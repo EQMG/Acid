@@ -58,18 +58,6 @@ public:
 	 */
 	void SetParent(Entity *parent) { m_parent = parent; }
 
-	friend const Metadata& operator>>(const Metadata& metadata, Component& component)
-	{
-		// TODO: Virtual?
-		return metadata;
-	}
-
-	friend Metadata& operator<<(Metadata& metadata, const Component& component)
-	{
-		// TODO: Virtual?
-		return metadata;
-	}
-
 private:
 	friend class Entity;
 	bool m_started;

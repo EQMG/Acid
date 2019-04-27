@@ -41,7 +41,7 @@ public:
 
 	T &operator*() { return Get(); }
 
-	T *operator->() { return &Get(); }
+	T &operator->() { return Get(); }
 
 private:
 	std::future<T> m_future;

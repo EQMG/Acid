@@ -82,7 +82,7 @@ public:
 	 * @param arrayLayer The array layer to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const;
+	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -90,7 +90,7 @@ public:
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0) const;
+	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, const uint32_t &mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.

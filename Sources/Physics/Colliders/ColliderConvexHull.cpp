@@ -1,8 +1,8 @@
 #include "ColliderConvexHull.hpp"
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
+#include "Scenes/Entity.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Scenes/Scenes.hpp"
 
 namespace acid
 {

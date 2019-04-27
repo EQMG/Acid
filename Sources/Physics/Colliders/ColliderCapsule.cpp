@@ -1,24 +1,22 @@
 #include "ColliderCapsule.hpp"
 
-#include <LinearMath/btAlignedObjectArray.h>
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
-#include "Scenes/Scenes.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {
 ColliderCapsule::ColliderCapsule(const float &radius, const float &height, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)),
-	m_shape(new btCapsuleShape(radius, height)),
+	m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 	m_radius(radius),
 	m_height(height)
 {
-	Scenes::Get()->GetPhysics()->GetCollisionShapes()->push_back(m_shape);
 	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
 }
 
 ColliderCapsule::~ColliderCapsule()
 {
-	//Scenes::Get()->GetPhysics()->GetCollisionShapes()->remove(m_shape);
+	m_shape.release(); // TODO: Fix deletion of shape.
 }
 
 void ColliderCapsule::Start()
@@ -32,7 +30,7 @@ void ColliderCapsule::Update()
 
 btCollisionShape *ColliderCapsule::GetCollisionShape() const
 {
-	return m_shape;
+	return m_shape.get();
 }
 
 void ColliderCapsule::SetRadius(const float &radius)

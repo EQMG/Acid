@@ -33,7 +33,7 @@ public:
 	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderCapsule& collider);
 
 private:
-	btCapsuleShape *m_shape;
+	std::unique_ptr<btCapsuleShape> m_shape;
 	float m_radius;
 	float m_height;
 };

@@ -9,8 +9,6 @@
 #include "Renderer/Renderer.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
-#include "Files/File.hpp"
-#include "Serialized/Yaml/Yaml.hpp"
 
 namespace acid
 {
@@ -24,9 +22,9 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	m_skybox(nullptr),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
-	auto metadata = Metadata();
-	metadata << *m_pipeline.GetShader();
-	File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
+	//auto metadata = Metadata();
+	//metadata << *m_pipeline.GetShader();
+	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
 
 void RendererDeferred::Render(const CommandBuffer &commandBuffer)
@@ -144,9 +142,9 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
-		VkExtent3D extent = {};
+		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+		Image::WritePixels(filename, pixels.get(), extent);
 	}, brdfImage.get());*/
 #endif
 
@@ -186,9 +184,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
-		VkExtent3D extent = {};
+		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+		Image::WritePixels(filename, pixels.get(), extent);
 	}, irradianceCubemap.get());*/
 #endif
 
@@ -261,9 +259,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
 			FileSystem::ClearFile(filename);
-			VkExtent3D extent = {};
+			Vector2ui extent;
 			auto pixels = image->GetPixels(extent, i);
-			Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+			Image::WritePixels(filename, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
 	}*/
 #endif

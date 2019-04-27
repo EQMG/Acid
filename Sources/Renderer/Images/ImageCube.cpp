@@ -183,17 +183,15 @@ void ImageCube::Load()
 	m_loadPixels = nullptr;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	extent.width = int32_t(m_extent.m_x >> mipLevel);
-	extent.height = int32_t(m_extent.m_y >> mipLevel);
-	extent.depth = 1;
+	extent = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, extent, m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -216,7 +214,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
 {
 	std::unique_ptr<uint8_t[]> pixels = nullptr;
 	uint8_t *offset = nullptr;
@@ -224,7 +222,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 	for (uint32_t i = 0; i < 6; i++)
 	{
 		auto resultSide = GetPixels(extent, mipLevel, i);
-		int32_t sizeSide = extent.width * extent.height * m_components;
+		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
 		if (pixels == nullptr)
 		{
@@ -236,7 +234,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 		offset += sizeSide;
 	}
 
-	extent.height *= 6;
+	extent.m_x *= 6;
 	return pixels;
 }
 

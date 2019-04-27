@@ -184,17 +184,15 @@ void Image2d::Load()
 	m_loadPixels = nullptr;
 }
 
-std::unique_ptr<uint8_t[]> Image2d::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	extent.width = int32_t(m_extent.m_x >> mipLevel);
-	extent.height = int32_t(m_extent.m_y >> mipLevel);
-	extent.depth = 1;
+	extent = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, extent, m_layout, mipLevel, 0);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, 0);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
