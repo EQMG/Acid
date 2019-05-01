@@ -24,9 +24,9 @@ public:
 
 	void SetAxis(const Vector3f &axis) { m_axis = axis; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterLine& emitter);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EmitterLine &emitter);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterLine& emitter);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EmitterLine &emitter);
 
 private:
 	float m_length;

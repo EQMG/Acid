@@ -31,9 +31,9 @@ public:
 
 	const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MeshAnimated& meshAnimated);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MeshAnimated& meshAnimated);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
 
 	static const uint32_t MaxJoints;
 	static const uint32_t MaxWeights;

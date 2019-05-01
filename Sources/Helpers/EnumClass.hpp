@@ -72,13 +72,13 @@ struct BitMask
 	{
 	}
 
-	friend const Metadata& operator>>(const Metadata& metadata, BitMask& bitmask)
+	friend const Metadata &operator>>(const Metadata &metadata, BitMask &bitmask)
 	{
 		metadata >> bitmask.m_value;
 		return metadata;
 	}
 
-	friend Metadata& operator<<(Metadata& metadata, const BitMask& bitmask)
+	friend Metadata &operator<<(Metadata &metadata, const BitMask &bitmask)
 	{
 		metadata << bitmask.m_value;
 		return metadata;

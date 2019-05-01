@@ -24,16 +24,16 @@ public:
 	class Instance
 	{
 	public:
-		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
+		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 		{
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
+				VkVertexInputBindingDescription{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect)},
-				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex)},
-				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_sharpness)},
-				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
+				VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect) },
+				VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex) },
+				VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_sharpness) },
+				VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour) }
 			};
 			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 		}
@@ -77,9 +77,9 @@ public:
 
 	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, FontType& fontType);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, FontType &fontType);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const FontType& fontType);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const FontType &fontType);
 
 private:
 	struct CellInfo

@@ -201,7 +201,7 @@ void KinematicCharacter::SetWalkDirection(const Vector3f &direction)
 	m_controller->setWalkDirection(Collider::Convert(direction));
 }
 
-const Metadata& operator>>(const Metadata& metadata, KinematicCharacter& character)
+const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character)
 {
 	metadata.GetChild("Mass", character.m_mass);
 	metadata.GetChild("Friction", character.m_friction);
@@ -216,7 +216,7 @@ const Metadata& operator>>(const Metadata& metadata, KinematicCharacter& charact
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const KinematicCharacter& character)
+Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character)
 {
 	metadata.SetChild("Mass", character.m_mass);
 	metadata.SetChild("Friction", character.m_friction);

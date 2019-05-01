@@ -47,9 +47,9 @@ public:
 
 	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, PipelineMaterial& pipeline);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const PipelineMaterial& pipeline);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline);
 
 private:
 	Pipeline::Stage m_pipelineStage;

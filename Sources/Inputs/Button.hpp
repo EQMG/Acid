@@ -35,10 +35,10 @@ public:
 	 * Called when the button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
+	Delegate<void(InputAction, BitMask < InputMod > )> &OnButton() { return m_onButton; }
 
 protected:
-	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
+	Delegate<void(InputAction, BitMask < InputMod > )> m_onButton;
 
 private:
 	bool m_wasDown;

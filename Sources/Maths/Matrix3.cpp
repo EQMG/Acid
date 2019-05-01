@@ -249,7 +249,7 @@ std::string Matrix3::ToString() const
 	std::stringstream stream;
 	stream.precision(10);
 	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
-		<< m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
+	       << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
 	return stream.str();
 }
 
@@ -380,7 +380,7 @@ Matrix3 &Matrix3::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector3f(other, other, other));
 }
 
-const Metadata& operator>>(const Metadata& metadata, Matrix3& matrix)
+const Metadata &operator>>(const Metadata &metadata, Matrix3 &matrix)
 {
 	metadata.GetChild("m0", matrix.m_rows[0]);
 	metadata.GetChild("m1", matrix.m_rows[1]);
@@ -388,7 +388,7 @@ const Metadata& operator>>(const Metadata& metadata, Matrix3& matrix)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Matrix3& matrix)
+Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix)
 {
 	metadata.SetChild("m0", matrix.m_rows[0]);
 	metadata.SetChild("m1", matrix.m_rows[1]);

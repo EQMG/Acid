@@ -30,7 +30,7 @@ Transform Light::GetWorldTransform() const
 	return m_worldTransform;
 }
 
-const Metadata& operator>>(const Metadata& metadata, Light& light)
+const Metadata &operator>>(const Metadata &metadata, Light &light)
 {
 	metadata.GetChild("Colour", light.m_colour);
 	metadata.GetChild("Radius", light.m_radius);
@@ -38,7 +38,7 @@ const Metadata& operator>>(const Metadata& metadata, Light& light)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Light& light)
+Metadata &operator<<(Metadata &metadata, const Light &light)
 {
 	metadata.SetChild("Colour", light.m_colour);
 	metadata.SetChild("Radius", light.m_radius);

@@ -89,13 +89,13 @@ void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4>
 	}
 }
 
-const Metadata& operator>>(const Metadata& metadata, MeshAnimated& meshAnimated)
+const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated)
 {
 	metadata.GetChild("Model", meshAnimated.m_filename);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const MeshAnimated& meshAnimated)
+Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated)
 {
 	metadata.SetChild("Model", meshAnimated.m_filename);
 	return metadata;

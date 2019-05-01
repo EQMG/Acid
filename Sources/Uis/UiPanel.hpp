@@ -39,7 +39,6 @@ private:
 	UiScrollBar m_scrollY;
 	BitMask<ScrollBar> m_scrollBars;
 
-
 	Vector2f m_min;
 	Vector2f m_max;
 };

@@ -34,9 +34,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelObj& model);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelObj &model);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelObj& model);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
 
 private:
 	std::string m_filename;

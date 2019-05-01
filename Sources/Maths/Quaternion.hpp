@@ -193,9 +193,9 @@ public:
 
 	Quaternion &operator*=(const float &other);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Quaternion& quaternion);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Quaternion& quaternion);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion);
 
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 

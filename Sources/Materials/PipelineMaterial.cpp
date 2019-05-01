@@ -69,8 +69,7 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 	return true;
 }
 
-
-const Metadata& operator>>(const Metadata& metadata, PipelineMaterial& pipeline)
+const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline)
 {
 	metadata.GetChild("Renderpass", pipeline.m_pipelineStage.first);
 	metadata.GetChild("Subpass", pipeline.m_pipelineStage.second);
@@ -78,7 +77,7 @@ const Metadata& operator>>(const Metadata& metadata, PipelineMaterial& pipeline)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const PipelineMaterial& pipeline)
+Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline)
 {
 	metadata.SetChild("Renderpass", pipeline.m_pipelineStage.first);
 	metadata.SetChild("Subpass", pipeline.m_pipelineStage.second);

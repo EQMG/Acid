@@ -23,8 +23,8 @@ public:
 	 * @param scale The particles scale.
 	 * @param gravityEffect The particles gravity effect.
 	 */
-	Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles, const float &rotation,
-		const float &scale, const float &gravityEffect);
+	Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles,
+		const float &rotation, const float &scale, const float &gravityEffect);
 
 	/**
 	 * Updates the particle.

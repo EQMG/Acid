@@ -24,8 +24,8 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
-			UiInputButton::SlideTime));
+		m_background.SetColourDriver(
+			new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
 	OnClick().Add([this](MouseButton button)

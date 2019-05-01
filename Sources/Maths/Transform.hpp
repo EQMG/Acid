@@ -63,9 +63,9 @@ public:
 
 	Transform &operator*=(const Transform &other);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Transform& transform);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Transform &transform);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Transform& transform);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
 
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 

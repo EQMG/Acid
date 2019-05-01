@@ -96,7 +96,7 @@ Transform &Transform::operator*=(const Transform &other)
 	return *this = Multiply(other);
 }
 
-const Metadata& operator>>(const Metadata& metadata, Transform& transform)
+const Metadata &operator>>(const Metadata &metadata, Transform &transform)
 {
 	metadata.GetChild("Position", transform.m_position);
 	metadata.GetChild("Rotation", transform.m_rotation);
@@ -104,7 +104,7 @@ const Metadata& operator>>(const Metadata& metadata, Transform& transform)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Transform& transform)
+Metadata &operator<<(Metadata &metadata, const Transform &transform)
 {
 	metadata.SetChild("Position", transform.m_position);
 	metadata.SetChild("Rotation", transform.m_rotation);

@@ -20,9 +20,9 @@ public:
 
 	void SetPoint(const Vector3f &point) { m_point = point; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterPoint& emitter);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EmitterPoint &emitter);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterPoint& emitter);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EmitterPoint &emitter);
 
 private:
 	Vector3f m_point;

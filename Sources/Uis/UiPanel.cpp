@@ -23,7 +23,8 @@ UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colou
 		m_resizeHandle.GetRectangle() = UiBound(Vector2f(RESIZE_SIZE / 2.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	case Resize::Right:
-		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
+		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale,
+			Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	default:
 		m_resizeHandle.SetEnabled(false);

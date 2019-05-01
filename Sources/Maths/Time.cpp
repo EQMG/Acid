@@ -131,13 +131,13 @@ Time &Time::operator%=(const Time &other)
 	return *this = *this % other;
 }
 
-const Metadata& operator>>(const Metadata& metadata, Time& time)
+const Metadata &operator>>(const Metadata &metadata, Time &time)
 {
 	metadata >> time.m_microseconds;
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Time& time)
+Metadata &operator<<(Metadata &metadata, const Time &time)
 {
 	metadata << time.m_microseconds;
 	return metadata;

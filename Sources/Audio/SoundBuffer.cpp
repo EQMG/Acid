@@ -187,13 +187,13 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	return buffer;
 }
 
-const Metadata& operator>>(const Metadata& metadata, SoundBuffer& soundBuffer)
+const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer)
 {
 	metadata.GetChild("Filename", soundBuffer.m_filename);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const SoundBuffer& soundBuffer)
+Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer)
 {
 	metadata.SetChild("Filename", soundBuffer.m_filename);
 	return metadata;

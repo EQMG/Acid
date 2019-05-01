@@ -44,9 +44,9 @@ public:
 
 	void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MaterialSkybox& material);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MaterialSkybox &material);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MaterialSkybox& material);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MaterialSkybox &material);
 
 private:
 	std::shared_ptr<ImageCube> m_image;

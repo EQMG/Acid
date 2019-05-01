@@ -59,9 +59,8 @@ ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilte
 	}
 }
 
-ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout,
-	const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic,
-	const bool &mipmap) :
+ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
+	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 	m_filename(""),
 	m_fileSuffix(""),
 	m_filter(filter),
@@ -145,8 +144,8 @@ void ImageCube::Load()
 
 	m_mipLevels = m_mipmap ? Image::GetMipLevels({ m_extent.m_x, m_extent.m_y, 1 }) : 1;
 
-	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 6,
-		VK_IMAGE_TYPE_2D);
+	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		m_mipLevels, 6, VK_IMAGE_TYPE_2D);
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 
@@ -157,7 +156,8 @@ void ImageCube::Load()
 
 	if (m_loadPixels != nullptr)
 	{
-		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);
@@ -276,7 +276,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 	return result;
 }
 
-const Metadata& operator>>(const Metadata& metadata, ImageCube& image)
+const Metadata &operator>>(const Metadata &metadata, ImageCube &image)
 {
 	metadata.GetChild("Filename", image.m_filename);
 	metadata.GetChild("Suffix", image.m_fileSuffix);
@@ -288,7 +288,7 @@ const Metadata& operator>>(const Metadata& metadata, ImageCube& image)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ImageCube& image)
+Metadata &operator<<(Metadata &metadata, const ImageCube &image)
 {
 	metadata.SetChild("Filename", image.m_filename);
 	metadata.SetChild("Suffix", image.m_fileSuffix);

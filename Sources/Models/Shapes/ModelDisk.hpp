@@ -40,9 +40,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelDisk& model);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelDisk &model);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelDisk& model);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelDisk &model);
 
 private:
 	float m_innerRadius;

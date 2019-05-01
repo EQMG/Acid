@@ -7,7 +7,8 @@
 namespace test
 {
 Inspector::Inspector(UiObject *parent) :
-	UiPanel(parent, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(0.34f, 1.0f)), UiInputButton::BackgroundColour, Resize::Left, ScrollBar::Vertical),
+	UiPanel(parent, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(0.34f, 1.0f)), UiInputButton::BackgroundColour, Resize::Left,
+		ScrollBar::Vertical),
 	m_masterVolume(&GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.92f, 0.06f), UiReference::TopRight)),
 	m_dropdown(&GetContent(), "Dropdown", 0, { "A", "B", "C" }, UiBound(Vector2f(0.92f, 0.12f), UiReference::TopRight)),
 	m_generalVolume(&GetContent(), "General Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.92f, 0.18f), UiReference::TopRight)),

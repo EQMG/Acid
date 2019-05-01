@@ -28,21 +28,20 @@ public:
 	class VertexInput
 	{
 	public:
-		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {},
-			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
+		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions))
 		{
 		}
 
-		ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, VertexInput& vertexInput)
+		friend const Metadata &operator>>(const Metadata &metadata, VertexInput &vertexInput)
 		{
 			//metadata.GetChild("Binding Descriptions", vertexInput.m_bindingDescriptions);
 			//metadata.GetChild("Attribute Descriptions", vertexInput.m_attributeDescriptions);
 			return metadata;
 		}
 
-		ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const VertexInput& vertexInput)
+		friend Metadata &operator<<(Metadata &metadata, const VertexInput &vertexInput)
 		{
 			//metadata.SetChild("Binding Descriptions", vertexInput.m_bindingDescriptions);
 			//metadata.SetChild("Attribute Descriptions", vertexInput.m_attributeDescriptions);
@@ -79,7 +78,7 @@ public:
 		{
 		}
 
-		ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Uniform& uniform)
+		friend const Metadata &operator>>(const Metadata &metadata, Uniform &uniform)
 		{
 			metadata.GetChild("Binding", uniform.m_binding);
 			metadata.GetChild("Offset", uniform.m_offset);
@@ -91,7 +90,7 @@ public:
 			return metadata;
 		}
 
-		ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Uniform& uniform)
+		friend Metadata &operator<<(Metadata &metadata, const Uniform &uniform)
 		{
 			metadata.SetChild("Binding", uniform.m_binding);
 			metadata.SetChild("Offset", uniform.m_offset);
@@ -163,7 +162,7 @@ public:
 		{
 		}
 
-		ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, UniformBlock& uniformBlock)
+		friend const Metadata &operator>>(const Metadata &metadata, UniformBlock &uniformBlock)
 		{
 			metadata.GetChild("Binding", uniformBlock.m_binding);
 			metadata.GetChild("Size", uniformBlock.m_size);
@@ -173,7 +172,7 @@ public:
 			return metadata;
 		}
 
-		ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const UniformBlock& uniformBlock)
+		friend Metadata &operator<<(Metadata &metadata, const UniformBlock &uniformBlock)
 		{
 			metadata.SetChild("Binding", uniformBlock.m_binding);
 			metadata.SetChild("Size", uniformBlock.m_size);
@@ -243,7 +242,7 @@ public:
 		{
 		}
 
-		ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Attribute& attribute)
+		friend const Metadata &operator>>(const Metadata &metadata, Attribute &attribute)
 		{
 			metadata.GetChild("Set", attribute.m_set);
 			metadata.GetChild("Location", attribute.m_location);
@@ -252,7 +251,7 @@ public:
 			return metadata;
 		}
 
-		ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Attribute& attribute)
+		friend Metadata &operator<<(Metadata &metadata, const Attribute &attribute)
 		{
 			metadata.SetChild("Set", attribute.m_set);
 			metadata.SetChild("Location", attribute.m_location);
@@ -303,9 +302,9 @@ public:
 
 	void CreateReflection();
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Shader& shader);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Shader& shader);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
 
 	static VkFormat GlTypeToVk(const int32_t &type);
 
@@ -345,7 +344,7 @@ public:
 
 	static std::string ProcessIncludes(const std::string &shaderCode);
 
-	VkShaderModule CreateShaderModule(const std::string& moduleName, const std::string& moduleCode, const VkShaderStageFlags &moduleFlag);
+	VkShaderModule CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const VkShaderStageFlags &moduleFlag);
 
 	std::string ToString() const;
 

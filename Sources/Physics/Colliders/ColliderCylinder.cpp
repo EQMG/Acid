@@ -46,7 +46,7 @@ void ColliderCylinder::SetHeight(const float &height)
 	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
 }
 
-const Metadata& operator>>(const Metadata& metadata, ColliderCylinder& collider)
+const Metadata &operator>>(const Metadata &metadata, ColliderCylinder &collider)
 {
 	metadata.GetChild("Local Transform", collider.m_localTransform);
 	metadata.GetChild("Radius", collider.m_radius);
@@ -54,7 +54,7 @@ const Metadata& operator>>(const Metadata& metadata, ColliderCylinder& collider)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ColliderCylinder& collider)
+Metadata &operator<<(Metadata &metadata, const ColliderCylinder &collider)
 {
 	metadata.SetChild("Local Transform", collider.m_localTransform);
 	metadata.SetChild("Radius", collider.m_radius);

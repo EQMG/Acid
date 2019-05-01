@@ -54,7 +54,7 @@ void ComponentRegister::Remove(const std::string &name)
 	m_components.erase(name);
 }
 
-Component* ComponentRegister::Create(const std::string& name) const
+Component *ComponentRegister::Create(const std::string &name) const
 {
 	auto it = m_components.find(name);
 
@@ -67,7 +67,7 @@ Component* ComponentRegister::Create(const std::string& name) const
 	return ((*it).second).m_create();
 }
 
-void ComponentRegister::Decode(const std::string& name, const Metadata& metadata, Component* component)
+void ComponentRegister::Decode(const std::string &name, const Metadata &metadata, Component *component)
 {
 	auto it = m_components.find(name);
 
@@ -80,7 +80,7 @@ void ComponentRegister::Decode(const std::string& name, const Metadata& metadata
 	((*it).second).m_decode(metadata, component);
 }
 
-void ComponentRegister::Encode(const std::string& name, Metadata& metadata, const Component* component)
+void ComponentRegister::Encode(const std::string &name, Metadata &metadata, const Component *component)
 {
 	auto it = m_components.find(name);
 

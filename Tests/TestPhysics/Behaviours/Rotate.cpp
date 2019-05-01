@@ -36,13 +36,13 @@ void Rotate::Update()
 	}
 }
 
-const Metadata& operator>>(const Metadata& metadata, Rotate& rotate)
+const Metadata &operator>>(const Metadata &metadata, Rotate &rotate)
 {
 	metadata.GetChild("Direction", rotate.m_direction);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Rotate& rotate)
+Metadata &operator<<(Metadata &metadata, const Rotate &rotate)
 {
 	metadata.SetChild("Direction", rotate.m_direction);
 	return metadata;

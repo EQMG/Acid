@@ -118,7 +118,7 @@ public:
 	const float &GetScreenAlpha() const { return m_screenAlpha; }
 
 	const Vector2f &GetScreenScale() const { return m_screenScale; }
-	
+
 	/**
 	 * Gets if the object provided has the cursor hovered above it.
 	 * @return If the object has the cursor inside of its bounds.

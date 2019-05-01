@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata& operator>>(const Metadata& metadata, SkyboxCycle& skyboxCycle);
+	friend const Metadata &operator>>(const Metadata &metadata, SkyboxCycle &skyboxCycle);
 
-	friend Metadata& operator<<(Metadata& metadata, const SkyboxCycle& skyboxCycle);
+	friend Metadata &operator<<(Metadata &metadata, const SkyboxCycle &skyboxCycle);
 
 private:
 	bool m_enableFog;

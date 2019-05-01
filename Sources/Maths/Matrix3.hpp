@@ -174,9 +174,9 @@ public:
 
 	Matrix3 &operator/=(const float &other);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Matrix3& matrix);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Matrix3 &matrix);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Matrix3& matrix);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix);
 
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 

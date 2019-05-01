@@ -26,7 +26,7 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 		for (auto &m : monitors)
 		{
 			m->SetPrimary(m->GetMonitor() == glfwGetPrimaryMonitor());
-		
+
 			if (m->GetMonitor() == monitor)
 			{
 				Window::Get()->m_onMonitorConnect(m.get(), false);

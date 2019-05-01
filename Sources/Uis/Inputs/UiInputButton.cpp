@@ -27,8 +27,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : PrimaryColour,
-			SlideTime));
+		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : PrimaryColour, SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
 }

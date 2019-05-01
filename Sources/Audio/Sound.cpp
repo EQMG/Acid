@@ -151,13 +151,13 @@ void Sound::SetPitch(const float &pitch)
 	Audio::CheckAl(alGetError());
 }
 
-const Metadata& operator>>(const Metadata& metadata, Sound& sound)
+const Metadata &operator>>(const Metadata &metadata, Sound &sound)
 {
 	metadata.GetResource("Buffer", sound.m_soundBuffer);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Sound& sound)
+Metadata &operator<<(Metadata &metadata, const Sound &sound)
 {
 	metadata.SetResource("Buffer", sound.m_soundBuffer);
 	return metadata;

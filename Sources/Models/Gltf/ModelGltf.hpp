@@ -35,9 +35,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelGltf& model);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelGltf &model);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelGltf& model);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelGltf &model);
 
 private:
 	//struct Node;

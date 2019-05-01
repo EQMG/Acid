@@ -32,7 +32,7 @@ public:
 
 private:
 	void SetUpdating(const bool &updating);
-	
+
 	Gui m_background;
 	Text m_textTitle;
 	Text m_textValue;

@@ -44,9 +44,9 @@ public:
 	void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
 
 	const Vector2f &GetAtlasOffset() const { return m_atlasOffset; }
-	
+
 	const Vector2f &GetAtlasScale() const { return m_atlasScale; }
-	
+
 	void SetAtlasScale(const Vector2f &atlasScale) { m_atlasScale = atlasScale; }
 
 	const Vector4f &GetNinePatches() const { return m_ninePatches; }

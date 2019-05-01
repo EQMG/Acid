@@ -1,6 +1,6 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
-		Acid.hpp		
+		Acid.hpp
 		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
 		Animations/Animator.hpp

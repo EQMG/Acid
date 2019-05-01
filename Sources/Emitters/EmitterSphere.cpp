@@ -38,14 +38,14 @@ Vector3f EmitterSphere::GeneratePosition() const
 	return m_radius * distance * Emitter::RandomUnitVector();
 }
 
-const Metadata& operator>>(const Metadata& metadata, EmitterSphere& emitter)
+const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter)
 {
 	metadata.GetChild("Radius", emitter.m_radius);
 	metadata.GetChild("Local Transform", emitter.m_localTransform);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const EmitterSphere& emitter)
+Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter)
 {
 	metadata.SetChild("Radius", emitter.m_radius);
 	metadata.SetChild("Local Transform", emitter.m_localTransform);

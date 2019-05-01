@@ -110,7 +110,7 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 	return true;
 }
 
-const Metadata& operator>>(const Metadata& metadata, GizmoType& gizmoType)
+const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType)
 {
 	metadata.GetResource("Model", gizmoType.m_model);
 	metadata.GetChild("Line Thickness", gizmoType.m_lineThickness);
@@ -118,7 +118,7 @@ const Metadata& operator>>(const Metadata& metadata, GizmoType& gizmoType)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const GizmoType& gizmoType)
+Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType)
 {
 	metadata.SetResource("Model", gizmoType.m_model);
 	metadata.SetChild("Line Thickness", gizmoType.m_lineThickness);

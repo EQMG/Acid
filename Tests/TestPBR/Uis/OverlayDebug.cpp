@@ -11,7 +11,8 @@ OverlayDebug::OverlayDebug(UiObject *parent) :
 		Colour::White),
 	m_textFps(this, UiBound(Vector2f(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
 		Colour::White),
-	m_textUps(this, UiBound(Vector2f(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, Colour::White)
+	m_textUps(this, UiBound(Vector2f(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
+		Colour::White)
 {
 }
 

@@ -47,9 +47,9 @@ public:
 
 	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Rigidbody& rigidbody);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Rigidbody& rigidbody);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody);
 
 protected:
 	void RecalculateMass() override;

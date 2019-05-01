@@ -133,13 +133,13 @@ void ModelGltf::Load()
 	Initialize(vertices, indices);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ModelGltf& model)
+const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
 {
 	metadata.GetChild("Filename", model.m_filename);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ModelGltf& model)
+Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelGltf");
 	metadata.SetChild("Filename", model.m_filename);

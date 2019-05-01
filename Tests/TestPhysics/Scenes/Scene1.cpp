@@ -90,37 +90,37 @@ Scene1::Scene1() :
 		if (action == InputAction::Press)
 		{
 			Resources::Get()->GetThreadPool().Enqueue([this]()
+			{
+				auto sceneFile = File("Scene1.yaml", new Yaml());
+				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
+
+				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto sceneFile = File("Scene1.yaml", new Yaml());
-					auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
+					auto entityNode = sceneNode->AddChild(new Metadata());
+					entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
+					auto transformNode = entityNode->AddChild(new Metadata("Transform"));
+					auto componentsNode = entityNode->AddChild(new Metadata("Components"));
+					*transformNode << entity->GetLocalTransform();
 
-					for (auto& entity : GetStructure()->QueryAll())
+					for (auto &component : entity->GetComponents())
 					{
-						auto entityNode = sceneNode->AddChild(new Metadata());
-						entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
-						auto transformNode = entityNode->AddChild(new Metadata("Transform"));
-						auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-						*transformNode << entity->GetLocalTransform();
+						//if (component->IsFromPrefab())
+						//{
+						//	continue;
+						//}
 
-						for (auto& component : entity->GetComponents())
+						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+
+						if (componentName)
 						{
-							//if (component->IsFromPrefab())
-							//{
-							//	continue;
-							//}
-
-							auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
-
-							if (componentName)
-							{
-								auto child = componentsNode->AddChild(new Metadata(*componentName));
-								Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
-							}
+							auto child = componentsNode->AddChild(new Metadata(*componentName));
+							Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 						}
 					}
+				}
 
-					sceneFile.Write();
-				});
+				sceneFile.Write();
+			});
 		}
 	});
 
@@ -158,20 +158,20 @@ void Scene1::Start()
 {
 	GetPhysics()->SetGravity(Vector3f(0.0f, -9.81f, 0.0f));
 	GetPhysics()->SetAirDensity(1.0f);
-	
+
 	// Player.
 	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f))); // Skybox.
-	
+
 	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f)); // Animated model.
-	
+
 	auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f), 0.3f));
 	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animatedObject->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//animatedObject->AddComponent<Rigidbody>(0.0f);
 	//animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
 	animatedObject->AddComponent<MeshRender>();
-	animatedObject->AddComponent<ShadowRender>(); 
-	
+	animatedObject->AddComponent<ShadowRender>();
+
 	// Animated model.
 	//auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0f, 0.0f), 0.3f));
 	//animatedObject->AddComponent<Mesh>(ModelGltf::Create("Objects/Animated/Model.glb"));
@@ -187,7 +187,7 @@ void Scene1::Start()
 	auto sun = GetStructure()->CreateEntity(Transform(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f));
 	//sun->AddComponent<CelestialBody>(CELESTIAL_SUN);
 	sun->AddComponent<Light>(Colour::White);
-	
+
 	auto plane = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, -0.5f, 0.0f), Vector3f(), Vector3f(50.0f, 1.0f, 50.0f)));
 	plane->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)));
 	plane->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
@@ -195,14 +195,14 @@ void Scene1::Start()
 	plane->AddComponent<ColliderCube>(Vector3f(1.0f, 1.0f, 1.0f));
 	plane->AddComponent<MeshRender>();
 	plane->AddComponent<ShadowRender>();
-	
+
 	auto terrain = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, -10.0f, 0.0f)));
 	terrain->AddComponent<Mesh>(ModelCube::Create(Vector3f(50.0f, 1.0f, 50.0f)));
 	//terrain->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
 	terrain->AddComponent<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png"));
 	terrain->AddComponent<MeshRender>();
-	terrain->AddComponent<ShadowRender>(); 
-	
+	terrain->AddComponent<ShadowRender>();
+
 	/*auto terrain = GetStructure()->CreateEntity();
 	terrain->AddComponent<Mesh>();
 	terrain->AddComponent<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png"));
@@ -211,13 +211,13 @@ void Scene1::Start()
 	terrain->AddComponent<ColliderHeightfield>();
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
-	
+
 	EntityPrefab prefabTerrain = EntityPrefab("Prefabs/Terrain.yaml");
 	prefabTerrain.Write(*terrain);
 	prefabTerrain.Save();
-	
-	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
-	
+
+	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
+
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
@@ -244,7 +244,7 @@ void Scene1::Start()
 
 	auto teapot1 = GetStructure()->CreateEntity(Transform(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), 0.2f));
 	teapot1->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")); 
+	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
 	//teapot1->AddComponent<Rigidbody>(1.0f);
 	//teapot1->AddComponent<ColliderConvexHull>();
 	teapot1->AddComponent<Rotate>(Vector3f(50.0f, 30.0f, 40.0f), 0);

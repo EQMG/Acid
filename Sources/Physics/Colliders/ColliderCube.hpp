@@ -24,9 +24,9 @@ public:
 
 	void SetExtents(const Vector3f &extents);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ColliderCube& collider);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderCube& collider);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCube &collider);
 
 private:
 	std::unique_ptr<btBoxShape> m_shape;

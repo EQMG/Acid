@@ -28,9 +28,9 @@ public:
 
 	void SetHeight(const float &height);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ColliderCylinder& collider);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCylinder &collider);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderCylinder& collider);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCylinder &collider);
 
 private:
 	std::unique_ptr<btCylinderShape> m_shape;

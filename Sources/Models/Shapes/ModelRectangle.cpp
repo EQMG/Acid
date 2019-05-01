@@ -46,28 +46,22 @@ void ModelRectangle::Load()
 		return;
 	}
 
-	std::vector<VertexDefault> vertices = {
-		VertexDefault(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f::Zero),
-		VertexDefault(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f::Zero),
-		VertexDefault(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f::Zero),
-		VertexDefault(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f::Zero),
-	};
-	static std::vector<uint32_t> indices = {
-		0, 1, 2,
-		2, 3, 0
-	};
+	std::vector<VertexDefault> vertices = { VertexDefault(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f::Zero),
+		VertexDefault(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f::Zero), VertexDefault(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f::Zero),
+		VertexDefault(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f::Zero), };
+	static std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
 
 	Initialize(vertices, indices);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ModelRectangle& model)
+const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model)
 {
 	metadata.GetChild("Min", model.m_min);
 	metadata.GetChild("Max", model.m_max);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ModelRectangle& model)
+Metadata &operator<<(Metadata &metadata, const ModelRectangle &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelRectangle");
 	metadata.SetChild("Min", model.m_min);

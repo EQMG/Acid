@@ -117,12 +117,12 @@ void PlayerFps::Update()
 	GetParent()->GetLocalTransform().SetRotation(newRotation);
 }
 
-const Metadata& operator>>(const Metadata& metadata, PlayerFps& player)
+const Metadata &operator>>(const Metadata &metadata, PlayerFps &player)
 {
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const PlayerFps& player)
+Metadata &operator<<(Metadata &metadata, const PlayerFps &player)
 {
 	return metadata;
 }

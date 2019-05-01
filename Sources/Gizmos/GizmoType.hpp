@@ -23,17 +23,17 @@ public:
 	class Instance
 	{
 	public:
-		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
+		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 		{
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
+				VkVertexInputBindingDescription{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-				VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
+				VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0]) },
+				VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1]) },
+				VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2]) },
+				VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3]) },
+				VkVertexInputAttributeDescription{ 4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour) }
 			};
 			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 		}
@@ -82,9 +82,9 @@ public:
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, GizmoType& gizmoType);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const GizmoType& gizmoType);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType);
 
 private:
 	std::shared_ptr<Model> m_model;

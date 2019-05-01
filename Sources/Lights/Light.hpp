@@ -40,9 +40,9 @@ public:
 
 	Transform GetWorldTransform() const;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Light& light);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Light &light);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Light& light);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Light &light);
 
 private:
 	Colour m_colour;

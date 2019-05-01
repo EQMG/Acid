@@ -7,8 +7,8 @@
 
 namespace acid
 {
-Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain,
-	const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples)
+Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
+	const VkSampleCountFlagBits &samples)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 

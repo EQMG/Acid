@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata& operator>>(const Metadata& metadata, Rotate& rotate);
+	friend const Metadata &operator>>(const Metadata &metadata, Rotate &rotate);
 
-	friend Metadata& operator<<(Metadata& metadata, const Rotate& rotate);
+	friend Metadata &operator<<(Metadata &metadata, const Rotate &rotate);
 
 private:
 	Vector3f m_direction;

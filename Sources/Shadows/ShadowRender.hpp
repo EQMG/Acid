@@ -23,9 +23,9 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ShadowRender& shadowRender);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ShadowRender &shadowRender);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ShadowRender& shadowRender);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ShadowRender &shadowRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

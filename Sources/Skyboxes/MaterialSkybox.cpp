@@ -5,7 +5,7 @@
 
 namespace acid
 {
-MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour & baseColour) :
+MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &baseColour) :
 	m_image(std::move(image)),
 	m_baseColour(baseColour),
 	m_blend(1.0f),
@@ -38,14 +38,14 @@ void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 	descriptorSet.Push("samplerColour", m_image);
 }
 
-const Metadata& operator>>(const Metadata& metadata, MaterialSkybox& material)
+const Metadata &operator>>(const Metadata &metadata, MaterialSkybox &material)
 {
 	metadata.GetResource("Image", material.m_image);
 	metadata.GetChild("Base Colour", material.m_baseColour);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const MaterialSkybox& material)
+Metadata &operator<<(Metadata &metadata, const MaterialSkybox &material)
 {
 	metadata.SetResource("Image", material.m_image);
 	metadata.SetChild("Base Colour", material.m_baseColour);

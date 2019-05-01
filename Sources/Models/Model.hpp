@@ -73,9 +73,9 @@ public:
 
 	VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Model& model);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Model &model);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Model& model);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Model &model);
 
 protected:
 	template<typename T>

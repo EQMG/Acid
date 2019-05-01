@@ -62,9 +62,9 @@ public:
 
 	void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, MaterialDefault& material);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const MaterialDefault& material);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MaterialDefault &material);
 
 private:
 	std::vector<Shader::Define> GetDefines() const;

@@ -133,7 +133,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return true;
 }
 
-const Metadata& operator>>(const Metadata& metadata, ParticleType& particleType)
+const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType)
 {
 	metadata.GetResource("Image", particleType.m_image);
 	metadata.GetChild("Number Of Rows", particleType.m_numberOfRows);
@@ -144,7 +144,7 @@ const Metadata& operator>>(const Metadata& metadata, ParticleType& particleType)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ParticleType& particleType)
+Metadata &operator<<(Metadata &metadata, const ParticleType &particleType)
 {
 	metadata.SetResource("Image", particleType.m_image);
 	metadata.SetChild("Number Of Rows", particleType.m_numberOfRows);

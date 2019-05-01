@@ -103,7 +103,7 @@ public:
 	}
 
 	template<typename T>
-	std::shared_ptr<T> GetResource(const std::string& name) const
+	std::shared_ptr<T> GetResource(const std::string &name) const
 	{
 		auto child = FindChild(name);
 
@@ -116,7 +116,7 @@ public:
 	}
 
 	template<typename T>
-	void GetResource(const std::string& name, std::shared_ptr<T>& dest) const
+	void GetResource(const std::string &name, std::shared_ptr<T> &dest) const
 	{
 		auto child = FindChild(name);
 
@@ -130,7 +130,7 @@ public:
 	}
 
 	template<typename T>
-	void SetResource(const std::string& name, const std::shared_ptr<T>& value)
+	void SetResource(const std::string &name, const std::shared_ptr<T> &value)
 	{
 		auto child = FindChild(name, false);
 
@@ -182,21 +182,21 @@ protected:
 };
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, T& object)
+const Metadata &operator>>(const Metadata &metadata, T &object)
 {
 	object = String::From<T>(metadata.GetValue());
 	return metadata;
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const T& object)
+Metadata &operator<<(Metadata &metadata, const T &object)
 {
 	metadata.SetValue(String::To(object));
 	return metadata;
 }
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, std::unique_ptr<T>& object)
+const Metadata &operator>>(const Metadata &metadata, std::unique_ptr<T> &object)
 {
 	T x;
 	metadata >> x;
@@ -205,7 +205,7 @@ const Metadata& operator>>(const Metadata& metadata, std::unique_ptr<T>& object)
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const std::unique_ptr<T>& object)
+Metadata &operator<<(Metadata &metadata, const std::unique_ptr<T> &object)
 {
 	if (object == nullptr)
 	{
@@ -218,7 +218,7 @@ Metadata& operator<<(Metadata& metadata, const std::unique_ptr<T>& object)
 }
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, std::shared_ptr<T>& object)
+const Metadata &operator>>(const Metadata &metadata, std::shared_ptr<T> &object)
 {
 	T x;
 	metadata >> x;
@@ -227,7 +227,7 @@ const Metadata& operator>>(const Metadata& metadata, std::shared_ptr<T>& object)
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const std::shared_ptr<T>& object)
+Metadata &operator<<(Metadata &metadata, const std::shared_ptr<T> &object)
 {
 	if (object == nullptr)
 	{
@@ -240,21 +240,21 @@ Metadata& operator<<(Metadata& metadata, const std::shared_ptr<T>& object)
 }
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, std::basic_string<T, std::char_traits<T>, std::allocator<T>>& string)
+const Metadata &operator>>(const Metadata &metadata, std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
 {
 	string = metadata.GetString();
 	return metadata;
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const std::basic_string<T, std::char_traits<T>, std::allocator<T>>& string)
+Metadata &operator<<(Metadata &metadata, const std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
 {
 	metadata.SetString(string);
 	return metadata;
 }
 
 template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Metadata&> operator>>(const Metadata& metadata, T& object)
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Metadata &> operator>>(const Metadata &metadata, T &object)
 {
 	auto result = T();
 	metadata >> ConstExpr::AsRef(result);
@@ -262,7 +262,7 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Metadata&> op
 }
 
 template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Metadata&> operator<<(Metadata& metadata, const T& object)
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Metadata &> operator<<(Metadata &metadata, const T &object)
 {
 	if (ConstExpr::AsPtr(object) == nullptr)
 	{
@@ -275,7 +275,7 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Metadata&> operator
 }
 
 template<typename T, typename K>
-const Metadata& operator>>(const Metadata& metadata, std::pair<T, K>& pair)
+const Metadata &operator>>(const Metadata &metadata, std::pair<T, K> &pair)
 {
 	pair.first = String::From<T>(metadata.GetName());
 	metadata >> pair.second;
@@ -283,7 +283,7 @@ const Metadata& operator>>(const Metadata& metadata, std::pair<T, K>& pair)
 }
 
 template<typename T, typename K>
-Metadata& operator<<(Metadata& metadata, const std::pair<T, K>& pair)
+Metadata &operator<<(Metadata &metadata, const std::pair<T, K> &pair)
 {
 	metadata.SetName(String::To(pair.first));
 	metadata << pair.second;
@@ -291,7 +291,7 @@ Metadata& operator<<(Metadata& metadata, const std::pair<T, K>& pair)
 }
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, std::optional<T>& optional)
+const Metadata &operator>>(const Metadata &metadata, std::optional<T> &optional)
 {
 	if (metadata.GetValue() != "nullopt")
 	{
@@ -308,7 +308,7 @@ const Metadata& operator>>(const Metadata& metadata, std::optional<T>& optional)
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const std::optional<T>& optional)
+Metadata &operator<<(Metadata &metadata, const std::optional<T> &optional)
 {
 	if (optional)
 	{
@@ -318,17 +318,17 @@ Metadata& operator<<(Metadata& metadata, const std::optional<T>& optional)
 	{
 		metadata.SetValue("nullopt");
 	}
-	
+
 	return metadata;
 }
 
 template<typename T>
-const Metadata& operator>>(const Metadata& metadata, std::vector<T>& vector)
+const Metadata &operator>>(const Metadata &metadata, std::vector<T> &vector)
 {
 	vector = std::vector<T>();
 	vector.reserve(metadata.GetChildren().size());
 
-	for (const auto& child : metadata.GetChildren())
+	for (const auto &child : metadata.GetChildren())
 	{
 		T x;
 		*child >> x;
@@ -339,7 +339,7 @@ const Metadata& operator>>(const Metadata& metadata, std::vector<T>& vector)
 }
 
 template<typename T>
-Metadata& operator<<(Metadata& metadata, const std::vector<T>& vector)
+Metadata &operator<<(Metadata &metadata, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
@@ -351,11 +351,11 @@ Metadata& operator<<(Metadata& metadata, const std::vector<T>& vector)
 }
 
 template<typename T, typename K>
-const Metadata& operator>>(const Metadata& metadata, std::map<T, K>& map)
+const Metadata &operator>>(const Metadata &metadata, std::map<T, K> &map)
 {
 	map = std::map<T, K>();
 
-	for (const auto& child : metadata.GetChildren())
+	for (const auto &child : metadata.GetChildren())
 	{
 		std::pair<T, K> pair;
 		*child >> pair;
@@ -366,7 +366,7 @@ const Metadata& operator>>(const Metadata& metadata, std::map<T, K>& map)
 }
 
 template<typename T, typename K>
-Metadata& operator<<(Metadata& metadata, const std::map<T, K>& map)
+Metadata &operator<<(Metadata &metadata, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{

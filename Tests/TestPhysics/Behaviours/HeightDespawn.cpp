@@ -21,13 +21,13 @@ void HeightDespawn::Update()
 	}
 }
 
-const Metadata& operator>>(const Metadata& metadata, HeightDespawn& heightDespawn)
+const Metadata &operator>>(const Metadata &metadata, HeightDespawn &heightDespawn)
 {
 	metadata.GetChild("Remove Height", heightDespawn.m_removeHeight);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const HeightDespawn& heightDespawn)
+Metadata &operator<<(Metadata &metadata, const HeightDespawn &heightDespawn)
 {
 	metadata.SetChild("Remove Height", heightDespawn.m_removeHeight);
 	return metadata;

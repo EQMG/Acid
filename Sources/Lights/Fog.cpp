@@ -18,7 +18,7 @@ std::string Fog::ToString() const
 	return stream.str();
 }
 
-const Metadata& operator>>(const Metadata& metadata, Fog& fog)
+const Metadata &operator>>(const Metadata &metadata, Fog &fog)
 {
 	metadata.GetChild("Colour", fog.m_colour);
 	metadata.GetChild("Density", fog.m_density);
@@ -28,7 +28,7 @@ const Metadata& operator>>(const Metadata& metadata, Fog& fog)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Fog& fog)
+Metadata &operator<<(Metadata &metadata, const Fog &fog)
 {
 	metadata.SetChild("Colour", fog.m_colour);
 	metadata.SetChild("Density", fog.m_density);

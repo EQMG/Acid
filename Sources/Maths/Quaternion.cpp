@@ -273,7 +273,6 @@ bool Quaternion::operator==(const Quaternion &other) const
 	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
 }
 
-
 Quaternion Quaternion::operator-() const
 {
 	return Quaternion(-m_x, -m_y, -m_z, -m_w);
@@ -358,7 +357,7 @@ Quaternion &Quaternion::operator*=(const float &other)
 	return *this = Scale(other);
 }
 
-const Metadata& operator>>(const Metadata& metadata, Quaternion& quaternion)
+const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion)
 {
 	metadata.GetChild("x", quaternion.m_x);
 	metadata.GetChild("y", quaternion.m_y);
@@ -367,7 +366,7 @@ const Metadata& operator>>(const Metadata& metadata, Quaternion& quaternion)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Quaternion& quaternion)
+Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion)
 {
 	metadata.SetChild("x", quaternion.m_x);
 	metadata.SetChild("y", quaternion.m_y);

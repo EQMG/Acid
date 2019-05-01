@@ -167,7 +167,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 	return Vector3f(x, y, z);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ParticleSystem& particleSystem)
+const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)
 {
 	auto typesNode = metadata.FindChild("Types");
 
@@ -175,7 +175,7 @@ const Metadata& operator>>(const Metadata& metadata, ParticleSystem& particleSys
 
 	if (typesNode != nullptr)
 	{
-		for (const auto& typeNode : typesNode->GetChildren())
+		for (const auto &typeNode : typesNode->GetChildren())
 		{
 			particleSystem.m_types.emplace_back(ParticleType::Create(*typeNode));
 		}
@@ -195,7 +195,7 @@ const Metadata& operator>>(const Metadata& metadata, ParticleSystem& particleSys
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ParticleSystem& particleSystem)
+Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
 {
 	auto typesNode = metadata.FindChild("Types", false);
 
@@ -204,7 +204,7 @@ Metadata& operator<<(Metadata& metadata, const ParticleSystem& particleSystem)
 		typesNode = metadata.AddChild(new Metadata("Types"));
 	}
 
-	for (const auto& type : particleSystem.m_types)
+	for (const auto &type : particleSystem.m_types)
 	{
 		*typesNode->AddChild(new Metadata()) << type;
 	}

@@ -45,9 +45,9 @@ public:
 
 	std::string ToString() const;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Fog& fog);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Fog &fog);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Fog& fog);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Fog &fog);
 
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
 

@@ -147,7 +147,7 @@ void Shader::CreateReflection()
 	}
 }
 
-const Metadata& operator>>(const Metadata& metadata, Shader& shader)
+const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 {
 	metadata.GetChild("Name", shader.m_name);
 	metadata.GetChild("Stages", shader.m_stages);
@@ -158,7 +158,7 @@ const Metadata& operator>>(const Metadata& metadata, Shader& shader)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Shader& shader)
+Metadata &operator<<(Metadata &metadata, const Shader &shader)
 {
 	metadata.SetChild("Name", shader.m_name);
 	metadata.SetChild("Stages", shader.m_stages);
@@ -491,7 +491,7 @@ TBuiltInResource GetResources()
 	return resources;
 }
 
-VkShaderModule Shader::CreateShaderModule(const std::string& moduleName, const std::string& moduleCode, const VkShaderStageFlags& moduleFlag)
+VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const VkShaderStageFlags &moduleFlag)
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 

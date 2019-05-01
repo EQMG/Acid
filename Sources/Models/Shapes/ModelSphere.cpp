@@ -88,7 +88,7 @@ void ModelSphere::Load()
 	Initialize(vertices, indices);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ModelSphere& model)
+const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
 {
 	metadata.GetChild("Latitude Bands", model.m_latitudeBands);
 	metadata.GetChild("Longitude Bands", model.m_longitudeBands);
@@ -96,7 +96,7 @@ const Metadata& operator>>(const Metadata& metadata, ModelSphere& model)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ModelSphere& model)
+Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelSphere");
 	metadata.SetChild("Latitude Bands", model.m_latitudeBands);

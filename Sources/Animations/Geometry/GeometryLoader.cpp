@@ -51,7 +51,8 @@ std::vector<Vector3f> GeometryLoader::GetPositions()
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++)
 	{
-		Vector4f position = Vector4f(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]), String::From<float>(positionsRawData[i * 3 + 2]));
+		Vector4f position = Vector4f(String::From<float>(positionsRawData[i * 3]), String::From<float>(positionsRawData[i * 3 + 1]),
+			String::From<float>(positionsRawData[i * 3 + 2]));
 		positions.emplace_back(m_correction.Transform(position));
 	}
 

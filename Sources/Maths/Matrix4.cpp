@@ -449,8 +449,8 @@ std::string Matrix4::ToString() const
 	std::stringstream stream;
 	stream.precision(10);
 	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", "
-		<< m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
-		<< ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
+	       << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
+	       << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
 	return stream.str();
 }
 
@@ -581,7 +581,7 @@ Matrix4 &Matrix4::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector4f(other, other, other, other));
 }
 
-const Metadata& operator>>(const Metadata& metadata, Matrix4& matrix)
+const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix)
 {
 	metadata.GetChild("m0", matrix.m_rows[0]);
 	metadata.GetChild("m1", matrix.m_rows[1]);
@@ -590,7 +590,7 @@ const Metadata& operator>>(const Metadata& metadata, Matrix4& matrix)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Matrix4& matrix)
+Metadata &operator<<(Metadata &metadata, const Matrix4 &matrix)
 {
 	metadata.SetChild("m0", matrix.m_rows[0]);
 	metadata.SetChild("m1", matrix.m_rows[1]);

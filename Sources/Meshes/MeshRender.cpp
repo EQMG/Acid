@@ -90,12 +90,12 @@ bool MeshRender::operator<(const MeshRender &other) const
 	return thisDistance2 > otherDistance2;
 }
 
-const Metadata& operator>>(const Metadata& metadata, MeshRender& meshRender)
+const Metadata &operator>>(const Metadata &metadata, MeshRender &meshRender)
 {
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const MeshRender& meshRender)
+Metadata &operator<<(Metadata &metadata, const MeshRender &meshRender)
 {
 	return metadata;
 }

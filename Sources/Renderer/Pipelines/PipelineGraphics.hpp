@@ -190,7 +190,7 @@ public:
 			m_pushDescriptors);
 	}
 
-	friend const Metadata& operator>>(const Metadata& metadata, PipelineGraphicsCreate& pipelineCreate)
+	friend const Metadata &operator>>(const Metadata &metadata, PipelineGraphicsCreate &pipelineCreate)
 	{
 		metadata.GetChild("Shader Stages", pipelineCreate.m_shaderStages);
 		//metadata.GetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);
@@ -205,7 +205,7 @@ public:
 
 	}
 
-	friend Metadata& operator<<(Metadata& metadata, const PipelineGraphicsCreate& pipelineCreate)
+	friend Metadata &operator<<(Metadata &metadata, const PipelineGraphicsCreate &pipelineCreate)
 	{
 		metadata.SetChild("Shader Stages", pipelineCreate.m_shaderStages);
 		//metadata.SetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);

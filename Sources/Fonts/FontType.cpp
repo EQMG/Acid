@@ -60,7 +60,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 		return;
 	}
 
-	Instance* instances;
+	Instance *instances;
 	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &text : texts)
@@ -155,14 +155,14 @@ void FontType::Load()
 	LoadFont(m_filename + "/" + m_style + ".ttf");
 }
 
-const Metadata& operator>>(const Metadata& metadata, FontType& fontType)
+const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
 {
 	metadata.GetChild("Filename", fontType.m_filename);
 	metadata.GetChild("Style", fontType.m_style);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const FontType& fontType)
+Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 {
 	metadata.SetChild("Filename", fontType.m_filename);
 	metadata.SetChild("Style", fontType.m_style);

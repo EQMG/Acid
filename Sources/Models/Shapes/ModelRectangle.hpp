@@ -36,9 +36,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ModelRectangle& model);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ModelRectangle& model);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelRectangle &model);
 
 private:
 	float m_min;

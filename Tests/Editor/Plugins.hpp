@@ -4,6 +4,7 @@
 #include <Files/FileWatcher.hpp>
 #include "Uis/Panels.hpp"
 #include "Inputs/ButtonKeyboard.hpp"
+
 using namespace acid;
 
 struct cr_plugin;

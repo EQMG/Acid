@@ -77,13 +77,13 @@ void ColliderConvexHull::Initialize(const std::vector<float> &pointCloud)
 	m_pointCount = static_cast<uint32_t>(pointCloud.size() / 3);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ColliderConvexHull& collider)
+const Metadata &operator>>(const Metadata &metadata, ColliderConvexHull &collider)
 {
 	metadata.GetChild("Local Transform", collider.m_localTransform);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ColliderConvexHull& collider)
+Metadata &operator<<(Metadata &metadata, const ColliderConvexHull &collider)
 {
 	metadata.SetChild("Local Transform", collider.m_localTransform);
 	return metadata;

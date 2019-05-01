@@ -77,7 +77,7 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 	return defines;
 }
 
-const Metadata& operator>>(const Metadata& metadata, MaterialDefault& material)
+const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material)
 {
 	metadata.GetChild("Base Diffuse", material.m_baseDiffuse);
 	metadata.GetResource("Image Diffuse", material.m_imageDiffuse);
@@ -93,7 +93,7 @@ const Metadata& operator>>(const Metadata& metadata, MaterialDefault& material)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const MaterialDefault& material)
+Metadata &operator<<(Metadata &metadata, const MaterialDefault &material)
 {
 	metadata.SetChild("Base Diffuse", material.m_baseDiffuse);
 	metadata.SetResource("Image Diffuse", material.m_imageDiffuse);

@@ -92,7 +92,7 @@ void ModelCylinder::Load()
 	Initialize(vertices, indices);
 }
 
-const Metadata& operator>>(const Metadata& metadata, ModelCylinder& model)
+const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model)
 {
 	metadata.GetChild("Radius Base", model.m_radiusBase);
 	metadata.GetChild("Radius Top", model.m_radiusTop);
@@ -102,7 +102,7 @@ const Metadata& operator>>(const Metadata& metadata, ModelCylinder& model)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const ModelCylinder& model)
+Metadata &operator<<(Metadata &metadata, const ModelCylinder &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelCylinder");
 	metadata.SetChild("Radius Base", model.m_radiusBase);

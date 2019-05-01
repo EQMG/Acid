@@ -97,15 +97,15 @@ public:
 	const Vector2i &GetOffset() const { return m_offset; }
 
 	void SetOffset(const Vector2i &offset) { m_offset = offset; }
-	
+
 	/**
 	 * Gets the aspect ratio between the render stages width and height.
 	 * @return The aspect ratio.
 	 */
 	const float &GetAspectRatio() const { return m_aspectRatio; }
-	
+
 	void SetAspectRatio(const float &aspectRatio) { m_aspectRatio = aspectRatio; }
-	
+
 	bool operator==(const RenderArea &other) const
 	{
 		return m_extent == other.m_extent && m_offset == other.m_offset;
@@ -182,7 +182,7 @@ public:
 	 * @return The the render stage viewport.
 	 */
 	const RenderArea &GetRenderArea() const { return m_renderArea; }
-	
+
 	/**
 	 * Gets if the width or height has changed between the last update and now.
 	 * @return If the width or height has changed.

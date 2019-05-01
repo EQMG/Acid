@@ -84,7 +84,7 @@ public:
 	{
 		return static_cast<T>(m_microseconds);
 	}
-	
+
 	bool operator==(const Time &other) const;
 
 	bool operator!=(const Time &other) const;
@@ -133,9 +133,9 @@ public:
 
 	Time &operator%=(const Time &other);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Time& time);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Time &time);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Time& time);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Time &time);
 
 	static const Time Zero;
 	static const Time Min;

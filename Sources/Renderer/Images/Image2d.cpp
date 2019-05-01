@@ -56,9 +56,8 @@ Image2d::Image2d(std::string filename, const VkFilter &filter, const VkSamplerAd
 	}
 }
 
-Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &imageLayout,
-	const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic,
-	const bool &mipmap) :
+Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
+	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 	m_filename(""),
 	m_filter(filter),
 	m_addressMode(addressMode),
@@ -141,8 +140,8 @@ void Image2d::Load()
 
 	m_mipLevels = m_mipmap ? Image::GetMipLevels({ m_extent.m_x, m_extent.m_y, 1 }) : 1;
 
-	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 1,
-		VK_IMAGE_TYPE_2D);
+	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		m_mipLevels, 1, VK_IMAGE_TYPE_2D);
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
@@ -155,7 +154,8 @@ void Image2d::Load()
 	if (m_loadPixels != nullptr)
 	{
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);
@@ -217,7 +217,8 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t 
 
 void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
-	Buffer bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	Buffer bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	void *data;
 	bufferStaging.MapMemory(&data);
@@ -227,7 +228,7 @@ void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const
 	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
 }
 
-const Metadata& operator>>(const Metadata& metadata, Image2d& image)
+const Metadata &operator>>(const Metadata &metadata, Image2d &image)
 {
 	metadata.GetChild("Filename", image.m_filename);
 	metadata.GetChild("Filter", image.m_filter);
@@ -237,7 +238,7 @@ const Metadata& operator>>(const Metadata& metadata, Image2d& image)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Image2d& image)
+Metadata &operator<<(Metadata &metadata, const Image2d &image)
 {
 	metadata.SetChild("Filename", image.m_filename);
 	metadata.SetChild("Filter", image.m_filter);

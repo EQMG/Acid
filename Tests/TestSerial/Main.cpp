@@ -35,9 +35,9 @@ public:
 	public:
 		std::vector<std::vector<std::string>> data{{ "clunky" }, { "uses more words than necessary" }};
 		std::optional<float> optional0{};
-		std::optional<std::string> optional1{"Hello optional string!"};
+		std::optional<std::string> optional1{ "Hello optional string!" };
 
-		friend const Metadata& operator>>(const Metadata& metadata, XML& xml)
+		friend const Metadata &operator>>(const Metadata &metadata, XML &xml)
 		{
 			metadata.GetChild("data", xml.data);
 			metadata.GetChild("optional0", xml.optional0);
@@ -45,7 +45,7 @@ public:
 			return metadata;
 		}
 
-		friend Metadata& operator<<(Metadata& metadata, const XML& xml)
+		friend Metadata &operator<<(Metadata &metadata, const XML &xml)
 		{
 			metadata.SetChild("data", xml.data);
 			metadata.SetChild("optional0", xml.optional0);
@@ -60,14 +60,14 @@ public:
 		std::string key{ "value" };
 		std::vector<float> values{ 190.0f, 11.0f, -0.001f };
 
-		friend const Metadata& operator>>(const Metadata& metadata, Objects& objects)
+		friend const Metadata &operator>>(const Metadata &metadata, Objects &objects)
 		{
 			metadata.GetChild("key", objects.key);
 			metadata.GetChild("values", objects.values);
 			return metadata;
 		}
 
-		friend Metadata& operator<<(Metadata& metadata, const Objects& objects)
+		friend Metadata &operator<<(Metadata &metadata, const Objects &objects)
 		{
 			metadata.SetChild("key", objects.key);
 			metadata.SetChild("values", objects.values);
@@ -76,7 +76,8 @@ public:
 	} objects;
 
 	std::string paragraph{ "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" };
-	std::unique_ptr<std::string> content{ std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.") };
+	std::unique_ptr<std::string> content{
+		std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.") };
 
 	std::vector<std::string> json{ "rigid", "better for data interchange" };
 	std::vector<std::string> yaml{ "slim and flexible", "better for configuration", "supports comments" };
@@ -89,7 +90,7 @@ public:
 	//std::array<double, 5> array{ -9.1, 10932.0, 1.111, 64634.324324234, -7436.0043 }; // TODO
 	//float cArray[3]{ 0.0f, 10.0f, -33.3f }; // TODO: By converting into a vector for saving?
 
-	friend const Metadata& operator>>(const Metadata& metadata, Example1& example1)
+	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
 	{
 		example1.paragraph = metadata.GetChild<std::string>("paragraph");
 		metadata.GetChild("content", example1.content);
@@ -107,7 +108,7 @@ public:
 		return metadata;
 	}
 
-	friend Metadata& operator<<(Metadata& metadata, const Example1& example1)
+	friend Metadata &operator<<(Metadata &metadata, const Example1 &example1)
 	{
 		metadata.SetChild("paragraph", example1.paragraph);
 		metadata.SetChild("content", example1.content);

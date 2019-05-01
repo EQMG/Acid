@@ -108,7 +108,7 @@ public:
 	Delegate() = default;
 
 	virtual ~Delegate() = default;
-	
+
 	template<typename ...KArgs>
 	void Add(FunctionType &&function, KArgs ...args)
 	{
@@ -140,12 +140,12 @@ public:
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functions.clear();
 	}
-	
+
 	typename Invoker::ReturnType Invoke(TArgs ... args)
 	{
 		return Invoker::Invoke(*this, args...);
 	}
-	
+
 	Delegate &operator+=(FunctionType &&function)
 	{
 		return Add(std::move(function));
@@ -179,7 +179,7 @@ class DelegateValue :
 	public NonCopyable
 {
 public:
-	template <typename ...Args>
+	template<typename ...Args>
 	DelegateValue(Args ...args) :
 		m_value(std::forward<Args>(args)...)
 	{
@@ -193,12 +193,13 @@ public:
 		Invoke(m_value);
 		return *this;
 	}
-	
+
 	const T &Get() const { return m_value; }
 
 	const T &operator*() const { return m_value; }
 
 	const T *operator->() const { return &m_value; }
+
 protected:
 	T m_value;
 };

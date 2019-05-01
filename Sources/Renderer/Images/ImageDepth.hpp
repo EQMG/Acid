@@ -23,7 +23,7 @@ public:
 	const Vector2ui &GetExtent() const { return m_extent; }
 
 	const VkImage &GetImage() const { return m_image; }
-	
+
 	const VkDeviceMemory &GetMemory() { return m_memory; }
 
 	const VkSampler &GetSampler() const { return m_sampler; }

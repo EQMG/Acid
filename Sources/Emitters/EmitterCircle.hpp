@@ -24,9 +24,9 @@ public:
 
 	void SetHeading(const Vector3f &heading) { m_heading = heading; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, EmitterCircle& emitter);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EmitterCircle &emitter);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const EmitterCircle& emitter);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EmitterCircle &emitter);
 
 private:
 	float m_radius;

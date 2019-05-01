@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 //
+// version 2.0.0 : Add new object oriented API. 1.x API is still provided.
+//                 * Support line primitive.
+//                 * Support points primitive.
 // version 1.4.0 : Modifed ParseTextureNameAndOption API
 // version 1.3.1 : Make ParseTextureNameAndOption API public
 // version 1.3.0 : Separate warning and error message(breaking API of LoadObj)
@@ -252,23 +255,50 @@ typedef struct {
   std::vector<tag_t> tags;                        // SubD tag
 } mesh_t;
 
+// typedef struct {
+//  std::vector<int> indices;  // pairs of indices for lines
+//} path_t;
+
 typedef struct {
-  std::vector<int> indices;  // pairs of indices for lines
-} path_t;
+  // Linear flattened indices.
+  std::vector<index_t> indices;       // indices for vertices(poly lines)
+  std::vector<int> num_line_vertices;  // The number of vertices per line.
+} lines_t;
+
+typedef struct {
+  std::vector<index_t> indices;  // indices for points
+} points_t;
 
 typedef struct {
   std::string name;
   mesh_t mesh;
-  path_t path;
+  lines_t lines;
+  points_t points;
 } shape_t;
 
 // Vertex attributes
-typedef struct {
-  std::vector<real_t> vertices;   // 'v'
-  std::vector<real_t> normals;    // 'vn'
-  std::vector<real_t> texcoords;  // 'vt'
-  std::vector<real_t> colors;     // extension: vertex colors
-} attrib_t;
+struct attrib_t {
+  std::vector<real_t> vertices;  // 'v'(xyz)
+
+  // For backward compatibility, we store vertex weight in separate array.
+  std::vector<real_t> vertex_weights;  // 'v'(w)
+  std::vector<real_t> normals;         // 'vn'
+  std::vector<real_t> texcoords;       // 'vt'(uv)
+
+  // For backward compatibility, we store texture coordinate 'w' in separate
+  // array.
+  std::vector<real_t> texcoord_ws;  // 'vt'(w)
+  std::vector<real_t> colors;       // extension: vertex colors
+
+  attrib_t() {}
+
+  //
+  // For pybind11
+  //
+  const std::vector<real_t> &GetVertices() const { return vertices; }
+
+  const std::vector<real_t> &GetVertexWeights() const { return vertex_weights; }
+};
 
 typedef struct callback_t_ {
   // W is optional and set to 1 if there is no `w` item in `v` line
@@ -316,6 +346,9 @@ class MaterialReader {
                           std::string *err) = 0;
 };
 
+///
+/// Read .mtl from a file.
+///
 class MaterialFileReader : public MaterialReader {
  public:
   explicit MaterialFileReader(const std::string &mtl_basedir)
@@ -330,6 +363,9 @@ class MaterialFileReader : public MaterialReader {
   std::string m_mtlBaseDir;
 };
 
+///
+/// Read .mtl from a stream.
+///
 class MaterialStreamReader : public MaterialReader {
  public:
   explicit MaterialStreamReader(std::istream &inStream)
@@ -343,6 +379,88 @@ class MaterialStreamReader : public MaterialReader {
  private:
   std::istream &m_inStream;
 };
+
+// v2 API
+struct ObjReaderConfig {
+  bool triangulate;  // triangulate polygon?
+
+  /// Parse vertex color.
+  /// If vertex color is not present, its filled with default value.
+  /// false = no vertex color
+  /// This will increase memory of parsed .obj
+  bool vertex_color;
+
+  ///
+  /// Search path to .mtl file.
+  /// Default = search from same directory of .obj file.
+  /// Valid only when loading .obj from a file.
+  ///
+  std::string mtl_search_path;
+
+  ObjReaderConfig()
+      : triangulate(true), vertex_color(true), mtl_search_path("./") {}
+};
+
+///
+/// Wavefront .obj reader class(v2 API)
+///
+class ObjReader {
+ public:
+  ObjReader() : valid_(false) {}
+  ~ObjReader() {}
+
+  ///
+  /// Load .obj and .mtl from a file.
+  ///
+  /// @param[in] filename wavefront .obj filename
+  /// @param[in] config Reader configuration
+  ///
+  bool ParseFromFile(const std::string &filename, const ObjReaderConfig &config = ObjReaderConfig());
+
+  ///
+  /// Parse .obj from a text string.
+  /// Need to supply .mtl text string by `mtl_text`.
+  /// This function ignores `mtllib` line in .obj text.
+  ///
+  /// @param[in] obj_text wavefront .obj filename
+  /// @param[in] mtl_text wavefront .mtl filename
+  /// @param[in] config Reader configuration
+  ///
+  bool ParseFromString(const std::string &obj_text, const std::string &mtl_text, const ObjReaderConfig &config = ObjReaderConfig());
+
+  ///
+  /// .obj was loaded or parsed correctly.
+  ///
+  bool Valid() const { return valid_; }
+
+  const attrib_t &GetAttrib() const { return attrib_; }
+
+  const std::vector<shape_t> &GetShapes() const { return shapes_; }
+
+  const std::vector<material_t> &GetMaterials() const { return materials_; }
+
+  ///
+  /// Warning message(may be filled after `Load` or `Parse`)
+  ///
+  const std::string &Warning() const { return warning_; }
+
+  ///
+  /// Error message(filled when `Load` or `Parse` failed)
+  ///
+  const std::string &Error() const { return error_; }
+
+ private:
+  bool valid_;
+
+  attrib_t attrib_;
+  std::vector<shape_t> shapes_;
+  std::vector<material_t> materials_;
+
+  std::string warning_;
+  std::string error_;
+};
+
+/// ==>>========= Legacy v1 API =============================================
 
 /// Loads .obj from a file.
 /// 'attrib', 'shapes' and 'materials' will be filled with parsed shape data
@@ -373,7 +491,7 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
                          MaterialReader *readMatFn = NULL,
                          std::string *warn = NULL, std::string *err = NULL);
 
-/// Loads object from a std::istream, uses GetMtlIStreamFn to retrieve
+/// Loads object from a std::istream, uses `readMatFn` to retrieve
 /// std::istream for materials.
 /// Returns true when loading .obj become success.
 /// Returns warning and error message into `err`
@@ -398,6 +516,9 @@ void LoadMtl(std::map<std::string, int> *material_map,
 ///
 bool ParseTextureNameAndOption(std::string *texname, texture_option_t *texopt,
                                const char *linebuf);
+
+/// =<<========== Legacy v1 API =============================================
+
 }  // namespace tinyobj
 
 #endif  // TINY_OBJ_LOADER_H_
@@ -438,9 +559,20 @@ struct face_t {
   face_t() : smoothing_group_id(0), pad_(0) {}
 };
 
-struct line_t {
-  int idx0;
-  int idx1;
+// Internal data structure for line representation
+struct __line_t {
+  // l v1/vt1 v2/vt2 ...
+  // In the specification, line primitrive does not have normal index, but
+  // TinyObjLoader allow it
+  std::vector<vertex_index_t> vertex_indices;
+};
+
+// Internal data structure for points representation
+struct __points_t {
+  // p v1 v2 ...
+  // In the specification, point primitrive does not have normal index and
+  // texture coord index, but TinyObjLoader allow it.
+  std::vector<vertex_index_t> vertex_indices;
 };
 
 struct tag_sizes {
@@ -454,6 +586,26 @@ struct obj_shape {
   std::vector<real_t> v;
   std::vector<real_t> vn;
   std::vector<real_t> vt;
+};
+
+//
+// Manages group of primitives(face, line, points, ...)
+struct PrimGroup {
+  std::vector<face_t> faceGroup;
+  std::vector<__line_t> lineGroup;
+  std::vector<__points_t> pointsGroup;
+
+  void clear() {
+    faceGroup.clear();
+    lineGroup.clear();
+    pointsGroup.clear();
+  }
+
+  bool IsEmpty() const {
+    return faceGroup.empty() && lineGroup.empty() && pointsGroup.empty();
+  }
+
+  // TODO(syoyo): bspline, surface, ...
 };
 
 // See
@@ -1077,21 +1229,22 @@ static int pnpoly(int nvert, T *vertx, T *verty, T testx, T testy) {
 }
 
 // TODO(syoyo): refactor function.
-static bool exportGroupsToShape(shape_t *shape,
-                                const std::vector<face_t> &faceGroup,
-                                std::vector<int> &lineGroup,
+static bool exportGroupsToShape(shape_t *shape, const PrimGroup &prim_group,
                                 const std::vector<tag_t> &tags,
                                 const int material_id, const std::string &name,
                                 bool triangulate,
                                 const std::vector<real_t> &v) {
-  if (faceGroup.empty() && lineGroup.empty()) {
+  if (prim_group.IsEmpty()) {
     return false;
   }
 
-  if (!faceGroup.empty()) {
+  shape->name = name;
+
+  // polygon
+  if (!prim_group.faceGroup.empty()) {
     // Flatten vertices and indices
-    for (size_t i = 0; i < faceGroup.size(); i++) {
-      const face_t &face = faceGroup[i];
+    for (size_t i = 0; i < prim_group.faceGroup.size(); i++) {
+      const face_t &face = prim_group.faceGroup[i];
 
       size_t npolys = face.vertex_indices.size();
 
@@ -1171,7 +1324,6 @@ static bool exportGroupsToShape(shape_t *shape,
           area += (v0x * v1y - v0y * v1x) * static_cast<real_t>(0.5);
         }
 
-
         face_t remainingFace = face;  // copy
         size_t guess_vert = 0;
         vertex_index_t ind[3];
@@ -1183,7 +1335,8 @@ static bool exportGroupsToShape(shape_t *shape,
         size_t remainingIterations = face.vertex_indices.size();
         size_t previousRemainingVertices = remainingFace.vertex_indices.size();
 
-        while (remainingFace.vertex_indices.size() > 3 && remainingIterations > 0){
+        while (remainingFace.vertex_indices.size() > 3 &&
+               remainingIterations > 0) {
           npolys = remainingFace.vertex_indices.size();
           if (guess_vert >= npolys) {
             guess_vert -= npolys;
@@ -1327,12 +1480,45 @@ static bool exportGroupsToShape(shape_t *shape,
       }
     }
 
-    shape->name = name;
     shape->mesh.tags = tags;
   }
 
-  if (!lineGroup.empty()) {
-    shape->path.indices.swap(lineGroup);
+  // line
+  if (!prim_group.lineGroup.empty()) {
+    // Flatten indices
+    for (size_t i = 0; i < prim_group.lineGroup.size(); i++) {
+      for (size_t j = 0; j < prim_group.lineGroup[i].vertex_indices.size(); j++) {
+
+        const vertex_index_t &vi = prim_group.lineGroup[i].vertex_indices[j];
+
+        index_t idx;
+        idx.vertex_index = vi.v_idx;
+        idx.normal_index = vi.vn_idx;
+        idx.texcoord_index = vi.vt_idx;
+
+        shape->lines.indices.push_back(idx);
+      }
+
+      shape->lines.num_line_vertices.push_back(int(prim_group.lineGroup[i].vertex_indices.size()));
+    }
+  }
+
+  // points
+  if (!prim_group.pointsGroup.empty()) {
+    // Flatten & convert indices
+    for (size_t i = 0; i < prim_group.pointsGroup.size(); i++) {
+      for (size_t j = 0; j < prim_group.pointsGroup[i].vertex_indices.size(); j++) {
+
+        const vertex_index_t &vi = prim_group.pointsGroup[i].vertex_indices[j];
+
+        index_t idx;
+        idx.vertex_index = vi.v_idx;
+        idx.normal_index = vi.vn_idx;
+        idx.texcoord_index = vi.vt_idx;
+
+        shape->points.indices.push_back(idx);
+      }
+    }
   }
 
   return true;
@@ -1822,8 +2008,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   std::vector<real_t> vt;
   std::vector<real_t> vc;
   std::vector<tag_t> tags;
-  std::vector<face_t> faceGroup;
-  std::vector<int> lineGroup;
+  PrimGroup prim_group;
   std::string name;
 
   // material
@@ -1919,29 +2104,64 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
     if (token[0] == 'l' && IS_SPACE((token[1]))) {
       token += 2;
 
-      line_t line_cache;
-      bool end_line_bit = 0;
+      __line_t line;
+
       while (!IS_NEW_LINE(token[0])) {
-        // get index from string
-        int idx;
-        fixIndex(parseInt(&token), 0, &idx);
+        vertex_index_t vi;
+        if (!parseTriple(&token, static_cast<int>(v.size() / 3),
+                         static_cast<int>(vn.size() / 3),
+                         static_cast<int>(vt.size() / 2), &vi)) {
+          if (err) {
+            std::stringstream ss;
+            ss << "Failed parse `l' line(e.g. zero value for vertex index. line "
+               << line_num << ".)\n";
+            (*err) += ss.str();
+          }
+          return false;
+        }
+
+        line.vertex_indices.push_back(vi);
 
         size_t n = strspn(token, " \t\r");
         token += n;
-
-        if (!end_line_bit) {
-          line_cache.idx0 = idx;
-        } else {
-          line_cache.idx1 = idx;
-          lineGroup.push_back(line_cache.idx0);
-          lineGroup.push_back(line_cache.idx1);
-          line_cache = line_t();
-        }
-        end_line_bit = !end_line_bit;
       }
+
+      prim_group.lineGroup.push_back(line);
 
       continue;
     }
+
+    // points
+    if (token[0] == 'p' && IS_SPACE((token[1]))) {
+      token += 2;
+
+      __points_t pts;
+
+      while (!IS_NEW_LINE(token[0])) {
+        vertex_index_t vi;
+        if (!parseTriple(&token, static_cast<int>(v.size() / 3),
+                         static_cast<int>(vn.size() / 3),
+                         static_cast<int>(vt.size() / 2), &vi)) {
+          if (err) {
+            std::stringstream ss;
+            ss << "Failed parse `p' line(e.g. zero value for vertex index. line "
+               << line_num << ".)\n";
+            (*err) += ss.str();
+          }
+          return false;
+        }
+
+        pts.vertex_indices.push_back(vi);
+
+        size_t n = strspn(token, " \t\r");
+        token += n;
+      }
+
+      prim_group.pointsGroup.push_back(pts);
+
+      continue;
+    }
+
     // face
     if (token[0] == 'f' && IS_SPACE((token[1]))) {
       token += 2;
@@ -1978,7 +2198,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       }
 
       // replace with emplace_back + std::move on C++11
-      faceGroup.push_back(face);
+      prim_group.faceGroup.push_back(face);
 
       continue;
     }
@@ -2001,9 +2221,9 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
         // Create per-face material. Thus we don't add `shape` to `shapes` at
         // this time.
         // just clear `faceGroup` after `exportGroupsToShape()` call.
-        exportGroupsToShape(&shape, faceGroup, lineGroup, tags, material, name,
+        exportGroupsToShape(&shape, prim_group, tags, material, name,
                             triangulate, v);
-        faceGroup.clear();
+        prim_group.faceGroup.clear();
         material = newMaterialId;
       }
 
@@ -2064,8 +2284,8 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
     // group name
     if (token[0] == 'g' && IS_SPACE((token[1]))) {
       // flush previous face group.
-      bool ret = exportGroupsToShape(&shape, faceGroup, lineGroup, tags,
-                                     material, name, triangulate, v);
+      bool ret = exportGroupsToShape(&shape, prim_group, tags, material, name,
+                                     triangulate, v);
       (void)ret;  // return value not used.
 
       if (shape.mesh.indices.size() > 0) {
@@ -2075,7 +2295,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       shape = shape_t();
 
       // material = -1;
-      faceGroup.clear();
+      prim_group.clear();
 
       std::vector<std::string> names;
 
@@ -2116,14 +2336,14 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
     // object name
     if (token[0] == 'o' && IS_SPACE((token[1]))) {
       // flush previous face group.
-      bool ret = exportGroupsToShape(&shape, faceGroup, lineGroup, tags,
-                                     material, name, triangulate, v);
+      bool ret = exportGroupsToShape(&shape, prim_group, tags, material, name,
+                                     triangulate, v);
       if (ret) {
         shapes->push_back(shape);
       }
 
       // material = -1;
-      faceGroup.clear();
+      prim_group.clear();
       shape = shape_t();
 
       // @todo { multiple object name? }
@@ -2254,24 +2474,27 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
     }
   }
 
-  bool ret = exportGroupsToShape(&shape, faceGroup, lineGroup, tags, material,
-                                 name, triangulate, v);
+  bool ret = exportGroupsToShape(&shape, prim_group, tags, material, name,
+                                 triangulate, v);
   // exportGroupsToShape return false when `usemtl` is called in the last
   // line.
   // we also add `shape` to `shapes` when `shape.mesh` has already some
   // faces(indices)
-  if (ret || shape.mesh.indices.size()) {
+  if (ret || shape.mesh.indices
+                 .size()) {  // FIXME(syoyo): Support other prims(e.g. lines)
     shapes->push_back(shape);
   }
-  faceGroup.clear();  // for safety
+  prim_group.clear();  // for safety
 
   if (err) {
     (*err) += errss.str();
   }
 
   attrib->vertices.swap(v);
+  attrib->vertex_weights.swap(v);
   attrib->normals.swap(vn);
   attrib->texcoords.swap(vt);
+  attrib->texcoord_ws.swap(vt);
   attrib->colors.swap(vc);
 
   return true;
@@ -2554,6 +2777,31 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
   }
 
   return true;
+}
+
+bool ObjReader::ParseFromFile(const std::string &filename,
+                     const ObjReaderConfig &config) {
+  valid_ = LoadObj(&attrib_, &shapes_, &materials_, &warning_, &error_,
+                   filename.c_str(), config.mtl_search_path.c_str(),
+                   config.triangulate, config.vertex_color);
+
+  return valid_;
+}
+
+bool ObjReader::ParseFromString(const std::string &obj_text, const std::string &mtl_text,
+                     const ObjReaderConfig &config) {
+  std::stringbuf obj_buf(obj_text);
+  std::stringbuf mtl_buf(mtl_text);
+
+  std::istream obj_ifs(&obj_buf);
+  std::istream mtl_ifs(&mtl_buf);
+
+  MaterialStreamReader mtl_ss(mtl_ifs);
+
+  valid_ = LoadObj(&attrib_, &shapes_, &materials_, &warning_, &error_,
+                   &obj_ifs, &mtl_ss, config.triangulate, config.vertex_color);
+
+  return valid_;
 }
 
 #ifdef __clang__

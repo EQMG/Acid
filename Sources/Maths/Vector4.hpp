@@ -297,12 +297,12 @@ public:
 		return Vector4<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w));
 	}
 
-	 /**
-	  * Gets the distance between this vector and another vector.
-	  * @tparam K The others type.
-	  * @param other The other vector.
-	  * @return The squared distance.
-	  **/
+	/**
+	 * Gets the distance between this vector and another vector.
+	 * @tparam K The others type.
+	 * @param other The other vector.
+	 * @return The squared distance.
+	 **/
 	template<typename K>
 	auto DistanceSquared(const Vector4<K> &other) const
 	{
@@ -356,13 +356,13 @@ public:
 	const T &GetY() const { return m_y; }
 
 	void SetY(const T &y) { m_y = y; }
-	
+
 	const T &GetZ() const { return m_z; }
 
 	void SetZ(const T &z) { m_z = z; }
-	
+
 	const T &GetW() const { return m_w; }
-	
+
 	void SetW(const T &w) { m_w = w; }
 
 	std::string ToString() const

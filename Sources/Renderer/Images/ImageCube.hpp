@@ -139,9 +139,9 @@ public:
 
 	const VkFormat &GetFormat() const { return m_format; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ImageCube& image);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ImageCube &image);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ImageCube& image);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
 
 private:
 	std::string m_filename;

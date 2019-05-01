@@ -14,7 +14,7 @@ public:
 	Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
 
 	~Surface();
-	
+
 	operator const VkSurfaceKHR &() const { return m_surface; }
 
 	const VkSurfaceKHR &GetSurface() const { return m_surface; }

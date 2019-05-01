@@ -161,7 +161,7 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 	m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
 }
 
-const Metadata& operator>>(const Metadata& metadata, Rigidbody& rigidbody)
+const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)
 {
 	metadata.GetChild("Mass", rigidbody.m_mass);
 	metadata.GetChild("Friction", rigidbody.m_friction);
@@ -172,7 +172,7 @@ const Metadata& operator>>(const Metadata& metadata, Rigidbody& rigidbody)
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Rigidbody& rigidbody)
+Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody)
 {
 	metadata.SetChild("Mass", rigidbody.m_mass);
 	metadata.SetChild("Friction", rigidbody.m_friction);

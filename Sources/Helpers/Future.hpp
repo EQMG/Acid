@@ -33,7 +33,7 @@ public:
 
 		return *m_current;
 	}
-	
+
 	constexpr operator bool() const
 	{
 		return HasValue();

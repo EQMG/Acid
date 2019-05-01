@@ -13,8 +13,8 @@ class ACID_EXPORT Framebuffers :
 	public NonCopyable
 {
 public:
-	Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain,
-		const ImageDepth &depthStencil, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
+	Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
+		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 	~Framebuffers();
 

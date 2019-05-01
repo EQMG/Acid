@@ -30,15 +30,15 @@ public:
 
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 	{
-		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-			VkVertexInputBindingDescription{baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX}
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
+			VkVertexInputBindingDescription{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position)},
-			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv)},
-			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal)},
-			VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId)},
-			VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight)}
+			VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position) },
+			VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv) },
+			VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal) },
+			VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId) },
+			VkVertexInputAttributeDescription{ 4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight) }
 		};
 		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 	}

@@ -24,9 +24,9 @@ public:
 	void Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData, const float &minHeight, const float &maxHeight,
 		const bool &flipQuadEdges);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ColliderHeightfield& collider);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderHeightfield &collider);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ColliderHeightfield& collider);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderHeightfield &collider);
 
 private:
 	std::unique_ptr<btHeightfieldTerrainShape> m_shape;

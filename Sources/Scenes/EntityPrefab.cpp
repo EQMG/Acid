@@ -96,13 +96,13 @@ void EntityPrefab::Save()
 	m_file->Write();
 }
 
-const Metadata& operator>>(const Metadata& metadata, EntityPrefab& enityPrefab)
+const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab)
 {
 	metadata.GetChild("Filename", enityPrefab.m_filename);
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const EntityPrefab& enityPrefab)
+Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab)
 {
 	metadata.SetChild("Filename", enityPrefab.m_filename);
 	return metadata;

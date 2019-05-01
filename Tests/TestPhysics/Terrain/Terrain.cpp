@@ -49,12 +49,12 @@ void Terrain::Update()
 	}
 }
 
-const Metadata& operator>>(const Metadata& metadata, Terrain& terrain)
+const Metadata &operator>>(const Metadata &metadata, Terrain &terrain)
 {
 	return metadata;
 }
 
-Metadata& operator<<(Metadata& metadata, const Terrain& terrain)
+Metadata &operator<<(Metadata &metadata, const Terrain &terrain)
 {
 	return metadata;
 }

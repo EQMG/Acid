@@ -71,9 +71,9 @@ public:
 
 	void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, ParticleSystem& particleSystem);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const ParticleSystem& particleSystem);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem);
 
 private:
 	Particle EmitParticle(const Emitter &emitter);

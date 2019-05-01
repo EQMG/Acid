@@ -58,9 +58,9 @@ public:
 
 	void SetPitch(const float &pitch);
 
-	ACID_EXPORT friend const Metadata& operator>>(const Metadata& metadata, Sound& sound);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Sound &sound);
 
-	ACID_EXPORT friend Metadata& operator<<(Metadata& metadata, const Sound& sound);
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Sound &sound);
 
 private:
 	std::shared_ptr<SoundBuffer> m_soundBuffer;

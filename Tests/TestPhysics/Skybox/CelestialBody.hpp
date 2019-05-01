@@ -26,9 +26,9 @@ public:
 
 	void SetType(const Type &type) { m_type = type; }
 
-	friend const Metadata& operator>>(const Metadata& metadata, CelestialBody& celestialBody);
+	friend const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody);
 
-	friend Metadata& operator<<(Metadata& metadata, const CelestialBody& celestialBody);
+	friend Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody);
 
 private:
 	Type m_type;
