@@ -56,6 +56,7 @@
 #include "Helpers/EnumClass.hpp"
 #include "Helpers/Future.hpp"
 #include "Helpers/NonCopyable.hpp"
+#include "Helpers/Reference.hpp"
 #include "Helpers/RingBuffer.hpp"
 #include "Helpers/String.hpp"
 #include "Helpers/ThreadPool.hpp"

@@ -196,7 +196,7 @@ namespace std
 template<>
 struct hash<acid::Matrix2>
 {
-	size_t operator()(acid::Matrix2 const &matrix) const
+	size_t operator()(const acid::Matrix2 &matrix) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);

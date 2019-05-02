@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
 		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
 		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
-		//Log::Out("  %s rot %f = %s\n", a.ToString().c_str(), 90.0f, a.Rotate(90.0f).ToString().c_str());
+		//Log::Out("  %s rot %s = %s\n", a.ToString().c_str(), Vector3f(1.22f, 0.0f, 0.0f).ToString().c_str(), a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)).ToString().c_str());
 		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
 		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
 		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());

@@ -57,6 +57,7 @@ set(_temp_acid_headers
 		Helpers/EnumClass.hpp
 		Helpers/Future.hpp
 		Helpers/NonCopyable.hpp
+		Helpers/Reference.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp

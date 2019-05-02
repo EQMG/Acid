@@ -51,7 +51,7 @@ namespace std
 template<>
 struct hash<acid::VertexDefault>
 {
-	size_t operator()(acid::VertexDefault const &vertex) const noexcept
+	size_t operator()(const acid::VertexDefault &vertex) const noexcept
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);

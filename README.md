@@ -56,10 +56,10 @@ Acid uses the following libraries:
 # Code Snippets
 ```cpp
 // Imports a 2D texture using nearest filtering.
-auto guiBlack = Texture::Create("Guis/Black.png", VK_FILTER_NEAREST);
+auto guiBlack = Image2d::Create("Guis/Black.png", VK_FILTER_NEAREST);
 
 // Imports a 3D cubemap (face names defined in Cubemap.cpp).
-auto skyboxSnowy = Cubemap::Create("Objects/SkyboxSnowy", ".png");
+auto skyboxSnowy = ImageCube::Create("Objects/SkyboxSnowy", ".png");
 
 // Imports a OBJ model.
 auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");

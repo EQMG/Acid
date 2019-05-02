@@ -214,7 +214,7 @@ namespace std
 template<>
 struct hash<acid::Quaternion>
 {
-	size_t operator()(acid::Quaternion const &quaternion) const
+	size_t operator()(const acid::Quaternion &quaternion) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, quaternion.m_x);

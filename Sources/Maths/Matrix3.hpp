@@ -203,7 +203,7 @@ namespace std
 template<>
 struct hash<acid::Matrix3>
 {
-	size_t operator()(acid::Matrix3 const &matrix) const
+	size_t operator()(const acid::Matrix3 &matrix) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);

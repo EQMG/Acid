@@ -207,7 +207,7 @@ namespace std
 template<>
 struct hash<acid::Colour>
 {
-	size_t operator()(acid::Colour const &colour) const
+	size_t operator()(const acid::Colour &colour) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, colour.m_r);
