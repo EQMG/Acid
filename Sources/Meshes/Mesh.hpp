@@ -23,15 +23,15 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
 	virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexDefault::GetVertexInput(binding); }
 
 	virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Mesh &mesh);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Mesh &mesh);
 
 private:
 	std::shared_ptr<Model> m_model;

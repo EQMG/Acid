@@ -19,7 +19,7 @@ public:
 
 	template<class F, class... Args>
 	decltype(auto) Enqueue(F &&f, Args &&... args);
-	
+
 	void Wait();
 
 	const std::vector<std::thread> &GetWorkers() const { return m_workers; }

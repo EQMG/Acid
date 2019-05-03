@@ -1,6 +1,5 @@
 #include "UiColourWheel.hpp"
 
-#include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
@@ -14,13 +13,13 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBoun
 {
 	GetRectangle().SetSize(SIZE);
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
 		//m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::AccentColour,
 		//	UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
-	OnClick() += [this](MouseButton button)
+	});
+	OnClick().Add([this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -32,7 +31,7 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBoun
 			//m_value = Colour(); // TODO: Pick colour.
 			m_onValue(m_value);
 		}
-	};
+	});
 }
 
 void UiColourWheel::UpdateObject()

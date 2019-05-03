@@ -22,18 +22,6 @@ void MaterialTerrain::Update()
 {
 }
 
-void MaterialTerrain::Decode(const Metadata &metadata)
-{
-	metadata.GetResource("Image R", m_imageR);
-	metadata.GetResource("Image G", m_imageG);
-}
-
-void MaterialTerrain::Encode(Metadata &metadata) const
-{
-	metadata.SetResource("Image R", m_imageR);
-	metadata.SetResource("Image G", m_imageG);
-}
-
 void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)
 {
 	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
@@ -43,5 +31,19 @@ void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
 	descriptorSet.Push("samplerR", m_imageR);
 	descriptorSet.Push("samplerG", m_imageG);
+}
+
+const Metadata &operator>>(const Metadata &metadata, MaterialTerrain &material)
+{
+	metadata.GetResource("Image R", material.m_imageR);
+	metadata.GetResource("Image G", material.m_imageG);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const MaterialTerrain &material)
+{
+	metadata.SetResource("Image R", material.m_imageR);
+	metadata.SetResource("Image G", material.m_imageG);
+	return metadata;
 }
 }

@@ -25,27 +25,19 @@ public:
 	class Instance
 	{
 	public:
-		Instance(const Matrix4 &modelMatrix, const Colour &colourOffset, const Vector4f &offsets, const Vector3f &blend) :
-			m_modelMatrix(modelMatrix),
-			m_colourOffset(colourOffset),
-			m_offsets(offsets),
-			m_blend(blend)
+		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 		{
-		}
-
-		static Shader::VertexInput GetVertexInput(const uint32_t& baseBinding = 0)
-		{
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-				VkVertexInputBindingDescription{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
+				VkVertexInputBindingDescription{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-				VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-				VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-				VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-				VkVertexInputAttributeDescription{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colourOffset)},
-				VkVertexInputAttributeDescription{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_offsets)},
-				VkVertexInputAttributeDescription{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Instance, m_blend)}
+				VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0]) },
+				VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1]) },
+				VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2]) },
+				VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3]) },
+				VkVertexInputAttributeDescription{ 4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colourOffset) },
+				VkVertexInputAttributeDescription{ 5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_offsets) },
+				VkVertexInputAttributeDescription{ 6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Instance, m_blend) }
 			};
 			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 		}
@@ -73,7 +65,7 @@ public:
 	 * @param scale The averaged scale for the particle.
 	 * @return The particle type with the requested values.
 	 */
-	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> & image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 		const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
 
 	/**
@@ -91,10 +83,6 @@ public:
 	void Update(const std::vector<Particle> &particles);
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
-
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
@@ -119,6 +107,10 @@ public:
 	const float &GetScale() const { return m_scale; }
 
 	void SetScale(const float &scale) { m_scale = scale; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ParticleType &particleType);
 
 private:
 	std::shared_ptr<Image2d> m_image;

@@ -29,13 +29,13 @@ public:
 
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 	{
-		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-			VkVertexInputBindingDescription{baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX}
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
+			VkVertexInputBindingDescription{ baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX }
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_position)},
-			VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv)},
-			VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal)}
+			VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_position) },
+			VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv) },
+			VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal) }
 		};
 		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 	}
@@ -51,7 +51,7 @@ namespace std
 template<>
 struct hash<acid::VertexDefault>
 {
-	size_t operator()(acid::VertexDefault const &vertex) const noexcept
+	size_t operator()(const acid::VertexDefault &vertex) const noexcept
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);

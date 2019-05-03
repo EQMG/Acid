@@ -41,15 +41,15 @@ public:
 	 */
 	bool BindPipeline(const CommandBuffer &commandBuffer);
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
 
 	const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
 
 	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline);
 
 private:
 	Pipeline::Stage m_pipelineStage;

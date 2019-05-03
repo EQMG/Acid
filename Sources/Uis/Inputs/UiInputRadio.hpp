@@ -52,7 +52,7 @@ private:
 };
 
 class ACID_EXPORT UiRadioManager :
-	public NonCopyable
+	public Observer
 {
 public:
 	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
@@ -63,7 +63,7 @@ public:
 		for (auto &input : inputs)
 		{
 			input->SetType(type);
-			input->OnValue() += [this, input](bool value)
+			input->OnValue().Add([this, input](bool value)
 			{
 				if (!m_multiple)
 				{
@@ -75,7 +75,7 @@ public:
 						}
 					}
 				}
-			};
+			}, this);
 		}
 	}
 

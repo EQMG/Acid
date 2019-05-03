@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 		Log::Out("Vector2f:\n");
 		Vector2f a(3.0f, -7.2f);
 		Vector2f b(-1.74f, 15.4f);
-		Vector2i c(-8, 2);
+		Vector2ui c(5, 2);
 
 		Log::Out("  %s + %f = %s\n", a.ToString().c_str(), 20.0f, (a + 20.0f).ToString().c_str());
 		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString().c_str(), (-1.11f * a).ToString().c_str());
@@ -141,6 +141,14 @@ int main(int argc, char **argv)
 		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
 		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		Log::Out("\n");
+
+		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
+		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
+		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("\n");
 	}
 	{
 		Log::Out("Vector3:\n");
@@ -154,12 +162,14 @@ int main(int argc, char **argv)
 		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
 		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
 		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
-		//Log::Out("  %s rot %f = %s\n", a.ToString().c_str(), 90.0f, a.Rotate(90.0f).ToString().c_str());
+		//Log::Out("  %s rot %s = %s\n", a.ToString().c_str(), Vector3f(1.22f, 0.0f, 0.0f).ToString().c_str(), a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)).ToString().c_str());
 		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
 		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
 		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
 		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		Log::Out("\n");
+
+		//Log::Out << "  " << a << " + " << b << " = " << a + b << Log::Endl;
 	}
 
 	// Pauses the console.

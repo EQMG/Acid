@@ -444,6 +444,8 @@ struct cr_plugin {
     void *userdata;
     unsigned int version;
     enum cr_failure failure;
+    unsigned int next_version;
+    unsigned int last_working_version;
 };
 
 #ifndef CR_HOST
@@ -637,7 +639,7 @@ static void cr_plugin_sections_reload(cr_plugin &ctx,
 static void cr_plugin_sections_store(cr_plugin &ctx);
 static void cr_plugin_sections_backup(cr_plugin &ctx);
 static void cr_plugin_reload(cr_plugin &ctx);
-static void cr_plugin_unload(cr_plugin &ctx, bool rollback, bool close);
+static int cr_plugin_unload(cr_plugin &ctx, bool rollback, bool close);
 static bool cr_plugin_changed(cr_plugin &ctx);
 static bool cr_plugin_rollback(cr_plugin &ctx);
 static int cr_plugin_main(cr_plugin &ctx, cr_op operation);
@@ -1085,7 +1087,7 @@ static int cr_seh_filter(cr_plugin &ctx, unsigned long seh) {
         return EXCEPTION_CONTINUE_SEARCH;
     }
 
-    ctx.version = ctx.version > 1 ? ctx.version - 1 : 1;
+    ctx.version = ctx.last_working_version;
     switch (seh) {
     case EXCEPTION_ACCESS_VIOLATION:
         ctx.failure = CR_SEGFAULT;
@@ -1595,7 +1597,7 @@ static cr_failure cr_signal_to_failure(int sig) {
 
 static int cr_plugin_main(cr_plugin &ctx, cr_op operation) {
     if (int sig = sigsetjmp(env, 1)) {
-        ctx.version = ctx.version > 0 ? ctx.version - 1 : 0;
+        ctx.version = ctx.last_working_version;
         ctx.failure = cr_signal_to_failure(sig);
         CR_LOG("1 FAILURE: %d (CR: %d)\n", sig, ctx.failure);
         return -1;
@@ -1617,13 +1619,25 @@ static bool cr_plugin_load_internal(cr_plugin &ctx, bool rollback) {
     auto p = (cr_internal *)ctx.p;
     const auto file = p->fullname;
     if (cr_exists(file) || rollback) {
-        const auto new_file = cr_version_path(file, ctx.version, p->temppath);
+        const auto old_file = cr_version_path(file, ctx.version, p->temppath);
+        CR_LOG("unload '%s' with rollback: %d\n", old_file.c_str(), rollback);
+        int r = cr_plugin_unload(ctx, rollback, false);
+        if (r < 0) {
+            return false;
+        }
 
-        const bool close = false;
-        CR_LOG("unload '%s' with rollback: %d\n", file.c_str(), rollback);
-        cr_plugin_unload(ctx, rollback, close);
-        if (!rollback) {
+        auto new_version = rollback ? ctx.version : ctx.next_version;
+        auto new_file = cr_version_path(file, new_version, p->temppath);
+        if (rollback) {
+            // Don't rollback to this version again, if it crashes.
+            ctx.last_working_version = ctx.version > 0 ? ctx.version - 1 : 0;
+        } else {
+            // Save current version for rollback.
+            ctx.last_working_version = ctx.version;
             cr_copy(file, new_file);
+
+            // Update `next_version` for use by the next reload.
+            ctx.next_version = new_version + 1;
 
 #if defined(_MSC_VER)
             if (!cr_pdb_process(file, new_file)) {
@@ -1666,7 +1680,7 @@ static bool cr_plugin_load_internal(cr_plugin &ctx, bool rollback) {
         if (ctx.failure != CR_BAD_IMAGE) {
             p2->timestamp = cr_last_write_time(file);
         }
-        ctx.version++;
+        ctx.version = new_version;
         CR_LOG("loaded: %s (version: %d)\n", new_file.c_str(), ctx.version);
     } else {
         CR_ERROR("Error loading plugin.\n");
@@ -1801,18 +1815,25 @@ static bool cr_plugin_changed(cr_plugin &ctx) {
 // unload is due a rollback, no `cr_op::CR_UNLOAD` is called neither any state
 // is saved, giving opportunity to the previous version to continue with valid
 // previous state.
-static void cr_plugin_unload(cr_plugin &ctx, bool rollback, bool close) {
+static int cr_plugin_unload(cr_plugin &ctx, bool rollback, bool close) {
     CR_TRACE
     auto p = (cr_internal *)ctx.p;
+    int r = 0;
     if (p->handle) {
         if (!rollback) {
-            cr_plugin_main(ctx, close ? CR_CLOSE : CR_UNLOAD);
-            cr_plugin_sections_store(ctx);
+            r = cr_plugin_main(ctx, close ? CR_CLOSE : CR_UNLOAD);
+            // Don't store state if unload crashed.  Rollback will use backup.
+            if (r < 0) {
+                CR_LOG("4 FAILURE: %d\n", r);
+            } else {
+                cr_plugin_sections_store(ctx);
+            }
         }
         cr_so_unload(ctx);
         p->handle = nullptr;
         p->main = nullptr;
     }
+    return r;
 }
 
 // internal
@@ -1821,7 +1842,6 @@ static void cr_plugin_unload(cr_plugin &ctx, bool rollback, bool close) {
 // in turn may also cause more rollbacks.
 static bool cr_plugin_rollback(cr_plugin &ctx) {
     CR_TRACE
-    ctx.version = ctx.version > 0 ? ctx.version - 1 : 0;
     auto loaded = cr_plugin_load_internal(ctx, true);
     if (loaded) {
         loaded = cr_plugin_main(ctx, CR_LOAD) >= 0;
@@ -1889,6 +1909,8 @@ extern "C" bool cr_plugin_load(cr_plugin &ctx, const char *fullpath) {
     p->mode = CR_OP_MODE;
     p->fullname = fullpath;
     ctx.p = p;
+    ctx.next_version = 1;
+    ctx.last_working_version = 0;
     ctx.version = 0;
     ctx.failure = CR_NONE;
     cr_plat_init();

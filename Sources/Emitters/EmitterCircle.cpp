@@ -19,20 +19,6 @@ void EmitterCircle::Update()
 {
 }
 
-void EmitterCircle::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Radius", m_radius);
-	metadata.GetChild("Heading", m_heading);
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void EmitterCircle::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Radius", m_radius);
-	metadata.SetChild("Heading", m_heading);
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 Vector3f EmitterCircle::GeneratePosition() const
 {
 	auto direction = Vector3f();
@@ -61,5 +47,21 @@ Vector3f EmitterCircle::GeneratePosition() const
 	auto randY = b * std::sin(2.0f * Maths::Pi * (a / b));
 	auto distance = Vector3f(randX, randY, 0.0f).Length();
 	return Vector3f(direction * distance);
+}
+
+const Metadata &operator>>(const Metadata &metadata, EmitterCircle &emitter)
+{
+	metadata.GetChild("Radius", emitter.m_radius);
+	metadata.GetChild("Heading", emitter.m_heading);
+	metadata.GetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const EmitterCircle &emitter)
+{
+	metadata.SetChild("Radius", emitter.m_radius);
+	metadata.SetChild("Heading", emitter.m_heading);
+	metadata.SetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
 }
 }

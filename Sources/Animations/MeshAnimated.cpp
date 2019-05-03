@@ -64,16 +64,6 @@ void MeshAnimated::Load()
 	m_animator->DoAnimation(m_animation.get());
 }
 
-void MeshAnimated::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Model", m_filename);
-}
-
-void MeshAnimated::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Model", m_filename);
-}
-
 Joint *MeshAnimated::CreateJoints(const JointData &data)
 {
 	auto joint = new Joint(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
@@ -97,5 +87,17 @@ void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4>
 	{
 		AddJointsToArray(*childJoint, jointMatrices);
 	}
+}
+
+const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated)
+{
+	metadata.GetChild("Model", meshAnimated.m_filename);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated)
+{
+	metadata.SetChild("Model", meshAnimated.m_filename);
+	return metadata;
 }
 }

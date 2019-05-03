@@ -1,6 +1,7 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
-		Acid.hpp		Animations/Animation/Animation.hpp
+		Acid.hpp
+		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
 		Animations/Animator.hpp
 		Animations/Geometry/GeometryLoader.hpp
@@ -56,10 +57,11 @@ set(_temp_acid_headers
 		Helpers/EnumClass.hpp
 		Helpers/Future.hpp
 		Helpers/NonCopyable.hpp
+		Helpers/Reference.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
-		Helpers/TypeTraits.hpp
+		Helpers/ConstExpr.hpp
 		Inputs/Axis.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp

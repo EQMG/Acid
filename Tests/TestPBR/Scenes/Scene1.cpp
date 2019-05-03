@@ -31,13 +31,13 @@ Scene1::Scene1() :
 	m_paused(false),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
-	m_buttonPause.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			m_paused = !m_paused;
 		}
-	};
+	});
 }
 
 void Scene1::Start()

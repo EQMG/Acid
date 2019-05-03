@@ -28,23 +28,24 @@ public:
 	class VertexInput
 	{
 	public:
-		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {},
-			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
+		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions))
 		{
 		}
 
-		void Decode(const Metadata &metadata)
+		friend const Metadata &operator>>(const Metadata &metadata, VertexInput &vertexInput)
 		{
-			//metadata.GetChild("Binding Descriptions", m_bindingDescriptions);
-			//metadata.GetChild("Attribute Descriptions", m_attributeDescriptions);
+			//metadata.GetChild("Binding Descriptions", vertexInput.m_bindingDescriptions);
+			//metadata.GetChild("Attribute Descriptions", vertexInput.m_attributeDescriptions);
+			return metadata;
 		}
 
-		void Encode(Metadata &metadata) const
+		friend Metadata &operator<<(Metadata &metadata, const VertexInput &vertexInput)
 		{
-			//metadata.SetChild("Binding Descriptions", m_bindingDescriptions);
-			//metadata.SetChild("Attribute Descriptions", m_attributeDescriptions);
+			//metadata.SetChild("Binding Descriptions", vertexInput.m_bindingDescriptions);
+			//metadata.SetChild("Attribute Descriptions", vertexInput.m_attributeDescriptions);
+			return metadata;
 		}
 
 		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
@@ -77,26 +78,28 @@ public:
 		{
 		}
 
-		void Decode(const Metadata &metadata)
+		friend const Metadata &operator>>(const Metadata &metadata, Uniform &uniform)
 		{
-			metadata.GetChild("Binding", m_binding);
-			metadata.GetChild("Offset", m_offset);
-			metadata.GetChild("Size", m_size);
-			metadata.GetChild("GL Type", m_glType);
-			metadata.GetChild("Read Only", m_readOnly);
-			metadata.GetChild("Write Only", m_writeOnly);
-			metadata.GetChild("Stage Flags", m_stageFlags);
+			metadata.GetChild("Binding", uniform.m_binding);
+			metadata.GetChild("Offset", uniform.m_offset);
+			metadata.GetChild("Size", uniform.m_size);
+			metadata.GetChild("GL Type", uniform.m_glType);
+			metadata.GetChild("Read Only", uniform.m_readOnly);
+			metadata.GetChild("Write Only", uniform.m_writeOnly);
+			metadata.GetChild("Stage Flags", uniform.m_stageFlags);
+			return metadata;
 		}
 
-		void Encode(Metadata &metadata) const
+		friend Metadata &operator<<(Metadata &metadata, const Uniform &uniform)
 		{
-			metadata.SetChild("Binding", m_binding);
-			metadata.SetChild("Offset", m_offset);
-			metadata.SetChild("Size", m_size);
-			metadata.SetChild("GL Type", m_glType);
-			metadata.SetChild("Read Only", m_readOnly);
-			metadata.SetChild("Write Only", m_writeOnly);
-			metadata.SetChild("Stage Flags", m_stageFlags);
+			metadata.SetChild("Binding", uniform.m_binding);
+			metadata.SetChild("Offset", uniform.m_offset);
+			metadata.SetChild("Size", uniform.m_size);
+			metadata.SetChild("GL Type", uniform.m_glType);
+			metadata.SetChild("Read Only", uniform.m_readOnly);
+			metadata.SetChild("Write Only", uniform.m_writeOnly);
+			metadata.SetChild("Stage Flags", uniform.m_stageFlags);
+			return metadata;
 		}
 
 		const int32_t &GetBinding() const { return m_binding; }
@@ -159,22 +162,24 @@ public:
 		{
 		}
 
-		void Decode(const Metadata &metadata)
+		friend const Metadata &operator>>(const Metadata &metadata, UniformBlock &uniformBlock)
 		{
-			metadata.GetChild("Binding", m_binding);
-			metadata.GetChild("Size", m_size);
-			metadata.GetChild("Stage Flags", m_stageFlags);
-			metadata.GetChild("Type", m_type);
-			metadata.GetChild("Uniforms", m_uniforms);
+			metadata.GetChild("Binding", uniformBlock.m_binding);
+			metadata.GetChild("Size", uniformBlock.m_size);
+			metadata.GetChild("Stage Flags", uniformBlock.m_stageFlags);
+			metadata.GetChild("Type", uniformBlock.m_type);
+			metadata.GetChild("Uniforms", uniformBlock.m_uniforms);
+			return metadata;
 		}
 
-		void Encode(Metadata &metadata) const
+		friend Metadata &operator<<(Metadata &metadata, const UniformBlock &uniformBlock)
 		{
-			metadata.SetChild("Binding", m_binding);
-			metadata.SetChild("Size", m_size);
-			metadata.SetChild("Stage Flags", m_stageFlags);
-			metadata.SetChild("Type", m_type);
-			metadata.SetChild("Uniforms", m_uniforms);
+			metadata.SetChild("Binding", uniformBlock.m_binding);
+			metadata.SetChild("Size", uniformBlock.m_size);
+			metadata.SetChild("Stage Flags", uniformBlock.m_stageFlags);
+			metadata.SetChild("Type", uniformBlock.m_type);
+			metadata.SetChild("Uniforms", uniformBlock.m_uniforms);
+			return metadata;
 		}
 
 		const int32_t &GetBinding() const { return m_binding; }
@@ -237,20 +242,22 @@ public:
 		{
 		}
 
-		void Decode(const Metadata &metadata)
+		friend const Metadata &operator>>(const Metadata &metadata, Attribute &attribute)
 		{
-			metadata.GetChild("Set", m_set);
-			metadata.GetChild("Location", m_location);
-			metadata.GetChild("Size", m_size);
-			metadata.GetChild("GL Type", m_glType);
+			metadata.GetChild("Set", attribute.m_set);
+			metadata.GetChild("Location", attribute.m_location);
+			metadata.GetChild("Size", attribute.m_size);
+			metadata.GetChild("GL Type", attribute.m_glType);
+			return metadata;
 		}
 
-		void Encode(Metadata &metadata) const
+		friend Metadata &operator<<(Metadata &metadata, const Attribute &attribute)
 		{
-			metadata.SetChild("Set", m_set);
-			metadata.SetChild("Location", m_location);
-			metadata.SetChild("Size", m_size);
-			metadata.SetChild("GL Type", m_glType);
+			metadata.SetChild("Set", attribute.m_set);
+			metadata.SetChild("Location", attribute.m_location);
+			metadata.SetChild("Size", attribute.m_size);
+			metadata.SetChild("GL Type", attribute.m_glType);
+			return metadata;
 		}
 
 		const int32_t &GetSet() const { return m_set; }
@@ -293,11 +300,11 @@ public:
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
-	void ProcessShader();
+	void CreateReflection();
 
-	void Decode(const Metadata &metadata);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
 
-	void Encode(Metadata &metadata) const;
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
 
 	static VkFormat GlTypeToVk(const int32_t &type);
 
@@ -337,7 +344,7 @@ public:
 
 	static std::string ProcessIncludes(const std::string &shaderCode);
 
-	VkShaderModule ProcessShader(const std::string &shaderCode, const VkShaderStageFlags &stageFlag);
+	VkShaderModule CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const VkShaderStageFlags &moduleFlag);
 
 	std::string ToString() const;
 
@@ -353,6 +360,7 @@ private:
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
 	std::string m_name;
+	std::vector<std::string> m_stages;
 	std::map<std::string, Uniform> m_uniforms;
 	std::map<std::string, UniformBlock> m_uniformBlocks;
 	std::map<std::string, Attribute> m_attributes;

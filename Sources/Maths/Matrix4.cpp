@@ -399,7 +399,7 @@ Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
 	result = result.Rotate(rotation.m_y, Vector3f::Up);
 	result = result.Rotate(rotation.m_z, Vector3f::Front);
-	result = result.Translate(position.Negate());
+	result = result.Translate(-position);
 	return result;
 }
 
@@ -444,20 +444,14 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 	return result;
 }
 
-void Matrix4::Decode(const Metadata &metadata)
+std::string Matrix4::ToString() const
 {
-	metadata.GetChild("m0", m_rows[0]);
-	metadata.GetChild("m1", m_rows[1]);
-	metadata.GetChild("m2", m_rows[2]);
-	metadata.GetChild("m3", m_rows[3]);
-}
-
-void Matrix4::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("m0", m_rows[0]);
-	metadata.SetChild("m1", m_rows[1]);
-	metadata.SetChild("m2", m_rows[2]);
-	metadata.SetChild("m3", m_rows[3]);
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", "
+	       << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
+	       << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
+	return stream.str();
 }
 
 bool Matrix4::operator==(const Matrix4 &other) const
@@ -587,19 +581,27 @@ Matrix4 &Matrix4::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector4f(other, other, other, other));
 }
 
+const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix)
+{
+	metadata.GetChild("m0", matrix.m_rows[0]);
+	metadata.GetChild("m1", matrix.m_rows[1]);
+	metadata.GetChild("m2", matrix.m_rows[2]);
+	metadata.GetChild("m3", matrix.m_rows[3]);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Matrix4 &matrix)
+{
+	metadata.SetChild("m0", matrix.m_rows[0]);
+	metadata.SetChild("m1", matrix.m_rows[1]);
+	metadata.SetChild("m2", matrix.m_rows[2]);
+	metadata.SetChild("m3", matrix.m_rows[3]);
+	return metadata;
+}
+
 std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)
 {
 	stream << matrix.ToString();
 	return stream;
-}
-
-std::string Matrix4::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", "
-	       << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
-	       << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
-	return stream.str();
 }
 }

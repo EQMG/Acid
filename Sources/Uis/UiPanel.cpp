@@ -23,18 +23,19 @@ UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colou
 		m_resizeHandle.GetRectangle() = UiBound(Vector2f(RESIZE_SIZE / 2.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	case Resize::Right:
-		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
+		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale,
+			Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	default:
 		m_resizeHandle.SetEnabled(false);
 		break;
 	}
 
-	m_resizeHandle.OnSelected() += [this](bool selected)
+	m_resizeHandle.OnSelected().Add([this](bool selected)
 	{
 		auto standard = m_resize == Resize::Left || m_resize == Resize::Right ? CursorStandard::ResizeX : CursorStandard::ResizeY;
 		Mouse::Get()->SetCursor(selected ? standard : CursorStandard::Arrow);
-	};
+	}, this);
 }
 
 void UiPanel::UpdateObject()

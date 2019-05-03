@@ -47,7 +47,7 @@ Scene1::Scene1() :
 	m_uiStartLogo(&Uis::Get()->GetContainer()),
 	m_overlayDebug(&Uis::Get()->GetContainer())
 {
-	m_buttonSpawnSphere.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -72,17 +72,17 @@ Scene1::Scene1() :
 			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
 			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 		}
-	};
+	});
 
-	m_buttonCaptureMouse->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	};
+	});
 
-	m_buttonSave.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -97,7 +97,7 @@ Scene1::Scene1() :
 					entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
 					auto transformNode = entityNode->AddChild(new Metadata("Transform"));
 					auto componentsNode = entityNode->AddChild(new Metadata("Components"));
-					entity->GetLocalTransform().Encode(*transformNode);
+					*transformNode << entity->GetLocalTransform();
 
 					for (auto &component : entity->GetComponents())
 					{
@@ -111,7 +111,7 @@ Scene1::Scene1() :
 						if (componentName)
 						{
 							auto child = componentsNode->AddChild(new Metadata(*componentName));
-							component->Encode(*child);
+							Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 						}
 					}
 				}
@@ -119,16 +119,16 @@ Scene1::Scene1() :
 				sceneFile.Write();
 			});
 		}
-	};
+	});
 
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-	m_uiStartLogo.OnFinished() += [this]()
+	m_uiStartLogo.OnFinished().Add([this]()
 	{
 		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		Mouse::Get()->SetCursorHidden(true);
-	};
+	});
 }
 
 void Scene1::Start()

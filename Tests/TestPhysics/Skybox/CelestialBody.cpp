@@ -70,13 +70,15 @@ void CelestialBody::Update()
 	}
 }
 
-void CelestialBody::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody)
 {
-	metadata.GetChild("Type", m_type);
+	metadata.GetChild("Type", celestialBody.m_type);
+	return metadata;
 }
 
-void CelestialBody::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody)
 {
-	metadata.SetChild("Type", m_type);
+	metadata.SetChild("Type", celestialBody.m_type);
+	return metadata;
 }
 }

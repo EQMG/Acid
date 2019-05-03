@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "Scenes/Component.hpp"
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
@@ -10,8 +9,7 @@ namespace acid
 /**
  * @brief Holds position, rotation, and scale components.
  */
-class ACID_EXPORT Transform :
-	public Component
+class ACID_EXPORT Transform
 {
 public:
 	/**
@@ -29,14 +27,6 @@ public:
 	 * @param scale The scale.
 	 */
 	Transform(const Vector3f &position, const Vector3f &rotation, const float &scale);
-
-	void Start() override;
-
-	void Update() override;
-
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
 
 	/**
 	 * Multiplies this transform with another transform.
@@ -63,6 +53,8 @@ public:
 
 	void SetDirty(const bool &dirty) const;
 
+	std::string ToString() const;
+
 	bool operator==(const Transform &other) const;
 
 	bool operator!=(const Transform &other) const;
@@ -71,11 +63,13 @@ public:
 
 	Transform &operator*=(const Transform &other);
 
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Transform &transform);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
+
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 
-	std::string ToString() const;
-
-	static const Transform Identity;
+	static const Transform Zero;
 private:
 	Vector3f m_position;
 	Vector3f m_rotation;

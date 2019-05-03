@@ -22,13 +22,13 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	Type GetType() const { return m_type; }
 
 	void SetType(const Type &type) { m_type = type; }
+
+	friend const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody);
+
+	friend Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody);
 
 private:
 	Type m_type;

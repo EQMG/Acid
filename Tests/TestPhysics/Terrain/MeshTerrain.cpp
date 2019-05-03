@@ -15,8 +15,7 @@ VertexDefault MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
 	float z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
 	auto position = GetPosition(x, z);
-	auto uv = Vector2f(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount),
-		static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
+	auto uv = Vector2f(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
 	auto normal = GetNormal(x, z);
 	//Colour colour = GetColour(normal);
 	return VertexDefault(position, uv, normal);

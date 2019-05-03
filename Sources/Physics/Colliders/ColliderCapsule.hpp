@@ -10,17 +10,13 @@ class ACID_EXPORT ColliderCapsule :
 	public Collider
 {
 public:
-	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCapsule();
 
 	void Start() override;
 
 	void Update() override;
-
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
 
 	btCollisionShape *GetCollisionShape() const override;
 
@@ -32,8 +28,12 @@ public:
 
 	void SetHeight(const float &height);
 
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCapsule &collider);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCapsule &collider);
+
 private:
-	btCapsuleShape *m_shape;
+	std::unique_ptr<btCapsuleShape> m_shape;
 	float m_radius;
 	float m_height;
 };

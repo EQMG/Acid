@@ -33,7 +33,7 @@ Entity::Entity(const std::string &filename, const Transform &transform) :
 			continue;
 		}
 
-		component->Decode(*child);
+		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
 		AddComponent(component);
 	}
 
@@ -92,7 +92,7 @@ Component *Entity::AddComponent(Component *component)
 
 void Entity::RemoveComponent(Component *component)
 {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c)
+	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [component](std::unique_ptr<Component> &c)
 	{
 		return c.get() == component;
 	}), m_components.end());

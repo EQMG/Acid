@@ -1,8 +1,8 @@
 #include "ColliderConvexHull.hpp"
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
+#include "Scenes/Entity.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Scenes/Scenes.hpp"
 
 namespace acid
 {
@@ -59,16 +59,6 @@ void ColliderConvexHull::Update()
 	}
 }
 
-void ColliderConvexHull::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void ColliderConvexHull::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 btCollisionShape *ColliderConvexHull::GetCollisionShape() const
 {
 	return m_shape.get();
@@ -85,5 +75,17 @@ void ColliderConvexHull::Initialize(const std::vector<float> &pointCloud)
 	m_shape->optimizeConvexHull();
 	m_shape->initializePolyhedralFeatures();
 	m_pointCount = static_cast<uint32_t>(pointCloud.size() / 3);
+}
+
+const Metadata &operator>>(const Metadata &metadata, ColliderConvexHull &collider)
+{
+	metadata.GetChild("Local Transform", collider.m_localTransform);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ColliderConvexHull &collider)
+{
+	metadata.SetChild("Local Transform", collider.m_localTransform);
+	return metadata;
 }
 }

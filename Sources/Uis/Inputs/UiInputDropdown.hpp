@@ -14,17 +14,17 @@ public:
 		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
-	
+
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
-	
+
 	const uint32_t &GetValue() const { return m_value; }
-	
+
 	void SetValue(const uint32_t &value);
-	
+
 	const std::vector<std::string> &GetOptions() const { return m_options; }
-	
+
 	void SetOptions(const std::vector<std::string> &options);
 
 	/**

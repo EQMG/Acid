@@ -49,10 +49,6 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	std::vector<float> GetPointCloud() const;
 
 	const Vector3f &GetMinExtents() const { return m_minExtents; }
@@ -76,6 +72,10 @@ public:
 	const uint32_t &GetIndexCount() const { return m_indexCount; }
 
 	VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Model &model);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Model &model);
 
 protected:
 	template<typename T>

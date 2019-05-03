@@ -27,25 +27,57 @@ ENABLE_BITMASK_OPERATORS(ExampleType)
 
 namespace test
 {
-struct Example1
+class Example1
 {
-	std::string paragraph{ "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" };
-	std::string content{ "Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." };
-
-	struct XML
+public:
+	class XML
 	{
+	public:
 		std::vector<std::vector<std::string>> data{{ "clunky" }, { "uses more words than necessary" }};
+		std::optional<float> optional0{};
+		std::optional<std::string> optional1{ "Hello optional string!" };
 
-		void Decode(const Metadata &metadata)
+		friend const Metadata &operator>>(const Metadata &metadata, XML &xml)
 		{
-			metadata.GetChild("data", data);
+			metadata.GetChild("data", xml.data);
+			metadata.GetChild("optional0", xml.optional0);
+			metadata.GetChild("optional1", xml.optional1);
+			return metadata;
 		}
 
-		void Encode(Metadata &metadata) const
+		friend Metadata &operator<<(Metadata &metadata, const XML &xml)
 		{
-			metadata.SetChild("data", data);
+			metadata.SetChild("data", xml.data);
+			metadata.SetChild("optional0", xml.optional0);
+			metadata.SetChild("optional1", xml.optional1);
+			return metadata;
 		}
 	} xml;
+
+	class Objects
+	{
+	public:
+		std::string key{ "value" };
+		std::vector<float> values{ 190.0f, 11.0f, -0.001f };
+
+		friend const Metadata &operator>>(const Metadata &metadata, Objects &objects)
+		{
+			metadata.GetChild("key", objects.key);
+			metadata.GetChild("values", objects.values);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const Objects &objects)
+		{
+			metadata.SetChild("key", objects.key);
+			metadata.SetChild("values", objects.values);
+			return metadata;
+		}
+	} objects;
+
+	std::string paragraph{ "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" };
+	std::unique_ptr<std::string> content{
+		std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.") };
 
 	std::vector<std::string> json{ "rigid", "better for data interchange" };
 	std::vector<std::string> yaml{ "slim and flexible", "better for configuration", "supports comments" };
@@ -53,68 +85,54 @@ struct Example1
 	std::map<int32_t, std::vector<std::string>> vectorMap{{ -1, { "A", "B", "C" }}, { 8, { "1", "2.00", "3.00" }}, { 700, { "%", "$", "#", "&", "#" }}};
 	std::vector<std::pair<std::string, BitMask<ExampleType>>> types{{ "AB", ExampleType::A | ExampleType::B }, { "C", ExampleType::C },
 		{ "ABD", ExampleType::A | ExampleType::B | ExampleType::D }};
-	//std::vector<std::unique_ptr<float>> uniqueVector{ std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f) }; // TODO
+	//std::vector<std::unique_ptr<float>> uniqueVector{ std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f) };
 	//std::map<Vector2f, Matrix4> vectorMatrixMap{ { Vector2f(-0.91f, 5998.1f), Matrix4(1.0f) }, { Vector2f(75.559f, 1.2433f), Matrix4(0.0f) } }; // Not allowed by Json.
 	//std::array<double, 5> array{ -9.1, 10932.0, 1.111, 64634.324324234, -7436.0043 }; // TODO
 	//float cArray[3]{ 0.0f, 10.0f, -33.3f }; // TODO: By converting into a vector for saving?
 
-	struct Objects
+	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
 	{
-		std::string key{ "value" };
-		std::vector<float> values{ 190.0f, 11.0f, -0.001f };
-
-		void Decode(const Metadata &metadata)
-		{
-			metadata.GetChild("key", key);
-			metadata.GetChild("values", values);
-		}
-
-		void Encode(Metadata &metadata) const
-		{
-			metadata.SetChild("key", key);
-			metadata.SetChild("values", values);
-		}
-	} objects;
-
-	void Decode(const Metadata &metadata)
-	{
-		metadata.GetChild("paragraph", paragraph);
-		metadata.GetChild("content", content);
-		metadata.GetChild("xml", xml);
-		metadata.GetChild("json", json);
-		metadata.GetChild("yaml", yaml);
-		metadata.GetChild("map", map);
-		metadata.GetChild("vectorMap", vectorMap);
-		//metadata.GetChild("array", array);
-		//metadata.GetChild("cArray", cArray);
-		//metadata.GetChild("vectorMatrixMap", vectorMatrixMap);
-		metadata.GetChild("types", types);
-		metadata.GetChild("objects", objects);
+		example1.paragraph = metadata.GetChild<std::string>("paragraph");
+		metadata.GetChild("content", example1.content);
+		metadata.GetChild("xml", example1.xml);
+		metadata.GetChild("json", example1.json);
+		metadata.GetChild("yaml", example1.yaml);
+		metadata.GetChild("map", example1.map);
+		metadata.GetChild("vectorMap", example1.vectorMap);
+		//metadata.GetChild("array", example1.array);
+		//metadata.GetChild("cArray", example1.cArray);
+		//metadata.GetChild("vectorMatrixMap", example1.vectorMatrixMap);
+		metadata.GetChild("types", example1.types);
+		//metadata.GetChild("uniqueVector", example1.uniqueVector);
+		metadata.GetChild("objects", example1.objects);
+		return metadata;
 	}
 
-	void Encode(Metadata &metadata) const
+	friend Metadata &operator<<(Metadata &metadata, const Example1 &example1)
 	{
-		metadata.SetChild("paragraph", paragraph);
-		metadata.SetChild("content", content);
-		metadata.SetChild("xml", xml);
-		metadata.SetChild("json", json);
-		metadata.SetChild("yaml", yaml);
-		metadata.SetChild("map", map);
-		metadata.SetChild("vectorMap", vectorMap);
-		//metadata.SetChild("array", array);
-		//metadata.SetChild("cArray", cArray);
-		//metadata.SetChild("vectorMatrixMap", vectorMatrixMap);
-		metadata.SetChild("types", types);
-		metadata.SetChild("objects", objects);
+		metadata.SetChild("paragraph", example1.paragraph);
+		metadata.SetChild("content", example1.content);
+		metadata.SetChild("xml", example1.xml);
+		metadata.SetChild("json", example1.json);
+		metadata.SetChild("yaml", example1.yaml);
+		metadata.SetChild("map", example1.map);
+		metadata.SetChild("vectorMap", example1.vectorMap);
+		//metadata.SetChild("array", example1.array);
+		//metadata.SetChild("cArray", example1.cArray);
+		//metadata.SetChild("vectorMatrixMap", example1.vectorMatrixMap);
+		metadata.SetChild("types", example1.types);
+		//metadata.SetChild("uniqueVector", example1.uniqueVector);
+		metadata.SetChild("objects", example1.objects);
+		return metadata;
 	}
 };
 }
 
 int main(int argc, char **argv)
 {
-	test::Example1 example1 = {};
+	test::Example1 example1;
 	auto metadata = Metadata();
-	example1.Encode(metadata);
+	metadata << example1;
 
 	File("Serial/Example1.json", new Json(&metadata)).Write();
 	File("Serial/Example1.xml", new Xml("Example", &metadata)).Write();
@@ -126,7 +144,7 @@ int main(int argc, char **argv)
 	jsonLoader.Write();
 
 	test::Example1 example2;
-	example2.Decode(*jsonLoader.GetMetadata());
+	*jsonLoader.GetMetadata() >> example2;
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

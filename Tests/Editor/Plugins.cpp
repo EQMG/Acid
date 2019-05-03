@@ -16,26 +16,27 @@ Plugins::Plugins() :
 	m_watcher(FileSystem::GetWorkingDirectory(), Time::Seconds(0.5f)),
 	m_plugin(std::make_unique<cr_plugin>()),
 	m_update(true),
-	m_panels(&Uis::Get()->GetContainer())
+	m_panels(&Uis::Get()->GetContainer()),
+	m_buttonReload(Key::R)
 {
 	cr_plugin_load(*m_plugin, m_loadedPath.c_str());
 
-	// Watches the DLL path.
-	m_watcher.OnChange() += [this](std::string path, FileWatcher::Status status)
+	// Watches the plugin path.
+	m_watcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
 	{
 		if (path == m_loadedPath)
 		{
 			m_update = true;
 		}
-	};
+	});
 
-	Keyboard::Get()->OnKey() += [this](Key key, InputAction action, BitMask<InputMod> mods)
+	m_buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
-		if (key == Key::R && action == InputAction::Press)
+		if (action == InputAction::Press)
 		{
 			FileSystem::Touch(m_loadedPath);
 		}
-	};
+	});
 }
 
 Plugins::~Plugins()
@@ -48,7 +49,7 @@ void Plugins::Update()
 	if (m_update)
 	{
 		Log::Out("[Host] Updating plugin\n");
-		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 		m_panels.SetParent(nullptr);
 		cr_plugin_unload(*m_plugin, false, false);
 		cr_plugin_update(*m_plugin);

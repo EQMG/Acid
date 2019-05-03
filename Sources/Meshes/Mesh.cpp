@@ -15,13 +15,15 @@ void Mesh::Update()
 {
 }
 
-void Mesh::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, Mesh &mesh)
 {
-	metadata.GetResource("Model", m_model);
+	metadata.GetResource("Model", mesh.m_model);
+	return metadata;
 }
 
-void Mesh::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const Mesh &mesh)
 {
-	metadata.SetResource("Model", m_model);
+	metadata.SetResource("Model", mesh.m_model);
+	return metadata;
 }
 }

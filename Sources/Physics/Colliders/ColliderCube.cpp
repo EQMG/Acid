@@ -1,7 +1,7 @@
 #include "ColliderCube.hpp"
 
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
-#include "Scenes/Scenes.hpp"
+#include "Scenes/Entity.hpp"
 
 namespace acid
 {
@@ -26,18 +26,6 @@ void ColliderCube::Update()
 	Collider::Update();
 }
 
-void ColliderCube::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Local Transform", m_localTransform);
-	metadata.GetChild("Extents", m_extents);
-}
-
-void ColliderCube::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Local Transform", m_localTransform);
-	metadata.SetChild("Extents", m_extents);
-}
-
 btCollisionShape *ColliderCube::GetCollisionShape() const
 {
 	return m_shape.get();
@@ -48,5 +36,19 @@ void ColliderCube::SetExtents(const Vector3f &extents)
 	m_extents = extents;
 	m_shape->setImplicitShapeDimensions(Convert(m_extents));
 	m_localTransform.SetScaling(m_extents);
+}
+
+const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider)
+{
+	metadata.GetChild("Local Transform", collider.m_localTransform);
+	metadata.GetChild("Extents", collider.m_extents);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ColliderCube &collider)
+{
+	metadata.SetChild("Local Transform", collider.m_localTransform);
+	metadata.SetChild("Extents", collider.m_extents);
+	return metadata;
 }
 }

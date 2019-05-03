@@ -24,15 +24,26 @@ public:
 		if (m_components.find(name) != m_components.end())
 		{
 			Log::Error("Component '%s' is already registered!\n", name.c_str());
+			Remove(name);
 			return;
 		}
 
 		ComponentCreate componentCreate;
-		componentCreate.m_create = []()
+		componentCreate.m_create = []() -> Component *
 		{
 			return new T();
 		};
-		componentCreate.m_isSame = [](Component *component)
+		componentCreate.m_decode = [](const Metadata &metadata, Component *component) -> const Metadata &
+		{
+			metadata >> *dynamic_cast<T *>(component);
+			return metadata;
+		};
+		componentCreate.m_encode = [](Metadata &metadata, const Component *component) -> Metadata &
+		{
+			metadata << *dynamic_cast<const T *>(component);
+			return metadata;
+		};
+		componentCreate.m_isSame = [](Component *component) -> bool
 		{
 			return dynamic_cast<T *>(component) != nullptr; // TODO: Ignore type inheritance
 		};
@@ -53,6 +64,10 @@ public:
 	 */
 	Component *Create(const std::string &name) const;
 
+	void Decode(const std::string &name, const Metadata &metadata, Component *component);
+
+	void Encode(const std::string &name, Metadata &metadata, const Component *component);
+
 	/**
 	 * Finds the registered name to a component.
 	 * @param compare The components to get the registered name of.
@@ -64,6 +79,8 @@ private:
 	struct ComponentCreate
 	{
 		std::function<Component *()> m_create;
+		std::function<const Metadata &(const Metadata &metadata, Component *component)> m_decode;
+		std::function<Metadata &(Metadata &metadata, const Component *component)> m_encode;
 		std::function<bool(Component *)> m_isSame;
 	};
 

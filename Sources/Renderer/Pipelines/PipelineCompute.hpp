@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer/Commands/CommandBuffer.hpp"
+#include "Maths/Vector2.hpp"
 #include "Pipeline.hpp"
 
 namespace acid
@@ -28,7 +29,7 @@ public:
 
 	const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const;
+	void CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const;
 
 	const Shader *GetShader() const override { return m_shader.get(); }
 

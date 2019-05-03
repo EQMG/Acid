@@ -37,10 +37,6 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	void Write(const Entity &entity);
 
 	void Save();
@@ -48,6 +44,10 @@ public:
 	const std::string &GetFilename() const { return m_filename; }
 
 	Metadata *GetParent() const { return m_file->GetMetadata(); }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab);
 
 private:
 	std::string m_filename;

@@ -47,12 +47,11 @@ PipelineCompute::~PipelineCompute()
 	vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
 }
 
-bool PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &width, const uint32_t &height) const
+void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const
 {
-	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(width) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
-	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(height) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
+	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_x) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
+	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_y) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
 	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
-	return true;
 }
 
 void PipelineCompute::CreateShaderProgram()
@@ -78,14 +77,14 @@ void PipelineCompute::CreateShaderProgram()
 	shaderCode = Shader::ProcessIncludes(shaderCode);
 
 	auto stageFlag = Shader::GetShaderStage(m_shaderStage);
-	m_shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
+	m_shaderModule = m_shader->CreateShaderModule(m_shaderStage, shaderCode, stageFlag);
 
 	m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 	m_shaderStageCreateInfo.stage = stageFlag;
 	m_shaderStageCreateInfo.module = m_shaderModule;
 	m_shaderStageCreateInfo.pName = "main";
 
-	m_shader->ProcessShader();
+	m_shader->CreateReflection();
 }
 
 void PipelineCompute::CreateDescriptorLayout()

@@ -717,7 +717,7 @@ void OutlineFixThinLines(Outline *o)
 			Vector2f mid = p0.Lerp(p2, 0.5f);
 			Vector2f midp1 = p1 - mid;
 
-			Vector2f bezier[] = {p0, p0, p2};
+			Vector2f bezier[] = { p0, p0, p2 };
 
 			bezier[1] += midp1;
 			/*bool subdivide = false;

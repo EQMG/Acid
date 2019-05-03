@@ -72,14 +72,16 @@ struct BitMask
 	{
 	}
 
-	void Decode(const Metadata &metadata)
+	friend const Metadata &operator>>(const Metadata &metadata, BitMask &bitmask)
 	{
-		m_value = metadata.Get<underlying_type>();
+		metadata >> bitmask.m_value;
+		return metadata;
 	}
 
-	void Encode(Metadata &metadata) const
+	friend Metadata &operator<<(Metadata &metadata, const BitMask &bitmask)
 	{
-		metadata.Set(m_value);
+		metadata << bitmask.m_value;
+		return metadata;
 	}
 
 	constexpr operator bool() const

@@ -63,7 +63,7 @@ public:
 	const Vector3f &GetGravity() const { return m_gravity; }
 
 	virtual void SetGravity(const Vector3f &gravity) = 0;
-	
+
 	const Vector3f &GetLinearFactor() const { return m_linearFactor; }
 
 	virtual void SetLinearFactor(const Vector3f &linearFactor) = 0;

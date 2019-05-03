@@ -31,10 +31,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	bool InFrustum(const Frustum &frustum) override;
 
 	void ClearForces() override;
@@ -50,6 +46,10 @@ public:
 	void SetLinearVelocity(const Vector3f &linearVelocity) override;
 
 	void SetAngularVelocity(const Vector3f &angularVelocity) override;
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody);
 
 protected:
 	void RecalculateMass() override;

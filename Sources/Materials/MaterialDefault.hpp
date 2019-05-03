@@ -22,10 +22,6 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	void PushUniforms(UniformHandler &uniformObject) override;
 
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
@@ -65,6 +61,10 @@ public:
 	const bool &IsIgnoringFog() const { return m_ignoreFog; }
 
 	void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MaterialDefault &material);
 
 private:
 	std::vector<Shader::Define> GetDefines() const;

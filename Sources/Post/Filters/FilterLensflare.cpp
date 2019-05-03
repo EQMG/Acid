@@ -14,7 +14,7 @@ void FilterLensflare::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("sunPosition", m_sunPosition);
-	m_pushScene.Push("displaySize", m_pipeline.GetSize());
+	m_pushScene.Push("displaySize", m_pipeline.GetRenderArea().GetExtent());
 	m_pushScene.Push("worldHeight", m_sunHeight);
 
 	// Updates descriptors.

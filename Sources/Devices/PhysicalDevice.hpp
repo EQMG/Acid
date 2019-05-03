@@ -11,7 +11,7 @@ class ACID_EXPORT PhysicalDevice
 {
 public:
 	explicit PhysicalDevice(const Instance *instance);
-	
+
 	operator const VkPhysicalDevice &() const { return m_physicalDevice; }
 
 	const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }

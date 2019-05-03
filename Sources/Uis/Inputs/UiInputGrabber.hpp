@@ -16,7 +16,7 @@ public:
 	UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle);
 
 	void UpdateObject() override;
-	
+
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }

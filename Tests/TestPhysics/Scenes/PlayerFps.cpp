@@ -106,11 +106,13 @@ void PlayerFps::Update()
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 
-void PlayerFps::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, PlayerFps &player)
 {
+	return metadata;
 }
 
-void PlayerFps::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const PlayerFps &player)
 {
+	return metadata;
 }
 }

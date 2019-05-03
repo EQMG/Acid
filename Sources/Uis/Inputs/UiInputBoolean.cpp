@@ -11,8 +11,8 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	m_slider(this, UiBound(Vector2f(1.0f, 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour),
 	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size),
-		UiInputButton::FontSize, title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
+	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
 	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_value(value)
@@ -22,13 +22,13 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateValue();
 
-	OnSelected() += [this](bool selected)
+	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, 
-			UiInputButton::SlideTime));
+		m_background.SetColourDriver(
+			new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	};
-	OnClick() += [this](MouseButton button)
+	});
+	OnClick().Add([this](MouseButton button)
 	{
 		if (button == MouseButton::Left)
 		{
@@ -37,7 +37,7 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 			m_onValue(m_value);
 			UpdateValue();
 		}
-	};
+	});
 }
 
 void UiInputBoolean::UpdateObject()

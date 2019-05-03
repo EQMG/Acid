@@ -17,24 +17,24 @@ Scene1::Scene1() :
 	m_overlayDebug(&Uis::Get()->GetContainer()),
 	m_uiPanels(&Uis::Get()->GetContainer())
 {
-	m_buttonPause.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
 			TogglePause();
 		}
-	};
+	});
 
 	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
 	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
 	m_uiPanels.SetAlphaDriver(new DriverConstant<float>(0.0f));
 
-	m_uiStartLogo.OnFinished() += [this]()
+	m_uiStartLogo.OnFinished().Add([this]()
 	{
 		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		//m_uiPanels.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
 		TogglePause();
-	};
+	});
 }
 
 void Scene1::Start()

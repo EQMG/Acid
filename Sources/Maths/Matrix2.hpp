@@ -115,9 +115,7 @@ public:
 	 **/
 	float GetSubmatrix(const int32_t &row, const int32_t &col) const;
 
-	void Decode(const Metadata &metadata);
-
-	void Encode(Metadata &metadata) const;
+	std::string ToString() const;
 
 	bool operator==(const Matrix2 &other) const;
 
@@ -169,9 +167,11 @@ public:
 
 	Matrix2 &operator/=(const float &other);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Matrix2 &matrix);
 
-	std::string ToString() const;
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Matrix2 &matrix);
+
+	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
 
 	static const Matrix2 Identity;
 	static const Matrix2 Zero;
@@ -196,7 +196,7 @@ namespace std
 template<>
 struct hash<acid::Matrix2>
 {
-	size_t operator()(acid::Matrix2 const &matrix) const
+	size_t operator()(const acid::Matrix2 &matrix) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);

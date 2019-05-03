@@ -43,13 +43,13 @@ public:
 
 	void SetUpperLimit(const float &upperLimit) { m_upperLimit = upperLimit; }
 
-	void Decode(const Metadata &metadata);
+	std::string ToString() const;
 
-	void Encode(Metadata &metadata) const;
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Fog &fog);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Fog &fog);
 
 	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
-
-	std::string ToString() const;
 
 private:
 	Colour m_colour;

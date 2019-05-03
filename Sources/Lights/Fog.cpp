@@ -11,34 +11,36 @@ Fog::Fog(const Colour &colour, const float &density, const float &gradient, cons
 {
 }
 
-void Fog::Decode(const Metadata &metadata)
+std::string Fog::ToString() const
 {
-	metadata.GetChild("Colour", m_colour);
-	metadata.GetChild("Density", m_density);
-	metadata.GetChild("Gradient", m_gradient);
-	metadata.GetChild("Lower Limit", m_lowerLimit);
-	metadata.GetChild("Upper Limit", m_upperLimit);
+	std::stringstream stream;
+	stream << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
+	return stream.str();
 }
 
-void Fog::Encode(Metadata &metadata) const
+const Metadata &operator>>(const Metadata &metadata, Fog &fog)
 {
-	metadata.SetChild("Colour", m_colour);
-	metadata.SetChild("Density", m_density);
-	metadata.SetChild("Gradient", m_gradient);
-	metadata.SetChild("Lower Limit", m_lowerLimit);
-	metadata.SetChild("Upper Limit", m_upperLimit);
+	metadata.GetChild("Colour", fog.m_colour);
+	metadata.GetChild("Density", fog.m_density);
+	metadata.GetChild("Gradient", fog.m_gradient);
+	metadata.GetChild("Lower Limit", fog.m_lowerLimit);
+	metadata.GetChild("Upper Limit", fog.m_upperLimit);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Fog &fog)
+{
+	metadata.SetChild("Colour", fog.m_colour);
+	metadata.SetChild("Density", fog.m_density);
+	metadata.SetChild("Gradient", fog.m_gradient);
+	metadata.SetChild("Lower Limit", fog.m_lowerLimit);
+	metadata.SetChild("Upper Limit", fog.m_upperLimit);
+	return metadata;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Fog &colour)
 {
 	stream << colour.ToString();
 	return stream;
-}
-
-std::string Fog::ToString() const
-{
-	std::stringstream stream;
-	stream << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
-	return stream.str();
 }
 }

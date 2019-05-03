@@ -17,7 +17,7 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelDisk>(0.0f, 0.0f);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -26,7 +26,7 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const flo
 {
 	auto temp = ModelDisk(innerRadius, outerRadius, slices, loops, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -90,20 +90,22 @@ void ModelDisk::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelDisk::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelDisk &model)
 {
-	metadata.GetChild("Inner Radius", m_innerRadius);
-	metadata.GetChild("Outer Radius", m_outerRadius);
-	metadata.GetChild("Slices", m_slices);
-	metadata.GetChild("Loops", m_loops);
+	metadata.GetChild("Inner Radius", model.m_innerRadius);
+	metadata.GetChild("Outer Radius", model.m_outerRadius);
+	metadata.GetChild("Slices", model.m_slices);
+	metadata.GetChild("Loops", model.m_loops);
+	return metadata;
 }
 
-void ModelDisk::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelDisk &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelDisk");
-	metadata.SetChild("Inner Radius", m_innerRadius);
-	metadata.SetChild("Outer Radius", m_outerRadius);
-	metadata.SetChild("Slices", m_slices);
-	metadata.SetChild("Loops", m_loops);
+	metadata.SetChild("Inner Radius", model.m_innerRadius);
+	metadata.SetChild("Outer Radius", model.m_outerRadius);
+	metadata.SetChild("Slices", model.m_slices);
+	metadata.SetChild("Loops", model.m_loops);
+	return metadata;
 }
 }

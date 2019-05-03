@@ -99,12 +99,6 @@ public:
 	Quaternion Scale(const float &scalar) const;
 
 	/**
-	 * Negates this quaternion.
-	 * @return The negated quaternion. 
-	 **/
-	Quaternion Negate() const;
-
-	/**
 	 * Normalizes this quaternion.
 	 * @return The normalized quaternion. 
 	 **/
@@ -169,9 +163,7 @@ public:
 
 	void SetW(const float &w) { m_w = w; }
 
-	void Decode(const Metadata &metadata);
-
-	void Encode(Metadata &metadata) const;
+	std::string ToString() const;
 
 	bool operator==(const Quaternion &other) const;
 
@@ -201,9 +193,11 @@ public:
 
 	Quaternion &operator*=(const float &other);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion);
 
-	std::string ToString() const;
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion);
+
+	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
 	static const Quaternion Zero;
 	static const Quaternion One;
@@ -220,7 +214,7 @@ namespace std
 template<>
 struct hash<acid::Quaternion>
 {
-	size_t operator()(acid::Quaternion const &quaternion) const
+	size_t operator()(const acid::Quaternion &quaternion) const
 	{
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, quaternion.m_x);

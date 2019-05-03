@@ -15,8 +15,6 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 	m_depthAttachment({}),
 	m_swapchainAttachment({}),
 	m_subpassMultisampled(m_subpasses.size()),
-	m_size(0, 0),
-	m_aspectRatio(1.0f),
 	m_outOfDate(false)
 {
 	for (const auto &image : m_attachments)
@@ -60,22 +58,23 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 void RenderStage::Update()
 {
-	Vector2i lastSize = m_size;
+	auto lastRenderArea = m_renderArea;
+
+	m_renderArea.SetOffset(m_viewport.GetOffset());
 
 	if (m_viewport.GetSize())
 	{
-		m_size = *m_viewport.GetSize();
+		m_renderArea.SetExtent(m_viewport.GetScale() * *m_viewport.GetSize());
 	}
 	else
 	{
-		m_size = Window::Get()->GetSize();
+		m_renderArea.SetExtent(m_viewport.GetScale() * Window::Get()->GetSize());
 	}
 
-	// TODO: Use viewport offset, fix scale.
-	m_size = m_viewport.GetScale() * m_size;
-	m_aspectRatio = static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y);
+	m_renderArea.SetAspectRatio(static_cast<float>(m_renderArea.GetExtent().m_x) / static_cast<float>(m_renderArea.GetExtent().m_y));
+	m_renderArea.SetExtent(m_renderArea.GetExtent() + m_renderArea.GetOffset());
 
-	m_outOfDate = m_size != lastSize;
+	m_outOfDate = m_renderArea != lastRenderArea;
 }
 
 void RenderStage::Rebuild(const Swapchain &swapchain)
@@ -93,7 +92,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 
 	if (m_depthAttachment)
 	{
-		m_depthStencil = std::make_unique<ImageDepth>(m_size.m_x, m_size.m_y, m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
+		m_depthStencil = std::make_unique<ImageDepth>(m_renderArea.GetExtent(), m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 	}
 
 	if (m_renderpass == nullptr)
@@ -101,7 +100,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 		m_renderpass = std::make_unique<Renderpass>(*this, m_depthStencil->GetFormat(), surface->GetFormat().format, msaaSamples);
 	}
 
-	m_framebuffers = std::make_unique<Framebuffers>(m_size.m_x, m_size.m_y, *this, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
+	m_framebuffers = std::make_unique<Framebuffers>(m_renderArea.GetExtent(), *this, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);
 	m_outOfDate = false;
 
 	m_descriptors.clear();

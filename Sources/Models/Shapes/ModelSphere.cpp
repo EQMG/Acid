@@ -17,7 +17,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelSphere>(0.0f);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -26,7 +26,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint
 {
 	auto temp = ModelSphere(radius, latitudeBands, longitudeBands, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -88,18 +88,20 @@ void ModelSphere::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelSphere::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
 {
-	metadata.GetChild("Latitude Bands", m_latitudeBands);
-	metadata.GetChild("Longitude Bands", m_longitudeBands);
-	metadata.GetChild("Radius", m_radius);
+	metadata.GetChild("Latitude Bands", model.m_latitudeBands);
+	metadata.GetChild("Longitude Bands", model.m_longitudeBands);
+	metadata.GetChild("Radius", model.m_radius);
+	return metadata;
 }
 
-void ModelSphere::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelSphere");
-	metadata.SetChild("Latitude Bands", m_latitudeBands);
-	metadata.SetChild("Longitude Bands", m_longitudeBands);
-	metadata.SetChild("Radius", m_radius);
+	metadata.SetChild("Latitude Bands", model.m_latitudeBands);
+	metadata.SetChild("Longitude Bands", model.m_longitudeBands);
+	metadata.SetChild("Radius", model.m_radius);
+	return metadata;
 }
 }

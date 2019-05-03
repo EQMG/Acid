@@ -82,11 +82,10 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 		return;
 	}
 
-	uint32_t width = 0;
-	uint32_t height = 0;
-	uint32_t components = 0;
-	VkFormat format = VK_FORMAT_UNDEFINED;
-	auto data = Image::LoadPixels(filename, width, height, components, format);
+	Vector2ui extent;
+	uint32_t components;
+	VkFormat format;
+	auto data = Image::LoadPixels(filename, extent, components, format);
 
 	if (data == nullptr)
 	{
@@ -94,8 +93,8 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	}
 
 	GLFWimage image[1];
-	image[0].width = width;
-	image[0].height = height;
+	image[0].width = extent.m_x;
+	image[0].height = extent.m_y;
 	image[0].pixels = data.get();
 
 	glfwDestroyCursor(m_cursor);

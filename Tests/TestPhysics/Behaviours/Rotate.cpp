@@ -36,13 +36,15 @@ void Rotate::Update()
 	}
 }
 
-void Rotate::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, Rotate &rotate)
 {
-	m_direction = metadata.GetChild<Vector3f>("Direction");
+	metadata.GetChild("Direction", rotate.m_direction);
+	return metadata;
 }
 
-void Rotate::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const Rotate &rotate)
 {
-	metadata.SetChild<Vector3f>("Direction", m_direction);
+	metadata.SetChild("Direction", rotate.m_direction);
+	return metadata;
 }
 }

@@ -45,9 +45,9 @@ float distToBezier2(vec2 p0, vec2 p1, vec2 p2, float t, vec2 p)
 
 void processBezier2(vec2 p, uint i, inout float minUdist, inout float v)
 {
-	vec2 p0 = pointBuffer.points[i];
-	vec2 p1 = pointBuffer.points[i + 1];
-	vec2 p2 = pointBuffer.points[i + 2];
+	vec2 p0 = bufferPoint.points[i];
+	vec2 p1 = bufferPoint.points[i + 1];
+	vec2 p2 = bufferPoint.points[i + 2];
 
 	float t = calcT(p0, p2, p);
 	float udist = distance(mix(p0, p2, t), p);

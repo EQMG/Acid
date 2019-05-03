@@ -95,14 +95,9 @@ const Image2d *PipelineGraphics::GetImage(const uint32_t &index, const std::opti
 	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 }
 
-Vector2ui PipelineGraphics::GetSize(const std::optional<uint32_t> &stage) const
+RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage) const
 {
-	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetSize();
-}
-
-float PipelineGraphics::GetAspectRatio(const std::optional<uint32_t> &stage) const
-{
-	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetAspectRatio();
+	return Renderer::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetRenderArea();
 }
 
 void PipelineGraphics::CreateShaderProgram()
@@ -130,7 +125,7 @@ void PipelineGraphics::CreateShaderProgram()
 		shaderCode = Shader::ProcessIncludes(shaderCode);
 
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
-		auto shaderModule = m_shader->ProcessShader(shaderCode, stageFlag);
+		auto shaderModule = m_shader->CreateShaderModule(shaderStage, shaderCode, stageFlag);
 
 		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -141,7 +136,7 @@ void PipelineGraphics::CreateShaderProgram()
 		m_modules.emplace_back(shaderModule);
 	}
 
-	m_shader->ProcessShader();
+	m_shader->CreateReflection();
 }
 
 void PipelineGraphics::CreateDescriptorLayout()

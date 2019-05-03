@@ -19,20 +19,6 @@ void Light::Update()
 {
 }
 
-void Light::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Colour", m_colour);
-	metadata.GetChild("Radius", m_radius);
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void Light::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Colour", m_colour);
-	metadata.SetChild("Radius", m_radius);
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 Transform Light::GetWorldTransform() const
 {
 	if (m_localTransform.IsDirty() || GetParent()->GetWorldTransform().IsDirty())
@@ -42,5 +28,21 @@ Transform Light::GetWorldTransform() const
 	}
 
 	return m_worldTransform;
+}
+
+const Metadata &operator>>(const Metadata &metadata, Light &light)
+{
+	metadata.GetChild("Colour", light.m_colour);
+	metadata.GetChild("Radius", light.m_radius);
+	metadata.GetChild("Local Transform", light.m_localTransform);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Light &light)
+{
+	metadata.SetChild("Colour", light.m_colour);
+	metadata.SetChild("Radius", light.m_radius);
+	metadata.SetChild("Local Transform", light.m_localTransform);
+	return metadata;
 }
 }

@@ -10,17 +10,13 @@ class ACID_EXPORT ColliderCylinder :
 	public Collider
 {
 public:
-	explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCylinder();
 
 	void Start() override;
 
 	void Update() override;
-
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
 
 	btCollisionShape *GetCollisionShape() const override;
 
@@ -31,6 +27,10 @@ public:
 	const float &GetHeight() const { return m_height; }
 
 	void SetHeight(const float &height);
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCylinder &collider);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCylinder &collider);
 
 private:
 	std::unique_ptr<btCylinderShape> m_shape;

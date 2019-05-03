@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include "Maths/Vector2.hpp"
 #include "Renderer/Commands/CommandBuffer.hpp"
 #include "Renderer/Descriptors/Descriptor.hpp"
 
@@ -83,9 +84,9 @@ public:
 
 	const VkImageView &GetView() const { return m_view; }
 
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, uint32_t &width, uint32_t &height, uint32_t &components, VkFormat &format);
+	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, Vector2ui &extent, uint32_t &components, VkFormat &format);
 
-	static void WritePixels(const std::string &filename, const uint8_t *pixels, const int32_t &width, const int32_t &height, const int32_t &components = 4);
+	static void WritePixels(const std::string &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components = 4);
 
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
@@ -109,7 +110,7 @@ public:
 
 	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels);
 
-	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect, 
+	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect,
 		const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
 	static void CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels,

@@ -17,7 +17,7 @@ public:
 	 * Creates a new emitter.
 	 * @param localTransform The local transform from the parents space.
 	 */
-	explicit Emitter(const Transform &localTransform = Transform::Identity) :
+	explicit Emitter(const Transform &localTransform = Transform::Zero) :
 		m_localTransform(localTransform)
 	{
 	}

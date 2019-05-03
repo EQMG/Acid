@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Serialized/Metadata.hpp"
+#include "Helpers/Delegate.hpp"
 
 namespace acid
 {
@@ -9,7 +10,8 @@ class Entity;
 /**
  * @brief Class that represents a functional component attached to entity.
  */
-class ACID_EXPORT Component
+class ACID_EXPORT Component :
+	public Observer
 {
 public:
 	Component() :
@@ -33,22 +35,6 @@ public:
 	 * Run when updating the entity this is attached to.
 	 */
 	virtual void Update()
-	{
-	}
-
-	/**
-	 * Used to decode this component from a loaded data format.
-	 * @param metadata The metadata to decode from.
-	 */
-	virtual void Decode(const Metadata &metadata)
-	{
-	}
-
-	/**
-	 * Used to encode this component into a data format.
-	 * @param metadata The metadata to encode into.
-	 */
-	virtual void Encode(Metadata &metadata) const
 	{
 	}
 
@@ -79,4 +65,5 @@ private:
 	bool m_removed;
 	Entity *m_parent;
 };
+
 }

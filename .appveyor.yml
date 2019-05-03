@@ -1,4 +1,4 @@
-version: 0.12.2{build}
+version: 0.13.1{build}
 
 clone_depth: 5
 
@@ -31,7 +31,8 @@ install:
   - appveyor DownloadFile %VULKAN_SDK_URL% -FileName vulkan-sdk.exe
   - .\vulkan-sdk.exe /S
   # Get OpenAL SDK
-  - appveyor DownloadFile %OPENAL_SDK_URL% -FileName openal-soft.zip
+  #- appveyor DownloadFile %OPENAL_SDK_URL% -FileName openal-soft.zip
+  - curl -k "%OPENAL_SDK_URL%" -o openal-soft.zip
   - 7z x openal-soft.zip && del /f openal-soft.zip
   - move "openal-soft-*" %OPENALDIR%
   # Get Ninja

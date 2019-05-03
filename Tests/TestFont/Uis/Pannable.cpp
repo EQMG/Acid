@@ -13,7 +13,8 @@ Pannable::Pannable(UiObject *parent) :
 	m_buttonReset(ButtonKeyboard({ Key::Enter })),
 	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
 	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
-	m_settings(parent, UiBound(Vector2f(0.02f, 0.02f), UiReference::TopLeft, UiAspect::Size, Vector2f(0.25f, 0.2f)), UiInputButton::BackgroundColour, UiPanel::Resize::Right, ScrollBar::None),
+	m_settings(parent, UiBound(Vector2f(0.02f, 0.02f), UiReference::TopLeft, UiAspect::Size, Vector2f(0.25f, 0.2f)), UiInputButton::BackgroundColour, UiPanel::Resize::Right,
+		ScrollBar::None),
 	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiBound(Vector2f(0.5f, 0.06f), UiReference::TopCentre)),
 	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiBound(Vector2f(0.5f, 0.30f), UiReference::TopCentre)),
 	m_zoom(1.0f),
@@ -26,7 +27,7 @@ Pannable::Pannable(UiObject *parent) :
 	m_textFps(parent, UiBound(Vector2f(0.002f, 0.978f), UiReference::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
 	m_textUps(parent, UiBound(Vector2f(0.002f, 0.958f), UiReference::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 {
-	m_buttonReset.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -34,24 +35,24 @@ Pannable::Pannable(UiObject *parent) :
 			GetRectangle().SetPosition(Vector2f(0.5f, 0.5f));
 		}
 		Log::Out("Button Reset: %i\n", action);
-	};
-	m_testCompound->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_testCompound->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Compound: %i\n", action);
-	};
-	m_testHat.OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	});
+	m_testHat.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		Log::Out("Test Hat: %i\n", action);
-	};
+	});
 
 	m_settings.SetHeight(4.0f);
-	m_masterVolume.OnValue() += [this](float value)
+	m_masterVolume.OnValue().Add([this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
-	};
-	m_antialiasing.OnValue() += [this](bool value)
+	});
+	m_antialiasing.OnValue().Add([this](bool value)
 	{
-	};
+	});
 
 	m_body.SetString(//L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum\n"
@@ -95,7 +96,7 @@ void Pannable::UpdateObject()
 	Vector2f offset = GetRectangle().GetPosition();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
-	dynamic_cast<DriverConstant<float> *>(GetScaleDriver())->SetConstant(m_zoom);
+	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector2f(m_zoom));
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 	{

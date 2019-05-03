@@ -67,6 +67,32 @@ Component *ComponentRegister::Create(const std::string &name) const
 	return ((*it).second).m_create();
 }
 
+void ComponentRegister::Decode(const std::string &name, const Metadata &metadata, Component *component)
+{
+	auto it = m_components.find(name);
+
+	if (it == m_components.end())
+	{
+		Log::Error("Could not find registered component: '%s'\n", name.c_str());
+		return;
+	}
+
+	((*it).second).m_decode(metadata, component);
+}
+
+void ComponentRegister::Encode(const std::string &name, Metadata &metadata, const Component *component)
+{
+	auto it = m_components.find(name);
+
+	if (it == m_components.end())
+	{
+		Log::Error("Could not find registered component: '%s'\n", name.c_str());
+		return;
+	}
+
+	((*it).second).m_encode(metadata, component);
+}
+
 std::optional<std::string> ComponentRegister::FindName(Component *compare) const
 {
 	for (const auto &[name, component] : m_components) // TODO: Clean remove.

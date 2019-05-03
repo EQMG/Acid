@@ -22,7 +22,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelGltf>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -31,7 +31,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const std::string &filename)
 {
 	auto temp = ModelGltf(filename, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -133,14 +133,16 @@ void ModelGltf::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelGltf::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
 {
-	metadata.GetChild("Filename", m_filename);
+	metadata.GetChild("Filename", model.m_filename);
+	return metadata;
 }
 
-void ModelGltf::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelGltf");
-	metadata.SetChild("Filename", m_filename);
+	metadata.SetChild("Filename", model.m_filename);
+	return metadata;
 }
 }

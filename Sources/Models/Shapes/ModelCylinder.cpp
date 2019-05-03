@@ -17,7 +17,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelCylinder>(0.0f, 0.0f);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -26,7 +26,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, co
 {
 	auto temp = ModelCylinder(radiusBase, radiusTop, height, slices, stacks, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -92,22 +92,24 @@ void ModelCylinder::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelCylinder::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model)
 {
-	metadata.GetChild("Radius Base", m_radiusBase);
-	metadata.GetChild("Radius Top", m_radiusTop);
-	metadata.GetChild("Height", m_height);
-	metadata.GetChild("Slices", m_slices);
-	metadata.GetChild("Stacks", m_stacks);
+	metadata.GetChild("Radius Base", model.m_radiusBase);
+	metadata.GetChild("Radius Top", model.m_radiusTop);
+	metadata.GetChild("Height", model.m_height);
+	metadata.GetChild("Slices", model.m_slices);
+	metadata.GetChild("Stacks", model.m_stacks);
+	return metadata;
 }
 
-void ModelCylinder::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelCylinder &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelCylinder");
-	metadata.SetChild("Radius Base", m_radiusBase);
-	metadata.SetChild("Radius Top", m_radiusTop);
-	metadata.SetChild("Height", m_height);
-	metadata.SetChild("Slices", m_slices);
-	metadata.SetChild("Stacks", m_stacks);
+	metadata.SetChild("Radius Base", model.m_radiusBase);
+	metadata.SetChild("Radius Top", model.m_radiusTop);
+	metadata.SetChild("Height", model.m_height);
+	metadata.SetChild("Slices", model.m_slices);
+	metadata.SetChild("Stacks", model.m_stacks);
+	return metadata;
 }
 }

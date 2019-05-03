@@ -6,14 +6,14 @@ AxisButton::AxisButton(Button *negative, Button *positive) :
 	m_negative(negative),
 	m_positive(positive)
 {
-	m_negative->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	m_negative->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
-	};
-	m_positive->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+	}, this);
+	m_positive->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		m_onAxis(GetAmount());
-	};
+	}, this);
 }
 
 float AxisButton::GetAmount() const

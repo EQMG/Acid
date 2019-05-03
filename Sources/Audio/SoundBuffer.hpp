@@ -38,13 +38,13 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	const std::string &GetFilename() const { return m_filename; };
 
 	const uint32_t &GetBuffer() const { return m_buffer; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
 
 private:
 	static uint32_t LoadBufferWav(const std::string &filename);

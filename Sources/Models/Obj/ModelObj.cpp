@@ -58,7 +58,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelObj>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -67,7 +67,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 {
 	auto temp = ModelObj(filename, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -136,14 +136,16 @@ void ModelObj::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelObj::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
 {
-	metadata.GetChild("Filename", m_filename);
+	metadata.GetChild("Filename", model.m_filename);
+	return metadata;
 }
 
-void ModelObj::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelObj &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelObj");
-	metadata.SetChild("Filename", m_filename);
+	metadata.SetChild("Filename", model.m_filename);
+	return metadata;
 }
 }

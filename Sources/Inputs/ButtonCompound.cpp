@@ -8,7 +8,7 @@ ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool 
 {
 	for (const auto &button : buttons)
 	{
-		button->OnButton() += [this](InputAction action, BitMask<InputMod> mods)
+		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 		{
 			bool isDown = IsDown();
 
@@ -26,7 +26,7 @@ ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool 
 			{
 				m_onButton(InputAction::Repeat, 0);
 			}
-		};
+		}, this);
 
 		m_buttons.emplace_back(button);
 	}

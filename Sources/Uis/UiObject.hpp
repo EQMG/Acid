@@ -15,7 +15,8 @@ namespace acid
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI images, fonts, etc.
  */
-class ACID_EXPORT UiObject
+class ACID_EXPORT UiObject :
+	public Observer
 {
 public:
 	/**
@@ -117,7 +118,7 @@ public:
 	const float &GetScreenAlpha() const { return m_screenAlpha; }
 
 	const Vector2f &GetScreenScale() const { return m_screenScale; }
-	
+
 	/**
 	 * Gets if the object provided has the cursor hovered above it.
 	 * @return If the object has the cursor inside of its bounds.

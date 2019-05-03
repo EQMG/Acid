@@ -16,7 +16,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ModelCube>(Vector3f::Zero);
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -25,7 +25,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
 	auto temp = ModelCube(extents, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -45,8 +45,7 @@ void ModelCube::Load()
 		return;
 	}
 
-	static std::vector<VertexDefault> vertices = {
-		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
+	static std::vector<VertexDefault> vertices = { VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
 		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
 		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
 		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
@@ -69,22 +68,14 @@ void ModelCube::Load()
 		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
 		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
 		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
-		};
-	static std::vector<uint32_t> indices = {
-		1, 2, 0, // Front
-		3, 6, 8,
-		7, 4, 9, // Back
-		5, 10, 11,
-		12, 13, 14, // Top
-		15, 16, 17,
-		1, 18, 2, // Bottom
-		3, 19, 6,
-		7, 20, 4, // Left
-		5, 21, 10,
-		12, 22, 13, // Right
-		15, 23, 16,
-	};
+		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)), };
+	static std::vector<uint32_t> indices = { 1, 2, 0, // Front
+		3, 6, 8, 7, 4, 9, // Back
+		5, 10, 11, 12, 13, 14, // Top
+		15, 16, 17, 1, 18, 2, // Bottom
+		3, 19, 6, 7, 20, 4, // Left
+		5, 21, 10, 12, 22, 13, // Right
+		15, 23, 16, };
 
 	for (auto &vertex : vertices)
 	{
@@ -94,14 +85,16 @@ void ModelCube::Load()
 	Initialize(vertices, indices);
 }
 
-void ModelCube::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, ModelCube &model)
 {
-	metadata.GetChild("Extents", m_extents);
+	metadata.GetChild("Extents", model.m_extents);
+	return metadata;
 }
 
-void ModelCube::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const ModelCube &model)
 {
 	metadata.SetChild<std::string>("Type", "ModelCube");
-	metadata.SetChild("Extents", m_extents);
+	metadata.SetChild("Extents", model.m_extents);
+	return metadata;
 }
 }

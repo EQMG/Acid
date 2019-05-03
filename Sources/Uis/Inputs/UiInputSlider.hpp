@@ -29,7 +29,7 @@ public:
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	const float &GetValue() const { return m_value; }
-	
+
 	void SetValue(const float &value);
 
 	const float &GetProgress() const { return m_progress; }

@@ -61,10 +61,10 @@ void Particles::AddParticle(const Particle &particle)
 
 	if (it != m_particles.end())
 	{
-		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](Particle &p)
-			{
-				return p == particle;
-			}), it->second.end());
+		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [particle](Particle &p)
+		{
+			return p == particle;
+		}), it->second.end());
 	}
 }*/
 

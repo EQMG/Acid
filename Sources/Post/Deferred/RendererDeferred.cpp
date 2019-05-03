@@ -23,8 +23,8 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
 	//auto metadata = Metadata();
-	//m_pipeline.GetShader()->Encode(metadata);
-	//File("Shaders/Deferred.json", new Json(&metadata)).Write();
+	//metadata << *m_pipeline.GetShader();
+	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
 
 void RendererDeferred::Render(const CommandBuffer &commandBuffer)
@@ -90,9 +90,9 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
 	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
 	m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
-	m_descriptorSet.Push("samplerBRDF", m_brdf.Get());
-	m_descriptorSet.Push("samplerIrradiance", m_irradiance.Get());
-	m_descriptorSet.Push("samplerPrefiltered", m_prefiltered.Get());
+	m_descriptorSet.Push("samplerBRDF", *m_brdf);
+	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
+	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
 
 	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
@@ -117,7 +117,7 @@ std::vector<Shader::Define> RendererDeferred::GetDefines()
 
 std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 {
-	auto brdfImage = std::make_unique<Image2d>(size, size, nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -133,7 +133,7 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 
 	// Runs the compute pipeline.
 	descriptorSet.BindDescriptor(commandBuffer, compute);
-	compute.CmdRender(commandBuffer, brdfImage->GetWidth(), brdfImage->GetHeight());
+	compute.CmdRender(commandBuffer, brdfImage->GetExtent());
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
@@ -142,9 +142,9 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
 		FileSystem::ClearFile(filename);
-		VkExtent3D extent = {};
+		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+		Image::WritePixels(filename, pixels.get(), extent);
 	}, brdfImage.get());*/
 #endif
 
@@ -158,7 +158,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 		return nullptr;
 	}
 
-	auto irradianceCubemap = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto irradianceCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -175,7 +175,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 
 	// Runs the compute pipeline.
 	descriptorSet.BindDescriptor(commandBuffer, compute);
-	compute.CmdRender(commandBuffer, irradianceCubemap->GetWidth(), irradianceCubemap->GetHeight());
+	compute.CmdRender(commandBuffer, irradianceCubemap->GetExtent());
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_VERBOSE)
@@ -184,9 +184,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 	{
 		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
 		FileSystem::ClearFile(filename);
-		VkExtent3D extent = {};
+		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+		Image::WritePixels(filename, pixels.get(), extent);
 	}, irradianceCubemap.get());*/
 #endif
 
@@ -202,7 +202,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	auto prefilteredCubemap = std::make_unique<ImageCube>(size, size, nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
+	auto prefilteredCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
 		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 	// Creates the pipeline.
@@ -245,7 +245,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 
 		descriptorSet.BindDescriptor(commandBuffer, compute);
 		pushHandler.BindPush(commandBuffer, compute);
-		compute.CmdRender(commandBuffer, prefilteredCubemap->GetWidth() >> i, prefilteredCubemap->GetHeight() >> i);
+		compute.CmdRender(commandBuffer, prefilteredCubemap->GetExtent() >> i);
 		commandBuffer.SubmitIdle();
 
 		vkDestroyImageView(*logicalDevice, levelView, nullptr);
@@ -259,9 +259,9 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::share
 		{
 			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
 			FileSystem::ClearFile(filename);
-			VkExtent3D extent = {};
+			Vector2ui extent;
 			auto pixels = image->GetPixels(extent, i);
-			Image::WritePixels(filename, pixels.get(), extent.width, extent.height);
+			Image::WritePixels(filename, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
 	}*/
 #endif

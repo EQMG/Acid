@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCube :
 	public Collider
 {
 public:
-	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Identity);
+	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Zero);
 
 	~ColliderCube();
 
@@ -18,15 +18,15 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	btCollisionShape *GetCollisionShape() const override;
 
 	const Vector3f &GetExtents() const { return m_extents; }
 
 	void SetExtents(const Vector3f &extents);
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCube &collider);
 
 private:
 	std::unique_ptr<btBoxShape> m_shape;

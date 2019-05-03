@@ -17,14 +17,14 @@ public:
 	 * Creates a new entity and stores it into a structure.
 	 * @param transform The objects initial world position, rotation, and scale.
 	 */
-	explicit Entity(const Transform &transform);
+	explicit Entity(const Transform &transform = Transform::Zero);
 
 	/**
 	 * Creates a new entity and stores it into a structure.
 	 * @param filename The file to load the component data from.
 	 * @param transform The objects initial world position, rotation, and scale.
 	 */
-	explicit Entity(const std::string &filename, const Transform &transform = Transform::Identity);
+	explicit Entity(const std::string &filename, const Transform &transform = Transform::Zero);
 
 	~Entity();
 

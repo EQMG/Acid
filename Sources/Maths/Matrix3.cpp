@@ -244,18 +244,13 @@ Matrix2 Matrix3::GetSubmatrix(const int32_t &row, const int32_t &col) const
 	return result;
 }
 
-void Matrix3::Decode(const Metadata &metadata)
+std::string Matrix3::ToString() const
 {
-	metadata.GetChild("m0", m_rows[0]);
-	metadata.GetChild("m1", m_rows[1]);
-	metadata.GetChild("m2", m_rows[2]);
-}
-
-void Matrix3::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("m0", m_rows[0]);
-	metadata.SetChild("m1", m_rows[1]);
-	metadata.SetChild("m2", m_rows[2]);
+	std::stringstream stream;
+	stream.precision(10);
+	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
+	       << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
+	return stream.str();
 }
 
 bool Matrix3::operator==(const Matrix3 &other) const
@@ -385,18 +380,25 @@ Matrix3 &Matrix3::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector3f(other, other, other));
 }
 
+const Metadata &operator>>(const Metadata &metadata, Matrix3 &matrix)
+{
+	metadata.GetChild("m0", matrix.m_rows[0]);
+	metadata.GetChild("m1", matrix.m_rows[1]);
+	metadata.GetChild("m2", matrix.m_rows[2]);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix)
+{
+	metadata.SetChild("m0", matrix.m_rows[0]);
+	metadata.SetChild("m1", matrix.m_rows[1]);
+	metadata.SetChild("m2", matrix.m_rows[2]);
+	return metadata;
+}
+
 std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix)
 {
 	stream << matrix.ToString();
 	return stream;
-}
-
-std::string Matrix3::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
-	       << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
-	return stream.str();
 }
 }

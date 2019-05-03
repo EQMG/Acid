@@ -11,16 +11,6 @@ Time::Time(const int64_t &microseconds) :
 {
 }
 
-void Time::Decode(const Metadata &metadata)
-{
-	m_microseconds = metadata.Get<int64_t>();
-}
-
-void Time::Encode(Metadata &metadata) const
-{
-	metadata.Set(m_microseconds);
-}
-
 bool Time::operator==(const Time &other) const
 {
 	return AsMicroseconds() == other.AsMicroseconds();
@@ -139,5 +129,17 @@ Time &Time::operator/=(const int64_t &other)
 Time &Time::operator%=(const Time &other)
 {
 	return *this = *this % other;
+}
+
+const Metadata &operator>>(const Metadata &metadata, Time &time)
+{
+	metadata >> time.m_microseconds;
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Time &time)
+{
+	metadata << time.m_microseconds;
+	return metadata;
 }
 }

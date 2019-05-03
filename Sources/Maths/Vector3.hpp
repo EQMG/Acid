@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
-#include "Maths.hpp"
+#include "StdAfx.hpp"
 
 namespace acid
 {
@@ -22,37 +21,22 @@ public:
 	/**
 	 * Constructor for Vector3.
 	 **/
-	explicit Vector3() :
-		m_x(0),
-		m_y(0),
-		m_z(0)
-	{
-	}
-
+	explicit Vector3(); 
+	
 	/**
 	 * Constructor for Vector3.
 	 * @param a The value to set all components to.
 	 **/
-	explicit Vector3(const T &a) :
-		m_x(a),
-		m_y(a),
-		m_z(a)
-	{
-	}
-
+	explicit Vector3(const T &a); 
+	
 	/**
 	 * Constructor for Vector3.
 	 * @param x Start x.
 	 * @param y Start y.
 	 * @param z Start z.
 	 **/
-	Vector3(const T &x, const T &y, const T &z) :
-		m_x(x),
-		m_y(y),
-		m_z(z)
-	{
-	}
-
+	Vector3(const T &x, const T &y, const T &z); 
+	
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
@@ -60,39 +44,24 @@ public:
 	 * @param z Start z.
 	 **/
 	template<typename K>
-	explicit Vector3(const Vector2<K> &source, const float &z = 0) :
-		m_x(static_cast<T>(source.m_x)),
-		m_y(static_cast<T>(source.m_y)),
-		m_z(z)
-	{
-	}
-
+	explicit Vector3(const Vector2<K> &source, const float &z = 0); 
+	
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	Vector3(const Vector3<K> &source) :
-		m_x(static_cast<T>(source.m_x)),
-		m_y(static_cast<T>(source.m_y)),
-		m_z(static_cast<T>(source.m_z))
-	{
-	}
-
+	Vector3(const Vector3<K> &source); 
+	
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	explicit Vector3(const Vector4<K> &source) :
-		m_x(static_cast<T>(source.m_x)),
-		m_y(static_cast<T>(source.m_y)),
-		m_z(static_cast<T>(source.m_z))
-	{
-	}
-
+	explicit Vector3(const Vector4<K> &source); 
+	
 	/**
 	 * Adds this vector to another vector.
 	 * @tparam K The others type.
@@ -100,11 +69,8 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Add(const Vector3<K> &other) const
-	{
-		return Vector3<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z);
-	}
-
+	auto Add(const Vector3<K> &other) const; 
+	
 	/**
 	 * Subtracts this vector to another vector.
 	 * @tparam K The others type.
@@ -112,11 +78,8 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Subtract(const Vector3<K> &other) const
-	{
-		return Vector3<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z);
-	}
-
+	auto Subtract(const Vector3<K> &other) const; 
+	
 	/**
 	 * Multiplies this vector with another vector.
 	 * @tparam K The others type.
@@ -124,11 +87,8 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Multiply(const Vector3<K> &other) const
-	{
-		return Vector3<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z);
-	}
-
+	auto Multiply(const Vector3<K> &other) const; 
+	
 	/**
 	 * Divides this vector by another vector.
 	 * @tparam K The others type.
@@ -136,11 +96,8 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Divide(const Vector3<K> &other) const
-	{
-		return Vector3<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z);
-	}
-
+	auto Divide(const Vector3<K> &other) const; 
+	
 	/**
 	 * Calculates the angle between this vector and another vector.
 	 * @tparam K The others type.
@@ -148,22 +105,8 @@ public:
 	 * @return The angle, in radians.
 	 **/
 	template<typename K>
-	auto Angle(const Vector3<K> &other) const
-	{
-		auto dls = Dot(other) / (Length() * other.Length());
-
-		if (dls < -1)
-		{
-			dls = -1;
-		}
-		else if (dls > 1)
-		{
-			dls = 1;
-		}
-
-		return std::acos(dls);
-	}
-
+	auto Angle(const Vector3<K> &other) const; 
+	
 	/**
 	 * Calculates the dot product of the this vector and another vector.
 	 * @tparam K The others type.
@@ -171,11 +114,8 @@ public:
 	 * @return The dot product.
 	 **/
 	template<typename K>
-	auto Dot(const Vector3<K> &other) const
-	{
-		return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
-	}
-
+	auto Dot(const Vector3<K> &other) const; 
+	
 	/**
 	 * Calculates the cross product of the this vector and another vector.
 	 * @tparam K The others type.
@@ -183,11 +123,8 @@ public:
 	 * @return The cross product.
 	 **/
 	template<typename K>
-	auto Cross(const Vector3<K> &other) const
-	{
-		return Vector3<decltype(m_x * other.m_x)>(m_y * other.m_z - m_z * other.m_y, other.m_x * m_z - other.m_z * m_x, m_x * other.m_y - m_y * other.m_x);
-	}
-
+	auto Cross(const Vector3<K> &other) const; 
+	
 	/**
 	 * Calculates the linear interpolation between this vector and another vector.
 	 * @tparam K The others type.
@@ -197,13 +134,8 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	auto Lerp(const Vector3<K> &other, const J &progression) const
-	{
-		auto ta = *this * (1 - progression);
-		auto tb = other * progression;
-		return ta + tb;
-	}
-
+	auto Lerp(const Vector3<K> &other, const J &progression) const; 
+	
 	/**
 	 * Scales this vector by a scalar.
 	 * @tparam K The scalar type.
@@ -211,94 +143,53 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	auto Scale(const K &scalar) const
-	{
-		return Vector3<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar, m_z * scalar);
-	}
-
+	auto Scale(const K &scalar) const; 
+	
 	/**
 	 * Rotates this vector by a angle around the origin.
 	 * @tparam K The rotations type.
 	 * @param angle The angle to rotate by, in radians.
 	 * @return The rotated vector.
 	 **/
-	/*template<typename K = float>
-	auto Rotate(const Vector3<K> &rotation) const
-	{
-		Matrix4 matrix = Matrix4::TransformationMatrix(Zero, rotation, One);
-		return matrix.Transform(*this);
-	}*/
-
-	/**
-	 * Negates this vector.
-	 * @return The negated vector.
-	 **/
-	auto Negate() const
-	{
-		return Vector3<decltype(-m_x)>(-m_x, -m_y, -m_z);
-	}
-
+	//template<typename K = float>
+	//auto Rotate(const Vector3<K> &angle) const; 
+	
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
 	 **/
-	auto Normalize() const
-	{
-		auto l = Length();
-
-		if (l == 0)
-		{
-			throw std::runtime_error("Can't normalize a zero length vector");
-		}
-
-		return *this / l;
-	}
-
+	auto Normalize() const; 
+	
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared.
 	 **/
-	auto LengthSquared() const
-	{
-		return m_x * m_x + m_y * m_y + m_z * m_z;
-	}
-
+	auto LengthSquared() const; 
+	
 	/**
 	 * Gets the length of this vector.
 	 * @return The length.
 	 **/
-	auto Length() const
-	{
-		return std::sqrt(LengthSquared());
-	}
-
+	auto Length() const; 
+	
 	/**
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.
 	 **/
-	auto Min() const
-	{
-		return std::min({ m_x, m_y, m_z });
-	}
-
+	auto Min() const; 
+	
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components.
 	 **/
-	auto Max() const
-	{
-		return std::max({ m_x, m_y, m_z });
-	}
-
+	auto Max() const; 
+	
 	/**
 	 * Gets the minimal and maximal values in the vector.
 	 * @return The minimal and maximal components.
 	 */
-	auto MinMax() const
-	{
-		return std::minmax({ m_x, m_y, m_z });
-	}
-
+	auto MinMax() const; 
+	
 	/**
 	 * Gets the lowest vector size between this vector and other.
 	 * @tparam K The others type.
@@ -306,11 +197,8 @@ public:
 	 * @return The lowest vector.
 	 **/
 	template<typename K>
-	auto Min(const Vector3<K> &other)
-	{
-		return Vector3<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z));
-	}
-
+	auto Min(const Vector3<K> &other); 
+	
 	/**
 	 * Gets the maximum vector size between this vector and other.
 	 * @tparam K The others type.
@@ -318,11 +206,8 @@ public:
 	 * @return The maximum vector.
 	 **/
 	template<typename K>
-	auto Max(const Vector3<K> &other)
-	{
-		return Vector3<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z));
-	}
-
+	auto Max(const Vector3<K> &other); 
+	
 	/**
 	 * Gets the distance between this vector and another vector.
 	 * @tparam K The others type.
@@ -330,14 +215,8 @@ public:
 	 * @return The squared distance.
 	 **/
 	template<typename K>
-	auto DistanceSquared(const Vector3<K> &other) const
-	{
-		auto dx = m_x - other.m_x;
-		auto dy = m_y - other.m_y;
-		auto dz = m_z - other.m_z;
-		return dx * dx + dy * dy + dz * dz;
-	}
-
+	auto DistanceSquared(const Vector3<K> &other) const; 
+	
 	/**
 	 * Gets the between this vector and another vector.
 	 * @tparam K The others type.
@@ -345,11 +224,8 @@ public:
 	 * @return The distance.
 	 **/
 	template<typename K>
-	auto Distance(const Vector3<K> &other) const
-	{
-		return std::sqrt(DistanceSquared(other));
-	}
-
+	auto Distance(const Vector3<K> &other) const; 
+	
 	/**
 	 * Gets the vector distance between this vector and another vector.
 	 * @tparam K The others type.
@@ -357,11 +233,8 @@ public:
 	 * @return The vector distance.
 	 **/
 	template<typename K>
-	auto DistanceVector(const Vector3<K> &other) const
-	{
-		return (*this - other) * (*this - other);
-	}
-
+	auto DistanceVector(const Vector3<K> &other) const; 
+	
 	/**
 	 * Gradually changes this vector to a target.
 	 * @param target The target vector.
@@ -369,34 +242,19 @@ public:
 	 * @return The changed vector.
 	 **/
 	template<typename K, typename J>
-	auto SmoothDamp(const Vector3<K> &target, const Vector3<J> &rate) const
-	{
-		return Maths::SmoothDamp(*this, target, rate);
-	}
-
+	auto SmoothDamp(const Vector3<K> &target, const Vector3<J> &rate) const; 
+	
 	/**
 	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
 	 * @return The polar coordinates (radius, theta).
 	 **/
-	auto CartesianToPolar() const
-	{
-		auto radius = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
-		auto theta = std::atan2(m_y, m_x);
-		auto phi = std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z);
-		return Vector3<decltype(radius)>(radius, theta, phi);
-	}
-
+	auto CartesianToPolar() const; 
+	
 	/**
 	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
 	 * @return The cartesian coordinates (x, y).
 	 **/
-	auto PolarToCartesian() const
-	{
-		auto x = m_x * std::sin(m_z) * std::cos(m_y);
-		auto y = m_x * std::sin(m_z) * std::sin(m_y);
-		auto z = m_x * std::cos(m_z);
-		return Vector3<decltype(x)>(x, y, z);
-	}
+	auto PolarToCartesian() const;
 
 	const T &GetX() const { return m_x; }
 
@@ -410,118 +268,43 @@ public:
 
 	void SetZ(const T &z) { m_z = z; }
 
-	void Decode(const Metadata &metadata)
-	{
-		metadata.GetChild("x", m_x);
-		metadata.GetChild("y", m_y);
-		metadata.GetChild("z", m_z);
-	}
-
-	void Encode(Metadata &metadata) const
-	{
-		metadata.SetChild("x", m_x);
-		metadata.SetChild("y", m_y);
-		metadata.SetChild("z", m_z);
-	}
-
-	std::string ToString() const
-	{
-		std::stringstream stream;
-		stream.precision(10);
-		stream << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
-		return stream.str();
-	}
+	std::string ToString() const;
 
 	template<typename K>
-	bool operator==(const Vector3<K> &other) const
-	{
-		return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z;
-	}
+	bool operator==(const Vector3<K> &other) const;
 
 	template<typename K>
-	bool operator!=(const Vector3<K> &other) const
-	{
-		return !(*this == other);
-	}
+	bool operator!=(const Vector3<K> &other) const;
 
-	Vector3 operator-() const
-	{
-		return Negate();
-	}
+	template<typename U = T>
+	std::enable_if_t<std::is_signed_v<U>, Vector3> operator-() const;
 
-	const T &operator[](const uint32_t &index) const
-	{
-		switch (index)
-		{
-		case 0:
-			return m_x;
-		case 1:
-			return m_y;
-		case 2:
-			return m_z;
-		default:
-			throw std::runtime_error("Vector3 index out of bounds!");
-		}
-	}
+	template<typename U = T>
+	std::enable_if_t<std::is_integral_v<U>, Vector3> operator~() const;
 
-	T &operator[](const uint32_t &index)
-	{
-		switch (index)
-		{
-		case 0:
-			return m_x;
-		case 1:
-			return m_y;
-		case 2:
-			return m_z;
-		default:
-			throw std::runtime_error("Vector3 index out of bounds!");
-		}
-	}
+	const T &operator[](const uint32_t &index) const;
+
+	T &operator[](const uint32_t &index);
 
 	template<typename K>
-	Vector3 &operator+=(const Vector3<K> &other)
-	{
-		return *this = Add(other);
-	}
+	Vector3 &operator+=(const Vector3<K> &other);
 
 	template<typename K>
-	Vector3 &operator-=(const Vector3<K> &other)
-	{
-		return *this = Subtract(other);
-	}
+	Vector3 &operator-=(const Vector3<K> &other);
 
 	template<typename K>
-	Vector3 &operator*=(const Vector3<K> &other)
-	{
-		return *this = Multiply(other);
-	}
+	Vector3 &operator*=(const Vector3<K> &other);
 
 	template<typename K>
-	Vector3 &operator/=(const Vector3<K> &other)
-	{
-		return *this = Divide(other);
-	}
+	Vector3 &operator/=(const Vector3<K> &other);
 
-	Vector3 &operator+=(const T &other)
-	{
-		return *this = Add(Vector3<T>(other));
-	}
+	Vector3 &operator+=(const T &other);
 
-	Vector3 &operator-=(const T &other)
-	{
-		return *this = Subtract(Vector3<T>(other));
-	}
+	Vector3 &operator-=(const T &other);
 
-	Vector3 &operator*=(const T &other)
-	{
-		return *this = Multiply(Vector3<T>(other));
-	}
+	Vector3 &operator*=(const T &other);
 
-	Vector3 &operator/=(const T &other)
-	{
-		return *this = Divide(Vector3<T>(other));
-	}
+	Vector3 &operator/=(const T &other);
 
 	ACID_EXPORT static const Vector3 Zero;
 	ACID_EXPORT static const Vector3 One;
@@ -537,103 +320,10 @@ public:
 	T m_x, m_y, m_z;
 };
 
-template<typename K>
-std::ostream &operator<<(std::ostream &stream, const Vector3<K> &vector)
-{
-	stream << vector.ToString();
-	return stream;
-}
-
-template<typename K, typename J>
-auto operator+(const Vector3<K> &left, const Vector3<J> &right)
-{
-	return left.Add(right);
-}
-
-template<typename K, typename J>
-auto operator-(const Vector3<K> &left, const Vector3<J> &right)
-{
-	return left.Subtract(right);
-}
-
-template<typename K, typename J>
-auto operator*(const Vector3<K> &left, const Vector3<J> &right)
-{
-	return left.Multiply(right);
-}
-
-template<typename K, typename J>
-auto operator/(const Vector3<K> &left, const Vector3<J> &right)
-{
-	return left.Divide(right);
-}
-
-template<typename K, typename J>
-auto operator+(const K &left, const Vector3<J> &right)
-{
-	return Vector3<K>(left).Add(right);
-}
-
-template<typename K, typename J>
-auto operator-(const K &left, const Vector3<J> &right)
-{
-	return Vector3<K>(left).Subtract(right);
-}
-
-template<typename K, typename J>
-auto operator*(const K &left, const Vector3<J> &right)
-{
-	return Vector3<K>(left).Multiply(right);
-}
-
-template<typename K, typename J>
-auto operator/(const K &left, const Vector3<J> &right)
-{
-	return Vector3<K>(left).Divide(right);
-}
-
-template<typename K, typename J>
-auto operator+(const Vector3<K> &left, const J &right)
-{
-	return left.Add(Vector3<J>(right));
-}
-
-template<typename K, typename J>
-auto operator-(const Vector3<K> &left, const J &right)
-{
-	return left.Subtract(Vector3<J>(right));
-}
-
-template<typename K, typename J>
-auto operator*(const Vector3<K> &left, const J &right)
-{
-	return left.Multiply(Vector3<J>(right));
-}
-
-template<typename K, typename J>
-auto operator/(const Vector3<K> &left, const J &right)
-{
-	return left.Divide(Vector3<J>(right));
-}
-
 using Vector3f = Vector3<float>;
 using Vector3d = Vector3<double>;
 using Vector3i = Vector3<int32_t>;
 using Vector3ui = Vector3<uint32_t>;
 }
 
-namespace std
-{
-template<typename T>
-struct hash<acid::Vector3<T>>
-{
-	size_t operator()(acid::Vector3<T> const &vector) const
-	{
-		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vector.m_x);
-		acid::Maths::HashCombine(seed, vector.m_y);
-		acid::Maths::HashCombine(seed, vector.m_z);
-		return seed;
-	}
-};
-}
+#include "Vector3.inl"

@@ -21,7 +21,7 @@ std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<FontType>("", "");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -32,7 +32,7 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 	temp.m_filename = filename;
 	temp.m_style = style;
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -43,7 +43,6 @@ FontType::FontType(std::string filename, std::string style, const bool &load) :
 	m_metadata(nullptr),
 	m_storageGlyphs(nullptr),
 	m_instanceBuffer(nullptr),
-	m_glyphInstances(nullptr),
 	m_instances(0)
 {
 	if (load)
@@ -61,7 +60,8 @@ void FontType::Update(const std::vector<Text *> &texts)
 		return;
 	}
 
-	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&m_glyphInstances));
+	Instance *instances;
+	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &text : texts)
 	{
@@ -81,7 +81,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 
 			const uint32_t glyphIndex = m_charmap[c];
 			const HostGlyphInfo *gi = &m_glyphInfos[glyphIndex];
-			auto instance = &m_glyphInstances[m_instances];
+			auto instance = &instances[m_instances];
 
 			if (c == '\n')
 			{
@@ -155,30 +155,18 @@ void FontType::Load()
 	LoadFont(m_filename + "/" + m_style + ".ttf");
 }
 
-void FontType::Decode(const Metadata &metadata)
+const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
 {
-	metadata.GetChild("Filename", m_filename);
-	metadata.GetChild("Style", m_style);
+	metadata.GetChild("Filename", fontType.m_filename);
+	metadata.GetChild("Style", fontType.m_style);
+	return metadata;
 }
 
-void FontType::Encode(Metadata &metadata) const
+Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 {
-	metadata.SetChild("Filename", m_filename);
-	metadata.SetChild("Style", m_style);
-}
-
-Shader::VertexInput FontType::GetVertexInput(const uint32_t &baseBinding)
-{
-	std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-		VkVertexInputBindingDescription{baseBinding, sizeof(GlyphInstance), VK_VERTEX_INPUT_RATE_INSTANCE}
-	};
-	std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-		VkVertexInputAttributeDescription{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, m_rect)},
-		VkVertexInputAttributeDescription{1, baseBinding, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, m_glyphIndex)},
-		VkVertexInputAttributeDescription{2, baseBinding, VK_FORMAT_R32_UINT, offsetof(GlyphInstance, m_sharpness)},
-		VkVertexInputAttributeDescription{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(GlyphInstance, m_colour)}
-	};
-	return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+	metadata.SetChild("Filename", fontType.m_filename);
+	metadata.SetChild("Style", fontType.m_style);
+	return metadata;
 }
 
 uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
@@ -266,7 +254,7 @@ void FontType::LoadFont(const std::string &filename)
 
 	m_glyphDataSize = m_glyphPointsOffset + m_glyphPointsSize;
 	m_storageGlyphs = std::make_unique<StorageBuffer>(m_glyphDataSize);
-	m_instanceBuffer = std::make_unique<InstanceBuffer>(MAX_VISIBLE_GLYPHS * sizeof(GlyphInstance));
+	m_instanceBuffer = std::make_unique<InstanceBuffer>(MAX_VISIBLE_GLYPHS * sizeof(Instance));
 
 	char *glyphData;
 	m_storageGlyphs->MapMemory(reinterpret_cast<void **>(&glyphData));

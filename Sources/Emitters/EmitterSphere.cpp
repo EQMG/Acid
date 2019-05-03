@@ -20,18 +20,6 @@ void EmitterSphere::Update()
 {
 }
 
-void EmitterSphere::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Radius", m_radius);
-	metadata.GetChild("Local Transform", m_localTransform);
-}
-
-void EmitterSphere::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Radius", m_radius);
-	metadata.SetChild("Local Transform", m_localTransform);
-}
-
 Vector3f EmitterSphere::GeneratePosition() const
 {
 	float a = Maths::Random(0.0f, 1.0f);
@@ -48,5 +36,19 @@ Vector3f EmitterSphere::GeneratePosition() const
 	float randY = b * std::sin(2.0f * Maths::Pi * (a / b));
 	float distance = Vector2f(randX, randY).Length();
 	return m_radius * distance * Emitter::RandomUnitVector();
+}
+
+const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter)
+{
+	metadata.GetChild("Radius", emitter.m_radius);
+	metadata.GetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter)
+{
+	metadata.SetChild("Radius", emitter.m_radius);
+	metadata.SetChild("Local Transform", emitter.m_localTransform);
+	return metadata;
 }
 }

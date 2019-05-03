@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	void Decode(const Metadata &metadata) override;
+	friend const Metadata &operator>>(const Metadata &metadata, Rotate &rotate);
 
-	void Encode(Metadata &metadata) const override;
+	friend Metadata &operator<<(Metadata &metadata, const Rotate &rotate);
 
 private:
 	Vector3f m_direction;

@@ -50,8 +50,7 @@ public:
 
 	/**
 	 * Creates a new cubemap image.
-	 * @param width The images width.
-	 * @param height The images height.
+	 * @param extent The images extent in pixels.
 	 * @param pixels The initial pixels to use in the Image. {@link ImageCube#GetPixels} to get a copy of the pixels, and {@link ImageCube#SetPixels} to set the pixels.
 	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param layout The layout that the image subresources accessible from.
@@ -62,7 +61,7 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	ImageCube(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+	ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
@@ -76,10 +75,6 @@ public:
 
 	void Load() override;
 
-	void Decode(const Metadata &metadata) override;
-
-	void Encode(Metadata &metadata) const override;
-
 	/**
 	 * Copies the images pixels from memory.
 	 * @param extent The sampled images extent.
@@ -87,7 +82,7 @@ public:
 	 * @param arrayLayer The array layer to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const;
+	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -95,7 +90,7 @@ public:
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0) const;
+	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, const uint32_t &mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
@@ -105,8 +100,8 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width,
-		uint32_t &height, uint32_t &components, VkFormat &format);
+	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
+		uint32_t &components, VkFormat &format);
 
 	const std::string &GetFilename() const { return m_filename; };
 
@@ -130,9 +125,7 @@ public:
 
 	const uint32_t &GetComponents() const { return m_components; }
 
-	const uint32_t &GetWidth() const { return m_width; }
-
-	const uint32_t &GetHeight() const { return m_height; }
+	const Vector2ui &GetExtent() const { return m_extent; }
 
 	const uint32_t &GetMipLevels() const { return m_mipLevels; }
 
@@ -145,6 +138,10 @@ public:
 	const VkImageView &GetView() const { return m_view; }
 
 	const VkFormat &GetFormat() const { return m_format; }
+
+	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ImageCube &image);
+
+	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
 
 private:
 	std::string m_filename;
@@ -160,7 +157,7 @@ private:
 	VkImageUsageFlags m_usage;
 
 	uint32_t m_components;
-	uint32_t m_width, m_height;
+	Vector2ui m_extent;
 	std::unique_ptr<uint8_t[]> m_loadPixels;
 	uint32_t m_mipLevels;
 

@@ -51,57 +51,6 @@ void ParticleSystem::Update()
 	}
 }
 
-void ParticleSystem::Decode(const Metadata &metadata)
-{
-	auto typesNode = metadata.FindChild("Types");
-
-	if (typesNode != nullptr)
-	{
-		for (const auto &typeNode : typesNode->GetChildren())
-		{
-			m_types.emplace_back(ParticleType::Create(*typeNode));
-		}
-	}
-
-	metadata.GetChild("PPS", m_pps);
-	metadata.GetChild("Average Speed", m_averageSpeed);
-	metadata.GetChild("Gravity Effect", m_gravityEffect);
-	metadata.GetChild("Random Rotation", m_randomRotation);
-	metadata.GetChild("Direction", m_direction);
-	metadata.GetChild("Direction Deviation", m_directionDeviation);
-	metadata.GetChild("Speed Deviation", m_speedDeviation);
-	metadata.GetChild("Life Deviation", m_lifeDeviation);
-	metadata.GetChild("Stage Deviation", m_stageDeviation);
-	metadata.GetChild("Scale Deviation", m_scaleDeviation);
-	m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
-}
-
-void ParticleSystem::Encode(Metadata &metadata) const
-{
-	auto typesNode = metadata.FindChild("Types", false);
-
-	if (typesNode == nullptr)
-	{
-		typesNode = metadata.AddChild(new Metadata("Types"));
-	}
-
-	for (const auto &type : m_types)
-	{
-		type->Encode(*typesNode->AddChild(new Metadata()));
-	}
-
-	metadata.SetChild("PPS", m_pps);
-	metadata.SetChild("Average Speed", m_averageSpeed);
-	metadata.SetChild("Gravity Effect", m_gravityEffect);
-	metadata.SetChild("Random Rotation", m_randomRotation);
-	metadata.SetChild("Direction", m_direction);
-	metadata.SetChild("Direction Deviation", m_directionDeviation);
-	metadata.SetChild("Speed Deviation", m_speedDeviation);
-	metadata.SetChild("Life Deviation", m_lifeDeviation);
-	metadata.SetChild("Stage Deviation", m_stageDeviation);
-	metadata.SetChild("Scale Deviation", m_scaleDeviation);
-}
-
 void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
 {
 	if (std::find(m_types.begin(), m_types.end(), type) != m_types.end())
@@ -216,5 +165,60 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 	float x = rootOneMinusZSquared * std::cos(theta);
 	float y = rootOneMinusZSquared * std::sin(theta);
 	return Vector3f(x, y, z);
+}
+
+const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)
+{
+	auto typesNode = metadata.FindChild("Types");
+
+	particleSystem.m_types.clear();
+
+	if (typesNode != nullptr)
+	{
+		for (const auto &typeNode : typesNode->GetChildren())
+		{
+			particleSystem.m_types.emplace_back(ParticleType::Create(*typeNode));
+		}
+	}
+
+	metadata.GetChild("PPS", particleSystem.m_pps);
+	metadata.GetChild("Average Speed", particleSystem.m_averageSpeed);
+	metadata.GetChild("Gravity Effect", particleSystem.m_gravityEffect);
+	metadata.GetChild("Random Rotation", particleSystem.m_randomRotation);
+	metadata.GetChild("Direction", particleSystem.m_direction);
+	metadata.GetChild("Direction Deviation", particleSystem.m_directionDeviation);
+	metadata.GetChild("Speed Deviation", particleSystem.m_speedDeviation);
+	metadata.GetChild("Life Deviation", particleSystem.m_lifeDeviation);
+	metadata.GetChild("Stage Deviation", particleSystem.m_stageDeviation);
+	metadata.GetChild("Scale Deviation", particleSystem.m_scaleDeviation);
+	particleSystem.m_emitTimer = Timer(Time::Seconds(1.0f / particleSystem.m_pps));
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
+{
+	auto typesNode = metadata.FindChild("Types", false);
+
+	if (typesNode == nullptr)
+	{
+		typesNode = metadata.AddChild(new Metadata("Types"));
+	}
+
+	for (const auto &type : particleSystem.m_types)
+	{
+		*typesNode->AddChild(new Metadata()) << type;
+	}
+
+	metadata.SetChild("PPS", particleSystem.m_pps);
+	metadata.SetChild("Average Speed", particleSystem.m_averageSpeed);
+	metadata.SetChild("Gravity Effect", particleSystem.m_gravityEffect);
+	metadata.SetChild("Random Rotation", particleSystem.m_randomRotation);
+	metadata.SetChild("Direction", particleSystem.m_direction);
+	metadata.SetChild("Direction Deviation", particleSystem.m_directionDeviation);
+	metadata.SetChild("Speed Deviation", particleSystem.m_speedDeviation);
+	metadata.SetChild("Life Deviation", particleSystem.m_lifeDeviation);
+	metadata.SetChild("Stage Deviation", particleSystem.m_stageDeviation);
+	metadata.SetChild("Scale Deviation", particleSystem.m_scaleDeviation);
+	return metadata;
 }
 }

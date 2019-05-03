@@ -107,26 +107,6 @@ void Rigidbody::Update()
 	m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
 }
 
-void Rigidbody::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Mass", m_mass);
-	metadata.GetChild("Friction", m_friction);
-	metadata.GetChild("Friction Rolling", m_frictionRolling);
-	metadata.GetChild("Friction Spinning", m_frictionSpinning);
-	metadata.GetChild("Linear Factor", m_linearFactor);
-	metadata.GetChild("Angular Factor", m_angularFactor);
-}
-
-void Rigidbody::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Mass", m_mass);
-	metadata.SetChild("Friction", m_friction);
-	metadata.SetChild("Friction Rolling", m_frictionRolling);
-	metadata.SetChild("Friction Spinning", m_frictionSpinning);
-	metadata.SetChild("Linear Factor", m_linearFactor);
-	metadata.SetChild("Angular Factor", m_angularFactor);
-}
-
 bool Rigidbody::InFrustum(const Frustum &frustum)
 {
 	btVector3 min = btVector3();
@@ -179,6 +159,28 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 {
 	m_angularVelocity = angularVelocity;
 	m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
+}
+
+const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)
+{
+	metadata.GetChild("Mass", rigidbody.m_mass);
+	metadata.GetChild("Friction", rigidbody.m_friction);
+	metadata.GetChild("Friction Rolling", rigidbody.m_frictionRolling);
+	metadata.GetChild("Friction Spinning", rigidbody.m_frictionSpinning);
+	metadata.GetChild("Linear Factor", rigidbody.m_linearFactor);
+	metadata.GetChild("Angular Factor", rigidbody.m_angularFactor);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody)
+{
+	metadata.SetChild("Mass", rigidbody.m_mass);
+	metadata.SetChild("Friction", rigidbody.m_friction);
+	metadata.SetChild("Friction Rolling", rigidbody.m_frictionRolling);
+	metadata.SetChild("Friction Spinning", rigidbody.m_frictionSpinning);
+	metadata.SetChild("Linear Factor", rigidbody.m_linearFactor);
+	metadata.SetChild("Angular Factor", rigidbody.m_angularFactor);
+	return metadata;
 }
 
 void Rigidbody::RecalculateMass()

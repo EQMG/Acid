@@ -18,7 +18,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 
 	auto result = std::make_shared<ImageCube>("");
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	result->Decode(metadata);
+	metadata >> *result;
 	result->Load();
 	return result;
 }
@@ -28,7 +28,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const 
 {
 	auto temp = ImageCube(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Metadata metadata = Metadata();
-	temp.Encode(metadata);
+	metadata << temp;
 	return Create(metadata);
 }
 
@@ -45,8 +45,6 @@ ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilte
 	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
 	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
 	m_components(0),
-	m_width(0),
-	m_height(0),
 	m_loadPixels(nullptr),
 	m_mipLevels(0),
 	m_image(VK_NULL_HANDLE),
@@ -61,9 +59,8 @@ ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilte
 	}
 }
 
-ImageCube::ImageCube(const uint32_t &width, const uint32_t &height, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout,
-	const VkImageUsageFlags &usage, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic,
-	const bool &mipmap) :
+ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
+	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
 	m_filename(""),
 	m_fileSuffix(""),
 	m_filter(filter),
@@ -74,8 +71,7 @@ ImageCube::ImageCube(const uint32_t &width, const uint32_t &height, std::unique_
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
 	m_components(4),
-	m_width(width),
-	m_height(height),
+	m_extent(extent),
 	m_loadPixels(std::move(pixels)),
 	m_mipLevels(0),
 	m_image(VK_NULL_HANDLE),
@@ -134,22 +130,22 @@ void ImageCube::Load()
 #if defined(ACID_VERBOSE)
 		auto debugStart = Engine::GetTime();
 #endif
-		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_width, m_height, m_components, m_format);
+		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Engine::GetTime();
 		Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 
-	if (m_width == 0 && m_height == 0)
+	if (m_extent.m_x == 0 || m_extent.m_y == 0)
 	{
 		return;
 	}
 
-	m_mipLevels = m_mipmap ? Image::GetMipLevels({ m_width, m_height, 1 }) : 1;
+	m_mipLevels = m_mipmap ? Image::GetMipLevels({ m_extent.m_x, m_extent.m_y, 1 }) : 1;
 
-	Image::CreateImage(m_image, m_memory, { m_width, m_height, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_mipLevels, 6,
-		VK_IMAGE_TYPE_2D);
+	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		m_mipLevels, 6, VK_IMAGE_TYPE_2D);
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 
@@ -160,19 +156,20 @@ void ImageCube::Load()
 
 	if (m_loadPixels != nullptr)
 	{
-		auto bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);
 		std::memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
-		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, 6, 0);
+		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, 6, 0);
 	}
 
 	if (m_mipmap)
 	{
-		Image::CreateMipmaps(m_image, { m_width, m_height, 1 }, m_format, m_layout, m_mipLevels, 0, 6);
+		Image::CreateMipmaps(m_image, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_layout, m_mipLevels, 0, 6);
 	}
 	else if (m_loadPixels != nullptr)
 	{
@@ -186,39 +183,15 @@ void ImageCube::Load()
 	m_loadPixels = nullptr;
 }
 
-void ImageCube::Decode(const Metadata &metadata)
-{
-	metadata.GetChild("Filename", m_filename);
-	metadata.GetChild("Suffix", m_fileSuffix);
-	//metadata.GetChild("Sides", m_fileSides);
-	metadata.GetChild("Filter", m_filter);
-	metadata.GetChild("Address Mode", m_addressMode);
-	metadata.GetChild("Anisotropic", m_anisotropic);
-	metadata.GetChild("Mipmap", m_mipmap);
-}
-
-void ImageCube::Encode(Metadata &metadata) const
-{
-	metadata.SetChild("Filename", m_filename);
-	metadata.SetChild("Suffix", m_fileSuffix);
-	//metadata.SetChild("Sides", m_fileSides);
-	metadata.SetChild("Filter", m_filter);
-	metadata.SetChild("Address Mode", m_addressMode);
-	metadata.SetChild("Anisotropic", m_anisotropic);
-	metadata.SetChild("Mipmap", m_mipmap);
-}
-
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
 	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
 
-	extent.width = int32_t(m_width >> mipLevel);
-	extent.height = int32_t(m_height >> mipLevel);
-	extent.depth = 1;
+	extent = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, extent, m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -241,7 +214,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
 {
 	std::unique_ptr<uint8_t[]> pixels = nullptr;
 	uint8_t *offset = nullptr;
@@ -249,7 +222,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 	for (uint32_t i = 0; i < 6; i++)
 	{
 		auto resultSide = GetPixels(extent, mipLevel, i);
-		int32_t sizeSide = extent.width * extent.height * m_components;
+		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
 		if (pixels == nullptr)
 		{
@@ -261,13 +234,13 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(VkExtent3D &extent, const uint32
 		offset += sizeSide;
 	}
 
-	extent.height *= 6;
+	extent.m_x *= 6;
 	return pixels;
 }
 
 void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
-	Buffer bufferStaging = Buffer(m_width * m_height * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+	Buffer bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	void *data;
@@ -275,11 +248,11 @@ void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, con
 	memcpy(data, pixels, bufferStaging.GetSize());
 	bufferStaging.UnmapMemory();
 
-	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_width, m_height, 1 }, layerCount, baseArrayLayer);
+	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, uint32_t &width,
-	uint32_t &height, uint32_t &components, VkFormat &format)
+std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
+	uint32_t &components, VkFormat &format)
 {
 	std::unique_ptr<uint8_t[]> result = nullptr;
 	uint8_t *offset = nullptr;
@@ -287,8 +260,8 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 	for (const auto &side : fileSides)
 	{
 		std::string filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
-		auto resultSide = Image::LoadPixels(filenameSide, width, height, components, format);
-		int32_t sizeSide = width * height * components;
+		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
+		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
 		if (result == nullptr)
 		{
@@ -301,5 +274,29 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 	}
 
 	return result;
+}
+
+const Metadata &operator>>(const Metadata &metadata, ImageCube &image)
+{
+	metadata.GetChild("Filename", image.m_filename);
+	metadata.GetChild("Suffix", image.m_fileSuffix);
+	//metadata.GetChild("Sides", image.m_fileSides);
+	metadata.GetChild("Filter", image.m_filter);
+	metadata.GetChild("Address Mode", image.m_addressMode);
+	metadata.GetChild("Anisotropic", image.m_anisotropic);
+	metadata.GetChild("Mipmap", image.m_mipmap);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ImageCube &image)
+{
+	metadata.SetChild("Filename", image.m_filename);
+	metadata.SetChild("Suffix", image.m_fileSuffix);
+	//metadata.SetChild("Sides", image.m_fileSides);
+	metadata.SetChild("Filter", image.m_filter);
+	metadata.SetChild("Address Mode", image.m_addressMode);
+	metadata.SetChild("Anisotropic", image.m_anisotropic);
+	metadata.SetChild("Mipmap", image.m_mipmap);
+	return metadata;
 }
 }

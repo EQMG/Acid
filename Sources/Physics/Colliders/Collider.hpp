@@ -23,7 +23,7 @@ public:
 	 * @param localTransform The parent offset of the body.
 	 * @param gizmoType The gizmo type to use for this collider type.
 	 */
-	explicit Collider(const Transform &localTransform = Transform::Identity, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
+	explicit Collider(const Transform &localTransform = Transform::Zero, const std::shared_ptr<GizmoType> &gizmoType = nullptr);
 
 	virtual ~Collider();
 

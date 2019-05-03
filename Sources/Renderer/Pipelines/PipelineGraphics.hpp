@@ -3,6 +3,7 @@
 #include "Maths/Vector2.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Pipeline.hpp"
+#include "Renderer/RenderStage.hpp"
 
 namespace acid
 {
@@ -63,18 +64,11 @@ public:
 	const Image2d *GetImage(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
 
 	/**
-	 * Gets the size of the render stage in pixels.
+	 * Gets the render stage viewport.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The size of the render stage.
+	 * @return The the render stage viewport.
 	 */
-	Vector2ui GetSize(const std::optional<uint32_t> &stage = {}) const;
-
-	/**
-	 * Gets the aspect ratio between the render stages width and height.
-	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
-	 * @return The aspect ratio.
-	 */
-	float GetAspectRatio(const std::optional<uint32_t> &stage = {}) const;
+	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = {}) const;
 
 	const Stage &GetStage() const { return m_stage; }
 
@@ -196,30 +190,34 @@ public:
 			m_pushDescriptors);
 	}
 
-	void Decode(const Metadata &metadata)
+	friend const Metadata &operator>>(const Metadata &metadata, PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.GetChild("Shader Stages", m_shaderStages);
-		//metadata.GetChild("Vertex Inputs", m_vertexInputs);
-		metadata.GetChild("Defines", m_defines);
-		metadata.GetChild("Mode", m_mode);
-		metadata.GetChild("Depth", m_depth);
-		metadata.GetChild("Polygon Mode", m_polygonMode);
-		metadata.GetChild("Cull Mode", m_cullMode);
-		metadata.GetChild("Front Face", m_frontFace);
-		metadata.GetChild("Push Descriptors", m_pushDescriptors);
+		metadata.GetChild("Shader Stages", pipelineCreate.m_shaderStages);
+		//metadata.GetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);
+		metadata.GetChild("Defines", pipelineCreate.m_defines);
+		metadata.GetChild("Mode", pipelineCreate.m_mode);
+		metadata.GetChild("Depth", pipelineCreate.m_depth);
+		metadata.GetChild("Polygon Mode", pipelineCreate.m_polygonMode);
+		metadata.GetChild("Cull Mode", pipelineCreate.m_cullMode);
+		metadata.GetChild("Front Face", pipelineCreate.m_frontFace);
+		metadata.GetChild("Push Descriptors", pipelineCreate.m_pushDescriptors);
+		return metadata;
+
 	}
 
-	void Encode(Metadata &metadata) const
+	friend Metadata &operator<<(Metadata &metadata, const PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.SetChild("Shader Stages", m_shaderStages);
-		//metadata.SetChild("Vertex Inputs", m_vertexInputs);
-		metadata.SetChild("Defines", m_defines);
-		metadata.SetChild("Mode", m_mode);
-		metadata.SetChild("Depth", m_depth);
-		metadata.SetChild("Polygon Mode", m_polygonMode);
-		metadata.SetChild("Cull Mode", m_cullMode);
-		metadata.SetChild("Front Face", m_frontFace);
-		metadata.SetChild("Push Descriptors", m_pushDescriptors);
+		metadata.SetChild("Shader Stages", pipelineCreate.m_shaderStages);
+		//metadata.SetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);
+		metadata.SetChild("Defines", pipelineCreate.m_defines);
+		metadata.SetChild("Mode", pipelineCreate.m_mode);
+		metadata.SetChild("Depth", pipelineCreate.m_depth);
+		metadata.SetChild("Polygon Mode", pipelineCreate.m_polygonMode);
+		metadata.SetChild("Cull Mode", pipelineCreate.m_cullMode);
+		metadata.SetChild("Front Face", pipelineCreate.m_frontFace);
+		metadata.SetChild("Push Descriptors", pipelineCreate.m_pushDescriptors);
+		return metadata;
+
 	}
 
 	const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
