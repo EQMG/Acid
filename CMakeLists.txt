@@ -58,7 +58,7 @@ set(_ACID_ALL_SYSTEM_LIBS true)
 include(FetchContent)
 
 # PhysFS is arranged before GLFW to prevent "uninstall" being defined twice
-find_package(PhysFS)
+find_package(PhysFS QUIET)
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
@@ -83,7 +83,7 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-find_package(Freetype)
+find_package(Freetype QUIET)
 if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
@@ -106,7 +106,7 @@ if(NOT Freetype_FOUND)
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-find_package(glfw3)
+find_package(glfw3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
@@ -129,11 +129,27 @@ else()
 	set(glfw_FOUND true)
 endif()
 
-# SPIRV is needed (from Glslang)
+# SPIRV and other GLSLang libraries are needed.
 # NOTE: End-users can pass -DSPIRV_ROOT=/some/path to find the lib
 set(SPIRV_ROOT CACHE PATH "An optional path to the system's SPIRV root dir to help find it. Ignore if building Glslang locally.")
 find_library(SPIRV_LIBRARY
 		NAMES "SPIRV" "libSPIRV"
+		HINTS "${SPIRV_ROOT}"
+		)
+find_library(GLSLANG_LIBRARY
+		NAMES "glslang" "libglslang"
+		HINTS "${SPIRV_ROOT}"
+		)
+find_library(OSDEPENDENT_LIBRARY
+		NAMES "OSDependent" "libOSDependent"
+		HINTS "${SPIRV_ROOT}"
+		)
+find_library(OGLCOMPILER_LIBRARY
+		NAMES "OGLCompiler" "libOGLCompiler"
+		HINTS "${SPIRV_ROOT}"
+		)
+find_library(HLSL_LIBRARY
+		NAMES "HLSL" "libHLSL"
 		HINTS "${SPIRV_ROOT}"
 		)
 find_path(SPIRV_INCLUDE_DIR
@@ -142,7 +158,12 @@ find_path(SPIRV_INCLUDE_DIR
 		HINTS "${SPIRV_ROOT}"
 		)
 
-if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
+if(NOT SPIRV_LIBRARY
+		OR NOT GLSLANG_LIBRARY
+		OR NOT OSDEPENDENT_LIBRARY
+		OR NOT OGLCOMPILER_LIBRARY
+		OR NOT HLSL_LIBRARY
+		OR NOT SPIRV_INCLUDE_DIR)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
 			GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
@@ -164,12 +185,22 @@ if(NOT SPIRV_LIBRARY OR NOT SPIRV_INCLUDE_DIR)
 	# Have to manually define because we manually searched for SPIRV
 	set(SPIRV_FOUND false)
 	# Used in target_link_libraries()
-	set(SPIRV_LIBRARY "SPIRV")
+	# Please note that SPIRV is now a CMake target, which means transitive dependencies are taken into account.
+	set(SPIRV_LIBRARIES "SPIRV")
 else()
 	set(SPIRV_FOUND true)
+	# glslang, hlsl and the others are transitive dependencies of libSPIRV, which are not detected
+	# during linking (because the project might be a shared object).
+	set(SPIRV_LIBRARIES
+			"${SPIRV_LIBRARY}"
+			"${GLSLANG_LIBRARY}"
+			"${OSDEPENDENT_LIBRARY}"
+			"${OGLCOMPILER_LIBRARY}"
+			"${HLSL_LIBRARY}"
+			)
 endif()
 
-find_package(Bullet)
+find_package(Bullet QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3
