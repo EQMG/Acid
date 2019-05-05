@@ -149,7 +149,7 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 	VkResult acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&m_activeImageIndex);
 
-	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
+	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR && acquireResult != VK_ERROR_OUT_OF_DATE_KHR)
 	{
 		throw std::runtime_error("Failed to acquire swapchain image");
 		return acquireResult;
@@ -158,7 +158,7 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 	//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
 	//Renderer::CheckVk(vkResetFences(*logicalDevice, 1, &m_fenceImage));
-	return VK_SUCCESS;
+	return acquireResult;
 }
 
 VkResult Swapchain::QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore)
