@@ -18,7 +18,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Particles *Get() { return Engine::Get()->GetModuleManager().Get<Particles>(); }
+	static Particles *Get() { return Engine::Get()->GetModuleHolder().Get<Particles>(); }
 
 	Particles();
 

@@ -21,7 +21,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static World *Get() { return Engine::Get()->GetModuleManager().Get<World>(); }
+	static World *Get() { return Engine::Get()->GetModuleHolder().Get<World>(); }
 
 	World();
 

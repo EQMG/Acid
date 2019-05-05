@@ -22,7 +22,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 
 	if (!emptyRegister)
 	{
-		m_moduleManager.FillRegister();
+		m_moduleHolder.FillRegister();
 	}
 }
 
@@ -32,16 +32,10 @@ int32_t Engine::Run()
 	{
 		if (m_game != nullptr)
 		{
-			if (!m_game->m_started)
-			{
-				m_game->Start();
-				m_game->m_started = true;
-			}
-
 			m_game->Update();
 		}
 
-		m_moduleUpdater.Update(m_moduleManager);
+		m_moduleUpdater.Update(m_moduleHolder);
 	}
 
 	return EXIT_SUCCESS;

@@ -47,12 +47,6 @@ void Renderer::Update()
 		return;
 	}
 
-	if (!m_renderManager->m_started)
-	{
-		m_renderManager->Start();
-		m_renderManager->m_started = true;
-	}
-
 	m_renderManager->Update();
 
 	auto &stages = m_renderManager->GetRendererContainer().GetStages();

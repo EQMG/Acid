@@ -34,7 +34,7 @@ set(_temp_acid_headers
 		Engine/Game.hpp
 		Engine/Log.hpp
 		Engine/Module.hpp
-		Engine/ModuleManager.hpp
+		Engine/ModuleHolder.hpp
 		Engine/ModuleUpdater.hpp
 		Files/File.hpp
 		Files/Files.hpp
@@ -61,6 +61,7 @@ set(_temp_acid_headers
 		Helpers/RingBuffer.hpp
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
+		Helpers/TypeInfo.hpp
 		Helpers/ConstExpr.hpp
 		Inputs/Axis.hpp
 		Inputs/AxisButton.hpp
@@ -266,7 +267,7 @@ set(_temp_acid_sources
 		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
-		Engine/ModuleManager.cpp
+		Engine/ModuleHolder.cpp
 		Engine/ModuleUpdater.cpp
 		Files/File.cpp
 		Files/Files.cpp

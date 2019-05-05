@@ -16,8 +16,6 @@ public:
 
 	~MainGame();
 
-	void Start() override;
-
 	void Update() override;
 
 private:

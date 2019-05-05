@@ -26,7 +26,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Renderer *Get() { return Engine::Get()->GetModuleManager().Get<Renderer>(); }
+	static Renderer *Get() { return Engine::Get()->GetModuleHolder().Get<Renderer>(); }
 
 	Renderer();
 

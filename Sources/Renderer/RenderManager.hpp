@@ -12,20 +12,7 @@ class RenderPipeline;
 class ACID_EXPORT RenderManager
 {
 public:
-	/**Creates a new render manager.
-	 *
-	 */
-	explicit RenderManager() :
-		m_started(false)
-	{
-	}
-
 	virtual ~RenderManager() = default;
-
-	/**
-	 * Run when starting the renderer manager.
-	 */
-	virtual void Start() = 0;
 
 	/**
 	 * Run when updating the renderer manager.
@@ -41,7 +28,6 @@ public:
 private:
 	friend class Renderer;
 
-	bool m_started;
 	RendererContainer m_rendererContainer;
 };
 }

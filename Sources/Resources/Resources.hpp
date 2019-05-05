@@ -19,7 +19,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Resources *Get() { return Engine::Get()->GetModuleManager().Get<Resources>(); }
+	static Resources *Get() { return Engine::Get()->GetModuleHolder().Get<Resources>(); }
 
 	Resources();
 

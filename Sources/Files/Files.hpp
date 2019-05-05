@@ -64,7 +64,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Files *Get() { return Engine::Get()->GetModuleManager().Get<Files>(); }
+	static Files *Get() { return Engine::Get()->GetModuleHolder().Get<Files>(); }
 
 	Files();
 

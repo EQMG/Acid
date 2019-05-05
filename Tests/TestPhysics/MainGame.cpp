@@ -85,9 +85,11 @@ MainGame::MainGame() :
 	});
 
 	// Registers modules.
-	auto &moduleManager = Engine::Get()->GetModuleManager();
+	auto &moduleManager = Engine::Get()->GetModuleHolder();
 	moduleManager.Add<World>(Module::Stage::Always);
 	//moduleManager.Remove<Shadows>();
+
+	auto worldTypeId = GetModuleTypeId<World>();
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
@@ -116,10 +118,6 @@ MainGame::~MainGame()
 
 	Renderer::Get()->SetManager(nullptr);
 	Scenes::Get()->SetScene(nullptr);
-}
-
-void MainGame::Start()
-{
 }
 
 void MainGame::Update()

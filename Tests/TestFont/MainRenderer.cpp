@@ -10,10 +10,6 @@ namespace test
 {
 MainRenderer::MainRenderer()
 {
-}
-
-void MainRenderer::Start()
-{
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
 	std::vector<Attachment> renderpassAttachments0 = { Attachment(0, "depth", Attachment::Type::Depth),

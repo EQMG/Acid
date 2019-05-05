@@ -25,7 +25,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Joysticks *Get() { return Engine::Get()->GetModuleManager().Get<Joysticks>(); }
+	static Joysticks *Get() { return Engine::Get()->GetModuleHolder().Get<Joysticks>(); }
 
 	Joysticks();
 

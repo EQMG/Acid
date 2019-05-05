@@ -2,7 +2,7 @@
 
 #include "Maths/Delta.hpp"
 #include "Maths/Timer.hpp"
-#include "ModuleManager.hpp"
+#include "ModuleHolder.hpp"
 
 namespace acid
 {
@@ -16,9 +16,9 @@ public:
 
 	/**
 	 * Updates all modules in order.
-	 * @param moduleManager The module manager to update.
+	 * @param moduleHolder The module holder to run updates on.
 	 */
-	void Update(ModuleManager &moduleManager);
+	void Update(ModuleHolder &moduleHolder);
 
 	/**
 	 * Gets the delta (seconds) between updates.

@@ -13,12 +13,12 @@ ModuleUpdater::ModuleUpdater() :
 {
 }
 
-void ModuleUpdater::Update(ModuleManager &moduleManager)
+void ModuleUpdater::Update(ModuleHolder &moduleHolder)
 {
 	m_timerRender.SetInterval(Time::Seconds(1.0f / Engine::Get()->GetFpsLimit()));
 
 	// Always-Update.
-	moduleManager.RunUpdate(Module::Stage::Always);
+	moduleHolder.UpdateStage(Module::Stage::Always);
 
 	if (m_timerUpdate.IsPassedTime())
 	{
@@ -27,13 +27,13 @@ void ModuleUpdater::Update(ModuleManager &moduleManager)
 		m_ups.Update(Engine::GetTime().AsSeconds());
 
 		// Pre-Update.
-		moduleManager.RunUpdate(Module::Stage::Pre);
+		moduleHolder.UpdateStage(Module::Stage::Pre);
 
 		// Update.
-		moduleManager.RunUpdate(Module::Stage::Normal);
+		moduleHolder.UpdateStage(Module::Stage::Normal);
 
 		// Post-Update.
-		moduleManager.RunUpdate(Module::Stage::Post);
+		moduleHolder.UpdateStage(Module::Stage::Post);
 
 		// Updates the engines delta.
 		m_deltaUpdate.Update();
@@ -53,7 +53,7 @@ void ModuleUpdater::Update(ModuleManager &moduleManager)
 		m_fps.Update(Engine::GetTime().AsSeconds());
 
 		// Render
-		moduleManager.RunUpdate(Module::Stage::Render);
+		moduleHolder.UpdateStage(Module::Stage::Render);
 
 		// Updates the render delta, and render time extension.
 		m_deltaRender.Update();

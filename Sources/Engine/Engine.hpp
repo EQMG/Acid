@@ -2,7 +2,7 @@
 
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/Time.hpp"
-#include "ModuleManager.hpp"
+#include "ModuleHolder.hpp"
 #include "ModuleUpdater.hpp"
 #include "Log.hpp"
 #include "Game.hpp"
@@ -36,10 +36,10 @@ public:
 	int32_t Run();
 
 	/**
-	 * Gets the module manager used by the engine instance. The manager can be used to register/deregister modules.
-	 * @return The engines module manager.
+	 * Gets the module holder used by the engine instance.
+	 * @return The engines module holder.
 	 */
-	ModuleManager &GetModuleManager() { return m_moduleManager; }
+	ModuleHolder &GetModuleHolder() { return m_moduleHolder; }
 
 	/**
 	 * Gets the current game.
@@ -134,7 +134,7 @@ public:
 private:
 	static ACID_STATE Engine *INSTANCE;
 
-	ModuleManager m_moduleManager;
+	ModuleHolder m_moduleHolder;
 	ModuleUpdater m_moduleUpdater;
 
 	std::unique_ptr<Game> m_game;

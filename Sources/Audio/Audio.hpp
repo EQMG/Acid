@@ -24,7 +24,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Audio *Get() { return Engine::Get()->GetModuleManager().Get<Audio>(); }
+	static Audio *Get() { return Engine::Get()->GetModuleHolder().Get<Audio>(); }
 
 	Audio();
 

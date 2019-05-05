@@ -12,9 +12,11 @@ template<typename T>
 class Future
 {
 public:
-	Future() = default;
+	Future() noexcept
+	{
+	}
 
-	Future(std::future<T> future) :
+	Future(std::future<T> future) noexcept :
 		m_future(std::move(future))
 	{
 	}

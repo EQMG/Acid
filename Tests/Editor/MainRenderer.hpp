@@ -12,8 +12,6 @@ class MainRenderer :
 public:
 	MainRenderer();
 
-	void Start() override;
-
 	void Update() override;
 };
 }

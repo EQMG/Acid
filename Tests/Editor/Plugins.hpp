@@ -22,7 +22,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Plugins *Get() { return Engine::Get()->GetModuleManager().Get<Plugins>(); }
+	static Plugins *Get() { return Engine::Get()->GetModuleHolder().Get<Plugins>(); }
 
 	Plugins();
 
