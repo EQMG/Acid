@@ -122,7 +122,7 @@ target_link_libraries(Acid
 		$<$<NOT:$<BOOL:${Freetype_FOUND}>>:${FREETYPE_LIBRARIES}>
 		${PHYSFS_LIBRARY}
 		${BULLET_LIBRARIES}
-		${SPIRV_LIBRARY}
+		${SPIRV_LIBRARIES}
 		)
 
 # Creates a symbolic link from Resources to Resources/Engine in the binary folder
