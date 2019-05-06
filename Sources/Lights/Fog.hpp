@@ -2,15 +2,17 @@
 
 #include "Maths/Colour.hpp"
 #include "Serialized/Metadata.hpp"
+#include "Scenes/Component.hpp"
 
 namespace acid
 {
 class Metadata;
 
 /**
- * @brief Represents a hazy fog in the world.
+ * @brief Component that represents a 3d fog.
  */
-class ACID_EXPORT Fog
+class ACID_EXPORT Fog :
+	public Component
 {
 public:
 	/**
@@ -22,6 +24,10 @@ public:
 	 * @param upperLimit At what height will there be skybox no fog.
 	 */
 	explicit Fog(const Colour &colour = Colour::White, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
+
+	void Start() override;
+
+	void Update() override;
 
 	const Colour &GetColour() const { return m_colour; }
 

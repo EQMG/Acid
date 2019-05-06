@@ -3,7 +3,6 @@
 #include <Engine/Engine.hpp>
 #include <Maths/Visual/DriverLinear.hpp>
 #include <Maths/Vector3.hpp>
-#include <Maths/Colour.hpp>
 #include <Lights/Fog.hpp>
 
 using namespace acid;
@@ -21,7 +20,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static World *Get() { return Engine::Get()->GetModuleHolder().Get<World>(); }
+	static World *Get() { return Engine::Get()->GetModule<World>(); }
 
 	World();
 

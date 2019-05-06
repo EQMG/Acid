@@ -36,7 +36,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Window *Get() { return Engine::Get()->GetModuleHolder().Get<Window>(); }
+	static Window *Get() { return Engine::Get()->GetModule<Window>(); }
 
 	Window();
 

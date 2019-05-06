@@ -78,7 +78,7 @@ public:
 private:
 	Particle EmitParticle(const Emitter &emitter);
 
-	float GenerateValue(const float &average, const float &errorPercent) const;
+	static float GenerateValue(const float &average, const float &errorPercent);
 
 	float GenerateRotation() const;
 

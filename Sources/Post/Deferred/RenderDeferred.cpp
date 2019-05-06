@@ -1,4 +1,4 @@
-#include "RendererDeferred.hpp"
+#include "RenderDeferred.hpp"
 
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
@@ -14,8 +14,8 @@ namespace acid
 {
 static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
-RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
-	RenderPipeline(pipelineStage),
+RenderDeferred::RenderDeferred(const Pipeline::Stage &pipelineStage) :
+	Render(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None),
 	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
@@ -27,7 +27,7 @@ RendererDeferred::RendererDeferred(const Pipeline::Stage &pipelineStage) :
 	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
 
-void RendererDeferred::Render(const CommandBuffer &commandBuffer)
+void RenderDeferred::Record(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 
@@ -59,7 +59,7 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 
 		DeferredLight deferredLight = {};
 		deferredLight.m_colour = light->GetColour();
-		deferredLight.m_position = light->GetWorldTransform().GetPosition();
+		deferredLight.m_position = light->GetParent()->GetWorldTransform().GetPosition();
 		deferredLight.m_radius = light->GetRadius();
 		deferredLights[lightCount] = deferredLight;
 		lightCount++;
@@ -108,14 +108,14 @@ void RendererDeferred::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-std::vector<Shader::Define> RendererDeferred::GetDefines()
+std::vector<Shader::Define> RenderDeferred::GetDefines()
 {
 	std::vector<Shader::Define> defines;
 	defines.emplace_back("MAX_LIGHTS", String::To(MAX_LIGHTS));
 	return defines;
 }
 
-std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
+std::unique_ptr<Image2d> RenderDeferred::ComputeBRDF(const uint32_t &size)
 {
 	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
@@ -151,7 +151,7 @@ std::unique_ptr<Image2d> RendererDeferred::ComputeBRDF(const uint32_t &size)
 	return brdfImage;
 }
 
-std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> RenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 {
 	if (source == nullptr)
 	{
@@ -193,7 +193,7 @@ std::unique_ptr<ImageCube> RendererDeferred::ComputeIrradiance(const std::shared
 	return irradianceCubemap;
 }
 
-std::unique_ptr<ImageCube> RendererDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> RenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 {
 	if (source == nullptr)
 	{

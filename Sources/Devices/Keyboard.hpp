@@ -144,7 +144,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Keyboard *Get() { return Engine::Get()->GetModuleHolder().Get<Keyboard>(); }
+	static Keyboard *Get() { return Engine::Get()->GetModule<Keyboard>(); }
 
 	Keyboard();
 

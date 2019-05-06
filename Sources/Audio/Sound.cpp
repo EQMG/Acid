@@ -9,10 +9,9 @@
 
 namespace acid
 {
-Sound::Sound(const std::string &filename, const Transform &localTransform, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
+Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
 	m_soundBuffer(SoundBuffer::Create(filename)),
 	m_source(0),
-	m_localTransform(localTransform),
 	m_type(type),
 	m_gain(gain),
 	m_pitch(pitch)
@@ -51,7 +50,7 @@ void Sound::Start()
 
 void Sound::Update()
 {
-	SetPosition(GetWorldTransform().GetPosition());
+	SetPosition(GetParent()->GetWorldTransform().GetPosition());
 }
 
 void Sound::Play(const bool &loop)
@@ -105,17 +104,6 @@ bool Sound::IsPlaying() const
 	return state == AL_PLAYING;
 }
 
-Transform Sound::GetWorldTransform() const
-{
-	if (m_localTransform.IsDirty() || GetParent()->GetWorldTransform().IsDirty())
-	{
-		m_worldTransform = GetParent()->GetWorldTransform() * m_localTransform;
-		m_localTransform.SetDirty(false);
-	}
-
-	return m_worldTransform;
-}
-
 void Sound::SetPosition(const Vector3f &position)
 {
 	m_position = position;
@@ -154,12 +142,18 @@ void Sound::SetPitch(const float &pitch)
 const Metadata &operator>>(const Metadata &metadata, Sound &sound)
 {
 	metadata.GetResource("Buffer", sound.m_soundBuffer);
+	metadata.GetChild("Type", sound.m_type);
+	metadata.GetChild("Gain", sound.m_gain);
+	metadata.GetChild("Pitch", sound.m_pitch);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Sound &sound)
 {
 	metadata.SetResource("Buffer", sound.m_soundBuffer);
+	metadata.SetChild("Type", sound.m_type);
+	metadata.SetChild("Gain", sound.m_gain);
+	metadata.SetChild("Pitch", sound.m_pitch);
 	return metadata;
 }
 }

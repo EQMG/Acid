@@ -10,7 +10,7 @@ FilterLensflare::FilterLensflare(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterLensflare::Render(const CommandBuffer &commandBuffer)
+void FilterLensflare::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("sunPosition", m_sunPosition);

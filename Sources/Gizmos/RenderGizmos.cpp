@@ -1,4 +1,4 @@
-#include "RendererGizmos.hpp"
+#include "RenderGizmos.hpp"
 
 #include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
@@ -6,14 +6,14 @@
 
 namespace acid
 {
-RendererGizmos::RendererGizmos(const Pipeline::Stage &pipelineStage) :
-	RenderPipeline(pipelineStage),
+RenderGizmos::RenderGizmos(const Pipeline::Stage &pipelineStage) :
+	Render(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag" }, { VertexDefault::GetVertexInput(0), GizmoType::Instance::GetVertexInput(1) }, {},
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE)
 {
 }
 
-void RendererGizmos::Render(const CommandBuffer &commandBuffer)
+void RenderGizmos::Record(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());

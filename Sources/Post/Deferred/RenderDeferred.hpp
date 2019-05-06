@@ -3,7 +3,7 @@
 #include "Helpers/Future.hpp"
 #include "Lights/Fog.hpp"
 #include "Maths/Vector3.hpp"
-#include "Renderer/RenderPipeline.hpp"
+#include "Renderer/Render.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Images/ImageCube.hpp"
@@ -11,13 +11,13 @@
 
 namespace acid
 {
-class ACID_EXPORT RendererDeferred :
-	public RenderPipeline
+class ACID_EXPORT RenderDeferred :
+	public Render
 {
 public:
-	explicit RendererDeferred(const Pipeline::Stage &pipelineStage);
+	explicit RenderDeferred(const Pipeline::Stage &pipelineStage);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const Fog &GetFog() const { return m_fog; }
 

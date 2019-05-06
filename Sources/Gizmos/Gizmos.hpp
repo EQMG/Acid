@@ -16,7 +16,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Gizmos *Get() { return Engine::Get()->GetModuleHolder().Get<Gizmos>(); }
+	static Gizmos *Get() { return Engine::Get()->GetModule<Gizmos>(); }
 
 	Gizmos();
 

@@ -28,7 +28,7 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 	}
 }
 
-void FilterSsao::Render(const CommandBuffer &commandBuffer)
+void FilterSsao::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	auto camera = Scenes::Get()->GetCamera();

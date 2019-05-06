@@ -117,8 +117,7 @@ void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviat
 
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
-	auto worldTransform = GetParent()->GetWorldTransform() * emitter.GetLocalTransform();
-	Vector3f spawnPos = emitter.GeneratePosition() + worldTransform.GetPosition();
+	Vector3f spawnPos = emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition();
 
 	Vector3f velocity;
 
@@ -135,15 +134,15 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	velocity *= GenerateValue(m_averageSpeed, m_speedDeviation);
 
 	auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0.0f, static_cast<float>(m_types.size())))));
-	float scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
-	float lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
-	float stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
+	auto scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
+	auto lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
+	auto stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
 	return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
 }
 
-float ParticleSystem::GenerateValue(const float &average, const float &errorPercent) const
+float ParticleSystem::GenerateValue(const float &average, const float &errorPercent)
 {
-	float error = Maths::Random(-1.0f, 1.0f) * errorPercent;
+	auto error = Maths::Random(-1.0f, 1.0f) * errorPercent;
 	return average + (average * error);
 }
 

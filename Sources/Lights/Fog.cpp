@@ -11,6 +11,14 @@ Fog::Fog(const Colour &colour, const float &density, const float &gradient, cons
 {
 }
 
+void Fog::Start()
+{
+}
+
+void Fog::Update()
+{
+}
+
 std::string Fog::ToString() const
 {
 	std::stringstream stream;

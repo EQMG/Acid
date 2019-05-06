@@ -2,12 +2,12 @@
 
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/FileSystem.hpp"
-#include "RenderPipeline.hpp"
+#include "Render.hpp"
 
 namespace acid
 {
 Renderer::Renderer() :
-	m_renderManager(nullptr),
+	m_rendererManager(nullptr),
 	m_swapchain(nullptr),
 	m_timerPurge(Time::Seconds(4.0f)),
 	m_pipelineCache(VK_NULL_HANDLE),
@@ -42,14 +42,13 @@ Renderer::~Renderer()
 
 void Renderer::Update()
 {
-	if (m_renderManager == nullptr || Window::Get()->IsIconified())
+	if (m_rendererManager == nullptr || Window::Get()->IsIconified())
 	{
 		return;
 	}
 
-	m_renderManager->Update();
-
-	auto &stages = m_renderManager->GetRendererContainer().GetStages();
+	m_rendererManager->Update();
+	const auto &stages = m_rendererManager->m_renderHolder.m_stages;
 
 	std::optional<uint32_t> renderpass;
 	uint32_t subpass = 0;
@@ -68,7 +67,7 @@ void Renderer::Update()
 		return;
 	}
 
-	for (auto &[key, renderPipelines] : stages)
+	for (auto &[key, renders] : stages)
 	{
 		if (renderpass != key.first)
 		{
@@ -113,14 +112,12 @@ void Renderer::Update()
 		}
 
 		// Renders subpass render pipeline.
-		for (auto &renderPipeline : renderPipelines)
+		for (auto &render : renders)
 		{
-			if (!renderPipeline->IsEnabled())
+			if (render->IsEnabled())
 			{
-				continue;
+				render->Record(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 			}
-
-			renderPipeline->Render(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 		}
 	}
 

@@ -8,7 +8,7 @@ FilterGrain::FilterGrain(const Pipeline::Stage &pipelineStage, const float &stre
 {
 }
 
-void FilterGrain::Render(const CommandBuffer &commandBuffer)
+void FilterGrain::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("strength", m_strength);

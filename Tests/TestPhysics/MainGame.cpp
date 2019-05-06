@@ -85,9 +85,8 @@ MainGame::MainGame() :
 	});
 
 	// Registers modules.
-	auto &moduleManager = Engine::Get()->GetModuleHolder();
-	moduleManager.Add<World>(Module::Stage::Always);
-	//moduleManager.Remove<Shadows>();
+	Engine::Get()->AddModule<World>(Module::Stage::Always);
+	//Engine::Get()->RemoveModule<Shadows>();
 
 	auto worldTypeId = GetModuleTypeId<World>();
 

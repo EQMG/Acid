@@ -1,12 +1,12 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/RendererFonts.hpp>
-#include <Gizmos/RendererGizmos.hpp>
-#include <Guis/RendererGuis.hpp>
-#include <Meshes/RendererMeshes.hpp>
+#include <Fonts/RenderFonts.hpp>
+#include <Gizmos/RenderGizmos.hpp>
+#include <Guis/RenderGuis.hpp>
+#include <Meshes/RenderMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/RendererParticles.hpp>
-#include <Post/Deferred/RendererDeferred.hpp>
+#include <Particles/RenderParticles.hpp>
+#include <Post/Deferred/RenderDeferred.hpp>
 #include <Post/Filters/FilterCrt.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterDof.hpp>
@@ -21,53 +21,64 @@
 #include <Post/Filters/FilterVignette.hpp>
 #include <Post/Pipelines/PipelineBlur.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Shadows/RendererShadows.hpp>
+#include <Shadows/RenderShadows.hpp>
 #include "Devices/Keyboard.hpp"
 
 namespace test
 {
 MainRenderer::MainRenderer()
 {
+	//auto &renderStages = GetRenderStages();
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
-	std::vector<Attachment> renderpassAttachments0 = { Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R16_SFLOAT) };
-	std::vector<SubpassType> renderpassSubpasses0 = { SubpassType(0, { 0 }) };
+	std::vector<Attachment> renderpassAttachments0 = { 
+		Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R16_SFLOAT) 
+	};
+	std::vector<SubpassType> renderpassSubpasses0 = { 
+		SubpassType(0, { 0 }) 
+	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(Vector2ui(4096, 4096))));
 
-	std::vector<Attachment> renderpassAttachments1 = { Attachment(0, "depth", Attachment::Type::Depth, false), Attachment(1, "swapchain", Attachment::Type::Swapchain),
+	std::vector<Attachment> renderpassAttachments1 = { 
+		Attachment(0, "depth", Attachment::Type::Depth, false), Attachment(1, "swapchain", Attachment::Type::Swapchain),
 		Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) };
-	std::vector<SubpassType> renderpassSubpasses1 = { SubpassType(0, { 0, 2, 3, 4, 5 }), SubpassType(1, { 0, 6 }), SubpassType(2, { 0, 1 }) };
+		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
+		Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
+		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
+		Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) 
+	};
+	std::vector<SubpassType> renderpassSubpasses1 = { 
+		SubpassType(0, { 0, 2, 3, 4, 5 }), 
+		SubpassType(1, { 0, 6 }), 
+		SubpassType(2, { 0, 1 }) 
+	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
 
-	auto &rendererContainer = GetRendererContainer();
-	rendererContainer.Clear();
+	auto &renderHolder = GetRenderHolder();
+	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));
 
-	//rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+	renderHolder.Add<RenderMeshes>(Pipeline::Stage(1, 0));
 
-	rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
+	renderHolder.Add<RenderDeferred>(Pipeline::Stage(1, 1));
+	renderHolder.Add<RenderParticles>(Pipeline::Stage(1, 1));
 
-	rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
-	rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
-
-	//rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
-	//auto sceneBlur = rendererContainer.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
-	//rendererContainer.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
-	//rendererContainer.Add<FilterEmboss>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterCrt>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
-	rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-	//rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
-	rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));
-	rendererContainer.Add<RendererFonts>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterTone>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterSsao>(Pipeline::Stage(1, 2));
+	//auto sceneBlur = renderHolder.Add<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
+	//renderHolder.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
+	//renderHolder.Add<FilterEmboss>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterCrt>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterLensflare>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
+	//renderHolder.Add<FilterVignette>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterGrain>(Pipeline::Stage(1, 2));
+	renderHolder.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
+	//renderHolder.Add<RendererGizmos>(Pipeline::Stage(1, 2));
+	renderHolder.Add<RenderGuis>(Pipeline::Stage(1, 2));
+	renderHolder.Add<RenderFonts>(Pipeline::Stage(1, 2));
 }
 
 void MainRenderer::Update()

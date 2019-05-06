@@ -8,7 +8,7 @@ FilterDarken::FilterDarken(const Pipeline::Stage &pipelineStage, const float &fa
 {
 }
 
-void FilterDarken::Render(const CommandBuffer &commandBuffer)
+void FilterDarken::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("factor", m_factor);

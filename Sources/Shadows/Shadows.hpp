@@ -17,7 +17,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Shadows *Get() { return Engine::Get()->GetModuleHolder().Get<Shadows>(); }
+	static Shadows *Get() { return Engine::Get()->GetModule<Shadows>(); }
 
 	Shadows();
 

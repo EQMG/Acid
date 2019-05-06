@@ -64,12 +64,18 @@ Scene1::Scene1() :
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation * Maths::DegToRad) * Vector3f::Front).Normalize(), Time::Seconds(2.0f));
-			sphere->AddComponent<ColliderSphere>(); //sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
+			sphere->AddComponent<ColliderSphere>(); 
+			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
-			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3f(0.0f, 0.7f, 0.0f)));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
-			sphere->AddComponent<HeightDespawn>(-75.0f); //auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
+			sphere->AddComponent<HeightDespawn>(-75.0f); 
+
+			auto sphereLight = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 0.7f, 0.0f)));
+			sphereLight->SetParent(sphere);
+			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
+
+			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
 			//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
 			//auto collisionObject = sphere->GetComponent<CollisionObject>();
 			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
@@ -160,10 +166,12 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f))); // Skybox.
-
-	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f)); // Animated model.
-
+	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f))); 
+	
+	// Skybox.
+	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f)); 
+	
+	// Animated model.
 	auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f), 0.3f));
 	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animatedObject->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
@@ -236,7 +244,9 @@ void Scene1::Start()
 	suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/Suzanne.obj"));
 	suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.2f, 0.8f);
 	suzanne->AddComponent<MeshRender>();
-	suzanne->AddComponent<ShadowRender>(); //auto suzanne1 = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 6.0f), Vector3(), 1.0f));
+	suzanne->AddComponent<ShadowRender>(); 
+	
+	//auto suzanne1 = GetStructure()->CreateEntity(Transform(Vector3(-1.0f, 2.0f, 6.0f), Vector3(), 1.0f));
 	//suzanne1->AddComponent<Mesh>(ModelGltf::Create("Objects/Suzanne/Suzanne.glb"));
 	//suzanne1->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
 	//suzanne1->AddComponent<MeshRender>();
@@ -260,13 +270,17 @@ void Scene1::Start()
 	teapotCone->SetParent(teapot1);
 	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 16, 8));
 	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
-	teapotCone->AddComponent<Light>(Colour::White, 6.0f, Transform(Vector3f(0.0f, 0.5f, 0.0f)));
 	teapotCone->AddComponent<MeshRender>();
 	teapotCone->AddComponent<ShadowRender>();
 
+	auto teapotConeLight = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 0.5f, 0.0f)));
+	teapotConeLight->SetParent(teapotCone);
+	teapotConeLight->AddComponent<Light>(Colour::White, 6.0f);
+
 	auto teapot2 = GetStructure()->CreateEntity(Transform(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), 0.2f));
 	teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f); //teapot2->AddComponent<Rigidbody>(1.0f);
+	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f); 
+	//teapot2->AddComponent<Rigidbody>(1.0f);
 	//teapot2->AddComponent<ColliderConvexHull>();
 	teapot2->AddComponent<Rotate>(Vector3f(50.0f, 30.0f, 40.0f), 1);
 	teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
@@ -275,7 +289,8 @@ void Scene1::Start()
 
 	auto teapot3 = GetStructure()->CreateEntity(Transform(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), 0.2f));
 	teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f); //teapot3->AddComponent<Rigidbody>(1.0f);
+	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f); 
+	//teapot3->AddComponent<Rigidbody>(1.0f);
 	//teapot3->AddComponent<ColliderConvexHull>();
 	teapot3->AddComponent<Rotate>(Vector3f(50.0f, 30.0f, 40.0f), 2);
 	teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
@@ -300,7 +315,7 @@ void Scene1::Start()
 	cylinder->AddComponent<ShadowRender>();
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3f(-15.0f, 4.0f, 12.0f)));
-	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::IDENTITY, SOUND_TYPE_MUSIC, true, true);
+	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg, SOUND_TYPE_MUSIC, true, true);
 
 	EntityPrefab prefabSmokeSystem = EntityPrefab("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem.Write(*smokeSystem);

@@ -1,8 +1,8 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/RendererFonts.hpp>
-#include <Fonts/RendererFonts2.hpp>
-#include <Guis/RendererGuis.hpp>
+#include <Fonts/RenderFonts.hpp>
+#include <Fonts/RenderFonts2.hpp>
+#include <Guis/RenderGuis.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -17,13 +17,11 @@ MainRenderer::MainRenderer()
 	std::vector<SubpassType> renderpassSubpasses0 = { SubpassType(0, { 0, 1 }) };
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
-
-	auto &rendererContainer = GetRendererContainer();
-	rendererContainer.Clear();
-
-	rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
-	rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));
-	rendererContainer.Add<RendererFonts2>(Pipeline::Stage(0, 0));
+	
+	auto &renderHolder = GetRenderHolder();
+	renderHolder.Add<RenderGuis>(Pipeline::Stage(0, 0));
+	renderHolder.Add<RenderFonts>(Pipeline::Stage(0, 0));
+	renderHolder.Add<RenderFonts2>(Pipeline::Stage(0, 0));
 }
 
 void MainRenderer::Update()

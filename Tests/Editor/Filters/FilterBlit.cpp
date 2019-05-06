@@ -7,7 +7,7 @@ FilterBlit::FilterBlit(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterBlit::Render(const CommandBuffer &commandBuffer)
+void FilterBlit::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("swapchain"));

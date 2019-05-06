@@ -61,9 +61,12 @@ Scene1::Scene1() :
 			sphere->AddComponent<ColliderSphere>();
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
-			sphere->AddComponent<Light>(Colour::Aqua, 4.0f, Transform(Vector3f(0.0f, 0.7f, 0.0f)));
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
+
+			auto sphereLight = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 0.7f, 0.0f)));
+			sphereLight->SetParent(sphere);
+			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 
 			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
 			//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
@@ -189,7 +192,7 @@ void Scene1::Start()
 	cylinder->AddComponent<ShadowRender>();
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3f(-15.0f, 4.0f, 12.0f)));
-	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Transform::Identity, Audio::Type::Music, true, true);
+	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg, Audio::Type::Music, true, true);
 }
 
 void Scene1::Update()

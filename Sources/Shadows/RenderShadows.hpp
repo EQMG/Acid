@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Renderer/RenderPipeline.hpp"
+#include "Renderer/Render.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
-class ACID_EXPORT RendererShadows :
-	public RenderPipeline
+class ACID_EXPORT RenderShadows :
+	public Render
 {
 public:
-	explicit RendererShadows(const Pipeline::Stage &pipelineStage);
+	explicit RenderShadows(const Pipeline::Stage &pipelineStage);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 private:
 	std::vector<Shader::Define> GetDefines();

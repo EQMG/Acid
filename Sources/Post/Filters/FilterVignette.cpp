@@ -10,7 +10,7 @@ FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, const float
 {
 }
 
-void FilterVignette::Render(const CommandBuffer &commandBuffer)
+void FilterVignette::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("innerRadius", m_innerRadius);

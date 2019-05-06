@@ -17,7 +17,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Uis *Get() { return Engine::Get()->GetModuleHolder().Get<Uis>(); }
+	static Uis *Get() { return Engine::Get()->GetModule<Uis>(); }
 
 	Uis();
 

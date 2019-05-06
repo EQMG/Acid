@@ -10,7 +10,7 @@ class ACID_EXPORT FilterDarken :
 public:
 	explicit FilterDarken(const Pipeline::Stage &pipelineStage, const float &factor = 0.5f);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const float &GetFactor() const { return m_factor; }
 

@@ -10,6 +10,6 @@ class ACID_EXPORT FilterTone :
 public:
 	explicit FilterTone(const Pipeline::Stage &pipelineStage);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 };
 }

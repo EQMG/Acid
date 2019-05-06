@@ -52,7 +52,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Mouse *Get() { return Engine::Get()->GetModuleHolder().Get<Mouse>(); }
+	static Mouse *Get() { return Engine::Get()->GetModule<Mouse>(); }
 
 	Mouse();
 

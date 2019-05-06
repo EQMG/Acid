@@ -1,7 +1,7 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/RendererFonts.hpp>
-#include <Guis/RendererGuis.hpp>
+#include <Fonts/RenderFonts.hpp>
+#include <Guis/RenderGuis.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -16,9 +16,9 @@ MainRenderer::MainRenderer()
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
 
-	auto &rendererContainer = GetRendererContainer();
-	rendererContainer.Add<RendererGuis>(Pipeline::Stage(0, 0));
-	rendererContainer.Add<RendererFonts>(Pipeline::Stage(0, 0));
+	auto &renderHolder = GetRenderHolder();
+	renderHolder.Add<RenderGuis>(Pipeline::Stage(0, 0));
+	renderHolder.Add<RenderFonts>(Pipeline::Stage(0, 0));
 }
 
 void MainRenderer::Update()

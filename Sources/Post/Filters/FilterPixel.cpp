@@ -8,7 +8,7 @@ FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixe
 {
 }
 
-void FilterPixel::Render(const CommandBuffer &commandBuffer)
+void FilterPixel::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("pixelSize", m_pixelSize);

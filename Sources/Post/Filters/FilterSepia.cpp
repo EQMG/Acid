@@ -7,7 +7,7 @@ FilterSepia::FilterSepia(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterSepia::Render(const CommandBuffer &commandBuffer)
+void FilterSepia::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

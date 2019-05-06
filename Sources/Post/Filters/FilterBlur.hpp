@@ -16,7 +16,7 @@ public:
 
 	explicit FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type = Type::_9);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const Vector2f &GetDirection() const { return m_direction; }
 

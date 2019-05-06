@@ -10,7 +10,7 @@ class ACID_EXPORT FilterVignette :
 public:
 	explicit FilterVignette(const Pipeline::Stage &pipelineStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const float &GetInnerRadius() const { return m_innerRadius; }
 

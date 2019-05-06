@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Maths/Transform.hpp"
 #include "Scenes/Component.hpp"
 #include "SoundBuffer.hpp"
 #include "Audio.hpp"
@@ -15,7 +14,7 @@ class ACID_EXPORT Sound :
 	public Component
 {
 public:
-	explicit Sound(const std::string &filename, const Transform &localTransform = Transform::Zero, const Audio::Type &type = Audio::Type::General, const bool &begin = false,
+	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, const bool &begin = false,
 		const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
 
 	~Sound();
@@ -33,12 +32,6 @@ public:
 	void Stop();
 
 	bool IsPlaying() const;
-
-	const Transform &GetLocalTransform() const { return m_localTransform; }
-
-	void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
-
-	Transform GetWorldTransform() const;
 
 	void SetPosition(const Vector3f &position);
 
@@ -66,8 +59,6 @@ private:
 	std::shared_ptr<SoundBuffer> m_soundBuffer;
 	uint32_t m_source;
 
-	Transform m_localTransform;
-	mutable Transform m_worldTransform;
 	Vector3f m_position;
 	Vector3f m_direction;
 	Vector3f m_velocity;

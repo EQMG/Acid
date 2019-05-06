@@ -13,17 +13,12 @@ class ACID_EXPORT ModuleHolder :
 {
 public:
 	/**
-	 * Fills the module register with default modules.
-	 */
-	void FillRegister();
-
-	/**
 	 * Checks whether a Module exists or not.
 	 * @tparam T The Module type.
 	 * @return If the Module has the System.
 	 */
 	template<typename T>
-	bool Has() const
+	bool HasModule() const
 	{
 		const auto it = m_modules.find(GetModuleTypeId<T>());
 
@@ -36,7 +31,7 @@ public:
 	 * @return The Module.
 	 */
 	template<typename T>
-	T *Get() const
+	T *GetModule() const
 	{
 		const auto typeId = GetModuleTypeId<T>();
 
@@ -45,6 +40,7 @@ public:
 		if (it == m_modules.end() || it->second == nullptr)
 		{
 			throw std::runtime_error("Module Holder does not have requested Module");
+			return nullptr;
 		}
 
 		return static_cast<T *>(it->second.get());
@@ -58,7 +54,7 @@ public:
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>
-	void Add(const Module::Stage &stage, Args &&...args)
+	void AddModule(const Module::Stage &stage, Args &&...args)
 	{
 		// Remove previous Module, if it exists.
 		//Remove<T>();
@@ -78,7 +74,7 @@ public:
 	 * @tparam T The Module type.
 	 */
 	template<typename T>
-	void Remove()
+	void RemoveModule()
 	{
 		const auto typeId = GetModuleTypeId<T>();
 
@@ -90,7 +86,7 @@ public:
 	}
 
 private:
-	friend class ModuleUpdater;
+	friend class Engine;
 
 	void RemoveModuleStage(const TypeId &id);
 

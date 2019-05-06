@@ -89,8 +89,7 @@ MainGame::MainGame() :
 	});
 
 	// Registers modules.
-	auto &moduleManager = Engine::Get()->GetModuleHolder();
-	//moduleManager.Remove<Shadows>();
+	//Engine::Get()->RemoveModule<Shadows>();
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();

@@ -7,7 +7,7 @@ FilterTone::FilterTone(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterTone::Render(const CommandBuffer &commandBuffer)
+void FilterTone::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

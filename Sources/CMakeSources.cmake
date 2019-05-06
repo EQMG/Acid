@@ -35,7 +35,6 @@ set(_temp_acid_headers
 		Engine/Log.hpp
 		Engine/Module.hpp
 		Engine/ModuleHolder.hpp
-		Engine/ModuleUpdater.hpp
 		Files/File.hpp
 		Files/Files.hpp
 		Files/FileSystem.hpp
@@ -44,15 +43,16 @@ set(_temp_acid_headers
 		Fonts/FontType.hpp
 		Fonts/Geometry.hpp
 		Fonts/Outline.hpp
-		Fonts/RendererFonts.hpp
-		Fonts/RendererFonts2.hpp
+		Fonts/RenderFonts.hpp
+		Fonts/RenderFonts2.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
 		Gizmos/Gizmos.hpp
 		Gizmos/GizmoType.hpp
-		Gizmos/RendererGizmos.hpp
+		Gizmos/RenderGizmos.hpp
 		Guis/Gui.hpp
-		Guis/RendererGuis.hpp
+		Guis/RenderGuis.hpp
+		Helpers/ConstExpr.hpp
 		Helpers/Delegate.hpp
 		Helpers/EnumClass.hpp
 		Helpers/Future.hpp
@@ -62,7 +62,6 @@ set(_temp_acid_headers
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeInfo.hpp
-		Helpers/ConstExpr.hpp
 		Inputs/Axis.hpp
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
@@ -103,7 +102,7 @@ set(_temp_acid_headers
 		Maths/Visual/DriverSlide.hpp
 		Meshes/Mesh.hpp
 		Meshes/MeshRender.hpp
-		Meshes/RendererMeshes.hpp
+		Meshes/RenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
 		Models/Model.hpp
 		Models/ModelRegister.hpp
@@ -135,7 +134,7 @@ set(_temp_acid_headers
 		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
 		Particles/ParticleType.hpp
-		Particles/RendererParticles.hpp
+		Particles/RenderParticles.hpp
 		Physics/Colliders/Collider.hpp
 		Physics/Colliders/ColliderCapsule.hpp
 		Physics/Colliders/ColliderCone.hpp
@@ -150,7 +149,7 @@ set(_temp_acid_headers
 		Physics/KinematicCharacter.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
-		Post/Deferred/RendererDeferred.hpp
+		Post/Deferred/RenderDeferred.hpp
 		Post/Filters/FilterBlur.hpp
 		Post/Filters/FilterCrt.hpp
 		Post/Filters/FilterDarken.hpp
@@ -192,13 +191,13 @@ set(_temp_acid_headers
 		Renderer/Pipelines/PipelineCompute.hpp
 		Renderer/Pipelines/PipelineGraphics.hpp
 		Renderer/Pipelines/Shader.hpp
+		Renderer/Render.hpp
 		Renderer/Renderer.hpp
-		Renderer/RendererContainer.hpp
-		Renderer/RenderManager.hpp
+		Renderer/RendererManager.hpp
+		Renderer/RenderHolder.hpp
 		Renderer/Renderpass/Framebuffers.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/Swapchain.hpp
-		Renderer/RenderPipeline.hpp
 		Renderer/RenderStage.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
@@ -215,7 +214,7 @@ set(_temp_acid_headers
 		Serialized/Metadata.hpp
 		Serialized/Xml/Xml.hpp
 		Serialized/Yaml/Yaml.hpp
-		Shadows/RendererShadows.hpp
+		Shadows/RenderShadows.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -268,7 +267,6 @@ set(_temp_acid_sources
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Engine/ModuleHolder.cpp
-		Engine/ModuleUpdater.cpp
 		Files/File.cpp
 		Files/Files.cpp
 		Files/FileSystem.cpp
@@ -277,15 +275,15 @@ set(_temp_acid_sources
 		Fonts/FontType.cpp
 		Fonts/Geometry.cpp
 		Fonts/Outline.cpp
-		Fonts/RendererFonts.cpp
-		Fonts/RendererFonts2.cpp
+		Fonts/RenderFonts.cpp
+		Fonts/RenderFonts2.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
 		Gizmos/Gizmos.cpp
 		Gizmos/GizmoType.cpp
-		Gizmos/RendererGizmos.cpp
+		Gizmos/RenderGizmos.cpp
 		Guis/Gui.cpp
-		Guis/RendererGuis.cpp
+		Guis/RenderGuis.cpp
 		Helpers/String.cpp
 		Helpers/ThreadPool.cpp
 		Inputs/AxisButton.cpp
@@ -317,7 +315,7 @@ set(_temp_acid_sources
 		Maths/Vector4.cpp
 		Meshes/Mesh.cpp
 		Meshes/MeshRender.cpp
-		Meshes/RendererMeshes.cpp
+		Meshes/RenderMeshes.cpp
 		Models/Gltf/ModelGltf.cpp
 		Models/Model.cpp
 		Models/ModelRegister.cpp
@@ -348,7 +346,7 @@ set(_temp_acid_sources
 		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp
 		Particles/ParticleType.cpp
-		Particles/RendererParticles.cpp
+		Particles/RenderParticles.cpp
 		Physics/Colliders/Collider.cpp
 		Physics/Colliders/ColliderCapsule.cpp
 		Physics/Colliders/ColliderCone.cpp
@@ -363,7 +361,7 @@ set(_temp_acid_sources
 		Physics/KinematicCharacter.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
-		Post/Deferred/RendererDeferred.cpp
+		Post/Deferred/RenderDeferred.cpp
 		Post/Filters/FilterBlur.cpp
 		Post/Filters/FilterCrt.cpp
 		Post/Filters/FilterDarken.cpp
@@ -403,7 +401,7 @@ set(_temp_acid_sources
 		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/Shader.cpp
 		Renderer/Renderer.cpp
-		Renderer/RendererContainer.cpp
+		Renderer/RenderHolder.cpp
 		Renderer/Renderpass/Framebuffers.cpp
 		Renderer/Renderpass/Renderpass.cpp
 		Renderer/Renderpass/Swapchain.cpp
@@ -419,7 +417,7 @@ set(_temp_acid_sources
 		Serialized/Metadata.cpp
 		Serialized/Xml/Xml.cpp
 		Serialized/Yaml/Yaml.cpp
-		Shadows/RendererShadows.cpp
+		Shadows/RenderShadows.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp

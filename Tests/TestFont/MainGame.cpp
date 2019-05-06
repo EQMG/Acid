@@ -64,7 +64,6 @@ MainGame::MainGame() :
 	});
 
 	// Registers modules.
-	auto &moduleManager = Engine::Get()->GetModuleHolder();
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();

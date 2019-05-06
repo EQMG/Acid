@@ -1,19 +1,19 @@
-#include "RendererFonts.hpp"
+#include "RenderGuis.hpp"
 
 #include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
-#include "Text.hpp"
+#include "Gui.hpp"
 
 namespace acid
 {
-RendererFonts::RendererFonts(const Pipeline::Stage &pipelineStage) :
-	RenderPipeline(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag" }, { VertexDefault::GetVertexInput() })
+RenderGuis::RenderGuis(const Pipeline::Stage &pipelineStage) :
+	Render(pipelineStage),
+	m_pipeline(pipelineStage, { "Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag" }, { VertexDefault::GetVertexInput() })
 {
 }
 
-void RendererFonts::Render(const CommandBuffer &commandBuffer)
+void RenderGuis::Record(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
@@ -28,7 +28,7 @@ void RendererFonts::Render(const CommandBuffer &commandBuffer)
 			continue;
 		}
 
-		auto object = dynamic_cast<Text *>(screenObject);
+		auto object = dynamic_cast<Gui *>(screenObject);
 
 		if (object != nullptr)
 		{

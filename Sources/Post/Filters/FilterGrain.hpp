@@ -10,7 +10,7 @@ class ACID_EXPORT FilterGrain :
 public:
 	explicit FilterGrain(const Pipeline::Stage &pipelineStage, const float &strength = 2.3f);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const float &GetStrength() const { return m_strength; }
 

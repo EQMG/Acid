@@ -7,7 +7,7 @@ FilterNegative::FilterNegative(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterNegative::Render(const CommandBuffer &commandBuffer)
+void FilterNegative::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

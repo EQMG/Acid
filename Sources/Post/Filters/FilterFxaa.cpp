@@ -8,7 +8,7 @@ FilterFxaa::FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMa
 {
 }
 
-void FilterFxaa::Render(const CommandBuffer &commandBuffer)
+void FilterFxaa::Record(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("spanMax", m_spanMax);

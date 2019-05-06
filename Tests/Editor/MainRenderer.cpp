@@ -1,13 +1,13 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/RendererFonts.hpp>
-#include <Gizmos/RendererGizmos.hpp>
-#include <Guis/RendererGuis.hpp>
+#include <Fonts/RenderFonts.hpp>
+#include <Gizmos/RenderGizmos.hpp>
+#include <Guis/RenderGuis.hpp>
 #include <Devices/Keyboard.hpp>
-#include <Meshes/RendererMeshes.hpp>
+#include <Meshes/RenderMeshes.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/RendererParticles.hpp>
-#include <Post/Deferred/RendererDeferred.hpp>
+#include <Particles/RenderParticles.hpp>
+#include <Post/Deferred/RenderDeferred.hpp>
 #include <Post/Filters/FilterCrt.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterDof.hpp>
@@ -22,7 +22,7 @@
 #include <Post/Filters/FilterVignette.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Shadows/RendererShadows.hpp>
+#include <Shadows/RenderShadows.hpp>
 #include "Filters/FilterBlit.hpp"
 
 namespace test
@@ -47,35 +47,33 @@ MainRenderer::MainRenderer()
 	std::vector<SubpassType> renderpassSubpasses2 = { SubpassType(0, { 0 }) };
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments2, renderpassSubpasses2));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
+	
+	auto &renderHolder = GetRenderHolder();
+	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));
 
-	auto &rendererContainer = GetRendererContainer();
-	rendererContainer.Clear();
+	renderHolder.Add<RenderMeshes>(Pipeline::Stage(1, 0));
 
-	//rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+	renderHolder.Add<RenderDeferred>(Pipeline::Stage(1, 1));
+	renderHolder.Add<RenderParticles>(Pipeline::Stage(1, 1));
 
-	rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
+	//renderHolder.Add<FilterFxaa>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterTone>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterSsao>(Pipeline::Stage(1, 2));
+	//renderHolder.Add()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
+	//renderHolder.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
+	//renderHolder.Add<FilterEmboss>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterCrt>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterLensflare>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
+	//renderHolder.Add<FilterVignette>(Pipeline::Stage(1, 2));
+	//renderHolder.Add<FilterGrain>(Pipeline::Stage(1, 2));
+	renderHolder.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
+	//renderHolder.Add<RenderGizmos>(Pipeline::Stage(1, 2));
 
-	rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
-	rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
-
-	//rendererContainer.Add<FilterFxaa>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterTone>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterSsao>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
-	//rendererContainer.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
-	//rendererContainer.Add<FilterEmboss>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterCrt>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterLensflare>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//rendererContainer.Add<FilterVignette>(Pipeline::Stage(1, 2));
-	//rendererContainer.Add<FilterGrain>(Pipeline::Stage(1, 2));
-	rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-	//rendererContainer.Add<RendererGizmos>(Pipeline::Stage(1, 2));
-
-	rendererContainer.Add<FilterBlit>(Pipeline::Stage(2, 0));
-	rendererContainer.Add<RendererGuis>(Pipeline::Stage(2, 0));
-	rendererContainer.Add<RendererFonts>(Pipeline::Stage(2, 0));
+	renderHolder.Add<FilterBlit>(Pipeline::Stage(2, 0));
+	renderHolder.Add<RenderGuis>(Pipeline::Stage(2, 0));
+	renderHolder.Add<RenderFonts>(Pipeline::Stage(2, 0));
 }
 
 void MainRenderer::Update()

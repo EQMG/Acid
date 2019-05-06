@@ -1,14 +1,34 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
+#include "Maths/Delta.hpp"
 #include "Maths/Time.hpp"
+#include "Maths/Timer.hpp"
 #include "ModuleHolder.hpp"
-#include "ModuleUpdater.hpp"
-#include "Log.hpp"
 #include "Game.hpp"
 
 namespace acid
 {
+class ACID_EXPORT ChangePerSecond
+{
+public:
+	void Update(const float &time)
+	{
+		m_valueTemp++;
+
+		if (std::floor(time) > std::floor(m_valueTime))
+		{
+			m_value = m_valueTemp;
+			m_valueTemp = 0;
+		}
+
+		m_valueTime = time;
+	}
+
+	uint32_t m_valueTemp, m_value;
+	float m_valueTime;
+};
+
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
@@ -36,10 +56,49 @@ public:
 	int32_t Run();
 
 	/**
-	 * Gets the module holder used by the engine instance.
-	 * @return The engines module holder.
+	 * Checks whether a Module exists or not.
+	 * @tparam T The Module type.
+	 * @return If the Module has the System.
 	 */
-	ModuleHolder &GetModuleHolder() { return m_moduleHolder; }
+	template<typename T>
+	bool HasModule() const
+	{
+		return m_modules.HasModule<T>();
+	}
+
+	/**
+	 * Gets a module instance by type from the register.
+	 * @tparam T The Module type.
+	 * @return The Module.
+	 */
+	template<typename T>
+	T *GetModule() const
+	{
+		return m_modules.GetModule<T>();
+	}
+
+	/**
+	 * Adds a Module.
+	 * @tparam T The Module type.
+	 * @param stage The Module stage.
+	 * @tparam Args The constructor arg types.
+	 * @param args The constructor arguments.
+	 */
+	template<typename T, typename... Args>
+	void AddModule(const Module::Stage& stage, Args &&...args)
+	{
+		m_modules.AddModule<T>(stage, std::forward(args)...);
+	}
+
+	/**
+	 * Removes a Module.
+	 * @tparam T The Module type.
+	 */
+	template<typename T>
+	void RemoveModule()
+	{
+		m_modules.RemoveModule<T>();
+	}
 
 	/**
 	 * Gets the current game.
@@ -105,44 +164,48 @@ public:
 	 * Gets the delta (seconds) between updates.
 	 * @return The delta between updates.
 	 */
-	const Time &GetDelta() const { return m_moduleUpdater.GetDelta(); }
+	const Time &GetDelta() const { return m_deltaUpdate.GetChange(); }
 
 	/**
 	 * Gets the delta (seconds) between renders.
 	 * @return The delta between renders.
 	 */
-	const Time &GetDeltaRender() const { return m_moduleUpdater.GetDeltaRender(); }
+	const Time &GetDeltaRender() const { return m_deltaRender.GetChange(); }
 
 	/**
 	 * Gets the average UPS over a short interval.
 	 * @return The updates per second.
 	 */
-	const uint32_t &GetUps() const { return m_moduleUpdater.GetUps(); }
+	const uint32_t &GetUps() const { return m_ups.m_value; }
 
 	/**
 	 * Gets the average FPS over a short interval.
 	 * @return The frames per second.
 	 */
-	const uint32_t &GetFps() const { return m_moduleUpdater.GetFps(); }
+	const uint32_t &GetFps() const { return m_fps.m_value; }
 
 	/**
 	 * Requests the engine to delete and stop the game-loop.
 	 * @param error If a bad error occurred.
 	 */
-	void RequestClose(const bool &error);
+	void RequestClose(const bool &error) { m_running = false; }
 
 private:
 	static ACID_STATE Engine *INSTANCE;
 
-	ModuleHolder m_moduleHolder;
-	ModuleUpdater m_moduleUpdater;
-
+	ModuleHolder m_modules;
 	std::unique_ptr<Game> m_game;
 
 	std::string m_argv0;
 	Time m_timeOffset;
 	float m_fpsLimit;
 	bool m_running;
-	bool m_error;
+
+	Delta m_deltaUpdate;
+	Delta m_deltaRender;
+	Timer m_timerUpdate;
+	Timer m_timerRender;
+
+	ChangePerSecond m_ups, m_fps;
 };
 }

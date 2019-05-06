@@ -1,14 +1,13 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/RendererFonts.hpp>
-#include <Guis/RendererGuis.hpp>
-#include <Meshes/RendererMeshes.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/RendererParticles.hpp>
-#include <Post/Deferred/RendererDeferred.hpp>
+#include <Fonts/RenderFonts.hpp>
+#include <Guis/RenderGuis.hpp>
+#include <Meshes/RenderMeshes.hpp>
+#include <Particles/RenderParticles.hpp>
+#include <Post/Deferred/RenderDeferred.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Renderer/Renderer.hpp>
-#include <Shadows/RendererShadows.hpp>
+#include <Shadows/RenderShadows.hpp>
 
 namespace test
 {
@@ -28,18 +27,17 @@ MainRenderer::MainRenderer()
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 	Renderer::Get()->SetRenderStages(std::move(renderStages));
 
-	auto &rendererContainer = GetRendererContainer();
-	rendererContainer.Clear();
-	//rendererContainer.Add<RendererShadows>(Pipeline::Stage(0, 0));
+	auto &renderHolder = GetRenderHolder();
+	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));
 
-	rendererContainer.Add<RendererMeshes>(Pipeline::Stage(1, 0));
+	renderHolder.Add<RenderMeshes>(Pipeline::Stage(1, 0));
 
-	rendererContainer.Add<RendererDeferred>(Pipeline::Stage(1, 1));
-	rendererContainer.Add<RendererParticles>(Pipeline::Stage(1, 1));
+	renderHolder.Add<RenderDeferred>(Pipeline::Stage(1, 1));
+	renderHolder.Add<RenderParticles>(Pipeline::Stage(1, 1));
 
-	rendererContainer.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-	rendererContainer.Add<RendererGuis>(Pipeline::Stage(1, 2));
-	rendererContainer.Add<RendererFonts>(Pipeline::Stage(1, 2));
+	renderHolder.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
+	renderHolder.Add<RenderGuis>(Pipeline::Stage(1, 2));
+	renderHolder.Add<RenderFonts>(Pipeline::Stage(1, 2));
 }
 
 void MainRenderer::Update()

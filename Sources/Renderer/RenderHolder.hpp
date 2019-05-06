@@ -1,23 +1,17 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
-#include "RenderPipeline.hpp"
+#include "Render.hpp"
 
 namespace acid
 {
 /**
  * @brief Class that contains and manages renderers registered to a render manager.
  */
-class ACID_EXPORT RendererContainer :
+class ACID_EXPORT RenderHolder :
 	public NonCopyable
 {
 public:
-	RendererContainer();
-
-	const std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>> &GetStages() const { return m_stages; }
-
-	void Clear() { m_stages.clear(); }
-
 	/**
 	 * Gets a renderer instance by type from this register.
 	 * @tparam T The renderer type to find.
@@ -56,7 +50,7 @@ public:
 	 * @param renderer The renderer to add.
 	 * @return The added renderer.
 	 */
-	RenderPipeline *Add(RenderPipeline *renderer);
+	Render *Add(Render *renderer);
 
 	/**
 	 * Creates a renderer by type to be added this register.
@@ -77,7 +71,7 @@ public:
 	 * Removes a renderer from this register.
 	 * @param renderer The renderer to remove.
 	 */
-	void Remove(RenderPipeline *renderer);
+	void Remove(Render *renderer);
 
 	/**
 	 * Removes a renderer by type from this register.
@@ -106,6 +100,8 @@ public:
 	}
 
 private:
-	std::map<Pipeline::Stage, std::vector<std::unique_ptr<RenderPipeline>>> m_stages;
+	friend class Renderer;
+
+	std::map<Pipeline::Stage, std::vector<std::unique_ptr<Render>>> m_stages;
 };
 }

@@ -10,6 +10,6 @@ class ACID_EXPORT FilterNegative :
 public:
 	explicit FilterNegative(const Pipeline::Stage &pipelineStage);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 };
 }

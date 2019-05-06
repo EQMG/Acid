@@ -10,7 +10,7 @@ class ACID_EXPORT FilterWobble :
 public:
 	explicit FilterWobble(const Pipeline::Stage &pipelineStage, const float &wobbleSpeed = 2.0f);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const float &GetWobbleSpeed() const { return m_wobbleSpeed; }
 

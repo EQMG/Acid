@@ -10,7 +10,7 @@
 #include "Devices/PhysicalDevice.hpp"
 #include "Devices/Surface.hpp"
 #include "Devices/Window.hpp"
-#include "RenderManager.hpp"
+#include "RendererManager.hpp"
 #include "RenderStage.hpp"
 
 namespace acid
@@ -26,7 +26,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current module instance.
 	 */
-	static Renderer *Get() { return Engine::Get()->GetModuleHolder().Get<Renderer>(); }
+	static Renderer *Get() { return Engine::Get()->GetModule<Renderer>(); }
 
 	Renderer();
 
@@ -47,16 +47,61 @@ public:
 	void CaptureScreenshot(const std::string &filename);
 
 	/**
+	 * Checks whether a Render exists or not.
+	 * @tparam T The Render type.
+	 * @return If the Render has the System.
+	 */
+	 /*template<typename T>
+	 bool HasRender() const
+	 {
+		 return m_rendererManager->m_renderHolder.Has<T>();
+	 }*/
+
+	 /**
+	  * Gets a Render.
+	  * @tparam T The Render type.
+	  * @return The Render.
+	  */
+	template<typename T>
+	T* GetRender() const
+	{
+		return m_rendererManager->m_renderHolder.Get<T>();
+	}
+
+	/**
+	 * Adds a Render.
+	 * @tparam T The Render type.
+	 * @param pipelineStage The Render pipeline stage.
+	 * @tparam Args The constructor arg types.
+	 * @param args The constructor arguments.
+	 */
+	template<typename T, typename... Args>
+	void AddRender(const Pipeline::Stage& pipelineStage, Args&& ...args)
+	{
+		m_rendererManager->m_renderHolder.Add<T>(pipelineStage, std::forward(args)...);
+	}
+
+	/**
+	 * Removes a Render.
+	 * @tparam T The Render type.
+	 */
+	template<typename T>
+	void RemoveRender()
+	{
+		m_rendererManager->m_renderHolder.Remove<T>();
+	}
+
+	/**
 	 * Gets the current renderer manager.
 	 * @return The renderer manager.
 	 */
-	RenderManager *GetManager() const { return m_renderManager.get(); }
+	RendererManager *GetManager() const { return m_rendererManager.get(); }
 
 	/**
 	 * Sets the current renderer manager to a new renderer manager.
 	 * @param managerRender The new renderer manager.
 	 */
-	void SetManager(RenderManager *managerRender) { m_renderManager.reset(managerRender); }
+	void SetManager(RendererManager *managerRender) { m_rendererManager.reset(managerRender); }
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;
 
@@ -87,7 +132,7 @@ private:
 
 	void EndRenderpass(RenderStage &renderStage);
 
-	std::unique_ptr<RenderManager> m_renderManager;
+	std::unique_ptr<RendererManager> m_rendererManager;
 	std::vector<std::unique_ptr<RenderStage>> m_renderStages;
 	std::map<std::string, const Descriptor *> m_attachments;
 	std::unique_ptr<Swapchain> m_swapchain;

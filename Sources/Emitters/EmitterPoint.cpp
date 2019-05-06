@@ -4,8 +4,7 @@
 
 namespace acid
 {
-EmitterPoint::EmitterPoint(const Transform &localTransform) :
-	Emitter(localTransform)
+EmitterPoint::EmitterPoint()
 {
 }
 
@@ -25,14 +24,12 @@ Vector3f EmitterPoint::GeneratePosition() const
 const Metadata &operator>>(const Metadata &metadata, EmitterPoint &emitter)
 {
 	metadata.GetChild("Point", emitter.m_point);
-	metadata.GetChild("Local Transform", emitter.m_localTransform);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const EmitterPoint &emitter)
 {
 	metadata.SetChild("Point", emitter.m_point);
-	metadata.SetChild("Local Transform", emitter.m_localTransform);
 	return metadata;
 }
 }

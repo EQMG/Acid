@@ -30,12 +30,9 @@ Joysticks::Joysticks()
 	{
 		if (glfwJoystickPresent(i))
 		{
-			//It may seem tempting to call 'CallbackJoystick' here, but this requires a reference to the module.
-			//As we're currently in the process of adding the module, this will lead to an exception.
 			Joysticks::JoystickImpl joystick = {};
 			joystick.m_name = glfwGetJoystickName(i);
 			m_connected.emplace(i, joystick);
-			//Called for consistency sake, although this can not have an effect.
 			m_onConnect(i, true);
 		}
 	}

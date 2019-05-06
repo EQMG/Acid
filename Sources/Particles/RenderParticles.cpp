@@ -1,4 +1,4 @@
-#include "RendererParticles.hpp"
+#include "RenderParticles.hpp"
 
 #include "Scenes/Scenes.hpp"
 #include "Models/VertexDefault.hpp"
@@ -6,15 +6,15 @@
 
 namespace acid
 {
-RendererParticles::RendererParticles(const Pipeline::Stage &pipelineStage) :
-	RenderPipeline(pipelineStage),
+RenderParticles::RenderParticles(const Pipeline::Stage &pipelineStage) :
+	Render(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag" },
 		{ VertexDefault::GetVertexInput(0), ParticleType::Instance::GetVertexInput(1) }, {}, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::Read,
 		VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST)
 {
 }
 
-void RendererParticles::Render(const CommandBuffer &commandBuffer)
+void RenderParticles::Record(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());

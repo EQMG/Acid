@@ -10,7 +10,7 @@ class ACID_EXPORT FilterFxaa :
 public:
 	explicit FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax = 8.0f);
 
-	void Render(const CommandBuffer &commandBuffer) override;
+	void Record(const CommandBuffer &commandBuffer) override;
 
 	const float &GetSpanMax() const { return m_spanMax; }
 

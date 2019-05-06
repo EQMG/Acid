@@ -4,8 +4,7 @@
 
 namespace acid
 {
-EmitterCircle::EmitterCircle(const float &radius, const Vector3f &heading, const Transform &localTransform) :
-	Emitter(localTransform),
+EmitterCircle::EmitterCircle(const float &radius, const Vector3f &heading) :
 	m_radius(radius),
 	m_heading(heading.Normalize())
 {
@@ -53,7 +52,6 @@ const Metadata &operator>>(const Metadata &metadata, EmitterCircle &emitter)
 {
 	metadata.GetChild("Radius", emitter.m_radius);
 	metadata.GetChild("Heading", emitter.m_heading);
-	metadata.GetChild("Local Transform", emitter.m_localTransform);
 	return metadata;
 }
 
@@ -61,7 +59,6 @@ Metadata &operator<<(Metadata &metadata, const EmitterCircle &emitter)
 {
 	metadata.SetChild("Radius", emitter.m_radius);
 	metadata.SetChild("Heading", emitter.m_heading);
-	metadata.SetChild("Local Transform", emitter.m_localTransform);
 	return metadata;
 }
 }

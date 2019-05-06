@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Maths/Transform.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid
@@ -13,14 +12,7 @@ class ACID_EXPORT Emitter :
 	public Component
 {
 public:
-	/**
-	 * Creates a new emitter.
-	 * @param localTransform The local transform from the parents space.
-	 */
-	explicit Emitter(const Transform &localTransform = Transform::Zero) :
-		m_localTransform(localTransform)
-	{
-	}
+	virtual ~Emitter() = default;
 
 	/**
 	 * Creates a new objects position.
@@ -37,12 +29,5 @@ public:
 		auto y = rootOneMinusZSquared * std::sin(theta);
 		return Vector3f(x, y, z);
 	}
-
-	const Transform &GetLocalTransform() const { return m_localTransform; }
-
-	void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
-
-protected:
-	Transform m_localTransform;
 };
 }
