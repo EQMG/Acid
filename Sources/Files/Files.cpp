@@ -38,7 +38,7 @@ private:
 			return traits_type::eof();
 		}
 
-		auto bytesRead = PHYSFS_read(m_file, m_buffer, 1, static_cast<PHYSFS_uint32>(m_bufferSize));
+		auto bytesRead = PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize));
 
 		if (bytesRead < 1)
 		{
@@ -109,7 +109,7 @@ private:
 
 		if (c != traits_type::eof())
 		{
-			if (PHYSFS_write(m_file, &c, 1, 1) < 1)
+			if (PHYSFS_writeBytes(m_file, &c, 1) < 1)
 			{
 				return traits_type::eof();
 			}
