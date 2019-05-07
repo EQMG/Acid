@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Renderer/Subrender.hpp"
-#include "Renderer/Renderer.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Subrender.hpp"
+#include "Graphics/Graphics.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {

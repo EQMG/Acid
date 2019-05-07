@@ -25,7 +25,7 @@ public:
 	const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
 
 private:
-	friend class Renderer;
+	friend class Graphics;
 
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 

@@ -2,7 +2,7 @@
 
 #include <Files/FileSystem.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Audio/Audio.hpp>
 
 namespace test

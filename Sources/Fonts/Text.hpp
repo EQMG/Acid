@@ -5,9 +5,9 @@
 #include "Maths/Visual/Driver.hpp"
 #include "Models/Model.hpp"
 #include "Models/VertexDefault.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Buffers/UniformHandler.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Buffers/UniformHandler.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
 #include "FontType.hpp"
 

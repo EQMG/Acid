@@ -23,7 +23,7 @@
 #include <Physics/Colliders/ColliderCylinder.hpp>
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Colliders/ColliderSphere.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Resources/Resources.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>

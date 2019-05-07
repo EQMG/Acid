@@ -24,7 +24,7 @@ public:
 	const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
 
 private:
-	friend class Renderer;
+	friend class Graphics;
 
 	const Instance *m_instance;
 	const PhysicalDevice *m_physicalDevice;

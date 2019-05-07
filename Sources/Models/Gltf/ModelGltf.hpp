@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Renderer/Images/Image2d.hpp"
+#include "Graphics/Images/Image2d.hpp"
 
 namespace acid
 {

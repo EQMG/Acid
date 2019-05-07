@@ -2,7 +2,7 @@
 
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
-#include "Renderer/Pipelines/Pipeline.hpp"
+#include "Graphics/Pipelines/Pipeline.hpp"
 
 namespace acid
 {

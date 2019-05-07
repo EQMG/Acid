@@ -2,7 +2,7 @@
 
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Lights/Light.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include "World/World.hpp"
 
 namespace test
@@ -43,7 +43,7 @@ void CelestialBody::Update()
 			componentLight->SetColour(sunColour);
 		}
 
-		auto filterLensflare = Renderer::Get()->GetRender<FilterLensflare>();
+		auto filterLensflare = Graphics::Get()->GetRender<FilterLensflare>();
 
 		if (filterLensflare != nullptr)
 		{

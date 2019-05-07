@@ -6,7 +6,7 @@
 #include <Particles/SubrenderParticles.hpp>
 #include <Post/Deferred/SubrenderDeferred.hpp>
 #include <Post/Filters/FilterDefault.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Shadows/SubrenderShadows.hpp>
 
 namespace test
@@ -38,7 +38,7 @@ MainRenderer::MainRenderer()
 		SubpassType(2, { 0, 1 }) 
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
-	Renderer::Get()->SetRenderStages(std::move(renderStages));
+	Graphics::Get()->SetRenderStages(std::move(renderStages));
 
 	auto &renderHolder = GetRenderHolder();
 	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));

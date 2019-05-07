@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Renderer/Subrender.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Subrender.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {

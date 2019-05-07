@@ -1,6 +1,6 @@
 #include "Instance.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Window.hpp"
 
 #if !defined(VK_EXT_DEBUG_UTILS_EXTENSION_NAME)
@@ -168,7 +168,7 @@ void Instance::CreateInstance()
 	instanceCreateInfo.ppEnabledLayerNames = m_instanceLayers.data();
 	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensions.size());
 	instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensions.data();
-	Renderer::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 }
 
 void Instance::CreateDebugCallback()
@@ -180,7 +180,7 @@ void Instance::CreateDebugCallback()
 	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 	debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 	debugReportCallbackCreateInfo.pUserData = nullptr;
-	Renderer::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+	Graphics::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
 #endif
 }
 

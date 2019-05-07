@@ -171,34 +171,34 @@ set(_temp_acid_headers
 		Post/Pipelines/PipelineBlur.hpp
 		Post/PostFilter.hpp
 		Post/PostPipeline.hpp
-		Renderer/Buffers/Buffer.hpp
-		Renderer/Buffers/InstanceBuffer.hpp
-		Renderer/Buffers/PushHandler.hpp
-		Renderer/Buffers/StorageBuffer.hpp
-		Renderer/Buffers/StorageHandler.hpp
-		Renderer/Buffers/UniformBuffer.hpp
-		Renderer/Buffers/UniformHandler.hpp
-		Renderer/Commands/CommandBuffer.hpp
-		Renderer/Commands/CommandPool.hpp
-		Renderer/Descriptors/Descriptor.hpp
-		Renderer/Descriptors/DescriptorSet.hpp
-		Renderer/Descriptors/DescriptorsHandler.hpp
-		Renderer/Images/Image.hpp
-		Renderer/Images/Image2d.hpp
-		Renderer/Images/ImageCube.hpp
-		Renderer/Images/ImageDepth.hpp
-		Renderer/Pipelines/Pipeline.hpp
-		Renderer/Pipelines/PipelineCompute.hpp
-		Renderer/Pipelines/PipelineGraphics.hpp
-		Renderer/Pipelines/Shader.hpp
-		Renderer/Renderer.hpp
-		Renderer/RendererManager.hpp
-		Renderer/Renderpass/Framebuffers.hpp
-		Renderer/Renderpass/Renderpass.hpp
-		Renderer/Renderpass/Swapchain.hpp
-		Renderer/RenderStage.hpp
-		Renderer/Subrender.hpp
-		Renderer/SubrenderHolder.hpp
+		Graphics/Buffers/Buffer.hpp
+		Graphics/Buffers/InstanceBuffer.hpp
+		Graphics/Buffers/PushHandler.hpp
+		Graphics/Buffers/StorageBuffer.hpp
+		Graphics/Buffers/StorageHandler.hpp
+		Graphics/Buffers/UniformBuffer.hpp
+		Graphics/Buffers/UniformHandler.hpp
+		Graphics/Commands/CommandBuffer.hpp
+		Graphics/Commands/CommandPool.hpp
+		Graphics/Descriptors/Descriptor.hpp
+		Graphics/Descriptors/DescriptorSet.hpp
+		Graphics/Descriptors/DescriptorsHandler.hpp
+		Graphics/Images/Image.hpp
+		Graphics/Images/Image2d.hpp
+		Graphics/Images/ImageCube.hpp
+		Graphics/Images/ImageDepth.hpp
+		Graphics/Pipelines/Pipeline.hpp
+		Graphics/Pipelines/PipelineCompute.hpp
+		Graphics/Pipelines/PipelineGraphics.hpp
+		Graphics/Pipelines/Shader.hpp
+		Graphics/Graphics.hpp
+		Graphics/Renderer.hpp
+		Graphics/Renderpass/Framebuffers.hpp
+		Graphics/Renderpass/Renderpass.hpp
+		Graphics/Renderpass/Swapchain.hpp
+		Graphics/RenderStage.hpp
+		Graphics/Subrender.hpp
+		Graphics/SubrenderHolder.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
@@ -382,30 +382,30 @@ set(_temp_acid_sources
 		Post/Filters/FilterWobble.cpp
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
-		Renderer/Buffers/Buffer.cpp
-		Renderer/Buffers/InstanceBuffer.cpp
-		Renderer/Buffers/PushHandler.cpp
-		Renderer/Buffers/StorageBuffer.cpp
-		Renderer/Buffers/StorageHandler.cpp
-		Renderer/Buffers/UniformBuffer.cpp
-		Renderer/Buffers/UniformHandler.cpp
-		Renderer/Commands/CommandBuffer.cpp
-		Renderer/Commands/CommandPool.cpp
-		Renderer/Descriptors/DescriptorSet.cpp
-		Renderer/Descriptors/DescriptorsHandler.cpp
-		Renderer/Images/Image.cpp
-		Renderer/Images/Image2d.cpp
-		Renderer/Images/ImageCube.cpp
-		Renderer/Images/ImageDepth.cpp
-		Renderer/Pipelines/PipelineCompute.cpp
-		Renderer/Pipelines/PipelineGraphics.cpp
-		Renderer/Pipelines/Shader.cpp
-		Renderer/Renderer.cpp
-		Renderer/Renderpass/Framebuffers.cpp
-		Renderer/Renderpass/Renderpass.cpp
-		Renderer/Renderpass/Swapchain.cpp
-		Renderer/RenderStage.cpp
-		Renderer/SubrenderHolder.cpp
+		Graphics/Buffers/Buffer.cpp
+		Graphics/Buffers/InstanceBuffer.cpp
+		Graphics/Buffers/PushHandler.cpp
+		Graphics/Buffers/StorageBuffer.cpp
+		Graphics/Buffers/StorageHandler.cpp
+		Graphics/Buffers/UniformBuffer.cpp
+		Graphics/Buffers/UniformHandler.cpp
+		Graphics/Commands/CommandBuffer.cpp
+		Graphics/Commands/CommandPool.cpp
+		Graphics/Descriptors/DescriptorSet.cpp
+		Graphics/Descriptors/DescriptorsHandler.cpp
+		Graphics/Images/Image.cpp
+		Graphics/Images/Image2d.cpp
+		Graphics/Images/ImageCube.cpp
+		Graphics/Images/ImageDepth.cpp
+		Graphics/Pipelines/PipelineCompute.cpp
+		Graphics/Pipelines/PipelineGraphics.cpp
+		Graphics/Pipelines/Shader.cpp
+		Graphics/Graphics.cpp
+		Graphics/Renderpass/Framebuffers.cpp
+		Graphics/Renderpass/Renderpass.cpp
+		Graphics/Renderpass/Swapchain.cpp
+		Graphics/RenderStage.cpp
+		Graphics/SubrenderHolder.cpp
 		Resources/Resources.cpp
 		Scenes/ComponentRegister.cpp
 		Scenes/Entity.cpp

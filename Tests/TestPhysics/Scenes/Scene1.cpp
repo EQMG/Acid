@@ -26,7 +26,7 @@
 #include <Physics/Colliders/ColliderCylinder.hpp>
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Colliders/ColliderSphere.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>

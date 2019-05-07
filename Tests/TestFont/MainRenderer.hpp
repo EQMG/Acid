@@ -1,13 +1,13 @@
 #pragma once
 
-#include <Renderer/RendererManager.hpp>
+#include <Graphics/Renderer.hpp>
 
 using namespace acid;
 
 namespace test
 {
 class MainRenderer :
-	public RendererManager
+	public Renderer
 {
 public:
 	MainRenderer();

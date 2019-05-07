@@ -1,6 +1,6 @@
 #include "PhysicalDevice.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
 
 namespace acid

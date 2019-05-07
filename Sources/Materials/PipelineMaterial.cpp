@@ -1,7 +1,7 @@
 #include "PipelineMaterial.hpp"
 
 #include "Resources/Resources.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 
 namespace acid
 {
@@ -52,7 +52,7 @@ PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphi
 
 bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 {
-	auto renderStage = Renderer::Get()->GetRenderStage(m_pipelineStage.first);
+	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
 
 	if (renderStage == nullptr)
 	{

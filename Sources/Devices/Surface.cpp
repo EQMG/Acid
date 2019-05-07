@@ -1,6 +1,6 @@
 #include "Surface.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
 #include "Window.hpp"
@@ -17,7 +17,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 	// Creates the surface.
 	Window::Get()->CreateSurface(*m_instance, nullptr, &m_surface);
 
-	Renderer::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, m_surface, &m_capabilities));
+	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, m_surface, &m_capabilities));
 
 	uint32_t surfaceFormatCount = 0;
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, nullptr);

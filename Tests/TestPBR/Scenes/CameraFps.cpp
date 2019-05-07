@@ -3,7 +3,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include "PlayerFps.hpp"
 
 namespace test

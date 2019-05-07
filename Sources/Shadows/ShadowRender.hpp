@@ -2,9 +2,9 @@
 
 #include "Scenes/Component.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Buffers/PushHandler.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Buffers/PushHandler.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {

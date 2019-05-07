@@ -1,6 +1,6 @@
 ﻿#include "ShadowBox.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Maths/Maths.hpp"
 
 namespace acid

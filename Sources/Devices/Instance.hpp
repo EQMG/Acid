@@ -41,7 +41,7 @@ public:
 	const VkInstance &GetInstance() const { return m_instance; }
 
 private:
-	friend class Renderer;
+	friend class Graphics;
 
 	void SetupLayers();
 

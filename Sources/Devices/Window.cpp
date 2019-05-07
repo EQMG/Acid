@@ -1,8 +1,8 @@
 #include "Window.hpp"
 
 #include <GLFW/glfw3.h>
-#include "Renderer/Renderer.hpp"
-#include "Renderer/Images/Image.hpp"
+#include "Graphics/Graphics.hpp"
+#include "Graphics/Images/Image.hpp"
 
 namespace acid
 {
@@ -70,7 +70,7 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 	}
 
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-	Renderer::Get()->UpdateSurfaceCapabilities();
+	Graphics::Get()->UpdateSurfaceCapabilities();
 	Window::Get()->m_onSize(Window::Get()->m_size);
 }
 

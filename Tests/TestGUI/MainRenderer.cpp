@@ -2,7 +2,7 @@
 
 #include <Fonts/SubrenderFonts.hpp>
 #include <Guis/SubrenderGuis.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 
 namespace test
@@ -19,7 +19,7 @@ MainRenderer::MainRenderer()
 		SubpassType(0, { 0, 1 }) 
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
-	Renderer::Get()->SetRenderStages(std::move(renderStages));
+	Graphics::Get()->SetRenderStages(std::move(renderStages));
 
 	auto &renderHolder = GetRenderHolder();
 	renderHolder.Add<SubrenderGuis>(Pipeline::Stage(0, 0));

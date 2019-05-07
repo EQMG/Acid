@@ -13,7 +13,7 @@
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Particles/ParticleSystem.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Shadows/ShadowRender.hpp>

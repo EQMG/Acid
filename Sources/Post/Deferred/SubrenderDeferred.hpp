@@ -3,11 +3,11 @@
 #include "Helpers/Future.hpp"
 #include "Lights/Fog.hpp"
 #include "Maths/Vector3.hpp"
-#include "Renderer/Subrender.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Buffers/UniformHandler.hpp"
-#include "Renderer/Images/ImageCube.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Subrender.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Buffers/UniformHandler.hpp"
+#include "Graphics/Images/ImageCube.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {

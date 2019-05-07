@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include "Maths/Maths.hpp"
-#include "Renderer/Images/Image.hpp"
+#include "Graphics/Images/Image.hpp"
 
 namespace acid
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Renderer/Buffers/Buffer.hpp"
+#include "Graphics/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid

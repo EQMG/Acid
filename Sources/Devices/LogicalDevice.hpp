@@ -39,7 +39,7 @@ public:
 	const uint32_t &GetTransferFamily() const { return m_transferFamily; }
 
 private:
-	friend class Renderer;
+	friend class Graphics;
 
 	void CreateQueueIndices();
 

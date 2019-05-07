@@ -1,6 +1,6 @@
 #include "LogicalDevice.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
 #include "Surface.hpp"
@@ -28,7 +28,7 @@ LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *phy
 
 LogicalDevice::~LogicalDevice()
 {
-	Renderer::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
+	Graphics::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
 
 	vkDestroyDevice(m_logicalDevice, nullptr);
 }
@@ -263,7 +263,7 @@ void LogicalDevice::CreateLogicalDevice()
 	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instance->GetDeviceExtensions().size());
 	deviceCreateInfo.ppEnabledExtensionNames = m_instance->GetDeviceExtensions().data();
 	deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
-	Renderer::CheckVk(vkCreateDevice(*m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
+	Graphics::CheckVk(vkCreateDevice(*m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
 	vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
 	vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);

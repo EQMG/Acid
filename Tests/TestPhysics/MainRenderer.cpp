@@ -20,7 +20,7 @@
 #include <Post/Filters/FilterTone.hpp>
 #include <Post/Filters/FilterVignette.hpp>
 #include <Post/Pipelines/PipelineBlur.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Shadows/SubrenderShadows.hpp>
 #include "Devices/Keyboard.hpp"
 
@@ -54,7 +54,7 @@ MainRenderer::MainRenderer()
 		SubpassType(2, { 0, 1 }) 
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
-	Renderer::Get()->SetRenderStages(std::move(renderStages));
+	Graphics::Get()->SetRenderStages(std::move(renderStages));
 
 	auto &renderHolder = GetRenderHolder();
 	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));

@@ -3,7 +3,7 @@
 #include <Files/Files.hpp>
 #include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
 #include "MainRenderer.hpp"
@@ -76,7 +76,7 @@ MainGame::MainGame() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([]()
 			{
-				Renderer::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
+				Graphics::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
 			});
 		}
 	});

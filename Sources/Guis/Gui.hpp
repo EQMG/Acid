@@ -3,10 +3,10 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/UniformHandler.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Images/Image2d.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Buffers/UniformHandler.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Images/Image2d.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
 
 namespace acid

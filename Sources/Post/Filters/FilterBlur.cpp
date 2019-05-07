@@ -1,6 +1,6 @@
 #include "FilterBlur.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 
 namespace acid
 {

@@ -5,8 +5,8 @@
 #include "Models/VertexDefault.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Resources/Resources.hpp"
-#include "Renderer/Pipelines/PipelineCompute.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Pipelines/PipelineCompute.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
@@ -85,11 +85,11 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", m_uniformScene);
 	m_descriptorSet.Push("BufferLights", m_storageLights);
-	m_descriptorSet.Push("samplerShadows", Renderer::Get()->GetAttachment("shadows"));
-	m_descriptorSet.Push("samplerPosition", Renderer::Get()->GetAttachment("position"));
-	m_descriptorSet.Push("samplerDiffuse", Renderer::Get()->GetAttachment("diffuse"));
-	m_descriptorSet.Push("samplerNormal", Renderer::Get()->GetAttachment("normal"));
-	m_descriptorSet.Push("samplerMaterial", Renderer::Get()->GetAttachment("material"));
+	m_descriptorSet.Push("samplerShadows", Graphics::Get()->GetAttachment("shadows"));
+	m_descriptorSet.Push("samplerPosition", Graphics::Get()->GetAttachment("position"));
+	m_descriptorSet.Push("samplerDiffuse", Graphics::Get()->GetAttachment("diffuse"));
+	m_descriptorSet.Push("samplerNormal", Graphics::Get()->GetAttachment("normal"));
+	m_descriptorSet.Push("samplerMaterial", Graphics::Get()->GetAttachment("material"));
 	m_descriptorSet.Push("samplerBRDF", *m_brdf);
 	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
 	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
@@ -200,7 +200,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		return nullptr;
 	}
 
-	auto logicalDevice = Renderer::Get()->GetLogicalDevice();
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto prefilteredCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
 		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);

@@ -3,7 +3,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "Resources/Resources.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Text.hpp"
 
 namespace acid
@@ -176,7 +176,7 @@ uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
 
 void FontType::LoadFont(const std::string &filename)
 {
-	auto physicalDevice = Renderer::Get()->GetPhysicalDevice();
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
 	auto fileLoaded = Files::Read(filename); // TODO: Use a stream.
 

@@ -11,7 +11,7 @@
 #include "Files/Files.hpp"
 #include "Gizmos/Gizmos.hpp"
 #include "Particles/Particles.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
@@ -41,7 +41,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	if (!emptyRegister)
 	{
 		AddModule<Window>(Module::Stage::Always);
-		AddModule<Renderer>(Module::Stage::Render);
+		AddModule<Graphics>(Module::Stage::Render);
 		AddModule<Audio>(Module::Stage::Pre);
 		AddModule<Joysticks>(Module::Stage::Pre);
 		AddModule<Keyboard>(Module::Stage::Pre);

@@ -4,7 +4,7 @@
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Maths/Quaternion.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Physics/CollisionObject.hpp>
 #include "PlayerFps.hpp"
 

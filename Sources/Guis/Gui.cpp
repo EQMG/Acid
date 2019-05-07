@@ -1,6 +1,6 @@
 ﻿#include "Gui.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 #include "Maths/Visual/DriverConstant.hpp"
 

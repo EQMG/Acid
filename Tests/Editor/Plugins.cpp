@@ -5,7 +5,7 @@
 #include <Engine/cr.h>
 #include <Devices/Keyboard.hpp>
 #include <Files/FileSystem.hpp>
-#include <Renderer/Renderer.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
 

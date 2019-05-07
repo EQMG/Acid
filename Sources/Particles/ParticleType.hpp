@@ -5,10 +5,10 @@
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/InstanceBuffer.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
-#include "Renderer/Images/Image2d.hpp"
+#include "Graphics/Buffers/InstanceBuffer.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Images/Image2d.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid

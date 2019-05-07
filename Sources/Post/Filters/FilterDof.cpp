@@ -1,6 +1,6 @@
 #include "FilterDof.hpp"
 
-#include "Renderer/Renderer.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -32,7 +32,7 @@ void FilterDof::Render(const CommandBuffer &commandBuffer)
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	//m_descriptorSet.Push("writeColour", Renderer::Get()->GetAttachment("resolved"));
-	m_descriptorSet.Push("samplerDepth", Renderer::Get()->GetAttachment("depth"));
+	m_descriptorSet.Push("samplerDepth", Graphics::Get()->GetAttachment("depth"));
 	//m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("resolved"));
 	m_descriptorSet.Push("samplerBlured", m_pipelineBlur == nullptr ? nullptr : m_pipelineBlur->GetOutput());
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");

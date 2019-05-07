@@ -3,9 +3,9 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Models/Model.hpp"
-#include "Renderer/Buffers/InstanceBuffer.hpp"
-#include "Renderer/Descriptors/DescriptorsHandler.hpp"
-#include "Renderer/Pipelines/PipelineGraphics.hpp"
+#include "Graphics/Buffers/InstanceBuffer.hpp"
+#include "Graphics/Descriptors/DescriptorsHandler.hpp"
+#include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
 #include "Serialized/Metadata.hpp"
 

@@ -10,7 +10,7 @@ FilterBlit::FilterBlit(const Pipeline::Stage &pipelineStage) :
 void FilterBlit::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
-	m_descriptorSet.Push("samplerColour", Renderer::Get()->GetAttachment("swapchain"));
+	m_descriptorSet.Push("samplerColour", Graphics::Get()->GetAttachment("swapchain"));
 	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
 	if (!updateSuccess)
