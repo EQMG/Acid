@@ -61,8 +61,7 @@ public:
 		const auto typeId = GetModuleTypeId<T>();
 
 		// Insert the stage value
-		auto stageKey = static_cast<float>(stage) + (0.01f * static_cast<float>(m_modules.size()));
-		m_stages.insert({ stageKey, typeId });
+		m_stages.insert({ StageIndex(stage, m_modules.size()), typeId });
 
 		// Then, add the Module
 		m_modules[typeId] = std::move(module);
@@ -87,34 +86,20 @@ public:
 private:
 	friend class Engine;
 
+	using StageIndex = std::pair<Module::Stage, std::size_t>;
+
 	void RemoveModuleStage(const TypeId &id);
 
 	/**
 	 * Iterates through all Modules.
 	 * @param stage The Module stage.
 	 */
-	void UpdateStage(const Module::Stage &stage)
-	{
-		for (const auto &typeId : m_stages)
-		{
-			if (static_cast<uint32_t>(std::floor(typeId.first)) != static_cast<uint32_t>(stage))
-			{
-				continue;
-			}
-
-			auto &module = m_modules[typeId.second];
-
-			if (module != nullptr)
-			{
-				module->Update();
-			}
-		}
-	}
+	void UpdateStage(const Module::Stage& stage);
 
 	// List of all Modules.
 	std::unordered_map<TypeId, std::unique_ptr<Module>> m_modules;
 
 	// List of module stages.
-	std::multimap<float, TypeId> m_stages;
+	std::multimap<StageIndex, TypeId> m_stages;
 };
 }

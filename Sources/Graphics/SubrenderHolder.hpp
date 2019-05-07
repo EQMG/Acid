@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
+#include "Pipelines/Pipeline.hpp"
 #include "Subrender.hpp"
 
 namespace acid
@@ -20,48 +21,39 @@ public:
 	template<typename T>
 	T *Get() const
 	{
-		for (const auto &[key, renderers] : m_stages)
-		{
-			for (const auto &renderer : renderers)
-			{
-				auto casted = dynamic_cast<T *>(renderer.get());
+		const auto typeId = GetSubrenderTypeId<T>();
 
-				if (casted != nullptr)
-				{
-					return casted;
-				}
-			}
+		auto it = m_subrenders.find(typeId);
+
+		if (it == m_subrenders.end() || it->second == nullptr)
+		{
+			throw std::runtime_error("Subrender Holder does not have requested Subrender");
+			return nullptr;
 		}
 
-		return nullptr;
+		return static_cast<T *>(it->second.get());
 	}
 
 	/**
 	 * Adds a Subrender.
 	 * @tparam T The Subrender type.
-	 * @param pipelineStage The Subrender pipeline stage.
+	 * @param stage The Subrender pipeline stage.
 	 * @param subrender The subrender.
 	 * @return The added renderer.
 	 */
 	template<typename T, typename... Args>
-	void Add(const Pipeline::Stage &pipelineStage, std::unique_ptr<T> &&subrender)
+	void Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender)
 	{
-		bool emplaced = false;
+		// Remove previous Subrender, if it exists.
+		//Remove<T>();
 
-		do
-		{
-			auto stage = m_stages.find(pipelineStage);
+		const auto typeId = GetSubrenderTypeId<T>();
 
-			if (stage == m_stages.end())
-			{
-				m_stages.emplace(pipelineStage, std::vector<std::unique_ptr<Subrender>>());
-			}
-			else
-			{
-				(*stage).second.emplace_back(std::move(subrender));
-				emplaced = true;
-			}
-		} while (!emplaced);
+		// Insert the stage value
+		m_stages.insert({ StageIndex(stage, m_subrenders.size()), typeId });
+
+		// Then, add the Subrender
+		m_subrenders[typeId] = std::move(subrender);
 	}
 
 	/**
@@ -71,23 +63,13 @@ public:
 	template<typename T>
 	void Remove()
 	{
-		for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
-		{
-			for (auto it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it)
-			{
-				auto casted = dynamic_cast<T *>((*it2).get());
+		const auto typeId = GetSubrenderTypeId<T>();
 
-				if (casted != nullptr)
-				{
-					(*it).second.erase(it2);
+		// Remove the stage value for this Subrender.
+		RemoveSubrenderStage(typeId);
 
-					if ((*it).second.empty())
-					{
-						m_stages.erase(it);
-					}
-				}
-			}
-		}
+		// Then, remove the Subrender.
+		m_subrenders.erase(typeId);
 	}
 
 	/**
@@ -97,6 +79,21 @@ public:
 private:
 	friend class Graphics;
 
-	std::map<Pipeline::Stage, std::vector<std::unique_ptr<Subrender>>> m_stages;
+	using StageIndex = std::pair<Pipeline::Stage, std::size_t>;
+
+	void RemoveSubrenderStage(const TypeId &id);
+	
+	/**
+	 * Iterates through all Subrenders.
+	 * @param stage The Subrender stage.
+	 * @param commandBuffer The command buffer to record render command into.
+	 */
+	void RenderStage(const Pipeline::Stage &stage, const CommandBuffer &commandBuffer);
+
+	// List of all Subrenders.
+	std::unordered_map<TypeId, std::unique_ptr<Subrender>> m_subrenders;
+
+	// List of subrender stages.
+	std::multimap<StageIndex, TypeId> m_stages;
 };
 }

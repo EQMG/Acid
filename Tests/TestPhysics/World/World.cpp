@@ -35,13 +35,13 @@ void World::Update()
 	m_fog.SetLowerLimit(0.0f);
 	m_fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
-	auto lensflare = Graphics::Get()->GetSubrender<FilterLensflare>();
+	/*auto lensflare = Graphics::Get()->GetSubrender<FilterLensflare>();
 
 	if (lensflare != nullptr)
 	{
 		lensflare->SetSunPosition(Vector3f(1000.0f, 5000.0f, -4000.0f));
 		lensflare->SetSunHeight(1000.0f);
-	}
+	}*/
 
 	auto deferred = Graphics::Get()->GetSubrender<SubrenderDeferred>();
 

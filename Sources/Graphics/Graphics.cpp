@@ -50,9 +50,6 @@ void Graphics::Update()
 
 	m_renderer->Update();
 
-	std::optional<uint32_t> renderpass;
-	uint32_t subpass = 0;
-
 	VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
@@ -67,69 +64,32 @@ void Graphics::Update()
 		return;
 	}
 
-	for (auto &[key, renders] : m_subrenderHolder.m_stages)
+	Pipeline::Stage stage;
+
+	for (auto &renderStage : m_renderStages)
 	{
-		if (renderpass != key.first)
+		renderStage->Update();
+
+		if (!StartRenderpass(*renderStage))
 		{
-			// Ends the previous renderpass.
-			if (renderpass)
-			{
-				EndRenderpass(*GetRenderStage(*renderpass));
-			}
-
-			renderpass = key.first;
-			subpass = 0;
-
-			// Starts the next renderpass.
-			auto renderStage = GetRenderStage(*renderpass);
-			renderStage->Update();
-			auto startResult = StartRenderpass(*renderStage);
-
-			if (!startResult)
-			{
-				return;
-			}
+			return;
 		}
 
-		auto renderStage = GetRenderStage(*renderpass);
-
-		// Changes the subpass.
-		if (subpass != key.second)
+		for (const auto &subpass : renderStage->GetSubpasses())
 		{
-			uint32_t difference = key.second - subpass;
+			stage.second = subpass.GetBinding();
 
-			if (subpass == static_cast<uint32_t>(renderStage->GetSubpasses().size() - 1))
-			{
-				difference -= 1;
-			}
+			// Renders subpass subrender pipelines.
+			m_subrenderHolder.RenderStage(stage, *m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
-			for (uint32_t d = 0; d < difference; d++)
+			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding())
 			{
 				vkCmdNextSubpass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], VK_SUBPASS_CONTENTS_INLINE);
 			}
-
-			subpass = key.second;
 		}
 
-		// Renders subpass render pipeline.
-		for (auto &render : renders)
-		{
-			if (render->IsEnabled())
-			{
-				render->Render(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
-			}
-		}
-	}
-
-	// Ends the last renderpass.
-	if (renderpass)
-	{
-		auto renderStage = GetRenderStage(*renderpass);
-
-		if (renderStage != nullptr)
-		{
-			EndRenderpass(*renderStage);
-		}
+		EndRenderpass(*renderStage);
+		stage.first++;
 	}
 
 	// Purges unused command pools.
