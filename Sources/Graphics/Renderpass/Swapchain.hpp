@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vulkan/vulkan.h>
+#include "Helpers/Reference.hpp"
 #include "StdAfx.hpp"
 
 namespace acid
@@ -8,7 +9,7 @@ namespace acid
 class ACID_EXPORT Swapchain
 {
 public:
-	explicit Swapchain(const VkExtent2D &extent);
+	explicit Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain = {});
 
 	~Swapchain();
 
@@ -26,6 +27,8 @@ public:
 	 * @return Result of the queue presentation.
 	 */
 	VkResult QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore = VK_NULL_HANDLE);
+	
+	operator const VkSwapchainKHR &() const { return m_swapchain; }
 
 	const VkExtent2D &GetExtent() const { return m_extent; }
 

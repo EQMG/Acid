@@ -7,7 +7,7 @@ namespace acid
 static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = { VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR, VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR, };
 
-Swapchain::Swapchain(const VkExtent2D &extent) :
+Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
 	m_extent(extent),
 	m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 	m_imageCount(0),
@@ -98,9 +98,9 @@ Swapchain::Swapchain(const VkExtent2D &extent) :
 		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 	}
 
-	if (Graphics::Get()->GetSwapchain() != nullptr)
+	if (oldSwapchain && &oldSwapchain.value() != nullptr)
 	{
-		swapchainCreateInfo.oldSwapchain = Graphics::Get()->GetSwapchain()->GetSwapchain();
+		swapchainCreateInfo.oldSwapchain = oldSwapchain.value()->m_swapchain;
 	}
 
 	if (graphicsFamily != presentFamily)

@@ -43,7 +43,7 @@ void CelestialBody::Update()
 			componentLight->SetColour(sunColour);
 		}
 
-		auto filterLensflare = Graphics::Get()->GetRender<FilterLensflare>();
+		auto filterLensflare = Graphics::Get()->GetSubrender<FilterLensflare>();
 
 		if (filterLensflare != nullptr)
 		{

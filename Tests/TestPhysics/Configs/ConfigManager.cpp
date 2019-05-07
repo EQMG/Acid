@@ -2,6 +2,7 @@
 
 #include <Files/FileSystem.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
+#include <Devices/Window.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Audio/Audio.hpp>
 

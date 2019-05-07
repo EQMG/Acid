@@ -9,9 +9,9 @@
 #include "Devices/LogicalDevice.hpp"
 #include "Devices/PhysicalDevice.hpp"
 #include "Devices/Surface.hpp"
-#include "Devices/Window.hpp"
 #include "Renderer.hpp"
 #include "RenderStage.hpp"
+#include "SubrenderHolder.hpp"
 
 namespace acid
 {
@@ -47,61 +47,69 @@ public:
 	void CaptureScreenshot(const std::string &filename);
 
 	/**
-	 * Checks whether a Render exists or not.
-	 * @tparam T The Render type.
-	 * @return If the Render has the System.
+	 * Checks whether a Subrender exists or not.
+	 * @tparam T The Subrender type.
+	 * @return If the Subrender has the System.
 	 */
 	 /*template<typename T>
-	 bool HasRender() const
+	 bool HasSubrender() const
 	 {
-		 return m_rendererManager->m_renderHolder.Has<T>();
+		 return m_subrenderHolder.Has<T>();
 	 }*/
 
 	 /**
-	  * Gets a Render.
-	  * @tparam T The Render type.
-	  * @return The Render.
+	  * Gets a Subrender.
+	  * @tparam T The Subrender type.
+	  * @return The Subrender.
 	  */
 	template<typename T>
-	T* GetRender() const
+	T* GetSubrender() const
 	{
-		return m_rendererManager->m_renderHolder.Get<T>();
+		return m_subrenderHolder.Get<T>();
 	}
 
 	/**
-	 * Adds a Render.
-	 * @tparam T The Render type.
-	 * @param pipelineStage The Render pipeline stage.
+	 * Adds a Subrender.
+	 * @tparam T The Subrender type.
+	 * @param pipelineStage The Subrender pipeline stage.
 	 * @tparam Args The constructor arg types.
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>
-	void AddRender(const Pipeline::Stage& pipelineStage, Args&& ...args)
+	void AddSubrender(const Pipeline::Stage& pipelineStage, Args &&...args)
 	{
-		m_rendererManager->m_renderHolder.Add<T>(pipelineStage, std::forward(args)...);
+		m_subrenderHolder.Add<T>(pipelineStage, std::make_unique<T>(pipelineStage, std::forward<Args>(args)...));
 	}
 
 	/**
-	 * Removes a Render.
-	 * @tparam T The Render type.
+	 * Removes a Subrender.
+	 * @tparam T The Subrender type.
 	 */
 	template<typename T>
-	void RemoveRender()
+	void RemoveSubrender()
 	{
-		m_rendererManager->m_renderHolder.Remove<T>();
+		m_subrenderHolder.Remove<T>();
 	}
 
 	/**
-	 * Gets the current renderer manager.
-	 * @return The renderer manager.
+	 * Clears all Subrenders.
 	 */
-	Renderer *GetManager() const { return m_rendererManager.get(); }
+	void ClearSubrenders()
+	{
+		m_subrenderHolder.Clear();
+	}
 
 	/**
-	 * Sets the current renderer manager to a new renderer manager.
-	 * @param managerRender The new renderer manager.
+	 * Gets the current renderer.
+	 * @return The renderer.
 	 */
-	void SetManager(Renderer *managerRender) { m_rendererManager.reset(managerRender); }
+	Renderer *GetRenderer() const { return m_renderer.get(); }
+
+	/**
+	 * Sets the current renderer to a new renderer.
+	 * @param renderer The new renderer.
+	 */
+	void SetRenderer(Renderer *renderer) { m_renderer.reset(renderer); }
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;
 
@@ -132,7 +140,8 @@ private:
 
 	void EndRenderpass(RenderStage &renderStage);
 
-	std::unique_ptr<Renderer> m_rendererManager;
+	std::unique_ptr<Renderer> m_renderer;
+	SubrenderHolder m_subrenderHolder;
 	std::vector<std::unique_ptr<RenderStage>> m_renderStages;
 	std::map<std::string, const Descriptor *> m_attachments;
 	std::unique_ptr<Swapchain> m_swapchain;

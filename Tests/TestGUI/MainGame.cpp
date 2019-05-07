@@ -88,11 +88,10 @@ MainGame::MainGame() :
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test GUI");
-	Window::Get()->SetIcons(
-		{ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png",
-			"Icons/Icon-256.png" });
+	Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", 
+		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	Graphics::Get()->SetManager(new MainRenderer());
+	Graphics::Get()->SetRenderer(new MainRenderer());
 	Scenes::Get()->SetScene(new Scene1());
 }
 
@@ -100,7 +99,7 @@ MainGame::~MainGame()
 {
 	Files::Get()->ClearSearchPath();
 
-	Graphics::Get()->SetManager(nullptr);
+	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);
 }
 

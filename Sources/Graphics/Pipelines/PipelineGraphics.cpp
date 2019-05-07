@@ -257,8 +257,9 @@ void PipelineGraphics::CreateAttributes()
 	m_viewportState.viewportCount = 1;
 	m_viewportState.scissorCount = 1;
 
-	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
-	bool multisampled = renderStage->IsMultisampled(m_stage.second);
+	// TODO: Multisampled pipelines
+	//auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
+	bool multisampled = false; // renderStage->IsMultisampled(m_stage.second);
 
 	m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 	m_multisampleState.rasterizationSamples = multisampled ? physicalDevice->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
@@ -339,7 +340,7 @@ void PipelineGraphics::CreatePipeline()
 	pipelineCreateInfo.pDynamicState = &m_dynamicState;
 
 	pipelineCreateInfo.layout = m_pipelineLayout;
-	pipelineCreateInfo.renderPass = renderStage->GetRenderpass()->GetRenderpass();
+	pipelineCreateInfo.renderPass = *renderStage->GetRenderpass();
 	pipelineCreateInfo.subpass = m_stage.second;
 	pipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE;
 	pipelineCreateInfo.basePipelineIndex = -1;

@@ -43,6 +43,8 @@ public:
 	Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 	~Renderpass();
+	
+	operator const VkRenderPass &() const { return m_renderpass; }
 
 	const VkRenderPass &GetRenderpass() const { return m_renderpass; }
 

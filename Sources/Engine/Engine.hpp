@@ -63,7 +63,7 @@ public:
 	template<typename T>
 	bool HasModule() const
 	{
-		return m_modules.HasModule<T>();
+		return m_modules.Has<T>();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public:
 	template<typename T>
 	T *GetModule() const
 	{
-		return m_modules.GetModule<T>();
+		return m_modules.Get<T>();
 	}
 
 	/**
@@ -87,7 +87,7 @@ public:
 	template<typename T, typename... Args>
 	void AddModule(const Module::Stage& stage, Args &&...args)
 	{
-		m_modules.AddModule<T>(stage, std::forward(args)...);
+		m_modules.Add<T>(stage, std::make_unique<T>(std::forward<Args>(args)...));
 	}
 
 	/**
@@ -97,7 +97,7 @@ public:
 	template<typename T>
 	void RemoveModule()
 	{
-		m_modules.RemoveModule<T>();
+		m_modules.Remove<T>();
 	}
 
 	/**

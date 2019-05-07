@@ -1,5 +1,6 @@
 #include "PipelineBlur.hpp"
 
+#include "Devices/Window.hpp"
 #include "Graphics/Graphics.hpp"
 
 namespace acid

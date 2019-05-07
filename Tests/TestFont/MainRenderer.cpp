@@ -21,11 +21,11 @@ MainRenderer::MainRenderer()
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
 	Graphics::Get()->SetRenderStages(std::move(renderStages));
-	
-	auto &renderHolder = GetRenderHolder();
-	renderHolder.Add<SubrenderGuis>(Pipeline::Stage(0, 0));
-	renderHolder.Add<SubrenderFonts>(Pipeline::Stage(0, 0));
-	renderHolder.Add<SubrenderFonts2>(Pipeline::Stage(0, 0));
+
+	Graphics::Get()->ClearSubrenders();
+	Graphics::Get()->AddSubrender<SubrenderGuis>(Pipeline::Stage(0, 0));
+	Graphics::Get()->AddSubrender<SubrenderFonts>(Pipeline::Stage(0, 0));
+	Graphics::Get()->AddSubrender<SubrenderFonts2>(Pipeline::Stage(0, 0));
 }
 
 void MainRenderer::Update()

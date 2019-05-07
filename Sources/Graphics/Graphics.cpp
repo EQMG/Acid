@@ -1,13 +1,14 @@
 #include "Graphics.hpp"
 
 #include <SPIRV/GlslangToSpv.h>
+#include "Devices/Window.hpp"
 #include "Files/FileSystem.hpp"
 #include "Subrender.hpp"
 
 namespace acid
 {
 Graphics::Graphics() :
-	m_rendererManager(nullptr),
+	m_renderer(nullptr),
 	m_swapchain(nullptr),
 	m_timerPurge(Time::Seconds(4.0f)),
 	m_pipelineCache(VK_NULL_HANDLE),
@@ -42,13 +43,12 @@ Graphics::~Graphics()
 
 void Graphics::Update()
 {
-	if (m_rendererManager == nullptr || Window::Get()->IsIconified())
+	if (m_renderer == nullptr || Window::Get()->IsIconified())
 	{
 		return;
 	}
 
-	m_rendererManager->Update();
-	const auto &stages = m_rendererManager->m_renderHolder.m_stages;
+	m_renderer->Update();
 
 	std::optional<uint32_t> renderpass;
 	uint32_t subpass = 0;
@@ -67,7 +67,7 @@ void Graphics::Update()
 		return;
 	}
 
-	for (auto &[key, renders] : stages)
+	for (auto &[key, renders] : m_subrenderHolder.m_stages)
 	{
 		if (renderpass != key.first)
 		{
@@ -425,7 +425,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 
 	VkRenderPassBeginInfo renderPassBeginInfo = {};
 	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-	renderPassBeginInfo.renderPass = renderStage.GetRenderpass()->GetRenderpass();
+	renderPassBeginInfo.renderPass = *renderStage.GetRenderpass();
 	renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(m_swapchain->GetActiveImageIndex());
 	renderPassBeginInfo.renderArea = renderArea;
 	renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());

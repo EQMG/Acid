@@ -18,7 +18,7 @@ public:
 	 * @return If the Module has the System.
 	 */
 	template<typename T>
-	bool HasModule() const
+	bool Has() const
 	{
 		const auto it = m_modules.find(GetModuleTypeId<T>());
 
@@ -31,7 +31,7 @@ public:
 	 * @return The Module.
 	 */
 	template<typename T>
-	T *GetModule() const
+	T *Get() const
 	{
 		const auto typeId = GetModuleTypeId<T>();
 
@@ -50,11 +50,10 @@ public:
 	 * Adds a Module.
 	 * @tparam T The Module type.
 	 * @param stage The Module stage.
-	 * @tparam Args The constructor arg types.
-	 * @param args The constructor arguments.
+	 * @param module The module.
 	 */
 	template<typename T, typename... Args>
-	void AddModule(const Module::Stage &stage, Args &&...args)
+	void Add(const Module::Stage &stage, std::unique_ptr<T> &&module)
 	{
 		// Remove previous Module, if it exists.
 		//Remove<T>();
@@ -66,7 +65,7 @@ public:
 		m_stages.insert({ stageKey, typeId });
 
 		// Then, add the Module
-		m_modules[typeId] = std::make_unique<T>(std::forward<Args>(args)...);
+		m_modules[typeId] = std::move(module);
 	}
 
 	/**
@@ -74,7 +73,7 @@ public:
 	 * @tparam T The Module type.
 	 */
 	template<typename T>
-	void RemoveModule()
+	void Remove()
 	{
 		const auto typeId = GetModuleTypeId<T>();
 

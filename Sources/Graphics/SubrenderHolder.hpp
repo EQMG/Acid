@@ -13,16 +13,13 @@ class ACID_EXPORT SubrenderHolder :
 {
 public:
 	/**
-	 * Gets a renderer instance by type from this register.
-	 * @tparam T The renderer type to find.
-	 * @param allowDisabled If disabled renderers will be returned.
-	 * @return The found renderer.
+	 * Gets a Subrender.
+	 * @tparam T The Subrender type.
+	 * @return The Subrender.
 	 */
 	template<typename T>
-	T *Get(const bool &allowDisabled = false) const
+	T *Get() const
 	{
-		T *alternative = nullptr;
-
 		for (const auto &[key, renderers] : m_stages)
 		{
 			for (const auto &renderer : renderers)
@@ -31,51 +28,45 @@ public:
 
 				if (casted != nullptr)
 				{
-					if (!allowDisabled && !casted->IsEnabled())
-					{
-						alternative = casted;
-						continue;
-					}
-
 					return casted;
 				}
 			}
 		}
 
-		return alternative;
+		return nullptr;
 	}
 
 	/**
-	 * Adds a renderer to this register.
-	 * @param renderer The renderer to add.
-	 * @return The added renderer.
-	 */
-	Subrender *Add(Subrender *renderer);
-
-	/**
-	 * Creates a renderer by type to be added this register.
-	 * @tparam T The type of renderer to add.
-	 * @tparam Args The argument types.
-	 * @param args The type constructor arguments.
+	 * Adds a Subrender.
+	 * @tparam T The Subrender type.
+	 * @param pipelineStage The Subrender pipeline stage.
+	 * @param subrender The subrender.
 	 * @return The added renderer.
 	 */
 	template<typename T, typename... Args>
-	T *Add(Args &&... args)
+	void Add(const Pipeline::Stage &pipelineStage, std::unique_ptr<T> &&subrender)
 	{
-		auto created = new T(std::forward<Args>(args)...);
-		Add(created);
-		return created;
+		bool emplaced = false;
+
+		do
+		{
+			auto stage = m_stages.find(pipelineStage);
+
+			if (stage == m_stages.end())
+			{
+				m_stages.emplace(pipelineStage, std::vector<std::unique_ptr<Subrender>>());
+			}
+			else
+			{
+				(*stage).second.emplace_back(std::move(subrender));
+				emplaced = true;
+			}
+		} while (!emplaced);
 	}
 
 	/**
-	 * Removes a renderer from this register.
-	 * @param renderer The renderer to remove.
-	 */
-	void Remove(Subrender *renderer);
-
-	/**
-	 * Removes a renderer by type from this register.
-	 * @tparam T The type of renderer to remove.
+	 * Removes a Subrender.
+	 * @tparam T The Subrender type.
 	 */
 	template<typename T>
 	void Remove()
@@ -99,6 +90,10 @@ public:
 		}
 	}
 
+	/**
+	 * Clears all subrenders.
+	 */
+	void Clear();
 private:
 	friend class Graphics;
 

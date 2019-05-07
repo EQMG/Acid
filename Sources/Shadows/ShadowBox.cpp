@@ -1,5 +1,6 @@
 ﻿#include "ShadowBox.hpp"
 
+#include "Devices/Window.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Maths/Maths.hpp"
 

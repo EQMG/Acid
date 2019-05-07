@@ -1,5 +1,6 @@
 #include "RenderStage.hpp"
 
+#include "Devices/Window.hpp"
 #include "Graphics.hpp"
 
 namespace acid

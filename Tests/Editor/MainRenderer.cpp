@@ -63,33 +63,33 @@ MainRenderer::MainRenderer()
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments2, renderpassSubpasses2));
 	Graphics::Get()->SetRenderStages(std::move(renderStages));
-	
-	auto &renderHolder = GetRenderHolder();
-	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));
 
-	renderHolder.Add<SubrenderMeshes>(Pipeline::Stage(1, 0));
+	Graphics::Get()->ClearSubrenders();
+	//Graphics::Get()->AddSubrender<RenderShadows>(Pipeline::Stage(0, 0));
 
-	renderHolder.Add<SubrenderDeferred>(Pipeline::Stage(1, 1));
-	renderHolder.Add<SubrenderParticles>(Pipeline::Stage(1, 1));
+	Graphics::Get()->AddSubrender<SubrenderMeshes>(Pipeline::Stage(1, 0));
 
-	//renderHolder.Add<FilterFxaa>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterTone>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterSsao>(Pipeline::Stage(1, 2));
-	//renderHolder.Add()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
-	//renderHolder.Add<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
-	//renderHolder.Add<FilterEmboss>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterCrt>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterLensflare>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterTiltshift>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//renderHolder.Add<FilterVignette>(Pipeline::Stage(1, 2));
-	//renderHolder.Add<FilterGrain>(Pipeline::Stage(1, 2));
-	renderHolder.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-	//renderHolder.Add<RenderGizmos>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<SubrenderDeferred>(Pipeline::Stage(1, 1));
+	Graphics::Get()->AddSubrender<SubrenderParticles>(Pipeline::Stage(1, 1));
 
-	renderHolder.Add<FilterBlit>(Pipeline::Stage(2, 0));
-	renderHolder.Add<SubrenderGuis>(Pipeline::Stage(2, 0));
-	renderHolder.Add<SubrenderFonts>(Pipeline::Stage(2, 0));
+	//Graphics::Get()->AddSubrender<FilterFxaa>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterTone>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterSsao>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
+	//Graphics::Get()->AddSubrender<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
+	//Graphics::Get()->AddSubrender<FilterEmboss>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterCrt>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterLensflare>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterTiltshift>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
+	//Graphics::Get()->AddSubrender<FilterVignette>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterGrain>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<FilterDefault>(Pipeline::Stage(1, 2), true);
+	//Graphics::Get()->AddSubrender<RenderGizmos>(Pipeline::Stage(1, 2));
+
+	Graphics::Get()->AddSubrender<FilterBlit>(Pipeline::Stage(2, 0));
+	Graphics::Get()->AddSubrender<SubrenderGuis>(Pipeline::Stage(2, 0));
+	Graphics::Get()->AddSubrender<SubrenderFonts>(Pipeline::Stage(2, 0));
 }
 
 void MainRenderer::Update()

@@ -40,17 +40,17 @@ MainRenderer::MainRenderer()
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 	Graphics::Get()->SetRenderStages(std::move(renderStages));
 
-	auto &renderHolder = GetRenderHolder();
-	//renderHolder.Add<RenderShadows>(Pipeline::Stage(0, 0));
+	Graphics::Get()->ClearSubrenders();
+	//Graphics::Get()->AddSubrender<RenderShadows>(Pipeline::Stage(0, 0));
 
-	renderHolder.Add<SubrenderMeshes>(Pipeline::Stage(1, 0));
+	Graphics::Get()->AddSubrender<SubrenderMeshes>(Pipeline::Stage(1, 0));
 
-	renderHolder.Add<SubrenderDeferred>(Pipeline::Stage(1, 1));
-	renderHolder.Add<SubrenderParticles>(Pipeline::Stage(1, 1));
+	Graphics::Get()->AddSubrender<SubrenderDeferred>(Pipeline::Stage(1, 1));
+	Graphics::Get()->AddSubrender<SubrenderParticles>(Pipeline::Stage(1, 1));
 
-	renderHolder.Add<FilterDefault>(Pipeline::Stage(1, 2), true);
-	renderHolder.Add<SubrenderGuis>(Pipeline::Stage(1, 2));
-	renderHolder.Add<SubrenderFonts>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<FilterDefault>(Pipeline::Stage(1, 2), true);
+	Graphics::Get()->AddSubrender<SubrenderGuis>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<SubrenderFonts>(Pipeline::Stage(1, 2));
 }
 
 void MainRenderer::Update()
