@@ -9,7 +9,7 @@ FilterWobble::FilterWobble(const Pipeline::Stage &pipelineStage, const float &wo
 {
 }
 
-void FilterWobble::Record(const CommandBuffer &commandBuffer)
+void FilterWobble::Render(const CommandBuffer &commandBuffer)
 {
 	m_wobbleAmount += m_wobbleSpeed * Engine::Get()->GetDeltaRender().AsSeconds();
 

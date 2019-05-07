@@ -12,7 +12,7 @@ class FilterBlit :
 public:
 	explicit FilterBlit(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
 	bool m_lastFilter;

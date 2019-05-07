@@ -12,7 +12,7 @@ public:
 	explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f,
 		const float &nearTransition = 0.125f, const float &farField = 8.0f, const float &farTransition = 3.0f);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 	const PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
 

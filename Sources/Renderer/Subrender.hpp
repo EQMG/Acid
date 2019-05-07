@@ -9,26 +9,26 @@ namespace acid
 /**
  * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
-class ACID_EXPORT Render
+class ACID_EXPORT Subrender
 {
 public:
 	/**
 	 * Creates a new render pipeline.
 	 * @param stage The stage this renderer will be used in.
 	 */
-	explicit Render(Pipeline::Stage stage) :
+	explicit Subrender(Pipeline::Stage stage) :
 		m_stage(std::move(stage)),
 		m_enabled(true)
 	{
 	}
 
-	virtual ~Render() = default;
+	virtual ~Subrender() = default;
 
 	/**
 	 * Runs the render pipeline in the current renderpass.
 	 * @param commandBuffer The command buffer to record render command into.
 	 */
-	virtual void Record(const CommandBuffer &commandBuffer) = 0;
+	virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 	const Pipeline::Stage &GetStage() const { return m_stage; }
 
@@ -41,7 +41,7 @@ private:
 	bool m_enabled;
 };
 
-template class ACID_EXPORT TypeInfo<Render>;
+template class ACID_EXPORT TypeInfo<Subrender>;
 
 /**
  * Gets the Type ID for the Module.
@@ -51,8 +51,8 @@ template class ACID_EXPORT TypeInfo<Render>;
 template<typename T>
 TypeId GetRenderTypeId() noexcept
 {
-	static_assert(std::is_base_of<Render, T>::value, "T must be a Render.");
+	static_assert(std::is_base_of<Subrender, T>::value, "T must be a Subrender.");
 
-	return TypeInfo<Render>::GetTypeId<T>();
+	return TypeInfo<Subrender>::GetTypeId<T>();
 }
 }

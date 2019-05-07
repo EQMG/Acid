@@ -15,7 +15,7 @@ FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenC
 {
 }
 
-void FilterCrt::Record(const CommandBuffer &commandBuffer)
+void FilterCrt::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("screenColour", m_screenColour);

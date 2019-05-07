@@ -1,4 +1,4 @@
-#include "RenderDeferred.hpp"
+#include "SubrenderDeferred.hpp"
 
 #include "Files/FileSystem.hpp"
 #include "Lights/Light.hpp"
@@ -14,8 +14,8 @@ namespace acid
 {
 static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
-RenderDeferred::RenderDeferred(const Pipeline::Stage &pipelineStage) :
-	Render(pipelineStage),
+SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
+	Subrender(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None),
 	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
@@ -27,7 +27,7 @@ RenderDeferred::RenderDeferred(const Pipeline::Stage &pipelineStage) :
 	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
 
-void RenderDeferred::Record(const CommandBuffer &commandBuffer)
+void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 
@@ -108,14 +108,14 @@ void RenderDeferred::Record(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-std::vector<Shader::Define> RenderDeferred::GetDefines()
+std::vector<Shader::Define> SubrenderDeferred::GetDefines()
 {
 	std::vector<Shader::Define> defines;
 	defines.emplace_back("MAX_LIGHTS", String::To(MAX_LIGHTS));
 	return defines;
 }
 
-std::unique_ptr<Image2d> RenderDeferred::ComputeBRDF(const uint32_t &size)
+std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 {
 	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
@@ -151,7 +151,7 @@ std::unique_ptr<Image2d> RenderDeferred::ComputeBRDF(const uint32_t &size)
 	return brdfImage;
 }
 
-std::unique_ptr<ImageCube> RenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 {
 	if (source == nullptr)
 	{
@@ -193,7 +193,7 @@ std::unique_ptr<ImageCube> RenderDeferred::ComputeIrradiance(const std::shared_p
 	return irradianceCubemap;
 }
 
-std::unique_ptr<ImageCube> RenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
 {
 	if (source == nullptr)
 	{

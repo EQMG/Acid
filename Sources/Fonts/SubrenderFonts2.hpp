@@ -1,0 +1,19 @@
+#pragma once
+
+#include "Renderer/Subrender.hpp"
+#include "Renderer/Pipelines/PipelineGraphics.hpp"
+
+namespace acid
+{
+class ACID_EXPORT SubrenderFonts2 :
+	public Subrender
+{
+public:
+	explicit SubrenderFonts2(const Pipeline::Stage &pipelineStage);
+
+	void Render(const CommandBuffer &commandBuffer) override;
+
+private:
+	PipelineGraphics m_pipeline;
+};
+}

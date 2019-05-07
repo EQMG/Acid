@@ -11,7 +11,7 @@ FilterTiltshift::FilterTiltshift(const Pipeline::Stage &pipelineStage, const flo
 {
 }
 
-void FilterTiltshift::Record(const CommandBuffer &commandBuffer)
+void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("blurAmount", m_blurAmount);

@@ -1,8 +1,8 @@
-#include "RenderHolder.hpp"
+#include "SubrenderHolder.hpp"
 
 namespace acid
 {
-Render *RenderHolder::Add(Render *renderer)
+Subrender *SubrenderHolder::Add(Subrender *renderer)
 {
 	if (renderer == nullptr)
 	{
@@ -17,7 +17,7 @@ Render *RenderHolder::Add(Render *renderer)
 
 		if (stage == m_stages.end())
 		{
-			m_stages.emplace(renderer->GetStage(), std::vector<std::unique_ptr<Render>>());
+			m_stages.emplace(renderer->GetStage(), std::vector<std::unique_ptr<Subrender>>());
 		}
 		else
 		{
@@ -30,7 +30,7 @@ Render *RenderHolder::Add(Render *renderer)
 	return renderer;
 }
 
-void RenderHolder::Remove(Render *renderer)
+void SubrenderHolder::Remove(Subrender *renderer)
 {
 	for (auto it = m_stages.begin(); it != m_stages.end(); ++it)
 	{

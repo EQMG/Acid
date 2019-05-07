@@ -1,11 +1,11 @@
 #pragma once
 
-#include "RenderHolder.hpp"
+#include "SubrenderHolder.hpp"
 #include "RenderStage.hpp"
 
 namespace acid
 {
-class Render;
+class Subrender;
 
 /**
  * Class used to manage {@link Render} objects to create a list of render pass.
@@ -31,12 +31,12 @@ protected:
 	 * Gets the render holder used by when a renderer is using this manager.
 	 * @return The renderer holder.
 	 */
-	RenderHolder &GetRenderHolder() { return m_renderHolder; }
+	SubrenderHolder &GetRenderHolder() { return m_renderHolder; }
 
 private:
 	friend class Renderer;
 
 	//std::vector<std::unique_ptr<RenderStage>> m_renderStages;
-	RenderHolder m_renderHolder;
+	SubrenderHolder m_renderHolder;
 };
 }

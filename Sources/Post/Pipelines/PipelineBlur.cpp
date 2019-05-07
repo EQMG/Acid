@@ -18,7 +18,7 @@ PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, const float &bl
 {
 }
 
-void PipelineBlur::Record(const CommandBuffer &commandBuffer)
+void PipelineBlur::Render(const CommandBuffer &commandBuffer)
 {
 	if (!m_toScreen)
 	{
@@ -42,7 +42,7 @@ void PipelineBlur::Record(const CommandBuffer &commandBuffer)
 	m_filterBlurVertical.SetDirection(Vector2f(0.0f, m_blur));
 	m_filterBlurHorizontal.SetDirection(Vector2f(m_blur, 0.0f));
 
-	m_filterBlurVertical.Record(commandBuffer);
-	m_filterBlurHorizontal.Record(commandBuffer);
+	m_filterBlurVertical.Render(commandBuffer);
+	m_filterBlurHorizontal.Render(commandBuffer);
 }
 }

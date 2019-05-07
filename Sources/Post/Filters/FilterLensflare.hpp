@@ -11,7 +11,7 @@ class ACID_EXPORT FilterLensflare :
 public:
 	explicit FilterLensflare(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 	const Vector3f &GetSunPosition() const { return m_sunPosition; }
 

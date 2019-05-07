@@ -17,7 +17,7 @@ FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelin
 {
 }
 
-void FilterDof::Record(const CommandBuffer &commandBuffer)
+void FilterDof::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	auto camera = Scenes::Get()->GetCamera();

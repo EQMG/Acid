@@ -8,7 +8,7 @@ FilterDefault::FilterDefault(const Pipeline::Stage &pipelineStage, const bool &l
 {
 }
 
-void FilterDefault::Record(const CommandBuffer &commandBuffer)
+void FilterDefault::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

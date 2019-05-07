@@ -1,4 +1,4 @@
-#include "RenderFonts2.hpp"
+#include "SubrenderFonts2.hpp"
 
 #include "FontType.hpp"
 #include "Uis/Uis.hpp"
@@ -6,14 +6,14 @@
 
 namespace acid
 {
-RenderFonts2::RenderFonts2(const Pipeline::Stage &pipelineStage) :
-	Render(pipelineStage),
+SubrenderFonts2::SubrenderFonts2(const Pipeline::Stage &pipelineStage) :
+	Subrender(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag" }, { FontType::Instance::GetVertexInput() }, {}, PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, VK_FRONT_FACE_COUNTER_CLOCKWISE)
 {
 }
 
-void RenderFonts2::Record(const CommandBuffer &commandBuffer)
+void SubrenderFonts2::Render(const CommandBuffer &commandBuffer)
 {
 	std::map<std::shared_ptr<FontType>, std::vector<Text *>> sorted;
 

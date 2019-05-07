@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Render.hpp"
+#include "Renderer/Subrender.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Renderer/Descriptors/DescriptorsHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
@@ -11,7 +11,7 @@ namespace acid
  * @brief Represents a post effect pipeline.
  */
 class ACID_EXPORT PostFilter :
-	public Render
+	public Subrender
 {
 public:
 	/**

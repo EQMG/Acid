@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-#include <Post/Deferred/RenderDeferred.hpp>
+#include <Post/Deferred/SubrenderDeferred.hpp>
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Renderer/Renderer.hpp>
 #include <Scenes/Scenes.hpp>
@@ -43,7 +43,7 @@ void World::Update()
 		lensflare->SetSunHeight(1000.0f);
 	}
 
-	auto deferred = Renderer::Get()->GetRender<RenderDeferred>();
+	auto deferred = Renderer::Get()->GetRender<SubrenderDeferred>();
 
 	if (deferred != nullptr)
 	{

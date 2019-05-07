@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Renderer/Render.hpp"
+#include "Renderer/Subrender.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
-class ACID_EXPORT RenderGuis :
-	public Render
+class ACID_EXPORT SubrenderFonts :
+	public Subrender
 {
 public:
-	explicit RenderGuis(const Pipeline::Stage &pipelineStage);
+	explicit SubrenderFonts(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
 	PipelineGraphics m_pipeline;

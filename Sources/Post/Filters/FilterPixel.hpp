@@ -10,7 +10,7 @@ class ACID_EXPORT FilterPixel :
 public:
 	explicit FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixelSize = 2.0f);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 	const float &GetPixelSize() const { return m_pixelSize; }
 

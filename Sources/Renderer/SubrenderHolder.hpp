@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
-#include "Render.hpp"
+#include "Subrender.hpp"
 
 namespace acid
 {
 /**
- * @brief Class that contains and manages renderers registered to a render manager.
+ * @brief Class that contains and manages subrenders registered to a render manager.
  */
-class ACID_EXPORT RenderHolder :
+class ACID_EXPORT SubrenderHolder :
 	public NonCopyable
 {
 public:
@@ -50,7 +50,7 @@ public:
 	 * @param renderer The renderer to add.
 	 * @return The added renderer.
 	 */
-	Render *Add(Render *renderer);
+	Subrender *Add(Subrender *renderer);
 
 	/**
 	 * Creates a renderer by type to be added this register.
@@ -71,7 +71,7 @@ public:
 	 * Removes a renderer from this register.
 	 * @param renderer The renderer to remove.
 	 */
-	void Remove(Render *renderer);
+	void Remove(Subrender *renderer);
 
 	/**
 	 * Removes a renderer by type from this register.
@@ -102,6 +102,6 @@ public:
 private:
 	friend class Renderer;
 
-	std::map<Pipeline::Stage, std::vector<std::unique_ptr<Render>>> m_stages;
+	std::map<Pipeline::Stage, std::vector<std::unique_ptr<Subrender>>> m_stages;
 };
 }

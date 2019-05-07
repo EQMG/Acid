@@ -11,7 +11,7 @@ FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &dir
 {
 }
 
-void FilterBlur::Record(const CommandBuffer &commandBuffer)
+void FilterBlur::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
 	m_pushScene.Push("direction", m_direction);

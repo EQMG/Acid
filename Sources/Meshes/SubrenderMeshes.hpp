@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#include "Renderer/Render.hpp"
+#include "Renderer/Subrender.hpp"
 #include "Renderer/Buffers/UniformHandler.hpp"
 #include "Renderer/Pipelines/PipelineGraphics.hpp"
 
 namespace acid
 {
-class ACID_EXPORT RenderMeshes :
-	public Render
+class ACID_EXPORT SubrenderMeshes :
+	public Subrender
 {
 public:
 	enum class Sort
@@ -15,9 +15,9 @@ public:
 		None, Front, Back
 	};
 
-	explicit RenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort = Sort::None);
+	explicit SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort = Sort::None);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
 	Sort m_sort;

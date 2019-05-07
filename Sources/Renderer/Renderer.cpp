@@ -2,7 +2,7 @@
 
 #include <SPIRV/GlslangToSpv.h>
 #include "Files/FileSystem.hpp"
-#include "Render.hpp"
+#include "Subrender.hpp"
 
 namespace acid
 {
@@ -116,7 +116,7 @@ void Renderer::Update()
 		{
 			if (render->IsEnabled())
 			{
-				render->Record(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
+				render->Render(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 			}
 		}
 	}

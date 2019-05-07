@@ -11,7 +11,7 @@ class ACID_EXPORT FilterSsao :
 public:
 	explicit FilterSsao(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
 	std::vector<Shader::Define> GetDefines();

@@ -7,7 +7,7 @@ FilterGrey::FilterGrey(const Pipeline::Stage &pipelineStage) :
 {
 }
 
-void FilterGrey::Record(const CommandBuffer &commandBuffer)
+void FilterGrey::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates descriptors.
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));

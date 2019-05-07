@@ -1,4 +1,4 @@
-#include "RenderShadows.hpp"
+#include "SubrenderShadows.hpp"
 
 #include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
@@ -7,14 +7,14 @@
 
 namespace acid
 {
-RenderShadows::RenderShadows(const Pipeline::Stage &pipelineStage) :
-	Render(pipelineStage),
+SubrenderShadows::SubrenderShadows(const Pipeline::Stage &pipelineStage) :
+	Subrender(pipelineStage),
 	m_pipeline(pipelineStage, { "Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag" }, { VertexDefault::GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT)
 {
 }
 
-void RenderShadows::Record(const CommandBuffer &commandBuffer)
+void SubrenderShadows::Render(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 
@@ -28,7 +28,7 @@ void RenderShadows::Record(const CommandBuffer &commandBuffer)
 	}
 }
 
-std::vector<Shader::Define> RenderShadows::GetDefines()
+std::vector<Shader::Define> SubrenderShadows::GetDefines()
 {
 	std::vector<Shader::Define> defines;
 	return defines;

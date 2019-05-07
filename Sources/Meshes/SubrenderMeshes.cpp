@@ -1,18 +1,18 @@
-﻿#include "RenderMeshes.hpp"
+﻿#include "SubrenderMeshes.hpp"
 
 #include "Scenes/Scenes.hpp"
 #include "MeshRender.hpp"
 
 namespace acid
 {
-RenderMeshes::RenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
-	Render(pipelineStage),
+SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
+	Subrender(pipelineStage),
 	m_sort(sort),
 	m_uniformScene(true)
 {
 }
 
-void RenderMeshes::Record(const CommandBuffer &commandBuffer)
+void SubrenderMeshes::Render(const CommandBuffer &commandBuffer)
 {
 	auto camera = Scenes::Get()->GetCamera();
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());

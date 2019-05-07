@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Render.hpp"
+#include "Renderer/Subrender.hpp"
 
 namespace acid
 {
@@ -8,7 +8,7 @@ namespace acid
  * @brief Represents a system of post effects.
  */
 class ACID_EXPORT PostPipeline :
-	public Render
+	public Subrender
 {
 public:
 	/**
@@ -16,7 +16,7 @@ public:
 	 * @param pipelineStage The pipelines graphics stage.
 	 */
 	explicit PostPipeline(const Pipeline::Stage &pipelineStage) :
-		Render(pipelineStage)
+		Subrender(pipelineStage)
 	{
 	}
 

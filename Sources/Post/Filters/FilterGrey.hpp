@@ -10,6 +10,6 @@ class ACID_EXPORT FilterGrey :
 public:
 	explicit FilterGrey(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 };
 }

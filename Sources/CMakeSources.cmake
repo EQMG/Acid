@@ -43,15 +43,15 @@ set(_temp_acid_headers
 		Fonts/FontType.hpp
 		Fonts/Geometry.hpp
 		Fonts/Outline.hpp
-		Fonts/RenderFonts.hpp
-		Fonts/RenderFonts2.hpp
+		Fonts/SubrenderFonts.hpp
+		Fonts/SubrenderFonts2.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
 		Gizmos/Gizmos.hpp
 		Gizmos/GizmoType.hpp
-		Gizmos/RenderGizmos.hpp
+		Gizmos/SubrenderGizmos.hpp
 		Guis/Gui.hpp
-		Guis/RenderGuis.hpp
+		Guis/SubrenderGuis.hpp
 		Helpers/ConstExpr.hpp
 		Helpers/Delegate.hpp
 		Helpers/EnumClass.hpp
@@ -102,7 +102,7 @@ set(_temp_acid_headers
 		Maths/Visual/DriverSlide.hpp
 		Meshes/Mesh.hpp
 		Meshes/MeshRender.hpp
-		Meshes/RenderMeshes.hpp
+		Meshes/SubrenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
 		Models/Model.hpp
 		Models/ModelRegister.hpp
@@ -134,7 +134,7 @@ set(_temp_acid_headers
 		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
 		Particles/ParticleType.hpp
-		Particles/RenderParticles.hpp
+		Particles/SubrenderParticles.hpp
 		Physics/Colliders/Collider.hpp
 		Physics/Colliders/ColliderCapsule.hpp
 		Physics/Colliders/ColliderCone.hpp
@@ -149,7 +149,7 @@ set(_temp_acid_headers
 		Physics/KinematicCharacter.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
-		Post/Deferred/RenderDeferred.hpp
+		Post/Deferred/SubrenderDeferred.hpp
 		Post/Filters/FilterBlur.hpp
 		Post/Filters/FilterCrt.hpp
 		Post/Filters/FilterDarken.hpp
@@ -191,14 +191,14 @@ set(_temp_acid_headers
 		Renderer/Pipelines/PipelineCompute.hpp
 		Renderer/Pipelines/PipelineGraphics.hpp
 		Renderer/Pipelines/Shader.hpp
-		Renderer/Render.hpp
 		Renderer/Renderer.hpp
 		Renderer/RendererManager.hpp
-		Renderer/RenderHolder.hpp
 		Renderer/Renderpass/Framebuffers.hpp
 		Renderer/Renderpass/Renderpass.hpp
 		Renderer/Renderpass/Swapchain.hpp
 		Renderer/RenderStage.hpp
+		Renderer/Subrender.hpp
+		Renderer/SubrenderHolder.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
@@ -214,10 +214,10 @@ set(_temp_acid_headers
 		Serialized/Metadata.hpp
 		Serialized/Xml/Xml.hpp
 		Serialized/Yaml/Yaml.hpp
-		Shadows/RenderShadows.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
+		Shadows/SubrenderShadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputBoolean.hpp
@@ -275,15 +275,15 @@ set(_temp_acid_sources
 		Fonts/FontType.cpp
 		Fonts/Geometry.cpp
 		Fonts/Outline.cpp
-		Fonts/RenderFonts.cpp
-		Fonts/RenderFonts2.cpp
+		Fonts/SubrenderFonts.cpp
+		Fonts/SubrenderFonts2.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
 		Gizmos/Gizmos.cpp
 		Gizmos/GizmoType.cpp
-		Gizmos/RenderGizmos.cpp
+		Gizmos/SubrenderGizmos.cpp
 		Guis/Gui.cpp
-		Guis/RenderGuis.cpp
+		Guis/SubrenderGuis.cpp
 		Helpers/String.cpp
 		Helpers/ThreadPool.cpp
 		Inputs/AxisButton.cpp
@@ -315,7 +315,7 @@ set(_temp_acid_sources
 		Maths/Vector4.cpp
 		Meshes/Mesh.cpp
 		Meshes/MeshRender.cpp
-		Meshes/RenderMeshes.cpp
+		Meshes/SubrenderMeshes.cpp
 		Models/Gltf/ModelGltf.cpp
 		Models/Model.cpp
 		Models/ModelRegister.cpp
@@ -346,7 +346,7 @@ set(_temp_acid_sources
 		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp
 		Particles/ParticleType.cpp
-		Particles/RenderParticles.cpp
+		Particles/SubrenderParticles.cpp
 		Physics/Colliders/Collider.cpp
 		Physics/Colliders/ColliderCapsule.cpp
 		Physics/Colliders/ColliderCone.cpp
@@ -361,7 +361,7 @@ set(_temp_acid_sources
 		Physics/KinematicCharacter.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
-		Post/Deferred/RenderDeferred.cpp
+		Post/Deferred/SubrenderDeferred.cpp
 		Post/Filters/FilterBlur.cpp
 		Post/Filters/FilterCrt.cpp
 		Post/Filters/FilterDarken.cpp
@@ -401,11 +401,11 @@ set(_temp_acid_sources
 		Renderer/Pipelines/PipelineGraphics.cpp
 		Renderer/Pipelines/Shader.cpp
 		Renderer/Renderer.cpp
-		Renderer/RenderHolder.cpp
 		Renderer/Renderpass/Framebuffers.cpp
 		Renderer/Renderpass/Renderpass.cpp
 		Renderer/Renderpass/Swapchain.cpp
 		Renderer/RenderStage.cpp
+		Renderer/SubrenderHolder.cpp
 		Resources/Resources.cpp
 		Scenes/ComponentRegister.cpp
 		Scenes/Entity.cpp
@@ -417,10 +417,10 @@ set(_temp_acid_sources
 		Serialized/Metadata.cpp
 		Serialized/Xml/Xml.cpp
 		Serialized/Yaml/Yaml.cpp
-		Shadows/RenderShadows.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp
+		Shadows/SubrenderShadows.cpp
 		Skyboxes/MaterialSkybox.cpp
 		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputBoolean.cpp

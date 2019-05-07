@@ -10,6 +10,6 @@ class ACID_EXPORT FilterSepia :
 public:
 	explicit FilterSepia(const Pipeline::Stage &pipelineStage);
 
-	void Record(const CommandBuffer &commandBuffer) override;
+	void Render(const CommandBuffer &commandBuffer) override;
 };
 }
