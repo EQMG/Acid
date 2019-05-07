@@ -49,8 +49,8 @@ private:
 	Time m_delay;
 	Delegate<void(std::string, Status)> m_onChange;
 
+	bool m_running;
 	std::thread m_thread;
 	std::unordered_map<std::string, long> m_paths;
-	bool m_running;
 };
 }
