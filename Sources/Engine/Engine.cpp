@@ -15,6 +15,7 @@
 #include "Resources/Resources.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Shadows/Shadows.hpp"
+#include "Timers/Timers.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
@@ -53,6 +54,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 		AddModule<Uis>(Module::Stage::Pre);
 		AddModule<Particles>(Module::Stage::Normal);
 		AddModule<Shadows>(Module::Stage::Normal);
+		AddModule<Timers>(Module::Stage::Always);
 	}
 }
 

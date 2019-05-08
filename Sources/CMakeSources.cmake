@@ -219,6 +219,7 @@ set(_temp_acid_headers
 		Shadows/Shadows.hpp
 		Shadows/SubrenderShadows.hpp
 		Skyboxes/MaterialSkybox.hpp
+		Timers/Timers.hpp
 		Uis/Inputs/UiColourWheel.hpp
 		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
@@ -422,6 +423,7 @@ set(_temp_acid_sources
 		Shadows/Shadows.cpp
 		Shadows/SubrenderShadows.cpp
 		Skyboxes/MaterialSkybox.cpp
+		Timers/Timers.cpp
 		Uis/Inputs/UiColourWheel.cpp
 		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp

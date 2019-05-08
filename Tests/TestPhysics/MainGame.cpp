@@ -7,6 +7,7 @@
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Timers/Timers.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "MainRenderer.hpp"
@@ -44,6 +45,18 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
+	auto timer = Timers::Get()->Every(Time::Seconds(2.0f), []()
+	{
+		Log::Out("Timer Tick\n");
+	}, this);
+
+	/*timer->Destroy();
+
+	if (timer->IsDestroyed())
+	{
+		Log::Out("Timer Destroyed\n");
+	}*/
+
 	// Registers file search paths.
 	for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
 	{

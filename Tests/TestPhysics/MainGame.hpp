@@ -9,7 +9,8 @@ using namespace acid;
 namespace test
 {
 class MainGame :
-	public Game
+	public Game,
+	public Observer
 {
 public:
 	MainGame();
