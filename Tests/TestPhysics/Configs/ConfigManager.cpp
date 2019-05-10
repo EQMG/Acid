@@ -5,6 +5,7 @@
 #include <Devices/Window.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Audio/Audio.hpp>
+#include <Timers/Timers.hpp>
 
 namespace test
 {
@@ -13,7 +14,10 @@ ConfigManager::ConfigManager() :
 	m_graphics("Configs/Graphics.yaml", new Yaml())
 {
 	Load();
-	// TODO: Autosave every x minutes, and soon after load.
+	Timers::Get()->Every(Time::Seconds(160.0f), [this]()
+	{
+		Save();
+	}, this);
 }
 
 void ConfigManager::Load()

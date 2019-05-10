@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -51,6 +52,8 @@ public:
 	{
 		return Time(static_cast<int64_t>(amount));
 	}
+	
+	operator std::chrono::microseconds () const { return std::chrono::microseconds(m_microseconds); }
 
 	/**
 	 * Gets the time value as a number of seconds.

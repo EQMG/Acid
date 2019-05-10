@@ -1,12 +1,14 @@
 #pragma once
 
 #include <Files/File.hpp>
+#include <Helpers/Delegate.hpp>
 
 using namespace acid;
 
 namespace test
 {
-class ConfigManager
+class ConfigManager :
+	public Observer
 {
 public:
 	ConfigManager();

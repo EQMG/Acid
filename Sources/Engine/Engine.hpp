@@ -131,18 +131,6 @@ public:
 	const std::string &GetArgv0() const { return m_argv0; };
 
 	/**
-	 * Gets the added/removed time for the engine.
-	 * @return The time offset.
-	 */
-	const Time &GetTimeOffset() const { return m_timeOffset; }
-
-	/**
-	 * Sets the time offset for the engine.
-	 * @param timeOffset The new time offset.
-	 */
-	void SetTimeOffset(const Time &timeOffset) { m_timeOffset = timeOffset; }
-
-	/**
 	 * Gets the fps limit.
 	 * @return The frame per second limit.
 	 */
@@ -197,7 +185,6 @@ private:
 	std::unique_ptr<Game> m_game;
 
 	std::string m_argv0;
-	Time m_timeOffset;
 	float m_fpsLimit;
 	bool m_running;
 

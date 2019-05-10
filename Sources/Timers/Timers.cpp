@@ -2,40 +2,77 @@
 
 namespace acid
 {
-Timers::Timers()
+Timers::Timers() :
+	m_stop(false)
 {
+	std::unique_lock<std::mutex> lock(m_mutex);
+	m_worker = std::thread(std::bind(&Timers::Run, this));
 }
 
 Timers::~Timers()
 {
+	{
+		std::unique_lock<std::mutex> lock(m_mutex);
+		m_stop = true;
+	}
+
+	m_condition.notify_all();
+	m_worker.join();
 }
 
 void Timers::Update()
 {
-	for (auto it = m_timers.begin(); it != m_timers.end();)
+}
+
+void Timers::Run()
+{
+	std::unique_lock<std::mutex> lock(m_mutex);
+
+	while (true)
 	{
-		if ((*it)->m_destroyed || (*it)->IsFinished())
+		if (m_timers.empty())
 		{
-			it = m_timers.erase(it);
-			continue;
+			m_condition.wait(lock);
 		}
-
-		if ((*it)->m_start + (*it)->m_intervel <= Engine::Get()->GetTime())
+		else
 		{
-			auto error = Engine::Get()->GetTime() - ((*it)->m_start + (*it)->m_intervel);
-			Log::Out("Timer Error: %f\n", error.AsSeconds());
-
-			(*it)->m_start = Engine::Get()->GetTime();
-
-			if ((*it)->m_repeat)
+			/*m_timers.erase(std::remove_if(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &x)
 			{
-				(*(*it)->m_repeat)--;
+				return x->m_destroyed;
+			}), m_timers.end());*/
+			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &a, const std::unique_ptr<TimerInstance> &b)
+			{
+				return a->m_next < b->m_next;
+			});
+
+			auto it = m_timers.begin();
+			auto &instance = *it;
+			auto time = Engine::GetTime();
+
+			if (time >= instance->m_next)
+			{
+				lock.unlock();
+				instance->m_onTick();
+				lock.lock();
+
+				instance->m_next += instance->m_interval;
+
+				if (instance->m_repeat)
+				{
+					(*instance->m_repeat)--;
+
+					if (*instance->m_repeat == 0)
+					{
+						m_timers.erase(it);
+					}
+				}
 			}
-
-			(*it)->m_onTick();
+			else
+			{
+				auto timePoint = std::chrono::time_point<std::chrono::steady_clock>(std::chrono::microseconds(instance->m_next));
+				m_condition.wait_until(lock, timePoint);
+			}
 		}
-
-		it++;
 	}
 }
 }

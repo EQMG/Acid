@@ -1,6 +1,5 @@
 #include "Engine.hpp"
 
-#include <chrono>
 #include "Maths/Maths.hpp"
 
 #include "Audio/Audio.hpp"
@@ -117,14 +116,7 @@ int32_t Engine::Run()
 
 Time Engine::GetTime()
 {
-	auto duration = Time::Microseconds(std::chrono::duration_cast<MicrosecondsType>(HighResolutionClock::now() - TIME_START).count());
-
-	if (INSTANCE == nullptr)
-	{
-		return duration;
-	}
-
-	return duration + INSTANCE->m_timeOffset;
+	return Time::Microseconds(std::chrono::duration_cast<MicrosecondsType>(HighResolutionClock::now() - TIME_START).count());
 }
 
 std::string Engine::GetDateTime()

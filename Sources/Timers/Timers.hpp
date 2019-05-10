@@ -10,22 +10,17 @@ namespace acid
 class ACID_EXPORT TimerInstance
 {
 public:
-	TimerInstance(const Time &intervel, const std::optional<uint32_t> &repeat) :
-		m_start(Engine::Get()->GetTime()),
-		m_intervel(intervel),
+	TimerInstance(const Time &interval, const std::optional<uint32_t> &repeat) :
+		m_interval(interval),
+		m_next(Engine::GetTime() + m_interval),
 		m_repeat(repeat),
 		m_destroyed(false)
 	{
 	}
 
-	const Time &GetIntervel() const { return m_intervel; }
+	const Time &GetInterval() const { return m_interval; }
 
 	const std::optional<uint32_t> &GetRepeat() const { return m_repeat; }
-
-	bool IsFinished()
-	{
-		return m_repeat && *m_repeat == 0;
-	}
 
 	const bool &IsDestroyed() const { return m_destroyed; }
 
@@ -36,11 +31,11 @@ public:
 private:
 	friend class Timers;
 
-	Time m_start;
-	Time m_intervel;
+	Time m_interval;
+	Time m_next;
 	std::optional<uint32_t> m_repeat;
 	bool m_destroyed;
-	Delegate<void(void)> m_onTick;
+	Delegate<void()> m_onTick;
 };
 
 /**
@@ -63,33 +58,47 @@ public:
 	void Update() override;
 
 	template<typename ...Args>
-	TimerInstance *Once(const Time &intervel, std::function<void(void)> &&function, Args ...args)
+	TimerInstance *Once(const Time &delay, std::function<void(void)> &&function, Args ...args)
 	{
-		auto &instance = std::make_unique<TimerInstance>(intervel, 1);
+		std::unique_lock<std::mutex> lock(m_mutex);
+		auto instance = std::make_unique<TimerInstance>(delay, 1);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
+		m_condition.notify_all();
 		return instance.get();
 	}
 
 	template<typename ...Args>
-	TimerInstance *Every(const Time &intervel, std::function<void(void)> &&function, Args ...args)
+	TimerInstance *Every(const Time &interval, std::function<void(void)> &&function, Args ...args)
 	{
-		auto &instance = std::make_unique<TimerInstance>(intervel, std::nullopt);
+		std::unique_lock<std::mutex> lock(m_mutex);
+		auto instance = std::make_unique<TimerInstance>(interval, std::nullopt);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
+		m_condition.notify_all();
 		return instance.get();
 	}
 
 	template<typename ...Args>
-	TimerInstance *Repeat(const Time &intervel, const uint32_t &repeat, std::function<void(void)> &&function, Args ...args)
+	TimerInstance *Repeat(const Time &interval, const uint32_t &repeat, std::function<void(void)> &&function, Args ...args)
 	{
-		auto &instance = std::make_unique<TimerInstance>(intervel, repeat);
+		std::unique_lock<std::mutex> lock(m_mutex);
+		auto instance = std::make_unique<TimerInstance>(interval, repeat);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
+		m_condition.notify_all();
 		return instance.get();
 	}
 
 private:
+	void Run();
+
 	std::vector<std::unique_ptr<TimerInstance>> m_timers;
+
+	bool m_stop;
+	std::thread m_worker;
+
+	std::mutex m_mutex;
+	std::condition_variable m_condition;
 };
 }

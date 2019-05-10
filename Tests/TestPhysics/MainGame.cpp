@@ -45,17 +45,16 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	auto timer = Timers::Get()->Every(Time::Seconds(2.0f), []()
+	Timers::Get()->Repeat(Time::Seconds(4.0f), 5, []()
 	{
-		Log::Out("Timer Tick\n");
+		static uint32_t i = 0;
+		Log::Out("Timer Repeat Tick #%i\n", i);
+		i++;
 	}, this);
-
-	/*timer->Destroy();
-
-	if (timer->IsDestroyed())
+	/*Timers::Get()->Every(Time::Seconds(2.0f), []()
 	{
-		Log::Out("Timer Destroyed\n");
-	}*/
+		Log::Out("Timer Every Tick\n");
+	}, this);*/
 
 	// Registers file search paths.
 	for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
