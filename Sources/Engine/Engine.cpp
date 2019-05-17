@@ -39,20 +39,22 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 
 	if (!emptyRegister)
 	{
+		AddModule<Files>(Module::Stage::Post);
+		AddModule<Timers>(Module::Stage::Post);
+		AddModule<Resources>(Module::Stage::Post);
+
 		AddModule<Window>(Module::Stage::Always);
+		AddModule<Audio>(Module::Stage::Always);
+		AddModule<Joysticks>(Module::Stage::Always);
+		AddModule<Keyboard>(Module::Stage::Always);
+		AddModule<Mouse>(Module::Stage::Always);
 		AddModule<Graphics>(Module::Stage::Render);
-		AddModule<Audio>(Module::Stage::Pre);
-		AddModule<Joysticks>(Module::Stage::Pre);
-		AddModule<Keyboard>(Module::Stage::Pre);
-		AddModule<Mouse>(Module::Stage::Pre);
-		AddModule<Files>(Module::Stage::Pre);
+		
 		AddModule<Scenes>(Module::Stage::Normal);
 		AddModule<Gizmos>(Module::Stage::Normal);
-		AddModule<Resources>(Module::Stage::Pre);
-		AddModule<Uis>(Module::Stage::Pre);
 		AddModule<Particles>(Module::Stage::Normal);
 		AddModule<Shadows>(Module::Stage::Normal);
-		AddModule<Timers>(Module::Stage::Always);
+		AddModule<Uis>(Module::Stage::Normal);
 	}
 }
 
