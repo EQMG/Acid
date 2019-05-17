@@ -15,7 +15,6 @@ CollisionObject::CollisionObject(const float &mass, const float &friction, const
 	m_frictionSpinning(0.2f),
 	m_linearFactor(linearFactor),
 	m_angularFactor(angularFactor),
-	m_shape(nullptr),
 	m_body(nullptr)
 {
 }

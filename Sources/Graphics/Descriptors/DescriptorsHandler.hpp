@@ -20,7 +20,7 @@ public:
 	explicit DescriptorsHandler(const Pipeline &pipeline);
 
 	template<typename T>
-	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = {})
+	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = std::nullopt)
 	{
 		if (m_shader == nullptr)
 		{
@@ -99,15 +99,15 @@ public:
 		auto location = m_shader->GetDescriptorLocation(descriptorName);
 		//auto descriptorType = m_shader->GetDescriptorType(*location);
 
-		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), {}, *location });
+		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), std::nullopt, *location });
 		m_changed = true;
 	}
 
-	void Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize = {});
+	void Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
 
-	void Push(const std::string &descriptorName, StorageHandler &storageHandler, const std::optional<OffsetSize> &offsetSize = {});
+	void Push(const std::string &descriptorName, StorageHandler &storageHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
 
-	void Push(const std::string &descriptorName, PushHandler &pushHandler, const std::optional<OffsetSize> &offsetSize = {});
+	void Push(const std::string &descriptorName, PushHandler &pushHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
 
 	bool Update(const Pipeline &pipeline);
 

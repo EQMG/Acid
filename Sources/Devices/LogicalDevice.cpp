@@ -163,7 +163,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support wireframe pipelines!");
+		Log::Warning("Selected GPU does not support wireframe pipelines!\n");
 	}
 
 	if (physicalDeviceFeatures.samplerAnisotropy)
@@ -172,7 +172,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support sampler anisotropy!");
+		Log::Warning("Selected GPU does not support sampler anisotropy!\n");
 	}
 
 	if (physicalDeviceFeatures.textureCompressionBC)
@@ -194,7 +194,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support vertex pipeline stores and atomics!");
+		Log::Warning("Selected GPU does not support vertex pipeline stores and atomics!\n");
 	}
 
 	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
@@ -203,7 +203,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support fragment stores and atomics!");
+		Log::Warning("Selected GPU does not support fragment stores and atomics!\n");
 	}
 
 	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats)
@@ -212,7 +212,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support shader storage extended formats!");
+		Log::Warning("Selected GPU does not support shader storage extended formats!\n");
 	}
 
 	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat)
@@ -221,7 +221,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support shader storage write without format!");
+		Log::Warning("Selected GPU does not support shader storage write without format!\n");
 	}
 
 	//enabledFeatures.shaderClipDistance = VK_TRUE;
@@ -233,7 +233,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support geometry shaders!");
+		Log::Warning("Selected GPU does not support geometry shaders!\n");
 	}
 
 	if (physicalDeviceFeatures.tessellationShader)
@@ -242,7 +242,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support tessellation shaders!");
+		Log::Warning("Selected GPU does not support tessellation shaders!\n");
 	}
 
 	if (physicalDeviceFeatures.multiViewport)
@@ -251,7 +251,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Error("Selected GPU does not support multi viewports!");
+		Log::Warning("Selected GPU does not support multi viewports!\n");
 	}
 
 	VkDeviceCreateInfo deviceCreateInfo = {};

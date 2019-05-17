@@ -53,7 +53,7 @@ public:
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
 	 * @return The depth stencil that is found.
 	 */
-	const ImageDepth *GetDepthStencil(const std::optional<uint32_t> &stage = {}) const;
+	const ImageDepth *GetDepthStencil(const std::optional<uint32_t> &stage = std::nullopt) const;
 
 	/**
 	 * Gets a image used in a stage by the index given to it in the renderpass.
@@ -61,14 +61,14 @@ public:
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
 	 * @return The image that is found.
 	 */
-	const Image2d *GetImage(const uint32_t &index, const std::optional<uint32_t> &stage = {}) const;
+	const Image2d *GetImage(const uint32_t &index, const std::optional<uint32_t> &stage = std::nullopt) const;
 
 	/**
 	 * Gets the render stage viewport.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
 	 * @return The the render stage viewport.
 	 */
-	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = {}) const;
+	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = std::nullopt) const;
 
 	const Stage &GetStage() const { return m_stage; }
 

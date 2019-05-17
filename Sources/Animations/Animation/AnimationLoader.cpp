@@ -32,7 +32,7 @@ std::vector<Time> AnimationLoader::GetKeyTimes() const
 {
 	auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
 	auto rawTimes = String::Split(timeData->GetValue(), " ");
-	std::vector<Time> times = {};
+	std::vector<Time> times;
 	times.reserve(rawTimes.size());
 
 	for (const auto &rawTime : rawTimes)

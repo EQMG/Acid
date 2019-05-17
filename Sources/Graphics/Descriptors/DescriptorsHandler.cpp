@@ -7,7 +7,6 @@ namespace acid
 DescriptorsHandler::DescriptorsHandler() :
 	m_shader(nullptr),
 	m_pushDescriptors(false),
-	m_descriptorSet(nullptr),
 	m_changed(false)
 {
 }

@@ -120,7 +120,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 
 	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
 	m_currentCursor = std::pair<std::string, CursorHotspot>(filename, hotspot);
-	m_currentStandard = {};
+	m_currentStandard = std::nullopt;
 }
 
 void Mouse::SetCursor(const CursorStandard &standard)
@@ -135,7 +135,7 @@ void Mouse::SetCursor(const CursorStandard &standard)
 	m_cursor = glfwCreateStandardCursor(static_cast<int32_t>(standard));
 
 	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
-	m_currentCursor = {};
+	m_currentCursor = std::nullopt;
 	m_currentStandard = standard;
 }
 

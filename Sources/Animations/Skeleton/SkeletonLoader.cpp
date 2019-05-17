@@ -8,8 +8,7 @@ SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<s
 	m_armatureData(nullptr),
 	m_boneOrder(std::move(boneOrder)),
 	m_correction(correction),
-	m_jointCount(0),
-	m_headJoint(nullptr)
+	m_jointCount(0)
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	auto headNode = m_armatureData->FindChild("node");
@@ -62,6 +61,6 @@ std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
 		}
 	}
 
-	return {};
+	return std::nullopt;
 }
 }

@@ -12,8 +12,7 @@
 namespace acid
 {
 Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(mass, friction, linearFactor, angularFactor),
-	m_rigidBody(nullptr)
+	CollisionObject(mass, friction, linearFactor, angularFactor)
 {
 }
 

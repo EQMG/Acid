@@ -158,7 +158,7 @@ std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(const uint32_t &po
 
 	if (it == m_connected.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;

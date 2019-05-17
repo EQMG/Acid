@@ -40,18 +40,17 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_configs(nullptr),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	Timers::Get()->Repeat(Time::Seconds(4.0f), 5, []()
+	/*Timers::Get()->Repeat(Time::Seconds(4.0f), 5, []()
 	{
 		static uint32_t i = 0;
 		Log::Out("Timer Repeat Tick #%i\n", i);
 		i++;
 	}, this);
-	/*Timers::Get()->Every(Time::Seconds(2.0f), []()
+	Timers::Get()->Every(Time::Seconds(2.0f), []()
 	{
 		Log::Out("Timer Every Tick\n");
 	}, this);*/

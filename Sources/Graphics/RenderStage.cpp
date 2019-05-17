@@ -9,12 +9,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 	m_attachments(std::move(images)),
 	m_subpasses(std::move(subpasses)),
 	m_viewport(viewport),
-	m_renderpass(nullptr),
-	m_depthStencil(nullptr),
-	m_framebuffers(nullptr),
 	m_subpassAttachmentCount(m_subpasses.size()),
-	m_depthAttachment({}),
-	m_swapchainAttachment({}),
 	m_subpassMultisampled(m_subpasses.size()),
 	m_outOfDate(false)
 {
@@ -133,7 +128,7 @@ std::optional<Attachment> RenderStage::GetAttachment(const std::string &name) co
 
 	if (it == m_attachments.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return *it;
@@ -148,7 +143,7 @@ std::optional<Attachment> RenderStage::GetAttachment(const uint32_t &binding) co
 
 	if (it == m_attachments.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return *it;

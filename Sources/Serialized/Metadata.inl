@@ -226,7 +226,7 @@ const Metadata &operator>>(const Metadata &metadata, std::optional<T> &optional)
 	}
 	else
 	{
-		optional = {};
+		optional = std::nullopt;
 	}
 
 	return metadata;

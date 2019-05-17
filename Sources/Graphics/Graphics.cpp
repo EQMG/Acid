@@ -8,8 +8,6 @@
 namespace acid
 {
 Graphics::Graphics() :
-	m_renderer(nullptr),
-	m_swapchain(nullptr),
 	m_timerPurge(Time::Seconds(4.0f)),
 	m_pipelineCache(VK_NULL_HANDLE),
 	m_currentFrame(0),
@@ -150,8 +148,8 @@ std::string Graphics::StringifyResultVk(const VkResult &result)
 		return "A requested format is not supported on this device";
 	case VK_ERROR_SURFACE_LOST_KHR:
 		return "A surface is no longer available";
-		//case VK_ERROR_OUT_OF_POOL_MEMORY:
-		//return "A allocation failed due to having no more space in the descriptor pool";
+	//case VK_ERROR_OUT_OF_POOL_MEMORY:
+	//	return "A allocation failed due to having no more space in the descriptor pool";
 	case VK_SUBOPTIMAL_KHR:
 		return "A swapchain no longer matches the surface properties exactly, but can still be used";
 	case VK_ERROR_OUT_OF_DATE_KHR:

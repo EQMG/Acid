@@ -36,8 +36,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 }
 
 EntityPrefab::EntityPrefab(std::string filename, const bool &load) :
-	m_filename(std::move(filename)),
-	m_file(nullptr)
+	m_filename(std::move(filename))
 {
 	if (load)
 	{

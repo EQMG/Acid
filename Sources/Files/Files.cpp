@@ -280,7 +280,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 		if (!FileSystem::Exists(path) || !FileSystem::IsFile(path))
 		{
 			Log::Error("Error while opening file to load %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
-			return {};
+			return std::nullopt;
 		}
 
 		return FileSystem::ReadTextFile(path);

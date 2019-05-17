@@ -2,8 +2,7 @@
 
 namespace acid
 {
-Scenes::Scenes() :
-	m_scene(nullptr)
+Scenes::Scenes()
 {
 }
 

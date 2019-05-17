@@ -19,7 +19,6 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, GetDefines(), PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None),
 	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
-	m_skybox(nullptr),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
 	//auto metadata = Metadata();

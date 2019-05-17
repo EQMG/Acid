@@ -227,16 +227,16 @@ std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 {
 	if (!Exists(filename))
 	{
-		Log::Error("File does not exist: '%s'\n", filename.c_str());
-		return {};
+		Log::Warning("File does not exist: '%s'\n", filename.c_str());
+		return std::nullopt;
 	}
 
 	auto file = fopen(filename.c_str(), "rb");
 
 	if (file == nullptr)
 	{
-		Log::Error("Could not open file: '%s'\n", filename.c_str());
-		return {};
+		Log::Warning("Could not open file: '%s'\n", filename.c_str());
+		return std::nullopt;
 	}
 
 	fseek(file, 0, SEEK_END);
@@ -285,16 +285,16 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 		{
 			if (ferror(fp))
 			{
-				Log::Error("Error reading file: '%s'\n", filename.c_str());
-				return {};
+				Log::Warning("Error reading file: '%s'\n", filename.c_str());
+				return std::nullopt;
 			}
 		}
 		else
 		{
 			if (ftell(fp) % sizeof(char))
 			{
-				Log::Error("Corrupted word found in file: '%s'\n", filename.c_str());
-				return {};
+				Log::Warning("Corrupted word found in file: '%s'\n", filename.c_str());
+				return std::nullopt;
 			}
 		}
 
@@ -305,8 +305,8 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 	}
 	else
 	{
-		Log::Error("File does not exist: '%s'\n", filename.c_str());
-		return {};
+		Log::Warning("File does not exist: '%s'\n", filename.c_str());
+		return std::nullopt;
 	}
 
 	return data;
@@ -322,7 +322,7 @@ bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<
 
 		if (data.size() != written)
 		{
-			Log::Error("Could not write to file: '%s'\n", filename.c_str());
+			Log::Warning("Could not write to file: '%s'\n", filename.c_str());
 			return false;
 		}
 
@@ -333,7 +333,7 @@ bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<
 	}
 	else
 	{
-		Log::Error("File could not be opened: '%s'\n", filename.c_str());
+		Log::Warning("File could not be opened: '%s'\n", filename.c_str());
 		return false;
 	}
 

@@ -39,10 +39,6 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 FontType::FontType(std::string filename, std::string style, const bool &load) :
 	m_filename(std::move(filename)),
 	m_style(std::move(style)),
-	m_image(nullptr),
-	m_metadata(nullptr),
-	m_storageGlyphs(nullptr),
-	m_instanceBuffer(nullptr),
 	m_instances(0)
 {
 	if (load)
@@ -212,8 +208,6 @@ void FontType::LoadFont(const std::string &filename)
 	m_charmap = std::map<wchar_t, uint32_t>();
 	m_glyphInfos = std::vector<HostGlyphInfo>(glyphCount);
 	std::vector<Outline> outlines(glyphCount);
-
-	//Log::Out("Glyph Count: %i\n", glyphCount);
 
 	FT_UInt glyphIndex;
 	FT_ULong charcode = FT_Get_First_Char(face, &glyphIndex);

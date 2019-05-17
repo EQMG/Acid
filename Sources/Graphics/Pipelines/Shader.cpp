@@ -208,7 +208,7 @@ std::optional<uint32_t> Shader::GetDescriptorLocation(const std::string &name) c
 
 	if (it == m_descriptorLocations.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;
@@ -220,7 +220,7 @@ std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &name) const
 
 	if (it == m_descriptorSizes.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;
@@ -232,7 +232,7 @@ std::optional<Shader::Uniform> Shader::GetUniform(const std::string &name) const
 
 	if (it == m_uniforms.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;
@@ -244,7 +244,7 @@ std::optional<Shader::UniformBlock> Shader::GetUniformBlock(const std::string &n
 
 	if (it == m_uniformBlocks.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;
@@ -256,7 +256,7 @@ std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) c
 
 	if (it == m_attributes.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;
@@ -291,7 +291,7 @@ std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &locati
 
 	if (it == m_descriptorTypes.end())
 	{
-		return {};
+		return std::nullopt;
 	}
 
 	return it->second;

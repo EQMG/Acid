@@ -14,7 +14,6 @@ PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, const float &bl
 	m_inputScale(inputScale),
 	m_outputScale(outputScale),
 	m_blur(blur),
-	m_output(nullptr),
 	m_lastSize(0, 0)
 {
 }

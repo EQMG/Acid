@@ -39,7 +39,7 @@ std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 
 	if (it == m_modelMetadatas.end())
 	{
-		Log::Error("Could not find registered model by name: '%s'\n", typeName.c_str());
+		Log::Warning("Could not find registered model by name: '%s'\n", typeName.c_str());
 		return nullptr;
 	}
 
@@ -53,7 +53,7 @@ std::shared_ptr<Model> ModelRegister::Create(const std::string &filename) const
 
 	if (it == m_modelExtensions.end())
 	{
-		Log::Error("Could not find registered model by extension: '%s'\n", fileExt.c_str());
+		Log::Warning("Could not find registered model by extension: '%s'\n", fileExt.c_str());
 		return nullptr;
 	}
 

@@ -134,9 +134,7 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount()
 
 void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties)
 {
-	Log::Out("-- Physical Device: %i '%s' --\n", physicalDeviceProperties.deviceID, physicalDeviceProperties.deviceName);
-
-	Log::Out("Extensions: ");
+	Log::Out("-- Physical Device: %i '%s' --\nExtensions: ", physicalDeviceProperties.deviceID, physicalDeviceProperties.deviceName);
 
 	for (const auto &extension : extensionProperties)
 	{

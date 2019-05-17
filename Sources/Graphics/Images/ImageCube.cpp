@@ -45,7 +45,6 @@ ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilte
 	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
 	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
 	m_components(0),
-	m_loadPixels(nullptr),
 	m_mipLevels(0),
 	m_image(VK_NULL_HANDLE),
 	m_memory(VK_NULL_HANDLE),

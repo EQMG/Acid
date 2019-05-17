@@ -27,7 +27,7 @@ public:
 	{
 		if (m_modelMetadatas.find(name) != m_modelMetadatas.end())
 		{
-			Log::Error("Model metadata type '%s' is already registered!\n", name.c_str());
+			Log::Warning("Model metadata type '%s' is already registered!\n", name.c_str());
 			return;
 		}
 
@@ -48,7 +48,7 @@ public:
 	{
 		if (m_modelMetadatas.find(extension) != m_modelMetadatas.end())
 		{
-			Log::Error("Model extension type '%s' is already registered!\n", extension.c_str());
+			Log::Warning("Model extension type '%s' is already registered!\n", extension.c_str());
 			return;
 		}
 

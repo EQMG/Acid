@@ -471,7 +471,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 	{
-		Log::Error("Device does not support blitting from optimal tiled images, using copy instead of blit!\n");
+		Log::Warning("Device does not support blitting from optimal tiled images, using copy instead of blit!\n");
 		supportsBlit = false;
 	}
 
@@ -480,7 +480,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 	{
-		Log::Error("Device does not support blitting to linear tiled images, using copy instead of blit!\n");
+		Log::Warning("Device does not support blitting to linear tiled images, using copy instead of blit!\n");
 		supportsBlit = false;
 	}
 

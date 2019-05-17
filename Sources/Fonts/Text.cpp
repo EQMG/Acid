@@ -7,7 +7,6 @@ namespace acid
 Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify, const float &maxWidth,
 	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
-	m_model(nullptr),
 	m_numberLines(0),
 	m_string(std::move(text)),
 	m_justify(justify),
@@ -34,7 +33,7 @@ void Text::UpdateObject()
 	{
 		m_string = *m_newString;
 		LoadText();
-		m_newString = {};
+		m_newString = std::nullopt;
 	}
 
 	m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());

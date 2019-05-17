@@ -198,7 +198,7 @@ public:
 
 			if (it == m_uniforms.end())
 			{
-				return {};
+				return std::nullopt;
 			}
 
 			return it->second;

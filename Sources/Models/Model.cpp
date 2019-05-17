@@ -16,8 +16,6 @@ std::shared_ptr<Model> Model::Create(const std::string &filename)
 }
 
 Model::Model() :
-	m_vertexBuffer(nullptr),
-	m_indexBuffer(nullptr),
 	m_vertexCount(0),
 	m_indexCount(0),
 	m_radius(0.0f)

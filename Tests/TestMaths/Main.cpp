@@ -17,6 +17,13 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
+	Log::Out("Hello out!\n");
+	Log::Out(Log::Style::Underlined, "Hello underlined!\n");
+	Log::Info("Hello info!\n");
+	Log::Success("Hello success!\n");
+	Log::Warning("Hello warning!\n");
+	Log::Error("Hello error!\n");
+
 	{
 		RingBuffer<int32_t> buffer(4);
 

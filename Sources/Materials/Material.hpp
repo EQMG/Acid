@@ -15,11 +15,6 @@ class ACID_EXPORT Material :
 	public Component
 {
 public:
-	Material() :
-		m_pipelineMaterial(nullptr)
-	{
-	}
-
 	virtual ~Material() = default;
 
 	/**

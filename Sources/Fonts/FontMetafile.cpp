@@ -52,7 +52,7 @@ std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t 
 		return it->second;
 	}
 
-	return {};
+	return std::nullopt;
 }
 
 void FontMetafile::ProcessNextLine(const std::string &line)

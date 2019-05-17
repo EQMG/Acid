@@ -117,7 +117,8 @@ void Instance::SetupLayers()
 
 		if (!layerFound)
 		{
-			Log::Error("Vulkan validation layer not found: '%s'\n", layerName);
+			Log::Warning("Vulkan validation layer not found: '%s'\n", layerName);
+			continue;
 		}
 
 		m_instanceLayers.emplace_back(layerName);
@@ -186,8 +187,7 @@ void Instance::CreateDebugCallback()
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties)
 {
-	Log::Out("-- Instance --\n");
-	Log::Out("Layers: ");
+	Log::Out("-- Instance --\nLayers: ");
 
 	for (const auto &layer : layerProperties)
 	{

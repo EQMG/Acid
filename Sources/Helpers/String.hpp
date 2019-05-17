@@ -181,7 +181,7 @@ public:
 
 			if ((iss >> temp).fail())
 			{
-				return {};
+				return std::nullopt;
 			}
 
 			return temp;

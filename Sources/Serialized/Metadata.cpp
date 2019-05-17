@@ -81,7 +81,7 @@ Metadata *Metadata::FindChild(const std::string &name, const bool &reportError) 
 
 	if (reportError)
 	{
-		Log::Error("Could not find child in metadata by name '%s'\n", name.c_str());
+		Log::Warning("Could not find child in metadata by name '%s'\n", name.c_str());
 	}
 
 	return nullptr;
@@ -120,7 +120,7 @@ Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const s
 
 	if (reportError)
 	{
-		Log::Error("Could not find child in metadata '%s' with '%s'\n", childName.c_str(), attribute.c_str());
+		Log::Warning("Could not find child in metadata '%s' with '%s'\n", childName.c_str(), attribute.c_str());
 	}
 
 	return nullptr;

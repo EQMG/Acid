@@ -26,7 +26,6 @@ Engine *Engine::INSTANCE = nullptr;
 std::chrono::time_point<HighResolutionClock> TIME_START = HighResolutionClock::now();
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
-	m_game(nullptr),
 	m_argv0(std::move(argv0)),
 	m_fpsLimit(-1.0f),
 	m_running(true),

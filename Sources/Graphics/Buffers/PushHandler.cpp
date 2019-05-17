@@ -3,8 +3,7 @@
 namespace acid
 {
 PushHandler::PushHandler(const bool &multipipeline) :
-	m_multipipeline(multipipeline),
-	m_data(nullptr)
+	m_multipipeline(multipipeline)
 {
 }
 

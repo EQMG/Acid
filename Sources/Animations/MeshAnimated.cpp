@@ -11,11 +11,7 @@ const uint32_t MeshAnimated::MaxJoints = 50;
 const uint32_t MeshAnimated::MaxWeights = 3;
 
 MeshAnimated::MeshAnimated(std::string filename) :
-	m_filename(std::move(filename)),
-	m_model(nullptr),
-	m_headJoint(nullptr),
-	m_animator(nullptr),
-	m_animation(nullptr)
+	m_filename(std::move(filename))
 {
 	Load();
 }

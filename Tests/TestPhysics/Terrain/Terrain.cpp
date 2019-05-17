@@ -21,7 +21,7 @@ void Terrain::Start()
 
 	if (mesh == nullptr)
 	{
-		Log::Error("Terrain must be attached to a object with a mesh!\n");
+		Log::Warning("Terrain must be attached to a object with a mesh!\n");
 		return;
 	}
 
@@ -34,7 +34,7 @@ void Terrain::Start()
 
 	if (colliderHeightfield == nullptr)
 	{
-		Log::Error("Terrain does not contail a heightfield collider!\n");
+		Log::Warning("Terrain does not contail a heightfield collider!\n");
 		return;
 	}
 
