@@ -10,7 +10,7 @@ class ACID_EXPORT UiColourWheel :
 {
 public:
 	explicit UiColourWheel(UiObject *parent, const Colour &value = Colour::White,
-		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+		const UiTransform &rectangle = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 

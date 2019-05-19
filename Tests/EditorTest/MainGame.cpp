@@ -76,7 +76,7 @@ MainGame::MainGame() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([]()
 			{
-				Graphics::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
+				Graphics::Get()->CaptureScreenshot("Screenshots/" + Time::GetDateTime() + ".png");
 			});
 		}
 	});
@@ -115,7 +115,7 @@ MainGame::~MainGame()
 
 	//Renderer::Get()->SetManager(nullptr);
 	Scenes::Get()->SetScene(nullptr);
-	Uis::Get()->GetContainer().ClearChildren();
+	Uis::Get()->GetCanvas().ClearChildren();
 }
 
 void MainGame::Update()

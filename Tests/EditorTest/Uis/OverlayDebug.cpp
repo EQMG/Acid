@@ -7,12 +7,12 @@
 namespace test
 {
 OverlayDebug::OverlayDebug(UiObject *parent) :
-	UiObject(parent, UiBound::Screen),
-	m_textFrameTime(this, UiBound(Vector2f(0.998f, 0.998f), UiReference::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
+	UiObject(parent, UiTransform::Screen),
+	m_textFrameTime(this, UiTransform(Vector2f(0.998f, 0.998f), UiAnchor::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
 		Colour::White),
-	m_textFps(this, UiBound(Vector2f(0.998f, 0.978f), UiReference::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
+	m_textFps(this, UiTransform(Vector2f(0.998f, 0.978f), UiAnchor::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
 		Colour::White),
-	m_textUps(this, UiBound(Vector2f(0.998f, 0.958f), UiReference::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
+	m_textUps(this, UiTransform(Vector2f(0.998f, 0.958f), UiAnchor::BottomRight), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
 		Colour::White)
 {
 }

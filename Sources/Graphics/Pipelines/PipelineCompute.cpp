@@ -19,7 +19,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	CreateShaderProgram();
@@ -29,7 +29,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 	CreatePipelineCompute();
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	//Log::Out("%s", m_shader->ToString().c_str());
 	Log::Out("Pipeline compute '%s' created in %.3fms\n", m_shaderStage.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif

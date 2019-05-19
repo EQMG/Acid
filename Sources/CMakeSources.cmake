@@ -228,7 +228,7 @@ set(_temp_acid_headers
 		Uis/Inputs/UiInputRadio.hpp
 		Uis/Inputs/UiInputSlider.hpp
 		Uis/Inputs/UiInputText.hpp
-		Uis/UiBound.hpp
+		Uis/UiTransform.hpp
 		Uis/UiObject.hpp
 		Uis/UiPanel.hpp
 		Uis/Uis.hpp
@@ -432,7 +432,7 @@ set(_temp_acid_sources
 		Uis/Inputs/UiInputRadio.cpp
 		Uis/Inputs/UiInputSlider.cpp
 		Uis/Inputs/UiInputText.cpp
-		Uis/UiBound.cpp
+		Uis/UiTransform.cpp
 		Uis/UiObject.cpp
 		Uis/UiPanel.cpp
 		Uis/Uis.cpp

@@ -3,8 +3,8 @@
 namespace test
 {
 Panels::Panels(UiObject *parent) :
-	UiObject(parent, UiBound::Screen),
-	m_background(this, UiBound::Screen, Image2d::Create("Guis/White.png")),
+	UiObject(parent, UiTransform::Screen),
+	m_background(this, UiTransform::Screen, Image2d::Create("Guis/White.png")),
 	m_hierarchy(this),
 	m_inspector(this)
 {

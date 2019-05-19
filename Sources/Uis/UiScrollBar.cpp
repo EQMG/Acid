@@ -10,10 +10,10 @@ const Colour UiScrollBar::BackgroundColour = Colour("#20292b");
 const Colour UiScrollBar::PrimaryColour = Colour("#5b7073");
 const Colour UiScrollBar::SelectedColour = Colour("#FF6600");
 
-UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound &rectangle) :
+UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), BackgroundColour),
-	m_scroll(this, UiBound(Vector2f(), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/White.png"), PrimaryColour),
+	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/White.png"), BackgroundColour),
+	m_scroll(this, UiTransform(Vector2f(), UiAnchor::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/White.png"), PrimaryColour),
 	m_index(type == ScrollBar::Horizontal ? 0 : 1),
 	m_updating(false),
 	m_mouseOver(false)
@@ -24,7 +24,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiBound 
 		{
 			Vector2f position = Vector2f();
 			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
-			m_scroll.GetRectangle().SetPosition(position);
+			m_scroll.GetTransform().SetPosition(position);
 		}
 	}, this);
 }
@@ -44,7 +44,7 @@ void UiScrollBar::UpdateObject()
 
 		Vector2f position = Vector2f();
 		position[m_index] = ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
-		m_scroll.GetRectangle().SetPosition(position);
+		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}
 
@@ -66,12 +66,12 @@ void UiScrollBar::UpdateObject()
 float UiScrollBar::GetProgress()
 {
 	// TODO: Mark const
-	return m_scroll.GetRectangle().GetPosition()[m_index];
+	return m_scroll.GetTransform().GetPosition()[m_index];
 }
 
 void UiScrollBar::SetSize(const Vector2f &size)
 {
-	m_scroll.GetRectangle().SetSize(size);
+	m_scroll.GetTransform().SetSize(size);
 }
 
 float UiScrollBar::ScrollByDelta(const float &delta)
@@ -79,7 +79,7 @@ float UiScrollBar::ScrollByDelta(const float &delta)
 	float puckLength = m_scroll.GetScreenSize()[m_index];
 	float barLength = GetParent()->GetScreenSize()[m_index];
 	float maxValue = (barLength - puckLength) / barLength;
-	float value = m_scroll.GetRectangle().GetPosition()[m_index];
+	float value = m_scroll.GetTransform().GetPosition()[m_index];
 	value += delta;
 	return std::clamp(value, 0.0f, maxValue);
 }

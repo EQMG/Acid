@@ -6,6 +6,7 @@
 #include <Windows.h>
 #endif
 #include "Files/FileSystem.hpp"
+#include "Maths/Time.hpp"
 
 namespace acid
 {
@@ -74,11 +75,12 @@ std::string Log::FormatColour(const Colour &colour)
 	}
 }
 
-void Log::Print(const Style &style, const Colour &colour, const std::string &string)
+void Log::Print(const Style &style, const Colour &colour, const std::optional<std::string> &type, const std::string &string)
 {
+	auto typeString = ""; // Time::GetDateTime("[%H:%M:%S] ") + (type ? "[" + *type + "] " : "");
 	std::lock_guard<std::mutex> lock(MUTEX);
-	std::cout << FormatStyle(style) << FormatColour(colour) << string << FormatStyle(Style::Default);
-	STREAM << string;
+	std::cout << FormatStyle(style) << FormatColour(colour) << typeString << string << FormatStyle(Style::Default);
+	STREAM << typeString << string;
 }
 
 void Log::PopupMessage(const std::string &title, const std::string &message)
@@ -90,8 +92,8 @@ void Log::PopupMessage(const std::string &title, const std::string &message)
 
 void Log::OpenLog(const std::string &filename)
 {
-	std::lock_guard<std::mutex> lock(MUTEX);
 	FileSystem::Create(filename);
+	std::lock_guard<std::mutex> lock(MUTEX);
 	STREAM.open(filename);
 }
 }

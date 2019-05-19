@@ -187,7 +187,7 @@ void Graphics::UpdateSurfaceCapabilities()
 void Graphics::CaptureScreenshot(const std::string &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	auto extent = Window::Get()->GetSize();
@@ -222,7 +222,7 @@ void Graphics::CaptureScreenshot(const std::string &filename)
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	Log::Out("Screenshot '%s' saved in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }

@@ -12,7 +12,7 @@ class ACID_EXPORT TimerInstance
 public:
 	TimerInstance(const Time &interval, const std::optional<uint32_t> &repeat) :
 		m_interval(interval),
-		m_next(Engine::GetTime() + m_interval),
+		m_next(Time::Now() + m_interval),
 		m_repeat(repeat),
 		m_destroyed(false)
 	{

@@ -22,7 +22,7 @@ public:
 	static const Colour PrimaryColour;
 	static const Colour SelectedColour;
 
-	UiInputButton(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &rectangle = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 

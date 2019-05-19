@@ -34,8 +34,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_msaaSamples = GetMaxUsableSampleCount();
 
 #if defined(ACID_VERBOSE)
-	Log::Out("Selected Physical Device: '%s', %i\n", m_properties.deviceName, m_properties.deviceID);
-	Log::Out("Max MSAA Samples: %i\n", m_msaaSamples);
+	Log::Out("Selected Physical Device: %i '%s'\n", m_properties.deviceID, m_properties.deviceName);
 #endif
 }
 
@@ -134,51 +133,56 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount()
 
 void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties)
 {
-	Log::Out("-- Physical Device: %i '%s' --\nExtensions: ", physicalDeviceProperties.deviceID, physicalDeviceProperties.deviceName);
-
-	for (const auto &extension : extensionProperties)
-	{
-		Log::Out("%s, ", extension.extensionName);
-	}
+	std::stringstream stream;
 
 	switch (static_cast<int>(physicalDeviceProperties.deviceType))
 	{
 	case 1:
-		Log::Out("\nType: Integrated\n");
+		stream << "Integrated";
 		break;
 	case 2:
-		Log::Out("\nType: Discrete\n");
+		stream << "Discrete";
 		break;
 	case 3:
-		Log::Out("\nType: Virtual\n");
+		stream << "Virtual";
 		break;
 	case 4:
-		Log::Out("\nType: CPU\n");
+		stream << "CPU";
 		break;
 	default:
-		Log::Out("\nType: Other (%x)\n", physicalDeviceProperties.deviceType);
+		stream << "Other " << physicalDeviceProperties.deviceType;
 	}
+
+	stream << " Physical Device: " << physicalDeviceProperties.deviceID;
 
 	switch (physicalDeviceProperties.vendorID)
 	{
 	case 0x8086:
-		Log::Out("Vendor: Intel\n");
+		stream << " 'Intel'";
 		break;
 	case 0x10DE:
-		Log::Out("Vendor: NVIDIA\n");
+		stream << " 'Nvidia'";
 		break;
 	case 0x1002:
-		Log::Out("Vendor: AMD\n");
+		stream << " 'AMD'";
 		break;
 	default:
-		Log::Out("Vendor: Unknown (0x%x)\n", physicalDeviceProperties.vendorID);
+		stream << " '" << physicalDeviceProperties.vendorID << "'";
 	}
+
+	stream << " '" << physicalDeviceProperties.deviceName << "'\n";
 
 	uint32_t supportedVersion[] = { VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion) };
-	Log::Out("Supports Version: %i.%i.%i\n", supportedVersion[0], supportedVersion[1], supportedVersion[2]);
-	Log::Out("Header Version: %i\n", VK_HEADER_VERSION);
+	stream << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << "\n";
+	stream << "Extensions: ";
 
-	Log::Out("-- Done --\n");
+	for (const auto &extension : extensionProperties)
+	{
+		stream << extension.extensionName << ", ";
+	}
+
+	stream << "\n\n";
+	Log::Out(stream.str());
 }
 }

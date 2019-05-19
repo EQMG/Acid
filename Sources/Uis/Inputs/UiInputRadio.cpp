@@ -8,18 +8,18 @@ namespace acid
 {
 static const Vector2f SIZE = Vector2f(0.22f, 0.0315f);
 
-UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, const bool &value, const UiBound &rectangle) :
+UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, const bool &value, const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Left, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
-	m_fill(&m_background, UiBound::Maximum, nullptr, Colour::White),
-	m_text(this, UiBound::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
+	m_background(this, UiTransform::Left, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
+	m_fill(&m_background, UiTransform::Maximum, nullptr, Colour::White),
+	m_text(this, UiTransform::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_value(value),
 	m_type(type)
 {
-	GetRectangle().SetSize(SIZE);
+	GetTransform().SetSize(SIZE);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
-	m_text.GetRectangle().SetPosition(Vector2f(5.4f * GetRectangle().GetSize().m_y, 0.5f));
+	m_background.GetTransform().SetSize(Vector2f(GetTransform().GetSize().m_y));
+	m_text.GetTransform().SetPosition(Vector2f(5.4f * GetTransform().GetSize().m_y, 0.5f));
 	UpdateValue();
 
 	OnSelected().Add([this](bool selected)

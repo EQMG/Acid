@@ -30,13 +30,13 @@ public:
 	bool WasDown(const MouseButton &button);
 
 	/**
-	 * Gets the screen container.
-	 * @return The screen container.
+	 * Gets the screen canvas.
+	 * @return The screen canvas.
 	 */
-	UiObject &GetContainer() { return m_container; }
+	UiObject &GetCanvas() { return m_canvas; }
 
 	/**
-	 * The rendering objects from the container.
+	 * The rendering objects from the canvas.
 	 * @return The objects.
 	 */
 	const std::vector<UiObject *> &GetObjects() const { return m_objects; };
@@ -48,7 +48,7 @@ private:
 	};
 
 	std::map<MouseButton, SelectorMouse> m_selectors;
-	UiObject m_container;
+	UiObject m_canvas;
 	std::vector<UiObject *> m_objects;
 };
 }

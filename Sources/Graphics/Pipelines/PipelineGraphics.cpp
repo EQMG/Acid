@@ -40,7 +40,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 	m_tessellationState({})
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	std::sort(m_vertexInputs.begin(), m_vertexInputs.end());
@@ -64,7 +64,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	//Log::Out("%s\n", m_shader->ToString().c_str());
 	Log::Out("Pipeline graphics '%s' created in %.3fms\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif

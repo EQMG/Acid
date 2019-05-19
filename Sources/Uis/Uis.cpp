@@ -3,7 +3,7 @@
 namespace acid
 {
 Uis::Uis() :
-	m_container(nullptr, UiBound::Screen)
+	m_canvas(nullptr, UiTransform::Screen)
 {
 	for (auto button : EnumIterator<MouseButton>())
 	{
@@ -21,7 +21,7 @@ void Uis::Update()
 	}
 
 	m_objects.clear();
-	m_container.Update(m_objects);
+	m_canvas.Update(m_objects);
 }
 
 void Uis::CancelWasEvent(const MouseButton &button)

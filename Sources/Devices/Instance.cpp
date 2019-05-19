@@ -187,13 +187,15 @@ void Instance::CreateDebugCallback()
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties)
 {
-	Log::Out("-- Instance --\nLayers: ");
+	std::stringstream stream;
+	stream << "Instance Layers: ";
 
 	for (const auto &layer : layerProperties)
 	{
-		Log::Out("%s, ", layer.layerName);
+		stream << layer.layerName << ", ";
 	}
 
-	Log::Out("\n-- Done --\n");
+	stream << "\n\n";
+	Log::Out(stream.str());
 }
 }

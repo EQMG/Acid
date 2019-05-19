@@ -10,7 +10,7 @@ class ACID_EXPORT UiSection :
 	public UiObject
 {
 public:
-	UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+	UiSection(UiObject *parent, const std::string &string, const UiTransform &rectangle = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 

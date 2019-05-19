@@ -5,14 +5,14 @@
 namespace acid
 {
 Timer::Timer(const Time &interval) :
-	m_startTime(Engine::GetTime()),
+	m_startTime(Time::Now()),
 	m_interval(interval)
 {
 }
 
 Time Timer::GetDifference() const
 {
-	return Engine::GetTime() - m_startTime;
+	return Time::Now() - m_startTime;
 }
 
 bool Timer::IsPassedTime() const
@@ -22,7 +22,7 @@ bool Timer::IsPassedTime() const
 
 void Timer::ResetStartTime()
 {
-	m_startTime = Engine::GetTime();
+	m_startTime = Time::Now();
 }
 
 void Timer::SetInterval(const Time &interval)
@@ -33,6 +33,6 @@ void Timer::SetInterval(const Time &interval)
 	}
 
 	m_interval = interval;
-	m_startTime = Engine::GetTime();
+	m_startTime = Time::Now();
 }
 }

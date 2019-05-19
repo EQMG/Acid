@@ -6,18 +6,18 @@
 
 namespace acid
 {
-UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiBound &rectangle) :
+UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiBound(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiReference::CentreRight, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize,
+	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiAnchor::CentreRight, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
-	m_textValue(this, UiBound(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiReference::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
+	m_textValue(this, UiTransform(Vector2f(2.5f * UiInputButton::Padding.m_x, 0.5f), UiAnchor::CentreLeft, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_lastKey(0),
 	m_updating(false),
 	m_mouseOver(false)
 {
-	GetRectangle().SetSize(UiInputButton::Size);
+	GetTransform().SetSize(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
 	OnSelected().Add([this](bool selected)
@@ -68,7 +68,7 @@ void UiInputGrabber::UpdateValue()
 	m_textValue.SetString(GetTextString());
 }
 
-UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value, const UiBound &rectangle) :
+UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value, const UiTransform &rectangle) :
 	UiInputGrabber(parent, title, rectangle),
 	m_port(port),
 	m_value(value)
@@ -96,7 +96,7 @@ void UiGrabberJoystick::SetValue(const uint32_t &value)
 	//m_onValue(m_value);
 }
 
-UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiBound &rectangle) :
+UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiTransform &rectangle) :
 	UiInputGrabber(parent, title, rectangle),
 	m_value(value)
 {
@@ -123,7 +123,7 @@ void UiGrabberKeyboard::SetValue(const Key &value)
 	//m_onValue(m_value);
 }
 
-UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiBound &rectangle) :
+UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiTransform &rectangle) :
 	UiInputGrabber(parent, title, rectangle),
 	m_value(value)
 {

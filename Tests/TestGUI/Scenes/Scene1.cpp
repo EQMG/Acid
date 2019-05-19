@@ -13,9 +13,9 @@ const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
 Scene1::Scene1() :
 	Scene(new Camera()),
 	m_buttonPause(ButtonCompound({ new ButtonKeyboard(Key::Escape), new ButtonJoystick(0, 7) })),
-	m_uiStartLogo(&Uis::Get()->GetContainer()),
-	m_overlayDebug(&Uis::Get()->GetContainer()),
-	m_uiPanels(&Uis::Get()->GetContainer())
+	m_uiStartLogo(&Uis::Get()->GetCanvas()),
+	m_overlayDebug(&Uis::Get()->GetCanvas()),
+	m_uiPanels(&Uis::Get()->GetCanvas())
 {
 	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

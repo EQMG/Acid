@@ -23,7 +23,7 @@ void FilterCrt::Render(const CommandBuffer &commandBuffer)
 	m_pushScene.Push("curveAmountY", m_curveAmountY);
 	m_pushScene.Push("scanLineSize", m_scanLineSize);
 	m_pushScene.Push("scanIntensity", m_scanIntensity);
-	m_pushScene.Push("moveTime", Engine::GetTime() / 100.0f);
+	m_pushScene.Push("moveTime", Time::Now() / 100.0f);
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);

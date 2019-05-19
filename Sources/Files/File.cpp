@@ -15,7 +15,7 @@ File::File(std::string filename, Metadata *metadata) :
 void File::Read()
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -31,7 +31,7 @@ void File::Read()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	Log::Out("File '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
@@ -39,7 +39,7 @@ void File::Read()
 void File::Write()
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -56,7 +56,7 @@ void File::Write()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	Log::Out("File '%s' saved in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }

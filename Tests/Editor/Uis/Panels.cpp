@@ -3,7 +3,7 @@
 namespace test
 {
 Panels::Panels(UiObject *parent) :
-	UiObject(parent, UiBound::Screen),
+	UiObject(parent, UiTransform::Screen),
 	m_hierarchy(this),
 	m_inspector(this)
 {

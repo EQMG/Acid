@@ -51,8 +51,8 @@ Scene1::Scene1() :
 	m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
 	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
 	m_buttonSave(Key::K),
-	m_uiStartLogo(&Uis::Get()->GetContainer()),
-	m_overlayDebug(&Uis::Get()->GetContainer())
+	m_uiStartLogo(&Uis::Get()->GetCanvas()),
+	m_overlayDebug(&Uis::Get()->GetCanvas())
 {
 	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

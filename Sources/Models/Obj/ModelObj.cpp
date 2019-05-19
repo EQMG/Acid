@@ -88,7 +88,7 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	auto folder = FileSystem::ParentDirectory(m_filename);
@@ -129,7 +129,7 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 

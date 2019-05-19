@@ -76,7 +76,7 @@ void RenderStage::Update()
 void RenderStage::Rebuild(const Swapchain &swapchain)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Engine::GetTime();
+	auto debugStart = Time::Now();
 #endif
 
 	Update();
@@ -114,7 +114,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Engine::GetTime();
+	auto debugEnd = Time::Now();
 	Log::Out("Render Stage built in %.3fms\n", (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }

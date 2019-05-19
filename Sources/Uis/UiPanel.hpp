@@ -15,7 +15,7 @@ public:
 		None, Left, Top, Right, Bottom
 	};
 
-	explicit UiPanel(UiObject *parent, const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size),
+	explicit UiPanel(UiObject *parent, const UiTransform &rectangle = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size),
 		const Colour &colour = Colour::White, const Resize &resize = Resize::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;

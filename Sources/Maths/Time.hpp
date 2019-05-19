@@ -88,6 +88,19 @@ public:
 		return static_cast<T>(m_microseconds);
 	}
 
+	/**
+	 * Gets the current time of this application.
+	 * @return The current time.
+	 */
+	static Time Now();
+
+	/**
+	 * Gets the current system time as a string. "%d-%m-%Y %I:%M:%S"
+	 * @tparam format The format to put the time into.
+	 * @return The date time as a string.
+	 */
+	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S");
+
 	bool operator==(const Time &other) const;
 
 	bool operator!=(const Time &other) const;
@@ -117,6 +130,10 @@ public:
 	ACID_EXPORT friend Time operator/(const Time &left, const float &right);
 
 	ACID_EXPORT friend Time operator/(const Time &left, const int64_t &right);
+	
+	ACID_EXPORT friend Time operator/(const float &left, const Time &right);
+
+	ACID_EXPORT friend Time operator/(const int64_t &left, const Time &right);
 
 	ACID_EXPORT friend float operator/(const Time &left, const Time &right);
 
@@ -144,6 +161,8 @@ public:
 	static const Time Min;
 	static const Time Max;
 private:
+	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
+
 	int64_t m_microseconds;
 };
 }

@@ -123,11 +123,11 @@ void Image2d::Load()
 	if (!m_filename.empty() && m_loadPixels == nullptr)
 	{
 #if defined(ACID_VERBOSE)
-		auto debugStart = Engine::GetTime();
+		auto debugStart = Time::Now();
 #endif
 		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
-		auto debugEnd = Engine::GetTime();
+		auto debugEnd = Time::Now();
 		Log::Out("Image 2D '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}

@@ -55,7 +55,7 @@ public:
 	template<typename... Args>
 	static void Out(const Style &style, const Colour &colour, const std::string &format, Args &&... args)
 	{
-		Print(style, colour, StringFormat(format, std::forward<Args>(args)...));
+		Print(style, colour, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public:
 	template<typename... Args>
 	static void Out(const Style &style, const std::string &format, Args &&... args)
 	{
-		Print(style, Colour::Default, StringFormat(format, std::forward<Args>(args)...));
+		Print(style, Colour::Default, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public:
 	template<typename... Args>
 	static void Out(const Colour &colour, const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, colour, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, colour, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -93,7 +93,19 @@ public:
 	template<typename... Args>
 	static void Out(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::Default, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::Default, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
+	}
+	
+	/**
+	 * Outputs a debug into the console.
+	 * @tparam Args The args types.
+	 * @param format The format to output into.
+	 * @param args The args to be added into the format.
+	 */
+	template<typename... Args>
+	static void Debug(const std::string &format, Args &&... args)
+	{
+		Print(Style::Default, Colour::LightCyan, "Debug", StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -105,19 +117,7 @@ public:
 	template<typename... Args>
 	static void Info(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightCyan, StringFormat(format, std::forward<Args>(args)...));
-	}
-	
-	/**
-	 * Outputs a success into the console.
-	 * @tparam Args The args types.
-	 * @param format The format to output into.
-	 * @param args The args to be added into the format.
-	 */
-	template<typename... Args>
-	static void Success(const std::string &format, Args &&... args)
-	{
-		Print(Style::Default, Colour::LightGreen, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::Default, "Info", StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public:
 	template<typename... Args>
 	static void Warning(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightYellow, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::LightYellow, "Warning", StringFormat(format, std::forward<Args>(args)...));
 	}
 
 	/**
@@ -141,7 +141,7 @@ public:
 	template<typename... Args>
 	static void Error(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightRed, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::LightRed, "Error", StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -170,7 +170,7 @@ private:
 
 	static std::string FormatColour(const Colour &colour);
 
-	static void Print(const Style &style, const Colour &colour, const std::string& string);
+	static void Print(const Style &style, const Colour &colour, const std::optional<std::string> &type, const std::string &string);
 	
 	static void PopupMessage(const std::string &title, const std::string &message);
 

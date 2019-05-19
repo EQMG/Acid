@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	engine->SetGame(new MainGame());
 
 	// Runs the game loop.
-	int32_t exitCode = engine->Run();
+	auto exitCode = engine->Run();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -44,25 +44,28 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	/*Timers::Get()->Repeat(Time::Seconds(4.0f), 5, []()
+	Log::Out("Current DateTime: %s\n", Time::GetDateTime().c_str());
+
+	Timers::Get()->Repeat(Time::Seconds(4.0f), 3, []()
 	{
 		static uint32_t i = 0;
+		static Time l = Time::Now();
 		Log::Out("Timer Repeat Tick #%i\n", i);
 		i++;
-	}, this);
+	});
 	Timers::Get()->Every(Time::Seconds(2.0f), []()
 	{
 		Log::Out("Timer Every Tick\n");
-	}, this);*/
+	});
 
 	// Registers file search paths.
-	for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
+	/*for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
 	{
 		if (String::Contains(file, "data-"))
 		{
 			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
 		}
-	}
+	}*/
 
 	Files::Get()->AddSearchPath("Resources/Engine");
 	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
@@ -83,7 +86,7 @@ MainGame::MainGame() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([]()
 			{
-				Graphics::Get()->CaptureScreenshot("Screenshots/" + Engine::GetDateTime() + ".png");
+				Graphics::Get()->CaptureScreenshot("Screenshots/" + Time::GetDateTime() + ".png");
 			});
 		}
 	});

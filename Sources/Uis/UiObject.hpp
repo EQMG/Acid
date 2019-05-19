@@ -6,7 +6,7 @@
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"
 #include "Maths/Visual/Driver.hpp"
-#include "UiBound.hpp"
+#include "UiTransform.hpp"
 
 namespace acid
 {
@@ -22,9 +22,9 @@ public:
 	/**
 	 * Creates a new ui object.
 	 * @param parent The parent screen object.
-	 * @param rectangle The rectangle that will represent the bounds of the ui object.
+	 * @param transform The virtual space transform.
 	 */
-	UiObject(UiObject *parent, const UiBound &rectangle);
+	UiObject(UiObject *parent, const UiTransform &transform);
 
 	virtual ~UiObject();
 
@@ -67,9 +67,9 @@ public:
 
 	void SetEnabled(const bool &enabled) { m_enabled = enabled; }
 
-	UiBound &GetRectangle() { return m_rectangle; }
+	UiTransform &GetTransform() { return m_transform; }
 
-	void SetRectangle(const UiBound &rectangle) { m_rectangle = rectangle; }
+	void SetTransform(const UiTransform &transform) { m_transform = transform; }
 
 	const Vector4f &GetScissor() const { return m_scissor; }
 
@@ -144,8 +144,8 @@ private:
 	std::vector<UiObject *> m_children;
 
 	bool m_enabled;
-	UiBound m_rectangle;
-	Vector4f m_scissor; // TODO: Convert to UiBound.
+	UiTransform m_transform;
+	Vector4f m_scissor; // TODO: Convert to UiTransform.
 	float m_height;
 
 	bool m_lockRotation;

@@ -28,7 +28,11 @@ void Timers::Run()
 {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
-	while (true)
+	//Time startWait;
+	//Time lengthWait;
+	//bool setWait = false;
+
+	while (!m_stop)
 	{
 		if (m_timers.empty())
 		{
@@ -36,21 +40,23 @@ void Timers::Run()
 		}
 		else
 		{
-			/*m_timers.erase(std::remove_if(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &x)
-			{
-				return x->m_destroyed;
-			}), m_timers.end());*/
+			//if (setWait)
+			//{
+			//	Log::Debug("End Wait: %fms, error: %fms\n", Time::Now().AsMilliseconds<float>(), (Time::Now() - (startWait + lengthWait)).AsMilliseconds<float>());
+			//	setWait = false;
+			//}
+
 			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &a, const std::unique_ptr<TimerInstance> &b)
 			{
 				return a->m_next < b->m_next;
 			});
 
-			auto it = m_timers.begin();
-			auto &instance = *it;
-			auto time = Engine::GetTime();
+			auto &instance = m_timers.front();
+			auto time = Time::Now();
 
 			if (time >= instance->m_next)
 			{
+				//Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
 				lock.unlock();
 				instance->m_onTick();
 				lock.lock();
@@ -63,14 +69,18 @@ void Timers::Run()
 
 					if (*instance->m_repeat == 0)
 					{
-						m_timers.erase(it);
+						m_timers.erase(std::remove(m_timers.begin(), m_timers.end(), instance), m_timers.end());
 					}
 				}
 			}
 			else
 			{
-				auto timePoint = std::chrono::time_point<std::chrono::steady_clock>(std::chrono::microseconds(instance->m_next));
-				m_condition.wait_until(lock, timePoint);
+				auto timePoint = std::chrono::microseconds(instance->m_next - time);
+				//Log::Debug("Start Wait: %fms, waiting: %fms\n", time.AsMilliseconds<float>(), (instance->m_next - time).AsMilliseconds<float>());
+				//startWait = time;
+				//lengthWait = instance->m_next - time;
+				//setWait = true;
+				m_condition.wait_for(lock, timePoint);
 			}
 		}
 	}

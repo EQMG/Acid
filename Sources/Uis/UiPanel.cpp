@@ -7,23 +7,23 @@ namespace acid
 static const float SCROLL_BAR_SIZE = 0.01f;
 static const float RESIZE_SIZE = 0.016f;
 
-UiPanel::UiPanel(UiObject *parent, const UiBound &rectangle, const Colour &colour, const Resize &resize, const BitMask<ScrollBar> &scrollBars) :
+UiPanel::UiPanel(UiObject *parent, const UiTransform &rectangle, const Colour &colour, const Resize &resize, const BitMask<ScrollBar> &scrollBars) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Maximum, Image2d::Create("Guis/White.png"), colour),
-	m_content(this, UiBound::Maximum),
-	m_resizeHandle(this, UiBound()),
+	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/White.png"), colour),
+	m_content(this, UiTransform::Maximum),
+	m_resizeHandle(this, UiTransform()),
 	m_resize(resize),
-	m_scrollX(this, ScrollBar::Horizontal, UiBound(Vector2f(0.0f, 1.0f), UiReference::BottomLeft, UiAspect::Position | UiAspect::Size, Vector2f(1.0f, SCROLL_BAR_SIZE))),
-	m_scrollY(this, ScrollBar::Vertical, UiBound(Vector2f(1.0f, 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR_SIZE, 1.0f))),
+	m_scrollX(this, ScrollBar::Horizontal, UiTransform(Vector2f(0.0f, 1.0f), UiAnchor::BottomLeft, UiAspect::Position | UiAspect::Size, Vector2f(1.0f, SCROLL_BAR_SIZE))),
+	m_scrollY(this, ScrollBar::Vertical, UiTransform(Vector2f(1.0f, 0.0f), UiAnchor::TopRight, UiAspect::Position | UiAspect::Size, Vector2f(SCROLL_BAR_SIZE, 1.0f))),
 	m_scrollBars(scrollBars)
 {
 	switch (resize)
 	{
 	case Resize::Left:
-		m_resizeHandle.GetRectangle() = UiBound(Vector2f(RESIZE_SIZE / 2.0f, 0.0f), UiReference::TopLeft, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
+		m_resizeHandle.GetTransform() = UiTransform(Vector2f(RESIZE_SIZE / 2.0f, 0.0f), UiAnchor::TopLeft, UiAspect::Position | UiAspect::Scale, Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	case Resize::Right:
-		m_resizeHandle.GetRectangle() = UiBound(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiReference::TopRight, UiAspect::Position | UiAspect::Scale,
+		m_resizeHandle.GetTransform() = UiTransform(Vector2f(1.0f + (RESIZE_SIZE / 2.0f), 0.0f), UiAnchor::TopRight, UiAspect::Position | UiAspect::Scale,
 			Vector2f(RESIZE_SIZE, 1.0f));
 		break;
 	default:
@@ -47,7 +47,7 @@ void UiPanel::UpdateObject()
 	m_scrollX.SetSize(Vector2f(0.5f * (1.0f / contentSize.m_x), 1.0f));
 	m_scrollY.SetSize(Vector2f(1.0f, 0.5f * (1.0f / contentSize.m_y)));
 
-	//m_content.GetRectangle().SetPosition(0.5f - (Vector2f(m_scrollX.GetProgress(), m_scrollY.GetProgress()) * contentSize));
+	//m_content.GetTransform().SetPosition(0.5f - (Vector2f(m_scrollX.GetProgress(), m_scrollY.GetProgress()) * contentSize));
 
 	m_min = Vector2f::PositiveInfinity;
 	m_max = Vector2f::NegativeInfinity;

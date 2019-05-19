@@ -4,7 +4,7 @@
 
 namespace acid
 {
-Text::Text(UiObject *parent, const UiBound &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify, const float &maxWidth,
+Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify, const float &maxWidth,
 	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
 	m_numberLines(0),
@@ -148,14 +148,14 @@ float Text::GetGlowSize() const
 
 float Text::CalculateEdgeStart() const
 {
-	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
 	auto size = 0.5f * scale.m_x;
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
-	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetRectangle().GetDimensions()).MinComponent();
+	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
 	auto size = 0.5f * scale.m_x;
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
@@ -184,7 +184,7 @@ void Text::LoadText()
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	GetRectangle().SetSize(bounding);
+	GetTransform().SetSize(bounding);
 }
 
 std::vector<Text::Line> Text::CreateStructure() const

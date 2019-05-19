@@ -6,12 +6,12 @@ namespace acid
 {
 static const Vector2f SIZE = Vector2f(0.22f, 0.22f);
 
-UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiBound &rectangle) :
+UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
-	m_background(this, UiBound::Maximum, Image2d::Create("Guis/ColourWheel.png")),
+	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/ColourWheel.png")),
 	m_value(value)
 {
-	GetRectangle().SetSize(SIZE);
+	GetTransform().SetSize(SIZE);
 
 	OnSelected().Add([this](bool selected)
 	{

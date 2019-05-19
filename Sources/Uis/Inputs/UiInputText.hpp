@@ -12,7 +12,7 @@ class ACID_EXPORT UiInputText :
 {
 public:
 	UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
-		const UiBound &rectangle = UiBound(Vector2f(0.0f, 0.0f), UiReference::Centre, UiAspect::Position | UiAspect::Size));
+		const UiTransform &rectangle = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size));
 
 	void UpdateObject() override;
 

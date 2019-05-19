@@ -9,16 +9,16 @@ static const Time SLIDE_TIME = Time::Seconds(0.1f);
 static const Vector2f SIZE = Vector2f(0.3f, 0.03375f);
 static const float FONT_SIZE = 1.4f;
 
-UiSection::UiSection(UiObject *parent, const std::string &string, const UiBound &rectangle) :
+UiSection::UiSection(UiObject *parent, const std::string &string, const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
-	m_icon(this, UiBound::Left, Image2d::Create("Guis/Triangle_Down.png")),
-	m_text(this, UiBound::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
-	m_content(this, UiBound(Vector2f(0.0f, 4.0f * SIZE.m_x), UiReference::TopLeft, UiAspect::Position | UiAspect::Size)),
+	m_icon(this, UiTransform::Left, Image2d::Create("Guis/Triangle_Down.png")),
+	m_text(this, UiTransform::Left, FONT_SIZE, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, SIZE.m_x, Colour::White),
+	m_content(this, UiTransform(Vector2f(0.0f, 4.0f * SIZE.m_x), UiAnchor::TopLeft, UiAspect::Position | UiAspect::Size)),
 	m_collapsed(false)
 {
-	GetRectangle().SetSize(SIZE);
-	m_icon.GetRectangle().SetSize(Vector2f(GetRectangle().GetSize().m_y));
-	m_text.GetRectangle().SetPosition(Vector2f(4.0f * GetRectangle().GetSize().m_y, 0.5f));
+	GetTransform().SetSize(SIZE);
+	m_icon.GetTransform().SetSize(Vector2f(GetTransform().GetSize().m_y));
+	m_text.GetTransform().SetPosition(Vector2f(4.0f * GetTransform().GetSize().m_y, 0.5f));
 
 	OnClick().Add([this](MouseButton button)
 	{

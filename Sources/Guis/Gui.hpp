@@ -25,7 +25,7 @@ public:
 	 * @param image The objects image.
 	 * @param colourOffset The image colour offset.
 	 */
-	Gui(UiObject *parent, const UiBound &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset = Colour::White);
+	Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset = Colour::White);
 
 	void UpdateObject() override;
 
@@ -78,7 +78,7 @@ private:
 	uint32_t m_selectedRow;
 	Vector2f m_atlasOffset;
 	Vector2f m_atlasScale;
-	Vector4f m_ninePatches; // TODO: Use UiBound
+	Vector4f m_ninePatches; // TODO: Use UiTransform
 
 	std::unique_ptr<Driver<Colour>> m_colourDriver;
 	Colour m_colourOffset;

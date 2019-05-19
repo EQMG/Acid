@@ -113,18 +113,6 @@ public:
 	void SetGame(Game *game) { m_game.reset(game); }
 
 	/**
-	 * Gets the current time of the engine instance.
-	 * @return The current engine time.
-	 */
-	static Time GetTime();
-
-	/**
-	 * Gets the current date time as a string. "%d-%m-%Y %I:%M:%S"
-	 * @return The date time as a string.
-	 */
-	static std::string GetDateTime();
-
-	/**
 	 * Gets the first argument passed to main.
 	 * @return The first argument passed to main.
 	 */

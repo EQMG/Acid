@@ -19,11 +19,7 @@
 
 namespace acid
 {
-using HighResolutionClock = std::chrono::high_resolution_clock;
-using MicrosecondsType = std::chrono::duration<int64_t, std::micro>;
-
 Engine *Engine::INSTANCE = nullptr;
-std::chrono::time_point<HighResolutionClock> TIME_START = HighResolutionClock::now();
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0(std::move(argv0)),
@@ -35,7 +31,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_fps()
 {
 	INSTANCE = this;
-	Log::OpenLog("Logs/" + GetDateTime() + ".log");
+	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
 
 	if (!emptyRegister)
 	{
@@ -43,11 +39,11 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 		AddModule<Timers>(Module::Stage::Post);
 		AddModule<Resources>(Module::Stage::Post);
 
-		AddModule<Window>(Module::Stage::Always);
-		AddModule<Audio>(Module::Stage::Always);
-		AddModule<Joysticks>(Module::Stage::Always);
-		AddModule<Keyboard>(Module::Stage::Always);
-		AddModule<Mouse>(Module::Stage::Always);
+		AddModule<Window>(Module::Stage::Pre);
+		AddModule<Audio>(Module::Stage::Pre);
+		AddModule<Joysticks>(Module::Stage::Pre);
+		AddModule<Keyboard>(Module::Stage::Pre);
+		AddModule<Mouse>(Module::Stage::Pre);
 		AddModule<Graphics>(Module::Stage::Render);
 		
 		AddModule<Scenes>(Module::Stage::Normal);
@@ -76,7 +72,7 @@ int32_t Engine::Run()
 		{
 			// Resets the timer.
 			m_timerUpdate.ResetStartTime();
-			m_ups.Update(GetTime().AsSeconds());
+			m_ups.Update(Time::Now().AsSeconds());
 
 			// Pre-Update.
 			m_modules.UpdateStage(Module::Stage::Pre);
@@ -102,7 +98,7 @@ int32_t Engine::Run()
 		{
 			// Resets the timer.
 			m_timerRender.ResetStartTime();
-			m_fps.Update(GetTime().AsSeconds());
+			m_fps.Update(Time::Now().AsSeconds());
 
 			// Render
 			m_modules.UpdateStage(Module::Stage::Render);
@@ -113,22 +109,5 @@ int32_t Engine::Run()
 	}
 
 	return EXIT_SUCCESS;
-}
-
-Time Engine::GetTime()
-{
-	return Time::Microseconds(std::chrono::duration_cast<MicrosecondsType>(HighResolutionClock::now() - TIME_START).count());
-}
-
-std::string Engine::GetDateTime()
-{
-	time_t rawtime;
-	char buffer[80];
-
-	time(&rawtime);
-	struct tm *timeinfo = localtime(&rawtime);
-
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d-%I%M%S", timeinfo);
-	return std::string(buffer);
 }
 }
