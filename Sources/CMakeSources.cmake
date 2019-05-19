@@ -79,7 +79,6 @@ set(_temp_acid_headers
 		Materials/MaterialDefault.hpp
 		Materials/PipelineMaterial.hpp
 		Maths/Colour.hpp
-		Maths/Delta.hpp
 		Maths/Interpolation/SmoothFloat.hpp
 		Maths/Maths.hpp
 		Maths/Matrix2.hpp
@@ -88,7 +87,6 @@ set(_temp_acid_headers
 		Maths/Noise/Noise.hpp
 		Maths/Quaternion.hpp
 		Maths/Time.hpp
-		Maths/Timer.hpp
 		Maths/Transform.hpp
 		Maths/Vector2.hpp
 		Maths/Vector3.hpp
@@ -301,7 +299,6 @@ set(_temp_acid_sources
 		Materials/MaterialDefault.cpp
 		Materials/PipelineMaterial.cpp
 		Maths/Colour.cpp
-		Maths/Delta.cpp
 		Maths/Maths.cpp
 		Maths/Matrix2.cpp
 		Maths/Matrix3.cpp
@@ -309,7 +306,6 @@ set(_temp_acid_sources
 		Maths/Noise/Noise.cpp
 		Maths/Quaternion.cpp
 		Maths/Time.cpp
-		Maths/Timer.cpp
 		Maths/Transform.cpp
 		Maths/Vector2.cpp
 		Maths/Vector3.cpp

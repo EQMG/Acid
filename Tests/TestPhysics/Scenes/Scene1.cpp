@@ -44,7 +44,7 @@
 
 namespace test
 {
-static const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
+static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(new CameraFps()),
@@ -63,7 +63,7 @@ Scene1::Scene1() :
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation * Maths::DegToRad) * Vector3f::Front).Normalize(), Time::Seconds(2.0f));
+			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation * Maths::DegToRad) * Vector3f::Front).Normalize(), 2s);
 			sphere->AddComponent<ColliderSphere>(); 
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);

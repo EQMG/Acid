@@ -1,6 +1,5 @@
 #pragma once
 
-#include <chrono>
 #include "Serialized/Metadata.hpp"
 
 namespace acid
@@ -15,7 +14,13 @@ public:
 	 * Creates a new time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
 	 * @param microseconds Number of microseconds.
 	 */
-	explicit Time(const int64_t &microseconds = 0);
+	constexpr explicit Time(const int64_t &microseconds = 0);
+
+	template<typename T, typename K>
+	constexpr Time(const std::chrono::duration<T, K> &duration) :
+		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
+	{
+	}
 
 	/**
 	 * Creates a time value from a number of seconds.
@@ -24,7 +29,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename T = float>
-	static Time Seconds(const T &amount)
+	constexpr static Time Seconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000000)));
 	}
@@ -36,7 +41,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename T = int32_t>
-	static Time Milliseconds(const T &amount)
+	constexpr static Time Milliseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount * static_cast<T>(1000)));
 	}
@@ -48,7 +53,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename T = int64_t>
-	static Time Microseconds(const T &amount)
+	constexpr static Time Microseconds(const T &amount)
 	{
 		return Time(static_cast<int64_t>(amount));
 	}

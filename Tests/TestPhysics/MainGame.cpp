@@ -46,16 +46,19 @@ MainGame::MainGame() :
 {
 	Log::Out("Current DateTime: %s\n", Time::GetDateTime().c_str());
 
-	Timers::Get()->Repeat(Time::Seconds(4.0f), 3, []()
+	Timers::Get()->Once(0.333s, []()
 	{
-		static uint32_t i = 0;
-		static Time l = Time::Now();
-		Log::Out("Timer Repeat Tick #%i\n", i);
-		i++;
+		Log::Out("Timer Hello World!\n");
 	});
-	Timers::Get()->Every(Time::Seconds(2.0f), []()
+	Timers::Get()->Every(4s, []()
 	{
 		Log::Out("Timer Every Tick\n");
+	});
+	Timers::Get()->Repeat(2s, 3, []()
+	{
+		static uint32_t i = 0;
+		Log::Out("Timer Repeat Tick #%i\n", i);
+		i++;
 	});
 
 	// Registers file search paths.

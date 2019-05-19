@@ -14,10 +14,10 @@ ConfigManager::ConfigManager() :
 	m_graphics("Configs/Graphics.yaml", new Yaml())
 {
 	Load();
-	/*Timers::Get()->Every(Time::Seconds(160.0f), [this]()
+	Timers::Get()->Every(160s, [this]()
 	{
 		Save();
-	}, this);*/
+	}, this);
 }
 
 void ConfigManager::Load()

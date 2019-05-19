@@ -106,7 +106,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 void ParticleSystem::SetPps(const float &pps)
 {
 	m_pps = pps;
-	m_emitTimer = Timer(Time::Seconds(1.0f / m_pps));
+	m_emitTimer = DeltaTimer(Time::Seconds(1.0f / m_pps));
 }
 
 void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviation)
@@ -190,7 +190,7 @@ const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSys
 	metadata.GetChild("Life Deviation", particleSystem.m_lifeDeviation);
 	metadata.GetChild("Stage Deviation", particleSystem.m_stageDeviation);
 	metadata.GetChild("Scale Deviation", particleSystem.m_scaleDeviation);
-	particleSystem.m_emitTimer = Timer(Time::Seconds(1.0f / particleSystem.m_pps));
+	particleSystem.m_emitTimer = DeltaTimer(Time::Seconds(1.0f / particleSystem.m_pps));
 	return metadata;
 }
 

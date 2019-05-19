@@ -107,6 +107,24 @@ da.Add([](Vector3f value)
 	Log::Out("New Value: %s\n", value.ToString().c_str());
 });
 da = Vector3f(10.0f, -4.11f, 99.991f);
+
+// Calls the function once after x seconds.
+Timers::Get()->Once(0.333s, []()
+{
+	Log::Out("Timer Hello World!\n");
+});
+// Calls the function every x seconds. 
+Timers::Get()->Every(4s, []()
+{
+	Log::Out("Timer Every Tick\n");
+});
+// Calls the funcion every x seconds y times.
+Timers::Get()->Repeat(2s, 3, []()
+{
+	static uint32_t i = 0;
+	Log::Out("Timer Repeat Tick #%i\n", i);
+	i++;
+});
 ```
 
 ## Screenshots

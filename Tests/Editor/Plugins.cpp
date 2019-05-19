@@ -13,7 +13,7 @@ namespace test
 {
 Plugins::Plugins() :
 	m_loadedPath(FileSystem::GetWorkingDirectory() + FileSystem::Separator + CR_PLUGIN("EditorTest")),
-	m_watcher(FileSystem::GetWorkingDirectory(), Time::Seconds(0.5f)),
+	m_watcher(FileSystem::GetWorkingDirectory(), 0.5s),
 	m_plugin(std::make_unique<cr_plugin>()),
 	m_update(true),
 	m_panels(&Uis::Get()->GetCanvas()),

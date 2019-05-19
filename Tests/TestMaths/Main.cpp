@@ -108,8 +108,8 @@ int main(int argc, char **argv)
 		Log::Out("\n");
 	}
 	{
-		Time a = Time::Seconds(348.991f);
-		Time b = Time::Milliseconds(9683);
+		Time a = 348.991s;
+		Time b = 9683ms;
 		Time c = a + b;
 
 		Log::Out("Seconds: %f\n", c.AsSeconds());

@@ -72,7 +72,7 @@ int32_t Engine::Run()
 		{
 			// Resets the timer.
 			m_timerUpdate.ResetStartTime();
-			m_ups.Update(Time::Now().AsSeconds());
+			m_ups.Update(Time::Now());
 
 			// Pre-Update.
 			m_modules.UpdateStage(Module::Stage::Pre);
@@ -88,7 +88,7 @@ int32_t Engine::Run()
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.GetChange().AsSeconds(), 0.8f))
+		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f))
 		{
 			continue;
 		}
@@ -98,7 +98,7 @@ int32_t Engine::Run()
 		{
 			// Resets the timer.
 			m_timerRender.ResetStartTime();
-			m_fps.Update(Time::Now().AsSeconds());
+			m_fps.Update(Time::Now());
 
 			// Render
 			m_modules.UpdateStage(Module::Stage::Render);

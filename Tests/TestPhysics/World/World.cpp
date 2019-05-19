@@ -13,11 +13,11 @@ static const Colour FOG_COLOUR_NIGHT = Colour("#0D0D1A");
 static const Colour FOG_COLOUR_DAY = Colour("#e6e6e6");
 
 World::World() :
-	m_driverDay(DriverLinear<float>(0.0f, 1.0f, Time::Seconds(300.0f))),
+	m_driverDay(DriverLinear<float>(0.0f, 1.0f, 300s)),
 	m_factorDay(0.0f),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
 {
-	m_driverDay.Update(Time::Seconds(50.0f)); // Starts during daytime.
+	m_driverDay.Update(50s); // Starts during daytime.
 }
 
 void World::Update()

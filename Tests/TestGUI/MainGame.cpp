@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_fileWatcher(FileSystem::GetWorkingDirectory(), Time::Seconds(2.0f)),
+	m_fileWatcher(FileSystem::GetWorkingDirectory(), 2s),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)

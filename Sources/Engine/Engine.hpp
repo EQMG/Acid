@@ -1,22 +1,76 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
-#include "Maths/Delta.hpp"
 #include "Maths/Time.hpp"
-#include "Maths/Timer.hpp"
 #include "ModuleHolder.hpp"
 #include "Game.hpp"
 
 namespace acid
 {
+class ACID_EXPORT DeltaTimer
+{
+public:
+	explicit DeltaTimer(const Time &interval) :
+		m_startTime(Time::Now()),
+		m_interval(interval)
+	{
+	}
+
+	Time GetDifference() const
+	{
+		return Time::Now() - m_startTime;
+	}
+
+	bool IsPassedTime() const
+	{
+		return GetDifference() >= m_interval;
+	}
+
+	void ResetStartTime()
+	{
+		m_startTime = Time::Now();
+	}
+	
+	const Time &GetInterval() const { return m_interval; }
+
+	void SetInterval(const Time& interval)
+	{
+		if (m_interval == interval)
+		{
+			return;
+		}
+
+		m_interval = interval;
+		m_startTime = Time::Now();
+	}
+private:
+	Time m_startTime;
+	Time m_interval;
+};
+
+class ACID_EXPORT Delta
+{
+public:
+	void Update()
+	{
+		m_currentFrameTime = Time::Now();
+		m_change = m_currentFrameTime - m_lastFrameTime;
+		m_lastFrameTime = m_currentFrameTime;
+	}
+
+	Time m_currentFrameTime;
+	Time m_lastFrameTime;
+	Time m_change;
+};
+
 class ACID_EXPORT ChangePerSecond
 {
 public:
-	void Update(const float &time)
+	void Update(const Time &time)
 	{
 		m_valueTemp++;
 
-		if (std::floor(time) > std::floor(m_valueTime))
+		if (std::floor(time.AsSeconds()) > std::floor(m_valueTime.AsSeconds()))
 		{
 			m_value = m_valueTemp;
 			m_valueTemp = 0;
@@ -25,8 +79,8 @@ public:
 		m_valueTime = time;
 	}
 
-	uint32_t m_valueTemp, m_value;
-	float m_valueTime;
+	uint32_t m_valueTemp{}, m_value{};
+	Time m_valueTime;
 };
 
 /**
@@ -140,13 +194,13 @@ public:
 	 * Gets the delta (seconds) between updates.
 	 * @return The delta between updates.
 	 */
-	const Time &GetDelta() const { return m_deltaUpdate.GetChange(); }
+	const Time &GetDelta() const { return m_deltaUpdate.m_change; }
 
 	/**
 	 * Gets the delta (seconds) between renders.
 	 * @return The delta between renders.
 	 */
-	const Time &GetDeltaRender() const { return m_deltaRender.GetChange(); }
+	const Time &GetDeltaRender() const { return m_deltaRender.m_change; }
 
 	/**
 	 * Gets the average UPS over a short interval.
@@ -178,8 +232,8 @@ private:
 
 	Delta m_deltaUpdate;
 	Delta m_deltaRender;
-	Timer m_timerUpdate;
-	Timer m_timerRender;
+	DeltaTimer m_timerUpdate;
+	DeltaTimer m_timerRender;
 
 	ChangePerSecond m_ups, m_fps;
 };

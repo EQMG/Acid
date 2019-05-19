@@ -9,7 +9,7 @@ const Time Time::Max = Time(std::numeric_limits<int64_t>::max());
 
 const std::chrono::time_point<std::chrono::high_resolution_clock> Time::Start = std::chrono::high_resolution_clock::now();
 
-Time::Time(const int64_t &microseconds) :
+constexpr Time::Time(const int64_t &microseconds) :
 	m_microseconds(microseconds)
 {
 }

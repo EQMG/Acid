@@ -16,8 +16,7 @@ OverlayDebug::OverlayDebug(UiObject *parent) :
 	m_textUps(this, UiTransform(Vector2f(0.002f, 0.958f), UiAnchor::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
 		Colour::White),
 	m_textTime(this, UiTransform(Vector2f(0.002f, 0.938f), UiAnchor::BottomLeft), 1.1f, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f,
-		Colour::White),
-	m_timerUpdate(Time::Seconds(0.5f))
+		Colour::White)
 {
 }
 
@@ -27,23 +26,18 @@ void OverlayDebug::UpdateObject()
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	if (m_timerUpdate.IsPassedTime())
+	if (World::Get() != nullptr)
 	{
-		m_timerUpdate.ResetStartTime();
+		auto timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
+		auto hour = static_cast<int32_t>(timePercent);
+		auto minute = static_cast<int32_t>((timePercent - hour) * 60.0f);
 
-		if (World::Get() != nullptr)
+		if (hour > 24)
 		{
-			float timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
-			auto hour = static_cast<int32_t>(timePercent);
-			auto minute = static_cast<int32_t>((timePercent - hour) * 60.0f);
-
-			if (hour > 24)
-			{
-				hour -= 24;
-			}
-
-			m_textTime.SetString("Time: " + String::To(hour) + ":" + String::To(minute));
+			hour -= 24;
 		}
+
+		m_textTime.SetString("Time: " + String::To(hour) + ":" + String::To(minute));
 	}
 }
 }

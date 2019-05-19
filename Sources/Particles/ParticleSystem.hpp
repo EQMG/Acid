@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Maths/Timer.hpp"
 #include "Scenes/Component.hpp"
 #include "Emitters/Emitter.hpp"
 #include "Particle.hpp"
@@ -98,6 +97,6 @@ private:
 	float m_stageDeviation;
 	float m_scaleDeviation;
 
-	Timer m_emitTimer;
+	DeltaTimer m_emitTimer;
 };
 }

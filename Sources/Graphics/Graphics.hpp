@@ -2,7 +2,6 @@
 
 #include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
-#include "Maths/Timer.hpp"
 #include "Commands/CommandBuffer.hpp"
 #include "Commands/CommandPool.hpp"
 #include "Devices/Instance.hpp"
@@ -147,7 +146,7 @@ private:
 	std::unique_ptr<Swapchain> m_swapchain;
 
 	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
-	Timer m_timerPurge;
+	DeltaTimer m_timerPurge;
 
 	VkPipelineCache m_pipelineCache;
 	std::vector<VkSemaphore> m_presentCompletes;

@@ -3,7 +3,7 @@
 namespace acid
 {
 Resources::Resources() :
-	m_timerPurge(Time::Seconds(4.0f))
+	m_timerPurge(4s)
 {
 }
 

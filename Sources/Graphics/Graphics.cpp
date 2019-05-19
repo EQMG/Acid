@@ -8,7 +8,7 @@
 namespace acid
 {
 Graphics::Graphics() :
-	m_timerPurge(Time::Seconds(4.0f)),
+	m_timerPurge(4s),
 	m_pipelineCache(VK_NULL_HANDLE),
 	m_currentFrame(0),
 	m_instance(std::make_unique<Instance>()),

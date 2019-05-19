@@ -8,7 +8,7 @@
 
 namespace test
 {
-const Time UI_SLIDE_TIME = Time::Seconds(0.2f);
+const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(new Camera()),

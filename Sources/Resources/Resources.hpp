@@ -2,7 +2,6 @@
 
 #include "Engine/Engine.hpp"
 #include "Helpers/ThreadPool.hpp"
-#include "Maths/Timer.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Resource.hpp"
 
@@ -39,7 +38,7 @@ public:
 
 private:
 	std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
-	Timer m_timerPurge;
+	DeltaTimer m_timerPurge;
 
 	ThreadPool m_threadPool;
 };

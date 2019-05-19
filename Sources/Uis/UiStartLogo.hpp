@@ -22,8 +22,6 @@ private:
 	Gui m_guiLogoAcid;
 	Text m_textCopyright;
 
-	Timer m_delayTimer;
-	bool m_fadeout;
 	bool m_finished;
 
 	Delegate<void()> m_onFinished;

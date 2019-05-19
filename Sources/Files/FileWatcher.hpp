@@ -22,7 +22,7 @@ public:
 	 * @param path The path to watch recursively.
 	 * @param delay How frequently to check for changes.
 	 */
-	explicit FileWatcher(std::string path, const Time &delay = Time::Seconds(5.0f));
+	explicit FileWatcher(std::string path, const Time &delay = 5s);
 
 	~FileWatcher();
 

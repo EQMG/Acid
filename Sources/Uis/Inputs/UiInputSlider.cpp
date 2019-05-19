@@ -7,7 +7,7 @@
 
 namespace acid
 {
-static const Time CHANGE_TIME = Time::Seconds(0.05f);
+static const Time CHANGE_TIME = 0.05s;
 
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
 	const UiTransform &rectangle) :

@@ -1,11 +1,10 @@
 #include "UiSection.hpp"
 
-#include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
 {
-static const Time SLIDE_TIME = Time::Seconds(0.1f);
+static const Time SLIDE_TIME = 0.1s;
 static const Vector2f SIZE = Vector2f(0.3f, 0.03375f);
 static const float FONT_SIZE = 1.4f;
 

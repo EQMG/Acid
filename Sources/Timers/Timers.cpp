@@ -28,10 +28,6 @@ void Timers::Run()
 {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
-	//Time startWait;
-	//Time lengthWait;
-	//bool setWait = false;
-
 	while (!m_stop)
 	{
 		if (m_timers.empty())
@@ -40,12 +36,6 @@ void Timers::Run()
 		}
 		else
 		{
-			//if (setWait)
-			//{
-			//	Log::Debug("End Wait: %fms, error: %fms\n", Time::Now().AsMilliseconds<float>(), (Time::Now() - (startWait + lengthWait)).AsMilliseconds<float>());
-			//	setWait = false;
-			//}
-
 			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &a, const std::unique_ptr<TimerInstance> &b)
 			{
 				return a->m_next < b->m_next;
@@ -56,7 +46,7 @@ void Timers::Run()
 
 			if (time >= instance->m_next)
 			{
-				//Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
+				Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
 				lock.unlock();
 				instance->m_onTick();
 				lock.lock();
@@ -76,10 +66,6 @@ void Timers::Run()
 			else
 			{
 				auto timePoint = std::chrono::microseconds(instance->m_next - time);
-				//Log::Debug("Start Wait: %fms, waiting: %fms\n", time.AsMilliseconds<float>(), (instance->m_next - time).AsMilliseconds<float>());
-				//startWait = time;
-				//lengthWait = instance->m_next - time;
-				//setWait = true;
 				m_condition.wait_for(lock, timePoint);
 			}
 		}

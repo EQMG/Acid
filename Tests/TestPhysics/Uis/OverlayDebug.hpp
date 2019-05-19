@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <Uis/UiObject.hpp>
-#include <Maths/Timer.hpp>
 #include <Fonts/Text.hpp>
 
 using namespace acid;
@@ -21,6 +20,5 @@ private:
 	Text m_textFps;
 	Text m_textUps;
 	Text m_textTime;
-	Timer m_timerUpdate;
 };
 }

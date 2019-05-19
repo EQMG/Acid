@@ -2,7 +2,6 @@
 
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
-#include "Maths/Timer.hpp"
 #include "Uis/UiObject.hpp"
 
 namespace acid
@@ -58,7 +57,7 @@ private:
 	bool m_mouseOver;
 
 	bool m_hasChange;
-	Timer m_timerChange;
+	DeltaTimer m_timerChange;
 	Delegate<void(float)> m_onValue;
 };
 }

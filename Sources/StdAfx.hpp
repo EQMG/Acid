@@ -4,6 +4,7 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <chrono>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -26,6 +27,8 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+
+using namespace std::chrono_literals;
 
 #if defined(ACID_BUILD_MSVC)
 #  pragma section(".state", read, write)
