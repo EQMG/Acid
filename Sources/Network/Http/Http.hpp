@@ -69,12 +69,12 @@ public:
 	 * Any missing mandatory header field in the request will be added with an appropriate value.
 	 * Warning: this function waits for the server's response and may not return instantly;
 	 * use a thread if you don't want to block your application, or use a timeout to limit the time to wait.
-	 * A value of Time::ZERO means that the client will use the system default timeout (which is usually pretty long).
+	 * A value of 0s means that the client will use the system default timeout (which is usually pretty long).
 	 * @param request Request to send. 
 	 * @param timeout Maximum time to wait. 
 	 * @return Server's response. 
 	 **/
-	HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = Time::Zero);
+	HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = 0s);
 
 private:
 	/// Connection to the host.

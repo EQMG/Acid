@@ -3,20 +3,16 @@
 
 namespace acid
 {
-const Time Time::Zero = Time();
-const Time Time::Min = Time(std::numeric_limits<int64_t>::min());
-const Time Time::Max = Time(std::numeric_limits<int64_t>::max());
-
 const std::chrono::time_point<std::chrono::high_resolution_clock> Time::Start = std::chrono::high_resolution_clock::now();
 
-constexpr Time::Time(const int64_t &microseconds) :
-	m_microseconds(microseconds)
+Time::Time() :
+	m_microseconds(0us)
 {
 }
 
 Time Time::Now()
 {
-	return Microseconds(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - Start).count());
+	return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - Start);
 }
 
 std::string Time::GetDateTime(const std::string &format)
@@ -31,57 +27,57 @@ std::string Time::GetDateTime(const std::string &format)
 
 bool Time::operator==(const Time &other) const
 {
-	return AsMicroseconds() == other.AsMicroseconds();
+	return m_microseconds == other.m_microseconds;
 }
 
 bool Time::operator!=(const Time &other) const
 {
-	return AsMicroseconds() != other.AsMicroseconds();
+	return m_microseconds != other.m_microseconds;
 }
 
 bool Time::operator<(const Time &other) const
 {
-	return AsMicroseconds() < other.AsMicroseconds();
+	return m_microseconds < other.m_microseconds;
 }
 
 bool Time::operator<=(const Time &other) const
 {
-	return AsMicroseconds() <= other.AsMicroseconds();
+	return m_microseconds <= other.m_microseconds;
 }
 
 bool Time::operator>(const Time &other) const
 {
-	return AsMicroseconds() > other.AsMicroseconds();
+	return m_microseconds > other.m_microseconds;
 }
 
 bool Time::operator>=(const Time &other) const
 {
-	return AsMicroseconds() >= other.AsMicroseconds();
+	return m_microseconds >= other.m_microseconds;
 }
 
 Time Time::operator-() const
 {
-	return Time(-AsMicroseconds());
+	return Time(-m_microseconds);
 }
 
 Time operator+(const Time &left, const Time &right)
 {
-	return Time::Microseconds(left.AsMicroseconds() + right.AsMicroseconds());
+	return left.m_microseconds + right.m_microseconds;
 }
 
 Time operator-(const Time &left, const Time &right)
 {
-	return Time::Microseconds(left.AsMicroseconds() - right.AsMicroseconds());
+	return left.m_microseconds - right.m_microseconds;
 }
 
 Time operator*(const Time &left, const float &right)
 {
-	return Time::Seconds(left.AsSeconds() * right);
+	return left.m_microseconds * right;
 }
 
 Time operator*(const Time &left, const int64_t &right)
 {
-	return Time::Microseconds(left.AsMicroseconds() * right);
+	return left.m_microseconds * right;
 }
 
 Time operator*(const float &left, const Time &right)
@@ -96,32 +92,17 @@ Time operator*(const int64_t &left, const Time &right)
 
 Time operator/(const Time &left, const float &right)
 {
-	return Time::Seconds(left.AsSeconds() / right);
+	return left.m_microseconds / right;
 }
 
 Time operator/(const Time &left, const int64_t &right)
 {
-	return Time::Microseconds(left.AsMicroseconds() / right);
+	return left.m_microseconds / right;
 }
 
-Time operator/(const float &left, const Time &right)
+double operator/(const Time &left, const Time &right)
 {
-	return Time::Seconds(left / right.AsSeconds());
-}
-
-Time operator/(const int64_t &left, const Time &right)
-{
-	return Time::Microseconds(left / right.AsMicroseconds());
-}
-
-float operator/(const Time &left, const Time &right)
-{
-	return left.AsSeconds() / right.AsSeconds();
-}
-
-Time operator%(const Time &left, const Time &right)
-{
-	return Time::Microseconds(std::fmod(left.AsMicroseconds(), right.AsMicroseconds()));
+	return static_cast<double>(left.m_microseconds.count()) / static_cast<double>(right.m_microseconds.count());
 }
 
 Time &Time::operator+=(const Time &other)
@@ -154,20 +135,17 @@ Time &Time::operator/=(const int64_t &other)
 	return *this = *this / other;
 }
 
-Time &Time::operator%=(const Time &other)
-{
-	return *this = *this % other;
-}
-
 const Metadata &operator>>(const Metadata &metadata, Time &time)
 {
-	metadata >> time.m_microseconds;
+	int64_t us;
+	metadata >> us;
+	time.m_microseconds = std::chrono::microseconds(us);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Time &time)
 {
-	metadata << time.m_microseconds;
+	metadata << time.m_microseconds.count();
 	return metadata;
 }
 }

@@ -6,7 +6,6 @@ namespace acid
 {
 Animator::Animator(Joint *rootJoint) :
 	m_rootJoint(rootJoint),
-	m_animationTime(Time::Zero),
 	m_currentAnimation(nullptr)
 {
 }
@@ -29,7 +28,7 @@ void Animator::IncreaseAnimationTime()
 
 	if (m_animationTime > m_currentAnimation->GetLength())
 	{
-		m_animationTime = m_animationTime % m_currentAnimation->GetLength();
+		m_animationTime = Time::Seconds(std::fmod(m_animationTime.AsSeconds(), m_currentAnimation->GetLength().AsSeconds()));
 	}
 }
 
@@ -99,7 +98,7 @@ void Animator::ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPo
 
 void Animator::DoAnimation(Animation *animation)
 {
-	m_animationTime = Time::Zero;
+	m_animationTime = 0s;
 	m_currentAnimation = animation;
 }
 }

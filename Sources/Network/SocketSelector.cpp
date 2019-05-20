@@ -122,7 +122,7 @@ bool SocketSelector::Wait(const Time timeout)
 
 	// Wait until one of the sockets is ready for reading, or timeout is reached
 	// The first parameter is ignored on Windows
-	int count = select(m_impl->maxSocket + 1, &m_impl->socketsReady, nullptr, nullptr, timeout != Time::Zero ? &time : nullptr);
+	int count = select(m_impl->maxSocket + 1, &m_impl->socketsReady, nullptr, nullptr, timeout != 0s ? &time : nullptr);
 
 	return count > 0;
 }

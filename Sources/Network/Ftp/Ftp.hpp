@@ -49,17 +49,17 @@ public:
 	/**
 	 * Connects to the specified FTP server.
 	 * The port has a default value of 21, which is the standard port used by the FTP protocol.
-	 * You shouldn't use a different value, unless you really know what you do.
+	 * You should'nt use a different value, unless you really know what you do.
 	 * This function tries to connect to the server so it may take a while to complete,
 	 * especially if the server is not reachable. To avoid blocking your application for too long,
-	 * you can use a timeout. The default value, Time::Zero, means that the system timeout will be
+	 * you can use a timeout. The default value, 0s, means that the system timeout will be
 	 * used (which is usually pretty long).
 	 * @param server Name or address of the FTP server to connect to. 
 	 * @param port Port used for the connection. 
 	 * @param timeout Maximum time to wait. 
 	 * @return Server response to the request. 
 	 **/
-	FtpResponse Connect(const IpAddress &server, const uint16_t &port = 21, const Time &timeout = Time::Zero);
+	FtpResponse Connect(const IpAddress &server, const uint16_t &port = 21, const Time &timeout = 0s);
 
 	/**
 	 * Close the connection with the server.

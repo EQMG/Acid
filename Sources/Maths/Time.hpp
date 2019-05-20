@@ -10,55 +10,56 @@ namespace acid
 class ACID_EXPORT Time
 {
 public:
-	/**
-	 * Creates a new time. This function is internal. To construct time values, use Time::Seconds, Time::Milliseconds or Time::Microseconds instead.
-	 * @param microseconds Number of microseconds.
-	 */
-	constexpr explicit Time(const int64_t &microseconds = 0);
+	Time();
 
-	template<typename T, typename K>
-	constexpr Time(const std::chrono::duration<T, K> &duration) :
+	/*
+	 * Creates a new time. This function is internal. To construct time values, use {@link Time::Seconds}, {@link Time::Milliseconds} or {@link Time::Microseconds} instead.
+	 * @param duration The duration.
+	 */
+	template<typename Rep, typename Period>
+	constexpr Time(const std::chrono::duration<Rep, Period> &duration) :
 		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
 	{
 	}
 
 	/**
 	 * Creates a time value from a number of seconds.
-	 * @tparam T The type of value to be casted to.
-	 * @param amount Number of seconds.
+	 * @tparam Rep The type of value to be casted to.
+	 * @param seconds Number of seconds.
 	 * @return Time value constructed from the amount of seconds.
 	 */
-	template<typename T = float>
-	constexpr static Time Seconds(const T &amount)
+	template<typename Rep = float>
+	constexpr static Time Seconds(const Rep &seconds)
 	{
-		return Time(static_cast<int64_t>(amount * static_cast<T>(1000000)));
+		return Time(std::chrono::duration<Rep>(seconds));
 	}
 
 	/**
 	 * Creates a time value from a number of milliseconds
-	 * @tparam T The type of value to be casted to.
-	 * @param amount Number of milliseconds.
+	 * @tparam Rep The type of value to be casted to.
+	 * @param milliseconds Number of milliseconds.
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
-	template<typename T = int32_t>
-	constexpr static Time Milliseconds(const T &amount)
+	template<typename Rep = int32_t>
+	constexpr static Time Milliseconds(const Rep &milliseconds)
 	{
-		return Time(static_cast<int64_t>(amount * static_cast<T>(1000)));
+		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
 	}
 
 	/**
 	 * Creates a time value from a number of microseconds.
-	 * @tparam T The type of value to be casted to.
-	 * @param amount Number of microseconds.
+	 * @tparam Rep The type of value to be casted to.
+	 * @param microseconds Number of microseconds.
 	 * @return Time value constructed from the amount of microseconds.
 	 */
-	template<typename T = int64_t>
-	constexpr static Time Microseconds(const T &amount)
+	template<typename Rep = int64_t>
+	constexpr static Time Microseconds(const Rep &microseconds)
 	{
-		return Time(static_cast<int64_t>(amount));
+		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
 	}
-	
-	operator std::chrono::microseconds () const { return std::chrono::microseconds(m_microseconds); }
+
+	template<typename Rep, typename Period>
+	operator std::chrono::duration<Rep, Period>() const { return std::chrono::duration_cast<std::chrono::duration<Rep, Period>>(m_microseconds); }
 
 	/**
 	 * Gets the time value as a number of seconds.
@@ -68,7 +69,7 @@ public:
 	template<typename T = float>
 	auto AsSeconds() const
 	{
-		return static_cast<T>(m_microseconds) / static_cast<T>(1000000);
+		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000000);
 	}
 
 	/**
@@ -79,7 +80,7 @@ public:
 	template<typename T = int32_t>
 	auto AsMilliseconds() const
 	{
-		return static_cast<T>(m_microseconds) / static_cast<T>(1000);
+		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000);
 	}
 
 	/**
@@ -90,7 +91,7 @@ public:
 	template<typename T = int64_t>
 	auto AsMicroseconds() const
 	{
-		return static_cast<T>(m_microseconds);
+		return static_cast<T>(m_microseconds.count());
 	}
 
 	/**
@@ -105,6 +106,13 @@ public:
 	 * @return The date time as a string.
 	 */
 	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S");
+
+	/*template<typename Period = std::ratio<1, 1>>
+	float Mod(const Time &other)
+	{
+		return std::modf(std::chrono::duration_cast<std::chrono::duration<double, Period>>(m_microseconds),
+			std::chrono::duration_cast<std::chrono::duration<double, Period>>(other.m_microseconds));
+	}*/
 
 	bool operator==(const Time &other) const;
 
@@ -136,13 +144,7 @@ public:
 
 	ACID_EXPORT friend Time operator/(const Time &left, const int64_t &right);
 	
-	ACID_EXPORT friend Time operator/(const float &left, const Time &right);
-
-	ACID_EXPORT friend Time operator/(const int64_t &left, const Time &right);
-
-	ACID_EXPORT friend float operator/(const Time &left, const Time &right);
-
-	ACID_EXPORT friend Time operator%(const Time &left, const Time &right);
+	ACID_EXPORT friend double operator/(const Time &left, const Time &right);
 
 	Time &operator+=(const Time &other);
 
@@ -156,18 +158,13 @@ public:
 
 	Time &operator/=(const int64_t &other);
 
-	Time &operator%=(const Time &other);
-
 	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Time &time);
 
 	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Time &time);
 
-	static const Time Zero;
-	static const Time Min;
-	static const Time Max;
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
 
-	int64_t m_microseconds;
+	std::chrono::microseconds m_microseconds;
 };
 }

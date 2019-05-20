@@ -96,7 +96,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t
 	// Create the remote address
 	sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
-	if (timeout <= Time::Zero)
+	if (timeout <= 0s)
 	{
 		// We're not using a timeout: just try to connect.
 

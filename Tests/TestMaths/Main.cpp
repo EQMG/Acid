@@ -17,12 +17,15 @@ using namespace acid;
 
 int main(int argc, char **argv)
 {
-	Log::Out("Hello out!\n");
-	Log::Out(Log::Style::Underlined, "Hello underlined!\n");
-	Log::Debug("Hello debug!\n");
-	Log::Info("Hello info!\n");
-	Log::Warning("Hello warning!\n");
-	Log::Error("Hello error!\n");
+	{
+		Log::Out("Hello out!\n");
+		Log::Out(Log::Style::Underlined, "Hello underlined!\n");
+		Log::Debug("Hello debug!\n");
+		Log::Info("Hello info!\n");
+		Log::Warning("Hello warning!\n");
+		Log::Error("Hello error!\n");
+		Log::Out("\n");
+	}
 
 	{
 		RingBuffer<int32_t> buffer(4);
@@ -86,6 +89,7 @@ int main(int argc, char **argv)
 		{
 			return false;
 		}
+		Log::Out("\n");
 	}
 	{
 		Log::Out("Time Size: %i\n", static_cast<int>(sizeof(Time)));
@@ -99,11 +103,13 @@ int main(int argc, char **argv)
 		Log::Out("Vector2i Size: %i\n", static_cast<int>(sizeof(Vector2i)));
 		Log::Out("Vector2ui Size: %i\n", static_cast<int>(sizeof(Vector2ui)));
 		Log::Out("Vector3f Size: %i\n", static_cast<int>(sizeof(Vector3f)));
-		//Log::Out("Vector3d Size: %i\n", static_cast<int>(sizeof(Vector3d)));
-		//Log::Out("Vector3i Size: %i\n", static_cast<int>(sizeof(Vector3i)));
+		Log::Out("Vector3d Size: %i\n", static_cast<int>(sizeof(Vector3d)));
+		Log::Out("Vector3i Size: %i\n", static_cast<int>(sizeof(Vector3i)));
+		Log::Out("Vector3ui Size: %i\n", static_cast<int>(sizeof(Vector3ui)));
 		Log::Out("Vector4f Size: %i\n", static_cast<int>(sizeof(Vector4f)));
-		//Log::Out("Vector4d Size: %i\n", static_cast<int>(sizeof(Vector4d)));
-		//Log::Out("Vector4i Size: %i\n", static_cast<int>(sizeof(Vector4i)));
+		Log::Out("Vector4d Size: %i\n", static_cast<int>(sizeof(Vector4d)));
+		Log::Out("Vector4i Size: %i\n", static_cast<int>(sizeof(Vector4i)));
+		Log::Out("Vector4ui Size: %i\n", static_cast<int>(sizeof(Vector4ui)));
 		Log::Out("Transform Size: %i\n", static_cast<int>(sizeof(Transform)));
 		Log::Out("\n");
 	}
@@ -112,6 +118,11 @@ int main(int argc, char **argv)
 		Time b = 9683ms;
 		Time c = a + b;
 
+		Time d = 5s - 2s;
+		Time e = 10s;
+		double f = d / e;
+		//double g = d.Mod(e); // d % e;
+
 		Log::Out("Seconds: %f\n", c.AsSeconds());
 		Log::Out("Milliseconds: %i\n", c.AsMilliseconds());
 		Log::Out("Microseconds: %i\n", c.AsMicroseconds());
@@ -119,7 +130,7 @@ int main(int argc, char **argv)
 	}
 	{
 		Vector3f original(90.0f, 0.0f, 0.0f);
-		Quaternion quaternion = Quaternion(original);
+		Quaternion quaternion(original);
 		Vector3f restored = quaternion.ToEuler();
 
 		Log::Out("Original: %s\n", original.ToString().c_str());
@@ -141,6 +152,7 @@ int main(int argc, char **argv)
 		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
 		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
 		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
 		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
 		Log::Out("  %s rot %f = %s\n", a.ToString().c_str(), 90.0f, a.Rotate(90.0f).ToString().c_str());
 		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
@@ -161,6 +173,7 @@ int main(int argc, char **argv)
 		Log::Out("Vector3:\n");
 		Vector3f a(12.9f, -2.0f, 6.7f);
 		Vector3f b(-9.7f, 15.9f, -13.8f);
+		Vector3ui c(5, 2, 1);
 
 		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
 		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
@@ -168,6 +181,8 @@ int main(int argc, char **argv)
 		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
 		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
 		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
+		Log::Out("  %s cross %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Cross(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
 		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
 		//Log::Out("  %s rot %s = %s\n", a.ToString().c_str(), Vector3f(1.22f, 0.0f, 0.0f).ToString().c_str(), a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)).ToString().c_str());
 		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
@@ -176,7 +191,41 @@ int main(int argc, char **argv)
 		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
 		Log::Out("\n");
 
-		//Log::Out << "  " << a << " + " << b << " = " << a + b << Log::Endl;
+		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
+		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
+		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("\n");
+	}
+	{
+		Log::Out("Vector4:\n");
+		Vector4f a(12.9f, -2.0f, 6.7f, 11.11f);
+		Vector4f b(-9.7f, 15.9f, -13.8f, -2.246f);
+		Vector4ui c(5, 2, 1, 3);
+
+		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
+		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
+		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());
+		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
+		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
+		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
+		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
+		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
+		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
+		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
+		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
+		Log::Out("\n");
+
+		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
+		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
+		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
+		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("\n");
 	}
 
 	// Pauses the console.

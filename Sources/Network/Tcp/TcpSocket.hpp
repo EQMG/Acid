@@ -91,7 +91,7 @@ public:
 	 * @param timeout Optional maximum time to wait. 
 	 * @return Status code. 
 	 **/
-	Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = Time::Zero);
+	Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = 0s);
 
 	/**
 	 * Disconnect the socket from its remote peer.

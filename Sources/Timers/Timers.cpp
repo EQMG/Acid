@@ -36,7 +36,7 @@ void Timers::Run()
 		}
 		else
 		{
-			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<TimerInstance> &a, const std::unique_ptr<TimerInstance> &b)
+			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<Timer> &a, const std::unique_ptr<Timer> &b)
 			{
 				return a->m_next < b->m_next;
 			});
@@ -46,7 +46,7 @@ void Timers::Run()
 
 			if (time >= instance->m_next)
 			{
-				Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
+				//Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
 				lock.unlock();
 				instance->m_onTick();
 				lock.lock();

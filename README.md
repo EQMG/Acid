@@ -108,6 +108,9 @@ da.Add([](Vector3f value)
 });
 da = Vector3f(10.0f, -4.11f, 99.991f);
 
+// Time addition.
+Time dateTime = 4h + 2min + 11s + 9ms + 1us + 4ns;
+
 // Calls the function once after x seconds.
 Timers::Get()->Once(0.333s, []()
 {

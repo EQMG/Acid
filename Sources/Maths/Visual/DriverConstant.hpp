@@ -19,7 +19,7 @@ public:
 	 * @param constant The constant value. 
 	 **/
 	explicit DriverConstant(const T &constant) :
-		Driver<T>(Time::Max),
+		Driver<T>(-1s),
 		m_constant(constant)
 	{
 	}

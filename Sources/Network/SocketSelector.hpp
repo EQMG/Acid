@@ -71,10 +71,10 @@ public:
 	 * This function returns as soon as at least one socket has some data available to be received.
 	 * To know which sockets are ready, use the isReady function.
 	 * If you use a timeout and no socket is ready before the timeout is over, the function returns false.
-	 * @param timeout Maximum time to wait, (use Time::Zero for infinity). 
+	 * @param timeout Maximum time to wait, (use 0s for infinity). 
 	 * @return True if there are sockets ready, false otherwise. 
 	 **/
-	bool Wait(Time timeout = Time::Zero);
+	bool Wait(Time timeout = 0s);
 
 	/**
 	 * Test a socket to know if it is ready to receive data.

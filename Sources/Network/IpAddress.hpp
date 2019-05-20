@@ -84,7 +84,7 @@ public:
 	 * @param timeout Maximum time to wait. 
 	 * @return Public IP address of the computer. 
 	 **/
-	static IpAddress GetPublicAddress(const Time &timeout = Time::Zero);
+	static IpAddress GetPublicAddress(const Time &timeout = 0s);
 
 	bool operator==(const IpAddress &other) const;
 
