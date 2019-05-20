@@ -17,7 +17,7 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
 	m_value(value)
 {
-	GetTransform().SetSize(UiInputButton::Size);
+	GetTransform().SetScale(UiInputButton::Size);
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateValue();
@@ -54,6 +54,6 @@ void UiInputBoolean::SetValue(const bool &value)
 void UiInputBoolean::UpdateValue()
 {
 	m_textValue.SetString(String::To(m_value));
-	m_slider.GetTransform().SetSize(Vector2f(1.0f - m_value, 1.0f));
+	m_slider.GetTransform().SetScale(Vector2f(1.0f - m_value, 1.0f));
 }
 }

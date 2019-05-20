@@ -71,7 +71,7 @@ float UiScrollBar::GetProgress()
 
 void UiScrollBar::SetSize(const Vector2f &size)
 {
-	m_scroll.GetTransform().SetSize(size);
+	m_scroll.GetTransform().SetScale(size);
 }
 
 float UiScrollBar::ScrollByDelta(const float &delta)

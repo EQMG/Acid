@@ -16,7 +16,7 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 	m_value(value),
 	m_options(options)
 {
-	GetTransform().SetSize(UiInputButton::Size);
+	GetTransform().SetScale(UiInputButton::Size);
 	//m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	//m_slider.SetHeight(1.0f);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));

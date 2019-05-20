@@ -41,10 +41,10 @@ public:
 	 * @param position The object screen position.
 	 * @param anchor Where the transform is anchored to the parent.
 	 * @param aspect The aspect that will be used for bounding in the parent reference.
-	 * @param size The object size.
+	 * @param scale The object scale.
 	 */
 	explicit UiTransform(const Vector2f &position = Vector2f(0.0f, 0.0f), const Vector2f &anchor = UiAnchor::TopLeft,
-		const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Size, const Vector2f &size = Vector2f(1.0f, 1.0f)) noexcept;
+		const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Size, const Vector2f &scale = Vector2f(1.0f, 1.0f)) noexcept;
 
 	/**
 	 * Gets the bounds position in the current screen space.
@@ -72,9 +72,9 @@ public:
 
 	void SetAspect(const BitMask<UiAspect> &aspect) { m_aspect = aspect; }
 
-	const Vector2f &GetSize() const { return m_size; }
+	const Vector2f &GetScale() const { return m_scale; }
 
-	void SetSize(const Vector2f &size) { m_size = size; }
+	void SetScale(const Vector2f &scale) { m_scale = scale; }
 
 	bool operator==(const UiTransform &other) const;
 
@@ -89,6 +89,6 @@ public:
 	Vector2f m_position;
 	Vector2f m_anchor;
 	BitMask<UiAspect> m_aspect;
-	Vector2f m_size;
+	Vector2f m_scale;
 };
 }

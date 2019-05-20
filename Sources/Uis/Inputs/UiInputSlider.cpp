@@ -25,7 +25,7 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_updating(false),
 	m_mouseOver(false)
 {
-	GetTransform().SetSize(UiInputButton::Size);
+	GetTransform().SetScale(UiInputButton::Size);
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	UpdateProgress();
@@ -73,7 +73,7 @@ void UiInputSlider::UpdateObject()
 		m_mouseOver = false;
 	}
 
-	m_slider.GetTransform().SetSize(Vector2f(m_progress, 1.0f));
+	m_slider.GetTransform().SetScale(Vector2f(m_progress, 1.0f));
 }
 
 void UiInputSlider::SetValue(const float &value)

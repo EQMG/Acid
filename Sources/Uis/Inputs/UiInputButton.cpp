@@ -22,7 +22,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/Button_Filled.png"), PrimaryColour),
 	m_text(this, UiTransform::Centre, FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, ValueColour)
 {
-	GetTransform().SetSize(Size);
+	GetTransform().SetScale(Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
 	OnSelected().Add([this](bool selected)

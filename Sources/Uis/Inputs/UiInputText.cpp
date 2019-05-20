@@ -20,7 +20,7 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::
 	m_updating(false),
 	m_mouseOver(false)
 {
-	GetTransform().SetSize(UiInputButton::Size);
+	GetTransform().SetScale(UiInputButton::Size);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)

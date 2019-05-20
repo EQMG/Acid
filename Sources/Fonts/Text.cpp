@@ -184,7 +184,7 @@ void Text::LoadText()
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	GetTransform().SetSize(bounding);
+	GetTransform().SetScale(bounding);
 }
 
 std::vector<Text::Line> Text::CreateStructure() const

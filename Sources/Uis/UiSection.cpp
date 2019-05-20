@@ -15,9 +15,9 @@ UiSection::UiSection(UiObject *parent, const std::string &string, const UiTransf
 	m_content(this, UiTransform(Vector2f(0.0f, 4.0f * SIZE.m_x), UiAnchor::TopLeft, UiAspect::Position | UiAspect::Size)),
 	m_collapsed(false)
 {
-	GetTransform().SetSize(SIZE);
-	m_icon.GetTransform().SetSize(Vector2f(GetTransform().GetSize().m_y));
-	m_text.GetTransform().SetPosition(Vector2f(4.0f * GetTransform().GetSize().m_y, 0.5f));
+	GetTransform().SetScale(SIZE);
+	m_icon.GetTransform().SetScale(Vector2f(GetTransform().GetScale().m_y));
+	m_text.GetTransform().SetPosition(Vector2f(4.0f * GetTransform().GetScale().m_y, 0.5f));
 
 	OnClick().Add([this](MouseButton button)
 	{

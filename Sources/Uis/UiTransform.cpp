@@ -18,11 +18,11 @@ const UiTransform UiTransform::Left = UiTransform(Vector2f(0.0f, 0.5f), UiAnchor
 const UiTransform UiTransform::Centre = UiTransform(Vector2f(0.5f, 0.5f), UiAnchor::Centre);
 const UiTransform UiTransform::Right = UiTransform(Vector2f(1.0f, 0.5f), UiAnchor::CentreRight);
 
-UiTransform::UiTransform(const Vector2f &position, const Vector2f &anchor, const BitMask<UiAspect> &aspect, const Vector2f &size) noexcept :
+UiTransform::UiTransform(const Vector2f &position, const Vector2f &anchor, const BitMask<UiAspect> &aspect, const Vector2f &scale) noexcept :
 	m_position(position),
 	m_anchor(anchor),
 	m_aspect(aspect),
-	m_size(size)
+	m_scale(scale)
 {
 }
 
@@ -40,7 +40,7 @@ Vector2f UiTransform::GetScreenPosition(const float &aspectRatio) const
 
 Vector2f UiTransform::GetScreenSize(const float &aspectRatio) const
 {
-	Vector2f screenSize = m_size;
+	Vector2f screenSize = m_scale;
 
 	if (m_aspect & UiAspect::Size)
 	{
@@ -52,7 +52,7 @@ Vector2f UiTransform::GetScreenSize(const float &aspectRatio) const
 
 bool UiTransform::operator==(const UiTransform &other) const
 {
-	return m_position == other.m_position && m_anchor == other.m_anchor && m_aspect == other.m_aspect && m_size == other.m_size;
+	return m_position == other.m_position && m_anchor == other.m_anchor && m_aspect == other.m_aspect && m_scale == other.m_scale;
 }
 
 bool UiTransform::operator!=(const UiTransform &other) const

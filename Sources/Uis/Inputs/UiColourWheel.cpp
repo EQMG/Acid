@@ -11,7 +11,7 @@ UiColourWheel::UiColourWheel(UiObject *parent, const Colour &value, const UiTran
 	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/ColourWheel.png")),
 	m_value(value)
 {
-	GetTransform().SetSize(SIZE);
+	GetTransform().SetScale(SIZE);
 
 	OnSelected().Add([this](bool selected)
 	{

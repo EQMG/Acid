@@ -16,10 +16,10 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_value(value),
 	m_type(type)
 {
-	GetTransform().SetSize(SIZE);
+	GetTransform().SetScale(SIZE);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.GetTransform().SetSize(Vector2f(GetTransform().GetSize().m_y));
-	m_text.GetTransform().SetPosition(Vector2f(5.4f * GetTransform().GetSize().m_y, 0.5f));
+	m_background.GetTransform().SetScale(Vector2f(GetTransform().GetScale().m_y));
+	m_text.GetTransform().SetPosition(Vector2f(5.4f * GetTransform().GetScale().m_y, 0.5f));
 	UpdateValue();
 
 	OnSelected().Add([this](bool selected)

@@ -25,9 +25,9 @@ Hierarchy::Hierarchy(UiObject *parent) :
 		}
 	});
 
-	m_sliderR.GetTransform().SetSize(Vector2f(0.071f, 0.042f));
-	m_sliderG.GetTransform().SetSize(Vector2f(0.071f, 0.042f));
-	m_sliderB.GetTransform().SetSize(Vector2f(0.071f, 0.042f));
+	m_sliderR.GetTransform().SetScale(Vector2f(0.071f, 0.042f));
+	m_sliderG.GetTransform().SetScale(Vector2f(0.071f, 0.042f));
+	m_sliderB.GetTransform().SetScale(Vector2f(0.071f, 0.042f));
 	auto onSlide = [this](float value)
 	{
 		auto colour = Colour(m_sliderR.GetValue(), m_sliderG.GetValue(), m_sliderB.GetValue()) / 255.0f;
