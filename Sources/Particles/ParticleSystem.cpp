@@ -17,7 +17,7 @@ ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types,
 	m_lifeDeviation(0.0f),
 	m_stageDeviation(0.0f),
 	m_scaleDeviation(0.0f),
-	m_emitTimer(Time::Seconds(1.0f / m_pps))
+	m_elapsedEmit(Time::Seconds(1.0f / m_pps))
 {
 }
 
@@ -32,21 +32,18 @@ void ParticleSystem::Update()
 		return;
 	}
 
-	if (m_emitTimer.IsPassedTime())
-	{
-		float pastFactor = std::floor(m_emitTimer.GetDifference() / m_emitTimer.GetInterval());
-		m_emitTimer.ResetStartTime();
+	m_elapsedEmit = ElapsedTime(Time::Seconds(1.0f / m_pps));
 
+	if (float elapsed = m_elapsedEmit.GetElapsed(); elapsed != 0)
+	{
 		auto emitters = GetParent()->GetComponents<Emitter>();
 
-		if (emitters.empty())
+		if (!emitters.empty())
 		{
-			return;
-		}
-
-		for (uint32_t i = 0; i < pastFactor; i++)
-		{
-			Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
+			for (uint32_t i = 0; i < elapsed; i++)
+			{
+				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
+			}
 		}
 	}
 }
@@ -75,7 +72,7 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	return false;
 }
 
-Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle)
+Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const
 {
 	auto cosAngle = std::cos(angle);
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
@@ -106,7 +103,6 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 void ParticleSystem::SetPps(const float &pps)
 {
 	m_pps = pps;
-	m_emitTimer = DeltaTimer(Time::Seconds(1.0f / m_pps));
 }
 
 void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviation)
@@ -190,7 +186,6 @@ const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSys
 	metadata.GetChild("Life Deviation", particleSystem.m_lifeDeviation);
 	metadata.GetChild("Stage Deviation", particleSystem.m_stageDeviation);
 	metadata.GetChild("Scale Deviation", particleSystem.m_scaleDeviation);
-	particleSystem.m_emitTimer = DeltaTimer(Time::Seconds(1.0f / particleSystem.m_pps));
 	return metadata;
 }
 

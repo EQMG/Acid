@@ -7,8 +7,6 @@
 
 namespace acid
 {
-static const Time CHANGE_TIME = 0.05s;
-
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
 	const UiTransform &rectangle) :
 	UiObject(parent, rectangle),
@@ -25,9 +23,7 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_progress(0.0f),
 	m_roundTo(roundTo),
 	m_updating(false),
-	m_mouseOver(false),
-	m_hasChange(false),
-	m_timerChange(CHANGE_TIME)
+	m_mouseOver(false)
 {
 	GetTransform().SetSize(UiInputButton::Size);
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
@@ -61,16 +57,10 @@ void UiInputSlider::UpdateObject()
 		m_value = (m_progress * (m_valueMax - m_valueMin)) + m_valueMin;
 		m_onValue(m_value);
 
-		m_hasChange = true;
 		CancelEvent(MouseButton::Left);
 	}
 
-	if (m_hasChange && m_timerChange.IsPassedTime())
-	{
-		m_timerChange.ResetStartTime();
-		m_hasChange = false;
-		UpdateProgress();
-	}
+	UpdateProgress();
 
 	if (m_background.IsSelected() && !m_mouseOver)
 	{

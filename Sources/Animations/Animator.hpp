@@ -56,7 +56,7 @@ public:
 	 * @return The current pose as a map of the desired local-space transforms for all the joints.
 	 * The transforms are indexed by the name ID of the joint that they should be applied to. </returns>
 	 **/
-	std::map<std::string, Matrix4> CalculateCurrentAnimationPose();
+	std::map<std::string, Matrix4> CalculateCurrentAnimationPose() const;
 
 	/**
 	 * Finds the previous keyframe in the animation and the next keyframe in the animation, and returns them in an array of length 2.

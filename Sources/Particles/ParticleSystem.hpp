@@ -32,7 +32,7 @@ public:
 
 	bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
 
-	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle);
+	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const;
 
 	const float &GetPps() const { return m_pps; }
 
@@ -97,6 +97,6 @@ private:
 	float m_stageDeviation;
 	float m_scaleDeviation;
 
-	DeltaTimer m_emitTimer;
+	ElapsedTime m_elapsedEmit;
 };
 }

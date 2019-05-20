@@ -25,8 +25,8 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0(std::move(argv0)),
 	m_fpsLimit(-1.0f),
 	m_running(true),
-	m_timerUpdate(14.705ms),
-	m_timerRender(-1s)
+	m_elapsedUpdate(14.705ms),
+	m_elapsedRender(-1s)
 {
 	INSTANCE = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
@@ -61,15 +61,14 @@ int32_t Engine::Run()
 			m_game->Update();
 		}
 
-		m_timerRender.SetInterval(Time::Seconds(1.0f / m_fpsLimit));
+		m_elapsedRender.SetInterval(Time::Seconds(1.0f / m_fpsLimit));
 
 		// Always-Update.
 		m_modules.UpdateStage(Module::Stage::Always);
 
-		if (m_timerUpdate.IsPassedTime())
+		if (m_elapsedUpdate.GetElapsed() != 0)
 		{
 			// Resets the timer.
-			m_timerUpdate.ResetStartTime();
 			m_ups.Update(Time::Now());
 
 			// Pre-Update.
@@ -86,16 +85,15 @@ int32_t Engine::Run()
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_timerUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f))
+		if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f))
 		{
 			continue;
 		}
 
 		// Renders when needed.
-		if (m_timerRender.IsPassedTime())
+		if (m_elapsedRender.GetElapsed() != 0)
 		{
 			// Resets the timer.
-			m_timerRender.ResetStartTime();
 			m_fps.Update(Time::Now());
 
 			// Render

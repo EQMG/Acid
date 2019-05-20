@@ -3,8 +3,8 @@
 namespace acid
 {
 InputDelay::InputDelay(const Time &delay, const Time &repeat) :
-	m_timerDelay(delay),
-	m_timerRepeat(repeat),
+	m_elapsedDelay(delay),
+	m_elapsedRepeat(repeat),
 	m_delayOver(false)
 {
 }
@@ -13,24 +13,18 @@ void InputDelay::Update(const bool &keyIsDown)
 {
 	if (keyIsDown)
 	{
-		m_delayOver = m_timerDelay.IsPassedTime();
+		m_delayOver = m_elapsedDelay.GetElapsed() != 0;
 	}
 	else
 	{
 		m_delayOver = false;
-		m_timerDelay.ResetStartTime();
-		m_timerRepeat.ResetStartTime();
+		//m_elapsedDelay.SetStartTime(Time::Now());
+		//m_elapsedRepeat.SetStartTime(Time::Now());
 	}
 }
 
 bool InputDelay::CanInput()
 {
-	if (m_delayOver && m_timerRepeat.IsPassedTime())
-	{
-		m_timerRepeat.ResetStartTime();
-		return true;
-	}
-
-	return false;
+	return m_delayOver && m_elapsedRepeat.GetElapsed() != 0;
 }
 }

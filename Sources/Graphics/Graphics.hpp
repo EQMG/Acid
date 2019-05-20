@@ -146,7 +146,7 @@ private:
 	std::unique_ptr<Swapchain> m_swapchain;
 
 	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
-	DeltaTimer m_timerPurge;
+	ElapsedTime m_elapsedPurge;
 
 	VkPipelineCache m_pipelineCache;
 	std::vector<VkSemaphore> m_presentCompletes;

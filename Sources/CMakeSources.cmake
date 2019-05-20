@@ -79,6 +79,7 @@ set(_temp_acid_headers
 		Materials/MaterialDefault.hpp
 		Materials/PipelineMaterial.hpp
 		Maths/Colour.hpp
+		Maths/ElapsedTime.hpp
 		Maths/Interpolation/SmoothFloat.hpp
 		Maths/Maths.hpp
 		Maths/Matrix2.hpp
@@ -299,6 +300,7 @@ set(_temp_acid_sources
 		Materials/MaterialDefault.cpp
 		Materials/PipelineMaterial.cpp
 		Maths/Colour.cpp
+		Maths/ElapsedTime.cpp
 		Maths/Maths.cpp
 		Maths/Matrix2.cpp
 		Maths/Matrix3.cpp

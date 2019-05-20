@@ -8,7 +8,7 @@
 namespace acid
 {
 Graphics::Graphics() :
-	m_timerPurge(4s),
+	m_elapsedPurge(5s),
 	m_pipelineCache(VK_NULL_HANDLE),
 	m_currentFrame(0),
 	m_instance(std::make_unique<Instance>()),
@@ -91,10 +91,8 @@ void Graphics::Update()
 	}
 
 	// Purges unused command pools.
-	if (m_timerPurge.IsPassedTime())
+	if (m_elapsedPurge.GetElapsed() != 0)
 	{
-		m_timerPurge.ResetStartTime();
-
 		for (auto it = m_commandPools.begin(); it != m_commandPools.end();)
 		{
 			if ((*it).second.use_count() <= 1)

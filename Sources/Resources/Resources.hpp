@@ -38,7 +38,7 @@ public:
 
 private:
 	std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
-	DeltaTimer m_timerPurge;
+	ElapsedTime m_elapsedPurge;
 
 	ThreadPool m_threadPool;
 };

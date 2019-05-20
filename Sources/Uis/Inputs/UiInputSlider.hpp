@@ -56,8 +56,6 @@ private:
 	bool m_updating;
 	bool m_mouseOver;
 
-	bool m_hasChange;
-	DeltaTimer m_timerChange;
 	Delegate<void(float)> m_onValue;
 };
 }

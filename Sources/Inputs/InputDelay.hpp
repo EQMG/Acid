@@ -13,17 +13,17 @@ public:
 
 	bool CanInput();
 
-	const Time &GetDelay() const { return m_timerDelay.GetInterval(); }
+	const Time &GetDelay() const { return m_elapsedDelay.GetInterval(); }
 
-	void SetDelay(const Time &delay) { m_timerDelay.SetInterval(delay); }
+	void SetDelay(const Time &delay) { m_elapsedDelay.SetInterval(delay); }
 
-	const Time &GetRepeat() const { return m_timerRepeat.GetInterval(); }
+	const Time &GetRepeat() const { return m_elapsedRepeat.GetInterval(); }
 
-	void SetRepeat(const Time &repeat) { m_timerRepeat.SetInterval(repeat); }
+	void SetRepeat(const Time &repeat) { m_elapsedRepeat.SetInterval(repeat); }
 
 private:
-	DeltaTimer m_timerDelay;
-	DeltaTimer m_timerRepeat;
+	ElapsedTime m_elapsedDelay;
+	ElapsedTime m_elapsedRepeat;
 	bool m_delayOver;
 };
 }

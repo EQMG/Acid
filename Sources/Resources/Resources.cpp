@@ -3,16 +3,14 @@
 namespace acid
 {
 Resources::Resources() :
-	m_timerPurge(4s)
+	m_elapsedPurge(5s)
 {
 }
 
 void Resources::Update()
 {
-	if (m_timerPurge.IsPassedTime())
+	if (m_elapsedPurge.GetElapsed() != 0)
 	{
-		m_timerPurge.ResetStartTime();
-
 		for (auto it = m_resources.begin(); it != m_resources.end();)
 		{
 			if ((*it).second.use_count() <= 1)

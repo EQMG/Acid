@@ -1,53 +1,13 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
+#include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"
 #include "ModuleHolder.hpp"
 #include "Game.hpp"
 
 namespace acid
 {
-class ACID_EXPORT DeltaTimer
-{
-public:
-	explicit DeltaTimer(const Time &interval) :
-		m_startTime(Time::Now()),
-		m_interval(interval)
-	{
-	}
-
-	Time GetDifference() const
-	{
-		return Time::Now() - m_startTime;
-	}
-
-	bool IsPassedTime() const
-	{
-		return GetDifference() >= m_interval;
-	}
-
-	void ResetStartTime()
-	{
-		m_startTime = Time::Now();
-	}
-	
-	const Time &GetInterval() const { return m_interval; }
-
-	void SetInterval(const Time& interval)
-	{
-		if (m_interval == interval)
-		{
-			return;
-		}
-
-		m_interval = interval;
-		m_startTime = Time::Now();
-	}
-private:
-	Time m_startTime;
-	Time m_interval;
-};
-
 class ACID_EXPORT Delta
 {
 public:
@@ -232,8 +192,8 @@ private:
 
 	Delta m_deltaUpdate;
 	Delta m_deltaRender;
-	DeltaTimer m_timerUpdate;
-	DeltaTimer m_timerRender;
+	ElapsedTime m_elapsedUpdate;
+	ElapsedTime m_elapsedRender;
 
 	ChangePerSecond m_ups, m_fps;
 };
