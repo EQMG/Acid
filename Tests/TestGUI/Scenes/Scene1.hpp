@@ -28,7 +28,7 @@ private:
 	ButtonCompound m_buttonPause;
 
 	UiStartLogo m_uiStartLogo;
-	OverlayDebug m_overlayDebug;
 	Panels m_uiPanels;
+	OverlayDebug m_overlayDebug;
 };
 }

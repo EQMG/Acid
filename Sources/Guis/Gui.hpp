@@ -29,7 +29,7 @@ public:
 
 	void UpdateObject() override;
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 

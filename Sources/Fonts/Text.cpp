@@ -4,14 +4,13 @@
 
 namespace acid
 {
-Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify, const float &maxWidth,
+Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
 	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
 	m_numberLines(0),
 	m_string(std::move(text)),
 	m_justify(justify),
 	m_fontType(std::move(fontType)),
-	m_maxWidth(maxWidth),
 	m_kerning(kerning),
 	m_leading(leading),
 	m_textColour(textColour),
@@ -23,7 +22,7 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize
 	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 	m_borderSize(0.0f)
 {
-	SetScaleDriver(new DriverConstant<Vector2f>(Vector2f(fontSize)));
+	//SetScaleDriver(new DriverConstant<Vector2f>(Vector2f(fontSize)));
 	LoadText();
 }
 
@@ -40,10 +39,7 @@ void Text::UpdateObject()
 	m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
 
 	// Updates uniforms.
-	m_uniformObject.Push("modelMatrix", GetModelMatrix());
-	m_uniformObject.Push("screenOffset", Vector4f(2.0f * GetScreenSize(), 2.0f * GetScreenPosition() - 1.0f));
-	m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
-	m_uniformObject.Push("depth", GetScreenDepth());
+	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
 	m_uniformObject.Push("colour", m_textColour);
@@ -52,7 +48,7 @@ void Text::UpdateObject()
 	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
 }
 
-bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	// Gets if this should be rendered.
 	if (m_model == nullptr || m_fontType == nullptr || !IsEnabled())
@@ -61,7 +57,6 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_fontType->GetImage());
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
@@ -71,12 +66,12 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 		return false;
 	}
 
-	VkRect2D scissorRect = {};
+	/*VkRect2D scissorRect = {};
 	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_x);
 	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_y);
 	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_z);
 	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_w);
-	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
+	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);*/
 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
@@ -148,14 +143,14 @@ float Text::GetGlowSize() const
 
 float Text::CalculateEdgeStart() const
 {
-	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
+	auto scale = GetScreenTransform().GetSize(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
 	auto size = 0.5f * scale.m_x;
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
-	auto scale = GetScreenScale(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
+	auto scale = GetScreenTransform().GetSize(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
 	auto size = 0.5f * scale.m_x;
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
@@ -184,13 +179,15 @@ void Text::LoadText()
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	GetTransform().SetScale(bounding);
+	//GetTransform().SetSize(bounding);
 }
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
+	float maxLength = GetTransform().GetSize().m_x;
+
 	std::vector<Line> lines;
-	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
 	auto currentWord = Word();
 
 	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
@@ -214,7 +211,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 				if (!added)
 				{
 					lines.emplace_back(currentLine);
-					currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+					currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
 					currentLine.AddWord(currentWord);
 				}
 
@@ -234,7 +231,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 		{
 			bool wordAdded = currentLine.AddWord(currentWord);
 			lines.emplace_back(currentLine);
-			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
 
 			if (!wordAdded)
 			{
@@ -245,18 +242,18 @@ std::vector<Text::Line> Text::CreateStructure() const
 		}
 	}
 
-	CompleteStructure(lines, currentLine, currentWord);
+	CompleteStructure(lines, currentLine, currentWord, maxLength);
 	return lines;
 }
 
-void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const
+void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const
 {
 	auto added = currentLine.AddWord(currentWord);
 
 	if (!added)
 	{
 		lines.emplace_back(currentLine);
-		currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), m_maxWidth);
+		currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
 		currentLine.AddWord(currentWord);
 	}
 
@@ -355,7 +352,7 @@ void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexDefault> &vertice
 	if (m_justify == Justify::Centre)
 	{
 		min.m_x = 0.0f;
-		max.m_x = m_maxWidth;
+		max.m_x = GetTransform().GetSize().m_x;
 	}
 
 	//max.m_y = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;

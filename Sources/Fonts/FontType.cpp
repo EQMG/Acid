@@ -38,8 +38,8 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 
 FontType::FontType(std::string filename, std::string style, const bool &load) :
 	m_filename(std::move(filename)),
-	m_style(std::move(style)),
-	m_instances(0)
+	m_style(std::move(style))
+	//m_instances(0)
 {
 	if (load)
 	{
@@ -49,7 +49,7 @@ FontType::FontType(std::string filename, std::string style, const bool &load) :
 
 void FontType::Update(const std::vector<Text *> &texts)
 {
-	m_instances = 0;
+	/*m_instances = 0;
 
 	if (texts.empty())
 	{
@@ -109,10 +109,10 @@ void FontType::Update(const std::vector<Text *> &texts)
 		}
 	}
 
-	m_instanceBuffer->UnmapMemory();
+	m_instanceBuffer->UnmapMemory();*/
 }
 
-bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
+/*bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	if (m_instances == 0)
 	{
@@ -137,7 +137,7 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
 	vkCmdDraw(commandBuffer, 4, m_instances, 0, 0);
 	return true;
-}
+}*/
 
 void FontType::Load()
 {
@@ -148,7 +148,7 @@ void FontType::Load()
 
 	m_image = Image2d::Create(m_filename + "/" + m_style + ".png");
 	m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
-	LoadFont(m_filename + "/" + m_style + ".ttf");
+	//LoadFont(m_filename + "/" + m_style + ".ttf");
 }
 
 const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
@@ -165,7 +165,7 @@ Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 	return metadata;
 }
 
-uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
+/*uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
 {
 	return (value + alignment - 1) / alignment * alignment;
 }
@@ -294,5 +294,5 @@ void FontType::LoadFont(const std::string &filename)
 	{
 		throw std::runtime_error("Freetype failed to destory library");
 	}
-}
+}*/
 }

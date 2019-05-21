@@ -165,6 +165,12 @@ auto Vector3<T>::Length() const
 }
 
 template<typename T>
+auto Vector3<T>::Abs() const
+{
+	return Vector2<T>(std::abs(m_x), std::abs(m_y), std::abs(m_z));
+}
+
+template<typename T>
 auto Vector3<T>::Min() const
 {
 	return std::min({m_x, m_y, m_z});

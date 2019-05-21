@@ -30,9 +30,10 @@ public:
 
 	/**
 	 * Updates this screen object and the extended object.
+	 * @param viewMatrix The screens orthographic view matrix.
 	 * @param list The list to add to.
 	 */
-	void Update(std::vector<UiObject *> &list);
+	void Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list);
 
 	/**
 	 * Updates the ui object.
@@ -68,52 +69,26 @@ public:
 	void SetEnabled(const bool &enabled) { m_enabled = enabled; }
 
 	UiTransform &GetTransform() { return m_transform; }
+	
+	const UiTransform &GetTransform() const { return m_transform; }
 
 	void SetTransform(const UiTransform &transform) { m_transform = transform; }
-
-	const Vector4f &GetScissor() const { return m_scissor; }
-
-	void SetScissor(const Vector4f &scissor) { m_scissor = scissor; }
-
-	const float &GetHeight() const { return m_height; }
-
-	void SetHeight(const float &height) { m_height = height; }
-
-	const bool &IsLockRotation() const { return m_lockRotation; }
-
-	void SetLockRotation(const bool &lockRotation) { m_lockRotation = lockRotation; }
-
-	/**
-	 * Gets the world transform applied to the object, if has value.
-	 * @return The world transform.
-	 */
-	const std::optional<Transform> &GetWorldTransform() const { return m_worldTransform; }
-
-	/**
-	 * Sets the world transform applied to the object.
-	 * @param transform The new world space transform.
-	 */
-	void SetWorldTransform(const std::optional<Transform> &transform) { m_worldTransform = transform; }
-
-	Matrix4 GetModelMatrix() const;
 
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
 	void SetAlphaDriver(Driver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
 
 	const float &GetAlpha() const { return m_alpha; }
-
+	
 	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
 	void SetScaleDriver(Driver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
 
 	const Vector2f &GetScale() const { return m_scale; }
 
-	const Vector2f &GetScreenPosition() const { return m_screenPosition; }
+	const UiTransform& GetScreenTransform() const { return m_screenTransform; }
 
-	const Vector2f &GetScreenSize() const { return m_screenSize; }
-
-	const float &GetScreenDepth() const { return m_screenDepth; }
+	const Matrix4& GetModelView() const { return m_modelView; }
 
 	const float &GetScreenAlpha() const { return m_screenAlpha; }
 
@@ -145,11 +120,6 @@ private:
 
 	bool m_enabled;
 	UiTransform m_transform;
-	Vector4f m_scissor; // TODO: Convert to UiTransform.
-	float m_height;
-
-	bool m_lockRotation;
-	std::optional<Transform> m_worldTransform;
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;
@@ -157,9 +127,8 @@ private:
 	std::unique_ptr<Driver<Vector2f>> m_scaleDriver;
 	Vector2f m_scale;
 
-	Vector2f m_screenPosition;
-	Vector2f m_screenSize;
-	float m_screenDepth;
+	UiTransform m_screenTransform;
+	Matrix4 m_modelView;
 	float m_screenAlpha;
 	Vector2f m_screenScale;
 	bool m_selected;

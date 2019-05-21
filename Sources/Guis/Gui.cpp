@@ -28,11 +28,7 @@ void Gui::UpdateObject()
 	m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 
 	// Updates uniforms.
-	m_uniformObject.Push("aspectRatio", Window::Get()->GetAspectRatio());
-	m_uniformObject.Push("modelMatrix", GetModelMatrix());
-	m_uniformObject.Push("screenOffset", Vector4f(2.0f * GetScreenSize(), 2.0f * GetScreenPosition() - 1.0f));
-	m_uniformObject.Push("modelMode", GetWorldTransform() ? (IsLockRotation() + 1) : 0);
-	m_uniformObject.Push("depth", GetScreenDepth());
+	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
 	m_uniformObject.Push("colourOffset", m_colourOffset);
@@ -42,7 +38,7 @@ void Gui::UpdateObject()
 	m_uniformObject.Push("ninePatches", m_ninePatches);
 }
 
-bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
+bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	// Gets if this should be rendered.
 	if (m_image == nullptr || !IsEnabled())
@@ -51,7 +47,6 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_image);
 	bool updateSuccess = m_descriptorSet.Update(pipeline);
@@ -61,12 +56,12 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 		return false;
 	}
 
-	VkRect2D scissorRect = {};
+	/*VkRect2D scissorRect = {};
 	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_x);
 	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_y);
 	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_z);
 	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_w);
-	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
+	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);*/
 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);

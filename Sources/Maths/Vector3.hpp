@@ -171,7 +171,13 @@ public:
 	 * @return The length.
 	 **/
 	auto Length() const; 
-	
+
+	/**
+	 * Gets the absolute value of every component in this vector.
+	 * @return The absolute value of this vector.
+	 **/
+	auto Abs() const;
+
 	/**
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.

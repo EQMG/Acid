@@ -1,94 +1,57 @@
 #pragma once
 
 #include "Maths/Vector2.hpp"
-#include "Helpers/EnumClass.hpp"
 
 namespace acid
 {
 class ACID_EXPORT UiAnchor
 {
 public:
-	static const Vector2f TopLeft;
-	static const Vector2f TopCentre;
-	static const Vector2f TopRight;
-	static const Vector2f CentreLeft;
+	static const Vector2f LeftTop;
+	static const Vector2f CentreTop;
+	static const Vector2f RightTop;
+	static const Vector2f LeftCentre;
 	static const Vector2f Centre;
-	static const Vector2f CentreRight;
-	static const Vector2f BottomLeft;
-	static const Vector2f BottomCentre;
-	static const Vector2f BottomRight;
+	static const Vector2f RightCentre;
+	static const Vector2f LeftBottom;
+	static const Vector2f CentreBottom;
+	static const Vector2f RightBottom;
 };
-
-enum class UiAspect :
-	uint32_t
-{
-	None = 0,
-	Position = 1,
-	Size = 2,
-	Scale = 4
-};
-
-ENABLE_BITMASK_OPERATORS(UiAspect)
 
 /**
- * @brief Class that represents a rectangle made of a position and dimension.
+ * @brief Class that represents a 2D screen space transform.
  */
 class ACID_EXPORT UiTransform
 {
 public:
-	/**
-	 * Creates a new ui bound.
-	 * @param position The object screen position.
-	 * @param anchor Where the transform is anchored to the parent.
-	 * @param aspect The aspect that will be used for bounding in the parent reference.
-	 * @param scale The object scale.
-	 */
-	explicit UiTransform(const Vector2f &position = Vector2f(0.0f, 0.0f), const Vector2f &anchor = UiAnchor::TopLeft,
-		const BitMask<UiAspect> &aspect = UiAspect::Position | UiAspect::Size, const Vector2f &scale = Vector2f(1.0f, 1.0f)) noexcept;
+	explicit UiTransform(const Vector2i &size = Vector2i(100, 100), const Vector2i &position = Vector2i(), 
+		const Vector2f &anchor = UiAnchor::LeftTop) noexcept;
 
-	/**
-	 * Gets the bounds position in the current screen space.
-	 * @param aspectRatio The screens acpect ratio.
-	 * @return The position in screen space.
-	 */
-	Vector2f GetScreenPosition(const float &aspectRatio) const;
+	const Vector2f &GetSize() const { return m_size; }
 
-	/**
-	 * Gets the bounds size in the current screen space.
-	 * @param aspectRatio The screens acpect ratio.
-	 * @return The size in screen space.
-	 */
-	Vector2f GetScreenSize(const float &aspectRatio) const;
+	void SetSize(const Vector2i &size) { m_size = size; }
 
 	const Vector2f &GetPosition() const { return m_position; }
 
-	void SetPosition(const Vector2f &position) { m_position = position; }
-
+	void SetPosition(const Vector2i &position) { m_position = position; }
+	
 	const Vector2f &GetAnchor() const { return m_anchor; }
 
 	void SetAnchor(const Vector2f &anchor) { m_anchor = anchor; }
 
-	const BitMask<UiAspect> &GetAspect() const { return m_aspect; }
+	const float &GetDepth() const { return m_depth; }
 
-	void SetAspect(const BitMask<UiAspect> &aspect) { m_aspect = aspect; }
-
-	const Vector2f &GetScale() const { return m_scale; }
-
-	void SetScale(const Vector2f &scale) { m_scale = scale; }
+	void SetDepth(const float &depth) { m_depth = depth; }
 
 	bool operator==(const UiTransform &other) const;
 
 	bool operator!=(const UiTransform &other) const;
 
-	static const UiTransform Screen;
-	static const UiTransform Maximum;
-	static const UiTransform Left;
-	static const UiTransform Centre;
-	static const UiTransform Right;
+	// TODO: Still needs a way for size inheritance from parent, for background. And margins for expanding menus.
 
+	Vector2f m_size;
 	Vector2f m_position;
 	Vector2f m_anchor;
-	BitMask<UiAspect> m_aspect;
-	Vector2f m_scale;
+	float m_depth;
 };
 }

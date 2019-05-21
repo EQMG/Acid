@@ -15,10 +15,6 @@ SubrenderGuis::SubrenderGuis(const Pipeline::Stage &pipelineStage) :
 
 void SubrenderGuis::Render(const CommandBuffer &commandBuffer)
 {
-	auto camera = Scenes::Get()->GetCamera();
-	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
-	m_uniformScene.Push("view", camera->GetViewMatrix());
-
 	m_pipeline.BindPipeline(commandBuffer);
 
 	for (const auto &screenObject : Uis::Get()->GetObjects())
@@ -32,7 +28,7 @@ void SubrenderGuis::Render(const CommandBuffer &commandBuffer)
 
 		if (object != nullptr)
 		{
-			object->CmdRender(commandBuffer, m_pipeline, m_uniformScene);
+			object->CmdRender(commandBuffer, m_pipeline);
 		}
 	}
 }

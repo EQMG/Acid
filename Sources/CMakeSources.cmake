@@ -219,20 +219,9 @@ set(_temp_acid_headers
 		Shadows/SubrenderShadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Timers/Timers.hpp
-		Uis/Inputs/UiColourWheel.hpp
-		Uis/Inputs/UiInputBoolean.hpp
-		Uis/Inputs/UiInputButton.hpp
-		Uis/Inputs/UiInputDropdown.hpp
-		Uis/Inputs/UiInputGrabber.hpp
-		Uis/Inputs/UiInputRadio.hpp
-		Uis/Inputs/UiInputSlider.hpp
-		Uis/Inputs/UiInputText.hpp
 		Uis/UiTransform.hpp
 		Uis/UiObject.hpp
-		Uis/UiPanel.hpp
 		Uis/Uis.hpp
-		Uis/UiScrollBar.hpp
-		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		)
 set(_temp_acid_sources
@@ -422,20 +411,9 @@ set(_temp_acid_sources
 		Shadows/SubrenderShadows.cpp
 		Skyboxes/MaterialSkybox.cpp
 		Timers/Timers.cpp
-		Uis/Inputs/UiColourWheel.cpp
-		Uis/Inputs/UiInputBoolean.cpp
-		Uis/Inputs/UiInputButton.cpp
-		Uis/Inputs/UiInputDropdown.cpp
-		Uis/Inputs/UiInputGrabber.cpp
-		Uis/Inputs/UiInputRadio.cpp
-		Uis/Inputs/UiInputSlider.cpp
-		Uis/Inputs/UiInputText.cpp
 		Uis/UiTransform.cpp
 		Uis/UiObject.cpp
-		Uis/UiPanel.cpp
 		Uis/Uis.cpp
-		Uis/UiScrollBar.cpp
-		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
 add_precompiled_header(Acid

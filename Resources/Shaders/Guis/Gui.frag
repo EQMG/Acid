@@ -2,13 +2,9 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 1) uniform UniformObject
+layout(binding = 0) uniform UniformObject
 {
-	float aspectRatio;
-	mat4 modelMatrix;
-	vec4 screenOffset;
-	int modelMode;
-	float depth;
+	mat4 modelView;
 	float alpha;
 
 	vec4 colourOffset;
@@ -46,7 +42,7 @@ float processAxis(float coord, float textureBorder, float windowBorder)
 
 void main() 
 {
-	if (object.ninePatches != vec4(0.0f))
+	/*if (object.ninePatches != vec4(0.0f))
 	{
 		vec2 newUV = vec2(
 		    processAxis(inUV.x, object.ninePatches.x, object.ninePatches.x / (object.screenOffset.x / object.screenOffset.y) / object.aspectRatio),
@@ -56,9 +52,9 @@ void main()
 		outColour = texture(samplerColour, newUV);
 	}
 	else
-	{
+	{*/
 		outColour = texture(samplerColour, inUV);
-	}
+	//}
 
 	outColour *= object.colourOffset;
 	outColour.a *= object.alpha;

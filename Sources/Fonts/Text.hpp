@@ -36,17 +36,16 @@ public:
 	 * @param text The string text the object will be created with.
 	 * @param fontType The font type to be used in this text.
 	 * @param justify How the text will justify.
-	 * @param maxWidth The maximum length of a line of this text.
 	 * @param textColour The colour of this text.
 	 * @param kerning The kerning (type character spacing multiplier) of this text.
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-		const Justify &justify = Justify::Left, const float &maxWidth = 1.0f, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+		const Justify &justify = Justify::Left, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 	void UpdateObject() override;
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
+	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	/**
 	 * Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
@@ -77,18 +76,6 @@ public:
 	 * @return How the text should justify.
 	 */
 	const Justify &GetJustify() const { return m_justify; }
-
-	/**
-	 * Gets the maximum length of a line of this text.
-	 * @return The maximum length of a line.
-	 */
-	const float &GetMaxWidth() const { return m_maxWidth; }
-
-	/**
-	 * Sets the maximum length of a line of this text.
-	 * @param maxWidth The new maximum length.
-	 */
-	void SetMaxWidth(const float &maxWidth) { m_maxWidth = maxWidth; }
 
 	/**
 	 * Gets the kerning (type character spacing multiplier) of this text.
@@ -284,7 +271,7 @@ private:
 
 	std::vector<Line> CreateStructure() const;
 
-	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord) const;
+	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const;
 
 	std::vector<VertexDefault> CreateQuad(const std::vector<Line> &lines);
 
@@ -305,7 +292,6 @@ private:
 	Justify m_justify;
 
 	std::shared_ptr<FontType> m_fontType;
-	float m_maxWidth;
 	float m_kerning;
 	float m_leading;
 
