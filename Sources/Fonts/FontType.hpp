@@ -69,7 +69,7 @@ public:
 
 	void Update(const std::vector<Text *> &texts);
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
+	//bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	void Load() override;
 
@@ -82,7 +82,7 @@ public:
 	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const FontType &fontType);
 
 private:
-	struct CellInfo
+	/*struct CellInfo
 	{
 		uint32_t pointOffset;
 		uint32_t cellOffset;
@@ -106,12 +106,12 @@ private:
 
 	static uint32_t AlignUint32(const uint32_t &value, const uint32_t &alignment);
 
-	void LoadFont(const std::string &filename);
+	void LoadFont(const std::string &filename);*/
 
 	std::string m_filename;
 	std::string m_style;
 
-	std::map<wchar_t, uint32_t> m_charmap;
+	/*std::map<wchar_t, uint32_t> m_charmap;
 	std::vector<HostGlyphInfo> m_glyphInfos;
 
 	uint32_t m_glyphDataSize{};
@@ -120,15 +120,15 @@ private:
 	uint32_t m_glyphPointsSize{};
 	uint32_t m_glyphInfoOffset{};
 	uint32_t m_glyphCellsOffset{};
-	uint32_t m_glyphPointsOffset{};
+	uint32_t m_glyphPointsOffset{};*/
 
 	std::shared_ptr<Image2d> m_image;
 	std::unique_ptr<FontMetafile> m_metadata;
 
-	DescriptorsHandler m_descriptorSet;
+	/*DescriptorsHandler m_descriptorSet;
 	std::unique_ptr<StorageBuffer> m_storageGlyphs;
 	std::unique_ptr<InstanceBuffer> m_instanceBuffer;
 
-	uint32_t m_instances;
+	uint32_t m_instances;*/
 };
 }

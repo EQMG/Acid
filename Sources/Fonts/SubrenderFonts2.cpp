@@ -15,7 +15,7 @@ SubrenderFonts2::SubrenderFonts2(const Pipeline::Stage &pipelineStage) :
 
 void SubrenderFonts2::Render(const CommandBuffer &commandBuffer)
 {
-	std::map<std::shared_ptr<FontType>, std::vector<Text *>> sorted;
+	/*std::map<std::shared_ptr<FontType>, std::vector<Text *>> sorted;
 
 	for (const auto &screenObject : Uis::Get()->GetObjects())
 	{
@@ -46,6 +46,6 @@ void SubrenderFonts2::Render(const CommandBuffer &commandBuffer)
 	{
 		type->Update(typeTexts);
 		type->CmdRender(commandBuffer, m_pipeline);
-	}
+	}*/
 }
 }

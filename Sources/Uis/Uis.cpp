@@ -3,7 +3,7 @@
 namespace acid
 {
 Uis::Uis() :
-	m_canvas(nullptr, UiTransform::Screen)
+	m_canvas(nullptr, UiTransform(Window::Get()->GetSize()))
 {
 	for (auto button : EnumIterator<MouseButton>())
 	{
@@ -20,8 +20,10 @@ void Uis::Update()
 		selector.m_isDown = isDown;
 	}
 
+	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().m_x, 0.0f, Window::Get()->GetSize().m_y, 0.0f, 1.0f);
 	m_objects.clear();
-	m_canvas.Update(m_objects);
+	m_canvas.GetTransform().SetSize(Window::Get()->GetSize());
+	m_canvas.Update(viewMatrix, m_objects);
 }
 
 void Uis::CancelWasEvent(const MouseButton &button)

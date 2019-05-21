@@ -2,19 +2,9 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UniformScene
+layout(binding = 0) uniform UniformObject
 {
-	mat4 projection;
-	mat4 view;
-} scene;
-
-layout(binding = 1) uniform UniformObject
-{
-	float aspectRatio;
-	mat4 modelMatrix;
-	vec4 screenOffset;
-	int modelMode;
-	float depth;
+	mat4 modelView;
 	float alpha;
 
 	vec4 colourOffset;
@@ -34,26 +24,9 @@ out gl_PerVertex
 	vec4 gl_Position;
 };
 
-#include "Shaders/Billboard.glsl"
-const vec3 rotation = vec3(3.14159f, 0.0f, 0.0f);
-
 void main()
 {
-	vec4 position = vec4((inPosition.xy * object.screenOffset.xy) + object.screenOffset.zw, 0.0f, 1.0f);
-
-	if (object.modelMode != 0)
-	{
-		mat4 modelMatrix = modelMatrix(object.modelMatrix, scene.view, object.modelMode == 2, rotation);
-		vec4 worldPosition = modelMatrix * position;
-		gl_Position = scene.projection * scene.view * worldPosition;
-	}
-	else
-	{
-		gl_Position = position;
-		gl_Position.z = 0.5f;
-	}
-
-	gl_Position.z -= object.depth;
+	gl_Position = object.modelView * vec4(inPosition, 1.0f);
 
 	outUV = object.atlasScale * ((inUV.xy / object.atlasRows) + object.atlasOffset);
 }

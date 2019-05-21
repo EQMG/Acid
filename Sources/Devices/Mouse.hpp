@@ -93,22 +93,22 @@ public:
 	void SetClipboard(const std::string &string) const;
 
 	/**
-	 * Gets the mouses screen position.
+	 * Gets the mouses position.
 	 * @return The mouses position.
 	 */
-	const Vector2f &GetPosition() const { return m_mousePosition; }
+	const Vector2d &GetPosition() const { return m_mousePosition; }
 
 	/**
 	 * Sets the mouse position.
-	 * @param position The new position in screen space.
+	 * @param position The new mouse position.
 	 */
-	void SetPosition(const Vector2f &position);
+	void SetPosition(const Vector2d &position);
 
 	/**
 	 * Gets the mouse delta.
 	 * @return The mouse delta.
 	 */
-	const Vector2f &GetDelta() const { return m_mouseDelta; }
+	const Vector2d &GetDelta() const { return m_mouseDelta; }
 
 	/**
 	 * Gets the mouse wheel delta.
@@ -165,7 +165,7 @@ public:
 	Delegate<void(std::vector<std::string>)> &OnDrop() { return m_onDrop; }
 
 private:
-	static float SmoothScrollWheel(float value, const float &delta);
+	static double SmoothScrollWheel(double value, const float &delta);
 
 	friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
 
@@ -181,9 +181,9 @@ private:
 	std::optional<CursorStandard> m_currentStandard;
 	GLFWcursor *m_cursor;
 
-	Vector2f m_lastMousePosition;
-	Vector2f m_mousePosition;
-	Vector2f m_mouseDelta;
+	Vector2d m_lastMousePosition;
+	Vector2d m_mousePosition;
+	Vector2d m_mouseDelta;
 	Vector2f m_mouseWheelDelta;
 	bool m_windowSelected;
 	bool m_cursorHidden;

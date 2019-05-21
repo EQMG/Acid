@@ -10,14 +10,10 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 	m_parent(parent),
 	m_enabled(true),
 	m_transform(transform),
-	m_scissor(0.0f, 0.0f, 1.0f, 1.0f),
-	m_height(0.0f),
-	m_lockRotation(true),
 	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
 	m_alpha(1.0f),
 	m_scaleDriver(std::make_unique<DriverConstant<Vector2f>>(Vector2f(1.0f))),
 	m_scale(1.0f),
-	m_screenDepth(0.0f),
 	m_screenAlpha(1.0f),
 	m_screenScale(1.0f),
 	m_selected(false)
@@ -41,14 +37,14 @@ UiObject::~UiObject()
 	}
 }
 
-void UiObject::Update(std::vector<UiObject *> &list)
+void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 {
 	bool selected = IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused();
 
 	if (selected)
 	{
-		auto distance = Mouse::Get()->GetPosition() - m_screenPosition;
-		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenSize.m_x && distance.m_y <= m_screenSize.m_y;
+		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.GetPosition();
+		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenTransform.GetSize().m_x && distance.m_y <= m_screenTransform.GetSize().m_y;
 	}
 
 	if (selected != m_selected)
@@ -80,28 +76,30 @@ void UiObject::Update(std::vector<UiObject *> &list)
 	UpdateObject();
 
 	// Transform updates.
-	float aspectRatio = m_worldTransform ? 1.0f : Window::Get()->GetAspectRatio();
-
-	m_screenSize = m_transform.GetScreenSize(aspectRatio) * m_scale;
-	m_screenDepth = 0.01f * m_height;
-	m_screenScale = m_scale;
 	m_screenAlpha = m_alpha;
+	m_screenScale = m_scale;
+	m_screenTransform = m_transform;
 
 	if (m_parent != nullptr)
 	{
-		if (m_transform.GetAspect() & UiAspect::Scale)
-		{
-			m_screenSize *= m_parent->m_screenSize;
-			m_screenScale *= m_parent->m_screenScale;
-		}
-
-		m_screenPosition = (m_transform.GetScreenPosition(aspectRatio) * m_parent->m_screenSize) - (m_screenSize * m_transform.GetAnchor()) + m_parent->m_screenPosition;
 		m_screenAlpha *= m_parent->m_screenAlpha;
+		m_screenScale *= m_parent->m_screenScale;
+
+		m_screenTransform.m_size *= m_screenScale;
+		m_screenTransform.m_position *= m_screenScale;
+
+		m_screenTransform.m_position += m_parent->m_screenTransform.m_size * m_transform.GetAnchor();
+		m_screenTransform.m_position += m_parent->m_screenTransform.m_position;
 	}
 	else
 	{
-		m_screenPosition = m_transform.GetScreenPosition(aspectRatio) - (m_screenSize * m_transform.GetAnchor());
+		m_screenTransform.m_size *= m_screenScale;
 	}
+
+	m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor();
+
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, -m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	m_modelView = viewMatrix * modelMatrix;
 
 	// Adds this object to the list if it is visible.
 	if (m_screenAlpha > 0.0f)
@@ -112,7 +110,7 @@ void UiObject::Update(std::vector<UiObject *> &list)
 	// Update all children objects.
 	for (auto &child : m_children)
 	{
-		child->Update(list);
+		child->Update(viewMatrix, list);
 	}
 }
 
@@ -154,33 +152,6 @@ bool UiObject::IsEnabled() const
 	}
 
 	return m_enabled;
-}
-
-Matrix4 UiObject::GetModelMatrix() const
-{
-	if (m_worldTransform)
-	{
-		Matrix4 worldMatrix = m_worldTransform->GetWorldMatrix();
-
-		if (m_lockRotation)
-		{
-			Vector3f scaling = m_worldTransform->GetScaling();
-
-			for (uint32_t i = 0; i < 3; i++)
-			{
-				worldMatrix[0][i] = scaling[i];
-			}
-		}
-
-		return worldMatrix;
-	}
-
-	if (m_parent != nullptr)
-	{
-		return m_parent->GetModelMatrix(); // TODO: Multiply by this 'local' WorldMatrix.
-	}
-
-	return Matrix4::Identity;
 }
 
 void UiObject::CancelEvent(const MouseButton &button) const

@@ -13,8 +13,8 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePosition.m_x = static_cast<float>(xpos) / static_cast<float>(Window::Get()->GetSize().m_x);
-	Mouse::Get()->m_mousePosition.m_y = static_cast<float>(ypos) / static_cast<float>(Window::Get()->GetSize().m_y);
+	Mouse::Get()->m_mousePosition.m_x = xpos;
+	Mouse::Get()->m_mousePosition.m_y = ypos;
 	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
 }
 
@@ -155,10 +155,11 @@ InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 	return static_cast<InputAction>(state);
 }
 
-void Mouse::SetPosition(const Vector2f &position)
+void Mouse::SetPosition(const Vector2d &position)
 {
+	m_lastMousePosition = position;
 	m_mousePosition = position;
-	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetSize().m_x, m_mousePosition.m_y * Window::Get()->GetSize().m_y);
+	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x, m_mousePosition.m_y);
 }
 
 void Mouse::SetCursorHidden(const bool &hidden)
@@ -169,22 +170,22 @@ void Mouse::SetCursorHidden(const bool &hidden)
 
 		if (!hidden && m_cursorHidden)
 		{
-			glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x * Window::Get()->GetSize().m_x, m_mousePosition.m_x * Window::Get()->GetSize().m_y);
+			SetPosition(m_mousePosition);
 		}
 	}
 
 	m_cursorHidden = hidden;
 }
 
-float Mouse::SmoothScrollWheel(float value, const float &delta)
+double Mouse::SmoothScrollWheel(double value, const float &delta)
 {
-	if (value != 0.0f)
+	if (value != 0.0)
 	{
-		value -= delta * ((value < 0.0f) ? -3.0f : 3.0f);
-		value = Maths::Deadband(0.08f, value);
+		value -= static_cast<double>(delta) * ((value < 0.0) ? -3.0 : 3.0);
+		value = Maths::Deadband(0.08, value);
 		return value;
 	}
 
-	return 0.0f;
+	return 0.0;
 }
 }
