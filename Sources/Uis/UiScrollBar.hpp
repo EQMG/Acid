@@ -16,7 +16,7 @@ ENABLE_BITMASK_OPERATORS(ScrollBar)
 	public UiObject
 {
 public:
-	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform = UiTransform(Size, Vector2i(), UiAnchor::Centre));
+	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform = UiTransform(Size));
 
 	void UpdateObject() override;
 

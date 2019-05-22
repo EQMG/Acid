@@ -7,10 +7,10 @@ namespace acid
 {
 UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, UiTransform(transform.GetSize(), Vector2i(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(-UiInputButton::Padding, 0), UiAnchor::RightCentre), UiInputButton::FontSize,
+	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(UiInputButton::Padding, 0), UiAnchor::LeftCentre), UiInputButton::FontSize, "",
+	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_lastKey(0),
 	m_updating(false),
@@ -22,24 +22,26 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	{
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
+	OnClick().Add([this](MouseButton mouseButton)
+	{
+		if (mouseButton == MouseButton::Left)
+		{
+			if (m_background.IsSelected())
+			{
+				SetUpdating(true);
+				CancelEvent(MouseButton::Left);
+			}
+			else if (m_updating)
+			{
+				SetUpdating(false);
+				CancelEvent(MouseButton::Left);
+			}
+		}
+	});
 }
 
 void UiInputGrabber::UpdateObject()
 {
-	if (Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (m_background.IsSelected())
-		{
-			SetUpdating(true);
-			CancelEvent(MouseButton::Left);
-		}
-		else if (m_updating)
-		{
-			SetUpdating(false);
-			CancelEvent(MouseButton::Left);
-		}
-	}
-
 	if (!m_updating)
 	{
 		if (m_background.IsSelected() && !m_mouseOver)
@@ -129,7 +131,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{
-		if (!m_updating)
+		if (!m_updating || action != InputAction::Press)
 		{
 			return;
 		}
@@ -138,6 +140,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 		{
 			if (!m_background.IsSelected())
 			{
+				SetUpdating(false);
 				return;
 			}
 

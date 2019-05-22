@@ -18,8 +18,8 @@ void InputDelay::Update(const bool &keyIsDown)
 	else
 	{
 		m_delayOver = false;
-		m_elapsedDelay.SetStartTime(Time::Now());
-		m_elapsedRepeat.SetStartTime(Time::Now());
+		m_elapsedDelay.SetStartTime(0s);
+		m_elapsedRepeat.SetStartTime(0s);
 	}
 }
 

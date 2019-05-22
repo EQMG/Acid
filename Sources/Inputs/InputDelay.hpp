@@ -7,7 +7,7 @@ namespace acid
 class ACID_EXPORT InputDelay
 {
 public:
-	explicit InputDelay(const Time &delay = 0.2s, const Time &repeat = Time::Seconds(0.06f));
+	explicit InputDelay(const Time &delay = 0.06s, const Time &repeat = Time::Seconds(0.06f));
 
 	void Update(const bool &keyIsDown);
 

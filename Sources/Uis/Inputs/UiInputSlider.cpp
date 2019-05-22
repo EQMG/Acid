@@ -10,12 +10,12 @@ namespace acid
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
 	const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_slider(this, UiTransform(transform.GetSize(), Vector2i(), UiAnchor::LeftTop), Image2d::Create("Guis/Button_Filled.png"),
+	m_slider(this, UiTransform(transform.GetSize(), UiAnchor::LeftTop), Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour),
-	m_background(this, UiTransform(transform.GetSize(), Vector2i(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(-UiInputButton::Padding, 0), UiAnchor::RightCentre), UiInputButton::FontSize,
+	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(UiInputButton::Padding, 0), UiAnchor::LeftCentre), UiInputButton::FontSize, "",
+	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
 	m_valueMin(valueMin),
@@ -48,9 +48,9 @@ void UiInputSlider::UpdateObject()
 	}
 	else if (m_updating)
 	{
-		float width = m_background.GetScreenTransform().GetSize().m_x;
-		float positionX = m_background.GetScreenTransform().GetPosition().m_x;
-		float cursorX = Mouse::Get()->GetPosition().m_x - positionX;
+		auto width = m_background.GetScreenTransform().GetSize().m_x;
+		auto positionX = m_background.GetScreenTransform().GetPosition().m_x;
+		auto cursorX = static_cast<float>(Mouse::Get()->GetPosition().m_x) - positionX;
 		m_progress = cursorX / width;
 		m_progress = std::clamp(m_progress, 0.0f, 1.0f);
 		m_value = (m_progress * (m_valueMax - m_valueMin)) + m_valueMin;

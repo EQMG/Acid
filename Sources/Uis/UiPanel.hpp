@@ -16,7 +16,7 @@ public:
 		None, Left, Top, Right, Bottom
 	};
 
-	explicit UiPanel(UiObject *parent, const UiTransform &transform = UiTransform(Vector2i(), Vector2i(), UiAnchor::Centre),
+	explicit UiPanel(UiObject *parent, const UiTransform &transform = UiTransform(),
 		const Colour &colour = UiInputButton::BackgroundColour, const Resize &resize = Resize::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;

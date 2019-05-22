@@ -5,11 +5,12 @@
 namespace acid
 {
 static const Vector2i RESIZE_SIZE = Vector2i(8, 8);
+static const Vector2i PADDING = Vector2i(16, 16);
 
 UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour, const Resize &resize, const BitMask<ScrollBar> &scrollBars) :
 	UiObject(parent, transform),
 	m_background(this, UiTransform(transform.GetSize()), Image2d::Create("Guis/White.png"), colour),
-	m_content(this, UiTransform(transform.GetSize())),
+	m_content(this, UiTransform(transform.GetSize() - PADDING, UiAnchor::Centre)),
 	m_resizeHandle(this, UiTransform(RESIZE_SIZE)),
 	m_resize(resize),
 	//m_scrollX(this, ScrollBar::Horizontal, UiTransform(UiScrollBar::Size, Vector2i(), UiAnchor::LeftBottom)),
@@ -40,7 +41,7 @@ UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &c
 void UiPanel::UpdateObject()
 {
 	m_background.GetTransform().SetSize(GetTransform().GetSize());
-	m_content.GetTransform().SetSize(GetTransform().GetSize());
+	m_content.GetTransform().SetSize(GetTransform().GetSize() - PADDING);
 
 	m_resizeHandle.GetTransform().SetSize(Vector2i(RESIZE_SIZE.m_x, GetTransform().GetSize().m_y));
 
