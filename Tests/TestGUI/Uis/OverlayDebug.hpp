@@ -17,7 +17,7 @@ public:
 	void UpdateObject() override;
 
 private:
-	//Gui m_slices;
+	Gui m_slices;
 
 	Text m_textFrameTime;
 	Text m_textFps;

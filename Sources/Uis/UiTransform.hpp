@@ -24,8 +24,7 @@ public:
 class ACID_EXPORT UiTransform
 {
 public:
-	explicit UiTransform(const Vector2i &size = Vector2i(100, 100), const Vector2i &position = Vector2i(), 
-		const Vector2f &anchor = UiAnchor::LeftTop) noexcept;
+	explicit UiTransform(const Vector2i &size = Vector2i(), const Vector2i &position = Vector2i(), const Vector2f &anchor = UiAnchor::LeftTop);
 
 	const Vector2f &GetSize() const { return m_size; }
 
@@ -46,8 +45,6 @@ public:
 	bool operator==(const UiTransform &other) const;
 
 	bool operator!=(const UiTransform &other) const;
-
-	// TODO: Still needs a way for size inheritance from parent, for background. And margins for expanding menus.
 
 	Vector2f m_size;
 	Vector2f m_position;

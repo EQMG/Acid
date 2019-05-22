@@ -98,7 +98,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 
 	m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor();
 
-	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, -m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
 
 	// Adds this object to the list if it is visible.

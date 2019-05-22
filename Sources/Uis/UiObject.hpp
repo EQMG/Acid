@@ -74,6 +74,10 @@ public:
 
 	void SetTransform(const UiTransform &transform) { m_transform = transform; }
 
+	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
+
+	void SetScissor(const std::optional<Vector4i> &scissor) { m_scissor = scissor; }
+
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
 	void SetAlphaDriver(Driver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
@@ -120,6 +124,7 @@ private:
 
 	bool m_enabled;
 	UiTransform m_transform;
+	std::optional<Vector4i> m_scissor; 
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;

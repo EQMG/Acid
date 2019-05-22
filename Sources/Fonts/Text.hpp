@@ -40,7 +40,8 @@ public:
 	 * @param kerning The kerning (type character spacing multiplier) of this text.
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
-	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
+	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text,
+	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
 		const Justify &justify = Justify::Left, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 	void UpdateObject() override;
@@ -52,6 +53,12 @@ public:
 	 * @return The model of the text.
 	 */
 	const Model *GetModel() const { return m_model.get(); }
+	
+	/**
+	 * Gets the font size.
+	 * @return The font size.
+	 */
+	const float &GetFontSize() const { return m_fontSize; }
 
 	/**
 	 * Gets the number of lines in this text.
@@ -279,14 +286,13 @@ private:
 
 	static void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices);
 
-	void NormalizeQuad(Vector2f &bounding, std::vector<VertexDefault> &vertices) const;
-
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
 
 	std::unique_ptr<Model> m_model;
 	uint32_t m_numberLines;
 
+	float m_fontSize;
 	std::string m_string;
 	std::optional<std::string> m_newString;
 	Justify m_justify;

@@ -12,7 +12,7 @@ const Vector2f UiAnchor::LeftBottom = Vector2f(0.0f, 1.0f);
 const Vector2f UiAnchor::CentreBottom = Vector2f(0.5f, 1.0f);
 const Vector2f UiAnchor::RightBottom = Vector2f(1.0f, 1.0f);
 
-UiTransform::UiTransform(const Vector2i &size, const Vector2i &position, const Vector2f &anchor) noexcept :
+UiTransform::UiTransform(const Vector2i &size, const Vector2i &position, const Vector2f &anchor) :
 	m_size(size),
 	m_position(position),
 	m_anchor(anchor),

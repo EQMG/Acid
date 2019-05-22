@@ -1,6 +1,7 @@
 ﻿#include "Text.hpp"
 
 #include "Maths/Visual/DriverConstant.hpp"
+#include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid
 {
@@ -8,6 +9,7 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize
 	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
 	m_numberLines(0),
+	m_fontSize(fontSize),
 	m_string(std::move(text)),
 	m_justify(justify),
 	m_fontType(std::move(fontType)),
@@ -22,7 +24,6 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize
 	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 	m_borderSize(0.0f)
 {
-	//SetScaleDriver(new DriverConstant<Vector2f>(Vector2f(fontSize)));
 	LoadText();
 }
 
@@ -66,12 +67,13 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 		return false;
 	}
 
-	/*VkRect2D scissorRect = {};
-	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_x);
-	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_y);
-	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_z);
-	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_w);
-	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);*/
+	auto scissor = GetScissor();
+	VkRect2D scissorRect = {};
+	scissorRect.offset.x = scissor ? scissor->m_x : 0;
+	scissorRect.offset.y = scissor ? scissor->m_y : 0;
+	scissorRect.extent.width = scissor ? scissor->m_z : Window::Get()->GetSize().m_x;
+	scissorRect.extent.height = scissor ? scissor->m_w : Window::Get()->GetSize().m_y;
+	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
@@ -143,14 +145,14 @@ float Text::GetGlowSize() const
 
 float Text::CalculateEdgeStart() const
 {
-	auto scale = GetScreenTransform().GetSize(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
+	auto scale = GetScale() * m_fontSize;
 	auto size = 0.5f * scale.m_x;
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
-	auto scale = GetScreenTransform().GetSize(); // (GetScreenDimensions() / GetTransform().GetDimensions()).MinComponent();
+	auto scale = GetScale() * m_fontSize;
 	auto size = 0.5f * scale.m_x;
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
@@ -173,13 +175,9 @@ void Text::LoadText()
 	auto lines = CreateStructure();
 	auto vertices = CreateQuad(lines);
 
-	// Calculates the bounds and normalizes the vertices.
-	Vector2f bounding;
-	NormalizeQuad(bounding, vertices);
-
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	//GetTransform().SetSize(bounding);
+	m_model = std::make_unique<ModelRectangle>(0.0f, 1.0f);
 }
 
 std::vector<Text::Line> Text::CreateStructure() const
@@ -335,32 +333,5 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
 {
 	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f::Zero));
-}
-
-void Text::NormalizeQuad(Vector2f &bounding, std::vector<VertexDefault> &vertices) const
-{
-	auto min = Vector2f::PositiveInfinity;
-	auto max = Vector2f::NegativeInfinity;
-
-	for (const auto &vertex : vertices)
-	{
-		auto position = Vector2f(vertex.m_position);
-		min = min.Min(position);
-		max = max.Max(position);
-	}
-
-	if (m_justify == Justify::Centre)
-	{
-		min.m_x = 0.0f;
-		max.m_x = GetTransform().GetSize().m_x;
-	}
-
-	//max.m_y = static_cast<float>(GetFontType()->GetMetadata()->GetMaxSizeY()) * m_numberLines;
-	bounding = (max - min) / 2.0f;
-
-	for (auto &vertex : vertices)
-	{
-		vertex.m_position = Vector3f((Vector2f(vertex.m_position) - min) / (max - min));
-	}
 }
 }

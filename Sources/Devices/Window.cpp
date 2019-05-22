@@ -321,6 +321,19 @@ void Window::SetIconified(const bool &iconify)
 	}
 }
 
+const Monitor *Window::GetPrimaryMonitor() const
+{
+	for (const auto &monitor : m_monitors)
+	{
+		if (monitor->IsPrimary())
+		{
+			return monitor.get();
+		}
+	}
+
+	return nullptr;
+}
+
 std::string Window::StringifyResultGlfw(const int32_t &result)
 {
 	switch (result)

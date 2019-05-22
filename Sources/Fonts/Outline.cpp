@@ -83,7 +83,8 @@ void OutlineConvert(FT_Outline *outline, Outline *o)
 
 void OutlineDecompose(FT_Outline *outline, Outline *o)
 {
-	memset(o, 0, sizeof(Outline)); // TODO: Remove
+	//memset(o, 0, sizeof(Outline)); // TODO: Remove
+	*o = {};
 
 	FT_BBox outlineBbox;
 
