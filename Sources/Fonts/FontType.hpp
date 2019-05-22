@@ -86,8 +86,7 @@ private:
 	{
 		uint32_t pointOffset;
 		uint32_t cellOffset;
-		uint32_t cellCountX;
-		uint32_t cellCountY;
+		Vector2ui cellCount;
 	};
 
 	struct HostGlyphInfo

@@ -21,7 +21,7 @@ layout(location = 0) out vec4 outColour;
 
 void main() 
 {
-	/*float distance = texture(samplerColour, inUV).a;
+	float distance = texture(samplerColour, inUV).a;
 	float alpha = smoothstep((1.0f - object.edgeData.x) - object.edgeData.y, 1.0f - object.edgeData.x, distance);
 	float outlineAlpha = smoothstep((1.0f - object.borderSizes.x) - object.borderSizes.y, 1.0f - object.borderSizes.x, distance);
 	float overallAlpha = alpha + (1.0f - alpha) * outlineAlpha;
@@ -34,6 +34,5 @@ void main()
 	{
 		outColour = vec4(0.0f);
 		discard;
-	}*/
-	outColour = vec4(object.colour.rgb, object.alpha);
+	}
 }

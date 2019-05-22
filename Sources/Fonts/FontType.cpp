@@ -76,8 +76,8 @@ void FontType::Update(const std::vector<Text *> &texts)
 				break;
 			}
 
-			const uint32_t glyphIndex = m_charmap[c];
-			const HostGlyphInfo *gi = &m_glyphInfos[glyphIndex];
+			auto glyphIndex = m_charmap[c];
+			auto gi = &m_glyphInfos[glyphIndex];
 			auto instance = &instances[m_instances];
 
 			if (c == '\n')
@@ -87,16 +87,17 @@ void FontType::Update(const std::vector<Text *> &texts)
 				continue;
 			}
 
-			instance->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			instance->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
-			instance->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			instance->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.m_min.m_x = ((position.m_x + localOffset.m_x) + gi->bbox.m_min.m_x * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.m_min.m_y = ((position.m_y + localOffset.m_y) - gi->bbox.m_min.m_y * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.m_max.m_x = ((position.m_x + localOffset.m_x) + gi->bbox.m_max.m_x * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.m_max.m_y = ((position.m_y + localOffset.m_y) - gi->bbox.m_max.m_y * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
-			if (instance->m_rect.minX <= 1.0f && instance->m_rect.maxX >= -1.0f && instance->m_rect.maxY <= 1.0f && instance->m_rect.minY >= -1.0f)
+			if (instance->m_rect.m_min.m_x <= 1.0f && instance->m_rect.m_max.m_x >= -1.0f && instance->m_rect.m_max.m_y <= 1.0f && instance->m_rect.m_min.m_y >= -1.0f)
 			{
 				instance->m_glyphIndex = glyphIndex;
 				instance->m_sharpness = fontSize.m_x;
 				instance->m_colour = text->m_textColour;
+				instance->m_colour.m_a *= text->GetScreenAlpha();
 
 				m_instances++;
 			}
@@ -222,12 +223,12 @@ void FontType::LoadFont(const std::string &filename)
 
 		OutlineConvert(&face->glyph->outline, o);
 
-		hgi->bbox = o->bbox;
+		hgi->bbox = o->m_bbox;
 		hgi->horiAdvance = face->glyph->metrics.horiAdvance / 64.0f;
 		hgi->vertAdvance = face->glyph->metrics.vertAdvance / 64.0f;
 
-		totalPoints += static_cast<uint32_t>(o->points.size());
-		totalCells += static_cast<uint32_t>(o->cells.size());
+		totalPoints += static_cast<uint32_t>(o->m_points.size());
+		totalCells += static_cast<uint32_t>(o->m_cells.size());
 
 		charcode = FT_Get_Next_Char(face, charcode, &glyphIndex);
 		i++;
@@ -261,19 +262,18 @@ void FontType::LoadFont(const std::string &filename)
 		Outline *o = &outlines[j];
 		DeviceGlyphInfo *dgi = &deviceGlyphInfos[j];
 
-		dgi->cellInfo.cellCountX = o->cellCountX;
-		dgi->cellInfo.cellCountY = o->cellCountY;
+		dgi->cellInfo.cellCount = o->m_cellCount;
 		dgi->cellInfo.pointOffset = pointOffset;
 		dgi->cellInfo.cellOffset = cellOffset;
-		dgi->bbox = o->bbox;
+		dgi->bbox = o->m_bbox;
 
-		std::memcpy(cells + cellOffset, o->cells.data(), sizeof(uint32_t) * o->cells.size());
-		std::memcpy(points + pointOffset, o->points.data(), sizeof(Vector2f) * o->points.size());
+		std::memcpy(cells + cellOffset, o->m_cells.data(), sizeof(uint32_t) * o->m_cells.size());
+		std::memcpy(points + pointOffset, o->m_points.data(), sizeof(Vector2f) * o->m_points.size());
 
-		//OutlineU16Points(o, &dgi->cbox, reinterpret_cast<PointU16 *>(reinterpret_cast<char *>(points) + pointOffset));
+		//OutlineU16Points(o, &dgi->cbox, reinterpret_cast<Vector2us *>(reinterpret_cast<char *>(points) + pointOffset));
 
-		pointOffset += static_cast<uint32_t>(o->points.size());
-		cellOffset += static_cast<uint32_t>(o->cells.size());
+		pointOffset += static_cast<uint32_t>(o->m_points.size());
+		cellOffset += static_cast<uint32_t>(o->m_cells.size());
 	}
 
 	m_storageGlyphs->UnmapMemory();

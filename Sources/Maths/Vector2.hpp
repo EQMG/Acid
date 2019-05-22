@@ -324,6 +324,7 @@ using Vector2f = Vector2<float>;
 using Vector2d = Vector2<double>;
 using Vector2i = Vector2<int32_t>;
 using Vector2ui = Vector2<uint32_t>;
+using Vector2us = Vector2<uint16_t>;
 }
 
 #include "Vector2.inl"

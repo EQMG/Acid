@@ -9,38 +9,35 @@ typedef FT_Outline_ FT_Outline;
 
 namespace acid
 {
-struct WIPCell
+class WIPCell
 {
-	Rect bbox;
-	uint32_t value;
-	uint32_t from;
-	uint32_t to;
-	uint32_t startLength;
+public:
+	Rect m_bbox;
+	uint32_t m_value;
+	uint32_t m_from;
+	uint32_t m_to;
+	uint32_t m_startLength;
 };
 
-struct ContourRange
+class ContourRange
 {
-	uint32_t begin, end;
+public:
+	uint32_t m_begin, m_end;
 };
 
-struct Outline
+class Outline
 {
-	Rect bbox;
+public:
+	Rect m_bbox;
 
-	std::vector<Vector2f> points;
+	std::vector<Vector2f> m_points;
 
-	std::vector<ContourRange> contours;
+	std::vector<ContourRange> m_contours;
 
-	std::vector<uint32_t> cells;
-	uint32_t cellCountX;
-	uint32_t cellCountY;
+	std::vector<uint32_t> m_cells;
+	Vector2ui m_cellCount;
 
-	uint32_t cornerFixBegin;
-};
-
-struct PointU16
-{
-	uint16_t x, y;
+	uint32_t m_cornerFixBegin;
 };
 
 static void OutlineAddOddPoint(Outline *o);
@@ -97,5 +94,5 @@ void OutlineCbox(Outline *o, Rect *cbox);
 
 static uint16_t GenU16Value(const float &x, const float &min, const float &max);
 
-void OutlineU16Points(Outline *o, Rect *cbox, PointU16 *pout);
+void OutlineU16Points(Outline *o, Rect *cbox, Vector2us *pout);
 }

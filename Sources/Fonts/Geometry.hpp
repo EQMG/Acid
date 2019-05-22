@@ -9,12 +9,11 @@ enum class QuadraticSolution
 	None, All, Touch, One, Two
 };
 
-struct Rect
+class Rect
 {
-	float minX;
-	float minY;
-	float maxX;
-	float maxY;
+public:
+	Vector2f m_min;
+	Vector2f m_max;
 };
 
 static QuadraticSolution SolveQuadratic(const float &a, const float &b, const float &c, float &x1, float &x2);

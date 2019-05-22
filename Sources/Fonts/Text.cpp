@@ -177,7 +177,6 @@ void Text::LoadText()
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
-	m_model = std::make_unique<ModelRectangle>(0.0f, 1.0f);
 }
 
 std::vector<Text::Line> Text::CreateStructure() const

@@ -17,7 +17,7 @@ public:
 	};
 
 	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, const bool &value = false,
-		const UiTransform &transform = UiTransform(UiInputButton::Size, Vector2i(), UiAnchor::Centre));
+		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	void UpdateObject() override;
 

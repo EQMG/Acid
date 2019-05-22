@@ -79,6 +79,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 	m_screenAlpha = m_alpha;
 	m_screenScale = m_scale;
 	m_screenTransform = m_transform;
+	m_screenTransform.SetAnchor(UiAnchor::LeftTop);
 
 	if (m_parent != nullptr)
 	{

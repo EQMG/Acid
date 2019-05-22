@@ -44,7 +44,7 @@ class ACID_EXPORT UiGrabberJoystick :
 {
 public:
 	UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
-		const UiTransform &transform = UiTransform(UiInputButton::Size, Vector2i(), UiAnchor::Centre));
+		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	const uint32_t &GetPort() const { return m_port; }
 
@@ -77,7 +77,7 @@ class ACID_EXPORT UiGrabberKeyboard :
 {
 public:
 	UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
-		const UiTransform &transform = UiTransform(UiInputButton::Size, Vector2i(), UiAnchor::Centre));
+		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	const Key &GetValue() const { return m_value; }
 
@@ -105,7 +105,7 @@ class ACID_EXPORT UiGrabberMouse :
 {
 public:
 	UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,
-		const UiTransform &transform = UiTransform(UiInputButton::Size, Vector2i(), UiAnchor::Centre));
+		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	const MouseButton &GetValue() const { return m_value; }
 

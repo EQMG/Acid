@@ -10,7 +10,7 @@ class ACID_EXPORT UiSection :
 	public UiObject
 {
 public:
-	UiSection(UiObject *parent, const std::string &string, const UiTransform &transform = UiTransform(Vector2i(), Vector2i(), UiAnchor::Centre));
+	UiSection(UiObject *parent, const std::string &string, const UiTransform &transform = UiTransform());
 
 	void UpdateObject() override;
 

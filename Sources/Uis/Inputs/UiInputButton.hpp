@@ -10,7 +10,7 @@ class ACID_EXPORT UiInputButton :
 	public UiObject
 {
 public:
-	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = UiTransform(Size, Vector2i(), UiAnchor::Centre));
+	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = UiTransform(Size));
 
 	void UpdateObject() override;
 
@@ -19,8 +19,8 @@ public:
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
 	static const Vector2i Size;
-	static const uint32_t Padding;
-	static const uint32_t FontSize;
+	static const int32_t Padding;
+	static const float FontSize;
 	static const Time SlideTime;
 
 	static const Colour TitleColour;

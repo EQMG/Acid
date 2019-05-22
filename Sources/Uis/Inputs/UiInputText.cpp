@@ -8,10 +8,10 @@ namespace acid
 {
 UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, UiTransform(transform.GetSize(), Vector2i(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(-UiInputButton::Padding, 0), UiAnchor::RightCentre), UiInputButton::FontSize,
+	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), Vector2i(UiInputButton::Padding, 0), UiAnchor::LeftCentre), UiInputButton::FontSize, "",
+	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
 	m_maxLength(maxLength),
