@@ -3,9 +3,8 @@
 #include <Uis/Inputs/UiInputButton.hpp>
 #include <Uis/Inputs/UiInputGrabber.hpp>
 #include <Uis/Inputs/UiInputSlider.hpp>
-#include <Uis/Inputs/UiInputRadio.hpp>
+//#include <Uis/Inputs/UiInputRadio.hpp>
 #include <Uis/Inputs/UiInputText.hpp>
-#include <Uis/Inputs/UiColourWheel.hpp>
 #include <Uis/UiSection.hpp>
 #include <Uis/UiPanel.hpp>
 #include <Guis/Gui.hpp>
@@ -30,9 +29,9 @@ private:
 	UiGrabberJoystick m_input3;
 	UiInputSlider m_slider1;
 	UiInputText m_text1;
-	UiInputRadio m_radio1;
-	UiInputRadio m_radio2;
-	UiInputRadio m_radio3;
-	UiRadioManager m_radioManager1;
+	//UiInputRadio m_radio1;
+	//UiInputRadio m_radio2;
+	//UiInputRadio m_radio3;
+	//UiRadioManager m_radioManager1;
 };
 }

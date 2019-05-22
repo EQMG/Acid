@@ -57,10 +57,28 @@ public:
 	void SetPrimary(const bool &primary) { m_primary = primary; }
 
 	/**
+	 * Gets the workarea size of the monitor.
+	 * @return The size, in pixels, of the display area.
+	 */
+	Vector2ui GetWorkareaSize() const;
+
+	/**
+	 * Gets the workarea size of the monitor.
+	 * @return The size, in pixels, of the display area.
+	 */
+	Vector2ui GetWorkareaPosition() const;
+
+	/**
 	 * Gets the physical size of the monitor.
 	 * @return The size, in millimetres, of the display area.
 	 */
 	Vector2ui GetSize() const;
+
+	/**
+	 * Gets the content scale of the monitor.
+	 * @return The content scale, the ratio between the current DPI and the platform's default DPI.
+	 */
+	Vector2f GetContentScale() const;
 
 	/**
 	 * Gets the position of the monitor's viewport on the virtual screen.

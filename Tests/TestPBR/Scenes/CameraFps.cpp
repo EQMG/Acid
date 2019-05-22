@@ -20,8 +20,8 @@ static const float VIEW_HEIGHT = 1.8f;
 static const float INFLUENCE_OF_JOYSTICK_DY = 4.5f;
 static const float INFLUENCE_OF_JOYSTICK_DX = 4.5f;
 
-static const float INFLUENCE_OF_MOUSE_DY = 10000.0f;
-static const float INFLUENCE_OF_MOUSE_DX = 10000.0f;
+static const float INFLUENCE_OF_MOUSE_DY = 10.0f;
+static const float INFLUENCE_OF_MOUSE_DX = 10.0f;
 
 static const float MAX_HORIZONTAL_CHANGE = 30.0f;
 static const float MAX_VERTICAL_CHANGE = 30.0f;

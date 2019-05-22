@@ -170,6 +170,8 @@ public:
 
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
 
+	const Monitor *GetPrimaryMonitor() const;
+
 	/**
 	 * Called when the window is resized.
 	 * @return The delegate.

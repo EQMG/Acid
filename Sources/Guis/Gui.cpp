@@ -31,6 +31,8 @@ void Gui::UpdateObject()
 	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
+	m_uniformObject.Push("aspectRatio", (GetScreenTransform().GetSize().m_x / GetScreenTransform().GetSize().m_y));
+
 	m_uniformObject.Push("colourOffset", m_colourOffset);
 	m_uniformObject.Push("atlasOffset", m_atlasOffset);
 	m_uniformObject.Push("atlasScale", m_atlasScale);
@@ -56,12 +58,13 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 		return false;
 	}
 
-	/*VkRect2D scissorRect = {};
-	scissorRect.offset.x = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_x);
-	scissorRect.offset.y = static_cast<int32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_y);
-	scissorRect.extent.width = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_x * GetScissor().m_z);
-	scissorRect.extent.height = static_cast<uint32_t>(pipeline.GetRenderArea().GetExtent().m_y * GetScissor().m_w);
-	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);*/
+	auto scissor = GetScissor();
+	VkRect2D scissorRect = {};
+	scissorRect.offset.x = scissor ? scissor->m_x : 0;
+	scissorRect.offset.y = scissor ? scissor->m_y : 0;
+	scissorRect.extent.width = scissor ? scissor->m_z : Window::Get()->GetSize().m_x;
+	scissorRect.extent.height = scissor ? scissor->m_w : Window::Get()->GetSize().m_y;
+	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);

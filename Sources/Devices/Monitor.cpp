@@ -11,12 +11,36 @@ Monitor::Monitor(GLFWmonitor *monitor) :
 {
 }
 
+Vector2ui Monitor::GetWorkareaSize() const
+{
+	int32_t width;
+	int32_t height;
+	glfwGetMonitorWorkarea(m_monitor, nullptr, nullptr, &width, &height);
+	return Vector2ui(width, height);
+}
+
+Vector2ui Monitor::GetWorkareaPosition() const
+{
+	int32_t xPos;
+	int32_t yPos;
+	glfwGetMonitorWorkarea(m_monitor, &xPos, &yPos, nullptr, nullptr);
+	return Vector2ui(xPos, yPos);
+}
+
 Vector2ui Monitor::GetSize() const
 {
 	int32_t widthMM;
 	int32_t heightMM;
 	glfwGetMonitorPhysicalSize(m_monitor, &widthMM, &heightMM);
 	return Vector2ui(widthMM, heightMM);
+}
+
+Vector2f Monitor::GetContentScale() const
+{
+	float xScale;
+	float yScale;
+	glfwGetMonitorContentScale(m_monitor, &xScale, &yScale);
+	return Vector2f(xScale, yScale);
 }
 
 Vector2ui Monitor::GetPosition() const
@@ -35,7 +59,7 @@ std::string Monitor::GetName() const
 std::vector<VideoMode> Monitor::GetVideoModes() const
 {
 	int32_t videoModeCount;
-	const GLFWvidmode *videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
+	auto videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
 	std::vector<VideoMode> modes(static_cast<uint32_t>(videoModeCount));
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++)
@@ -48,13 +72,13 @@ std::vector<VideoMode> Monitor::GetVideoModes() const
 
 VideoMode Monitor::GetVideoMode() const
 {
-	const GLFWvidmode *videoMode = glfwGetVideoMode(m_monitor);
+	auto videoMode = glfwGetVideoMode(m_monitor);
 	return *reinterpret_cast<const VideoMode *>(videoMode);
 }
 
 GammaRamp Monitor::GetGammaRamp() const
 {
-	const GLFWgammaramp *gamaRamp = glfwGetGammaRamp(m_monitor);
+	auto gamaRamp = glfwGetGammaRamp(m_monitor);
 	return *reinterpret_cast<const GammaRamp *>(gamaRamp);
 }
 

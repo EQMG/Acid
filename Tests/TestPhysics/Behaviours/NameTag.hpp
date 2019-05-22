@@ -26,6 +26,6 @@ private:
 	float m_heightOffset;
 
 	Transform m_transform;
-	Text m_text;
+	//Text m_text;
 };
 }

@@ -9,23 +9,23 @@
 namespace test
 {
 Pannable::Pannable(UiObject *parent) :
-	UiObject(parent, UiTransform::Maximum),
+	UiObject(parent, UiTransform(Window::Get()->GetSize())),
 	m_buttonReset(ButtonKeyboard({ Key::Enter })),
 	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
 	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
-	m_settings(parent, UiTransform(Vector2f(0.02f, 0.02f), UiAnchor::TopLeft, UiAspect::Size, Vector2f(0.25f, 0.2f)), UiInputButton::BackgroundColour, UiPanel::Resize::Right,
+	m_settings(parent, UiTransform(Vector2f(0.02f, 0.02f), UiAnchor::LeftTop, Vector2f(0.25f, 0.2f)), UiInputButton::BackgroundColour, UiPanel::Resize::Right,
 		ScrollBar::None),
-	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiTransform(Vector2f(0.5f, 0.06f), UiAnchor::TopCentre)),
-	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiTransform(Vector2f(0.5f, 0.30f), UiAnchor::TopCentre)),
+	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiTransform(Vector2f(0.5f, 0.06f), UiAnchor::CentreTop)),
+	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiTransform(Vector2f(0.5f, 0.30f), UiAnchor::CentreTop)),
 	m_zoom(1.0f),
-	m_title(this, UiTransform(Vector2f(0.5f, -0.7f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size | UiAspect::Scale), 6.0f, "Acid Font",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 1.0f, Colour::Red, 0.0f, 0.015f),
-	m_body(this, UiTransform(Vector2f(0.5f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size | UiAspect::Scale), 1.8f, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, 10.0f, Colour::Black, 0.002f, 0.015),
-	m_textFrameTime(parent, UiTransform(Vector2f(0.002f, 0.998f), UiAnchor::BottomLeft), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
+	m_title(this, UiTransform(Vector2f(0.5f, -0.7f), UiAnchor::Centre), 6.0f, "Acid Font",
+		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Red, 0.0f, 0.015f),
+	m_body(this, UiTransform(Vector2f(0.5f, 0.0f), UiAnchor::Centre), 1.8f, "",
+		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Black, 0.002f, 0.015),
+	m_textFrameTime(parent, UiTransform(Vector2f(0.002f, 0.998f), UiAnchor::LeftBottom), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
 		Text::Justify::Left),
-	m_textFps(parent, UiTransform(Vector2f(0.002f, 0.978f), UiAnchor::BottomLeft), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
-	m_textUps(parent, UiTransform(Vector2f(0.002f, 0.958f), UiAnchor::BottomLeft), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
+	m_textFps(parent, UiTransform(Vector2f(0.002f, 0.978f), UiAnchor::LeftBottom), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
+	m_textUps(parent, UiTransform(Vector2f(0.002f, 0.958f), UiAnchor::LeftBottom), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 {
 	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -45,7 +45,7 @@ Pannable::Pannable(UiObject *parent) :
 		Log::Out("Test Hat: %i\n", action);
 	});
 
-	m_settings.SetHeight(4.0f);
+	m_settings.GetTransform().SetDepth(-4.0f);
 	m_masterVolume.OnValue().Add([this](float value)
 	{
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
@@ -89,6 +89,8 @@ Pannable::Pannable(UiObject *parent) :
 
 void Pannable::UpdateObject()
 {
+	GetTransform().SetSize(Window::Get()->GetSize());
+
 	m_textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));

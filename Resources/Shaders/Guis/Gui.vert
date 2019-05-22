@@ -7,6 +7,8 @@ layout(binding = 0) uniform UniformObject
 	mat4 modelView;
 	float alpha;
 
+	float aspectRatio;
+
 	vec4 colourOffset;
 	vec2 atlasOffset;
 	vec2 atlasScale;

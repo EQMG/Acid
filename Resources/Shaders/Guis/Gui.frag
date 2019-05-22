@@ -6,6 +6,8 @@ layout(binding = 0) uniform UniformObject
 {
 	mat4 modelView;
 	float alpha;
+	
+	float aspectRatio;
 
 	vec4 colourOffset;
 	vec2 atlasOffset;
@@ -42,19 +44,19 @@ float processAxis(float coord, float textureBorder, float windowBorder)
 
 void main() 
 {
-	/*if (object.ninePatches != vec4(0.0f))
+	if (object.ninePatches != vec4(0.0f))
 	{
 		vec2 newUV = vec2(
-		    processAxis(inUV.x, object.ninePatches.x, object.ninePatches.x / (object.screenOffset.x / object.screenOffset.y) / object.aspectRatio),
+		    processAxis(inUV.x, object.ninePatches.x, object.ninePatches.x / object.aspectRatio),
 		    processAxis(inUV.y, object.ninePatches.y, object.ninePatches.y)
 		);
 
 		outColour = texture(samplerColour, newUV);
 	}
 	else
-	{*/
+	{
 		outColour = texture(samplerColour, inUV);
-	//}
+	}
 
 	outColour *= object.colourOffset;
 	outColour.a *= object.alpha;

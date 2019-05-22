@@ -1,6 +1,7 @@
 #include "MainRenderer.hpp"
 
 #include <Fonts/SubrenderFonts.hpp>
+#include <Fonts/SubrenderFonts2.hpp>
 #include <Guis/SubrenderGuis.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -24,6 +25,7 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->ClearSubrenders();
 	Graphics::Get()->AddSubrender<SubrenderGuis>(Pipeline::Stage(0, 0));
 	Graphics::Get()->AddSubrender<SubrenderFonts>(Pipeline::Stage(0, 0));
+	Graphics::Get()->AddSubrender<SubrenderFonts2>(Pipeline::Stage(0, 0));
 }
 
 void MainRenderer::Update()

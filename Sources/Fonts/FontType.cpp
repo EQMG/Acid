@@ -38,8 +38,8 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 
 FontType::FontType(std::string filename, std::string style, const bool &load) :
 	m_filename(std::move(filename)),
-	m_style(std::move(style))
-	//m_instances(0)
+	m_style(std::move(style)),
+	m_instances(0)
 {
 	if (load)
 	{
@@ -49,7 +49,7 @@ FontType::FontType(std::string filename, std::string style, const bool &load) :
 
 void FontType::Update(const std::vector<Text *> &texts)
 {
-	/*m_instances = 0;
+	m_instances = 0;
 
 	if (texts.empty())
 	{
@@ -59,14 +59,15 @@ void FontType::Update(const std::vector<Text *> &texts)
 	Instance *instances;
 	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&instances));
 
+	auto extent = Window::Get()->GetSize();
+
 	for (const auto &text : texts)
 	{
-		Vector2f extent = Window::Get()->GetSize();
-		auto scale = text->GetScreenScale() / 64.0f;
-		//auto dimensions = 2.0f * text->GetScreenDimensions();
-		auto position = extent * text->GetScreenPosition(); // 2.0f *text->GetScreenPosition() - 1.0f;
+		auto fontSize = text->GetFontSize() * text->GetScreenScale() / 1000.0f;
+		auto size = text->GetScreenTransform().GetSize();
+		auto position = text->GetScreenTransform().GetPosition();
 
-		Vector2f localOffset = Vector2f();
+		Vector2f localOffset;
 
 		for (const auto &c : text->GetString())
 		{
@@ -82,37 +83,32 @@ void FontType::Update(const std::vector<Text *> &texts)
 			if (c == '\n')
 			{
 				localOffset.m_x = 0.0f;
-				localOffset.m_y += gi->vertAdvance * scale.m_y;
+				localOffset.m_y += gi->vertAdvance * fontSize.m_y;
 				continue;
 			}
 
-			instance->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			instance->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
-			instance->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * scale.m_x) / (extent.m_x / 2.0f) - 1.0f;
-			instance->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * scale.m_y) / (extent.m_y / 2.0f) - 1.0f;
-
-			//inst->rect.minX = ((x + local.m_x) + gi->bbox.minX * localScale) / (extent.m_x / 2.0f) - 1.0f;
-			//inst->rect.minY = ((y + local.m_y) - gi->bbox.minY * localScale) / (extent.m_y / 2.0f) - 1.0f;
-			//inst->rect.maxX = ((x + local.m_x) + gi->bbox.maxX * localScale) / (extent.m_x / 2.0f) - 1.0f;
-			//inst->rect.maxY = ((y + local.m_y) - gi->bbox.maxY * localScale) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.minX = ((position.m_x + localOffset.m_x) + gi->bbox.minX * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.minY = ((position.m_y + localOffset.m_y) - gi->bbox.minY * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
+			instance->m_rect.maxX = ((position.m_x + localOffset.m_x) + gi->bbox.maxX * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
+			instance->m_rect.maxY = ((position.m_y + localOffset.m_y) - gi->bbox.maxY * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
 			if (instance->m_rect.minX <= 1.0f && instance->m_rect.maxX >= -1.0f && instance->m_rect.maxY <= 1.0f && instance->m_rect.minY >= -1.0f)
 			{
 				instance->m_glyphIndex = glyphIndex;
-				instance->m_sharpness = scale.m_x;
+				instance->m_sharpness = fontSize.m_x;
 				instance->m_colour = text->m_textColour;
 
 				m_instances++;
 			}
 
-			localOffset.m_x += gi->horiAdvance * scale.m_x;
+			localOffset.m_x += gi->horiAdvance * fontSize.m_x;
 		}
 	}
 
-	m_instanceBuffer->UnmapMemory();*/
+	m_instanceBuffer->UnmapMemory();
 }
 
-/*bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
+bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	if (m_instances == 0)
 	{
@@ -137,7 +133,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
 	vkCmdDraw(commandBuffer, 4, m_instances, 0, 0);
 	return true;
-}*/
+}
 
 void FontType::Load()
 {
@@ -148,7 +144,7 @@ void FontType::Load()
 
 	m_image = Image2d::Create(m_filename + "/" + m_style + ".png");
 	m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
-	//LoadFont(m_filename + "/" + m_style + ".ttf");
+	LoadFont(m_filename + "/" + m_style + ".ttf");
 }
 
 const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
@@ -165,7 +161,7 @@ Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 	return metadata;
 }
 
-/*uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
+uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
 {
 	return (value + alignment - 1) / alignment * alignment;
 }
@@ -294,5 +290,5 @@ void FontType::LoadFont(const std::string &filename)
 	{
 		throw std::runtime_error("Freetype failed to destory library");
 	}
-}*/
+}
 }
