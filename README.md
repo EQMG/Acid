@@ -2,14 +2,16 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
-[![Build Status](https://travis-ci.org/Equilibrium-Games/Acid.svg?branch=master)](https://travis-ci.org/Equilibrium-Games/Acid)
-[![Documentation](https://codedocs.xyz/Equilibrium-Games/Acid.svg)](https://codedocs.xyz/Equilibrium-Games/Acid/)
+[![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
+[![Documentation](https://codedocs.xyz/EQMG/Acid.svg)](https://codedocs.xyz/eqmg/Acid/)
 
-Acid is an open-source, cross-platform game engine written in modern C++17 with a focus on modularity and simplicity. Features are broken down into modules, modules can be loaded or unloaded from Acid with ease. Acid uses an Entity Component System that breaks entity features between serializable Components.
+Acid is an open-source, cross-platform game engine written in modern C++17 and structured to be fast, simple, and extremely modular.
 
-Vulkan is used as the only rendering API, as a result, Vulkan functions can be used directly in games, but should be avoided. Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK), eventually, DirectX will be supported in a similar way.
+Vulkan is the sole graphics API, the Khronos Vulkan API can be accessed in apps with the provided Acid rendering pipeline. Apple's Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK); eventually, Microsoft's DirectX will be supported in a similar way.
 
-Acid is licensed under the MIT licence and is open to contributions, read [Compiling](#Compiling) to get started with development.
+This project is being worked on part-time by a single developer, the entire project is under heavy development, expect bugs, API changes, and plenty of missing features.
+
+Acid is licensed under the MIT licence and is open to contributions, read [Compiling](#Compiling) to get started with development. 
 
 ## Links
 GitBooks   [Git Books](https://acid.equilibrium.games)
@@ -23,26 +25,25 @@ This is a list of current features in Acid:
  * Multiplatform (Windows, Linux, MacOS, 32bit and 64bit)
  * Multithreaded command buffers and thread safety
  * On the fly GLSL to SPIR-V compilation and reflection
- * Graphics and compute pipelines
- * Deferred rendering (PBR, Simple)
+ * Deferred physically based rendering (PBR)
  * Networking (HTTP, FTP, UDP, TCP)
- * Serialization (JSON, YAML, XML)
- * Resource management
+ * Object serialization (JSON, YAML, XML)
+ * Resource management using serialization
  * Event delegate callbacks with scoped functions
  * Bullet physics
  * Entity component system
  * Particle effect systems
- * File path searching, and packaging
+ * File multi-path searching, and packaging
  * GUI and SDF font rendering
  * Audio systems (OGG, WAV)
  * Shadow mapping
- * Post effects (Lensflare, Glow, Blur, SSAO, ...)
- * Model file loading (OBJ)
+ * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)
+ * Model file loading (OBJ, GLTF2)
  * Animations loading (COLLADA)
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
 
 ## Dependencies
-Acid uses the following libraries:
+Acid makes use of the following libraries:
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [GLFW](https://github.com/glfw/glfw) - Window creation

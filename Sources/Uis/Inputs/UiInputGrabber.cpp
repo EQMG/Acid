@@ -22,26 +22,23 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	{
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
-	OnClick().Add([this](MouseButton mouseButton)
-	{
-		if (mouseButton == MouseButton::Left)
-		{
-			if (m_background.IsSelected())
-			{
-				SetUpdating(true);
-				CancelEvent(MouseButton::Left);
-			}
-			else if (m_updating)
-			{
-				SetUpdating(false);
-				CancelEvent(MouseButton::Left);
-			}
-		}
-	});
 }
 
 void UiInputGrabber::UpdateObject()
 {
+	if (Uis::Get()->WasDown(MouseButton::Left))
+	{
+		if (m_background.IsSelected())
+		{
+			SetUpdating(true);
+			CancelEvent(MouseButton::Left);
+		}
+		else if (m_updating)
+		{
+			SetUpdating(false);
+			CancelEvent(MouseButton::Left);
+		}
+	}
 	if (!m_updating)
 	{
 		if (m_background.IsSelected() && !m_mouseOver)
