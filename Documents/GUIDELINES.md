@@ -1,9 +1,9 @@
 # Acid Guidelines 
-January 6, 2019
+May 22, 2019
  
-This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](LICENSE.md) file. For more about the project read our read more on our [README.md](README.md) file.
+This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](../LICENSE.md) file. For more about the project read our read more on our [README.md](../README.md) file.
 
-You may also import default settings for [CLion](Documents/CLion-Settings.jar), or [Visual Studio Resharper](Documents/Resharper.DotSettings).
+You may also import default settings for [CLion](CLion-Settings.jar), or [Visual Studio Resharper](Resharper.DotSettings).
 
 # Introduction 
 This is a set of guidelines for Acid C++17, and GLSL 450. Our guideline is setup for the best code performance, documentation, uniformaty, and readability.
@@ -17,31 +17,26 @@ This is a set of guidelines for Acid C++17, and GLSL 450. Our guideline is setup
 
 namespace Examples
 {
-	enum Enable
+	enum class Enable
 	{
-		ENABLE_ON = 0,
-		ENABLE_OFF = 1
+		Null, On, Off
 	}
 
-	/// <summary>
-	/// A example class.
-	/// </summary>
+	/**
+	 * @brief A example class.
+	 */
 	class Example
 	{
-	private:
-		uint32_t m_x;
-		float m_y;
-		std::vector<int16_t> m_list;
 	public:
-		Example(const int &x = 0);
+		explicit Example(const int &x = 0);
 
 		~Example();
 	
-		/// <summary>
-		/// Does stuff!
-		/// </summary>
-		/// <param name="doThing"> If a thing will be done. </param>
-		/// <returns> If there was a error (result does not equal 0). </returns>
+		/**
+		 * Does stuff!
+		 * @param doThing If a thing will be done.
+		 * @return If there was a error (result does not equal 0).
+		 */
 		int32_t DoStuff(const bool &doThing);
 
 		const uint32_t &GetX() const { return m_x; }
@@ -53,6 +48,10 @@ namespace Examples
 		void SetY(const float &y) { m_y = y; }
 
 		bool IsListEmpty() const { return m_list.empty(); }
+	private:
+		uint32_t m_x;
+		float m_y;
+		std::vector<int16_t> m_list;
 	}
 }
 ```
@@ -67,8 +66,7 @@ namespace Examples
 {
 	Example::Example(const int &x) :
 		m_x(x),
-        m_y(-1.0f),
-		m_list(std::vector<int16_t>())
+        m_y(-1.0f)
 	{
 	}
 	
@@ -79,18 +77,18 @@ namespace Examples
 	int32_t Example::DoStuff(const bool &doThing)
 	{
 		m_list.emplace_back(m_x + m_list.size());
-		fprintf(stdout, "X: %i\n", m_x);
+		printf("X: %i\n", m_x);
 
 		if (doThing)
 		{
 			for (auto item : m_list)
 			{
-				fprintf(stdout, "Item: %i\n", m_x);
+				printf("Item: %i\n", m_x);
 			}
 		}
 		else
 		{
-			fprintf(stdout, "doThing is false!\n");
+			printf("doThing is false!\n");
 			return 1;
 		}
 
@@ -115,7 +113,7 @@ namespace Examples
 Classes, all methods, functions, and files are camelcase + first letter upper. Member variables start with m_, paramaters are normal camelcased. Tabs are used for indentations, and braces are required for all blocks. Use the member initializer list no matter what. Avoid compiler macros where possible! Use multiple lines instead of long lines, const as much as possible. Line length is usualy never wrapped, VS wraps lines for readability.
 
 # Date Guide
-Our date format is day.month.year, for example December 1st 2017 is written as '1.12.17'. 
+Our date format is day.month.year, for example January 20th 2019 is written as '20.1.19'. 
 
 # GLSL
 ```glsl
@@ -123,7 +121,7 @@ Our date format is day.month.year, for example December 1st 2017 is written as '
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UboObject
+layout(set = 0, binding = 0) uniform UniformObject
 {
 	float passedValue;
 } object;
@@ -132,6 +130,6 @@ layout(location = 0) out vec4 outColour;
 
 void main(void) 
 {
-	outColour = vec4(object.passedValue, 0.0, 0.0, 1.0);
+	outColour = vec4(object.passedValue, 0.0f, 0.0f, 1.0f);
 }
 ```

@@ -23,12 +23,13 @@ public:
 	static const float FontSize;
 	static const Time SlideTime;
 
-	static const Colour TitleColour;
 	static const Colour ValueColour;
+	static const Colour TitleColour;
 
 	static const Colour BackgroundColour;
 	static const Colour PrimaryColour;
 	static const Colour SelectedColour;
+	static const Colour HoverColour;
 
 private:
 	Gui m_background;
