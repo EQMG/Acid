@@ -12,7 +12,7 @@ class ACID_EXPORT UiInputText :
 	public UiObject
 {
 public:
-	UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength,
+	UiInputText(UiObject *parent, const std::string &title, std::string value, const int32_t &maxLength,
 		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	void UpdateObject() override;

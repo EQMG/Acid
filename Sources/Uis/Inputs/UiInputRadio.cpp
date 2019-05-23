@@ -5,20 +5,15 @@
 
 namespace acid
 {
-static const Vector2f SIZE = Vector2f(0.22f, 0.0315f);
-
 UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, const bool &value, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, UiTransform::Left, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
-	m_fill(&m_background, UiTransform::Maximum, nullptr, Colour::White),
-	m_text(this, UiTransform::Left, UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::ValueColour),
+	m_background(this, UiTransform(Vector2i(26, 26), UiAnchor::LeftCentre), Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
+	m_fill(&m_background, UiTransform(Vector2i(26, 26), UiAnchor::Centre), nullptr, Colour::White),
+	m_text(this, UiTransform(Vector2i(144, 26), UiAnchor::LeftCentre, Vector2i(31, 0)), UiInputButton::FontSize, string, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
 	m_type(type)
 {
-	GetTransform().SetScale(SIZE);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.GetTransform().SetScale(Vector2f(GetTransform().GetScale().m_y));
-	m_text.GetTransform().SetPosition(Vector2f(5.4f * GetTransform().GetScale().m_y, 0.5f));
 	UpdateValue();
 
 	OnSelected().Add([this](bool selected)
