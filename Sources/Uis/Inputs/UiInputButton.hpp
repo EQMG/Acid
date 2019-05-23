@@ -29,7 +29,7 @@ public:
 	static const Colour BackgroundColour;
 	static const Colour PrimaryColour;
 	static const Colour SelectedColour;
-	static const Colour HoverColour;
+	static const Colour ButtonColour;
 
 private:
 	Gui m_background;

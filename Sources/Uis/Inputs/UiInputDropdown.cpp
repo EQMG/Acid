@@ -5,17 +5,16 @@
 
 namespace acid
 {
-UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, const std::vector<std::string> &options, const UiTransform &transform) :
+UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, std::vector<std::string> options, const UiTransform &transform) :
 	UiObject(parent, transform),
 	//m_slider(this, UiTransform(Vector2f(0.5f, 0.0f), UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 	//	UiInputButton::PrimaryColour),
-	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(Vector2f(1.0f - (2.5f * UiInputButton::Padding.m_x), 0.5f), UiAnchor::CentreRight, UiAspect::Position | UiAspect::Size), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, 1.0f, UiInputButton::TitleColour),
+	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
 	m_value(value),
-	m_options(options)
+	m_options(std::move(options))
 {
-	GetTransform().SetScale(UiInputButton::Size);
 	//m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	//m_slider.SetHeight(1.0f);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));

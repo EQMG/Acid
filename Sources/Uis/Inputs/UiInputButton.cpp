@@ -16,11 +16,11 @@ const Colour UiInputButton::TitleColour = Colour("#9C9A9C");
 const Colour UiInputButton::BackgroundColour = Colour("#282729");
 const Colour UiInputButton::PrimaryColour = Colour("#121113");
 const Colour UiInputButton::SelectedColour = Colour("#FEA62A");
-const Colour UiInputButton::HoverColour = Colour("#D87700");
+const Colour UiInputButton::ButtonColour = Colour("#3C3B3C");
 
 UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button_Filled.png"), SelectedColour),
+	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button_Filled.png"), ButtonColour),
 	m_text(this, UiTransform(transform.GetSize() - (2 * Padding), UiAnchor::Centre), FontSize, string, 
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, ValueColour)
 {
@@ -28,7 +28,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? HoverColour : SelectedColour, SlideTime));
+		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
 		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
 }

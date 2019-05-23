@@ -1,19 +1,19 @@
 ﻿#include "UiInputText.hpp"
-
+#include <utility>
 #include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
 {
-UiInputText::UiInputText(UiObject *parent, const std::string &title, const std::string &value, const int32_t &maxLength, const UiTransform &transform) :
+UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, const int32_t &maxLength, const UiTransform &transform) :
 	UiObject(parent, transform),
 	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, "",
+	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, value,
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(value),
+	m_value(std::move(value)),
 	m_maxLength(maxLength),
 	m_lastKey(0),
 	m_updating(false),

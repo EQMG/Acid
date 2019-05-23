@@ -11,8 +11,8 @@ class ACID_EXPORT UiInputDropdown :
 	public UiObject
 {
 public:
-	UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, const std::vector<std::string> &options,
-		const UiTransform &transform = UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::Centre, UiAspect::Position | UiAspect::Size));
+	UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, std::vector<std::string> options,
+		const UiTransform &transform = UiTransform(UiInputButton::Size));
 
 	void UpdateObject() override;
 

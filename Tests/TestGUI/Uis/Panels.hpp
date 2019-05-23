@@ -3,8 +3,9 @@
 #include <Guis/Gui.hpp>
 #include <Uis/Inputs/UiInputBoolean.hpp>
 #include <Uis/Inputs/UiInputButton.hpp>
+#include <Uis/Inputs/UiInputDropdown.hpp>
 #include <Uis/Inputs/UiInputGrabber.hpp>
-//#include <Uis/Inputs/UiInputRadio.hpp>
+#include <Uis/Inputs/UiInputRadio.hpp>
 #include <Uis/Inputs/UiInputSlider.hpp>
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiObject.hpp>
@@ -61,14 +62,20 @@ private:
 	UiPanel m_gui0;
 	UiInputBoolean m_boolean0;
 	UiInputButton m_button0;
+	UiInputDropdown m_dropdown0;
 	UiGrabberJoystick m_grabber0;
 	UiGrabberKeyboard m_grabber1;
 	UiGrabberMouse m_grabber2;
-	//UiInputRadio m_radio0a;
-	//UiInputRadio m_radio0b;
-	//UiRadioManager m_radioManager0;
+	UiInputRadio m_radio0a;
+	UiInputRadio m_radio0b;
+	UiInputRadio m_radio0c;
+	UiRadioManager m_radioManager0;
 	UiInputSlider m_slider0;
 	UiInputText m_text0;
+
+	UiInputText m_textX;
+	UiInputText m_textY;
+	UiInputText m_textZ;
 
 	Gui m_gui1;
 	Gui m_gui2;
