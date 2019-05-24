@@ -50,7 +50,7 @@ class ACID_EXPORT Monitor
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);
 
-	ACID_HIDDEN GLFWmonitor *GetMonitor() const { return m_monitor; }
+	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return m_monitor; }
 
 	const bool &IsPrimary() const { return m_primary; }
 

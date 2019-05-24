@@ -9,6 +9,7 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize
 	const Colour &textColour, const float &kerning, const float &leading) :
 	UiObject(parent, rectangle),
 	m_numberLines(0),
+	m_lastSize(rectangle.GetSize()),
 	m_fontSize(fontSize),
 	m_string(std::move(text)),
 	m_justify(justify),
@@ -32,8 +33,14 @@ void Text::UpdateObject()
 	if (m_newString.has_value())
 	{
 		m_string = *m_newString;
-		LoadText();
 		m_newString = std::nullopt;
+		LoadText();
+	}
+
+	if (GetScreenTransform().GetSize() != m_lastSize)
+	{
+		m_lastSize = GetScreenTransform().GetSize();
+		LoadText();
 	}
 
 	m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
@@ -78,6 +85,12 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	return m_model->CmdRender(commandBuffer);
+}
+
+void Text::SetFontSize(const float &fontSize)
+{
+	m_fontSize = fontSize;
+	m_lastSize = Vector2f();
 }
 
 void Text::SetString(const std::string &string)
@@ -181,7 +194,7 @@ void Text::LoadText()
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
-	float maxLength = GetTransform().GetSize().m_x;
+	float maxLength = m_lastSize.m_x;
 
 	std::vector<Line> lines;
 	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
@@ -216,9 +229,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 				continue;
 			}
 
-			auto character = m_fontType->GetMetadata()->GetCharacter(ascii);
-
-			if (character)
+			if (auto character = m_fontType->GetMetadata()->GetCharacter(ascii); character)
 			{
 				currentWord.AddCharacter(*character, m_kerning);
 			}

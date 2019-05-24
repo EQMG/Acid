@@ -64,8 +64,8 @@ using namespace std::chrono_literals;
 #	  endif
 #	 endif
 #  endif
-#  define ACID_HIDDEN
+#  define ACID_NO_EXPORT
 #else
 #  define ACID_EXPORT __attribute__ ((visibility ("default")))
-#  define ACID_HIDDEN __attribute__ ((visibility ("hidden")))
+#  define ACID_NO_EXPORT __attribute__ ((visibility ("hidden")))
 #endif

@@ -1,24 +1,15 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid_03.png" alt="Acid" height="130px">
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mattparks5855)
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/mattparks5855)
+[![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 [![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
-[![Documentation](https://codedocs.xyz/EQMG/Acid.svg)](https://codedocs.xyz/EQMG/Acid/)
 
 Acid is an open-source, cross-platform game engine written in modern C++17 and structured to be fast, simple, and extremely modular.
 
-Vulkan is the sole graphics API, the Khronos Vulkan API can be accessed in apps with the provided Acid rendering pipeline. Apple's Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK); eventually, Microsoft's DirectX will be supported in a similar way.
+Vulkan is the sole graphics API, Vulkan can be accessed in apps with the provided Acid rendering pipeline. Metal is supported through [MoltenVK](https://github.com/KhronosGroup/MoltenVK); eventually, DirectX will be supported in a similar way.
 
-This project is being worked on part-time by a single developer, the entire project is under heavy development, expect bugs, API changes, and plenty of missing features.
-
-Acid is licensed under the MIT licence and is open to contributions, read [Compiling](#Compiling) to get started with development. 
-
-## Links
-GitBooks   [Git Books](https://acid.equilibrium.games)
-
-Trello   [Board](https://trello.com/b/ZRvpbbYC)
-
-Website   [Learn more](https://equilibrium.games)
+This project is being worked on part-time by a single developer, this is under heavy development, expect bugs, API changes, and plenty of missing features.
 
 ## Features
 This is a list of current features in Acid:
@@ -75,7 +66,7 @@ auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3f::Right), Audio::
 auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::Identity);
 
 // Creates a entity.
-auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(6.7f, 6.7f, -8.0f), Vector3f::Zero, 3.0f));
+auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(), 3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
 sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
 sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
@@ -112,18 +103,18 @@ da = Vector3f(10.0f, -4.11f, 99.991f);
 // Time addition.
 Time dateTime = 4h + 2min + 11s + 9ms + 1us + 4ns;
 
-// Calls the function once after x seconds.
-Timers::Get()->Once(0.333s, []()
+// Calls the function once after 150 milliseconds.
+Timers::Get()->Once(150ms, []()
 {
 	Log::Out("Timer Hello World!\n");
 });
-// Calls the function every x seconds. 
+// Calls the function every 4 seconds. 
 Timers::Get()->Every(4s, []()
 {
 	Log::Out("Timer Every Tick\n");
 });
-// Calls the funcion every x seconds y times.
-Timers::Get()->Repeat(2s, 3, []()
+// Calls the funcion every 7 seconds 3 times.
+Timers::Get()->Repeat(7s, 3, []()
 {
 	static uint32_t i = 0;
 	Log::Out("Timer Repeat Tick #%i\n", i);
