@@ -32,9 +32,9 @@ void ParticleSystem::Update()
 		return;
 	}
 
-	m_elapsedEmit = ElapsedTime(Time::Seconds(1.0f / m_pps));
+	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (float elapsed = m_elapsedEmit.GetElapsed(); elapsed != 0)
+	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed)
 	{
 		auto emitters = GetParent()->GetComponents<Emitter>();
 

@@ -63,7 +63,7 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->AddSubrender<SubrenderDeferred>(Pipeline::Stage(1, 1));
 	Graphics::Get()->AddSubrender<SubrenderParticles>(Pipeline::Stage(1, 1));
 
-	//Graphics::Get()->AddSubrender<FilterFxaa>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<FilterFxaa>(Pipeline::Stage(1, 2));
 	//Graphics::Get()->AddSubrender<FilterTone>(Pipeline::Stage(1, 2));
 	//Graphics::Get()->AddSubrender<FilterSsao>(Pipeline::Stage(1, 2));
 	//auto sceneBlur = Graphics::Get()->AddSubrender<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
@@ -73,7 +73,7 @@ MainRenderer::MainRenderer()
 	//Graphics::Get()->AddSubrender<FilterLensflare>(Pipeline::Stage(1, 2));
 	//Graphics::Get()->AddSubrender<FilterTiltshift>(Pipeline::Stage(1, 2));
 	//Graphics::Get()->AddSubrender<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//Graphics::Get()->AddSubrender<FilterVignette>(Pipeline::Stage(1, 2));
+	Graphics::Get()->AddSubrender<FilterVignette>(Pipeline::Stage(1, 2));
 	//Graphics::Get()->AddSubrender<FilterGrain>(Pipeline::Stage(1, 2));
 	Graphics::Get()->AddSubrender<FilterDefault>(Pipeline::Stage(1, 2), true);
 	//Graphics::Get()->AddSubrender<RendererGizmos>(Pipeline::Stage(1, 2));
