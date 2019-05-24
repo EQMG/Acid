@@ -166,7 +166,7 @@ public:
 	 */
 	void SetIconified(const bool &iconify);
 
-	ACID_HIDDEN GLFWwindow *GetWindow() const { return m_window; }
+	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
 
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
 
@@ -238,9 +238,9 @@ public:
 	 */
 	Delegate<void(bool)> &OnIconify() { return m_onIconify; }
 
-	ACID_HIDDEN static std::string StringifyResultGlfw(const int32_t &result);
+	ACID_NO_EXPORT static std::string StringifyResultGlfw(const int32_t &result);
 
-	ACID_HIDDEN static void CheckGlfw(const int32_t &result);
+	ACID_NO_EXPORT static void CheckGlfw(const int32_t &result);
 
 	std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 

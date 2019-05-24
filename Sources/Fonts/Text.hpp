@@ -61,6 +61,12 @@ public:
 	const float &GetFontSize() const { return m_fontSize; }
 
 	/**
+	 * Sets the font size.
+	 * @param fontSize The new font size,
+	 */
+	void SetFontSize(const float &fontSize);
+
+	/**
 	 * Gets the number of lines in this text.
 	 * @return The number of lines.
 	 */
@@ -291,6 +297,7 @@ private:
 
 	std::unique_ptr<Model> m_model;
 	uint32_t m_numberLines;
+	Vector2f m_lastSize;
 
 	float m_fontSize;
 	std::string m_string;

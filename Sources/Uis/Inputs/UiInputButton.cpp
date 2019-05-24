@@ -5,10 +5,10 @@
 
 namespace acid
 {
-const Vector2i UiInputButton::Size = Vector2f(175, 26);
+const Vector2i UiInputButton::Size = Vector2f(150, 22);
 const int32_t UiInputButton::Padding = 5;
-const float UiInputButton::FontSize = 12.0f;
-const Time UiInputButton::SlideTime = 0.1s;
+const float UiInputButton::FontSize = 11.0f;
+const Time UiInputButton::SlideTime = 0.07s;
 
 const Colour UiInputButton::ValueColour = Colour("#FEFCFE");
 const Colour UiInputButton::TitleColour = Colour("#9C9A9C");

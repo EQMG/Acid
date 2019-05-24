@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Maths/Vector2.hpp"
+#include "Helpers/EnumClass.hpp"
 
 namespace acid
 {
@@ -17,6 +18,20 @@ public:
 	static const Vector2f CentreBottom;
 	static const Vector2f RightBottom;
 };
+
+enum class UiMargins
+{
+	None = 0,
+	Left = 1,
+	Right = 2,
+	Top = 4,
+	Bottom = 8,
+	LeftTop = Left | Top,
+	RightBottom = Right | Bottom,
+	All = Left | Right | Top | Bottom
+};
+
+ENABLE_BITMASK_OPERATORS(UiMargins)
 
 /**
  * @brief Class that represents a 2D screen space transform.
