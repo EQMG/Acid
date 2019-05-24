@@ -12,7 +12,6 @@ Vulkan is the sole graphics API, Vulkan can be accessed in apps with the provide
 This project is being worked on part-time by a single developer, this is under heavy development, expect bugs, API changes, and plenty of missing features.
 
 ## Features
-This is a list of current features in Acid:
  * Multiplatform (Windows, Linux, MacOS, 32bit and 64bit)
  * Multithreaded command buffers and thread safety
  * On the fly GLSL to SPIR-V compilation and reflection
@@ -34,7 +33,6 @@ This is a list of current features in Acid:
  * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
 
 ## Dependencies
-Acid makes use of the following libraries:
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [GLFW](https://github.com/glfw/glfw) - Window creation
@@ -123,15 +121,15 @@ Timers::Get()->Repeat(7s, 3, []()
 ```
 
 ## Screenshots
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot1.png" alt="Acid" width="600px">
+<img src="/Documents/Screenshot1.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot2.png" alt="Acid" width="600px">
+<img src="/Documents/Screenshot2.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot3.png" alt="Acid" width="600px">
+<img src="/Documents/Screenshot3.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot4.png" alt="Acid" width="600px">
+<img src="/Documents/Screenshot4.png" alt="Acid" width="600px">
 
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Screenshot5.png" alt="Acid" width="600px">
+<img src="/Documents/Screenshot5.png" alt="Acid" width="600px">
 
 ## Compiling
 All platforms depend on [CMake](https://cmake.org/download), 3.11 or higher, to generate IDE/make files.
