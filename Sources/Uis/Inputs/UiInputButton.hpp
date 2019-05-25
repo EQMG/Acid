@@ -19,7 +19,7 @@ public:
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
 	static const Vector2i Size;
-	static const int32_t Padding;
+	static const Vector2i Padding;
 	static const float FontSize;
 	static const Time SlideTime;
 

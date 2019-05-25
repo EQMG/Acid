@@ -95,7 +95,7 @@ void Pannable::UpdateObject()
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	Vector2f offset = GetTransform().GetPosition();
+	Vector2f offset = GetTransform().GetOffset();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
 	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector2f(m_zoom));
@@ -105,6 +105,6 @@ void Pannable::UpdateObject()
 		offset -= Mouse::Get()->GetDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 
-	GetTransform().SetPosition(offset);
+	GetTransform().SetOffset(offset);
 }
 }

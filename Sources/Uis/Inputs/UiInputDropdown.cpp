@@ -9,8 +9,8 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 	UiObject(parent, transform),
 	//m_slider(this, UiTransform(Vector2f(0.5f, 0.0f), UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 	//	UiInputButton::PrimaryColour),
-	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
+	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
 		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
 	m_value(value),
 	m_options(std::move(options))

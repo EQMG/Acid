@@ -8,12 +8,12 @@ namespace acid
 {
 UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_slider(this, UiTransform(transform.GetSize(), Vector2i(), UiAnchor::LeftTop), Image2d::Create("Guis/Button_Filled.png"),
+	m_slider(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour),
-	m_background(this, UiTransform(transform.GetSize(), UiAnchor::Centre), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::RightCentre, Vector2i(-UiInputButton::Padding, 0)), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(transform.GetSize() - (2 * UiInputButton::Padding), UiAnchor::LeftCentre, Vector2i(UiInputButton::Padding, 0)), UiInputButton::FontSize, "",
+	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Right, UiInputButton::TitleColour),
+	m_textValue(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize, "",
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value)
 {
