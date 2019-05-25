@@ -41,7 +41,8 @@ This project is being worked on part-time by a single developer, this is under h
  * [PhysFS](https://icculus.org/physfs) - Archive file access
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading
  * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation
- * [Freetype2](https://www.freetype.org/) - Font handling in text objects
+ * [TinyOBJ](https://github.com/syoyo/tinyobjloader) - OBJ model loading
+ * [TinyGLTF](https://github.com/syoyo/tinygltf/) - GLTF2 model loading
 
 # Code Snippets
 ```cpp

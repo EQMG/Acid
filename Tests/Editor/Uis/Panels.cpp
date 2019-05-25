@@ -3,7 +3,7 @@
 namespace test
 {
 Panels::Panels(UiObject *parent) :
-	UiObject(parent, UiTransform(Window::Get()->GetSize())),
+	UiObject(parent, UiTransform(UiMargins::All)),
 	m_hierarchy(this),
 	m_inspector(this)
 {
@@ -11,6 +11,5 @@ Panels::Panels(UiObject *parent) :
 
 void Panels::UpdateObject()
 {
-	GetTransform().SetSize(Window::Get()->GetSize());
 }
 }

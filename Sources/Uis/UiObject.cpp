@@ -43,8 +43,8 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 
 	if (selected)
 	{
-		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.GetPosition();
-		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenTransform.GetSize().m_x && distance.m_y <= m_screenTransform.GetSize().m_y;
+		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.m_offset;
+		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenTransform.m_size.m_x && distance.m_y <= m_screenTransform.m_size.m_y;
 	}
 
 	if (selected != m_selected)
@@ -86,20 +86,73 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 		m_screenAlpha *= m_parent->m_screenAlpha;
 		m_screenScale *= m_parent->m_screenScale;
 
-		m_screenTransform.m_size *= m_screenScale;
-		m_screenTransform.m_position *= m_screenScale;
+		m_screenTransform.m_offset *= m_screenScale;
+	}
 
-		m_screenTransform.m_position += m_parent->m_screenTransform.m_size * m_transform.GetAnchor();
-		m_screenTransform.m_position += m_parent->m_screenTransform.m_position;
+	m_screenTransform.m_size *= m_screenScale;
+
+	if (m_transform.m_margins)
+	{
+		if (m_parent != nullptr)
+		{
+			Vector2f leftTop = m_transform.GetAnchor0();
+
+			if (*m_transform.m_margins & UiMargins::Left)
+			{
+				leftTop.m_x = m_parent->m_screenTransform.m_size.m_x * leftTop.m_x;
+			}
+
+			if (*m_transform.m_margins & UiMargins::Top)
+			{
+				leftTop.m_y = m_parent->m_screenTransform.m_size.m_y * leftTop.m_y;
+			}
+
+			Vector2f rightBottom;
+
+			if (*m_transform.m_margins & UiMargins::Right)
+			{
+				rightBottom.m_x = m_parent->m_screenTransform.m_size.m_x * (1.0f + m_transform.GetAnchor1().m_x);
+			}
+			else
+			{
+				rightBottom.m_x = m_parent->m_screenTransform.m_size.m_x + m_transform.GetAnchor1().m_x;
+			}
+
+			if (*m_transform.m_margins & UiMargins::Bottom)
+			{
+				rightBottom.m_y = m_parent->m_screenTransform.m_size.m_y * (1.0f + m_transform.GetAnchor1().m_y);
+			}
+			else
+			{
+				rightBottom.m_y = m_parent->m_screenTransform.m_size.m_y + m_transform.GetAnchor1().m_y;
+			}
+
+			m_screenTransform.m_size = rightBottom - leftTop;
+			m_screenTransform.m_offset = m_parent->m_screenTransform.m_offset + leftTop;
+		}
+		else
+		{
+			/*if (*m_transform.m_margins != UiMargins::None)
+			{
+				throw std::runtime_error("UiTransform with a percent margin must have a parent.");
+			}*/
+
+			m_screenTransform.m_size = m_transform.GetAnchor1() - m_transform.GetAnchor0();
+			m_screenTransform.m_offset = m_transform.GetAnchor0();
+		}
 	}
 	else
 	{
-		m_screenTransform.m_size *= m_screenScale;
+		if (m_parent != nullptr)
+		{
+			m_screenTransform.m_offset += m_parent->m_screenTransform.m_size * m_transform.GetAnchor0();
+			m_screenTransform.m_offset += m_parent->m_screenTransform.m_offset;
+		}
+
+		m_screenTransform.m_offset -= m_screenTransform.m_size * m_transform.GetAnchor1();
 	}
 
-	m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor();
-
-	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_offset, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
 
 	// Adds this object to the list if it is visible.

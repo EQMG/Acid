@@ -65,7 +65,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 	{
 		auto fontSize = text->GetFontSize() * text->GetScreenScale() / 1000.0f;
 		auto size = text->GetScreenTransform().GetSize();
-		auto position = text->GetScreenTransform().GetPosition();
+		auto position = text->GetScreenTransform().GetOffset();
 
 		Vector2f localOffset;
 
