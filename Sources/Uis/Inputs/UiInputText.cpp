@@ -19,6 +19,8 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string
 	m_updating(false),
 	m_mouseOver(false)
 {
+	SetCursorHover(CursorStandard::Hand);
+
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
@@ -71,11 +73,6 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string
 			m_lastKey = 0;
 		}
 	}, this);
-
-	OnSelected().Add([this](bool selected)
-	{
-		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	});
 }
 
 void UiInputText::UpdateObject()

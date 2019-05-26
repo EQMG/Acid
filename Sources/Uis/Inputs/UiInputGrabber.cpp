@@ -16,12 +16,9 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	m_updating(false),
 	m_mouseOver(false)
 {
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	SetCursorHover(CursorStandard::Hand);
 
-	OnSelected().Add([this](bool selected)
-	{
-		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	});
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 }
 
 void UiInputGrabber::UpdateObject()

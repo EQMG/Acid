@@ -37,36 +37,11 @@ UiObject::~UiObject()
 	}
 }
 
-void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
+void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, UiObject *&cursorSelect)
 {
-	bool selected = IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused();
-
-	if (selected)
-	{
-		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.m_offset;
-		selected = distance.m_x >= 0.0f && distance.m_y >= 0.0f && distance.m_x <= m_screenTransform.m_size.m_x && distance.m_y <= m_screenTransform.m_size.m_y;
-	}
-
-	if (selected != m_selected)
-	{
-		m_selected = selected;
-		m_onSelected(m_selected);
-	}
-
 	if (!m_enabled)
 	{
 		return;
-	}
-
-	if (m_selected)
-	{
-		for (auto button : EnumIterator<MouseButton>())
-		{
-			if (Uis::Get()->WasDown(button))
-			{
-				m_onClick(button);
-			}
-		}
 	}
 
 	// Alpha and scale updates.
@@ -86,7 +61,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 		m_screenAlpha *= m_parent->m_screenAlpha;
 		m_screenScale *= m_parent->m_screenScale;
 
-		m_screenTransform.m_offset *= m_screenScale;
+		m_screenTransform.m_position *= m_screenScale;
 	}
 
 	m_screenTransform.m_size *= m_screenScale;
@@ -128,7 +103,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 			}
 
 			m_screenTransform.m_size = rightBottom - leftTop;
-			m_screenTransform.m_offset = m_parent->m_screenTransform.m_offset + leftTop;
+			m_screenTransform.m_position = leftTop + m_parent->m_screenTransform.m_position;
 		}
 		else
 		{
@@ -138,22 +113,53 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 			}*/
 
 			m_screenTransform.m_size = m_transform.GetAnchor1() - m_transform.GetAnchor0();
-			m_screenTransform.m_offset = m_transform.GetAnchor0();
+			m_screenTransform.m_position = m_transform.GetAnchor0();
 		}
 	}
 	else
 	{
 		if (m_parent != nullptr)
 		{
-			m_screenTransform.m_offset += m_parent->m_screenTransform.m_size * m_transform.GetAnchor0();
-			m_screenTransform.m_offset += m_parent->m_screenTransform.m_offset;
+			m_screenTransform.m_position += m_parent->m_screenTransform.m_size * m_transform.GetAnchor0();
+			m_screenTransform.m_position += m_parent->m_screenTransform.m_position;
 		}
 
-		m_screenTransform.m_offset -= m_screenTransform.m_size * m_transform.GetAnchor1();
+		m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor1();
 	}
 
-	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_offset, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
+
+	bool selected = false;
+
+	if (IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
+	{
+		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.m_position;
+		selected = distance.m_x <= m_screenTransform.m_size.m_x && distance.m_y <= m_screenTransform.m_size.m_y &&
+			distance.m_x >= 0.0f && distance.m_y >= 0.0f;
+	}
+
+	if (selected != m_selected)
+	{
+		m_selected = selected;
+		m_onSelected(m_selected);
+	}
+
+	if (m_selected)
+	{
+		if (m_cursorHover)
+		{
+			cursorSelect = this;
+		}
+
+		for (auto button : EnumIterator<MouseButton>())
+		{
+			if (Uis::Get()->WasDown(button))
+			{
+				m_onClick(button);
+			}
+		}
+	}
 
 	// Adds this object to the list if it is visible.
 	if (m_screenAlpha > 0.0f)
@@ -164,7 +170,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list)
 	// Update all children objects.
 	for (auto &child : m_children)
 	{
-		child->Update(viewMatrix, list);
+		child->Update(viewMatrix, list, cursorSelect);
 	}
 }
 

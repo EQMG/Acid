@@ -49,6 +49,7 @@ private:
 
 	std::map<MouseButton, SelectorMouse> m_selectors;
 	UiObject m_canvas;
+	UiObject *m_cursorSelect;
 	std::vector<UiObject *> m_objects;
 };
 }

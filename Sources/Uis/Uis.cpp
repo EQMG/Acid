@@ -3,12 +3,14 @@
 namespace acid
 {
 Uis::Uis() :
-	m_canvas(nullptr, UiTransform(Window::Get()->GetSize()))
+	m_canvas(nullptr, UiTransform(Window::Get()->GetSize())),
+	m_cursorSelect(nullptr)
 {
 	for (auto button : EnumIterator<MouseButton>())
 	{
 		m_selectors.emplace(button, SelectorMouse());
 	}
+
 }
 
 void Uis::Update()
@@ -20,10 +22,18 @@ void Uis::Update()
 		selector.m_isDown = isDown;
 	}
 
+	auto lastCursorSelect = m_cursorSelect;
+	m_cursorSelect = nullptr;
+
 	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().m_x, 0.0f, Window::Get()->GetSize().m_y, -1.0f, 1.0f);
 	m_objects.clear();
 	m_canvas.GetTransform().SetSize(Window::Get()->GetSize());
-	m_canvas.Update(viewMatrix, m_objects);
+	m_canvas.Update(viewMatrix, m_objects, m_cursorSelect);
+
+	if (lastCursorSelect != m_cursorSelect)
+	{
+		Mouse::Get()->SetCursor(m_cursorSelect != nullptr ? *m_cursorSelect->GetCursorHover() : CursorStandard::Arrow);
+	}
 }
 
 void Uis::CancelWasEvent(const MouseButton &button)

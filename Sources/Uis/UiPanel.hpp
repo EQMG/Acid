@@ -7,17 +7,22 @@
 
 namespace acid
 {
+enum class UiManipulate
+{
+	None = 0, 
+	Resize = 1, 
+	Move = 2,
+	All = Resize | Move
+};
+
+ENABLE_BITMASK_OPERATORS(UiManipulate)
+
 class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:
-	enum class Resize
-	{
-		None, Left, Top, Right, Bottom
-	};
-
-	explicit UiPanel(UiObject *parent, const UiTransform &transform = UiTransform(),
-		const Colour &colour = UiInputButton::BackgroundColour, const Resize &resize = Resize::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
+	explicit UiPanel(UiObject *parent, const UiTransform &transform = UiTransform(), const Colour &colour = UiInputButton::BackgroundColour, 
+		const BitMask<UiManipulate> &manipulate = UiManipulate::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;
 
@@ -33,11 +38,11 @@ private:
 	Gui m_background;
 	UiObject m_content;
 
-	UiObject m_resizeHandle;
-	Resize m_resize;
+	Gui m_resizeHandle;
+	BitMask<UiManipulate> m_manipulate;
 
-	//UiScrollBar m_scrollX;
-	//UiScrollBar m_scrollY;
+	UiScrollBar m_scrollX;
+	UiScrollBar m_scrollY;
 	BitMask<ScrollBar> m_scrollBars;
 
 	Vector2f m_min;

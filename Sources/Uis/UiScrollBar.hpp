@@ -7,12 +7,15 @@ namespace acid
 {
 enum class ScrollBar
 {
-	None = 0, Vertical = 1, Horizontal = 2
+	None = 0, 
+	Vertical = 1, 
+	Horizontal = 2,
+	Both = Vertical | Horizontal
 };
 
 ENABLE_BITMASK_OPERATORS(ScrollBar)
 
-/*class ACID_EXPORT UiScrollBar :
+class ACID_EXPORT UiScrollBar :
 	public UiObject
 {
 public:
@@ -24,11 +27,7 @@ public:
 
 	void SetSize(const Vector2f &size);
 
-	static const Vector2i Size;
-
-	static const Colour BackgroundColour;
-	static const Colour PrimaryColour;
-	static const Colour SelectedColour;
+	static const uint32_t Size;
 
 private:
 	float ScrollByDelta(const float &delta);
@@ -40,5 +39,5 @@ private:
 	uint32_t m_index;
 	bool m_updating;
 	bool m_mouseOver;
-};*/
+};
 }

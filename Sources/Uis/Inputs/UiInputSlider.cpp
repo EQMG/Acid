@@ -25,14 +25,12 @@ UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const f
 	m_updating(false),
 	m_mouseOver(false)
 {
+	SetCursorHover(CursorStandard::ResizeX);
+
 	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	UpdateProgress();
 
-	OnSelected().Add([this](bool selected)
-	{
-		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
-	});
+	UpdateProgress();
 }
 
 void UiInputSlider::UpdateObject()
@@ -49,7 +47,7 @@ void UiInputSlider::UpdateObject()
 	else if (m_updating)
 	{
 		auto width = m_background.GetScreenTransform().GetSize().m_x;
-		auto positionX = m_background.GetScreenTransform().GetOffset().m_x;
+		auto positionX = m_background.GetScreenTransform().GetPosition().m_x;
 		auto cursorX = static_cast<float>(Mouse::Get()->GetPosition().m_x) - positionX;
 		m_progress = cursorX / width;
 		m_progress = std::clamp(m_progress, 0.0f, 1.0f);

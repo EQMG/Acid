@@ -39,10 +39,29 @@ ENABLE_BITMASK_OPERATORS(UiMargins)
 class ACID_EXPORT UiTransform
 {
 public:
-	explicit UiTransform(const Vector2i &size = Vector2i(), const Vector2f &anchor = UiAnchor::LeftTop, const Vector2i &offset = Vector2i());
+	/**
+	 * Creates a new UiTransform.
+	 * @param size The size of the rectangle in pixels.
+	 * @param anchor The reference anchor where the rectangle will be placed relative in the parent.
+	 * @param position The pixel offset from the anchor position.
+	 */
+	explicit UiTransform(const Vector2i &size = Vector2i(), const Vector2f &anchor = UiAnchor::LeftTop, const Vector2i &position = Vector2i());
 
-	UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &offset = Vector2i());
+	/**
+	 * Creates a new UiTransform.
+	 * @param size The size of the rectangle in pixels.
+	 * @param anchor0 The reference anchor where the rectangle will be placed relative in the parent.
+	 * @param anchor1 The anchor inside of this rectangle.
+	 * @param position The pixel offset from the anchor position.
+	 */
+	UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &position = Vector2i());
 
+	/**
+	 * Creates a new UiTransform.
+	 * @param margins What margins will be in percentage from the parent.
+	 * @param anchor0 The offset from the left top vertex in pixels or percentage of the parents size.
+	 * @param anchor1 The offset from the right bottom vertex in pixels or percentage of the parents size.
+	 */
 	UiTransform(const BitMask<UiMargins> &margins, const Vector2f &anchor0 = Vector2f(), const Vector2f &anchor1 = Vector2f());
 
 	const Vector2f &GetSize() const { return m_size; }
@@ -59,9 +78,9 @@ public:
 
 	void SetAnchor(const Vector2f &anchor);
 
-	const Vector2f &GetOffset() const { return m_offset; }
+	const Vector2f &GetPosition() const { return m_position; }
 
-	void SetOffset(const Vector2i &offset) { m_offset = offset; }
+	void SetPosition(const Vector2i &position) { m_position = position; }
 
 	const std::optional<BitMask<UiMargins>> &GetMargins() const { return m_margins; }
 
@@ -77,7 +96,7 @@ public:
 
 	Vector2f m_size;
 	Vector2f m_anchor0, m_anchor1;
-	Vector2f m_offset;
+	Vector2f m_position;
 	std::optional<BitMask<UiMargins>> m_margins;
 	float m_depth;
 };
