@@ -4,8 +4,14 @@
 
 namespace test
 {
+int32_t GetNextY()
+{
+	static uint32_t i = 0;
+	return i++ * (UiInputButton::Size.m_y + 6);
+}
+
 Hierarchy::Hierarchy(UiObject *parent) :
-	UiPanel(parent, UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::LeftTop, Vector2f(0.3f, 1.0f)), UiInputButton::BackgroundColour, Resize::Right, ScrollBar::None),
+	UiPanel(parent, UiTransform(Vector2i(400, 500), UiAnchor::LeftTop), UiInputButton::BackgroundColour, UiManipulate::None, ScrollBar::None),
 	m_section1(&GetContent(), "Section Left", UiTransform(Vector2f(0.08f, 0.05f), UiAnchor::LeftTop)),
 	m_button1(&m_section1.GetContent(), "Button #1", UiTransform(Vector2f(0.0f, 0.0f), UiAnchor::LeftTop)),
 	m_sliderR(&m_section1.GetContent(), "R", 255.0f, 0.0f, 255.0f, 0, UiTransform(Vector2f(0.0f, 0.06f), UiAnchor::LeftTop)),

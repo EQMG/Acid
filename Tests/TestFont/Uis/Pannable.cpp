@@ -8,24 +8,24 @@
 
 namespace test
 {
-Pannable::Pannable(UiObject *parent) :
-	UiObject(parent, UiTransform(Window::Get()->GetSize())),
-	m_buttonReset(ButtonKeyboard({ Key::Enter })),
-	m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
-	m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
-	m_settings(parent, UiTransform(Vector2f(0.02f, 0.02f), UiAnchor::LeftTop, Vector2f(0.25f, 0.2f)), UiInputButton::BackgroundColour, UiPanel::Resize::Right,
-		ScrollBar::None),
-	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiTransform(Vector2f(0.5f, 0.06f), UiAnchor::CentreTop)),
-	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiTransform(Vector2f(0.5f, 0.30f), UiAnchor::CentreTop)),
-	m_zoom(1.0f),
-	m_title(this, UiTransform(Vector2f(0.5f, -0.7f), UiAnchor::Centre), 6.0f, "Acid Font",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Red, 0.0f, 0.015f),
-	m_body(this, UiTransform(Vector2f(0.5f, 0.0f), UiAnchor::Centre), 1.8f, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Black, 0.002f, 0.015),
-	m_textFrameTime(parent, UiTransform(Vector2f(0.002f, 0.998f), UiAnchor::LeftBottom), 1.1f, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
-		Text::Justify::Left),
-	m_textFps(parent, UiTransform(Vector2f(0.002f, 0.978f), UiAnchor::LeftBottom), 1.1f, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
-	m_textUps(parent, UiTransform(Vector2f(0.002f, 0.958f), UiAnchor::LeftBottom), 1.1f, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
+	Pannable::Pannable(UiObject *parent) :
+		UiObject(parent, UiTransform(Window::Get()->GetSize())),
+		m_buttonReset(ButtonKeyboard({ Key::Enter })),
+		m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
+		m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
+		m_settings(parent, UiTransform(Vector2i(300, 300), UiAnchor::LeftTop, Vector2i(20, 20)), UiInputButton::BackgroundColour, UiManipulate::All,
+			ScrollBar::None),
+		m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiTransform(UiInputButton::Size, UiAnchor::LeftTop, Vector2i(0, 0))),
+		m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiTransform(UiInputButton::Size, UiAnchor::LeftTop, Vector2i(0, 28))),
+		m_zoom(1.0f),
+		m_title(this, UiTransform(Vector2i(300, 80), UiAnchor::CentreTop), 72, "Acid Font",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Red),
+		m_body(this, UiTransform(Vector2i(500, 1000), UiAnchor::CentreTop, Vector2i(0, 100)), 12, "",
+			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, Colour::Black),
+		m_textFrameTime(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -2)), 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
+			Text::Justify::Left),
+		m_textFps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -16)), 11, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
+		m_textUps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -30)), 11, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
 {
 	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -95,7 +95,7 @@ void Pannable::UpdateObject()
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	Vector2f offset = GetTransform().GetOffset();
+	Vector2f offset = GetTransform().GetPosition();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
 	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector2f(m_zoom));
@@ -105,6 +105,6 @@ void Pannable::UpdateObject()
 		offset -= Mouse::Get()->GetDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 
-	GetTransform().SetOffset(offset);
+	GetTransform().SetPosition(offset);
 }
 }

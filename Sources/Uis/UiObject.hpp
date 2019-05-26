@@ -32,8 +32,9 @@ public:
 	 * Updates this screen object and the extended object.
 	 * @param viewMatrix The screens orthographic view matrix.
 	 * @param list The list to add to.
+	 * @param cursorSelect The currently selected UI that has a cursor hover.
 	 */
-	void Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list);
+	void Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, UiObject *&cursorSelect);
 
 	/**
 	 * Updates the ui object.
@@ -73,6 +74,10 @@ public:
 	const UiTransform &GetTransform() const { return m_transform; }
 
 	void SetTransform(const UiTransform &transform) { m_transform = transform; }
+
+	const std::optional<CursorStandard> &GetCursorHover() const { return m_cursorHover; }
+
+	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
 
 	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
 
@@ -124,6 +129,7 @@ private:
 
 	bool m_enabled;
 	UiTransform m_transform;
+	std::optional<CursorStandard> m_cursorHover;
 	std::optional<Vector4i> m_scissor; 
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;

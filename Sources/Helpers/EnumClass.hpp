@@ -28,7 +28,7 @@ struct Enumerator
 	{
 	}
 
-	constexpr explicit operator bool() const
+	constexpr operator bool() const
 	{
 		using underlying_type = typename std::underlying_type<T>::type;
 		return static_cast<underlying_type>(m_value) != 0;

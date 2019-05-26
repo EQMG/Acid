@@ -24,13 +24,13 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	m_text(this, UiTransform(UiMargins::None, Padding, -Padding), FontSize, string,
 		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, ValueColour)
 {
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-
+	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
 		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
-		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
+
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 }
 
 void UiInputButton::UpdateObject()

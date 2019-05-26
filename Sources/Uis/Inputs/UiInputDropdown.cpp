@@ -15,16 +15,16 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 	m_value(value),
 	m_options(std::move(options))
 {
-	//m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	//m_slider.SetHeight(1.0f);
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-
+	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
 		m_background.SetColourDriver(
 			new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
-		Mouse::Get()->SetCursor(selected ? CursorStandard::Hand : CursorStandard::Arrow);
 	});
+
+	//m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	//m_slider.SetHeight(1.0f);
+	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 }
 
 void UiInputDropdown::UpdateObject()

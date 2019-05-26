@@ -1,4 +1,4 @@
-/*#include "UiScrollBar.hpp"
+#include "UiScrollBar.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Inputs/UiInputButton.hpp"
@@ -6,16 +6,12 @@
 
 namespace acid
 {
-const Vector2i UiScrollBar::Size = Vector2f(16, 16);
-
-const Colour UiScrollBar::BackgroundColour = Colour("#20292b");
-const Colour UiScrollBar::PrimaryColour = Colour("#5b7073");
-const Colour UiScrollBar::SelectedColour = Colour("#FF6600");
+const uint32_t UiScrollBar::Size = 8;
 
 UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, UiTransform::Maximum, Image2d::Create("Guis/White.png"), BackgroundColour),
-	m_scroll(this, UiTransform(Vector2f(), UiAnchor::TopLeft, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/White.png"), PrimaryColour),
+	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/White.png"), UiInputButton::PrimaryColour),
+	m_scroll(this, UiTransform(UiMargins::RightBottom), Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour),
 	m_index(type == ScrollBar::Horizontal ? 0 : 1),
 	m_updating(false),
 	m_mouseOver(false)
@@ -45,7 +41,7 @@ void UiScrollBar::UpdateObject()
 		}
 
 		Vector2f position = Vector2f();
-		position[m_index] = ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
+		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenTransform().GetPosition()[m_index]; //  ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}
@@ -54,12 +50,12 @@ void UiScrollBar::UpdateObject()
 	{
 		if (m_scroll.IsSelected() && !m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), SelectedColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_scroll.IsSelected() && m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), PrimaryColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::ButtonColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}
@@ -73,26 +69,27 @@ float UiScrollBar::GetProgress()
 
 void UiScrollBar::SetSize(const Vector2f &size)
 {
-	m_scroll.GetTransform().SetScale(size);
+	m_scroll.GetTransform().SetAnchor0(m_scroll.GetTransform().GetPosition());
+	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
 }
 
 float UiScrollBar::ScrollByDelta(const float &delta)
 {
-	float puckLength = m_scroll.GetScreenSize()[m_index];
-	float barLength = GetParent()->GetScreenSize()[m_index];
+	float puckLength = m_scroll.GetScreenTransform().m_size[m_index];
+	float barLength = GetParent()->GetScreenTransform().m_size[m_index];
 	float maxValue = (barLength - puckLength) / barLength;
-	float value = m_scroll.GetTransform().GetPosition()[m_index];
+	float value = m_scroll.GetScreenTransform().m_position[m_index];
 	value += delta;
 	return std::clamp(value, 0.0f, maxValue);
 }
 
 float UiScrollBar::ScrollByPosition(const float &position)
 {
-	float puckLength = m_scroll.GetScreenSize()[m_index];
-	float barLength = GetParent()->GetScreenSize()[m_index];
+	float puckLength = m_scroll.GetScreenTransform().m_size[m_index];
+	float barLength = GetParent()->GetScreenTransform().m_size[m_index];
 	float maxValue = (barLength - puckLength) / barLength;
-	float positionLength = GetParent()->GetScreenPosition()[m_index];
+	float positionLength = GetParent()->GetScreenTransform().m_position[m_index];
 	float cursorLength = (position - positionLength) - (puckLength / 2.0f);
 	return std::clamp(cursorLength / barLength, 0.0f, maxValue);
 }
-}*/
+}
