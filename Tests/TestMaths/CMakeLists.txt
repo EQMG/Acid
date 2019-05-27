@@ -11,10 +11,8 @@ set(TESTMATHS_SOURCES
 		${TESTMATHS_HEADER_FILES}
 		${TESTMATHS_SOURCE_FILES}
 		)
-set(TESTMATHS_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestMaths/")
 
 add_executable(TestMaths ${TESTMATHS_SOURCES})
-add_dependencies(TestMaths Acid)
 
 target_compile_features(TestMaths PUBLIC cxx_std_17)
 set_target_properties(TestMaths PROPERTIES
@@ -22,7 +20,7 @@ set_target_properties(TestMaths PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(TestMaths PRIVATE ${ACID_INCLUDE_DIR} ${TESTMATHS_INCLUDE_DIR})
+target_include_directories(TestMaths PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestMaths PRIVATE Acid)
 
 if(UNIX AND APPLE)

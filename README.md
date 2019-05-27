@@ -87,9 +87,10 @@ std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, " ");
 
 // Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
-Window::Get()->OnSize().Add([this](Vector2ui size){
+Window::Get()->OnSize().Add([](Vector2ui size)
+{
 	Log::Out("Hello world: %s\n", size.ToString().c_str());
-}, this);
+});
 
 // A value container that calls a delegate on value assignments.
 DelegateValue<Vector3f> da;

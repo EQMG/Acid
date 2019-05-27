@@ -11,10 +11,8 @@ set(TESTSERIAL_SOURCES
 		${TESTSERIAL_HEADER_FILES}
 		${TESTSERIAL_SOURCE_FILES}
 		)
-set(TESTSERIAL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestSerial/")
 
 add_executable(TestSerial ${TESTSERIAL_SOURCES})
-add_dependencies(TestSerial Acid)
 
 target_compile_features(TestSerial PUBLIC cxx_std_17)
 set_target_properties(TestSerial PROPERTIES
@@ -22,7 +20,7 @@ set_target_properties(TestSerial PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(TestSerial PRIVATE ${ACID_INCLUDE_DIR} ${TESTSERIAL_INCLUDE_DIR})
+target_include_directories(TestSerial PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestSerial PRIVATE Acid)
 
 if(UNIX AND APPLE)

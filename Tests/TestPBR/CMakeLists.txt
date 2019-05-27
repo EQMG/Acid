@@ -11,10 +11,8 @@ set(TESTPBR_SOURCES
 		${TESTPBR_HEADER_FILES}
 		${TESTPBR_SOURCE_FILES}
 		)
-set(TESTPBR_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestPBR/")
 
 add_executable(TestPBR ${TESTPBR_SOURCES})
-add_dependencies(TestPBR Acid)
 
 target_compile_features(TestPBR PUBLIC cxx_std_17)
 set_target_properties(TestPBR PROPERTIES
@@ -22,7 +20,7 @@ set_target_properties(TestPBR PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(TestPBR PRIVATE ${ACID_INCLUDE_DIR} ${TESTPBR_INCLUDE_DIR})
+target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestPBR PRIVATE Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")

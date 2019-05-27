@@ -11,10 +11,8 @@ set(TESTNETWORK_SOURCES
 		${TESTNETWORK_HEADER_FILES}
 		${TESTNETWORK_SOURCE_FILES}
 		)
-set(TESTNETWORK_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestNetwork/")
 
 add_executable(TestNetwork ${TESTNETWORK_SOURCES})
-add_dependencies(TestNetwork Acid)
 
 target_compile_features(TestNetwork PUBLIC cxx_std_17)
 set_target_properties(TestNetwork PROPERTIES
@@ -22,7 +20,7 @@ set_target_properties(TestNetwork PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(TestNetwork PRIVATE ${ACID_INCLUDE_DIR} ${TESTNETWORK_INCLUDE_DIR})
+target_include_directories(TestNetwork PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestNetwork PRIVATE Acid)
 
 if(UNIX AND APPLE)

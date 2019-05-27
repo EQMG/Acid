@@ -3,31 +3,6 @@ add_library(Acid)
 # This uses target_sources(Acid) to define its headers & source files
 include(CMakeSources.cmake)
 
-# Manually defined by us
-if(NOT glfw_FOUND)
-	add_dependencies(Acid glfw)
-endif()
-# Defined in find_package(PhysFS)
-if(NOT PHYSFS_FOUND)
-	if(PHYSFS_BUILD_STATIC)
-		add_dependencies(Acid physfs-static)
-	else()
-		add_dependencies(Acid physfs)
-	endif()
-endif()
-# Defined in find_package(Freetype)
-if(NOT Freetype_FOUND)
-	add_dependencies(Acid freetype)
-endif()
-# Manually defined by us
-if(NOT SPIRV_FOUND)
-	add_dependencies(Acid SPIRV)
-endif()
-# Defined in find_package(Bullet)
-if(NOT BULLET_FOUND)
-	add_dependencies(Acid BulletDynamics)
-endif()
-
 target_compile_features(Acid PUBLIC cxx_std_17)
 set_target_properties(Acid PROPERTIES
 		POSITION_INDEPENDENT_CODE ON

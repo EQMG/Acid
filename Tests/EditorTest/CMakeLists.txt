@@ -11,10 +11,8 @@ set(EDITORTEST_SOURCES
 		${EDITORTEST_HEADER_FILES}
 		${EDITORTEST_SOURCE_FILES}
 		)
-set(EDITORTEST_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/EditorTest/")
 
 add_library(EditorTest ${EDITORTEST_SOURCES})
-add_dependencies(EditorTest Acid)
 
 target_compile_definitions(EditorTest
 		PUBLIC
@@ -26,5 +24,5 @@ set_target_properties(EditorTest PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(EditorTest PRIVATE ${ACID_INCLUDE_DIR} ${EDITORTEST_INCLUDE_DIR})
+target_include_directories(EditorTest PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(EditorTest PRIVATE Acid)

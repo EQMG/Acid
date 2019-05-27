@@ -11,10 +11,8 @@ set(TESTFONT_SOURCES
 		${TESTFONT_HEADER_FILES}
 		${TESTFONT_SOURCE_FILES}
 		)
-set(TESTFONT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/Tests/TestFont/")
 
 add_executable(TestFont ${TESTFONT_SOURCES})
-add_dependencies(TestFont Acid)
 
 target_compile_features(TestFont PUBLIC cxx_std_17)
 set_target_properties(TestFont PROPERTIES
@@ -22,7 +20,7 @@ set_target_properties(TestFont PROPERTIES
 		FOLDER "Acid"
 		)
 
-target_include_directories(TestFont PRIVATE ${ACID_INCLUDE_DIR} ${TESTFONT_INCLUDE_DIR})
+target_include_directories(TestFont PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestFont PRIVATE Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")

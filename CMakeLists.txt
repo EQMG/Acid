@@ -12,6 +12,8 @@ option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 include(PrecompiledHeader)
 
+# Add property to allow making folders for Acid in IDEs
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)  
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
