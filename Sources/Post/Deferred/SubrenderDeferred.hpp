@@ -37,8 +37,6 @@ private:
 		float m_radius{};
 	};
 
-	std::vector<Shader::Define> GetDefines();
-
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformScene;
 	StorageHandler m_storageLights;

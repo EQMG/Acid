@@ -12,8 +12,52 @@
 
 namespace acid
 {
-Shader::Shader(std::string name) :
-	m_name(std::move(name)),
+class ShaderIncluder :
+	public glslang::TShader::Includer
+{
+public:
+	IncludeResult *includeLocal(const char *headerName, const char *includerName, size_t inclusionDepth) override
+	{
+		auto directory = FileSystem::ParentDirectory(includerName);
+		auto fileLoaded = Files::Read(directory + "/" + headerName);
+
+		if (!fileLoaded)
+		{
+			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			return nullptr;
+		}
+
+		auto content = new char[fileLoaded->size()];
+		std::memcpy(content, fileLoaded->c_str(), fileLoaded->size());
+		return new IncludeResult(headerName, content, fileLoaded->size(), content);
+	}
+
+	IncludeResult *includeSystem(const char *headerName, const char *includerName, size_t inclusionDepth) override
+	{
+		auto fileLoaded = Files::Read(headerName);
+
+		if (!fileLoaded)
+		{
+			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			return nullptr;
+		}
+
+		auto content = new char[fileLoaded->size()];
+		std::memcpy(content, fileLoaded->c_str(), fileLoaded->size());
+		return new IncludeResult(headerName, content, fileLoaded->size(), content);
+	}
+
+	void releaseInclude(IncludeResult *result) override
+	{
+		if (result != nullptr)
+		{
+			delete[] static_cast<char *>(result->userData);
+			delete result;
+		}
+	}
+};
+
+Shader::Shader() :
 	m_lastDescriptorBinding(0)
 {
 }
@@ -33,123 +77,8 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 	return false;
 }
 
-void Shader::CreateReflection()
-{
-	std::map<VkDescriptorType, uint32_t> descriptorPoolCounts;
-
-	// Process to descriptors.
-	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
-	{
-		VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
-
-		switch (uniformBlock.m_type)
-		{
-		case UniformBlock::Type::Uniform:
-			descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), descriptorType, uniformBlock.m_stageFlags, 1));
-			break;
-		case UniformBlock::Type::Storage:
-			descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-			m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), descriptorType, uniformBlock.m_stageFlags, 1));
-			break;
-		case UniformBlock::Type::Push:
-			// Push constants are described in the pipeline.
-			break;
-		default:
-			break;
-		}
-
-		IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
-		m_descriptorLocations.emplace(uniformBlockName, uniformBlock.m_binding);
-		m_descriptorSizes.emplace(uniformBlockName, uniformBlock.m_size);
-	}
-
-	for (const auto &[uniformName, uniform] : m_uniforms)
-	{
-		VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
-
-		switch (uniform.m_glType)
-		{
-		case 0x8B5E: // GL_SAMPLER_2D
-		case 0x904D: // GL_IMAGE_2D
-		case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
-		case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
-			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			m_descriptorSetLayouts.emplace_back(Image2d::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), descriptorType, uniform.m_stageFlags, 1));
-			break;
-		case 0x8B60: // GL_SAMPLER_CUBE
-		case 0x9050: // GL_IMAGE_CUBE
-			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			m_descriptorSetLayouts.emplace_back(ImageCube::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), descriptorType, uniform.m_stageFlags, 1));
-			break;
-		default:
-			break;
-		}
-
-		IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
-		m_descriptorLocations.emplace(uniformName, uniform.m_binding);
-		m_descriptorSizes.emplace(uniformName, uniform.m_size);
-	}
-
-	for (const auto &[type, descriptorCount] : descriptorPoolCounts)
-	{
-		VkDescriptorPoolSize descriptorPoolSize = {};
-		descriptorPoolSize.type = type;
-		descriptorPoolSize.descriptorCount = descriptorCount;
-		m_descriptorPools.emplace_back(descriptorPoolSize);
-	}
-
-	// FIXME: This is a AMD workaround that works on Nvidia too...
-	m_descriptorPools = std::vector<VkDescriptorPoolSize>(6);
-	m_descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-	m_descriptorPools[0].descriptorCount = 4096;
-	m_descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-	m_descriptorPools[1].descriptorCount = 2048;
-	m_descriptorPools[2].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
-	m_descriptorPools[2].descriptorCount = 2048;
-	m_descriptorPools[3].type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
-	m_descriptorPools[3].descriptorCount = 2048;
-	m_descriptorPools[4].type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
-	m_descriptorPools[4].descriptorCount = 2048;
-	m_descriptorPools[5].type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-	m_descriptorPools[5].descriptorCount = 2048;
-
-	// Sort descriptors by binding.
-	std::sort(m_descriptorSetLayouts.begin(), m_descriptorSetLayouts.end(), [](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
-	{
-		return l.binding < r.binding;
-	});
-
-	// Gets the last descriptors binding.
-	if (!m_descriptorSetLayouts.empty())
-	{
-		m_lastDescriptorBinding = m_descriptorSetLayouts.back().binding;
-	}
-
-	// Gets the descriptor type for each descriptor.
-	for (const auto &descriptor : m_descriptorSetLayouts)
-	{
-		m_descriptorTypes.emplace(descriptor.binding, descriptor.descriptorType);
-	}
-
-	// Process attribute descriptions.
-	uint32_t currentOffset = 4;
-
-	for (const auto &[attributeName, attribute] : m_attributes)
-	{
-		VkVertexInputAttributeDescription attributeDescription = {};
-		attributeDescription.location = static_cast<uint32_t>(attribute.m_location);
-		attributeDescription.binding = 0;
-		attributeDescription.format = GlTypeToVk(attribute.m_glType);
-		attributeDescription.offset = currentOffset;
-		m_attributeDescriptions.emplace_back(attributeDescription);
-		currentOffset += attribute.m_size;
-	}
-}
-
 const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 {
-	metadata.GetChild("Name", shader.m_name);
 	metadata.GetChild("Stages", shader.m_stages);
 	metadata.GetChild("Uniforms", shader.m_uniforms);
 	metadata.GetChild("Uniform Blocks", shader.m_uniformBlocks);
@@ -160,7 +89,6 @@ const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 
 Metadata &operator<<(Metadata &metadata, const Shader &shader)
 {
-	metadata.SetChild("Name", shader.m_name);
 	metadata.SetChild("Stages", shader.m_stages);
 	metadata.SetChild("Uniforms", shader.m_uniforms);
 	metadata.SetChild("Uniform Blocks", shader.m_uniformBlocks);
@@ -329,49 +257,6 @@ VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)
 	return VK_SHADER_STAGE_ALL;
 }
 
-std::string Shader::InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode)
-{
-	// TODO: Needs to be replaced with specialization constants.
-	std::string updatedCode = shaderCode;
-	std::size_t foundIndex0 = updatedCode.find('\n', 0);
-	std::size_t foundIndex1 = updatedCode.find('\n', foundIndex0 + 1);
-	std::size_t foundIndex2 = updatedCode.find('\n', foundIndex1 + 1);
-	updatedCode.insert(foundIndex2, blockCode);
-	return updatedCode;
-}
-
-std::string Shader::ProcessIncludes(const std::string &shaderCode)
-{
-	auto lines = String::Split(shaderCode, "\n", true);
-
-	std::stringstream stream;
-
-	for (const auto &line : lines)
-	{
-		if (String::Contains(line, "#include"))
-		{
-			std::string filename = String::ReplaceFirst(line, "#include", "");
-			filename = String::RemoveAll(filename, '\"');
-			filename = String::Trim(filename);
-
-			auto fileLoaded = Files::Read(filename);
-
-			if (!fileLoaded)
-			{
-				Log::Error("Shader Include could not be loaded: '%s'\n", filename.c_str());
-				continue;
-			}
-
-			stream << "\n" << *fileLoaded << "\n";
-			continue;
-		}
-
-		stream << line << "\n";
-	}
-
-	return stream.str();
-}
-
 EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
 {
 	switch (stageFlag)
@@ -491,17 +376,17 @@ TBuiltInResource GetResources()
 	return resources;
 }
 
-VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const VkShaderStageFlags &moduleFlag)
+VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag)
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_stages.emplace_back(moduleName);
 
 	// Starts converting GLSL to SPIR-V.
-	EShLanguage language = GetEshLanguage(moduleFlag);
+	auto language = GetEshLanguage(moduleFlag);
 	glslang::TProgram program;
 	glslang::TShader shader(language);
-	TBuiltInResource resources = GetResources();
+	auto resources = GetResources();
 
 	// Enable SPIR-V and Vulkan rules when parsing GLSL.
 	auto messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
@@ -509,20 +394,33 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 	messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
-	const char *shaderSource = moduleCode.c_str();
-	shader.setStrings(&shaderSource, 1);
+	auto shaderName = moduleName.c_str();
+	auto shaderSource = moduleCode.c_str();
+	shader.setStringsWithLengthsAndNames(&shaderSource, nullptr, &shaderName, 1);
+	shader.setPreamble(preamble.c_str());
 
 	shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 110);
 	shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_1);
 	shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_3);
 
-	const int defaultVersion = glslang::EShTargetOpenGL_450;
+	ShaderIncluder includer;
 
-	if (!shader.parse(&resources, defaultVersion, false, messages))
+	auto defaultVersion = glslang::EShTargetVulkan_1_1;
+
+	std::string str;
+
+	if (!shader.preprocess(&resources, defaultVersion, ENoProfile, false, false, messages, &str, includer))
 	{
 		Log::Out("%s\n", shader.getInfoLog());
 		Log::Out("%s\n", shader.getInfoDebugLog());
-		Log::Error("SPRIV shader compile failed!\n");
+		Log::Error("SPRIV shader preprocess failed!\n");
+	}
+
+	if (!shader.parse(&resources, defaultVersion, true, messages, includer))
+	{
+		Log::Out("%s\n", shader.getInfoLog());
+		Log::Out("%s\n", shader.getInfoDebugLog());
+		Log::Error("SPRIV shader parse failed!\n");
 	}
 
 	program.addShader(&shader);
@@ -573,7 +471,7 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 
 	spv::SpvBuildLogger logger;
 	std::vector<uint32_t> spirv;
-	GlslangToSpv(*program.getIntermediate((EShLanguage) language), spirv, &logger, &spvOptions);
+	GlslangToSpv(*program.getIntermediate(static_cast<EShLanguage>(language)), spirv, &logger, &spvOptions);
 
 	VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 	shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -583,6 +481,120 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 	VkShaderModule shaderModule;
 	Graphics::CheckVk(vkCreateShaderModule(*logicalDevice, &shaderModuleCreateInfo, nullptr, &shaderModule));
 	return shaderModule;
+}
+
+void Shader::CreateReflection()
+{
+	std::map<VkDescriptorType, uint32_t> descriptorPoolCounts;
+
+	// Process to descriptors.
+	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
+	{
+		auto descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
+
+		switch (uniformBlock.m_type)
+		{
+		case UniformBlock::Type::Uniform:
+			descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+			m_descriptorSetLayouts.emplace_back(UniformBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), descriptorType, uniformBlock.m_stageFlags, 1));
+			break;
+		case UniformBlock::Type::Storage:
+			descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+			m_descriptorSetLayouts.emplace_back(StorageBuffer::GetDescriptorSetLayout(static_cast<uint32_t>(uniformBlock.m_binding), descriptorType, uniformBlock.m_stageFlags, 1));
+			break;
+		case UniformBlock::Type::Push:
+			// Push constants are described in the pipeline.
+			break;
+		default:
+			break;
+		}
+
+		IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
+		m_descriptorLocations.emplace(uniformBlockName, uniformBlock.m_binding);
+		m_descriptorSizes.emplace(uniformBlockName, uniformBlock.m_size);
+	}
+
+	for (const auto &[uniformName, uniform] : m_uniforms)
+	{
+		auto descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
+
+		switch (uniform.m_glType)
+		{
+		case 0x8B5E: // GL_SAMPLER_2D
+		case 0x904D: // GL_IMAGE_2D
+		case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
+		case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
+			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			m_descriptorSetLayouts.emplace_back(Image2d::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), descriptorType, uniform.m_stageFlags, 1));
+			break;
+		case 0x8B60: // GL_SAMPLER_CUBE
+		case 0x9050: // GL_IMAGE_CUBE
+			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			m_descriptorSetLayouts.emplace_back(ImageCube::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), descriptorType, uniform.m_stageFlags, 1));
+			break;
+		default:
+			break;
+		}
+
+		IncrementDescriptorPool(descriptorPoolCounts, descriptorType);
+		m_descriptorLocations.emplace(uniformName, uniform.m_binding);
+		m_descriptorSizes.emplace(uniformName, uniform.m_size);
+	}
+
+	for (const auto &[type, descriptorCount] : descriptorPoolCounts)
+	{
+		VkDescriptorPoolSize descriptorPoolSize = {};
+		descriptorPoolSize.type = type;
+		descriptorPoolSize.descriptorCount = descriptorCount;
+		m_descriptorPools.emplace_back(descriptorPoolSize);
+	}
+
+	// TODO: This is a AMD workaround that works on NVidia too...
+	m_descriptorPools = std::vector<VkDescriptorPoolSize>(6);
+	m_descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	m_descriptorPools[0].descriptorCount = 4096;
+	m_descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+	m_descriptorPools[1].descriptorCount = 2048;
+	m_descriptorPools[2].type = VK_DESCRIPTOR_TYPE_STORAGE_IMAGE;
+	m_descriptorPools[2].descriptorCount = 2048;
+	m_descriptorPools[3].type = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
+	m_descriptorPools[3].descriptorCount = 2048;
+	m_descriptorPools[4].type = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
+	m_descriptorPools[4].descriptorCount = 2048;
+	m_descriptorPools[5].type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+	m_descriptorPools[5].descriptorCount = 2048;
+
+	// Sort descriptors by binding.
+	std::sort(m_descriptorSetLayouts.begin(), m_descriptorSetLayouts.end(), [](const VkDescriptorSetLayoutBinding &l, const VkDescriptorSetLayoutBinding &r)
+	{
+		return l.binding < r.binding;
+	});
+
+	// Gets the last descriptors binding.
+	if (!m_descriptorSetLayouts.empty())
+	{
+		m_lastDescriptorBinding = m_descriptorSetLayouts.back().binding;
+	}
+
+	// Gets the descriptor type for each descriptor.
+	for (const auto &descriptor : m_descriptorSetLayouts)
+	{
+		m_descriptorTypes.emplace(descriptor.binding, descriptor.descriptorType);
+	}
+
+	// Process attribute descriptions.
+	uint32_t currentOffset = 4;
+
+	for (const auto &[attributeName, attribute] : m_attributes)
+	{
+		VkVertexInputAttributeDescription attributeDescription = {};
+		attributeDescription.location = static_cast<uint32_t>(attribute.m_location);
+		attributeDescription.binding = 0;
+		attributeDescription.format = GlTypeToVk(attribute.m_glType);
+		attributeDescription.offset = currentOffset;
+		m_attributeDescriptions.emplace_back(attributeDescription);
+		currentOffset += attribute.m_size;
+	}
 }
 
 std::string Shader::ToString() const
@@ -658,36 +670,44 @@ void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descr
 
 void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
+	auto reflection = program.getUniformBlock(i);
+
 	for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 	{
-		if (uniformBlockName == program.getUniformBlockName(i))
+		if (uniformBlockName == reflection.name)
 		{
 			uniformBlock.m_stageFlags |= stageFlag;
 			return;
 		}
 	}
 
-	auto type = UniformBlock::Type::Uniform;
+	auto type = UniformBlock::Type::None;
 
-	if (strcmp(program.getUniformBlockTType(i)->getStorageQualifierString(), "buffer") == 0)
+	if (reflection.getType()->getQualifier().storage == glslang::EvqUniform)
+	{
+		type = UniformBlock::Type::Uniform;
+	}
+
+	if (reflection.getType()->getQualifier().storage == glslang::EvqBuffer)
 	{
 		type = UniformBlock::Type::Storage;
 	}
 
-	if (program.getUniformBlockTType(i)->getQualifier().layoutPushConstant)
+	if (reflection.getType()->getQualifier().layoutPushConstant)
 	{
 		type = UniformBlock::Type::Push;
 	}
 
-	m_uniformBlocks.emplace(program.getUniformBlockName(i), UniformBlock(program.getUniformBlockBinding(i), program.getUniformBlockSize(i), stageFlag, type));
+	m_uniformBlocks.emplace(reflection.name, UniformBlock(reflection.getBinding(), reflection.size, stageFlag, type));
 }
 
 void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
-	if (program.getUniformBinding(i) == -1)
+	auto reflection = program.getUniform(i);
+
+	if (reflection.getBinding() == -1)
 	{
-		auto uniformName = program.getUniformName(i);
-		auto splitName = String::Split(uniformName, ".");
+		auto splitName = String::Split(reflection.name, ".");
 
 		if (splitName.size() > 1)
 		{
@@ -695,8 +715,8 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 			{
 				if (uniformBlockName == splitName.at(0))
 				{
-					uniformBlock.m_uniforms.emplace(String::ReplaceFirst(uniformName, splitName.at(0) + ".", ""),
-						Uniform(program.getUniformBinding(i), program.getUniformBufferOffset(i), ComputeSize(program.getUniformTType(i)), program.getUniformType(i), false, false,
+					uniformBlock.m_uniforms.emplace(String::ReplaceFirst(reflection.name, splitName.at(0) + ".", ""),
+						Uniform(reflection.getBinding(), reflection.offset, ComputeSize(reflection.getType()), reflection.glDefineType, false, false,
 							stageFlag));
 					return;
 				}
@@ -706,43 +726,42 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 
 	for (auto &[uniformName, uniform] : m_uniforms)
 	{
-		if (uniformName == program.getUniformName(i))
+		if (uniformName == reflection.name)
 		{
 			uniform.m_stageFlags |= stageFlag;
 			return;
 		}
 	}
 
-	auto &qualifier = program.getUniformTType(i)->getQualifier();
-	m_uniforms.emplace(program.getUniformName(i),
-		Uniform(program.getUniformBinding(i), program.getUniformBufferOffset(i), -1, program.getUniformType(i), qualifier.readonly, qualifier.writeonly, stageFlag));
+	auto &qualifier = reflection.getType()->getQualifier();
+	m_uniforms.emplace(reflection.name, Uniform(reflection.getBinding(), reflection.offset, -1, reflection.glDefineType, qualifier.readonly, qualifier.writeonly, stageFlag));
 }
 
 void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
-	std::string name = program.getAttributeName(i);
+	auto reflection = program.getPipeInput(i);
 
-	if (name.empty())
+	if (reflection.name.empty())
 	{
 		return;
 	}
 
 	for (const auto &[attributeName, attribute] : m_attributes)
 	{
-		if (attributeName == name)
+		if (attributeName == reflection.name)
 		{
 			return;
 		}
 	}
 
-	auto &qualifier = program.getAttributeTType(i)->getQualifier();
-	m_attributes.emplace(name, Attribute(qualifier.layoutSet, qualifier.layoutLocation, ComputeSize(program.getAttributeTType(i)), program.getAttributeType(i)));
+	auto &qualifier = reflection.getType()->getQualifier();
+	m_attributes.emplace(reflection.name, Attribute(qualifier.layoutSet, qualifier.layoutLocation, ComputeSize(reflection.getType()), reflection.glDefineType));
 }
 
 int32_t Shader::ComputeSize(const glslang::TType *ttype)
 {
-	// glslang::TType::computeNumComponents is available but has many issues resolved in this method.
-	int components = 0;
+	// TODO: glslang::TType::computeNumComponents is available but has many issues resolved in this method.
+	int32_t components = 0;
 
 	if (ttype->getBasicType() == glslang::EbtStruct || ttype->getBasicType() == glslang::EbtBlock)
 	{

@@ -2,6 +2,10 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
+//layout(constant_id = 0) const int SSAO_KERNEL_SIZE = 64;
+//layout(constant_id = 1) const float SSAO_RADIUS = 0.5f;
+//layout(constant_id = 2) const bool RANGE_CHECK = true;
+
 layout(binding = 0) uniform UniformScene
 {
 	vec3 kernel[SSAO_KERNEL_SIZE];

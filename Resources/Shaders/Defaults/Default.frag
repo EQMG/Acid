@@ -2,6 +2,12 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
+//layout(constant_id = 0) const bool ANIMATED = false;
+//layout(constant_id = 1) const int MAX_JOINTS = 64;
+//layout(constant_id = 3) const bool DIFFUSE_MAPPING = false;
+//layout(constant_id = 4) const bool MATERIAL_MAPPING = false;
+//layout(constant_id = 5) const bool NORMAL_MAPPING = false;
+
 layout(binding = 1) uniform UniformObject
 {
 #if ANIMATED

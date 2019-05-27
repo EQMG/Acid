@@ -25,7 +25,7 @@ KinematicCharacter::~KinematicCharacter()
 
 	if (physics != nullptr)
 	{
-		// FIXME: Are these being deleted?
+		// TODO: Are these being deleted?
 		physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 		physics->GetDynamicsWorld()->removeAction(m_controller.get());
 	}

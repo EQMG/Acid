@@ -9,7 +9,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 	m_shaderStage(std::move(shaderStage)),
 	m_defines(std::move(defines)),
 	m_pushDescriptors(pushDescriptors),
-	m_shader(std::make_unique<Shader>(m_shaderStage)),
+	m_shader(std::make_unique<Shader>()),
 	m_shaderModule(VK_NULL_HANDLE),
 	m_shaderStageCreateInfo({}),
 	m_descriptorSetLayout(VK_NULL_HANDLE),
@@ -70,14 +70,10 @@ void PipelineCompute::CreateShaderProgram()
 	{
 		Log::Error("Shader Stage could not be loaded: '%s'\n", m_shaderStage.c_str());
 		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
-		return;
 	}
 
-	auto shaderCode = Shader::InsertDefineBlock(*fileLoaded, defineBlock.str());
-	shaderCode = Shader::ProcessIncludes(shaderCode);
-
 	auto stageFlag = Shader::GetShaderStage(m_shaderStage);
-	m_shaderModule = m_shader->CreateShaderModule(m_shaderStage, shaderCode, stageFlag);
+	m_shaderModule = m_shader->CreateShaderModule(m_shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
 	m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 	m_shaderStageCreateInfo.stage = stageFlag;

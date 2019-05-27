@@ -29,6 +29,7 @@ public:
 	{
 	public:
 		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
+			m_binding(0),
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions))
 		{
@@ -151,7 +152,7 @@ public:
 	public:
 		enum class Type
 		{
-			Uniform, Storage, Push
+			None, Uniform, Storage, Push
 		};
 
 		explicit UniformBlock(const int32_t &binding = -1, const int32_t &size = -1, const VkShaderStageFlags &stageFlags = 0, const Type &type = Type::Uniform) :
@@ -294,13 +295,11 @@ public:
 		int32_t m_glType;
 	};
 
-	explicit Shader(std::string name);
+	Shader();
 
-	const std::string &GetName() const { return m_name; }
+	const std::string &GetName() const { return m_stages.back(); }
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
-
-	void CreateReflection();
 
 	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
 
@@ -340,11 +339,9 @@ public:
 
 	static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
 
-	static std::string InsertDefineBlock(const std::string &shaderCode, const std::string &blockCode);
+	VkShaderModule CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag);
 
-	static std::string ProcessIncludes(const std::string &shaderCode);
-
-	VkShaderModule CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const VkShaderStageFlags &moduleFlag);
+	void CreateReflection();
 
 	std::string ToString() const;
 
@@ -359,7 +356,6 @@ private:
 
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
-	std::string m_name;
 	std::vector<std::string> m_stages;
 	std::map<std::string, Uniform> m_uniforms;
 	std::map<std::string, UniformBlock> m_uniformBlocks;

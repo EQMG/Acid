@@ -21,7 +21,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 	m_cullMode(cullMode),
 	m_frontFace(frontFace),
 	m_pushDescriptors(pushDescriptors),
-	m_shader(std::make_unique<Shader>(m_shaderStages.back())),
+	m_shader(std::make_unique<Shader>()),
 	m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
 	m_descriptorSetLayout(VK_NULL_HANDLE),
 	m_descriptorPool(VK_NULL_HANDLE),
@@ -118,14 +118,10 @@ void PipelineGraphics::CreateShaderProgram()
 		{
 			Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage.c_str());
 			throw std::runtime_error("Could not create pipeline, missing shader stage");
-			return;
 		}
 
-		auto shaderCode = Shader::InsertDefineBlock(*fileLoaded, defineBlock.str());
-		shaderCode = Shader::ProcessIncludes(shaderCode);
-
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
-		auto shaderModule = m_shader->CreateShaderModule(shaderStage, shaderCode, stageFlag);
+		auto shaderModule = m_shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
 		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;

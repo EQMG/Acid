@@ -159,7 +159,7 @@ void Instance::CreateInstance()
 	applicationInfo.pApplicationName = "Acid Application";
 	applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
 	applicationInfo.pEngineName = "Acid Engine";
-	applicationInfo.engineVersion = VK_MAKE_VERSION(0, 11, 2);
+	applicationInfo.engineVersion = VK_MAKE_VERSION(0, 13, 3);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
 	VkInstanceCreateInfo instanceCreateInfo = {};

@@ -15,8 +15,6 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
-	std::vector<Shader::Define> GetDefines();
-
 	PipelineGraphics m_pipeline;
 };
 }

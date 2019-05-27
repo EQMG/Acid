@@ -9,7 +9,7 @@ namespace acid
 {
 SubrenderShadows::SubrenderShadows(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag" }, { VertexDefault::GetVertexInput() }, GetDefines(), PipelineGraphics::Mode::Polygon,
+	m_pipeline(pipelineStage, { "Shaders/Shadows/Shadow.vert", "Shaders/Shadows/Shadow.frag" }, { VertexDefault::GetVertexInput() }, {}, PipelineGraphics::Mode::Polygon,
 		PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT)
 {
 }
@@ -26,11 +26,5 @@ void SubrenderShadows::Render(const CommandBuffer &commandBuffer)
 	{
 		shadowRender->CmdRender(commandBuffer, m_pipeline);
 	}
-}
-
-std::vector<Shader::Define> SubrenderShadows::GetDefines()
-{
-	std::vector<Shader::Define> defines;
-	return defines;
 }
 }
