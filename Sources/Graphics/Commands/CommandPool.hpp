@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Class that represents a command pool.
  */
-class ACID_EXPORT CommandPool
+class CommandPool
 {
 public:
 	explicit CommandPool(const std::thread::id &threadId = std::this_thread::get_id());

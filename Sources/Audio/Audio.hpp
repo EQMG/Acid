@@ -11,7 +11,7 @@ namespace acid
 /**
  * M@brief odule used for loading, managing and playing a variety of different sound types.
  */
-class ACID_EXPORT Audio :
+class Audio :
 	public Module
 {
 public:
@@ -32,13 +32,13 @@ public:
 
 	void Update() override;
 
-	ACID_NO_EXPORT static std::string StringifyResultAl(const int32_t &result);
+	static std::string StringifyResultAl(const int32_t &result);
 
-	ACID_NO_EXPORT static void CheckAl(const int32_t &result);
+	static void CheckAl(const int32_t &result);
 
-	ACID_NO_EXPORT ALCdevice *GetDevice() const { return m_alDevice; }
+	ALCdevice *GetDevice() const { return m_alDevice; }
 
-	ACID_NO_EXPORT ALCcontext *GetContext() const { return m_alContext; }
+	ALCcontext *GetContext() const { return m_alContext; }
 
 	float GetGain(const Type &type) const;
 

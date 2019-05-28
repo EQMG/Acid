@@ -12,7 +12,7 @@ namespace acid
 /**
  * @brief Represents a kinematic character controller.
  */
-class ACID_EXPORT KinematicCharacter :
+class KinematicCharacter :
 	public CollisionObject
 {
 public:
@@ -75,9 +75,9 @@ public:
 
 	void SetWalkDirection(const Vector3f &direction);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character);
+	friend const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character);
+	friend Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character);
 
 protected:
 	void RecalculateMass() override;

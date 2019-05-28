@@ -16,12 +16,11 @@ add_executable(Editor ${EDITOR_SOURCES})
 
 target_compile_features(Editor PUBLIC cxx_std_17)
 set_target_properties(Editor PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
 
 target_include_directories(Editor PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(Editor PRIVATE Acid)
+target_link_libraries(Editor PRIVATE Acid::Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(Editor PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

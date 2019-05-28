@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT JointData :
+class JointData :
 	public NonCopyable
 {
 public:
@@ -52,7 +52,7 @@ private:
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
  **/
-class ACID_EXPORT Joint :
+class Joint :
 	public NonCopyable
 {
 public:

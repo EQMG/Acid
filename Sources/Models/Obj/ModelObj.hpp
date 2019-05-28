@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a OBL model.
  */
-class ACID_EXPORT ModelObj :
+class ModelObj :
 	public Model
 {
 public:
@@ -34,9 +34,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelObj &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelObj &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
 
 private:
 	std::string m_filename;

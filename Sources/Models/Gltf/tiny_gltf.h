@@ -437,8 +437,7 @@ struct AnimationChannel {
 struct AnimationSampler {
   int input;                  // required
   int output;                 // required
-  std::string interpolation;  // in ["LINEAR", "STEP", "CATMULLROMSPLINE",
-                              // "CUBICSPLINE"], default "LINEAR"
+  std::string interpolation;  // "LINEAR", "STEP","CUBICSPLINE" or user defined string. default "LINEAR"
   Value extras;
 
   AnimationSampler() : input(-1), output(-1), interpolation("LINEAR") {}
@@ -708,7 +707,6 @@ struct Mesh {
   std::string name;
   std::vector<Primitive> primitives;
   std::vector<double> weights;  // weights to be applied to the Morph Targets
-  std::vector<std::map<std::string, int> > targets;
   ExtensionMap extensions;
   Value extras;
 
@@ -826,13 +824,14 @@ class Model {
 
 enum SectionCheck {
   NO_REQUIRE = 0x00,
-  REQUIRE_SCENE = 0x01,
-  REQUIRE_SCENES = 0x02,
-  REQUIRE_NODES = 0x04,
-  REQUIRE_ACCESSORS = 0x08,
-  REQUIRE_BUFFERS = 0x10,
-  REQUIRE_BUFFER_VIEWS = 0x20,
-  REQUIRE_ALL = 0x3f
+  REQUIRE_VERSION = 0x01,
+  REQUIRE_SCENE = 0x02,
+  REQUIRE_SCENES = 0x04,
+  REQUIRE_NODES = 0x08,
+  REQUIRE_ACCESSORS = 0x10,
+  REQUIRE_BUFFERS = 0x20,
+  REQUIRE_BUFFER_VIEWS = 0x40,
+  REQUIRE_ALL = 0x7f
 };
 
 ///
@@ -934,7 +933,7 @@ class TinyGLTF {
   ///
   bool LoadASCIIFromFile(Model *model, std::string *err, std::string *warn,
                          const std::string &filename,
-                         unsigned int check_sections = REQUIRE_ALL);
+                         unsigned int check_sections = REQUIRE_VERSION);
 
   ///
   /// Loads glTF ASCII asset from string(memory).
@@ -945,7 +944,7 @@ class TinyGLTF {
   bool LoadASCIIFromString(Model *model, std::string *err, std::string *warn,
                            const char *str, const unsigned int length,
                            const std::string &base_dir,
-                           unsigned int check_sections = REQUIRE_ALL);
+                           unsigned int check_sections = REQUIRE_VERSION);
 
   ///
   /// Loads glTF binary asset from a file.
@@ -954,7 +953,7 @@ class TinyGLTF {
   ///
   bool LoadBinaryFromFile(Model *model, std::string *err, std::string *warn,
                           const std::string &filename,
-                          unsigned int check_sections = REQUIRE_ALL);
+                          unsigned int check_sections = REQUIRE_VERSION);
 
   ///
   /// Loads glTF binary asset from memory.
@@ -966,7 +965,7 @@ class TinyGLTF {
                             const unsigned char *bytes,
                             const unsigned int length,
                             const std::string &base_dir = "",
-                            unsigned int check_sections = REQUIRE_ALL);
+                            unsigned int check_sections = REQUIRE_VERSION);
 
   ///
   /// Write glTF to file.
@@ -1303,8 +1302,7 @@ bool Material::operator==(const Material &other) const {
 }
 bool Mesh::operator==(const Mesh &other) const {
   return this->extensions == other.extensions && this->extras == other.extras &&
-         this->name == other.name && this->primitives == other.primitives &&
-         this->targets == other.targets && Equals(this->weights, other.weights);
+         this->name == other.name && this->primitives == other.primitives;
 }
 bool Model::operator==(const Model &other) const {
   return this->accessors == other.accessors &&
@@ -3382,24 +3380,6 @@ static bool ParseMesh(Mesh *mesh, Model *model, std::string *err,
     }
   }
 
-  // Look for morph targets
-  json::const_iterator targetsObject = o.find("targets");
-  if ((targetsObject != o.end()) && targetsObject.value().is_array()) {
-    for (json::const_iterator i = targetsObject.value().begin();
-         i != targetsObject.value().end(); i++) {
-      std::map<std::string, int> targetAttribues;
-
-      const json &dict = i.value();
-      json::const_iterator dictIt(dict.begin());
-      json::const_iterator dictItEnd(dict.end());
-
-      for (; dictIt != dictItEnd; ++dictIt) {
-        targetAttribues[dictIt.key()] = static_cast<int>(dictIt.value());
-      }
-      mesh->targets.push_back(targetAttribues);
-    }
-  }
-
   // Should probably check if has targets and if dimensions fit
   ParseNumberArrayProperty(&mesh->weights, err, o, "weights", false);
 
@@ -3812,6 +3792,25 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
       (*err) = "Root element is not a JSON object\n";
     }
     return false;
+  }
+
+  {
+    bool version_found = false;
+    json::const_iterator it = v.find("asset");
+    if ((it != v.end()) && it.value().is_object()) {
+      json::const_iterator version_it = it.value().find("version");
+      if ((version_it != it.value().end() && version_it.value().is_string())) {
+        version_found = true;
+      }
+    }
+    if (version_found) {
+      // OK
+    } else if (check_sections & REQUIRE_VERSION) {
+      if (err) {
+        (*err) += "\"asset\" object not found in .gltf or not an object type\n";
+      }
+      return false;
+    }
   }
 
   // scene is not mandatory.
@@ -4892,14 +4891,13 @@ static void SerializeGltfBufferView(BufferView &bufferView, json &o) {
 }
 
 static void SerializeGltfImage(Image &image, json &o) {
- 	// if uri empty, the mimeType and bufferview should be set
+  // if uri empty, the mimeType and bufferview should be set
   if (image.uri.empty()) {
-		SerializeStringProperty("mimeType", image.mimeType, o);
-		SerializeNumberProperty<int>("bufferView", image.bufferView, o);
-	}
-  else {
-		SerializeStringProperty("uri", image.uri, o);
-	}
+    SerializeStringProperty("mimeType", image.mimeType, o);
+    SerializeNumberProperty<int>("bufferView", image.bufferView, o);
+  } else {
+    SerializeStringProperty("uri", image.uri, o);
+  }
 
   if (image.name.size()) {
     SerializeStringProperty("name", image.name, o);

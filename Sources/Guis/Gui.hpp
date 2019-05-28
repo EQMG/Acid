@@ -14,7 +14,7 @@ namespace acid
 /**
  * @brief Class that represents a image UI.
  */
-class ACID_EXPORT Gui :
+class Gui :
 	public UiObject
 {
 public:

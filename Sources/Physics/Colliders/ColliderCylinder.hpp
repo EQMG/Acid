@@ -6,7 +6,7 @@ class btCylinderShape;
 
 namespace acid
 {
-class ACID_EXPORT ColliderCylinder :
+class ColliderCylinder :
 	public Collider
 {
 public:
@@ -28,9 +28,9 @@ public:
 
 	void SetHeight(const float &height);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderCylinder &collider);
+	friend const Metadata &operator>>(const Metadata &metadata, ColliderCylinder &collider);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderCylinder &collider);
+	friend Metadata &operator<<(Metadata &metadata, const ColliderCylinder &collider);
 
 private:
 	std::unique_ptr<btCylinderShape> m_shape;

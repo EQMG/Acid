@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterGrain :
+class FilterGrain :
 	public PostFilter
 {
 public:

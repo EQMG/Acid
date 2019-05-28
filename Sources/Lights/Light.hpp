@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Component that represents a point light.
  */
-class ACID_EXPORT Light :
+class Light :
 	public Component
 {
 public:
@@ -32,9 +32,9 @@ public:
 
 	void SetRadius(const float &radius) { m_radius = radius; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Light &light);
+	friend const Metadata &operator>>(const Metadata &metadata, Light &light);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Light &light);
+	friend Metadata &operator<<(Metadata &metadata, const Light &light);
 
 private:
 	Colour m_colour;

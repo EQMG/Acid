@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a cylinder model.
  */
-class ACID_EXPORT ModelCylinder :
+class ModelCylinder :
 	public Model
 {
 public:
@@ -44,9 +44,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelCylinder &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelCylinder &model);
 
 private:
 	float m_radiusBase;

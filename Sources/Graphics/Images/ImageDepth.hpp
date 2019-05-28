@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Resource that represents a depth stencil image.
  */
-class ACID_EXPORT ImageDepth :
+class ImageDepth :
 	public Descriptor
 {
 public:

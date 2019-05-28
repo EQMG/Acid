@@ -16,12 +16,11 @@ add_executable(TestFont ${TESTFONT_SOURCES})
 
 target_compile_features(TestFont PUBLIC cxx_std_17)
 set_target_properties(TestFont PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
 
 target_include_directories(TestFont PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestFont PRIVATE Acid)
+target_link_libraries(TestFont PRIVATE Acid::Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestFont PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

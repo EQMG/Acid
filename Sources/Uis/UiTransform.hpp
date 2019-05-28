@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiAnchor
+class UiAnchor
 {
 public:
 	static const Vector2f LeftTop;
@@ -36,7 +36,7 @@ ENABLE_BITMASK_OPERATORS(UiMargins)
 /**
  * @brief Class that represents a 2D screen space transform.
  */
-class ACID_EXPORT UiTransform
+class UiTransform
 {
 public:
 	/**

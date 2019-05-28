@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Class that represents a playable sound.
  */
-class ACID_EXPORT Sound :
+class Sound :
 	public Component
 {
 public:
@@ -51,9 +51,9 @@ public:
 
 	void SetPitch(const float &pitch);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Sound &sound);
+	friend const Metadata &operator>>(const Metadata &metadata, Sound &sound);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Sound &sound);
+	friend Metadata &operator<<(Metadata &metadata, const Sound &sound);
 
 private:
 	std::shared_ptr<SoundBuffer> m_soundBuffer;

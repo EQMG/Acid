@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Button input from the mouse input device.
  */
-class ACID_EXPORT ButtonMouse :
+class ButtonMouse :
 	public Button
 {
 public:

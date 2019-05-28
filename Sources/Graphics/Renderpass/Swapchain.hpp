@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT Swapchain
+class Swapchain
 {
 public:
 	explicit Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain = {});

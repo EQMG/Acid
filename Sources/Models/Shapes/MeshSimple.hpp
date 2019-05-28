@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT MeshSimple :
+class MeshSimple :
 	public Model
 {
 public:

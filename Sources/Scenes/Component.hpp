@@ -10,7 +10,7 @@ class Entity;
 /**
  * @brief Class that represents a functional component attached to entity.
  */
-class ACID_EXPORT Component :
+class Component :
 	public Observer
 {
 public:

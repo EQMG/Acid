@@ -10,7 +10,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiInputGrabber :
+class UiInputGrabber :
 	public UiObject
 {
 public:
@@ -39,7 +39,7 @@ protected:
 	bool m_mouseOver;
 };
 
-class ACID_EXPORT UiGrabberJoystick :
+class UiGrabberJoystick :
 	public UiInputGrabber
 {
 public:
@@ -72,7 +72,7 @@ private:
 	Delegate<void(uint32_t, uint32_t)> m_onValue;
 };
 
-class ACID_EXPORT UiGrabberKeyboard :
+class UiGrabberKeyboard :
 	public UiInputGrabber
 {
 public:
@@ -100,7 +100,7 @@ private:
 	Delegate<void(Key)> m_onValue;
 };
 
-class ACID_EXPORT UiGrabberMouse :
+class UiGrabberMouse :
 	public UiInputGrabber
 {
 public:

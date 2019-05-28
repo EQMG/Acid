@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT SubrenderGizmos :
+class SubrenderGizmos :
 	public Subrender
 {
 public:

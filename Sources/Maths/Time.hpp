@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Represents a time value stored in microseconds.
  */
-class ACID_EXPORT Time
+class Time
 {
 public:
 	Time();
@@ -128,23 +128,23 @@ public:
 
 	Time operator-() const;
 
-	ACID_EXPORT friend Time operator+(const Time &left, const Time &right);
+	friend Time operator+(const Time &left, const Time &right);
 
-	ACID_EXPORT friend Time operator-(const Time &left, const Time &right);
+	friend Time operator-(const Time &left, const Time &right);
 
-	ACID_EXPORT friend Time operator*(const Time &left, const float &right);
+	friend Time operator*(const Time &left, const float &right);
 
-	ACID_EXPORT friend Time operator*(const Time &left, const int64_t &right);
+	friend Time operator*(const Time &left, const int64_t &right);
 
-	ACID_EXPORT friend Time operator*(const float &left, const Time &right);
+	friend Time operator*(const float &left, const Time &right);
 
-	ACID_EXPORT friend Time operator*(const int64_t &left, const Time &right);
+	friend Time operator*(const int64_t &left, const Time &right);
 
-	ACID_EXPORT friend Time operator/(const Time &left, const float &right);
+	friend Time operator/(const Time &left, const float &right);
 
-	ACID_EXPORT friend Time operator/(const Time &left, const int64_t &right);
+	friend Time operator/(const Time &left, const int64_t &right);
 	
-	ACID_EXPORT friend double operator/(const Time &left, const Time &right);
+	friend double operator/(const Time &left, const Time &right);
 
 	Time &operator+=(const Time &other);
 
@@ -158,9 +158,9 @@ public:
 
 	Time &operator/=(const int64_t &other);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Time &time);
+	friend const Metadata &operator>>(const Metadata &metadata, Time &time);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Time &time);
+	friend Metadata &operator<<(Metadata &metadata, const Time &time);
 
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;

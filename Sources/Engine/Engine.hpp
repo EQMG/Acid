@@ -8,7 +8,7 @@
 
 namespace acid
 {
-class ACID_EXPORT Delta
+class Delta
 {
 public:
 	void Update()
@@ -23,7 +23,7 @@ public:
 	Time m_change;
 };
 
-class ACID_EXPORT ChangePerSecond
+class ChangePerSecond
 {
 public:
 	void Update(const Time &time)
@@ -46,7 +46,7 @@ public:
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
-class ACID_EXPORT Engine :
+class Engine :
 	public NonCopyable
 {
 public:

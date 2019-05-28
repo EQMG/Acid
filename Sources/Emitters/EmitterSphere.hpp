@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT EmitterSphere :
+class EmitterSphere :
 	public Emitter
 {
 public:
@@ -20,9 +20,9 @@ public:
 
 	void SetRadius(const float &radius) { m_radius = radius; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter);
+	friend const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter);
+	friend Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter);
 
 private:
 	float m_radius;

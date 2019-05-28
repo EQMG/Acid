@@ -225,6 +225,90 @@ typedef struct {
   int pad2;
 
   std::map<std::string, std::string> unknown_parameter;
+
+#ifdef TINY_OBJ_LOADER_PYTHON_BINDING
+  // For pybind11
+  std::array<double, 3> GetDiffuse() {
+    std::array<double, 3> values;
+    values[0] = double(diffuse[0]);
+    values[1] = double(diffuse[1]);
+    values[2] = double(diffuse[2]);
+
+    return values;
+  }
+
+  std::array<double, 3> GetSpecular() {
+    std::array<double, 3> values;
+    values[0] = double(specular[0]);
+    values[1] = double(specular[1]);
+    values[2] = double(specular[2]);
+
+    return values;
+  }
+
+  std::array<double, 3> GetTransmittance() {
+    std::array<double, 3> values;
+    values[0] = double(transmittance[0]);
+    values[1] = double(transmittance[1]);
+    values[2] = double(transmittance[2]);
+
+    return values;
+  }
+
+  std::array<double, 3> GetEmission() {
+    std::array<double, 3> values;
+    values[0] = double(emission[0]);
+    values[1] = double(emission[1]);
+    values[2] = double(emission[2]);
+
+    return values;
+  }
+
+  std::array<double, 3> GetAmbient() {
+    std::array<double, 3> values;
+    values[0] = double(ambient[0]);
+    values[1] = double(ambient[1]);
+    values[2] = double(ambient[2]);
+
+    return values;
+  }
+
+  void SetDiffuse(std::array<double, 3> &a) {
+    diffuse[0] = real_t(a[0]);
+    diffuse[1] = real_t(a[1]);
+    diffuse[2] = real_t(a[2]);
+  }
+
+  void SetAmbient(std::array<double, 3> &a) {
+    ambient[0] = real_t(a[0]);
+    ambient[1] = real_t(a[1]);
+    ambient[2] = real_t(a[2]);
+  }
+
+  void SetSpecular(std::array<double, 3> &a) {
+    specular[0] = real_t(a[0]);
+    specular[1] = real_t(a[1]);
+    specular[2] = real_t(a[2]);
+  }
+
+  void SetTransmittance(std::array<double, 3> &a) {
+    transmittance[0] = real_t(a[0]);
+    transmittance[1] = real_t(a[1]);
+    transmittance[2] = real_t(a[2]);
+  }
+
+  std::string GetCustomParameter(const std::string &key) {
+    std::map<std::string, std::string>::const_iterator it =
+        unknown_parameter.find(key);
+
+    if (it != unknown_parameter.end()) {
+      return it->second;
+    }
+    return std::string();
+  }
+
+#endif
+
 } material_t;
 
 typedef struct {
@@ -261,7 +345,7 @@ typedef struct {
 
 typedef struct {
   // Linear flattened indices.
-  std::vector<index_t> indices;       // indices for vertices(poly lines)
+  std::vector<index_t> indices;        // indices for vertices(poly lines)
   std::vector<int> num_line_vertices;  // The number of vertices per line.
 } lines_t;
 
@@ -392,13 +476,12 @@ struct ObjReaderConfig {
 
   ///
   /// Search path to .mtl file.
-  /// Default = search from same directory of .obj file.
+  /// Default = "" = search from the same directory of .obj file.
   /// Valid only when loading .obj from a file.
   ///
   std::string mtl_search_path;
 
-  ObjReaderConfig()
-      : triangulate(true), vertex_color(true), mtl_search_path("./") {}
+  ObjReaderConfig() : triangulate(true), vertex_color(true) {}
 };
 
 ///
@@ -415,7 +498,8 @@ class ObjReader {
   /// @param[in] filename wavefront .obj filename
   /// @param[in] config Reader configuration
   ///
-  bool ParseFromFile(const std::string &filename, const ObjReaderConfig &config = ObjReaderConfig());
+  bool ParseFromFile(const std::string &filename,
+                     const ObjReaderConfig &config = ObjReaderConfig());
 
   ///
   /// Parse .obj from a text string.
@@ -426,7 +510,8 @@ class ObjReader {
   /// @param[in] mtl_text wavefront .mtl filename
   /// @param[in] config Reader configuration
   ///
-  bool ParseFromString(const std::string &obj_text, const std::string &mtl_text, const ObjReaderConfig &config = ObjReaderConfig());
+  bool ParseFromString(const std::string &obj_text, const std::string &mtl_text,
+                       const ObjReaderConfig &config = ObjReaderConfig());
 
   ///
   /// .obj was loaded or parsed correctly.
@@ -741,6 +826,7 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
   int read = 0;
   // Tells whether a loop terminated due to reaching s_end.
   bool end_not_reached = false;
+  bool leading_decimal_dots = false;
 
   /*
           BEGIN PARSING.
@@ -750,23 +836,35 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
   if (*curr == '+' || *curr == '-') {
     sign = *curr;
     curr++;
+    if ((curr != s_end) && (*curr == '.')) {
+      // accept. Somethig like `.7e+2`, `-.5234`
+      leading_decimal_dots = true;
+    }
   } else if (IS_DIGIT(*curr)) { /* Pass through. */
+  } else if (*curr == '.') {
+    // accept. Somethig like `.7e+2`, `-.5234`
+    leading_decimal_dots = true;
   } else {
     goto fail;
   }
 
   // Read the integer part.
   end_not_reached = (curr != s_end);
-  while (end_not_reached && IS_DIGIT(*curr)) {
-    mantissa *= 10;
-    mantissa += static_cast<int>(*curr - 0x30);
-    curr++;
-    read++;
-    end_not_reached = (curr != s_end);
+  if (!leading_decimal_dots) {
+    while (end_not_reached && IS_DIGIT(*curr)) {
+      mantissa *= 10;
+      mantissa += static_cast<int>(*curr - 0x30);
+      curr++;
+      read++;
+      end_not_reached = (curr != s_end);
+    }
   }
 
   // We must make sure we actually got something.
-  if (read == 0) goto fail;
+  if (!leading_decimal_dots) {
+    if (read == 0) goto fail;
+  }
+
   // We allow numbers of form "#", "###" etc.
   if (!end_not_reached) goto assemble;
 
@@ -1487,8 +1585,8 @@ static bool exportGroupsToShape(shape_t *shape, const PrimGroup &prim_group,
   if (!prim_group.lineGroup.empty()) {
     // Flatten indices
     for (size_t i = 0; i < prim_group.lineGroup.size(); i++) {
-      for (size_t j = 0; j < prim_group.lineGroup[i].vertex_indices.size(); j++) {
-
+      for (size_t j = 0; j < prim_group.lineGroup[i].vertex_indices.size();
+           j++) {
         const vertex_index_t &vi = prim_group.lineGroup[i].vertex_indices[j];
 
         index_t idx;
@@ -1499,7 +1597,8 @@ static bool exportGroupsToShape(shape_t *shape, const PrimGroup &prim_group,
         shape->lines.indices.push_back(idx);
       }
 
-      shape->lines.num_line_vertices.push_back(int(prim_group.lineGroup[i].vertex_indices.size()));
+      shape->lines.num_line_vertices.push_back(
+          int(prim_group.lineGroup[i].vertex_indices.size()));
     }
   }
 
@@ -1507,8 +1606,8 @@ static bool exportGroupsToShape(shape_t *shape, const PrimGroup &prim_group,
   if (!prim_group.pointsGroup.empty()) {
     // Flatten & convert indices
     for (size_t i = 0; i < prim_group.pointsGroup.size(); i++) {
-      for (size_t j = 0; j < prim_group.pointsGroup[i].vertex_indices.size(); j++) {
-
+      for (size_t j = 0; j < prim_group.pointsGroup[i].vertex_indices.size();
+           j++) {
         const vertex_index_t &vi = prim_group.pointsGroup[i].vertex_indices[j];
 
         index_t idx;
@@ -2113,7 +2212,8 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
                          static_cast<int>(vt.size() / 2), &vi)) {
           if (err) {
             std::stringstream ss;
-            ss << "Failed parse `l' line(e.g. zero value for vertex index. line "
+            ss << "Failed parse `l' line(e.g. zero value for vertex index. "
+                  "line "
                << line_num << ".)\n";
             (*err) += ss.str();
           }
@@ -2144,7 +2244,8 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
                          static_cast<int>(vt.size() / 2), &vi)) {
           if (err) {
             std::stringstream ss;
-            ss << "Failed parse `p' line(e.g. zero value for vertex index. line "
+            ss << "Failed parse `p' line(e.g. zero value for vertex index. "
+                  "line "
                << line_num << ".)\n";
             (*err) += ss.str();
           }
@@ -2780,16 +2881,29 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
 }
 
 bool ObjReader::ParseFromFile(const std::string &filename,
-                     const ObjReaderConfig &config) {
+                              const ObjReaderConfig &config) {
+  std::string mtl_search_path;
+
+  if (config.mtl_search_path.empty()) {
+    //
+    // split at last '/'(for unixish system) or '\\'(for windows) to get
+    // the base directory of .obj file
+    //
+    if (filename.find_last_of("/\\") != std::string::npos) {
+      mtl_search_path = filename.substr(0, filename.find_last_of("/\\"));
+    }
+  }
+
   valid_ = LoadObj(&attrib_, &shapes_, &materials_, &warning_, &error_,
-                   filename.c_str(), config.mtl_search_path.c_str(),
+                   filename.c_str(), mtl_search_path.c_str(),
                    config.triangulate, config.vertex_color);
 
   return valid_;
 }
 
-bool ObjReader::ParseFromString(const std::string &obj_text, const std::string &mtl_text,
-                     const ObjReaderConfig &config) {
+bool ObjReader::ParseFromString(const std::string &obj_text,
+                                const std::string &mtl_text,
+                                const ObjReaderConfig &config) {
   std::stringbuf obj_buf(obj_text);
   std::stringbuf mtl_buf(mtl_text);
 

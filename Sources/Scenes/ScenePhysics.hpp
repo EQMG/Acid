@@ -17,7 +17,7 @@ class CollisionObject;
 using CollisionPair = std::pair<const btCollisionObject *, const btCollisionObject *>;
 using CollisionPairs = std::set<CollisionPair>;
 
-class ACID_EXPORT Raycast
+class Raycast
 {
 public:
 	Raycast(bool m_hasHit, const Vector3f &m_pointWorld, CollisionObject *collisionObject) :
@@ -39,7 +39,7 @@ private:
 	CollisionObject *m_collisionObject;
 };
 
-class ACID_EXPORT ScenePhysics
+class ScenePhysics
 {
 public:
 	ScenePhysics();

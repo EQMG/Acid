@@ -11,7 +11,7 @@ namespace acid
 /**
  * @brief Component that is used to render a entity as a shadow.
  */
-class ACID_EXPORT ShadowRender :
+class ShadowRender :
 	public Component
 {
 public:
@@ -23,9 +23,9 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ShadowRender &shadowRender);
+	friend const Metadata &operator>>(const Metadata &metadata, ShadowRender &shadowRender);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ShadowRender &shadowRender);
+	friend Metadata &operator<<(Metadata &metadata, const ShadowRender &shadowRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

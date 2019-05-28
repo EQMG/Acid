@@ -10,7 +10,7 @@ namespace acid
  * The transform is stored as a position vector and a quaternion (rotation) so that these values can  be easily interpolated,
  * a functionality that this class also provides.
  **/
-class ACID_EXPORT JointTransform
+class JointTransform
 {
 public:
 	/**

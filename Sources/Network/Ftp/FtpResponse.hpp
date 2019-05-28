@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Define a FTP response.
  **/
-class ACID_EXPORT FtpResponse
+class FtpResponse
 {
 public:
 	/**

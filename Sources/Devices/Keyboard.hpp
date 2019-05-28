@@ -136,7 +136,7 @@ enum class Key :
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT Keyboard :
+class Keyboard :
 	public Module
 {
 public:

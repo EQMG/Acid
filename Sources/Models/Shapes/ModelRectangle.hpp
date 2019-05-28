@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a rectangle model.
  */
-class ACID_EXPORT ModelRectangle :
+class ModelRectangle :
 	public Model
 {
 public:
@@ -36,9 +36,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelRectangle &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelRectangle &model);
 
 private:
 	float m_min;

@@ -103,7 +103,6 @@ RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage)
 void PipelineGraphics::CreateShaderProgram()
 {
 	std::stringstream defineBlock;
-	defineBlock << "\n";
 
 	for (const auto &define : m_defines)
 	{

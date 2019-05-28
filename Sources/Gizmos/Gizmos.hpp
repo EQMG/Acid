@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Module used for that manages debug gizmos.
  */
-class ACID_EXPORT Gizmos :
+class Gizmos :
 	public Module
 {
 public:

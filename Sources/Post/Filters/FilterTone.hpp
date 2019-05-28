@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterTone :
+class FilterTone :
 	public PostFilter
 {
 public:

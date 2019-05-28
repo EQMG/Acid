@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Class that handles a storage buffer.
  */
-class ACID_EXPORT StorageHandler
+class StorageHandler
 {
 public:
 	explicit StorageHandler(const bool &multipipeline = false);

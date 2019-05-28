@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief A logging class used in Acid, will write output to a file one the application has closed.
  */
-class ACID_EXPORT Log
+class Log
 {
 public:
 	enum class Style

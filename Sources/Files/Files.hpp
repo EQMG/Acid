@@ -11,7 +11,7 @@ enum class FileMode
 	Read, Write, Append
 };
 
-class ACID_EXPORT BaseFStream
+class BaseFStream
 {
 protected:
 	PHYSFS_File *file;
@@ -23,7 +23,7 @@ public:
 	size_t length();
 };
 
-class ACID_EXPORT IFStream :
+class IFStream :
 	public BaseFStream,
 	public std::istream
 {
@@ -33,7 +33,7 @@ public:
 	virtual ~IFStream();
 };
 
-class ACID_EXPORT OFStream :
+class OFStream :
 	public BaseFStream,
 	public std::ostream
 {
@@ -43,7 +43,7 @@ public:
 	virtual ~OFStream();
 };
 
-class ACID_EXPORT FStream :
+class FStream :
 	public BaseFStream,
 	public std::iostream
 {
@@ -56,7 +56,7 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT Files :
+class Files :
 	public Module
 {
 public:

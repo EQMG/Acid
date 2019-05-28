@@ -8,12 +8,16 @@ option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 
-# Used to include Acid cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
-include(PrecompiledHeader)
+# Sets the install directories defined by GNU
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-# Add property to allow making folders for Acid in IDEs
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)  
+# Add property to allow making project folders in IDEs
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+# Position-independent code
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
@@ -25,11 +29,15 @@ if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
-# Sets the install directories defined by GNU
-include(GNUInstallDirs)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+# Used to include Acid cmake modules
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+
+# Checks if interprocedural optimization is supported by the compiler
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
+if(NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"))
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT CMAKE_INTERPROCEDURAL_OPTIMIZATION)
+endif()
 
 # Use ccache if it is installed, will cach previous compilations
 find_program(CCACHE_FOUND "ccache")

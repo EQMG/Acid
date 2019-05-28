@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT SubrenderShadows :
+class SubrenderShadows :
 	public Subrender
 {
 public:

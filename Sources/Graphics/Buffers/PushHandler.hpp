@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Class that handles a pipeline push constant.
  */
-class ACID_EXPORT PushHandler
+class PushHandler
 {
 public:
 	explicit PushHandler(const bool &multipipeline = false);

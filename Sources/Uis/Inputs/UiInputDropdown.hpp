@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiInputDropdown :
+class UiInputDropdown :
 	public UiObject
 {
 public:

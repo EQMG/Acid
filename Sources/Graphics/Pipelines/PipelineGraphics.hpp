@@ -13,7 +13,7 @@ class Image2d;
 /**
  * @brief Class that represents a graphics pipeline.
  */
-class ACID_EXPORT PipelineGraphics :
+class PipelineGraphics :
 	public Pipeline
 {
 public:
@@ -159,7 +159,7 @@ private:
 	VkPipelineTessellationStateCreateInfo m_tessellationState;
 };
 
-class ACID_EXPORT PipelineGraphicsCreate
+class PipelineGraphicsCreate
 {
 public:
 	explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},

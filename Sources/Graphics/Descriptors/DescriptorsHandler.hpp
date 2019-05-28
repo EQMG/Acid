@@ -12,7 +12,7 @@ namespace acid
 /**
  * @brief Class that handles a descriptor set.
  */
-class ACID_EXPORT DescriptorsHandler
+class DescriptorsHandler
 {
 public:
 	DescriptorsHandler();

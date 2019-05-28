@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Axis composed of two buttons.
  */
-class ACID_EXPORT AxisButton :
+class AxisButton :
 	public Axis
 {
 public:

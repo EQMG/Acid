@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class ACID_EXPORT VertexDefault
+class VertexDefault
 {
 public:
 	VertexDefault(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :

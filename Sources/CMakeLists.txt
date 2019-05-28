@@ -1,31 +1,14 @@
 add_library(Acid)
+add_library(Acid::Acid ALIAS Acid)
+
 # This file is quite big, so for readability we include instead...
 # This uses target_sources(Acid) to define its headers & source files
 include(CMakeSources.cmake)
 
 target_compile_features(Acid PUBLIC cxx_std_17)
 set_target_properties(Acid PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
-
-if(BUILD_SHARED_LIBS)
-	set_target_properties(Acid PROPERTIES DEFINE_SYMBOL "ACID_EXPORTS")
-
-	if(WIN32)
-		set_target_properties(Acid PROPERTIES PREFIX "")
-		set_target_properties(Acid PROPERTIES DEBUG_POSTFIX "")
-	elseif(UNIX AND APPLE)
-		set_target_properties(Acid PROPERTIES INSTALL_NAME_DIR "lib${LIB_SUFFIX}")
-	endif()
-	target_compile_options(Acid
-			PRIVATE
-			$<$<CXX_COMPILER_ID:GNU>:-fvisibility=hidden>
-			$<$<CXX_COMPILER_ID:AppleClang>:-fno-common>
-			)
-else()
-	target_compile_definitions(Acid PUBLIC "ACID_STATICLIB")
-endif()
 
 target_compile_definitions(Acid
 		PUBLIC
@@ -144,14 +127,14 @@ if(_ACID_ALL_SYSTEM_LIBS)
 	write_basic_package_version_file(
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			COMPATIBILITY SameMajorVersion
-	)
+			)
 	# Install the auto-generated version file and AcidConfig
 	install(
 			FILES
 			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-	)
+			)
 else()
 	# Install without an export since we're using 1 (or more) non-system libs
 	install(TARGETS Acid

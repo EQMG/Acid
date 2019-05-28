@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Resource that represents a model vertex and index buffer.
  */
-class ACID_EXPORT Model :
+class Model :
 	public Resource
 {
 public:
@@ -73,9 +73,9 @@ public:
 
 	VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Model &model);
+	friend const Metadata &operator>>(const Metadata &metadata, Model &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Model &model);
+	friend Metadata &operator<<(Metadata &metadata, const Model &model);
 
 protected:
 	template<typename T>

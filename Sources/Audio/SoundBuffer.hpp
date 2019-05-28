@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Resource that represents a sound buffer.
  */
-class ACID_EXPORT SoundBuffer :
+class SoundBuffer :
 	public Resource
 {
 public:
@@ -42,9 +42,9 @@ public:
 
 	const uint32_t &GetBuffer() const { return m_buffer; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer);
+	friend const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
+	friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
 
 private:
 	static uint32_t LoadBufferWav(const std::string &filename);

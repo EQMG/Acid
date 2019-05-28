@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Resource that represents a 2D image.
  */
-class ACID_EXPORT Image2d :
+class Image2d :
 	public NonCopyable,
 	public Descriptor,
 	public Resource
@@ -121,9 +121,9 @@ public:
 
 	const VkFormat &GetFormat() const { return m_format; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Image2d &image);
+	friend const Metadata &operator>>(const Metadata &metadata, Image2d &image);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
+	friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
 
 private:
 	std::string m_filename;

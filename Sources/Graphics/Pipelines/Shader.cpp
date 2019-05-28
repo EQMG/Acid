@@ -83,6 +83,7 @@ const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 	metadata.GetChild("Uniforms", shader.m_uniforms);
 	metadata.GetChild("Uniform Blocks", shader.m_uniformBlocks);
 	metadata.GetChild("Attributes", shader.m_attributes);
+	metadata.GetChild("Constants", shader.m_constants);
 	//metadata.GetChild("Local Sizes", shader.m_localSizes);
 	return metadata;
 }
@@ -92,7 +93,7 @@ Metadata &operator<<(Metadata &metadata, const Shader &shader)
 	metadata.SetChild("Stages", shader.m_stages);
 	metadata.SetChild("Uniforms", shader.m_uniforms);
 	metadata.SetChild("Uniform Blocks", shader.m_uniformBlocks);
-	metadata.SetChild("Attributes", shader.m_attributes);
+	metadata.SetChild("Constants", shader.m_constants);
 	//metadata.SetChild("Local Sizes", shader.m_localSizes);
 	return metadata;
 }
@@ -550,7 +551,7 @@ void Shader::CreateReflection()
 	}
 
 	// TODO: This is a AMD workaround that works on NVidia too...
-	m_descriptorPools = std::vector<VkDescriptorPoolSize>(6);
+	m_descriptorPools.resize(6);
 	m_descriptorPools[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 	m_descriptorPools[0].descriptorCount = 4096;
 	m_descriptorPools[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

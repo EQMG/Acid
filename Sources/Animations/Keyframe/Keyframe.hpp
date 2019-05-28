@@ -12,7 +12,7 @@ namespace acid
  * It also contains the desired local-space transforms of all of the joints in the animated entity at this keyframe in the animation.
  * The joint transforms are stored in a map, indexed by the name of the joint that they should be applied to.
  **/
-class ACID_EXPORT Keyframe
+class Keyframe
 {
 public:
 	/**

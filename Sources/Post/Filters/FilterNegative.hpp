@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterNegative :
+class FilterNegative :
 	public PostFilter
 {
 public:

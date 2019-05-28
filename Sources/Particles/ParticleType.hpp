@@ -18,7 +18,7 @@ class Particle;
 /**
  * @brief Resource that represents a particle type.
  */
-class ACID_EXPORT ParticleType :
+class ParticleType :
 	public Resource
 {
 public:
@@ -108,9 +108,9 @@ public:
 
 	void SetScale(const float &scale) { m_scale = scale; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType);
+	friend const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ParticleType &particleType);
+	friend Metadata &operator<<(Metadata &metadata, const ParticleType &particleType);
 
 private:
 	std::shared_ptr<Image2d> m_image;

@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiInputSlider :
+class UiInputSlider :
 	public UiObject
 {
 public:

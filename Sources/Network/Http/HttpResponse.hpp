@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Defines a HTTP response.
  **/
-class ACID_EXPORT HttpResponse
+class HttpResponse
 {
 public:
 	/**

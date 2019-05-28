@@ -33,7 +33,7 @@ namespace acid
  * This is important to know if you don't want to block your application while
  * the server is completing the task.
  **/
-class ACID_EXPORT Ftp
+class Ftp
 {
 public:
 	/**

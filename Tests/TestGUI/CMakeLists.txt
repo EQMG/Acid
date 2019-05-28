@@ -16,12 +16,11 @@ add_executable(TestGUI ${TESTGUI_SOURCES})
 
 target_compile_features(TestGUI PUBLIC cxx_std_17)
 set_target_properties(TestGUI PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
 
 target_include_directories(TestGUI PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestGUI PRIVATE Acid)
+target_link_libraries(TestGUI PRIVATE Acid::Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestGUI PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

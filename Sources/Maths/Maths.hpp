@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Class that holds many various math functions.
  **/
-class ACID_EXPORT Maths
+class Maths
 {
 public:
 	static constexpr float Pi = 3.14159265358979323846264338f;

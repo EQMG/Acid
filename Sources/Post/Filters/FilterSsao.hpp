@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterSsao :
+class FilterSsao :
 	public PostFilter
 {
 public:

@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiInputRadio :
+class UiInputRadio :
 	public UiObject
 {
 public:
@@ -52,7 +52,7 @@ private:
 	Delegate<void(bool)> m_onValue;
 };
 
-class ACID_EXPORT UiRadioManager :
+class UiRadioManager :
 	public Observer
 {
 public:

@@ -13,7 +13,7 @@ namespace acid
 /**
  * @brief Class that represents an animated armature with a skin mesh.
  **/
-class ACID_EXPORT MeshAnimated :
+class MeshAnimated :
 	public Mesh
 {
 public:
@@ -31,9 +31,9 @@ public:
 
 	const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated);
+	friend const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
+	friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
 
 	static const uint32_t MaxJoints;
 	static const uint32_t MaxWeights;

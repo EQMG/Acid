@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a cube model.
  */
-class ACID_EXPORT ModelCube :
+class ModelCube :
 	public Model
 {
 public:
@@ -34,9 +34,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelCube &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelCube &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelCube &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelCube &model);
 
 private:
 	Vector3f m_extents;

@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Provides functionality for getting the values from a font file.
  */
-class ACID_EXPORT FontMetafile
+class FontMetafile
 {
 public:
 	/**

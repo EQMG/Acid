@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief A representation of a Vulkan image, sampler, and view.
  */
-class ACID_EXPORT Image :
+class Image :
 	public Descriptor
 {
 public:
