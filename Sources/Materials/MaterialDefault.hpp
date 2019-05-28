@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Class that represents the default material shader.
  */
-class ACID_EXPORT MaterialDefault :
+class MaterialDefault :
 	public Material
 {
 public:
@@ -62,9 +62,9 @@ public:
 
 	void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material);
+	friend const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MaterialDefault &material);
+	friend Metadata &operator<<(Metadata &metadata, const MaterialDefault &material);
 
 private:
 	std::vector<Shader::Define> GetDefines() const;

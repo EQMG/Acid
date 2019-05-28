@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UniformBuffer :
+class UniformBuffer :
 	public Descriptor,
 	public Buffer
 {

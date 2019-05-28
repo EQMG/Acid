@@ -16,7 +16,7 @@ class Gizmo;
 /**
  * @brief Resource that represents a gizmo type.
  */
-class ACID_EXPORT GizmoType :
+class GizmoType :
 	public Resource
 {
 public:
@@ -82,9 +82,9 @@ public:
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType);
+	friend const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType);
+	friend Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType);
 
 private:
 	std::shared_ptr<Model> m_model;

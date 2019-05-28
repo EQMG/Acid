@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Helper class for C++ strings.
  */
-class ACID_EXPORT String
+class String
 {
 public:
 	/**

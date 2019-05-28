@@ -31,7 +31,7 @@ namespace acid
 /**
  * @brief Class that can generate 2D, 3D and 4D noise values.
  */
-class ACID_EXPORT Noise
+class Noise
 {
 public:
 	enum class Type

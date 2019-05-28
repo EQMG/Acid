@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterBlur :
+class FilterBlur :
 	public PostFilter
 {
 public:

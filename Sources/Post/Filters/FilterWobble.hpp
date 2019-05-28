@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterWobble :
+class FilterWobble :
 	public PostFilter
 {
 public:

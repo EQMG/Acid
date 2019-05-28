@@ -5,11 +5,11 @@
 
 namespace acid
 {
-class ACID_EXPORT Xml :
+class Xml :
 	public Metadata
 {
 public:
-	class ACID_EXPORT Node :
+	class Node :
 		public NonCopyable
 	{
 	public:

@@ -288,10 +288,10 @@ public:
 
 	Vector4 &operator/=(const T &other);
 
-	ACID_EXPORT static const Vector4 Zero;
-	ACID_EXPORT static const Vector4 One;
-	ACID_EXPORT static const Vector4 PositiveInfinity;
-	ACID_EXPORT static const Vector4 NegativeInfinity;
+	static const Vector4 Zero;
+	static const Vector4 One;
+	static const Vector4 PositiveInfinity;
+	static const Vector4 NegativeInfinity;
 
 	T m_x, m_y, m_z, m_w;
 };

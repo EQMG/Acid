@@ -12,7 +12,7 @@ namespace acid
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT Rigidbody :
+class Rigidbody :
 	public CollisionObject
 {
 public:
@@ -47,9 +47,9 @@ public:
 
 	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody);
+	friend const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody);
+	friend Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody);
 
 protected:
 	void RecalculateMass() override;

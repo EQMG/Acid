@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Holds a RGBA colour.
  **/
-class ACID_EXPORT Colour
+class Colour
 {
 public:
 	/**
@@ -134,29 +134,29 @@ public:
 
 	float &operator[](const uint32_t &index);
 
-	ACID_EXPORT friend Colour operator+(const Colour &left, const Colour &right);
+	friend Colour operator+(const Colour &left, const Colour &right);
 
-	ACID_EXPORT friend Colour operator-(const Colour &left, const Colour &right);
+	friend Colour operator-(const Colour &left, const Colour &right);
 
-	ACID_EXPORT friend Colour operator*(const Colour &left, const Colour &right);
+	friend Colour operator*(const Colour &left, const Colour &right);
 
-	ACID_EXPORT friend Colour operator/(const Colour &left, const Colour &right);
+	friend Colour operator/(const Colour &left, const Colour &right);
 
-	ACID_EXPORT friend Colour operator+(const float &value, const Colour &left);
+	friend Colour operator+(const float &value, const Colour &left);
 
-	ACID_EXPORT friend Colour operator-(const float &value, const Colour &left);
+	friend Colour operator-(const float &value, const Colour &left);
 
-	ACID_EXPORT friend Colour operator*(const float &value, const Colour &left);
+	friend Colour operator*(const float &value, const Colour &left);
 
-	ACID_EXPORT friend Colour operator/(const float &value, const Colour &left);
+	friend Colour operator/(const float &value, const Colour &left);
 
-	ACID_EXPORT friend Colour operator+(const Colour &left, const float &value);
+	friend Colour operator+(const Colour &left, const float &value);
 
-	ACID_EXPORT friend Colour operator-(const Colour &left, const float &value);
+	friend Colour operator-(const Colour &left, const float &value);
 
-	ACID_EXPORT friend Colour operator*(const Colour &left, const float &value);
+	friend Colour operator*(const Colour &left, const float &value);
 
-	ACID_EXPORT friend Colour operator/(const Colour &left, const float &value);
+	friend Colour operator/(const Colour &left, const float &value);
 
 	Colour &operator+=(const Colour &other);
 
@@ -174,11 +174,11 @@ public:
 
 	Colour &operator/=(const float &value);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Colour &colour);
+	friend const Metadata &operator>>(const Metadata &metadata, Colour &colour);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Colour &colour);
+	friend Metadata &operator<<(Metadata &metadata, const Colour &colour);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
+	friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 
 	static const Colour Clear;
 	static const Colour Black;

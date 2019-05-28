@@ -12,7 +12,7 @@ class Matrix3;
 /**
  * @brief Holds a row major 4x4 matrix.
  **/
-class ACID_EXPORT Matrix4
+class Matrix4
 {
 public:
 	/**
@@ -252,29 +252,29 @@ public:
 
 	Vector4f &operator[](const uint32_t &index);
 
-	ACID_EXPORT friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
+	friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
+	friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
+	friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
+	friend Matrix4 operator/(const Matrix4 &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Vector4f &left, const Matrix4 &right);
+	friend Matrix4 operator*(const Vector4f &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Vector4f &left, const Matrix4 &right);
+	friend Matrix4 operator/(const Vector4f &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const Vector4f &right);
+	friend Matrix4 operator*(const Matrix4 &left, const Vector4f &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const Vector4f &right);
+	friend Matrix4 operator/(const Matrix4 &left, const Vector4f &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const float &left, const Matrix4 &right);
+	friend Matrix4 operator*(const float &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const float &left, const Matrix4 &right);
+	friend Matrix4 operator/(const float &left, const Matrix4 &right);
 
-	ACID_EXPORT friend Matrix4 operator*(const Matrix4 &left, const float &right);
+	friend Matrix4 operator*(const Matrix4 &left, const float &right);
 
-	ACID_EXPORT friend Matrix4 operator/(const Matrix4 &left, const float &right);
+	friend Matrix4 operator/(const Matrix4 &left, const float &right);
 
 	Matrix4 &operator+=(const Matrix4 &other);
 
@@ -292,11 +292,11 @@ public:
 
 	Matrix4 &operator/=(const float &other);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix);
+	friend const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Matrix4 &matrix);
+	friend Metadata &operator<<(Metadata &metadata, const Matrix4 &matrix);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
+	friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
 	static const Matrix4 Identity;
 	static const Matrix4 Zero;

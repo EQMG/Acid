@@ -14,7 +14,7 @@ namespace acid
 /**
  * @brief Class that represents a physics shape.
  */
-class ACID_EXPORT Collider :
+class Collider :
 	public Component
 {
 public:

@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT MeshRender :
+class MeshRender :
 	public Component
 {
 public:
@@ -18,9 +18,9 @@ public:
 
 	bool operator<(const MeshRender &other) const;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, MeshRender &meshRender);
+	friend const Metadata &operator>>(const Metadata &metadata, MeshRender &meshRender);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const MeshRender &meshRender);
+	friend Metadata &operator<<(Metadata &metadata, const MeshRender &meshRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

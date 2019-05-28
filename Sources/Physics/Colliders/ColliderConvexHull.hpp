@@ -7,7 +7,7 @@ class btConvexHullShape;
 
 namespace acid
 {
-class ACID_EXPORT ColliderConvexHull :
+class ColliderConvexHull :
 	public Collider
 {
 public:
@@ -25,9 +25,9 @@ public:
 
 	void Initialize(const std::vector<float> &pointCloud);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ColliderConvexHull &collider);
+	friend const Metadata &operator>>(const Metadata &metadata, ColliderConvexHull &collider);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ColliderConvexHull &collider);
+	friend Metadata &operator<<(Metadata &metadata, const ColliderConvexHull &collider);
 
 private:
 	std::unique_ptr<btConvexHullShape> m_shape;

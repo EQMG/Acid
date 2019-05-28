@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT Yaml :
+class Yaml :
 	public Metadata
 {
 public:

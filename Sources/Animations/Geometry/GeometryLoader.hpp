@@ -8,7 +8,7 @@
 
 namespace acid
 {
-class ACID_EXPORT GeometryLoader :
+class GeometryLoader :
 	public NonCopyable
 {
 public:

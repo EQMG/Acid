@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class ACID_EXPORT UiInputButton :
+class UiInputButton :
 	public UiObject
 {
 public:

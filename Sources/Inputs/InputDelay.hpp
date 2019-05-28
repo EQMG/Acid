@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT InputDelay
+class InputDelay
 {
 public:
 	explicit InputDelay(const Time &delay = 0.06s, const Time &repeat = Time::Seconds(0.06f));

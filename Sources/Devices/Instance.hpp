@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT Instance
+class Instance
 {
 public:
 	friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,

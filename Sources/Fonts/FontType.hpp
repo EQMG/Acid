@@ -17,7 +17,7 @@ class Text;
 /**
  * @brief Resource that is used when creating a font mesh.
  */
-class ACID_EXPORT FontType :
+class FontType :
 	public Resource
 {
 public:
@@ -77,9 +77,9 @@ public:
 
 	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, FontType &fontType);
+	friend const Metadata &operator>>(const Metadata &metadata, FontType &fontType);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const FontType &fontType);
+	friend Metadata &operator<<(Metadata &metadata, const FontType &fontType);
 
 private:
 	struct CellInfo

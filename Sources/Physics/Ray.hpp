@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Class that represents a 3 dimensional ray.
  */
-class ACID_EXPORT Ray
+class Ray
 {
 public:
 	static const Ray Zero;

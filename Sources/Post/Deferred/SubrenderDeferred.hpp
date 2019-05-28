@@ -11,7 +11,7 @@
 
 namespace acid
 {
-class ACID_EXPORT SubrenderDeferred :
+class SubrenderDeferred :
 	public Subrender
 {
 public:

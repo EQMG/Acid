@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterPixel :
+class FilterPixel :
 	public PostFilter
 {
 public:

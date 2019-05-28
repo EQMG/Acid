@@ -15,7 +15,7 @@ enum class ScrollBar
 
 ENABLE_BITMASK_OPERATORS(ScrollBar)
 
-class ACID_EXPORT UiScrollBar :
+class UiScrollBar :
 	public UiObject
 {
 public:

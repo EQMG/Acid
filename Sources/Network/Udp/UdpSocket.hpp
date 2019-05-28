@@ -37,7 +37,7 @@ class Packet;
  * However, you can unbind the socket explicitly with the Unbind function if necessary,
  * to stop receiving messages or make the port available for other sockets.
  **/
-class ACID_EXPORT UdpSocket :
+class UdpSocket :
 	public Socket
 {
 public:

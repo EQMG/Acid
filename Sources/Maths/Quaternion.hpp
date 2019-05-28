@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
  **/
-class ACID_EXPORT Quaternion
+class Quaternion
 {
 public:
 	/**
@@ -175,29 +175,29 @@ public:
 
 	float &operator[](const uint32_t &index);
 
-	ACID_EXPORT friend Quaternion operator+(const Quaternion &left, const Quaternion &right);
+	friend Quaternion operator+(const Quaternion &left, const Quaternion &right);
 
-	ACID_EXPORT friend Quaternion operator-(const Quaternion &left, const Quaternion &right);
+	friend Quaternion operator-(const Quaternion &left, const Quaternion &right);
 
-	ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
+	friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
 
-	ACID_EXPORT friend Vector3f operator*(const Vector3f &right, const Quaternion &left);
+	friend Vector3f operator*(const Vector3f &right, const Quaternion &left);
 
-	ACID_EXPORT friend Vector3f operator*(const Quaternion &left, const Vector3f &right);
+	friend Vector3f operator*(const Quaternion &left, const Vector3f &right);
 
-	ACID_EXPORT friend Quaternion operator*(const float &left, const Quaternion &right);
+	friend Quaternion operator*(const float &left, const Quaternion &right);
 
-	ACID_EXPORT friend Quaternion operator*(const Quaternion &left, const float &right);
+	friend Quaternion operator*(const Quaternion &left, const float &right);
 
 	Quaternion &operator*=(const Quaternion &other);
 
 	Quaternion &operator*=(const float &other);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion);
+	friend const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion);
+	friend Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
+	friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
 	static const Quaternion Zero;
 	static const Quaternion One;

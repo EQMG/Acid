@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Class used to describe the video mode for a monitor.
  */
-class ACID_EXPORT VideoMode
+class VideoMode
 {
 public:
 	/// The width, in screen coordinates, of the video mode.
@@ -29,7 +29,7 @@ public:
 /**
  * @brief Class used to describe the gamma ramp for a monitor.
  */
-class ACID_EXPORT GammaRamp
+class GammaRamp
 {
 public:
 	/// An array of value describing the response of the red channel.
@@ -45,12 +45,12 @@ public:
 /**
  * @brief Class used to represent a monitor.
  */
-class ACID_EXPORT Monitor
+class Monitor
 {
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);
 
-	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return m_monitor; }
+	GLFWmonitor *GetMonitor() const { return m_monitor; }
 
 	const bool &IsPrimary() const { return m_primary; }
 

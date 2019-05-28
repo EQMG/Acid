@@ -10,7 +10,7 @@ class Entity;
 /**
  * @brief Resource that represents a entity prefab.
  */
-class ACID_EXPORT EntityPrefab :
+class EntityPrefab :
 	public Resource
 {
 public:
@@ -45,9 +45,9 @@ public:
 
 	Metadata *GetParent() const { return m_file->GetMetadata(); }
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab);
+	friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab);
+	friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab);
 
 private:
 	std::string m_filename;

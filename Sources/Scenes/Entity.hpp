@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Class that represents a objects that acts as a component container.
  */
-class ACID_EXPORT Entity :
+class Entity :
 	public NonCopyable
 {
 public:

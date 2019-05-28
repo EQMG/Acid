@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Combines multiple button inputs into a single button.
  */
-class ACID_EXPORT ButtonCompound :
+class ButtonCompound :
 	public Button,
 	public NonCopyable
 {

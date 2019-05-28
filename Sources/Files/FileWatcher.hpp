@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Class that can listen to file changes on a path recursively.
  */
-class ACID_EXPORT FileWatcher
+class FileWatcher
 {
 public:
 	enum class Status

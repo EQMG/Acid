@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT SubrenderGuis :
+class SubrenderGuis :
 	public Subrender
 {
 public:

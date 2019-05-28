@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT FilterDarken :
+class FilterDarken :
 	public PostFilter
 {
 public:

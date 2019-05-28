@@ -8,7 +8,7 @@ namespace acid
 class Descriptor;
 class WriteDescriptorSet;
 
-class ACID_EXPORT DescriptorSet
+class DescriptorSet
 {
 public:
 	explicit DescriptorSet(const Pipeline &pipeline);

@@ -10,7 +10,7 @@ class FtpResponse;
 /**
  * @brief Utility class for exchanging datas with the server on the data channel.
  **/
-class ACID_EXPORT FtpDataChannel
+class FtpDataChannel
 {
 public:
 	/**

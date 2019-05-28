@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Combines multiple axes inputs into a single axis.
  */
-class ACID_EXPORT AxisCompound :
+class AxisCompound :
 	public Axis,
 	public NonCopyable
 {

@@ -57,7 +57,6 @@ void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector
 void PipelineCompute::CreateShaderProgram()
 {
 	std::stringstream defineBlock;
-	defineBlock << "\n";
 
 	for (const auto &define : m_defines)
 	{

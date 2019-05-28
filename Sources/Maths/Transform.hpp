@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Holds position, rotation, and scale components.
  */
-class ACID_EXPORT Transform
+class Transform
 {
 public:
 	/**
@@ -59,15 +59,15 @@ public:
 
 	bool operator!=(const Transform &other) const;
 
-	ACID_EXPORT friend Transform operator*(const Transform &left, const Transform &right);
+	friend Transform operator*(const Transform &left, const Transform &right);
 
 	Transform &operator*=(const Transform &other);
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Transform &transform);
+	friend const Metadata &operator>>(const Metadata &metadata, Transform &transform);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
+	friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
+	friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 
 	static const Transform Zero;
 private:

@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a disk model.
  */
-class ACID_EXPORT ModelDisk :
+class ModelDisk :
 	public Model
 {
 public:
@@ -40,9 +40,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelDisk &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelDisk &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelDisk &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelDisk &model);
 
 private:
 	float m_innerRadius;

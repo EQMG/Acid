@@ -312,16 +312,16 @@ public:
 
 	Vector3 &operator/=(const T &other);
 
-	ACID_EXPORT static const Vector3 Zero;
-	ACID_EXPORT static const Vector3 One;
-	ACID_EXPORT static const Vector3 Left;
-	ACID_EXPORT static const Vector3 Right;
-	ACID_EXPORT static const Vector3 Up;
-	ACID_EXPORT static const Vector3 Down;
-	ACID_EXPORT static const Vector3 Front;
-	ACID_EXPORT static const Vector3 Back;
-	ACID_EXPORT static const Vector3 PositiveInfinity;
-	ACID_EXPORT static const Vector3 NegativeInfinity;
+	static const Vector3 Zero;
+	static const Vector3 One;
+	static const Vector3 Left;
+	static const Vector3 Right;
+	static const Vector3 Up;
+	static const Vector3 Down;
+	static const Vector3 Front;
+	static const Vector3 Back;
+	static const Vector3 PositiveInfinity;
+	static const Vector3 NegativeInfinity;
 
 	T m_x, m_y, m_z;
 };

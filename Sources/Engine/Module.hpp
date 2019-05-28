@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief A interface used for defining engine modules.
  */
-class ACID_EXPORT Module :
+class Module :
 	public NonCopyable
 {
 public:
@@ -28,7 +28,7 @@ public:
 	virtual void Update() = 0;
 };
 
-template class ACID_EXPORT TypeInfo<Module>;
+template class TypeInfo<Module>;
 
 /**
  * Gets the Type ID for the Module.

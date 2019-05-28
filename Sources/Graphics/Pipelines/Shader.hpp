@@ -14,7 +14,7 @@ namespace acid
 /**
  * @brief Class that loads and processes a shader, and provides a reflection.
  */
-class ACID_EXPORT Shader
+class Shader
 {
 public:
 	/**
@@ -295,15 +295,78 @@ public:
 		int32_t m_glType;
 	};
 
+	class Constant
+	{
+	public:
+		explicit Constant(const int32_t &binding = -1, const int32_t &size = -1, const VkShaderStageFlags &stageFlags = 0, const int32_t &glType = -1) :
+			m_binding(binding),
+			m_size(size),
+			m_stageFlags(stageFlags),
+			m_glType(glType)
+		{
+		}
+
+		friend const Metadata &operator>>(const Metadata &metadata, Constant &constant)
+		{
+			metadata.GetChild("Binding", constant.m_binding);
+			metadata.GetChild("Size", constant.m_size);
+			metadata.GetChild("Stage Flags", constant.m_stageFlags);
+			metadata.GetChild("GL Type", constant.m_glType);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const Constant &constant)
+		{
+			metadata.SetChild("Binding", constant.m_binding);
+			metadata.SetChild("Size", constant.m_size);
+			metadata.SetChild("Stage Flags", constant.m_stageFlags);
+			metadata.SetChild("GL Type", constant.m_glType);
+			return metadata;
+		}
+
+		const int32_t &GetBinding() const { return m_binding; }
+
+		const int32_t &GetSize() const { return m_size; }
+
+		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
+
+		const int32_t &GetGlType() const { return m_glType; }
+
+		bool operator==(const Constant &other) const
+		{
+			return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_glType == other.m_glType;
+		}
+
+		bool operator!=(const Constant &other) const
+		{
+			return !(*this == other);
+		}
+
+		std::string ToString() const
+		{
+			std::stringstream stream;
+			stream << "Constant(binding " << m_binding << "', size " << m_size << ", stageFlags " << m_stageFlags << ", glType " << m_glType << ")";
+			return stream.str();
+		}
+
+	private:
+		friend class Shader;
+
+		int32_t m_binding;
+		int32_t m_size;
+		VkShaderStageFlags m_stageFlags;
+		int32_t m_glType;
+	};
+
 	Shader();
 
 	const std::string &GetName() const { return m_stages.back(); }
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
+	friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
+	friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
 
 	static VkFormat GlTypeToVk(const int32_t &type);
 
@@ -326,6 +389,8 @@ public:
 	const std::map<std::string, UniformBlock> &GetUniformBlocks() const { return m_uniformBlocks; };
 
 	const std::map<std::string, Attribute> &GetAttributes() const { return m_attributes; };
+
+	const std::map<std::string, Constant> &GetConstants() const { return m_constants; };
 
 	const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return m_localSizes; }
 
@@ -360,6 +425,7 @@ private:
 	std::map<std::string, Uniform> m_uniforms;
 	std::map<std::string, UniformBlock> m_uniformBlocks;
 	std::map<std::string, Attribute> m_attributes;
+	std::map<std::string, Constant> m_constants;
 
 	std::array<std::optional<uint32_t>, 3> m_localSizes;
 

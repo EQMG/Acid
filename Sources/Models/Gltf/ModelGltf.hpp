@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Resource that represents a GLTF model.
  */
-class ACID_EXPORT ModelGltf :
+class ModelGltf :
 	public Model
 {
 public:
@@ -35,9 +35,9 @@ public:
 
 	void Load() override;
 
-	ACID_EXPORT friend const Metadata &operator>>(const Metadata &metadata, ModelGltf &model);
+	friend const Metadata &operator>>(const Metadata &metadata, ModelGltf &model);
 
-	ACID_EXPORT friend Metadata &operator<<(Metadata &metadata, const ModelGltf &model);
+	friend Metadata &operator<<(Metadata &metadata, const ModelGltf &model);
 
 private:
 	//struct Node;

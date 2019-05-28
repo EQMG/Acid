@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class ACID_EXPORT SkinLoader
+class SkinLoader
 {
 public:
 	SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights);

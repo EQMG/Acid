@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class ACID_EXPORT Timer
+class Timer
 {
 public:
 	Timer(const Time &interval, const std::optional<uint32_t> &repeat) :
@@ -41,7 +41,7 @@ private:
 /**
  * @brief Module used for timed events.
  */
-class ACID_EXPORT Timers :
+class Timers :
 	public Module
 {
 public:

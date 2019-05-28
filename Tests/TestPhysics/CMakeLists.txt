@@ -16,12 +16,11 @@ add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
 
 target_compile_features(TestPhysics PUBLIC cxx_std_17)
 set_target_properties(TestPhysics PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
 
 target_include_directories(TestPhysics PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestPhysics PRIVATE Acid)
+target_link_libraries(TestPhysics PRIVATE Acid::Acid)
 
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPhysics PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")

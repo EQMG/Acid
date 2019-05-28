@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief A instance of a particle type.
  */
-class ACID_EXPORT Particle
+class Particle
 {
 public:
 	/**

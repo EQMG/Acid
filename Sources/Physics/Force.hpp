@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Represents a force that is attached to a {@link Rigidbody}.
  */
-class ACID_EXPORT Force
+class Force
 {
 public:
 	/**

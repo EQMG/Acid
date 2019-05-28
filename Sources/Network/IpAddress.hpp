@@ -9,7 +9,7 @@ namespace acid
  * It provides a set a implicit constructors and conversion functions
  * to easily build or transform an IP address from/to various representations.
  **/
-class ACID_EXPORT IpAddress
+class IpAddress
 {
 public:
 	/**
@@ -98,9 +98,9 @@ public:
 
 	bool operator>=(const IpAddress &other) const;
 
-	ACID_EXPORT friend std::ostream &operator<<(std::ostream &stream, const IpAddress &address);
+	friend std::ostream &operator<<(std::ostream &stream, const IpAddress &address);
 
-	ACID_EXPORT friend std::istream &operator>>(std::istream &stream, IpAddress &address);
+	friend std::istream &operator>>(std::istream &stream, IpAddress &address);
 
 	/// Value representing an empty/invalid address.
 	static const IpAddress None;

@@ -16,12 +16,11 @@ add_executable(TestMaths ${TESTMATHS_SOURCES})
 
 target_compile_features(TestMaths PUBLIC cxx_std_17)
 set_target_properties(TestMaths PROPERTIES
-		POSITION_INDEPENDENT_CODE ON
 		FOLDER "Acid"
 		)
 
 target_include_directories(TestMaths PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestMaths PRIVATE Acid)
+target_link_libraries(TestMaths PRIVATE Acid::Acid)
 
 if(UNIX AND APPLE)
 	set_target_properties(TestMaths PROPERTIES

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ACID_EXPORT InstanceBuffer :
+class InstanceBuffer :
 	public Buffer
 {
 public:
