@@ -97,15 +97,13 @@ MainGame::MainGame() :
 	{
 		if (action == InputAction::Press)
 		{
-			Engine::Get()->RequestClose(false);
+			Engine::Get()->RequestClose();
 		}
 	});
 
 	// Registers modules.
 	Engine::Get()->AddModule<World>(Module::Stage::Always);
 	//Engine::Get()->RemoveModule<Shadows>();
-
-	auto worldTypeId = GetModuleTypeId<World>();
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();

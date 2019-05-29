@@ -77,7 +77,7 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 void CallbackClose(GLFWwindow *window)
 {
 	Window::Get()->m_closed = false;
-	Engine::Get()->RequestClose(false);
+	Engine::Get()->RequestClose();
 	Window::Get()->m_onClose();
 }
 

@@ -18,7 +18,7 @@ public:
 	 * @param rotation The rotation.
 	 * @param scaling The scale.
 	 */
-	explicit Transform(const Vector3f &position = Vector3f::Zero, const Vector3f &rotation = Vector3f::Zero, const Vector3f &scaling = Vector3f::One);
+	explicit Transform(const Vector3f &position = Vector3f(), const Vector3f &rotation = Vector3f(), const Vector3f &scaling = Vector3f(1.0f));
 
 	/**
 	 * Creates a new transform.
@@ -68,8 +68,6 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
-
-	static const Transform Zero;
 private:
 	Vector3f m_position;
 	Vector3f m_rotation;

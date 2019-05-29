@@ -163,8 +163,8 @@ public:
 	static void OpenLog(const std::string &filename);
 
 private:
-	static ACID_STATE std::mutex MUTEX;
-	static ACID_STATE std::ofstream STREAM;
+	ACID_STATE static std::mutex MUTEX;
+	ACID_STATE static std::ofstream STREAM;
 	
 	static std::string FormatStyle(const Style &style);
 

@@ -34,7 +34,7 @@ void NameTag::Update()
 	worldPosition.m_y += m_heightOffset;
 
 	m_transform.SetPosition(worldPosition);
-	m_transform.SetRotation(Vector3f::Zero);
+	m_transform.SetRotation(Vector3f());
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
 	float toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);

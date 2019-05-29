@@ -13,19 +13,36 @@
 namespace acid
 {
 Audio::Audio() :
-	m_alDevice(nullptr),
-	m_alContext(nullptr)
+	m_device(nullptr),
+	m_context(nullptr)
 {
-	m_alDevice = alcOpenDevice(nullptr);
-	m_alContext = alcCreateContext(m_alDevice, nullptr);
-	alcMakeContextCurrent(m_alContext);
+	m_device = alcOpenDevice(nullptr);
+	m_context = alcCreateContext(m_device, nullptr);
+	alcMakeContextCurrent(m_context);
+
+#if defined(ACID_VERBOSE)
+	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
+	auto device = devices;
+	auto next = devices + 1;
+
+	while (device && *device != '\0' && next && *next != '\0')
+	{
+		Log::Out("Audio Device: %s\n", device);
+		auto len = strlen(device);
+		device += len + 1;
+		next += len + 2;
+	}
+
+	auto deviceName = alcGetString(m_device, ALC_DEVICE_SPECIFIER);
+	Log::Out("Selected Audio Device: '%s'\n", deviceName);
+#endif
 }
 
 Audio::~Audio()
 {
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(m_alContext);
-	alcCloseDevice(m_alDevice);
+	alcDestroyContext(m_context);
+	alcCloseDevice(m_device);
 }
 
 void Audio::Update()

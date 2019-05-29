@@ -175,13 +175,12 @@ public:
 	const uint32_t &GetFps() const { return m_fps.m_value; }
 
 	/**
-	 * Requests the engine to delete and stop the game-loop.
-	 * @param error If a bad error occurred.
+	 * Requests the engine to stop the game-loop.
 	 */
-	void RequestClose(const bool &error) { m_running = false; }
+	void RequestClose() { m_running = false; }
 
 private:
-	static ACID_STATE Engine *INSTANCE;
+	ACID_STATE static Engine *INSTANCE;
 
 	ModuleHolder m_modules;
 	std::unique_ptr<Game> m_game;

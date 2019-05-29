@@ -84,7 +84,7 @@ MainGame::MainGame() :
 	{
 		if (action == InputAction::Press)
 		{
-			Engine::Get()->RequestClose(false);
+			Engine::Get()->RequestClose();
 		}
 	});
 

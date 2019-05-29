@@ -23,7 +23,7 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = Vector3f::One, const Vector3f &angularFactor = Vector3f::One);
+	explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = Vector3f(1.0f), const Vector3f &angularFactor = Vector3f(1.0f));
 
 	~Rigidbody();
 

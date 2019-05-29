@@ -22,15 +22,14 @@ const Vector3f DAMP_NORMAL = Vector3f(20.0f, 1.0f, 20.0f);
 PlayerFps::PlayerFps() :
 	m_jumping(false),
 	m_noclipEnabled(true),
-	m_inputForward(AxisCompound({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		new AxisJoystick(0, 1, true) })),
-	m_inputStrafe(AxisCompound(
-		{ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			new AxisJoystick(0, 0, true) })),
-	m_inputSprint(ButtonCompound({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) })),
-	m_inputJump(ButtonCompound({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) })),
-	m_inputCrouch(ButtonCompound({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) })),
-	m_toggleNoclip(ButtonCompound({ ButtonCompound::Create<ButtonKeyboard>(false, Key::N) }))
+	m_inputForward({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
+		new AxisJoystick(0, 1, true) }),
+	m_inputStrafe({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
+			new AxisJoystick(0, 0, true) }),
+	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) }),
+	m_inputJump({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) }),
+	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) }),
+	m_toggleNoclip({ ButtonCompound::Create<ButtonKeyboard>(false, Key::N) })
 {
 }
 

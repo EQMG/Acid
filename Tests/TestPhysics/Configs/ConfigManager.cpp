@@ -32,8 +32,8 @@ void ConfigManager::Load()
 	m_graphics.Read();
 	auto graphicsData = m_graphics.GetMetadata();
 	//Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
-	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", -Vector2i::One));
-	Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2f>("Position", -Vector2i::One));
+	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", Vector2i(-1)));
+	Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2f>("Position", Vector2i(-1)));
 	Window::Get()->SetBorderless(graphicsData->GetChildDefault<bool>("Borderless", false));
 	Window::Get()->SetResizable(graphicsData->GetChildDefault<bool>("Resizable", true));
 	Window::Get()->SetFloating(graphicsData->GetChildDefault<bool>("Floating", false));

@@ -10,7 +10,7 @@ namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
 		UiObject(parent, UiTransform(Window::Get()->GetSize())),
-		m_buttonReset(ButtonKeyboard({ Key::Enter })),
+		m_buttonReset({ Key::Enter }),
 		m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
 		m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
 		m_settings(parent, UiTransform(Vector2i(300, 300), UiAnchor::LeftTop, Vector2i(20, 20)), UiInputButton::BackgroundColour, UiManipulate::All,

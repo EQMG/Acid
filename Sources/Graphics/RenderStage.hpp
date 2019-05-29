@@ -83,7 +83,7 @@ private:
 class RenderArea
 {
 public:
-	explicit RenderArea(const Vector2ui &extent = Vector2ui::Zero, const Vector2i &offset = Vector2ui::Zero) :
+	explicit RenderArea(const Vector2ui &extent = Vector2ui(), const Vector2i &offset = Vector2ui()) :
 		m_extent(extent),
 		m_offset(offset),
 		m_aspectRatio(1.0f)

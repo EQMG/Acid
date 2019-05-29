@@ -35,10 +35,10 @@ public:
 	static std::string StringifyResultAl(const int32_t &result);
 
 	static void CheckAl(const int32_t &result);
+	
+	ALCdevice *GetDevice() const { return m_device; }
 
-	ALCdevice *GetDevice() const { return m_alDevice; }
-
-	ALCcontext *GetContext() const { return m_alContext; }
+	ALCcontext *GetContext() const { return m_context; }
 
 	float GetGain(const Type &type) const;
 
@@ -51,8 +51,8 @@ public:
 	Delegate<void(Type, float)> &OnGain() { return m_onGain; }
 
 private:
-	ALCdevice *m_alDevice;
-	ALCcontext *m_alContext;
+	ALCdevice *m_device;
+	ALCcontext *m_context;
 
 	std::map<Type, float> m_gains;
 
