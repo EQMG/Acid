@@ -10,7 +10,7 @@ class ColliderSphere :
 	public Collider
 {
 public:
-	explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform::Zero);
+	explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform());
 
 	~ColliderSphere();
 

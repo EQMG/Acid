@@ -17,7 +17,6 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize
 	m_kerning(kerning),
 	m_leading(leading),
 	m_textColour(textColour),
-	m_borderColour(Colour::White),
 	m_solidBorder(false),
 	m_glowBorder(false),
 	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
@@ -342,6 +341,6 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
 {
-	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f::Zero));
+	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f()));
 }
 }

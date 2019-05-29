@@ -10,7 +10,7 @@ class ColliderCapsule :
 	public Collider
 {
 public:
-	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
+	explicit ColliderCapsule(const float &radius = 0.5f, const float &height = 1.0f, const Transform &localTransform = Transform());
 
 	~ColliderCapsule();
 

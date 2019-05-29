@@ -11,7 +11,7 @@ class Rotate :
 	public Component
 {
 public:
-	explicit Rotate(const Vector3f &direction = Vector3f::Zero, const int &test = 0);
+	explicit Rotate(const Vector3f &direction = Vector3f(), const int &test = 0);
 
 	void Start() override;
 

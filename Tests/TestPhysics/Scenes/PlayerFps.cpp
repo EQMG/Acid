@@ -18,15 +18,14 @@ const float NOCLIP_SPEED = 3.0f;
 
 PlayerFps::PlayerFps() :
 	m_noclipEnabled(false),
-	m_inputForward(AxisCompound({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		new AxisJoystick(0, 1, true) })),
-	m_inputStrafe(AxisCompound(
-		{ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			new AxisJoystick(0, 0, true) })),
-	m_inputSprint(ButtonCompound({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) })),
-	m_inputJump(ButtonCompound({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) })),
-	m_inputCrouch(ButtonCompound({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) })),
-	m_toggleNoclip(ButtonCompound({ new ButtonKeyboard(Key::N), }))
+	m_inputForward({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
+		new AxisJoystick(0, 1, true) }),
+	m_inputStrafe({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
+			new AxisJoystick(0, 0, true) }),
+	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) }),
+	m_inputJump({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) }),
+	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) }),
+	m_toggleNoclip({ new ButtonKeyboard(Key::N), })
 {
 }
 
@@ -78,8 +77,8 @@ void PlayerFps::Update()
 
 			if (m_noclipEnabled)
 			{
-				character->SetGravity(Vector3f::Zero);
-				character->SetLinearVelocity(Vector3f::Zero);
+				character->SetGravity(Vector3f());
+				character->SetLinearVelocity(Vector3f());
 			}
 			else
 			{

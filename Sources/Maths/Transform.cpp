@@ -2,8 +2,6 @@
 
 namespace acid
 {
-const Transform Transform::Zero = Transform(Vector3f::Zero, Vector3f::Zero, Vector3f::One);
-
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scaling) :
 	m_position(position),
 	m_rotation(rotation),
@@ -15,7 +13,7 @@ Transform::Transform(const Vector3f &position, const Vector3f &rotation, const V
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const float &scale) :
 	m_position(position),
 	m_rotation(rotation),
-	m_scaling(scale, scale, scale),
+	m_scaling(scale),
 	m_dirty(true)
 {
 }

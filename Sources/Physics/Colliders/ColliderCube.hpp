@@ -10,7 +10,7 @@ class ColliderCube :
 	public Collider
 {
 public:
-	explicit ColliderCube(const Vector3f &extents = Vector3f::One, const Transform &localTransform = Transform::Zero);
+	explicit ColliderCube(const Vector3f &extents = Vector3f(1.0f), const Transform &localTransform = Transform());
 
 	~ColliderCube();
 

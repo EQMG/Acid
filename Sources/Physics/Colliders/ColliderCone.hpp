@@ -10,7 +10,7 @@ class ColliderCone :
 	public Collider
 {
 public:
-	explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform::Zero);
+	explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform());
 
 	~ColliderCone();
 

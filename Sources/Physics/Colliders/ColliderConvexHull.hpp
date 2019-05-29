@@ -11,7 +11,7 @@ class ColliderConvexHull :
 	public Collider
 {
 public:
-	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform::Zero);
+	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform());
 
 	~ColliderConvexHull();
 

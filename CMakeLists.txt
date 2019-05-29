@@ -18,7 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Position-independent code
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-# To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE
+# To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to ON
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")
@@ -78,7 +78,9 @@ if(NOT PHYSFS_FOUND)
 			)
 	FetchContent_GetProperties(physfs)
 	if(NOT physfs_POPULATED)
-		foreach(_physfs_option "PHYSFS_BUILD_STATIC" "PHYSFS_BUILD_TEST")
+		set(PHYSFS_BUILD_STATIC NOT${BUILD_SHARED_LIBS} CACHE INTERNAL "")
+		set(PHYSFS_BUILD_SHARED ${BUILD_SHARED_LIBS} CACHE INTERNAL "")
+		foreach(_physfs_option "PHYSFS_BUILD_TEST")
 			set(${_physfs_option} OFF CACHE INTERNAL "")
 		endforeach()
 		FetchContent_Populate(physfs)
