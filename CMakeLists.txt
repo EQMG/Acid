@@ -8,6 +8,11 @@ option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 
+# MSVC building shared libs fails to export global data
+if(MSVC)
+	set(BUILD_SHARED_LIBS OFF)
+endif()
+
 # Sets the install directories defined by GNU
 include(GNUInstallDirs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})

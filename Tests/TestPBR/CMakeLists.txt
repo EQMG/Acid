@@ -15,15 +15,16 @@ set(TESTPBR_SOURCES
 add_executable(TestPBR ${TESTPBR_SOURCES})
 
 target_compile_features(TestPBR PUBLIC cxx_std_17)
-set_target_properties(TestPBR PROPERTIES
-		FOLDER "Acid"
-		)
-
 target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestPBR PRIVATE Acid::Acid)
 
+set_target_properties(TestPBR PROPERTIES
+		FOLDER "Acid"
+		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	set_target_properties(TestPBR PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
+	set_target_properties(TestPBR PROPERTIES 
+			LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup"
+			)
 elseif(UNIX AND APPLE)
 	set_target_properties(TestPBR PROPERTIES
 			MACOSX_BUNDLE_BUNDLE_NAME "Test PBR"

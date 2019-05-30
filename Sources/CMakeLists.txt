@@ -6,10 +6,6 @@ add_library(Acid::Acid ALIAS Acid)
 include(CMakeSources.cmake)
 
 target_compile_features(Acid PUBLIC cxx_std_17)
-set_target_properties(Acid PROPERTIES
-		FOLDER "Acid"
-		)
-
 target_compile_definitions(Acid
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
@@ -42,7 +38,6 @@ target_compile_options(Acid
 		# Enabled SSE2 for MSVC for 32-bit.
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		)
-
 target_include_directories(Acid
 		PUBLIC
 		# Helps the includes find what they need at build-time
@@ -57,7 +52,6 @@ target_include_directories(Acid
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
 		$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
 		)
-
 target_link_libraries(Acid
 		PUBLIC
 		# All IMPORTED targets, which automatically handles includes
@@ -81,6 +75,10 @@ target_link_libraries(Acid
 		${PHYSFS_LIBRARY}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARIES}
+		)
+
+set_target_properties(Acid PROPERTIES
+		FOLDER "Acid"
 		)
 
 # Creates a symbolic link from Resources to Resources/Engine in the binary folder
@@ -124,13 +122,11 @@ if(_ACID_ALL_SYSTEM_LIBS)
 			NO_CHECK_REQUIRED_COMPONENTS_MACRO
 			)
 	# Auto-generates a version file based on the current version specified in project()
-	write_basic_package_version_file(
-			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
+	write_basic_package_version_file("${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			COMPATIBILITY SameMajorVersion
 			)
 	# Install the auto-generated version file and AcidConfig
-	install(
-			FILES
+	install(FILES
 			"${PROJECT_BINARY_DIR}/AcidConfig.cmake"
 			"${PROJECT_BINARY_DIR}/AcidConfigVersion.cmake"
 			DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"

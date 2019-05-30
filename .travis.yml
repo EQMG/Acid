@@ -89,7 +89,7 @@ script:
       cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       make all -j$(nproc)
     else
-      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE
     fi
 - cd ../

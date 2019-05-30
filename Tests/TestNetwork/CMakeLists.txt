@@ -15,13 +15,12 @@ set(TESTNETWORK_SOURCES
 add_executable(TestNetwork ${TESTNETWORK_SOURCES})
 
 target_compile_features(TestNetwork PUBLIC cxx_std_17)
-set_target_properties(TestNetwork PROPERTIES
-		FOLDER "Acid"
-		)
-
 target_include_directories(TestNetwork PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestNetwork PRIVATE Acid::Acid)
 
+set_target_properties(TestNetwork PROPERTIES
+		FOLDER "Acid"
+		)
 if(UNIX AND APPLE)
 	set_target_properties(TestNetwork PROPERTIES
 			MACOSX_BUNDLE_BUNDLE_NAME "Test Network"
