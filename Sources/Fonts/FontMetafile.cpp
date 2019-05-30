@@ -1,6 +1,5 @@
 ﻿#include "FontMetafile.hpp"
 
-#include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 
@@ -100,10 +99,10 @@ void FontMetafile::LoadCharacterData()
 		return;
 	}
 
-	auto xTextureCoord = (static_cast<float>(GetValueOfVariable("x")) + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth;
-	auto yTextureCoord = (static_cast<float>(GetValueOfVariable("y")) + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth;
+	auto xTextureCoord = (GetValueOfVariable<float>("x") + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth;
+	auto yTextureCoord = (GetValueOfVariable<float>("y") + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth;
 	auto width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DesiredPassing));
-	auto height = GetValueOfVariable("height") - ((m_paddingHeight) - (2 * DesiredPassing));
+	auto height = GetValueOfVariable("height") - (m_paddingHeight - (2 * DesiredPassing));
 	auto quadWidth = width * m_horizontalPerPixelSize;
 	auto quadHeight = height * m_verticalPerPixelSize;
 	auto xTexSize = static_cast<float>(width) / m_imageWidth;
@@ -119,11 +118,6 @@ void FontMetafile::LoadCharacterData()
 
 	auto character = Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
 	m_characters.emplace(character.m_id, character);
-}
-
-int32_t FontMetafile::GetValueOfVariable(const std::string &variable)
-{
-	return String::From<int32_t>(m_values.at(variable));
 }
 
 std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)

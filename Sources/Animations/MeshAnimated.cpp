@@ -43,7 +43,7 @@ void MeshAnimated::Load()
 	file.Read();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
-	auto correction = Matrix4::Identity.Rotate(-90.0f * Maths::DegToRad, Vector3f::Right);
+	auto correction = Matrix4().Rotate(-90.0f * Maths::DegToRad, Vector3f::Right);
 
 	auto skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
 	auto skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), correction);
@@ -51,7 +51,7 @@ void MeshAnimated::Load()
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
-	m_headJoint->CalculateInverseBindTransform(Matrix4::Identity);
+	m_headJoint->CalculateInverseBindTransform(Matrix4());
 	m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 	auto animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), correction);

@@ -82,7 +82,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 
 		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
 		auto instance = &instances[m_instances];
-		instance->m_modelMatrix = Matrix4::Identity.Translate(particle.GetPosition());
+		instance->m_modelMatrix = Matrix4().Translate(particle.GetPosition());
 
 		for (int32_t row = 0; row < 3; row++)
 		{

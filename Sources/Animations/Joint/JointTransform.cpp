@@ -16,23 +16,18 @@ JointTransform::JointTransform(const Matrix4 &localTransform) :
 
 Matrix4 JointTransform::GetLocalTransform() const
 {
-	Matrix4 matrix = Matrix4::Identity.Translate(m_position);
-	matrix = matrix * m_rotation.ToRotationMatrix();
-	return matrix;
+	return Matrix4().Translate(m_position) * m_rotation.ToRotationMatrix();
 }
 
 JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
 {
-	Vector3f pos = Interpolate(frameA.GetPosition(), frameB.GetPosition(), progression);
-	Quaternion rot = frameA.GetRotation().Slerp(frameB.GetRotation(), progression);
-	return JointTransform(pos, rot);
+	auto position = Interpolate(frameA.GetPosition(), frameB.GetPosition(), progression);
+	auto rotation = frameA.GetRotation().Slerp(frameB.GetRotation(), progression);
+	return JointTransform(position, rotation);
 }
 
 Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end, const float &progression)
 {
-	float x = start.m_x + (end.m_x - start.m_x) * progression;
-	float y = start.m_y + (end.m_y - start.m_y) * progression;
-	float z = start.m_z + (end.m_z - start.m_z) * progression;
-	return Vector3f(x, y, z);
+	return start + (end - start) * progression;
 }
 }

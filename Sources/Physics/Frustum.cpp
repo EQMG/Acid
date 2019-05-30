@@ -2,8 +2,6 @@
 
 namespace acid
 {
-const Frustum Frustum::Zero = Frustum();
-
 Frustum::Frustum()
 {
 }

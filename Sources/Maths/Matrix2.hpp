@@ -173,9 +173,6 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix);
 
-	static const Matrix2 Identity;
-	static const Matrix2 Zero;
-
 	union
 	{
 		struct
