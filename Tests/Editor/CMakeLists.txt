@@ -15,15 +15,16 @@ set(EDITOR_SOURCES
 add_executable(Editor ${EDITOR_SOURCES})
 
 target_compile_features(Editor PUBLIC cxx_std_17)
-set_target_properties(Editor PROPERTIES
-		FOLDER "Acid"
-		)
-
 target_include_directories(Editor PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(Editor PRIVATE Acid::Acid)
 
+set_target_properties(Editor PROPERTIES
+		FOLDER "Acid"
+		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	set_target_properties(Editor PROPERTIES LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup")
+	set_target_properties(Editor PROPERTIES 
+			LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup"
+			)
 elseif(UNIX AND APPLE)
 	set_target_properties(Editor PROPERTIES
 			#RESOURCE Icon.icns
