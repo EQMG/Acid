@@ -4,7 +4,6 @@ namespace acid
 {
 const Quaternion Quaternion::Zero = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 const Quaternion Quaternion::One = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
-const Quaternion Quaternion::OneW = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 const Quaternion Quaternion::PositiveInfinity = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(),
 	+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
 const Quaternion Quaternion::NegativeInfinity = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),

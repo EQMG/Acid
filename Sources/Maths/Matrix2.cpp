@@ -5,9 +5,6 @@
 
 namespace acid
 {
-const Matrix2 Matrix2::Identity = Matrix2(1.0f);
-const Matrix2 Matrix2::Zero = Matrix2(0.0f);
-
 Matrix2::Matrix2(const float &diagonal)
 {
 	std::memset(m_rows, 0, 2 * 2 * sizeof(float));

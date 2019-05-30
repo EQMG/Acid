@@ -298,9 +298,6 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
-	static const Matrix4 Identity;
-	static const Matrix4 Zero;
-
 	union
 	{
 		struct

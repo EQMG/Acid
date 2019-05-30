@@ -201,7 +201,6 @@ public:
 
 	static const Quaternion Zero;
 	static const Quaternion One;
-	static const Quaternion OneW;
 	static const Quaternion PositiveInfinity;
 	static const Quaternion NegativeInfinity;
 

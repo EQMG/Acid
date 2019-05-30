@@ -68,6 +68,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
+
 private:
 	Vector3f m_position;
 	Vector3f m_rotation;

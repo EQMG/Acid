@@ -180,9 +180,6 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 
-	static const Matrix3 Identity;
-	static const Matrix3 Zero;
-
 	union
 	{
 		struct

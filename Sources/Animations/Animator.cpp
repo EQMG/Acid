@@ -19,7 +19,7 @@ void Animator::Update()
 
 	IncreaseAnimationTime();
 	auto currentPose = CalculateCurrentAnimationPose();
-	ApplyPoseToJoints(currentPose, *m_rootJoint, Matrix4::Identity);
+	ApplyPoseToJoints(currentPose, *m_rootJoint, Matrix4());
 }
 
 void Animator::IncreaseAnimationTime()

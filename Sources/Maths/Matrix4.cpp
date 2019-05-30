@@ -5,9 +5,6 @@
 
 namespace acid
 {
-const Matrix4 Matrix4::Identity = Matrix4(1.0f);
-const Matrix4 Matrix4::Zero = Matrix4(0.0f);
-
 Matrix4::Matrix4(const float &diagonal)
 {
 	std::memset(m_rows, 0, 4 * sizeof(Vector4f));

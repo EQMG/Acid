@@ -105,10 +105,15 @@ private:
 
 	/**
 	 * Gets the {@code int} value of the variable with a certain name on the current line.
+	 * @tparam T The value type.
 	 * @param variable The name of the variable.
 	 * @return The value of the variable.
 	 */
-	int32_t GetValueOfVariable(const std::string &variable);
+	template<typename T = int32_t>
+	T GetValueOfVariable(const std::string &variable)
+	{
+		return String::From<T>(m_values.at(variable));
+	}
 
 	/**
 	 * Gets the array of ints associated with a variable on the current line.

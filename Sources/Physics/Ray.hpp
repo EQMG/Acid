@@ -13,8 +13,6 @@ namespace acid
 class Ray
 {
 public:
-	static const Ray Zero;
-
 	/**
 	 * Creates a new ray.
 	 * @param useMouse If the ray will use the mouse coords or to start from screenStart.

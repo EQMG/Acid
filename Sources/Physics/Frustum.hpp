@@ -13,7 +13,7 @@ public:
 	/**
 	 * Creates a new frustum.
 	 */
-	explicit Frustum();
+	Frustum();
 
 	/**
 	 * Updates a frustum from the view and projection matrix.
@@ -44,8 +44,6 @@ public:
 	 * @return If cube sphere is contained.
 	 */
 	bool CubeInFrustum(const Vector3f &min, const Vector3f &max) const;
-
-	static const Frustum Zero;
 
 private:
 	void NormalizePlane(const int32_t &side);
