@@ -10,8 +10,8 @@ namespace acid
 class FileSystem
 {
 public:
-	static const char Separator;
-	static const char AltSeparator;
+	ACID_EXPORT static const char Separator;
+	ACID_EXPORT static const char AltSeparator;
 
 	/**
 	 * Gets the current working directory.

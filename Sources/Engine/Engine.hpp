@@ -180,7 +180,7 @@ public:
 	void RequestClose() { m_running = false; }
 
 private:
-	ACID_STATE static Engine *INSTANCE;
+	ACID_EXPORT ACID_STATE static Engine *INSTANCE;
 
 	ModuleHolder m_modules;
 	std::unique_ptr<Game> m_game;

@@ -18,18 +18,18 @@ public:
 
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
-	static const Vector2i Size;
-	static const Vector2i Padding;
-	static const float FontSize;
-	static const Time SlideTime;
+	ACID_EXPORT static const Vector2i Size;
+	ACID_EXPORT static const Vector2i Padding;
+	ACID_EXPORT static const float FontSize;
+	ACID_EXPORT static const Time SlideTime;
 
-	static const Colour ValueColour;
-	static const Colour TitleColour;
+	ACID_EXPORT static const Colour ValueColour;
+	ACID_EXPORT static const Colour TitleColour;
 
-	static const Colour BackgroundColour;
-	static const Colour PrimaryColour;
-	static const Colour SelectedColour;
-	static const Colour ButtonColour;
+	ACID_EXPORT static const Colour BackgroundColour;
+	ACID_EXPORT static const Colour PrimaryColour;
+	ACID_EXPORT static const Colour SelectedColour;
+	ACID_EXPORT static const Colour ButtonColour;
 
 private:
 	Gui m_background;

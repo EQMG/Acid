@@ -27,7 +27,7 @@ public:
 
 	void SetSize(const Vector2f &size);
 
-	static const uint32_t Size;
+	ACID_EXPORT static const uint32_t Size;
 
 private:
 	float ScrollByDelta(const float &delta);

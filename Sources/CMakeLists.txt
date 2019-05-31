@@ -42,6 +42,8 @@ target_include_directories(Acid
 		PUBLIC
 		# Helps the includes find what they need at build-time
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Generated exports location
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>

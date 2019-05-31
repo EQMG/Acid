@@ -32,13 +32,13 @@ public:
 
 	void Update() override;
 
-	static std::string StringifyResultAl(const int32_t &result);
+	ACID_NO_EXPORT static std::string StringifyResultAl(const int32_t &result);
 
-	static void CheckAl(const int32_t &result);
+	ACID_NO_EXPORT static void CheckAl(const int32_t &result);
 	
-	ALCdevice *GetDevice() const { return m_device; }
+	ACID_NO_EXPORT ALCdevice *GetDevice() const { return m_device; }
 
-	ALCcontext *GetContext() const { return m_context; }
+	ACID_NO_EXPORT ALCcontext *GetContext() const { return m_context; }
 
 	float GetGain(const Type &type) const;
 

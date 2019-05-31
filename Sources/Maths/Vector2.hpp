@@ -308,14 +308,14 @@ public:
 
 	Vector2 &operator/=(const T &other);
 
-	static const Vector2 Zero;
-	static const Vector2 One;
-	static const Vector2 Left;
-	static const Vector2 Right;
-	static const Vector2 Up;
-	static const Vector2 Down;
-	static const Vector2 PositiveInfinity;
-	static const Vector2 NegativeInfinity;
+	ACID_EXPORT static const Vector2 Zero;
+	ACID_EXPORT static const Vector2 One;
+	ACID_EXPORT static const Vector2 Left;
+	ACID_EXPORT static const Vector2 Right;
+	ACID_EXPORT static const Vector2 Up;
+	ACID_EXPORT static const Vector2 Down;
+	ACID_EXPORT static const Vector2 PositiveInfinity;
+	ACID_EXPORT static const Vector2 NegativeInfinity;
 
 	T m_x, m_y;
 };
