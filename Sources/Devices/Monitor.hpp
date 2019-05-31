@@ -50,7 +50,7 @@ class Monitor
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);
 
-	GLFWmonitor *GetMonitor() const { return m_monitor; }
+	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return m_monitor; }
 
 	const bool &IsPrimary() const { return m_primary; }
 

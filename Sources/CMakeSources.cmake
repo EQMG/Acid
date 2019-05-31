@@ -438,8 +438,8 @@ set(_temp_acid_sources
 		)
 
 # Generates exports for shared builds
-#include(GenerateExportHeader)
-#generate_export_header(Acid)
+include(GenerateExportHeader)
+generate_export_header(Acid)
 
 # Adds the precompiled header
 include(PrecompiledHeader)

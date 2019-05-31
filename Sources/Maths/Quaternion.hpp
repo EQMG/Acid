@@ -199,10 +199,10 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
-	static const Quaternion Zero;
-	static const Quaternion One;
-	static const Quaternion PositiveInfinity;
-	static const Quaternion NegativeInfinity;
+	ACID_EXPORT static const Quaternion Zero;
+	ACID_EXPORT static const Quaternion One;
+	ACID_EXPORT static const Quaternion PositiveInfinity;
+	ACID_EXPORT static const Quaternion NegativeInfinity;
 
 	float m_x, m_y, m_z, m_w;
 };

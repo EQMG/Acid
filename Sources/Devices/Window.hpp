@@ -166,7 +166,7 @@ public:
 	 */
 	void SetIconified(const bool &iconify);
 
-	GLFWwindow *GetWindow() const { return m_window; }
+	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
 
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
 
