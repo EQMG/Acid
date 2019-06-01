@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * @brief class that represents one keyframe of an animation. This contains the timestamp of the keyframe,
+ * @brief Class that represents one keyframe of an animation. This contains the timestamp of the keyframe,
  * which is the time (in seconds) from the start of the animation when this keyframe occurs.
  *
  * It also contains the desired local-space transforms of all of the joints in the animated entity at this keyframe in the animation.

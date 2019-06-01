@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * @brief class  that represents a  structure of spatial objects.
+ * @brief Class that represents a  structure of spatial objects.
  */
 class ACID_EXPORT SceneStructure :
 	public NonCopyable

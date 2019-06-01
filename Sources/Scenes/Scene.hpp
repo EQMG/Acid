@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * @brief class  that is used to represent a scene.
+ * @brief Class that is used to represent a scene.
  */
 class ACID_EXPORT Scene
 {

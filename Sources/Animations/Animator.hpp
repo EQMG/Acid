@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * @brief class that contains all the functionality to apply an animation to an animated entity.
+ * @brief Class that contains all the functionality to apply an animation to an animated entity.
  * An Animator instance is associated with just one animated entity.
  * It also keeps track of the running time (in seconds) of the current animation,
  * along with a reference to the currently playing animation for the corresponding entity.

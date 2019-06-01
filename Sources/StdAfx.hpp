@@ -32,6 +32,7 @@ using namespace std::chrono_literals;
 
 #include "acid_export.h"
 
+// TODO: Use cr.h state defines.
 #if defined(ACID_BUILD_MSVC)
 #	pragma section(".state", read, write)
 #	define ACID_STATE __declspec(allocate(".state"))

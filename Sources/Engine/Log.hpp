@@ -11,36 +11,38 @@ namespace acid
 class ACID_EXPORT Log
 {
 public:
-	enum class Style
+	class Style
 	{
-		Default,
-		Bold,
-		Dim,
-		Underlined,
-		Blink,
-		Reverse,
-		Hidden
+	public:
+		static constexpr char *Default = "\033[0m";
+		static constexpr char *Bold = "\033[1m";
+		static constexpr char *Dim = "\033[2m";
+		static constexpr char *Underlined = "\033[4m";
+		static constexpr char *Blink = "\033[5m";
+		static constexpr char *Reverse = "\033[7m";
+		static constexpr char *Hidden = "\033[8m";
 	};
 
-	enum class Colour
+	class Colour
 	{
-		Default,
-		Black,
-		Red,
-		Green,
-		Yellow,
-		Blue,
-		Magenta,
-		Cyan,
-		LightGrey,
-		DarkGrey,
-		LightRed,
-		LightGreen,
-		LightYellow,
-		LightBlue,
-		LightMagenta,
-		LightCyan,
-		White
+	public:
+		static constexpr char *Default = "\033[39m";
+		static constexpr char *Black = "\033[30m";
+		static constexpr char *Red = "\033[31m";
+		static constexpr char *Green = "\033[32m";
+		static constexpr char *Yellow = "\033[33m";
+		static constexpr char *Blue = "\033[34m";
+		static constexpr char *Magenta = "\033[35m";
+		static constexpr char *Cyan = "\033[36m";
+		static constexpr char *LightGrey = "\033[37m";
+		static constexpr char *DarkGrey = "\033[90m";
+		static constexpr char *LightRed = "\033[91m";
+		static constexpr char *LightGreen = "\033[92m";
+		static constexpr char *LightYellow = "\033[93m";
+		static constexpr char *LightBlue = "\033[94m";
+		static constexpr char *LightMagenta = "\033[95m";
+		static constexpr char *LightCyan = "\033[96m";
+		static constexpr char *White = "\033[97m";
 	};
 
 	/**
@@ -166,11 +168,7 @@ private:
 	ACID_STATE static std::mutex MUTEX;
 	ACID_STATE static std::ofstream STREAM;
 	
-	static std::string FormatStyle(const Style &style);
-
-	static std::string FormatColour(const Colour &colour);
-
-	static void Print(const Style &style, const Colour &colour, const std::optional<std::string> &type, const std::string &string);
+	static void Print(const std::string &style, const std::string &colour, const std::optional<std::string> &type, const std::string &string);
 	
 	static void PopupMessage(const std::string &title, const std::string &message);
 

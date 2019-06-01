@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * @brief class  that holds many various math functions.
+ * @brief Class that holds many various math functions.
  **/
 class ACID_EXPORT Maths
 {

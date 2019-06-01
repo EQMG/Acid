@@ -38,7 +38,7 @@ private:
 };
 
 /**
- * @brief class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
+ * @brief Class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
  * It also contains the name of the bone, and a list of all the child joints.
  *
  * The "animatedTransform" matrix is the joint transform.

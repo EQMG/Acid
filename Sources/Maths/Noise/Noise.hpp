@@ -29,7 +29,7 @@
 namespace acid
 {
 /**
- * @brief class  that can generate 2D, 3D and 4D noise values.
+ * @brief Class that can generate 2D, 3D and 4D noise values.
  */
 class ACID_EXPORT Noise
 {

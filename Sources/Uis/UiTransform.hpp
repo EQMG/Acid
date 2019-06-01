@@ -34,7 +34,7 @@ enum class UiMargins
 ENABLE_BITMASK_OPERATORS(UiMargins)
 
 /**
- * @brief class  that represents a 2D screen space transform.
+ * @brief Class that represents a 2D screen space transform.
  */
 class ACID_EXPORT UiTransform
 {

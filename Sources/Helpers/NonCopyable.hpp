@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * @brief class  that removes the copy constructor and operator from derived classes, while leaving move.
+ * @brief Class that removes the copy constructor and operator from derived classes, while leaving move.
  */
 class ACID_EXPORT NonCopyable
 {

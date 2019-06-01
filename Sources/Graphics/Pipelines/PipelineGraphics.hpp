@@ -11,7 +11,7 @@ class ImageDepth;
 class Image2d;
 
 /**
- * @brief class  that represents a graphics pipeline.
+ * @brief Class that represents a graphics pipeline.
  */
 class ACID_EXPORT PipelineGraphics :
 	public Pipeline
