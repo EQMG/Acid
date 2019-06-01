@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * @brief A logging class used in Acid, will write output to a file one the application has closed.
+ * @brief A logging class used in Acid, will write output to the standard stream and into a file.
  */
 class ACID_EXPORT Log
 {
@@ -14,35 +14,35 @@ public:
 	class Style
 	{
 	public:
-		static constexpr char *Default = "\033[0m";
-		static constexpr char *Bold = "\033[1m";
-		static constexpr char *Dim = "\033[2m";
-		static constexpr char *Underlined = "\033[4m";
-		static constexpr char *Blink = "\033[5m";
-		static constexpr char *Reverse = "\033[7m";
-		static constexpr char *Hidden = "\033[8m";
+		static constexpr std::string_view Default = "\033[0m";
+		static constexpr std::string_view Bold = "\033[1m";
+		static constexpr std::string_view Dim = "\033[2m";
+		static constexpr std::string_view Underlined = "\033[4m";
+		static constexpr std::string_view Blink = "\033[5m";
+		static constexpr std::string_view Reverse = "\033[7m";
+		static constexpr std::string_view Hidden = "\033[8m";
 	};
 
 	class Colour
 	{
 	public:
-		static constexpr char *Default = "\033[39m";
-		static constexpr char *Black = "\033[30m";
-		static constexpr char *Red = "\033[31m";
-		static constexpr char *Green = "\033[32m";
-		static constexpr char *Yellow = "\033[33m";
-		static constexpr char *Blue = "\033[34m";
-		static constexpr char *Magenta = "\033[35m";
-		static constexpr char *Cyan = "\033[36m";
-		static constexpr char *LightGrey = "\033[37m";
-		static constexpr char *DarkGrey = "\033[90m";
-		static constexpr char *LightRed = "\033[91m";
-		static constexpr char *LightGreen = "\033[92m";
-		static constexpr char *LightYellow = "\033[93m";
-		static constexpr char *LightBlue = "\033[94m";
-		static constexpr char *LightMagenta = "\033[95m";
-		static constexpr char *LightCyan = "\033[96m";
-		static constexpr char *White = "\033[97m";
+		static constexpr std::string_view Default = "\033[39m";
+		static constexpr std::string_view Black = "\033[30m";
+		static constexpr std::string_view Red = "\033[31m";
+		static constexpr std::string_view Green = "\033[32m";
+		static constexpr std::string_view Yellow = "\033[33m";
+		static constexpr std::string_view Blue = "\033[34m";
+		static constexpr std::string_view Magenta = "\033[35m";
+		static constexpr std::string_view Cyan = "\033[36m";
+		static constexpr std::string_view LightGrey = "\033[37m";
+		static constexpr std::string_view DarkGrey = "\033[90m";
+		static constexpr std::string_view LightRed = "\033[91m";
+		static constexpr std::string_view LightGreen = "\033[92m";
+		static constexpr std::string_view LightYellow = "\033[93m";
+		static constexpr std::string_view LightBlue = "\033[94m";
+		static constexpr std::string_view LightMagenta = "\033[95m";
+		static constexpr std::string_view LightCyan = "\033[96m";
+		static constexpr std::string_view White = "\033[97m";
 	};
 
 	/**
@@ -55,35 +55,9 @@ public:
 	 * @param args The args to be added into the format.
 	 */
 	template<typename... Args>
-	static void Out(const Style &style, const Colour &colour, const std::string &format, Args &&... args)
+	static void Out(const std::string_view &style, const std::string_view &colour, const std::string &format, Args &&... args)
 	{
 		Print(style, colour, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
-	}
-	
-	/**
-	 * Outputs a message into the console.
-	 * @tparam Args The args types.
-	 * @param style The style to output as.
-	 * @param format The format to output into.
-	 * @param args The args to be added into the format.
-	 */
-	template<typename... Args>
-	static void Out(const Style &style, const std::string &format, Args &&... args)
-	{
-		Print(style, Colour::Default, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
-	}
-	
-	/**
-	 * Outputs a message into the console.
-	 * @tparam Args The args types.
-	 * @param colour The colour to output as.
-	 * @param format The format to output into.
-	 * @param args The args to be added into the format.
-	 */
-	template<typename... Args>
-	static void Out(const Colour &colour, const std::string &format, Args &&... args)
-	{
-		Print(Style::Default, colour, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
 	}
 	
 	/**
@@ -168,17 +142,17 @@ private:
 	ACID_STATE static std::mutex MUTEX;
 	ACID_STATE static std::ofstream STREAM;
 	
-	static void Print(const std::string &style, const std::string &colour, const std::optional<std::string> &type, const std::string &string);
+	static void Print(const std::string_view &style, const std::string_view &colour, const std::optional<std::string> &type, const std::string &string);
 	
 	static void PopupMessage(const std::string &title, const std::string &message);
 
 	template<typename... Args>
 	static std::string StringFormat(const std::string &format, Args &&... args)
 	{
-		size_t size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
-		std::unique_ptr<char[]> buf(new char[size]);
-		snprintf(buf.get(), size, format.c_str(), args ...);
-		return std::string(buf.get(), buf.get() + size - 1); // Excludes the '\0'
+		auto size = std::snprintf(nullptr, 0, format.c_str(), args ...);
+		std::string output(size, '\0');
+		std::sprintf(&output[0], format.c_str(), std::forward<Args>(args)...);
+		return output;
 	}
 };
 }

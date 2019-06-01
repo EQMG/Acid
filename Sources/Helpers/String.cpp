@@ -1,5 +1,4 @@
 #include "String.hpp"
-#include <string_view>
 
 namespace acid
 {

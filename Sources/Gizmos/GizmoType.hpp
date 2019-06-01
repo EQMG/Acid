@@ -16,7 +16,7 @@ class Gizmo;
 /**
  * @brief Resource that represents a gizmo type.
  */
-class GizmoType :
+class ACID_EXPORT GizmoType :
 	public Resource
 {
 public:

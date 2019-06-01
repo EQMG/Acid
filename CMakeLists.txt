@@ -33,11 +33,11 @@ endif()
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 
 # Checks if interprocedural optimization is supported by the compiler
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
-if(NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"))
-    include(CheckIPOSupported)
-    check_ipo_supported(RESULT CMAKE_INTERPROCEDURAL_OPTIMIZATION)
-endif()
+#set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
+#if(NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"))
+#    include(CheckIPOSupported)
+#    check_ipo_supported(RESULT CMAKE_INTERPROCEDURAL_OPTIMIZATION)
+#endif()
 
 # Use ccache if it is installed, will cach previous compilations
 find_program(CCACHE_FOUND "ccache")
