@@ -5,9 +5,9 @@
 namespace acid
 {
 /**
- * Class used to manage {@link Subrender} objects to create a list of render pass.
+ * @brief Class used to manage {@link Subrender} objects to create a list of render pass.
  */
-class Renderer
+class ACID_EXPORT Renderer
 {
 public:
 	virtual ~Renderer() = default;

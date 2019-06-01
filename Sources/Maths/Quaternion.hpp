@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
  **/
-class Quaternion
+class ACID_EXPORT Quaternion
 {
 public:
 	/**
@@ -199,10 +199,10 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 
-	ACID_EXPORT static const Quaternion Zero;
-	ACID_EXPORT static const Quaternion One;
-	ACID_EXPORT static const Quaternion PositiveInfinity;
-	ACID_EXPORT static const Quaternion NegativeInfinity;
+	static const Quaternion Zero;
+	static const Quaternion One;
+	static const Quaternion PositiveInfinity;
+	static const Quaternion NegativeInfinity;
 
 	float m_x, m_y, m_z, m_w;
 };

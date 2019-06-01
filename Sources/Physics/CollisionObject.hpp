@@ -17,7 +17,7 @@ class Frustum;
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class CollisionObject :
+class ACID_EXPORT CollisionObject :
 	public Component
 {
 public:

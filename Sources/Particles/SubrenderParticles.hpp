@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class SubrenderParticles :
+class ACID_EXPORT SubrenderParticles :
 	public Subrender
 {
 public:

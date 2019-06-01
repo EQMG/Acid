@@ -4,13 +4,13 @@
 
 namespace acid
 {
-class Ftp;
-class FtpResponse;
+class ACID_EXPORT Ftp;
+class ACID_EXPORT FtpResponse;
 
 /**
  * @brief Utility class for exchanging datas with the server on the data channel.
  **/
-class FtpDataChannel
+class ACID_EXPORT FtpDataChannel
 {
 public:
 	/**

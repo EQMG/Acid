@@ -11,7 +11,7 @@ namespace acid
  * @brief Component that represents a material shader that is used to render a mesh.
  * The child of this object should initialize {@link Material#m_pipelineMaterial} in {@link Material#Start}.
  */
-class Material :
+class ACID_EXPORT Material :
 	public Component
 {
 public:

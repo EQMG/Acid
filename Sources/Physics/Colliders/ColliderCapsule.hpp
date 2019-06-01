@@ -6,7 +6,7 @@ class btCapsuleShape;
 
 namespace acid
 {
-class ColliderCapsule :
+class ACID_EXPORT ColliderCapsule :
 	public Collider
 {
 public:

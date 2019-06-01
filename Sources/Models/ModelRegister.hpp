@@ -7,9 +7,9 @@
 namespace acid
 {
 /**
- * @brief Class that holds registered model types.
+ * @brief class  that holds registered model types.
  */
-class ModelRegister
+class ACID_EXPORT ModelRegister
 {
 public:
 	/**

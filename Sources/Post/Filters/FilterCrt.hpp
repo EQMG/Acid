@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class FilterCrt :
+class ACID_EXPORT FilterCrt :
 	public PostFilter
 {
 public:

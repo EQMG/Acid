@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Interface that represents a buffer.
  */
-class Buffer
+class ACID_EXPORT Buffer
 {
 public:
 	enum class Status

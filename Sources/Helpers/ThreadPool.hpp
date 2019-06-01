@@ -10,14 +10,14 @@ namespace acid
 /**
  * @brief A fixed size pool of threads.
  */
-class ThreadPool
+class ACID_EXPORT ThreadPool
 {
 public:
 	explicit ThreadPool(const uint32_t &threadCount = std::thread::hardware_concurrency());
 
 	~ThreadPool();
 
-	template<class F, class... Args>
+	template<typename F, typename... Args>
 	decltype(auto) Enqueue(F &&f, Args &&... args);
 
 	void Wait();
@@ -33,7 +33,7 @@ private:
 	bool m_stop;
 };
 
-template<class F, class ... Args>
+template<typename F, typename ... Args>
 decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 {
 	using return_type = typename std::result_of<F(Args...)>::type;

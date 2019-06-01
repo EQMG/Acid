@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class StorageBuffer :
+class ACID_EXPORT StorageBuffer :
 	public Descriptor,
 	public Buffer
 {

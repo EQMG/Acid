@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Represents a time value stored in microseconds.
  */
-class Time
+class ACID_EXPORT Time
 {
 public:
 	Time();

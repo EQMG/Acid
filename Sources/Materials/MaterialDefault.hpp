@@ -8,9 +8,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents the default material shader.
+ * @brief class  that represents the default material shader.
  */
-class MaterialDefault :
+class ACID_EXPORT MaterialDefault :
 	public Material
 {
 public:

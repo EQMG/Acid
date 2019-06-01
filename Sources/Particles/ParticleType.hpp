@@ -18,7 +18,7 @@ class Particle;
 /**
  * @brief Resource that represents a particle type.
  */
-class ParticleType :
+class ACID_EXPORT ParticleType :
 	public Resource
 {
 public:

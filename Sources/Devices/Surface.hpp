@@ -8,7 +8,7 @@ namespace acid
 class Instance;
 class PhysicalDevice;
 
-class Surface
+class ACID_EXPORT Surface
 {
 public:
 	Surface(const Instance *instance, const PhysicalDevice *physicalDevice);

@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Axis composed of two buttons.
  */
-class AxisButton :
+class ACID_EXPORT AxisButton :
 	public Axis
 {
 public:
@@ -19,7 +19,7 @@ public:
 	 * @param args The arguments to pass to T
 	 * @return The created button axis.
 	 */
-	template<class T, typename... Args>
+	template<typename T, typename... Args>
 	static AxisButton *Create(Args &&... args)
 	{
 		std::vector<Button *> buttons;

@@ -9,7 +9,7 @@ enum class QuadraticSolution
 	None, All, Touch, One, Two
 };
 
-class Rect
+class ACID_EXPORT Rect
 {
 public:
 	Vector2f m_min;

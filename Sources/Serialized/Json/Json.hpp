@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class Json :
+class ACID_EXPORT Json :
 	public Metadata
 {
 public:

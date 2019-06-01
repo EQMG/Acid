@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterEmboss :
+class ACID_EXPORT FilterEmboss :
 	public PostFilter
 {
 public:

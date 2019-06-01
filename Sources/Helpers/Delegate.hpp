@@ -9,7 +9,7 @@ namespace acid
 template<typename>
 class Delegate;
 
-class Observer
+class ACID_EXPORT Observer
 {
 public:
 	Observer() :

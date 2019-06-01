@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class Xml :
+class ACID_EXPORT Xml :
 	public Metadata
 {
 public:

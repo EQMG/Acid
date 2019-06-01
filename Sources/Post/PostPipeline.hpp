@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Represents a system of post effects.
  */
-class PostPipeline :
+class ACID_EXPORT PostPipeline :
 	public Subrender
 {
 public:

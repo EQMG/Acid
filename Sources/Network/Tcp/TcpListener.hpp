@@ -22,7 +22,7 @@ class TcpSocket;
  * A listener is automatically closed on destruction, like all other types of socket.
  * However if you want to stop listening before the socket is destroyed, you can call its Close() function.
  **/
-class TcpListener :
+class ACID_EXPORT TcpListener :
 	public Socket
 {
 public:

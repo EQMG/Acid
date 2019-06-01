@@ -5,9 +5,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents a game.
+ * @brief class  that represents a game.
  */
-class Game
+class ACID_EXPORT Game
 {
 public:
 	virtual ~Game() = default;

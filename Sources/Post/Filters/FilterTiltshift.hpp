@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterTiltshift :
+class ACID_EXPORT FilterTiltshift :
 	public PostFilter
 {
 public:

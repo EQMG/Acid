@@ -33,7 +33,7 @@ namespace acid
  * return the corresponding acid::HttpResponse
  * from the server.
  **/
-class Http
+class ACID_EXPORT Http
 {
 public:
 	/**

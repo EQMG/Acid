@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Resource that represents a cubemap image.
  */
-class ImageCube :
+class ACID_EXPORT ImageCube :
 	public NonCopyable,
 	public Descriptor,
 	public Resource

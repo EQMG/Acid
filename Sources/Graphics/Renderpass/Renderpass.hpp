@@ -8,7 +8,7 @@ namespace acid
 class ImageDepth;
 class RenderStage;
 
-class Renderpass
+class ACID_EXPORT Renderpass
 {
 public:
 	class SubpassDescription :

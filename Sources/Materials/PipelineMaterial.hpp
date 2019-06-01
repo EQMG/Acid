@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Resource that represents a material pipeline.
  */
-class PipelineMaterial :
+class ACID_EXPORT PipelineMaterial :
 	public Resource
 {
 public:

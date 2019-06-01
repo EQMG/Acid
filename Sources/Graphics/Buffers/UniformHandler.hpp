@@ -5,9 +5,9 @@
 namespace acid
 {
 /**
- * @brief Class that handles a uniform buffer.
+ * @brief class  that handles a uniform buffer.
  */
-class UniformHandler
+class ACID_EXPORT UniformHandler
 {
 public:
 	explicit UniformHandler(const bool &multipipeline = false);

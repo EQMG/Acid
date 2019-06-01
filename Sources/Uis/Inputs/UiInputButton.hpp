@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class UiInputButton :
+class ACID_EXPORT UiInputButton :
 	public UiObject
 {
 public:
@@ -18,18 +18,18 @@ public:
 
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
-	ACID_EXPORT static const Vector2i Size;
-	ACID_EXPORT static const Vector2i Padding;
-	ACID_EXPORT static const float FontSize;
-	ACID_EXPORT static const Time SlideTime;
+	static const Vector2i Size;
+	static const Vector2i Padding;
+	static const float FontSize;
+	static const Time SlideTime;
 
-	ACID_EXPORT static const Colour ValueColour;
-	ACID_EXPORT static const Colour TitleColour;
+	static const Colour ValueColour;
+	static const Colour TitleColour;
 
-	ACID_EXPORT static const Colour BackgroundColour;
-	ACID_EXPORT static const Colour PrimaryColour;
-	ACID_EXPORT static const Colour SelectedColour;
-	ACID_EXPORT static const Colour ButtonColour;
+	static const Colour BackgroundColour;
+	static const Colour PrimaryColour;
+	static const Colour SelectedColour;
+	static const Colour ButtonColour;
 
 private:
 	Gui m_background;

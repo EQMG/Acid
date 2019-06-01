@@ -7,7 +7,7 @@ namespace acid
 {
 class Instance;
 
-class PhysicalDevice
+class ACID_EXPORT PhysicalDevice
 {
 public:
 	explicit PhysicalDevice(const Instance *instance);

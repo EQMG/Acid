@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class MeshPattern :
+class ACID_EXPORT MeshPattern :
 	public Model
 {
 public:

@@ -12,7 +12,7 @@ namespace acid
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class Rigidbody :
+class ACID_EXPORT Rigidbody :
 	public CollisionObject
 {
 public:

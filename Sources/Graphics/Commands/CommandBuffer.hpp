@@ -5,9 +5,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents a command buffer.
+ * @brief class  that represents a command buffer.
  */
-class CommandBuffer
+class ACID_EXPORT CommandBuffer
 {
 public:
 	/**

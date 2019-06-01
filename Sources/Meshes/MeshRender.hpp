@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class MeshRender :
+class ACID_EXPORT MeshRender :
 	public Component
 {
 public:

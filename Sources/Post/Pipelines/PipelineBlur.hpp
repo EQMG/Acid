@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class PipelineBlur :
+class ACID_EXPORT PipelineBlur :
 	public PostPipeline
 {
 public:

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterVignette :
+class ACID_EXPORT FilterVignette :
 	public PostFilter
 {
 public:

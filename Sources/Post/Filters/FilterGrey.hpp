@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterGrey :
+class ACID_EXPORT FilterGrey :
 	public PostFilter
 {
 public:

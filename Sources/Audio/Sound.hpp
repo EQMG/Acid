@@ -8,9 +8,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents a playable sound.
+ * @brief class  that represents a playable sound.
  */
-class Sound :
+class ACID_EXPORT Sound :
 	public Component
 {
 public:

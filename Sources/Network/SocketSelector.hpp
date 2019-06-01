@@ -28,7 +28,7 @@ class Socket;
  * \li make it wait until there is data available on any of the sockets
  * \li test each socket to find out which ones are ready
  **/
-class SocketSelector
+class ACID_EXPORT SocketSelector
 {
 public:
 	/**

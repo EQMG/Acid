@@ -8,7 +8,7 @@
 
 namespace acid
 {
-class UiInputText :
+class ACID_EXPORT UiInputText :
 	public UiObject
 {
 public:

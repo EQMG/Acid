@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterSepia :
+class ACID_EXPORT FilterSepia :
 	public PostFilter
 {
 public:

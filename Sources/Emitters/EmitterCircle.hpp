@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class EmitterCircle :
+class ACID_EXPORT EmitterCircle :
 	public Emitter
 {
 public:

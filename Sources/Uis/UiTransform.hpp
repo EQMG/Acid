@@ -5,18 +5,18 @@
 
 namespace acid
 {
-class UiAnchor
+class ACID_EXPORT UiAnchor
 {
 public:
-	ACID_EXPORT static const Vector2f LeftTop;
-	ACID_EXPORT static const Vector2f CentreTop;
-	ACID_EXPORT static const Vector2f RightTop;
-	ACID_EXPORT static const Vector2f LeftCentre;
-	ACID_EXPORT static const Vector2f Centre;
-	ACID_EXPORT static const Vector2f RightCentre;
-	ACID_EXPORT static const Vector2f LeftBottom;
-	ACID_EXPORT static const Vector2f CentreBottom;
-	ACID_EXPORT static const Vector2f RightBottom;
+	static const Vector2f LeftTop;
+	static const Vector2f CentreTop;
+	static const Vector2f RightTop;
+	static const Vector2f LeftCentre;
+	static const Vector2f Centre;
+	static const Vector2f RightCentre;
+	static const Vector2f LeftBottom;
+	static const Vector2f CentreBottom;
+	static const Vector2f RightBottom;
 };
 
 enum class UiMargins
@@ -34,9 +34,9 @@ enum class UiMargins
 ENABLE_BITMASK_OPERATORS(UiMargins)
 
 /**
- * @brief Class that represents a 2D screen space transform.
+ * @brief class  that represents a 2D screen space transform.
  */
-class UiTransform
+class ACID_EXPORT UiTransform
 {
 public:
 	/**

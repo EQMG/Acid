@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Holds a RGBA colour.
  **/
-class Colour
+class ACID_EXPORT Colour
 {
 public:
 	/**
@@ -180,23 +180,23 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 
-	ACID_EXPORT static const Colour Clear;
-	ACID_EXPORT static const Colour Black;
-	ACID_EXPORT static const Colour Grey;
-	ACID_EXPORT static const Colour Silver;
-	ACID_EXPORT static const Colour White;
-	ACID_EXPORT static const Colour Maroon;
-	ACID_EXPORT static const Colour Red;
-	ACID_EXPORT static const Colour Olive;
-	ACID_EXPORT static const Colour Yellow;
-	ACID_EXPORT static const Colour Green;
-	ACID_EXPORT static const Colour Lime;
-	ACID_EXPORT static const Colour Teal;
-	ACID_EXPORT static const Colour Aqua;
-	ACID_EXPORT static const Colour Navy;
-	ACID_EXPORT static const Colour Blue;
-	ACID_EXPORT static const Colour Purple;
-	ACID_EXPORT static const Colour Fuchsia;
+	static const Colour Clear;
+	static const Colour Black;
+	static const Colour Grey;
+	static const Colour Silver;
+	static const Colour White;
+	static const Colour Maroon;
+	static const Colour Red;
+	static const Colour Olive;
+	static const Colour Yellow;
+	static const Colour Green;
+	static const Colour Lime;
+	static const Colour Teal;
+	static const Colour Aqua;
+	static const Colour Navy;
+	static const Colour Blue;
+	static const Colour Purple;
+	static const Colour Fuchsia;
 
 	float m_r, m_g, m_b, m_a;
 };

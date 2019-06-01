@@ -5,11 +5,11 @@
 namespace acid
 {
 /**
- * @brief Class that smoothly increases its value.
+ * @brief class  that smoothly increases its value.
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class SmoothFloat
+class ACID_EXPORT SmoothFloat
 {
 public:
 	/**

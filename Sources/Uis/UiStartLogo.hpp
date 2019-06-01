@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class UiStartLogo :
+class ACID_EXPORT UiStartLogo :
 	public UiObject
 {
 public:

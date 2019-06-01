@@ -15,7 +15,7 @@ enum class ScrollBar
 
 ENABLE_BITMASK_OPERATORS(ScrollBar)
 
-class UiScrollBar :
+class ACID_EXPORT UiScrollBar :
 	public UiObject
 {
 public:
@@ -27,7 +27,7 @@ public:
 
 	void SetSize(const Vector2f &size);
 
-	ACID_EXPORT static const uint32_t Size;
+	static const uint32_t Size;
 
 private:
 	float ScrollByDelta(const float &delta);

@@ -9,7 +9,7 @@ class ImageDepth;
 class Renderpass;
 class RenderStage;
 
-class Framebuffers :
+class ACID_EXPORT Framebuffers :
 	public NonCopyable
 {
 public:

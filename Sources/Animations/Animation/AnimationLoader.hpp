@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class AnimationLoader
+class ACID_EXPORT AnimationLoader
 {
 public:
 	AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes, const Matrix4 &correction);
