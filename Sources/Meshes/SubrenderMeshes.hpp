@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class SubrenderMeshes :
+class ACID_EXPORT SubrenderMeshes :
 	public Subrender
 {
 public:

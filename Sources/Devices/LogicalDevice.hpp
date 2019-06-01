@@ -9,7 +9,7 @@ class Instance;
 class PhysicalDevice;
 class Surface;
 
-class LogicalDevice
+class ACID_EXPORT LogicalDevice
 {
 public:
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);

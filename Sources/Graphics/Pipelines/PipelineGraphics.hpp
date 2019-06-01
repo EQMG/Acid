@@ -11,9 +11,9 @@ class ImageDepth;
 class Image2d;
 
 /**
- * @brief Class that represents a graphics pipeline.
+ * @brief class  that represents a graphics pipeline.
  */
-class PipelineGraphics :
+class ACID_EXPORT PipelineGraphics :
 	public Pipeline
 {
 public:
@@ -159,7 +159,7 @@ private:
 	VkPipelineTessellationStateCreateInfo m_tessellationState;
 };
 
-class PipelineGraphicsCreate
+class ACID_EXPORT PipelineGraphicsCreate
 {
 public:
 	explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},

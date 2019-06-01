@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class ElapsedTime
+class ACID_EXPORT ElapsedTime
 {
 public:
 	explicit ElapsedTime(const Time &interval = -1s);

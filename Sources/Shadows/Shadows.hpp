@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Module used for managing a shadow map.
  */
-class Shadows :
+class ACID_EXPORT Shadows :
 	public Module
 {
 public:

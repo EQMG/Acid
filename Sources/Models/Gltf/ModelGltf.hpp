@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Resource that represents a GLTF model.
  */
-class ModelGltf :
+class ACID_EXPORT ModelGltf :
 	public Model
 {
 public:

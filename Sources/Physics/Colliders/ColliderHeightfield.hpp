@@ -6,7 +6,7 @@ class btHeightfieldTerrainShape;
 
 namespace acid
 {
-class ColliderHeightfield :
+class ACID_EXPORT ColliderHeightfield :
 	public Collider
 {
 public:

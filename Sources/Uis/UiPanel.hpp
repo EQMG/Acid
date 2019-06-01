@@ -17,7 +17,7 @@ enum class UiManipulate
 
 ENABLE_BITMASK_OPERATORS(UiManipulate)
 
-class UiPanel :
+class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:

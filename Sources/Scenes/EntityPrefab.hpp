@@ -10,7 +10,7 @@ class Entity;
 /**
  * @brief Resource that represents a entity prefab.
  */
-class EntityPrefab :
+class ACID_EXPORT EntityPrefab :
 	public Resource
 {
 public:

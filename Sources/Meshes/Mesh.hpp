@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Component that represents a model/mesh.
  */
-class Mesh :
+class ACID_EXPORT Mesh :
 	public Component
 {
 public:

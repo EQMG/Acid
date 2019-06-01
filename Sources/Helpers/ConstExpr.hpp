@@ -107,7 +107,7 @@ template<typename T> inline constexpr bool is_ptr_access_v = std::is_pointer_v<T
 /**
  * @brief Helper header that contains constant expressions.
  */
-class ConstExpr
+class ACID_EXPORT ConstExpr
 {
 public:
 	template<typename T>

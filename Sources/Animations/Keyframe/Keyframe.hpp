@@ -6,13 +6,13 @@
 namespace acid
 {
 /**
- * @brief Class that represents one keyframe of an animation. This contains the timestamp of the keyframe,
+ * @brief class that represents one keyframe of an animation. This contains the timestamp of the keyframe,
  * which is the time (in seconds) from the start of the animation when this keyframe occurs.
  *
  * It also contains the desired local-space transforms of all of the joints in the animated entity at this keyframe in the animation.
  * The joint transforms are stored in a map, indexed by the name of the joint that they should be applied to.
  **/
-class Keyframe
+class ACID_EXPORT Keyframe
 {
 public:
 	/**

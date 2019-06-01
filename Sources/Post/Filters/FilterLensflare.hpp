@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class FilterLensflare :
+class ACID_EXPORT FilterLensflare :
 	public PostFilter
 {
 public:

@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class UiSection :
+class ACID_EXPORT UiSection :
 	public UiObject
 {
 public:

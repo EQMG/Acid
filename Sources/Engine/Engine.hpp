@@ -8,7 +8,7 @@
 
 namespace acid
 {
-class Delta
+class ACID_EXPORT Delta
 {
 public:
 	void Update()
@@ -23,7 +23,7 @@ public:
 	Time m_change;
 };
 
-class ChangePerSecond
+class ACID_EXPORT ChangePerSecond
 {
 public:
 	void Update(const Time &time)
@@ -46,7 +46,7 @@ public:
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
-class Engine :
+class ACID_EXPORT Engine :
 	public NonCopyable
 {
 public:
@@ -180,7 +180,7 @@ public:
 	void RequestClose() { m_running = false; }
 
 private:
-	ACID_EXPORT ACID_STATE static Engine *INSTANCE;
+	ACID_STATE static Engine *INSTANCE;
 
 	ModuleHolder m_modules;
 	std::unique_ptr<Game> m_game;

@@ -7,9 +7,9 @@
 namespace acid
 {
 /**
- * @brief Class that contains and manages subrenders registered to a render manager.
+ * @brief class  that contains and manages subrenders registered to a render manager.
  */
-class SubrenderHolder :
+class ACID_EXPORT SubrenderHolder :
 	public NonCopyable
 {
 public:

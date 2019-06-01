@@ -6,9 +6,9 @@
 namespace acid
 {
 /**
- * @brief Class that holds registered component types.
+ * @brief class  that holds registered component types.
  */
-class ComponentRegister
+class ACID_EXPORT ComponentRegister
 {
 public:
 	ComponentRegister();

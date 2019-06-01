@@ -7,11 +7,11 @@ namespace acid
 /**
  * @brief A group of functions used for creation, loading, writing, and more.
  */
-class FileSystem
+class ACID_EXPORT FileSystem
 {
 public:
-	ACID_EXPORT static const char Separator;
-	ACID_EXPORT static const char AltSeparator;
+	static const char Separator;
+	static const char AltSeparator;
 
 	/**
 	 * Gets the current working directory.

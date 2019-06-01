@@ -6,7 +6,7 @@
 
 namespace acid
 {
-class VertexAnimated
+class ACID_EXPORT VertexAnimated
 {
 public:
 	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight) :

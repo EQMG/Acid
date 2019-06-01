@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
-class Subrender
+class ACID_EXPORT Subrender
 {
 public:
 	/**
@@ -41,7 +41,7 @@ private:
 	bool m_enabled;
 };
 
-template class TypeInfo<Subrender>;
+template class ACID_EXPORT TypeInfo<Subrender>;
 
 /**
  * Gets the Type ID for the Subrender.

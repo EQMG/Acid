@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class VertexWeights
+class ACID_EXPORT VertexWeights
 {
 public:
 	void AddJointEffect(const uint32_t &jointId, const float &weight);

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class SkeletonLoader
+class ACID_EXPORT SkeletonLoader
 {
 public:
 	SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);

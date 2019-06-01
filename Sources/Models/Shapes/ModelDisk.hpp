@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Resource that represents a disk model.
  */
-class ModelDisk :
+class ACID_EXPORT ModelDisk :
 	public Model
 {
 public:

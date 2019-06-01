@@ -9,7 +9,7 @@ typedef FT_Outline_ FT_Outline;
 
 namespace acid
 {
-class WIPCell
+class ACID_EXPORT WIPCell
 {
 public:
 	Rect m_bbox;
@@ -19,13 +19,13 @@ public:
 	uint32_t m_startLength;
 };
 
-class ContourRange
+class ACID_EXPORT ContourRange
 {
 public:
 	uint32_t m_begin, m_end;
 };
 
-class Outline
+class ACID_EXPORT Outline
 {
 public:
 	Rect m_bbox;

@@ -17,7 +17,7 @@ class Text;
 /**
  * @brief Resource that is used when creating a font mesh.
  */
-class FontType :
+class ACID_EXPORT FontType :
 	public Resource
 {
 public:

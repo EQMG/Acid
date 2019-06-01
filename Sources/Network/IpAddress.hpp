@@ -9,7 +9,7 @@ namespace acid
  * It provides a set a implicit constructors and conversion functions
  * to easily build or transform an IP address from/to various representations.
  **/
-class IpAddress
+class ACID_EXPORT IpAddress
 {
 public:
 	/**

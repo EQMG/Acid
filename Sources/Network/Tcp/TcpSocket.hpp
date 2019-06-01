@@ -31,7 +31,7 @@ class Packet;
  * The socket is automatically disconnected when it is destroyed, but if you want to
  * explicitly close the connection while the socket instance is still alive, you can call disconnect.
  **/
-class PendingPacket
+class ACID_EXPORT PendingPacket
 {
 public:
 	PendingPacket() :
@@ -52,7 +52,7 @@ public:
 /**
  * @brief Specialized socket using the TCP protocol
  **/
-class TcpSocket :
+class ACID_EXPORT TcpSocket :
 	public Socket
 {
 public:

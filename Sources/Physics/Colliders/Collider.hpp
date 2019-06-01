@@ -12,9 +12,9 @@ class btTransform;
 namespace acid
 {
 /**
- * @brief Class that represents a physics shape.
+ * @brief class  that represents a physics shape.
  */
-class Collider :
+class ACID_EXPORT Collider :
 	public Component
 {
 public:

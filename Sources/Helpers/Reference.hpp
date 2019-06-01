@@ -5,7 +5,7 @@
 namespace acid
 {
 template<typename T>
-class Reference
+class ACID_EXPORT Reference
 {
 public:
 	Reference() noexcept :

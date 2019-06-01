@@ -17,7 +17,7 @@ namespace acid
 /**
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
-class Graphics :
+class ACID_EXPORT Graphics :
 	public Module
 {
 public:

@@ -8,9 +8,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents a 3 dimensional ray.
+ * @brief class  that represents a 3 dimensional ray.
  */
-class Ray
+class ACID_EXPORT Ray
 {
 public:
 	/**

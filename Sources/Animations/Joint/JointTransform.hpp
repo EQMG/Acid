@@ -5,12 +5,12 @@
 namespace acid
 {
 /**
- * @brief Class that represents the local bone-space transform of a joint at a certain keyframe during an animation.
+ * @brief class that represents the local bone-space transform of a joint at a certain keyframe during an animation.
  * This includes the position and rotation of the joint, relative to the parent joint (or relative to the model's origin if it's the root joint).
  * The transform is stored as a position vector and a quaternion (rotation) so that these values can  be easily interpolated,
  * a functionality that this class also provides.
  **/
-class JointTransform
+class ACID_EXPORT JointTransform
 {
 public:
 	/**

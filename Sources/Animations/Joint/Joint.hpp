@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class JointData :
+class ACID_EXPORT JointData :
 	public NonCopyable
 {
 public:
@@ -38,7 +38,7 @@ private:
 };
 
 /**
- * @brief Class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
+ * @brief class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
  * It also contains the name of the bone, and a list of all the child joints.
  *
  * The "animatedTransform" matrix is the joint transform.
@@ -52,7 +52,7 @@ private:
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
  **/
-class Joint :
+class ACID_EXPORT Joint :
 	public NonCopyable
 {
 public:

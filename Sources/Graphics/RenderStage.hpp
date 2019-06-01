@@ -11,9 +11,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents an attachment in a renderpass.
+ * @brief class  that represents an attachment in a renderpass.
  */
-class Attachment
+class ACID_EXPORT Attachment
 {
 public:
 	enum class Type
@@ -62,7 +62,7 @@ private:
 	Colour m_clearColour;
 };
 
-class SubpassType
+class ACID_EXPORT SubpassType
 {
 public:
 	SubpassType(const uint32_t &binding, std::vector<uint32_t> attachmentBindings) :
@@ -80,7 +80,7 @@ private:
 	std::vector<uint32_t> m_attachmentBindings;
 };
 
-class RenderArea
+class ACID_EXPORT RenderArea
 {
 public:
 	explicit RenderArea(const Vector2ui &extent = Vector2ui(), const Vector2i &offset = Vector2ui()) :
@@ -122,7 +122,7 @@ private:
 	float m_aspectRatio;
 };
 
-class Viewport
+class ACID_EXPORT Viewport
 {
 public:
 	Viewport() :
@@ -156,7 +156,7 @@ private:
 	Vector2i m_offset;
 };
 
-class RenderStage
+class ACID_EXPORT RenderStage
 {
 public:
 	explicit RenderStage(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, const Viewport &viewport = Viewport());

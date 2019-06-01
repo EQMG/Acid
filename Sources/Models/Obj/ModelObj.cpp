@@ -9,7 +9,7 @@
 
 namespace acid
 {
-class MaterialStreamReader :
+class ACID_EXPORT MaterialStreamReader :
 	public tinyobj::MaterialReader
 {
 public:

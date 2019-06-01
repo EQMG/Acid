@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Combines multiple button inputs into a single button.
  */
-class ButtonCompound :
+class ACID_EXPORT ButtonCompound :
 	public Button,
 	public NonCopyable
 {
@@ -21,7 +21,7 @@ public:
 	 * @param args The arguments to pass to T.
 	 * @return The created compound button.
 	 */
-	template<class T, typename... Args>
+	template<typename T, typename... Args>
 	static ButtonCompound *Create(const bool &useAnd, Args &&... args)
 	{
 		std::vector<Button *> buttons;

@@ -12,7 +12,7 @@ namespace acid
 /**
  * @brief Represents a kinematic character controller.
  */
-class KinematicCharacter :
+class ACID_EXPORT KinematicCharacter :
 	public CollisionObject
 {
 public:

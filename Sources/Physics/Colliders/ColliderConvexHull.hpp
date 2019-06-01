@@ -7,7 +7,7 @@ class btConvexHullShape;
 
 namespace acid
 {
-class ColliderConvexHull :
+class ACID_EXPORT ColliderConvexHull :
 	public Collider
 {
 public:

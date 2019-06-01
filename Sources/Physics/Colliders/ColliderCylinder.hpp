@@ -6,7 +6,7 @@ class btCylinderShape;
 
 namespace acid
 {
-class ColliderCylinder :
+class ACID_EXPORT ColliderCylinder :
 	public Collider
 {
 public:

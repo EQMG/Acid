@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief Interface for an axis based input device.
  */
-class Axis :
+class ACID_EXPORT Axis :
 	public Observer
 {
 public:

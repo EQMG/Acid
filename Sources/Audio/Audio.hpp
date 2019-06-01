@@ -11,7 +11,7 @@ namespace acid
 /**
  * M@brief odule used for loading, managing and playing a variety of different sound types.
  */
-class Audio :
+class ACID_EXPORT Audio :
 	public Module
 {
 public:

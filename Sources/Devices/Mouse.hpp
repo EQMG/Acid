@@ -44,7 +44,7 @@ enum class CursorStandard
 /**
  * @brief Module used for managing a virtual mouse.
  */
-class Mouse :
+class ACID_EXPORT Mouse :
 	public Module
 {
 public:

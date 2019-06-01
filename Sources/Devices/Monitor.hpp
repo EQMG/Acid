@@ -7,9 +7,9 @@ struct GLFWmonitor;
 namespace acid
 {
 /**
- * @brief Class used to describe the video mode for a monitor.
+ * @brief class used to describe the video mode for a monitor.
  */
-class VideoMode
+class ACID_EXPORT VideoMode
 {
 public:
 	/// The width, in screen coordinates, of the video mode.
@@ -27,9 +27,9 @@ public:
 };
 
 /**
- * @brief Class used to describe the gamma ramp for a monitor.
+ * @brief class used to describe the gamma ramp for a monitor.
  */
-class GammaRamp
+class ACID_EXPORT GammaRamp
 {
 public:
 	/// An array of value describing the response of the red channel.
@@ -43,9 +43,9 @@ public:
 };
 
 /**
- * @brief Class used to represent a monitor.
+ * @brief class used to represent a monitor.
  */
-class Monitor
+class ACID_EXPORT Monitor
 {
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);

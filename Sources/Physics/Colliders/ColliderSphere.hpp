@@ -6,7 +6,7 @@ class btSphereShape;
 
 namespace acid
 {
-class ColliderSphere :
+class ACID_EXPORT ColliderSphere :
 	public Collider
 {
 public:

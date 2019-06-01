@@ -39,7 +39,7 @@ using SocketAddrLength = unsigned int;
  * applications that run an endless loop that can poll the socket often enough,
  * and cannot afford blocking this loop.
  **/
-class Socket
+class ACID_EXPORT Socket
 {
 public:
 	/**

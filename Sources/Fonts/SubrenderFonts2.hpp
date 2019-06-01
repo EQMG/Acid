@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class SubrenderFonts2 :
+class ACID_EXPORT SubrenderFonts2 :
 	public Subrender
 {
 public:

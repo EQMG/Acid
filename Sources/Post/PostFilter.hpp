@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Represents a post effect pipeline.
  */
-class PostFilter :
+class ACID_EXPORT PostFilter :
 	public Subrender
 {
 public:

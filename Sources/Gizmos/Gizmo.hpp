@@ -8,7 +8,7 @@ namespace acid
 /**
  * @brief A instance of a gizmo type.
  */
-class Gizmo
+class ACID_EXPORT Gizmo
 {
 public:
 	/**

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-class FilterFxaa :
+class ACID_EXPORT FilterFxaa :
 	public PostFilter
 {
 public:

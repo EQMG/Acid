@@ -6,7 +6,7 @@ class btConeShape;
 
 namespace acid
 {
-class ColliderCone :
+class ACID_EXPORT ColliderCone :
 	public Collider
 {
 public:

@@ -7,7 +7,7 @@
 
 namespace acid
 {
-class UiInputBoolean :
+class ACID_EXPORT UiInputBoolean :
 	public UiObject
 {
 public:

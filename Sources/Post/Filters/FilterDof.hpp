@@ -5,7 +5,7 @@
 
 namespace acid
 {
-class FilterDof :
+class ACID_EXPORT FilterDof :
 	public PostFilter
 {
 public:

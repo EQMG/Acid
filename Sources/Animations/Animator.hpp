@@ -7,7 +7,7 @@
 namespace acid
 {
 /**
- * @brief Class that contains all the functionality to apply an animation to an animated entity.
+ * @brief class that contains all the functionality to apply an animation to an animated entity.
  * An Animator instance is associated with just one animated entity.
  * It also keeps track of the running time (in seconds) of the current animation,
  * along with a reference to the currently playing animation for the corresponding entity.
@@ -18,7 +18,7 @@ namespace acid
  * The Animator calculates the desired current animation pose by interpolating between the previous and next keyframes of the animation
  * (based on the current animation time). The Animator then updates the transforms all of the joints each frame to match the current desired animation pose.
  **/
-class Animator
+class ACID_EXPORT Animator
 {
 public:
 	/**

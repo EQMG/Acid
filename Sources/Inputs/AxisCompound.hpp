@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief Combines multiple axes inputs into a single axis.
  */
-class AxisCompound :
+class ACID_EXPORT AxisCompound :
 	public Axis,
 	public NonCopyable
 {
@@ -22,7 +22,7 @@ public:
 	 * @param args The arguments to pass to T.
 	 * @return The created compound axis.
 	 */
-	template<class T, typename... Args>
+	template<typename T, typename... Args>
 	static AxisCompound *Create(Args &&... args)
 	{
 		std::vector<Axis *> axes;

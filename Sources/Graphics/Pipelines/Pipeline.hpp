@@ -8,9 +8,9 @@
 namespace acid
 {
 /**
- * @brief Class that is used to represent a pipeline.
+ * @brief class  that is used to represent a pipeline.
  */
-class Pipeline
+class ACID_EXPORT Pipeline
 {
 public:
 	/**

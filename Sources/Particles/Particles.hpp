@@ -10,7 +10,7 @@ namespace acid
 /**
  * @brief A manager that manages particles.
  */
-class Particles :
+class ACID_EXPORT Particles :
 	public Module
 {
 public:

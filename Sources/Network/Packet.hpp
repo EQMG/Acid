@@ -20,7 +20,7 @@ namespace acid
  * Indeed, the native C++ types may have different sizes on two platforms and your data may be
  * corrupted if that happens.
  **/
-class Packet
+class ACID_EXPORT Packet
 {
 public:
 	/// A bool-like type that cannot be converted to integer or pointer types.

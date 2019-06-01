@@ -28,7 +28,7 @@ ENABLE_BITMASK_OPERATORS(InputMod)
 /**
  * @brief Module used for managing a window.
  */
-class Window :
+class ACID_EXPORT Window :
 	public Module
 {
 public:
@@ -238,9 +238,9 @@ public:
 	 */
 	Delegate<void(bool)> &OnIconify() { return m_onIconify; }
 
-	static std::string StringifyResultGlfw(const int32_t &result);
+	ACID_NO_EXPORT static std::string StringifyResultGlfw(const int32_t &result);
 
-	static void CheckGlfw(const int32_t &result);
+	ACID_NO_EXPORT static void CheckGlfw(const int32_t &result);
 
 	std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 

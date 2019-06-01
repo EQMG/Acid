@@ -5,9 +5,9 @@
 namespace acid
 {
 /**
- * @brief Class that represents a readable and writable file format using {@link Metadata} as storage.
+ * @brief class  that represents a readable and writable file format using {@link Metadata} as storage.
  */
-class File
+class ACID_EXPORT File
 {
 public:
 	explicit File(std::string filename, Metadata *metadata);

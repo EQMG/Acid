@@ -6,12 +6,10 @@
 
 namespace acid
 {
-class Metadata;
-
 /**
  * @brief Component that represents a 3d fog.
  */
-class Fog :
+class ACID_EXPORT Fog :
 	public Component
 {
 public:

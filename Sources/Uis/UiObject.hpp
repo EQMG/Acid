@@ -15,7 +15,7 @@ namespace acid
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI images, fonts, etc.
  */
-class UiObject :
+class ACID_EXPORT UiObject :
 	public Observer
 {
 public:

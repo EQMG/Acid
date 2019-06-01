@@ -17,7 +17,7 @@ ENABLE_BITMASK_OPERATORS(JoystickHat)
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
-class Joysticks :
+class ACID_EXPORT Joysticks :
 	public Module
 {
 public:

@@ -9,7 +9,7 @@ namespace acid
 /**
  * @brief Holds position, rotation, and scale components.
  */
-class Transform
+class ACID_EXPORT Transform
 {
 public:
 	/**

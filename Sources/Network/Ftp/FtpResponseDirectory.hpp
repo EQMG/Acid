@@ -7,7 +7,7 @@ namespace acid
 /**
  * @brief Specialization of FTP response returning a directory.
  **/
-class FtpResponseDirectory :
+class ACID_EXPORT FtpResponseDirectory :
 	public FtpResponse
 {
 public:
