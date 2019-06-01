@@ -6,7 +6,7 @@
 namespace acid
 {
 /**
- * @brief class  that contains and manages modules registered to a engine.
+ * @brief Class that contains and manages modules registered to a engine.
  */
 class ACID_EXPORT ModuleHolder :
 	public NonCopyable

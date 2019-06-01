@@ -8,7 +8,7 @@ namespace acid
 class Entity;
 
 /**
- * @brief class  that represents a functional component attached to entity.
+ * @brief Class that represents a functional component attached to entity.
  */
 class ACID_EXPORT Component :
 	public Observer

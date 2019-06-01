@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * @brief class  that represents a command buffer.
+ * @brief Class that represents a command buffer.
  */
 class ACID_EXPORT CommandBuffer
 {

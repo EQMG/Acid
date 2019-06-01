@@ -5,7 +5,7 @@
 namespace acid
 {
 /**
- * @brief class  that represents a readable and writable file format using {@link Metadata} as storage.
+ * @brief Class that represents a readable and writable file format using {@link Metadata} as storage.
  */
 class ACID_EXPORT File
 {

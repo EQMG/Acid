@@ -14,7 +14,7 @@
 namespace acid
 {
 /**
- * @brief class  that represents a text in a GUI.
+ * @brief Class that represents a text in a GUI.
  */
 class ACID_EXPORT Text :
 	public UiObject

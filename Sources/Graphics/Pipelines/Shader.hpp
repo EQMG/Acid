@@ -12,7 +12,7 @@ class TType;
 namespace acid
 {
 /**
- * @brief class  that loads and processes a shader, and provides a reflection.
+ * @brief Class that loads and processes a shader, and provides a reflection.
  */
 class ACID_EXPORT Shader
 {
@@ -23,7 +23,7 @@ public:
 	using Define = std::pair<std::string, std::string>;
 
 	/**
-	 * class used to define sets of vertex inputs used in a shader.
+	 * @brief Class used to define sets of vertex inputs used in a shader.
 	 */
 	class VertexInput
 	{

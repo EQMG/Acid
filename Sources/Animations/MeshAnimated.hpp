@@ -11,7 +11,7 @@
 namespace acid
 {
 /**
- * @brief class that represents an animated armature with a skin mesh.
+ * @brief Class that represents an animated armature with a skin mesh.
  **/
 class ACID_EXPORT MeshAnimated :
 	public Mesh
