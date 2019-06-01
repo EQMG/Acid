@@ -13,12 +13,17 @@ class ACID_EXPORT Colour
 public:
 	/**
 	 * Constructor for Colour.
+	 **/
+	Colour();
+
+	/**
+	 * Constructor for Colour.
 	 * @param r The new R value. 
 	 * @param g The new G value. 
 	 * @param b The new B value. 
 	 * @param a The new A value. 
 	 **/
-	explicit Colour(const float &r = 0.0f, const float &g = 0.0f, const float &b = 0.0f, const float &a = 1.0f);
+	Colour(const float &r, const float &g, const float &b, const float &a = 1.0f);
 
 	/**
 	 * Constructor for Colour.

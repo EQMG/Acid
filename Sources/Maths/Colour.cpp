@@ -11,14 +11,22 @@ const Colour Colour::Maroon = Colour("#800000");
 const Colour Colour::Red = Colour("#FF0000");
 const Colour Colour::Olive = Colour("#808000");
 const Colour Colour::Yellow = Colour("#FFFF00");
-const Colour Colour::Green = Colour("#008000");
-const Colour Colour::Lime = Colour("#00FF00");
+const Colour Colour::Green = Colour("#00FF00");
+const Colour Colour::Lime = Colour("#008000");
 const Colour Colour::Teal = Colour("#008080");
 const Colour Colour::Aqua = Colour("#00FFFF");
 const Colour Colour::Navy = Colour("#000080");
 const Colour Colour::Blue = Colour("#0000FF");
 const Colour Colour::Purple = Colour("#800080");
 const Colour Colour::Fuchsia = Colour("#FF00FF");
+
+Colour::Colour() :
+	m_r(0.0f),
+	m_g(0.0f),
+	m_b(0.0f),
+	m_a(1.0f)
+{
+}
 
 Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 	m_r(r),
@@ -28,14 +36,17 @@ Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 {
 }
 
-Colour::Colour(const std::string &hex, const float &a)
+Colour::Colour(const std::string &hex, const float &a) :
+	m_r(0.0f),
+	m_g(0.0f),
+	m_b(0.0f),
+	m_a(a)
 {
-	uint32_t r, g, b;
-	sscanf(hex.c_str() + (hex[0] == '#' ? 1 : 0), "%2x%2x%2x", &r, &g, &b);
-	m_r = static_cast<float>(r) / 255.0f;
-	m_g = static_cast<float>(g) / 255.0f;
-	m_b = static_cast<float>(b) / 255.0f;
-	m_a = a;
+	auto hexValue = std::stoul(hex.substr(1, hex.size()), nullptr, 16);
+
+	m_r = static_cast<float>((hexValue >> 16) & 255) / 255.0f;
+	m_g = static_cast<float>((hexValue >> 8) & 255) / 255.0f;
+	m_b = static_cast<float>(hexValue & 255) / 255.0f;
 }
 
 Colour Colour::Add(const Colour &other) const

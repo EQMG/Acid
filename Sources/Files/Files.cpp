@@ -9,7 +9,7 @@ namespace acid
 using std::streambuf;
 using std::ios_base;
 
-class ACID_EXPORT FBuffer :
+class FBuffer :
 	public NonCopyable,
 	public streambuf
 {

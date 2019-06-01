@@ -10,7 +10,7 @@ class Matrix4;
 /**
  * @brief Holds a row major 2x2 matrix.
  **/
-class Matrix2
+class ACID_EXPORT Matrix2
 {
 public:
 	/**

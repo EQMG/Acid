@@ -12,7 +12,7 @@
 
 namespace acid
 {
-class ACID_EXPORT ShaderIncluder :
+class ShaderIncluder :
 	public glslang::TShader::Includer
 {
 public:

@@ -13,7 +13,7 @@ namespace acid
 std::mutex Log::MUTEX = std::mutex();
 std::ofstream Log::STREAM = std::ofstream();
 
-void Log::Print(const std::string &style, const std::string &colour, const std::optional<std::string> &type, const std::string &string)
+void Log::Print(const std::string_view &style, const std::string_view &colour, const std::optional<std::string> &type, const std::string &string)
 {
 	auto typeString = ""; // Time::GetDateTime("[%H:%M:%S] ") + (type ? "[" + *type + "] " : "");
 	std::lock_guard<std::mutex> lock(MUTEX);
