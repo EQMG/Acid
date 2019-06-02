@@ -37,7 +37,7 @@ MainGame::MainGame() :
 {
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %s\n", std::filesystem::current_path().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
 
 	// Watches all files in the working directory.
 	m_fileWatcher.OnChange().Add([this](std::string path, FileWatcher::Status status)

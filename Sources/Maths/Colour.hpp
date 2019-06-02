@@ -30,7 +30,7 @@ public:
 	 * @param hex The new values from HEX. 
 	 * @param a The new A value. 
 	 **/
-	Colour(const std::string &hex, const float &a = 1.0f);
+	Colour(std::string hex, const float &a = 1.0f);
 
 	/**
 	 * Adds this colour to another colour.
@@ -112,22 +112,6 @@ public:
 	 * @return The hex code. 
 	 **/
 	std::string GetHex() const;
-
-	const float &GetR() const { return m_r; }
-
-	void SetR(const float &r) { m_r = r; }
-
-	const float &GetG() const { return m_g; }
-
-	void SetG(const float &g) { m_g = g; }
-
-	const float &GetB() const { return m_b; }
-
-	void SetB(const float &b) { m_b = b; }
-
-	const float &GetA() const { return m_a; }
-
-	void SetA(const float &a) { m_a = a; }
 
 	std::string ToString() const;
 

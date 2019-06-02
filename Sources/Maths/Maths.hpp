@@ -151,7 +151,7 @@ public:
 	 * @return The changed value. 
 	 **/
 	template<typename T = float, typename K = float>
-	static auto SmoothDamp(const T &current, const T &target, const K &rate)
+	static constexpr auto SmoothDamp(const T &current, const T &target, const K &rate)
 	{
 		return current + ((target - current) * rate);
 	}
@@ -166,7 +166,7 @@ public:
 	 * @return Returns a interpolation value. 
 	 **/
 	template<typename T = float, typename K = float>
-	static auto Lerp(const T &a, const T &b, const K &factor)
+	static constexpr auto Lerp(const T &a, const T &b, const K &factor)
 	{
 		return a * (1 - factor) + b * factor;
 	}
@@ -198,7 +198,7 @@ public:
 	 * @return The resulting stepped value. 
 	 **/
 	template<typename T = float, typename K = float>
-	static auto SmoothlyStep(const T &edge0, const T &edge1, const K &x)
+	static constexpr auto SmoothlyStep(const T &edge0, const T &edge1, const K &x)
 	{
 		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0, 1);
 		return s * s * (3 - 2 * s);

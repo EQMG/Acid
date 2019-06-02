@@ -18,20 +18,20 @@ public:
 	/**
 	 * Constructor for Vector2.
 	 **/
-	Vector2(); 
+	constexpr Vector2();
 	
 	/**
 	 * Constructor for Vector2.
 	 * @param a The value to set all components to.
 	 **/
-	explicit Vector2(const T &a); 
+	explicit constexpr Vector2(const T &a);
 	
 	/**
 	 * Constructor for Vector2.
 	 * @param x Start x. 
 	 * @param y Start y. 
 	 **/
-	Vector2(const T &x, const T &y); 
+	constexpr Vector2(const T &x, const T &y);
 	
 	/**
 	 * Constructor for Vector2.
@@ -39,7 +39,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	Vector2(const Vector2<K> &source); 
+	constexpr Vector2(const Vector2<K> &source);
 	
 	/**
 	 * Constructor for Vector3.
@@ -47,7 +47,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	explicit Vector2(const Vector3<K> &source); 
+	explicit constexpr Vector2(const Vector3<K> &source);
 	
 	/**
 	 * Adds this vector to another vector.
@@ -56,7 +56,7 @@ public:
 	 * @return The resultant vector. 
 	 **/
 	template<typename K>
-	auto Add(const Vector2<K> &other) const; 
+	constexpr auto Add(const Vector2<K> &other) const;
 	
 	/**
 	 * Subtracts this vector to another vector.
@@ -65,7 +65,7 @@ public:
 	 * @return The resultant vector. 
 	 **/
 	template<typename K>
-	auto Subtract(const Vector2<K> &other) const; 
+	constexpr auto Subtract(const Vector2<K> &other) const;
 	
 	/**
 	 * Multiplies this vector with another vector.
@@ -74,7 +74,7 @@ public:
 	 * @return The resultant vector. 
 	 **/
 	template<typename K>
-	auto Multiply(const Vector2<K> &other) const; 
+	constexpr auto Multiply(const Vector2<K> &other) const;
 	
 	/**
 	 * Divides this vector by another vector.
@@ -83,7 +83,7 @@ public:
 	 * @return The resultant vector. 
 	 **/
 	template<typename K>
-	auto Divide(const Vector2<K> &other) const; 
+	constexpr auto Divide(const Vector2<K> &other) const;
 	
 	/**
 	 * Calculates the angle between this vector and another vector.
@@ -92,7 +92,7 @@ public:
 	 * @return The angle, in radians. 
 	 **/
 	template<typename K>
-	auto Angle(const Vector2<K> &other) const; 
+	constexpr auto Angle(const Vector2<K> &other) const;
 	
 	/**
 	 * Calculates the dot product of the this vector and another vector.
@@ -101,7 +101,7 @@ public:
 	 * @return The dot product. 
 	 **/
 	template<typename K>
-	auto Dot(const Vector2<K> &other) const; 
+	constexpr auto Dot(const Vector2<K> &other) const;
 	
 	/**
 	 * Calculates the linear interpolation between this vector and another vector.
@@ -112,7 +112,7 @@ public:
 	 * @return Left lerp right. 
 	 **/
 	template<typename K, typename J = float>
-	auto Lerp(const Vector2<K> &other, const J &progression) const; 
+	constexpr auto Lerp(const Vector2<K> &other, const J &progression) const;
 	
 	/**
 	 * Scales this vector by a scalar.
@@ -121,7 +121,7 @@ public:
 	 * @return The scaled vector. 
 	 **/
 	template<typename K = float>
-	auto Scale(const K &scalar) const; 
+	constexpr auto Scale(const K &scalar) const;
 	
 	/**
 	 * Rotates this vector by a angle around the origin.
@@ -130,7 +130,7 @@ public:
 	 * @return The rotated vector. 
 	 **/
 	template<typename K = float>
-	auto Rotate(const K &angle) const; 
+	auto Rotate(const K &angle) const;
 	
 	/**
 	 * Rotates this vector by a angle around a rotation axis.
@@ -141,19 +141,19 @@ public:
 	 * @return The rotated vector. 
 	 **/
 	template<typename K = float, typename J>
-	auto Rotate(const K &angle, const Vector2<J> &rotationAxis) const; 
+	auto Rotate(const K &angle, const Vector2<J> &rotationAxis) const;
 	
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector. 
 	 **/
-	auto Normalize() const; 
+	auto Normalize() const;
 	
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared. 
 	 **/
-	auto LengthSquared() const; 
+	constexpr auto LengthSquared() const;
 	
 	/**
 	 * Gets the length of this vector.
@@ -171,19 +171,19 @@ public:
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.
 	 **/
-	auto Min() const; 
+	constexpr auto Min() const;
 	
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components. 
 	 **/
-	auto Max() const; 
+	constexpr auto Max() const;
 	
 	/**
 	 * Gets the minimal and maximal values in the vector.
 	 * @return The minimal and maximal components.
 	 */
-	auto MinMax() const; 
+	constexpr auto MinMax() const;
 	
 	/**
 	 * Gets the lowest vector size between this vector and other.
@@ -192,7 +192,7 @@ public:
 	 * @return The lowest vector.
 	 **/
 	template<typename K>
-	auto Min(const Vector2<K> &other); 
+	constexpr auto Min(const Vector2<K> &other);
 	
 	/**
 	 * Gets the maximum vector size between this vector and other.
@@ -201,7 +201,7 @@ public:
 	 * @return The maximum vector.
 	 **/
 	template<typename K>
-	auto Max(const Vector2<K> &other); 
+	constexpr auto Max(const Vector2<K> &other);
 	
 	/**
 	 * Gets the distance between this vector and another vector.
@@ -210,7 +210,7 @@ public:
 	 * @return The squared distance. 
 	 **/
 	template<typename K>
-	auto DistanceSquared(const Vector2<K> &other) const; 
+	constexpr auto DistanceSquared(const Vector2<K> &other) const;
 	
 	/**
 	 * Gets the between this vector and another vector.
@@ -219,7 +219,7 @@ public:
 	 * @return The distance. 
 	 **/
 	template<typename K>
-	auto Distance(const Vector2<K> &other) const; 
+	auto Distance(const Vector2<K> &other) const;
 	
 	/**
 	 * Gets the vector distance between this vector and another vector.
@@ -228,7 +228,7 @@ public:
 	 * @return The vector distance. 
 	 **/
 	template<typename K>
-	auto DistanceVector(const Vector2<K> &other) const; 
+	constexpr auto DistanceVector(const Vector2<K> &other) const;
 	
 	/**
 	 * Gets if this vector is in a triangle.
@@ -239,7 +239,7 @@ public:
 	 * @return If this vector is in a triangle. 
 	 **/
 	template<typename K>
-	bool InTriangle(const Vector2<K> &v1, const Vector2<K> &v2, const Vector2<K> &v3) const; 
+	constexpr bool InTriangle(const Vector2<K> &v1, const Vector2<K> &v2, const Vector2<K> &v3) const;
 	
 	/**
 	 * Gradually changes this vector to a target.
@@ -248,13 +248,13 @@ public:
 	 * @return The changed vector. 
 	 **/
 	template<typename K, typename J>
-	auto SmoothDamp(const Vector2<K> &target, const Vector2<J> &rate) const; 
+	constexpr auto SmoothDamp(const Vector2<K> &target, const Vector2<J> &rate) const;
 	
 	/**
 	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
 	 * @return The polar coordinates (radius, theta). 
 	 **/
-	auto CartesianToPolar() const; 
+	auto CartesianToPolar() const;
 	
 	/**
 	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
@@ -262,51 +262,43 @@ public:
 	 **/
 	auto PolarToCartesian() const;
 
-	const T &GetX() const { return m_x; }
-
-	void SetX(const T &x) { m_x = x; }
-
-	const T &GetY() const { return m_y; }
-
-	void SetY(const T &y) { m_y = y; }
-
 	std::string ToString() const;
 
 	template<typename K>
-	bool operator==(const Vector2<K> &other) const;
+	constexpr bool operator==(const Vector2<K> &other) const;
 
 	template<typename K>
-	bool operator!=(const Vector2<K> &other) const;
+	constexpr bool operator!=(const Vector2<K> &other) const;
 
 	template<typename U = T>
-	std::enable_if_t<std::is_signed_v<U>, Vector2> operator-() const;
+	constexpr std::enable_if_t<std::is_signed_v<U>, Vector2> operator-() const;
 
 	template<typename U = T>
-	std::enable_if_t<std::is_integral_v<U>, Vector2> operator~() const;
+	constexpr std::enable_if_t<std::is_integral_v<U>, Vector2> operator~() const;
 
-	const T &operator[](const uint32_t &index) const;
+	constexpr const T &operator[](const uint32_t &index) const;
 
-	T &operator[](const uint32_t &index);
-
-	template<typename K>
-	Vector2 &operator+=(const Vector2<K> &other);
+	constexpr T &operator[](const uint32_t &index);
 
 	template<typename K>
-	Vector2 &operator-=(const Vector2<K> &other);
+	constexpr Vector2 &operator+=(const Vector2<K> &other);
 
 	template<typename K>
-	Vector2 &operator*=(const Vector2<K> &other);
+	constexpr Vector2 &operator-=(const Vector2<K> &other);
 
 	template<typename K>
-	Vector2 &operator/=(const Vector2<K> &other);
+	constexpr Vector2 &operator*=(const Vector2<K> &other);
 
-	Vector2 &operator+=(const T &other);
+	template<typename K>
+	constexpr Vector2 &operator/=(const Vector2<K> &other);
 
-	Vector2 &operator-=(const T &other);
+	constexpr Vector2 &operator+=(const T &other);
 
-	Vector2 &operator*=(const T &other);
+	constexpr Vector2 &operator-=(const T &other);
 
-	Vector2 &operator/=(const T &other);
+	constexpr Vector2 &operator*=(const T &other);
+
+	constexpr Vector2 &operator/=(const T &other);
 
 	ACID_EXPORT static const Vector2 Zero;
 	ACID_EXPORT static const Vector2 One;

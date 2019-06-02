@@ -36,17 +36,25 @@ Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 {
 }
 
-Colour::Colour(const std::string &hex, const float &a) :
+Colour::Colour(std::string hex, const float &a) :
 	m_r(0.0f),
 	m_g(0.0f),
 	m_b(0.0f),
 	m_a(a)
 {
-	auto hexValue = std::stoul(hex.substr(1, hex.size()), nullptr, 16);
+	if (hex[0] == '#')
+	{
+		hex.erase(0, 1);
+	}
 
-	m_r = static_cast<float>((hexValue >> 16) & 255) / 255.0f;
-	m_g = static_cast<float>((hexValue >> 8) & 255) / 255.0f;
-	m_b = static_cast<float>(hexValue & 255) / 255.0f;
+	assert(hex.size() == 6);
+
+	auto hexValue = std::stoul(hex, nullptr, 16);
+
+	m_r = static_cast<float>((hexValue >> 16) & 0xff) / 255.0f;
+	m_g = static_cast<float>((hexValue >> 8) & 0xff) / 255.0f;
+	m_b = static_cast<float>((hexValue >> 0) & 0xff) / 255.0f;
+	//m_a = static_cast<float>((hexValue >> 24) & 0xff) / 255.0f;
 }
 
 Colour Colour::Add(const Colour &other) const
@@ -76,14 +84,14 @@ Colour Colour::Scale(const float &scalar) const
 
 Colour Colour::Lerp(const Colour &other, const float &progression) const
 {
-	Colour ta = *this * (1.0f - progression);
-	Colour tb = other * progression;
+	auto ta = *this * (1.0f - progression);
+	auto tb = other * progression;
 	return ta + tb;
 }
 
 Colour Colour::Normalize() const
 {
-	float l = Length();
+	auto l = Length();
 
 	if (l == 0.0f)
 	{
@@ -105,34 +113,26 @@ float Colour::Length() const
 
 Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const
 {
-	return Colour(Maths::SmoothDamp(m_r, target.m_r, rate.m_r), Maths::SmoothDamp(m_g, target.m_g, rate.m_g), Maths::SmoothDamp(m_b, target.m_b, rate.m_b),
-		Maths::SmoothDamp(m_a, target.m_a, rate.m_a));
+	return Maths::SmoothDamp(*this, target, rate);
 }
 
 Colour Colour::GetUnit() const
 {
-	float l = Length();
+	auto l = Length();
 	return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
 }
 
 std::string Colour::GetHex() const
 {
-	std::stringstream result;
-	result << "#";
+	std::stringstream stream;
+	stream << "#";
 
-	char r[255];
-	snprintf(r, 255, "%.2X", static_cast<int32_t>(m_r * 255.0f));
-	result << r;
+	auto hexValue = ((static_cast<uint32_t>(m_r * 255.0f) & 0xff) << 16) +
+		((static_cast<uint32_t>(m_g * 255.0f) & 0xff) << 8) +
+		(static_cast<uint32_t>(m_b * 255.0f) & 0xff);
+	stream << std::hex << hexValue;
 
-	char g[255];
-	snprintf(g, 255, "%.2X", static_cast<int32_t>(m_g * 255.0f));
-	result << g;
-
-	char b[255];
-	snprintf(b, 255, "%.2X", static_cast<int32_t>(m_b * 255.0f));
-	result << b;
-
-	return result.str();
+	return stream.str();
 }
 
 std::string Colour::ToString() const

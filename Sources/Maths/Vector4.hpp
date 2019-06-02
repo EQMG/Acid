@@ -21,13 +21,13 @@ public:
 	/**
 	 * Constructor for Vector4.
 	 **/
-	explicit Vector4(); 
+	explicit constexpr Vector4();
 	
 	/**
 	 * Constructor for Vector4.
 	 * @param a The value to set all components to.
 	 **/
-	explicit Vector4(const T &a); 
+	explicit constexpr Vector4(const T &a); 
 	
 	/**
 	 * Constructor for Vector4.
@@ -36,7 +36,7 @@ public:
 	 * @param z Start z.
 	 * @param w Start w.
 	 **/
-	Vector4(const T &x, const T &y, const T &z, const T &w = 1.0f); 
+	constexpr Vector4(const T &x, const T &y, const T &z, const T &w = 1.0f);
 	
 	/**
 	 * Constructor for Vector4.
@@ -45,7 +45,7 @@ public:
 	 * @param right Creates this vector out of a existing vector, zw.
 	 **/
 	template<typename K>
-	explicit Vector4(const Vector2<K> &left, const Vector2<K> &right = Vector2<K>::Up); 
+	explicit constexpr Vector4(const Vector2<K> &left, const Vector2<K> &right = Vector2<K>::Up);
 	
 	/**
 	 * Constructor for Vector4.
@@ -54,7 +54,7 @@ public:
 	 * @param w Start w.
 	 **/
 	template<typename K>
-	explicit Vector4(const Vector3<K> &source, const T &w = 1); 
+	explicit constexpr Vector4(const Vector3<K> &source, const T &w = 1);
 	
 	/**
 	 * Constructor for Vector4.
@@ -62,7 +62,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	Vector4(const Vector4<K> &source); 
+	constexpr Vector4(const Vector4<K> &source);
 	
 	/**
 	 * Adds this vector to another vector.
@@ -71,7 +71,7 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Add(const Vector4<K> &other) const; 
+	constexpr auto Add(const Vector4<K> &other) const;
 	
 	/**
 	 * Subtracts this vector to another vector.
@@ -80,7 +80,7 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Subtract(const Vector4<K> &other) const; 
+	constexpr auto Subtract(const Vector4<K> &other) const;
 	
 	/**
 	 * Multiplies this vector with another vector.
@@ -89,7 +89,7 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Multiply(const Vector4<K> &other) const; 
+	constexpr auto Multiply(const Vector4<K> &other) const;
 	
 	/**
 	 * Divides this vector by another vector.
@@ -98,7 +98,7 @@ public:
 	 * @return The resultant vector.
 	 **/
 	template<typename K>
-	auto Divide(const Vector4<K> &other) const; 
+	constexpr auto Divide(const Vector4<K> &other) const;
 	
 	/**
 	 * Calculates the angle between this vector and another vector.
@@ -107,7 +107,7 @@ public:
 	 * @return The angle, in radians.
 	 **/
 	template<typename K>
-	auto Angle(const Vector4<K> &other) const; 
+	auto Angle(const Vector4<K> &other) const;
 	
 	/**
 	 * Calculates the dot product of the this vector and another vector.
@@ -116,7 +116,7 @@ public:
 	 * @return The dot product.
 	 **/
 	template<typename K>
-	auto Dot(const Vector4<K> &other) const; 
+	constexpr auto Dot(const Vector4<K> &other) const;
 	
 	/**
 	 * Calculates the linear interpolation between this vector and another vector.
@@ -127,7 +127,7 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	auto Lerp(const Vector4<K> &other, const J &progression) const; 
+	constexpr auto Lerp(const Vector4<K> &other, const J &progression) const;
 	
 	/**
 	 * Scales this vector by a scalar.
@@ -136,25 +136,25 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	auto Scale(const K &scalar) const; 
+	constexpr auto Scale(const K &scalar) const;
 	
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
 	 **/
-	auto Normalize() const; 
+	auto Normalize() const;
 	
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared.
 	 **/
-	auto LengthSquared() const; 
+	constexpr auto LengthSquared() const;
 	
 	/**
 	 * Gets the length of this vector.
 	 * @return The length.
 	 **/
-	auto Length() const; 
+	auto Length() const;
 
 	/**
 	 * Gets the absolute value of every component in this vector.
@@ -166,19 +166,19 @@ public:
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.
 	 **/
-	auto Min() const; 
+	constexpr auto Min() const;
 	
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components.
 	 **/
-	auto Max() const; 
+	constexpr auto Max() const;
 	
 	/**
 	 * Gets the minimal and maximal values in the vector.
 	 * @return The minimal and maximal components.
 	 */
-	auto MinMax() const; 
+	constexpr auto MinMax() const;
 	
 	/**
 	 * Gets the lowest vector size between this vector and other.
@@ -187,7 +187,7 @@ public:
 	 * @return The lowest vector.
 	 **/
 	template<typename K>
-	auto Min(const Vector4<K> &other); 
+	constexpr auto Min(const Vector4<K> &other);
 	
 	/**
 	 * Gets the maximum vector size between this vector and other.
@@ -196,7 +196,7 @@ public:
 	 * @return The maximum vector.
 	 **/
 	template<typename K>
-	auto Max(const Vector4<K> &other); 
+	constexpr auto Max(const Vector4<K> &other);
 	
 	/**
 	 * Gets the distance between this vector and another vector.
@@ -205,7 +205,7 @@ public:
 	 * @return The squared distance.
 	 **/
 	template<typename K>
-	auto DistanceSquared(const Vector4<K> &other) const; 
+	constexpr auto DistanceSquared(const Vector4<K> &other) const;
 	
 	/**
 	 * Gets the between this vector and another vector.
@@ -214,7 +214,7 @@ public:
 	 * @return The distance.
 	 **/
 	template<typename K>
-	auto Distance(const Vector4<K> &other) const; 
+	auto Distance(const Vector4<K> &other) const;
 	
 	/**
 	 * Gets the vector distance between this vector and another vector.
@@ -223,7 +223,7 @@ public:
 	 * @return The vector distance.
 	 **/
 	template<typename K>
-	auto DistanceVector(const Vector4<K> &other) const; 
+	constexpr auto DistanceVector(const Vector4<K> &other) const;
 	
 	/**
 	 * Gradually changes this vector to a target.
@@ -232,61 +232,45 @@ public:
 	 * @return The changed vector.
 	 **/
 	template<typename K, typename J>
-	auto SmoothDamp(const Vector4<K> &target, const Vector4<J> &rate) const;
-
-	const T &GetX() const { return m_x; }
-
-	void SetX(const T &x) { m_x = x; }
-
-	const T &GetY() const { return m_y; }
-
-	void SetY(const T &y) { m_y = y; }
-
-	const T &GetZ() const { return m_z; }
-
-	void SetZ(const T &z) { m_z = z; }
-
-	const T &GetW() const { return m_w; }
-
-	void SetW(const T &w) { m_w = w; }
+	constexpr auto SmoothDamp(const Vector4<K> &target, const Vector4<J> &rate) const;
 
 	std::string ToString() const;
 
 	template<typename K>
-	bool operator==(const Vector4<K> &other) const;
+	constexpr bool operator==(const Vector4<K> &other) const;
 
 	template<typename K>
-	bool operator!=(const Vector4<K> &other) const;
+	constexpr bool operator!=(const Vector4<K> &other) const;
 
 	template<typename U = T>
-	std::enable_if_t<std::is_signed_v<U>, Vector4> operator-() const;
+	constexpr std::enable_if_t<std::is_signed_v<U>, Vector4> operator-() const;
 
 	template<typename U = T>
-	std::enable_if_t<std::is_integral_v<U>, Vector4> operator~() const;
+	constexpr std::enable_if_t<std::is_integral_v<U>, Vector4> operator~() const;
 
-	const T &operator[](const uint32_t &index) const;
+	constexpr const T &operator[](const uint32_t &index) const;
 
-	T &operator[](const uint32_t &index);
-
-	template<typename K>
-	Vector4 &operator+=(const Vector4<K> &other);
+	constexpr T &operator[](const uint32_t &index);
 
 	template<typename K>
-	Vector4 &operator-=(const Vector4<K> &other);
+	constexpr Vector4 &operator+=(const Vector4<K> &other);
 
 	template<typename K>
-	Vector4 &operator*=(const Vector4<K> &other);
+	constexpr Vector4 &operator-=(const Vector4<K> &other);
 
 	template<typename K>
-	Vector4 &operator/=(const Vector4<K> &other);
+	constexpr Vector4 &operator*=(const Vector4<K> &other);
 
-	Vector4 &operator+=(const T &other);
+	template<typename K>
+	constexpr Vector4 &operator/=(const Vector4<K> &other);
 
-	Vector4 &operator-=(const T &other);
+	constexpr Vector4 &operator+=(const T &other);
 
-	Vector4 &operator*=(const T &other);
+	constexpr Vector4 &operator-=(const T &other);
 
-	Vector4 &operator/=(const T &other);
+	constexpr Vector4 &operator*=(const T &other);
+
+	constexpr Vector4 &operator/=(const T &other);
 
 	ACID_EXPORT static const Vector4 Zero;
 	ACID_EXPORT static const Vector4 One;
