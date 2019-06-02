@@ -18,24 +18,22 @@
 #include <Scenes/EntityPrefab.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Uis/Uis.hpp>
-#include "CameraFps.hpp"
-#include "PlayerFps.hpp"
+#include "CameraFree.hpp"
 
 namespace test
 {
 static const float UI_SLIDE_TIME = 0.2f;
 
 Scene1::Scene1() :
-	Scene(new CameraFps()),
-	m_buttonPause(ButtonCompound({ new ButtonKeyboard(Key::Escape), new ButtonJoystick(0, 7) })),
-	m_paused(false),
+	Scene(new CameraFree()),
+	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
 	m_overlayDebug(&Uis::Get()->GetCanvas())
 {
-	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
-			m_paused = !m_paused;
+			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 }
@@ -44,12 +42,6 @@ void Scene1::Start()
 {
 	GetPhysics()->SetGravity(Vector3f(0.0f, -9.81f, 0.0f));
 	GetPhysics()->SetAirDensity(1.0f);
-
-	// Player.
-	auto playerObject = GetStructure()->CreateEntity(Transform(Vector3f(), Vector3f(0.0f, 180.0f, 0.0f)));
-	//playerObject->AddComponent<Rigidbody>(1.0f, 0.4f, Transform::ZERO, Vector3::ZERO, Vector3::ZERO);
-	//playerObject->AddComponent<ColliderCapsule>(0.2f, 1.8f);
-	playerObject->AddComponent<PlayerFps>();
 
 	// Skybox.
 	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json", Transform(Vector3f(), Vector3f(), 1024.0f));
@@ -78,7 +70,7 @@ void Scene1::Start()
 		}
 	}
 
-	/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, -90.0f, 0.0f), 0.4f));
+	/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, -90.0_deg, 0.0f), 0.4f));
 	dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
 	dragon->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f);
 	dragon->AddComponent<MeshRender>();
@@ -91,6 +83,6 @@ void Scene1::Update()
 
 bool Scene1::IsPaused() const
 {
-	return m_paused;
+	return false;
 }
 }

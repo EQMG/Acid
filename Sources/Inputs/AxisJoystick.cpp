@@ -22,4 +22,8 @@ float AxisJoystick::GetAmount() const
 {
 	return Joysticks::Get()->GetAxis(m_port, m_axis) * (m_inverted ? -1.0f : 1.0f);
 }
+bool AxisJoystick::IsConnected() const
+{
+	return Joysticks::Get()->IsConnected(m_port);
+}
 }

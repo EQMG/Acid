@@ -57,7 +57,7 @@ Scene1::Scene1() :
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation * Maths::DegToRad) * Vector3f::Front).Normalize(), 2s);
+			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s);
 			sphere->AddComponent<ColliderSphere>();
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
@@ -140,7 +140,7 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0f, 0.0f)));
+	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0_deg, 0.0f)));
 
 	// Skybox.
 	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f));
@@ -183,7 +183,7 @@ void Scene1::Start()
 	cone->AddComponent<MeshRender>();
 	cone->AddComponent<ShadowRender>();
 
-	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, 90.0f), 1.0f));
+	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, 90.0_deg), 1.0f));
 	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 16, 8));
 	cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
 	cylinder->AddComponent<Rigidbody>(2.5f);

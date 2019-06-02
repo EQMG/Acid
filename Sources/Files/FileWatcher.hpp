@@ -22,13 +22,13 @@ public:
 	 * @param path The path to watch recursively.
 	 * @param delay How frequently to check for changes.
 	 */
-	explicit FileWatcher(std::string path, const Time &delay = 5s);
+	explicit FileWatcher(std::filesystem::path path, const Time &delay = 5s);
 
 	~FileWatcher();
 
-	const std::string &GetPath() const { return m_path; }
+	const std::filesystem::path &GetPath() const { return m_path; }
 
-	void SetPath(const std::string &path) { m_path = path; }
+	void SetPath(const std::filesystem::path &path) { m_path = path; }
 
 	const Time &GetDelay() const { return m_delay; }
 
@@ -45,12 +45,12 @@ private:
 
 	bool Contains(const std::string &key) const;
 
-	std::string m_path;
+	std::filesystem::path m_path;
 	Time m_delay;
 	Delegate<void(std::string, Status)> m_onChange;
 
 	bool m_running;
 	std::thread m_thread;
-	std::unordered_map<std::string, long> m_paths;
+	std::unordered_map<std::string, std::filesystem::file_time_type> m_paths;
 };
 }

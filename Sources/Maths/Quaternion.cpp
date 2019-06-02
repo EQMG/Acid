@@ -251,7 +251,7 @@ Vector3f Quaternion::ToEuler() const
 	result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
 	result.m_y = std::asin(2.0f * (m_x * m_z + m_y * m_w));
 	result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));
-	return result * Maths::RadToDeg;
+	return result;
 }
 
 std::string Quaternion::ToString() const

@@ -12,14 +12,14 @@
 namespace test
 {
 Plugins::Plugins() :
-	m_loadedPath(FileSystem::GetWorkingDirectory() + FileSystem::Separator + CR_PLUGIN("EditorTest")),
-	m_watcher(FileSystem::GetWorkingDirectory(), 0.5s),
+	m_loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
+	m_watcher(std::filesystem::current_path(), 0.5s),
 	m_plugin(std::make_unique<cr_plugin>()),
 	m_update(true),
 	m_panels(&Uis::Get()->GetCanvas()),
 	m_buttonReload(Key::R)
 {
-	cr_plugin_load(*m_plugin, m_loadedPath.c_str());
+	cr_plugin_load(*m_plugin, m_loadedPath.string().c_str());
 
 	// Watches the plugin path.
 	m_watcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
@@ -34,7 +34,7 @@ Plugins::Plugins() :
 	{
 		if (action == InputAction::Press)
 		{
-			FileSystem::Touch(m_loadedPath);
+			FileSystem::Touch(m_loadedPath.string());
 		}
 	});
 }

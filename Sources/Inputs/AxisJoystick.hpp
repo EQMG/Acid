@@ -21,6 +21,8 @@ public:
 
 	float GetAmount() const override;
 
+	bool IsConnected() const;
+
 	const uint32_t &GetPort() const { return m_port; }
 
 	void SetPort(const uint32_t &port) { m_port = port; }

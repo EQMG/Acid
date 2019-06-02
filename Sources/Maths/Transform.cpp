@@ -27,7 +27,7 @@ Matrix4 Transform::GetWorldMatrix() const
 {
 	if (m_dirty)
 	{
-		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation * Maths::DegToRad, m_scaling);
+		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
 		m_dirty = false;
 	}
 
@@ -64,7 +64,7 @@ void Transform::SetScaling(const Vector3f &scaling)
 void Transform::SetDirty(const bool &dirty) const
 {
 	m_dirty = dirty;
-	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation * Maths::DegToRad, m_scaling);
+	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
 }
 
 std::string Transform::ToString() const

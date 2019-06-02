@@ -32,10 +32,8 @@ PlayerFps::PlayerFps() :
 void PlayerFps::Start()
 {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){
-	//	Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
-	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){
-	//	Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
+	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
 }
 
 void PlayerFps::Update()
@@ -80,6 +78,7 @@ void PlayerFps::Update()
 			if (m_noclipEnabled)
 			{
 				character->SetGravity(Vector3f());
+				character->SetLinearVelocity(Vector3f());
 			}
 			else
 			{
@@ -95,10 +94,9 @@ void PlayerFps::Update()
 
 	transform.SetRotation(Vector3f(0.0f, cameraRotation.m_y, 0.0f));
 
-	float theta = cameraRotation.m_y * Maths::DegToRad;
-	Vector3f walkDirection = direction;
-	walkDirection.m_x = -(direction.m_z * std::sin(theta) + direction.m_x * std::cos(theta));
-	walkDirection.m_z = direction.m_z * std::cos(theta) - direction.m_x * std::sin(theta);
+	auto walkDirection = direction;
+	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));
+	walkDirection.m_z = direction.m_z * std::cos(cameraRotation.m_y) - direction.m_x * std::sin(cameraRotation.m_y);
 
 	//walkDirection = walkDirection.Normalize();
 	walkDirection *= m_inputSprint.IsDown() ? RUN_SPEED : m_inputCrouch.IsDown() ? CROUCH_SPEED : WALK_SPEED;

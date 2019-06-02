@@ -54,17 +54,17 @@ void ModelSphere::Load()
 
 	for (uint32_t i = 0; i < m_longitudeBands + 1; i++)
 	{
-		float iDivLong = static_cast<float>(i) / static_cast<float>(m_longitudeBands);
-		float theta = (i == 0 || i == m_longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi;
+		auto iDivLong = static_cast<float>(i) / static_cast<float>(m_longitudeBands);
+		auto theta = (i == 0 || i == m_longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi<float>;
 
 		for (uint32_t j = 0; j < m_latitudeBands + 1; j++)
 		{
-			float jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
-			float phi = jDivLat * 2.0f * Maths::Pi;
+			auto jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
+			auto phi = jDivLat * 2.0f * Maths::Pi<float>;
 
-			Vector3f normal = Vector3f(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
-			Vector3f position = m_radius * normal;
-			Vector2f uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
+			auto normal = Vector3f(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
+			auto position = m_radius * normal;
+			auto uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
 			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
@@ -73,8 +73,8 @@ void ModelSphere::Load()
 	{
 		for (uint32_t j = 0; j < m_latitudeBands; j++)
 		{
-			uint32_t first = j + ((m_latitudeBands + 1) * i);
-			uint32_t second = j + ((m_latitudeBands + 1) * (i + 1));
+			auto first = j + ((m_latitudeBands + 1) * i);
+			auto second = j + ((m_latitudeBands + 1) * (i + 1));
 
 			indices.emplace_back(second + 1);
 			indices.emplace_back(first + 1);

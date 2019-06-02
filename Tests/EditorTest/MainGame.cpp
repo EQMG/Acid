@@ -61,7 +61,7 @@ MainGame::MainGame() :
 
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

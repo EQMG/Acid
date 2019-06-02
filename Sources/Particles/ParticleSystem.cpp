@@ -75,7 +75,7 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const
 {
 	auto cosAngle = std::cos(angle);
-	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
+	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 	auto z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
 	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 	auto x = rootOneMinusZSquared * std::cos(theta);
@@ -109,7 +109,7 @@ void ParticleSystem::SetPps(const float &pps)
 void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviation)
 {
 	m_direction = direction;
-	m_directionDeviation = deviation * Maths::Pi;
+	m_directionDeviation = deviation * Maths::Pi<float>;
 }
 
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
@@ -147,7 +147,7 @@ float ParticleSystem::GenerateRotation() const
 {
 	if (m_randomRotation)
 	{
-		return Maths::Random(0.0f, 360.0f);
+		return Maths::Random(0.0f, 360.0_deg);
 	}
 
 	return 0.0f;
@@ -155,11 +155,11 @@ float ParticleSystem::GenerateRotation() const
 
 Vector3f ParticleSystem::GenerateRandomUnitVector() const
 {
-	float theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
-	float z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
-	float rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-	float x = rootOneMinusZSquared * std::cos(theta);
-	float y = rootOneMinusZSquared * std::sin(theta);
+	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
+	auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
+	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
+	auto x = rootOneMinusZSquared * std::cos(theta);
+	auto y = rootOneMinusZSquared * std::sin(theta);
 	return Vector3f(x, y, z);
 }
 

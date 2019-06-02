@@ -53,8 +53,8 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 	UpdateSizes(camera);
 
 	Matrix4 rotation;
-	rotation = rotation.Rotate(-camera.GetRotation().m_y * Maths::DegToRad, Vector3f::Up);
-	rotation = rotation.Rotate(-camera.GetRotation().m_x * Maths::DegToRad, Vector3f::Right);
+	rotation = rotation.Rotate(-camera.GetRotation().m_y, Vector3f::Up);
+	rotation = rotation.Rotate(-camera.GetRotation().m_x, Vector3f::Right);
 
 	auto forwardVector = Vector3f(rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f)));
 
@@ -80,13 +80,13 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 
 void ShadowBox::UpdateSizes(const Camera &camera)
 {
-	m_farWidth = m_shadowDistance * std::tan(camera.GetFieldOfView() * Maths::DegToRad);
-	m_nearWidth = camera.GetNearPlane() * std::tan(camera.GetFieldOfView() * Maths::DegToRad);
+	m_farWidth = m_shadowDistance * std::tan(camera.GetFieldOfView());
+	m_nearWidth = camera.GetNearPlane() * std::tan(camera.GetFieldOfView());
 	m_farHeight = m_farWidth / Window::Get()->GetAspectRatio();
 	m_nearHeight = m_nearWidth / Window::Get()->GetAspectRatio();
 }
 
-std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar)
+std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const
 {
 	auto upVector = Vector3f(rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f)));
 	auto rightVector = forwardVector.Cross(upVector);
@@ -142,7 +142,7 @@ void ShadowBox::UpdateLightViewMatrix()
 
 	if (m_lightDirection.m_z > 0.0f)
 	{
-		yaw -= Maths::Pi;
+		yaw -= Maths::Pi<float>;
 	}
 
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(-yaw, Vector3f::Up);

@@ -39,11 +39,11 @@ void MeshAnimated::Load()
 		return;
 	}
 
-	File file = File(m_filename, new Xml("COLLADA"));
+	auto file = File(m_filename, new Xml("COLLADA"));
 	file.Read();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
-	auto correction = Matrix4().Rotate(-90.0f * Maths::DegToRad, Vector3f::Right);
+	auto correction = Matrix4().Rotate(-90.0_deg, Vector3f::Right);
 
 	auto skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
 	auto skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), correction);

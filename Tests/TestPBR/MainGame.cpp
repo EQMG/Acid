@@ -6,7 +6,6 @@
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
-#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
 #include "MainRenderer.hpp"
 #include "Resources/Resources.hpp"
@@ -37,7 +36,7 @@ MainGame::MainGame() :
 {
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -68,7 +67,6 @@ MainGame::MainGame() :
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Add<PlayerFps>("PlayerFps");
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test PBR");

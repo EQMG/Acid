@@ -55,18 +55,18 @@ void ModelDisk::Load()
 
 	for (uint32_t i = 0; i < m_slices; i++)
 	{
-		float iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
-		float alpha = iDivSlices * 2.0f * Maths::Pi;
-		float xDir = std::cos(alpha), yDir = std::sin(alpha);
+		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
+		auto alpha = iDivSlices * 2.0f * Maths::Pi<float>;
+		auto xDir = std::cos(alpha), yDir = std::sin(alpha);
 
 		for (uint32_t j = 0; j < m_loops + 1; j++)
 		{
-			float jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
-			float radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
+			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
+			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
-			Vector3f position = Vector3f(radius * xDir, 0.0f, radius * yDir);
-			Vector2f uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivLoops);
-			Vector3f normal = Vector3f(0.0f, 1.0f, 0.0f);
+			auto position = Vector3f(radius * xDir, 0.0f, radius * yDir);
+			auto uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivLoops);
+			auto normal = Vector3f(0.0f, 1.0f, 0.0f);
 			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
@@ -75,8 +75,8 @@ void ModelDisk::Load()
 	{
 		for (uint32_t j = 0; j < m_loops; j++)
 		{
-			uint32_t first = i * (m_loops + 1) + j;
-			uint32_t second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
+			auto first = i * (m_loops + 1) + j;
+			auto second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
 
 			indices.emplace_back(second + 1);
 			indices.emplace_back(first + 1);

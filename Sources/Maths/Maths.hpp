@@ -10,9 +10,8 @@ namespace acid
 class ACID_EXPORT Maths
 {
 public:
-	static constexpr float Pi = 3.14159265358979323846264338f;
-	static constexpr float DegToRad = Pi / 180.0f;
-	static constexpr float RadToDeg = 180.0f / Pi;
+	template<typename T>
+	static constexpr T Pi = T(3.14159265358979323846264338327950288L);
 
 	/**
 	 * Generates a random value from between a range.
@@ -45,9 +44,9 @@ public:
 	 * @return The radians value. 
 	 **/
 	template<typename T = float>
-	static T Radians(const T &degrees)
+	static constexpr T Radians(const T &degrees)
 	{
-		return degrees * static_cast<T>(DegToRad);
+		return degrees * Pi<long double> / 180;
 	}
 
 	/**
@@ -57,9 +56,9 @@ public:
 	 * @return The degrees value. 
 	 **/
 	template<typename T = float>
-	static T Degrees(const T &radians)
+	static constexpr T Degrees(const T &radians)
 	{
-		return radians * static_cast<T>(RadToDeg);
+		return radians * 180 / Pi<long double>;
 	}
 
 	/**
@@ -90,11 +89,11 @@ public:
 	template<typename T = float>
 	static T WrapRadians(const T &radians)
 	{
-		auto x = std::fmod(radians, 2 * Pi);
+		auto x = std::fmod(radians, 2 * Pi<T>);
 
 		if (x < 0)
 		{
-			x += 2 * Pi;
+			x += 2 * Pi<T>;
 		}
 
 		return static_cast<T>(x);
@@ -110,7 +109,7 @@ public:
 	template<typename T = float>
 	static T RoundToPlace(const T &value, const int32_t &place)
 	{
-		auto placeMul = std::pow(static_cast<T>(10), static_cast<T>(place));
+		auto placeMul = std::pow(10, place);
 		return static_cast<T>(std::round(value * placeMul) / placeMul);
 	}
 
@@ -184,7 +183,7 @@ public:
 	template<typename T = float, typename K = float>
 	static auto CosLerp(const T &a, const T &b, const K &factor)
 	{
-		auto ft = factor * Pi;
+		auto ft = factor * Pi<T>;
 		auto f = 1 - std::cos(ft) / 2;
 		return (a * (1 - f)) + (b * f);
 	}
@@ -218,15 +217,15 @@ public:
 	{
 		// sin(x)^2 + cos(x)^2 = 1
 		auto cos = std::sqrt(1 - sin * sin);
-		auto a = angle + (Pi / 2);
-		auto b = a - static_cast<int32_t>(a / (2 * Pi)) * (2 * Pi);
+		auto a = angle + (Pi<T> / 2);
+		auto b = a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>);
 
 		if (b < 0)
 		{
-			b = (2 * Pi) + b;
+			b = (2 * Pi<T>) + b;
 		}
 
-		if (b >= Pi)
+		if (b >= Pi<T>)
 		{
 			return -cos;
 		}
@@ -246,4 +245,14 @@ public:
 		seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 	}
 };
+
+constexpr long double operator"" _deg(long double deg)
+{
+	return deg * Maths::Pi<long double> / 180;
+}
+
+constexpr long double operator"" _rad(long double rad)
+{
+	return rad;
+}
 }

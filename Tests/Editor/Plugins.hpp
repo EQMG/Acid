@@ -31,7 +31,7 @@ public:
 	void Update() override;
 
 private:
-	std::string m_loadedPath;
+	std::filesystem::path m_loadedPath;
 	FileWatcher m_watcher;
 	std::unique_ptr<cr_plugin> m_plugin;
 	bool m_update;

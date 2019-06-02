@@ -82,7 +82,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 
 #if defined(ACID_VERBOSE)
 	// Saves the noise Image.
-	/*std::string filename = FileSystem::GetWorkingDirectory() + "/SSAO_Noise.png";
+	/*std::string filename = std::filesystem::current_path() / "SSAO_Noise.png";
 	FileSystem::ClearFile(filename);
 	uint32_t width = 0;
 	uint32_t height = 0;

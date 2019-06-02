@@ -31,13 +31,6 @@ const char FileSystem::Separator = '/';
 const char FileSystem::AltSeparator = '\\';
 #endif
 
-std::string FileSystem::GetWorkingDirectory()
-{
-	char buff[FILENAME_MAX];
-	GetCurrentDir(buff, FILENAME_MAX);
-	return buff;
-}
-
 bool FileSystem::Exists(const std::string &path)
 {
 	STAT st;

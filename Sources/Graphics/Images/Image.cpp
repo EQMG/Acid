@@ -148,6 +148,9 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector
 
 void Image::WritePixels(const std::string &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
 {
+	//int32_t len;
+	//std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));
+
 	int32_t result = stbi_write_png(filename.c_str(), extent.m_x, extent.m_y, components, pixels, extent.m_x * components);
 
 	if (result != 1)

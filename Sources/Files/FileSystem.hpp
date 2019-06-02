@@ -14,12 +14,6 @@ public:
 	static const char AltSeparator;
 
 	/**
-	 * Gets the current working directory.
-	 * @return If the working directory.
-	 */
-	static std::string GetWorkingDirectory();
-
-	/**
 	 * Gets if a file exists.
 	 * @param path The path.
 	 * @return If the file exists.

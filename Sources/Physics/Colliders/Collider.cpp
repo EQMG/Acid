@@ -1,7 +1,6 @@
 #include "Collider.hpp"
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include "Maths/Maths.hpp"
 #include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
@@ -66,10 +65,10 @@ Quaternion Collider::Convert(const btQuaternion &quaternion)
 
 btTransform Collider::Convert(const Transform &transform)
 {
-	btQuaternion rotation = btQuaternion();
-	rotation.setEulerZYX(transform.GetRotation().m_y * Maths::DegToRad, transform.GetRotation().m_x * Maths::DegToRad, transform.GetRotation().m_z * Maths::DegToRad);
+	auto rotation = btQuaternion();
+	rotation.setEulerZYX(transform.GetRotation().m_y, transform.GetRotation().m_x, transform.GetRotation().m_z);
 
-	btTransform worldTransform = btTransform();
+	auto worldTransform = btTransform();
 	worldTransform.setIdentity();
 	worldTransform.setOrigin(Convert(transform.GetPosition()));
 	worldTransform.setRotation(rotation);
@@ -78,9 +77,9 @@ btTransform Collider::Convert(const Transform &transform)
 
 Transform Collider::Convert(const btTransform &transform, const Vector3f &scaling)
 {
-	btVector3 position = transform.getOrigin();
+	auto position = transform.getOrigin();
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
-	return Transform(Convert(position), Vector3f(pitch, yaw, roll) * Maths::RadToDeg, scaling);
+	return Transform(Convert(position), Vector3f(pitch, yaw, roll), scaling);
 }
 }

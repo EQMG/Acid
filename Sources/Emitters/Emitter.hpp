@@ -22,7 +22,7 @@ public:
 
 	static Vector3f RandomUnitVector()
 	{
-		auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi;
+		auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 		auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		auto x = rootOneMinusZSquared * std::cos(theta);

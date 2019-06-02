@@ -30,14 +30,14 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_fileWatcher(FileSystem::GetWorkingDirectory(), 2s),
+	m_fileWatcher(std::filesystem::current_path(), 2s),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	Log::Out("Working Directory: %s\n", std::filesystem::current_path().c_str());
 
 	// Watches all files in the working directory.
 	m_fileWatcher.OnChange().Add([this](std::string path, FileWatcher::Status status)

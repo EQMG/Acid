@@ -62,7 +62,7 @@ MainGame::MainGame() :
 	});
 
 	// Registers file search paths.
-	/*for (auto &file : FileSystem::FilesInPath(FileSystem::GetWorkingDirectory(), false))
+	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
 	{
 		if (String::Contains(file, "data-"))
 		{
@@ -71,7 +71,7 @@ MainGame::MainGame() :
 	}*/
 
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %s\n", FileSystem::GetWorkingDirectory().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
 
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();

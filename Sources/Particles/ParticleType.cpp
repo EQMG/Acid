@@ -92,7 +92,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 			}
 		}
 
-		instance->m_modelMatrix = instance->m_modelMatrix.Rotate(particle.GetRotation() * Maths::DegToRad, Vector3f::Front);
+		instance->m_modelMatrix = instance->m_modelMatrix.Rotate(particle.GetRotation(), Vector3f::Front);
 		instance->m_modelMatrix = instance->m_modelMatrix.Scale(Vector3f(particle.GetScale()));
 		// TODO: Multiply MVP by View and Projection (And run update every frame?)
 

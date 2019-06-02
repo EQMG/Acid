@@ -132,11 +132,10 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 	// Saves the BRDF Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Brdf.png";
-		FileSystem::ClearFile(filename);
+		auto path = std::filesystem::current_path() / "Brdf.png";
 		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent);
+		Image::WritePixels(path, pixels.get(), extent);
 	}, brdfImage.get());*/
 #endif
 
@@ -174,11 +173,10 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	// Saves the irradiance Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
 	{
-		std::string filename = FileSystem::GetWorkingDirectory() + "/Irradiance.png";
-		FileSystem::ClearFile(filename);
+		auto path = std::filesystem::current_path() / "Irradiance.png";
 		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(filename, pixels.get(), extent);
+		Image::WritePixels(path, pixels.get(), extent);
 	}, irradianceCubemap.get());*/
 #endif
 
@@ -249,11 +247,10 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
 		{
-			std::string filename = FileSystem::GetWorkingDirectory() + "/Prefiltered_" + String::To(i) + ".png";
-			FileSystem::ClearFile(filename);
+			auto path = std::filesystem::current_path() / ("Prefiltered_" + String::To(i) + ".png");
 			Vector2ui extent;
 			auto pixels = image->GetPixels(extent, i);
-			Image::WritePixels(filename, pixels.get(), extent);
+			Image::WritePixels(path, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
 	}*/
 #endif

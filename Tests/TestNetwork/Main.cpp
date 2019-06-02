@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		uint32_t fileSize = page.GetBody().size();
 
 		const auto &fileContainer = page.GetBody();
-		std::ofstream file(FileSystem::GetWorkingDirectory() + "/Data-Sponza.zip", std::ios::out | std::ios::binary);
+		std::ofstream file(std::filesystem::current_path() + "/Data-Sponza.zip", std::ios::out | std::ios::binary);
 		file.write(fileContainer.c_str(), fileSize);
 		file.close();
 	}*/

@@ -79,7 +79,7 @@ private:
 	 * @param centreFar The centre point of the frustum's far plane.
 	 * @return The vertices of the frustum in light space.
 	 */
-	std::array<Vector4f, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar);
+	std::array<Vector4f, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const;
 
 	/**
 	 * Calculates one of the corner vertices of the view frustum in world space and converts it to light space.

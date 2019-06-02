@@ -67,12 +67,12 @@ float World::GetDayFactor() const
 
 float World::GetSunriseFactor() const
 {
-	return std::clamp(-(std::sin(2.0f * Maths::Pi * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
+	return std::clamp(-(std::sin(2.0f * Maths::Pi<float> * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 }
 
 float World::GetShadowFactor() const
 {
-	return std::clamp(1.7f * std::sin(2.0f * Maths::Pi * GetDayFactor()), 0.0f, 1.0f);
+	return std::clamp(1.7f * std::sin(2.0f * Maths::Pi<float> * GetDayFactor()), 0.0f, 1.0f);
 }
 
 float World::GetStarIntensity() const
