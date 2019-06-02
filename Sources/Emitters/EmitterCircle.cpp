@@ -20,7 +20,7 @@ void EmitterCircle::Update()
 
 Vector3f EmitterCircle::GeneratePosition() const
 {
-	auto direction = Vector3f();
+	Vector3f direction;
 
 	do
 	{

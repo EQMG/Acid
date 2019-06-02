@@ -26,8 +26,8 @@ void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-	Mouse::Get()->m_mouseWheelDelta.m_x = static_cast<float>(yoffset);
-	Mouse::Get()->m_mouseWheelDelta.m_y = static_cast<float>(yoffset);
+	Mouse::Get()->m_mouseWheelDelta.m_x = yoffset;
+	Mouse::Get()->m_mouseWheelDelta.m_y = yoffset;
 	Mouse::Get()->m_onScroll(Mouse::Get()->m_mouseWheelDelta);
 }
 
@@ -70,7 +70,7 @@ void Mouse::Update()
 	// Sets the last position of the current.
 	m_lastMousePosition = m_mousePosition;
 
-	// Updates the mouse wheel using a smooth scroll technique, this is needed because scroll wheel callbacks are not called when scroll is stopped.
+	// TODO: Scroll callback is not called when wheel delta goes to zero.
 	m_mouseWheelDelta.m_x = SmoothScrollWheel(m_mouseWheelDelta.m_x, delta);
 	m_mouseWheelDelta.m_y = SmoothScrollWheel(m_mouseWheelDelta.m_y, delta);
 }

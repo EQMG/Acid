@@ -36,7 +36,7 @@ bool ShadowBox::IsInBox(const Vector3f &position, const float &radius) const
 {
 	auto entityPos = m_lightViewMatrix.Transform(Vector4f(position));
 
-	auto closestPoint = Vector3f();
+	Vector3f closestPoint;
 	closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
 	closestPoint.m_y = std::clamp(entityPos.m_y, m_minExtents.m_y, m_maxExtents.m_y);
 	closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
@@ -52,7 +52,7 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 {
 	UpdateSizes(camera);
 
-	auto rotation = Matrix4();
+	Matrix4 rotation;
 	rotation = rotation.Rotate(-camera.GetRotation().m_y * Maths::DegToRad, Vector3f::Up);
 	rotation = rotation.Rotate(-camera.GetRotation().m_x * Maths::DegToRad, Vector3f::Right);
 

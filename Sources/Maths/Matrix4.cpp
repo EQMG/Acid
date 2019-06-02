@@ -41,7 +41,7 @@ Matrix4::Matrix4(const Vector4f *source)
 
 Matrix4 Matrix4::Add(const Matrix4 &other) const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -56,7 +56,7 @@ Matrix4 Matrix4::Add(const Matrix4 &other) const
 
 Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -71,7 +71,7 @@ Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 
 Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -86,7 +86,7 @@ Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 
 Vector4f Matrix4::Multiply(const Vector4f &other) const
 {
-	Vector4f result = Vector4f();
+	Vector4f result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -98,7 +98,7 @@ Vector4f Matrix4::Multiply(const Vector4f &other) const
 
 Matrix4 Matrix4::Divide(const Matrix4 &other) const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -113,7 +113,7 @@ Matrix4 Matrix4::Divide(const Matrix4 &other) const
 
 Vector4f Matrix4::Transform(const Vector4f &other) const
 {
-	Vector4f result = Vector4f();
+	Vector4f result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -149,16 +149,17 @@ Matrix4 Matrix4::Translate(const Vector3f &other) const
 
 Matrix4 Matrix4::Scale(const Vector3f &other) const
 {
-	Matrix4 result = Matrix4(*this);
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
 		for (int32_t col = 0; col < 4; col++)
 		{
-			result[row][col] *= other[row];
+			result[row][col] = m_rows[row][col] * other[row];
 		}
 	}
 
+	result[3] = m_rows[3];
 	return result;
 }
 
@@ -179,7 +180,7 @@ Matrix4 Matrix4::Scale(const Vector4f &other) const
 
 Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 {
-	Matrix4 result = Matrix4(*this);
+	Matrix4 result;
 
 	float c = std::cos(angle);
 	float s = std::sin(angle);
@@ -191,7 +192,7 @@ Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 	float ys = axis.m_y * s;
 	float zs = axis.m_z * s;
 
-	Matrix3 f = Matrix3();
+	Matrix3 f;
 	f[0][0] = axis.m_x * axis.m_x * o + c;
 	f[0][1] = xy * o + zs;
 	f[0][2] = xz * o - ys;
@@ -210,12 +211,13 @@ Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 		}
 	}
 
+	result[3] = m_rows[3];
 	return result;
 }
 
 Matrix4 Matrix4::Negate() const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -230,7 +232,7 @@ Matrix4 Matrix4::Negate() const
 
 Matrix4 Matrix4::Inverse() const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	float det = Determinant();
 
@@ -260,7 +262,7 @@ Matrix4 Matrix4::Inverse() const
 
 Matrix4 Matrix4::Transpose() const
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	for (int32_t row = 0; row < 4; row++)
 	{
@@ -294,7 +296,7 @@ float Matrix4::Determinant() const
 
 Matrix3 Matrix4::GetSubmatrix(const int32_t &row, const int32_t &col) const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 	int32_t colCount = 0;
 	int32_t rowCount = 0;
 
@@ -322,7 +324,7 @@ Matrix3 Matrix4::GetSubmatrix(const int32_t &row, const int32_t &col) const
 
 Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3f &rotation, const Vector3f &scale)
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 	result = result.Translate(translation);
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
 	result = result.Rotate(rotation.m_y, Vector3f::Up);
@@ -365,7 +367,7 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 
 Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 
 	result[0][0] = 2.0f / (right - left);
 	result[1][1] = 2.0f / (top - bottom);
@@ -392,7 +394,8 @@ Matrix4 Matrix4::FrustumMatrix(const float &left, const float &right, const floa
 
 Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 {
-	Matrix4 result = Matrix4();
+	Matrix4 result;
+
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
 	result = result.Rotate(rotation.m_y, Vector3f::Up);
 	result = result.Rotate(rotation.m_z, Vector3f::Front);
@@ -414,18 +417,19 @@ Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix,
 
 Vector3f Matrix4::Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
-	Vector3f result = Vector3f();
+	Vector3f result;
 	// TODO: Create
 	return result;
 }
 
 Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up)
 {
+	Matrix4 result;
+
 	Vector3f f = (centre - eye).Normalize();
 	Vector3f s = f.Cross(up).Normalize();
 	Vector3f u = s.Cross(f);
 
-	Matrix4 result = Matrix4();
 	result[0][0] = s.m_x;
 	result[1][0] = s.m_y;
 	result[2][0] = s.m_z;
