@@ -81,7 +81,8 @@ Quaternion::Quaternion(const Matrix4 &source)
 
 Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ)
 {
-	Matrix4 rotation = Matrix4();
+	Matrix4 rotation;
+
 	rotation[0][0] = axisX.m_x;
 	rotation[1][0] = axisX.m_y;
 	rotation[2][0] = axisX.m_z;
@@ -91,7 +92,6 @@ Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vecto
 	rotation[0][2] = axisZ.m_x;
 	rotation[1][2] = axisZ.m_y;
 	rotation[2][2] = axisZ.m_z;
-
 	*this = rotation;
 }
 
@@ -205,7 +205,7 @@ Matrix4 Quaternion::ToMatrix() const
 	float yz = m_y * m_z;
 	float xw = m_x * m_w;
 
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 	result[0][0] = w2 + x2 - z2 - y2;
 	result[0][1] = xy + zw + zw + xy;
 	result[0][2] = xz - yw + xz - yw;
@@ -230,7 +230,7 @@ Matrix4 Quaternion::ToRotationMatrix() const
 	float ySquared = m_y * m_y;
 	float zSquared = m_z * m_z;
 
-	Matrix4 result = Matrix4();
+	Matrix4 result;
 	result[0][0] = 1.0f - 2.0f * (ySquared + zSquared);
 	result[0][1] = 2.0f * (xy - zw);
 	result[0][2] = 2.0f * (xz + yw);
@@ -242,17 +242,12 @@ Matrix4 Quaternion::ToRotationMatrix() const
 	result[2][0] = 2.0f * (xz - yw);
 	result[2][1] = 2.0f * (yz + xw);
 	result[2][2] = 1.0f - 2.0f * (xSquared + ySquared);
-	result[2][3] = 0.0f;
-	result[3][0] = 0.0f;
-	result[3][1] = 0.0f;
-	result[3][2] = 0.0f;
-	result[3][3] = 1.0f;
 	return result;
 }
 
 Vector3f Quaternion::ToEuler() const
 {
-	Vector3f result = Vector3f();
+	Vector3f result;
 	result.m_x = std::atan2(2.0f * (m_x * m_w - m_y * m_z), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
 	result.m_y = std::asin(2.0f * (m_x * m_z + m_y * m_w));
 	result.m_z = std::atan2(2.0f * (m_z * m_w - m_x * m_y), 1.0f - 2.0f * (m_y * m_y + m_z * m_z));

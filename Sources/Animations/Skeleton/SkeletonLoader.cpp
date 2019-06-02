@@ -33,7 +33,7 @@ JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const
 	auto index = GetBoneIndex(nameId);
 	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), " ");
 
-	Matrix4 transform = Matrix4();
+	Matrix4 transform;
 
 	for (uint32_t i = 0; i < matrixData.size(); i++)
 	{

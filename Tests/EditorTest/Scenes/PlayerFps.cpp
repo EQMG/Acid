@@ -47,7 +47,7 @@ void PlayerFps::Update()
 		return;
 	}
 
-	Vector3f direction = Vector3f();
+	Vector3f direction;
 
 	if (!Scenes::Get()->IsPaused())
 	{

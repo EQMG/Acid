@@ -114,7 +114,7 @@ public:
 	 * Gets the mouse wheel delta.
 	 * @return The mouse wheel delta.
 	 */
-	const Vector2f &GetWheelDelta() const { return m_mouseWheelDelta; }
+	const Vector2d &GetWheelDelta() const { return m_mouseWheelDelta; }
 
 	/**
 	 * Gets if the display is selected.
@@ -144,7 +144,7 @@ public:
 	 * Called when the mouse moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2f)> &OnPosition() { return m_onPosition; }
+	Delegate<void(Vector2d)> &OnPosition() { return m_onPosition; }
 
 	/**
 	 * Called when the mouse enters the window.
@@ -156,7 +156,7 @@ public:
 	 * Called when the scroll wheel changes velocity.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2f)> &OnScroll() { return m_onScroll; }
+	Delegate<void(Vector2d)> &OnScroll() { return m_onScroll; }
 
 	/**
 	 * Called when a group of files/folders is dropped onto the window.
@@ -184,14 +184,14 @@ private:
 	Vector2d m_lastMousePosition;
 	Vector2d m_mousePosition;
 	Vector2d m_mouseDelta;
-	Vector2f m_mouseWheelDelta;
+	Vector2d m_mouseWheelDelta;
 	bool m_windowSelected;
 	bool m_cursorHidden;
 
 	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> m_onButton;
-	Delegate<void(Vector2f)> m_onPosition;
+	Delegate<void(Vector2d)> m_onPosition;
 	Delegate<void(bool)> m_onEnter;
-	Delegate<void(Vector2f)> m_onScroll;
+	Delegate<void(Vector2d)> m_onScroll;
 	Delegate<void(std::vector<std::string>)> m_onDrop;
 };
 }

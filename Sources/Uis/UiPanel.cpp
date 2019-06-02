@@ -34,8 +34,8 @@ void UiPanel::UpdateObject()
 	m_scrollY.SetEnabled(m_scrollBars & ScrollBar::Vertical && contentSize.m_y > 1.05f);
 
 	// TODO: Abstract math into UiTransform.
-	m_scrollX.GetTransform().SetAnchor0(Vector2i(0, GetScreenTransform().GetSize().m_y - UiScrollBar::Size));
-	m_scrollY.GetTransform().SetAnchor0(Vector2i(GetScreenTransform().GetSize().m_x - UiScrollBar::Size, 0));
+	m_scrollX.GetTransform().SetAnchor0(Vector2f(0, GetScreenTransform().GetSize().m_y - UiScrollBar::Size));
+	m_scrollY.GetTransform().SetAnchor0(Vector2f(GetScreenTransform().GetSize().m_x - UiScrollBar::Size, 0));
 
 	m_scrollX.SetSize(Vector2f(-1.0f / contentSize.m_x, 0.0f));
 	m_scrollY.SetSize(Vector2f(0.0f, -1.0f / contentSize.m_y));

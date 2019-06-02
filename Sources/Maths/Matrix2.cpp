@@ -34,7 +34,7 @@ Matrix2::Matrix2(const Vector2f *source)
 
 Matrix2 Matrix2::Add(const Matrix2 &other) const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
@@ -49,7 +49,7 @@ Matrix2 Matrix2::Add(const Matrix2 &other) const
 
 Matrix2 Matrix2::Subtract(const Matrix2 &other) const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
@@ -64,7 +64,7 @@ Matrix2 Matrix2::Subtract(const Matrix2 &other) const
 
 Matrix2 Matrix2::Multiply(const Matrix2 &other) const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
@@ -79,7 +79,7 @@ Matrix2 Matrix2::Multiply(const Matrix2 &other) const
 
 Matrix2 Matrix2::Divide(const Matrix2 &other) const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
@@ -94,7 +94,7 @@ Matrix2 Matrix2::Divide(const Matrix2 &other) const
 
 Vector2f Matrix2::Transform(const Vector2f &other) const
 {
-	Vector2f result = Vector2f();
+	Vector2f result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -106,13 +106,13 @@ Vector2f Matrix2::Transform(const Vector2f &other) const
 
 Matrix2 Matrix2::Scale(const Vector2f &other) const
 {
-	Matrix2 result = Matrix2(*this);
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
 		for (int32_t col = 0; col < 2; col++)
 		{
-			result[row][col] *= other[row];
+			result[row][col] = m_rows[row][col] * other[row];
 		}
 	}
 
@@ -121,7 +121,7 @@ Matrix2 Matrix2::Scale(const Vector2f &other) const
 
 Matrix2 Matrix2::Negate() const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
@@ -136,7 +136,7 @@ Matrix2 Matrix2::Negate() const
 
 Matrix2 Matrix2::Inverse() const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	float det = Determinant();
 
@@ -165,7 +165,7 @@ Matrix2 Matrix2::Inverse() const
 
 Matrix2 Matrix2::Transpose() const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 
 	for (int32_t row = 0; row < 2; row++)
 	{
