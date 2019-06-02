@@ -88,7 +88,8 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 		auto rotateAxis = coneDirection.Cross(Vector3f::Front);
 		rotateAxis.Normalize();
 		auto rotateAngle = std::acos(coneDirection.Dot(Vector3f::Front));
-		auto rotationMatrix = Matrix4();
+
+		Matrix4 rotationMatrix;
 		rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
 		direction = rotationMatrix.Transform(direction);
 	}

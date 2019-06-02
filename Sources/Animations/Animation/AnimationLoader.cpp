@@ -81,7 +81,7 @@ void AnimationLoader::ProcessTransforms(const std::string &jointName, const std:
 {
 	for (uint32_t i = 0; i < m_keyframes.size(); i++)
 	{
-		Matrix4 transform = Matrix4();
+		Matrix4 transform;
 
 		for (uint32_t j = 0; j < 16; j++)
 		{

@@ -16,11 +16,11 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransf
 	m_updating(false),
 	m_mouseOver(false)
 {
-	Mouse::Get()->OnScroll().Add([this](Vector2f wheelDelta)
+	Mouse::Get()->OnScroll().Add([this](Vector2d wheelDelta)
 	{
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled())
 		{
-			Vector2f position = Vector2f();
+			Vector2f position;
 			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
 			m_scroll.GetTransform().SetPosition(position);
 		}
@@ -40,7 +40,7 @@ void UiScrollBar::UpdateObject()
 			m_updating = false;
 		}
 
-		Vector2f position = Vector2f();
+		Vector2d position;
 		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenTransform().GetPosition()[m_index]; //  ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);

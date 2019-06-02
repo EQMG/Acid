@@ -26,7 +26,7 @@ void ConvertPoint(const FT_Vector *v, Vector2f &out)
 
 int32_t MoveToFunc(const FT_Vector *to, Outline *o)
 {
-	Vector2f p = Vector2f();
+	Vector2f p;
 
 	if (!o->m_contours.empty())
 	{

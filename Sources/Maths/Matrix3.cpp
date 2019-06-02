@@ -37,7 +37,7 @@ Matrix3::Matrix3(const Vector3f *source)
 
 Matrix3 Matrix3::Add(const Matrix3 &other) const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -52,7 +52,7 @@ Matrix3 Matrix3::Add(const Matrix3 &other) const
 
 Matrix3 Matrix3::Subtract(const Matrix3 &other) const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -67,7 +67,7 @@ Matrix3 Matrix3::Subtract(const Matrix3 &other) const
 
 Matrix3 Matrix3::Multiply(const Matrix3 &other) const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -82,7 +82,7 @@ Matrix3 Matrix3::Multiply(const Matrix3 &other) const
 
 Vector3f Matrix3::Multiply(const Vector3f &other) const
 {
-	Vector3f result = Vector3f();
+	Vector3f result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -94,7 +94,7 @@ Vector3f Matrix3::Multiply(const Vector3f &other) const
 
 Matrix3 Matrix3::Divide(const Matrix3 &other) const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -109,7 +109,7 @@ Matrix3 Matrix3::Divide(const Matrix3 &other) const
 
 Vector3f Matrix3::Transform(const Vector3f &other) const
 {
-	Vector3f result = Vector3f();
+	Vector3f result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -121,13 +121,13 @@ Vector3f Matrix3::Transform(const Vector3f &other) const
 
 Matrix3 Matrix3::Scale(const Vector3f &other) const
 {
-	Matrix3 result = Matrix3(*this);
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
 		for (int32_t col = 0; col < 3; col++)
 		{
-			result[row][col] *= other[row];
+			result[row][col] = m_rows[row][col] * other[row];
 		}
 	}
 
@@ -136,7 +136,7 @@ Matrix3 Matrix3::Scale(const Vector3f &other) const
 
 Matrix3 Matrix3::Negate() const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -151,7 +151,7 @@ Matrix3 Matrix3::Negate() const
 
 Matrix3 Matrix3::Inverse() const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	float det = Determinant();
 
@@ -181,7 +181,7 @@ Matrix3 Matrix3::Inverse() const
 
 Matrix3 Matrix3::Transpose() const
 {
-	Matrix3 result = Matrix3();
+	Matrix3 result;
 
 	for (int32_t row = 0; row < 3; row++)
 	{
@@ -215,7 +215,7 @@ float Matrix3::Determinant() const
 
 Matrix2 Matrix3::GetSubmatrix(const int32_t &row, const int32_t &col) const
 {
-	Matrix2 result = Matrix2();
+	Matrix2 result;
 	int32_t colCount = 0;
 	int32_t rowCount = 0;
 
