@@ -170,6 +170,8 @@ int main(int argc, char **argv)
 		Log::Out("\n");
 	}
 	{
+		constexpr auto compileTime = Vector3f(10.0f, -9.0f, 8.0f) + Vector3d(-7.0, -6.0, 5.0);
+
 		Log::Out("Vector3:\n");
 		Vector3f a(12.9f, -2.0f, 6.7f);
 		Vector3f b(-9.7f, 15.9f, -13.8f);
