@@ -20,9 +20,9 @@ public:
 	 * @param length The time to get to the end value. 
 	 **/
 	DriverSlide(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
-		m_start(start),
-		m_end(end)
+		Driver<T>{length},
+		m_start{start},
+		m_end{end}
 	{
 	}
 

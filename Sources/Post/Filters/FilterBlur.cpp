@@ -5,9 +5,9 @@
 namespace acid
 {
 FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Blur.frag" }, { Shader::Define("BLUR_TYPE", String::To(static_cast<uint32_t>(type))) }),
-	m_type(type),
-	m_direction(direction)
+	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Blur.frag"}, GetDefines(type)},
+	m_type{type},
+	m_direction{direction}
 {
 }
 
@@ -18,12 +18,9 @@ void FilterBlur::Render(const CommandBuffer &commandBuffer)
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
-	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-	//m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}
@@ -35,5 +32,12 @@ void FilterBlur::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
 	m_pushScene.BindPush(commandBuffer, m_pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+}
+
+std::vector<Shader::Define> FilterBlur::GetDefines(const Type &type)
+{
+	std::vector<Shader::Define> defines;
+	defines.emplace_back(Shader::Define("BLUR_TYPE", String::To(type)));
+	return defines;
 }
 }

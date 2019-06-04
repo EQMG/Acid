@@ -6,9 +6,9 @@
 namespace acid
 {
 SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
-	Subrender(pipelineStage),
-	m_sort(sort),
-	m_uniformScene(true)
+	Subrender{pipelineStage},
+	m_sort{sort},
+	m_uniformScene{true}
 {
 }
 

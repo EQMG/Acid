@@ -21,9 +21,9 @@ public:
 	 * @param length The length between two waves. 
 	 **/
 	DriverBounce(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
-		m_start(start),
-		m_end(end)
+		Driver<T>{length},
+		m_start{start},
+		m_end{end}
 	{
 	}
 

@@ -7,15 +7,12 @@
 namespace acid
 {
 Entity::Entity(const Transform &transform) :
-	m_name(""),
-	m_localTransform(transform),
-	m_parent(nullptr),
-	m_removed(false)
+	m_localTransform{transform}
 {
 }
 
 Entity::Entity(const std::string &filename, const Transform &transform) :
-	Entity(transform)
+	m_localTransform{transform}
 {
 	auto entityPrefab = EntityPrefab::Create(filename);
 	*entityPrefab >> *this;

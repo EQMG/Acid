@@ -3,11 +3,11 @@
 namespace acid
 {
 FilterTiltshift::FilterTiltshift(const Pipeline::Stage &pipelineStage, const float &blurAmount, const float &centre, const float &stepSize, const float &steps) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Tiltshift.frag" }, {}),
-	m_blurAmount(blurAmount),
-	m_centre(centre),
-	m_stepSize(stepSize),
-	m_steps(steps)
+	PostFilter{pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Tiltshift.frag" }},
+	m_blurAmount{blurAmount},
+	m_centre{centre},
+	m_stepSize{stepSize},
+	m_steps{steps}
 {
 }
 
@@ -21,12 +21,9 @@ void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
-	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-	//m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}

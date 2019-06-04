@@ -24,8 +24,8 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 {
-	auto temp = ModelCylinder(radiusBase, radiusTop, height, slices, stacks, false);
-	Metadata metadata = Metadata();
+	ModelCylinder temp{radiusBase, radiusTop, height, slices, stacks, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -66,10 +66,10 @@ void ModelCylinder::Load()
 			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
 			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
 
-			auto position = Vector3f(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
-			auto uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivStacks);
-			auto normal = Vector3f(xDir, 0.0f, zDir);
-			vertices.emplace_back(VertexDefault(position, uvs, normal));
+			Vector3f position{xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius};
+			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivStacks};
+			Vector3f normal{xDir, 0.0f, zDir};
+			vertices.emplace_back(VertexDefault{position, uvs, normal});
 		}
 	}
 

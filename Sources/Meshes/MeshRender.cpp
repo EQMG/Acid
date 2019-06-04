@@ -27,9 +27,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	auto rigidbody = GetParent()->GetComponent<Rigidbody>();
-
-	if (rigidbody != nullptr)
+	if (auto rigidbody = GetParent()->GetComponent<Rigidbody>(); rigidbody != nullptr)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -55,9 +53,8 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Binds the material pipeline.
-	bool bindSuccess = materialPipeline->BindPipeline(commandBuffer);
 
-	if (!bindSuccess)
+	if (!materialPipeline->BindPipeline(commandBuffer))
 	{
 		return false;
 	}
@@ -68,9 +65,8 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	material->PushDescriptors(m_descriptorSet);
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
@@ -84,8 +80,8 @@ bool MeshRender::operator<(const MeshRender &other) const
 {
 	auto camera = Scenes::Get()->GetCamera();
 
-	float thisDistance2 = (camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
-	float otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
+	auto thisDistance2 = (camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
+	auto otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
 
 	return thisDistance2 > otherDistance2;
 }

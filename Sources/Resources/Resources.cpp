@@ -3,7 +3,7 @@
 namespace acid
 {
 Resources::Resources() :
-	m_elapsedPurge(5s)
+	m_elapsedPurge{5s}
 {
 }
 

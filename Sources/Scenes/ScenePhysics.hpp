@@ -48,7 +48,7 @@ public:
 
 	void Update();
 
-	Raycast Raytest(const Vector3f &start, const Vector3f &end);
+	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 
 	const Vector3f &GetGravity() const { return m_gravity; }
 

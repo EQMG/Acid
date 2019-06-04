@@ -1,7 +1,5 @@
 #include "FilterSsao.hpp"
 
-#include "Files/FileSystem.hpp"
-#include "Maths/Colour.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
@@ -13,16 +11,16 @@ static const uint32_t SSAO_KERNEL_SIZE = 64;
 static const float SSAO_RADIUS = 0.5f;
 
 FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag" }, GetDefines()),
-	m_noise(ComputeNoise(SSAO_NOISE_DIM)),
-	m_kernel(SSAO_KERNEL_SIZE)
+	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()},
+	m_noise{ComputeNoise(SSAO_NOISE_DIM)},
+	m_kernel{SSAO_KERNEL_SIZE}
 {
 	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
 	{
-		Vector3f sample = Vector3f(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f));
+		Vector3f sample{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f)};
 		sample = sample.Normalize();
 		sample *= Maths::Random(0.0f, 1.0f);
-		float scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
+		auto scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
 		scale = Maths::Lerp(0.1f, 1.0f, scale * scale);
 		m_kernel[i] = sample * scale;
 	}
@@ -43,9 +41,8 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
 	m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
 	m_descriptorSet.Push("samplerNoise", m_noise);
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}

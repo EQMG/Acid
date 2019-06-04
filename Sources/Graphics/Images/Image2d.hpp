@@ -126,7 +126,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
 
 private:
-	std::string m_filename{};
+	std::string m_filename;
 
 	VkFilter m_filter;
 	VkSamplerAddressMode m_addressMode;

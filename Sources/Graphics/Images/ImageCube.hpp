@@ -144,8 +144,8 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
 
 private:
-	std::string m_filename{};
-	std::string m_fileSuffix{};
+	std::string m_filename;
+	std::string m_fileSuffix;
 	std::vector<std::string> m_fileSides{"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	VkFilter m_filter;

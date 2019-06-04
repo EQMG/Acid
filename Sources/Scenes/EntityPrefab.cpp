@@ -29,14 +29,14 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 {
-	auto temp = EntityPrefab(filename, false);
-	Metadata metadata = Metadata();
+	EntityPrefab temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 EntityPrefab::EntityPrefab(std::string filename, const bool &load) :
-	m_filename(std::move(filename))
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{

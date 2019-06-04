@@ -117,7 +117,7 @@ public:
 private:
 	struct JoystickImpl
 	{
-		std::string m_name{};
+		std::string m_name;
 		std::vector<float> m_axes;
 		std::vector<InputAction> m_buttons;
 		std::vector<BitMask<JoystickHat>> m_hats;

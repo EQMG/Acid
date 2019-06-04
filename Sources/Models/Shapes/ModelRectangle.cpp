@@ -23,8 +23,8 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
 {
-	auto temp = ModelRectangle(min, max, false);
-	Metadata metadata = Metadata();
+	ModelRectangle temp{min, max, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -46,13 +46,13 @@ void ModelRectangle::Load()
 		return;
 	}
 
-	std::vector<VertexDefault> vertices = { 
-		VertexDefault(Vector3f(m_min, m_min, 0.0f), Vector2f(0.0f, 0.0f), Vector3f()),
-		VertexDefault(Vector3f(m_max, m_min, 0.0f), Vector2f(1.0f, 0.0f), Vector3f()), 
-		VertexDefault(Vector3f(m_max, m_max, 0.0f), Vector2f(1.0f, 1.0f), Vector3f()),
-		VertexDefault(Vector3f(m_min, m_max, 0.0f), Vector2f(0.0f, 1.0f), Vector3f())
+	std::vector<VertexDefault> vertices{ 
+		{Vector3f{m_min, m_min, 0.0f}, Vector2f{0.0f, 0.0f}, Vector3f{}},
+		{Vector3f{m_max, m_min, 0.0f}, Vector2f{1.0f, 0.0f}, Vector3f{}}, 
+		{Vector3f{m_max, m_max, 0.0f}, Vector2f{1.0f, 1.0f}, Vector3f{}},
+		{Vector3f{m_min, m_max, 0.0f}, Vector2f{0.0f, 1.0f}, Vector3f{}}
 	};
-	static std::vector<uint32_t> indices = { 
+	static std::vector<uint32_t> indices{ 
 		0, 1, 2, 
 		2, 3, 0 
 	};

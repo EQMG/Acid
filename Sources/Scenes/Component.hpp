@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
 #include "Helpers/Delegate.hpp"
 
 namespace acid
@@ -15,10 +14,7 @@ class ACID_EXPORT Component :
 {
 public:
 	Component() :
-		m_started(false),
-		m_enabled(true),
-		m_removed(false),
-		m_parent(nullptr)
+		m_enabled(true)
 	{
 	}
 
@@ -60,10 +56,11 @@ public:
 
 private:
 	friend class Entity;
-	bool m_started;
+
+	bool m_started{};
 	bool m_enabled;
-	bool m_removed;
-	Entity *m_parent;
+	bool m_removed{};
+	Entity *m_parent{};
 };
 
 }

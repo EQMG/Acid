@@ -53,10 +53,9 @@ VertexDefault MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
-	auto position = Vector3f(x, 0.0f, z);
-	auto uv = Vector2f(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
-	auto normal = Vector3f::Up;
-	//auto colour = Colour::White;
-	return VertexDefault(position, uv, normal); // , colour
+	Vector3f position{x, 0.0f, z};
+	Vector2f uv{static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount)};
+	Vector3f normal{Vector3f::Up};
+	return VertexDefault{position, uv, normal};
 }
 }

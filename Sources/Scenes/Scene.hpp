@@ -17,10 +17,9 @@ public:
 	 * @param camera The scenes camera.
 	 */
 	explicit Scene(Camera *camera) :
-		m_camera(camera),
-		m_structure(std::make_unique<SceneStructure>()),
-		m_physics(std::make_unique<ScenePhysics>()),
-		m_started(false)
+		m_camera{camera},
+		m_structure{std::make_unique<SceneStructure>()},
+		m_physics{std::make_unique<ScenePhysics>()}
 	{
 	}
 
@@ -69,6 +68,6 @@ private:
 	std::unique_ptr<Camera> m_camera;
 	std::unique_ptr<SceneStructure> m_structure;
 	std::unique_ptr<ScenePhysics> m_physics;
-	bool m_started;
+	bool m_started{};
 };
 }

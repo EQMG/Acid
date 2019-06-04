@@ -18,9 +18,9 @@ public:
 	 * @param agility The agility for increasing actual. 
 	 **/
 	SmoothFloat(const T &initialValue, const float &agility) :
-		m_agility(agility),
-		m_target(initialValue),
-		m_actual(initialValue)
+		m_agility{agility},
+		m_target{initialValue},
+		m_actual{initialValue}
 	{
 	}
 
@@ -30,8 +30,8 @@ public:
 	 **/
 	void Update(const Time &delta)
 	{
-		float offset = m_target - m_actual;
-		float change = offset * delta.AsSeconds() * m_agility;
+		auto offset = m_target - m_actual;
+		auto change = offset * delta.AsSeconds() * m_agility;
 		m_actual += change;
 	}
 

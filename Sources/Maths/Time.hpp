@@ -10,7 +10,7 @@ namespace acid
 class ACID_EXPORT Time
 {
 public:
-	constexpr Time();
+	constexpr Time() = default;
 
 	/*
 	 * Creates a new time. This function is internal. To construct time values, use {@link Time::Seconds}, {@link Time::Milliseconds} or {@link Time::Microseconds} instead.
@@ -165,6 +165,6 @@ public:
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
 
-	std::chrono::microseconds m_microseconds;
+	std::chrono::microseconds m_microseconds{};
 };
 }

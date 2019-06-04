@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Log.hpp"
+#include "Serialized/Metadata.hpp"
 #include "Component.hpp"
 
 namespace acid

@@ -17,7 +17,7 @@ public:
 	 * @param length The drivers length. 
 	 **/
 	explicit Driver(const Time &length) :
-		m_length(length)
+		m_length{length}
 	{
 	}
 

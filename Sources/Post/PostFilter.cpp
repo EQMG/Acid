@@ -5,8 +5,8 @@ namespace acid
 uint32_t PostFilter::GlobalSwitching = 0;
 
 PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines) :
-	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, shaderStages, {}, defines, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None)
+	Subrender{pipelineStage},
+	m_pipeline{pipelineStage, shaderStages, {}, defines, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None}
 {
 }
 
@@ -63,6 +63,7 @@ bool PostFilter::RemoveAttachment(const std::string &name)
 void PostFilter::PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1,
 	const std::string &rendererAttachment2)
 {
+	// TODO: Clean up this state machine mess...
 	auto it1 = m_attachments.find(descriptorName1);
 	auto it2 = m_attachments.find(descriptorName1);
 

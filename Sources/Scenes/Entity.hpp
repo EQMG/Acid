@@ -186,8 +186,8 @@ private:
 	Transform m_localTransform;
 	mutable Transform m_worldTransform;
 	std::vector<std::unique_ptr<Component>> m_components;
-	Entity *m_parent;
+	Entity *m_parent{};
 	std::vector<Entity *> m_children;
-	bool m_removed;
+	bool m_removed{};
 };
 }

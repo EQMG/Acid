@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterFxaa::FilterFxaa(const Pipeline::Stage &pipelineStage, const float &spanMax) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag" }, {}),
-	m_spanMax(spanMax)
+	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag"}},
+	m_spanMax{spanMax}
 {
 }
 
@@ -18,9 +18,8 @@ void FilterFxaa::Render(const CommandBuffer &commandBuffer)
 	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	//m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}

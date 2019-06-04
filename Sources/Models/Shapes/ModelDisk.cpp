@@ -24,8 +24,8 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 {
-	auto temp = ModelDisk(innerRadius, outerRadius, slices, loops, false);
-	Metadata metadata = Metadata();
+	ModelDisk temp{innerRadius, outerRadius, slices, loops, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -64,10 +64,10 @@ void ModelDisk::Load()
 			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
 			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
-			auto position = Vector3f(radius * xDir, 0.0f, radius * yDir);
-			auto uvs = Vector2f(1.0f - iDivSlices, 1.0f - jDivLoops);
-			auto normal = Vector3f(0.0f, 1.0f, 0.0f);
-			vertices.emplace_back(VertexDefault(position, uvs, normal));
+			Vector3f position{radius * xDir, 0.0f, radius * yDir};
+			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivLoops};
+			Vector3f normal{0.0f, 1.0f, 0.0f};
+			vertices.emplace_back(VertexDefault{position, uvs, normal});
 		}
 	}
 

@@ -3,7 +3,7 @@
 namespace acid
 {
 Mesh::Mesh(const std::shared_ptr<Model> &model) :
-	m_model(model)
+	m_model{model}
 {
 }
 

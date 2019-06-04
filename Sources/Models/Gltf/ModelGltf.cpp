@@ -30,14 +30,14 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelGltf> ModelGltf::Create(const std::string &filename)
 {
-	auto temp = ModelGltf(filename, false);
-	Metadata metadata = Metadata();
+	ModelGltf temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 ModelGltf::ModelGltf(std::string filename, const bool &load) :
-	m_filename(std::move(filename))
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{

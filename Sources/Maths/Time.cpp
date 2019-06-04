@@ -5,11 +5,6 @@ namespace acid
 {
 const std::chrono::time_point<std::chrono::high_resolution_clock> Time::Start = std::chrono::high_resolution_clock::now();
 
-constexpr Time::Time() :
-	m_microseconds{0us}
-{
-}
-
 Time Time::Now()
 {
 	return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - Start);

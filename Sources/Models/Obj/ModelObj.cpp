@@ -15,7 +15,7 @@ class MaterialStreamReader :
 {
 public:
 	explicit MaterialStreamReader(std::string folder) :
-		m_folder(std::move(folder))
+		m_folder{std::move(folder)}
 	{
 	}
 
@@ -24,7 +24,7 @@ public:
 		(void) err;
 		(void) matId;
 
-		std::string filepath = m_folder + "/" + matId;
+		auto filepath = m_folder + "/" + matId;
 
 		if (!Files::ExistsInPath(filepath))
 		{
@@ -66,8 +66,8 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 {
-	auto temp = ModelObj(filename, false);
-	Metadata metadata = Metadata();
+	ModelObj temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -114,10 +114,10 @@ void ModelObj::Load()
 	{
 		for (const auto &index : shape.mesh.indices)
 		{
-			Vector3f position = Vector3f(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
-			Vector2f uv = Vector2f(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
-			Vector3f normal = Vector3f(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
-			VertexDefault vertex = VertexDefault(position, uv, normal);
+			Vector3f position{attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]};
+			Vector2f uv{attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
+			Vector3f normal{attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]};
+			VertexDefault vertex{position, uv, normal};
 
 			if (uniqueVertices.count(vertex) == 0)
 			{

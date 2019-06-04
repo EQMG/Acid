@@ -24,8 +24,8 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands)
 {
-	auto temp = ModelSphere(radius, latitudeBands, longitudeBands, false);
-	Metadata metadata = Metadata();
+	ModelSphere temp{radius, latitudeBands, longitudeBands, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -62,10 +62,10 @@ void ModelSphere::Load()
 			auto jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
 			auto phi = jDivLat * 2.0f * Maths::Pi<float>;
 
-			auto normal = Vector3f(std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta));
+			Vector3f normal{std::cos(phi) * std::sin(theta), std::cos(theta), std::sin(phi) * std::sin(theta)};
 			auto position = m_radius * normal;
-			auto uvs = Vector2f(1.0f - jDivLat, 1.0f - iDivLong);
-			vertices.emplace_back(VertexDefault(position, uvs, normal));
+			Vector2f uvs{1.0f - jDivLat, 1.0f - iDivLong};
+			vertices.emplace_back(VertexDefault{position, uvs, normal});
 		}
 	}
 

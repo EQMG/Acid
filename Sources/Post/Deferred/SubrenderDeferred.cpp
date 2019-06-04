@@ -15,13 +15,13 @@ namespace acid
 static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
-	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag" }, {}, {}, PipelineGraphics::Mode::Polygon,
-		PipelineGraphics::Depth::None),
-	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
-	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
+	Subrender{pipelineStage},
+	m_pipeline{pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, {}, PipelineGraphics::Mode::Polygon,
+	PipelineGraphics::Depth::None},
+	m_brdf{Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)},
+	m_fog{Colour::White, 0.001f, 2.0f, -0.1f, 0.3f}
 {
-	//auto metadata = Metadata();
+	//Metadata metadata;
 	//metadata << *m_pipeline.GetShader();
 	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
 }
@@ -41,7 +41,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	}
 
 	// Updates uniforms.
-	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
+	std::vector<DeferredLight> deferredLights{MAX_LIGHTS};
 	uint32_t lightCount = 0;
 
 	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
@@ -56,7 +56,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 		//	continue;
 		//}
 
-		DeferredLight deferredLight = {};
+		DeferredLight deferredLight{};
 		deferredLight.m_colour = light->GetColour();
 		deferredLight.m_position = light->GetParent()->GetWorldTransform().GetPosition();
 		deferredLight.m_radius = light->GetRadius();
@@ -93,9 +93,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
 	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
 
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
-
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}
@@ -112,14 +110,14 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
-	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-	PipelineCompute compute = PipelineCompute("Shaders/Brdf.comp");
+	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
+	PipelineCompute compute{"Shaders/Brdf.comp"};
 
 	// Bind the pipeline.
 	compute.BindPipeline(commandBuffer);
 
 	// Updates descriptors.
-	DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+	DescriptorsHandler descriptorSet{compute};
 	descriptorSet.Push("outColour", brdfImage.get());
 	descriptorSet.Update(compute);
 
@@ -152,14 +150,14 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	auto irradianceCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
-	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-	PipelineCompute compute = PipelineCompute("Shaders/Irradiance.comp");
+	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
+	PipelineCompute compute{"Shaders/Irradiance.comp"};
 
 	// Bind the pipeline.
 	compute.BindPipeline(commandBuffer);
 
 	// Updates descriptors.
-	DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
+	DescriptorsHandler descriptorSet{compute};
 	descriptorSet.Push("outColour", irradianceCubemap.get());
 	descriptorSet.Push("samplerColour", source);
 	descriptorSet.Update(compute);
@@ -196,11 +194,11 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 	// Creates the pipeline.
-	CommandBuffer commandBuffer = CommandBuffer(true, VK_QUEUE_COMPUTE_BIT);
-	PipelineCompute compute = PipelineCompute("Shaders/Prefiltered.comp");
+	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
+	PipelineCompute compute{"Shaders/Prefiltered.comp"};
 
-	DescriptorsHandler descriptorSet = DescriptorsHandler(compute);
-	PushHandler pushHandler = PushHandler(*compute.GetShader()->GetUniformBlock("PushObject"));
+	DescriptorsHandler descriptorSet{compute};
+	PushHandler pushHandler{*compute.GetShader()->GetUniformBlock("PushObject")};
 
 	// TODO: Use image barriers between rendering (single command buffer), rework write descriptor passing. Image class also needs a restructure.
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
@@ -211,12 +209,12 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		commandBuffer.Begin();
 		compute.BindPipeline(commandBuffer);
 
-		VkDescriptorImageInfo imageInfo = {};
+		VkDescriptorImageInfo imageInfo{};
 		imageInfo.sampler = prefilteredCubemap->GetSampler();
 		imageInfo.imageView = levelView;
 		imageInfo.imageLayout = prefilteredCubemap->GetLayout();
 
-		VkWriteDescriptorSet descriptorWrite = {};
+		VkWriteDescriptorSet descriptorWrite{};
 		descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 		descriptorWrite.dstBinding = *compute.GetShader()->GetDescriptorLocation("outColour");
