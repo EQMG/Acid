@@ -53,6 +53,6 @@ public:
 
 protected:
 	Transform m_localTransform;
-	Gizmo *m_gizmo;
+	Gizmo *m_gizmo{};
 };
 }

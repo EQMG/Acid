@@ -4,6 +4,7 @@
 #include "Files/File.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
+#include "Skin/SkinLoader.hpp"
 
 namespace acid
 {
@@ -36,7 +37,7 @@ void MeshAnimated::Load()
 		return;
 	}
 
-	File file{m_filename, new Xml{"COLLADA"}};
+	File file{m_filename, std::make_unique<Xml>("COLLADA")};
 	file.Load();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
@@ -47,7 +48,7 @@ void MeshAnimated::Load()
 	GeometryLoader geometryLoader{file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), correction};
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
-	m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
+	m_headJoint = CreateJoints(*skeletonLoader.GetHeadJoint());
 	m_headJoint->CalculateInverseBindTransform(Matrix4{});
 	m_animator = std::make_unique<Animator>(m_headJoint.get());
 
@@ -57,9 +58,9 @@ void MeshAnimated::Load()
 	m_animator->DoAnimation(m_animation.get());
 }
 
-Joint *MeshAnimated::CreateJoints(const JointData &data)
+std::unique_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)
 {
-	auto joint = new Joint{data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform()};
+	auto joint = std::make_unique<Joint>(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
 
 	for (const auto &child : data.GetChildren())
 	{

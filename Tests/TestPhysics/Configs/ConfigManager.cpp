@@ -10,8 +10,8 @@
 namespace test
 {
 ConfigManager::ConfigManager() :
-	m_audio("Configs/Audio.yaml", new Yaml()),
-	m_graphics("Configs/Graphics.yaml", new Yaml())
+	m_audio{"Configs/Audio.yaml", std::make_unique<Yaml>()},
+	m_graphics{"Configs/Graphics.yaml", std::make_unique<Yaml>()}
 {
 	Load();
 	Timers::Get()->Every(160s, [this]()
@@ -32,8 +32,8 @@ void ConfigManager::Load()
 	m_graphics.Load();
 	auto graphicsData = m_graphics.GetMetadata();
 	//Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
-	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", Vector2i(-1)));
-	Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2f>("Position", Vector2i(-1)));
+	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", Vector2i{-1}));
+	Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2f>("Position", Vector2i{-1}));
 	Window::Get()->SetBorderless(graphicsData->GetChildDefault<bool>("Borderless", false));
 	Window::Get()->SetResizable(graphicsData->GetChildDefault<bool>("Resizable", true));
 	Window::Get()->SetFloating(graphicsData->GetChildDefault<bool>("Floating", false));

@@ -2,13 +2,9 @@
 
 namespace acid
 {
-Frustum::Frustum()
-{
-}
-
 void Frustum::Update(const Matrix4 &view, const Matrix4 &projection)
 {
-	auto clip = std::array<float, 16>();
+	std::array<float, 16> clip;
 
 	clip[0] = view[0][0] * projection[0][0] + view[0][1] * projection[1][0] + view[0][2] * projection[2][0] + view[0][3] * projection[3][0];
 	clip[1] = view[0][0] * projection[0][1] + view[0][1] * projection[1][1] + view[0][2] * projection[2][1] + view[0][3] * projection[3][1];
@@ -127,7 +123,7 @@ bool Frustum::CubeInFrustum(const Vector3f &min, const Vector3f &max) const
 
 void Frustum::NormalizePlane(const int32_t &side)
 {
-	float magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2]);
+	auto magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2]);
 	m_frustum[side][0] /= magnitude;
 	m_frustum[side][1] /= magnitude;
 	m_frustum[side][2] /= magnitude;

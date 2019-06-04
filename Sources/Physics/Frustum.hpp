@@ -11,11 +11,6 @@ class ACID_EXPORT Frustum
 {
 public:
 	/**
-	 * Creates a new frustum.
-	 */
-	Frustum();
-
-	/**
 	 * Updates a frustum from the view and projection matrix.
 	 * @param view The view matrix.
 	 * @param projection The projection matrix.

@@ -55,15 +55,15 @@ void EntityPrefab::Load()
 
 	if (fileExt == ".json")
 	{
-		m_file = std::make_unique<File>(m_filename, new Json());
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Json>());
 	}
 	else if (fileExt == ".yaml")
 	{
-		m_file = std::make_unique<File>(m_filename, new Yaml());
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Yaml>());
 	}
 	else if (fileExt == ".xml")
 	{
-		m_file = std::make_unique<File>(m_filename, new Xml("EntityDefinition"));
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Xml>("EntityDefinition"));
 	}
 
 	if (m_file != nullptr)

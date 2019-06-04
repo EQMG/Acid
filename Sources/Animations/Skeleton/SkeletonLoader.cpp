@@ -10,10 +10,10 @@ SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<s
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	auto headNode = m_armatureData->FindChild("node");
-	m_headJoint.reset(LoadJointData(headNode, true));
+	m_headJoint = LoadJointData(headNode, true);
 }
 
-JointData *SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
+std::unique_ptr<JointData> SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
 {
 	auto joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -25,7 +25,7 @@ JointData *SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &
 	return joint;
 }
 
-JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
+std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
 {
 	auto nameId = *jointNode->FindAttribute("id");
 	auto index = GetBoneIndex(nameId);
@@ -51,7 +51,7 @@ JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const
 	}
 
 	m_jointCount++;
-	return new JointData{*index, nameId, transform};
+	return std::make_unique<JointData>(*index, nameId, transform);
 }
 
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)

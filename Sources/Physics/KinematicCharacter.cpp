@@ -9,13 +9,13 @@
 namespace acid
 {
 KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
-	CollisionObject(mass, friction),
-	m_up(Vector3f::Up),
-	m_stepHeight(0.0f),
-	m_fallSpeed(55.0f),
-	m_jumpSpeed(10.0f),
-	m_maxHeight(1.5f),
-	m_interpolate(true)
+	CollisionObject{mass, friction},
+	m_up{Vector3f::Up},
+	m_stepHeight{0.0f},
+	m_fallSpeed{55.0f},
+	m_jumpSpeed{10.0f},
+	m_maxHeight{1.5f},
+	m_interpolate{true}
 {
 }
 
@@ -46,7 +46,7 @@ void KinematicCharacter::Start()
 	CreateShape(true);
 	assert((m_shape != nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
-	btVector3 localInertia = btVector3();
+	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
 	if (m_mass != 0.0f)
@@ -56,9 +56,9 @@ void KinematicCharacter::Start()
 
 	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
-	m_ghostObject.reset(new btPairCachingGhostObject());
+	m_ghostObject.reset(new btPairCachingGhostObject{});
 	m_ghostObject->setWorldTransform(worldTransform);
-	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback{});
 	m_ghostObject->setCollisionShape(m_shape.get());
 	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	m_ghostObject->setFriction(m_friction);
@@ -68,7 +68,7 @@ void KinematicCharacter::Start()
 	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 	m_body = m_ghostObject.get();
 
-	m_controller.reset(new btKinematicCharacterController(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f));
+	m_controller.reset(new btKinematicCharacterController{m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f});
 	m_controller->setGravity(Collider::Convert(m_gravity));
 	m_controller->setUp(Collider::Convert(m_up));
 	m_controller->setStepHeight(m_stepHeight);
@@ -87,7 +87,7 @@ void KinematicCharacter::Update()
 	}
 
 	auto &transform = GetParent()->GetLocalTransform();
-	btTransform worldTransform = m_ghostObject->getWorldTransform();
+	auto worldTransform = m_ghostObject->getWorldTransform();
 	transform = Collider::Convert(worldTransform, transform.GetScaling());
 
 	m_linearVelocity = Collider::Convert(m_controller->getLinearVelocity());
@@ -96,8 +96,8 @@ void KinematicCharacter::Update()
 
 bool KinematicCharacter::InFrustum(const Frustum &frustum)
 {
-	btVector3 min = btVector3();
-	btVector3 max = btVector3();
+	btVector3 min;
+	btVector3 max;
 
 	if (m_body != nullptr && m_shape != nullptr)
 	{

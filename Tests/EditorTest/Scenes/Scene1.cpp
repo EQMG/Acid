@@ -91,7 +91,7 @@ Scene1::Scene1() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([this]()
 			{
-				auto sceneFile = File("Scene1.yaml", new Yaml());
+				auto sceneFile = File("Scene1.yaml", std::make_unique<Yaml>());
 				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())

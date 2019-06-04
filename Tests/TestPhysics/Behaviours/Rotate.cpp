@@ -21,17 +21,17 @@ void Rotate::Start()
 void Rotate::Update()
 {
 	m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
-	Transform &transform = GetParent()->GetLocalTransform();
+	auto &transform = GetParent()->GetLocalTransform();
 	transform.SetRotation(m_rotation);
 
 	if (m_test == 1)
 	{
-		Quaternion rotation = Quaternion(m_rotation.m_x, m_rotation.m_y, m_rotation.m_z);
+		Quaternion rotation{m_rotation};
 		transform.SetRotation(rotation.ToEuler());
 	}
 	else if (m_test == 2)
 	{
-		//btTransform transform1 = Collider::Convert(transform);
+		//auto transform1 = Collider::Convert(transform);
 		//transform = Collider::Convert(transform1, transform.GetScaling());
 	}
 }

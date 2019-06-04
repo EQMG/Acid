@@ -13,12 +13,17 @@ class ACID_EXPORT Quaternion
 public:
 	/**
 	 * Constructor for Quaternion.
+	 **/
+	Quaternion();
+
+	/**
+	 * Constructor for Quaternion.
 	 * @param x Start x. 
 	 * @param y Start y. 
 	 * @param z Start z. 
 	 * @param w Start w. 
 	 **/
-	explicit Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
+	Quaternion(const float &x, const float &y, const float &z, const float &w);
 
 	/**
 	 * Constructor for Quaternion.

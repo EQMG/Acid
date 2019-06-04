@@ -6,9 +6,9 @@
 
 namespace acid
 {
-File::File(std::string filename, Metadata *metadata) :
+File::File(std::string filename, std::unique_ptr<Metadata> &&metadata) :
 	m_filename{std::move(filename)},
-	m_metadata{metadata}
+	m_metadata{std::move(metadata)}
 {
 }
 

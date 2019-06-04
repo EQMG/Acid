@@ -12,13 +12,13 @@
 namespace acid
 {
 Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(mass, friction, linearFactor, angularFactor)
+	CollisionObject{mass, friction, linearFactor, angularFactor}
 {
 }
 
 Rigidbody::~Rigidbody()
 {
-	btRigidBody *body = btRigidBody::upcast(m_body);
+	auto body = btRigidBody::upcast(m_body);
 
 	if (body != nullptr && body->getMotionState() != nullptr)
 	{
@@ -43,7 +43,7 @@ void Rigidbody::Start()
 	CreateShape();
 	assert((m_shape == nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
-	btVector3 localInertia = btVector3();
+	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
 	if (m_mass != 0.0f)
@@ -54,10 +54,10 @@ void Rigidbody::Start()
 	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-	auto motionState = new btDefaultMotionState(worldTransform);
-	btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, motionState, m_shape.get(), localInertia);
+	auto motionState = new btDefaultMotionState{worldTransform};
+	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
 
-	m_rigidBody.reset(new btRigidBody(cInfo));
+	m_rigidBody.reset(new btRigidBody{cInfo});
 	//m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 	m_rigidBody->setWorldTransform(worldTransform);
 	//m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
@@ -108,8 +108,8 @@ void Rigidbody::Update()
 
 bool Rigidbody::InFrustum(const Frustum &frustum)
 {
-	btVector3 min = btVector3();
-	btVector3 max = btVector3();
+	btVector3 min;
+	btVector3 max;
 
 	if (m_body != nullptr && m_shape != nullptr)
 	{
@@ -191,7 +191,7 @@ void Rigidbody::RecalculateMass()
 
 	bool isDynamic = m_mass != 0.0f;
 
-	btVector3 localInertia = btVector3(0.0f, 0.0f, 0.0f);
+	btVector3 localInertia;
 
 	auto shape = GetParent()->GetComponent<Collider>();
 

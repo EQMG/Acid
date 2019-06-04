@@ -22,7 +22,7 @@ public:
 
 	void Update() override;
 
-	Gizmo *AddGizmo(Gizmo *gizmo);
+	Gizmo *AddGizmo(std::unique_ptr<Gizmo> &&gizmo);
 
 	void RemoveGizmo(Gizmo *gizmo);
 

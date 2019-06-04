@@ -134,11 +134,11 @@ int main(int argc, char **argv)
 	auto metadata = Metadata();
 	metadata << example1;
 
-	File{"Serial/Example1.json", new Json{&metadata}}.Write();
-	File{"Serial/Example1.xml", new Xml{"Example", &metadata}}.Write();
-	File{"Serial/Example1.yaml", new Yaml{&metadata}}.Write();
+	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();
+	File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
+	File{"Serial/Example1.yaml", std::make_unique<Yaml>(&metadata)}.Write();
 
-	File jsonLoader{"Serial/Example1.json", new Json{}};
+	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
 	jsonLoader.Load();
 	jsonLoader.SetFilename("Serial/Example2.json");
 	jsonLoader.Write();

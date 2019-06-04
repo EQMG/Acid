@@ -20,9 +20,9 @@ void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
 	}
 }
 
-void Joint::AddChild(Joint *child)
+void Joint::AddChild(std::unique_ptr<Joint> &&child)
 {
-	m_children.emplace_back(child);
+	m_children.emplace_back(std::move(child));
 }
 
 void Joint::AddSelfAndChildren(std::vector<Joint *> &children)

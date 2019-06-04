@@ -9,13 +9,12 @@
 namespace acid
 {
 CollisionObject::CollisionObject(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	m_mass(mass),
-	m_friction(friction),
-	m_frictionRolling(0.1f),
-	m_frictionSpinning(0.2f),
-	m_linearFactor(linearFactor),
-	m_angularFactor(angularFactor),
-	m_body(nullptr)
+	m_mass{mass},
+	m_friction{friction},
+	m_frictionRolling{0.1f},
+	m_frictionSpinning{0.2f},
+	m_linearFactor{linearFactor},
+	m_angularFactor{angularFactor}
 {
 }
 
@@ -119,7 +118,7 @@ void CollisionObject::CreateShape(const bool &forceSingle)
 		m_shape.release();
 	}
 
-	auto compoundShape = new btCompoundShape();
+	auto compoundShape = new btCompoundShape{};
 
 	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 	{
