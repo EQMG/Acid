@@ -31,16 +31,16 @@ public:
 		 */
 		Character(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX,
 			const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
-			m_id(id),
-			m_textureCoordX(textureCoordX),
-			m_textureCoordY(textureCoordY),
-			m_maxTextureCoordX(textureSizeX + textureCoordX),
-			m_maxTextureCoordY(textureSizeY + textureCoordY),
-			m_offsetX(offsetX),
-			m_offsetY(offsetY),
-			m_sizeX(sizeX),
-			m_sizeY(sizeY),
-			m_advanceX(advanceX)
+			m_id{id},
+			m_textureCoordX{textureCoordX},
+			m_textureCoordY{textureCoordY},
+			m_maxTextureCoordX{textureSizeX + textureCoordX},
+			m_maxTextureCoordY{textureSizeY + textureCoordY},
+			m_offsetX{offsetX},
+			m_offsetY{offsetY},
+			m_sizeX{sizeX},
+			m_sizeY{sizeY},
+			m_advanceX{advanceX}
 		{
 		}
 
@@ -126,13 +126,13 @@ private:
 	std::map<std::string, std::string> m_values;
 
 	std::string m_filename;
-	float m_verticalPerPixelSize;
-	float m_horizontalPerPixelSize;
-	int32_t m_imageWidth;
-	float m_spaceWidth;
+	float m_verticalPerPixelSize{};
+	float m_horizontalPerPixelSize{};
+	int32_t m_imageWidth{};
+	float m_spaceWidth{};
 	std::vector<int32_t> m_padding;
-	int32_t m_paddingWidth;
-	int32_t m_paddingHeight;
-	float m_maxSizeY;
+	int32_t m_paddingWidth{};
+	int32_t m_paddingHeight{};
+	float m_maxSizeY{};
 };
 }

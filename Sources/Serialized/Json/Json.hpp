@@ -13,18 +13,18 @@ public:
 		public NonCopyable
 	{
 	public:
+		Section(Section *parent, std::string name, std::string content) :
+			m_parent{parent},
+			m_name{std::move(name)},
+			m_content{std::move(content)}
+		{
+		}
+
 		Section *m_parent;
 		std::vector<std::unique_ptr<Section>> m_children;
 
 		std::string m_name;
 		std::string m_content;
-
-		Section(Section *parent, std::string name, std::string content) :
-			m_parent(parent),
-			m_name(std::move(name)),
-			m_content(std::move(content))
-		{
-		}
 	};
 
 	Json();

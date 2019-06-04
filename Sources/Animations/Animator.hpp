@@ -64,7 +64,7 @@ public:
 	 * then the next keyframe is used as both the previous and next keyframe. The reverse happens if there is no next keyframe.
 	 * @return The previous and next keyframes, in an array which therefore will always have a length of 2.
 	 **/
-	std::array<Keyframe, 2> GetPreviousAndNextFrames() const;
+	std::pair<Keyframe, Keyframe> GetPreviousAndNextFrames() const;
 
 	/**
 	 * Calculates how far between the previous and next keyframe the current animation time is, and returns it as a value between 0 and 1.
@@ -124,6 +124,6 @@ private:
 	Joint *m_rootJoint;
 
 	Time m_animationTime;
-	Animation *m_currentAnimation;
+	Animation *m_currentAnimation{};
 };
 }

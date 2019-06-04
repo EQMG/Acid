@@ -20,7 +20,7 @@ CameraFps::CameraFps() :
 {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;
-	m_fieldOfView = 70.0_deg;
+	m_fieldOfView = Maths::Radians(70.0f);
 }
 
 void CameraFps::Start()
@@ -49,7 +49,7 @@ void CameraFps::Update()
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;
 		m_rotation.m_x += rotationDelta.m_y * m_sensitivity;
-		m_rotation.m_x = std::clamp(m_rotation.m_x, static_cast<float>(90.0_deg), static_cast<float>(270.0_deg));
+		m_rotation.m_x = std::clamp(m_rotation.m_x, Maths::Radians(90.0f), Maths::Radians(270.0f));
 	}
 
 	m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);

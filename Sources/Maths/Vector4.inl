@@ -8,58 +8,58 @@ namespace acid
 {
 template<typename T>
 constexpr Vector4<T>::Vector4():
-	m_x(0),
-	m_y(0),
-	m_z(0),
-	m_w(1)
+	m_x{0},
+	m_y{0},
+	m_z{0},
+	m_w{1}
 {
 }
 
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &a):
-	m_x(a),
-	m_y(a),
-	m_z(a),
-	m_w(a)
+	m_x{a},
+	m_y{a},
+	m_z{a},
+	m_w{a}
 {
 }
 
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &x, const T &y, const T &z, const T &w):
-	m_x(x),
-	m_y(y),
-	m_z(z),
-	m_w(w)
+	m_x{x},
+	m_y{y},
+	m_z{z},
+	m_w{w}
 {
 }
 
 template<typename T>
-template<typename K>
-constexpr Vector4<T>::Vector4(const Vector2<K> &left, const Vector2<K> &right):
-	m_x(static_cast<T>(left.m_x)),
-	m_y(static_cast<T>(left.m_y)),
-	m_z(static_cast<T>(right.m_x)),
-	m_w(static_cast<T>(right.m_y))
+template<typename K, typename J>
+constexpr Vector4<T>::Vector4(const Vector2<K> &left, const Vector2<J> &right):
+	m_x{static_cast<T>(left.m_x)},
+	m_y{static_cast<T>(left.m_y)},
+	m_z{static_cast<T>(right.m_x)},
+	m_w{static_cast<T>(right.m_y)}
 {
 }
 
 template<typename T>
-template<typename K>
-constexpr Vector4<T>::Vector4(const Vector3<K> &source, const T &w):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)),
-	m_z(static_cast<T>(source.m_z)),
-	m_w(w)
+template<typename K, typename J>
+constexpr Vector4<T>::Vector4(const Vector3<K> &source, const J &w):
+	m_x{static_cast<T>(source.m_x)},
+	m_y{static_cast<T>(source.m_y)},
+	m_z{static_cast<T>(source.m_z)},
+	m_w{static_cast<T>(w)}
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector4<T>::Vector4(const Vector4<K> &source):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)),
-	m_z(static_cast<T>(source.m_z)),
-	m_w(static_cast<T>(source.m_w))
+	m_x{static_cast<T>(source.m_x)},
+	m_y{static_cast<T>(source.m_y)},
+	m_z{static_cast<T>(source.m_z)},
+	m_w{static_cast<T>(source.m_w)}
 {
 }
 

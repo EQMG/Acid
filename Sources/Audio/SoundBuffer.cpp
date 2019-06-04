@@ -31,15 +31,14 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 {
-	auto temp = SoundBuffer(filename, false);
-	Metadata metadata = Metadata();
+	SoundBuffer temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 SoundBuffer::SoundBuffer(std::string filename, const bool &load) :
-	m_filename(std::move(filename)),
-	m_buffer(0)
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{
@@ -59,7 +58,7 @@ void SoundBuffer::Load()
 		return;
 	}
 
-	std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 	if (fileExt == ".wav")
 	{

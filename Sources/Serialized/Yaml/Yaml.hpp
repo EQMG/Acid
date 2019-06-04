@@ -13,20 +13,20 @@ public:
 		public NonCopyable
 	{
 	public:
+		Section(Section *parent, std::string content, const uint32_t &indentation, const uint32_t &arrayLevels) :
+			m_parent{parent},
+			m_indentation{indentation},
+			m_arrayLevels{arrayLevels},
+			m_content{std::move(content)}
+		{
+		}
+
 		Section *m_parent;
 		std::vector<std::unique_ptr<Section>> m_children;
 
 		uint32_t m_indentation;
 		uint32_t m_arrayLevels;
 		std::string m_content;
-
-		Section(Section *parent, std::string content, const uint32_t &indentation, const uint32_t &arrayLevels) :
-			m_parent(parent),
-			m_indentation(indentation),
-			m_arrayLevels(arrayLevels),
-			m_content(std::move(content))
-		{
-		}
 	};
 
 	Yaml();

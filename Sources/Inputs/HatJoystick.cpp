@@ -3,10 +3,9 @@
 namespace acid
 {
 HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMask<JoystickHat> &hatFlags) :
-	m_port(port),
-	m_hat(hat),
-	m_hatFlags(hatFlags),
-	m_lastDown(false)
+	m_port{port},
+	m_hat{hat},
+	m_hatFlags{hatFlags}
 {
 	Joysticks::Get()->OnHat().Add([this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value)
 	{

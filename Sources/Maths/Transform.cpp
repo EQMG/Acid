@@ -3,18 +3,18 @@
 namespace acid
 {
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scaling) :
-	m_position(position),
-	m_rotation(rotation),
-	m_scaling(scaling),
-	m_dirty(true)
+	m_position{position},
+	m_rotation{rotation},
+	m_scaling{scaling},
+	m_dirty{true}
 {
 }
 
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const float &scale) :
-	m_position(position),
-	m_rotation(rotation),
-	m_scaling(scale),
-	m_dirty(true)
+	m_position{position},
+	m_rotation{rotation},
+	m_scaling{scale},
+	m_dirty{true}
 {
 }
 

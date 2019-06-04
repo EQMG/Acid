@@ -8,13 +8,10 @@ namespace acid
 {
 Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset) :
 	UiObject(parent, rectangle),
-	m_model(ModelRectangle::Create(0.0f, 1.0f)),
-	m_image(std::move(image)),
-	m_numberOfRows(1),
-	m_selectedRow(0),
-	m_atlasScale(1.0f, 1.0f),
-	m_ninePatches(0.0f),
-	m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset))
+	m_model{ModelRectangle::Create(0.0f, 1.0f)},
+	m_image{std::move(image)},
+	m_atlasScale{1.0f},
+	m_colourDriver{std::make_unique<DriverConstant<Colour>>(colourOffset)}
 {
 }
 

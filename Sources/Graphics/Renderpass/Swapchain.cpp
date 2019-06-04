@@ -8,14 +8,11 @@ static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = { 
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR, };
 
 Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
-	m_extent(extent),
-	m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
-	m_imageCount(0),
-	m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
-	m_compositeAlpha(VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-	m_swapchain(VK_NULL_HANDLE),
-	m_fenceImage(VK_NULL_HANDLE),
-	m_activeImageIndex(std::numeric_limits<uint32_t>::max())
+	m_extent{extent},
+	m_presentMode{VK_PRESENT_MODE_FIFO_KHR},
+	m_preTransform{VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR},
+	m_compositeAlpha{VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR},
+	m_activeImageIndex{std::numeric_limits<uint32_t>::max()}
 {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto surface = Graphics::Get()->GetSurface();
@@ -28,7 +25,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 
 	uint32_t physicalPresentModeCount = 0;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
-	std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
+	std::vector<VkPresentModeKHR> physicalPresentModes{physicalPresentModeCount};
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, physicalPresentModes.data());
 
 	for (const auto &presentMode : physicalPresentModes)
@@ -45,7 +42,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		}
 	}
 
-	uint32_t desiredImageCount = surfaceCapabilities.minImageCount + 1;
+	auto desiredImageCount = surfaceCapabilities.minImageCount + 1;
 
 	if (surfaceCapabilities.maxImageCount > 0 && desiredImageCount > surfaceCapabilities.maxImageCount)
 	{
@@ -71,7 +68,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		}
 	}
 
-	VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
+	VkSwapchainCreateInfoKHR swapchainCreateInfo{};
 	swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 	swapchainCreateInfo.surface = *surface;
 	swapchainCreateInfo.minImageCount = desiredImageCount;
@@ -123,7 +120,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 	}
 
-	VkFenceCreateInfo fenceCreateInfo = {};
+	VkFenceCreateInfo fenceCreateInfo{};
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 	vkCreateFence(*logicalDevice, &fenceCreateInfo, nullptr, &m_fenceImage);
 }
@@ -146,13 +143,12 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	VkResult acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
+	auto acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&m_activeImageIndex);
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR && acquireResult != VK_ERROR_OUT_OF_DATE_KHR)
 	{
 		throw std::runtime_error("Failed to acquire swapchain image");
-		return acquireResult;
 	}
 
 	//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));

@@ -33,9 +33,8 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushObject", m_pushObject);
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}

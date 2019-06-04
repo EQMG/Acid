@@ -140,7 +140,7 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0_deg, 0.0f)));
+	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f)));
 
 	// Skybox.
 	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f));
@@ -158,7 +158,7 @@ void Scene1::Start()
 	plane->AddComponent<MeshRender>();
 	plane->AddComponent<ShadowRender>();
 
-	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
+	static const std::vector cubeColours{ Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -183,7 +183,7 @@ void Scene1::Start()
 	cone->AddComponent<MeshRender>();
 	cone->AddComponent<ShadowRender>();
 
-	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, 90.0_deg), 1.0f));
+	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, Maths::Radians(90.0f)), 1.0f));
 	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 16, 8));
 	cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
 	cylinder->AddComponent<Rigidbody>(2.5f);

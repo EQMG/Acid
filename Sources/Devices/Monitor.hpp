@@ -52,9 +52,7 @@ public:
 
 	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return m_monitor; }
 
-	const bool &IsPrimary() const { return m_primary; }
-
-	void SetPrimary(const bool &primary) { m_primary = primary; }
+	const bool &IsPrimary() const;
 
 	/**
 	 * Gets the workarea size of the monitor.
@@ -118,6 +116,5 @@ public:
 
 private:
 	GLFWmonitor *m_monitor;
-	bool m_primary;
 };
 }

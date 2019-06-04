@@ -49,18 +49,18 @@ private:
 	const PhysicalDevice *m_physicalDevice;
 	const Surface *m_surface;
 
-	VkDevice m_logicalDevice;
-	VkPhysicalDeviceFeatures m_enabledFeatures;
+	VkDevice m_logicalDevice{VK_NULL_HANDLE};
+	VkPhysicalDeviceFeatures m_enabledFeatures{};
 
-	VkQueueFlags m_supportedQueues;
-	uint32_t m_graphicsFamily;
-	uint32_t m_presentFamily;
-	uint32_t m_computeFamily;
-	uint32_t m_transferFamily;
+	VkQueueFlags m_supportedQueues{};
+	uint32_t m_graphicsFamily{};
+	uint32_t m_presentFamily{};
+	uint32_t m_computeFamily{};
+	uint32_t m_transferFamily{};
 
-	VkQueue m_graphicsQueue;
-	VkQueue m_presentQueue;
-	VkQueue m_computeQueue;
-	VkQueue m_transferQueue;
+	VkQueue m_graphicsQueue{VK_NULL_HANDLE};
+	VkQueue m_presentQueue{VK_NULL_HANDLE};
+	VkQueue m_computeQueue{VK_NULL_HANDLE};
+	VkQueue m_transferQueue{VK_NULL_HANDLE};
 };
 }

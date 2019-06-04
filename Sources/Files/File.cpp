@@ -7,12 +7,12 @@
 namespace acid
 {
 File::File(std::string filename, Metadata *metadata) :
-	m_filename(std::move(filename)),
-	m_metadata(metadata)
+	m_filename{std::move(filename)},
+	m_metadata{metadata}
 {
 }
 
-void File::Read()
+void File::Load()
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
@@ -36,7 +36,7 @@ void File::Read()
 #endif
 }
 
-void File::Write()
+void File::Write() const
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();

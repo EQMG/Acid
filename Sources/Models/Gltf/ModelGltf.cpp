@@ -6,6 +6,7 @@
 
 #include "tiny_gltf.h"
 #include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 

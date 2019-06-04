@@ -22,14 +22,14 @@ ConfigManager::ConfigManager() :
 
 void ConfigManager::Load()
 {
-	m_audio.Read();
+	m_audio.Load();
 	auto audioData = m_audio.GetMetadata();
 	Audio::Get()->SetGain(Audio::Type::Master, audioData->GetChildDefault<float>("Master Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::General, audioData->GetChildDefault<float>("General Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::Effect, audioData->GetChildDefault<float>("Effect Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::Music, audioData->GetChildDefault<float>("Music Volume", 1.0f));
 
-	m_graphics.Read();
+	m_graphics.Load();
 	auto graphicsData = m_graphics.GetMetadata();
 	//Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
 	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", Vector2i(-1)));
@@ -41,7 +41,7 @@ void ConfigManager::Load()
 	Engine::Get()->SetFpsLimit(graphicsData->GetChildDefault<float>("FPS Limit", 0.0f));
 }
 
-void ConfigManager::Save()
+void ConfigManager::Save() const
 {
 	auto audioData = m_audio.GetMetadata();
 	audioData->SetChild<float>("Master Volume", Audio::Get()->GetGain(Audio::Type::Master));

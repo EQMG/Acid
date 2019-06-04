@@ -7,9 +7,9 @@
 namespace acid
 {
 SubrenderGizmos::SubrenderGizmos(const Pipeline::Stage &pipelineStage) :
-	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag" }, { VertexDefault::GetVertexInput(0), GizmoType::Instance::GetVertexInput(1) }, {},
-		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE)
+	Subrender{pipelineStage},
+	m_pipeline{pipelineStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {VertexDefault::GetVertexInput(0), GizmoType::Instance::GetVertexInput(1)}, {},
+	PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE}
 {
 }
 

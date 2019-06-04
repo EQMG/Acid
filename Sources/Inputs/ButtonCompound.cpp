@@ -3,14 +3,13 @@
 namespace acid
 {
 ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool &useAnd) :
-	m_useAnd(useAnd),
-	m_lastDown(false)
+	m_useAnd{useAnd}
 {
 	for (const auto &button : buttons)
 	{
 		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 		{
-			bool isDown = IsDown();
+			auto isDown = IsDown();
 
 			if (!m_lastDown && isDown)
 			{

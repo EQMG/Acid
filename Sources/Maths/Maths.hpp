@@ -46,7 +46,7 @@ public:
 	template<typename T = float>
 	static constexpr T Radians(const T &degrees)
 	{
-		return degrees * Pi<long double> / 180;
+		return static_cast<T>(degrees * Pi<long double> / 180);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public:
 	template<typename T = float>
 	static constexpr T Degrees(const T &radians)
 	{
-		return radians * 180 / Pi<long double>;
+		return static_cast<T>(radians * 180 / Pi<long double>);
 	}
 
 	/**
@@ -245,14 +245,4 @@ public:
 		seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 	}
 };
-
-constexpr long double operator"" _deg(long double deg)
-{
-	return deg * Maths::Pi<long double> / 180;
-}
-
-constexpr long double operator"" _rad(long double rad)
-{
-	return rad;
-}
 }

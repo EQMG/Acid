@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	}
 
 	{
-		RingBuffer<int32_t> buffer(4);
+		RingBuffer<int32_t> buffer{4};
 
 		if (!buffer.push(1, 2, 3, 4))
 		{

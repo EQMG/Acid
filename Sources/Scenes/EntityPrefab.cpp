@@ -51,7 +51,7 @@ void EntityPrefab::Load()
 		return;
 	}
 
-	std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
 
 	if (fileExt == ".json")
 	{
@@ -68,13 +68,41 @@ void EntityPrefab::Load()
 
 	if (m_file != nullptr)
 	{
-		m_file->Read();
+		m_file->Load();
 	}
 }
 
-void EntityPrefab::Write(const Entity &entity)
+void EntityPrefab::Write() const
 {
-	m_file->GetMetadata()->ClearChildren();
+	m_file->Write();
+}
+
+const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
+{
+	for (const auto &child : entityPrefab.GetParent()->GetChildren())
+	{
+		if (child->GetName().empty())
+		{
+			continue;
+		}
+
+		auto component = Scenes::Get()->GetComponentRegister().Create(child->GetName());
+
+		if (component == nullptr)
+		{
+			continue;
+		}
+
+		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
+		entity.AddComponent(component);
+	}
+
+	return entityPrefab;
+}
+
+EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
+{
+	entityPrefab.m_file->GetMetadata()->ClearChildren();
 
 	for (const auto &component : entity.GetComponents())
 	{
@@ -85,25 +113,22 @@ void EntityPrefab::Write(const Entity &entity)
 			continue;
 		}
 
-		auto child = m_file->GetMetadata()->AddChild(new Metadata(*componentName));
+		auto child = entityPrefab.m_file->GetMetadata()->AddChild(new Metadata(*componentName));
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 	}
+
+	return entityPrefab;
 }
 
-void EntityPrefab::Save()
+const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab)
 {
-	m_file->Write();
-}
-
-const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab)
-{
-	metadata.GetChild("Filename", enityPrefab.m_filename);
+	metadata.GetChild("Filename", entityPrefab.m_filename);
 	return metadata;
 }
 
-Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab)
+Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab)
 {
-	metadata.SetChild("Filename", enityPrefab.m_filename);
+	metadata.SetChild("Filename", entityPrefab.m_filename);
 	return metadata;
 }
 }

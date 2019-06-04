@@ -8,11 +8,8 @@
 namespace acid
 {
 Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
-	m_instance(instance),
-	m_physicalDevice(physicalDevice),
-	m_surface(VK_NULL_HANDLE),
-	m_capabilities({}),
-	m_format({})
+	m_instance{instance},
+	m_physicalDevice{physicalDevice}
 {
 	// Creates the surface.
 	Window::Get()->CreateSurface(*m_instance, nullptr, &m_surface);
@@ -21,7 +18,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 
 	uint32_t surfaceFormatCount = 0;
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, nullptr);
-	std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
+	std::vector<VkSurfaceFormatKHR> surfaceFormats{surfaceFormatCount};
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, surfaceFormats.data());
 
 	if ((surfaceFormatCount == 1) && (surfaceFormats[0].format == VK_FORMAT_UNDEFINED))

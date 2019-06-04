@@ -5,15 +5,13 @@
 namespace acid
 {
 CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
-	m_queueType(queueType),
-	m_commandBuffer(VK_NULL_HANDLE),
-	m_running(false)
+	m_queueType{queueType}
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_commandPool = Graphics::Get()->GetCommandPool();
 
-	VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
+	VkCommandBufferAllocateInfo commandBufferAllocateInfo{};
 	commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 	commandBufferAllocateInfo.commandPool = *m_commandPool;
 	commandBufferAllocateInfo.level = bufferLevel;
@@ -40,7 +38,7 @@ void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
 		return;
 	}
 
-	VkCommandBufferBeginInfo beginInfo = {};
+	VkCommandBufferBeginInfo beginInfo{};
 	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 	beginInfo.flags = usage;
 	Graphics::CheckVk(vkBeginCommandBuffer(m_commandBuffer, &beginInfo));
@@ -68,12 +66,12 @@ void CommandBuffer::SubmitIdle()
 		End();
 	}
 
-	VkSubmitInfo submitInfo = {};
+	VkSubmitInfo submitInfo{};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &m_commandBuffer;
 
-	VkFenceCreateInfo fenceCreateInfo = {};
+	VkFenceCreateInfo fenceCreateInfo{};
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 
 	VkFence fence;
@@ -98,7 +96,7 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 		End();
 	}
 
-	VkSubmitInfo submitInfo = {};
+	VkSubmitInfo submitInfo{};
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &m_commandBuffer;

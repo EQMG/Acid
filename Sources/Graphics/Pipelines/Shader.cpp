@@ -4,6 +4,7 @@
 #include <glslang/Public/ShaderLang.h>
 #include "Graphics/Graphics.hpp"
 #include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 #include "Helpers/String.hpp"
 #include "Graphics/Buffers/StorageBuffer.hpp"
 #include "Graphics/Buffers/UniformBuffer.hpp"
@@ -57,8 +58,7 @@ public:
 	}
 };
 
-Shader::Shader() :
-	m_lastDescriptorBinding(0)
+Shader::Shader() 
 {
 }
 
@@ -198,7 +198,7 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 
 	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 	{
-		if (uniformBlock.GetType() != Shader::UniformBlock::Type::Push)
+		if (uniformBlock.GetType() != UniformBlock::Type::Push)
 		{
 			continue;
 		}

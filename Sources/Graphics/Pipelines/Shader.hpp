@@ -433,7 +433,7 @@ private:
 	std::map<std::string, uint32_t> m_descriptorSizes;
 
 	std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
-	uint32_t m_lastDescriptorBinding;
+	uint32_t m_lastDescriptorBinding{};
 	std::vector<VkDescriptorPoolSize> m_descriptorPools;
 	std::map<uint32_t, VkDescriptorType> m_descriptorTypes;
 	std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;

@@ -21,11 +21,11 @@ private:
 
 	std::optional<uint32_t> GetBoneIndex(const std::string &name);
 
-	const Metadata *m_armatureData;
+	const Metadata *m_armatureData{};
 	std::vector<std::string> m_boneOrder;
 	Matrix4 m_correction;
 
-	uint32_t m_jointCount;
+	uint32_t m_jointCount{};
 	std::unique_ptr<JointData> m_headJoint;
 };
 }

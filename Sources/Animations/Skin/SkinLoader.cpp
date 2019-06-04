@@ -3,8 +3,8 @@
 namespace acid
 {
 SkinLoader::SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights) :
-	m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
-	m_maxWeights(maxWeights)
+	m_skinData{libraryControllers->FindChild("controller")->FindChild("skin")},
+	m_maxWeights{maxWeights}
 {
 	LoadJointsList();
 	auto weights = LoadWeights();
@@ -16,7 +16,7 @@ SkinLoader::SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWe
 void SkinLoader::LoadJointsList()
 {
 	auto inputNode = m_skinData->FindChild("vertex_weights");
-	std::string jointDataId = inputNode->FindChildWithAttribute("input", "semantic", "JOINT")->FindAttribute("source").substr(1);
+	auto jointDataId = inputNode->FindChildWithAttribute("input", "semantic", "JOINT")->FindAttribute("source")->substr(1);
 	auto jointsNode = m_skinData->FindChildWithAttribute("source", "id", jointDataId)->FindChild("Name_array");
 	m_jointOrder = String::Split(jointsNode->GetValue(), " ");
 }
@@ -24,15 +24,15 @@ void SkinLoader::LoadJointsList()
 std::vector<float> SkinLoader::LoadWeights() const
 {
 	auto inputNode = m_skinData->FindChild("vertex_weights");
-	std::string weightsDataId = inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute("source").substr(1);
+	auto weightsDataId = inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute("source")->substr(1);
 	auto weightsNode = m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array");
 
-	auto rawData = String::Split(weightsNode->GetValue(), " ");
-	std::vector<float> weights(rawData.size());
+	auto rawDatas = String::Split(weightsNode->GetValue(), " ");
+	std::vector<float> weights(rawDatas.size()); // TODO C++20: {rawDatas.size()}
 
 	for (uint32_t i = 0; i < weights.size(); i++)
 	{
-		weights[i] = String::From<float>(rawData[i]);
+		weights[i] = String::From<float>(rawDatas[i]);
 	}
 
 	return weights;
@@ -58,7 +58,7 @@ void SkinLoader::GetSkinWeights(const Metadata *weightsDataNode, const std::vect
 
 	for (auto count : counts)
 	{
-		auto skinData = VertexWeights();
+		VertexWeights skinData;
 
 		for (uint32_t i = 0; i < count; i++)
 		{

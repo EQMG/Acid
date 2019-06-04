@@ -6,12 +6,12 @@
 namespace acid
 {
 Json::Json() :
-	Metadata("", "")
+	Metadata{}
 {
 }
 
 Json::Json(Metadata *metadata) :
-	Metadata("", "")
+	Metadata{}
 {
 	AddChildren(metadata, this);
 }
@@ -33,7 +33,7 @@ void Json::Load(std::istream *inStream)
 		Files::SafeGetLine(*inStream, linebuf);
 		lineNum++;
 
-		for (const char &c : linebuf)
+		for (const auto &c : linebuf)
 		{
 			if (c == '{' || c == '[')
 			{
@@ -56,7 +56,7 @@ void Json::Load(std::istream *inStream)
 				}
 
 				currentSection->m_content += summation.str();
-				summation.str(std::string());
+				summation.str({});
 
 				auto section = new Section(currentSection, name, "");
 				currentSection->m_children.emplace_back(section);
@@ -65,7 +65,7 @@ void Json::Load(std::istream *inStream)
 			else if (c == '}' || c == ']')
 			{
 				currentSection->m_content += summation.str();
-				summation.str(std::string());
+				summation.str({});
 
 				if (currentSection->m_parent != nullptr)
 				{
@@ -94,13 +94,13 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+		auto created = destination->AddChild(new Metadata{child->GetName(), child->GetValue()});
 		AddChildren(child.get(), created);
 	}
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		destination->AddAttribute(attribute.first, attribute.second);
+		destination->SetAttribute(attribute.first, attribute.second);
 	}
 }
 
@@ -110,7 +110,7 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata(source->m_name, "");
+		thisValue = new Metadata{source->m_name, ""};
 		parent->AddChild(thisValue);
 	}
 
@@ -119,7 +119,7 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 	for (const auto &data : contentSplit)
 	{
 		std::string name;
-		std::string value = data;
+		auto value = data;
 
 		if (String::Contains(data, ":"))
 		{
@@ -143,11 +143,11 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 				value = value.substr(1, value.size() - 2);
 			}
 
-			thisValue->AddAttribute(name, value);
+			thisValue->SetAttribute(name, value);
 		}
 		else
 		{
-			auto newChild = new Metadata(name, value);
+			auto newChild = new Metadata{name, value};
 			thisValue->AddChild(newChild);
 		}
 	}
@@ -167,8 +167,8 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 		indents << "  ";
 	}
 
-	char openBrace = '{';
-	char closeBrace = '}';
+	auto openBrace = '{';
+	auto closeBrace = '}';
 
 	for (const auto &child : source->GetChildren())
 	{

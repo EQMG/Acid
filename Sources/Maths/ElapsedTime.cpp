@@ -3,8 +3,8 @@
 namespace acid
 {
 ElapsedTime::ElapsedTime(const Time &interval) :
-	m_startTime(Time::Now()),
-	m_interval(interval)
+	m_startTime{Time::Now()},
+	m_interval{interval}
 {
 }
 

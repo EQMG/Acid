@@ -12,9 +12,9 @@ class ACID_EXPORT File
 public:
 	explicit File(std::string filename, Metadata *metadata);
 
-	void Read();
+	void Load();
 
-	void Write();
+	void Write() const;
 
 	void Clear();
 

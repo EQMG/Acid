@@ -36,25 +36,27 @@ public:
 	 * @param z Start z.
 	 * @param w Start w.
 	 **/
-	constexpr Vector4(const T &x, const T &y, const T &z, const T &w = 1.0f);
+	constexpr Vector4(const T &x, const T &y, const T &z, const T &w = 1);
 	
 	/**
 	 * Constructor for Vector4.
-	 * @tparam K The sources type.
+	 * @tparam K The left type.
+	 * @tparam J The right type.
 	 * @param left Creates this vector out of a existing vector, xy.
 	 * @param right Creates this vector out of a existing vector, zw.
 	 **/
-	template<typename K>
-	explicit constexpr Vector4(const Vector2<K> &left, const Vector2<K> &right = Vector2<K>::Up);
+	template<typename K, typename J>
+	explicit constexpr Vector4(const Vector2<K> &left, const Vector2<J> &right = Vector2<K>::Up);
 	
 	/**
 	 * Constructor for Vector4.
 	 * @tparam K The sources type.
+	 * @tparam J The w type.
 	 * @param source Creates this vector out of a existing vector.
 	 * @param w Start w.
 	 **/
-	template<typename K>
-	explicit constexpr Vector4(const Vector3<K> &source, const T &w = 1);
+	template<typename K, typename J = T>
+	explicit constexpr Vector4(const Vector3<K> &source, const J &w = 1);
 	
 	/**
 	 * Constructor for Vector4.

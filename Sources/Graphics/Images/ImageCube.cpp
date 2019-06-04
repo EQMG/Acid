@@ -26,31 +26,24 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 	const bool &anisotropic, const bool &mipmap)
 {
-	auto temp = ImageCube(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
-	Metadata metadata = Metadata();
+	ImageCube temp{filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap,
 	const bool &load) :
-	m_filename(std::move(filename)),
-	m_fileSuffix(std::move(fileSuffix)),
-	m_fileSides(std::vector<std::string>{ "Right", "Left", "Top", "Bottom", "Back", "Front" }),
-	m_filter(filter),
-	m_addressMode(addressMode),
-	m_anisotropic(anisotropic),
-	m_mipmap(mipmap),
-	m_samples(VK_SAMPLE_COUNT_1_BIT),
-	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
-	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_components(0),
-	m_mipLevels(0),
-	m_image(VK_NULL_HANDLE),
-	m_memory(VK_NULL_HANDLE),
-	m_sampler(VK_NULL_HANDLE),
-	m_view(VK_NULL_HANDLE),
-	m_format(VK_FORMAT_R8G8B8A8_UNORM)
+	m_filename{std::move(filename)},
+	m_fileSuffix{std::move(fileSuffix)},
+	m_filter{filter},
+	m_addressMode{addressMode},
+	m_anisotropic{anisotropic},
+	m_mipmap{mipmap},
+	m_samples{VK_SAMPLE_COUNT_1_BIT},
+	m_layout{VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL},
+	m_usage{VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
+	m_format{VK_FORMAT_R8G8B8A8_UNORM}
 {
 	if (load)
 	{
@@ -60,24 +53,17 @@ ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilte
 
 ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
 	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
-	m_filename(""),
-	m_fileSuffix(""),
-	m_filter(filter),
-	m_addressMode(addressMode),
-	m_anisotropic(anisotropic),
-	m_mipmap(mipmap),
-	m_samples(samples),
-	m_layout(layout),
-	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_components(4),
-	m_extent(extent),
-	m_loadPixels(std::move(pixels)),
-	m_mipLevels(0),
-	m_image(VK_NULL_HANDLE),
-	m_memory(VK_NULL_HANDLE),
-	m_sampler(VK_NULL_HANDLE),
-	m_view(VK_NULL_HANDLE),
-	m_format(format)
+	m_filter{filter},
+	m_addressMode{addressMode},
+	m_anisotropic{anisotropic},
+	m_mipmap{mipmap},
+	m_samples{samples},
+	m_layout{layout},
+	m_usage{usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
+	m_components{4},
+	m_extent{extent},
+	m_loadPixels{std::move(pixels)},
+	m_format{format}
 {
 	ImageCube::Load();
 }
@@ -95,7 +81,7 @@ ImageCube::~ImageCube()
 VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 	const uint32_t &count)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -106,12 +92,12 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &b
 
 WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorImageInfo imageInfo = {};
+	VkDescriptorImageInfo imageInfo{};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = m_layout;
 
-	VkWriteDescriptorSet descriptorWrite = {};
+	VkWriteDescriptorSet descriptorWrite{};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
@@ -155,8 +141,8 @@ void ImageCube::Load()
 
 	if (m_loadPixels != nullptr)
 	{
-		auto bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
 
 		void *data;
 		bufferStaging.MapMemory(&data);
@@ -192,7 +178,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 	VkDeviceMemory dstImageMemory;
 	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, arrayLayer);
 
-	VkImageSubresource dstImageSubresource = {};
+	VkImageSubresource dstImageSubresource{};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	dstImageSubresource.mipLevel = 0;
 	dstImageSubresource.arrayLayer = 0;
@@ -239,8 +225,8 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
-	Buffer bufferStaging = Buffer(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
 
 	void *data;
 	bufferStaging.MapMemory(&data);
@@ -258,7 +244,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 
 	for (const auto &side : fileSides)
 	{
-		std::string filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
+		auto filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
 		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 

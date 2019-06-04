@@ -166,13 +166,13 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, 180.0_deg, 0.0f))); 
+	auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.xml", Transform(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f)));
 	
 	// Skybox.
 	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json", Transform(Vector3f(), Vector3f(), 2048.0f)); 
 	
 	// Animated model.
-	auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(0.0f, 180.0_deg, 0.0f), 0.3f));
+	auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), 0.3f));
 	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animatedObject->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//animatedObject->AddComponent<Rigidbody>(0.0f);
@@ -181,15 +181,15 @@ void Scene1::Start()
 	animatedObject->AddComponent<ShadowRender>();
 
 	// Animated model.
-	//auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 180.0_deg, 0.0f), 0.3f));
+	//auto animatedObject = GetStructure()->CreateEntity(Transform(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, Maths::Radians(180.0f), 0.0f), 0.3f));
 	//animatedObject->AddComponent<Mesh>(ModelGltf::Create("Objects/Animated/Model.glb"));
 	//animatedObject->AddComponent<MaterialDefault>();
 	//animatedObject->AddComponent<MeshRender>();
 	//animatedObject->AddComponent<ShadowRender>();
 
-	auto prefabAnimated = EntityPrefab("Prefabs/Animated.yaml");
-	prefabAnimated.Write(*animatedObject);
-	prefabAnimated.Save();
+	EntityPrefab prefabAnimated{"Prefabs/Animated.yaml"};
+	prefabAnimated << *animatedObject;
+	prefabAnimated.Write();
 
 	// Entities.
 	auto sun = GetStructure()->CreateEntity(Transform(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f));
@@ -220,11 +220,11 @@ void Scene1::Start()
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
 
-	auto prefabTerrain = EntityPrefab("Prefabs/Terrain.yaml");
-	prefabTerrain.Write(*terrain);
-	prefabTerrain.Save();
+	EntityPrefab prefabTerrain{"Prefabs/Terrain.yaml"};
+	prefabTerrain << *terrain;
+	prefabTerrain.Write();
 
-	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
+	static const std::vector cubeColours{ Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -257,14 +257,14 @@ void Scene1::Start()
 	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
 	//teapot1->AddComponent<Rigidbody>(1.0f);
 	//teapot1->AddComponent<ColliderConvexHull>();
-	teapot1->AddComponent<Rotate>(Vector3f(50.0_deg, 30.0_deg, 40.0_deg), 0);
+	teapot1->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 0);
 	teapot1->AddComponent<NameTag>("Vector3", 1.4f);
 	teapot1->AddComponent<MeshRender>();
 	teapot1->AddComponent<ShadowRender>();
 
-	auto prefabTeapot1 = EntityPrefab("Prefabs/Teapot1.yaml");
-	prefabTeapot1.Write(*teapot1);
-	prefabTeapot1.Save();
+	EntityPrefab prefabTeapot1{"Prefabs/Teapot1.yaml"};
+	prefabTeapot1 << *teapot1;
+	prefabTeapot1.Write();
 
 	auto teapotCone = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), 3.0f));
 	teapotCone->SetParent(teapot1);
@@ -282,7 +282,7 @@ void Scene1::Start()
 	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f); 
 	//teapot2->AddComponent<Rigidbody>(1.0f);
 	//teapot2->AddComponent<ColliderConvexHull>();
-	teapot2->AddComponent<Rotate>(Vector3f(50.0_deg, 30.0_deg, 40.0_deg), 1);
+	teapot2->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 1);
 	teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
 	teapot2->AddComponent<MeshRender>();
 	teapot2->AddComponent<ShadowRender>();
@@ -292,7 +292,7 @@ void Scene1::Start()
 	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f); 
 	//teapot3->AddComponent<Rigidbody>(1.0f);
 	//teapot3->AddComponent<ColliderConvexHull>();
-	teapot3->AddComponent<Rotate>(Vector3f(50.0_deg, 30.0_deg, 40.0_deg), 2);
+	teapot3->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 2);
 	teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
 	teapot3->AddComponent<MeshRender>();
 	teapot3->AddComponent<ShadowRender>();
@@ -306,7 +306,7 @@ void Scene1::Start()
 	cone->AddComponent<MeshRender>();
 	cone->AddComponent<ShadowRender>();
 
-	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, 90.0_deg), 1.0f));
+	auto cylinder = GetStructure()->CreateEntity(Transform(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, Maths::Radians(90.0f)), 1.0f));
 	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 16, 8));
 	cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
 	cylinder->AddComponent<Rigidbody>(2.5f);
@@ -317,9 +317,9 @@ void Scene1::Start()
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json", Transform(Vector3f(-15.0f, 4.0f, 12.0f)));
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg, SOUND_TYPE_MUSIC, true, true);
 
-	EntityPrefab prefabSmokeSystem = EntityPrefab("Prefabs/SmokeSystem.json");
-	prefabSmokeSystem.Write(*smokeSystem);
-	prefabSmokeSystem.Save();
+	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.json"};
+	prefabSmokeSystem << *smokeSystem;
+	prefabSmokeSystem.Write();
 }
 
 void Scene1::Update()

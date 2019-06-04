@@ -29,8 +29,8 @@ private:
 	const Instance *m_instance;
 	const PhysicalDevice *m_physicalDevice;
 
-	VkSurfaceKHR m_surface;
-	VkSurfaceCapabilitiesKHR m_capabilities;
-	VkSurfaceFormatKHR m_format;
+	VkSurfaceKHR m_surface{VK_NULL_HANDLE};
+	VkSurfaceCapabilitiesKHR m_capabilities{};
+	VkSurfaceFormatKHR m_format{};
 };
 }

@@ -24,7 +24,7 @@ template<typename T>
 struct Enumerator
 {
 	constexpr Enumerator(const T &value) :
-		m_value(value)
+		m_value{value}
 	{
 	}
 

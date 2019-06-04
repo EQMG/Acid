@@ -28,18 +28,15 @@ std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 
 std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &style)
 {
-	auto temp = FontType(filename, style, false);
-	temp.m_filename = filename;
-	temp.m_style = style;
-	Metadata metadata = Metadata();
+	FontType temp{filename, style, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 FontType::FontType(std::string filename, std::string style, const bool &load) :
-	m_filename(std::move(filename)),
-	m_style(std::move(style)),
-	m_instances(0)
+	m_filename{std::move(filename)},
+	m_style{std::move(style)}
 {
 	if (load)
 	{
@@ -64,7 +61,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 	for (const auto &text : texts)
 	{
 		auto fontSize = text->GetFontSize() * text->GetScreenScale() / 1000.0f;
-		auto size = text->GetScreenTransform().GetSize();
+		//auto size = text->GetScreenTransform().GetSize();
 		auto position = text->GetScreenTransform().GetPosition();
 
 		Vector2f localOffset;
@@ -120,9 +117,8 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	m_descriptorSet.Push("BufferGlyph", *m_storageGlyphs, OffsetSize(m_glyphInfoOffset, m_glyphInfoSize));
 	m_descriptorSet.Push("BufferCell", *m_storageGlyphs, OffsetSize(m_glyphCellsOffset, m_glyphCellsSize));
 	m_descriptorSet.Push("BufferPoint", *m_storageGlyphs, OffsetSize(m_glyphPointsOffset, m_glyphPointsSize));
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
@@ -130,7 +126,7 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkDeviceSize offsets[] = { 0 };
+	VkDeviceSize offsets[]{ 0 };
 	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
 	vkCmdDraw(commandBuffer, 4, m_instances, 0, 0);
 	return true;
@@ -207,7 +203,7 @@ void FontType::LoadFont(const std::string &filename)
 	std::vector<Outline> outlines(glyphCount);
 
 	FT_UInt glyphIndex;
-	FT_ULong charcode = FT_Get_First_Char(face, &glyphIndex);
+	auto charcode = FT_Get_First_Char(face, &glyphIndex);
 	uint32_t i = 0;
 
 	while (glyphIndex != 0)
@@ -218,8 +214,8 @@ void FontType::LoadFont(const std::string &filename)
 		}
 
 		m_charmap.emplace(static_cast<wchar_t>(charcode), i);
-		HostGlyphInfo *hgi = &m_glyphInfos[i];
-		Outline *o = &outlines[i];
+		auto hgi = &m_glyphInfos[i];
+		auto o = &outlines[i];
 
 		OutlineConvert(&face->glyph->outline, o);
 
@@ -238,7 +234,7 @@ void FontType::LoadFont(const std::string &filename)
 	m_glyphCellsSize = sizeof(uint32_t) * totalCells;
 	m_glyphPointsSize = sizeof(Vector2f) * totalPoints;
 
-	uint32_t alignment = static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment);
+	auto alignment = static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment);
 	m_glyphInfoOffset = 0;
 	m_glyphCellsOffset = AlignUint32(m_glyphInfoSize, alignment);
 	m_glyphPointsOffset = AlignUint32(m_glyphInfoSize + m_glyphCellsSize, alignment);
@@ -259,8 +255,8 @@ void FontType::LoadFont(const std::string &filename)
 
 	for (uint32_t j = 0; j < m_glyphInfos.size(); j++)
 	{
-		Outline *o = &outlines[j];
-		DeviceGlyphInfo *dgi = &deviceGlyphInfos[j];
+		auto o = &outlines[j];
+		auto dgi = &deviceGlyphInfos[j];
 
 		dgi->cellInfo.cellCount = o->m_cellCount;
 		dgi->cellInfo.pointOffset = pointOffset;

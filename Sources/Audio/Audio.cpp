@@ -12,9 +12,7 @@
 
 namespace acid
 {
-Audio::Audio() :
-	m_device(nullptr),
-	m_context(nullptr)
+Audio::Audio()
 {
 	m_device = alcOpenDevice(nullptr);
 	m_context = alcCreateContext(m_device, nullptr);
@@ -28,7 +26,7 @@ Audio::Audio() :
 	while (device && *device != '\0' && next && *next != '\0')
 	{
 		Log::Out("Audio Device: %s\n", device);
-		auto len = strlen(device);
+		auto len = std::strlen(device);
 		device += len + 1;
 		next += len + 2;
 	}
@@ -66,8 +64,8 @@ void Audio::Update()
 	alListener3f(AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
 
 	// Listener orientation.
-	Vector3f currentRay = camera->GetViewRay().GetCurrentRay();
-	ALfloat orientation[6] = { currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f };
+	auto currentRay = camera->GetViewRay().GetCurrentRay();
+	ALfloat orientation[6]{ currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f };
 	alListenerfv(AL_ORIENTATION, orientation);
 
 	//CheckAl(alGetError());
@@ -101,7 +99,7 @@ void Audio::CheckAl(const int32_t &result)
 		return;
 	}
 
-	std::string failure = StringifyResultAl(result);
+	auto failure = StringifyResultAl(result);
 
 	Log::Error("OpenAL error: %s, %i\n", failure.c_str(), result);
 	Log::Popup("OpenAL Error", failure);

@@ -10,11 +10,10 @@
 namespace acid
 {
 Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
-	m_soundBuffer(SoundBuffer::Create(filename)),
-	m_source(0),
-	m_type(type),
-	m_gain(gain),
-	m_pitch(pitch)
+	m_soundBuffer{SoundBuffer::Create(filename)},
+	m_type{type},
+	m_gain{gain},
+	m_pitch{pitch}
 {
 	alGenSources(1, &m_source);
 	alSourcei(m_source, AL_BUFFER, m_soundBuffer->GetBuffer());

@@ -6,8 +6,8 @@
 namespace acid
 {
 EmitterLine::EmitterLine(const float &length, const Vector3f &axis) :
-	m_length(length),
-	m_axis(axis.Normalize())
+	m_length{length},
+	m_axis{axis.Normalize()}
 {
 }
 

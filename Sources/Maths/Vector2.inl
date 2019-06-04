@@ -8,38 +8,38 @@ namespace acid
 {
 template<typename T>
 constexpr Vector2<T>::Vector2():
-	m_x(0),
-	m_y(0)
+	m_x{0},
+	m_y{0}
 {
 }
 
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &a):
-	m_x(a),
-	m_y(a)
+	m_x{a},
+	m_y{a}
 {
 }
 
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &x, const T &y):
-	m_x(x),
-	m_y(y)
+	m_x{x},
+	m_y{y}
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector2<K> &source):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y))
+	m_x{static_cast<T>(source.m_x)},
+	m_y{static_cast<T>(source.m_y)}
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector3<K> &source):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y))
+	m_x{static_cast<T>(source.m_x)},
+	m_y{static_cast<T>(source.m_y)}
 {
 }
 

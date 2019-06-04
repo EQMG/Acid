@@ -33,7 +33,7 @@ public:
 
 	/**
 	 * Gets a list of all gizmos.
-	 * @return All gizmods.
+	 * @return All gizmos.
 	 */
 	const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
 

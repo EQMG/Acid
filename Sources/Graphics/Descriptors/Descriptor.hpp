@@ -9,8 +9,8 @@ class ACID_EXPORT OffsetSize
 {
 public:
 	OffsetSize(const uint32_t &offset, const uint32_t &size) :
-		m_offset(offset),
-		m_size(size)
+		m_offset{offset},
+		m_size{size}
 	{
 	}
 
@@ -37,15 +37,15 @@ class ACID_EXPORT WriteDescriptorSet
 {
 public:
 	WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :
-		m_writeDescriptorSet(writeDescriptorSet),
-		m_imageInfo(std::make_unique<VkDescriptorImageInfo>(imageInfo))
+		m_writeDescriptorSet{writeDescriptorSet},
+		m_imageInfo{std::make_unique<VkDescriptorImageInfo>(imageInfo)}
 	{
 		m_writeDescriptorSet.pImageInfo = m_imageInfo.get();
 	}
 
 	WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorBufferInfo &bufferInfo) :
-		m_writeDescriptorSet(writeDescriptorSet),
-		m_bufferInfo(std::make_unique<VkDescriptorBufferInfo>(bufferInfo))
+		m_writeDescriptorSet{writeDescriptorSet},
+		m_bufferInfo{std::make_unique<VkDescriptorBufferInfo>(bufferInfo)}
 	{
 		m_writeDescriptorSet.pBufferInfo = m_bufferInfo.get();
 	}

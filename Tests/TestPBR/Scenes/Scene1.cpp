@@ -70,7 +70,7 @@ void Scene1::Start()
 		}
 	}
 
-	/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, -90.0_deg, 0.0f), 0.4f));
+	/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, Maths::Radians(-90.0f), 0.0f), 0.4f));
 	dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
 	dragon->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f);
 	dragon->AddComponent<MeshRender>();

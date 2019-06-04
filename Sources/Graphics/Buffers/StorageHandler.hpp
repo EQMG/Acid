@@ -82,7 +82,7 @@ public:
 private:
 	bool m_multipipeline;
 	std::optional<Shader::UniformBlock> m_uniformBlock;
-	uint32_t m_size;
+	uint32_t m_size{0};
 	std::unique_ptr<char[]> m_data;
 	std::unique_ptr<StorageBuffer> m_storageBuffer;
 	Buffer::Status m_handlerStatus;

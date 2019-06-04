@@ -1,22 +1,16 @@
 #include "PipelineCompute.hpp"
 
 #include "Graphics/Graphics.hpp"
-#include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 
 namespace acid
 {
 PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines, const bool &pushDescriptors) :
-	m_shaderStage(std::move(shaderStage)),
-	m_defines(std::move(defines)),
-	m_pushDescriptors(pushDescriptors),
-	m_shader(std::make_unique<Shader>()),
-	m_shaderModule(VK_NULL_HANDLE),
-	m_shaderStageCreateInfo({}),
-	m_descriptorSetLayout(VK_NULL_HANDLE),
-	m_descriptorPool(VK_NULL_HANDLE),
-	m_pipeline(VK_NULL_HANDLE),
-	m_pipelineLayout(VK_NULL_HANDLE),
-	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE)
+	m_shaderStage{std::move(shaderStage)},
+	m_defines{std::move(defines)},
+	m_pushDescriptors{pushDescriptors},
+	m_shader{std::make_unique<Shader>()},
+	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_COMPUTE}
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
@@ -88,7 +82,7 @@ void PipelineCompute::CreateDescriptorLayout()
 
 	auto descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
-	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
+	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo{};
 	descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
@@ -102,7 +96,7 @@ void PipelineCompute::CreateDescriptorPool()
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
 
-	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
+	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
@@ -117,7 +111,7 @@ void PipelineCompute::CreatePipelineLayout()
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
-	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
+	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipelineLayoutCreateInfo.setLayoutCount = 1;
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
@@ -131,7 +125,7 @@ void PipelineCompute::CreatePipelineCompute()
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto pipelineCache = Graphics::Get()->GetPipelineCache();
 
-	VkComputePipelineCreateInfo pipelineCreateInfo = {};
+	VkComputePipelineCreateInfo pipelineCreateInfo{};
 	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
 	pipelineCreateInfo.stage = m_shaderStageCreateInfo;
 	pipelineCreateInfo.layout = m_pipelineLayout;

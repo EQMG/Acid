@@ -140,23 +140,23 @@ private:
 	std::vector<VkShaderModule> m_modules;
 	std::vector<VkPipelineShaderStageCreateInfo> m_stages;
 
-	VkDescriptorSetLayout m_descriptorSetLayout;
-	VkDescriptorPool m_descriptorPool;
+	VkDescriptorSetLayout m_descriptorSetLayout{VK_NULL_HANDLE};
+	VkDescriptorPool m_descriptorPool{VK_NULL_HANDLE};
 
-	VkPipeline m_pipeline;
-	VkPipelineLayout m_pipelineLayout;
+	VkPipeline m_pipeline{VK_NULL_HANDLE};
+	VkPipelineLayout m_pipelineLayout{VK_NULL_HANDLE};
 	VkPipelineBindPoint m_pipelineBindPoint;
 
-	VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo;
-	VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
-	VkPipelineRasterizationStateCreateInfo m_rasterizationState;
+	VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo{};
+	VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState{};
+	VkPipelineRasterizationStateCreateInfo m_rasterizationState{};
 	std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
-	VkPipelineColorBlendStateCreateInfo m_colourBlendState;
-	VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
-	VkPipelineViewportStateCreateInfo m_viewportState;
-	VkPipelineMultisampleStateCreateInfo m_multisampleState;
-	VkPipelineDynamicStateCreateInfo m_dynamicState;
-	VkPipelineTessellationStateCreateInfo m_tessellationState;
+	VkPipelineColorBlendStateCreateInfo m_colourBlendState{};
+	VkPipelineDepthStencilStateCreateInfo m_depthStencilState{};
+	VkPipelineViewportStateCreateInfo m_viewportState{};
+	VkPipelineMultisampleStateCreateInfo m_multisampleState{};
+	VkPipelineDynamicStateCreateInfo m_dynamicState{};
+	VkPipelineTessellationStateCreateInfo m_tessellationState{};
 };
 
 class ACID_EXPORT PipelineGraphicsCreate

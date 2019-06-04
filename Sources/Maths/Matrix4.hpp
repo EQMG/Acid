@@ -298,18 +298,7 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
-	union
-	{
-		struct
-		{
-			Vector4f m_rows[4];
-		};
-
-		struct
-		{
-			float m_linear[16];
-		};
-	};
+	Vector4f m_rows[4];
 };
 }
 

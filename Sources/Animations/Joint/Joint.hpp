@@ -10,9 +10,9 @@ class ACID_EXPORT JointData :
 {
 public:
 	JointData(const uint32_t &index, std::string nameId, const Matrix4 &bindLocalTransform) :
-		m_index(index),
-		m_nameId(std::move(nameId)),
-		m_bindLocalTransform(bindLocalTransform)
+		m_index{index},
+		m_nameId{std::move(nameId)},
+		m_bindLocalTransform{bindLocalTransform}
 	{
 	}
 

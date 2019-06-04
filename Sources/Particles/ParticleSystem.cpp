@@ -147,7 +147,7 @@ float ParticleSystem::GenerateRotation() const
 {
 	if (m_randomRotation)
 	{
-		return Maths::Random(0.0f, 360.0_deg);
+		return Maths::Random(0.0f, Maths::Pi<float>);
 	}
 
 	return 0.0f;
@@ -192,16 +192,16 @@ const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSys
 
 Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
 {
-	auto typesNode = metadata.FindChild("Types", false);
+	auto typesNode = metadata.FindChild("Types");
 
 	if (typesNode == nullptr)
 	{
-		typesNode = metadata.AddChild(new Metadata("Types"));
+		typesNode = metadata.AddChild(new Metadata{"Types"});
 	}
 
 	for (const auto &type : particleSystem.m_types)
 	{
-		*typesNode->AddChild(new Metadata()) << type;
+		*typesNode->AddChild(new Metadata{}) << type;
 	}
 
 	metadata.SetChild("PPS", particleSystem.m_pps);

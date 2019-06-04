@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Maths/Vector3.hpp"
+#include "Maths/ElapsedTime.hpp"
 #include "Scenes/Component.hpp"
 #include "Emitters/Emitter.hpp"
 #include "Particle.hpp"

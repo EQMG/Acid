@@ -22,11 +22,11 @@ namespace acid
 Engine *Engine::INSTANCE = nullptr;
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
-	m_argv0(std::move(argv0)),
-	m_fpsLimit(-1.0f),
-	m_running(true),
-	m_elapsedUpdate(14.705ms),
-	m_elapsedRender(-1s)
+	m_argv0{std::move(argv0)},
+	m_fpsLimit{-1.0f},
+	m_running{true},
+	m_elapsedUpdate{14.705ms},
+	m_elapsedRender{-1s}
 {
 	INSTANCE = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));

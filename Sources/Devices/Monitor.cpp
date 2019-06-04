@@ -6,9 +6,13 @@
 namespace acid
 {
 Monitor::Monitor(GLFWmonitor *monitor) :
-	m_monitor(monitor),
-	m_primary(m_monitor == glfwGetPrimaryMonitor())
+	m_monitor{monitor}
 {
+}
+
+const bool &Monitor::IsPrimary() const
+{
+	return m_monitor == glfwGetPrimaryMonitor();
 }
 
 Vector2ui Monitor::GetWorkareaSize() const
@@ -60,7 +64,7 @@ std::vector<VideoMode> Monitor::GetVideoModes() const
 {
 	int32_t videoModeCount;
 	auto videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
-	std::vector<VideoMode> modes(static_cast<uint32_t>(videoModeCount));
+	std::vector<VideoMode> modes{static_cast<uint32_t>(videoModeCount)};
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++)
 	{

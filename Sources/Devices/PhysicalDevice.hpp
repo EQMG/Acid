@@ -29,18 +29,18 @@ private:
 
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
-	int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
+	static int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
 
-	VkSampleCountFlagBits GetMaxUsableSampleCount();
+	VkSampleCountFlagBits GetMaxUsableSampleCount() const;
 
 	static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties);
 
 	const Instance *m_instance;
 
-	VkPhysicalDevice m_physicalDevice;
-	VkPhysicalDeviceProperties m_properties;
-	VkPhysicalDeviceFeatures m_features;
-	VkPhysicalDeviceMemoryProperties m_memoryProperties;
-	VkSampleCountFlagBits m_msaaSamples;
+	VkPhysicalDevice m_physicalDevice{VK_NULL_HANDLE};
+	VkPhysicalDeviceProperties m_properties{};
+	VkPhysicalDeviceFeatures m_features{};
+	VkPhysicalDeviceMemoryProperties m_memoryProperties{};
+	VkSampleCountFlagBits m_msaaSamples{VK_SAMPLE_COUNT_1_BIT};
 };
 }

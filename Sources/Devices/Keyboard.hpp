@@ -172,11 +172,11 @@ public:
 	Delegate<void(char)> &OnChar() { return m_onChar; }
 
 private:
-	Delegate<void(Key, InputAction, BitMask<InputMod>)> m_onKey;
-	Delegate<void(char)> m_onChar;
-
 	friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
 
 	friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
+
+	Delegate<void(Key, InputAction, BitMask<InputMod>)> m_onKey;
+	Delegate<void(char)> m_onChar;
 };
 }

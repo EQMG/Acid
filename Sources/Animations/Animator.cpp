@@ -5,8 +5,7 @@
 namespace acid
 {
 Animator::Animator(Joint *rootJoint) :
-	m_rootJoint(rootJoint),
-	m_currentAnimation(nullptr)
+	m_rootJoint{rootJoint}
 {
 }
 
@@ -35,11 +34,11 @@ void Animator::IncreaseAnimationTime()
 std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const
 {
 	auto frames = GetPreviousAndNextFrames();
-	auto progression = CalculateProgression(frames[0], frames[1]);
-	return InterpolatePoses(frames[0], frames[1], progression);
+	auto progression = CalculateProgression(frames.first, frames.second);
+	return InterpolatePoses(frames.first, frames.second, progression);
 }
 
-std::array<Keyframe, 2> Animator::GetPreviousAndNextFrames() const
+std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const
 {
 	auto allFrames = m_currentAnimation->GetKeyframes();
 	auto previousFrame = allFrames[0];
@@ -69,7 +68,7 @@ float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyfra
 
 std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression) const
 {
-	auto currentPose = std::map<std::string, Matrix4>();
+	std::map<std::string, Matrix4> currentPose;
 
 	for (const auto &[name, joint] : previousFrame.GetPose())
 	{

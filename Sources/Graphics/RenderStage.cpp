@@ -6,12 +6,11 @@
 namespace acid
 {
 RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType> subpasses, const Viewport &viewport) :
-	m_attachments(std::move(images)),
-	m_subpasses(std::move(subpasses)),
-	m_viewport(viewport),
-	m_subpassAttachmentCount(m_subpasses.size()),
-	m_subpassMultisampled(m_subpasses.size()),
-	m_outOfDate(false)
+	m_attachments{std::move(images)},
+	m_subpasses{std::move(subpasses)},
+	m_viewport{viewport},
+	m_subpassAttachmentCount(m_subpasses.size()), // TODO C++20: {m_subpasses.size()}
+	m_subpassMultisampled(m_subpasses.size())
 {
 	for (const auto &image : m_attachments)
 	{
@@ -24,9 +23,8 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 			for (const auto &subpass : m_subpasses)
 			{
-				auto subpassBindings = subpass.GetAttachmentBindings();
-
-				if (std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
+				if (auto subpassBindings = subpass.GetAttachmentBindings();
+					std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
 				{
 					m_subpassAttachmentCount[subpass.GetBinding()]++;
 

@@ -7,7 +7,7 @@
 namespace acid
 {
 EmitterSphere::EmitterSphere(const float &radius) :
-	m_radius(radius)
+	m_radius{radius}
 {
 }
 
@@ -26,14 +26,12 @@ Vector3f EmitterSphere::GeneratePosition() const
 
 	if (a > b)
 	{
-		auto temp = a;
-		a = b;
-		b = temp;
+		std::swap(a, b);
 	}
 
 	auto randX = b * std::cos(2.0f * Maths::Pi<float> * (a / b));
 	auto randY = b * std::sin(2.0f * Maths::Pi<float> * (a / b));
-	auto distance = Vector2f(randX, randY).Length();
+	auto distance = Vector2f{randX, randY}.Length();
 	return m_radius * distance * RandomUnitVector();
 }
 

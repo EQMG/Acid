@@ -44,7 +44,7 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	Log::Out("Current DateTime: %ls\n", Time::GetDateTime().c_str());
+	Log::Out("Current DateTime: %s\n", Time::GetDateTime().c_str());
 
 	Timers::Get()->Once(0.333s, []()
 	{

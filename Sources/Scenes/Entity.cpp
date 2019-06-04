@@ -17,26 +17,8 @@ Entity::Entity(const Transform &transform) :
 Entity::Entity(const std::string &filename, const Transform &transform) :
 	Entity(transform)
 {
-	auto prefabObject = EntityPrefab::Create(filename);
-
-	for (const auto &child : prefabObject->GetParent()->GetChildren())
-	{
-		if (child->GetName().empty())
-		{
-			continue;
-		}
-
-		auto component = Scenes::Get()->GetComponentRegister().Create(child->GetName());
-
-		if (component == nullptr)
-		{
-			continue;
-		}
-
-		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
-		AddComponent(component);
-	}
-
+	auto entityPrefab = EntityPrefab::Create(filename);
+	*entityPrefab >> *this;
 	m_name = FileSystem::FileName(filename);
 }
 

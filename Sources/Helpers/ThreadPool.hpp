@@ -43,7 +43,7 @@ decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 	auto result = task->get_future();
 
 	{
-		std::unique_lock<std::mutex> lock(m_queueMutex);
+		std::unique_lock<std::mutex> lock{m_queueMutex};
 
 		if (m_stop)
 		{

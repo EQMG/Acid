@@ -5,12 +5,12 @@
 namespace acid
 {
 Xml::Xml(const std::string &rootName) :
-	Metadata(rootName, "")
+	Metadata{rootName}
 {
 }
 
 Xml::Xml(const std::string &rootName, Metadata *metadata) :
-	Metadata(rootName, "")
+	Metadata{rootName}
 {
 	AddChildren(metadata, this);
 }
@@ -50,12 +50,12 @@ void Xml::Load(std::istream *inStream)
 				}
 				else // Start tag.
 				{
-					auto section = new Node(currentSection, "", "");
+					auto section = new Node{currentSection, "", ""};
 					currentSection->m_children.emplace_back(section);
 					currentSection = section;
 				}
 
-				summation.str(std::string());
+				summation.str({});
 			}
 			else if (*it == '>')
 			{
@@ -64,7 +64,7 @@ void Xml::Load(std::istream *inStream)
 					currentSection->m_attributes += summation.str();
 				}
 
-				summation.str(std::string());
+				summation.str({});
 
 				if (end || *(it - 1) == '/') // End tag.
 				{
@@ -102,21 +102,21 @@ void Xml::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+		auto created = destination->AddChild(new Metadata{child->GetName(), child->GetValue()});
 		AddChildren(child.get(), created);
 	}
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		destination->AddAttribute(attribute.first, attribute.second);
+		destination->SetAttribute(attribute.first, attribute.second);
 	}
 }
 
 void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 {
-	int32_t firstSpace = String::FindCharPos(source->m_attributes, ' ');
-	std::string name = String::Trim(String::Substring(source->m_attributes, 0, firstSpace));
-	std::string attributes = String::Substring(source->m_attributes, firstSpace + 1, static_cast<int32_t>(source->m_attributes.size()));
+	auto firstSpace = String::FindCharPos(source->m_attributes, ' ');
+	auto name = String::Trim(String::Substring(source->m_attributes, 0, firstSpace));
+	auto attributes = String::Substring(source->m_attributes, firstSpace + 1, static_cast<int32_t>(source->m_attributes.size()));
 	attributes = String::Trim(attributes);
 
 	if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')
@@ -133,7 +133,7 @@ void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 		std::string currentKey;
 		std::string summation;
 
-		for (const char &c : attributes)
+		for (const auto &c : attributes)
 		{
 			switch (c)
 			{
@@ -175,7 +175,7 @@ void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 	{
 		if (depth != 1)
 		{
-			thisValue = new Metadata(name, source->m_content, parseAttributes);
+			thisValue = new Metadata{name, source->m_content, parseAttributes};
 			parent->AddChild(thisValue);
 		}
 		else
@@ -207,7 +207,7 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 		indents << "  ";
 	}
 
-	std::string name = String::ReplaceAll(source->GetName(), " ", "_");
+	auto name = String::ReplaceAll(source->GetName(), " ", "_");
 
 	std::stringstream nameAttributes;
 	nameAttributes << name;
@@ -217,7 +217,7 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 		nameAttributes << " " << attributeName << "=\"" << value << "\"";
 	}
 
-	std::string nameAndAttribs = String::Trim(nameAttributes.str());
+	auto nameAndAttribs = String::Trim(nameAttributes.str());
 
 	*outStream << indents.str();
 

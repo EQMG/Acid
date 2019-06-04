@@ -1,24 +1,23 @@
 #include "MaterialDefault.hpp"
 
 #include "Animations/MeshAnimated.hpp"
+#include "Engine/Log.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Models/VertexDefault.hpp"
 #include "Scenes/Entity.hpp"
 
 namespace acid
 {
 MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, const float &metallic, const float &roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
-	m_animated(false),
-	m_baseDiffuse(baseDiffuse),
-	m_imageDiffuse(std::move(imageDiffuse)),
-	m_metallic(metallic),
-	m_roughness(roughness),
-	m_imageMaterial(std::move(imageMaterial)),
-	m_imageNormal(std::move(imageNormal)),
-	m_castsShadows(castsShadows),
-	m_ignoreLighting(ignoreLighting),
-	m_ignoreFog(ignoreFog)
+	m_baseDiffuse{baseDiffuse},
+	m_imageDiffuse{std::move(imageDiffuse)},
+	m_metallic{metallic},
+	m_roughness{roughness},
+	m_imageMaterial{std::move(imageMaterial)},
+	m_imageNormal{std::move(imageNormal)},
+	m_castsShadows{castsShadows},
+	m_ignoreLighting{ignoreLighting},
+	m_ignoreFog{ignoreFog}
 {
 }
 

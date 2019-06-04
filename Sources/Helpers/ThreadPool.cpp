@@ -3,7 +3,7 @@
 namespace acid
 {
 ThreadPool::ThreadPool(const uint32_t &threadCount) :
-	m_stop(false)
+	m_stop{false}
 {
 	m_workers.reserve(threadCount);
 
@@ -16,7 +16,7 @@ ThreadPool::ThreadPool(const uint32_t &threadCount) :
 				std::function<void()> task;
 
 				{
-					std::unique_lock<std::mutex> lock(m_queueMutex);
+					std::unique_lock<std::mutex> lock{m_queueMutex};
 					m_condition.wait(lock, [this]
 					{
 						return m_stop || !m_tasks.empty();
@@ -40,7 +40,7 @@ ThreadPool::ThreadPool(const uint32_t &threadCount) :
 ThreadPool::~ThreadPool()
 {
 	{
-		std::unique_lock<std::mutex> lock(m_queueMutex);
+		std::unique_lock<std::mutex> lock{m_queueMutex};
 		m_stop = true;
 	}
 
@@ -54,7 +54,7 @@ ThreadPool::~ThreadPool()
 
 void ThreadPool::Wait()
 {
-	std::unique_lock<std::mutex> lock(m_queueMutex);
+	std::unique_lock<std::mutex> lock{m_queueMutex};
 
 	m_condition.wait(lock, [this]()
 	{

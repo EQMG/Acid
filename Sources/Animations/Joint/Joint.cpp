@@ -3,15 +3,15 @@
 namespace acid
 {
 Joint::Joint(const uint32_t &index, std::string name, const Matrix4 &bindLocalTransform) :
-	m_index(index),
-	m_name(std::move(name)),
-	m_localBindTransform(bindLocalTransform)
+	m_index{index},
+	m_name{std::move(name)},
+	m_localBindTransform{bindLocalTransform}
 {
 }
 
 void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
 {
-	Matrix4 bindTransform = parentBindTransform * m_localBindTransform;
+	auto bindTransform = parentBindTransform * m_localBindTransform;
 	m_inverseBindTransform = bindTransform.Inverse();
 
 	for (auto &child : m_children)

@@ -24,8 +24,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 {
-	auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
-	Metadata metadata = Metadata();
+	PipelineMaterial temp{pipelineStage, pipelineCreate};
+	Metadata metadata;
 	metadata << temp;
 
 	auto resource = Resources::Get()->Find(metadata);
@@ -43,9 +43,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 }
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
-	m_pipelineStage(std::move(pipelineStage)),
-	m_pipelineCreate(std::move(pipelineCreate)),
-	m_renderStage(nullptr)
+	m_pipelineStage{std::move(pipelineStage)},
+	m_pipelineCreate{std::move(pipelineCreate)}
 {
 }
 

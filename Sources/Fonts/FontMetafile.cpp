@@ -6,18 +6,11 @@
 namespace acid
 {
 FontMetafile::FontMetafile(std::string filename) :
-	m_filename(std::move(filename)),
-	m_verticalPerPixelSize(0.0f),
-	m_horizontalPerPixelSize(0.0f),
-	m_imageWidth(0),
-	m_spaceWidth(0.0f),
-	m_paddingWidth(0),
-	m_paddingHeight(0),
-	m_maxSizeY(0.0f)
+	m_filename{std::move(filename)}
 {
-	IFStream inStream(m_filename);
+	IFStream inStream{m_filename};
 
-	size_t lineNum = 0;
+	size_t lineNum{0};
 	std::string linebuf;
 
 	while (inStream.peek() != -1)
@@ -83,7 +76,7 @@ void FontMetafile::LoadPaddingData()
 
 void FontMetafile::LoadLineSizes()
 {
-	int32_t lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
+	auto lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
 	m_verticalPerPixelSize = LineHeight / static_cast<float>(lineHeightPixels);
 	m_horizontalPerPixelSize = m_verticalPerPixelSize;
 	m_imageWidth = GetValueOfVariable("scaleW");
@@ -116,7 +109,7 @@ void FontMetafile::LoadCharacterData()
 		m_maxSizeY = quadHeight;
 	}
 
-	auto character = Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
+	Character character{id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance};
 	m_characters.emplace(character.m_id, character);
 }
 

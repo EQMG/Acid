@@ -179,14 +179,14 @@ private:
 
 	std::optional<std::pair<std::string, CursorHotspot>> m_currentCursor;
 	std::optional<CursorStandard> m_currentStandard;
-	GLFWcursor *m_cursor;
+	GLFWcursor *m_cursor{};
 
 	Vector2d m_lastMousePosition;
 	Vector2d m_mousePosition;
 	Vector2d m_mouseDelta;
 	Vector2d m_mouseWheelDelta;
-	bool m_windowSelected;
-	bool m_cursorHidden;
+	bool m_windowSelected{};
+	bool m_cursorHidden{};
 
 	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> m_onButton;
 	Delegate<void(Vector2d)> m_onPosition;

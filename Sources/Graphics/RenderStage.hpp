@@ -32,12 +32,12 @@ public:
 	 */
 	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const Colour &clearColour = Colour::Black) :
-		m_binding(binding),
-		m_name(std::move(name)),
-		m_type(type),
-		m_multisampled(multisampled),
-		m_format(format),
-		m_clearColour(clearColour)
+		m_binding{binding},
+		m_name{std::move(name)},
+		m_type{type},
+		m_multisampled{multisampled},
+		m_format{format},
+		m_clearColour{clearColour}
 	{
 	}
 
@@ -66,8 +66,8 @@ class ACID_EXPORT SubpassType
 {
 public:
 	SubpassType(const uint32_t &binding, std::vector<uint32_t> attachmentBindings) :
-		m_binding(binding),
-		m_attachmentBindings(std::move(attachmentBindings))
+		m_binding{binding},
+		m_attachmentBindings{std::move(attachmentBindings)}
 	{
 	}
 
@@ -84,9 +84,9 @@ class ACID_EXPORT RenderArea
 {
 public:
 	explicit RenderArea(const Vector2ui &extent = Vector2ui(), const Vector2i &offset = Vector2ui()) :
-		m_extent(extent),
-		m_offset(offset),
-		m_aspectRatio(1.0f)
+		m_extent{extent},
+		m_offset{offset},
+		m_aspectRatio{1.0f}
 	{
 	}
 
@@ -126,15 +126,15 @@ class ACID_EXPORT Viewport
 {
 public:
 	Viewport() :
-		m_scale(1.0f, 1.0f),
-		m_offset(0, 0)
+		m_scale{1.0f, 1.0f},
+		m_offset{0, 0}
 	{
 	}
 
 	explicit Viewport(const std::optional<Vector2ui> &size) :
-		m_scale(1.0f, 1.0f),
-		m_size(size),
-		m_offset(0, 0)
+		m_scale{1.0f, 1.0f},
+		m_size{size},
+		m_offset{0, 0}
 	{
 	}
 
@@ -230,6 +230,6 @@ private:
 	std::vector<bool> m_subpassMultisampled;
 
 	RenderArea m_renderArea;
-	bool m_outOfDate;
+	bool m_outOfDate{};
 };
 }

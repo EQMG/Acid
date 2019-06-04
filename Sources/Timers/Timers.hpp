@@ -11,10 +11,10 @@ class ACID_EXPORT Timer
 {
 public:
 	Timer(const Time &interval, const std::optional<uint32_t> &repeat) :
-		m_interval(interval),
-		m_next(Time::Now() + m_interval),
-		m_repeat(repeat),
-		m_destroyed(false)
+		m_interval{interval},
+		m_next{Time::Now() + m_interval},
+		m_repeat{repeat},
+		m_destroyed{false}
 	{
 	}
 

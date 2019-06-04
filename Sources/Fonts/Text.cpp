@@ -7,22 +7,17 @@ namespace acid
 {
 Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
 	const Colour &textColour, const float &kerning, const float &leading) :
-	UiObject(parent, rectangle),
-	m_numberLines(0),
-	m_lastSize(rectangle.GetSize()),
-	m_fontSize(fontSize),
-	m_string(std::move(text)),
-	m_justify(justify),
-	m_fontType(std::move(fontType)),
-	m_kerning(kerning),
-	m_leading(leading),
-	m_textColour(textColour),
-	m_solidBorder(false),
-	m_glowBorder(false),
-	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-	m_glowSize(0.0f),
-	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-	m_borderSize(0.0f)
+	UiObject{parent, rectangle},
+	m_lastSize{rectangle.GetSize()},
+	m_fontSize{fontSize},
+	m_string{std::move(text)},
+	m_justify{justify},
+	m_fontType{std::move(fontType)},
+	m_kerning{kerning},
+	m_leading{leading},
+	m_textColour{textColour},
+	m_glowDriver{std::make_unique<DriverConstant<float>>(0.0f)},
+	m_borderDriver{std::make_unique<DriverConstant<float>>(0.0f)}
 {
 	LoadText();
 }
@@ -74,7 +69,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	}
 
 	auto scissor = GetScissor();
-	VkRect2D scissorRect = {};
+	VkRect2D scissorRect{};
 	scissorRect.offset.x = scissor ? scissor->m_x : 0;
 	scissorRect.offset.y = scissor ? scissor->m_y : 0;
 	scissorRect.extent.width = scissor ? scissor->m_z : Window::Get()->GetSize().m_x;
@@ -89,7 +84,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 void Text::SetFontSize(const float &fontSize)
 {
 	m_fontSize = fontSize;
-	m_lastSize = Vector2f();
+	m_lastSize = Vector2f{};
 }
 
 void Text::SetString(const std::string &string)
@@ -193,11 +188,11 @@ void Text::LoadText()
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
-	float maxLength = m_lastSize.m_x;
+	auto maxLength = m_lastSize.m_x;
 
 	std::vector<Line> lines;
-	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
-	auto currentWord = Word();
+	Line currentLine{m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+	Word currentWord;
 
 	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
 	auto textLines = String::Split(formattedText, "\n", true);
@@ -215,16 +210,14 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 			if (ascii == FontMetafile::SpaceAscii)
 			{
-				bool added = currentLine.AddWord(currentWord);
-
-				if (!added)
+				if (!currentLine.AddWord(currentWord))
 				{
 					lines.emplace_back(currentLine);
-					currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+					currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 					currentLine.AddWord(currentWord);
 				}
 
-				currentWord = Word();
+				currentWord = {};
 				continue;
 			}
 
@@ -236,16 +229,16 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 		if (i != textLines.size() - 1)
 		{
-			bool wordAdded = currentLine.AddWord(currentWord);
+			auto wordAdded = currentLine.AddWord(currentWord);
 			lines.emplace_back(currentLine);
-			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+			currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 
 			if (!wordAdded)
 			{
 				currentLine.AddWord(currentWord);
 			}
 
-			currentWord = Word();
+			currentWord = {};
 		}
 	}
 

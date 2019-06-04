@@ -28,7 +28,6 @@ public:
 		if (it == m_subrenders.end() || it->second == nullptr)
 		{
 			throw std::runtime_error("Subrender Holder does not have requested Subrender");
-			return nullptr;
 		}
 
 		return static_cast<T *>(it->second.get());
@@ -50,7 +49,7 @@ public:
 		const auto typeId = GetSubrenderTypeId<T>();
 
 		// Insert the stage value
-		m_stages.insert({ StageIndex(stage, m_subrenders.size()), typeId });
+		m_stages.insert({StageIndex{stage, m_subrenders.size()}, typeId});
 
 		// Then, add the Subrender
 		m_subrenders[typeId] = std::move(subrender);

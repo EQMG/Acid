@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/Log.hpp"
 #include "Helpers/ConstExpr.hpp"
 #include "Graphics/Descriptors/DescriptorSet.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
@@ -124,12 +125,12 @@ private:
 		uint32_t m_location;
 	};
 
-	const Shader *m_shader;
-	bool m_pushDescriptors;
+	const Shader *m_shader{nullptr};
+	bool m_pushDescriptors{};
 	std::unique_ptr<DescriptorSet> m_descriptorSet;
 
 	std::map<std::string, DescriptorValue> m_descriptors;
 	std::vector<VkWriteDescriptorSet> m_writeDescriptorSets;
-	bool m_changed;
+	bool m_changed{};
 };
 }

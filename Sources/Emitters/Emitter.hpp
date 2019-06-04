@@ -27,7 +27,7 @@ public:
 		auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 		auto x = rootOneMinusZSquared * std::cos(theta);
 		auto y = rootOneMinusZSquared * std::sin(theta);
-		return Vector3f(x, y, z);
+		return Vector3f{x, y, z};
 	}
 };
 }

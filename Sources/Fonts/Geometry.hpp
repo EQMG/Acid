@@ -46,9 +46,9 @@ void Bezier2Point(Vector2f &r, const Vector2f bezier[3], const float &t);
 
 void Bezier2SplitLr(Vector2f left[3], Vector2f right[3], const Vector2f bezier[3], const float &t);
 
-void Bezier2Split_5P(Vector2f ret[5], const Vector2f bezier[3], const float &t);
+void Bezier2Split5P(Vector2f ret[5], const Vector2f bezier[3], const float &t);
 
-void Bezier2Split_3P(Vector2f ret[3], const Vector2f bezier[3], const float &t);
+void Bezier2Split3P(Vector2f ret[3], const Vector2f bezier[3], const float &t);
 
 void Bezier2Derivative(const Vector2f bezier[3], Vector2f derivative[2]);
 

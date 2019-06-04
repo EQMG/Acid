@@ -265,21 +265,21 @@ private:
 
 	Vector2ui m_size;
 	Vector2ui m_fullscreenSize;
-	float m_aspectRatio;
+	float m_aspectRatio{1.0f};
 
 	Vector2ui m_position;
 
 	std::string m_title;
-	bool m_borderless;
-	bool m_resizable;
-	bool m_floating;
-	bool m_fullscreen;
+	bool m_borderless{};
+	bool m_resizable{};
+	bool m_floating{};
+	bool m_fullscreen{};
 
-	bool m_closed;
-	bool m_focused;
-	bool m_iconified;
+	bool m_closed{};
+	bool m_focused{};
+	bool m_iconified{};
 
-	GLFWwindow *m_window;
+	GLFWwindow *m_window{};
 	std::vector<std::unique_ptr<Monitor>> m_monitors;
 
 	Delegate<void(Vector2ui)> m_onSize;

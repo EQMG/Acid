@@ -3,10 +3,10 @@
 namespace acid
 {
 FileWatcher::FileWatcher(std::filesystem::path path, const Time &delay) :
-	m_path(std::move(path)),
-	m_delay(delay),
-	m_running(true),
-	m_thread(&FileWatcher::QueueLoop, this)
+	m_path{std::move(path)},
+	m_delay{delay},
+	m_running{true},
+	m_thread{&FileWatcher::QueueLoop, this}
 {
 	for (auto &file : std::filesystem::recursive_directory_iterator(m_path))
 	{
@@ -69,6 +69,7 @@ void FileWatcher::QueueLoop()
 
 bool FileWatcher::Contains(const std::string &key) const
 {
+	// TODO C++20: Remove method
 	auto el = m_paths.find(key);
 	return el != m_paths.end();
 }

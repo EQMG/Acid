@@ -21,26 +21,26 @@ const Colour Colour::Purple = Colour("#800080");
 const Colour Colour::Fuchsia = Colour("#FF00FF");
 
 Colour::Colour() :
-	m_r(0.0f),
-	m_g(0.0f),
-	m_b(0.0f),
-	m_a(1.0f)
+	m_r{0.0f},
+	m_g{0.0f},
+	m_b{0.0f},
+	m_a{1.0f}
 {
 }
 
 Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
-	m_r(r),
-	m_g(g),
-	m_b(b),
-	m_a(a)
+	m_r{r},
+	m_g{g},
+	m_b{b},
+	m_a{a}
 {
 }
 
 Colour::Colour(std::string hex, const float &a) :
-	m_r(0.0f),
-	m_g(0.0f),
-	m_b(0.0f),
-	m_a(a)
+	m_r{0.0f},
+	m_g{0.0f},
+	m_b{0.0f},
+	m_a{a}
 {
 	if (hex[0] == '#')
 	{
@@ -130,7 +130,7 @@ std::string Colour::GetHex() const
 	auto hexValue = ((static_cast<uint32_t>(m_r * 255.0f) & 0xff) << 16) +
 		((static_cast<uint32_t>(m_g * 255.0f) & 0xff) << 8) +
 		(static_cast<uint32_t>(m_b * 255.0f) & 0xff);
-	stream << std::hex << hexValue;
+	stream << std::hex << std::setfill('0') << std::setw(6) << hexValue;
 
 	return stream.str();
 }

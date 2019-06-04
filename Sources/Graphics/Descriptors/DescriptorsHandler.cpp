@@ -4,18 +4,15 @@
 
 namespace acid
 {
-DescriptorsHandler::DescriptorsHandler() :
-	m_shader(nullptr),
-	m_pushDescriptors(false),
-	m_changed(false)
+DescriptorsHandler::DescriptorsHandler()
 {
 }
 
 DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
-	m_shader(pipeline.GetShader()),
-	m_pushDescriptors(pipeline.IsPushDescriptors()),
-	m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
-	m_changed(true)
+	m_shader{pipeline.GetShader()},
+	m_pushDescriptors{pipeline.IsPushDescriptors()},
+	m_descriptorSet{std::make_unique<DescriptorSet>(pipeline)},
+	m_changed{true}
 {
 }
 

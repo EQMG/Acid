@@ -3,11 +3,11 @@
 namespace acid
 {
 Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
-	m_colour(colour),
-	m_density(density),
-	m_gradient(gradient),
-	m_lowerLimit(lowerLimit),
-	m_upperLimit(upperLimit)
+	m_colour{colour},
+	m_density{density},
+	m_gradient{gradient},
+	m_lowerLimit{lowerLimit},
+	m_upperLimit{upperLimit}
 {
 }
 
@@ -46,9 +46,9 @@ Metadata &operator<<(Metadata &metadata, const Fog &fog)
 	return metadata;
 }
 
-std::ostream &operator<<(std::ostream &stream, const Fog &colour)
+std::ostream &operator<<(std::ostream &stream, const Fog &fog)
 {
-	stream << colour.ToString();
+	stream << fog.ToString();
 	return stream;
 }
 }

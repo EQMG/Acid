@@ -37,17 +37,19 @@ public:
 
 	void Load() override;
 
-	void Write(const Entity &entity);
-
-	void Save();
+	void Write() const;
 
 	const std::string &GetFilename() const { return m_filename; }
 
 	Metadata *GetParent() const { return m_file->GetMetadata(); }
 
-	friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab);
+	friend const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity);
 
-	friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab);
+	friend EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity);
+
+	friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab);
+
+	friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab);
 
 private:
 	std::string m_filename;

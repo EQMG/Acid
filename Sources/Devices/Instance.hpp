@@ -57,7 +57,7 @@ private:
 	std::vector<const char *> m_instanceExtensions;
 	std::vector<const char *> m_deviceExtensions;
 
-	VkDebugReportCallbackEXT m_debugReportCallback;
-	VkInstance m_instance;
+	VkDebugReportCallbackEXT m_debugReportCallback{VK_NULL_HANDLE};
+	VkInstance m_instance{VK_NULL_HANDLE};
 };
 }

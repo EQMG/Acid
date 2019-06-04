@@ -3,7 +3,7 @@
 namespace acid
 {
 Timers::Timers() :
-	m_stop(false)
+	m_stop{false}
 {
 	std::unique_lock<std::mutex> lock(m_mutex);
 	m_worker = std::thread(std::bind(&Timers::Run, this));

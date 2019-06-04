@@ -15,8 +15,8 @@ class FBuffer :
 {
 public:
 	explicit FBuffer(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :
-		m_bufferSize(bufferSize),
-		m_file(file)
+		m_bufferSize{bufferSize},
+		m_file{file}
 	{
 		m_buffer = new char[m_bufferSize];
 		auto end = m_buffer + m_bufferSize;
@@ -130,7 +130,7 @@ protected:
 };
 
 BaseFStream::BaseFStream(PHYSFS_File *file) :
-	file(file)
+	file{file}
 {
 	if (file == NULL)
 	{
@@ -173,8 +173,8 @@ PHYSFS_File *OpenWithMode(char const *filename, FileMode openMode)
 }
 
 IFStream::IFStream(const std::string &filename) :
-	BaseFStream(OpenWithMode(filename.c_str(), FileMode::Read)),
-	std::istream(new FBuffer(file))
+	BaseFStream{OpenWithMode(filename.c_str(), FileMode::Read)},
+	std::istream{new FBuffer(file)}
 {
 }
 
@@ -184,8 +184,8 @@ IFStream::~IFStream()
 }
 
 OFStream::OFStream(const std::string &filename, const FileMode &writeMode) :
-	BaseFStream(OpenWithMode(filename.c_str(), writeMode)),
-	std::ostream(new FBuffer(file))
+	BaseFStream{OpenWithMode(filename.c_str(), writeMode)},
+	std::ostream{new FBuffer(file)}
 {
 }
 
@@ -195,8 +195,8 @@ OFStream::~OFStream()
 }
 
 FStream::FStream(const std::string &filename, const FileMode &openMode) :
-	BaseFStream(OpenWithMode(filename.c_str(), openMode)),
-	std::iostream(new FBuffer(file))
+	BaseFStream{OpenWithMode(filename.c_str(), openMode)},
+	std::iostream{new FBuffer(file)}
 {
 }
 
@@ -255,7 +255,7 @@ void Files::RemoveSearchPath(const std::string &path)
 
 void Files::ClearSearchPath()
 {
-	for (const auto &path : std::vector<std::string>(m_searchPaths))
+	for (const auto &path : std::vector<std::string>{m_searchPaths})
 	{
 		RemoveSearchPath(path);
 	}
@@ -287,7 +287,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 	}
 
 	auto size = PHYSFS_fileLength(fsFile);
-	std::vector<uint8_t> data(size);
+	std::vector<uint8_t> data(size); // TODO C++20: {size}
 	PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
 	if (PHYSFS_close(fsFile) == 0)
@@ -302,9 +302,8 @@ std::vector<std::string> Files::FilesInPath(const std::string &path, const bool 
 {
 	std::vector<std::string> files;
 	auto rc = PHYSFS_enumerateFiles(path.c_str());
-	char **i;
-
-	for (i = rc; *i != nullptr; i++)
+	
+	for (auto i = rc; *i != nullptr; i++)
 	{
 		/*if (IsDirectory(*i))
 		{
@@ -334,14 +333,14 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t)
 	// The sentry object performs various tasks,
 	// such as thread synchronization and updating the stream state.
 
-	std::istream::sentry se(is, true);
-	std::streambuf *sb = is.rdbuf();
+	std::istream::sentry se{is, true};
+	auto sb = is.rdbuf();
 
 	if (se)
 	{
 		for (;;)
 		{
-			int c = sb->sbumpc();
+			auto c = sb->sbumpc();
 
 			switch (c)
 			{

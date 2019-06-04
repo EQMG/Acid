@@ -1,43 +1,29 @@
 ﻿#include "PipelineGraphics.hpp"
 
 #include "Graphics/Graphics.hpp"
-#include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 
 namespace acid
 {
-const std::vector<VkDynamicState> DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
+const std::vector<VkDynamicState> DYNAMIC_STATES{ VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
 
 PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
 	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
 	const bool &pushDescriptors) :
-	m_stage(std::move(stage)),
-	m_shaderStages(std::move(shaderStages)),
-	m_vertexInputs(std::move(vertexInputs)),
-	m_defines(std::move(defines)),
-	m_mode(mode),
-	m_depth(depth),
-	m_topology(topology),
-	m_polygonMode(polygonMode),
-	m_cullMode(cullMode),
-	m_frontFace(frontFace),
-	m_pushDescriptors(pushDescriptors),
-	m_shader(std::make_unique<Shader>()),
-	m_dynamicStates(std::vector<VkDynamicState>(DYNAMIC_STATES)),
-	m_descriptorSetLayout(VK_NULL_HANDLE),
-	m_descriptorPool(VK_NULL_HANDLE),
-	m_pipeline(VK_NULL_HANDLE),
-	m_pipelineLayout(VK_NULL_HANDLE),
-	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS),
-	m_vertexInputStateCreateInfo({}),
-	m_inputAssemblyState({}),
-	m_rasterizationState({}),
-	m_blendAttachmentStates({}),
-	m_colourBlendState({}),
-	m_depthStencilState({}),
-	m_viewportState({}),
-	m_multisampleState({}),
-	m_dynamicState({}),
-	m_tessellationState({})
+	m_stage{std::move(stage)},
+	m_shaderStages{std::move(shaderStages)},
+	m_vertexInputs{std::move(vertexInputs)},
+	m_defines{std::move(defines)},
+	m_mode{mode},
+	m_depth{depth},
+	m_topology{topology},
+	m_polygonMode{polygonMode},
+	m_cullMode{cullMode},
+	m_frontFace{frontFace},
+	m_pushDescriptors{pushDescriptors},
+	m_shader{std::make_unique<Shader>()},
+	m_dynamicStates{DYNAMIC_STATES},
+	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_GRAPHICS}
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
@@ -60,7 +46,6 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 		break;
 	default:
 		throw std::runtime_error("Unknown pipeline mode");
-		break;
 	}
 
 #if defined(ACID_VERBOSE)
@@ -122,7 +107,7 @@ void PipelineGraphics::CreateShaderProgram()
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
 		auto shaderModule = m_shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
-		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
+		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo{};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipelineShaderStageCreateInfo.stage = stageFlag;
 		pipelineShaderStageCreateInfo.module = shaderModule;
@@ -140,7 +125,7 @@ void PipelineGraphics::CreateDescriptorLayout()
 
 	auto &descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
-	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
+	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo{};
 	descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
@@ -154,7 +139,7 @@ void PipelineGraphics::CreateDescriptorPool()
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
 
-	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
+	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
@@ -169,7 +154,7 @@ void PipelineGraphics::CreatePipelineLayout()
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
-	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
+	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipelineLayoutCreateInfo.setLayoutCount = 1;
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
@@ -319,7 +304,7 @@ void PipelineGraphics::CreatePipeline()
 	m_vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 	m_vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
-	VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
+	VkGraphicsPipelineCreateInfo pipelineCreateInfo{};
 	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 	pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
 	pipelineCreateInfo.pStages = m_stages.data();
@@ -350,14 +335,14 @@ void PipelineGraphics::CreatePipelinePolygon()
 void PipelineGraphics::CreatePipelineMrt()
 {
 	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
-	uint32_t attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
+	auto attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
 
 	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates;
 	blendAttachmentStates.reserve(attachmentCount);
 
 	for (uint32_t i = 0; i < attachmentCount; i++)
 	{
-		VkPipelineColorBlendAttachmentState blendAttachmentState = {};
+		VkPipelineColorBlendAttachmentState blendAttachmentState{};
 		blendAttachmentState.blendEnable = VK_TRUE;
 		blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 		blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;

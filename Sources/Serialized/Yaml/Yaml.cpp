@@ -6,12 +6,12 @@
 namespace acid
 {
 Yaml::Yaml() :
-	Metadata("", "")
+	Metadata{}
 {
 }
 
 Yaml::Yaml(Metadata *metadata) :
-	Metadata("", "")
+	Metadata{}
 {
 	AddChildren(metadata, this);
 }
@@ -22,7 +22,7 @@ void Yaml::Load(std::istream *inStream)
 	ClearAttributes();
 
 	auto topSection = std::make_unique<Section>(nullptr, "", 0, false);
-	Section *currentSection = topSection.get();
+	auto currentSection = topSection.get();
 	uint32_t lastIndentation = 0;
 
 	size_t lineNum = 0;
@@ -96,7 +96,7 @@ void Yaml::Load(std::istream *inStream)
 		}
 
 		auto content = String::Trim(linebuf).erase(0, 2 * arrayLevels);
-		auto section = new Section(currentSection, content, indentation, arrayLevels);
+		auto section = new Section{currentSection, content, indentation, arrayLevels};
 		currentSection->m_children.emplace_back(section);
 		lastIndentation = indentation;
 	}
@@ -114,13 +114,13 @@ void Yaml::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+		auto created = destination->AddChild(new Metadata{child->GetName(), child->GetValue()});
 		AddChildren(child.get(), created);
 	}
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		destination->AddAttribute(attribute.first, attribute.second);
+		destination->SetAttribute(attribute.first, attribute.second);
 	}
 }
 
@@ -143,13 +143,13 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 	if (String::StartsWith(name, "_"))
 	{
 		name = name.erase(0, 1);
-		parent->AddAttribute(name, value);
+		parent->SetAttribute(name, value);
 		return;
 	}
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata(name, value);
+		thisValue = new Metadata{name, value};
 		parent->AddChild(thisValue);
 	}
 
@@ -157,9 +157,9 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 
 	for (const auto &child : source->m_children)
 	{
-		if (child->m_arrayLevels != 0) //  && !singleArray
+		if (child->m_arrayLevels != 0) // && !singleArray
 		{
-			tmpValue = new Metadata();
+			tmpValue = new Metadata{};
 			thisValue->AddChild(tmpValue);
 		}
 

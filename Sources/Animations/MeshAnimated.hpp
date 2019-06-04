@@ -35,8 +35,8 @@ public:
 
 	friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
 
-	static const uint32_t MaxJoints;
-	static const uint32_t MaxWeights;
+	static constexpr uint32_t MaxJoints{50};
+	static constexpr uint32_t MaxWeights{3};
 
 private:
 	static Joint *CreateJoints(const JointData &data);

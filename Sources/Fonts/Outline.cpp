@@ -13,7 +13,7 @@ void OutlineAddOddPoint(Outline *o)
 {
 	if (o->m_points.size() % 2 != 0)
 	{
-		Vector2f p = Vector2f(o->m_bbox.m_min.m_x, o->m_bbox.m_min.m_y);
+		Vector2f p{o->m_bbox.m_min.m_x, o->m_bbox.m_min.m_y};
 		o->m_points.emplace_back(p);
 	}
 }
@@ -36,7 +36,7 @@ int32_t MoveToFunc(const FT_Vector *to, Outline *o)
 
 	assert(o->m_points.size() % 2 == 0);
 
-	ContourRange range = { static_cast<uint32_t>(o->m_points.size()), std::numeric_limits<uint32_t>::max() };
+	ContourRange range{ static_cast<uint32_t>(o->m_points.size()), std::numeric_limits<uint32_t>::max() };
 	o->m_contours.emplace_back(range);
 
 	ConvertPoint(to, p);
@@ -50,7 +50,7 @@ int32_t LineToFunc(const FT_Vector *to, Outline *o)
 
 	Vector2f toP;
 	ConvertPoint(to, toP);
-	Vector2f p = o->m_points[last].Lerp(toP, 0.5f);
+	auto p = o->m_points[last].Lerp(toP, 0.5f);
 	o->m_points.emplace_back(p);
 	o->m_points.emplace_back(toP);
 	return 0;
@@ -98,7 +98,7 @@ void OutlineDecompose(FT_Outline *outline, Outline *o)
 	o->m_bbox.m_max.m_x = static_cast<float>(outlineBbox.xMax) / 64.0f;
 	o->m_bbox.m_max.m_y = static_cast<float>(outlineBbox.yMax) / 64.0f;
 
-	FT_Outline_Funcs funcs = {};
+	FT_Outline_Funcs funcs{};
 	funcs.move_to = reinterpret_cast<FT_Outline_MoveToFunc>(MoveToFunc);
 	funcs.line_to = reinterpret_cast<FT_Outline_LineToFunc>(LineToFunc);
 	funcs.conic_to = reinterpret_cast<FT_Outline_ConicToFunc>(ConicToFunc);
@@ -166,9 +166,9 @@ uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to)
 bool IsCellFilled(const Outline *o, const Rect &bbox)
 {
 	// TODO: Optimize
-	auto p = Vector2f((bbox.m_max.m_x + bbox.m_min.m_x) / 2.0f, (bbox.m_max.m_y + bbox.m_min.m_y) / 2.0f);
+	Vector2f p{(bbox.m_max.m_x + bbox.m_min.m_x) / 2.0f, (bbox.m_max.m_y + bbox.m_min.m_y) / 2.0f};
 
-	auto mindist = std::numeric_limits<float>::max();
+	auto minDist = std::numeric_limits<float>::max();
 	auto v = std::numeric_limits<float>::max();
 	auto j = std::numeric_limits<uint32_t>::max();
 
@@ -187,13 +187,13 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 
 			auto p02 = p0.Lerp(p2, t);
 
-			auto udist = p02.Distance(p);
+			auto uDist = p02.Distance(p);
 
-			if (udist < mindist + 0.0001f)
+			if (uDist < minDist + 0.0001f)
 			{
 				auto d = LineSignedDistance(p0, p2, p);
 
-				if (udist >= mindist && i > contourBegin)
+				if (uDist >= minDist && i > contourBegin)
 				{
 					auto lastD = i == contourEnd - 2 && j == contourBegin ? LineSignedDistance(p0, p2, o->m_points[contourBegin + 2]) : LineSignedDistance(p0, p2, o->m_points[i - 2]);
 
@@ -211,7 +211,7 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 					v = d;
 				}
 
-				mindist = std::min(mindist, udist);
+				minDist = std::min(minDist, uDist);
 				j = i;
 			}
 		}
@@ -220,7 +220,7 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 	return v > 0.0f;
 }
 
-bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell &cell)
+bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell &cell)
 {
 	bool ret = true;
 	auto ucontourBegin = u->m_contours[contourIndex].m_begin;
@@ -260,7 +260,7 @@ bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, con
 	return ret;
 }
 
-bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell &cell, uint32_t &maxStartLength)
+bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell &cell, uint32_t &maxStartLength)
 {
 	bool ret = true;
 	auto ucontourBegin = u->m_contours[contourIndex].m_begin;
@@ -324,7 +324,7 @@ bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &co
 	return ret;
 }
 
-bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell *cells)
+bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell *cells)
 {
 	Rect bezierBbox;
 	Bezier2Bbox(&o->m_points[i], bezierBbox);
@@ -365,7 +365,7 @@ bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t 
 	return ret;
 }
 
-bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells, uint32_t &maxStartLength)
+bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell *cells, uint32_t &maxStartLength)
 {
 	bool ret = true;
 
@@ -381,7 +381,7 @@ bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint3
 	return ret;
 }
 
-void CopyWipcellValues(Outline *u, const WIPCell *cells)
+void CopyWipcellValues(Outline *u, const WipCell *cells)
 {
 	u->m_cells = std::vector<uint32_t>(u->m_cellCount.m_x * u->m_cellCount.m_y);
 
@@ -395,7 +395,7 @@ void CopyWipcellValues(Outline *u, const WIPCell *cells)
 	}
 }
 
-void InitWipcells(const Outline *o, WIPCell *cells)
+void InitWipcells(const Outline *o, WipCell *cells)
 {
 	auto size = o->m_bbox.m_max - o->m_bbox.m_min;
 
@@ -403,9 +403,10 @@ void InitWipcells(const Outline *o, WIPCell *cells)
 	{
 		for (uint32_t x = 0; x < o->m_cellCount.m_x; x++)
 		{
-			Rect bbox = { 
-				o->m_bbox.m_min + ((Vector2f(x, y) / o->m_cellCount) * size),
-				o->m_bbox.m_min + ((Vector2f(x + 1, y + 1) / o->m_cellCount) * size)
+			// TODO: Remove static_cast and cast in Vector.
+			Rect bbox{ 
+				o->m_bbox.m_min + ((Vector2f{static_cast<float>(x), static_cast<float>(y)} / o->m_cellCount) * size),
+				o->m_bbox.m_min + ((Vector2f{static_cast<float>(x + 1), static_cast<float>(y + 1)} / o->m_cellCount) * size)
 			};
 
 			auto i = y * o->m_cellCount.m_x + x;
@@ -440,7 +441,7 @@ uint32_t MakeCellFromSingleEdge(const uint32_t &e)
 	return e << 7 | 1;
 }
 
-void SetFilledCells(const Outline *u, WIPCell *cells, const uint32_t &filledCell)
+void SetFilledCells(const Outline *u, WipCell *cells, const uint32_t &filledCell)
 {
 	for (uint32_t y = 0; y < u->m_cellCount.m_y; y++)
 	{
@@ -461,7 +462,7 @@ bool TryToFitInCellCount(Outline *o)
 {
 	bool ret = true;
 
-	auto cells = std::vector<WIPCell>(o->m_cellCount.m_x * o->m_cellCount.m_y);
+	std::vector<WipCell> cells{o->m_cellCount.m_x * o->m_cellCount.m_y};
 	InitWipcells(o, cells.data());
 
 	Outline u = {};
@@ -471,12 +472,12 @@ bool TryToFitInCellCount(Outline *o)
 
 	for (uint32_t contourIndex = 0; contourIndex < o->m_contours.size(); contourIndex++)
 	{
-		uint32_t contourBegin = o->m_contours[contourIndex].m_begin;
-		uint32_t contourEnd = o->m_contours[contourIndex].m_end;
+		auto contourBegin = o->m_contours[contourIndex].m_begin;
+		auto contourEnd = o->m_contours[contourIndex].m_end;
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = { 
+		ContourRange urange{ 
 			static_cast<uint32_t>(u.m_points.size()), 
 			static_cast<uint32_t>(u.m_points.size()) + contourEnd - contourBegin 
 		};
@@ -498,7 +499,7 @@ bool TryToFitInCellCount(Outline *o)
 		uint32_t maxStartLen = 0;
 		ret &= ForEachWipcellFinishContour(o, &u, contourIndex, cells.data(), maxStartLen);
 
-		uint32_t continuationEnd = contourBegin + maxStartLen * 2;
+		auto continuationEnd = contourBegin + maxStartLen * 2;
 
 		for (uint32_t i = contourBegin; i < continuationEnd; i += 2)
 		{
@@ -610,17 +611,17 @@ void OutlineMakeCells(Outline *o)
 
 void OutlineSubdivide(Outline *o)
 {
-	Outline u = {};
+	Outline u{};
 	u.m_bbox = o->m_bbox;
 
 	for (uint32_t contourIndex = 0; contourIndex < o->m_contours.size(); contourIndex++)
 	{
-		uint32_t contourBegin = o->m_contours[contourIndex].m_begin;
-		uint32_t contour_end = o->m_contours[contourIndex].m_end;
+		auto contourBegin = o->m_contours[contourIndex].m_begin;
+		auto contour_end = o->m_contours[contourIndex].m_end;
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = { 
+		ContourRange urange{ 
 			static_cast<uint32_t>(u.m_points.size()), 
 			std::numeric_limits<uint32_t>::max()
 		};
@@ -633,7 +634,7 @@ void OutlineSubdivide(Outline *o)
 			//auto &p2 = o->points[i + 2];
 
 			Vector2f newp[3];
-			Bezier2Split_3P(newp, &o->m_points[i], 0.5f);
+			Bezier2Split3P(newp, &o->m_points[i], 0.5f);
 
 			u.m_points.emplace_back(p0);
 			u.m_points.emplace_back(newp[0]);
@@ -654,8 +655,8 @@ void OutlineFixCorners(Outline *o)
 
 	for (uint32_t contourIndex = 0; contourIndex < o->m_contours.size(); contourIndex++)
 	{
-		uint32_t contourBegin = o->m_contours[contourIndex].m_begin;
-		uint32_t contourEnd = o->m_contours[contourIndex].m_end;
+		auto contourBegin = o->m_contours[contourIndex].m_begin;
+		auto contourEnd = o->m_contours[contourIndex].m_end;
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
 		{
@@ -703,7 +704,7 @@ void OutlineFixCorners(Outline *o)
 void OutlineFixThinLines(Outline *o)
 {
 	// TODO: Optimize
-	Outline u = {};
+	Outline u{};
 	u.m_bbox = o->m_bbox;
 
 	for (uint32_t contourIndex = 0; contourIndex < o->m_contours.size(); contourIndex++)
@@ -713,7 +714,7 @@ void OutlineFixThinLines(Outline *o)
 
 		OutlineAddOddPoint(&u);
 
-		ContourRange urange = { static_cast<uint32_t>(u.m_points.size()), std::numeric_limits<uint32_t>::max() };
+		ContourRange urange{ static_cast<uint32_t>(u.m_points.size()), std::numeric_limits<uint32_t>::max() };
 		u.m_contours.emplace_back(urange);
 
 		for (uint32_t i = contourBegin; i < contourEnd; i += 2)
@@ -732,7 +733,7 @@ void OutlineFixThinLines(Outline *o)
 
 			if (i > 2)
 			{
-				uint32_t jbegin = contourBegin;
+				auto jbegin = contourBegin;
 
 				if (i == contourEnd - 2)
 				{
@@ -741,8 +742,8 @@ void OutlineFixThinLines(Outline *o)
 
 				for (uint32_t j = jbegin; j < i - 2; j += 2)
 				{
-					Vector2f &q0 = o->points[j];
-					Vector2f &q2 = o->points[j + 2];
+					auto &q0 = o->points[j];
+					auto &q2 = o->points[j + 2];
 
 					if (Bezier2LineIsIntersecting(bezier, q0, q2))
 					{
@@ -760,8 +761,8 @@ void OutlineFixThinLines(Outline *o)
 
 			for (uint32_t j = i + 2; j < jend; j += 2)
 			{
-				Vector2f &q0 = o->points[j];
-				Vector2f &q2 = o->points[j + 2];
+				auto &q0 = o->points[j];
+				auto &q2 = o->points[j + 2];
 
 				if (Bezier2LineIsIntersecting(bezier, q0, q2))
 				{
@@ -801,7 +802,7 @@ void OutlineFixThinLines(Outline *o)
 			if (subdivide)
 			{
 				Vector2f newp[3];
-				Bezier2Split_3P(newp, &o->m_points[i], 0.5f);
+				Bezier2Split3P(newp, &o->m_points[i], 0.5f);
 
 				u.m_points.emplace_back(p0);
 				u.m_points.emplace_back(newp[0]);

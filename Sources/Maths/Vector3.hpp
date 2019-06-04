@@ -40,11 +40,12 @@ public:
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
+	 * @tparam J The z type.
 	 * @param source Creates this vector out of a existing vector.
 	 * @param z Start z.
 	 **/
-	template<typename K>
-	explicit constexpr Vector3(const Vector2<K> &source, const float &z = 0);
+	template<typename K, typename J = T>
+	explicit constexpr Vector3(const Vector2<K> &source, const J &z = 0);
 	
 	/**
 	 * Constructor for Vector3.

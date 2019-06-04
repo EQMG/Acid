@@ -180,18 +180,7 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 
-	union
-	{
-		struct
-		{
-			Vector3f m_rows[3];
-		};
-
-		struct
-		{
-			float m_linear[9];
-		};
-	};
+	Vector3f m_rows[3];
 };
 }
 

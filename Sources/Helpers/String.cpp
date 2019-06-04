@@ -4,7 +4,7 @@ namespace acid
 {
 std::vector<std::string> String::Split(const std::string &str, const std::string &sep, bool trim)
 {
-	std::unique_ptr<char[]> copy(new char[strlen(str.c_str()) + 1]);
+	std::unique_ptr<char[]> copy{new char[strlen(str.c_str()) + 1]};
 	std::strcpy(copy.get(), str.c_str());
 
 	std::vector<std::string> splitVector;
@@ -12,7 +12,7 @@ std::vector<std::string> String::Split(const std::string &str, const std::string
 
 	while (current != nullptr)
 	{
-		auto currentS = std::string(current);
+		auto currentS = std::string{current};
 
 		if (trim)
 		{

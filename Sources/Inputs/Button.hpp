@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Devices/Window.hpp"
-#include "StdAfx.hpp"
 
 namespace acid
 {
@@ -26,7 +25,7 @@ public:
 	 */
 	bool WasDown()
 	{
-		bool stillDown = m_wasDown && IsDown();
+		auto stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
@@ -41,6 +40,6 @@ protected:
 	Delegate<void(InputAction, BitMask < InputMod > )> m_onButton;
 
 private:
-	bool m_wasDown;
+	bool m_wasDown{};
 };
 }

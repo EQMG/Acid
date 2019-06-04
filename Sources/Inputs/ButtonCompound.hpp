@@ -45,7 +45,7 @@ public:
 
 private:
 	std::vector<std::unique_ptr<Button>> m_buttons;
-	bool m_useAnd;
-	bool m_lastDown;
+	bool m_useAnd{};
+	bool m_lastDown{};
 };
 }
