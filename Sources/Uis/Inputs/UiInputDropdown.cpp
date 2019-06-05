@@ -18,18 +18,18 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, con
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(
-			new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), 
+			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 	});
 
-	//m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	//m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 	//m_slider.SetHeight(1.0f);
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 }
 
 void UiInputDropdown::UpdateObject()
 {
-	//m_slider.GetTransform().SetSize(Vector2f(1.0f, 2.0f * static_cast<float>(m_options.size())));
+	//m_slider.GetTransform().SetSize({1.0f, 2.0f * static_cast<float>(m_options.size())});
 }
 
 void UiInputDropdown::SetValue(const uint32_t &value)

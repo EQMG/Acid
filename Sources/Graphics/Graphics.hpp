@@ -108,7 +108,7 @@ public:
 	 * Sets the current renderer to a new renderer.
 	 * @param renderer The new renderer.
 	 */
-	void SetRenderer(Renderer *renderer) { m_renderer.reset(renderer); }
+	void SetRenderer(std::unique_ptr<Renderer> &&renderer) { m_renderer = std::move(renderer); }
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;
 

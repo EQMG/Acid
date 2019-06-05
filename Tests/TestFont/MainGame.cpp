@@ -9,6 +9,10 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 #include "Resources/Resources.hpp"
+#include "Inputs/AxisCompound.hpp"
+#include "Inputs/AxisJoystick.hpp"
+#include "Inputs/AxisButton.hpp"
+#include "Inputs/ButtonMouse.hpp"
 
 int main(int argc, char **argv)
 {
@@ -16,10 +20,10 @@ int main(int argc, char **argv)
 
 	// Creates the engine.
 	auto engine = std::make_unique<Engine>(argv[0]);
-	engine->SetGame(new MainGame());
+	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
-	int32_t exitCode = engine->Run();
+	auto exitCode = engine->Run();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -30,13 +34,53 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_buttonFullscreen(Key::F11),
-	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
+	m_buttonFullscreen{Key::F11},
+	m_buttonScreenshot{Key::F9},
+	m_buttonExit{Key::Delete}
 {
+	/*AxisButton inputForward{
+		AxisButton{
+			ButtonCompound{
+				ButtonKeyboard{Key::W}, 
+				ButtonKeyboard{Key::Up}
+			}, 
+			ButtonCompound{
+				ButtonKeyboard{Key::S}, 
+				ButtonKeyboard{Key::Down}
+			}
+		},
+		AxisJoystick{0, 1}
+	};
+
+	ButtonCompound kbc{
+		ButtonKeyboard{Key::W},
+		ButtonMouse{MouseButton::Right}
+	};
+
+	AxisButton mba{
+		ButtonMouse{MouseButton::Left}, 
+		ButtonKeyboard{Key::Up}
+	};
+
+	AxisCompound jac{
+		AxisJoystick{0, 0}, 
+		HatJoystick{0, 0, JoystickHat::Up}
+	};*/
+
+	AxisButton abk{std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)};
+	AxisCompound ack{std::make_unique<AxisJoystick>(0, 0), std::make_unique<AxisJoystick>(0, 1)};
+	ButtonCompound bck{std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)};
+
+	//using JoystickButton = std::pair<uint32_t, uint32_t>;
+	//using JoystickAxis = std::pair<uint32_t, uint32_t>;
+	//using JoystickHat = std::pair<uint32_t, Hat>;
+	//AxisButton abk{KeyboardButton::A, KeyboardButton::D};
+	//AxisCompound ack{JoystickAxis{0, 0}, JoystickAxis{0, 1}};
+	//ButtonCompound bck{KeyboardButton::A, MouseButton::Left};
+
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -73,8 +117,8 @@ MainGame::MainGame() :
 	Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", 
 		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	Graphics::Get()->SetRenderer(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
 MainGame::~MainGame()

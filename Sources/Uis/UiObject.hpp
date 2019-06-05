@@ -85,13 +85,13 @@ public:
 
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
-	void SetAlphaDriver(Driver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
+	void SetAlphaDriver(std::unique_ptr<Driver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
 
 	const float &GetAlpha() const { return m_alpha; }
 	
 	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
-	void SetScaleDriver(Driver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+	void SetScaleDriver(std::unique_ptr<Driver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
 
 	const Vector2f &GetScale() const { return m_scale; }
 

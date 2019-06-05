@@ -228,7 +228,7 @@ void Files::AddSearchPath(const std::string &path)
 
 	if (PHYSFS_mount(path.c_str(), nullptr, true) == 0)
 	{
-		Log::Error("File System error while adding a path or zip(%s): %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+		Log::Error("File System error while adding a path or zip(%s): %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		return;
 	}
 
@@ -246,7 +246,7 @@ void Files::RemoveSearchPath(const std::string &path)
 
 	if (PHYSFS_unmount(path.c_str()) == 0)
 	{
-		Log::Error("File System error while removing a path: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+		Log::Error("File System error while removing a path: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		return;
 	}
 
@@ -279,7 +279,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 	{
 		if (!FileSystem::Exists(path) || !FileSystem::IsFile(path))
 		{
-			Log::Error("Error while opening file to load %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+			Log::Error("Error while opening file to load %s: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return std::nullopt;
 		}
 
@@ -292,7 +292,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 
 	if (PHYSFS_close(fsFile) == 0)
 	{
-		Log::Error("Error while closing file %s: %s\n", path.c_str(), PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+		Log::Error("Error while closing file %s: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 	}
 
 	return std::string(data.begin(), data.end());

@@ -25,7 +25,7 @@ namespace test
 static const float UI_SLIDE_TIME = 0.2f;
 
 Scene1::Scene1() :
-	Scene(new CameraFree()),
+	Scene(std::make_unique<CameraFree>()),
 	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
 	m_overlayDebug(&Uis::Get()->GetCanvas())
 {

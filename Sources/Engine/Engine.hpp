@@ -124,7 +124,7 @@ public:
 	 * Sets the current game to a new game.
 	 * @param game The new game.
 	 */
-	void SetGame(Game *game) { m_game.reset(game); }
+	void SetGame(std::unique_ptr<Game> &&game) { m_game = std::move(game); }
 
 	/**
 	 * Gets the first argument passed to main.

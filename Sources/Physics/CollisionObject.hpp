@@ -39,10 +39,7 @@ public:
 	 */
 	virtual bool InFrustum(const Frustum &frustum) = 0;
 
-	Force *AddForce(Force *force);
-
-	template<typename T, typename... Args>
-	Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
+	Force *AddForce(std::unique_ptr<Force> &&force);
 
 	virtual void ClearForces() = 0;
 

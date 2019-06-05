@@ -27,7 +27,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
+		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
 	});
 
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));

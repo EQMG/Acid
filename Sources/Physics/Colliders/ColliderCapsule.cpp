@@ -6,17 +6,16 @@
 namespace acid
 {
 ColliderCapsule::ColliderCapsule(const float &radius, const float &height, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)),
-	m_shape(std::make_unique<btCapsuleShape>(radius, height)),
-	m_radius(radius),
-	m_height(height)
+	Collider{localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)},
+	m_shape{std::make_unique<btCapsuleShape>(radius, height)},
+	m_radius{radius},
+	m_height{height}
 {
-	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
+	m_localTransform.SetScaling({m_radius, m_height, m_radius});
 }
 
 ColliderCapsule::~ColliderCapsule()
 {
-	m_shape.release(); // TODO: Fix deletion of shape.
 }
 
 void ColliderCapsule::Start()
@@ -36,15 +35,15 @@ btCollisionShape *ColliderCapsule::GetCollisionShape() const
 void ColliderCapsule::SetRadius(const float &radius)
 {
 	m_radius = radius;
-	m_shape->setImplicitShapeDimensions(btVector3(m_radius, 0.5f * m_height, m_radius));
-	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
+	m_shape->setImplicitShapeDimensions({m_radius, 0.5f * m_height, m_radius});
+	m_localTransform.SetScaling({m_radius, m_height, m_radius});
 }
 
 void ColliderCapsule::SetHeight(const float &height)
 {
 	m_height = height;
-	m_shape->setImplicitShapeDimensions(btVector3(m_radius, 0.5f * m_height, m_radius));
-	m_localTransform.SetScaling(Vector3f(m_radius, m_height, m_radius));
+	m_shape->setImplicitShapeDimensions({m_radius, 0.5f * m_height, m_radius});
+	m_localTransform.SetScaling({m_radius, m_height, m_radius});
 }
 
 const Metadata &operator>>(const Metadata &metadata, ColliderCapsule &collider)

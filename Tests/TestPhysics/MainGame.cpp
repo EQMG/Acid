@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
 	// Creates the engine.
 	auto engine = std::make_unique<Engine>(argv[0]);
-	engine->SetGame(new MainGame());
+	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
@@ -44,7 +44,7 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	Log::Out("Current DateTime: %s\n", Time::GetDateTime().c_str());
+	Log::Out("Current DateTime: %s\n", Time::GetDateTime());
 
 	Timers::Get()->Once(0.333s, []()
 	{
@@ -71,7 +71,7 @@ MainGame::MainGame() :
 	}*/
 
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();
@@ -120,8 +120,8 @@ MainGame::MainGame() :
 	Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
 		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	Graphics::Get()->SetRenderer(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
 MainGame::~MainGame()

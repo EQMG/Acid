@@ -50,8 +50,8 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	//Log::Out("%s\n", m_shader->ToString().c_str());
-	Log::Out("Pipeline graphics '%s' created in %.3fms\n", m_shaderStages.back().c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("%s\n", m_shader->ToString());
+	Log::Out("Pipeline graphics '%s' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
@@ -100,7 +100,7 @@ void PipelineGraphics::CreateShaderProgram()
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage.c_str());
+			Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage);
 			throw std::runtime_error("Could not create pipeline, missing shader stage");
 		}
 

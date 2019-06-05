@@ -6,11 +6,11 @@
 namespace acid
 {
 ColliderSphere::ColliderSphere(const float &radius, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Sphere.obj"), 3.0f, Colour::Blue)),
-	m_shape(std::make_unique<btSphereShape>(radius)),
-	m_radius(radius)
+	Collider{localTransform, GizmoType::Create(Model::Create("Gizmos/Sphere.obj"), 3.0f, Colour::Blue)},
+	m_shape{std::make_unique<btSphereShape>(radius)},
+	m_radius{radius}
 {
-	m_localTransform.SetScaling(Vector3f(m_radius, m_radius, m_radius));
+	m_localTransform.SetScaling({m_radius, m_radius, m_radius});
 }
 
 ColliderSphere::~ColliderSphere()
@@ -35,7 +35,7 @@ void ColliderSphere::SetRadius(const float &radius)
 {
 	m_radius = radius;
 	m_shape->setUnscaledRadius(m_radius);
-	m_localTransform.SetScaling(Vector3f(m_radius, m_radius, m_radius));
+	m_localTransform.SetScaling({m_radius, m_radius, m_radius});
 }
 
 const Metadata &operator>>(const Metadata &metadata, ColliderSphere &collider)

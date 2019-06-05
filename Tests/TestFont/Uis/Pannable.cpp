@@ -10,9 +10,7 @@ namespace test
 {
 	Pannable::Pannable(UiObject *parent) :
 		UiObject(parent, UiTransform(Window::Get()->GetSize())),
-		m_buttonReset({ Key::Enter }),
-		m_testCompound(ButtonCompound::Create<ButtonKeyboard>(true, Key::G, Key::H, Key::J)),
-		m_testHat(0, 0, JoystickHat::Up | JoystickHat::Right),
+		m_buttonReset{Key::Enter},
 		m_settings(parent, UiTransform(Vector2i(300, 300), UiAnchor::LeftTop, Vector2i(20, 20)), UiInputButton::BackgroundColour, UiManipulate::All,
 			ScrollBar::None),
 		m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, UiTransform(UiInputButton::Size, UiAnchor::LeftTop, Vector2i(0, 0))),
@@ -35,14 +33,6 @@ namespace test
 			GetTransform().SetPosition(Vector2f(0.5f, 0.5f));
 		}
 		Log::Out("Button Reset: %i\n", action);
-	});
-	m_testCompound->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		Log::Out("Test Compound: %i\n", action);
-	});
-	m_testHat.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		Log::Out("Test Hat: %i\n", action);
 	});
 
 	m_settings.GetTransform().SetDepth(-4.0f);

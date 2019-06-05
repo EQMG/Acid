@@ -69,7 +69,7 @@ public:
 	template<typename... Args>
 	static void Out(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::Default, std::nullopt, StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::Default, std::nullopt, StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public:
 	template<typename... Args>
 	static void Debug(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightCyan, "Debug", StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::LightCyan, "Debug", StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public:
 	template<typename... Args>
 	static void Info(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::Default, "Info", StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::Default, "Info", StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public:
 	template<typename... Args>
 	static void Warning(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightYellow, "Warning", StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::LightYellow, "Warning", StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 
 	/**
@@ -117,7 +117,7 @@ public:
 	template<typename... Args>
 	static void Error(const std::string &format, Args &&... args)
 	{
-		Print(Style::Default, Colour::LightRed, "Error", StringFormat(format, std::forward<Args>(args)...));
+		Print(Style::Default, Colour::LightRed, "Error", StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public:
 	template<typename... Args>
 	static void Popup(const std::string &title, const std::string &format, Args &&... args)
 	{
-		PopupMessage(title, StringFormat(format, std::forward<Args>(args)...));
+		PopupMessage(title, StringFormat(format, StringClean(std::forward<Args>(args))...));
 	}
 
 	/**
@@ -145,6 +145,19 @@ private:
 	static void Print(const std::string_view &style, const std::string_view &colour, const std::optional<std::string> &type, const std::string &string);
 	
 	static void PopupMessage(const std::string &title, const std::string &message);
+
+	template<typename T>
+	static auto StringClean(const T &t)
+	{
+		if constexpr (std::is_same_v<std::string, T>)
+		{
+			return t.c_str();
+		}
+		else
+		{
+			return t;
+		}
+	}
 
 	template<typename... Args>
 	static std::string StringFormat(const std::string &format, Args &&... args)

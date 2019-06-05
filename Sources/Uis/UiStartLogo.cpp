@@ -20,7 +20,7 @@ UiStartLogo::UiStartLogo(UiObject *parent) :
 {
 	Timers::Get()->Once(START_DELAY, [this]()
 	{
-		SetAlphaDriver(new DriverSlide<float>(1.0f, 0.0f, Time::Seconds(1.4f)));
+		SetAlphaDriver(std::make_unique<DriverSlide<float>>(1.0f, 0.0f, Time::Seconds(1.4f)));
 	}, this);
 }
 

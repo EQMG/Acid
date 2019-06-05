@@ -170,7 +170,7 @@ void Graphics::CheckVk(const VkResult &result)
 
 	auto failure = StringifyResultVk(result);
 
-	Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
+	Log::Error("Vulkan error: %s, %i\n", failure, result);
 	Log::Popup("Vulkan Error", failure);
 	throw std::runtime_error("Vulkan error: " + failure);
 }
@@ -219,7 +219,7 @@ void Graphics::CaptureScreenshot(const std::string &filename) const
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	Log::Out("Screenshot '%s' saved in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Screenshot '%s' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

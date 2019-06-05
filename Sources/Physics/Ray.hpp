@@ -56,7 +56,7 @@ public:
 	const Vector3f &GetCurrentRay() const { return m_currentRay; }
 
 private:
-	void UpdateNormalisedDeviceCoordinates(const float &mouseX, const float &mouseY);
+	void UpdateNormalizedDeviceCoordinates(const float &mouseX, const float &mouseY);
 
 	void UpdateEyeCoords();
 

@@ -17,16 +17,16 @@ static const Vector2f SENSITIVITY_JOYSTICK = Vector2f(-0.06f);
 static const Vector2f SENSITIVITY_MOUSE = Vector2f(0.15f);
 
 CameraFree::CameraFree() :
-	m_sensitivity(1.0f),
-	m_joystickVertical(0, 3),
-	m_joystickHorizontal(0, 2),
-	m_inputForward({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		new AxisJoystick(0, 1, true) }),
-	m_inputStrafe({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			new AxisJoystick(0, 0, true) }),
-	m_inputVertical({ AxisButton::Create<ButtonKeyboard>(Key::ControlLeft, Key::Space),
-			new AxisButton(new ButtonJoystick(0, 0), new ButtonJoystick(0, 2)) }),
-	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) })
+	m_sensitivity{1.0f},
+	m_joystickVertical{0, 3},
+	m_joystickHorizontal{0, 2},
+	m_inputForward{std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
+		std::make_unique<AxisJoystick>(0, 1, true)},
+	m_inputStrafe{std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
+		std::make_unique<AxisJoystick>(0, 0, true)},
+	m_inputVertical{AxisButton::Create<ButtonKeyboard>(Key::ControlLeft, Key::Space),
+		std::make_unique<AxisButton>(std::make_unique<ButtonJoystick>(0, 0), std::make_unique<ButtonJoystick>(0, 2))},
+	m_inputSprint{ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), std::make_unique<ButtonJoystick>(0, 1)}
 {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;
@@ -78,6 +78,6 @@ void CameraFree::Update()
 	m_viewRay.Update(m_position, Vector2f(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix);
 
 	//auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
-	//Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName().c_str() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
+	//Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
 }
 }

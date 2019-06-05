@@ -47,7 +47,7 @@ namespace test
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(new CameraFps()),
+	Scene(std::make_unique<CameraFps>()),
 	m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
 	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
 	m_buttonSave(Key::K),
@@ -63,7 +63,7 @@ Scene1::Scene1() :
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s);
+			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
 			sphere->AddComponent<ColliderSphere>(); 
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
@@ -76,10 +76,10 @@ Scene1::Scene1() :
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 
 			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
-			//Gizmos::Get()->AddGizmo(new Gizmo(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
+			//Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
 			//auto collisionObject = sphere->GetComponent<CollisionObject>();
-			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName().c_str());});
-			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName());});
+			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName());});
 		}
 	});
 
@@ -130,12 +130,12 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_uiStartLogo.SetAlphaDriver(new DriverConstant<float>(1.0f));
-	m_overlayDebug.SetAlphaDriver(new DriverConstant<float>(0.0f));
+	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
+	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 
 	m_uiStartLogo.OnFinished().Add([this]()
 	{
-		m_overlayDebug.SetAlphaDriver(new DriverSlide<float>(0.0f, 1.0f, UI_SLIDE_TIME));
+		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
 		Mouse::Get()->SetCursorHidden(true);
 	});
 
@@ -143,12 +143,12 @@ Scene1::Scene1() :
 	{
 		for (const auto &path : paths)
 		{
-			Log::Out("File dropped: '%s'\n", path.c_str());
+			Log::Out("File dropped: '%s'\n", path);
 		}
 	});
 	Window::Get()->OnMonitorConnect().Add([this](Monitor *monitor, bool connected)
 	{
-		Log::Out("Monitor '%s' action: %i\n", monitor->GetName().c_str(), connected);
+		Log::Out("Monitor '%s' action: %i\n", monitor->GetName(), connected);
 	});
 	Window::Get()->OnClose().Add([this]()
 	{

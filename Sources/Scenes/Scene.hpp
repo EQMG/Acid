@@ -16,8 +16,8 @@ public:
 	 * Creates a new scene.
 	 * @param camera The scenes camera.
 	 */
-	explicit Scene(Camera *camera) :
-		m_camera{camera},
+	explicit Scene(std::unique_ptr<Camera> &&camera) :
+		m_camera{std::move(camera)},
 		m_structure{std::make_unique<SceneStructure>()},
 		m_physics{std::make_unique<ScenePhysics>()}
 	{

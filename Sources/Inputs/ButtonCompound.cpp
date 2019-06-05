@@ -2,10 +2,11 @@
 
 namespace acid
 {
-ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool &useAnd) :
+ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, const bool &useAnd) :
+	m_buttons{std::move(buttons)},
 	m_useAnd{useAnd}
 {
-	for (const auto &button : buttons)
+	for (const auto &button : m_buttons)
 	{
 		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 		{
@@ -26,8 +27,6 @@ ButtonCompound::ButtonCompound(const std::vector<Button *> &buttons, const bool 
 				m_onButton(InputAction::Repeat, 0);
 			}
 		}, this);
-
-		m_buttons.emplace_back(button);
 	}
 }
 

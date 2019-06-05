@@ -61,9 +61,8 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_fontType->GetImage());
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
@@ -95,16 +94,16 @@ void Text::SetString(const std::string &string)
 	}
 }
 
-void Text::SetBorderDriver(Driver<float> *borderDriver)
+void Text::SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver)
 {
-	m_borderDriver.reset(borderDriver);
+	m_borderDriver = std::move(borderDriver);
 	m_solidBorder = true;
 	m_glowBorder = false;
 }
 
-void Text::SetGlowDriver(Driver<float> *glowDriver)
+void Text::SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver)
 {
-	m_glowDriver.reset(glowDriver);
+	m_glowDriver = std::move(glowDriver);
 	m_solidBorder = false;
 	m_glowBorder = true;
 }

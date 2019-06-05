@@ -131,7 +131,7 @@ void ModelObj::Load()
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);

@@ -22,10 +22,10 @@ CollisionObject::~CollisionObject()
 {
 }
 
-Force *CollisionObject::AddForce(Force *force)
+Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force)
 {
-	m_forces.emplace_back(force);
-	return force;
+	m_forces.emplace_back(std::move(force));
+	return force.get();
 }
 
 void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)

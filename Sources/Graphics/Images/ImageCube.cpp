@@ -118,7 +118,7 @@ void ImageCube::Load()
 		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
 		auto debugEnd = Time::Now();
-		Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+		Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 

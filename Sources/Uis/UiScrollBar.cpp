@@ -50,12 +50,12 @@ void UiScrollBar::UpdateObject()
 	{
 		if (m_scroll.IsSelected() && !m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_scroll.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_scroll.IsSelected() && m_mouseOver)
 		{
-			m_scroll.SetColourDriver(new DriverSlide<Colour>(m_scroll.GetColourOffset(), UiInputButton::ButtonColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_scroll.GetColourOffset(), UiInputButton::ButtonColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}

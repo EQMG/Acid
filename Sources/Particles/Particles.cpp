@@ -42,7 +42,7 @@ void Particles::Update()
 	}
 }
 
-void Particles::AddParticle(const Particle &particle)
+void Particles::AddParticle(Particle &&particle)
 {
 	auto it = m_particles.find(particle.GetParticleType());
 
@@ -52,7 +52,7 @@ void Particles::AddParticle(const Particle &particle)
 		it = m_particles.find(particle.GetParticleType());
 	}
 
-	(*it).second.emplace_back(particle);
+	(*it).second.emplace_back(std::move(particle));
 }
 
 /*void Particles::RemoveParticle(const Particle &particle)

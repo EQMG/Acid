@@ -56,7 +56,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				Log::Error("Could not find descriptor in shader '%s' of name '%s'\n", m_shader->GetName().c_str(), descriptorName.c_str());
+				Log::Error("Could not find descriptor in shader '%s' of name '%s'\n", m_shader->GetName(), descriptorName);
 			}
 #endif
 
@@ -70,7 +70,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				Log::Error("Could not find descriptor in shader '%s' of name '%s' at location '%i'\n", m_shader->GetName().c_str(), descriptorName.c_str(), *location);
+				Log::Error("Could not find descriptor in shader '%s' of name '%s' at location '%i'\n", m_shader->GetName(), descriptorName, *location);
 			}
 #endif
 			return;

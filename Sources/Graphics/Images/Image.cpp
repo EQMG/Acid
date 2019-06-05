@@ -117,7 +117,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector
 
 	if (!fileLoaded)
 	{
-		Log::Error("Image could not be loaded: '%s'\n", filename.c_str());
+		Log::Error("Image could not be loaded: '%s'\n", filename);
 		return nullptr;
 	}
 
@@ -130,7 +130,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector
 
 	if (pixels == nullptr)
 	{
-		Log::Error("Unable to load Image: '%s'\n", filename.c_str());
+		Log::Error("Unable to load Image: '%s'\n", filename);
 	}
 
 	return pixels;
@@ -143,7 +143,7 @@ void Image::WritePixels(const std::string &filename, const uint8_t *pixels, cons
 
 	if (stbi_write_png(filename.c_str(), extent.m_x, extent.m_y, components, pixels, extent.m_x * components) != 1)
 	{
-		Log::Error("Unable to write pixels: '%s'\n", filename.c_str());
+		Log::Error("Unable to write pixels: '%s'\n", filename);
 	}
 }
 

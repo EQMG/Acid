@@ -7,10 +7,10 @@
 namespace acid
 {
 SubrenderParticles::SubrenderParticles(const Pipeline::Stage &pipelineStage) :
-	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag" },
+	Subrender{pipelineStage},
+	m_pipeline{pipelineStage, { "Shaders/Particles/Particle.vert", "Shaders/Particles/Particle.frag" },
 		{ VertexDefault::GetVertexInput(0), ParticleType::Instance::GetVertexInput(1) }, {}, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::Read,
-		VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST)
+		VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST}
 {
 }
 

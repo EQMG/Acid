@@ -57,7 +57,7 @@ void Rigidbody::Start()
 	auto motionState = new btDefaultMotionState{worldTransform};
 	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
 
-	m_rigidBody.reset(new btRigidBody{cInfo});
+	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
 	//m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 	m_rigidBody->setWorldTransform(worldTransform);
 	//m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);

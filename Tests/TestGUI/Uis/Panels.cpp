@@ -34,17 +34,17 @@ Panels::Panels(UiObject *parent) :
 	m_gui2(&m_gui1, UiTransform(UiMargins::None, Vector2i(48, 48), Vector2i(-48, -48)), Image2d::Create("Guis/White.png")),
 	m_text1(this, UiTransform(Vector2i(256, 256), UiAnchor::LeftBottom, Vector2i(50, -75)), 72, "|ABC abc 0123_*&.", FontType::Create("Fonts/ProximaNova", "Regular"))
 {
-	m_gui1.SetColourDriver(new DriverConstant<Colour>(Colour::Blue));
-	m_gui2.SetColourDriver(new DriverConstant<Colour>(Colour::Yellow));
+	m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
+	m_gui2.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Yellow));
 	m_gui1.OnSelected().Add([this](bool selected)
 	{
 		if (selected)
 		{
-			m_gui1.SetColourDriver(new DriverConstant<Colour>(Colour::Green));
+			m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Green));
 		}
 		else
 		{
-			m_gui1.SetColourDriver(new DriverConstant<Colour>(Colour::Blue));
+			m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 		}
 	});
 	m_text1.SetEnabled(false);

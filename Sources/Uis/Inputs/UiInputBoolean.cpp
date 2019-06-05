@@ -20,7 +20,7 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 	});
 	OnClick().Add([this](MouseButton button)
 	{

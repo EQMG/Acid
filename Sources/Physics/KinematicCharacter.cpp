@@ -56,7 +56,7 @@ void KinematicCharacter::Start()
 
 	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
 
-	m_ghostObject.reset(new btPairCachingGhostObject{});
+	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
 	m_ghostObject->setWorldTransform(worldTransform);
 	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback{});
 	m_ghostObject->setCollisionShape(m_shape.get());
@@ -68,7 +68,7 @@ void KinematicCharacter::Start()
 	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 	m_body = m_ghostObject.get();
 
-	m_controller.reset(new btKinematicCharacterController{m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f});
+	m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f);
 	m_controller->setGravity(Collider::Convert(m_gravity));
 	m_controller->setUp(Collider::Convert(m_up));
 	m_controller->setStepHeight(m_stepHeight);

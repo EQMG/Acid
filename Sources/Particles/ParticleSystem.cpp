@@ -7,17 +7,12 @@
 namespace acid
 {
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
-	m_types(std::move(types)),
-	m_pps(pps),
-	m_averageSpeed(averageSpeed),
-	m_gravityEffect(gravityEffect),
-	m_randomRotation(false),
-	m_directionDeviation(0.0f),
-	m_speedDeviation(0.0f),
-	m_lifeDeviation(0.0f),
-	m_stageDeviation(0.0f),
-	m_scaleDeviation(0.0f),
-	m_elapsedEmit(Time::Seconds(1.0f / m_pps))
+	m_types{std::move(types)},
+	m_pps{pps},
+	m_averageSpeed{averageSpeed},
+	m_gravityEffect{gravityEffect},
+	m_randomRotation{false},
+	m_elapsedEmit{Time::Seconds(1.0f / m_pps)}
 {
 }
 
@@ -114,11 +109,11 @@ void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviat
 
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
-	Vector3f spawnPos = emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition();
+	auto spawnPos = emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition();
 
 	Vector3f velocity;
 
-	if (m_direction != Vector3f())
+	if (m_direction != Vector3f::Zero)
 	{
 		velocity = RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 	}
@@ -134,7 +129,7 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	auto scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
 	auto lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
 	auto stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
-	return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
+	return {emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect};
 }
 
 float ParticleSystem::GenerateValue(const float &average, const float &errorPercent)
@@ -160,7 +155,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
 	auto x = rootOneMinusZSquared * std::cos(theta);
 	auto y = rootOneMinusZSquared * std::sin(theta);
-	return Vector3f(x, y, z);
+	return {x, y, z};
 }
 
 const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)

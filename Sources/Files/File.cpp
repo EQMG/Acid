@@ -32,7 +32,7 @@ void File::Load()
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	Log::Out("File '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("File '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
@@ -57,7 +57,7 @@ void File::Write() const
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	Log::Out("File '%s' saved in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("File '%s' saved in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

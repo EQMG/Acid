@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
 	// TODO: Download a ZIP from Google Drive.
 	/*{
-		auto http = Http("http://drive.google.com/");
+		Http http{"http://drive.google.com/"};
 
 		HttpRequest request;
 		request.SetMethod(HttpRequest::Method::Get);
@@ -23,17 +23,17 @@ int main(int argc, char **argv)
 		request.SetField("Content-Type", "application/vnd.google-apps.file");
 
 		auto page = http.SendRequest(request);
-		uint32_t fileSize = page.GetBody().size();
+		auto fileSize = page.GetBody().size();
 
-		const auto &fileContainer = page.GetBody();
-		std::ofstream file(std::filesystem::current_path() + "/Data-Sponza.zip", std::ios::out | std::ios::binary);
+		auto fileContainer = page.GetBody();
+		std::ofstream file{std::filesystem::current_path() / "Data-Sponza.zip", std::ios::out | std::ios::binary};
 		file.write(fileContainer.c_str(), fileSize);
 		file.close();
 	}*/
 
 	// https://www.sfml-dev.org/tutorials/2.5/network-http.php
 	{
-		auto http = Http("http://equilibrium.games/");
+		Http http{"http://equilibrium.games/"};
 
 		HttpRequest request;
 		request.SetMethod(HttpRequest::Method::Post);
@@ -46,37 +46,37 @@ int main(int argc, char **argv)
 		auto response = http.SendRequest(request);
 		Log::Out("Status: %i\n", response.GetStatus());
 		Log::Out("HTTP version: %i.%i\n", response.GetMajorHttpVersion(), response.GetMinorHttpVersion());
-		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type").c_str());
-		Log::Out("Body: %s\n", response.GetBody().c_str());
+		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type"));
+		Log::Out("Body: %s\n", response.GetBody());
 	}
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
 	/*{
 		Ftp ftp;
-		ftp.Connect(IpAddress("ftp.myserver.org"), 21);
+		ftp.Connect(IpAddress{"ftp.myserver.org"}, 21);
 		ftp.Login("username", "password");
 		ftp.KeepAlive();
 
-		FtpResponseDirectory response = ftp.GetWorkingDirectory();
+		auto response = ftp.GetWorkingDirectory();
 
 		if (response.IsOk())
 		{
 			Log::Out("Current directory: %s\n", response.GetDirectory());
 		}
 
-		ftp.Download("remote_file_name.txt", "local/destination/path", FtpTransfer::Mode::Ascii);
-		ftp.Upload("local_file_name.pdf", "remote/destination/path", FtpTransfer::Mode::Binary);
+		ftp.Download("remote_file_name.txt", "local/destination/path", FtpDataChannel::Mode::Ascii);
+		ftp.Upload("local_file_name.pdf", "remote/destination/path", FtpDataChannel::Mode::Binary);
 
 		ftp.Disconnect();
 	}*/
 
-	/*UdpSocket socket = UdpSocket();
+	/*UdpSocket socket;
 
-	std::string name = "Hello world";
-	uint32_t a = 420;
-	float b = 6.9f;
-	Vector3 c = Vector3(8.1f, -9.11f, 2.083f);
+	std::string name{"Hello world"};
+	uint32_t a{420};
+	float b{6.9f};
+	Vector3f c{8.1f, -9.11f, 2.083f};
 
-	Packet packet = Packet();
+	Packet packet;
 	packet << name << a << b << c; // Sending data.
 	packet >> name >> a >> b >> c; // Receiving data.
 

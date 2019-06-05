@@ -5,7 +5,7 @@
 namespace test
 {
 Scene1::Scene1() :
-	Scene(new Camera()),
+	Scene(std::make_unique<Camera>()),
 	m_pannable(&Uis::Get()->GetCanvas())
 {
 }

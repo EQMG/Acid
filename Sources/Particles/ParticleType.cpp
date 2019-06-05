@@ -31,24 +31,22 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength,
 	const float &stageCycles, const float &scale)
 {
-	auto temp = ParticleType(image, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
-	Metadata metadata = Metadata();
+	ParticleType temp{image, numberOfRows, colourOffset, lifeLength, stageCycles, scale};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 ParticleType::ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
 	const float &scale) :
-	m_image(std::move(image)),
-	m_model(ModelRectangle::Create(-0.5f, 0.5f)),
-	m_numberOfRows(numberOfRows),
-	m_colourOffset(colourOffset),
-	m_lifeLength(lifeLength),
-	m_stageCycles(stageCycles),
-	m_scale(scale),
-	m_maxInstances(0),
-	m_instances(0),
-	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
+	m_image{std::move(image)},
+	m_model{ModelRectangle::Create(-0.5f, 0.5f)},
+	m_numberOfRows{numberOfRows},
+	m_colourOffset{colourOffset},
+	m_lifeLength{lifeLength},
+	m_stageCycles{stageCycles},
+	m_scale{scale},
+	m_instanceBuffer{sizeof(Instance) * MAX_INSTANCES}
 {
 }
 
@@ -82,7 +80,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 
 		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
 		auto instance = &instances[m_instances];
-		instance->m_modelMatrix = Matrix4().Translate(particle.GetPosition());
+		instance->m_modelMatrix = Matrix4{}.Translate(particle.GetPosition());
 
 		for (int32_t row = 0; row < 3; row++)
 		{
@@ -97,8 +95,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		// TODO: Multiply MVP by View and Projection (And run update every frame?)
 
 		instance->m_colourOffset = particle.GetParticleType()->m_colourOffset;
-		instance->m_offsets = Vector4f(particle.m_imageOffset1, particle.m_imageOffset2);
-		instance->m_blend = Vector3f(particle.m_imageBlendFactor, particle.m_transparency, static_cast<float>(particle.m_particleType->m_numberOfRows));
+		instance->m_offsets = {particle.m_imageOffset1, particle.m_imageOffset2};
+		instance->m_blend = {particle.m_imageBlendFactor, particle.m_transparency, static_cast<float>(particle.m_particleType->m_numberOfRows)};
 		m_instances++;
 	}
 
@@ -115,9 +113,8 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("samplerColour", m_image);
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
@@ -125,8 +122,8 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	// Draws the instanced objects.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkBuffer vertexBuffers[] = { m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer() };
-	VkDeviceSize offsets[] = { 0, 0 };
+	VkBuffer vertexBuffers[]{ m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer() };
+	VkDeviceSize offsets[]{ 0, 0 };
 	vkCmdBindVertexBuffers(commandBuffer, 0, 2, vertexBuffers, offsets);
 	vkCmdBindIndexBuffer(commandBuffer, m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexType());
 	vkCmdDrawIndexed(commandBuffer, m_model->GetIndexCount(), m_instances, 0, 0, 0);

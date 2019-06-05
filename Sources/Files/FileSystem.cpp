@@ -121,7 +121,7 @@ std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const 
 
 	if (dr == nullptr)
 	{
-		Log::Error("Could not open current directory: '%s'!\n", path.c_str());
+		Log::Error("Could not open current directory: '%s'!\n", path);
 		return files;
 	}
 
@@ -220,7 +220,6 @@ std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 {
 	if (!Exists(filename))
 	{
-		Log::Warning("File does not exist: '%s'\n", filename.c_str());
 		return std::nullopt;
 	}
 
@@ -228,7 +227,6 @@ std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 
 	if (file == nullptr)
 	{
-		Log::Warning("Could not open file: '%s'\n", filename.c_str());
 		return std::nullopt;
 	}
 
@@ -278,7 +276,6 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 		{
 			if (ferror(fp))
 			{
-				Log::Warning("Error reading file: '%s'\n", filename.c_str());
 				return std::nullopt;
 			}
 		}
@@ -286,7 +283,6 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 		{
 			if (ftell(fp) % sizeof(char))
 			{
-				Log::Warning("Corrupted word found in file: '%s'\n", filename.c_str());
 				return std::nullopt;
 			}
 		}
@@ -298,7 +294,6 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 	}
 	else
 	{
-		Log::Warning("File does not exist: '%s'\n", filename.c_str());
 		return std::nullopt;
 	}
 
@@ -315,7 +310,7 @@ bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<
 
 		if (data.size() != written)
 		{
-			Log::Warning("Could not write to file: '%s'\n", filename.c_str());
+			Log::Warning("Could not write to file: '%s'\n", filename);
 			return false;
 		}
 
@@ -326,7 +321,7 @@ bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<
 	}
 	else
 	{
-		Log::Warning("File could not be opened: '%s'\n", filename.c_str());
+		Log::Warning("File could not be opened: '%s'\n", filename);
 		return false;
 	}
 

@@ -2,16 +2,15 @@
 
 namespace acid
 {
-AxisCompound::AxisCompound(const std::vector<Axis *> &axes)
+AxisCompound::AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes) :
+	m_axes{std::move(axes)}
 {
-	for (const auto &axis : axes)
+	for (const auto &axis : m_axes)
 	{
 		axis->OnAxis().Add([this](float value)
 		{
 			m_onAxis(GetAmount());
 		}, this);
-
-		m_axes.emplace_back(axis);
 	}
 }
 

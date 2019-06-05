@@ -61,7 +61,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	explicit constexpr Vector3(const Vector4<K> &source);
+	constexpr Vector3(const Vector4<K> &source);
 	
 	/**
 	 * Adds this vector to another vector.

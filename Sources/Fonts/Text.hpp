@@ -150,7 +150,7 @@ public:
 	 * Sets the glow driver, will disable solid borders.
 	 * @param glowDriver The new glow driver.
 	 */
-	void SetGlowDriver(Driver<float> *glowDriver);
+	void SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver);
 
 	Driver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
@@ -158,7 +158,7 @@ public:
 	 * Sets the border driver, will disable glowing.
 	 * @param borderDriver The new border driver.
 	 */
-	void SetBorderDriver(Driver<float> *borderDriver);
+	void SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver);
 
 	/**
 	 * Disables both solid borders and glow borders.

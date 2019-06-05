@@ -64,7 +64,7 @@ public:
 	 * Sets the colour offset driver.
 	 * @param colourDriver The new colour offset driver.
 	 */
-	void SetColourDriver(Driver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
+	void SetColourDriver(std::unique_ptr<Driver<Colour>> &&colourDriver) { m_colourDriver = std::move(colourDriver); }
 
 	const Colour &GetColourOffset() const { return m_colourOffset; }
 

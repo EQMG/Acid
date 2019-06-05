@@ -18,22 +18,22 @@ const float NOCLIP_SPEED = 3.0f;
 
 PlayerFps::PlayerFps() :
 	m_noclipEnabled(false),
-	m_inputForward({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		new AxisJoystick(0, 1, true) }),
-	m_inputStrafe({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			new AxisJoystick(0, 0, true) }),
-	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) }),
-	m_inputJump({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) }),
-	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) }),
-	m_toggleNoclip({ new ButtonKeyboard(Key::N), })
+	m_inputForward({ std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
+		std::make_unique<AxisJoystick>(0, 1, true) }),
+	m_inputStrafe({ std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
+			std::make_unique<AxisJoystick>(0, 0, true) }),
+	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), std::make_unique<ButtonJoystick>(0, 1) }),
+	m_inputJump({ std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 1) }),
+	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), std::make_unique<ButtonJoystick>(0, 1) }),
+	m_toggleNoclip({ std::make_unique<ButtonKeyboard>(Key::N), })
 {
 }
 
 void PlayerFps::Start()
 {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
-	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with '%s'\n", other->GetParent()->GetName());});
+	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName());});
 }
 
 void PlayerFps::Update()

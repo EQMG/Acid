@@ -121,8 +121,8 @@ private:
 	float m_stageCycles;
 	float m_scale;
 
-	uint32_t m_maxInstances;
-	uint32_t m_instances;
+	uint32_t m_maxInstances{};
+	uint32_t m_instances{};
 
 	DescriptorsHandler m_descriptorSet;
 	InstanceBuffer m_instanceBuffer;

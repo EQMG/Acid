@@ -62,7 +62,7 @@ void ModelGltf::Load()
 	if (!fileLoaded)
 	{
 
-		Log::Error("GLTF file could not be loaded: '%s'\n", m_filename.c_str());
+		Log::Error("GLTF file could not be loaded: '%s'\n", m_filename);
 		return;
 	}
 
@@ -128,7 +128,7 @@ void ModelGltf::Load()
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd = Time::Now();
-	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);
