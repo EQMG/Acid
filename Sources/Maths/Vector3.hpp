@@ -36,7 +36,19 @@ public:
 	 * @param z Start z.
 	 **/
 	constexpr Vector3(const T &x, const T &y, const T &z);
-	
+
+	/**
+	 * Constructor for Vector3.
+	 * @tparam K The x type.
+	 * @tparam J The y type.
+	 * @tparam H The z type.
+	 * @param x Start x.
+	 * @param y Start y.
+	 * @param z Start z.
+	 **/
+	template<typename K, typename J, typename H>
+	constexpr Vector3(const K &x, const J &y, const H &z);
+
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.

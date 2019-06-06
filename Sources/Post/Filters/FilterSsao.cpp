@@ -3,17 +3,18 @@
 #include "Maths/Vector4.hpp"
 #include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Resources/Resources.hpp"
 
 namespace acid
 {
-static const uint32_t SSAO_NOISE_DIM = 4;
-static const uint32_t SSAO_KERNEL_SIZE = 64;
-static const float SSAO_RADIUS = 0.5f;
+static const uint32_t SSAO_NOISE_DIM{4};
+static const uint32_t SSAO_KERNEL_SIZE{64};
+static const float SSAO_RADIUS{0.5f};
 
 FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()},
-	m_noise{ComputeNoise(SSAO_NOISE_DIM)},
-	m_kernel{SSAO_KERNEL_SIZE}
+	m_noise{Resources::Get()->GetThreadPool().Enqueue(ComputeNoise, SSAO_NOISE_DIM)},
+	m_kernel(SSAO_KERNEL_SIZE)
 {
 	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
 	{
@@ -40,7 +41,7 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
 	m_descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
 	m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
-	m_descriptorSet.Push("samplerNoise", m_noise);
+	m_descriptorSet.Push("samplerNoise", *m_noise);
 
 	if (!m_descriptorSet.Update(m_pipeline))
 	{

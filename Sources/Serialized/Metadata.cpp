@@ -19,9 +19,9 @@ void Metadata::Write(std::ostream *outStream) const
 {
 }
 
-Metadata *Metadata::Clone() const
+std::unique_ptr<Metadata> Metadata::Clone() const
 {
-	auto clone = new Metadata{m_name, m_value, m_attributes};
+	auto clone = std::make_unique<Metadata>(m_name, m_value, m_attributes);
 
 	for (const auto &child : m_children)
 	{
@@ -122,10 +122,9 @@ Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const s
 	return nullptr;
 }
 
-Metadata *Metadata::AddChild(Metadata *child)
+Metadata *Metadata::AddChild(std::unique_ptr<Metadata> &&child)
 {
-	m_children.emplace_back(child);
-	return child;
+	return m_children.emplace_back(std::move(child)).get();
 }
 
 void Metadata::RemoveChild(Metadata *child)

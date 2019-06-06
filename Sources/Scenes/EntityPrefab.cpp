@@ -113,7 +113,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 			continue;
 		}
 
-		auto child = entityPrefab.m_file->GetMetadata()->AddChild(new Metadata(*componentName));
+		auto child = entityPrefab.m_file->GetMetadata()->AddChild(std::make_unique<Metadata>(*componentName));
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 	}
 

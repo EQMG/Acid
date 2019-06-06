@@ -10,7 +10,7 @@ Monitor::Monitor(GLFWmonitor *monitor) :
 {
 }
 
-const bool &Monitor::IsPrimary() const
+bool Monitor::IsPrimary() const
 {
 	return m_monitor == glfwGetPrimaryMonitor();
 }
@@ -20,7 +20,7 @@ Vector2ui Monitor::GetWorkareaSize() const
 	int32_t width;
 	int32_t height;
 	glfwGetMonitorWorkarea(m_monitor, nullptr, nullptr, &width, &height);
-	return Vector2ui(width, height);
+	return {width, height};
 }
 
 Vector2ui Monitor::GetWorkareaPosition() const
@@ -36,7 +36,7 @@ Vector2ui Monitor::GetSize() const
 	int32_t widthMM;
 	int32_t heightMM;
 	glfwGetMonitorPhysicalSize(m_monitor, &widthMM, &heightMM);
-	return Vector2ui(widthMM, heightMM);
+	return {widthMM, heightMM};
 }
 
 Vector2f Monitor::GetContentScale() const
@@ -44,7 +44,7 @@ Vector2f Monitor::GetContentScale() const
 	float xScale;
 	float yScale;
 	glfwGetMonitorContentScale(m_monitor, &xScale, &yScale);
-	return Vector2f(xScale, yScale);
+	return {xScale, yScale};
 }
 
 Vector2ui Monitor::GetPosition() const
@@ -52,7 +52,7 @@ Vector2ui Monitor::GetPosition() const
 	int32_t xpos;
 	int32_t ypos;
 	glfwGetMonitorPos(m_monitor, &xpos, &ypos);
-	return Vector2ui(xpos, ypos);
+	return {xpos, ypos};
 }
 
 std::string Monitor::GetName() const

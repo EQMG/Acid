@@ -32,7 +32,17 @@ public:
 	 * @param y Start y. 
 	 **/
 	constexpr Vector2(const T &x, const T &y);
-	
+
+	/**
+	 * Constructor for Vector2.
+	 * @tparam K The x type.
+	 * @tparam J The y type.
+	 * @param x Start x.
+	 * @param y Start y.
+	 **/
+	template<typename K, typename J>
+	constexpr Vector2(const K &x, const J &y);
+
 	/**
 	 * Constructor for Vector2.
 	 * @tparam K The sources type.

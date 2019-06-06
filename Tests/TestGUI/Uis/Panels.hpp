@@ -24,7 +24,7 @@ public:
 	explicit Inventory(UiObject* parent) :
 		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom))
 	{
-		SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.9f), Vector2f(1.2f), 6s));
+		SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f{0.9f}, Vector2f{1.2f}, 6s));
 		for (uint32_t i = 0; i < 10; i++)
 		{
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);

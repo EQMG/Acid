@@ -12,7 +12,7 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 	m_transform{transform},
 	m_alphaDriver{std::make_unique<DriverConstant<float>>(1.0f)},
 	m_alpha{1.0f},
-	m_scaleDriver{std::make_unique<DriverConstant<Vector2f>>(Vector2f(1.0f))},
+	m_scaleDriver{std::make_unique<DriverConstant<Vector2f>>(Vector2f{1.0f})},
 	m_scale{1.0f},
 	m_screenAlpha{1.0f},
 	m_screenScale{1.0f}

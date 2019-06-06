@@ -304,9 +304,9 @@ void Bezier2AlignToSelf(Vector2f r[3], const Vector2f bezier[3])
 	float l, s, c;
 	AlignLsc(bezier[0], bezier[2], l, s, c);
 
-	r[0] = Vector2f(0.0f, 0.0f);
+	r[0] = {0.0f, 0.0f};
 	AlignPoint(r[1], bezier[1], bezier[0], s, c);
-	r[2] = Vector2f(l, 0.0f);
+	r[2] = {l, 0.0f};
 }
 
 void Bezier2AlignToLine(Vector2f r[3], const Vector2f bezier[3], const Vector2f &line0, const Vector2f &line1)

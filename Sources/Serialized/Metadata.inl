@@ -27,7 +27,7 @@ T Metadata::GetChildDefault(const std::string &name, const T &value)
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata{name});
+		child = AddChild(std::make_unique<Metadata>(name));
 		*child << value;
 	}
 
@@ -56,7 +56,7 @@ void Metadata::SetChild(const std::string &name, const T &value)
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata{name});
+		child = AddChild(std::make_unique<Metadata>(name));
 	}
 
 	*child << value;
@@ -96,7 +96,7 @@ void Metadata::SetResource(const std::string &name, const std::shared_ptr<T> &va
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata{name});
+		child = AddChild(std::make_unique<Metadata>(name));
 	}
 
 	if (value == nullptr)
@@ -268,7 +268,7 @@ Metadata &operator<<(Metadata &metadata, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
-		auto child = metadata.AddChild(new Metadata{});
+		auto child = metadata.AddChild(std::make_unique<Metadata>());
 		*child << x;
 	}
 
@@ -295,7 +295,7 @@ Metadata &operator<<(Metadata &metadata, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{
-		auto child = metadata.AddChild(new Metadata{});
+		auto child = metadata.AddChild(std::make_unique<Metadata>());
 		*child << x;
 	}
 

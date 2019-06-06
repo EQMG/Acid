@@ -92,7 +92,7 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata{child->GetName(), child->GetValue()});
+		auto created = destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()));
 		AddChildren(child.get(), created);
 	}
 
@@ -108,8 +108,7 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata{source->m_name, ""};
-		parent->AddChild(thisValue);
+		parent->AddChild(std::make_unique<Metadata>(source->m_name));
 	}
 
 	auto contentSplit = String::Split(source->m_content, ",", true);
@@ -145,8 +144,7 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 		}
 		else
 		{
-			auto newChild = new Metadata{name, value};
-			thisValue->AddChild(newChild);
+			thisValue->AddChild(std::make_unique<Metadata>(name, value));
 		}
 	}
 

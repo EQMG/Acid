@@ -28,8 +28,16 @@ constexpr Vector2<T>::Vector2(const T &x, const T &y):
 }
 
 template<typename T>
+template<typename K, typename J>
+constexpr Vector2<T>::Vector2(const K &x, const J &y) :
+	m_x{static_cast<T>(x)},
+	m_y{static_cast<T>(y)}
+{
+}
+
+template<typename T>
 template<typename K>
-constexpr Vector2<T>::Vector2(const Vector2<K> &source):
+constexpr Vector2<T>::Vector2(const Vector2<K> &source) :
 	m_x{static_cast<T>(source.m_x)},
 	m_y{static_cast<T>(source.m_y)}
 {

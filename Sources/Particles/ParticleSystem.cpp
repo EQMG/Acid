@@ -191,12 +191,12 @@ Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
 
 	if (typesNode == nullptr)
 	{
-		typesNode = metadata.AddChild(new Metadata{"Types"});
+		typesNode = metadata.AddChild(std::make_unique<Metadata>("Types"));
 	}
 
 	for (const auto &type : particleSystem.m_types)
 	{
-		*typesNode->AddChild(new Metadata{}) << type;
+		*typesNode->AddChild(std::make_unique<Metadata>()) << type;
 	}
 
 	metadata.SetChild("PPS", particleSystem.m_pps);

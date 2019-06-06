@@ -37,7 +37,21 @@ public:
 	 * @param w Start w.
 	 **/
 	constexpr Vector4(const T &x, const T &y, const T &z, const T &w = 1);
-	
+
+	/**
+	 * Constructor for Vector4.
+	 * @tparam K The x type.
+	 * @tparam J The y type.
+	 * @tparam H The z type.
+	 * @tparam F The w type.
+	 * @param x Start x.
+	 * @param y Start y.
+	 * @param z Start z.
+	 * @param w Start w.
+	 **/
+	template<typename K, typename J, typename H, typename F>
+	constexpr Vector4(const K &x, const J &y, const H &z, const F &w);
+
 	/**
 	 * Constructor for Vector4.
 	 * @tparam K The left type.

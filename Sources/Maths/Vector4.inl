@@ -34,6 +34,16 @@ constexpr Vector4<T>::Vector4(const T &x, const T &y, const T &z, const T &w):
 }
 
 template<typename T>
+template<typename K, typename J, typename H, typename F>
+constexpr Vector4<T>::Vector4(const K &x, const J &y, const H &z, const F &w) :
+	m_x{static_cast<T>(x)},
+	m_y{static_cast<T>(y)},
+	m_z{static_cast<T>(x)},
+	m_w{static_cast<T>(y)}
+{
+}
+
+template<typename T>
 template<typename K, typename J>
 constexpr Vector4<T>::Vector4(const Vector2<K> &left, const Vector2<J> &right):
 	m_x{static_cast<T>(left.m_x)},

@@ -18,7 +18,7 @@ public:
 
 	virtual void Write(std::ostream *outStream) const;
 
-	Metadata *Clone() const;
+	std::unique_ptr<Metadata> Clone() const;
 
 	const std::string &GetName() const { return m_name; }
 
@@ -44,7 +44,7 @@ public:
 
 	Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value) const;
 
-	Metadata *AddChild(Metadata *child);
+	Metadata *AddChild(std::unique_ptr<Metadata> &&child);
 
 	void RemoveChild(Metadata *child);
 

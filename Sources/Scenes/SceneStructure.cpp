@@ -10,16 +10,12 @@ SceneStructure::SceneStructure()
 
 Entity *SceneStructure::CreateEntity(const Transform &transform)
 {
-	auto entity = new Entity(transform);
-	m_objects.emplace_back(entity);
-	return entity;
+	return m_objects.emplace_back(std::make_unique<Entity>(transform)).get();
 }
 
 Entity *SceneStructure::CreateEntity(const std::string &filename, const Transform &transform)
 {
-	auto entity = new Entity(filename, transform);
-	m_objects.emplace_back(entity);
-	return entity;
+	return m_objects.emplace_back(std::make_unique<Entity>(filename, transform)).get();
 }
 
 void SceneStructure::Add(Entity *object)

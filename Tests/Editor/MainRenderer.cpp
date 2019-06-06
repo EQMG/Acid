@@ -95,15 +95,15 @@ MainRenderer::MainRenderer()
 void MainRenderer::Update()
 {
 	auto renderpassCreate1 = Graphics::Get()->GetRenderStage(1);
-	//renderpassCreate1->GetViewport().SetOffset(Vector2f(0.1f, 0.0f));
+	//renderpassCreate1->GetViewport().SetOffset({0.1f, 0.0f});
 
 	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release)
 	{
-		renderpassCreate1->GetViewport().SetScale(Vector2f(1.0f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale({1.0f, 1.0f});
 	}
 	else
 	{
-		renderpassCreate1->GetViewport().SetScale(Vector2f(0.5f, 1.0f));
+		renderpassCreate1->GetViewport().SetScale({0.5f, 1.0f});
 	}
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));

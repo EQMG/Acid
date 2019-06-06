@@ -112,7 +112,7 @@ void Yaml::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata{child->GetName(), child->GetValue()});
+		auto created = destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()));
 		AddChildren(child.get(), created);
 	}
 
@@ -147,8 +147,7 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata{name, value};
-		parent->AddChild(thisValue);
+		thisValue = parent->AddChild(std::make_unique<Metadata>(name, value));
 	}
 
 	auto tmpValue = thisValue;
@@ -157,8 +156,7 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 	{
 		if (child->m_arrayLevels != 0) // && !singleArray
 		{
-			tmpValue = new Metadata{};
-			thisValue->AddChild(tmpValue);
+			tmpValue = thisValue->AddChild(std::make_unique<Metadata>());
 		}
 
 		Convert(child.get(), tmpValue, false);

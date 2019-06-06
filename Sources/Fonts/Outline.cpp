@@ -425,9 +425,9 @@ uint32_t OutlineAddFilledLine(Outline *o)
 
 	auto i = static_cast<uint32_t>(o->m_points.size());
 	auto y = o->m_bbox.m_max.m_y + 1000.0f;
-	auto f0 = Vector2f(o->m_bbox.m_min.m_x, y);
-	auto f1 = Vector2f(o->m_bbox.m_min.m_x + 10.0f, y);
-	auto f2 = Vector2f(o->m_bbox.m_min.m_x + 20.0f, y);
+	Vector2f f0{o->m_bbox.m_min.m_x, y};
+	Vector2f f1{o->m_bbox.m_min.m_x + 10.0f, y};
+	Vector2f f2{o->m_bbox.m_min.m_x + 20.0f, y};
 	o->m_points.emplace_back(f0);
 	o->m_points.emplace_back(f1);
 	o->m_points.emplace_back(f2);

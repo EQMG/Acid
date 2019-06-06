@@ -96,14 +96,14 @@ Scene1::Scene1() :
 			Resources::Get()->GetThreadPool().Enqueue([this]()
 			{
 				auto sceneFile = File("Scene1.yaml", std::make_unique<Yaml>());
-				auto sceneNode = sceneFile.GetMetadata()->AddChild(new Metadata("Scene"));
+				auto sceneNode = sceneFile.GetMetadata()->AddChild(std::make_unique<Metadata>("Scene"));
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto entityNode = sceneNode->AddChild(new Metadata());
-					entityNode->AddChild(new Metadata("Name", "\"" + entity->GetName() + "\""));
-					auto transformNode = entityNode->AddChild(new Metadata("Transform"));
-					auto componentsNode = entityNode->AddChild(new Metadata("Components"));
+					auto entityNode = sceneNode->AddChild(std::make_unique<Metadata>());
+					entityNode->AddChild(std::make_unique<Metadata>("Name", "\"" + entity->GetName() + "\""));
+					auto transformNode = entityNode->AddChild(std::make_unique<Metadata>("Transform"));
+					auto componentsNode = entityNode->AddChild(std::make_unique<Metadata>("Components"));
 					*transformNode << entity->GetLocalTransform();
 
 					for (auto &component : entity->GetComponents())
@@ -117,7 +117,7 @@ Scene1::Scene1() :
 
 						if (componentName)
 						{
-							auto child = componentsNode->AddChild(new Metadata(*componentName));
+							auto child = componentsNode->AddChild(std::make_unique<Metadata>(*componentName));
 							Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 						}
 					}

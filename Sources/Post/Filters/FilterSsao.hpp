@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/Future.hpp"
 #include "Post/PostFilter.hpp"
 #include "Maths/Vector3.hpp"
 
@@ -20,7 +21,7 @@ private:
 
 	UniformHandler m_uniformScene;
 
-	std::shared_ptr<Image2d> m_noise;
+	Future<std::shared_ptr<Image2d>> m_noise;
 	std::vector<Vector3f> m_kernel;
 };
 }

@@ -30,7 +30,7 @@ namespace test
 		if (action == InputAction::Press)
 		{
 			m_zoom = 1.0f;
-			GetTransform().SetPosition(Vector2f(0.5f, 0.5f));
+			GetTransform().SetPosition({0.5f, 0.5f});
 		}
 		Log::Out("Button Reset: %i\n", action);
 	});
@@ -88,7 +88,7 @@ void Pannable::UpdateObject()
 	Vector2f offset = GetTransform().GetPosition();
 
 	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
-	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector2f(m_zoom));
+	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant({m_zoom});
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 	{

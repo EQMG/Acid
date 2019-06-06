@@ -24,8 +24,7 @@ CollisionObject::~CollisionObject()
 
 Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force)
 {
-	m_forces.emplace_back(std::move(force));
-	return force.get();
+	return m_forces.emplace_back(std::move(force)).get();
 }
 
 void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)

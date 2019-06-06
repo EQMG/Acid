@@ -31,8 +31,7 @@ Gizmo *Gizmos::AddGizmo(std::unique_ptr<Gizmo> &&gizmo)
 		it = m_gizmos.find(gizmo->GetGizmoType());
 	}
 
-	(*it).second.emplace_back(std::move(gizmo));
-	return gizmo.get();
+	return (*it).second.emplace_back(std::move(gizmo)).get();
 }
 
 void Gizmos::RemoveGizmo(Gizmo *gizmo)

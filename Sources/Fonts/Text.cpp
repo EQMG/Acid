@@ -46,8 +46,8 @@ void Text::UpdateObject()
 
 	m_uniformObject.Push("colour", m_textColour);
 	m_uniformObject.Push("borderColour", m_borderColour);
-	m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
-	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
+	m_uniformObject.Push("borderSizes", Vector2f{GetTotalBorderSize(), GetGlowSize()});
+	m_uniformObject.Push("edgeData", Vector2f{CalculateEdgeStart(), CalculateAntialiasSize()});
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)

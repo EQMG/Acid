@@ -31,6 +31,15 @@ constexpr Vector3<T>::Vector3(const T &x, const T &y, const T &z):
 }
 
 template<typename T>
+template<typename K, typename J, typename H>
+constexpr Vector3<T>::Vector3(const K &x, const J &y, const H &z) :
+	m_x{static_cast<T>(x)},
+	m_y{static_cast<T>(y)},
+	m_z{static_cast<T>(z)}
+{
+}
+
+template<typename T>
 template<typename K, typename J>
 constexpr Vector3<T>::Vector3(const Vector2<K> &source, const J &z):
 	m_x{static_cast<T>(source.m_x)},
