@@ -22,7 +22,7 @@ CameraFree::CameraFree() :
 	m_joystickHorizontal{0, 2},
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
 		std::make_unique<AxisJoystick>(0, 1)},
-	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
+	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
 		std::make_unique<AxisJoystick>(0, 0)},
 	m_inputVertical{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)},
 	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)}

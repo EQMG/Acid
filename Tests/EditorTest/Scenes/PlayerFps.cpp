@@ -20,7 +20,7 @@ PlayerFps::PlayerFps() :
 	m_noclipEnabled(false),
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
 		std::make_unique<AxisJoystick>(0, 1)},
-	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
+	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
 		std::make_unique<AxisJoystick>(0, 0)},
 	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)},
 	m_inputJump{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)},
@@ -67,7 +67,7 @@ void PlayerFps::Update()
 		{
 			if (m_inputJump.WasDown() && character->IsOnGround())
 			{
-				character->Jump(Vector3f(0.0f, JUMP_SPEED, 0.0f));
+				character->Jump({0.0f, JUMP_SPEED, 0.0f});
 			}
 		}
 
@@ -77,8 +77,8 @@ void PlayerFps::Update()
 
 			if (m_noclipEnabled)
 			{
-				character->SetGravity(Vector3f());
-				character->SetLinearVelocity(Vector3f());
+				character->SetGravity({});
+				character->SetLinearVelocity({});
 			}
 			else
 			{
@@ -92,7 +92,7 @@ void PlayerFps::Update()
 	auto &transform = GetParent()->GetLocalTransform();
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-	transform.SetRotation(Vector3f(0.0f, cameraRotation.m_y, 0.0f));
+	transform.SetRotation({0.0f, cameraRotation.m_y, 0.0f});
 
 	auto walkDirection = direction;
 	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));

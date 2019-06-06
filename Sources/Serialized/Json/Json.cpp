@@ -108,7 +108,7 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 
 	if (!isTopSection)
 	{
-		parent->AddChild(std::make_unique<Metadata>(source->m_name));
+		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
 	}
 
 	auto contentSplit = String::Split(source->m_content, ",", true);
