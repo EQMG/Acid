@@ -17,13 +17,13 @@ namespace test
 		m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, UiTransform(UiInputButton::Size, UiAnchor::LeftTop, Vector2i(0, 28))),
 		m_zoom(1.0f),
 		m_title(this, UiTransform(Vector2i(300, 80), UiAnchor::CentreTop), 72, "Acid Font",
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Centre, Colour::Red),
+			FontType::Create("Fonts/ProximaNova"), Text::Justify::Centre, Colour::Red),
 		m_body(this, UiTransform(Vector2i(500, 1000), UiAnchor::CentreTop, Vector2i(0, 100)), 12, "",
-			FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, Colour::Black),
-		m_textFrameTime(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -2)), 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova", "Regular"),
+			FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, Colour::Black),
+		m_textFrameTime(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -2)), 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova"),
 			Text::Justify::Left),
-		m_textFps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -16)), 11, "FPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left),
-		m_textUps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -30)), 11, "UPS: 0", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
+		m_textFps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -16)), 11, "FPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left),
+		m_textUps(parent, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -30)), 11, "UPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left)
 {
 	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

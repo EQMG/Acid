@@ -5,13 +5,11 @@
 
 namespace acid
 {
-Yaml::Yaml() :
-	Metadata{}
+Yaml::Yaml()
 {
 }
 
-Yaml::Yaml(Metadata *metadata) :
-	Metadata{}
+Yaml::Yaml(Metadata *metadata)
 {
 	AddChildren(metadata, this);
 }

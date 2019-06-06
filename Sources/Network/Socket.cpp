@@ -16,7 +16,7 @@
 
 namespace acid
 {
-Socket::Socket(Type type) :
+Socket::Socket(const Type &type) :
 	m_type(type),
 	m_socket(InvalidSocketHandle()),
 	m_isBlocking(true)
@@ -122,22 +122,22 @@ Socket::Status Socket::GetErrorStatus()
 
 	switch (errno)
 	{
-		case EWOULDBLOCK:
-			return Status::NotReady;
-		case ECONNABORTED:
-			return Status::Disconnected;
-		case ECONNRESET:
-			return Status::Disconnected;
-		case ETIMEDOUT:
-			return Status::Disconnected;
-		case ENETRESET:
-			return Status::Disconnected;
-		case ENOTCONN:
-			return Status::Disconnected;
-		case EPIPE:
-			return Status::Disconnected;
-		default:
-			return Status::Error;
+	case EWOULDBLOCK:
+		return Status::NotReady;
+	case ECONNABORTED:
+		return Status::Disconnected;
+	case ECONNRESET:
+		return Status::Disconnected;
+	case ETIMEDOUT:
+		return Status::Disconnected;
+	case ENETRESET:
+		return Status::Disconnected;
+	case ENOTCONN:
+		return Status::Disconnected;
+	case EPIPE:
+		return Status::Disconnected;
+	default:
+		return Status::Error;
 	}
 #endif
 }
@@ -179,7 +179,7 @@ void Socket::Create()
 	// Don't create the socket if it already exists.
 	if (m_socket == InvalidSocketHandle())
 	{
-		SocketHandle handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
+		auto handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
 
 		if (handle == InvalidSocketHandle())
 		{

@@ -252,7 +252,7 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 	if (!added)
 	{
 		lines.emplace_back(currentLine);
-		currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+		currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 		currentLine.AddWord(currentWord);
 	}
 
@@ -333,6 +333,6 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
 {
-	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f()));
+	vertices.emplace_back(VertexDefault{{vx, vy, 0.0f}, {tx, ty}, {}});
 }
 }

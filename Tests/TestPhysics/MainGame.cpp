@@ -44,6 +44,21 @@ MainGame::MainGame() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
+	// Registers file search paths.
+	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
+	{
+		if (String::Contains(file, "data-"))
+		{
+			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
+		}
+	}*/
+
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	Files::Get()->AddSearchPath("Resources/Engine");
+
+	// Loads configs from a config manager.
+	m_configs = std::make_unique<ConfigManager>();
+
 	Log::Out("Current DateTime: %s\n", Time::GetDateTime());
 
 	Timers::Get()->Once(0.333s, []()
@@ -60,21 +75,6 @@ MainGame::MainGame() :
 		Log::Out("Timer Repeat Tick #%i\n", i);
 		i++;
 	});
-
-	// Registers file search paths.
-	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
-	{
-		if (String::Contains(file, "data-"))
-		{
-			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
-		}
-	}*/
-
-	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
-
-	// Loads configs from a config manager.
-	m_configs = std::make_unique<ConfigManager>();
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

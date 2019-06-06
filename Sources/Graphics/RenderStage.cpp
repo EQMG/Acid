@@ -14,7 +14,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 {
 	for (const auto &image : m_attachments)
 	{
-		VkClearValue clearValue = {};
+		VkClearValue clearValue{};
 
 		switch (image.GetType())
 		{

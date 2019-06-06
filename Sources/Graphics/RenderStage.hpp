@@ -131,7 +131,7 @@ public:
 	{
 	}
 
-	explicit Viewport(const std::optional<Vector2ui> &size) :
+	explicit Viewport(const Vector2ui &size) :
 		m_scale{1.0f, 1.0f},
 		m_size{size},
 		m_offset{0, 0}

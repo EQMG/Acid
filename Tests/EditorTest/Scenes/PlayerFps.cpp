@@ -10,22 +10,22 @@
 
 namespace test
 {
-const float WALK_SPEED = 3.1f;
-const float RUN_SPEED = 5.7f;
-const float CROUCH_SPEED = 1.2f;
-const float JUMP_SPEED = 4.1f;
-const float NOCLIP_SPEED = 3.0f;
+const float WALK_SPEED{3.1f};
+const float RUN_SPEED{5.7f};
+const float CROUCH_SPEED{1.2f};
+const float JUMP_SPEED{4.1f};
+const float NOCLIP_SPEED{3.0f};
 
 PlayerFps::PlayerFps() :
 	m_noclipEnabled(false),
-	m_inputForward({ std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		std::make_unique<AxisJoystick>(0, 1, true) }),
-	m_inputStrafe({ std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			std::make_unique<AxisJoystick>(0, 0, true) }),
-	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), std::make_unique<ButtonJoystick>(0, 1) }),
-	m_inputJump({ std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 1) }),
-	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), std::make_unique<ButtonJoystick>(0, 1) }),
-	m_toggleNoclip({ std::make_unique<ButtonKeyboard>(Key::N), })
+	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
+		std::make_unique<AxisJoystick>(0, 1)},
+	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
+		std::make_unique<AxisJoystick>(0, 0)},
+	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)},
+	m_inputJump{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)},
+	m_inputCrouch{std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)},
+	m_toggleNoclip{std::make_unique<ButtonKeyboard>(Key::N)}
 {
 }
 

@@ -41,11 +41,16 @@ class ACID_EXPORT UiTransform
 public:
 	/**
 	 * Creates a new UiTransform.
+	 */
+	UiTransform() = default;
+
+	/**
+	 * Creates a new UiTransform.
 	 * @param size The size of the rectangle in pixels.
 	 * @param anchor The reference anchor where the rectangle will be placed relative in the parent.
 	 * @param position The pixel offset from the anchor position.
 	 */
-	explicit UiTransform(const Vector2i &size = {}, const Vector2f &anchor = UiAnchor::LeftTop, const Vector2i &position = {});
+	UiTransform(const Vector2i &size, const Vector2f &anchor = UiAnchor::LeftTop, const Vector2i &position = {});
 
 	/**
 	 * Creates a new UiTransform.
@@ -54,7 +59,7 @@ public:
 	 * @param anchor1 The anchor inside of this rectangle.
 	 * @param position The pixel offset from the anchor position.
 	 */
-	UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &position = {});
+	UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &position);
 
 	/**
 	 * Creates a new UiTransform.
@@ -98,6 +103,6 @@ public:
 	Vector2f m_anchor0, m_anchor1;
 	Vector2f m_position;
 	std::optional<BitMask<UiMargins>> m_margins;
-	float m_depth;
+	float m_depth{};
 };
 }

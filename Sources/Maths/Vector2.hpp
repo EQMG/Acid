@@ -24,7 +24,7 @@ public:
 	 * Constructor for Vector2.
 	 * @param a The value to set all components to.
 	 **/
-	explicit constexpr Vector2(const T &a);
+	constexpr Vector2(const T &a);
 	
 	/**
 	 * Constructor for Vector2.

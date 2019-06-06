@@ -5,13 +5,11 @@
 
 namespace acid
 {
-Json::Json() :
-	Metadata{}
+Json::Json()
 {
 }
 
-Json::Json(Metadata *metadata) :
-	Metadata{}
+Json::Json(Metadata *metadata)
 {
 	AddChildren(metadata, this);
 }

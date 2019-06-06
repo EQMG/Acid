@@ -48,7 +48,7 @@ void Particles::AddParticle(Particle &&particle)
 
 	if (it == m_particles.end())
 	{
-		m_particles.emplace(particle.GetParticleType(), std::vector<Particle>());
+		m_particles.emplace(particle.GetParticleType(), std::vector<Particle>{});
 		it = m_particles.find(particle.GetParticleType());
 	}
 

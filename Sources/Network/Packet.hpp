@@ -196,9 +196,9 @@ protected:
 	/// Data stored in the packet.
 	std::vector<char> m_data;
 	/// Current reading position in the packet.
-	std::size_t m_readPos;
+	std::size_t m_readPos{};
 	/// Current send position in the packet (for handling partial sends).
-	std::size_t m_sendPos;
+	std::size_t m_sendPos{};
 	/// Reading state of the packet.
 	bool m_isValid;
 };

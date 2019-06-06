@@ -21,7 +21,7 @@ public:
 	bool IsPaused() const override;
 
 private:
-	std::unique_ptr<ButtonCompound> m_buttonCaptureMouse;
+	ButtonCompound m_buttonCaptureMouse;
 
 	OverlayDebug m_overlayDebug;
 };

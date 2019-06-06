@@ -153,6 +153,10 @@ private:
 		{
 			return t.c_str();
 		}
+		else if constexpr (std::is_same_v<std::filesystem::path, T>)
+		{
+			return t.c_str();
+		}
 		else
 		{
 			return t;

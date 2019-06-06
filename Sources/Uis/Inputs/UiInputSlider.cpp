@@ -1,7 +1,6 @@
 ﻿#include "UiInputSlider.hpp"
 
 #include <iomanip>
-#include "Maths/Visual/DriverConstant.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
@@ -9,26 +8,23 @@ namespace acid
 {
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
 	const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_slider(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button_Filled.png"),
-		UiInputButton::PrimaryColour),
-	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(value),
-	m_valueMin(valueMin),
-	m_valueMax(valueMax),
-	m_progress(0.0f),
-	m_roundTo(roundTo),
-	m_updating(false),
-	m_mouseOver(false)
+	UiObject{parent, transform},
+	m_slider{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
+		UiInputButton::PrimaryColour},
+	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
+	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
+	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour},
+	m_value{value},
+	m_valueMin{valueMin},
+	m_valueMax{valueMax},
+	m_roundTo{roundTo}
 {
 	SetCursorHover(CursorStandard::ResizeX);
 
-	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 
 	UpdateProgress();
 }
@@ -70,7 +66,7 @@ void UiInputSlider::UpdateObject()
 		m_mouseOver = false;
 	}
 
-	m_slider.GetTransform().SetAnchor1(Vector2f(m_progress - 1.0f, 0.0f));
+	m_slider.GetTransform().SetAnchor1({m_progress - 1.0f, 0.0f});
 }
 
 void UiInputSlider::SetValue(const float &value)

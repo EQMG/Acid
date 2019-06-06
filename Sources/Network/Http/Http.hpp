@@ -84,6 +84,6 @@ private:
 	/// Web host name.
 	std::string m_hostName;
 	/// Port used for connection with host.
-	uint16_t m_port;
+	uint16_t m_port{};
 };
 }

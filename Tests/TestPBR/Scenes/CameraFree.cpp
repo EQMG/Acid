@@ -9,24 +9,23 @@
 
 namespace test
 {
-const float WALK_SPEED = 3.0f;
-const float RUN_SPEED = 7.0f;
-const Vector3f DAMP = Vector3f(20.0f, 20.0f, 20.0f);
+const float WALK_SPEED{3.0f};
+const float RUN_SPEED{7.0f};
+const Vector3f DAMP{20.0f, 20.0f, 20.0f};
 
-static const Vector2f SENSITIVITY_JOYSTICK = Vector2f(-0.06f);
-static const Vector2f SENSITIVITY_MOUSE = Vector2f(0.15f);
+static const Vector2f SENSITIVITY_JOYSTICK{-0.06f};
+static const Vector2f SENSITIVITY_MOUSE{0.15f};
 
 CameraFree::CameraFree() :
 	m_sensitivity{1.0f},
 	m_joystickVertical{0, 3},
 	m_joystickHorizontal{0, 2},
-	m_inputForward{std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		std::make_unique<AxisJoystick>(0, 1, true)},
-	m_inputStrafe{std::make_unique<AxisButton>(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-		std::make_unique<AxisJoystick>(0, 0, true)},
-	m_inputVertical{AxisButton::Create<ButtonKeyboard>(Key::ControlLeft, Key::Space),
-		std::make_unique<AxisButton>(std::make_unique<ButtonJoystick>(0, 0), std::make_unique<ButtonJoystick>(0, 2))},
-	m_inputSprint{ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), std::make_unique<ButtonJoystick>(0, 1)}
+	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
+		std::make_unique<AxisJoystick>(0, 1)},
+	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
+		std::make_unique<AxisJoystick>(0, 0)},
+	m_inputVertical{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)},
+	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)}
 {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;
@@ -52,14 +51,14 @@ void CameraFree::Update()
 			positionDelta.m_z = m_inputForward.GetAmount();
 		}
 
-		positionDelta *= m_inputSprint.IsDown() ? RUN_SPEED : WALK_SPEED;
+		positionDelta *= m_inputSprint.IsDown() ? -RUN_SPEED : -WALK_SPEED;
 		m_velocity = m_velocity.SmoothDamp(positionDelta, delta * DAMP);
 
 		Vector2f rotationDelta = Mouse::Get()->GetDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
 
 		if (m_joystickVertical.IsConnected())
 		{
-			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f{m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()} * SENSITIVITY_JOYSTICK;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;
@@ -75,7 +74,7 @@ void CameraFree::Update()
 	m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 	m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
-	m_viewRay.Update(m_position, Vector2f(0.5f, 0.5f), m_viewMatrix, m_projectionMatrix);
+	m_viewRay.Update(m_position, {0.5f, 0.5f}, m_viewMatrix, m_projectionMatrix);
 
 	//auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
 	//Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));

@@ -2,11 +2,34 @@
 
 namespace acid
 {
-ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, const bool &useAnd) :
+/*ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, const bool &useAnd) :
 	m_buttons{std::move(buttons)},
 	m_useAnd{useAnd}
 {
+	ConnectButtons();
+}*/
+
+bool ButtonCompound::IsDown() const
+{
 	for (const auto &button : m_buttons)
+	{
+		if (m_useAnd && !button->IsDown())
+		{
+			return false;
+		}
+
+		if (!m_useAnd && button->IsDown())
+		{
+			return true;
+		}
+	}
+
+	return m_useAnd;
+}
+
+void ButtonCompound::ConnectButtons()
+{
+	for (auto &button : m_buttons)
 	{
 		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 		{
@@ -28,23 +51,5 @@ ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, c
 			}
 		}, this);
 	}
-}
-
-bool ButtonCompound::IsDown() const
-{
-	for (const auto &button : m_buttons)
-	{
-		if (m_useAnd && !button->IsDown())
-		{
-			return false;
-		}
-
-		if (!m_useAnd && button->IsDown())
-		{
-			return true;
-		}
-	}
-
-	return m_useAnd;
 }
 }

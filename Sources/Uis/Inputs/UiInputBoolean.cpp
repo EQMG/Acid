@@ -1,21 +1,20 @@
 #include "UiInputBoolean.hpp"
 
-#include "Maths/Visual/DriverConstant.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid
 {
 UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_slider(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button_Filled.png"),
-		UiInputButton::PrimaryColour),
-	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(value)
+	UiObject{parent, transform},
+	m_slider{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
+		UiInputButton::PrimaryColour},
+	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
+	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
+	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour},
+	m_value{value}
 {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
@@ -33,8 +32,8 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const
 		}
 	});
 
-	m_slider.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 	UpdateValue();
 }
 

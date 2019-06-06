@@ -21,13 +21,13 @@ public:
 	/**
 	 * Constructor for Vector3.
 	 **/
-	explicit constexpr Vector3();
+	constexpr Vector3();
 	
 	/**
 	 * Constructor for Vector3.
 	 * @param a The value to set all components to.
 	 **/
-	explicit constexpr Vector3(const T &a);
+	constexpr Vector3(const T &a);
 	
 	/**
 	 * Constructor for Vector3.

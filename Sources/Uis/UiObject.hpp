@@ -142,7 +142,7 @@ private:
 	Matrix4 m_modelView;
 	float m_screenAlpha;
 	Vector2f m_screenScale;
-	bool m_selected;
+	bool m_selected{};
 
 	Delegate<void(MouseButton)> m_onClick;
 	Delegate<void(bool)> m_onSelected;

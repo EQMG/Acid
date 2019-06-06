@@ -14,7 +14,7 @@ NameTag::NameTag(const std::string &name, const float &heightOffset) :
 	m_name(name),
 	m_heightOffset(heightOffset),
 	m_transform(Transform())
-	//m_text(&Uis::Get()->GetCanvas(), UiTransform(Vector2f(0.5f, 0.5f), UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova", "Regular"),
+	//m_text(&Uis::Get()->GetCanvas(), UiTransform(Vector2f(0.5f, 0.5f), UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova"),
 	//	Text::Justify::Left)
 {
 	//m_text.SetTextColour(Colour("#ffffff"));

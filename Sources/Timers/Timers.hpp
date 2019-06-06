@@ -60,7 +60,7 @@ public:
 	template<typename ...Args>
 	Timer *Once(const Time &delay, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
+		std::unique_lock<std::mutex> lock{m_mutex};
 		auto instance = std::make_unique<Timer>(delay, 1);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
@@ -71,7 +71,7 @@ public:
 	template<typename ...Args>
 	Timer *Every(const Time &interval, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
+		std::unique_lock<std::mutex> lock{m_mutex};
 		auto instance = std::make_unique<Timer>(interval, std::nullopt);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
@@ -82,7 +82,7 @@ public:
 	template<typename ...Args>
 	Timer *Repeat(const Time &interval, const uint32_t &repeat, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
+		std::unique_lock<std::mutex> lock{m_mutex};
 		auto instance = std::make_unique<Timer>(interval, repeat);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
@@ -95,7 +95,7 @@ private:
 
 	std::vector<std::unique_ptr<Timer>> m_timers;
 
-	bool m_stop;
+	bool m_stop{};
 	std::thread m_worker;
 
 	std::mutex m_mutex;

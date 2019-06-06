@@ -6,14 +6,14 @@
 
 namespace test
 {
-const Time UI_SLIDE_TIME = 0.2s;
+const Time UI_SLIDE_TIME{0.2s};
 
 Scene1::Scene1() :
-	Scene(std::make_unique<Camera>()),
+	Scene{std::make_unique<Camera>()},
 	m_buttonPause{Key::Escape},
-	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_uiPanels(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
+	m_uiStartLogo{&Uis::Get()->GetCanvas()},
+	m_uiPanels{&Uis::Get()->GetCanvas()},
+	m_overlayDebug{&Uis::Get()->GetCanvas()}
 {
 	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

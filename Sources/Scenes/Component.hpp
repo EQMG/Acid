@@ -14,7 +14,7 @@ class ACID_EXPORT Component :
 {
 public:
 	Component() :
-		m_enabled(true)
+		m_enabled{true}
 	{
 	}
 

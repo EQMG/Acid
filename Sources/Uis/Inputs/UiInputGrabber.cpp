@@ -6,15 +6,12 @@
 namespace acid
 {
 UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_lastKey(0),
-	m_updating(false),
-	m_mouseOver(false)
+	UiObject{parent, transform},
+	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
+	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
+	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour}
 {
 	SetCursorHover(CursorStandard::Hand);
 

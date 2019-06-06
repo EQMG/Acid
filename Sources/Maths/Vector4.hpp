@@ -21,13 +21,13 @@ public:
 	/**
 	 * Constructor for Vector4.
 	 **/
-	explicit constexpr Vector4();
+	constexpr Vector4();
 	
 	/**
 	 * Constructor for Vector4.
 	 * @param a The value to set all components to.
 	 **/
-	explicit constexpr Vector4(const T &a); 
+	constexpr Vector4(const T &a); 
 	
 	/**
 	 * Constructor for Vector4.
@@ -46,7 +46,7 @@ public:
 	 * @param right Creates this vector out of a existing vector, zw.
 	 **/
 	template<typename K, typename J>
-	explicit constexpr Vector4(const Vector2<K> &left, const Vector2<J> &right = Vector2<K>::Up);
+	constexpr Vector4(const Vector2<K> &left, const Vector2<J> &right = Vector2<K>::Up);
 	
 	/**
 	 * Constructor for Vector4.

@@ -12,7 +12,7 @@ class ACID_EXPORT UiInputSlider :
 {
 public:
 	UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
-		const UiTransform &transform = UiTransform(UiInputButton::Size));
+		const UiTransform & transform = UiTransform{UiInputButton::Size});
 
 	void UpdateObject() override;
 
@@ -51,11 +51,11 @@ private:
 	float m_value;
 	float m_valueMin;
 	float m_valueMax;
-	float m_progress;
+	float m_progress{};
 	int32_t m_roundTo;
 
-	bool m_updating;
-	bool m_mouseOver;
+	bool m_updating{};
+	bool m_mouseOver{};
 
 	Delegate<void(float)> m_onValue;
 };

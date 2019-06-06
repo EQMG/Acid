@@ -10,9 +10,7 @@
 #include "Scenes/Scene1.hpp"
 #include "Resources/Resources.hpp"
 #include "Inputs/AxisCompound.hpp"
-#include "Inputs/AxisJoystick.hpp"
 #include "Inputs/AxisButton.hpp"
-#include "Inputs/ButtonMouse.hpp"
 
 int main(int argc, char **argv)
 {
@@ -38,49 +36,9 @@ MainGame::MainGame() :
 	m_buttonScreenshot{Key::F9},
 	m_buttonExit{Key::Delete}
 {
-	/*AxisButton inputForward{
-		AxisButton{
-			ButtonCompound{
-				ButtonKeyboard{Key::W}, 
-				ButtonKeyboard{Key::Up}
-			}, 
-			ButtonCompound{
-				ButtonKeyboard{Key::S}, 
-				ButtonKeyboard{Key::Down}
-			}
-		},
-		AxisJoystick{0, 1}
-	};
-
-	ButtonCompound kbc{
-		ButtonKeyboard{Key::W},
-		ButtonMouse{MouseButton::Right}
-	};
-
-	AxisButton mba{
-		ButtonMouse{MouseButton::Left}, 
-		ButtonKeyboard{Key::Up}
-	};
-
-	AxisCompound jac{
-		AxisJoystick{0, 0}, 
-		HatJoystick{0, 0, JoystickHat::Up}
-	};*/
-
-	AxisButton abk{std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)};
-	AxisCompound ack{std::make_unique<AxisJoystick>(0, 0), std::make_unique<AxisJoystick>(0, 1)};
-	ButtonCompound bck{std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)};
-
-	//using JoystickButton = std::pair<uint32_t, uint32_t>;
-	//using JoystickAxis = std::pair<uint32_t, uint32_t>;
-	//using JoystickHat = std::pair<uint32_t, Hat>;
-	//AxisButton abk{KeyboardButton::A, KeyboardButton::D};
-	//AxisCompound ack{JoystickAxis{0, 0}, JoystickAxis{0, 1}};
-	//ButtonCompound bck{KeyboardButton::A, MouseButton::Left};
-
 	// Registers file search paths.
-	Files::Get()->AddSearchPath("Resources/Engine");
 	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	Files::Get()->AddSearchPath("Resources/Engine");
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

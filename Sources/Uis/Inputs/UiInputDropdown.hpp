@@ -12,7 +12,7 @@ class ACID_EXPORT UiInputDropdown :
 {
 public:
 	UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, std::vector<std::string> options,
-		const UiTransform &transform = UiTransform(UiInputButton::Size));
+		const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 

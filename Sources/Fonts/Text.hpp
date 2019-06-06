@@ -41,8 +41,8 @@ public:
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text,
-	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-		const Justify &justify = Justify::Left, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left, 
+		const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 	void UpdateObject() override;
 

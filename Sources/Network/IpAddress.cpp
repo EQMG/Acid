@@ -1,35 +1,28 @@
 #include "IpAddress.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-
 #else
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #endif
-
 #include "Http/Http.hpp"
 #include "Socket.hpp"
 
 namespace acid
 {
-const IpAddress IpAddress::None = IpAddress();
-const IpAddress IpAddress::Any = IpAddress(0, 0, 0, 0);
-const IpAddress IpAddress::LocalHost = IpAddress(127, 0, 0, 1);
-const IpAddress IpAddress::Broadcast = IpAddress(255, 255, 255, 255);
+const IpAddress IpAddress::None{};
+const IpAddress IpAddress::Any{0, 0, 0, 0};
+const IpAddress IpAddress::LocalHost{127, 0, 0, 1};
+const IpAddress IpAddress::Broadcast{255, 255, 255, 255};
 
-IpAddress::IpAddress() :
-	m_address(0),
-	m_valid(false)
+IpAddress::IpAddress()
 {
 }
 
-IpAddress::IpAddress(const std::string &address) :
-	m_address(0),
-	m_valid(false)
+IpAddress::IpAddress(const std::string &address)
 {
 	Resolve(address);
 }
@@ -48,7 +41,7 @@ IpAddress::IpAddress(const uint32_t &address) :
 
 std::string IpAddress::ToString() const
 {
-	in_addr address = {};
+	in_addr address{};
 	address.s_addr = m_address;
 	return inet_ntoa(address);
 }
@@ -67,7 +60,7 @@ IpAddress IpAddress::GetLocalAddress()
 	IpAddress localAddress;
 
 	// Create the socket.
-	SocketHandle sock = socket(PF_INET, SOCK_DGRAM, 0);
+	auto sock = socket(PF_INET, SOCK_DGRAM, 0);
 
 	if (sock == Socket::InvalidSocketHandle())
 	{
@@ -75,7 +68,7 @@ IpAddress IpAddress::GetLocalAddress()
 	}
 
 	// Connect the socket to localhost on any port.
-	sockaddr_in address = Socket::CreateAddress(ntohl(INADDR_LOOPBACK), 9);
+	auto address = Socket::CreateAddress(ntohl(INADDR_LOOPBACK), 9);
 
 	if (connect(sock, reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1)
 	{
@@ -109,17 +102,17 @@ IpAddress IpAddress::GetPublicAddress(const Time &timeout)
 	// and parse the result to extract our IP address
 	// (not very hard: the web page contains only our IP address).
 
-	Http server = Http("www.sfml-dev.org");
-	HttpRequest request("/ip-provider.php", HttpRequest::Method::Get);
-	HttpResponse page = server.SendRequest(request, timeout);
+	Http server{"www.sfml-dev.org"};
+	HttpRequest request{"/ip-provider.php", HttpRequest::Method::Get};
+	auto page = server.SendRequest(request, timeout);
 
 	if (page.GetStatus() == HttpResponse::Status::Ok)
 	{
-		return IpAddress(page.GetBody());
+		return {page.GetBody()};
 	}
 
 	// Something failed: return an invalid address.
-	return IpAddress();
+	return {};
 }
 
 bool IpAddress::operator==(const IpAddress &other) const
@@ -161,7 +154,7 @@ std::istream &operator>>(std::istream &stream, IpAddress &address)
 {
 	std::string str;
 	stream >> str;
-	address = IpAddress(str);
+	address = IpAddress{str};
 
 	return stream;
 }
@@ -195,7 +188,7 @@ void IpAddress::Resolve(const std::string &address)
 		else
 		{
 			// Not a valid address, try to convert it as a host name.
-			addrinfo hints = {};
+			addrinfo hints{};
 			hints.ai_family = AF_INET;
 			addrinfo *result = nullptr;
 

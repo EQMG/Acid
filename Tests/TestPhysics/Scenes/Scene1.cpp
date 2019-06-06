@@ -33,13 +33,10 @@
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>
 #include <Uis/Uis.hpp>
-#include <Serialized/Json/Json.hpp>
-#include <Serialized/Xml/Xml.hpp>
 #include <Serialized/Yaml/Yaml.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
-#include "Skybox/CelestialBody.hpp"
 #include "CameraFps.hpp"
 
 namespace test
@@ -47,19 +44,20 @@ namespace test
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFps>()),
-	m_buttonSpawnSphere(ButtonMouse(MouseButton::Left)),
-	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
-	m_buttonSave(Key::K),
-	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
+	Scene{std::make_unique<CameraFps>()},
+	m_buttonSpawnSphere{std::make_unique<ButtonMouse>(MouseButton::Left)},
+	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
+	m_buttonSave{Key::K},
+	m_uiStartLogo{&Uis::Get()->GetCanvas()},
+	m_overlayDebug{&Uis::Get()->GetCanvas()}
 {
 	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
-			Vector3f cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-			Vector3f cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+
 			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
@@ -83,7 +81,7 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{

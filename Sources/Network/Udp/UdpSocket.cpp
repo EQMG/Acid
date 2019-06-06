@@ -1,24 +1,21 @@
 #include "UdpSocket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #endif
-
 #include "Engine/Log.hpp"
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
 
 namespace acid
 {
-static const uint32_t MAX_DATAGRAM_SIZE = 65507;
+static const uint32_t MAX_DATAGRAM_SIZE{65507};
 
 UdpSocket::UdpSocket() :
-	Socket(Type::Udp),
-	m_buffer(MAX_DATAGRAM_SIZE)
+	Socket{Type::Udp},
+	m_buffer(MAX_DATAGRAM_SIZE) // TODO: C++20: {}
 {
 }
 
@@ -55,7 +52,7 @@ Socket::Status UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
 	}
 
 	// Bind the socket/
-	sockaddr_in addr = CreateAddress(address.ToInteger(), port);
+	auto addr = CreateAddress(address.ToInteger(), port);
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{
@@ -85,10 +82,10 @@ Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const 
 	}
 
 	// Build the target address.
-	sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
+	auto address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 	// Send the data (unlike TCP, all the data is always sent in one call).
-	int sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
+	auto sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 	// Check for errors.
 	if (sent < 0)
@@ -114,11 +111,11 @@ Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size
 	}
 
 	// Data that will be filled with the other computer's address.
-	sockaddr_in address = CreateAddress(INADDR_ANY, 0);
+	auto address = CreateAddress(INADDR_ANY, 0);
 
 	// Receive a chunk of bytes.
 	SocketAddrLength addressSize = sizeof(address);
-	int sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
+	auto sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.
 	if (sizeReceived < 0)
@@ -157,7 +154,7 @@ Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint
 
 	// Receive the datagram.
 	std::size_t received = 0;
-	Status status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
+	auto status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
 
 	// If we received valid data, we can copy it to the user packet.
 	packet.Clear();

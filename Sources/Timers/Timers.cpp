@@ -2,17 +2,16 @@
 
 namespace acid
 {
-Timers::Timers() :
-	m_stop{false}
+Timers::Timers()
 {
-	std::unique_lock<std::mutex> lock(m_mutex);
-	m_worker = std::thread(std::bind(&Timers::Run, this));
+	std::unique_lock<std::mutex> lock{m_mutex};
+	m_worker = std::thread{std::bind(&Timers::Run, this)};
 }
 
 Timers::~Timers()
 {
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
+		std::unique_lock<std::mutex> lock{m_mutex};
 		m_stop = true;
 	}
 
@@ -26,7 +25,7 @@ void Timers::Update()
 
 void Timers::Run()
 {
-	std::unique_lock<std::mutex> lock(m_mutex);
+	std::unique_lock<std::mutex> lock{m_mutex};
 
 	while (!m_stop)
 	{
@@ -65,7 +64,7 @@ void Timers::Run()
 			}
 			else
 			{
-				auto timePoint = std::chrono::microseconds(instance->m_next - time);
+				std::chrono::microseconds timePoint{instance->m_next - time};
 				m_condition.wait_for(lock, timePoint);
 			}
 		}

@@ -17,24 +17,27 @@ class ACID_EXPORT AxisCompound :
 public:
 	/**
 	 * Creates a new compound axis.
-	 * @param axes The axes on the being added.
 	 */
-	explicit AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes);
+	AxisCompound() = default;
 
+	/**
+	 * Creates a new compound axis.
+	 * @tparam Args The axis argument types.
+	 * @param args The axes on the being added.
+	 */
 	template <typename... Args>
-	explicit AxisCompound(Args &&... args)
+	AxisCompound(Args &&... args)
 	{
-		/*m_axes.reserve(sizeof...(Args));
-
-		for (auto &&arg : {args...})
-		{
-			m_axes.emplace_back(std::move(arg));
-		}*/
+		m_axes.reserve(sizeof...(Args));
+		(m_axes.emplace_back(std::forward<Args>(args)), ...);
+		ConnectAxes();
 	}
 
 	float GetAmount() const override;
 
 private:
+	void ConnectAxes();
+
 	std::vector<std::unique_ptr<Axis>> m_axes;
 };
 }

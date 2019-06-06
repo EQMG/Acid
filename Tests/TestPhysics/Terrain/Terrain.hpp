@@ -25,9 +25,9 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Terrain &terrain);
 
 private:
-	uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
+	static uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
 
-	float CalculateTextureScale(const float &sideLength);
+	static float CalculateTextureScale(const float &sideLength);
 
 	std::vector<float> GenerateHeightmap(const uint32_t &vertexCount);
 

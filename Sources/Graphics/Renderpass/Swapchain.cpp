@@ -159,7 +159,7 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 
 VkResult Swapchain::QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore)
 {
-	VkPresentInfoKHR presentInfo = {};
+	VkPresentInfoKHR presentInfo{};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 	presentInfo.waitSemaphoreCount = 1;
 	presentInfo.pWaitSemaphores = &waitSemaphore;

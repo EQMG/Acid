@@ -1,21 +1,16 @@
 #include "Packet.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #endif
-
 #include <cwchar>
 #include "Socket.hpp"
 
 namespace acid
 {
 Packet::Packet() :
-	m_readPos(0),
-	m_sendPos(0),
 	m_isValid(true)
 {
 }

@@ -3,12 +3,11 @@
 namespace acid
 {
 Uis::Uis() :
-	m_canvas(nullptr, UiTransform(Window::Get()->GetSize())),
-	m_cursorSelect(nullptr)
+	m_canvas{nullptr, UiTransform{Window::Get()->GetSize()}}
 {
-	for (auto button : EnumIterator<MouseButton>())
+	for (auto button : EnumIterator<MouseButton>{})
 	{
-		m_selectors.emplace(button, SelectorMouse());
+		m_selectors.emplace(button, SelectorMouse{});
 	}
 
 }
@@ -17,7 +16,7 @@ void Uis::Update()
 {
 	for (auto &[button, selector] : m_selectors)
 	{
-		bool isDown = Mouse::Get()->GetButton(button) != InputAction::Release;
+		auto isDown = Mouse::Get()->GetButton(button) != InputAction::Release;
 		selector.m_wasDown = !selector.m_isDown && isDown;
 		selector.m_isDown = isDown;
 	}

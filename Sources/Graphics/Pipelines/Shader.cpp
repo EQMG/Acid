@@ -203,7 +203,7 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 			continue;
 		}
 
-		VkPushConstantRange pushConstantRange = {};
+		VkPushConstantRange pushConstantRange{};
 		pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
 		pushConstantRange.offset = currentOffset;
 		pushConstantRange.size = static_cast<uint32_t>(uniformBlock.GetSize());
@@ -281,7 +281,7 @@ EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
 
 TBuiltInResource GetResources()
 {
-	TBuiltInResource resources = {};
+	TBuiltInResource resources{};
 	resources.maxLights = 32;
 	resources.maxClipPlanes = 6;
 	resources.maxTextureUnits = 32;
@@ -474,7 +474,7 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 	std::vector<uint32_t> spirv;
 	GlslangToSpv(*program.getIntermediate(static_cast<EShLanguage>(language)), spirv, &logger, &spvOptions);
 
-	VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
+	VkShaderModuleCreateInfo shaderModuleCreateInfo{};
 	shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 	shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
 	shaderModuleCreateInfo.pCode = spirv.data();
@@ -544,7 +544,7 @@ void Shader::CreateReflection()
 
 	for (const auto &[type, descriptorCount] : descriptorPoolCounts)
 	{
-		VkDescriptorPoolSize descriptorPoolSize = {};
+		VkDescriptorPoolSize descriptorPoolSize{};
 		descriptorPoolSize.type = type;
 		descriptorPoolSize.descriptorCount = descriptorCount;
 		m_descriptorPools.emplace_back(descriptorPoolSize);
@@ -588,7 +588,7 @@ void Shader::CreateReflection()
 
 	for (const auto &[attributeName, attribute] : m_attributes)
 	{
-		VkVertexInputAttributeDescription attributeDescription = {};
+		VkVertexInputAttributeDescription attributeDescription{};
 		attributeDescription.location = static_cast<uint32_t>(attribute.m_location);
 		attributeDescription.binding = 0;
 		attributeDescription.format = GlTypeToVk(attribute.m_glType);

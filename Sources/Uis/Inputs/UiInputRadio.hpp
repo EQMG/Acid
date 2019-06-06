@@ -17,7 +17,7 @@ public:
 	};
 
 	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, const bool &value = false,
-		const UiTransform &transform = UiTransform(UiInputButton::Size));
+		const UiTransform &transform = UiTransform{UiInputButton::Size});
 
 	void UpdateObject() override;
 
@@ -57,9 +57,9 @@ class ACID_EXPORT UiRadioManager :
 {
 public:
 	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
-		m_type(type),
-		m_multiple(multiple),
-		m_inputs(inputs)
+		m_type{type},
+		m_multiple{multiple},
+		m_inputs{inputs}
 	{
 		for (auto &input : inputs)
 		{

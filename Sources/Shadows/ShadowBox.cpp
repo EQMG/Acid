@@ -6,13 +6,7 @@
 
 namespace acid
 {
-ShadowBox::ShadowBox() :
-	m_shadowOffset{0.0f},
-	m_shadowDistance{0.0f},
-	m_farHeight{0.0f},
-	m_farWidth{0.0f},
-	m_nearHeight{0.0f},
-	m_nearWidth{0.0f}
+ShadowBox::ShadowBox()
 {
 	// Creates the offset for part of the conversion to shadow map space.
 	m_offset = m_offset.Translate(Vector3f(0.5f));

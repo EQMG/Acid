@@ -23,7 +23,7 @@ void Ray::Update(const Vector3f &currentPosition, const Vector2f &mousePosition,
 
 	m_viewMatrix = viewMatrix;
 	m_projectionMatrix = projectionMatrix;
-	m_clipCoords = {m_normalizedCoords.m_x, m_normalizedCoords.m_y, -1.0f, 1.0f};
+	m_clipCoords = {m_normalizedCoords.m_x, m_normalizedCoords.m_y, -1.0f};
 	UpdateEyeCoords();
 	UpdateWorldCoords();
 }

@@ -1,6 +1,5 @@
 ﻿#include "OverlayDebug.hpp"
 
-#include <Maths/Visual/DriverConstant.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Guis/Gui.hpp>
 #include "World/World.hpp"
@@ -8,11 +7,11 @@
 namespace test
 {
 OverlayDebug::OverlayDebug(UiObject *parent) :
-	UiObject(parent, UiTransform(Vector2i(100, 48), UiAnchor::LeftBottom)),
-	m_textFrameTime(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -2)), 11, "", FontType::Create("Fonts/ProximaNova", "Regular")),
-	m_textFps(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -16)), 11, "", FontType::Create("Fonts/ProximaNova", "Regular")),
-	m_textUps(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -30)), 11, "", FontType::Create("Fonts/ProximaNova", "Regular")),
-	m_textTime(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -44)), 11, "", FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left)
+	UiObject{parent, {{100, 36}, UiAnchor::LeftBottom}},
+	m_textFrameTime{this, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "", FontType::Create("Fonts/ProximaNova")},
+	m_textFps{this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "", FontType::Create("Fonts/ProximaNova")},
+	m_textUps{this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "", FontType::Create("Fonts/ProximaNova")},
+	m_textTime{this, {{100, 12}, UiAnchor::LeftBottom, {2, -44}}, 11, "", FontType::Create("Fonts/ProximaNova")}
 {
 }
 

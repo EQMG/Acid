@@ -5,9 +5,9 @@
 namespace acid
 {
 HttpResponse::HttpResponse() :
-	m_status(Status::ConnectionFailed),
-	m_majorVersion(0),
-	m_minorVersion(0)
+	m_status{Status::ConnectionFailed},
+	m_majorVersion{0},
+	m_minorVersion{0}
 {
 }
 
@@ -20,8 +20,7 @@ std::string HttpResponse::GetField(const std::string &field) const
 		return it->second;
 	}
 
-	static const std::string Empty = "";
-	return Empty;
+	return {};
 }
 
 void HttpResponse::Parse(const std::string &data)
@@ -72,7 +71,7 @@ void HttpResponse::Parse(const std::string &data)
 	if (String::Lowercase(GetField("transfer-encoding")) != "chunked")
 	{
 		// Not chunked - just read everything at once.
-		std::copy(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>(), std::back_inserter(m_body));
+		std::copy(std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}, std::back_inserter(m_body));
 	}
 	else
 	{
@@ -86,7 +85,7 @@ void HttpResponse::Parse(const std::string &data)
 			in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 			// Copy the actual content data.
-			std::istreambuf_iterator<char> it(in);
+			std::istreambuf_iterator<char> it{in};
 			std::istreambuf_iterator<char> itEnd;
 
 			for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++)
@@ -109,13 +108,13 @@ void HttpResponse::ParseFields(std::istream &in)
 
 	while (std::getline(in, line) && (line.size() > 2))
 	{
-		std::string::size_type pos = line.find(": ");
+		auto pos = line.find(": ");
 
 		if (pos != std::string::npos)
 		{
 			// Extract the field name and its value.
-			std::string field = line.substr(0, pos);
-			std::string value = line.substr(pos + 2);
+			auto field = line.substr(0, pos);
+			auto value = line.substr(pos + 2);
 
 			// Remove any trailing '\r'.
 			if (!value.empty() && (*value.rbegin() == '\r'))

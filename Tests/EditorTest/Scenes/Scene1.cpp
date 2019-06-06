@@ -40,8 +40,8 @@ static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFps>()),
-	m_buttonSpawnSphere(MouseButton::Left),
-	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
+	m_buttonSpawnSphere{std::make_unique<ButtonMouse>(MouseButton::Left)},
+	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
 	m_buttonSave(Key::K),
 	m_soundScreenshot("Sounds/Screenshot.ogg"),
 	m_uiStartLogo(&Uis::Get()->GetCanvas()),
@@ -77,7 +77,7 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{

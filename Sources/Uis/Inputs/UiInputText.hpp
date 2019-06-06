@@ -13,7 +13,7 @@ class ACID_EXPORT UiInputText :
 {
 public:
 	UiInputText(UiObject *parent, const std::string &title, std::string value, const int32_t &maxLength,
-		const UiTransform &transform = UiTransform(UiInputButton::Size));
+		const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 
@@ -42,10 +42,10 @@ private:
 	int32_t m_maxLength;
 
 	InputDelay m_inputDelay;
-	int32_t m_lastKey;
+	int32_t m_lastKey{};
 
-	bool m_updating;
-	bool m_mouseOver;
+	bool m_updating{};
+	bool m_mouseOver{};
 
 	Delegate<void(std::string)> m_onValue;
 };

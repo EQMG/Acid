@@ -6,11 +6,11 @@
 
 namespace test
 {
-static const Colour SKYBOX_COLOUR_DAY = Colour("#003C8A");
+static const Colour SKYBOX_COLOUR_DAY{"#003C8A"};
 
 SkyboxCycle::SkyboxCycle(const bool &enableFog, const bool &enableRotation) :
-	m_enableFog(enableFog),
-	m_enableRotation(enableRotation)
+	m_enableFog{enableFog},
+	m_enableRotation{enableRotation}
 {
 }
 
@@ -31,13 +31,13 @@ void SkyboxCycle::Update()
 	{
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(World::Get()->GetFog().GetColour());
-		materialSkybox->SetFogLimits(Vector2f(World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()));
+		materialSkybox->SetFogLimits({World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()});
 	}
 	else
 	{
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(Colour::Black);
-		materialSkybox->SetFogLimits(Vector2f(-1000000.0f, -1000000.0f));
+		materialSkybox->SetFogLimits({-1000000.0f});
 	}
 
 	if (m_enableRotation)
@@ -48,7 +48,7 @@ void SkyboxCycle::Update()
 	else
 	{
 		materialSkybox->SetBlend(1.0f);
-		GetParent()->GetLocalTransform().SetRotation(Vector3f());
+		GetParent()->GetLocalTransform().SetRotation({});
 	}
 }
 

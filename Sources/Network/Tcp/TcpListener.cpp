@@ -1,20 +1,17 @@
 #include "TcpListener.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #endif
-
 #include "Engine/Log.hpp"
 #include "TcpSocket.hpp"
 
 namespace acid
 {
 TcpListener::TcpListener() :
-	Socket(Type::Tcp)
+	Socket{Type::Tcp}
 {
 }
 
@@ -51,7 +48,7 @@ Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &addres
 	}
 
 	// Bind the socket to the specified port.
-	sockaddr_in addr = CreateAddress(address.ToInteger(), port);
+	auto addr = CreateAddress(address.ToInteger(), port);
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{

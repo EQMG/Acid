@@ -7,8 +7,8 @@
 namespace test
 {
 MaterialTerrain::MaterialTerrain(std::shared_ptr<Image2d> imageR, std::shared_ptr<Image2d> imageG) :
-	m_imageR(std::move(imageR)),
-	m_imageG(std::move(imageG))
+	m_imageR{std::move(imageR)},
+	m_imageG{std::move(imageG)}
 {
 }
 

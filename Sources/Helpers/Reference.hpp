@@ -8,9 +8,7 @@ template<typename T>
 class Reference
 {
 public:
-	Reference() noexcept
-	{
-	}
+	Reference() noexcept = default;
 
 	Reference(T &reference) noexcept :
 		m_reference{std::addressof(reference)}

@@ -22,14 +22,12 @@
 
 namespace test
 {
-static const float UI_SLIDE_TIME = 0.2f;
-
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFree>()),
-	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
+	Scene{std::make_unique<CameraFree>()},
+	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
+	m_overlayDebug{&Uis::Get()->GetCanvas()}
 {
-	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -40,7 +38,7 @@ Scene1::Scene1() :
 
 void Scene1::Start()
 {
-	GetPhysics()->SetGravity(Vector3f(0.0f, -9.81f, 0.0f));
+	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Skybox.

@@ -87,7 +87,7 @@ public:
 	 * @param code Response status code. 
 	 * @param message Response message. 
 	 **/
-	explicit FtpResponse(const Status &code = Status::InvalidResponse, std::string message = "");
+	FtpResponse(const Status &code = Status::InvalidResponse, std::string message = "");
 
 	/**
 	 * Check if the status code means a success.
