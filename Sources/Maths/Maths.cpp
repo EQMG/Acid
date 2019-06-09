@@ -21,11 +21,11 @@ float Maths::RandomNormal(const float &standardDeviation, const float &mean)
 
 float Maths::RandomLog(const float &min, const float &max)
 {
-	auto logLower = std::log(min);
-	auto logUpper = std::log(max);
-	auto raw = Random(0.0f, 1.0f);
+	auto logLower{std::log(min)};
+	auto logUpper{std::log(max)};
+	auto raw{Random(0.0f, 1.0f)};
 
-	auto result = std::exp(raw * (logUpper - logLower) + logLower);
+	auto result{std::exp(raw * (logUpper - logLower) + logLower)};
 
 	if (result < min)
 	{

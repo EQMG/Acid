@@ -9,7 +9,7 @@ void SubrenderHolder::Clear()
 
 void SubrenderHolder::RemoveSubrenderStage(const TypeId &id)
 {
-	for (auto it = m_stages.begin(); it != m_stages.end();)
+	for (auto it{m_stages.begin()}; it != m_stages.end();)
 	{
 		if (it->second == id)
 		{
@@ -31,7 +31,7 @@ void SubrenderHolder::RenderStage(const Pipeline::Stage &stage, const CommandBuf
 			continue;
 		}
 
-		auto &subrender = m_subrenders[typeId.second];
+		auto &subrender{m_subrenders[typeId.second]};
 
 		if (subrender != nullptr)
 		{

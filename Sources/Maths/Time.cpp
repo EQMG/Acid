@@ -12,8 +12,8 @@ Time Time::Now()
 
 std::string Time::GetDateTime(const std::string &format)
 {
-	auto now = std::chrono::system_clock::now();
-	auto timeT = std::chrono::system_clock::to_time_t(now);
+	auto now{std::chrono::system_clock::now()};
+	auto timeT{std::chrono::system_clock::to_time_t(now)};
 
 	std::stringstream ss;
 	ss << std::put_time(std::localtime(&timeT), format.c_str());

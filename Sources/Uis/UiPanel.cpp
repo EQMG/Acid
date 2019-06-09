@@ -23,7 +23,7 @@ UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &c
 
 void UiPanel::UpdateObject()
 {
-	auto contentSize = (m_max - m_min) / GetScreenTransform().GetSize();
+	auto contentSize{(m_max - m_min) / GetScreenTransform().GetSize()};
 	m_scrollX.SetEnabled(m_scrollBars & ScrollBar::Horizontal && contentSize.m_x > 1.05f);
 	m_scrollY.SetEnabled(m_scrollBars & ScrollBar::Vertical && contentSize.m_y > 1.05f);
 
@@ -45,8 +45,8 @@ void UiPanel::UpdateObject()
 
 void UiPanel::SetScissor(UiObject *object, const bool &checkSize)
 {
-	auto position = m_background.GetScreenTransform().GetPosition();
-	auto size = m_background.GetScreenTransform().GetSize();
+	auto position{m_background.GetScreenTransform().GetPosition()};
+	auto size{m_background.GetScreenTransform().GetSize()};
 	object->SetScissor(Vector4i(position.m_x, position.m_y, size.m_x, size.m_y));
 
 	if (object->IsEnabled() && checkSize)

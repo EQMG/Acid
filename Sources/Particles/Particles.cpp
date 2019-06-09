@@ -15,9 +15,9 @@ void Particles::Update()
 		return;
 	}
 
-	for (auto it = m_particles.begin(); it != m_particles.end();)
+	for (auto it{m_particles.begin()}; it != m_particles.end();)
 	{
-		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
+		for (auto it1{(*it).second.begin()}; it1 != (*it).second.end();)
 		{
 			(*it1).Update();
 
@@ -44,7 +44,7 @@ void Particles::Update()
 
 void Particles::AddParticle(Particle &&particle)
 {
-	auto it = m_particles.find(particle.GetParticleType());
+	auto it{m_particles.find(particle.GetParticleType())};
 
 	if (it == m_particles.end())
 	{
@@ -57,7 +57,7 @@ void Particles::AddParticle(Particle &&particle)
 
 /*void Particles::RemoveParticle(const Particle &particle)
 {
-	auto it = m_particles.find(particle.GetParticleType());
+	auto it{m_particles.find(particle.GetParticleType())};
 
 	if (it != m_particles.end())
 	{

@@ -104,7 +104,7 @@ long FileSystem::LastModified(const std::string &path)
 void FileSystem::Touch(const std::string &path)
 {
 	// TODO: Rewrite.
-	auto data = ReadBinaryFile(path);
+	auto data{ReadBinaryFile(path)};
 
 	if (data)
 	{
@@ -117,7 +117,7 @@ std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const 
 	std::vector<std::string> files;
 
 	struct dirent *de;
-	auto dr = opendir(path.c_str());
+	auto dr{opendir(path.c_str())};
 
 	if (dr == nullptr)
 	{
@@ -132,13 +132,13 @@ std::vector<std::string> FileSystem::FilesInPath(const std::string &path, const 
 			continue;
 		}
 
-		auto relPath = path + Separator + de->d_name;
+		auto relPath{path + Separator + de->d_name};
 
 		if (IsDirectory(relPath))
 		{
 			if (recursive)
 			{
-				auto filesInFound = FilesInPath(relPath, recursive);
+				auto filesInFound{FilesInPath(relPath, recursive)};
 				files.insert(files.end(), filesInFound.begin(), filesInFound.end());
 			}
 		}
@@ -159,12 +159,12 @@ bool FileSystem::Create(const std::string &path)
 		return false;
 	}
 
-	auto lastFolderPos = path.find_last_of("\\/");
+	auto lastFolderPos{path.find_last_of("\\/")};
 
 	if (lastFolderPos != std::string::npos)
 	{
-		auto folderPath = path.substr(0, lastFolderPos);
-		auto splitFolders = SplitPath(folderPath);
+		auto folderPath{path.substr(0, lastFolderPos)};
+		auto splitFolders{SplitPath(folderPath)};
 		std::stringstream appended;
 
 		for (const auto &folder : splitFolders)
@@ -187,7 +187,7 @@ bool FileSystem::Create(const std::string &path)
 		return true;
 	}
 
-	auto file = fopen(path.c_str(), "rb+");
+	auto file{fopen(path.c_str(), "rb+")};
 
 	if (file == nullptr)
 	{
@@ -223,7 +223,7 @@ std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 		return std::nullopt;
 	}
 
-	auto file = fopen(filename.c_str(), "rb");
+	auto file{fopen(filename.c_str(), "rb")};
 
 	if (file == nullptr)
 	{
@@ -244,7 +244,7 @@ std::optional<std::string> FileSystem::ReadTextFile(const std::string &filename)
 
 bool FileSystem::WriteTextFile(const std::string &filename, const std::string &data)
 {
-	auto file = fopen(filename.c_str(), "ab");
+	auto file{fopen(filename.c_str(), "ab")};
 
 	if (file == nullptr)
 	{
@@ -260,8 +260,8 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 {
 	std::vector<char> data;
 
-	const auto bufferSize = 1024;
-	const auto useFile = filename.c_str() && strcmp("-", filename.c_str()) != 0;
+	const auto bufferSize{1024};
+	const auto useFile{filename.c_str() && strcmp("-", filename.c_str()) != 0};
 
 	if (auto fp = (useFile ? fopen(filename.c_str(), mode.c_str()) : stdin))
 	{
@@ -302,11 +302,11 @@ std::optional<std::vector<char>> FileSystem::ReadBinaryFile(const std::string &f
 
 bool FileSystem::WriteBinaryFile(const std::string &filename, const std::vector<char> &data, const std::string &mode)
 {
-	const auto useStdout = !filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0');
+	const auto useStdout{!filename.c_str() || (filename.c_str()[0] == '-' && filename.c_str()[1] == '\0')};
 
 	if (auto fp = (useStdout ? stdout : fopen(filename.c_str(), mode.c_str())))
 	{
-		auto written = fwrite(data.data(), sizeof(char), data.size(), fp);
+		auto written{fwrite(data.data(), sizeof(char), data.size(), fp)};
 
 		if (data.size() != written)
 		{
@@ -342,9 +342,9 @@ std::string FileSystem::ParentDirectory(const std::string &path)
 	}
 
 #if defined(ACID_BUILD_WINDOWS)
-	auto end = path.find_last_of(std::string(1, Separator) + "/");
+	auto end{path.find_last_of(std::string(1, Separator) + "/")};
 #else
-	auto end = path.find_last_of(Separator);
+	auto end{path.find_last_of(Separator)};
 #endif
 
 	if (end == path.length() - 1)
@@ -366,7 +366,7 @@ std::string FileSystem::ParentDirectory(const std::string &path)
 
 std::string FileSystem::FileName(const std::string &path)
 {
-	auto start = path.find_last_of(Separator);
+	auto start{path.find_last_of(Separator)};
 
 #if defined(ACID_BUILD_WINDOWS)
 	// WIN32 also understands '/' as the separator.
@@ -390,7 +390,7 @@ std::string FileSystem::FileName(const std::string &path)
 
 std::string FileSystem::FileSuffix(const std::string &path)
 {
-	auto start = path.find_last_of(Separator);
+	auto start{path.find_last_of(Separator)};
 
 #if defined(ACID_BUILD_WINDOWS)
 	// WIN32 also understands '/' as the separator.
@@ -410,7 +410,7 @@ std::string FileSystem::FileSuffix(const std::string &path)
 		start++; // We do not want the separator.
 	}
 
-	auto end = path.find_last_of('.');
+	auto end{path.find_last_of('.')};
 
 	if (end == std::string::npos || end < start)
 	{
@@ -442,11 +442,11 @@ std::vector<std::string> FileSystem::SplitPath(const std::string &path, const ch
 {
 	std::vector<std::string> split;
 	std::string::size_type previousIndex = 0;
-	auto separatorIndex = path.find(delim);
+	auto separatorIndex{path.find(delim)};
 
 	while (separatorIndex != std::string::npos)
 	{
-		auto part = path.substr(previousIndex, separatorIndex - previousIndex);
+		auto part{path.substr(previousIndex, separatorIndex - previousIndex)};
 
 		if (part != "..")
 		{
@@ -465,7 +465,7 @@ std::vector<std::string> FileSystem::SplitPath(const std::string &path, const ch
 
 	if (split.size() == 1 && delim == Separator)
 	{
-		auto alternative = SplitPath(path, AltSeparator);
+		auto alternative{SplitPath(path, AltSeparator)};
 
 		if (alternative.size() > 1)
 		{

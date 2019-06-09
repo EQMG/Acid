@@ -28,10 +28,10 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 
-	auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-	auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetImage();
+	auto materialSkybox{Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>()};
+	auto skybox{(materialSkybox == nullptr) ? nullptr : materialSkybox->GetImage()};
 
 	if (m_skybox != skybox)
 	{
@@ -44,11 +44,11 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	std::vector<DeferredLight> deferredLights{MAX_LIGHTS};
 	uint32_t lightCount = 0;
 
-	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
+	auto sceneLights{Scenes::Get()->GetStructure()->QueryComponents<Light>()};
 
 	for (const auto &light : sceneLights)
 	{
-		//auto position = *light->GetPosition();
+		//auto position{*light->GetPosition()};
 		//float radius = light->GetRadius();
 
 		//if (radius >= 0.0f && !camera.GetViewFrustum()->SphereInFrustum(position, radius))
@@ -107,7 +107,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 {
-	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto brdfImage{std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL)};
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
@@ -130,9 +130,9 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 	// Saves the BRDF Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
-		auto path = std::filesystem::current_path() / "Brdf.png";
+		auto path{std::filesystem::current_path() / "Brdf.png"};
 		Vector2ui extent;
-		auto pixels = image->GetPixels(extent);
+		auto pixels{image->GetPixels(extent)};
 		Image::WritePixels(path, pixels.get(), extent);
 	}, brdfImage.get());*/
 #endif
@@ -147,7 +147,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 		return nullptr;
 	}
 
-	auto irradianceCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto irradianceCubemap{std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL)};
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
@@ -171,9 +171,9 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	// Saves the irradiance Image.
 	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
 	{
-		auto path = std::filesystem::current_path() / "Irradiance.png";
+		auto path{std::filesystem::current_path() / "Irradiance.png"};
 		Vector2ui extent;
-		auto pixels = image->GetPixels(extent);
+		auto pixels{image->GetPixels(extent)};
 		Image::WritePixels(path, pixels.get(), extent);
 	}, irradianceCubemap.get());*/
 #endif
@@ -188,7 +188,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		return nullptr;
 	}
 
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	auto prefilteredCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
 		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
@@ -222,7 +222,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = *compute.GetShader()->GetDescriptorType(descriptorWrite.dstBinding);
 		//descriptorWrite.pImageInfo = &imageInfo;
-		auto writeDescriptorSet = WriteDescriptorSet(descriptorWrite, imageInfo);
+		auto writeDescriptorSet{WriteDescriptorSet(descriptorWrite, imageInfo)};
 
 		pushHandler.Push("roughness", static_cast<float>(i) / static_cast<float>(prefilteredCubemap->GetMipLevels() - 1));
 
@@ -245,9 +245,9 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
 		{
-			auto path = std::filesystem::current_path() / ("Prefiltered_" + String::To(i) + ".png");
+			auto path{std::filesystem::current_path() / ("Prefiltered_" + String::To(i) + ".png")};
 			Vector2ui extent;
-			auto pixels = image->GetPixels(extent, i);
+			auto pixels{image->GetPixels(extent, i)};
 			Image::WritePixels(path, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
 	}*/

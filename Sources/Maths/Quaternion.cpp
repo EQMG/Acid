@@ -31,17 +31,17 @@ Quaternion::Quaternion(const Vector3f &source) :
 	m_z{0.0f},
 	m_w{1.0f}
 {
-	auto sx = std::sin(source.m_x * 0.5f);
-	auto cx = Maths::CosFromSin(sx, source.m_x * 0.5f);
-	auto sy = std::sin(source.m_y * 0.5f);
-	auto cy = Maths::CosFromSin(sy, source.m_y * 0.5f);
-	auto sz = std::sin(source.m_z * 0.5f);
-	auto cz = Maths::CosFromSin(sz, source.m_z * 0.5f);
+	auto sx{std::sin(source.m_x * 0.5f)};
+	auto cx{Maths::CosFromSin(sx, source.m_x * 0.5f)};
+	auto sy{std::sin(source.m_y * 0.5f)};
+	auto cy{Maths::CosFromSin(sy, source.m_y * 0.5f)};
+	auto sz{std::sin(source.m_z * 0.5f)};
+	auto cz{Maths::CosFromSin(sz, source.m_z * 0.5f)};
 
-	auto cycz = cy * cz;
-	auto sysz = sy * sz;
-	auto sycz = sy * cz;
-	auto cysz = cy * sz;
+	auto cycz{cy * cz};
+	auto sysz{sy * sz};
+	auto sycz{sy * cz};
+	auto cysz{cy * sz};
 
 	m_w = cx * cycz - sx * sysz;
 	m_x = sx * cycz + cx * sysz;
@@ -51,11 +51,11 @@ Quaternion::Quaternion(const Vector3f &source) :
 
 Quaternion::Quaternion(const Matrix4 &source)
 {
-	auto diagonal = source[0][0] + source[1][1] + source[2][2];
+	auto diagonal{source[0][0] + source[1][1] + source[2][2]};
 
 	if (diagonal > 0.0f)
 	{
-		auto w4 = std::sqrt(diagonal + 1.0f) * 2.0f;
+		auto w4{std::sqrt(diagonal + 1.0f) * 2.0f};
 		m_w = w4 / 4.0f;
 		m_x = (source[2][1] - source[1][2]) / w4;
 		m_y = (source[0][2] - source[2][0]) / w4;
@@ -63,7 +63,7 @@ Quaternion::Quaternion(const Matrix4 &source)
 	}
 	else if ((source[0][0] > source[1][1]) && (source[0][0] > source[2][2]))
 	{
-		auto x4 = std::sqrt(1.0f + source[0][0] - source[1][1] - source[2][2]) * 2.0f;
+		auto x4{std::sqrt(1.0f + source[0][0] - source[1][1] - source[2][2]) * 2.0f};
 		m_w = (source[2][1] - source[1][2]) / x4;
 		m_x = x4 / 4.0f;
 		m_y = (source[0][1] + source[1][0]) / x4;
@@ -71,7 +71,7 @@ Quaternion::Quaternion(const Matrix4 &source)
 	}
 	else if (source[1][1] > source[2][2])
 	{
-		auto y4 = std::sqrt(1.0f + source[1][1] - source[0][0] - source[2][2]) * 2.0f;
+		auto y4{std::sqrt(1.0f + source[1][1] - source[0][0] - source[2][2]) * 2.0f};
 		m_w = (source[0][2] - source[2][0]) / y4;
 		m_x = (source[0][1] + source[1][0]) / y4;
 		m_y = y4 / 4.0f;
@@ -79,7 +79,7 @@ Quaternion::Quaternion(const Matrix4 &source)
 	}
 	else
 	{
-		auto z4 = std::sqrt(1.0f + source[2][2] - source[0][0] - source[1][1]) * 2.0f;
+		auto z4{std::sqrt(1.0f + source[2][2] - source[0][0] - source[1][1]) * 2.0f};
 		m_w = (source[1][0] - source[0][1]) / z4;
 		m_x = (source[0][2] + source[2][0]) / z4;
 		m_y = (source[1][2] + source[2][1]) / z4;
@@ -125,15 +125,15 @@ Quaternion Quaternion::Multiply(const Quaternion &other) const
 
 Vector3f Quaternion::Multiply(const Vector3f &other) const
 {
-	auto q = Vector3f(m_x, m_y, m_z);
-	auto cross1 = q.Cross(other);
-	auto cross2 = q.Cross(cross1);
+	auto q{Vector3f(m_x, m_y, m_z)};
+	auto cross1{q.Cross(other)};
+	auto cross2{q.Cross(cross1)};
 	return other + 2.0f * (cross1 * m_w + cross2);
 }
 
 Quaternion Quaternion::MultiplyInverse(const Quaternion &other) const
 {
-	auto n = other.LengthSquared();
+	auto n{other.LengthSquared()};
 	n = n == 0.0f ? n : 1.0f / n;
 	return Quaternion((m_x * other.m_w - m_w * other.m_x - m_y * other.m_z + m_z * other.m_y) * n, (m_y * other.m_w - m_w * other.m_y - m_z * other.m_x + m_x * other.m_z) * n,
 		(m_z * other.m_w - m_w * other.m_z - m_x * other.m_y + m_y * other.m_x) * n, (m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z) * n);
@@ -146,15 +146,15 @@ float Quaternion::Dot(const Quaternion &other) const
 
 Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression) const
 {
-	auto cosom = m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
-	auto absCosom = std::abs(cosom);
+	auto cosom{m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w};
+	auto absCosom{std::abs(cosom)};
 	float scale0, scale1;
 
 	if (1.0f - absCosom > 1E-6f)
 	{
-		auto sinSqr = 1.0f - absCosom * absCosom;
-		auto sinom = 1.0f / std::sqrt(sinSqr);
-		auto omega = std::atan2(sinSqr * sinom, absCosom);
+		auto sinSqr{1.0f - absCosom * absCosom};
+		auto sinom{1.0f / std::sqrt(sinSqr)};
+		auto omega{std::atan2(sinSqr * sinom, absCosom)};
 		scale0 = std::sin((1.0f - progression) * omega) * sinom;
 		scale1 = std::sin(progression * omega) * sinom;
 	}
@@ -180,7 +180,7 @@ Quaternion Quaternion::Scale(const float &scalar) const
 
 Quaternion Quaternion::Normalize() const
 {
-	auto l = Length();
+	auto l{Length()};
 	return Quaternion(m_x / l, m_y / l, m_z / l, m_w / l);
 }
 
@@ -206,16 +206,16 @@ float Quaternion::MinComponent() const
 
 Matrix4 Quaternion::ToMatrix() const
 {
-	auto w2 = m_w * m_w;
-	auto x2 = m_x * m_x;
-	auto y2 = m_y * m_y;
-	auto z2 = m_z * m_z;
-	auto zw = m_z * m_w;
-	auto xy = m_x * m_y;
-	auto xz = m_x * m_z;
-	auto yw = m_y * m_w;
-	auto yz = m_y * m_z;
-	auto xw = m_x * m_w;
+	auto w2{m_w * m_w};
+	auto x2{m_x * m_x};
+	auto y2{m_y * m_y};
+	auto z2{m_z * m_z};
+	auto zw{m_z * m_w};
+	auto xy{m_x * m_y};
+	auto xz{m_x * m_z};
+	auto yw{m_y * m_w};
+	auto yz{m_y * m_z};
+	auto xw{m_x * m_w};
 
 	Matrix4 result;
 	result[0][0] = w2 + x2 - z2 - y2;
@@ -232,15 +232,15 @@ Matrix4 Quaternion::ToMatrix() const
 
 Matrix4 Quaternion::ToRotationMatrix() const
 {
-	auto xy = m_x * m_y;
-	auto xz = m_x * m_z;
-	auto xw = m_x * m_w;
-	auto yz = m_y * m_z;
-	auto yw = m_y * m_w;
-	auto zw = m_z * m_w;
-	auto xSquared = m_x * m_x;
-	auto ySquared = m_y * m_y;
-	auto zSquared = m_z * m_z;
+	auto xy{m_x * m_y};
+	auto xz{m_x * m_z};
+	auto xw{m_x * m_w};
+	auto yz{m_y * m_z};
+	auto yw{m_y * m_w};
+	auto zw{m_z * m_w};
+	auto xSquared{m_x * m_x};
+	auto ySquared{m_y * m_y};
+	auto zSquared{m_z * m_z};
 
 	Matrix4 result;
 	result[0][0] = 1.0f - 2.0f * (ySquared + zSquared);

@@ -67,7 +67,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 		return false;
 	}
 
-	auto scissor = GetScissor();
+	auto scissor{GetScissor()};
 	VkRect2D scissorRect{};
 	scissorRect.offset.x = scissor ? scissor->m_x : 0;
 	scissorRect.offset.y = scissor ? scissor->m_y : 0;
@@ -151,15 +151,15 @@ float Text::GetGlowSize() const
 
 float Text::CalculateEdgeStart() const
 {
-	auto scale = GetScale() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
+	auto scale{GetScale() * m_fontSize};
+	auto size{0.5f * scale.m_x};
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
-	auto scale = GetScale() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
+	auto scale{GetScale() * m_fontSize};
+	auto size{0.5f * scale.m_x};
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
 }
@@ -178,8 +178,8 @@ void Text::LoadText()
 	}
 
 	// Creates mesh data.
-	auto lines = CreateStructure();
-	auto vertices = CreateQuad(lines);
+	auto lines{CreateStructure()};
+	auto vertices{CreateQuad(lines)};
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
@@ -187,14 +187,14 @@ void Text::LoadText()
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
-	auto maxLength = m_lastSize.m_x;
+	auto maxLength{m_lastSize.m_x};
 
 	std::vector<Line> lines;
 	Line currentLine{m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 	Word currentWord;
 
-	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
-	auto textLines = String::Split(formattedText, "\n", true);
+	auto formattedText{String::ReplaceAll(m_string, "\t", "	")};
+	auto textLines{String::Split(formattedText, "\n", true)};
 
 	for (uint32_t i = 0; i < textLines.size(); i++)
 	{
@@ -205,7 +205,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 		for (const auto &c : textLines.at(i))
 		{
-			auto ascii = static_cast<int32_t>(c);
+			auto ascii{static_cast<int32_t>(c)};
 
 			if (ascii == FontMetafile::SpaceAscii)
 			{
@@ -220,7 +220,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 				continue;
 			}
 
-			if (auto character = m_fontType->GetMetadata()->GetCharacter(ascii); character)
+			if (auto character{m_fontType->GetMetadata()->GetCharacter(ascii)}; character)
 			{
 				currentWord.AddCharacter(*character, m_kerning);
 			}
@@ -228,7 +228,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 		if (i != textLines.size() - 1)
 		{
-			auto wordAdded = currentLine.AddWord(currentWord);
+			auto wordAdded{currentLine.AddWord(currentWord)};
 			lines.emplace_back(currentLine);
 			currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 
@@ -247,7 +247,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const
 {
-	auto added = currentLine.AddWord(currentWord);
+	auto added{currentLine.AddWord(currentWord)};
 
 	if (!added)
 	{
@@ -264,9 +264,9 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 	std::vector<VertexDefault> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
-	auto cursorX = 0.0f;
-	auto cursorY = 0.0f;
-	auto lineOrder = static_cast<int32_t>(lines.size());
+	auto cursorX{0.0f};
+	auto cursorY{0.0f};
+	auto lineOrder{static_cast<int32_t>(lines.size())};
 
 	for (const auto &line : lines)
 	{
@@ -313,15 +313,15 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 
 void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices)
 {
-	auto vertexX = cursorX + character.m_offsetX;
-	auto vertexY = cursorY + character.m_offsetY;
-	auto vertexMaxX = vertexX + character.m_sizeX;
-	auto vertexMaxY = vertexY + character.m_sizeY;
+	auto vertexX{cursorX + character.m_offsetX};
+	auto vertexY{cursorY + character.m_offsetY};
+	auto vertexMaxX{vertexX + character.m_sizeX};
+	auto vertexMaxY{vertexY + character.m_sizeY};
 
-	auto textureX = character.m_textureCoordX;
-	auto textureY = character.m_textureCoordY;
-	auto textureMaxX = character.m_maxTextureCoordX;
-	auto textureMaxY = character.m_maxTextureCoordY;
+	auto textureX{character.m_textureCoordX};
+	auto textureY{character.m_textureCoordY};
+	auto textureMaxX{character.m_maxTextureCoordX};
+	auto textureMaxY{character.m_maxTextureCoordY};
 
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);

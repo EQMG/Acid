@@ -60,7 +60,7 @@ IpAddress IpAddress::GetLocalAddress()
 	IpAddress localAddress;
 
 	// Create the socket.
-	auto sock = socket(PF_INET, SOCK_DGRAM, 0);
+	auto sock{socket(PF_INET, SOCK_DGRAM, 0)};
 
 	if (sock == Socket::InvalidSocketHandle())
 	{
@@ -68,7 +68,7 @@ IpAddress IpAddress::GetLocalAddress()
 	}
 
 	// Connect the socket to localhost on any port.
-	auto address = Socket::CreateAddress(ntohl(INADDR_LOOPBACK), 9);
+	auto address{Socket::CreateAddress(ntohl(INADDR_LOOPBACK), 9)};
 
 	if (connect(sock, reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1)
 	{
@@ -104,7 +104,7 @@ IpAddress IpAddress::GetPublicAddress(const Time &timeout)
 
 	Http server{"www.sfml-dev.org"};
 	HttpRequest request{"/ip-provider.php", HttpRequest::Method::Get};
-	auto page = server.SendRequest(request, timeout);
+	auto page{server.SendRequest(request, timeout)};
 
 	if (page.GetStatus() == HttpResponse::Status::Ok)
 	{

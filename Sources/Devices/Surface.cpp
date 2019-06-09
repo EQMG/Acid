@@ -32,7 +32,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 		// check for the presence of VK_FORMAT_B8G8R8A8_UNORM
 		bool found_B8G8R8A8_UNORM = false;
 
-		for (auto &&surfaceFormat : surfaceFormats)
+		for (auto &surfaceFormat : surfaceFormats)
 		{
 			if (surfaceFormat.format == VK_FORMAT_B8G8R8A8_UNORM)
 			{

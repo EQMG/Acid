@@ -63,7 +63,7 @@ std::string Monitor::GetName() const
 std::vector<VideoMode> Monitor::GetVideoModes() const
 {
 	int32_t videoModeCount;
-	auto videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
+	auto videoModes{glfwGetVideoModes(m_monitor, &videoModeCount)};
 	std::vector<VideoMode> modes{static_cast<uint32_t>(videoModeCount)};
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++)
@@ -76,19 +76,19 @@ std::vector<VideoMode> Monitor::GetVideoModes() const
 
 VideoMode Monitor::GetVideoMode() const
 {
-	auto videoMode = glfwGetVideoMode(m_monitor);
+	auto videoMode{glfwGetVideoMode(m_monitor)};
 	return *reinterpret_cast<const VideoMode *>(videoMode);
 }
 
 GammaRamp Monitor::GetGammaRamp() const
 {
-	auto gamaRamp = glfwGetGammaRamp(m_monitor);
+	auto gamaRamp{glfwGetGammaRamp(m_monitor)};
 	return *reinterpret_cast<const GammaRamp *>(gamaRamp);
 }
 
 void Monitor::SetGammaRamp(const GammaRamp &gammaRamp) const
 {
-	auto ramp = reinterpret_cast<const GLFWgammaramp *>(&gammaRamp);
+	auto ramp{reinterpret_cast<const GLFWgammaramp *>(&gammaRamp)};
 	glfwSetGammaRamp(m_monitor, ramp);
 }
 }

@@ -20,7 +20,7 @@ FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelin
 void FilterDof::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 	m_pushScene.Push("nearPlane", camera->GetNearPlane());
 	m_pushScene.Push("farPlane", camera->GetFarPlane());
 	m_pushScene.Push("focusPoint", m_focusPoint);

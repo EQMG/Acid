@@ -9,13 +9,13 @@ SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<s
 	m_correction{correction}
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
-	auto headNode = m_armatureData->FindChild("node");
+	auto headNode{m_armatureData->FindChild("node")};
 	m_headJoint = LoadJointData(headNode, true);
 }
 
 std::unique_ptr<JointData> SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
 {
-	auto joint = ExtractMainJointData(jointNode, isRoot);
+	auto joint{ExtractMainJointData(jointNode, isRoot)};
 
 	for (const auto &childNode : jointNode->FindChildren("node"))
 	{
@@ -27,9 +27,9 @@ std::unique_ptr<JointData> SkeletonLoader::LoadJointData(const Metadata *jointNo
 
 std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
 {
-	auto nameId = *jointNode->FindAttribute("id");
-	auto index = GetBoneIndex(nameId);
-	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), " ");
+	auto nameId{*jointNode->FindAttribute("id")};
+	auto index{GetBoneIndex(nameId)};
+	auto matrixData{String::Split(jointNode->FindChild("matrix")->GetValue(), " ")};
 
 	assert(matrixData.size() == 16);
 

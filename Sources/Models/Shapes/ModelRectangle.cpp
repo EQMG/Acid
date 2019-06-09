@@ -7,14 +7,14 @@ namespace acid
 {
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelRectangle>(resource);
 	}
 
-	auto result = std::make_shared<ModelRectangle>(0.0f, 0.0f);
+	auto result{std::make_shared<ModelRectangle>(0.0f, 0.0f)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();

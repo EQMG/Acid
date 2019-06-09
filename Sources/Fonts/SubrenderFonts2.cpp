@@ -24,11 +24,11 @@ void SubrenderFonts2::Render(const CommandBuffer &commandBuffer)
 			continue;
 		}
 
-		auto object = dynamic_cast<Text *>(screenObject);
+		auto object{dynamic_cast<Text *>(screenObject)};
 
 		if (object != nullptr)
 		{
-			auto it = sorted.find(object->GetFontType());
+			auto it{sorted.find(object->GetFontType())};
 
 			if (it == sorted.end())
 			{

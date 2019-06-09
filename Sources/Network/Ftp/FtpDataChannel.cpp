@@ -13,17 +13,17 @@ FtpDataChannel::FtpDataChannel(Ftp &owner) :
 FtpResponse FtpDataChannel::Open(const Mode &mode)
 {
 	// Open a data connection in active mode (we connect to the server).
-	auto response = m_ftp.SendCommand("PASV");
+	auto response{m_ftp.SendCommand("PASV")};
 
 	if (response.IsOk())
 	{
 		// Extract the connection address and port from the response
-		auto begin = response.GetFullMessage().find_first_of("0123456789");
+		auto begin{response.GetFullMessage().find_first_of("0123456789")};
 
 		if (begin != std::string::npos)
 		{
 			uint8_t data[6]{ 0, 0, 0, 0, 0, 0 };
-			auto str = response.GetFullMessage().substr(begin);
+			auto str{response.GetFullMessage().substr(begin)};
 			std::size_t index = 0;
 
 			for (auto &i : data)

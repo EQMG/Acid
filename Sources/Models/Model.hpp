@@ -123,7 +123,7 @@ protected:
 
 		for (const auto &vertex : vertices)
 		{
-			auto position = Vector3f(vertex.m_position);
+			auto position{Vector3f(vertex.m_position)};
 			m_minExtents = m_minExtents.Min(position);
 			m_maxExtents = m_maxExtents.Max(position);
 		}

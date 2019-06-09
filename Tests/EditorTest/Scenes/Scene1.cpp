@@ -39,32 +39,32 @@ namespace test
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFps>()),
+	Scene{std::make_unique<CameraFps>()},
 	m_buttonSpawnSphere{std::make_unique<ButtonMouse>(MouseButton::Left)},
 	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
-	m_buttonSave(Key::K),
-	m_soundScreenshot("Sounds/Screenshot.ogg"),
-	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
+	m_buttonSave{Key::K},
+	m_soundScreenshot{"Sounds/Screenshot.ogg"},
+	m_uiStartLogo{&Uis::Get()->GetCanvas()},
+	m_overlayDebug{&Uis::Get()->GetCanvas()}
 {
 	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
-			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+			auto cameraPosition{Scenes::Get()->GetCamera()->GetPosition()};
+			auto cameraRotation{Scenes::Get()->GetCamera()->GetRotation()};
 
-			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
+			auto sphere{GetStructure()->CreateEntity({cameraPosition, {}, 1.0f})};
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 30, 30));
-			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
+			auto rigidbody{sphere->AddComponent<Rigidbody>(0.5f)};
+			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion{cameraRotation} * Vector3f::Front).Normalize(), 2s));
 			sphere->AddComponent<ColliderSphere>();
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
-			auto sphereLight = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 0.7f, 0.0f)));
+			auto sphereLight{GetStructure()->CreateEntity(Transform{{0.0f, 0.7f, 0.0f}})};
 			sphereLight->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 

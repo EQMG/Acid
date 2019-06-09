@@ -23,7 +23,7 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 
 void MaterialDefault::Start()
 {
-	auto mesh = GetParent()->GetComponent<Mesh>(true);
+	auto mesh{GetParent()->GetComponent<Mesh>(true)};
 
 	if (mesh == nullptr)
 	{
@@ -44,8 +44,8 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
 	if (m_animated)
 	{
-		auto meshAnimated = GetParent()->GetComponent<MeshAnimated>();
-		auto joints = meshAnimated->GetJointTransforms(); // TODO: Move into storage buffer and update every frame.
+		auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
+		auto joints{meshAnimated->GetJointTransforms()}; // TODO: Move into storage buffer and update every frame.
 		uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
 	}
 

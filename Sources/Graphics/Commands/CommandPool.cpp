@@ -7,8 +7,8 @@ namespace acid
 CommandPool::CommandPool(const std::thread::id &threadId) :
 	m_threadId{threadId}
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto graphicsFamily{logicalDevice->GetGraphicsFamily()};
 
 	VkCommandPoolCreateInfo commandPoolCreateInfo{};
 	commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -19,7 +19,7 @@ CommandPool::CommandPool(const std::thread::id &threadId) :
 
 CommandPool::~CommandPool()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);
 }

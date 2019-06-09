@@ -70,7 +70,7 @@ public:
 	template<typename T = float>
 	static T WrapDegrees(const T &degrees)
 	{
-		auto x = std::fmod(degrees, 360);
+		auto x{std::fmod(degrees, 360)};
 
 		if (x < 0)
 		{
@@ -89,7 +89,7 @@ public:
 	template<typename T = float>
 	static T WrapRadians(const T &radians)
 	{
-		auto x = std::fmod(radians, 2 * Pi<T>);
+		auto x{std::fmod(radians, 2 * Pi<T>)};
 
 		if (x < 0)
 		{
@@ -109,7 +109,7 @@ public:
 	template<typename T = float>
 	static T RoundToPlace(const T &value, const int32_t &place)
 	{
-		auto placeMul = std::pow(10, place);
+		auto placeMul{std::pow(10, place)};
 		return static_cast<T>(std::round(value * placeMul) / placeMul);
 	}
 
@@ -183,8 +183,8 @@ public:
 	template<typename T = float, typename K = float>
 	static auto CosLerp(const T &a, const T &b, const K &factor)
 	{
-		auto ft = factor * Pi<T>;
-		auto f = 1 - std::cos(ft) / 2;
+		auto ft{factor * Pi<T>};
+		auto f{1 - std::cos(ft) / 2};
 		return (a * (1 - f)) + (b * f);
 	}
 
@@ -200,7 +200,7 @@ public:
 	template<typename T = float, typename K = float>
 	static constexpr auto SmoothlyStep(const T &edge0, const T &edge1, const K &x)
 	{
-		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0, 1);
+		auto s{std::clamp((x - edge0) / (edge1 - edge0), 0, 1)};
 		return s * s * (3 - 2 * s);
 	}
 
@@ -216,9 +216,9 @@ public:
 	static auto CosFromSin(const T &sin, const K &angle)
 	{
 		// sin(x)^2 + cos(x)^2 = 1
-		auto cos = std::sqrt(1 - sin * sin);
-		auto a = angle + (Pi<T> / 2);
-		auto b = a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>);
+		auto cos{std::sqrt(1 - sin * sin)};
+		auto a{angle + (Pi<T> / 2)};
+		auto b{a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>)};
 
 		if (b < 0)
 		{

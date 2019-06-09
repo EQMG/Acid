@@ -26,7 +26,7 @@ void Keyboard::Update()
 
 InputAction Keyboard::GetKey(const Key &key) const
 {
-	auto state = glfwGetKey(Window::Get()->GetWindow(), static_cast<int32_t>(key));
+	auto state{glfwGetKey(Window::Get()->GetWindow(), static_cast<int32_t>(key))};
 	return static_cast<InputAction>(state);
 }
 

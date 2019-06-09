@@ -31,65 +31,65 @@ MainRenderer::MainRenderer()
 {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
-	std::vector<Attachment> renderpassAttachments0 = { 
-		Attachment(0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM) 
+	std::vector<Attachment> renderpassAttachments0{ 
+		{0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM}
 	};
-	std::vector<SubpassType> renderpassSubpasses0 = { 
-		SubpassType(0, { 0 }) 
+	std::vector<SubpassType> renderpassSubpasses0{ 
+		{0, {0}}
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport(Vector2ui(4096, 4096))));
 
-	std::vector<Attachment> renderpassAttachments1 = { 
-		Attachment(0, "depth", Attachment::Type::Depth, false),
-		Attachment(1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), // Attachment::Type::Swapchain
-		Attachment(2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
-		Attachment(4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT),
-		Attachment(5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM), 
-		Attachment(6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM) 
+	std::vector<Attachment> renderpassAttachments1{ 
+		{0, "depth", Attachment::Type::Depth, false},
+		{1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM}, // Attachment::Type::Swapchain
+		{2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT},
+		{3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM},
+		{4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT},
+		{5, "material", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM},
+		{6, "resolved", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM}
 	};
-	std::vector<SubpassType> renderpassSubpasses1 = { 
-		SubpassType(0, { 0, 2, 3, 4, 5 }), 
-		SubpassType(1, { 0, 6 }), 
-		SubpassType(2, { 0, 1 })
+	std::vector<SubpassType> renderpassSubpasses1{ 
+		{0, {0, 2, 3, 4, 5}},
+		{1, {0, 6}},
+		{2, {0, 1}}
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 
-	std::vector<Attachment> renderpassAttachments2 = { 
-		Attachment(0, "swapchainReal", Attachment::Type::Swapchain) 
+	std::vector<Attachment> renderpassAttachments2{ 
+		{0, "swapchainReal", Attachment::Type::Swapchain}
 	};
-	std::vector<SubpassType> renderpassSubpasses2 = { 
-		SubpassType(0, { 0 }) 
+	std::vector<SubpassType> renderpassSubpasses2{ 
+		{0, {0}}
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments2, renderpassSubpasses2));
 	Graphics::Get()->SetRenderStages(std::move(renderStages));
 
 	Graphics::Get()->ClearSubrenders();
-	//Graphics::Get()->AddSubrender<RenderShadows>(Pipeline::Stage(0, 0));
+	//Graphics::Get()->AddSubrender<RenderShadows>({0, 0});
 
-	Graphics::Get()->AddSubrender<SubrenderMeshes>(Pipeline::Stage(1, 0));
+	Graphics::Get()->AddSubrender<SubrenderMeshes>({1, 0});
 
-	Graphics::Get()->AddSubrender<SubrenderDeferred>(Pipeline::Stage(1, 1));
-	Graphics::Get()->AddSubrender<SubrenderParticles>(Pipeline::Stage(1, 1));
+	Graphics::Get()->AddSubrender<SubrenderDeferred>({1, 1});
+	Graphics::Get()->AddSubrender<SubrenderParticles>({1, 1});
 
-	//Graphics::Get()->AddSubrender<FilterFxaa>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterTone>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterSsao>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender()->AddRenderer<PipelineBlur>(Pipeline::Stage(1, 2), 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
-	//Graphics::Get()->AddSubrender<FilterDof>(Pipeline::Stage(1, 2), sceneBlur, 1.11f);
-	//Graphics::Get()->AddSubrender<FilterEmboss>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterCrt>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterLensflare>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterTiltshift>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterPixel>(Pipeline::Stage(1, 2), 8.0f);
-	//Graphics::Get()->AddSubrender<FilterVignette>(Pipeline::Stage(1, 2));
-	//Graphics::Get()->AddSubrender<FilterGrain>(Pipeline::Stage(1, 2));
-	Graphics::Get()->AddSubrender<FilterDefault>(Pipeline::Stage(1, 2), true);
-	//Graphics::Get()->AddSubrender<RenderGizmos>(Pipeline::Stage(1, 2));
+	//Graphics::Get()->AddSubrender<FilterFxaa>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterTone>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterSsao>({1, 2});
+	//Graphics::Get()->AddRenderer<PipelineBlur>({1, 2}, 1.8f, PipelineBlur::Type::_5, false, 0.6f, 1.0f);
+	//Graphics::Get()->AddSubrender<FilterDof>({1, 2}, sceneBlur, 1.11f);
+	//Graphics::Get()->AddSubrender<FilterEmboss>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterCrt>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterLensflare>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterTiltshift>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterPixel>({1, 2}, 8.0f);
+	//Graphics::Get()->AddSubrender<FilterVignette>({1, 2});
+	//Graphics::Get()->AddSubrender<FilterGrain>({1, 2});
+	Graphics::Get()->AddSubrender<FilterDefault>({1, 2}, true);
+	//Graphics::Get()->AddSubrender<RenderGizmos>({1, 2});
 
-	Graphics::Get()->AddSubrender<FilterBlit>(Pipeline::Stage(2, 0));
-	Graphics::Get()->AddSubrender<SubrenderGuis>(Pipeline::Stage(2, 0));
-	Graphics::Get()->AddSubrender<SubrenderFonts>(Pipeline::Stage(2, 0));
+	Graphics::Get()->AddSubrender<FilterBlit>({2, 0});
+	Graphics::Get()->AddSubrender<SubrenderGuis>({2, 0});
+	Graphics::Get()->AddSubrender<SubrenderFonts>({2, 0});
 }
 
 void MainRenderer::Update()

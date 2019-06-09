@@ -195,7 +195,7 @@ public:
 
 		std::optional<Uniform> GetUniform(const std::string &name) const
 		{
-			auto it = m_uniforms.find(name);
+			auto it{m_uniforms.find(name)};
 
 			if (it == m_uniforms.end())
 			{

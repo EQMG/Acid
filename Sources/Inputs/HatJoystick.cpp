@@ -34,7 +34,7 @@ HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMas
 
 float HatJoystick::GetAmount() const
 {
-	auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
+	auto hat{Joysticks::Get()->GetHat(m_port, m_hat)};
 
 	if (hat & JoystickHat::Up)
 	{

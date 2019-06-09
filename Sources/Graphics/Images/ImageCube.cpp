@@ -9,14 +9,14 @@ namespace acid
 {
 std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ImageCube>(resource);
 	}
 
-	auto result = std::make_shared<ImageCube>("");
+	auto result{std::make_shared<ImageCube>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -70,7 +70,7 @@ ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels,
 
 ImageCube::~ImageCube()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
@@ -113,11 +113,11 @@ void ImageCube::Load()
 	if (!m_filename.empty() && m_loadPixels == nullptr)
 	{
 #if defined(ACID_VERBOSE)
-		auto debugStart = Time::Now();
+		auto debugStart{Time::Now()};
 #endif
 		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
-		auto debugEnd = Time::Now();
+		auto debugEnd{Time::Now()};
 		Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
@@ -170,7 +170,7 @@ void ImageCube::Load()
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	extent = m_extent >> mipLevel;
 
@@ -186,7 +186,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	auto result{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -206,7 +206,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 	for (uint32_t i = 0; i < 6; i++)
 	{
-		auto resultSide = GetPixels(extent, mipLevel, i);
+		auto resultSide{GetPixels(extent, mipLevel, i)};
 		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
 		if (pixels == nullptr)
@@ -244,8 +244,8 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 
 	for (const auto &side : fileSides)
 	{
-		auto filenameSide = std::string(filename).append("/").append(side).append(fileSuffix);
-		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
+		auto filenameSide{std::string(filename).append("/").append(side).append(fileSuffix)};
+		auto resultSide{Image::LoadPixels(filenameSide, extent, components, format)};
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
 		if (result == nullptr)

@@ -48,7 +48,7 @@ Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &addres
 	}
 
 	// Bind the socket to the specified port.
-	auto addr = CreateAddress(address.ToInteger(), port);
+	auto addr{CreateAddress(address.ToInteger(), port)};
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{

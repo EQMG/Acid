@@ -7,13 +7,6 @@
 namespace acid
 {
 template<typename T>
-constexpr Vector2<T>::Vector2():
-	m_x{0},
-	m_y{0}
-{
-}
-
-template<typename T>
 constexpr Vector2<T>::Vector2(const T &a):
 	m_x{a},
 	m_y{a}
@@ -83,7 +76,7 @@ template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Angle(const Vector2<K> &other) const
 {
-	auto dls = Dot(other) / (Length() * other.Length());
+	auto dls{Dot(other) / (Length() * other.Length())};
 
 	if (dls < -1)
 	{
@@ -108,8 +101,8 @@ template<typename T>
 template<typename K, typename J>
 constexpr auto Vector2<T>::Lerp(const Vector2<K> &other, const J &progression) const
 {
-	auto ta = *this * (1 - progression);
-	auto tb = other * progression;
+	auto ta{*this * (1 - progression)};
+	auto tb{other * progression};
 	return ta + tb;
 }
 
@@ -131,15 +124,15 @@ template<typename T>
 template<typename K, typename J>
 auto Vector2<T>::Rotate(const K &angle, const Vector2<J> &rotationAxis) const
 {
-	auto x = ((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x);
-	auto y = ((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y);
+	auto x{((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x)};
+	auto y{((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y)};
 	return Vector2<decltype(x)>(x, y);
 }
 
 template<typename T>
 auto Vector2<T>::Normalize() const
 {
-	auto l = Length();
+	auto l{Length()};
 
 	if (l == 0)
 	{
@@ -203,8 +196,8 @@ template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::DistanceSquared(const Vector2<K> &other) const
 {
-	auto dx = m_x - other.m_x;
-	auto dy = m_y - other.m_y;
+	auto dx{m_x - other.m_x};
+	auto dy{m_y - other.m_y};
 	return dx * dx + dy * dy;
 }
 
@@ -242,16 +235,16 @@ constexpr auto Vector2<T>::SmoothDamp(const Vector2<K> &target, const Vector2<J>
 template<typename T>
 auto Vector2<T>::CartesianToPolar() const
 {
-	auto radius = std::sqrt(m_x * m_x + m_y * m_y);
-	auto theta = std::atan2(m_y, m_x);
+	auto radius{std::sqrt(m_x * m_x + m_y * m_y)};
+	auto theta{std::atan2(m_y, m_x)};
 	return Vector2<decltype(radius)>(radius, theta);
 }
 
 template<typename T>
 auto Vector2<T>::PolarToCartesian() const
 {
-	auto x = m_x * std::cos(m_y);
-	auto y = m_x * std::sin(m_y);
+	auto x{m_x * std::cos(m_y)};
+	auto y{m_x * std::sin(m_y)};
 	return Vector2<decltype(x)>(x, y);
 }
 

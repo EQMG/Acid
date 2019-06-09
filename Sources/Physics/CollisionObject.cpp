@@ -29,7 +29,7 @@ Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force)
 
 void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)
 {
-	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+	auto compoundShape{dynamic_cast<btCompoundShape *>(m_shape.get())};
 
 	if (compoundShape == nullptr)
 	{
@@ -50,7 +50,7 @@ void CollisionObject::SetChildTransform(Collider *child, const Transform &transf
 
 void CollisionObject::AddChild(Collider *child)
 {
-	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+	auto compoundShape{dynamic_cast<btCompoundShape *>(m_shape.get())};
 
 	if (compoundShape == nullptr)
 	{
@@ -63,7 +63,7 @@ void CollisionObject::AddChild(Collider *child)
 
 void CollisionObject::RemoveChild(Collider *child)
 {
-	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
+	auto compoundShape{dynamic_cast<btCompoundShape *>(m_shape.get())};
 
 	if (compoundShape == nullptr)
 	{
@@ -99,7 +99,7 @@ void CollisionObject::SetFrictionSpinning(const float &frictionSpinning)
 
 void CollisionObject::CreateShape(const bool &forceSingle)
 {
-	auto colliders = GetParent()->GetComponents<Collider>();
+	auto colliders{GetParent()->GetComponents<Collider>()};
 
 	if (forceSingle) // && colliders.size() == 1
 	{
@@ -117,7 +117,7 @@ void CollisionObject::CreateShape(const bool &forceSingle)
 		m_shape.release();
 	}
 
-	auto compoundShape = new btCompoundShape{};
+	auto compoundShape{new btCompoundShape{}};
 
 	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 	{

@@ -8,7 +8,7 @@ namespace acid
 template<typename T>
 T Metadata::GetChild(const std::string &name) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -23,7 +23,7 @@ T Metadata::GetChild(const std::string &name) const
 template<typename T>
 T Metadata::GetChildDefault(const std::string &name, const T &value)
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -39,7 +39,7 @@ T Metadata::GetChildDefault(const std::string &name, const T &value)
 template<typename T>
 void Metadata::GetChild(const std::string &name, T &dest) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -52,7 +52,7 @@ void Metadata::GetChild(const std::string &name, T &dest) const
 template<typename T>
 void Metadata::SetChild(const std::string &name, const T &value)
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -65,7 +65,7 @@ void Metadata::SetChild(const std::string &name, const T &value)
 template<typename T>
 std::shared_ptr<T> Metadata::GetResource(const std::string &name) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -78,7 +78,7 @@ std::shared_ptr<T> Metadata::GetResource(const std::string &name) const
 template<typename T>
 void Metadata::GetResource(const std::string &name, std::shared_ptr<T> &dest) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -92,7 +92,7 @@ void Metadata::GetResource(const std::string &name, std::shared_ptr<T> &dest) co
 template<typename T>
 void Metadata::SetResource(const std::string &name, const std::shared_ptr<T> &value)
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -268,7 +268,7 @@ Metadata &operator<<(Metadata &metadata, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
-		auto child = metadata.AddChild(std::make_unique<Metadata>());
+		auto child{metadata.AddChild(std::make_unique<Metadata>())};
 		*child << x;
 	}
 
@@ -295,7 +295,7 @@ Metadata &operator<<(Metadata &metadata, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{
-		auto child = metadata.AddChild(std::make_unique<Metadata>());
+		auto child{metadata.AddChild(std::make_unique<Metadata>())};
 		*child << x;
 	}
 

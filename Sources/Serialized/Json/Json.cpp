@@ -19,7 +19,7 @@ void Json::Load(std::istream *inStream)
 	ClearChildren();
 	ClearAttributes();
 
-	auto topSection = std::make_unique<Section>(nullptr, "", "");
+	auto topSection{std::make_unique<Section>(nullptr, "", "")};
 	Section *currentSection = nullptr;
 	std::stringstream summation;
 
@@ -45,7 +45,7 @@ void Json::Load(std::istream *inStream)
 
 				if (!summation.str().empty())
 				{
-					auto contentSplit = String::Split(summation.str(), "\"");
+					auto contentSplit{String::Split(summation.str(), "\"")};
 
 					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
 					{
@@ -56,7 +56,7 @@ void Json::Load(std::istream *inStream)
 				currentSection->m_content += summation.str();
 				summation.str({});
 
-				auto section = new Section(currentSection, name, "");
+				auto section{new Section(currentSection, name, "")};
 				currentSection->m_children.emplace_back(section);
 				currentSection = section;
 			}
@@ -92,7 +92,7 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()));
+		auto created{destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()))};
 		AddChildren(child.get(), created);
 	}
 
@@ -104,19 +104,19 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 
 void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 {
-	auto thisValue = parent;
+	auto thisValue{parent};
 
 	if (!isTopSection)
 	{
 		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
 	}
 
-	auto contentSplit = String::Split(source->m_content, ",", true);
+	auto contentSplit{String::Split(source->m_content, ",", true)};
 
 	for (const auto &data : contentSplit)
 	{
 		std::string name;
-		auto value = data;
+		auto value{data};
 
 		if (String::Contains(data, ":"))
 		{
@@ -163,8 +163,8 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 		indents << "  ";
 	}
 
-	auto openBrace = '{';
-	auto closeBrace = '}';
+	auto openBrace{'{'};
+	auto closeBrace{'}'};
 
 	for (const auto &child : source->GetChildren())
 	{

@@ -7,11 +7,11 @@ namespace acid
 Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data) :
 	m_size{size}
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
-	auto presentFamily = logicalDevice->GetPresentFamily();
-	auto computeFamily = logicalDevice->GetComputeFamily();
+	auto graphicsFamily{logicalDevice->GetGraphicsFamily()};
+	auto presentFamily{logicalDevice->GetPresentFamily()};
+	auto computeFamily{logicalDevice->GetComputeFamily()};
 
 	std::array queueFamily{ graphicsFamily, presentFamily, computeFamily };
 
@@ -62,7 +62,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 
 Buffer::~Buffer()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
 	vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
@@ -70,20 +70,20 @@ Buffer::~Buffer()
 
 void Buffer::MapMemory(void **data)
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	Graphics::CheckVk(vkMapMemory(*logicalDevice, GetBufferMemory(), 0, m_size, 0, data));
 }
 
 void Buffer::UnmapMemory()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	vkUnmapMemory(*logicalDevice, GetBufferMemory());
 }
 
 uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 {
-	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto memoryProperties = physicalDevice->GetMemoryProperties();
+	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
+	auto memoryProperties{physicalDevice->GetMemoryProperties()};
 
 	for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
 	{

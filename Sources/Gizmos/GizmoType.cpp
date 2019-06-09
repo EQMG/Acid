@@ -12,14 +12,14 @@ static const uint32_t MAX_INSTANCES{512};
 
 std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<GizmoType>(resource);
 	}
 
-	auto result = std::make_shared<GizmoType>(nullptr);
+	auto result{std::make_shared<GizmoType>(nullptr)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -70,7 +70,7 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 		//continue;
 		//}
 
-		auto instance = &instances[m_instances];
+		auto instance{&instances[m_instances]};
 		instance->m_modelMatrix = gizmo->m_transform.GetWorldMatrix();
 		instance->m_colour = gizmo->m_colour;
 		m_instances++;

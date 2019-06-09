@@ -43,7 +43,7 @@ SocketSelector::SocketSelector(const SocketSelector &copy) :
 
 void SocketSelector::Add(Socket &socket)
 {
-	auto handle = socket.GetHandle();
+	auto handle{socket.GetHandle()};
 
 	if (handle != Socket::InvalidSocketHandle())
 	{
@@ -77,7 +77,7 @@ void SocketSelector::Add(Socket &socket)
 
 void SocketSelector::Remove(Socket &socket)
 {
-	auto handle = socket.GetHandle();
+	auto handle{socket.GetHandle()};
 
 	if (handle != Socket::InvalidSocketHandle())
 	{
@@ -122,14 +122,14 @@ bool SocketSelector::Wait(const Time timeout)
 
 	// Wait until one of the sockets is ready for reading, or timeout is reached
 	// The first parameter is ignored on Windows
-	auto count = select(m_impl->maxSocket + 1, &m_impl->socketsReady, nullptr, nullptr, timeout != 0s ? &time : nullptr);
+	auto count{select(m_impl->maxSocket + 1, &m_impl->socketsReady, nullptr, nullptr, timeout != 0s ? &time : nullptr)};
 
 	return count > 0;
 }
 
 bool SocketSelector::IsReady(const Socket &socket) const
 {
-	auto handle = socket.GetHandle();
+	auto handle{socket.GetHandle()};
 
 	if (handle != Socket::InvalidSocketHandle())
 	{

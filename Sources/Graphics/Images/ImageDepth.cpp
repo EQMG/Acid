@@ -12,7 +12,7 @@ ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &sam
 	m_extent{extent},
 	m_format{VK_FORMAT_UNDEFINED}
 {
-	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
 
 	for (const auto &format : TRY_FORMATS)
 	{
@@ -47,7 +47,7 @@ ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &sam
 
 ImageDepth::~ImageDepth()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);

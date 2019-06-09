@@ -25,7 +25,7 @@ public:
 	 */
 	bool WasDown()
 	{
-		auto stillDown = m_wasDown && IsDown();
+		auto stillDown{m_wasDown && IsDown()};
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}

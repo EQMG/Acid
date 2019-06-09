@@ -10,11 +10,11 @@ namespace acid
 Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
 	const VkSampleCountFlagBits &samples)
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
+		auto attachmentSamples{attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT};
 
 		switch (attachment.GetType())
 		{
@@ -67,7 +67,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 Framebuffers::~Framebuffers()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	for (const auto &framebuffer : m_framebuffers)
 	{

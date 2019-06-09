@@ -12,7 +12,7 @@ PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<s
 
 const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const Descriptor *descriptor) const
 {
-	auto it = m_attachments.find(descriptorName);
+	auto it{m_attachments.find(descriptorName)};
 
 	if (it == m_attachments.end())
 	{
@@ -24,7 +24,7 @@ const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, c
 
 const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const
 {
-	auto it = m_attachments.find(descriptorName);
+	auto it{m_attachments.find(descriptorName)};
 
 	if (it == m_attachments.end())
 	{
@@ -36,7 +36,7 @@ const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, c
 
 void PostFilter::SetAttachment(const std::string &descriptorName, const Descriptor *descriptor)
 {
-	auto it = m_attachments.find(descriptorName);
+	auto it{m_attachments.find(descriptorName)};
 
 	if (it == m_attachments.end())
 	{
@@ -49,7 +49,7 @@ void PostFilter::SetAttachment(const std::string &descriptorName, const Descript
 
 bool PostFilter::RemoveAttachment(const std::string &name)
 {
-	auto it = m_attachments.find(name);
+	auto it{m_attachments.find(name)};
 
 	if (it != m_attachments.end())
 	{
@@ -64,8 +64,8 @@ void PostFilter::PushConditional(const std::string &descriptorName1, const std::
 	const std::string &rendererAttachment2)
 {
 	// TODO: Clean up this state machine mess...
-	auto it1 = m_attachments.find(descriptorName1);
-	auto it2 = m_attachments.find(descriptorName1);
+	auto it1{m_attachments.find(descriptorName1)};
+	auto it2{m_attachments.find(descriptorName1)};
 
 	if (it1 != m_attachments.end() || it2 != m_attachments.end())
 	{

@@ -73,21 +73,21 @@ void UiScrollBar::SetSize(const Vector2f &size)
 
 float UiScrollBar::ScrollByDelta(const float &delta)
 {
-	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
-	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];
-	auto maxValue = (barLength - puckLength) / barLength;
-	auto value = m_scroll.GetScreenTransform().m_position[m_index];
+	auto puckLength{m_scroll.GetScreenTransform().m_size[m_index]};
+	auto barLength{GetParent()->GetScreenTransform().m_size[m_index]};
+	auto maxValue{(barLength - puckLength) / barLength};
+	auto value{m_scroll.GetScreenTransform().m_position[m_index]};
 	value += delta;
 	return std::clamp(value, 0.0f, maxValue);
 }
 
 float UiScrollBar::ScrollByPosition(const float &position)
 {
-	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
-	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];
-	auto maxValue = (barLength - puckLength) / barLength;
-	auto positionLength = GetParent()->GetScreenTransform().m_position[m_index];
-	auto cursorLength = (position - positionLength) - (puckLength / 2.0f);
+	auto puckLength{m_scroll.GetScreenTransform().m_size[m_index]};
+	auto barLength{GetParent()->GetScreenTransform().m_size[m_index]};
+	auto maxValue{(barLength - puckLength) / barLength};
+	auto positionLength{GetParent()->GetScreenTransform().m_position[m_index]};
+	auto cursorLength{(position - positionLength) - (puckLength / 2.0f)};
 	return std::clamp(cursorLength / barLength, 0.0f, maxValue);
 }
 }

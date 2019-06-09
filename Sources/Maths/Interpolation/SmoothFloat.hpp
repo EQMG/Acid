@@ -30,8 +30,8 @@ public:
 	 **/
 	void Update(const Time &delta)
 	{
-		auto offset = m_target - m_actual;
-		auto change = offset * delta.AsSeconds() * m_agility;
+		auto offset{m_target - m_actual};
+		auto change{offset * delta.AsSeconds() * m_agility};
 		m_actual += change;
 	}
 

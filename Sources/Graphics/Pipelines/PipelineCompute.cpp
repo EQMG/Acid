@@ -13,7 +13,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_COMPUTE}
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
 	CreateShaderProgram();
@@ -23,7 +23,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 	CreatePipelineCompute();
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
+	auto debugEnd{Time::Now()};
 	//Log::Out("%s", m_shader->ToString());
 	Log::Out("Pipeline compute '%s' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
@@ -31,7 +31,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 
 PipelineCompute::~PipelineCompute()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyShaderModule(*logicalDevice, m_shaderModule, nullptr);
 
@@ -43,8 +43,8 @@ PipelineCompute::~PipelineCompute()
 
 void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const
 {
-	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_x) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
-	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_y) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
+	auto groupCountX{static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_x) / static_cast<float>(*m_shader->GetLocalSizes()[0])))};
+	auto groupCountY{static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_y) / static_cast<float>(*m_shader->GetLocalSizes()[1])))};
 	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
 }
 
@@ -57,7 +57,7 @@ void PipelineCompute::CreateShaderProgram()
 		defineBlock << "#define " << define.first << " " << define.second << "\n";
 	}
 
-	auto fileLoaded = Files::Read(m_shaderStage);
+	auto fileLoaded{Files::Read(m_shaderStage)};
 
 	if (!fileLoaded)
 	{
@@ -65,7 +65,7 @@ void PipelineCompute::CreateShaderProgram()
 		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
 	}
 
-	auto stageFlag = Shader::GetShaderStage(m_shaderStage);
+	auto stageFlag{Shader::GetShaderStage(m_shaderStage)};
 	m_shaderModule = m_shader->CreateShaderModule(m_shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
 	m_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -78,9 +78,9 @@ void PipelineCompute::CreateShaderProgram()
 
 void PipelineCompute::CreateDescriptorLayout()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
+	auto descriptorSetLayouts{m_shader->GetDescriptorSetLayouts()};
 
 	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo{};
 	descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -92,9 +92,9 @@ void PipelineCompute::CreateDescriptorLayout()
 
 void PipelineCompute::CreateDescriptorPool()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto descriptorPools = m_shader->GetDescriptorPools();
+	auto descriptorPools{m_shader->GetDescriptorPools()};
 
 	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
@@ -107,9 +107,9 @@ void PipelineCompute::CreateDescriptorPool()
 
 void PipelineCompute::CreatePipelineLayout()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto pushConstantRanges = m_shader->GetPushConstantRanges();
+	auto pushConstantRanges{m_shader->GetPushConstantRanges()};
 
 	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -122,8 +122,8 @@ void PipelineCompute::CreatePipelineLayout()
 
 void PipelineCompute::CreatePipelineCompute()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	auto pipelineCache = Graphics::Get()->GetPipelineCache();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto pipelineCache{Graphics::Get()->GetPipelineCache()};
 
 	VkComputePipelineCreateInfo pipelineCreateInfo{};
 	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;

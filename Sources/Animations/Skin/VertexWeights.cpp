@@ -23,7 +23,7 @@ void VertexWeights::LimitJointNumber(const uint32_t &max)
 	if (m_jointIds.size() > max)
 	{
 		std::vector<float> topWeights(max);
-		auto total = SaveTopWeights(topWeights);
+		auto total{SaveTopWeights(topWeights)};
 		RefillWeightList(topWeights, total);
 		RemoveExcessJointIds(max);
 	}
@@ -44,7 +44,7 @@ void VertexWeights::FillEmptyWeights(const uint32_t &max)
 
 float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray)
 {
-	float total = 0.0f;
+	float total{};
 
 	for (uint32_t i = 0; i < topWeightsArray.size(); i++)
 	{

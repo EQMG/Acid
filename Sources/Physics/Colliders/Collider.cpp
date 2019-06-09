@@ -34,7 +34,7 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 {
 	m_localTransform = localTransform;
 
-	auto collisionObject = GetParent()->GetComponent<CollisionObject>();
+	auto collisionObject{GetParent()->GetComponent<CollisionObject>()};
 
 	if (collisionObject != nullptr)
 	{
@@ -76,7 +76,7 @@ btTransform Collider::Convert(const Transform &transform)
 
 Transform Collider::Convert(const btTransform &transform, const Vector3f &scaling)
 {
-	auto position = transform.getOrigin();
+	auto position{transform.getOrigin()};
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
 	return Transform{Convert(position), Vector3f{pitch, yaw, roll}, scaling};

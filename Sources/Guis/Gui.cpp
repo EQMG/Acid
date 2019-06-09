@@ -54,7 +54,7 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 		return false;
 	}
 
-	auto scissor = GetScissor();
+	auto scissor{GetScissor()};
 	VkRect2D scissorRect{};
 	scissorRect.offset.x = scissor ? scissor->m_x : 0;
 	scissorRect.offset.y = scissor ? scissor->m_y : 0;

@@ -18,14 +18,14 @@ Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &l
 
 Rigidbody::~Rigidbody()
 {
-	auto body = btRigidBody::upcast(m_body);
+	auto body{btRigidBody::upcast(m_body)};
 
 	if (body != nullptr && body->getMotionState() != nullptr)
 	{
 		delete body->getMotionState();
 	}
 
-	auto physics = Scenes::Get()->GetPhysics();
+	auto physics{Scenes::Get()->GetPhysics()};
 
 	if (physics != nullptr)
 	{
@@ -51,10 +51,10 @@ void Rigidbody::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
+	auto worldTransform{Collider::Convert(GetParent()->GetWorldTransform())};
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-	auto motionState = new btDefaultMotionState{worldTransform};
+	auto motionState{new btDefaultMotionState{worldTransform}};
 	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
 
 	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
@@ -81,7 +81,7 @@ void Rigidbody::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
-	for (auto it = m_forces.begin(); it != m_forces.end();)
+	for (auto it{m_forces.begin()}; it != m_forces.end();)
 	{
 		(*it)->Update();
 		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
@@ -95,7 +95,7 @@ void Rigidbody::Update()
 		++it;
 	}
 
-	auto &transform = GetParent()->GetLocalTransform();
+	auto &transform{GetParent()->GetLocalTransform()};
 	btTransform motionTransform;
 	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
 	transform = Collider::Convert(motionTransform, transform.GetScaling());
@@ -193,7 +193,7 @@ void Rigidbody::RecalculateMass()
 
 	btVector3 localInertia;
 
-	auto shape = GetParent()->GetComponent<Collider>();
+	auto shape{GetParent()->GetComponent<Collider>()};
 
 	if (shape != nullptr && isDynamic)
 	{

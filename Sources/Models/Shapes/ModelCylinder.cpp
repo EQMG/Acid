@@ -8,14 +8,14 @@ namespace acid
 {
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelCylinder>(resource);
 	}
 
-	auto result = std::make_shared<ModelCylinder>(0.0f, 0.0f);
+	auto result{std::make_shared<ModelCylinder>(0.0f, 0.0f)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -56,15 +56,15 @@ void ModelCylinder::Load()
 
 	for (uint32_t i = 0; i < m_slices + 1; i++)
 	{
-		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
-		auto alpha = (i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi<float>;
-		auto xDir = std::cos(alpha);
-		auto zDir = std::sin(alpha);
+		auto iDivSlices{static_cast<float>(i) / static_cast<float>(m_slices)};
+		auto alpha{(i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi<float>};
+		auto xDir{std::cos(alpha)};
+		auto zDir{std::sin(alpha)};
 
 		for (uint32_t j = 0; j < m_stacks + 1; j++)
 		{
-			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
-			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
+			auto jDivStacks{static_cast<float>(j) / static_cast<float>(m_stacks)};
+			auto radius{m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks};
 
 			Vector3f position{xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius};
 			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivStacks};
@@ -77,8 +77,8 @@ void ModelCylinder::Load()
 	{
 		for (uint32_t j = 0; j < m_stacks; j++)
 		{
-			auto first = j + ((m_stacks + 1) * i);
-			auto second = j + ((m_stacks + 1) * (i + 1));
+			auto first{j + ((m_stacks + 1) * i)};
+			auto second{j + ((m_stacks + 1) * (i + 1))};
 
 			indices.emplace_back(first + 1);
 			indices.emplace_back(second + 1);

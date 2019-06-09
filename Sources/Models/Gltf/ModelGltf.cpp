@@ -14,14 +14,14 @@ namespace acid
 {
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelGltf>(resource);
 	}
 
-	auto result = std::make_shared<ModelGltf>("");
+	auto result{std::make_shared<ModelGltf>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -53,11 +53,11 @@ void ModelGltf::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto folder = FileSystem::ParentDirectory(m_filename);
-	auto fileLoaded = Files::Read(m_filename);
+	auto folder{FileSystem::ParentDirectory(m_filename)};
+	auto fileLoaded{Files::Read(m_filename)};
 
 	if (!fileLoaded)
 	{
@@ -124,10 +124,10 @@ void ModelGltf::Load()
 		}
 	}
 
-	auto extensions = gltfModel.extensionsUsed;*/
+	auto extensions{gltfModel.extensionsUsed};*/
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
+	auto debugEnd{Time::Now()};
 	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 

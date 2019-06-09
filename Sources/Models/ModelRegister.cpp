@@ -33,9 +33,9 @@ void ModelRegister::Remove(const std::string &name)
 
 std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 {
-	auto typeName = metadata.GetChild<std::string>("Type");
+	auto typeName{metadata.GetChild<std::string>("Type")};
 
-	auto it = m_modelMetadatas.find(typeName);
+	auto it{m_modelMetadatas.find(typeName)};
 
 	if (it == m_modelMetadatas.end())
 	{
@@ -48,8 +48,8 @@ std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 
 std::shared_ptr<Model> ModelRegister::Create(const std::string &filename) const
 {
-	auto fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
-	auto it = m_modelExtensions.find(fileExt);
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(filename))};
+	auto it{m_modelExtensions.find(fileExt)};
 
 	if (it == m_modelExtensions.end())
 	{

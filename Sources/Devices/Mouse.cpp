@@ -57,7 +57,7 @@ Mouse::~Mouse()
 
 void Mouse::Update()
 {
-	auto delta = Engine::Get()->GetDelta().AsSeconds();
+	auto delta{Engine::Get()->GetDelta().AsSeconds()};
 
 	// Updates the mouses delta.
 	m_mouseDelta = delta * (m_lastMousePosition - m_mousePosition);
@@ -80,7 +80,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	Vector2ui extent;
 	uint32_t components;
 	VkFormat format;
-	auto data = Image::LoadPixels(filename, extent, components, format);
+	auto data{Image::LoadPixels(filename, extent, components, format)};
 
 	if (data == nullptr)
 	{
@@ -146,7 +146,7 @@ void Mouse::SetClipboard(const std::string &string) const
 
 InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 {
-	auto state = glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton));
+	auto state{glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton))};
 	return static_cast<InputAction>(state);
 }
 

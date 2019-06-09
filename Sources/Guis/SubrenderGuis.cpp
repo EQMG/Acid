@@ -23,7 +23,7 @@ void SubrenderGuis::Render(const CommandBuffer &commandBuffer)
 			continue;
 		}
 
-		auto object = dynamic_cast<Gui *>(screenObject);
+		auto object{dynamic_cast<Gui *>(screenObject)};
 
 		if (object != nullptr)
 		{

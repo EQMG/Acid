@@ -55,7 +55,7 @@ public:
 
 		for (const auto &component : m_components)
 		{
-			auto casted = dynamic_cast<T *>(component.get());
+			auto casted{dynamic_cast<T *>(component.get())};
 
 			if (casted != nullptr)
 			{
@@ -85,7 +85,7 @@ public:
 
 		for (const auto &component : m_components)
 		{
-			auto casted = dynamic_cast<T *>(component.get());
+			auto casted{dynamic_cast<T *>(component.get())};
 
 			if (casted != nullptr)
 			{
@@ -119,7 +119,7 @@ public:
 	template<typename T, typename... Args>
 	T *AddComponent(Args &&... args)
 	{
-		auto created = new T(std::forward<Args>(args)...);
+		auto created{new T(std::forward<Args>(args)...)};
 		AddComponent(created);
 		return created;
 	}
@@ -143,9 +143,9 @@ public:
 	template<typename T>
 	void RemoveComponent()
 	{
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		for (auto it{m_components.begin()}; it != m_components.end(); ++it)
 		{
-			auto casted = dynamic_cast<T *>((*it).get());
+			auto casted{dynamic_cast<T *>((*it).get())};
 
 			if (casted != nullptr)
 			{

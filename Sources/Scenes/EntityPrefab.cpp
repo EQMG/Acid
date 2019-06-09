@@ -13,14 +13,14 @@ namespace acid
 {
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<EntityPrefab>(resource);
 	}
 
-	auto result = std::make_shared<EntityPrefab>("");
+	auto result{std::make_shared<EntityPrefab>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -51,7 +51,7 @@ void EntityPrefab::Load()
 		return;
 	}
 
-	auto fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
 
 	if (fileExt == ".json")
 	{
@@ -86,7 +86,7 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 			continue;
 		}
 
-		auto component = Scenes::Get()->GetComponentRegister().Create(child->GetName());
+		auto component{Scenes::Get()->GetComponentRegister().Create(child->GetName())};
 
 		if (component == nullptr)
 		{
@@ -106,14 +106,14 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 
 	for (const auto &component : entity.GetComponents())
 	{
-		auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+		auto componentName{Scenes::Get()->GetComponentRegister().FindName(component.get())};
 
 		if (!componentName)
 		{
 			continue;
 		}
 
-		auto child = entityPrefab.m_file->GetMetadata()->AddChild(std::make_unique<Metadata>(*componentName));
+		auto child{entityPrefab.m_file->GetMetadata()->AddChild(std::make_unique<Metadata>(*componentName))};
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 	}
 

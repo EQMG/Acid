@@ -179,7 +179,7 @@ void Socket::Create()
 	// Don't create the socket if it already exists.
 	if (m_socket == InvalidSocketHandle())
 	{
-		auto handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
+		auto handle{socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0)};
 
 		if (handle == InvalidSocketHandle())
 		{

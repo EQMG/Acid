@@ -7,15 +7,6 @@
 namespace acid
 {
 template<typename T>
-constexpr Vector4<T>::Vector4():
-	m_x{0},
-	m_y{0},
-	m_z{0},
-	m_w{1}
-{
-}
-
-template<typename T>
 constexpr Vector4<T>::Vector4(const T &a):
 	m_x{a},
 	m_y{a},
@@ -105,7 +96,7 @@ template<typename T>
 template<typename K>
 auto Vector4<T>::Angle(const Vector4<K> &other) const
 {
-	auto dls = Dot(other) / (Length() * other.Length());
+	auto dls{Dot(other) / (Length() * other.Length())};
 
 	if (dls < -1)
 	{
@@ -130,8 +121,8 @@ template<typename T>
 template<typename K, typename J>
 constexpr auto Vector4<T>::Lerp(const Vector4<K> &other, const J &progression) const
 {
-	auto ta = *this * (1 - progression);
-	auto tb = other * progression;
+	auto ta{*this * (1 - progression)};
+	auto tb{other * progression};
 	return ta + tb;
 }
 
@@ -145,7 +136,7 @@ constexpr auto Vector4<T>::Scale(const K &scalar) const
 template<typename T>
 auto Vector4<T>::Normalize() const
 {
-	auto l = Length();
+	auto l{Length()};
 
 	if (l == 0)
 	{
@@ -209,10 +200,10 @@ template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::DistanceSquared(const Vector4<K> &other) const
 {
-	auto dx = m_x - other.m_x;
-	auto dy = m_y - other.m_y;
-	auto dz = m_z - other.m_z;
-	auto dw = m_w - other.m_w;
+	auto dx{m_x - other.m_x};
+	auto dy{m_y - other.m_y};
+	auto dz{m_z - other.m_z};
+	auto dw{m_w - other.m_w};
 	return dx * dx + dy * dy + dz * dz + dw * dw;
 }
 

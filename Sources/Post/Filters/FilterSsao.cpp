@@ -21,7 +21,7 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 		Vector3f sample{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f)};
 		sample = sample.Normalize();
 		sample *= Maths::Random(0.0f, 1.0f);
-		auto scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
+		auto scale{static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE)};
 		scale = Maths::Lerp(0.1f, 1.0f, scale * scale);
 		m_kernel[i] = sample * scale;
 	}
@@ -30,7 +30,7 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 void FilterSsao::Render(const CommandBuffer &commandBuffer)
 {
 	// Updates uniforms.
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 	m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 	m_uniformScene.Push("view", camera->GetViewMatrix());
@@ -84,7 +84,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 	FileSystem::ClearFile(filename);
 	uint32_t width = 0;
 	uint32_t height = 0;
-	auto pixels = noiseImage->GetPixels(width, height, 1);
+	auto pixels{noiseImage->GetPixels(width, height, 1)};
 	Image::WritePixels(filename, pixels.get(), width, height);*/
 #endif
 

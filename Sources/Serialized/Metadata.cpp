@@ -21,7 +21,7 @@ void Metadata::Write(std::ostream *outStream) const
 
 std::unique_ptr<Metadata> Metadata::Clone() const
 {
-	auto clone = std::make_unique<Metadata>(m_name, m_value, m_attributes);
+	auto clone{std::make_unique<Metadata>(m_name, m_value, m_attributes)};
 
 	for (const auto &child : m_children)
 	{
@@ -33,7 +33,7 @@ std::unique_ptr<Metadata> Metadata::Clone() const
 
 std::string Metadata::GetString() const
 {
-	auto string = m_value;
+	auto string{m_value};
 
 	if (string.empty())
 	{
@@ -75,7 +75,7 @@ std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
 
 Metadata *Metadata::FindChild(const std::string &name) const
 {
-	auto nameNoSpaces = String::ReplaceAll(name, " ", "_");
+	auto nameNoSpaces{String::ReplaceAll(name, " ", "_")};
 
 	for (const auto &child : m_children)
 	{
@@ -90,7 +90,7 @@ Metadata *Metadata::FindChild(const std::string &name) const
 
 Metadata *Metadata::FindChildWithBackup(const std::string &name, const std::string &backupName) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child != nullptr)
 	{
@@ -102,7 +102,7 @@ Metadata *Metadata::FindChildWithBackup(const std::string &name, const std::stri
 
 Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value) const
 {
-	auto children = FindChildren(childName);
+	auto children{FindChildren(childName)};
 
 	if (children.empty())
 	{
@@ -111,7 +111,7 @@ Metadata *Metadata::FindChildWithAttribute(const std::string &childName, const s
 
 	for (const auto &child : children)
 	{
-		auto attrib = child->FindAttribute(attribute);
+		auto attrib{child->FindAttribute(attribute)};
 
 		if (attrib == value)
 		{
@@ -137,7 +137,7 @@ void Metadata::RemoveChild(Metadata *child)
 
 std::optional<std::string> Metadata::FindAttribute(const std::string &attribute) const
 {
-	auto it = m_attributes.find(attribute);
+	auto it{m_attributes.find(attribute)};
 
 	if (it == m_attributes.end())
 	{
@@ -149,7 +149,7 @@ std::optional<std::string> Metadata::FindAttribute(const std::string &attribute)
 
 void Metadata::SetAttribute(const std::string &attribute, const std::string &value)
 {
-	auto it = m_attributes.find(attribute);
+	auto it{m_attributes.find(attribute)};
 
 	if (it == m_attributes.end())
 	{
@@ -163,7 +163,7 @@ void Metadata::SetAttribute(const std::string &attribute, const std::string &val
 void Metadata::RemoveAttribute(const std::string &attribute)
 {
 	// TODO C++20: Clean remove.
-	auto it = m_attributes.find(attribute);
+	auto it{m_attributes.find(attribute)};
 
 	if (it != m_attributes.end()) 
 	{

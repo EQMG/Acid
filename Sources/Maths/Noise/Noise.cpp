@@ -217,7 +217,7 @@ void Noise::SetSeed(const int32_t &seed)
 
 	for (int32_t j = 0; j < 256; j++)
 	{
-		auto rng = static_cast<int32_t>(gen() % (256 - j));
+		auto rng{static_cast<int32_t>(gen() % (256 - j))};
 		int32_t k = rng + j;
 		int32_t l = m_perm[j];
 		m_perm[j] = m_perm[j + 256] = m_perm[k];

@@ -19,7 +19,7 @@ void Packet::Append(const void *data, const std::size_t &sizeInBytes)
 {
 	if (data && (sizeInBytes > 0))
 	{
-		auto start = m_data.size();
+		auto start{m_data.size()};
 		m_data.resize(start + sizeInBytes);
 		std::memcpy(&m_data[start], data, sizeInBytes);
 	}
@@ -135,7 +135,7 @@ Packet &Packet::operator>>(int64_t &data)
 	if (CheckSize(sizeof(data)))
 	{
 		// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
-		auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
+		auto bytes{reinterpret_cast<const uint8_t *>(&m_data[m_readPos])};
 		data = (static_cast<int64_t>(bytes[0]) << 56) | (static_cast<int64_t>(bytes[1]) << 48) | (static_cast<int64_t>(bytes[2]) << 40) | (static_cast<int64_t>(bytes[3]) << 32)
 			| (static_cast<int64_t>(bytes[4]) << 24) | (static_cast<int64_t>(bytes[5]) << 16) | (static_cast<int64_t>(bytes[6]) << 8) | (static_cast<int64_t>(bytes[7]));
 		m_readPos += sizeof(data);
@@ -149,7 +149,7 @@ Packet &Packet::operator>>(uint64_t &data)
 	if (CheckSize(sizeof(data)))
 	{
 		// Since ntohll is not available everywhere, we have to convert to network byte order (big endian) manually.
-		auto bytes = reinterpret_cast<const uint8_t *>(&m_data[m_readPos]);
+		auto bytes{reinterpret_cast<const uint8_t *>(&m_data[m_readPos])};
 		data = (static_cast<uint64_t>(bytes[0]) << 56) | (static_cast<uint64_t>(bytes[1]) << 48) | (static_cast<uint64_t>(bytes[2]) << 40) | (static_cast<uint64_t>(bytes[3]) << 32)
 			| (static_cast<uint64_t>(bytes[4]) << 24) | (static_cast<uint64_t>(bytes[5]) << 16) | (static_cast<uint64_t>(bytes[6]) << 8) | (static_cast<uint64_t>(bytes[7]));
 		m_readPos += sizeof(data);
@@ -344,7 +344,7 @@ Packet &Packet::operator<<(const double &data)
 Packet &Packet::operator<<(const char *data)
 {
 	// First insert string length.
-	auto length = static_cast<uint32_t>(std::strlen(data));
+	auto length{static_cast<uint32_t>(std::strlen(data))};
 	*this << length;
 
 	// Then insert characters
@@ -356,7 +356,7 @@ Packet &Packet::operator<<(const char *data)
 Packet &Packet::operator<<(const std::string &data)
 {
 	// First insert string length.
-	auto length = static_cast<uint32_t>(data.size());
+	auto length{static_cast<uint32_t>(data.size())};
 	*this << length;
 
 	// Then insert characters.
@@ -371,7 +371,7 @@ Packet &Packet::operator<<(const std::string &data)
 Packet &Packet::operator<<(const wchar_t *data)
 {
 	// First insert string length.
-	auto length = static_cast<uint32_t>(std::wcslen(data));
+	auto length{static_cast<uint32_t>(std::wcslen(data))};
 	*this << length;
 
 	// Then insert characters.
@@ -386,7 +386,7 @@ Packet &Packet::operator<<(const wchar_t *data)
 Packet &Packet::operator<<(const std::wstring &data)
 {
 	// First insert string length.
-	auto length = static_cast<uint32_t>(data.size());
+	auto length{static_cast<uint32_t>(data.size())};
 	*this << length;
 
 	// Then insert characters.

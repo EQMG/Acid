@@ -42,9 +42,9 @@ void UiInputSlider::UpdateObject()
 	}
 	else if (m_updating)
 	{
-		auto width = m_background.GetScreenTransform().GetSize().m_x;
-		auto positionX = m_background.GetScreenTransform().GetPosition().m_x;
-		auto cursorX = static_cast<float>(Mouse::Get()->GetPosition().m_x) - positionX;
+		auto width{m_background.GetScreenTransform().GetSize().m_x};
+		auto positionX{m_background.GetScreenTransform().GetPosition().m_x};
+		auto cursorX{static_cast<float>(Mouse::Get()->GetPosition().m_x) - positionX};
 		m_progress = cursorX / width;
 		m_progress = std::clamp(m_progress, 0.0f, 1.0f);
 		m_value = (m_progress * (m_valueMax - m_valueMin)) + m_valueMin;

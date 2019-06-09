@@ -12,12 +12,12 @@
 namespace test
 {
 Plugins::Plugins() :
-	m_loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
-	m_watcher(std::filesystem::current_path(), 0.5s),
-	m_plugin(std::make_unique<cr_plugin>()),
-	m_update(true),
-	m_panels(&Uis::Get()->GetCanvas()),
-	m_buttonReload(Key::R)
+	m_loadedPath{std::filesystem::current_path() / CR_PLUGIN("EditorTest")},
+	m_watcher{std::filesystem::current_path(), 0.5s},
+	m_plugin{std::make_unique<cr_plugin>()},
+	m_update{true},
+	m_panels{&Uis::Get()->GetCanvas()},
+	m_buttonReload{Key::R}
 {
 	cr_plugin_load(*m_plugin, m_loadedPath.string().c_str());
 

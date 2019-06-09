@@ -19,19 +19,19 @@ Audio::Audio()
 	alcMakeContextCurrent(m_context);
 
 #if defined(ACID_VERBOSE)
-	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
-	auto device = devices;
-	auto next = devices + 1;
+	auto devices{alcGetString(nullptr, ALC_DEVICE_SPECIFIER)};
+	auto device{devices};
+	auto next{devices + 1};
 
 	while (device && *device != '\0' && next && *next != '\0')
 	{
 		Log::Out("Audio Device: %s\n", device);
-		auto len = std::strlen(device);
+		auto len{std::strlen(device)};
 		device += len + 1;
 		next += len + 2;
 	}
 
-	auto deviceName = alcGetString(m_device, ALC_DEVICE_SPECIFIER);
+	auto deviceName{alcGetString(m_device, ALC_DEVICE_SPECIFIER)};
 	Log::Out("Selected Audio Device: '%s'\n", deviceName);
 #endif
 }
@@ -45,7 +45,7 @@ Audio::~Audio()
 
 void Audio::Update()
 {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 
 	if (camera == nullptr)
 	{
@@ -56,15 +56,15 @@ void Audio::Update()
 	alListenerf(AL_GAIN, GetGain(Type::Master));
 
 	// Listener position.
-	auto position = camera->GetPosition();
+	auto position{camera->GetPosition()};
 	alListener3f(AL_POSITION, position.m_x, position.m_y, position.m_z);
 
 	// Listener velocity.
-	auto velocity = camera->GetPosition();
+	auto velocity{camera->GetPosition()};
 	alListener3f(AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
 
 	// Listener orientation.
-	auto currentRay = camera->GetViewRay().GetCurrentRay();
+	auto currentRay{camera->GetViewRay().GetCurrentRay()};
 	ALfloat orientation[6]{ currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f };
 	alListenerfv(AL_ORIENTATION, orientation);
 
@@ -99,7 +99,7 @@ void Audio::CheckAl(const int32_t &result)
 		return;
 	}
 
-	auto failure = StringifyResultAl(result);
+	auto failure{StringifyResultAl(result)};
 
 	Log::Error("OpenAL error: %s, %i\n", failure, result);
 	Log::Popup("OpenAL Error", failure);
@@ -108,7 +108,7 @@ void Audio::CheckAl(const int32_t &result)
 
 float Audio::GetGain(const Type &type) const
 {
-	auto it = m_gains.find(type);
+	auto it{m_gains.find(type)};
 
 	if (it == m_gains.end())
 	{
@@ -120,7 +120,7 @@ float Audio::GetGain(const Type &type) const
 
 void Audio::SetGain(const Type &type, const float &volume)
 {
-	auto it = m_gains.find(type);
+	auto it{m_gains.find(type)};
 
 	if (it != m_gains.end())
 	{

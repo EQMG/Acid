@@ -40,8 +40,8 @@ void Timers::Run()
 				return a->m_next < b->m_next;
 			});
 
-			auto &instance = m_timers.front();
-			auto time = Time::Now();
+			auto &instance{m_timers.front()};
+			auto time{Time::Now()};
 
 			if (time >= instance->m_next)
 			{

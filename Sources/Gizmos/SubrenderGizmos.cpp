@@ -15,11 +15,11 @@ SubrenderGizmos::SubrenderGizmos(const Pipeline::Stage &pipelineStage) :
 
 void SubrenderGizmos::Render(const CommandBuffer &commandBuffer)
 {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 	m_uniformScene.Push("view", camera->GetViewMatrix());
 
-	auto &gizmos = Gizmos::Get()->GetGizmos();
+	auto &gizmos{Gizmos::Get()->GetGizmos()};
 
 	m_pipeline.BindPipeline(commandBuffer);
 

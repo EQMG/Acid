@@ -21,7 +21,7 @@ public:
 	/**
 	 * Constructor for Vector3.
 	 **/
-	constexpr Vector3();
+	constexpr Vector3() = default;
 	
 	/**
 	 * Constructor for Vector3.
@@ -324,7 +324,7 @@ public:
 	ACID_EXPORT static const Vector3 PositiveInfinity;
 	ACID_EXPORT static const Vector3 NegativeInfinity;
 
-	T m_x, m_y, m_z;
+	T m_x{}, m_y{}, m_z{};
 };
 
 using Vector3f = Vector3<float>;

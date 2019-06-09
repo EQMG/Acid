@@ -29,7 +29,7 @@ public:
 		}
 
 		// Finds the local value given to the descriptor name.
-		auto it = m_descriptors.find(descriptorName);
+		auto it{m_descriptors.find(descriptorName)};
 
 		if (it != m_descriptors.end())
 		{
@@ -49,7 +49,7 @@ public:
 		}
 
 		// When adding the descriptor find the location in the shader.
-		auto location = m_shader->GetDescriptorLocation(descriptorName);
+		auto location{m_shader->GetDescriptorLocation(descriptorName)};
 
 		if (!location)
 		{
@@ -63,7 +63,7 @@ public:
 			return;
 		}
 
-		auto descriptorType = m_shader->GetDescriptorType(*location);
+		auto descriptorType{m_shader->GetDescriptorType(*location)};
 
 		if (!descriptorType)
 		{
@@ -77,7 +77,7 @@ public:
 		}
 
 		// Adds the new descriptor value.
-		auto writeDescriptor = ConstExpr::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
+		auto writeDescriptor{ConstExpr::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize)};
 		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
 		m_changed = true;
 	}
@@ -90,15 +90,15 @@ public:
 			return;
 		}
 
-		auto it = m_descriptors.find(descriptorName);
+		auto it{m_descriptors.find(descriptorName)};
 
 		if (it != m_descriptors.end())
 		{
 			m_descriptors.erase(it);
 		}
 
-		auto location = m_shader->GetDescriptorLocation(descriptorName);
-		//auto descriptorType = m_shader->GetDescriptorType(*location);
+		auto location{m_shader->GetDescriptorLocation(descriptorName)};
+		//auto descriptorType{m_shader->GetDescriptorType(*location)};
 
 		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), std::nullopt, *location });
 		m_changed = true;

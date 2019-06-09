@@ -13,7 +13,7 @@ void MeshRender::Start()
 
 void MeshRender::Update()
 {
-	auto material = GetParent()->GetComponent<Material>();
+	auto material{GetParent()->GetComponent<Material>()};
 
 	if (material == nullptr)
 	{
@@ -27,7 +27,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	if (auto rigidbody = GetParent()->GetComponent<Rigidbody>(); rigidbody != nullptr)
+	if (auto rigidbody{GetParent()->GetComponent<Rigidbody>()}; rigidbody != nullptr)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -36,16 +36,16 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Gets required components.
-	auto material = GetParent()->GetComponent<Material>();
-	auto mesh = GetParent()->GetComponent<Mesh>();
+	auto material{GetParent()->GetComponent<Material>()};
+	auto mesh{GetParent()->GetComponent<Mesh>()};
 
 	if (material == nullptr || mesh == nullptr)
 	{
 		return false;
 	}
 
-	auto meshModel = mesh->GetModel();
-	auto materialPipeline = material->GetPipelineMaterial();
+	auto meshModel{mesh->GetModel()};
+	auto materialPipeline{material->GetPipelineMaterial()};
 
 	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)
 	{
@@ -59,7 +59,7 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 		return false;
 	}
 
-	auto &pipeline = *materialPipeline->GetPipeline();
+	auto &pipeline{*materialPipeline->GetPipeline()};
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
@@ -78,10 +78,10 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 
 bool MeshRender::operator<(const MeshRender &other) const
 {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 
-	auto thisDistance2 = (camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
-	auto otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
+	auto thisDistance2{(camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
+	auto otherDistance2{(camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
 
 	return thisDistance2 > otherDistance2;
 }

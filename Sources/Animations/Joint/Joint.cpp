@@ -11,7 +11,7 @@ Joint::Joint(const uint32_t &index, std::string name, const Matrix4 &bindLocalTr
 
 void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
 {
-	auto bindTransform = parentBindTransform * m_localBindTransform;
+	auto bindTransform{parentBindTransform * m_localBindTransform};
 	m_inverseBindTransform = bindTransform.Inverse();
 
 	for (auto &child : m_children)

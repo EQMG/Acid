@@ -54,7 +54,7 @@ public:
 protected:
 	T Calculate(const float &factor) override
 	{
-		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
+		auto value{0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f};
 
 		if (Driver<T>::m_actualTime > Driver<T>::GetLength() / 2.0f)
 		{

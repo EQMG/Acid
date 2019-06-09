@@ -14,14 +14,14 @@ static const float FRUSTUM_BUFFER = 1.4f;
 
 std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ParticleType>(resource);
 	}
 
-	auto result = std::make_shared<ParticleType>(nullptr);
+	auto result{std::make_shared<ParticleType>(nullptr)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -78,8 +78,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 			continue;
 		}
 
-		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
-		auto instance = &instances[m_instances];
+		auto viewMatrix{Scenes::Get()->GetCamera()->GetViewMatrix()};
+		auto instance{&instances[m_instances]};
 		instance->m_modelMatrix = Matrix4{}.Translate(particle.GetPosition());
 
 		for (int32_t row = 0; row < 3; row++)

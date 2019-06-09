@@ -15,14 +15,14 @@ namespace acid
 {
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<SoundBuffer>(resource);
 	}
 
-	auto result = std::make_shared<SoundBuffer>("");
+	auto result{std::make_shared<SoundBuffer>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -58,7 +58,7 @@ void SoundBuffer::Load()
 		return;
 	}
 
-	auto fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
 
 	if (fileExt == ".wav")
 	{
@@ -73,10 +73,10 @@ void SoundBuffer::Load()
 uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto fileLoaded = Files::Read(filename);
+	auto fileLoaded{Files::Read(filename)};
 
 	if (!fileLoaded)
 	{
@@ -142,7 +142,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
+	auto debugEnd{Time::Now()};
 	Log::Out("Sound WAV '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
@@ -151,10 +151,10 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto fileLoaded = Files::Read(filename);
+	auto fileLoaded{Files::Read(filename)};
 
 	if (!fileLoaded)
 	{
@@ -165,7 +165,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	int32_t channels;
 	int32_t samplesPerSec;
 	int16_t *data;
-	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data);
+	auto size{stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data)};
 
 	if (size == -1)
 	{
@@ -180,7 +180,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
+	auto debugEnd{Time::Now()};
 	Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;

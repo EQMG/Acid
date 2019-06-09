@@ -58,7 +58,7 @@ struct hash<acid::VertexAnimated>
 {
 	size_t operator()(const acid::VertexAnimated &vertex) const noexcept
 	{
-		size_t seed = 0;
+		size_t seed{0};
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);
 		acid::Maths::HashCombine(seed, vertex.m_normal);

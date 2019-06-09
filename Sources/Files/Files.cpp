@@ -19,7 +19,7 @@ public:
 		m_file{file}
 	{
 		m_buffer = new char[m_bufferSize];
-		auto end = m_buffer + m_bufferSize;
+		auto end{m_buffer + m_bufferSize};
 		setg(end, end, end);
 		setp(m_buffer, end);
 	}
@@ -38,7 +38,7 @@ private:
 			return traits_type::eof();
 		}
 
-		auto bytesRead = PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize));
+		auto bytesRead{PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize))};
 
 		if (bytesRead < 1)
 		{
@@ -237,7 +237,7 @@ void Files::AddSearchPath(const std::string &path)
 
 void Files::RemoveSearchPath(const std::string &path)
 {
-	auto it = std::find(m_searchPaths.begin(), m_searchPaths.end(), path);
+	auto it{std::find(m_searchPaths.begin(), m_searchPaths.end(), path)};
 
 	if (it == m_searchPaths.end())
 	{
@@ -273,7 +273,7 @@ bool Files::ExistsInPath(const std::string &path)
 
 std::optional<std::string> Files::Read(const std::string &path)
 {
-	auto fsFile = PHYSFS_openRead(path.c_str());
+	auto fsFile{PHYSFS_openRead(path.c_str())};
 
 	if (fsFile == nullptr)
 	{
@@ -286,7 +286,7 @@ std::optional<std::string> Files::Read(const std::string &path)
 		return FileSystem::ReadTextFile(path);
 	}
 
-	auto size = PHYSFS_fileLength(fsFile);
+	auto size{PHYSFS_fileLength(fsFile)};
 	std::vector<uint8_t> data(size); // TODO C++20: {size}
 	PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
@@ -301,15 +301,15 @@ std::optional<std::string> Files::Read(const std::string &path)
 std::vector<std::string> Files::FilesInPath(const std::string &path, const bool &recursive)
 {
 	std::vector<std::string> files;
-	auto rc = PHYSFS_enumerateFiles(path.c_str());
+	auto rc{PHYSFS_enumerateFiles(path.c_str())};
 	
-	for (auto i = rc; *i != nullptr; i++)
+	for (auto i{rc}; *i != nullptr; i++)
 	{
 		/*if (IsDirectory(*i))
 		{
 			if (recursive)
 			{
-				auto filesInFound = FilesInPath(*i, recursive);
+				auto filesInFound{FilesInPath(*i, recursive)};
 				files.insert(result.end(), filesInFound.begin(), filesInFound.end());
 			}
 		}
@@ -334,13 +334,13 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t)
 	// such as thread synchronization and updating the stream state.
 
 	std::istream::sentry se{is, true};
-	auto sb = is.rdbuf();
+	auto sb{is.rdbuf()};
 
 	if (se)
 	{
 		for (;;)
 		{
-			auto c = sb->sbumpc();
+			auto c{sb->sbumpc()};
 
 			switch (c)
 			{

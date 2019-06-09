@@ -32,7 +32,7 @@ FtpResponse Ftp::Login()
 
 FtpResponse Ftp::Login(const std::string &name, const std::string &password)
 {
-	auto response = SendCommand("USER", name);
+	auto response{SendCommand("USER", name)};
 
 	if (response.IsOk())
 	{
@@ -45,7 +45,7 @@ FtpResponse Ftp::Login(const std::string &name, const std::string &password)
 FtpResponse Ftp::Disconnect()
 {
 	// Send the exit command.
-	auto response = SendCommand("QUIT");
+	auto response{SendCommand("QUIT")};
 
 	if (response.IsOk())
 	{
@@ -70,7 +70,7 @@ FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
 	// Open a data channel on default port (20) using ASCII transfer mode.
 	std::ostringstream directoryData;
 	FtpDataChannel data(*this);
-	auto response = data.Open(FtpDataChannel::Mode::Ascii);
+	auto response{data.Open(FtpDataChannel::Mode::Ascii)};
 
 	if (response.IsOk())
 	{
@@ -112,7 +112,7 @@ FtpResponse Ftp::DeleteRemoteDirectory(const std::string &name)
 
 FtpResponse Ftp::RenameRemoteFile(const std::string &file, const std::string &newName)
 {
-	auto response = SendCommand("RNFR", file);
+	auto response{SendCommand("RNFR", file)};
 
 	if (response.IsOk())
 	{
@@ -131,7 +131,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 {
 	// Open a data channel using the given transfer mode.
 	FtpDataChannel data(*this);
-	auto response = data.Open(mode);
+	auto response{data.Open(mode)};
 
 	if (response.IsOk())
 	{
@@ -141,8 +141,8 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 		if (response.IsOk())
 		{
 			// Extract the filename from the file path
-			auto filename = remoteFile;
-			auto pos = filename.find_last_of("/\\");
+			auto filename{remoteFile};
+			auto pos{filename.find_last_of("/\\")};
 
 			if (pos != std::string::npos)
 			{
@@ -150,7 +150,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 			}
 
 			// Make sure the destination path ends with a slash.
-			auto path = localPath;
+			auto path{localPath};
 
 			if (!path.empty() && (path[path.size() - 1] != '\\') && (path[path.size() - 1] != '/'))
 			{
@@ -196,8 +196,8 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 	}
 
 	// Extract the filename from the file path.
-	auto filename = localFile;
-	auto pos = filename.find_last_of("/\\");
+	auto filename{localFile};
+	auto pos{filename.find_last_of("/\\")};
 
 	if (pos != std::string::npos)
 	{
@@ -205,7 +205,7 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 	}
 
 	// Make sure the destination path ends with a slash.
-	auto path = remotePath;
+	auto path{remotePath};
 
 	if (!path.empty() && (path[path.size() - 1] != '\\') && (path[path.size() - 1] != '/'))
 	{
@@ -214,7 +214,7 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 
 	// Open a data channel using the given transfer mode.
 	FtpDataChannel data{*this};
-	auto response = data.Open(mode);
+	auto response{data.Open(mode)};
 
 	if (response.IsOk())
 	{
