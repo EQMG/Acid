@@ -34,15 +34,15 @@ void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)
 
 const Metadata &operator>>(const Metadata &metadata, MaterialTerrain &material)
 {
-	metadata.GetResource("Image R", material.m_imageR);
-	metadata.GetResource("Image G", material.m_imageG);
+	metadata.GetResource("imageR", material.m_imageR);
+	metadata.GetResource("imageG", material.m_imageG);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const MaterialTerrain &material)
 {
-	metadata.SetResource("Image R", material.m_imageR);
-	metadata.SetResource("Image G", material.m_imageG);
+	metadata.SetResource("imageR", material.m_imageR);
+	metadata.SetResource("imageG", material.m_imageG);
 	return metadata;
 }
 }

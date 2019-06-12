@@ -88,17 +88,17 @@ Transform &Transform::operator*=(const Transform &other)
 
 const Metadata &operator>>(const Metadata &metadata, Transform &transform)
 {
-	metadata.GetChild("Position", transform.m_position);
-	metadata.GetChild("Rotation", transform.m_rotation);
-	metadata.GetChild("Scale", transform.m_scale);
+	metadata.GetChild("position", transform.m_position);
+	metadata.GetChild("rotation", transform.m_rotation);
+	metadata.GetChild("scale", transform.m_scale);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Transform &transform)
 {
-	metadata.SetChild("Position", transform.m_position);
-	metadata.SetChild("Rotation", transform.m_rotation);
-	metadata.SetChild("Scale", transform.m_scale);
+	metadata.SetChild("position", transform.m_position);
+	metadata.SetChild("rotation", transform.m_rotation);
+	metadata.SetChild("scale", transform.m_scale);
 	return metadata;
 }
 

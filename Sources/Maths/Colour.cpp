@@ -4,7 +4,7 @@
 
 namespace acid
 {
-// TODO: Allow hex length to be changed (RGBA), and write value out as hex string instead of RGBA%s.
+// TODO: Allow hex length to be changed (RGBA).
 
 const Colour Colour::Clear{"#000000", 0.0f};
 const Colour Colour::Black{"#000000"};

@@ -28,21 +28,21 @@ std::string Fog::ToString() const
 
 const Metadata &operator>>(const Metadata &metadata, Fog &fog)
 {
-	metadata.GetChild("Colour", fog.m_colour);
-	metadata.GetChild("Density", fog.m_density);
-	metadata.GetChild("Gradient", fog.m_gradient);
-	metadata.GetChild("Lower Limit", fog.m_lowerLimit);
-	metadata.GetChild("Upper Limit", fog.m_upperLimit);
+	metadata.GetChild("colour", fog.m_colour);
+	metadata.GetChild("density", fog.m_density);
+	metadata.GetChild("gradient", fog.m_gradient);
+	metadata.GetChild("lowerLimit", fog.m_lowerLimit);
+	metadata.GetChild("upperLimit", fog.m_upperLimit);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Fog &fog)
 {
-	metadata.SetChild("Colour", fog.m_colour);
-	metadata.SetChild("Density", fog.m_density);
-	metadata.SetChild("Gradient", fog.m_gradient);
-	metadata.SetChild("Lower Limit", fog.m_lowerLimit);
-	metadata.SetChild("Upper Limit", fog.m_upperLimit);
+	metadata.SetChild("colour", fog.m_colour);
+	metadata.SetChild("density", fog.m_density);
+	metadata.SetChild("gradient", fog.m_gradient);
+	metadata.SetChild("lowerLimit", fog.m_lowerLimit);
+	metadata.SetChild("upperLimit", fog.m_upperLimit);
 	return metadata;
 }
 

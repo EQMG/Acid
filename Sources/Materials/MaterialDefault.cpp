@@ -78,33 +78,33 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 
 const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material)
 {
-	metadata.GetChild("Base Diffuse", material.m_baseDiffuse);
-	metadata.GetResource("Image Diffuse", material.m_imageDiffuse);
+	metadata.GetChild("baseDiffuse", material.m_baseDiffuse);
+	metadata.GetResource("imageDiffuse", material.m_imageDiffuse);
 
-	metadata.GetChild("Metallic", material.m_metallic);
-	metadata.GetChild("Roughness", material.m_roughness);
-	metadata.GetResource("Image Material", material.m_imageMaterial);
-	metadata.GetResource("Image Normal", material.m_imageNormal);
+	metadata.GetChild("metallic", material.m_metallic);
+	metadata.GetChild("roughness", material.m_roughness);
+	metadata.GetResource("imageMaterial", material.m_imageMaterial);
+	metadata.GetResource("imageNormal", material.m_imageNormal);
 
-	metadata.GetChild("Casts Shadows", material.m_castsShadows);
-	metadata.GetChild("Ignore Lighting", material.m_ignoreLighting);
-	metadata.GetChild("Ignore Fog", material.m_ignoreFog);
+	metadata.GetChild("castsShadows", material.m_castsShadows);
+	metadata.GetChild("ignoreLighting", material.m_ignoreLighting);
+	metadata.GetChild("ignoreFog", material.m_ignoreFog);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const MaterialDefault &material)
 {
-	metadata.SetChild("Base Diffuse", material.m_baseDiffuse);
-	metadata.SetResource("Image Diffuse", material.m_imageDiffuse);
+	metadata.SetChild("baseDiffuse", material.m_baseDiffuse);
+	metadata.SetResource("imageDiffuse", material.m_imageDiffuse);
 
-	metadata.SetChild("Metallic", material.m_metallic);
-	metadata.SetChild("Roughness", material.m_roughness);
-	metadata.SetResource("Image Material", material.m_imageMaterial);
-	metadata.SetResource("Image Normal", material.m_imageNormal);
+	metadata.SetChild("metallic", material.m_metallic);
+	metadata.SetChild("roughness", material.m_roughness);
+	metadata.SetResource("imageMaterial", material.m_imageMaterial);
+	metadata.SetResource("imageNormal", material.m_imageNormal);
 
-	metadata.SetChild("Casts Shadows", material.m_castsShadows);
-	metadata.SetChild("Ignore Lighting", material.m_ignoreLighting);
-	metadata.SetChild("Ignore Fog", material.m_ignoreFog);
+	metadata.SetChild("castsShadows", material.m_castsShadows);
+	metadata.SetChild("ignoreLighting", material.m_ignoreLighting);
+	metadata.SetChild("ignoreFog", material.m_ignoreFog);
 	return metadata;
 }
 }

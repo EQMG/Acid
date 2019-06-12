@@ -136,14 +136,14 @@ void ModelGltf::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
 {
-	metadata.GetChild("Filename", model.m_filename);
+	metadata.GetChild("filename", model.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelGltf");
-	metadata.SetChild("Filename", model.m_filename);
+	metadata.SetChild<std::string>("type", "ModelGltf");
+	metadata.SetChild("filename", model.m_filename);
 	return metadata;
 }
 }

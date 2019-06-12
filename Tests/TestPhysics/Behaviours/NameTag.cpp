@@ -46,13 +46,13 @@ void NameTag::Update()
 
 const Metadata &operator>>(const Metadata &metadata, NameTag &nameTag)
 {
-	metadata.GetChild("Height Offset", nameTag.m_heightOffset);
+	metadata.GetChild("heightOffset", nameTag.m_heightOffset);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const NameTag &nameTag)
 {
-	metadata.SetChild("Height Offset", nameTag.m_heightOffset);
+	metadata.SetChild("heightOffset", nameTag.m_heightOffset);
 	return metadata;
 }
 }

@@ -48,17 +48,17 @@ void ColliderCone::SetHeight(const float &height)
 
 const Metadata &operator>>(const Metadata &metadata, ColliderCone &collider)
 {
-	metadata.GetChild("Local Transform", collider.m_localTransform);
-	metadata.GetChild("Radius", collider.m_radius);
-	metadata.GetChild("Height", collider.m_height);
+	metadata.GetChild("localTransform", collider.m_localTransform);
+	metadata.GetChild("radius", collider.m_radius);
+	metadata.GetChild("height", collider.m_height);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ColliderCone &collider)
 {
-	metadata.SetChild("Local Transform", collider.m_localTransform);
-	metadata.SetChild("Radius", collider.m_radius);
-	metadata.SetChild("Height", collider.m_height);
+	metadata.SetChild("localTransform", collider.m_localTransform);
+	metadata.SetChild("radius", collider.m_radius);
+	metadata.SetChild("height", collider.m_height);
 	return metadata;
 }
 }

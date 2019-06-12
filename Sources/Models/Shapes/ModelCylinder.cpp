@@ -94,22 +94,22 @@ void ModelCylinder::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model)
 {
-	metadata.GetChild("Radius Base", model.m_radiusBase);
-	metadata.GetChild("Radius Top", model.m_radiusTop);
-	metadata.GetChild("Height", model.m_height);
-	metadata.GetChild("Slices", model.m_slices);
-	metadata.GetChild("Stacks", model.m_stacks);
+	metadata.GetChild("radiusBase", model.m_radiusBase);
+	metadata.GetChild("radiusTop", model.m_radiusTop);
+	metadata.GetChild("height", model.m_height);
+	metadata.GetChild("slices", model.m_slices);
+	metadata.GetChild("stacks", model.m_stacks);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelCylinder &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelCylinder");
-	metadata.SetChild("Radius Base", model.m_radiusBase);
-	metadata.SetChild("Radius Top", model.m_radiusTop);
-	metadata.SetChild("Height", model.m_height);
-	metadata.SetChild("Slices", model.m_slices);
-	metadata.SetChild("Stacks", model.m_stacks);
+	metadata.SetChild<std::string>("type", "ModelCylinder");
+	metadata.SetChild("radiusBase", model.m_radiusBase);
+	metadata.SetChild("radiusTop", model.m_radiusTop);
+	metadata.SetChild("height", model.m_height);
+	metadata.SetChild("slices", model.m_slices);
+	metadata.SetChild("stacks", model.m_stacks);
 	return metadata;
 }
 }

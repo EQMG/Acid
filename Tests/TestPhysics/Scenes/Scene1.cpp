@@ -164,7 +164,7 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject{GetStructure()->CreateEntity({{0.0f, 2.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}}, "Objects/Player/Player.xml")};
+	auto playerObject{GetStructure()->CreateEntity({{0.0f, 2.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}}, "Objects/Player/Player.json")};
 	
 	// Skybox.
 	auto skyboxObject{GetStructure()->CreateEntity({{}, {}, 2048.0f}, "Objects/SkyboxClouds/SkyboxClouds.json")};

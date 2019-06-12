@@ -93,20 +93,20 @@ void ModelDisk::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelDisk &model)
 {
-	metadata.GetChild("Inner Radius", model.m_innerRadius);
-	metadata.GetChild("Outer Radius", model.m_outerRadius);
-	metadata.GetChild("Slices", model.m_slices);
-	metadata.GetChild("Loops", model.m_loops);
+	metadata.GetChild("innerRadius", model.m_innerRadius);
+	metadata.GetChild("outerRadius", model.m_outerRadius);
+	metadata.GetChild("slices", model.m_slices);
+	metadata.GetChild("loops", model.m_loops);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelDisk &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelDisk");
-	metadata.SetChild("Inner Radius", model.m_innerRadius);
-	metadata.SetChild("Outer Radius", model.m_outerRadius);
-	metadata.SetChild("Slices", model.m_slices);
-	metadata.SetChild("Loops", model.m_loops);
+	metadata.SetChild<std::string>("type", "ModelDisk");
+	metadata.SetChild("innerRadius", model.m_innerRadius);
+	metadata.SetChild("outerRadius", model.m_outerRadius);
+	metadata.SetChild("slices", model.m_slices);
+	metadata.SetChild("loops", model.m_loops);
 	return metadata;
 }
 }

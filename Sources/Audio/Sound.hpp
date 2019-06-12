@@ -56,7 +56,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Sound &sound);
 
 private:
-	std::shared_ptr<SoundBuffer> m_soundBuffer;
+	std::shared_ptr<SoundBuffer> m_buffer;
 	uint32_t m_source{};
 
 	Vector3f m_position;

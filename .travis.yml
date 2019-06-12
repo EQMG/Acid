@@ -63,33 +63,33 @@ matrix:
     before_install:
     - sudo apt-get update -qq
   # XCode 10.2
-  - os: osx
-    osx_image: xcode10.2
-    sudo: required
-    addons: 
-      homebrew:
-        taps:
-        - caskroom/cask
-        casks:
-        - apenngrace/vulkan/vulkan-sdk
-        packages:
-        - pkg-config
-        - ninja
-        - ccache
-        - cmake
-        - gcc
-        - llvm
-      update: true
-    language: cpp
-    cache: ccache
-    compiler: clang
-    env:
-    - COMPILER=clang++
-    - GSL_CXX_STANDARD=17
-    - BUILD_TYPE=Release
-    - BUILD_SHARED=OFF
-    before_install:
-    - export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/ccache/libexec:$PATH"
+#  - os: osx
+#    osx_image: xcode10.2
+#    sudo: required
+#    addons: 
+#      homebrew:
+#        taps:
+#        - caskroom/cask
+#        casks:
+#        - apenngrace/vulkan/vulkan-sdk
+#        packages:
+#        - pkg-config
+#        - ninja
+#        - ccache
+#        - cmake
+#        - gcc
+#        - llvm
+#      update: true
+#    language: cpp
+#    cache: ccache
+#    compiler: clang
+#    env:
+#    - COMPILER=clang++
+#    - GSL_CXX_STANDARD=17
+#    - BUILD_TYPE=Release
+#    - BUILD_SHARED=OFF
+#    before_install:
+#    - export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/ccache/libexec:$PATH"
 
 script:
 - git submodule update --init --recursive

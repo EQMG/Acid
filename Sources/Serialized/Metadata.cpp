@@ -75,11 +75,9 @@ std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const
 
 Metadata *Metadata::FindChild(const std::string &name) const
 {
-	auto nameNoSpaces{String::ReplaceAll(name, " ", "_")};
-
 	for (const auto &child : m_children)
 	{
-		if (child->m_name == name || child->m_name == nameNoSpaces)
+		if (child->m_name == name)
 		{
 			return child.get();
 		}

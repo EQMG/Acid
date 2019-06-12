@@ -201,31 +201,31 @@ void KinematicCharacter::SetWalkDirection(const Vector3f &direction)
 
 const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character)
 {
-	metadata.GetChild("Mass", character.m_mass);
-	metadata.GetChild("Friction", character.m_friction);
-	metadata.GetChild("Friction Rolling", character.m_frictionRolling);
-	metadata.GetChild("Friction Spinning", character.m_frictionSpinning);
-	metadata.GetChild("Up", character.m_up);
-	metadata.GetChild("Step Height", character.m_stepHeight);
-	metadata.GetChild("Fall Speed", character.m_fallSpeed);
-	metadata.GetChild("Jump Speed", character.m_jumpSpeed);
-	metadata.GetChild("Max Height", character.m_maxHeight);
-	metadata.GetChild("Interpolate", character.m_interpolate);
+	metadata.GetChild("mass", character.m_mass);
+	metadata.GetChild("friction", character.m_friction);
+	metadata.GetChild("frictionRolling", character.m_frictionRolling);
+	metadata.GetChild("frictionSpinning", character.m_frictionSpinning);
+	metadata.GetChild("up", character.m_up);
+	metadata.GetChild("stepHeight", character.m_stepHeight);
+	metadata.GetChild("fallSpeed", character.m_fallSpeed);
+	metadata.GetChild("jumpSpeed", character.m_jumpSpeed);
+	metadata.GetChild("maxHeight", character.m_maxHeight);
+	metadata.GetChild("interpolate", character.m_interpolate);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character)
 {
-	metadata.SetChild("Mass", character.m_mass);
-	metadata.SetChild("Friction", character.m_friction);
-	metadata.SetChild("Friction Rolling", character.m_frictionRolling);
-	metadata.SetChild("Friction Spinning", character.m_frictionSpinning);
-	metadata.SetChild("Up", character.m_up);
-	metadata.SetChild("Step Height", character.m_stepHeight);
-	metadata.SetChild("Fall Speed", character.m_fallSpeed);
-	metadata.SetChild("Jump Speed", character.m_jumpSpeed);
-	metadata.SetChild("Max Height", character.m_maxHeight);
-	metadata.SetChild("Interpolate", character.m_interpolate);
+	metadata.SetChild("mass", character.m_mass);
+	metadata.SetChild("friction", character.m_friction);
+	metadata.SetChild("frictionRolling", character.m_frictionRolling);
+	metadata.SetChild("frictionSpinning", character.m_frictionSpinning);
+	metadata.SetChild("up", character.m_up);
+	metadata.SetChild("stepHeight", character.m_stepHeight);
+	metadata.SetChild("fallSpeed", character.m_fallSpeed);
+	metadata.SetChild("jumpSpeed", character.m_jumpSpeed);
+	metadata.SetChild("maxHeight", character.m_maxHeight);
+	metadata.SetChild("interpolate", character.m_interpolate);
 	return metadata;
 }
 

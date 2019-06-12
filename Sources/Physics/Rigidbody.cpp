@@ -162,23 +162,23 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 
 const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)
 {
-	metadata.GetChild("Mass", rigidbody.m_mass);
-	metadata.GetChild("Friction", rigidbody.m_friction);
-	metadata.GetChild("Friction Rolling", rigidbody.m_frictionRolling);
-	metadata.GetChild("Friction Spinning", rigidbody.m_frictionSpinning);
-	metadata.GetChild("Linear Factor", rigidbody.m_linearFactor);
-	metadata.GetChild("Angular Factor", rigidbody.m_angularFactor);
+	metadata.GetChild("mass", rigidbody.m_mass);
+	metadata.GetChild("friction", rigidbody.m_friction);
+	metadata.GetChild("frictionRolling", rigidbody.m_frictionRolling);
+	metadata.GetChild("frictionSpinning", rigidbody.m_frictionSpinning);
+	metadata.GetChild("linearFactor", rigidbody.m_linearFactor);
+	metadata.GetChild("angularFactor", rigidbody.m_angularFactor);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody)
 {
-	metadata.SetChild("Mass", rigidbody.m_mass);
-	metadata.SetChild("Friction", rigidbody.m_friction);
-	metadata.SetChild("Friction Rolling", rigidbody.m_frictionRolling);
-	metadata.SetChild("Friction Spinning", rigidbody.m_frictionSpinning);
-	metadata.SetChild("Linear Factor", rigidbody.m_linearFactor);
-	metadata.SetChild("Angular Factor", rigidbody.m_angularFactor);
+	metadata.SetChild("mass", rigidbody.m_mass);
+	metadata.SetChild("friction", rigidbody.m_friction);
+	metadata.SetChild("frictionRolling", rigidbody.m_frictionRolling);
+	metadata.SetChild("frictionSpinning", rigidbody.m_frictionSpinning);
+	metadata.SetChild("linearFactor", rigidbody.m_linearFactor);
+	metadata.SetChild("angularFactor", rigidbody.m_angularFactor);
 	return metadata;
 }
 

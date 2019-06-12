@@ -96,14 +96,14 @@ void ModelCube::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelCube &model)
 {
-	metadata.GetChild("Extents", model.m_extents);
+	metadata.GetChild("extents", model.m_extents);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelCube &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelCube");
-	metadata.SetChild("Extents", model.m_extents);
+	metadata.SetChild<std::string>("type", "ModelCube");
+	metadata.SetChild("extents", model.m_extents);
 	return metadata;
 }
 }

@@ -146,15 +146,15 @@ void FontType::Load()
 
 const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
 {
-	metadata.GetChild("Filename", fontType.m_filename);
-	metadata.GetChild("Style", fontType.m_style);
+	metadata.GetChild("filename", fontType.m_filename);
+	metadata.GetChild("style", fontType.m_style);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 {
-	metadata.SetChild("Filename", fontType.m_filename);
-	metadata.SetChild("Style", fontType.m_style);
+	metadata.SetChild("filename", fontType.m_filename);
+	metadata.SetChild("style", fontType.m_style);
 	return metadata;
 }
 

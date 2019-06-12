@@ -217,21 +217,21 @@ void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const
 
 const Metadata &operator>>(const Metadata &metadata, Image2d &image)
 {
-	metadata.GetChild("Filename", image.m_filename);
-	metadata.GetChild("Filter", image.m_filter);
-	metadata.GetChild("Address Mode", image.m_addressMode);
-	metadata.GetChild("Anisotropic", image.m_anisotropic);
-	metadata.GetChild("Mipmap", image.m_mipmap);
+	metadata.GetChild("filename", image.m_filename);
+	metadata.GetChild("filter", image.m_filter);
+	metadata.GetChild("addressMode", image.m_addressMode);
+	metadata.GetChild("anisotropic", image.m_anisotropic);
+	metadata.GetChild("mipmap", image.m_mipmap);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Image2d &image)
 {
-	metadata.SetChild("Filename", image.m_filename);
-	metadata.SetChild("Filter", image.m_filter);
-	metadata.SetChild("Address Mode", image.m_addressMode);
-	metadata.SetChild("Anisotropic", image.m_anisotropic);
-	metadata.SetChild("Mipmap", image.m_mipmap);
+	metadata.SetChild("filename", image.m_filename);
+	metadata.SetChild("filter", image.m_filter);
+	metadata.SetChild("addressMode", image.m_addressMode);
+	metadata.SetChild("anisotropic", image.m_anisotropic);
+	metadata.SetChild("mipmap", image.m_mipmap);
 	return metadata;
 }
 }

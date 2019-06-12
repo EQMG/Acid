@@ -79,22 +79,22 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 
 const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 {
-	metadata.GetChild("Stages", shader.m_stages);
-	metadata.GetChild("Uniforms", shader.m_uniforms);
-	metadata.GetChild("Uniform Blocks", shader.m_uniformBlocks);
-	metadata.GetChild("Attributes", shader.m_attributes);
-	metadata.GetChild("Constants", shader.m_constants);
-	//metadata.GetChild("Local Sizes", shader.m_localSizes);
+	metadata.GetChild("stages", shader.m_stages);
+	metadata.GetChild("uniforms", shader.m_uniforms);
+	metadata.GetChild("uniformBlocks", shader.m_uniformBlocks);
+	metadata.GetChild("attributes", shader.m_attributes);
+	metadata.GetChild("constants", shader.m_constants);
+	//metadata.GetChild("localSizes", shader.m_localSizes);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Shader &shader)
 {
-	metadata.SetChild("Stages", shader.m_stages);
-	metadata.SetChild("Uniforms", shader.m_uniforms);
-	metadata.SetChild("Uniform Blocks", shader.m_uniformBlocks);
-	metadata.SetChild("Constants", shader.m_constants);
-	//metadata.SetChild("Local Sizes", shader.m_localSizes);
+	metadata.SetChild("stages", shader.m_stages);
+	metadata.SetChild("uniforms", shader.m_uniforms);
+	metadata.SetChild("uniformBlocks", shader.m_uniformBlocks);
+	metadata.SetChild("constants", shader.m_constants);
+	//metadata.SetChild("localSizes", shader.m_localSizes);
 	return metadata;
 }
 

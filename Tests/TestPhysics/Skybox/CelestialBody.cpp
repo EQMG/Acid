@@ -70,13 +70,13 @@ void CelestialBody::Update()
 
 const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody)
 {
-	metadata.GetChild("Type", celestialBody.m_type);
+	metadata.GetChild("type", celestialBody.m_type);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody)
 {
-	metadata.SetChild("Type", celestialBody.m_type);
+	metadata.SetChild("type", celestialBody.m_type);
 	return metadata;
 }
 }

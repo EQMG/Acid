@@ -139,14 +139,14 @@ void ModelObj::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
 {
-	metadata.GetChild("Filename", model.m_filename);
+	metadata.GetChild("filename", model.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelObj &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelObj");
-	metadata.SetChild("Filename", model.m_filename);
+	metadata.SetChild<std::string>("type", "ModelObj");
+	metadata.SetChild("filename", model.m_filename);
 	return metadata;
 }
 }

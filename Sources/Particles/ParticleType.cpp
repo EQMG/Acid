@@ -132,23 +132,23 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType)
 {
-	metadata.GetResource("Image", particleType.m_image);
-	metadata.GetChild("Number Of Rows", particleType.m_numberOfRows);
-	metadata.GetChild("Colour Offset", particleType.m_colourOffset);
-	metadata.GetChild("Life Length", particleType.m_lifeLength);
-	metadata.GetChild("Stage Cycles", particleType.m_stageCycles);
-	metadata.GetChild("Scale", particleType.m_scale);
+	metadata.GetResource("image", particleType.m_image);
+	metadata.GetChild("numberOfRows", particleType.m_numberOfRows);
+	metadata.GetChild("colourOffset", particleType.m_colourOffset);
+	metadata.GetChild("lifeLength", particleType.m_lifeLength);
+	metadata.GetChild("stageCycles", particleType.m_stageCycles);
+	metadata.GetChild("scale", particleType.m_scale);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ParticleType &particleType)
 {
-	metadata.SetResource("Image", particleType.m_image);
-	metadata.SetChild("Number Of Rows", particleType.m_numberOfRows);
-	metadata.SetChild("Colour Offset", particleType.m_colourOffset);
-	metadata.SetChild("Life Length", particleType.m_lifeLength);
-	metadata.SetChild("Stage Cycles", particleType.m_stageCycles);
-	metadata.SetChild("Scale", particleType.m_scale);
+	metadata.SetResource("image", particleType.m_image);
+	metadata.SetChild("numberOfRows", particleType.m_numberOfRows);
+	metadata.SetChild("colourOffset", particleType.m_colourOffset);
+	metadata.SetChild("lifeLength", particleType.m_lifeLength);
+	metadata.SetChild("stageCycles", particleType.m_stageCycles);
+	metadata.SetChild("scale", particleType.m_scale);
 	return metadata;
 }
 }

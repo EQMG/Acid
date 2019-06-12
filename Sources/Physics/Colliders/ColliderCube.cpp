@@ -40,15 +40,15 @@ void ColliderCube::SetExtents(const Vector3f &extents)
 
 const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider)
 {
-	metadata.GetChild("Local Transform", collider.m_localTransform);
-	metadata.GetChild("Extents", collider.m_extents);
+	metadata.GetChild("localTransform", collider.m_localTransform);
+	metadata.GetChild("extents", collider.m_extents);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ColliderCube &collider)
 {
-	metadata.SetChild("Local Transform", collider.m_localTransform);
-	metadata.SetChild("Extents", collider.m_extents);
+	metadata.SetChild("localTransform", collider.m_localTransform);
+	metadata.SetChild("extents", collider.m_extents);
 	return metadata;
 }
 }

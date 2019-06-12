@@ -62,16 +62,16 @@ void ModelRectangle::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model)
 {
-	metadata.GetChild("Min", model.m_min);
-	metadata.GetChild("Max", model.m_max);
+	metadata.GetChild("min", model.m_min);
+	metadata.GetChild("max", model.m_max);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelRectangle &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelRectangle");
-	metadata.SetChild("Min", model.m_min);
-	metadata.SetChild("Max", model.m_max);
+	metadata.SetChild<std::string>("type", "ModelRectangle");
+	metadata.SetChild("min", model.m_min);
+	metadata.SetChild("max", model.m_max);
 	return metadata;
 }
 }

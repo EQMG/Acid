@@ -40,15 +40,15 @@ void ColliderSphere::SetRadius(const float &radius)
 
 const Metadata &operator>>(const Metadata &metadata, ColliderSphere &collider)
 {
-	metadata.GetChild("Local Transform", collider.m_localTransform);
-	metadata.GetChild("Radius", collider.m_radius);
+	metadata.GetChild("localTransform", collider.m_localTransform);
+	metadata.GetChild("radius", collider.m_radius);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ColliderSphere &collider)
 {
-	metadata.SetChild("Local Transform", collider.m_localTransform);
-	metadata.SetChild("Radius", collider.m_radius);
+	metadata.SetChild("localTransform", collider.m_localTransform);
+	metadata.SetChild("radius", collider.m_radius);
 	return metadata;
 }
 }

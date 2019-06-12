@@ -33,7 +33,7 @@ void ModelRegister::Remove(const std::string &name)
 
 std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 {
-	auto typeName{metadata.GetChild<std::string>("Type")};
+	auto typeName{metadata.GetChild<std::string>("type")};
 
 	auto it{m_modelMetadatas.find(typeName)};
 

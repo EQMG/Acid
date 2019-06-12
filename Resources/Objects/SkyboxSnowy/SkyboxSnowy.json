@@ -1,29 +1,29 @@
 {
   "Mesh": {
-    "Model": {
-      "Type": "ModelSphere",
-      "Latitude Bands": 10,
-      "Longitude Bands": 10,
-      "Radius": 1.0
+    "model": {
+      "type": "ModelSphere",
+      "latitudeBands": 10,
+      "longitudeBands": 10,
+      "radius": 1.0
     }
   },
   "MaterialSkybox": {
-    "Image": {
-      "Filename": "Objects/SkyboxSnowy",
-      "Suffix": ".png",
-      "Sides": [
+    "image": {
+      "filename": "Objects/SkyboxSnowy",
+      "fileSuffix": ".png",
+      "fileSides": [
         "Right", "Left", "Top", "Bottom", "Back", "Front"
       ],
-      "Filter": 1,
-      "Address Mode": 2,
-      "Anisotropic": true,
-      "Mipmap": true
+      "filter": 1,
+      "addressMode": 2,
+      "anisotropic": true,
+      "mipmap": true
     },
-    "Base Colour": "#FFFFFF"
+    "baseColour": "#FFFFFF"
   },
   "SkyboxCycle": {
-    "Enable Fog": false,
-    "Enable Rotation": false
+    "enableFog": false,
+    "enableRotation": false
   },
   "MeshRender": {
   }

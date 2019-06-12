@@ -10,13 +10,13 @@
 namespace acid
 {
 Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
-	m_soundBuffer{SoundBuffer::Create(filename)},
+	m_buffer{SoundBuffer::Create(filename)},
 	m_type{type},
 	m_gain{gain},
 	m_pitch{pitch}
 {
 	alGenSources(1, &m_source);
-	alSourcei(m_source, AL_BUFFER, m_soundBuffer->GetBuffer());
+	alSourcei(m_source, AL_BUFFER, m_buffer->GetBuffer());
 
 	Audio::CheckAl(alGetError());
 
@@ -140,19 +140,19 @@ void Sound::SetPitch(const float &pitch)
 
 const Metadata &operator>>(const Metadata &metadata, Sound &sound)
 {
-	metadata.GetResource("Buffer", sound.m_soundBuffer);
-	metadata.GetChild("Type", sound.m_type);
-	metadata.GetChild("Gain", sound.m_gain);
-	metadata.GetChild("Pitch", sound.m_pitch);
+	metadata.GetResource("buffer", sound.m_buffer);
+	metadata.GetChild("type", sound.m_type);
+	metadata.GetChild("gain", sound.m_gain);
+	metadata.GetChild("pitch", sound.m_pitch);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Sound &sound)
 {
-	metadata.SetResource("Buffer", sound.m_soundBuffer);
-	metadata.SetChild("Type", sound.m_type);
-	metadata.SetChild("Gain", sound.m_gain);
-	metadata.SetChild("Pitch", sound.m_pitch);
+	metadata.SetResource("buffer", sound.m_buffer);
+	metadata.SetChild("type", sound.m_type);
+	metadata.SetChild("gain", sound.m_gain);
+	metadata.SetChild("pitch", sound.m_pitch);
 	return metadata;
 }
 }

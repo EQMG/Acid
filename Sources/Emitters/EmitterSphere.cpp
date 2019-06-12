@@ -37,13 +37,13 @@ Vector3f EmitterSphere::GeneratePosition() const
 
 const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter)
 {
-	metadata.GetChild("Radius", emitter.m_radius);
+	metadata.GetChild("radius", emitter.m_radius);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter)
 {
-	metadata.SetChild("Radius", emitter.m_radius);
+	metadata.SetChild("radius", emitter.m_radius);
 	return metadata;
 }
 }

@@ -122,13 +122,13 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 
 const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab)
 {
-	metadata.GetChild("Filename", entityPrefab.m_filename);
+	metadata.GetChild("filename", entityPrefab.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab)
 {
-	metadata.SetChild("Filename", entityPrefab.m_filename);
+	metadata.SetChild("filename", entityPrefab.m_filename);
 	return metadata;
 }
 }

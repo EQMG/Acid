@@ -90,18 +90,18 @@ void ModelSphere::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
 {
-	metadata.GetChild("Latitude Bands", model.m_latitudeBands);
-	metadata.GetChild("Longitude Bands", model.m_longitudeBands);
-	metadata.GetChild("Radius", model.m_radius);
+	metadata.GetChild("latitudeBands", model.m_latitudeBands);
+	metadata.GetChild("longitudeBands", model.m_longitudeBands);
+	metadata.GetChild("radius", model.m_radius);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelSphere");
-	metadata.SetChild("Latitude Bands", model.m_latitudeBands);
-	metadata.SetChild("Longitude Bands", model.m_longitudeBands);
-	metadata.SetChild("Radius", model.m_radius);
+	metadata.SetChild<std::string>("type", "ModelSphere");
+	metadata.SetChild("latitudeBands", model.m_latitudeBands);
+	metadata.SetChild("longitudeBands", model.m_longitudeBands);
+	metadata.SetChild("radius", model.m_radius);
 	return metadata;
 }
 }
