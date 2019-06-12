@@ -5,14 +5,14 @@
 namespace acid
 {
 AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes, const Matrix4 &correction) :
-	m_libraryAnimations(libraryAnimations),
-	m_libraryVisualScenes(libraryVisualScenes),
-	m_correction(correction)
+	m_libraryAnimations{libraryAnimations},
+	m_libraryVisualScenes{libraryVisualScenes},
+	m_correction{correction}
 {
-	auto animationNodes = m_libraryAnimations->FindChildren("animation");
+	auto animationNodes{m_libraryAnimations->FindChildren("animation")};
 
-	std::string rootNode = FindRootJointName();
-	auto times = GetKeyTimes();
+	auto rootNode{FindRootJointName()};
+	auto times{GetKeyTimes()};
 	m_lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
@@ -24,14 +24,15 @@ AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metada
 
 std::string AnimationLoader::FindRootJointName() const
 {
-	auto skeleton = m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
-	return skeleton->FindChild("node")->FindAttribute("id");
+	auto skeleton{m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature")};
+	return *skeleton->FindChild("node")->FindAttribute("id");
 }
 
 std::vector<Time> AnimationLoader::GetKeyTimes() const
 {
-	auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
-	auto rawTimes = String::Split(timeData->GetValue(), " ");
+	auto timeData{m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array")};
+	auto rawTimes{String::Split(timeData->GetValue(), " ")};
+	
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
 
@@ -47,45 +48,48 @@ void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 {
 	for (const auto &time : times)
 	{
-		m_keyframes.emplace_back(Keyframe(time, {}));
+		m_keyframes.emplace_back(Keyframe{time, {}});
 	}
 }
 
 void AnimationLoader::LoadJointTransforms(const Metadata *jointData, const std::string &rootNodeId)
 {
-	std::string jointNameId = GetJointName(jointData);
-	std::string dataId = GetDataId(jointData);
+	auto jointNameId{GetJointName(jointData)};
+	auto dataId{GetDataId(jointData)};
 
-	auto transformData = jointData->FindChildWithAttribute("source", "id", dataId);
+	auto transformData{jointData->FindChildWithAttribute("source", "id", dataId)};
 
-	std::string data = transformData->FindChild("float_array")->GetValue();
-	auto splitData = String::Split(data, " ");
+	auto data{transformData->FindChild("float_array")->GetValue()};
+	auto splitData{String::Split(data, " ")};
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }
 
 std::string AnimationLoader::GetDataId(const Metadata *jointData)
 {
-	auto node = jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT");
-	return node->FindAttribute("source").substr(1);
+	auto node{jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT")};
+	return node->FindAttribute("source")->substr(1);
 }
 
 std::string AnimationLoader::GetJointName(const Metadata *jointData)
 {
-	auto channelNode = jointData->FindChild("channel");
-	std::string data = channelNode->FindAttribute("target");
-	auto splitData = String::Split(data, "/");
+	auto channelNode{jointData->FindChild("channel")};
+	auto data{channelNode->FindAttribute("target")};
+	auto splitData{String::Split(*data, "/")};
 	return splitData[0];
 }
 
 void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
 {
-	for (uint32_t i = 0; i < m_keyframes.size(); i++)
+	for (uint32_t i{}; i < m_keyframes.size(); i++)
 	{
 		Matrix4 transform;
 
-		for (uint32_t j = 0; j < 16; j++)
+		for (uint32_t row{}; row < 4; row++)
 		{
-			transform.m_linear[j] = String::From<float>(rawData[i * 16 + j]);
+			for (uint32_t col{}; col < 4; col++)
+			{
+				transform[row][col] = String::From<float>(rawData[16 * i + (row * 4 + col)]);
+			}
 		}
 
 		transform = transform.Transpose();

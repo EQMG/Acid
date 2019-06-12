@@ -10,7 +10,7 @@ class ACID_EXPORT UiInputButton :
 	public UiObject
 {
 public:
-	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = UiTransform(Size));
+	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = {Size});
 
 	void UpdateObject() override;
 

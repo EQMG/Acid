@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Maths/Colour.hpp>
 #include <Models/Shapes/MeshSimple.hpp>
 #include <Maths/Maths.hpp>
 

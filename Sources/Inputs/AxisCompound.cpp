@@ -2,22 +2,15 @@
 
 namespace acid
 {
-AxisCompound::AxisCompound(const std::vector<Axis *> &axes)
+/*AxisCompound::AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes) :
+	m_axes{std::move(axes)}
 {
-	for (const auto &axis : axes)
-	{
-		axis->OnAxis().Add([this](float value)
-		{
-			m_onAxis(GetAmount());
-		}, this);
-
-		m_axes.emplace_back(axis);
-	}
-}
+	ConnectAxes();
+}*/
 
 float AxisCompound::GetAmount() const
 {
-	auto result = 0.0f;
+	float result{};
 
 	for (const auto &axis : m_axes)
 	{
@@ -25,5 +18,16 @@ float AxisCompound::GetAmount() const
 	}
 
 	return std::clamp(result, -1.0f, 1.0f);
+}
+
+void AxisCompound::ConnectAxes()
+{
+	for (auto &axis : m_axes)
+	{
+		axis->OnAxis().Add([this](float value)
+		{
+			m_onAxis(GetAmount());
+		}, this);
+	}
 }
 }

@@ -6,16 +6,15 @@
 namespace acid
 {
 RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType> subpasses, const Viewport &viewport) :
-	m_attachments(std::move(images)),
-	m_subpasses(std::move(subpasses)),
-	m_viewport(viewport),
-	m_subpassAttachmentCount(m_subpasses.size()),
-	m_subpassMultisampled(m_subpasses.size()),
-	m_outOfDate(false)
+	m_attachments{std::move(images)},
+	m_subpasses{std::move(subpasses)},
+	m_viewport{viewport},
+	m_subpassAttachmentCount(m_subpasses.size()), // TODO C++20: {m_subpasses.size()}
+	m_subpassMultisampled(m_subpasses.size())
 {
 	for (const auto &image : m_attachments)
 	{
-		VkClearValue clearValue = {};
+		VkClearValue clearValue{};
 
 		switch (image.GetType())
 		{
@@ -24,9 +23,8 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 			for (const auto &subpass : m_subpasses)
 			{
-				auto subpassBindings = subpass.GetAttachmentBindings();
-
-				if (std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
+				if (auto subpassBindings{subpass.GetAttachmentBindings()};
+					std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
 				{
 					m_subpassAttachmentCount[subpass.GetBinding()]++;
 
@@ -54,7 +52,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 void RenderStage::Update()
 {
-	auto lastRenderArea = m_renderArea;
+	auto lastRenderArea{m_renderArea};
 
 	m_renderArea.SetOffset(m_viewport.GetOffset());
 
@@ -76,15 +74,15 @@ void RenderStage::Update()
 void RenderStage::Rebuild(const Swapchain &swapchain)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
 	Update();
 
-	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto surface = Graphics::Get()->GetSurface();
+	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
+	auto surface{Graphics::Get()->GetSurface()};
 
-	auto msaaSamples = physicalDevice->GetMsaaSamples();
+	auto msaaSamples{physicalDevice->GetMsaaSamples()};
 
 	if (m_depthAttachment)
 	{
@@ -114,17 +112,17 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
+	auto debugEnd{Time::Now()};
 	Log::Out("Render Stage built in %.3fms\n", (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
 std::optional<Attachment> RenderStage::GetAttachment(const std::string &name) const
 {
-	auto it = std::find_if(m_attachments.begin(), m_attachments.end(), [name](const Attachment &a)
+	auto it{std::find_if(m_attachments.begin(), m_attachments.end(), [name](const Attachment &a)
 	{
 		return a.GetName() == name;
-	});
+	})};
 
 	if (it == m_attachments.end())
 	{
@@ -136,10 +134,10 @@ std::optional<Attachment> RenderStage::GetAttachment(const std::string &name) co
 
 std::optional<Attachment> RenderStage::GetAttachment(const uint32_t &binding) const
 {
-	auto it = std::find_if(m_attachments.begin(), m_attachments.end(), [binding](const Attachment &a)
+	auto it{std::find_if(m_attachments.begin(), m_attachments.end(), [binding](const Attachment &a)
 	{
 		return a.GetBinding() == binding;
-	});
+	})};
 
 	if (it == m_attachments.end())
 	{
@@ -151,7 +149,7 @@ std::optional<Attachment> RenderStage::GetAttachment(const uint32_t &binding) co
 
 const Descriptor *RenderStage::GetDescriptor(const std::string &name) const
 {
-	auto it = m_descriptors.find(name);
+	auto it{m_descriptors.find(name)};
 
 	if (it != m_descriptors.end())
 	{

@@ -7,7 +7,7 @@ namespace acid
 {
 ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData, const float &minHeight,
 	const float &maxHeight, const bool &flipQuadEdges, const Transform &localTransform) :
-	Collider(localTransform)
+	Collider{localTransform}
 {
 	Initialize(heightStickWidth, heightStickLength, heightfieldData, minHeight, maxHeight, flipQuadEdges);
 }
@@ -42,13 +42,13 @@ void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int3
 
 const Metadata &operator>>(const Metadata &metadata, ColliderHeightfield &collider)
 {
-	metadata.GetChild("Local Transform", collider.m_localTransform);
+	metadata.GetChild("localTransform", collider.m_localTransform);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ColliderHeightfield &collider)
 {
-	metadata.SetChild("Local Transform", collider.m_localTransform);
+	metadata.SetChild("localTransform", collider.m_localTransform);
 	return metadata;
 }
 }

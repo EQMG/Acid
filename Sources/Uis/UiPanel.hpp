@@ -21,7 +21,7 @@ class ACID_EXPORT UiPanel :
 	public UiObject
 {
 public:
-	explicit UiPanel(UiObject *parent, const UiTransform &transform = UiTransform(), const Colour &colour = UiInputButton::BackgroundColour, 
+	UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour = UiInputButton::BackgroundColour,
 		const BitMask<UiManipulate> &manipulate = UiManipulate::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
 
 	void UpdateObject() override;

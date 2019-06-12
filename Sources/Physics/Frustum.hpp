@@ -10,10 +10,7 @@ namespace acid
 class ACID_EXPORT Frustum
 {
 public:
-	/**
-	 * Creates a new frustum.
-	 */
-	Frustum();
+	Frustum() = default;
 
 	/**
 	 * Updates a frustum from the view and projection matrix.
@@ -48,6 +45,6 @@ public:
 private:
 	void NormalizePlane(const int32_t &side);
 
-	std::array<std::array<float, 4>, 6> m_frustum;
+	std::array<std::array<float, 4>, 6> m_frustum{};
 };
 }

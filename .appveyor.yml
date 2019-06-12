@@ -4,7 +4,7 @@ clone_depth: 5
 
 build:
   parallel: true
-  verbosity: normal
+  verbosity: minimal
 
 environment:
   matrix:
@@ -43,7 +43,7 @@ install:
 build_script:
   - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
   - mkdir Build\%BUILD_OUT% && cd Build\%BUILD_OUT%
-  - cmake -DCMAKE_BUILD_TYPE=%CFG% -DACID_LINK_RESOURCES=OFF -GNinja ../../
+  - cmake ../../ -GNinja -DCMAKE_BUILD_TYPE=%CFG% -DACID_LINK_RESOURCES=OFF
   - ninja
   - ninja install
   - cd ../../

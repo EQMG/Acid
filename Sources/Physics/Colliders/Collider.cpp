@@ -7,13 +7,12 @@
 namespace acid
 {
 Collider::Collider(const Transform &localTransform, const std::shared_ptr<GizmoType> &gizmoType) :
-	m_localTransform(localTransform),
-	m_gizmo(nullptr)
+	m_localTransform{localTransform}
 {
 #if defined(ACID_VERBOSE)
 	if (gizmoType != nullptr)
 	{
-		m_gizmo = Gizmos::Get()->AddGizmo(new Gizmo(gizmoType, localTransform));
+		m_gizmo = Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType, localTransform));
 	}
 #endif
 }
@@ -35,7 +34,7 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 {
 	m_localTransform = localTransform;
 
-	auto collisionObject = GetParent()->GetComponent<CollisionObject>();
+	auto collisionObject{GetParent()->GetComponent<CollisionObject>()};
 
 	if (collisionObject != nullptr)
 	{
@@ -45,30 +44,30 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 
 btVector3 Collider::Convert(const Vector3f &vector)
 {
-	return btVector3(vector.m_x, vector.m_y, vector.m_z);
+	return {vector.m_x, vector.m_y, vector.m_z};
 }
 
 Vector3f Collider::Convert(const btVector3 &vector)
 {
-	return Vector3f(vector.getX(), vector.getY(), vector.getZ());
+	return {vector.getX(), vector.getY(), vector.getZ()};
 }
 
 btQuaternion Collider::Convert(const Quaternion &quaternion)
 {
-	return btQuaternion(quaternion.m_x, quaternion.m_y, quaternion.m_z, quaternion.m_w);
+	return {quaternion.m_x, quaternion.m_y, quaternion.m_z, quaternion.m_w};
 }
 
 Quaternion Collider::Convert(const btQuaternion &quaternion)
 {
-	return Quaternion(quaternion.getX(), quaternion.getY(), quaternion.getZ(), quaternion.getW());
+	return {quaternion.getX(), quaternion.getY(), quaternion.getZ(), quaternion.getW()};
 }
 
 btTransform Collider::Convert(const Transform &transform)
 {
-	auto rotation = btQuaternion();
+	btQuaternion rotation;
 	rotation.setEulerZYX(transform.GetRotation().m_y, transform.GetRotation().m_x, transform.GetRotation().m_z);
 
-	auto worldTransform = btTransform();
+	btTransform worldTransform;
 	worldTransform.setIdentity();
 	worldTransform.setOrigin(Convert(transform.GetPosition()));
 	worldTransform.setRotation(rotation);
@@ -77,9 +76,9 @@ btTransform Collider::Convert(const Transform &transform)
 
 Transform Collider::Convert(const btTransform &transform, const Vector3f &scaling)
 {
-	auto position = transform.getOrigin();
+	auto position{transform.getOrigin()};
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
-	return Transform(Convert(position), Vector3f(pitch, yaw, roll), scaling);
+	return {Convert(position), {pitch, yaw, roll}, scaling};
 }
 }

@@ -54,7 +54,7 @@ public:
 private:
 	Pipeline::Stage m_pipelineStage;
 	PipelineGraphicsCreate m_pipelineCreate;
-	const RenderStage *m_renderStage;
+	const RenderStage *m_renderStage{};
 	std::unique_ptr<PipelineGraphics> m_pipeline;
 };
 }

@@ -16,7 +16,7 @@ public:
 	 * @param pipelineStage The pipelines graphics stage.
 	 */
 	explicit PostPipeline(const Pipeline::Stage &pipelineStage) :
-		Subrender(pipelineStage)
+		Subrender{pipelineStage}
 	{
 	}
 

@@ -20,9 +20,9 @@ public:
 	 * @param length The time to get to the end value. 
 	 **/
 	DriverSlide(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
-		m_start(start),
-		m_end(end)
+		Driver<T>{length},
+		m_start{start},
+		m_end{end}
 	{
 	}
 
@@ -53,7 +53,7 @@ public:
 protected:
 	T Calculate(const float &factor) override
 	{
-		auto realTime = static_cast<float>(std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength());
+		auto realTime{static_cast<float>(std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength())};
 		return m_start + realTime * (m_end - m_start);
 		//return Maths::CosInterpolate(m_start, m_end, realTime);
 	}

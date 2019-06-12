@@ -3,20 +3,18 @@
 namespace acid
 {
 UniformHandler::UniformHandler(const bool &multipipeline) :
-	m_multipipeline(multipipeline),
-	m_size(0),
-	m_uniformBuffer(nullptr),
-	m_handlerStatus(Buffer::Status::Normal)
+	m_multipipeline{multipipeline},
+	m_handlerStatus{Buffer::Status::Normal}
 {
 }
 
 UniformHandler::UniformHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline) :
-	m_multipipeline(multipipeline),
-	m_uniformBlock(uniformBlock),
-	m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
-	m_data(std::make_unique<char[]>(m_size)),
-	m_uniformBuffer(std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size))),
-	m_handlerStatus(Buffer::Status::Normal)
+	m_multipipeline{multipipeline},
+	m_uniformBlock{uniformBlock},
+	m_size{static_cast<uint32_t>(m_uniformBlock->GetSize())},
+	m_data{std::make_unique<char[]>(m_size)},
+	m_uniformBuffer{std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size))},
+	m_handlerStatus{Buffer::Status::Normal}
 {
 }
 

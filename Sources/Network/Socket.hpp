@@ -48,11 +48,15 @@ public:
 	enum class Status
 	{
 		/// The socket has sent / received the data.
-			Done, /// The socket is not ready to send / receive data yet.
-			NotReady, /// The socket sent a part of the data.
-			Partial, /// The TCP socket has been disconnected.
-			Disconnected, /// An unexpected error happened.
-			Error
+		Done, 
+		/// The socket is not ready to send / receive data yet.
+		NotReady, 
+		/// The socket sent a part of the data.
+		Partial, 
+		/// The TCP socket has been disconnected.
+		Disconnected, 
+		/// An unexpected error happened.
+		Error
 	};
 
 	/**
@@ -116,8 +120,9 @@ protected:
 	enum class Type
 	{
 		/// TCP protocol.
-			Tcp, /// UDP protocol.
-			Udp
+		Tcp, 
+		/// UDP protocol.
+		Udp
 	};
 
 	/**
@@ -125,7 +130,7 @@ protected:
 	 * This constructor can only be accessed by derived classes.
 	 * @param type Type of the socket (TCP or UDP). 
 	 **/
-	Socket(Type type);
+	Socket(const Type &type);
 
 	/**
 	 * Return the internal handle of the socket.

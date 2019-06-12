@@ -4,6 +4,7 @@
 
 #include "tiny_obj_loader.h"
 #include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
@@ -14,7 +15,7 @@ class MaterialStreamReader :
 {
 public:
 	explicit MaterialStreamReader(std::string folder) :
-		m_folder(std::move(folder))
+		m_folder{std::move(folder)}
 	{
 	}
 
@@ -23,7 +24,7 @@ public:
 		(void) err;
 		(void) matId;
 
-		std::string filepath = m_folder + "/" + matId;
+		auto filepath{m_folder + "/" + matId};
 
 		if (!Files::ExistsInPath(filepath))
 		{
@@ -49,14 +50,14 @@ private:
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelObj>(resource);
 	}
 
-	auto result = std::make_shared<ModelObj>("");
+	auto result{std::make_shared<ModelObj>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -65,8 +66,8 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 {
-	auto temp = ModelObj(filename, false);
-	Metadata metadata = Metadata();
+	ModelObj temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -88,10 +89,10 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto folder = FileSystem::ParentDirectory(m_filename);
+	auto folder{FileSystem::ParentDirectory(m_filename)};
 	IFStream inStream(m_filename);
 	MaterialStreamReader materialReader(folder);
 
@@ -113,10 +114,10 @@ void ModelObj::Load()
 	{
 		for (const auto &index : shape.mesh.indices)
 		{
-			Vector3f position = Vector3f(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
-			Vector2f uv = Vector2f(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
-			Vector3f normal = Vector3f(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
-			VertexDefault vertex = VertexDefault(position, uv, normal);
+			Vector3f position{attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]};
+			Vector2f uv{attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
+			Vector3f normal{attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]};
+			VertexDefault vertex{position, uv, normal};
 
 			if (uniqueVertices.count(vertex) == 0)
 			{
@@ -129,8 +130,8 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);
@@ -138,14 +139,14 @@ void ModelObj::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
 {
-	metadata.GetChild("Filename", model.m_filename);
+	metadata.GetChild("filename", model.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelObj &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelObj");
-	metadata.SetChild("Filename", model.m_filename);
+	metadata.SetChild<std::string>("type", "ModelObj");
+	metadata.SetChild("filename", model.m_filename);
 	return metadata;
 }
 }

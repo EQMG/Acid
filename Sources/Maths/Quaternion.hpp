@@ -13,12 +13,17 @@ class ACID_EXPORT Quaternion
 public:
 	/**
 	 * Constructor for Quaternion.
+	 **/
+	Quaternion() = default;
+
+	/**
+	 * Constructor for Quaternion.
 	 * @param x Start x. 
 	 * @param y Start y. 
 	 * @param z Start z. 
 	 * @param w Start w. 
 	 **/
-	explicit Quaternion(const float &x = 0.0f, const float &y = 0.0f, const float &z = 0.0f, const float &w = 1.0f);
+	Quaternion(const float &x, const float &y, const float &z, const float &w);
 
 	/**
 	 * Constructor for Quaternion.
@@ -204,7 +209,7 @@ public:
 	static const Quaternion PositiveInfinity;
 	static const Quaternion NegativeInfinity;
 
-	float m_x, m_y, m_z, m_w;
+	float m_x{}, m_y{}, m_z{}, m_w{1.0f};
 };
 }
 
@@ -215,7 +220,7 @@ struct hash<acid::Quaternion>
 {
 	size_t operator()(const acid::Quaternion &quaternion) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, quaternion.m_x);
 		acid::Maths::HashCombine(seed, quaternion.m_y);
 		acid::Maths::HashCombine(seed, quaternion.m_z);

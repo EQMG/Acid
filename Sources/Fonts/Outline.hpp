@@ -9,20 +9,20 @@ typedef FT_Outline_ FT_Outline;
 
 namespace acid
 {
-class ACID_EXPORT WIPCell
+class ACID_EXPORT WipCell
 {
 public:
 	Rect m_bbox;
-	uint32_t m_value;
-	uint32_t m_from;
-	uint32_t m_to;
-	uint32_t m_startLength;
+	uint32_t m_value{};
+	uint32_t m_from{};
+	uint32_t m_to{};
+	uint32_t m_startLength{};
 };
 
 class ACID_EXPORT ContourRange
 {
 public:
-	uint32_t m_begin, m_end;
+	uint32_t m_begin{}, m_end{};
 };
 
 class ACID_EXPORT Outline
@@ -37,7 +37,7 @@ public:
 	std::vector<uint32_t> m_cells;
 	Vector2ui m_cellCount;
 
-	uint32_t m_cornerFixBegin;
+	uint32_t m_cornerFixBegin{};
 };
 
 static void OutlineAddOddPoint(Outline *o);
@@ -60,23 +60,23 @@ static uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to);
 
 static bool IsCellFilled(const Outline *o, const Rect &bbox);
 
-static bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell &cell);
+static bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell &cell);
 
-static bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell &cell, uint32_t &maxStartLength);
+static bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell &cell, uint32_t &maxStartLength);
 
-static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WIPCell *cells);
+static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell *cells);
 
-static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WIPCell *cells, uint32_t &maxStartLength);
+static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell *cells, uint32_t &maxStartLength);
 
-static void CopyWipcellValues(Outline *u, const WIPCell *cells);
+static void CopyWipcellValues(Outline *u, const WipCell *cells);
 
-static void InitWipcells(const Outline *o, WIPCell *cells);
+static void InitWipcells(const Outline *o, WipCell *cells);
 
 static uint32_t OutlineAddFilledLine(Outline *o);
 
 static uint32_t MakeCellFromSingleEdge(const uint32_t &e);
 
-static void SetFilledCells(const Outline *u, WIPCell *cells, const uint32_t &filledCell);
+static void SetFilledCells(const Outline *u, WipCell *cells, const uint32_t &filledCell);
 
 static bool TryToFitInCellCount(Outline *o);
 

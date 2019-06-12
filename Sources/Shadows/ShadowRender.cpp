@@ -24,7 +24,7 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	m_pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * GetParent()->GetWorldMatrix());
 
 	// Gets required components.
-	auto mesh = GetParent()->GetComponent<Mesh>();
+	auto mesh{GetParent()->GetComponent<Mesh>()};
 
 	if (mesh == nullptr || mesh->GetModel() == nullptr)
 	{
@@ -33,9 +33,8 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushObject", m_pushObject);
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}

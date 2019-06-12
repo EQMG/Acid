@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderSphere :
 	public Collider
 {
 public:
-	explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = Transform());
+	explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = {});
 
 	~ColliderSphere();
 

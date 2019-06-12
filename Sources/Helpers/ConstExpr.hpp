@@ -110,6 +110,7 @@ template<typename T> inline constexpr bool is_ptr_access_v = std::is_pointer_v<T
 class ACID_EXPORT ConstExpr
 {
 public:
+	// TODO C++20: std::to_address
 	template<typename T>
 	static T *AsPtr(T &obj) { return &obj; }
 

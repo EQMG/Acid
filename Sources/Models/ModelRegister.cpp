@@ -33,13 +33,13 @@ void ModelRegister::Remove(const std::string &name)
 
 std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 {
-	auto typeName = metadata.GetChild<std::string>("Type");
+	auto typeName{metadata.GetChild<std::string>("type")};
 
-	auto it = m_modelMetadatas.find(typeName);
+	auto it{m_modelMetadatas.find(typeName)};
 
 	if (it == m_modelMetadatas.end())
 	{
-		Log::Warning("Could not find registered model by name: '%s'\n", typeName.c_str());
+		Log::Warning("Could not find registered model by name: '%s'\n", typeName);
 		return nullptr;
 	}
 
@@ -48,12 +48,12 @@ std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 
 std::shared_ptr<Model> ModelRegister::Create(const std::string &filename) const
 {
-	auto fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
-	auto it = m_modelExtensions.find(fileExt);
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(filename))};
+	auto it{m_modelExtensions.find(fileExt)};
 
 	if (it == m_modelExtensions.end())
 	{
-		Log::Warning("Could not find registered model by extension: '%s'\n", fileExt.c_str());
+		Log::Warning("Could not find registered model by extension: '%s'\n", fileExt);
 		return nullptr;
 	}
 

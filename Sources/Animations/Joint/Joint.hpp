@@ -10,9 +10,9 @@ class ACID_EXPORT JointData :
 {
 public:
 	JointData(const uint32_t &index, std::string nameId, const Matrix4 &bindLocalTransform) :
-		m_index(index),
-		m_nameId(std::move(nameId)),
-		m_bindLocalTransform(bindLocalTransform)
+		m_index{index},
+		m_nameId{std::move(nameId)},
+		m_bindLocalTransform{bindLocalTransform}
 	{
 	}
 
@@ -24,9 +24,9 @@ public:
 
 	const std::vector<std::unique_ptr<JointData>> &GetChildren() const { return m_children; }
 
-	void AddChild(JointData *child)
+	void AddChild(std::unique_ptr<JointData> &&child)
 	{
-		m_children.emplace_back(child);
+		m_children.emplace_back(std::move(child));
 	}
 
 private:
@@ -92,7 +92,7 @@ public:
 	 * which is why they are stored in a list (e.g. a "hand" joint may have multiple "finger" children joints).
 	 * @param child The new child joint of this joint.
 	 **/
-	void AddChild(Joint *child);
+	void AddChild(std::unique_ptr<Joint> &&child);
 
 	/**
 	 * Adds this joint to an array, they for each child calls the same method.

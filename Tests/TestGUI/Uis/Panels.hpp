@@ -24,13 +24,13 @@ public:
 	explicit Inventory(UiObject* parent) :
 		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom))
 	{
-		SetScaleDriver(new DriverSinwave<Vector2f>(Vector2f(0.9f), Vector2f(1.2f), 6s));
+		SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f{0.9f}, Vector2f{1.2f}, 6s));
 		for (uint32_t i = 0; i < 10; i++)
 		{
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);
 
 			auto slot = std::make_unique<Gui>(this, UiTransform(Vector2i(48, 48), UiAnchor::LeftTop, Vector2i(48 * i, 0)), Image2d::Create("Guis/White.png"));
-			slot->SetColourDriver(new DriverConstant<Colour>(colour)); // TODO: If colour for GUI is like this do the same for text.
+			slot->SetColourDriver(std::make_unique<DriverConstant<Colour>>(colour)); // TODO: If colour for GUI is like this do the same for text.
 			m_slots.emplace_back(std::move(slot));
 
 			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform(Vector2i(24, 16), UiAnchor::CentreBottom), 12,

@@ -86,15 +86,15 @@ protected:
 
 		if (!vertices.empty())
 		{
-			auto vertexStaging = Buffer(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-				vertices.data());
+			Buffer vertexStaging{sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+				vertices.data()};
 			m_vertexBuffer = std::make_unique<Buffer>(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 			m_vertexCount = static_cast<uint32_t>(vertices.size());
 
-			CommandBuffer commandBuffer = CommandBuffer();
+			CommandBuffer commandBuffer;
 
-			VkBufferCopy copyRegion = {};
+			VkBufferCopy copyRegion{};
 			copyRegion.size = sizeof(T) * vertices.size();
 			vkCmdCopyBuffer(commandBuffer, vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
 
@@ -103,15 +103,15 @@ protected:
 
 		if (!indices.empty())
 		{
-			auto indexStaging = Buffer(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
+			Buffer indexStaging{sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data()};
 			m_indexBuffer = std::make_unique<Buffer>(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 			m_indexCount = static_cast<uint32_t>(indices.size());
 
-			CommandBuffer commandBuffer = CommandBuffer();
+			CommandBuffer commandBuffer;
 
-			VkBufferCopy copyRegion = {};
+			VkBufferCopy copyRegion{};
 			copyRegion.size = sizeof(uint32_t) * indices.size();
 			vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
 
@@ -123,7 +123,7 @@ protected:
 
 		for (const auto &vertex : vertices)
 		{
-			auto position = Vector3f(vertex.m_position);
+			auto position{Vector3f(vertex.m_position)};
 			m_minExtents = m_minExtents.Min(position);
 			m_maxExtents = m_maxExtents.Max(position);
 		}
@@ -134,11 +134,11 @@ protected:
 private:
 	std::unique_ptr<Buffer> m_vertexBuffer;
 	std::unique_ptr<Buffer> m_indexBuffer;
-	uint32_t m_vertexCount;
-	uint32_t m_indexCount;
+	uint32_t m_vertexCount{};
+	uint32_t m_indexCount{};
 
 	Vector3f m_minExtents;
 	Vector3f m_maxExtents;
-	float m_radius;
+	float m_radius{};
 };
 }

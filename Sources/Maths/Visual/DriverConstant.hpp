@@ -19,8 +19,8 @@ public:
 	 * @param constant The constant value. 
 	 **/
 	explicit DriverConstant(const T &constant) :
-		Driver<T>(-1s),
-		m_constant(constant)
+		Driver<T>{-1s},
+		m_constant{constant}
 	{
 	}
 

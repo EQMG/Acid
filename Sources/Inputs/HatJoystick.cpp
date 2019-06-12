@@ -3,17 +3,16 @@
 namespace acid
 {
 HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMask<JoystickHat> &hatFlags) :
-	m_port(port),
-	m_hat(hat),
-	m_hatFlags(hatFlags),
-	m_lastDown(false)
+	m_port{port},
+	m_hat{hat},
+	m_hatFlags{hatFlags}
 {
 	Joysticks::Get()->OnHat().Add([this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value)
 	{
 		if (port == m_port && hat == m_hat)
 		{
 			m_onAxis(GetAmount());
-			bool isDown = IsDown();
+			auto isDown{IsDown()};
 
 			if (!m_lastDown && isDown)
 			{
@@ -35,7 +34,7 @@ HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMas
 
 float HatJoystick::GetAmount() const
 {
-	auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
+	auto hat{Joysticks::Get()->GetHat(m_port, m_hat)};
 
 	if (hat & JoystickHat::Up)
 	{

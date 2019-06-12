@@ -5,13 +5,11 @@
 
 namespace acid
 {
-Json::Json() :
-	Metadata("", "")
+Json::Json()
 {
 }
 
-Json::Json(Metadata *metadata) :
-	Metadata("", "")
+Json::Json(Metadata *metadata)
 {
 	AddChildren(metadata, this);
 }
@@ -21,11 +19,11 @@ void Json::Load(std::istream *inStream)
 	ClearChildren();
 	ClearAttributes();
 
-	auto topSection = std::make_unique<Section>(nullptr, "", "");
-	Section *currentSection = nullptr;
+	auto topSection{std::make_unique<Section>(nullptr, "", "")};
+	Section *currentSection{};
 	std::stringstream summation;
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream->peek() != -1)
@@ -33,7 +31,7 @@ void Json::Load(std::istream *inStream)
 		Files::SafeGetLine(*inStream, linebuf);
 		lineNum++;
 
-		for (const char &c : linebuf)
+		for (const auto &c : linebuf)
 		{
 			if (c == '{' || c == '[')
 			{
@@ -47,7 +45,7 @@ void Json::Load(std::istream *inStream)
 
 				if (!summation.str().empty())
 				{
-					auto contentSplit = String::Split(summation.str(), "\"");
+					auto contentSplit{String::Split(summation.str(), "\"")};
 
 					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
 					{
@@ -56,16 +54,16 @@ void Json::Load(std::istream *inStream)
 				}
 
 				currentSection->m_content += summation.str();
-				summation.str(std::string());
+				summation.str({});
 
-				auto section = new Section(currentSection, name, "");
+				auto section{new Section(currentSection, name, "")};
 				currentSection->m_children.emplace_back(section);
 				currentSection = section;
 			}
 			else if (c == '}' || c == ']')
 			{
 				currentSection->m_content += summation.str();
-				summation.str(std::string());
+				summation.str({});
 
 				if (currentSection->m_parent != nullptr)
 				{
@@ -94,32 +92,31 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+		auto created{destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()))};
 		AddChildren(child.get(), created);
 	}
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		destination->AddAttribute(attribute.first, attribute.second);
+		destination->SetAttribute(attribute.first, attribute.second);
 	}
 }
 
 void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 {
-	auto thisValue = parent;
+	auto thisValue{parent};
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata(source->m_name, "");
-		parent->AddChild(thisValue);
+		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
 	}
 
-	auto contentSplit = String::Split(source->m_content, ",", true);
+	auto contentSplit{String::Split(source->m_content, ",", true)};
 
 	for (const auto &data : contentSplit)
 	{
 		std::string name;
-		std::string value = data;
+		auto value{data};
 
 		if (String::Contains(data, ":"))
 		{
@@ -143,12 +140,11 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 				value = value.substr(1, value.size() - 2);
 			}
 
-			thisValue->AddAttribute(name, value);
+			thisValue->SetAttribute(name, value);
 		}
 		else
 		{
-			auto newChild = new Metadata(name, value);
-			thisValue->AddChild(newChild);
+			thisValue->AddChild(std::make_unique<Metadata>(name, value));
 		}
 	}
 
@@ -162,13 +158,13 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 {
 	std::stringstream indents;
 
-	for (int32_t i = 0; i < indentation; i++)
+	for (int32_t i{}; i < indentation; i++)
 	{
 		indents << "  ";
 	}
 
-	char openBrace = '{';
-	char closeBrace = '}';
+	auto openBrace{'{'};
+	auto closeBrace{'}'};
 
 	for (const auto &child : source->GetChildren())
 	{

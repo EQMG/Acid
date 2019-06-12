@@ -64,7 +64,7 @@ public:
 	 * Sets the colour offset driver.
 	 * @param colourDriver The new colour offset driver.
 	 */
-	void SetColourDriver(Driver<Colour> *colourDriver) { m_colourDriver.reset(colourDriver); }
+	void SetColourDriver(std::unique_ptr<Driver<Colour>> &&colourDriver) { m_colourDriver = std::move(colourDriver); }
 
 	const Colour &GetColourOffset() const { return m_colourOffset; }
 
@@ -74,8 +74,8 @@ private:
 
 	std::shared_ptr<Model> m_model;
 	std::shared_ptr<Image2d> m_image;
-	uint32_t m_numberOfRows;
-	uint32_t m_selectedRow;
+	uint32_t m_numberOfRows{1};
+	uint32_t m_selectedRow{};
 	Vector2f m_atlasOffset;
 	Vector2f m_atlasScale;
 	Vector4f m_ninePatches; // TODO: Use UiTransform

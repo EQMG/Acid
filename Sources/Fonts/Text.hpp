@@ -41,8 +41,8 @@ public:
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text,
-	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova", "Regular"),
-		const Justify &justify = Justify::Left, const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left, 
+		const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
 
 	void UpdateObject() override;
 
@@ -150,7 +150,7 @@ public:
 	 * Sets the glow driver, will disable solid borders.
 	 * @param glowDriver The new glow driver.
 	 */
-	void SetGlowDriver(Driver<float> *glowDriver);
+	void SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver);
 
 	Driver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
@@ -158,7 +158,7 @@ public:
 	 * Sets the border driver, will disable glowing.
 	 * @param borderDriver The new border driver.
 	 */
-	void SetBorderDriver(Driver<float> *borderDriver);
+	void SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver);
 
 	/**
 	 * Disables both solid borders and glow borders.
@@ -207,11 +207,8 @@ private:
 		/**
 		 * Creates a new text word.
 		 */
-		Word() :
-			m_width(0.0f)
-		{
-		}
-
+		Word() = default; 
+		
 		/**
 		 * Adds a character to the end of the current word and increases the screen-space width of the word.
 		 * @param character The character to be added.
@@ -224,7 +221,7 @@ private:
 		}
 
 		std::vector<FontMetafile::Character> m_characters;
-		float m_width;
+		float m_width{};
 	};
 
 	/**
@@ -240,9 +237,7 @@ private:
 		 */
 		Line(const float &spaceWidth, const float &maxLength) :
 			m_maxLength(maxLength),
-			m_spaceSize(spaceWidth),
-			m_currentWordsLength(0.0f),
-			m_currentLineLength(0.0f)
+			m_spaceSize(spaceWidth)
 		{
 		}
 
@@ -253,7 +248,7 @@ private:
 		 */
 		bool AddWord(const Word &word)
 		{
-			float additionalLength = word.m_width;
+			auto additionalLength{word.m_width};
 			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
 
 			if (m_currentLineLength + additionalLength <= m_maxLength)
@@ -271,8 +266,8 @@ private:
 		float m_spaceSize;
 
 		std::vector<Word> m_words;
-		float m_currentWordsLength;
-		float m_currentLineLength;
+		float m_currentWordsLength{};
+		float m_currentLineLength{};
 	};
 
 	/**
@@ -296,7 +291,7 @@ private:
 	UniformHandler m_uniformObject;
 
 	std::unique_ptr<Model> m_model;
-	uint32_t m_numberLines;
+	uint32_t m_numberLines{};
 	Vector2f m_lastSize;
 
 	float m_fontSize;
@@ -310,13 +305,13 @@ private:
 
 	Colour m_textColour;
 	Colour m_borderColour;
-	bool m_solidBorder;
-	bool m_glowBorder;
+	bool m_solidBorder{};
+	bool m_glowBorder{};
 
 	std::unique_ptr<Driver<float>> m_glowDriver;
-	float m_glowSize;
+	float m_glowSize{};
 
 	std::unique_ptr<Driver<float>> m_borderDriver;
-	float m_borderSize;
+	float m_borderSize{};
 };
 }

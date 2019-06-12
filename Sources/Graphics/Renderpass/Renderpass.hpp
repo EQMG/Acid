@@ -49,6 +49,6 @@ public:
 	const VkRenderPass &GetRenderpass() const { return m_renderpass; }
 
 private:
-	VkRenderPass m_renderpass;
+	VkRenderPass m_renderpass{VK_NULL_HANDLE};
 };
 }

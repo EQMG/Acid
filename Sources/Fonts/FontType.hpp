@@ -26,14 +26,14 @@ public:
 	public:
 		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 		{
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
-				VkVertexInputBindingDescription{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
+				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
-			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect) },
-				VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex) },
-				VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_sharpness) },
-				VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour) }
+			std::vector<VkVertexInputAttributeDescription> attributeDescriptions{
+				{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect) },
+				{ 1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex) },
+				{ 2, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_sharpness) },
+				{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour) }
 			};
 			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
 		}
@@ -128,6 +128,6 @@ private:
 	std::unique_ptr<StorageBuffer> m_storageGlyphs;
 	std::unique_ptr<InstanceBuffer> m_instanceBuffer;
 
-	uint32_t m_instances;
+	uint32_t m_instances{};
 };
 }

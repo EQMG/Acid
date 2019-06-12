@@ -3,10 +3,10 @@
 namespace acid
 {
 FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, const float &innerRadius, const float &outerRadius, const float &opacity) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Vignette.frag" }, {}),
-	m_innerRadius(innerRadius),
-	m_outerRadius(outerRadius),
-	m_opacity(opacity)
+	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Vignette.frag"}},
+	m_innerRadius{innerRadius},
+	m_outerRadius{outerRadius},
+	m_opacity{opacity}
 {
 }
 
@@ -19,12 +19,9 @@ void FilterVignette::Render(const CommandBuffer &commandBuffer)
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
-	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-	//m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}

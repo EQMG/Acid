@@ -7,16 +7,15 @@
 namespace acid
 {
 UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
-	m_parent(parent),
-	m_enabled(true),
-	m_transform(transform),
-	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
-	m_alpha(1.0f),
-	m_scaleDriver(std::make_unique<DriverConstant<Vector2f>>(Vector2f(1.0f))),
-	m_scale(1.0f),
-	m_screenAlpha(1.0f),
-	m_screenScale(1.0f),
-	m_selected(false)
+	m_parent{parent},
+	m_enabled{true},
+	m_transform{transform},
+	m_alphaDriver{std::make_unique<DriverConstant<float>>(1.0f)},
+	m_alpha{1.0f},
+	m_scaleDriver{std::make_unique<DriverConstant<Vector2f>>(1.0f)},
+	m_scale{1.0f},
+	m_screenAlpha{1.0f},
+	m_screenScale{1.0f}
 {
 	if (m_parent != nullptr)
 	{
@@ -70,7 +69,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	{
 		if (m_parent != nullptr)
 		{
-			Vector2f leftTop = m_transform.GetAnchor0();
+			Vector2f leftTop{m_transform.GetAnchor0()};
 
 			if (*m_transform.m_margins & UiMargins::Left)
 			{
@@ -127,14 +126,14 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 		m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor1();
 	}
 
-	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	auto modelMatrix{Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size))};
 	m_modelView = viewMatrix * modelMatrix;
 
-	bool selected = false;
+	bool selected{};
 
 	if (IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 	{
-		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.m_position;
+		auto distance{Mouse::Get()->GetPosition() - m_screenTransform.m_position};
 		selected = distance.m_x <= m_screenTransform.m_size.m_x && distance.m_y <= m_screenTransform.m_size.m_y &&
 			distance.m_x >= 0.0f && distance.m_y >= 0.0f;
 	}

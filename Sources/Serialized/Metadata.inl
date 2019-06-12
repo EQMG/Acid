@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Helpers/ConstExpr.hpp"
 #include "Metadata.hpp"
 
 namespace acid
@@ -7,11 +8,11 @@ namespace acid
 template<typename T>
 T Metadata::GetChild(const std::string &name) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
-		return T();
+		return T{};
 	}
 
 	T result;
@@ -22,11 +23,11 @@ T Metadata::GetChild(const std::string &name) const
 template<typename T>
 T Metadata::GetChildDefault(const std::string &name, const T &value)
 {
-	auto child = FindChild(name, false);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata(name));
+		child = AddChild(std::make_unique<Metadata>(name));
 		*child << value;
 	}
 
@@ -38,7 +39,7 @@ T Metadata::GetChildDefault(const std::string &name, const T &value)
 template<typename T>
 void Metadata::GetChild(const std::string &name, T &dest) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -51,11 +52,11 @@ void Metadata::GetChild(const std::string &name, T &dest) const
 template<typename T>
 void Metadata::SetChild(const std::string &name, const T &value)
 {
-	auto child = FindChild(name, false);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata(name));
+		child = AddChild(std::make_unique<Metadata>(name));
 	}
 
 	*child << value;
@@ -64,7 +65,7 @@ void Metadata::SetChild(const std::string &name, const T &value)
 template<typename T>
 std::shared_ptr<T> Metadata::GetResource(const std::string &name) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -77,7 +78,7 @@ std::shared_ptr<T> Metadata::GetResource(const std::string &name) const
 template<typename T>
 void Metadata::GetResource(const std::string &name, std::shared_ptr<T> &dest) const
 {
-	auto child = FindChild(name);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
@@ -91,11 +92,11 @@ void Metadata::GetResource(const std::string &name, std::shared_ptr<T> &dest) co
 template<typename T>
 void Metadata::SetResource(const std::string &name, const std::shared_ptr<T> &value)
 {
-	auto child = FindChild(name, false);
+	auto child{FindChild(name)};
 
 	if (child == nullptr)
 	{
-		child = AddChild(new Metadata(name));
+		child = AddChild(std::make_unique<Metadata>(name));
 	}
 
 	if (value == nullptr)
@@ -181,8 +182,7 @@ Metadata &operator<<(Metadata &metadata, const std::basic_string<T, std::char_tr
 template<typename T>
 std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Metadata &> operator>>(const Metadata &metadata, T &object)
 {
-	auto result = T();
-	metadata >> ConstExpr::AsRef(result);
+	metadata >> ConstExpr::AsRef(object);
 	return metadata;
 }
 
@@ -250,7 +250,7 @@ Metadata &operator<<(Metadata &metadata, const std::optional<T> &optional)
 template<typename T>
 const Metadata &operator>>(const Metadata &metadata, std::vector<T> &vector)
 {
-	vector = std::vector<T>();
+	vector = {};
 	vector.reserve(metadata.GetChildren().size());
 
 	for (const auto &child : metadata.GetChildren())
@@ -268,7 +268,7 @@ Metadata &operator<<(Metadata &metadata, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
-		auto child = metadata.AddChild(new Metadata());
+		auto child{metadata.AddChild(std::make_unique<Metadata>())};
 		*child << x;
 	}
 
@@ -278,7 +278,7 @@ Metadata &operator<<(Metadata &metadata, const std::vector<T> &vector)
 template<typename T, typename K>
 const Metadata &operator>>(const Metadata &metadata, std::map<T, K> &map)
 {
-	map = std::map<T, K>();
+	map = {};
 
 	for (const auto &child : metadata.GetChildren())
 	{
@@ -295,7 +295,7 @@ Metadata &operator<<(Metadata &metadata, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{
-		auto child = metadata.AddChild(new Metadata());
+		auto child{metadata.AddChild(std::make_unique<Metadata>())};
 		*child << x;
 	}
 

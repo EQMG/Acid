@@ -13,7 +13,7 @@ void MeshRender::Start()
 
 void MeshRender::Update()
 {
-	auto material = GetParent()->GetComponent<Material>();
+	auto material{GetParent()->GetComponent<Material>()};
 
 	if (material == nullptr)
 	{
@@ -27,9 +27,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	auto rigidbody = GetParent()->GetComponent<Rigidbody>();
-
-	if (rigidbody != nullptr)
+	if (auto rigidbody{GetParent()->GetComponent<Rigidbody>()}; rigidbody != nullptr)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -38,16 +36,16 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Gets required components.
-	auto material = GetParent()->GetComponent<Material>();
-	auto mesh = GetParent()->GetComponent<Mesh>();
+	auto material{GetParent()->GetComponent<Material>()};
+	auto mesh{GetParent()->GetComponent<Mesh>()};
 
 	if (material == nullptr || mesh == nullptr)
 	{
 		return false;
 	}
 
-	auto meshModel = mesh->GetModel();
-	auto materialPipeline = material->GetPipelineMaterial();
+	auto meshModel{mesh->GetModel()};
+	auto materialPipeline{material->GetPipelineMaterial()};
 
 	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)
 	{
@@ -55,22 +53,20 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Binds the material pipeline.
-	bool bindSuccess = materialPipeline->BindPipeline(commandBuffer);
 
-	if (!bindSuccess)
+	if (!materialPipeline->BindPipeline(commandBuffer))
 	{
 		return false;
 	}
 
-	auto &pipeline = *materialPipeline->GetPipeline();
+	auto &pipeline{*materialPipeline->GetPipeline()};
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	material->PushDescriptors(m_descriptorSet);
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
@@ -82,10 +78,10 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 
 bool MeshRender::operator<(const MeshRender &other) const
 {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera{Scenes::Get()->GetCamera()};
 
-	float thisDistance2 = (camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
-	float otherDistance2 = (camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared();
+	auto thisDistance2{(camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
+	auto otherDistance2{(camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
 
 	return thisDistance2 > otherDistance2;
 }

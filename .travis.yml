@@ -10,6 +10,8 @@ matrix:
         - ubuntu-toolchain-r-test
         packages:
         - pkg-config
+        - ninja-build
+        - ccache
         - cmake
         - gcc-9
         - g++-9
@@ -17,18 +19,18 @@ matrix:
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
-        - libfreetype6-dev
     language: cpp
+    cache: ccache
     compiler: gcc
     env:
     - COMPILER=g++-9
     - GSL_CXX_STANDARD=17
     - BUILD_TYPE=Release
+    - BUILD_SHARED=ON
     before_install:
     - sudo apt-get update -qq
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
-  # Clang 8.0
+  # Clang 8
   - os: linux
     dist: xenial
     sudo: required
@@ -41,56 +43,56 @@ matrix:
           key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
         packages:
         - pkg-config
+        - ninja-build
+        - ccache
         - cmake
+        - g++-8
         - clang-8
         - xorg-dev
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
-        - libfreetype6-dev
     language: cpp
+    cache: ccache
     compiler: clang
     env:
     - COMPILER=clang++-8
     - GSL_CXX_STANDARD=17
     - BUILD_TYPE=Release
+    - BUILD_SHARED=ON
     before_install:
     - sudo apt-get update -qq
-    - sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-8 1000
   # XCode 10.2
-  - os: osx
-    osx_image: xcode10.2
-    sudo: required
-    addons: 
-      homebrew:
-        taps:
-        - caskroom/cask
-        casks:
-        - apenngrace/vulkan/vulkan-sdk
-        packages:
-        - pkg-config
-        - cmake
-        - openal-soft
-        - gcc@9
-        - llvm@8
-      update: true
-    language: cpp
-    compiler: clang
-    env:
-    - COMPILER=clang++
-    - GSL_CXX_STANDARD=17
-    - BUILD_TYPE=Release
+#  - os: osx
+#    osx_image: xcode10.2
+#    sudo: required
+#    addons: 
+#      homebrew:
+#        taps:
+#        - caskroom/cask
+#        casks:
+#        - apenngrace/vulkan/vulkan-sdk
+#        packages:
+#        - pkg-config
+#        - ninja
+#        - ccache
+#        - cmake
+#        - gcc
+#        - llvm
+#      update: true
+#    language: cpp
+#    cache: ccache
+#    compiler: clang
+#    env:
+#    - COMPILER=clang++
+#    - GSL_CXX_STANDARD=17
+#    - BUILD_TYPE=Release
+#    - BUILD_SHARED=OFF
+#    before_install:
+#    - export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/ccache/libexec:$PATH"
 
 script:
 - git submodule update --init --recursive
 - mkdir Build && cd Build
-- |
-    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      make all -j$(nproc)
-    else
-      cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=OFF
-      make all -j$(sysctl -n hw.physicalcpu)
-      #xcodebuild -quiet -parallelizeTargets -jobs $(sysctl -n hw.physicalcpu) -target Acid -configuration $BUILD_TYPE
-    fi
-- cd ../
+- cmake .. -GNinja -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS=$BUILD_SHARED
+- ninja

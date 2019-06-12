@@ -19,15 +19,15 @@ public:
 	 * @param transform The objects initial world position, rotation, and scale.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const Transform &transform = Transform());
+	Entity *CreateEntity(const Transform &transform = {});
 
 	/**
 	 * Creates a new entity from a prefab that starts in this structure.
-	 * @param filename The file to load the component data from.
 	 * @param transform The objects initial world position, rotation, and scale.
+	 * @param filename The file to load the component data from.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const std::string &filename, const Transform &transform = Transform());
+	Entity *CreateEntity(const Transform &transform, const std::string &filename);
 
 	/**
 	 * Adds a new object to the spatial structure.
@@ -98,7 +98,7 @@ public:
 	{
 		std::vector<T *> components;
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+		for (auto it{m_objects.begin()}; it != m_objects.end(); ++it)
 		{
 			for (const auto &component : (*it)->GetComponents<T>())
 			{
@@ -121,9 +121,9 @@ public:
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false)
 	{
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
+		for (auto it{m_objects.begin()}; it != m_objects.end(); ++it)
 		{
-			auto component = (*it)->GetComponent<T>();
+			auto component{(*it)->GetComponent<T>()};
 
 			if (component != nullptr && (component->IsEnabled() || allowDisabled))
 			{

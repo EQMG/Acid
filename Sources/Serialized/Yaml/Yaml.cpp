@@ -5,13 +5,11 @@
 
 namespace acid
 {
-Yaml::Yaml() :
-	Metadata("", "")
+Yaml::Yaml()
 {
 }
 
-Yaml::Yaml(Metadata *metadata) :
-	Metadata("", "")
+Yaml::Yaml(Metadata *metadata)
 {
 	AddChildren(metadata, this);
 }
@@ -21,11 +19,11 @@ void Yaml::Load(std::istream *inStream)
 	ClearChildren();
 	ClearAttributes();
 
-	auto topSection = std::make_unique<Section>(nullptr, "", 0, false);
-	Section *currentSection = topSection.get();
-	uint32_t lastIndentation = 0;
+	auto topSection{std::make_unique<Section>(nullptr, "", 0, false)};
+	auto currentSection{topSection.get()};
+	uint32_t lastIndentation{};
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream->peek() != -1)
@@ -39,11 +37,11 @@ void Yaml::Load(std::istream *inStream)
 			continue;
 		}
 
-		uint32_t indentation = 0;
-		uint32_t arrayLevels = 0;
-		bool comment = false;
+		uint32_t indentation{};
+		uint32_t arrayLevels{};
+		bool comment{};
 
-		for (auto it = linebuf.begin(); it != linebuf.end(); ++it)
+		for (auto it{linebuf.begin()}; it != linebuf.end(); ++it)
 		{
 			if (*it == ' ')
 			{
@@ -72,7 +70,7 @@ void Yaml::Load(std::istream *inStream)
 
 		if (indentation < lastIndentation)
 		{
-			for (uint32_t i = 0; i < (lastIndentation - indentation) / 2; i++)
+			for (uint32_t i{}; i < (lastIndentation - indentation) / 2; i++)
 			{
 				if (currentSection->m_parent != nullptr)
 				{
@@ -82,9 +80,9 @@ void Yaml::Load(std::istream *inStream)
 		}
 		else if (indentation > lastIndentation)
 		{
-			for (uint32_t i = 0; i < ((indentation - lastIndentation) / 2) - 1; i++)
+			for (uint32_t i{}; i < ((indentation - lastIndentation) / 2) - 1; i++)
 			{
-				auto section = new Section(currentSection, "", lastIndentation + (i * 2), arrayLevels);
+				auto section{new Section(currentSection, "", lastIndentation + (i * 2), arrayLevels)};
 				currentSection->m_children.emplace_back(section);
 				currentSection = section;
 			}
@@ -95,8 +93,8 @@ void Yaml::Load(std::istream *inStream)
 			currentSection = currentSection->m_children.back().get();
 		}
 
-		auto content = String::Trim(linebuf).erase(0, 2 * arrayLevels);
-		auto section = new Section(currentSection, content, indentation, arrayLevels);
+		auto content{String::Trim(linebuf).erase(0, 2 * arrayLevels)};
+		auto section{new Section{currentSection, content, indentation, arrayLevels}};
 		currentSection->m_children.emplace_back(section);
 		lastIndentation = indentation;
 	}
@@ -114,22 +112,22 @@ void Yaml::AddChildren(const Metadata *source, Metadata *destination)
 {
 	for (const auto &child : source->GetChildren())
 	{
-		auto created = destination->AddChild(new Metadata(child->GetName(), child->GetValue()));
+		auto created{destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()))};
 		AddChildren(child.get(), created);
 	}
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		destination->AddAttribute(attribute.first, attribute.second);
+		destination->SetAttribute(attribute.first, attribute.second);
 	}
 }
 
 void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 {
-	auto name = String::Trim(source->m_content.substr(0, source->m_content.find(':')));
-	auto value = String::Trim(String::ReplaceFirst(source->m_content, name, ""));
+	auto name{String::Trim(source->m_content.substr(0, source->m_content.find(':')))};
+	auto value{String::Trim(String::ReplaceFirst(source->m_content, name, ""))};
 	value = String::Trim(value.erase(0, 1));
-	bool singleArray = false;
+	bool singleArray{};
 
 	if (source->m_arrayLevels != 0 && value.empty())
 	{
@@ -138,29 +136,27 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 		singleArray = true;
 	}
 
-	auto thisValue = parent;
+	auto thisValue{parent};
 
 	if (String::StartsWith(name, "_"))
 	{
 		name = name.erase(0, 1);
-		parent->AddAttribute(name, value);
+		parent->SetAttribute(name, value);
 		return;
 	}
 
 	if (!isTopSection)
 	{
-		thisValue = new Metadata(name, value);
-		parent->AddChild(thisValue);
+		thisValue = parent->AddChild(std::make_unique<Metadata>(name, value));
 	}
 
-	auto tmpValue = thisValue;
+	auto tmpValue{thisValue};
 
 	for (const auto &child : source->m_children)
 	{
-		if (child->m_arrayLevels != 0) //  && !singleArray
+		if (child->m_arrayLevels != 0) // && !singleArray
 		{
-			tmpValue = new Metadata();
-			thisValue->AddChild(tmpValue);
+			tmpValue = thisValue->AddChild(std::make_unique<Metadata>());
 		}
 
 		Convert(child.get(), tmpValue, false);
@@ -171,12 +167,12 @@ void Yaml::AppendData(const Metadata *source, const Metadata *parent, std::ostre
 {
 	std::stringstream indents;
 
-	for (int32_t i = 0; i < indentation; i++)
+	for (int32_t i{}; i < indentation; i++)
 	{
 		indents << "  ";
 	}
 
-	bool wroteIntents = false;
+	bool wroteIntents{};
 
 	if (parent != nullptr && !(parent->GetChildren()[0].get() == source && parent->GetName().empty() && parent->GetValue().empty()))
 	{

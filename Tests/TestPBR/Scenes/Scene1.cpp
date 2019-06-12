@@ -22,14 +22,12 @@
 
 namespace test
 {
-static const float UI_SLIDE_TIME = 0.2f;
-
 Scene1::Scene1() :
-	Scene(new CameraFree()),
-	m_buttonCaptureMouse(ButtonCompound::Create<ButtonKeyboard>(false, Key::Escape, Key::M)),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
+	Scene{std::make_unique<CameraFree>()},
+	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
+	m_overlayDebug{&Uis::Get()->GetCanvas()}
 {
-	m_buttonCaptureMouse->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
 		if (action == InputAction::Press)
 		{
@@ -40,21 +38,21 @@ Scene1::Scene1() :
 
 void Scene1::Start()
 {
-	GetPhysics()->SetGravity(Vector3f(0.0f, -9.81f, 0.0f));
+	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Skybox.
-	auto skyboxObject = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json", Transform(Vector3f(), Vector3f(), 1024.0f));
+	auto skyboxObject{GetStructure()->CreateEntity({{}, {}, 1024.0f}, "Objects/SkyboxSnowy/SkyboxSnowy.json")};
 
 	// Entities.
-	auto sun = GetStructure()->CreateEntity(Transform(Vector3f(1000.0f, 5000.0f, 4000.0f), Vector3f(), 18.0f));
+	auto sun{GetStructure()->CreateEntity(Transform{{1000.0f, 5000.0f, 4000.0f}, {}, 18.0f})};
 	sun->AddComponent<Light>(Colour::White);
 
 	for (uint32_t i = 0; i < 6; i++)
 	{
 		for (uint32_t j = 0; j < 6; j++)
 		{
-			auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(i, j, -6.0f), Vector3f(), 0.5f));
+			auto sphere{GetStructure()->CreateEntity({{i, j, -6.0f}, {}, 0.5f})};
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
 			sphere->AddComponent<MaterialDefault>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
 				nullptr, // Image2d::Create("Objects/Testing/Material.png")
@@ -62,7 +60,7 @@ void Scene1::Start()
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
 
-			auto teapot = GetStructure()->CreateEntity(Transform(Vector3f(i * 1.6f, j, 6.0f), Vector3f(), 0.14f));
+			auto teapot{GetStructure()->CreateEntity({{i * 1.6f, j, 6.0f}, {}, 0.14f})};
 			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
 			teapot->AddComponent<MeshRender>();
@@ -70,7 +68,7 @@ void Scene1::Start()
 		}
 	}
 
-	/*auto dragon = GetStructure()->CreateEntity(Transform(Vector3(6.0f, 0.0f, 0.0f), Vector3(0.0f, -90.0_deg, 0.0f), 0.4f));
+	/*auto dragon{GetStructure()->CreateEntity({{6.0f, 0.0f, 0.0f}, {0.0f, Maths::Radians(-90.0f), 0.0f}, 0.4f})};
 	dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
 	dragon->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f);
 	dragon->AddComponent<MeshRender>();

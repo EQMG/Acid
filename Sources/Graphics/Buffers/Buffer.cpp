@@ -5,20 +5,18 @@
 namespace acid
 {
 Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data) :
-	m_size(size),
-	m_buffer(VK_NULL_HANDLE),
-	m_bufferMemory(VK_NULL_HANDLE)
+	m_size{size}
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
-	auto presentFamily = logicalDevice->GetPresentFamily();
-	auto computeFamily = logicalDevice->GetComputeFamily();
+	auto graphicsFamily{logicalDevice->GetGraphicsFamily()};
+	auto presentFamily{logicalDevice->GetPresentFamily()};
+	auto computeFamily{logicalDevice->GetComputeFamily()};
 
-	std::array<uint32_t, 3> queueFamily = { graphicsFamily, presentFamily, computeFamily };
+	std::array queueFamily{ graphicsFamily, presentFamily, computeFamily };
 
 	// Create the buffer handle.
-	VkBufferCreateInfo bufferCreateInfo = {};
+	VkBufferCreateInfo bufferCreateInfo{};
 	bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	bufferCreateInfo.size = size;
 	bufferCreateInfo.usage = usage;
@@ -31,7 +29,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	VkMemoryRequirements memoryRequirements;
 	vkGetBufferMemoryRequirements(*logicalDevice, m_buffer, &memoryRequirements);
 
-	VkMemoryAllocateInfo memoryAllocateInfo = {};
+	VkMemoryAllocateInfo memoryAllocateInfo{};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	memoryAllocateInfo.allocationSize = memoryRequirements.size;
 	memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
@@ -47,7 +45,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 		// If host coherency hasn't been requested, do a manual flush to make writes visible.
 		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
 		{
-			VkMappedMemoryRange mappedMemoryRange = {};
+			VkMappedMemoryRange mappedMemoryRange{};
 			mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 			mappedMemoryRange.memory = m_bufferMemory;
 			mappedMemoryRange.offset = 0;
@@ -64,7 +62,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 
 Buffer::~Buffer()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
 	vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
@@ -72,30 +70,26 @@ Buffer::~Buffer()
 
 void Buffer::MapMemory(void **data)
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	Graphics::CheckVk(vkMapMemory(*logicalDevice, GetBufferMemory(), 0, m_size, 0, data));
 }
 
 void Buffer::UnmapMemory()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	vkUnmapMemory(*logicalDevice, GetBufferMemory());
 }
 
 uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 {
-	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto memoryProperties = physicalDevice->GetMemoryProperties();
+	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
+	auto memoryProperties{physicalDevice->GetMemoryProperties()};
 
-	for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
+	for (uint32_t i{}; i < memoryProperties.memoryTypeCount; i++)
 	{
 		uint32_t memoryTypeBits = 1 << i;
-		bool isRequiredMemoryType = typeFilter & memoryTypeBits;
 
-		auto properties = memoryProperties.memoryTypes[i].propertyFlags;
-		bool hasRequiredProperties = (properties & requiredProperties) == requiredProperties;
-
-		if (isRequiredMemoryType && hasRequiredProperties)
+		if (typeFilter & memoryTypeBits && (memoryProperties.memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
 		{
 			return i;
 		}

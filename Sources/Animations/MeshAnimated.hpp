@@ -5,7 +5,6 @@
 #include "Animation/AnimationLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Geometry/VertexAnimated.hpp"
-#include "Skin/SkinLoader.hpp"
 #include "Animator.hpp"
 
 namespace acid
@@ -35,11 +34,11 @@ public:
 
 	friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
 
-	static const uint32_t MaxJoints;
-	static const uint32_t MaxWeights;
+	static constexpr uint32_t MaxJoints{50};
+	static constexpr uint32_t MaxWeights{3};
 
 private:
-	static Joint *CreateJoints(const JointData &data);
+	static std::unique_ptr<Joint> CreateJoints(const JointData &data);
 
 	static void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 

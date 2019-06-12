@@ -8,20 +8,17 @@
 namespace acid
 {
 Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
-	m_instance(instance),
-	m_physicalDevice(physicalDevice),
-	m_surface(VK_NULL_HANDLE),
-	m_capabilities({}),
-	m_format({})
+	m_instance{instance},
+	m_physicalDevice{physicalDevice}
 {
 	// Creates the surface.
 	Window::Get()->CreateSurface(*m_instance, nullptr, &m_surface);
 
 	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, m_surface, &m_capabilities));
 
-	uint32_t surfaceFormatCount = 0;
+	uint32_t surfaceFormatCount{};
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, nullptr);
-	std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
+	std::vector<VkSurfaceFormatKHR> surfaceFormats{surfaceFormatCount};
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, surfaceFormats.data());
 
 	if ((surfaceFormatCount == 1) && (surfaceFormats[0].format == VK_FORMAT_UNDEFINED))
@@ -33,9 +30,9 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 	{
 		// Iterate over the list of available surface format and
 		// check for the presence of VK_FORMAT_B8G8R8A8_UNORM
-		bool found_B8G8R8A8_UNORM = false;
+		bool found_B8G8R8A8_UNORM{};
 
-		for (auto &&surfaceFormat : surfaceFormats)
+		for (auto &surfaceFormat : surfaceFormats)
 		{
 			if (surfaceFormat.format == VK_FORMAT_B8G8R8A8_UNORM)
 			{

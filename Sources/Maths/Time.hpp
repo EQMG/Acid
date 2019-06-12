@@ -10,7 +10,7 @@ namespace acid
 class ACID_EXPORT Time
 {
 public:
-	Time();
+	constexpr Time() = default;
 
 	/*
 	 * Creates a new time. This function is internal. To construct time values, use {@link Time::Seconds}, {@link Time::Milliseconds} or {@link Time::Microseconds} instead.
@@ -18,7 +18,7 @@ public:
 	 */
 	template<typename Rep, typename Period>
 	constexpr Time(const std::chrono::duration<Rep, Period> &duration) :
-		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
+		m_microseconds{std::chrono::duration_cast<std::chrono::microseconds>(duration).count()}
 	{
 	}
 
@@ -29,7 +29,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename Rep = float>
-	constexpr static Time Seconds(const Rep &seconds)
+	static constexpr Time Seconds(const Rep &seconds)
 	{
 		return Time(std::chrono::duration<Rep>(seconds));
 	}
@@ -41,7 +41,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename Rep = int32_t>
-	constexpr static Time Milliseconds(const Rep &milliseconds)
+	static constexpr Time Milliseconds(const Rep &milliseconds)
 	{
 		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
 	}
@@ -53,7 +53,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename Rep = int64_t>
-	constexpr static Time Microseconds(const Rep &microseconds)
+	static constexpr Time Microseconds(const Rep &microseconds)
 	{
 		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
 	}
@@ -165,6 +165,6 @@ public:
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
 
-	std::chrono::microseconds m_microseconds;
+	std::chrono::microseconds m_microseconds{};
 };
 }

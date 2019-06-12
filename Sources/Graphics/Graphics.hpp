@@ -43,7 +43,7 @@ public:
 	 * Takes a screenshot of the current image of the display and saves it into a image file.
 	 * @param filename The file to save the screenshot to.
 	 */
-	void CaptureScreenshot(const std::string &filename);
+	void CaptureScreenshot(const std::string &filename) const;
 
 	/**
 	 * Checks whether a Subrender exists or not.
@@ -108,7 +108,7 @@ public:
 	 * Sets the current renderer to a new renderer.
 	 * @param renderer The new renderer.
 	 */
-	void SetRenderer(Renderer *renderer) { m_renderer.reset(renderer); }
+	void SetRenderer(std::unique_ptr<Renderer> &&renderer) { m_renderer = std::move(renderer); }
 
 	RenderStage *GetRenderStage(const uint32_t &index) const;
 
@@ -148,11 +148,11 @@ private:
 	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
 	ElapsedTime m_elapsedPurge;
 
-	VkPipelineCache m_pipelineCache;
+	VkPipelineCache m_pipelineCache{VK_NULL_HANDLE};
 	std::vector<VkSemaphore> m_presentCompletes;
 	std::vector<VkSemaphore> m_renderCompletes;
 	std::vector<VkFence> m_flightFences;
-	size_t m_currentFrame;
+	std::size_t m_currentFrame{};
 
 	std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers;
 

@@ -8,13 +8,11 @@
 namespace acid
 {
 Graphics::Graphics() :
-	m_elapsedPurge(5s),
-	m_pipelineCache(VK_NULL_HANDLE),
-	m_currentFrame(0),
-	m_instance(std::make_unique<Instance>()),
-	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
-	m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
-	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get()))
+	m_elapsedPurge{5s},
+	m_instance{std::make_unique<Instance>()},
+	m_physicalDevice{std::make_unique<PhysicalDevice>(m_instance.get())},
+	m_surface{std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())},
+	m_logicalDevice{std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get())}
 {
 	glslang::InitializeProcess();
 
@@ -23,7 +21,7 @@ Graphics::Graphics() :
 
 Graphics::~Graphics()
 {
-	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
+	auto graphicsQueue{m_logicalDevice->GetGraphicsQueue()};
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -31,7 +29,7 @@ Graphics::~Graphics()
 
 	vkDestroyPipelineCache(*m_logicalDevice, m_pipelineCache, nullptr);
 
-	for (size_t i = 0; i < m_flightFences.size(); i++)
+	for (size_t i{}; i < m_flightFences.size(); i++)
 	{
 		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
@@ -48,11 +46,11 @@ void Graphics::Update()
 
 	m_renderer->Update();
 
-	VkResult acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
+	auto acquireResult{m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame])};
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 	{
-		VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+		VkExtent2D displayExtent{ Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 		return;
 	}
@@ -93,7 +91,7 @@ void Graphics::Update()
 	// Purges unused command pools.
 	if (m_elapsedPurge.GetElapsed() != 0)
 	{
-		for (auto it = m_commandPools.begin(); it != m_commandPools.end();)
+		for (auto it{m_commandPools.begin()}; it != m_commandPools.end();)
 		{
 			if ((*it).second.use_count() <= 1)
 			{
@@ -170,9 +168,9 @@ void Graphics::CheckVk(const VkResult &result)
 		return;
 	}
 
-	std::string failure = StringifyResultVk(result);
+	auto failure{StringifyResultVk(result)};
 
-	Log::Error("Vulkan error: %s, %i\n", failure.c_str(), result);
+	Log::Error("Vulkan error: %s, %i\n", failure, result);
 	Log::Popup("Vulkan Error", failure);
 	throw std::runtime_error("Vulkan error: " + failure);
 }
@@ -182,21 +180,21 @@ void Graphics::UpdateSurfaceCapabilities()
 	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, *m_surface, &m_surface->m_capabilities));
 }
 
-void Graphics::CaptureScreenshot(const std::string &filename)
+void Graphics::CaptureScreenshot(const std::string &filename) const
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto extent = Window::Get()->GetSize();
+	auto extent{Window::Get()->GetSize()};
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	bool supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { extent.m_x, extent.m_y, 1 },
+	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { extent.m_x, extent.m_y, 1 },
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
-	VkImageSubresource imageSubresource = {};
+	VkImageSubresource imageSubresource{};
 	imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	imageSubresource.mipLevel = 0;
 	imageSubresource.arrayLayer = 0;
@@ -204,7 +202,7 @@ void Graphics::CaptureScreenshot(const std::string &filename)
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
-	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	auto pixels{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
 
 	void *data;
 	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -220,8 +218,8 @@ void Graphics::CaptureScreenshot(const std::string &filename)
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("Screenshot '%s' saved in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("Screenshot '%s' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
@@ -244,7 +242,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 
 	if (m_flightFences.size() != m_swapchain->GetImageCount())
 	{
-		for (size_t i = 0; i < m_flightFences.size(); i++)
+		for (std::size_t i{}; i < m_flightFences.size(); i++)
 		{
 			vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 			vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
@@ -256,14 +254,14 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		m_flightFences.resize(m_swapchain->GetImageCount());
 		m_commandBuffers.resize(m_swapchain->GetImageCount());
 
-		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
+		VkSemaphoreCreateInfo semaphoreCreateInfo{};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		VkFenceCreateInfo fenceCreateInfo = {};
+		VkFenceCreateInfo fenceCreateInfo{};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-		for (size_t i = 0; i < m_flightFences.size(); i++)
+		for (std::size_t i{}; i < m_flightFences.size(); i++)
 		{
 			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
 
@@ -285,7 +283,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 
 const Descriptor *Graphics::GetAttachment(const std::string &name) const
 {
-	auto it = m_attachments.find(name);
+	auto it{m_attachments.find(name)};
 
 	if (it == m_attachments.end())
 	{
@@ -297,7 +295,7 @@ const Descriptor *Graphics::GetAttachment(const std::string &name) const
 
 const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId)
 {
-	auto it = m_commandPools.find(threadId);
+	auto it{m_commandPools.find(threadId)};
 
 	if (it != m_commandPools.end())
 	{
@@ -310,16 +308,16 @@ const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::
 
 void Graphics::CreatePipelineCache()
 {
-	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
+	VkPipelineCacheCreateInfo pipelineCacheCreateInfo{};
 	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 }
 
 void Graphics::RecreatePass(RenderStage &renderStage)
 {
-	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
+	auto graphicsQueue{m_logicalDevice->GetGraphicsQueue()};
 
-	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+	VkExtent2D displayExtent{ Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -359,11 +357,11 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 	}
 
-	VkRect2D renderArea = {};
+	VkRect2D renderArea{};
 	renderArea.offset = { renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y };
 	renderArea.extent = { renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y };
 
-	VkViewport viewport = {};
+	VkViewport viewport{};
 	viewport.x = 0.0f;
 	viewport.y = 0.0f;
 	viewport.width = static_cast<float>(renderArea.extent.width);
@@ -372,14 +370,14 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 	viewport.maxDepth = 1.0f;
 	vkCmdSetViewport(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &viewport);
 
-	VkRect2D scissor = {};
+	VkRect2D scissor{};
 	scissor.offset = renderArea.offset;
 	scissor.extent = renderArea.extent;
 	vkCmdSetScissor(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &scissor);
 
-	auto clearValues = renderStage.GetClearValues();
+	auto clearValues{renderStage.GetClearValues()};
 
-	VkRenderPassBeginInfo renderPassBeginInfo = {};
+	VkRenderPassBeginInfo renderPassBeginInfo{};
 	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	renderPassBeginInfo.renderPass = *renderStage.GetRenderpass();
 	renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(m_swapchain->GetActiveImageIndex());
@@ -393,7 +391,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 
 void Graphics::EndRenderpass(RenderStage &renderStage)
 {
-	auto presentQueue = m_logicalDevice->GetPresentQueue();
+	auto presentQueue{m_logicalDevice->GetPresentQueue()};
 
 	vkCmdEndRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
@@ -404,15 +402,16 @@ void Graphics::EndRenderpass(RenderStage &renderStage)
 
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
-	VkResult presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
-
-	if (!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
+	
+	if (auto presentResult{m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame])}; 
+		!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
 	{
 		if (presentResult == VK_ERROR_OUT_OF_DATE_KHR)
 		{
 			RecreatePass(renderStage);
 			return;
 		}
+
 		CheckVk(presentResult);
 	}
 

@@ -5,6 +5,7 @@
 #include <Inputs/ButtonMouse.hpp>
 #include <Inputs/AxisCompound.hpp>
 #include <Inputs/ButtonCompound.hpp>
+#include <Inputs/AxisButton.hpp>
 
 using namespace acid;
 
@@ -27,7 +28,7 @@ private:
 
 	AxisCompound m_inputForward;
 	AxisCompound m_inputStrafe;
-	AxisCompound m_inputVertical;
+	AxisButton m_inputVertical;
 	ButtonCompound m_inputSprint;
 };
 }

@@ -140,29 +140,29 @@ private:
 	std::vector<VkShaderModule> m_modules;
 	std::vector<VkPipelineShaderStageCreateInfo> m_stages;
 
-	VkDescriptorSetLayout m_descriptorSetLayout;
-	VkDescriptorPool m_descriptorPool;
+	VkDescriptorSetLayout m_descriptorSetLayout{VK_NULL_HANDLE};
+	VkDescriptorPool m_descriptorPool{VK_NULL_HANDLE};
 
-	VkPipeline m_pipeline;
-	VkPipelineLayout m_pipelineLayout;
+	VkPipeline m_pipeline{VK_NULL_HANDLE};
+	VkPipelineLayout m_pipelineLayout{VK_NULL_HANDLE};
 	VkPipelineBindPoint m_pipelineBindPoint;
 
-	VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo;
-	VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState;
-	VkPipelineRasterizationStateCreateInfo m_rasterizationState;
+	VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo{};
+	VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState{};
+	VkPipelineRasterizationStateCreateInfo m_rasterizationState{};
 	std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
-	VkPipelineColorBlendStateCreateInfo m_colourBlendState;
-	VkPipelineDepthStencilStateCreateInfo m_depthStencilState;
-	VkPipelineViewportStateCreateInfo m_viewportState;
-	VkPipelineMultisampleStateCreateInfo m_multisampleState;
-	VkPipelineDynamicStateCreateInfo m_dynamicState;
-	VkPipelineTessellationStateCreateInfo m_tessellationState;
+	VkPipelineColorBlendStateCreateInfo m_colourBlendState{};
+	VkPipelineDepthStencilStateCreateInfo m_depthStencilState{};
+	VkPipelineViewportStateCreateInfo m_viewportState{};
+	VkPipelineMultisampleStateCreateInfo m_multisampleState{};
+	VkPipelineDynamicStateCreateInfo m_dynamicState{};
+	VkPipelineTessellationStateCreateInfo m_tessellationState{};
 };
 
 class ACID_EXPORT PipelineGraphicsCreate
 {
 public:
-	explicit PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
+	PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
 		const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
 		const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
 		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false) :

@@ -1,75 +1,73 @@
 {
   "Mesh": {
-    "Model": {
-      "Type": "ModelObj",
-      "Filename": "Entities/Testing/Model.obj",
-      "Longitude Bands": 10,
-      "Radius": 1.0
+    "model": {
+      "type": "ModelObj",
+      "filename": "Entities/Testing/Model.obj"
     }
   },
   "MaterialDefault": {
-    "Base Diffuse": "#C7BEBE",
-    "Image Diffuse": {
-      "Filename": "Entities/Testing/Diffuse.png",
-      "Filter": 1,
-      "Address Mode": 2,
-      "Anisotropic": true,
-      "Mipmap": true
+    "baseDiffuse": "#C7BEBE",
+    "imageDiffuse": {
+      "filename": "Entities/Testing/Diffuse.png",
+      "filter": 1,
+      "addressMode": 2,
+      "anisotropic": true,
+      "mipmap": true
     },
-    "Metallic": 0.0,
-    "Roughness": 0.0,
-    "Image Material": {
-      "Filename": "Entities/Testing/Material.png",
-      "Filter": 1,
-      "Address Mode": 2,
-      "Anisotropic": true,
-      "Mipmap": true
+    "metallic": 0.0,
+    "roughness": 0.0,
+    "imageMaterial": {
+      "filename": "Entities/Testing/Material.png",
+      "filter": 1,
+      "addressMode": 2,
+      "anisotropic": true,
+      "mipmap": true
     },
-    "Image Normal": {
-      "Filename": "Entities/Testing/Normal.png",
-      "Filter": 1,
-      "Address Mode": 2,
-      "Anisotropic": true,
-      "Mipmap": true
+    "imageNormal": {
+      "filename": "Entities/Testing/Normal.png",
+      "filter": 1,
+      "addressMode": 2,
+      "anisotropic": true,
+      "mipmap": true
     },
-    "Casts Shadows": true,
-    "Ignore Lighting": false,
-    "Ignore Fog": false
+    "castsShadows": true,
+    "ignoreLighting": false,
+    "ignoreFog": false
   },
   "Rigidbody": {
-    "Mass": 2.0,
-    "Friction": 0.2,
-    "Local Transform": {
-      "Position": {
+    "mass": 2.0,
+    "friction": 0.2,
+    "localTransform": {
+      "position": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "Rotation": {
+      "rotation": {
         "x": 0.0,
         "y": 0.0,
         "z": 0.0
       },
-      "Scale": 1.0
+      "scale": 1.0
     },
-    "Linear Factor": {
+    "linearFactor": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
     },
-    "Angular Factor": {
+    "angularFactor": {
       "x": 1.0,
       "y": 1.0,
       "z": 1.0
     }
   },
   "ColliderSphere": {
-    "Radius": 1.0
+    "radius": 1.0
   },
   "Light": {
-    "Colour": "#3319CC",
-    "Radius": 1.33, 
-    "Local Offset": {
+    "colour": "#3319CC",
+    "radius": 1.33, 
+    "localOffset": {
       "x": 0.0, 
       "y": 3.0, 
       "z": 0.0

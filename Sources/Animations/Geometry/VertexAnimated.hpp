@@ -2,7 +2,7 @@
 
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
-#include "Graphics/Pipelines/Pipeline.hpp"
+#include "Graphics/Pipelines/Shader.hpp"
 
 namespace acid
 {
@@ -10,11 +10,11 @@ class ACID_EXPORT VertexAnimated
 {
 public:
 	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight) :
-		m_position(position),
-		m_uv(uv),
-		m_normal(normal),
-		m_jointId(jointId),
-		m_vertexWeight(vertexWeight)
+		m_position{position},
+		m_uv{uv},
+		m_normal{normal},
+		m_jointId{jointId},
+		m_vertexWeight{vertexWeight}
 	{
 	}
 
@@ -30,17 +30,17 @@ public:
 
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 	{
-		std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
-			VkVertexInputBindingDescription{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
+			{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }
 		};
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			VkVertexInputAttributeDescription{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position) },
-			VkVertexInputAttributeDescription{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv) },
-			VkVertexInputAttributeDescription{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal) },
-			VkVertexInputAttributeDescription{ 3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId) },
-			VkVertexInputAttributeDescription{ 4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight) }
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions{
+			{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position) },
+			{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv) },
+			{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal) },
+			{ 3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId) },
+			{ 4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight) }
 		};
-		return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+		return Shader::VertexInput{bindingDescriptions, attributeDescriptions};
 	}
 
 	Vector3f m_position;
@@ -58,7 +58,7 @@ struct hash<acid::VertexAnimated>
 {
 	size_t operator()(const acid::VertexAnimated &vertex) const noexcept
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);
 		acid::Maths::HashCombine(seed, vertex.m_normal);

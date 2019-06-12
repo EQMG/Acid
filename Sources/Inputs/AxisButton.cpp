@@ -2,9 +2,9 @@
 
 namespace acid
 {
-AxisButton::AxisButton(Button *negative, Button *positive) :
-	m_negative(negative),
-	m_positive(positive)
+AxisButton::AxisButton(std::unique_ptr<Button> &&negative, std::unique_ptr<Button> &&positive) :
+	m_negative{std::move(negative)},
+	m_positive{std::move(positive)}
 {
 	m_negative->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -18,7 +18,7 @@ AxisButton::AxisButton(Button *negative, Button *positive) :
 
 float AxisButton::GetAmount() const
 {
-	auto amount = 0.0f;
+	float amount{};
 
 	if (m_positive->IsDown())
 	{

@@ -3,7 +3,7 @@
 namespace acid
 {
 Resources::Resources() :
-	m_elapsedPurge(5s)
+	m_elapsedPurge{5s}
 {
 }
 
@@ -11,7 +11,7 @@ void Resources::Update()
 {
 	if (m_elapsedPurge.GetElapsed() != 0)
 	{
-		for (auto it = m_resources.begin(); it != m_resources.end();)
+		for (auto it{m_resources.begin()}; it != m_resources.end();)
 		{
 			if ((*it).second.use_count() <= 1)
 			{
@@ -35,7 +35,7 @@ std::shared_ptr<Resource> Resources::Find(const Metadata &metadata) const
 	}
 
 	return nullptr;
-	/*auto it = m_resources.find(metadata);
+	/*auto it{m_resources.find(metadata)};
 
 	if (it == m_resources.end())
 	{
@@ -57,7 +57,7 @@ void Resources::Add(const Metadata &metadata, const std::shared_ptr<Resource> &r
 
 void Resources::Remove(const std::shared_ptr<Resource> &resource)
 {
-	for (auto it = m_resources.begin(); it != m_resources.end(); ++it) // TODO: Clean remove.
+	for (auto it{m_resources.begin()}; it != m_resources.end(); ++it) // TODO: Clean remove.
 	{
 		if ((*it).second == resource)
 		{

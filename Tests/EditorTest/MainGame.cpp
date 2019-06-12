@@ -21,7 +21,7 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 	{
 	case CR_LOAD:
 		Log::Out("[Guest] Operation load: %i\n", ctx->version);
-		Engine::Get()->SetGame(new test::MainGame());
+		Engine::Get()->SetGame(std::make_unique<test::MainGame>());
 		return 0;
 	case CR_UNLOAD:
 		Log::Out("[Guest] Operation unload: %i\n", ctx->version);
@@ -37,11 +37,11 @@ int main(int argc, char **argv)
 	using namespace test;
 
 	// Creates the engine.
-	auto engine = std::make_unique<Engine>(argv[0]);
-	engine->SetGame(new MainGame());
+	auto engine{std::make_unique<Engine>(argv[0])};
+	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
-	int32_t exitCode = engine->Run();
+	auto exitCode{engine->Run()};
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -61,7 +61,7 @@ MainGame::MainGame() :
 
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{
@@ -100,8 +100,8 @@ MainGame::MainGame() :
 	//Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
 	//	"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	//Renderer::Get()->SetManager(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	//Renderer::Get()->SetManager(std::make_unique<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
 MainGame::~MainGame()

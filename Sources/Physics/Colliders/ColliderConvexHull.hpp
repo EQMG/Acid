@@ -11,7 +11,7 @@ class ACID_EXPORT ColliderConvexHull :
 	public Collider
 {
 public:
-	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform());
+	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = {});
 
 	~ColliderConvexHull();
 
@@ -32,6 +32,6 @@ public:
 private:
 	std::unique_ptr<btConvexHullShape> m_shape;
 	std::shared_ptr<Model> m_model;
-	uint32_t m_pointCount;
+	uint32_t m_pointCount{};
 };
 }

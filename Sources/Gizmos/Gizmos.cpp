@@ -8,7 +8,7 @@ Gizmos::Gizmos()
 
 void Gizmos::Update()
 {
-	for (auto it = m_gizmos.begin(); it != m_gizmos.end();)
+	for (auto it{m_gizmos.begin()}; it != m_gizmos.end();)
 	{
 		if (it->second.empty())
 		{
@@ -21,23 +21,22 @@ void Gizmos::Update()
 	}
 }
 
-Gizmo *Gizmos::AddGizmo(Gizmo *gizmo)
+Gizmo *Gizmos::AddGizmo(std::unique_ptr<Gizmo> &&gizmo)
 {
-	auto it = m_gizmos.find(gizmo->GetGizmoType());
+	auto it{m_gizmos.find(gizmo->GetGizmoType())};
 
 	if (it == m_gizmos.end())
 	{
-		m_gizmos.emplace(gizmo->GetGizmoType(), std::vector<std::unique_ptr<Gizmo>>());
+		m_gizmos.emplace(gizmo->GetGizmoType(), std::vector<std::unique_ptr<Gizmo>>{});
 		it = m_gizmos.find(gizmo->GetGizmoType());
 	}
 
-	(*it).second.emplace_back(gizmo);
-	return gizmo;
+	return (*it).second.emplace_back(std::move(gizmo)).get();
 }
 
 void Gizmos::RemoveGizmo(Gizmo *gizmo)
 {
-	auto it = m_gizmos.find(gizmo->GetGizmoType());
+	auto it{m_gizmos.find(gizmo->GetGizmoType())};
 
 	if (it != m_gizmos.end())
 	{

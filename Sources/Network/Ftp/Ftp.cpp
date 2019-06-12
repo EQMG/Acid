@@ -4,8 +4,7 @@
 
 namespace acid
 {
-Ftp::Ftp() :
-	m_receiveBuffer("")
+Ftp::Ftp()
 {
 }
 
@@ -19,7 +18,7 @@ FtpResponse Ftp::Connect(const IpAddress &server, const uint16_t &port, const Ti
 	// Connect to the server.
 	if (m_commandSocket.Connect(server, port, timeout) != Socket::Status::Done)
 	{
-		return FtpResponse(FtpResponse::Status::ConnectionFailed);
+		return {FtpResponse::Status::ConnectionFailed};
 	}
 
 	// Get the response to the connection.
@@ -33,7 +32,7 @@ FtpResponse Ftp::Login()
 
 FtpResponse Ftp::Login(const std::string &name, const std::string &password)
 {
-	FtpResponse response = SendCommand("USER", name);
+	auto response{SendCommand("USER", name)};
 
 	if (response.IsOk())
 	{
@@ -46,7 +45,7 @@ FtpResponse Ftp::Login(const std::string &name, const std::string &password)
 FtpResponse Ftp::Disconnect()
 {
 	// Send the exit command.
-	FtpResponse response = SendCommand("QUIT");
+	auto response{SendCommand("QUIT")};
 
 	if (response.IsOk())
 	{
@@ -63,7 +62,7 @@ FtpResponse Ftp::KeepAlive()
 
 FtpResponseDirectory Ftp::GetWorkingDirectory()
 {
-	return FtpResponseDirectory(SendCommand("PWD"));
+	return {SendCommand("PWD")};
 }
 
 FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
@@ -71,7 +70,7 @@ FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
 	// Open a data channel on default port (20) using ASCII transfer mode.
 	std::ostringstream directoryData;
 	FtpDataChannel data(*this);
-	FtpResponse response = data.Open(FtpDataChannel::Mode::Ascii);
+	auto response{data.Open(FtpDataChannel::Mode::Ascii)};
 
 	if (response.IsOk())
 	{
@@ -88,7 +87,7 @@ FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
 		}
 	}
 
-	return FtpResponseListing(response, directoryData.str());
+	return {response, directoryData.str()};
 }
 
 FtpResponse Ftp::ChangeDirectory(const std::string &directory)
@@ -113,7 +112,7 @@ FtpResponse Ftp::DeleteRemoteDirectory(const std::string &name)
 
 FtpResponse Ftp::RenameRemoteFile(const std::string &file, const std::string &newName)
 {
-	FtpResponse response = SendCommand("RNFR", file);
+	auto response{SendCommand("RNFR", file)};
 
 	if (response.IsOk())
 	{
@@ -132,7 +131,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 {
 	// Open a data channel using the given transfer mode.
 	FtpDataChannel data(*this);
-	FtpResponse response = data.Open(mode);
+	auto response{data.Open(mode)};
 
 	if (response.IsOk())
 	{
@@ -142,8 +141,8 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 		if (response.IsOk())
 		{
 			// Extract the filename from the file path
-			std::string filename = remoteFile;
-			std::string::size_type pos = filename.find_last_of("/\\");
+			auto filename{remoteFile};
+			auto pos{filename.find_last_of("/\\")};
 
 			if (pos != std::string::npos)
 			{
@@ -151,7 +150,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 			}
 
 			// Make sure the destination path ends with a slash.
-			std::string path = localPath;
+			auto path{localPath};
 
 			if (!path.empty() && (path[path.size() - 1] != '\\') && (path[path.size() - 1] != '/'))
 			{
@@ -159,11 +158,11 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 			}
 
 			// Create the file and truncate it if necessary.
-			std::ofstream file((path + filename).c_str(), std::ios_base::binary | std::ios_base::trunc);
+			std::ofstream file{(path + filename).c_str(), std::ios_base::binary | std::ios_base::trunc};
 
 			if (!file)
 			{
-				return FtpResponse(FtpResponse::Status::InvalidFile);
+				return {FtpResponse::Status::InvalidFile};
 			}
 
 			// Receive the file data.
@@ -189,16 +188,16 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode, const bool &append)
 {
 	// Get the contents of the file to send.
-	std::ifstream file(localFile.c_str(), std::ios_base::binary);
+	std::ifstream file{localFile.c_str(), std::ios_base::binary};
 
 	if (!file)
 	{
-		return FtpResponse(FtpResponse::Status::InvalidFile);
+		return {FtpResponse::Status::InvalidFile};
 	}
 
 	// Extract the filename from the file path.
-	std::string filename = localFile;
-	std::string::size_type pos = filename.find_last_of("/\\");
+	auto filename{localFile};
+	auto pos{filename.find_last_of("/\\")};
 
 	if (pos != std::string::npos)
 	{
@@ -206,7 +205,7 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 	}
 
 	// Make sure the destination path ends with a slash.
-	std::string path = remotePath;
+	auto path{remotePath};
 
 	if (!path.empty() && (path[path.size() - 1] != '\\') && (path[path.size() - 1] != '/'))
 	{
@@ -214,8 +213,8 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 	}
 
 	// Open a data channel using the given transfer mode.
-	FtpDataChannel data(*this);
-	FtpResponse response = data.Open(mode);
+	FtpDataChannel data{*this};
+	auto response{data.Open(mode)};
 
 	if (response.IsOk())
 	{
@@ -252,7 +251,7 @@ FtpResponse Ftp::SendCommand(const std::string &command, const std::string &para
 	// Send it to the server.
 	if (m_commandSocket.Send(commandStr.c_str(), commandStr.length()) != Socket::Status::Done)
 	{
-		return FtpResponse(FtpResponse::Status::ConnectionClosed);
+		return {FtpResponse::Status::ConnectionClosed};
 	}
 
 	// Get the response.
@@ -263,8 +262,8 @@ FtpResponse Ftp::GetResponse()
 {
 	// We'll use a variable to keep track of the last valid code.
 	// It is useful in case of multi-lines responses, because the end of such a response will start by the same code.
-	uint32_t lastCode = 0;
-	bool isInsideMultiline = false;
+	uint32_t lastCode{};
+	bool isInsideMultiline{};
 	std::string message;
 
 	for (;;)
@@ -277,7 +276,7 @@ FtpResponse Ftp::GetResponse()
 		{
 			if (m_commandSocket.Receive(buffer, sizeof(buffer), length) != Socket::Status::Done)
 			{
-				return FtpResponse(FtpResponse::Status::ConnectionClosed);
+				return {FtpResponse::Status::ConnectionClosed};
 			}
 		}
 		else
@@ -348,7 +347,7 @@ FtpResponse Ftp::GetResponse()
 						m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()), length - static_cast<std::size_t>(in.tellg()));
 
 						// Return the response code and message.
-						return FtpResponse(static_cast<FtpResponse::Status>(code), message);
+						return {static_cast<FtpResponse::Status>(code), message};
 					}
 					// The line we just read was actually not a response, only a new part of the current multiline response.
 
@@ -391,7 +390,7 @@ FtpResponse Ftp::GetResponse()
 			else
 			{
 				// Error: cannot extract the code, and we are not in a multiline response.
-				return FtpResponse(FtpResponse::Status::InvalidResponse);
+				return {FtpResponse::Status::InvalidResponse};
 			}
 		}
 	}

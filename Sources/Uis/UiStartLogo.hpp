@@ -22,7 +22,7 @@ private:
 	Gui m_guiLogoAcid;
 	Text m_textCopyright;
 
-	bool m_finished;
+	bool m_finished{false};
 
 	Delegate<void()> m_onFinished;
 };

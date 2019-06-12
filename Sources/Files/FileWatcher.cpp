@@ -3,10 +3,10 @@
 namespace acid
 {
 FileWatcher::FileWatcher(std::filesystem::path path, const Time &delay) :
-	m_path(std::move(path)),
-	m_delay(delay),
-	m_running(true),
-	m_thread(&FileWatcher::QueueLoop, this)
+	m_path{std::move(path)},
+	m_delay{delay},
+	m_running{true},
+	m_thread{&FileWatcher::QueueLoop, this}
 {
 	for (auto &file : std::filesystem::recursive_directory_iterator(m_path))
 	{
@@ -31,7 +31,7 @@ void FileWatcher::QueueLoop()
 		std::this_thread::sleep_for(std::chrono::microseconds(m_delay));
 
 		// Check if one of the old files was erased
-		for (auto it = m_paths.begin(); it != m_paths.end();)
+		for (auto it{m_paths.begin()}; it != m_paths.end();)
 		{
 			if (!std::filesystem::exists(it->first))
 			{
@@ -46,7 +46,7 @@ void FileWatcher::QueueLoop()
 		// Check if a file was created or modified
 		for (auto &file : std::filesystem::recursive_directory_iterator(m_path))
 		{
-			auto lastWriteTime = std::filesystem::last_write_time(file);
+			auto lastWriteTime{file.last_write_time()};
 
 			// File creation
 			if (!Contains(file.path().string()))
@@ -69,7 +69,8 @@ void FileWatcher::QueueLoop()
 
 bool FileWatcher::Contains(const std::string &key) const
 {
-	auto el = m_paths.find(key);
+	// TODO C++20: Remove method
+	auto el{m_paths.find(key)};
 	return el != m_paths.end();
 }
 }

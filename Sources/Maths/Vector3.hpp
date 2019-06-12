@@ -21,13 +21,13 @@ public:
 	/**
 	 * Constructor for Vector3.
 	 **/
-	explicit constexpr Vector3();
+	constexpr Vector3() = default;
 	
 	/**
 	 * Constructor for Vector3.
 	 * @param a The value to set all components to.
 	 **/
-	explicit constexpr Vector3(const T &a);
+	constexpr Vector3(const T &a);
 	
 	/**
 	 * Constructor for Vector3.
@@ -36,15 +36,28 @@ public:
 	 * @param z Start z.
 	 **/
 	constexpr Vector3(const T &x, const T &y, const T &z);
-	
+
+	/**
+	 * Constructor for Vector3.
+	 * @tparam K The x type.
+	 * @tparam J The y type.
+	 * @tparam H The z type.
+	 * @param x Start x.
+	 * @param y Start y.
+	 * @param z Start z.
+	 **/
+	template<typename K, typename J, typename H>
+	constexpr Vector3(const K &x, const J &y, const H &z);
+
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
+	 * @tparam J The z type.
 	 * @param source Creates this vector out of a existing vector.
 	 * @param z Start z.
 	 **/
-	template<typename K>
-	explicit constexpr Vector3(const Vector2<K> &source, const float &z = 0);
+	template<typename K, typename J = T>
+	explicit constexpr Vector3(const Vector2<K> &source, const J &z = 0);
 	
 	/**
 	 * Constructor for Vector3.
@@ -60,7 +73,7 @@ public:
 	 * @param source Creates this vector out of a existing vector.
 	 **/
 	template<typename K>
-	explicit constexpr Vector3(const Vector4<K> &source);
+	constexpr Vector3(const Vector4<K> &source);
 	
 	/**
 	 * Adds this vector to another vector.
@@ -311,7 +324,7 @@ public:
 	ACID_EXPORT static const Vector3 PositiveInfinity;
 	ACID_EXPORT static const Vector3 NegativeInfinity;
 
-	T m_x, m_y, m_z;
+	T m_x{}, m_y{}, m_z{};
 };
 
 using Vector3f = Vector3<float>;

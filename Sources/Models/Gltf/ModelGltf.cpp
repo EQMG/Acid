@@ -6,6 +6,7 @@
 
 #include "tiny_gltf.h"
 #include "Files/FileSystem.hpp"
+#include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
@@ -13,14 +14,14 @@ namespace acid
 {
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelGltf>(resource);
 	}
 
-	auto result = std::make_shared<ModelGltf>("");
+	auto result{std::make_shared<ModelGltf>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -29,14 +30,14 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelGltf> ModelGltf::Create(const std::string &filename)
 {
-	auto temp = ModelGltf(filename, false);
-	Metadata metadata = Metadata();
+	ModelGltf temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 ModelGltf::ModelGltf(std::string filename, const bool &load) :
-	m_filename(std::move(filename))
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{
@@ -52,16 +53,16 @@ void ModelGltf::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto folder = FileSystem::ParentDirectory(m_filename);
-	auto fileLoaded = Files::Read(m_filename);
+	auto folder{FileSystem::ParentDirectory(m_filename)};
+	auto fileLoaded{Files::Read(m_filename)};
 
 	if (!fileLoaded)
 	{
 
-		Log::Error("GLTF file could not be loaded: '%s'\n", m_filename.c_str());
+		Log::Error("GLTF file could not be loaded: '%s'\n", m_filename);
 		return;
 	}
 
@@ -91,12 +92,12 @@ void ModelGltf::Load()
 	//LoadTextureSamplers(gltfModel);
 	//LoadTextures(gltfModel);
 	//LoadMaterials(gltfModel);
-	float scale = 1.0f;
+	auto scale{1.0f};
 
 	// TODO: Scene handling with no default scene.
 	/*const tinygltf::Scene &scene = gltfModel.scenes[gltfModel.defaultScene > -1 ? gltfModel.defaultScene : 0];
 
-	for (size_t i = 0; i < scene.nodes.size(); i++)
+	for (std::size_t i{}; i < scene.nodes.size(); i++)
 	{
 		const tinygltf::Node node = gltfModel.nodes[scene.nodes[i]];
 		LoadNode(nullptr, node, scene.nodes[i], gltfModel, indices, vertices, scale);
@@ -123,11 +124,11 @@ void ModelGltf::Load()
 		}
 	}
 
-	auto extensions = gltfModel.extensionsUsed;*/
+	auto extensions{gltfModel.extensionsUsed};*/
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);
@@ -135,14 +136,14 @@ void ModelGltf::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
 {
-	metadata.GetChild("Filename", model.m_filename);
+	metadata.GetChild("filename", model.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelGltf");
-	metadata.SetChild("Filename", model.m_filename);
+	metadata.SetChild<std::string>("type", "ModelGltf");
+	metadata.SetChild("filename", model.m_filename);
 	return metadata;
 }
 }

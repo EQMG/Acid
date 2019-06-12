@@ -11,7 +11,7 @@ class ACID_EXPORT Maths
 {
 public:
 	template<typename T>
-	static constexpr T Pi = T(3.14159265358979323846264338327950288L);
+	static constexpr T Pi{T(3.14159265358979323846264338327950288L)};
 
 	/**
 	 * Generates a random value from between a range.
@@ -46,7 +46,7 @@ public:
 	template<typename T = float>
 	static constexpr T Radians(const T &degrees)
 	{
-		return degrees * Pi<long double> / 180;
+		return static_cast<T>(degrees * Pi<long double> / 180);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public:
 	template<typename T = float>
 	static constexpr T Degrees(const T &radians)
 	{
-		return radians * 180 / Pi<long double>;
+		return static_cast<T>(radians * 180 / Pi<long double>);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public:
 	template<typename T = float>
 	static T WrapDegrees(const T &degrees)
 	{
-		auto x = std::fmod(degrees, 360);
+		auto x{std::fmod(degrees, 360)};
 
 		if (x < 0)
 		{
@@ -89,7 +89,7 @@ public:
 	template<typename T = float>
 	static T WrapRadians(const T &radians)
 	{
-		auto x = std::fmod(radians, 2 * Pi<T>);
+		auto x{std::fmod(radians, 2 * Pi<T>)};
 
 		if (x < 0)
 		{
@@ -109,7 +109,7 @@ public:
 	template<typename T = float>
 	static T RoundToPlace(const T &value, const int32_t &place)
 	{
-		auto placeMul = std::pow(10, place);
+		auto placeMul{std::pow(10, place)};
 		return static_cast<T>(std::round(value * placeMul) / placeMul);
 	}
 
@@ -183,8 +183,8 @@ public:
 	template<typename T = float, typename K = float>
 	static auto CosLerp(const T &a, const T &b, const K &factor)
 	{
-		auto ft = factor * Pi<T>;
-		auto f = 1 - std::cos(ft) / 2;
+		auto ft{factor * Pi<T>};
+		auto f{1 - std::cos(ft) / 2};
 		return (a * (1 - f)) + (b * f);
 	}
 
@@ -200,7 +200,7 @@ public:
 	template<typename T = float, typename K = float>
 	static constexpr auto SmoothlyStep(const T &edge0, const T &edge1, const K &x)
 	{
-		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0, 1);
+		auto s{std::clamp((x - edge0) / (edge1 - edge0), 0, 1)};
 		return s * s * (3 - 2 * s);
 	}
 
@@ -216,9 +216,9 @@ public:
 	static auto CosFromSin(const T &sin, const K &angle)
 	{
 		// sin(x)^2 + cos(x)^2 = 1
-		auto cos = std::sqrt(1 - sin * sin);
-		auto a = angle + (Pi<T> / 2);
-		auto b = a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>);
+		auto cos{std::sqrt(1 - sin * sin)};
+		auto a{angle + (Pi<T> / 2)};
+		auto b{a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>)};
 
 		if (b < 0)
 		{
@@ -245,14 +245,4 @@ public:
 		seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 	}
 };
-
-constexpr long double operator"" _deg(long double deg)
-{
-	return deg * Maths::Pi<long double> / 180;
-}
-
-constexpr long double operator"" _rad(long double rad)
-{
-	return rad;
-}
 }

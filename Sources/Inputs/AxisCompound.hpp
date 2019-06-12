@@ -16,34 +16,28 @@ class ACID_EXPORT AxisCompound :
 {
 public:
 	/**
-	 * A template used to create a axis of a single type.
-	 * @tparam T The type of buttons to create.
-	 * @tparam Args The values passed to each axis.
-	 * @param args The arguments to pass to T.
-	 * @return The created compound axis.
+	 * Creates a new compound axis.
 	 */
-	template<typename T, typename... Args>
-	static AxisCompound *Create(Args &&... args)
-	{
-		std::vector<Axis *> axes;
-
-		for (const auto &x : { args... })
-		{
-			axes.emplace_back(new T(x));
-		}
-
-		return new AxisCompound(axes);
-	}
+	AxisCompound() = default;
 
 	/**
 	 * Creates a new compound axis.
-	 * @param axes The axes on the being added.
+	 * @tparam Args The axis argument types.
+	 * @param args The axes on the being added.
 	 */
-	explicit AxisCompound(const std::vector<Axis *> &axes);
+	template <typename... Args>
+	AxisCompound(Args &&... args)
+	{
+		m_axes.reserve(sizeof...(Args));
+		(m_axes.emplace_back(std::forward<Args>(args)), ...);
+		ConnectAxes();
+	}
 
 	float GetAmount() const override;
 
 private:
+	void ConnectAxes();
+
 	std::vector<std::unique_ptr<Axis>> m_axes;
 };
 }

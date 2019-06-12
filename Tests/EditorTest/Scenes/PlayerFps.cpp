@@ -10,35 +10,34 @@
 
 namespace test
 {
-const float WALK_SPEED = 3.1f;
-const float RUN_SPEED = 5.7f;
-const float CROUCH_SPEED = 1.2f;
-const float JUMP_SPEED = 4.1f;
-const float NOCLIP_SPEED = 3.0f;
+const float WALK_SPEED{3.1f};
+const float RUN_SPEED{5.7f};
+const float CROUCH_SPEED{1.2f};
+const float JUMP_SPEED{4.1f};
+const float NOCLIP_SPEED{3.0f};
 
 PlayerFps::PlayerFps() :
-	m_noclipEnabled(false),
-	m_inputForward({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::S, Key::Down), ButtonCompound::Create<ButtonKeyboard>(false, Key::W, Key::Up)),
-		new AxisJoystick(0, 1, true) }),
-	m_inputStrafe({ new AxisButton(ButtonCompound::Create<ButtonKeyboard>(false, Key::D, Key::Right), ButtonCompound::Create<ButtonKeyboard>(false, Key::A, Key::Left)),
-			new AxisJoystick(0, 0, true) }),
-	m_inputSprint({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ShiftLeft, Key::ShiftRight), new ButtonJoystick(0, 1) }),
-	m_inputJump({ new ButtonKeyboard(Key::Space), new ButtonJoystick(0, 1) }),
-	m_inputCrouch({ ButtonCompound::Create<ButtonKeyboard>(false, Key::ControlLeft, Key::ControlRight), new ButtonJoystick(0, 1) }),
-	m_toggleNoclip({ new ButtonKeyboard(Key::N), })
+	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
+		std::make_unique<AxisJoystick>(0, 1)},
+	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
+		std::make_unique<AxisJoystick>(0, 0)},
+	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)},
+	m_inputJump{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)},
+	m_inputCrouch{std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)},
+	m_toggleNoclip{std::make_unique<ButtonKeyboard>(Key::N)}
 {
 }
 
 void PlayerFps::Start()
 {
-	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with '%s'\n", other->GetParent()->GetName().c_str());});
-	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName().c_str());});
+	//auto collisionObject{GetParent()->GetComponent<CollisionObject>()};
+	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with '%s'\n", other->GetParent()->GetName());});
+	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with '%s'\n", other->GetParent()->GetName());});
 }
 
 void PlayerFps::Update()
 {
-	auto character = GetParent()->GetComponent<KinematicCharacter>();
+	auto character{GetParent()->GetComponent<KinematicCharacter>()};
 
 	if (character == nullptr || !character->IsShapeCreated())
 	{
@@ -67,7 +66,7 @@ void PlayerFps::Update()
 		{
 			if (m_inputJump.WasDown() && character->IsOnGround())
 			{
-				character->Jump(Vector3f(0.0f, JUMP_SPEED, 0.0f));
+				character->Jump({0.0f, JUMP_SPEED, 0.0f});
 			}
 		}
 
@@ -77,8 +76,8 @@ void PlayerFps::Update()
 
 			if (m_noclipEnabled)
 			{
-				character->SetGravity(Vector3f());
-				character->SetLinearVelocity(Vector3f());
+				character->SetGravity({});
+				character->SetLinearVelocity({});
 			}
 			else
 			{
@@ -89,12 +88,12 @@ void PlayerFps::Update()
 		}
 	}
 
-	auto &transform = GetParent()->GetLocalTransform();
-	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+	auto &transform{GetParent()->GetLocalTransform()};
+	auto cameraRotation{Scenes::Get()->GetCamera()->GetRotation()};
 
-	transform.SetRotation(Vector3f(0.0f, cameraRotation.m_y, 0.0f));
+	transform.SetRotation({0.0f, cameraRotation.m_y, 0.0f});
 
-	auto walkDirection = direction;
+	auto walkDirection{direction};
 	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));
 	walkDirection.m_z = direction.m_z * std::cos(cameraRotation.m_y) - direction.m_x * std::sin(cameraRotation.m_y);
 

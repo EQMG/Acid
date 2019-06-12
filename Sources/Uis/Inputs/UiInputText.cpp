@@ -7,21 +7,18 @@
 namespace acid
 {
 UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, const int32_t &maxLength, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, UiTransform(UiMargins::All), Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, UiTransform(UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding), UiInputButton::FontSize, value,
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(std::move(value)),
-	m_maxLength(maxLength),
-	m_lastKey(0),
-	m_updating(false),
-	m_mouseOver(false)
+	UiObject{parent, transform},
+	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
+	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
+	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, value,
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour},
+	m_value{std::move(value)},
+	m_maxLength{maxLength}
 {
 	SetCursorHover(CursorStandard::Hand);
 
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
 	{
@@ -95,12 +92,12 @@ void UiInputText::UpdateObject()
 	{
 		if (m_background.IsSelected() && !m_mouseOver)
 		{
-			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
+			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
 		}
 		else if (!m_background.IsSelected() && m_mouseOver)
 		{
-			m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}

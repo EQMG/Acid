@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Scenes/Component.hpp>
+#include <Serialized/Metadata.hpp>
 
 using namespace acid;
 

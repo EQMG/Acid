@@ -7,15 +7,14 @@
 namespace test
 {
 MaterialTerrain::MaterialTerrain(std::shared_ptr<Image2d> imageR, std::shared_ptr<Image2d> imageG) :
-	m_imageR(std::move(imageR)),
-	m_imageG(std::move(imageG))
+	m_imageR{std::move(imageR)},
+	m_imageG{std::move(imageG)}
 {
 }
 
 void MaterialTerrain::Start()
 {
-	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
-		PipelineGraphicsCreate({ "Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag" }, { VertexDefault::GetVertexInput() }));
+	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {VertexDefault::GetVertexInput()}});
 }
 
 void MaterialTerrain::Update()
@@ -35,15 +34,15 @@ void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)
 
 const Metadata &operator>>(const Metadata &metadata, MaterialTerrain &material)
 {
-	metadata.GetResource("Image R", material.m_imageR);
-	metadata.GetResource("Image G", material.m_imageG);
+	metadata.GetResource("imageR", material.m_imageR);
+	metadata.GetResource("imageG", material.m_imageG);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const MaterialTerrain &material)
 {
-	metadata.SetResource("Image R", material.m_imageR);
-	metadata.SetResource("Image G", material.m_imageG);
+	metadata.SetResource("imageR", material.m_imageR);
+	metadata.SetResource("imageG", material.m_imageG);
 	return metadata;
 }
 }

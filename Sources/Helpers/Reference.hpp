@@ -8,13 +8,10 @@ template<typename T>
 class Reference
 {
 public:
-	Reference() noexcept :
-		m_reference(nullptr)
-	{
-	}
+	Reference() noexcept = default;
 
 	Reference(T &reference) noexcept :
-		m_reference(std::addressof(reference))
+		m_reference{std::addressof(reference)}
 	{
 	}
 
@@ -68,6 +65,6 @@ public:
 
 private:
 	// Address of the referenced object.
-	T *m_reference;
+	T *m_reference{};
 };
 }

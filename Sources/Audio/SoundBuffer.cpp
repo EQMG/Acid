@@ -15,14 +15,14 @@ namespace acid
 {
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<SoundBuffer>(resource);
 	}
 
-	auto result = std::make_shared<SoundBuffer>("");
+	auto result{std::make_shared<SoundBuffer>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -31,15 +31,14 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 {
-	auto temp = SoundBuffer(filename, false);
-	Metadata metadata = Metadata();
+	SoundBuffer temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 SoundBuffer::SoundBuffer(std::string filename, const bool &load) :
-	m_filename(std::move(filename)),
-	m_buffer(0)
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{
@@ -59,7 +58,7 @@ void SoundBuffer::Load()
 		return;
 	}
 
-	std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
 
 	if (fileExt == ".wav")
 	{
@@ -74,14 +73,14 @@ void SoundBuffer::Load()
 uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto fileLoaded = Files::Read(filename);
+	auto fileLoaded{Files::Read(filename)};
 
 	if (!fileLoaded)
 	{
-		Log::Error("WAV file could not be loaded: '%s'\n", filename.c_str());
+		Log::Error("WAV file could not be loaded: '%s'\n", filename);
 		return 0;
 	}
 
@@ -133,7 +132,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 
 	chunkId[4] = '\0';
 
-	std::unique_ptr<uint8_t[]> data(new uint8_t[size]);
+	std::unique_ptr<uint8_t[]> data{new uint8_t[size]};
 	file.read(reinterpret_cast<char *>(data.get()), size);
 
 	uint32_t buffer;
@@ -143,8 +142,8 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("Sound WAV '%s' loaded in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("Sound WAV '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }
@@ -152,25 +151,25 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
-	auto fileLoaded = Files::Read(filename);
+	auto fileLoaded{Files::Read(filename)};
 
 	if (!fileLoaded)
 	{
-		Log::Error("OGG file could not be loaded: '%s'\n", filename.c_str());
+		Log::Error("OGG file could not be loaded: '%s'\n", filename);
 		return 0;
 	}
 
 	int32_t channels;
 	int32_t samplesPerSec;
 	int16_t *data;
-	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data);
+	auto size{stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data)};
 
 	if (size == -1)
 	{
-		Log::Error("Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename.c_str());
+		Log::Error("Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename);
 	}
 
 	uint32_t buffer;
@@ -181,21 +180,21 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }
 
 const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer)
 {
-	metadata.GetChild("Filename", soundBuffer.m_filename);
+	metadata.GetChild("filename", soundBuffer.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer)
 {
-	metadata.SetChild("Filename", soundBuffer.m_filename);
+	metadata.SetChild("filename", soundBuffer.m_filename);
 	return metadata;
 }
 }

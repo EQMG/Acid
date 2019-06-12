@@ -15,7 +15,7 @@ public:
 	 * Default constructor.
 	 * @param response Source response. 
 	 **/
-	explicit FtpResponseDirectory(const FtpResponse &response);
+	FtpResponseDirectory(const FtpResponse &response);
 
 	/**
 	 * Get the directory returned in the response.

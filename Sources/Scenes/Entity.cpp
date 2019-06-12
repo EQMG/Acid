@@ -7,37 +7,16 @@
 namespace acid
 {
 Entity::Entity(const Transform &transform) :
-	m_name(""),
-	m_localTransform(transform),
-	m_parent(nullptr),
-	m_removed(false)
+	m_localTransform{transform}
 {
 }
 
-Entity::Entity(const std::string &filename, const Transform &transform) :
-	Entity(transform)
+Entity::Entity(const Transform &transform, const std::string &filename) :
+	m_localTransform{transform},
+	m_name{FileSystem::FileName(filename)}
 {
-	auto prefabObject = EntityPrefab::Create(filename);
-
-	for (const auto &child : prefabObject->GetParent()->GetChildren())
-	{
-		if (child->GetName().empty())
-		{
-			continue;
-		}
-
-		auto component = Scenes::Get()->GetComponentRegister().Create(child->GetName());
-
-		if (component == nullptr)
-		{
-			continue;
-		}
-
-		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
-		AddComponent(component);
-	}
-
-	m_name = FileSystem::FileName(filename);
+	auto entityPrefab{EntityPrefab::Create(filename)};
+	*entityPrefab >> *this;
 }
 
 Entity::~Entity()
@@ -50,7 +29,7 @@ Entity::~Entity()
 
 void Entity::Update()
 {
-	for (auto it = m_components.begin(); it != m_components.end();)
+	for (auto it{m_components.begin()}; it != m_components.end();)
 	{
 		if ((*it)->IsRemoved())
 		{
@@ -102,7 +81,7 @@ void Entity::RemoveComponent(const std::string &name)
 {
 	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c)
 	{
-		auto componentName = Scenes::Get()->GetComponentRegister().FindName(c.get());
+		auto componentName{Scenes::Get()->GetComponentRegister().FindName(c.get())};
 		return componentName && name == *componentName;
 	}), m_components.end());
 }

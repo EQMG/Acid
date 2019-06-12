@@ -15,11 +15,11 @@ int main(int argc, char **argv)
 	using namespace test;
 
 	// Creates the engine.
-	auto engine = std::make_unique<Engine>(argv[0]);
-	engine->SetGame(new MainGame());
+	auto engine{std::make_unique<Engine>(argv[0])};
+	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
-	int32_t exitCode = engine->Run();
+	auto exitCode{engine->Run()};
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -30,14 +30,14 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_fileWatcher(std::filesystem::current_path(), 2s),
-	m_buttonFullscreen(Key::F11),
-	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
+	m_fileWatcher{std::filesystem::current_path(), 2s},
+	m_buttonFullscreen{Key::F11},
+	m_buttonScreenshot{Key::F9},
+	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
+	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 	Files::Get()->AddSearchPath("Resources/Engine");
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path().c_str());
 
 	// Watches all files in the working directory.
 	m_fileWatcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
@@ -45,13 +45,13 @@ MainGame::MainGame() :
 		switch (status)
 		{
 		case FileWatcher::Status::Created:
-			Log::Out("Created '%s'\n", path.c_str());
+			Log::Out("Created '%s'\n", path);
 			break;
 		case FileWatcher::Status::Modified:
-			Log::Out("Modified '%s'\n", path.c_str());
+			Log::Out("Modified '%s'\n", path);
 			break;
 		case FileWatcher::Status::Erased:
-			Log::Out("Erased '%s'\n", path.c_str());
+			Log::Out("Erased '%s'\n", path);
 			break;
 		}
 	});
@@ -84,15 +84,15 @@ MainGame::MainGame() :
 	// Registers modules.
 
 	// Registers components.
-	auto &componentRegister = Scenes::Get()->GetComponentRegister();
+	auto &componentRegister{Scenes::Get()->GetComponentRegister()};
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test GUI");
-	Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", 
-		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
+	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", 
+		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	Graphics::Get()->SetRenderer(new MainRenderer());
-	Scenes::Get()->SetScene(new Scene1());
+	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
+	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
 MainGame::~MainGame()

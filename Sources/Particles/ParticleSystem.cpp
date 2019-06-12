@@ -7,17 +7,12 @@
 namespace acid
 {
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
-	m_types(std::move(types)),
-	m_pps(pps),
-	m_averageSpeed(averageSpeed),
-	m_gravityEffect(gravityEffect),
-	m_randomRotation(false),
-	m_directionDeviation(0.0f),
-	m_speedDeviation(0.0f),
-	m_lifeDeviation(0.0f),
-	m_stageDeviation(0.0f),
-	m_scaleDeviation(0.0f),
-	m_elapsedEmit(Time::Seconds(1.0f / m_pps))
+	m_types{std::move(types)},
+	m_pps{pps},
+	m_averageSpeed{averageSpeed},
+	m_gravityEffect{gravityEffect},
+	m_randomRotation{false},
+	m_elapsedEmit{Time::Seconds(1.0f / m_pps)}
 {
 }
 
@@ -34,13 +29,13 @@ void ParticleSystem::Update()
 
 	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed)
+	if (auto elapsed{m_elapsedEmit.GetElapsed()}; elapsed)
 	{
-		auto emitters = GetParent()->GetComponents<Emitter>();
+		auto emitters{GetParent()->GetComponents<Emitter>()};
 
 		if (!emitters.empty())
 		{
-			for (uint32_t i = 0; i < elapsed; i++)
+			for (uint32_t i{}; i < elapsed; i++)
 			{
 				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
 			}
@@ -60,7 +55,7 @@ void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
 
 bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &type)
 {
-	for (auto it = m_types.begin(); it != m_types.end(); ++it)
+	for (auto it{m_types.begin()}; it != m_types.end(); ++it)
 	{
 		if (*it == type)
 		{
@@ -74,20 +69,20 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 
 Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const
 {
-	auto cosAngle = std::cos(angle);
-	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
-	auto z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
-	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-	auto x = rootOneMinusZSquared * std::cos(theta);
-	auto y = rootOneMinusZSquared * std::sin(theta);
+	auto cosAngle{std::cos(angle)};
+	auto theta{Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>};
+	auto z{(cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle)};
+	auto rootOneMinusZSquared{std::sqrt(1.0f - z * z)};
+	auto x{rootOneMinusZSquared * std::cos(theta)};
+	auto y{rootOneMinusZSquared * std::sin(theta)};
 
-	auto direction = Vector4f(x, y, z, 1.0f);
+	Vector4f direction{x, y, z, 1.0f};
 
 	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
 	{
-		auto rotateAxis = coneDirection.Cross(Vector3f::Front);
+		auto rotateAxis{coneDirection.Cross(Vector3f::Front)};
 		rotateAxis.Normalize();
-		auto rotateAngle = std::acos(coneDirection.Dot(Vector3f::Front));
+		auto rotateAngle{std::acos(coneDirection.Dot(Vector3f::Front))};
 
 		Matrix4 rotationMatrix;
 		rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
@@ -98,7 +93,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 		direction.m_z *= -1.0f;
 	}
 
-	return Vector3f(direction);
+	return {direction};
 }
 
 void ParticleSystem::SetPps(const float &pps)
@@ -114,11 +109,11 @@ void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviat
 
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
-	Vector3f spawnPos = emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition();
+	auto spawnPos{emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition()};
 
 	Vector3f velocity;
 
-	if (m_direction != Vector3f())
+	if (m_direction != Vector3f::Zero)
 	{
 		velocity = RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
 	}
@@ -130,16 +125,16 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	velocity = velocity.Normalize();
 	velocity *= GenerateValue(m_averageSpeed, m_speedDeviation);
 
-	auto emitType = m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0.0f, static_cast<float>(m_types.size())))));
-	auto scale = GenerateValue(emitType->GetScale(), m_scaleDeviation);
-	auto lifeLength = GenerateValue(emitType->GetLifeLength(), m_lifeDeviation);
-	auto stageCycles = GenerateValue(emitType->GetStageCycles(), m_stageDeviation);
-	return Particle(emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect);
+	auto emitType{m_types.at(static_cast<uint32_t>(std::floor(Maths::Random(0.0f, static_cast<float>(m_types.size())))))};
+	auto scale{GenerateValue(emitType->GetScale(), m_scaleDeviation)};
+	auto lifeLength{GenerateValue(emitType->GetLifeLength(), m_lifeDeviation)};
+	auto stageCycles{GenerateValue(emitType->GetStageCycles(), m_stageDeviation)};
+	return {emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect};
 }
 
 float ParticleSystem::GenerateValue(const float &average, const float &errorPercent)
 {
-	auto error = Maths::Random(-1.0f, 1.0f) * errorPercent;
+	auto error{Maths::Random(-1.0f, 1.0f) * errorPercent};
 	return average + (average * error);
 }
 
@@ -147,7 +142,7 @@ float ParticleSystem::GenerateRotation() const
 {
 	if (m_randomRotation)
 	{
-		return Maths::Random(0.0f, 360.0_deg);
+		return Maths::Random(0.0f, Maths::Pi<float>);
 	}
 
 	return 0.0f;
@@ -155,17 +150,17 @@ float ParticleSystem::GenerateRotation() const
 
 Vector3f ParticleSystem::GenerateRandomUnitVector() const
 {
-	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
-	auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
-	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
-	auto x = rootOneMinusZSquared * std::cos(theta);
-	auto y = rootOneMinusZSquared * std::sin(theta);
-	return Vector3f(x, y, z);
+	auto theta{Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>};
+	auto z{Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f};
+	auto rootOneMinusZSquared{std::sqrt(1.0f - z * z)};
+	auto x{rootOneMinusZSquared * std::cos(theta)};
+	auto y{rootOneMinusZSquared * std::sin(theta)};
+	return {x, y, z};
 }
 
 const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)
 {
-	auto typesNode = metadata.FindChild("Types");
+	auto typesNode{metadata.FindChild("types")};
 
 	particleSystem.m_types.clear();
 
@@ -177,43 +172,43 @@ const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSys
 		}
 	}
 
-	metadata.GetChild("PPS", particleSystem.m_pps);
-	metadata.GetChild("Average Speed", particleSystem.m_averageSpeed);
-	metadata.GetChild("Gravity Effect", particleSystem.m_gravityEffect);
-	metadata.GetChild("Random Rotation", particleSystem.m_randomRotation);
-	metadata.GetChild("Direction", particleSystem.m_direction);
-	metadata.GetChild("Direction Deviation", particleSystem.m_directionDeviation);
-	metadata.GetChild("Speed Deviation", particleSystem.m_speedDeviation);
-	metadata.GetChild("Life Deviation", particleSystem.m_lifeDeviation);
-	metadata.GetChild("Stage Deviation", particleSystem.m_stageDeviation);
-	metadata.GetChild("Scale Deviation", particleSystem.m_scaleDeviation);
+	metadata.GetChild("pps", particleSystem.m_pps);
+	metadata.GetChild("averageSpeed", particleSystem.m_averageSpeed);
+	metadata.GetChild("gravityEffect", particleSystem.m_gravityEffect);
+	metadata.GetChild("randomRotation", particleSystem.m_randomRotation);
+	metadata.GetChild("direction", particleSystem.m_direction);
+	metadata.GetChild("directionDeviation", particleSystem.m_directionDeviation);
+	metadata.GetChild("speedDeviation", particleSystem.m_speedDeviation);
+	metadata.GetChild("lifeDeviation", particleSystem.m_lifeDeviation);
+	metadata.GetChild("stageDeviation", particleSystem.m_stageDeviation);
+	metadata.GetChild("scaleDeviation", particleSystem.m_scaleDeviation);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
 {
-	auto typesNode = metadata.FindChild("Types", false);
+	auto typesNode{metadata.FindChild("types")};
 
 	if (typesNode == nullptr)
 	{
-		typesNode = metadata.AddChild(new Metadata("Types"));
+		typesNode = metadata.AddChild(std::make_unique<Metadata>("types"));
 	}
 
 	for (const auto &type : particleSystem.m_types)
 	{
-		*typesNode->AddChild(new Metadata()) << type;
+		*typesNode->AddChild(std::make_unique<Metadata>()) << type;
 	}
 
-	metadata.SetChild("PPS", particleSystem.m_pps);
-	metadata.SetChild("Average Speed", particleSystem.m_averageSpeed);
-	metadata.SetChild("Gravity Effect", particleSystem.m_gravityEffect);
-	metadata.SetChild("Random Rotation", particleSystem.m_randomRotation);
-	metadata.SetChild("Direction", particleSystem.m_direction);
-	metadata.SetChild("Direction Deviation", particleSystem.m_directionDeviation);
-	metadata.SetChild("Speed Deviation", particleSystem.m_speedDeviation);
-	metadata.SetChild("Life Deviation", particleSystem.m_lifeDeviation);
-	metadata.SetChild("Stage Deviation", particleSystem.m_stageDeviation);
-	metadata.SetChild("Scale Deviation", particleSystem.m_scaleDeviation);
+	metadata.SetChild("pps", particleSystem.m_pps);
+	metadata.SetChild("averageSpeed", particleSystem.m_averageSpeed);
+	metadata.SetChild("gravityEffect", particleSystem.m_gravityEffect);
+	metadata.SetChild("randomRotation", particleSystem.m_randomRotation);
+	metadata.SetChild("direction", particleSystem.m_direction);
+	metadata.SetChild("directionDeviation", particleSystem.m_directionDeviation);
+	metadata.SetChild("speedDeviation", particleSystem.m_speedDeviation);
+	metadata.SetChild("lifeDeviation", particleSystem.m_lifeDeviation);
+	metadata.SetChild("stageDeviation", particleSystem.m_stageDeviation);
+	metadata.SetChild("scaleDeviation", particleSystem.m_scaleDeviation);
 	return metadata;
 }
 }

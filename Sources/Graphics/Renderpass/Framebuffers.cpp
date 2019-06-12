@@ -10,11 +10,11 @@ namespace acid
 Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
 	const VkSampleCountFlagBits &samples)
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
+		auto attachmentSamples{attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT};
 
 		switch (attachment.GetType())
 		{
@@ -33,7 +33,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 	m_framebuffers.resize(swapchain.GetImageCount());
 
-	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
+	for (uint32_t i{}; i < swapchain.GetImageCount(); i++)
 	{
 		std::vector<VkImageView> attachments;
 
@@ -53,7 +53,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 			}
 		}
 
-		VkFramebufferCreateInfo framebufferCreateInfo = {};
+		VkFramebufferCreateInfo framebufferCreateInfo{};
 		framebufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 		framebufferCreateInfo.renderPass = renderPass;
 		framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
@@ -67,7 +67,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 Framebuffers::~Framebuffers()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	for (const auto &framebuffer : m_framebuffers)
 	{

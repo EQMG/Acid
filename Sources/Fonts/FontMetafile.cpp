@@ -6,18 +6,11 @@
 namespace acid
 {
 FontMetafile::FontMetafile(std::string filename) :
-	m_filename(std::move(filename)),
-	m_verticalPerPixelSize(0.0f),
-	m_horizontalPerPixelSize(0.0f),
-	m_imageWidth(0),
-	m_spaceWidth(0.0f),
-	m_paddingWidth(0),
-	m_paddingHeight(0),
-	m_maxSizeY(0.0f)
+	m_filename{std::move(filename)}
 {
-	IFStream inStream(m_filename);
+	IFStream inStream{m_filename};
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream.peek() != -1)
@@ -44,7 +37,7 @@ FontMetafile::FontMetafile(std::string filename) :
 
 std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t &ascii) const
 {
-	auto it = m_characters.find(ascii);
+	auto it{m_characters.find(ascii)};
 
 	if (it != m_characters.end())
 	{
@@ -57,11 +50,11 @@ std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t 
 void FontMetafile::ProcessNextLine(const std::string &line)
 {
 	m_values.clear();
-	auto parts = String::Split(line, " ");
+	auto parts{String::Split(line, " ")};
 
 	for (const auto &part : parts)
 	{
-		auto pairs = String::Split(part, "=");
+		auto pairs{String::Split(part, "=")};
 
 		if (pairs.size() == 2)
 		{
@@ -83,7 +76,7 @@ void FontMetafile::LoadPaddingData()
 
 void FontMetafile::LoadLineSizes()
 {
-	int32_t lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
+	auto lineHeightPixels{GetValueOfVariable("lineHeight") - m_paddingHeight};
 	m_verticalPerPixelSize = LineHeight / static_cast<float>(lineHeightPixels);
 	m_horizontalPerPixelSize = m_verticalPerPixelSize;
 	m_imageWidth = GetValueOfVariable("scaleW");
@@ -91,7 +84,7 @@ void FontMetafile::LoadLineSizes()
 
 void FontMetafile::LoadCharacterData()
 {
-	auto id = GetValueOfVariable("id");
+	auto id{GetValueOfVariable("id")};
 
 	if (id == SpaceAscii)
 	{
@@ -99,30 +92,30 @@ void FontMetafile::LoadCharacterData()
 		return;
 	}
 
-	auto xTextureCoord = (GetValueOfVariable<float>("x") + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth;
-	auto yTextureCoord = (GetValueOfVariable<float>("y") + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth;
-	auto width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DesiredPassing));
-	auto height = GetValueOfVariable("height") - (m_paddingHeight - (2 * DesiredPassing));
-	auto quadWidth = width * m_horizontalPerPixelSize;
-	auto quadHeight = height * m_verticalPerPixelSize;
-	auto xTexSize = static_cast<float>(width) / m_imageWidth;
-	auto yTexSize = static_cast<float>(height) / m_imageWidth;
-	auto xOffset = (GetValueOfVariable("xoffset") + m_padding.at(PadLeft) - DesiredPassing) * m_horizontalPerPixelSize;
-	auto yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize;
-	auto xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
+	auto xTextureCoord{(GetValueOfVariable<float>("x") + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth};
+	auto yTextureCoord{(GetValueOfVariable<float>("y") + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth};
+	auto width{GetValueOfVariable("width") - (m_paddingWidth - (2 * DesiredPassing))};
+	auto height{GetValueOfVariable("height") - (m_paddingHeight - (2 * DesiredPassing))};
+	auto quadWidth{width * m_horizontalPerPixelSize};
+	auto quadHeight{height * m_verticalPerPixelSize};
+	auto xTexSize{static_cast<float>(width) / m_imageWidth};
+	auto yTexSize{static_cast<float>(height) / m_imageWidth};
+	auto xOffset{(GetValueOfVariable("xoffset") + m_padding.at(PadLeft) - DesiredPassing) * m_horizontalPerPixelSize};
+	auto yOffset{(GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize};
+	auto xAdvance{(GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize};
 
 	if (quadHeight > m_maxSizeY)
 	{
 		m_maxSizeY = quadHeight;
 	}
 
-	auto character = Character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
+	Character character{id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance};
 	m_characters.emplace(character.m_id, character);
 }
 
 std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 {
-	auto numbers = String::Split(m_values.at(variable), ",");
+	auto numbers{String::Split(m_values.at(variable), ",")};
 
 	std::vector<int32_t> values;
 	values.reserve(numbers.size());

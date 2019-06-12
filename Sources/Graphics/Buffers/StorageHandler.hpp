@@ -58,14 +58,14 @@ public:
 			return;
 		}
 
-		auto uniform = m_uniformBlock->GetUniform(uniformName);
+		auto uniform{m_uniformBlock->GetUniform(uniformName)};
 
 		if (!uniform)
 		{
 			return;
 		}
 
-		auto realSize = size;
+		auto realSize{size};
 
 		if (realSize == 0)
 		{
@@ -82,7 +82,7 @@ public:
 private:
 	bool m_multipipeline;
 	std::optional<Shader::UniformBlock> m_uniformBlock;
-	uint32_t m_size;
+	uint32_t m_size{};
 	std::unique_ptr<char[]> m_data;
 	std::unique_ptr<StorageBuffer> m_storageBuffer;
 	Buffer::Status m_handlerStatus;

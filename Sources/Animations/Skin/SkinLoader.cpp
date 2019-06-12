@@ -3,36 +3,36 @@
 namespace acid
 {
 SkinLoader::SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights) :
-	m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
-	m_maxWeights(maxWeights)
+	m_skinData{libraryControllers->FindChild("controller")->FindChild("skin")},
+	m_maxWeights{maxWeights}
 {
 	LoadJointsList();
-	auto weights = LoadWeights();
-	auto weightsDataNode = m_skinData->FindChild("vertex_weights");
-	auto effectorJointCounts = GetEffectiveJointsCounts(weightsDataNode);
+	auto weights{LoadWeights()};
+	auto weightsDataNode{m_skinData->FindChild("vertex_weights")};
+	auto effectorJointCounts{GetEffectiveJointsCounts(weightsDataNode)};
 	GetSkinWeights(weightsDataNode, effectorJointCounts, weights);
 }
 
 void SkinLoader::LoadJointsList()
 {
-	auto inputNode = m_skinData->FindChild("vertex_weights");
-	std::string jointDataId = inputNode->FindChildWithAttribute("input", "semantic", "JOINT")->FindAttribute("source").substr(1);
-	auto jointsNode = m_skinData->FindChildWithAttribute("source", "id", jointDataId)->FindChild("Name_array");
+	auto inputNode{m_skinData->FindChild("vertex_weights")};
+	auto jointDataId{inputNode->FindChildWithAttribute("input", "semantic", "JOINT")->FindAttribute("source")->substr(1)};
+	auto jointsNode{m_skinData->FindChildWithAttribute("source", "id", jointDataId)->FindChild("Name_array")};
 	m_jointOrder = String::Split(jointsNode->GetValue(), " ");
 }
 
 std::vector<float> SkinLoader::LoadWeights() const
 {
-	auto inputNode = m_skinData->FindChild("vertex_weights");
-	std::string weightsDataId = inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute("source").substr(1);
-	auto weightsNode = m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array");
+	auto inputNode{m_skinData->FindChild("vertex_weights")};
+	auto weightsDataId{inputNode->FindChildWithAttribute("input", "semantic", "WEIGHT")->FindAttribute("source")->substr(1)};
+	auto weightsNode{m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array")};
 
-	auto rawData = String::Split(weightsNode->GetValue(), " ");
-	std::vector<float> weights(rawData.size());
+	auto rawDatas{String::Split(weightsNode->GetValue(), " ")};
+	std::vector<float> weights(rawDatas.size()); // TODO C++20: {rawDatas.size()}
 
-	for (uint32_t i = 0; i < weights.size(); i++)
+	for (uint32_t i{}; i < weights.size(); i++)
 	{
-		weights[i] = String::From<float>(rawData[i]);
+		weights[i] = String::From<float>(rawDatas[i]);
 	}
 
 	return weights;
@@ -40,10 +40,10 @@ std::vector<float> SkinLoader::LoadWeights() const
 
 std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weightsDataNode) const
 {
-	auto rawData = String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ");
+	auto rawData{String::Split(weightsDataNode->FindChild("vcount")->GetString(), " ")};
 	std::vector<uint32_t> counts(rawData.size());
 
-	for (uint32_t i = 0; i < rawData.size(); i++)
+	for (uint32_t i{}; i < rawData.size(); i++)
 	{
 		counts[i] = String::From<uint32_t>(rawData[i]);
 	}
@@ -53,17 +53,17 @@ std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weigh
 
 void SkinLoader::GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
 {
-	auto rawData = String::Split(weightsDataNode->FindChild("v")->GetString(), " ");
-	uint32_t pointer = 0;
+	auto rawData{String::Split(weightsDataNode->FindChild("v")->GetString(), " ")};
+	uint32_t pointer{};
 
 	for (auto count : counts)
 	{
-		auto skinData = VertexWeights();
+		VertexWeights skinData;
 
-		for (uint32_t i = 0; i < count; i++)
+		for (uint32_t i{}; i < count; i++)
 		{
-			auto jointId = String::From<uint32_t>(rawData[pointer++]);
-			auto weightId = String::From<uint32_t>(rawData[pointer++]);
+			auto jointId{String::From<uint32_t>(rawData[pointer++])};
+			auto weightId{String::From<uint32_t>(rawData[pointer++])};
 			skinData.AddJointEffect(jointId, weights[weightId]);
 		}
 

@@ -4,15 +4,15 @@ namespace acid
 {
 std::vector<std::string> String::Split(const std::string &str, const std::string &sep, bool trim)
 {
-	std::unique_ptr<char[]> copy(new char[strlen(str.c_str()) + 1]);
+	std::unique_ptr<char[]> copy{new char[strlen(str.c_str()) + 1]};
 	std::strcpy(copy.get(), str.c_str());
 
 	std::vector<std::string> splitVector;
-	auto current = std::strtok(copy.get(), sep.c_str());
+	auto current{std::strtok(copy.get(), sep.c_str())};
 
 	while (current != nullptr)
 	{
-		auto currentS = std::string(current);
+		auto currentS{std::string{current}};
 
 		if (trim)
 		{
@@ -48,23 +48,23 @@ bool String::IsInteger(std::string_view str)
 
 int String::FindCharPos(std::string_view str, char c)
 {
-	auto res = str.find(c);
+	auto res{str.find(c)};
 	return res == std::string::npos ? -1 : res;
 }
 
 std::string String::Trim(std::string str, std::string_view whitespace)
 {
-	auto strBegin = str.find_first_not_of(whitespace);
+	auto strBegin{str.find_first_not_of(whitespace)};
 
 	if (strBegin == std::string::npos)
 	{
 		return "";
 	}
 
-	auto strEnd = str.find_last_not_of(whitespace);
-	auto strRange = strEnd - strBegin + 1;
+	auto strEnd{str.find_last_not_of(whitespace)};
+	auto strRange{strEnd - strBegin + 1};
 
-	auto trimmed = str;
+	auto trimmed{str};
 	trimmed = trimmed.substr(strBegin, strRange);
 	return trimmed;
 }
@@ -83,7 +83,7 @@ std::string String::RemoveAll(std::string str, char token)
 
 std::string String::RemoveLast(std::string str, char token)
 {
-	for (auto it = str.end(); it != str.begin(); --it)
+	for (auto it{str.end()}; it != str.begin(); --it)
 	{
 		if (*it == token)
 		{
@@ -97,7 +97,7 @@ std::string String::RemoveLast(std::string str, char token)
 
 std::string String::ReplaceAll(std::string str, std::string_view token, std::string_view to)
 {
-	auto pos = str.find(token);
+	auto pos{str.find(token)};
 
 	while (pos != std::string::npos)
 	{
@@ -110,7 +110,7 @@ std::string String::ReplaceAll(std::string str, std::string_view token, std::str
 
 std::string String::ReplaceFirst(std::string str, std::string_view token, std::string_view to)
 {
-	const auto startPos = str.find(token);
+	const auto startPos{str.find(token)};
 
 	if (startPos == std::string::npos)
 	{

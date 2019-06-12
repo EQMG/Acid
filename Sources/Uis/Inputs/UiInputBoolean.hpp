@@ -11,7 +11,7 @@ class ACID_EXPORT UiInputBoolean :
 	public UiObject
 {
 public:
-	UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform = UiTransform(UiInputButton::Size));
+	UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 

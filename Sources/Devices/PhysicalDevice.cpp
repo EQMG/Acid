@@ -5,20 +5,15 @@
 
 namespace acid
 {
-static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS = { VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT,
+static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS{ VK_SAMPLE_COUNT_64_BIT, VK_SAMPLE_COUNT_32_BIT, VK_SAMPLE_COUNT_16_BIT, VK_SAMPLE_COUNT_8_BIT,
 	VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT };
 
 PhysicalDevice::PhysicalDevice(const Instance *instance) :
-	m_instance(instance),
-	m_physicalDevice(VK_NULL_HANDLE),
-	m_properties({}),
-	m_features({}),
-	m_memoryProperties({}),
-	m_msaaSamples(VK_SAMPLE_COUNT_1_BIT)
+	m_instance{instance}
 {
 	uint32_t physicalDeviceCount;
 	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, nullptr);
-	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
+	std::vector<VkPhysicalDevice> physicalDevices{physicalDeviceCount};
 	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, physicalDevices.data());
 
 	m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
@@ -46,8 +41,7 @@ VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysic
 	// Iterates through all devices and rate their suitability.
 	for (const auto &device : devices)
 	{
-		int32_t score = ScorePhysicalDevice(device);
-		rankedDevices.emplace(score, device);
+		rankedDevices.emplace(ScorePhysicalDevice(device), device);
 	}
 
 	// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.
@@ -61,18 +55,18 @@ VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysic
 
 int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device)
 {
-	int32_t score = 0;
+	int32_t score{};
 
 	// Checks if the requested extensions are supported.
 	uint32_t extensionPropertyCount;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, nullptr);
-	std::vector<VkExtensionProperties> extensionProperties(extensionPropertyCount);
+	std::vector<VkExtensionProperties> extensionProperties{extensionPropertyCount};
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
 
 	// Iterates through all extensions requested.
 	for (const char *currentExtension : Instance::DeviceExtensions)
 	{
-		bool extensionFound = false;
+		bool extensionFound{};
 
 		// Checks if the extension is in the available extensions.
 		for (const auto &extension : extensionProperties)
@@ -113,12 +107,12 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	return score;
 }
 
-VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount()
+VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount() const
 {
 	VkPhysicalDeviceProperties physicalDeviceProperties;
 	vkGetPhysicalDeviceProperties(m_physicalDevice, &physicalDeviceProperties);
 
-	VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
+	auto counts{std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts)};
 
 	for (const auto &sampleFlag : STAGE_FLAG_BITS)
 	{
@@ -172,7 +166,7 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 
 	stream << " '" << physicalDeviceProperties.deviceName << "'\n";
 
-	uint32_t supportedVersion[] = { VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+	uint32_t supportedVersion[]{ VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion) };
 	stream << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << "\n";
 	stream << "Extensions: ";

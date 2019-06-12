@@ -1,79 +1,79 @@
 {
   "ParticleSystem": {
-    "Types": [
+    "types": [
       {
-        "Image": {
-          "Filename": "Objects/Smoke/Circular.png",
-          "Filter": 1,
-          "Address Mode": 2,
-          "Anisotropic": true,
-          "Mipmap": true
+        "image": {
+          "filename": "Objects/Smoke/Circular.png",
+          "filter": 1,
+          "addressMode": 2,
+          "anisotropic": true,
+          "mipmap": true
         },
-        "Number Of Rows": 4,
-        "Colour Offset": "#0000FF",
-        "Life Length": 3.000000,
-        "Stage Cycles": 1.000000,
-        "Scale": 0.500000
+        "numberOfRows": 4,
+        "colourOffset": "#0000FF",
+        "lifeLength": 3.000000,
+        "stageCycles": 1.000000,
+        "scale": 0.500000
       },
       {
-        "Image": {
-          "Filename": "Objects/Smoke/Circular.png",
-          "Filter": 1,
-          "Address Mode": 2,
-          "Anisotropic": true,
-          "Mipmap": true
+        "image": {
+          "filename": "Objects/Smoke/Circular.png",
+          "filter": 1,
+          "addressMode": 2,
+          "anisotropic": true,
+          "mipmap": true
         },
-        "Number Of Rows": 4,
-        "Colour Offset": "#FFFF00",
-        "Life Length": 2.000000,
-        "Stage Cycles": 1.000000,
-        "Scale": 1.000000
+        "numberOfRows": 4,
+        "colourOffset": "#FFFF00",
+        "lifeLength": 2.000000,
+        "stageCycles": 1.000000,
+        "scale": 1.000000
       },
       {
-        "Image": {
-          "Filename": "Objects/Smoke/Circular.png",
-          "Filter": 1,
-          "Address Mode": 2,
-          "Anisotropic": true,
-          "Mipmap": true
+        "image": {
+          "filename": "Objects/Smoke/Circular.png",
+          "filter": 1,
+          "addressMode": 2,
+          "anisotropic": true,
+          "mipmap": true
         },
-        "Number Of Rows": 4,
-        "Colour Offset": "#FF0000",
-        "Life Length": 1.400000,
-        "Stage Cycles": 1.000000,
-        "Scale": 0.800000
+        "numberOfRows": 4,
+        "colourOffset": "#FF0000",
+        "lifeLength": 1.400000,
+        "stageCycles": 1.000000,
+        "scale": 0.800000
       },
       {
-        "Image": {
-          "Filename": "Objects/Smoke/Circular.png",
-          "Filter": 1,
-          "Address Mode": 2,
-          "Anisotropic": true,
-          "Mipmap": true
+        "image": {
+          "filename": "Objects/Smoke/Circular.png",
+          "filter": 1,
+          "addressMode": 2,
+          "anisotropic": true,
+          "mipmap": true
         },
-        "Number Of Rows": 4,
-        "Colour Offset": "#BA55D3",
-        "Life Length": 1.100000,
-        "Stage Cycles": 1.000000,
-        "Scale": 0.600000
+        "numberOfRows": 4,
+        "colourOffset": "#BA55D3",
+        "lifeLength": 1.100000,
+        "stageCycles": 1.000000,
+        "scale": 0.600000
       }
     ],
-    "PPS": 8.000000,
-    "Average Speed": 0.800000,
-    "Gravity Effect": 0.100000,
-    "Random Rotation": true,
-    "Direction": {
+    "pps": 8.000000,
+    "averageSpeed": 0.800000,
+    "gravityEffect": 0.100000,
+    "randomRotation": true,
+    "direction": {
       "x": 0.000000,
       "y": 1.000000,
       "z": 0.000000
     },
-    "Direction Deviation": 0.200000,
-    "Speed Deviation": 0.800000,
-    "Life Deviation": 0.500000,
-    "Stage Deviation": 0.000000,
-    "Scale Deviation": 0.100000
+    "directionDeviation": 0.200000,
+    "speedDeviation": 0.800000,
+    "lifeDeviation": 0.500000,
+    "stageDeviation": 0.000000,
+    "scaleDeviation": 0.100000
   },
   "EmitterSphere": {
-    "Radius": 3.000000
+    "radius": 3.000000
   }
 }

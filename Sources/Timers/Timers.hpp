@@ -11,10 +11,10 @@ class ACID_EXPORT Timer
 {
 public:
 	Timer(const Time &interval, const std::optional<uint32_t> &repeat) :
-		m_interval(interval),
-		m_next(Time::Now() + m_interval),
-		m_repeat(repeat),
-		m_destroyed(false)
+		m_interval{interval},
+		m_next{Time::Now() + m_interval},
+		m_repeat{repeat},
+		m_destroyed{false}
 	{
 	}
 
@@ -60,8 +60,8 @@ public:
 	template<typename ...Args>
 	Timer *Once(const Time &delay, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
-		auto instance = std::make_unique<Timer>(delay, 1);
+		std::unique_lock<std::mutex> lock{m_mutex};
+		auto instance{std::make_unique<Timer>(delay, 1)};
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();
@@ -71,8 +71,8 @@ public:
 	template<typename ...Args>
 	Timer *Every(const Time &interval, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
-		auto instance = std::make_unique<Timer>(interval, std::nullopt);
+		std::unique_lock<std::mutex> lock{m_mutex};
+		auto instance{std::make_unique<Timer>(interval, std::nullopt)};
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();
@@ -82,8 +82,8 @@ public:
 	template<typename ...Args>
 	Timer *Repeat(const Time &interval, const uint32_t &repeat, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock(m_mutex);
-		auto instance = std::make_unique<Timer>(interval, repeat);
+		std::unique_lock<std::mutex> lock{m_mutex};
+		auto instance{std::make_unique<Timer>(interval, repeat)};
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();
@@ -95,7 +95,7 @@ private:
 
 	std::vector<std::unique_ptr<Timer>> m_timers;
 
-	bool m_stop;
+	bool m_stop{};
 	std::thread m_worker;
 
 	std::mutex m_mutex;

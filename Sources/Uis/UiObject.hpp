@@ -79,19 +79,19 @@ public:
 
 	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
 
-	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
+	const std::optional<Vector4f> &GetScissor() const { return m_scissor; }
 
-	void SetScissor(const std::optional<Vector4i> &scissor) { m_scissor = scissor; }
+	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
 
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
-	void SetAlphaDriver(Driver<float> *alphaDriver) { m_alphaDriver.reset(alphaDriver); }
+	void SetAlphaDriver(std::unique_ptr<Driver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
 
 	const float &GetAlpha() const { return m_alpha; }
 	
 	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
-	void SetScaleDriver(Driver<Vector2f> *scaleDriver) { m_scaleDriver.reset(scaleDriver); }
+	void SetScaleDriver(std::unique_ptr<Driver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
 
 	const Vector2f &GetScale() const { return m_scale; }
 
@@ -130,7 +130,7 @@ private:
 	bool m_enabled;
 	UiTransform m_transform;
 	std::optional<CursorStandard> m_cursorHover;
-	std::optional<Vector4i> m_scissor; 
+	std::optional<Vector4f> m_scissor; 
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;
@@ -142,7 +142,7 @@ private:
 	Matrix4 m_modelView;
 	float m_screenAlpha;
 	Vector2f m_screenScale;
-	bool m_selected;
+	bool m_selected{};
 
 	Delegate<void(MouseButton)> m_onClick;
 	Delegate<void(bool)> m_onSelected;

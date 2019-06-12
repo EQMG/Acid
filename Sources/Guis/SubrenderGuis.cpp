@@ -1,15 +1,14 @@
 #include "SubrenderGuis.hpp"
 
 #include "Models/VertexDefault.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
 namespace acid
 {
 SubrenderGuis::SubrenderGuis(const Pipeline::Stage &pipelineStage) :
-	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, { "Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag" }, { VertexDefault::GetVertexInput() })
+	Subrender{pipelineStage},
+	m_pipeline{pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexDefault::GetVertexInput()}}
 {
 }
 
@@ -24,7 +23,7 @@ void SubrenderGuis::Render(const CommandBuffer &commandBuffer)
 			continue;
 		}
 
-		auto object = dynamic_cast<Gui *>(screenObject);
+		auto object{dynamic_cast<Gui *>(screenObject)};
 
 		if (object != nullptr)
 		{

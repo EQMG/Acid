@@ -13,27 +13,24 @@ class RingBuffer :
 	public NonCopyable
 {
 public:
-	explicit RingBuffer(const size_t &capacity) :
-		m_data(capacity),
-		m_head(0),
-		m_tail(0),
-		m_elements(0)
+	explicit RingBuffer(const std::size_t &capacity) :
+		m_data(capacity) // TODO C++20: {capacity}
 	{
 		if (capacity == 0)
 		{
-			throw std::runtime_error("Capacity must be non-zero");
+			throw std::runtime_error{"Capacity must be non-zero"};
 		}
 	}
 
-	const size_t &size() const { return m_elements; }
+	const std::size_t &size() const { return m_elements; }
 
-	size_t capacity() const { return m_data.capacity(); }
+	std::size_t capacity() const { return m_data.capacity(); }
 
-	void resize(const size_t &s)
+	void resize(const std::size_t &s)
 	{
 		if (s == 0)
 		{
-			throw std::runtime_error("Capacity must be non-zero");
+			throw std::runtime_error{"Capacity must be non-zero"};
 		}
 
 		// Don't need to resize.
@@ -52,7 +49,7 @@ public:
 
 		// Allocate new vector.
 		std::vector<T> copy(s);
-		size_t i = 0;
+		std::size_t i{};
 
 		// Check for a split buffer.
 		if (m_tail > m_head || m_elements > 0)
@@ -120,42 +117,42 @@ public:
 
 	const T &back() const
 	{
-		size_t i = m_head + (m_data.capacity() - 1);
+		std::size_t i{m_head + (m_data.capacity() - 1)};
 		return m_data[i % m_data.capacity()];
 	}
 
 	T &back()
 	{
-		size_t i = m_head + (m_data.capacity() - 1);
+		std::size_t i{m_head + (m_data.capacity() - 1)};
 		return m_data[i % m_data.capacity()];
 	}
 
-	T &operator[](const size_t &i)
+	T &operator[](const std::size_t &i)
 	{
 		return m_data[i];
 	}
 
-	const T &operator[](const size_t &i) const
+	const T &operator[](const std::size_t &i) const
 	{
 		return m_data[i];
 	}
 
-	const T &at(const size_t &i) const
+	const T &at(const std::size_t &i) const
 	{
-		size_t ind = m_tail + i;
+		std::size_t ind = m_tail + i;
 		return m_data[ind % m_data.capacity()];
 	}
 
-	T &at(const size_t &i)
+	T &at(const std::size_t &i)
 	{
-		size_t ind = m_tail + i;
+		std::size_t ind = m_tail + i;
 		return m_data[ind % m_data.capacity()];
 	}
 
 	template<typename... Args>
 	bool push(Args &&... values)
 	{
-		size_t numElements = NumArgs(values...);
+		std::size_t numElements{NumArgs(values...)};
 
 		if (m_elements + numElements > m_data.capacity())
 		{
@@ -188,33 +185,33 @@ public:
 
 private:
 	template<typename K, typename Arg1, typename... Args>
-	void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1, Args &&... values)
+	void MoveAll(std::vector<K> &data, const std::size_t &i, Arg1 &&v1, Args &&... values)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 		MoveAll(data, i + 1, values...);
 	}
 
 	template<typename K, typename Arg1>
-	void MoveAll(std::vector<K> &data, const size_t &i, Arg1 &&v1)
+	void MoveAll(std::vector<K> &data, const std::size_t &i, Arg1 &&v1)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 	}
 
 	template<typename... K>
-	size_t NumArgs(K...)
+	std::size_t NumArgs(K...)
 	{
-		const int n = sizeof...(K);
+		const int n{sizeof...(K)};
 		return n;
 	}
 
-	size_t NumArgs()
+	std::size_t NumArgs()
 	{
 		return 0;
 	}
 
 	std::vector<T> m_data;
-	size_t m_head;
-	size_t m_tail;
-	size_t m_elements;
+	std::size_t m_head{};
+	std::size_t m_tail{};
+	std::size_t m_elements{};
 };
 }

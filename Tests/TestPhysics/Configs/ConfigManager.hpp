@@ -15,7 +15,7 @@ public:
 
 	void Load();
 
-	void Save();
+	void Save() const;
 
 private:
 	File m_audio;

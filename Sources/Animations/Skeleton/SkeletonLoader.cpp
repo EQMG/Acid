@@ -5,19 +5,17 @@
 namespace acid
 {
 SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
-	m_armatureData(nullptr),
-	m_boneOrder(std::move(boneOrder)),
-	m_correction(correction),
-	m_jointCount(0)
+	m_boneOrder{std::move(boneOrder)},
+	m_correction{correction}
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
-	auto headNode = m_armatureData->FindChild("node");
-	m_headJoint.reset(LoadJointData(headNode, true));
+	auto headNode{m_armatureData->FindChild("node")};
+	m_headJoint = LoadJointData(headNode, true);
 }
 
-JointData *SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
+std::unique_ptr<JointData> SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
 {
-	auto joint = ExtractMainJointData(jointNode, isRoot);
+	auto joint{ExtractMainJointData(jointNode, isRoot)};
 
 	for (const auto &childNode : jointNode->FindChildren("node"))
 	{
@@ -27,19 +25,24 @@ JointData *SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &
 	return joint;
 }
 
-JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
+std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
 {
-	std::string nameId = jointNode->FindAttribute("id");
-	auto index = GetBoneIndex(nameId);
-	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), " ");
+	auto nameId{*jointNode->FindAttribute("id")};
+	auto index{GetBoneIndex(nameId)};
+	auto matrixData{String::Split(jointNode->FindChild("matrix")->GetValue(), " ")};
+
+	assert(matrixData.size() == 16);
 
 	Matrix4 transform;
 
-	for (uint32_t i = 0; i < matrixData.size(); i++)
+	for (int32_t row{}; row < 4; row++)
 	{
-		transform.m_linear[i] = String::From<float>(matrixData[i]);
+		for (int32_t col{}; col < 4; col++)
+		{
+			transform[row][col] = String::From<float>(matrixData[row * 4 + col]);
+		}
 	}
-
+	
 	transform = transform.Transpose();
 
 	if (isRoot)
@@ -48,12 +51,12 @@ JointData *SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const
 	}
 
 	m_jointCount++;
-	return new JointData(*index, nameId, transform);
+	return std::make_unique<JointData>(*index, nameId, transform);
 }
 
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
 {
-	for (uint32_t i = 0; i < m_boneOrder.size(); i++)
+	for (uint32_t i{}; i < m_boneOrder.size(); i++)
 	{
 		if (m_boneOrder[i] == name)
 		{

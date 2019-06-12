@@ -1,20 +1,17 @@
 #include "TcpListener.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #endif
-
 #include "Engine/Log.hpp"
 #include "TcpSocket.hpp"
 
 namespace acid
 {
 TcpListener::TcpListener() :
-	Socket(Type::Tcp)
+	Socket{Type::Tcp}
 {
 }
 
@@ -24,7 +21,7 @@ uint16_t TcpListener::GetLocalPort() const
 	{
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size = sizeof(address);
+		SocketAddrLength size{sizeof(address)};
 
 		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -51,7 +48,7 @@ Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &addres
 	}
 
 	// Bind the socket to the specified port.
-	sockaddr_in addr = CreateAddress(address.ToInteger(), port);
+	auto addr{CreateAddress(address.ToInteger(), port)};
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{
@@ -88,8 +85,8 @@ Socket::Status TcpListener::Accept(TcpSocket &socket)
 
 	// Accept a new connection.
 	sockaddr_in address;
-	SocketAddrLength length = sizeof(address);
-	SocketHandle remote = accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length);
+	SocketAddrLength length{sizeof(address)};
+	SocketHandle remote{accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length)};
 
 	// Check for errors.
 	if (remote == InvalidSocketHandle())

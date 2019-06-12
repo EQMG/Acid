@@ -71,20 +71,20 @@ public:
 	 * @param fractal The fractal noise type.
 	 * @param fractalBounding The fractal bounding. 
 	 **/
-	explicit Noise(const int32_t &seed = 1337, const float &frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, const int32_t &octaves = 3,
+	explicit Noise(const uint64_t &seed = 1337, const float &frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, const int32_t &octaves = 3,
 		const float &lacunarity = 2.0f, const float &gain = 0.5f, const Fractal &fractal = Fractal::FBM, const float &fractalBounding = 0.0f);
 
 	/**
 	 * Gets the seed used for all noise types.
 	 * @return The seed. 
 	 **/
-	int32_t GetSeed() const { return m_seed; }
+	uint64_t GetSeed() const { return m_seed; }
 
 	/**
 	 * Sets seed used for all noise types.
 	 * @param seed The new seed (Default: 1337). 
 	 **/
-	void SetSeed(const int32_t &seed);
+	void SetSeed(const uint64_t &seed);
 
 	/**
 	 * Gets the frequency used for all noise types.
@@ -341,11 +341,11 @@ private:
 
 	uint8_t Index4d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const;
 
-	static float ValueCoord2d(const int32_t &seed, const int32_t &x, const int32_t &y);
+	static float ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t &y);
 
-	static float ValueCoord3d(const int32_t &seed, const int32_t &x, const int32_t &y, const int32_t &z);
+	static float ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z);
 
-	static float ValueCoord4d(const int32_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w);
+	static float ValueCoord4d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w);
 
 	float ValueCoord2dFast(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
 
@@ -441,7 +441,7 @@ private:
 	//4D
 	float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const;
 
-	int32_t m_seed;
+	uint64_t m_seed;
 	std::unique_ptr<uint8_t[]> m_perm;
 	std::unique_ptr<uint8_t[]> m_perm12;
 

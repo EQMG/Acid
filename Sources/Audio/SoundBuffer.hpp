@@ -52,6 +52,6 @@ private:
 	static uint32_t LoadBufferOgg(const std::string &filename);
 
 	std::string m_filename;
-	uint32_t m_buffer;
+	uint32_t m_buffer{};
 };
 }

@@ -28,7 +28,7 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = Vector3f(1.0f), const Vector3f &angularFactor = Vector3f(1.0f));
+	explicit CollisionObject(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
 
 	virtual ~CollisionObject();
 
@@ -39,10 +39,7 @@ public:
 	 */
 	virtual bool InFrustum(const Frustum &frustum) = 0;
 
-	Force *AddForce(Force *force);
-
-	template<typename T, typename... Args>
-	Force *AddForce(Args &&... args) { return AddForce(new T(std::forward<Args>(args)...)); }
+	Force *AddForce(std::unique_ptr<Force> &&force);
 
 	virtual void ClearForces() = 0;
 
@@ -123,7 +120,7 @@ protected:
 	Vector3f m_angularVelocity;
 
 	std::unique_ptr<btCollisionShape> m_shape;
-	btCollisionObject *m_body;
+	btCollisionObject *m_body{};
 
 	std::vector<std::unique_ptr<Force>> m_forces;
 

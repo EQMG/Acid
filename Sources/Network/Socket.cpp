@@ -16,7 +16,7 @@
 
 namespace acid
 {
-Socket::Socket(Type type) :
+Socket::Socket(const Type &type) :
 	m_type(type),
 	m_socket(InvalidSocketHandle()),
 	m_isBlocking(true)
@@ -122,22 +122,22 @@ Socket::Status Socket::GetErrorStatus()
 
 	switch (errno)
 	{
-		case EWOULDBLOCK:
-			return Status::NotReady;
-		case ECONNABORTED:
-			return Status::Disconnected;
-		case ECONNRESET:
-			return Status::Disconnected;
-		case ETIMEDOUT:
-			return Status::Disconnected;
-		case ENETRESET:
-			return Status::Disconnected;
-		case ENOTCONN:
-			return Status::Disconnected;
-		case EPIPE:
-			return Status::Disconnected;
-		default:
-			return Status::Error;
+	case EWOULDBLOCK:
+		return Status::NotReady;
+	case ECONNABORTED:
+		return Status::Disconnected;
+	case ECONNRESET:
+		return Status::Disconnected;
+	case ETIMEDOUT:
+		return Status::Disconnected;
+	case ENETRESET:
+		return Status::Disconnected;
+	case ENOTCONN:
+		return Status::Disconnected;
+	case EPIPE:
+		return Status::Disconnected;
+	default:
+		return Status::Error;
 	}
 #endif
 }
@@ -179,7 +179,7 @@ void Socket::Create()
 	// Don't create the socket if it already exists.
 	if (m_socket == InvalidSocketHandle())
 	{
-		SocketHandle handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
+		auto handle{socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0)};
 
 		if (handle == InvalidSocketHandle())
 		{
@@ -205,7 +205,7 @@ void Socket::Create(SocketHandle handle)
 		if (m_type == Type::Tcp)
 		{
 			// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
-			int32_t yes = 1;
+			int32_t yes{1};
 
 			if (setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{
@@ -223,7 +223,7 @@ void Socket::Create(SocketHandle handle)
 		else
 		{
 			// Enable broadcast by default for UDP sockets.
-			int32_t yes = 1;
+			int32_t yes{1};
 
 			if (setsockopt(m_socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{

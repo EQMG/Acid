@@ -7,22 +7,17 @@ namespace acid
 {
 Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
 	const Colour &textColour, const float &kerning, const float &leading) :
-	UiObject(parent, rectangle),
-	m_numberLines(0),
-	m_lastSize(rectangle.GetSize()),
-	m_fontSize(fontSize),
-	m_string(std::move(text)),
-	m_justify(justify),
-	m_fontType(std::move(fontType)),
-	m_kerning(kerning),
-	m_leading(leading),
-	m_textColour(textColour),
-	m_solidBorder(false),
-	m_glowBorder(false),
-	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-	m_glowSize(0.0f),
-	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-	m_borderSize(0.0f)
+	UiObject{parent, rectangle},
+	m_lastSize{rectangle.GetSize()},
+	m_fontSize{fontSize},
+	m_string{std::move(text)},
+	m_justify{justify},
+	m_fontType{std::move(fontType)},
+	m_kerning{kerning},
+	m_leading{leading},
+	m_textColour{textColour},
+	m_glowDriver{std::make_unique<DriverConstant<float>>(0.0f)},
+	m_borderDriver{std::make_unique<DriverConstant<float>>(0.0f)}
 {
 	LoadText();
 }
@@ -51,8 +46,8 @@ void Text::UpdateObject()
 
 	m_uniformObject.Push("colour", m_textColour);
 	m_uniformObject.Push("borderColour", m_borderColour);
-	m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
-	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
+	m_uniformObject.Push("borderSizes", Vector2f{GetTotalBorderSize(), GetGlowSize()});
+	m_uniformObject.Push("edgeData", Vector2f{CalculateEdgeStart(), CalculateAntialiasSize()});
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
@@ -66,19 +61,18 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	m_descriptorSet.Push("samplerColour", m_fontType->GetImage());
-	bool updateSuccess = m_descriptorSet.Update(pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(pipeline))
 	{
 		return false;
 	}
 
-	auto scissor = GetScissor();
-	VkRect2D scissorRect = {};
-	scissorRect.offset.x = scissor ? scissor->m_x : 0;
-	scissorRect.offset.y = scissor ? scissor->m_y : 0;
-	scissorRect.extent.width = scissor ? scissor->m_z : Window::Get()->GetSize().m_x;
-	scissorRect.extent.height = scissor ? scissor->m_w : Window::Get()->GetSize().m_y;
+	auto scissor{GetScissor()};
+	VkRect2D scissorRect{};
+	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
+	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;
+	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->m_z) : Window::Get()->GetSize().m_x;
+	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->m_w) : Window::Get()->GetSize().m_y;
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
@@ -89,7 +83,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 void Text::SetFontSize(const float &fontSize)
 {
 	m_fontSize = fontSize;
-	m_lastSize = Vector2f();
+	m_lastSize = {};
 }
 
 void Text::SetString(const std::string &string)
@@ -100,16 +94,16 @@ void Text::SetString(const std::string &string)
 	}
 }
 
-void Text::SetBorderDriver(Driver<float> *borderDriver)
+void Text::SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver)
 {
-	m_borderDriver.reset(borderDriver);
+	m_borderDriver = std::move(borderDriver);
 	m_solidBorder = true;
 	m_glowBorder = false;
 }
 
-void Text::SetGlowDriver(Driver<float> *glowDriver)
+void Text::SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver)
 {
-	m_glowDriver.reset(glowDriver);
+	m_glowDriver = std::move(glowDriver);
 	m_solidBorder = false;
 	m_glowBorder = true;
 }
@@ -157,15 +151,15 @@ float Text::GetGlowSize() const
 
 float Text::CalculateEdgeStart() const
 {
-	auto scale = GetScale() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
+	auto scale{GetScale() * m_fontSize};
+	auto size{0.5f * scale.m_x};
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const
 {
-	auto scale = GetScale() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
+	auto scale{GetScale() * m_fontSize};
+	auto size{0.5f * scale.m_x};
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;
 }
@@ -184,8 +178,8 @@ void Text::LoadText()
 	}
 
 	// Creates mesh data.
-	auto lines = CreateStructure();
-	auto vertices = CreateQuad(lines);
+	auto lines{CreateStructure()};
+	auto vertices{CreateQuad(lines)};
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
@@ -193,16 +187,16 @@ void Text::LoadText()
 
 std::vector<Text::Line> Text::CreateStructure() const
 {
-	float maxLength = m_lastSize.m_x;
+	auto maxLength{m_lastSize.m_x};
 
 	std::vector<Line> lines;
-	auto currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
-	auto currentWord = Word();
+	Line currentLine{m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+	Word currentWord;
 
-	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
-	auto textLines = String::Split(formattedText, "\n", true);
+	auto formattedText{String::ReplaceAll(m_string, "\t", "	")};
+	auto textLines{String::Split(formattedText, "\n", true)};
 
-	for (uint32_t i = 0; i < textLines.size(); i++)
+	for (uint32_t i{}; i < textLines.size(); i++)
 	{
 		if (textLines.at(i).empty())
 		{
@@ -211,24 +205,22 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 		for (const auto &c : textLines.at(i))
 		{
-			auto ascii = static_cast<int32_t>(c);
+			auto ascii{static_cast<int32_t>(c)};
 
 			if (ascii == FontMetafile::SpaceAscii)
 			{
-				bool added = currentLine.AddWord(currentWord);
-
-				if (!added)
+				if (!currentLine.AddWord(currentWord))
 				{
 					lines.emplace_back(currentLine);
-					currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+					currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 					currentLine.AddWord(currentWord);
 				}
 
-				currentWord = Word();
+				currentWord = {};
 				continue;
 			}
 
-			if (auto character = m_fontType->GetMetadata()->GetCharacter(ascii); character)
+			if (auto character{m_fontType->GetMetadata()->GetCharacter(ascii)}; character)
 			{
 				currentWord.AddCharacter(*character, m_kerning);
 			}
@@ -236,16 +228,16 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 		if (i != textLines.size() - 1)
 		{
-			bool wordAdded = currentLine.AddWord(currentWord);
+			auto wordAdded{currentLine.AddWord(currentWord)};
 			lines.emplace_back(currentLine);
-			currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+			currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 
 			if (!wordAdded)
 			{
 				currentLine.AddWord(currentWord);
 			}
 
-			currentWord = Word();
+			currentWord = {};
 		}
 	}
 
@@ -255,12 +247,12 @@ std::vector<Text::Line> Text::CreateStructure() const
 
 void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const
 {
-	auto added = currentLine.AddWord(currentWord);
+	auto added{currentLine.AddWord(currentWord)};
 
 	if (!added)
 	{
 		lines.emplace_back(currentLine);
-		currentLine = Line(m_fontType->GetMetadata()->GetSpaceWidth(), maxLength);
+		currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
 		currentLine.AddWord(currentWord);
 	}
 
@@ -272,9 +264,9 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 	std::vector<VertexDefault> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
-	auto cursorX = 0.0f;
-	auto cursorY = 0.0f;
-	auto lineOrder = static_cast<int32_t>(lines.size());
+	float cursorX{};
+	float cursorY{};
+	auto lineOrder{static_cast<int32_t>(lines.size())};
 
 	for (const auto &line : lines)
 	{
@@ -321,15 +313,15 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 
 void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices)
 {
-	auto vertexX = cursorX + character.m_offsetX;
-	auto vertexY = cursorY + character.m_offsetY;
-	auto vertexMaxX = vertexX + character.m_sizeX;
-	auto vertexMaxY = vertexY + character.m_sizeY;
+	auto vertexX{cursorX + character.m_offsetX};
+	auto vertexY{cursorY + character.m_offsetY};
+	auto vertexMaxX{vertexX + character.m_sizeX};
+	auto vertexMaxY{vertexY + character.m_sizeY};
 
-	auto textureX = character.m_textureCoordX;
-	auto textureY = character.m_textureCoordY;
-	auto textureMaxX = character.m_maxTextureCoordX;
-	auto textureMaxY = character.m_maxTextureCoordY;
+	auto textureX{character.m_textureCoordX};
+	auto textureY{character.m_textureCoordY};
+	auto textureMaxX{character.m_maxTextureCoordX};
+	auto textureMaxY{character.m_maxTextureCoordY};
 
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
@@ -341,6 +333,6 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 
 void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
 {
-	vertices.emplace_back(VertexDefault(Vector3f(vx, vy, 0.0f), Vector2f(tx, ty), Vector3f()));
+	vertices.emplace_back(VertexDefault{{vx, vy, 0.0f}, {tx, ty}, {}});
 }
 }

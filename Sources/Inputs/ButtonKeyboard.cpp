@@ -3,7 +3,7 @@
 namespace acid
 {
 ButtonKeyboard::ButtonKeyboard(const Key &key) :
-	m_key(key)
+	m_key{key}
 {
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
 	{

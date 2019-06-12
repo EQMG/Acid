@@ -5,8 +5,8 @@
 namespace acid
 {
 Light::Light(const Colour &colour, const float &radius) :
-	m_colour(colour),
-	m_radius(radius)
+	m_colour{colour},
+	m_radius{radius}
 {
 }
 

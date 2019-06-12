@@ -21,9 +21,9 @@ public:
 	 * @param length The length between two waves. 
 	 **/
 	DriverSinwave(const T &min, const T &max, const Time &length) :
-		Driver<T>(length),
-		m_min(min),
-		m_max(max)
+		Driver<T>{length},
+		m_min{min},
+		m_max{max}
 	{
 	}
 
@@ -54,7 +54,7 @@ public:
 protected:
 	T Calculate(const float &factor) override
 	{
-		auto value = 0.5f + std::sin(2.0f * Maths::Pi<float> * factor) * 0.5f;
+		auto value{0.5f + std::sin(2.0f * Maths::Pi<float> * factor) * 0.5f};
 		return m_min + value * (m_max - m_min);
 	}
 

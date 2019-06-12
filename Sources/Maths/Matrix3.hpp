@@ -17,7 +17,7 @@ public:
 	 * Constructor for Matrix3. The matrix is initialised to the identity.
 	 * @param diagonal The value set to the diagonals. 
 	 **/
-	explicit Matrix3(const float &diagonal = 1.0f);
+	Matrix3(const float &diagonal = 1.0f);
 
 	/**
 	 * Constructor for Matrix3.
@@ -120,7 +120,7 @@ public:
 	 * Gets the submatrix of this matrix.
 	 * @return The submatrix. 
 	 **/
-	Matrix2 GetSubmatrix(const int32_t &row, const int32_t &col) const;
+	Matrix2 GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
 
 	std::string ToString() const;
 
@@ -180,18 +180,7 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 
-	union
-	{
-		struct
-		{
-			Vector3f m_rows[3];
-		};
-
-		struct
-		{
-			float m_linear[9];
-		};
-	};
+	Vector3f m_rows[3];
 };
 }
 
@@ -202,7 +191,7 @@ struct hash<acid::Matrix3>
 {
 	size_t operator()(const acid::Matrix3 &matrix) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);
 		acid::Maths::HashCombine(seed, matrix[2]);

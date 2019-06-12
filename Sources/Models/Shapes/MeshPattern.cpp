@@ -18,24 +18,24 @@ void MeshPattern::GenerateMesh()
 	indices.reserve(6 * (m_vertexCount - 1) * (m_vertexCount - 1));
 
 	// Creates and stores vertices.
-	for (uint32_t col = 0; col < m_vertexCount; col++)
+	for (uint32_t col{}; col < m_vertexCount; col++)
 	{
-		for (uint32_t row = 0; row < m_vertexCount; row++)
+		for (uint32_t row{}; row < m_vertexCount; row++)
 		{
 			vertices.emplace_back(GetVertex(col, row));
 		}
 	}
 
 	// Creates and stores indices.
-	for (uint32_t col = 0; col < m_vertexCount - 1; col++)
+	for (uint32_t col{}; col < m_vertexCount - 1; col++)
 	{
-		for (uint32_t row = 0; row < m_vertexCount - 1; row++)
+		for (uint32_t row{}; row < m_vertexCount - 1; row++)
 		{
-			auto topLeft = (row * m_vertexCount) + col;
-			auto topRight = topLeft + 1;
-			auto bottomLeft = ((row + 1) * m_vertexCount) + col;
-			auto bottomRight = bottomLeft + 1;
-			bool mixed = col % 2 == 0;
+			auto topLeft{(row * m_vertexCount) + col};
+			auto topRight{topLeft + 1};
+			auto bottomLeft{((row + 1) * m_vertexCount) + col};
+			auto bottomRight{bottomLeft + 1};
+			auto mixed{col % 2 == 0};
 
 			if (row % 2 == 0)
 			{
@@ -64,13 +64,12 @@ void MeshPattern::GenerateMesh()
 
 VertexDefault MeshPattern::GetVertex(const uint32_t &col, const uint32_t &row)
 {
-	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
-	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
+	auto x{((row * m_squareSize) - m_sideLength) / 2.0f};
+	auto z{((col * m_squareSize) - m_sideLength) / 2.0f};
 
-	auto position = Vector3f(x, 0.0f, z);
-	auto uv = Vector2f(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
-	auto normal = Vector3f::Up;
-	//auto colour = Colour::White;
-	return VertexDefault(position, uv, normal); // , colour
+	Vector3f position{x, 0.0f, z};
+	Vector2f uv{static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount)};
+	Vector3f normal{Vector3f::Up};
+	return {position, uv, normal};
 }
 }

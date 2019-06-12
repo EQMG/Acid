@@ -12,20 +12,20 @@
 namespace acid
 {
 Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(mass, friction, linearFactor, angularFactor)
+	CollisionObject{mass, friction, linearFactor, angularFactor}
 {
 }
 
 Rigidbody::~Rigidbody()
 {
-	btRigidBody *body = btRigidBody::upcast(m_body);
+	auto body{btRigidBody::upcast(m_body)};
 
 	if (body != nullptr && body->getMotionState() != nullptr)
 	{
 		delete body->getMotionState();
 	}
 
-	auto physics = Scenes::Get()->GetPhysics();
+	auto physics{Scenes::Get()->GetPhysics()};
 
 	if (physics != nullptr)
 	{
@@ -43,7 +43,7 @@ void Rigidbody::Start()
 	CreateShape();
 	assert((m_shape == nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
-	btVector3 localInertia = btVector3();
+	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
 	if (m_mass != 0.0f)
@@ -51,13 +51,13 @@ void Rigidbody::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform = Collider::Convert(GetParent()->GetWorldTransform());
+	auto worldTransform{Collider::Convert(GetParent()->GetWorldTransform())};
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-	auto motionState = new btDefaultMotionState(worldTransform);
-	btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, motionState, m_shape.get(), localInertia);
+	auto motionState{new btDefaultMotionState{worldTransform}};
+	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
 
-	m_rigidBody.reset(new btRigidBody(cInfo));
+	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
 	//m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
 	m_rigidBody->setWorldTransform(worldTransform);
 	//m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
@@ -81,7 +81,7 @@ void Rigidbody::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
-	for (auto it = m_forces.begin(); it != m_forces.end();)
+	for (auto it{m_forces.begin()}; it != m_forces.end();)
 	{
 		(*it)->Update();
 		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
@@ -95,12 +95,12 @@ void Rigidbody::Update()
 		++it;
 	}
 
-	auto &transform = GetParent()->GetLocalTransform();
+	auto &transform{GetParent()->GetLocalTransform()};
 	btTransform motionTransform;
 	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
-	transform = Collider::Convert(motionTransform, transform.GetScaling());
+	transform = Collider::Convert(motionTransform, transform.GetScale());
 
-	m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
+	m_shape->setLocalScaling(Collider::Convert(transform.GetScale()));
 	//m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
 	m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
 	m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
@@ -108,8 +108,8 @@ void Rigidbody::Update()
 
 bool Rigidbody::InFrustum(const Frustum &frustum)
 {
-	btVector3 min = btVector3();
-	btVector3 max = btVector3();
+	btVector3 min;
+	btVector3 max;
 
 	if (m_body != nullptr && m_shape != nullptr)
 	{
@@ -162,23 +162,23 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 
 const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)
 {
-	metadata.GetChild("Mass", rigidbody.m_mass);
-	metadata.GetChild("Friction", rigidbody.m_friction);
-	metadata.GetChild("Friction Rolling", rigidbody.m_frictionRolling);
-	metadata.GetChild("Friction Spinning", rigidbody.m_frictionSpinning);
-	metadata.GetChild("Linear Factor", rigidbody.m_linearFactor);
-	metadata.GetChild("Angular Factor", rigidbody.m_angularFactor);
+	metadata.GetChild("mass", rigidbody.m_mass);
+	metadata.GetChild("friction", rigidbody.m_friction);
+	metadata.GetChild("frictionRolling", rigidbody.m_frictionRolling);
+	metadata.GetChild("frictionSpinning", rigidbody.m_frictionSpinning);
+	metadata.GetChild("linearFactor", rigidbody.m_linearFactor);
+	metadata.GetChild("angularFactor", rigidbody.m_angularFactor);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody)
 {
-	metadata.SetChild("Mass", rigidbody.m_mass);
-	metadata.SetChild("Friction", rigidbody.m_friction);
-	metadata.SetChild("Friction Rolling", rigidbody.m_frictionRolling);
-	metadata.SetChild("Friction Spinning", rigidbody.m_frictionSpinning);
-	metadata.SetChild("Linear Factor", rigidbody.m_linearFactor);
-	metadata.SetChild("Angular Factor", rigidbody.m_angularFactor);
+	metadata.SetChild("mass", rigidbody.m_mass);
+	metadata.SetChild("friction", rigidbody.m_friction);
+	metadata.SetChild("frictionRolling", rigidbody.m_frictionRolling);
+	metadata.SetChild("frictionSpinning", rigidbody.m_frictionSpinning);
+	metadata.SetChild("linearFactor", rigidbody.m_linearFactor);
+	metadata.SetChild("angularFactor", rigidbody.m_angularFactor);
 	return metadata;
 }
 
@@ -189,11 +189,11 @@ void Rigidbody::RecalculateMass()
 		return;
 	}
 
-	bool isDynamic = m_mass != 0.0f;
+	auto isDynamic{m_mass != 0.0f};
 
-	btVector3 localInertia = btVector3(0.0f, 0.0f, 0.0f);
+	btVector3 localInertia;
 
-	auto shape = GetParent()->GetComponent<Collider>();
+	auto shape{GetParent()->GetComponent<Collider>()};
 
 	if (shape != nullptr && isDynamic)
 	{

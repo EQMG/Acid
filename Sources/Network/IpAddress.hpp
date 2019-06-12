@@ -22,7 +22,7 @@ public:
 	 * Here \a address can be either a decimal address (ex: "192.168.1.56") or a network name (ex: "localhost").
 	 * @param address IP address or network name. 
 	 **/
-	explicit IpAddress(const std::string &address);
+	IpAddress(const std::string &address);
 
 	/**
 	 * Construct the address from 4 bytes.
@@ -42,7 +42,7 @@ public:
 	 * It should be used for optimization purposes, and only if you got that representation from IpAddress::toInteger().
 	 * @param address 4 bytes of the address packed into a 32-bits integer. 
 	 **/
-	explicit IpAddress(const uint32_t &address);
+	IpAddress(const uint32_t &address);
 
 	/**
 	 * Get a string representation of the address.
@@ -118,8 +118,8 @@ private:
 	void Resolve(const std::string &address);
 
 	/// Address stored as an unsigned 32 bits integer.
-	uint32_t m_address;
+	uint32_t m_address{};
 	/// Is the address valid?
-	bool m_valid;
+	bool m_valid{};
 };
 }

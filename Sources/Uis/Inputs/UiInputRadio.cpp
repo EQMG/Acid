@@ -6,18 +6,18 @@
 namespace acid
 {
 UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, const bool &value, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, UiTransform(Vector2i(19, 19), UiAnchor::LeftCentre), Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
-	m_fill(&m_background, UiTransform(Vector2i(19, 19), UiAnchor::Centre), nullptr, UiInputButton::SelectedColour),
-	m_text(this, UiTransform(Vector2i(131, 19), UiAnchor::LeftCentre, Vector2i(24, 0)), UiInputButton::FontSize, string, 
-		FontType::Create("Fonts/ProximaNova", "Regular"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(value),
-	m_type(type)
+	UiObject{parent, transform},
+	m_background{this, {{19, 19}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour},
+	m_fill{&m_background, {{19, 19}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour},
+	m_text{this, {{131, 19}, UiAnchor::LeftCentre, {24, 0}}, UiInputButton::FontSize, string,
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour},
+	m_value{value},
+	m_type{type}
 {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)
 	{
-		m_background.SetColourDriver(new DriverSlide<Colour>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 	});
 	OnClick().Add([this](MouseButton button)
 	{
@@ -31,7 +31,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 		}
 	});
 
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 
 	UpdateValue();
 }
@@ -71,6 +71,6 @@ void UiInputRadio::UpdateValue()
 		break;
 	}
 
-	m_fill.SetAlphaDriver(new DriverSlide<float>(m_fill.GetAlpha(), m_value ? 1.0f : 0.0f, UiInputButton::SlideTime));
+	m_fill.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_fill.GetAlpha(), m_value, UiInputButton::SlideTime));
 }
 }

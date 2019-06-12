@@ -13,18 +13,18 @@ public:
 		public NonCopyable
 	{
 	public:
+		Node(Node *parent, std::string attributes, std::string content) :
+			m_parent{parent},
+			m_attributes{std::move(attributes)},
+			m_content{std::move(content)}
+		{
+		}
+
 		Node *m_parent;
 		std::vector<std::unique_ptr<Node>> m_children;
 
 		std::string m_attributes;
 		std::string m_content;
-
-		Node(Node *parent, std::string attributes, std::string content) :
-			m_parent(parent),
-			m_attributes(std::move(attributes)),
-			m_content(std::move(content))
-		{
-		}
 	};
 
 	explicit Xml(const std::string &rootName);

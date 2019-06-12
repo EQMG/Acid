@@ -57,7 +57,7 @@ private:
 	std::shared_ptr<CommandPool> m_commandPool;
 
 	VkQueueFlagBits m_queueType;
-	VkCommandBuffer m_commandBuffer;
-	bool m_running;
+	VkCommandBuffer m_commandBuffer{VK_NULL_HANDLE};
+	bool m_running{};
 };
 }

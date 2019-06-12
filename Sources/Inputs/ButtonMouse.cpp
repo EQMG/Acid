@@ -3,7 +3,7 @@
 namespace acid
 {
 ButtonMouse::ButtonMouse(const MouseButton &button) :
-	m_button(button)
+	m_button{button}
 {
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods)
 	{

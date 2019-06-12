@@ -13,14 +13,14 @@ namespace acid
 {
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<EntityPrefab>(resource);
 	}
 
-	auto result = std::make_shared<EntityPrefab>("");
+	auto result{std::make_shared<EntityPrefab>("")};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -29,14 +29,14 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 {
-	auto temp = EntityPrefab(filename, false);
-	Metadata metadata = Metadata();
+	EntityPrefab temp{filename, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
 
 EntityPrefab::EntityPrefab(std::string filename, const bool &load) :
-	m_filename(std::move(filename))
+	m_filename{std::move(filename)}
 {
 	if (load)
 	{
@@ -51,59 +51,84 @@ void EntityPrefab::Load()
 		return;
 	}
 
-	std::string fileExt = String::Lowercase(FileSystem::FileSuffix(m_filename));
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
 
 	if (fileExt == ".json")
 	{
-		m_file = std::make_unique<File>(m_filename, new Json());
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Json>());
 	}
 	else if (fileExt == ".yaml")
 	{
-		m_file = std::make_unique<File>(m_filename, new Yaml());
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Yaml>());
 	}
 	else if (fileExt == ".xml")
 	{
-		m_file = std::make_unique<File>(m_filename, new Xml("EntityDefinition"));
+		m_file = std::make_unique<File>(m_filename, std::make_unique<Xml>("EntityDefinition"));
 	}
 
 	if (m_file != nullptr)
 	{
-		m_file->Read();
+		m_file->Load();
 	}
 }
 
-void EntityPrefab::Write(const Entity &entity)
+void EntityPrefab::Write() const
 {
-	m_file->GetMetadata()->ClearChildren();
+	m_file->Write();
+}
+
+const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
+{
+	for (const auto &child : entityPrefab.GetParent()->GetChildren())
+	{
+		if (child->GetName().empty())
+		{
+			continue;
+		}
+
+		auto component{Scenes::Get()->GetComponentRegister().Create(child->GetName())};
+
+		if (component == nullptr)
+		{
+			continue;
+		}
+
+		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
+		entity.AddComponent(component);
+	}
+
+	return entityPrefab;
+}
+
+EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
+{
+	entityPrefab.m_file->GetMetadata()->ClearChildren();
 
 	for (const auto &component : entity.GetComponents())
 	{
-		auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+		auto componentName{Scenes::Get()->GetComponentRegister().FindName(component.get())};
 
 		if (!componentName)
 		{
 			continue;
 		}
 
-		auto child = m_file->GetMetadata()->AddChild(new Metadata(*componentName));
+		auto child{entityPrefab.m_file->GetMetadata()->AddChild(std::make_unique<Metadata>(*componentName))};
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
 	}
+
+	return entityPrefab;
 }
 
-void EntityPrefab::Save()
+const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab)
 {
-	m_file->Write();
-}
-
-const Metadata &operator>>(const Metadata &metadata, EntityPrefab &enityPrefab)
-{
-	metadata.GetChild("Filename", enityPrefab.m_filename);
+	metadata.GetChild("filename", entityPrefab.m_filename);
 	return metadata;
 }
 
-Metadata &operator<<(Metadata &metadata, const EntityPrefab &enityPrefab)
+Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab)
 {
-	metadata.SetChild("Filename", enityPrefab.m_filename);
+	metadata.SetChild("filename", entityPrefab.m_filename);
 	return metadata;
 }
 }

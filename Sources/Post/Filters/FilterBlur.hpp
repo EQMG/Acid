@@ -23,6 +23,8 @@ public:
 	void SetDirection(const Vector2f &direction) { m_direction = direction; }
 
 private:
+	std::vector<Shader::Define> GetDefines(const Type &type);
+
 	PushHandler m_pushScene;
 
 	Type m_type;

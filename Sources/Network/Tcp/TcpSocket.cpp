@@ -1,14 +1,11 @@
 #include "TcpSocket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <sys/select.h>
 #include <netinet/in.h>
 #endif
-
 #include "Engine/Log.hpp"
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
@@ -20,14 +17,14 @@
 namespace acid
 {
 // Define the low-level send/receive flags, which depends on the OS.
-#if defined(ACID_PLATFORM_LINUX)
-const int flags = MSG_NOSIGNAL;
+#if defined(ACID_BUILD_LINUX)
+const int32_t flags{MSG_NOSIGNAL};
 #else
-const int flags = 0;
+const int32_t flags{};
 #endif
 
 TcpSocket::TcpSocket() :
-	Socket(Type::Tcp)
+	Socket{Type::Tcp}
 {
 }
 
@@ -37,7 +34,7 @@ uint16_t TcpSocket::GetLocalPort() const
 	{
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size = sizeof(address);
+		SocketAddrLength size{sizeof(address)};
 
 		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -55,11 +52,11 @@ IpAddress TcpSocket::GetRemoteAddress() const
 	{
 		// Retrieve informations about the remote end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size = sizeof(address);
+		SocketAddrLength size{sizeof(address)};
 
 		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
-			return IpAddress(ntohl(address.sin_addr.s_addr));
+			return {ntohl(address.sin_addr.s_addr)};
 		}
 	}
 
@@ -73,7 +70,7 @@ uint16_t TcpSocket::GetRemotePort() const
 	{
 		// Retrieve informations about the remote end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size = sizeof(address);
+		SocketAddrLength size{sizeof(address)};
 
 		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -94,7 +91,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t
 	Create();
 
 	// Create the remote address
-	sockaddr_in address = CreateAddress(remoteAddress.ToInteger(), remotePort);
+	auto address{CreateAddress(remoteAddress.ToInteger(), remotePort)};
 
 	if (timeout <= 0s)
 	{
@@ -112,7 +109,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t
 	// We're using a timeout: we'll need a few tricks to make it work.
 
 	// Save the previous blocking state.
-	bool blocking = IsBlocking();
+	auto blocking{IsBlocking()};
 
 	// Switch to non-blocking to enable our connection timeout.
 	if (blocking)
@@ -129,7 +126,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t
 	}
 
 	// Get the error status.
-	Status status = GetErrorStatus();
+	auto status{GetErrorStatus()};
 
 	// If we were in non-blocking mode, return immediately.
 	if (!blocking)
@@ -146,7 +143,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t
 		FD_SET(GetHandle(), &selector);
 
 		// Setup the timeout.
-		timeval time = {};
+		timeval time{};
 		time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
 		time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
 
@@ -184,7 +181,7 @@ void TcpSocket::Disconnect()
 	Close();
 
 	// Reset the pending packet data.
-	m_pendingPacket = PendingPacket();
+	m_pendingPacket = {};
 }
 
 Socket::Status TcpSocket::Send(const void *data, const std::size_t &size)
@@ -208,7 +205,7 @@ Socket::Status TcpSocket::Send(const void *data, const std::size_t &size, std::s
 	}
 
 	// Loop until every byte has been sent.
-	int result = 0;
+	int32_t result{};
 
 	for (sent = 0; sent < size; sent += result)
 	{
@@ -218,7 +215,7 @@ Socket::Status TcpSocket::Send(const void *data, const std::size_t &size, std::s
 		// Check for errors.
 		if (result < 0)
 		{
-			Status status = GetErrorStatus();
+			auto status{GetErrorStatus()};
 
 			if ((status == Status::NotReady) && sent)
 			{
@@ -245,7 +242,7 @@ Socket::Status TcpSocket::Receive(void *data, const std::size_t &size, std::size
 	}
 
 	// Receive a chunk of bytes.
-	int sizeReceived = recv(GetHandle(), static_cast<char *>(data), static_cast<int>(size), flags);
+	auto sizeReceived{recv(GetHandle(), static_cast<char *>(data), static_cast<int>(size), flags)};
 
 	// Check the number of bytes received.
 	if (sizeReceived > 0)
@@ -274,10 +271,10 @@ Socket::Status TcpSocket::Send(Packet &packet)
 	// data corruption on the receiving end.
 
 	// Get the data to send from the packet.
-	auto dataSize = packet.OnSend();
+	auto dataSize{packet.OnSend()};
 
 	// First convert the packet size to network byte order
-	uint32_t packetSize = htonl(static_cast<uint32_t>(dataSize.second));
+	uint32_t packetSize{htonl(static_cast<uint32_t>(dataSize.second))};
 
 	// Allocate memory for the data block to send
 	std::vector<char> blockToSend(sizeof(packetSize) + dataSize.second);
@@ -292,7 +289,7 @@ Socket::Status TcpSocket::Send(Packet &packet)
 
 	// Send the data block.
 	std::size_t sent;
-	Status status = Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent);
+	auto status{Send(&blockToSend[0] + packet.m_sendPos, blockToSend.size() - packet.m_sendPos, sent)};
 
 	// In the case of a partial send, record the location to resume from
 	if (status == Status::Partial)
@@ -313,16 +310,16 @@ Socket::Status TcpSocket::Receive(Packet &packet)
 	packet.Clear();
 
 	// We start by getting the size of the incoming packet.
-	uint32_t packetSize = 0;
-	std::size_t received = 0;
+	uint32_t packetSize{};
+	std::size_t received{};
 
 	if (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 	{
 		// Loop until we've received the entire size of the packet (even a 4 byte variable may be received in more than one call).
 		while (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 		{
-			char *data = reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived;
-			Status status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received);
+			char *data{reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived};
+			Status status{Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received)};
 			m_pendingPacket.m_sizeReceived += received;
 
 			if (status != Status::Done)
@@ -346,8 +343,8 @@ Socket::Status TcpSocket::Receive(Packet &packet)
 	while (m_pendingPacket.m_data.size() < packetSize)
 	{
 		// Receive a chunk of data.
-		std::size_t sizeToGet = std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()), sizeof(buffer));
-		Status status = Receive(buffer, sizeToGet, received);
+		auto sizeToGet{std::min(static_cast<std::size_t>(packetSize - m_pendingPacket.m_data.size()), sizeof(buffer))};
+		auto status{Receive(buffer, sizeToGet, received)};
 
 		if (status != Status::Done)
 		{
@@ -358,7 +355,7 @@ Socket::Status TcpSocket::Receive(Packet &packet)
 		if (received > 0)
 		{
 			m_pendingPacket.m_data.resize(m_pendingPacket.m_data.size() + received);
-			char *begin = &m_pendingPacket.m_data[0] + m_pendingPacket.m_data.size() - received;
+			auto begin{&m_pendingPacket.m_data[0] + m_pendingPacket.m_data.size() - received};
 			std::memcpy(begin, buffer, received);
 		}
 	}
@@ -370,7 +367,7 @@ Socket::Status TcpSocket::Receive(Packet &packet)
 	}
 
 	// Clear the pending packet data.
-	m_pendingPacket = PendingPacket();
+	m_pendingPacket = {};
 	return Status::Done;
 }
 }

@@ -2,7 +2,6 @@
 
 #include "Helpers/String.hpp"
 #include "Helpers/NonCopyable.hpp"
-#include "Helpers/ConstExpr.hpp"
 
 namespace acid
 {
@@ -14,6 +13,12 @@ class ACID_EXPORT Metadata :
 {
 public:
 	explicit Metadata(const std::string &name = "", const std::string &value = "", std::map<std::string, std::string> attributes = {});
+
+	virtual void Load(std::istream *inStream);
+
+	virtual void Write(std::ostream *outStream) const;
+
+	std::unique_ptr<Metadata> Clone() const;
 
 	const std::string &GetName() const { return m_name; }
 
@@ -29,21 +34,19 @@ public:
 
 	const std::vector<std::unique_ptr<Metadata>> &GetChildren() const { return m_children; }
 
-	uint32_t GetChildCount() const { return static_cast<uint32_t>(m_children.size()); }
-
 	void ClearChildren() { m_children.clear(); }
-
-	Metadata *AddChild(Metadata *child);
-
-	void RemoveChild(Metadata *child);
 
 	std::vector<Metadata *> FindChildren(const std::string &name) const;
 
-	Metadata *FindChild(const std::string &name, const bool &reportError = true) const;
+	Metadata *FindChild(const std::string &name) const;
 
-	Metadata *FindChildWithBackup(const std::string &name, const std::string &backupName, const bool &reportError = true) const;
+	Metadata *FindChildWithBackup(const std::string &name, const std::string &backupName) const;
 
-	Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value, const bool &reportError = true) const;
+	Metadata *FindChildWithAttribute(const std::string &childName, const std::string &attribute, const std::string &value) const;
+
+	Metadata *AddChild(std::unique_ptr<Metadata> &&child);
+
+	void RemoveChild(Metadata *child);
 
 	template<typename T>
 	T GetChild(const std::string &name) const;
@@ -68,23 +71,15 @@ public:
 
 	const std::map<std::string, std::string> &GetAttributes() const { return m_attributes; }
 
-	uint32_t GetAttributeCount() const { return static_cast<uint32_t>(m_attributes.size()); }
-
 	void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }
 
 	void ClearAttributes() { m_attributes.clear(); }
 
-	void AddAttribute(const std::string &attribute, const std::string &value);
+	std::optional<std::string> FindAttribute(const std::string &attribute) const;
+
+	void SetAttribute(const std::string &attribute, const std::string &value);
 
 	void RemoveAttribute(const std::string &attribute);
-
-	std::string FindAttribute(const std::string &attribute) const;
-
-	virtual void Load(std::istream *inStream);
-
-	virtual void Write(std::ostream *outStream) const;
-
-	Metadata *Clone() const;
 
 	bool operator==(const Metadata &other) const;
 

@@ -4,18 +4,15 @@
 
 namespace acid
 {
-DescriptorsHandler::DescriptorsHandler() :
-	m_shader(nullptr),
-	m_pushDescriptors(false),
-	m_changed(false)
+DescriptorsHandler::DescriptorsHandler()
 {
 }
 
 DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
-	m_shader(pipeline.GetShader()),
-	m_pushDescriptors(pipeline.IsPushDescriptors()),
-	m_descriptorSet(std::make_unique<DescriptorSet>(pipeline)),
-	m_changed(true)
+	m_shader{pipeline.GetShader()},
+	m_pushDescriptors{pipeline.IsPushDescriptors()},
+	m_descriptorSet{std::make_unique<DescriptorSet>(pipeline)},
+	m_changed{true}
 {
 }
 
@@ -76,7 +73,7 @@ bool DescriptorsHandler::Update(const Pipeline &pipeline)
 
 		for (const auto &[descriptorName, descriptor] : m_descriptors)
 		{
-			auto writeDescriptorSet = descriptor.m_writeDescriptor.GetWriteDescriptorSet();
+			auto writeDescriptorSet{descriptor.m_writeDescriptor.GetWriteDescriptorSet()};
 			writeDescriptorSet.dstSet = VK_NULL_HANDLE;
 
 			if (!m_pushDescriptors)
@@ -102,7 +99,7 @@ void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, cons
 {
 	if (m_pushDescriptors)
 	{
-		auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+		auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 		Instance::FvkCmdPushDescriptorSetKHR(*logicalDevice, commandBuffer, pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(), 0,
 			static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 	}

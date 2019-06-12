@@ -4,14 +4,12 @@
 #include "Files/File.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
+#include "Skin/SkinLoader.hpp"
 
 namespace acid
 {
-const uint32_t MeshAnimated::MaxJoints = 50;
-const uint32_t MeshAnimated::MaxWeights = 3;
-
 MeshAnimated::MeshAnimated(std::string filename) :
-	m_filename(std::move(filename))
+	m_filename{std::move(filename)}
 {
 	Load();
 }
@@ -39,30 +37,30 @@ void MeshAnimated::Load()
 		return;
 	}
 
-	auto file = File(m_filename, new Xml("COLLADA"));
-	file.Read();
+	File file{m_filename, std::make_unique<Xml>("COLLADA")};
+	file.Load();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
-	auto correction = Matrix4().Rotate(-90.0_deg, Vector3f::Right);
+	auto correction{Matrix4{}.Rotate(Maths::Radians(-90.0f), Vector3f::Right)};
 
-	auto skinLoader = SkinLoader(file.GetMetadata()->FindChild("library_controllers"), MaxWeights);
-	auto skeletonLoader = SkeletonLoader(file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), correction);
-	auto geometryLoader = GeometryLoader(file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), correction);
+	SkinLoader skinLoader{file.GetMetadata()->FindChild("library_controllers"), MaxWeights};
+	SkeletonLoader skeletonLoader{file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), correction};
+	GeometryLoader geometryLoader{file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), correction};
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
-	m_headJoint.reset(CreateJoints(*skeletonLoader.GetHeadJoint()));
-	m_headJoint->CalculateInverseBindTransform(Matrix4());
+	m_headJoint = CreateJoints(*skeletonLoader.GetHeadJoint());
+	m_headJoint->CalculateInverseBindTransform(Matrix4{});
 	m_animator = std::make_unique<Animator>(m_headJoint.get());
 
-	auto animationLoader = AnimationLoader(file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), correction);
+	AnimationLoader animationLoader{file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), correction};
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator->DoAnimation(m_animation.get());
 }
 
-Joint *MeshAnimated::CreateJoints(const JointData &data)
+std::unique_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)
 {
-	auto joint = new Joint(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform());
+	auto joint{std::make_unique<Joint>(data.GetIndex(), data.GetNameId(), data.GetBindLocalTransform())};
 
 	for (const auto &child : data.GetChildren())
 	{
@@ -87,13 +85,13 @@ void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4>
 
 const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated)
 {
-	metadata.GetChild("Model", meshAnimated.m_filename);
+	metadata.GetChild("filename", meshAnimated.m_filename);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated)
 {
-	metadata.SetChild("Model", meshAnimated.m_filename);
+	metadata.SetChild("filename", meshAnimated.m_filename);
 	return metadata;
 }
 }

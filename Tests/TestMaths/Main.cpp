@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	}
 
 	{
-		RingBuffer<int32_t> buffer(4);
+		RingBuffer<int32_t> buffer{4};
 
 		if (!buffer.push(1, 2, 3, 4))
 		{
@@ -133,100 +133,100 @@ int main(int argc, char **argv)
 		Quaternion quaternion(original);
 		Vector3f restored = quaternion.ToEuler();
 
-		Log::Out("Original: %s\n", original.ToString().c_str());
-		Log::Out("Quaternion: %s\n", quaternion.ToString().c_str());
-		Log::Out("Restored: %s\n", restored.ToString().c_str());
+		Log::Out("Original: %s\n", original.ToString());
+		Log::Out("Quaternion: %s\n", quaternion.ToString());
+		Log::Out("Restored: %s\n", restored.ToString());
 		Log::Out("\n");
 	}
 	{
 		Log::Out("Vector2f:\n");
-		Vector2f a(3.0f, -7.2f);
-		Vector2f b(-1.74f, 15.4f);
-		Vector2ui c(5, 2);
+		Vector2f a{3.0f, -7.2f};
+		Vector2f b{-1.74f, 15.4f};
+		Vector2ui c{5, 2};
 
-		Log::Out("  %s + %f = %s\n", a.ToString().c_str(), 20.0f, (a + 20.0f).ToString().c_str());
-		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString().c_str(), (-1.11f * a).ToString().c_str());
-		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
-		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
-		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());
-		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
-		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
-		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
-		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
-		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
-		Log::Out("  %s rot %f = %s\n", a.ToString().c_str(), 90.0f, a.Rotate(90.0f).ToString().c_str());
-		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
-		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
-		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
-		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
+		Log::Out("  %s + %f = %s\n", a.ToString(), 20.0f, (a + 20.0f).ToString());
+		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString(), (-1.11f * a).ToString());
+		Log::Out("  %s + %s = %s\n", a.ToString(), b.ToString(), (a + b).ToString());
+		Log::Out("  %s - %s = %s\n", a.ToString(), b.ToString(), (a - b).ToString());
+		Log::Out("  %s * %s = %s\n", a.ToString(), b.ToString(), (a * b).ToString());
+		Log::Out("  %s / %s = %s\n", a.ToString(), b.ToString(), (a / b).ToString());
+		Log::Out("  %s ang %s = %f\n", a.ToString(), b.ToString(), a.Angle(b));
+		Log::Out("  %s dot %s = %f\n", a.ToString(), b.ToString(), a.Dot(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString(), b.ToString(), 0.5f, a.Lerp(b, 0.5f).ToString());
+		Log::Out("  %s sca %f = %s\n", a.ToString(), 10.0f, a.Scale(10.0f).ToString());
+		Log::Out("  %s rot %f = %s\n", a.ToString(), 90.0f, a.Rotate(90.0f).ToString());
+		Log::Out("  -%s = %s\n", a.ToString(), (-a).ToString());
+		Log::Out("  nor %s = %s\n", a.ToString(), a.Normalize().ToString());
+		Log::Out("  len %s = %f\n", a.ToString(), a.Length());
+		Log::Out("  %s dist %s = %f\n", a.ToString(), b.ToString(), a.Distance(b));
 		Log::Out("\n");
 
-		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
-		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
-		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("  %s & %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s | %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s ^ %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  ~%s = %s\n", c.ToString(), (~c).ToString());
+		Log::Out("  %s >> %i = %s\n", c.ToString(), 1, (c >> 1).ToString());
+		Log::Out("  %s << %i = %s\n", c.ToString(), 1, (c << 1).ToString());
 		Log::Out("\n");
 	}
 	{
-		constexpr auto compileTime = Vector3f(10.0f, -9.0f, 8.0f) + Vector3d(-7.0, -6.0, 5.0);
+		constexpr auto compileTime = Vector3f{10.0f, -9.0f, 8.0f} + Vector3d{-7.0, -6.0, 5.0};
 
 		Log::Out("Vector3:\n");
-		Vector3f a(12.9f, -2.0f, 6.7f);
-		Vector3f b(-9.7f, 15.9f, -13.8f);
-		Vector3ui c(5, 2, 1);
+		Vector3f a{12.9f, -2.0f, 6.7f};
+		Vector3f b{-9.7f, 15.9f, -13.8f};
+		Vector3ui c{5, 2, 1};
 
-		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
-		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
-		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());
-		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
-		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
-		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
-		Log::Out("  %s cross %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Cross(b));
-		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
-		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
-		//Log::Out("  %s rot %s = %s\n", a.ToString().c_str(), Vector3f(1.22f, 0.0f, 0.0f).ToString().c_str(), a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)).ToString().c_str());
-		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
-		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
-		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
-		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
+		Log::Out("  %s + %s = %s\n", a.ToString(), b.ToString(), (a + b).ToString());
+		Log::Out("  %s - %s = %s\n", a.ToString(), b.ToString(), (a - b).ToString());
+		Log::Out("  %s * %s = %s\n", a.ToString(), b.ToString(), (a * b).ToString());
+		Log::Out("  %s / %s = %s\n", a.ToString(), b.ToString(), (a / b).ToString());
+		Log::Out("  %s ang %s = %f\n", a.ToString(), b.ToString(), a.Angle(b));
+		Log::Out("  %s dot %s = %f\n", a.ToString(), b.ToString(), a.Dot(b));
+		Log::Out("  %s cross %s = %f\n", a.ToString(), b.ToString(), a.Cross(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString(), b.ToString(), 0.5f, a.Lerp(b, 0.5f).ToString());
+		Log::Out("  %s sca %f = %s\n", a.ToString(), 10.0f, a.Scale(10.0f).ToString());
+		//Log::Out("  %s rot %s = %s\n", a.ToString(), Vector3f(1.22f, 0.0f, 0.0f).ToString(), a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)).ToString());
+		Log::Out("  -%s = %s\n", a.ToString(), (-a).ToString());
+		Log::Out("  nor %s = %s\n", a.ToString(), a.Normalize().ToString());
+		Log::Out("  len %s = %f\n", a.ToString(), a.Length());
+		Log::Out("  %s dist %s = %f\n", a.ToString(), b.ToString(), a.Distance(b));
 		Log::Out("\n");
 
-		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
-		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
-		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("  %s & %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s | %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s ^ %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  ~%s = %s\n", c.ToString(), (~c).ToString());
+		Log::Out("  %s >> %i = %s\n", c.ToString(), 1, (c >> 1).ToString());
+		Log::Out("  %s << %i = %s\n", c.ToString(), 1, (c << 1).ToString());
 		Log::Out("\n");
 	}
 	{
 		Log::Out("Vector4:\n");
-		Vector4f a(12.9f, -2.0f, 6.7f, 11.11f);
-		Vector4f b(-9.7f, 15.9f, -13.8f, -2.246f);
-		Vector4ui c(5, 2, 1, 3);
+		Vector4f a{12.9f, -2.0f, 6.7f, 11.11f};
+		Vector4f b{-9.7f, 15.9f, -13.8f, -2.246f};
+		Vector4ui c{5, 2, 1, 3};
 
-		Log::Out("  %s + %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a + b).ToString().c_str());
-		Log::Out("  %s - %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a - b).ToString().c_str());
-		Log::Out("  %s * %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a * b).ToString().c_str());
-		Log::Out("  %s / %s = %s\n", a.ToString().c_str(), b.ToString().c_str(), (a / b).ToString().c_str());
-		Log::Out("  %s ang %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Angle(b));
-		Log::Out("  %s dot %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Dot(b));
-		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString().c_str(), b.ToString().c_str(), 0.5f, a.Lerp(b, 0.5f).ToString().c_str());
-		Log::Out("  %s sca %f = %s\n", a.ToString().c_str(), 10.0f, a.Scale(10.0f).ToString().c_str());
-		Log::Out("  -%s = %s\n", a.ToString().c_str(), (-a).ToString().c_str());
-		Log::Out("  nor %s = %s\n", a.ToString().c_str(), a.Normalize().ToString().c_str());
-		Log::Out("  len %s = %f\n", a.ToString().c_str(), a.Length());
-		Log::Out("  %s dist %s = %f\n", a.ToString().c_str(), b.ToString().c_str(), a.Distance(b));
+		Log::Out("  %s + %s = %s\n", a.ToString(), b.ToString(), (a + b).ToString());
+		Log::Out("  %s - %s = %s\n", a.ToString(), b.ToString(), (a - b).ToString());
+		Log::Out("  %s * %s = %s\n", a.ToString(), b.ToString(), (a * b).ToString());
+		Log::Out("  %s / %s = %s\n", a.ToString(), b.ToString(), (a / b).ToString());
+		Log::Out("  %s ang %s = %f\n", a.ToString(), b.ToString(), a.Angle(b));
+		Log::Out("  %s dot %s = %f\n", a.ToString(), b.ToString(), a.Dot(b));
+		Log::Out("  %s lerp %s prog %f = %s\n", a.ToString(), b.ToString(), 0.5f, a.Lerp(b, 0.5f).ToString());
+		Log::Out("  %s sca %f = %s\n", a.ToString(), 10.0f, a.Scale(10.0f).ToString());
+		Log::Out("  -%s = %s\n", a.ToString(), (-a).ToString());
+		Log::Out("  nor %s = %s\n", a.ToString(), a.Normalize().ToString());
+		Log::Out("  len %s = %f\n", a.ToString(), a.Length());
+		Log::Out("  %s dist %s = %f\n", a.ToString(), b.ToString(), a.Distance(b));
 		Log::Out("\n");
 
-		Log::Out("  %s & %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s | %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  %s ^ %i = %s\n", c.ToString().c_str(), 9, (c & 9).ToString().c_str());
-		Log::Out("  ~%s = %s\n", c.ToString().c_str(), (~c).ToString().c_str());
-		Log::Out("  %s >> %i = %s\n", c.ToString().c_str(), 1, (c >> 1).ToString().c_str());
-		Log::Out("  %s << %i = %s\n", c.ToString().c_str(), 1, (c << 1).ToString().c_str());
+		Log::Out("  %s & %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s | %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  %s ^ %i = %s\n", c.ToString(), 9, (c & 9).ToString());
+		Log::Out("  ~%s = %s\n", c.ToString(), (~c).ToString());
+		Log::Out("  %s >> %i = %s\n", c.ToString(), 1, (c >> 1).ToString());
+		Log::Out("  %s << %i = %s\n", c.ToString(), 1, (c << 1).ToString());
 		Log::Out("\n");
 	}
 

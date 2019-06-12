@@ -2,32 +2,24 @@
 
 namespace acid
 {
-Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scaling) :
-	m_position(position),
-	m_rotation(rotation),
-	m_scaling(scaling),
-	m_dirty(true)
-{
-}
-
-Transform::Transform(const Vector3f &position, const Vector3f &rotation, const float &scale) :
-	m_position(position),
-	m_rotation(rotation),
-	m_scaling(scale),
-	m_dirty(true)
+Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scale) :
+	m_position{position},
+	m_rotation{rotation},
+	m_scale{scale},
+	m_dirty{true}
 {
 }
 
 Transform Transform::Multiply(const Transform &other) const
 {
-	return Transform(Vector3f(GetWorldMatrix().Transform(Vector4f(other.m_position))), m_rotation + other.m_rotation, m_scaling * other.m_scaling);
+	return {Vector3f{GetWorldMatrix().Transform(Vector4f{other.m_position})}, m_rotation + other.m_rotation, m_scale * other.m_scale};
 }
 
 Matrix4 Transform::GetWorldMatrix() const
 {
 	if (m_dirty)
 	{
-		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
+		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scale);
 		m_dirty = false;
 	}
 
@@ -52,11 +44,11 @@ void Transform::SetRotation(const Vector3f &rotation)
 	}
 }
 
-void Transform::SetScaling(const Vector3f &scaling)
+void Transform::SetScale(const Vector3f &scale)
 {
-	if (m_scaling != scaling)
+	if (m_scale != scale)
 	{
-		m_scaling = scaling;
+		m_scale = scale;
 		m_dirty = true;
 	}
 }
@@ -64,19 +56,19 @@ void Transform::SetScaling(const Vector3f &scaling)
 void Transform::SetDirty(const bool &dirty) const
 {
 	m_dirty = dirty;
-	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scaling);
+	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scale);
 }
 
 std::string Transform::ToString() const
 {
 	std::stringstream stream;
-	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scaling << ")";
+	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scale << ")";
 	return stream.str();
 }
 
 bool Transform::operator==(const Transform &other) const
 {
-	return m_position == other.m_position && m_rotation == other.m_rotation && m_scaling == other.m_scaling;
+	return m_position == other.m_position && m_rotation == other.m_rotation && m_scale == other.m_scale;
 }
 
 bool Transform::operator!=(const Transform &other) const
@@ -96,17 +88,17 @@ Transform &Transform::operator*=(const Transform &other)
 
 const Metadata &operator>>(const Metadata &metadata, Transform &transform)
 {
-	metadata.GetChild("Position", transform.m_position);
-	metadata.GetChild("Rotation", transform.m_rotation);
-	metadata.GetChild("Scaling", transform.m_scaling);
+	metadata.GetChild("position", transform.m_position);
+	metadata.GetChild("rotation", transform.m_rotation);
+	metadata.GetChild("scale", transform.m_scale);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Transform &transform)
 {
-	metadata.SetChild("Position", transform.m_position);
-	metadata.SetChild("Rotation", transform.m_rotation);
-	metadata.SetChild("Scaling", transform.m_scaling);
+	metadata.SetChild("position", transform.m_position);
+	metadata.SetChild("rotation", transform.m_rotation);
+	metadata.SetChild("scale", transform.m_scale);
 	return metadata;
 }
 

@@ -13,8 +13,7 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePosition.m_x = xpos;
-	Mouse::Get()->m_mousePosition.m_y = ypos;
+	Mouse::Get()->m_mousePosition = {xpos, ypos};
 	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
 }
 
@@ -26,16 +25,15 @@ void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-	Mouse::Get()->m_mouseWheelDelta.m_x = yoffset;
-	Mouse::Get()->m_mouseWheelDelta.m_y = yoffset;
+	Mouse::Get()->m_mouseWheelDelta = {yoffset, yoffset};
 	Mouse::Get()->m_onScroll(Mouse::Get()->m_mouseWheelDelta);
 }
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 {
-	std::vector<std::string> files(static_cast<uint32_t>(count));
+	std::vector<std::string> files{static_cast<uint32_t>(count)};
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(count); i++)
+	for (uint32_t i{}; i < static_cast<uint32_t>(count); i++)
 	{
 		files[i] = paths[i];
 	}
@@ -43,10 +41,7 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 	Mouse::Get()->m_onDrop(files);
 }
 
-Mouse::Mouse() :
-	m_cursor(nullptr),
-	m_windowSelected(true),
-	m_cursorHidden(false)
+Mouse::Mouse()
 {
 	glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
 	glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
@@ -62,7 +57,7 @@ Mouse::~Mouse()
 
 void Mouse::Update()
 {
-	float delta = Engine::Get()->GetDelta().AsSeconds();
+	auto delta{Engine::Get()->GetDelta().AsSeconds()};
 
 	// Updates the mouses delta.
 	m_mouseDelta = delta * (m_lastMousePosition - m_mousePosition);
@@ -85,7 +80,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	Vector2ui extent;
 	uint32_t components;
 	VkFormat format;
-	auto data = Image::LoadPixels(filename, extent, components, format);
+	auto data{Image::LoadPixels(filename, extent, components, format)};
 
 	if (data == nullptr)
 	{
@@ -119,7 +114,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	}
 
 	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
-	m_currentCursor = std::pair<std::string, CursorHotspot>(filename, hotspot);
+	m_currentCursor = {filename, hotspot};
 	m_currentStandard = std::nullopt;
 }
 
@@ -151,7 +146,7 @@ void Mouse::SetClipboard(const std::string &string) const
 
 InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 {
-	auto state = glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton));
+	auto state{glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton))};
 	return static_cast<InputAction>(state);
 }
 
@@ -181,7 +176,7 @@ double Mouse::SmoothScrollWheel(double value, const float &delta)
 {
 	if (value != 0.0)
 	{
-		value -= static_cast<double>(delta) * ((value < 0.0) ? -3.0 : 3.0);
+		value -= static_cast<double>(delta) * std::copysign(3.0, value);
 		value = Maths::Deadband(0.08, value);
 		return value;
 	}

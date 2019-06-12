@@ -16,10 +16,10 @@ class ACID_EXPORT Camera :
 {
 public:
 	Camera() :
-		m_nearPlane(0.1f),
-		m_farPlane(1000.0f),
-		m_fieldOfView(45.0_deg),
-		m_viewRay(false, Vector2f(0.5f, 0.5f))
+		m_nearPlane{0.1f},
+		m_farPlane{1000.0f},
+		m_fieldOfView{Maths::Radians(45.0f)},
+		m_viewRay{false, {0.5f, 0.5f}}
 	{
 	}
 

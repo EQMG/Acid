@@ -35,7 +35,7 @@ public:
 	 * Sets the current scene to a new scene.
 	 * @param scene The new scene.
 	 */
-	void SetScene(Scene *scene) { m_scene.reset(scene); }
+	void SetScene(std::unique_ptr<Scene> &&scene) { m_scene = std::move(scene); }
 
 	/**
 	 * Gets the component register used by the engine. The register can be used to register/deregister component types.

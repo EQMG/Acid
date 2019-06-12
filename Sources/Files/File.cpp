@@ -6,16 +6,16 @@
 
 namespace acid
 {
-File::File(std::string filename, Metadata *metadata) :
-	m_filename(std::move(filename)),
-	m_metadata(metadata)
+File::File(std::string filename, std::unique_ptr<Metadata> &&metadata) :
+	m_filename{std::move(filename)},
+	m_metadata{std::move(metadata)}
 {
 }
 
-void File::Read()
+void File::Load()
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -31,15 +31,15 @@ void File::Read()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("File '%s' loaded in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("File '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
-void File::Write()
+void File::Write() const
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart = Time::Now();
+	auto debugStart{Time::Now()};
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -56,8 +56,8 @@ void File::Write()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd = Time::Now();
-	Log::Out("File '%s' saved in %.3fms\n", m_filename.c_str(), (debugEnd - debugStart).AsMilliseconds<float>());
+	auto debugEnd{Time::Now()};
+	Log::Out("File '%s' saved in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

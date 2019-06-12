@@ -23,13 +23,13 @@ Vector3f EmitterPoint::GeneratePosition() const
 
 const Metadata &operator>>(const Metadata &metadata, EmitterPoint &emitter)
 {
-	metadata.GetChild("Point", emitter.m_point);
+	metadata.GetChild("point", emitter.m_point);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const EmitterPoint &emitter)
 {
-	metadata.SetChild("Point", emitter.m_point);
+	metadata.SetChild("point", emitter.m_point);
 	return metadata;
 }
 }

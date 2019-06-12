@@ -54,14 +54,14 @@ private:
 	VkExtent2D m_extent;
 	VkPresentModeKHR m_presentMode;
 
-	uint32_t m_imageCount;
+	uint32_t m_imageCount{};
 	VkSurfaceTransformFlagsKHR m_preTransform;
 	VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
 	std::vector<VkImage> m_images;
 	std::vector<VkImageView> m_imageViews;
-	VkSwapchainKHR m_swapchain;
+	VkSwapchainKHR m_swapchain{VK_NULL_HANDLE};
 
-	VkFence m_fenceImage;
+	VkFence m_fenceImage{VK_NULL_HANDLE};
 	uint32_t m_activeImageIndex;
 };
 }

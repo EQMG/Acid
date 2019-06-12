@@ -17,7 +17,7 @@ public:
 	 * @param length The drivers length. 
 	 **/
 	explicit Driver(const Time &length) :
-		m_length(length)
+		m_length{length}
 	{
 	}
 
@@ -34,7 +34,7 @@ public:
 		m_actualTime += delta;
 		m_currentTime += delta;
 		m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));
-		auto time = static_cast<float>(m_currentTime / m_length);
+		auto time{static_cast<float>(m_currentTime / m_length)};
 		return Calculate(time);
 	}
 

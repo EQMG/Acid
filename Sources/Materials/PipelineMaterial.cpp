@@ -7,14 +7,14 @@ namespace acid
 {
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metadata)
 {
-	/*auto resource = Resources::Get()->Find(metadata);
+	/*auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
-	auto result = std::make_shared<PipelineMaterial>();
+	auto result{std::make_shared<PipelineMaterial>()};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -24,18 +24,18 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 {
-	auto temp = PipelineMaterial(pipelineStage, pipelineCreate);
-	Metadata metadata = Metadata();
+	PipelineMaterial temp{pipelineStage, pipelineCreate};
+	Metadata metadata;
 	metadata << temp;
 
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
-	auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
+	auto result{std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	//metadata >> *result;
 	//result->Load();
@@ -43,15 +43,14 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 }
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
-	m_pipelineStage(std::move(pipelineStage)),
-	m_pipelineCreate(std::move(pipelineCreate)),
-	m_renderStage(nullptr)
+	m_pipelineStage{std::move(pipelineStage)},
+	m_pipelineCreate{std::move(pipelineCreate)}
 {
 }
 
 bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 {
-	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
+	auto renderStage{Graphics::Get()->GetRenderStage(m_pipelineStage.first)};
 
 	if (renderStage == nullptr)
 	{
@@ -70,17 +69,17 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 
 const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline)
 {
-	metadata.GetChild("Renderpass", pipeline.m_pipelineStage.first);
-	metadata.GetChild("Subpass", pipeline.m_pipelineStage.second);
-	metadata.GetChild("Pipeline Create", pipeline.m_pipelineCreate);
+	metadata.GetChild("renderpass", pipeline.m_pipelineStage.first);
+	metadata.GetChild("subpass", pipeline.m_pipelineStage.second);
+	metadata.GetChild("pipelineCreate", pipeline.m_pipelineCreate);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline)
 {
-	metadata.SetChild("Renderpass", pipeline.m_pipelineStage.first);
-	metadata.SetChild("Subpass", pipeline.m_pipelineStage.second);
-	metadata.SetChild("Pipeline Create", pipeline.m_pipelineCreate);
+	metadata.SetChild("renderpass", pipeline.m_pipelineStage.first);
+	metadata.SetChild("subpass", pipeline.m_pipelineStage.second);
+	metadata.SetChild("pipelineCreate", pipeline.m_pipelineCreate);
 	return metadata;
 }
 }

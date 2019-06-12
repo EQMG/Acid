@@ -11,7 +11,7 @@ class ACID_EXPORT ColliderHeightfield :
 {
 public:
 	explicit ColliderHeightfield(const int32_t &heightStickWidth = 100, const int32_t &heightStickLength = 100, const void *heightfieldData = nullptr,
-		const float &minHeight = -1.0f, const float &maxHeight = 1.0f, const bool &flipQuadEdges = false, const Transform &localTransform = Transform());
+		const float &minHeight = -1.0f, const float &maxHeight = 1.0f, const bool &flipQuadEdges = false, const Transform &localTransform = {});
 
 	~ColliderHeightfield();
 

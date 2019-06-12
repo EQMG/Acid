@@ -24,7 +24,7 @@ public:
 
 	void Update() override;
 
-	void AddParticle(const Particle &particle);
+	void AddParticle(Particle &&particle);
 
 	//void RemoveParticle(const Particle &particle);
 

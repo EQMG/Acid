@@ -13,7 +13,7 @@ class ACID_EXPORT Observer
 {
 public:
 	Observer() :
-		m_valid(std::make_shared<bool>(true))
+		m_valid{std::make_shared<bool>(true)}
 	{
 	}
 
@@ -30,10 +30,10 @@ public:
 
 	static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params)
 	{
-		std::lock_guard<std::mutex> lock(delegate.m_mutex);
+		std::lock_guard<std::mutex> lock{delegate.m_mutex};
 		ReturnType returnValues;
 
-		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
+		for (auto it{delegate.m_functions.begin()}; it != delegate.m_functions.end();)
 		{
 			if (it->IsExpired())
 			{
@@ -57,14 +57,14 @@ public:
 
 	static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params)
 	{
-		std::lock_guard<std::mutex> lock(delegate.m_mutex);
+		std::lock_guard<std::mutex> lock{delegate.m_mutex};
 
 		if (delegate.m_functions.empty())
 		{
 			return;
 		}
 
-		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
+		for (auto it{delegate.m_functions.begin()}; it != delegate.m_functions.end();)
 		{
 			if (it->IsExpired())
 			{
@@ -112,7 +112,7 @@ public:
 	template<typename ...KArgs>
 	void Add(FunctionType &&function, KArgs ...args)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
+		std::lock_guard<std::mutex> lock{m_mutex};
 		ObserversType observers;
 
 		if constexpr (sizeof...(args) != 0)
@@ -128,7 +128,7 @@ public:
 
 	void Remove(const FunctionType &function)
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
+		std::lock_guard<std::mutex> lock{m_mutex};
 		m_functions.erase(std::remove_if(m_functions.begin(), m_functions.end(), [function](FunctionPair &f)
 		{
 			return Hash(f.m_function) == Hash(function);
@@ -137,7 +137,7 @@ public:
 
 	void Clear()
 	{
-		std::lock_guard<std::mutex> lock(m_mutex);
+		std::lock_guard<std::mutex> lock{m_mutex};
 		m_functions.clear();
 	}
 
@@ -181,7 +181,7 @@ class DelegateValue :
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) :
-		m_value(std::forward<Args>(args)...)
+		m_value{std::forward<Args>(args)...}
 	{
 	}
 

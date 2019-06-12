@@ -5,13 +5,12 @@
 
 namespace acid
 {
-Http::Http() :
-	m_port(0)
+Http::Http()
 {
 }
 
 Http::Http(const std::string &host, const uint16_t &port) :
-	m_port(port)
+	m_port{port}
 {
 	SetHost(host, port);
 }
@@ -45,13 +44,13 @@ void Http::SetHost(const std::string &host, const uint16_t &port)
 		m_hostName.erase(m_hostName.size() - 1);
 	}
 
-	m_host = IpAddress(m_hostName);
+	m_host = {m_hostName};
 }
 
 HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 {
 	// First make sure that the request is valid -- add missing mandatory fields.
-	HttpRequest toSend(request);
+	HttpRequest toSend{request};
 
 	if (!toSend.HasField("From"))
 	{
@@ -92,7 +91,7 @@ HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 	if (m_connection.Connect(m_host, m_port, timeout) == Socket::Status::Done)
 	{
 		// Convert the request to string and send it through the connected socket.
-		std::string requestStr = toSend.Prepare();
+		auto requestStr{toSend.Prepare()};
 
 		if (!requestStr.empty())
 		{
@@ -101,7 +100,7 @@ HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 			{
 				// Wait for the server's response.
 				std::string receivedStr;
-				std::size_t size = 0;
+				std::size_t size{};
 				char buffer[1024];
 
 				while (m_connection.Receive(buffer, sizeof(buffer), size) == Socket::Status::Done)

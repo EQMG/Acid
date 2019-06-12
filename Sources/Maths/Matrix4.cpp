@@ -43,9 +43,9 @@ Matrix4 Matrix4::Add(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] + other[row][col];
 		}
@@ -58,9 +58,9 @@ Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] - other[row][col];
 		}
@@ -73,9 +73,9 @@ Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
 		}
@@ -88,7 +88,7 @@ Vector4f Matrix4::Multiply(const Vector4f &other) const
 {
 	Vector4f result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
@@ -100,9 +100,9 @@ Matrix4 Matrix4::Divide(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2] + m_rows[3][col] / other[row][3];
 		}
@@ -115,7 +115,7 @@ Vector4f Matrix4::Transform(const Vector4f &other) const
 {
 	Vector4f result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
@@ -125,9 +125,9 @@ Vector4f Matrix4::Transform(const Vector4f &other) const
 
 Matrix4 Matrix4::Translate(const Vector2f &other) const
 {
-	Matrix4 result = Matrix4(*this);
+	Matrix4 result{*this};
 
-	for (int32_t col = 0; col < 4; col++)
+	for (uint32_t col{}; col < 4; col++)
 	{
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y;
 	}
@@ -137,9 +137,9 @@ Matrix4 Matrix4::Translate(const Vector2f &other) const
 
 Matrix4 Matrix4::Translate(const Vector3f &other) const
 {
-	Matrix4 result = Matrix4(*this);
+	Matrix4 result{*this};
 
-	for (int32_t col = 0; col < 4; col++)
+	for (uint32_t col{}; col < 4; col++)
 	{
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y + m_rows[2][col] * other.m_z;
 	}
@@ -151,9 +151,9 @@ Matrix4 Matrix4::Scale(const Vector3f &other) const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 3; row++)
+	for (uint32_t row{}; row < 3; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] * other[row];
 		}
@@ -165,11 +165,11 @@ Matrix4 Matrix4::Scale(const Vector3f &other) const
 
 Matrix4 Matrix4::Scale(const Vector4f &other) const
 {
-	Matrix4 result = Matrix4(*this);
+	Matrix4 result{*this};
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] *= other[row];
 		}
@@ -182,15 +182,15 @@ Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 {
 	Matrix4 result;
 
-	float c = std::cos(angle);
-	float s = std::sin(angle);
-	float o = 1.0f - c;
-	float xy = axis.m_x * axis.m_y;
-	float yz = axis.m_y * axis.m_z;
-	float xz = axis.m_x * axis.m_z;
-	float xs = axis.m_x * s;
-	float ys = axis.m_y * s;
-	float zs = axis.m_z * s;
+	auto c = std::cos(angle);
+	auto s = std::sin(angle);
+	auto o = 1.0f - c;
+	auto xy = axis.m_x * axis.m_y;
+	auto yz = axis.m_y * axis.m_z;
+	auto xz = axis.m_x * axis.m_z;
+	auto xs = axis.m_x * s;
+	auto ys = axis.m_y * s;
+	auto zs = axis.m_z * s;
 
 	Matrix3 f;
 	f[0][0] = axis.m_x * axis.m_x * o + c;
@@ -203,9 +203,9 @@ Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
 	f[2][1] = yz * o - xs;
 	f[2][2] = axis.m_z * axis.m_z * o + c;
 
-	for (int32_t row = 0; row < 3; row++)
+	for (uint32_t row{}; row < 3; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
 		}
@@ -219,9 +219,9 @@ Matrix4 Matrix4::Negate() const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = -m_rows[row][col];
 		}
@@ -234,24 +234,24 @@ Matrix4 Matrix4::Inverse() const
 {
 	Matrix4 result;
 
-	float det = Determinant();
+	auto det{Determinant()};
 
 	if (det == 0.0f)
 	{
 		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
 	}
 
-	for (int32_t j = 0; j < 4; j++)
+	for (uint32_t j{}; j < 4; j++)
 	{
-		for (int32_t i = 0; i < 4; i++)
+		for (uint32_t i{}; i < 4; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
-			Matrix3 minorSubmatrix = GetSubmatrix(j, i);
-			float minor = minorSubmatrix.Determinant();
+			auto minorSubmatrix{GetSubmatrix(j, i)};
+			auto minor{minorSubmatrix.Determinant()};
 
 			// Multiply by (−1)^{i+j}.
-			float factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
-			float cofactor = minor * factor;
+			auto factor{((i + j) % 2 == 1) ? -1.0f : 1.0f};
+			auto cofactor{minor * factor};
 
 			result[i][j] = cofactor / det;
 		}
@@ -264,9 +264,9 @@ Matrix4 Matrix4::Transpose() const
 {
 	Matrix4 result;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (uint32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (uint32_t col{}; col < 4; col++)
 		{
 			result[row][col] = m_rows[col][row];
 		}
@@ -277,16 +277,16 @@ Matrix4 Matrix4::Transpose() const
 
 float Matrix4::Determinant() const
 {
-	float result = 0.0f;
+	float result{};
 
-	for (int32_t i = 0; i < 4; i++)
+	for (uint32_t i{}; i < 4; i++)
 	{
 		// Get minor of element [0][i].
-		Matrix3 minorSubmatrix = GetSubmatrix(0, i);
-		float minor = minorSubmatrix.Determinant();
+		auto minorSubmatrix{GetSubmatrix(0, i)};
+		auto minor{minorSubmatrix.Determinant()};
 
 		// If this is an odd-numbered row, negate the value.
-		float factor = (i % 2 == 1) ? -1.0f : 1.0f;
+		auto factor{(i % 2 == 1) ? -1.0f : 1.0f};
 
 		result += factor * m_rows[0][i] * minor;
 	}
@@ -294,19 +294,19 @@ float Matrix4::Determinant() const
 	return result;
 }
 
-Matrix3 Matrix4::GetSubmatrix(const int32_t &row, const int32_t &col) const
+Matrix3 Matrix4::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
 {
 	Matrix3 result;
-	int32_t colCount = 0;
-	int32_t rowCount = 0;
+	uint32_t colCount{};
+	uint32_t rowCount{};
 
-	for (int32_t i = 0; i < 4; i++)
+	for (uint32_t i{}; i < 4; i++)
 	{
 		if (i != row)
 		{
 			colCount = 0;
 
-			for (int32_t j = 0; j < 4; j++)
+			for (uint32_t j{}; j < 4; j++)
 			{
 				if (j != col)
 				{
@@ -335,9 +335,9 @@ Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3
 
 Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar)
 {
-	Matrix4 result = Matrix4(0.0f);
+	Matrix4 result{0.0f};
 
-	float f = std::tan(0.5f * fov);
+	auto f{std::tan(0.5f * fov)};
 
 	result[0][0] = 1.0f / (aspectRatio * f);
 	result[1][1] = 1.0f / f;
@@ -349,13 +349,13 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 
 Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear)
 {
-	Matrix4 result = Matrix4(0.0f);
+	Matrix4 result{0.0f};
 
-	float range = std::tan(0.5f * fov) * zNear;
-	float left = -range * aspectRatio;
-	float right = range * aspectRatio;
-	float bottom = -range;
-	float top = range;
+	auto range{std::tan(0.5f * fov) * zNear};
+	auto left{-range * aspectRatio};
+	auto right{range * aspectRatio};
+	auto bottom{-range};
+	auto top{range};
 
 	result[0][0] = (2.0f * zNear) / (right - left);
 	result[1][1] = (2.0f * zNear) / (top - bottom);
@@ -380,7 +380,7 @@ Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const
 
 Matrix4 Matrix4::FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
 {
-	Matrix4 result = Matrix4(0.0f);
+	Matrix4 result{0.0f};
 
 	result[0][0] = (2.0f * zNear) / (right - left);
 	result[1][1] = (2.0f * zNear) / (top - bottom);
@@ -405,11 +405,11 @@ Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 
 Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
-	Vector4f point4 = Vector4f(worldSpace.m_x, worldSpace.m_y, worldSpace.m_z, 1.0f);
+	Vector4f point4{worldSpace, 1.0f};
 	point4 = viewMatrix.Transform(point4);
 	point4 = projectionMatrix.Transform(point4);
 
-	Vector3f result = Vector3f(point4);
+	Vector3f result{point4};
 	result.m_x /= result.m_z;
 	result.m_y /= result.m_z;
 	return result;
@@ -426,9 +426,9 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 {
 	Matrix4 result;
 
-	Vector3f f = (centre - eye).Normalize();
-	Vector3f s = f.Cross(up).Normalize();
-	Vector3f u = s.Cross(f);
+	auto f{(centre - eye).Normalize()};
+	auto s{f.Cross(up).Normalize()};
+	auto u{s.Cross(f)};
 
 	result[0][0] = s.m_x;
 	result[1][0] = s.m_y;
@@ -524,22 +524,22 @@ Matrix4 operator/(const Matrix4 &left, const Vector4f &right)
 
 Matrix4 operator*(const float &left, const Matrix4 &right)
 {
-	return right.Scale(Vector4f(left, left, left, left));
+	return right.Scale({left, left, left, left});
 }
 
 Matrix4 operator/(const float &left, const Matrix4 &right)
 {
-	return right.Scale(1.0f / Vector4f(left, left, left, left));
+	return right.Scale(1.0f / Vector4f{left, left, left, left});
 }
 
 Matrix4 operator*(const Matrix4 &left, const float &right)
 {
-	return left.Scale(Vector4f(right, right, right, right));
+	return left.Scale({right, right, right, right});
 }
 
 Matrix4 operator/(const Matrix4 &left, const float &right)
 {
-	return left.Scale(1.0f / Vector4f(right, right, right, right));
+	return left.Scale(1.0f / Vector4f{right, right, right, right});
 }
 
 Matrix4 &Matrix4::operator+=(const Matrix4 &other)
@@ -574,12 +574,12 @@ Matrix4 &Matrix4::operator/=(const Vector4f &other)
 
 Matrix4 &Matrix4::operator*=(const float &other)
 {
-	return *this = Scale(Vector4f(other, other, other, other));
+	return *this = Scale({other, other, other, other});
 }
 
 Matrix4 &Matrix4::operator/=(const float &other)
 {
-	return *this = Scale(1.0f / Vector4f(other, other, other, other));
+	return *this = Scale(1.0f / Vector4f{other, other, other, other});
 }
 
 const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix)

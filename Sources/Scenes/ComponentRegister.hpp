@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Log.hpp"
+#include "Serialized/Metadata.hpp"
 #include "Component.hpp"
 
 namespace acid
@@ -23,7 +24,7 @@ public:
 	{
 		if (m_components.find(name) != m_components.end())
 		{
-			Log::Warning("Component '%s' is already registered!\n", name.c_str());
+			Log::Warning("Component '%s' is already registered!\n", name);
 			Remove(name);
 			return;
 		}
@@ -31,7 +32,7 @@ public:
 		ComponentCreate componentCreate;
 		componentCreate.m_create = []() -> Component *
 		{
-			return new T();
+			return new T{};
 		};
 		componentCreate.m_decode = [](const Metadata &metadata, Component *component) -> const Metadata &
 		{

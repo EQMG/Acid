@@ -5,18 +5,17 @@
 
 namespace acid
 {
-Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) :
-	m_renderpass(VK_NULL_HANDLE)
-{
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) {
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	// Creates the renderpasses attachment descriptions,
 	std::vector<VkAttachmentDescription> attachmentDescriptions;
 
 	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
-		VkAttachmentDescription attachmentDescription = {};
+		auto attachmentSamples{attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT};
+		
+		VkAttachmentDescription attachmentDescription{};
 		attachmentDescription.samples = attachmentSamples;
 		attachmentDescription.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; // Clear at beginning of the render pass.
 		attachmentDescription.storeOp = VK_ATTACHMENT_STORE_OP_STORE; // // The image can be read from so it's important to store the attachment results
@@ -56,7 +55,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 
 		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 		{
-			auto attachment = renderStage.GetAttachment(attachmentBinding);
+			auto attachment{renderStage.GetAttachment(attachmentBinding)};
 
 			if (!attachment)
 			{
@@ -70,7 +69,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 				continue;
 			}
 
-			VkAttachmentReference attachmentReference = {};
+			VkAttachmentReference attachmentReference{};
 			attachmentReference.attachment = attachment->GetBinding();
 			attachmentReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 			subpassColourAttachments.emplace_back(attachmentReference);
@@ -80,7 +79,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 		subpasses.emplace_back(std::make_unique<SubpassDescription>(VK_PIPELINE_BIND_POINT_GRAPHICS, subpassColourAttachments, depthAttachment));
 
 		// Subpass dependencies.
-		VkSubpassDependency subpassDependency = {};
+		VkSubpassDependency subpassDependency{};
 		subpassDependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		subpassDependency.dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 		subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
@@ -124,7 +123,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	}
 
 	// Creates the render pass.
-	VkRenderPassCreateInfo renderPassCreateInfo = {};
+	VkRenderPassCreateInfo renderPassCreateInfo{};
 	renderPassCreateInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 	renderPassCreateInfo.attachmentCount = static_cast<uint32_t>(attachmentDescriptions.size());
 	renderPassCreateInfo.pAttachments = attachmentDescriptions.data();
@@ -137,7 +136,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 
 Renderpass::~Renderpass()
 {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
 	vkDestroyRenderPass(*logicalDevice, m_renderpass, nullptr);
 }

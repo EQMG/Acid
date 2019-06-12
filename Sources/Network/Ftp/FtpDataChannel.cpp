@@ -6,27 +6,27 @@
 namespace acid
 {
 FtpDataChannel::FtpDataChannel(Ftp &owner) :
-	m_ftp(owner)
+	m_ftp{owner}
 {
 }
 
 FtpResponse FtpDataChannel::Open(const Mode &mode)
 {
 	// Open a data connection in active mode (we connect to the server).
-	FtpResponse response = m_ftp.SendCommand("PASV");
+	auto response{m_ftp.SendCommand("PASV")};
 
 	if (response.IsOk())
 	{
 		// Extract the connection address and port from the response
-		std::string::size_type begin = response.GetFullMessage().find_first_of("0123456789");
+		auto begin{response.GetFullMessage().find_first_of("0123456789")};
 
 		if (begin != std::string::npos)
 		{
-			uint8_t data[6] = { 0, 0, 0, 0, 0, 0 };
-			std::string str = response.GetFullMessage().substr(begin);
-			std::size_t index = 0;
+			uint8_t data[6]{ 0, 0, 0, 0, 0, 0 };
+			auto str{response.GetFullMessage().substr(begin)};
+			std::size_t index{};
 
-			for (uint8_t &i : data)
+			for (auto &i : data)
 			{
 				// Extract the current number.
 				while (isdigit(str[index]))
@@ -40,8 +40,8 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 			}
 
 			// Reconstruct connection port and address.
-			uint16_t port = data[4] * 256 + data[5];
-			IpAddress address(static_cast<uint8_t>(data[0]), static_cast<uint8_t>(data[1]), static_cast<uint8_t>(data[2]), static_cast<uint8_t>(data[3]));
+			auto port{static_cast<uint16_t>(data[4] * 256 + data[5])};
+			IpAddress address{static_cast<uint8_t>(data[0]), static_cast<uint8_t>(data[1]), static_cast<uint8_t>(data[2]), static_cast<uint8_t>(data[3])};
 
 			// Connect the data channel to the server.
 			if (m_dataSocket.Connect(address, port) == Socket::Status::Done)
@@ -68,7 +68,7 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 			else
 			{
 				// Failed to connect to the server.
-				response = FtpResponse(FtpResponse::Status::ConnectionFailed);
+				response = {FtpResponse::Status::ConnectionFailed};
 			}
 		}
 	}

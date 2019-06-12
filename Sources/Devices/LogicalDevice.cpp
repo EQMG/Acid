@@ -8,19 +8,9 @@
 namespace acid
 {
 LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface) :
-	m_instance(instance),
-	m_physicalDevice(physicalDevice),
-	m_surface(surface),
-	m_logicalDevice(VK_NULL_HANDLE),
-	m_supportedQueues(0),
-	m_graphicsFamily(0),
-	m_presentFamily(0),
-	m_computeFamily(0),
-	m_transferFamily(0),
-	m_graphicsQueue(VK_NULL_HANDLE),
-	m_presentQueue(VK_NULL_HANDLE),
-	m_computeQueue(VK_NULL_HANDLE),
-	m_transferQueue(VK_NULL_HANDLE)
+	m_instance{instance},
+	m_physicalDevice{physicalDevice},
+	m_surface{surface}
 {
 	CreateQueueIndices();
 	CreateLogicalDevice();
@@ -37,15 +27,12 @@ void LogicalDevice::CreateQueueIndices()
 {
 	uint32_t deviceQueueFamilyPropertyCount;
 	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
-	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
+	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties{deviceQueueFamilyPropertyCount};
 	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
 
-	int32_t graphicsFamily = -1;
-	int32_t presentFamily = -1;
-	int32_t computeFamily = -1;
-	int32_t transferFamily = -1;
+	std::optional<uint32_t> graphicsFamily, presentFamily, computeFamily, transferFamily;
 
-	for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
+	for (uint32_t i{}; i < deviceQueueFamilyPropertyCount; i++)
 	{
 		// Check for graphics support.
 		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
@@ -56,7 +43,7 @@ void LogicalDevice::CreateQueueIndices()
 		}
 
 		// Check for presentation support.
-		VkBool32 presentSupport = VK_FALSE;
+		VkBool32 presentSupport;
 		vkGetPhysicalDeviceSurfaceSupportKHR(*m_physicalDevice, i, *m_surface, &presentSupport);
 
 		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)
@@ -81,13 +68,13 @@ void LogicalDevice::CreateQueueIndices()
 			m_supportedQueues |= VK_QUEUE_TRANSFER_BIT;
 		}
 
-		if (graphicsFamily != -1 && presentFamily != -1 && computeFamily != -1 && transferFamily != -1)
+		if (graphicsFamily && presentFamily && computeFamily && transferFamily)
 		{
 			break;
 		}
 	}
 
-	if (graphicsFamily == -1)
+	if (!graphicsFamily)
 	{
 		throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
 	}
@@ -95,14 +82,14 @@ void LogicalDevice::CreateQueueIndices()
 
 void LogicalDevice::CreateLogicalDevice()
 {
-	auto physicalDeviceFeatures = m_physicalDevice->GetFeatures();
+	auto physicalDeviceFeatures{m_physicalDevice->GetFeatures()};
 
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-	float queuePriorities[] = { 0.0f };
+	float queuePriorities[]{ 0.0f };
 
 	if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
 	{
-		VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
+		VkDeviceQueueCreateInfo graphicsQueueCreateInfo{};
 		graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
 		graphicsQueueCreateInfo.queueCount = 1;
@@ -116,7 +103,7 @@ void LogicalDevice::CreateLogicalDevice()
 
 	if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily)
 	{
-		VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
+		VkDeviceQueueCreateInfo computeQueueCreateInfo{};
 		computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		computeQueueCreateInfo.queueFamilyIndex = m_computeFamily;
 		computeQueueCreateInfo.queueCount = 1;
@@ -130,7 +117,7 @@ void LogicalDevice::CreateLogicalDevice()
 
 	if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily)
 	{
-		VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
+		VkDeviceQueueCreateInfo transferQueueCreateInfo{};
 		transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		transferQueueCreateInfo.queueFamilyIndex = m_transferFamily;
 		transferQueueCreateInfo.queueCount = 1;
@@ -142,7 +129,7 @@ void LogicalDevice::CreateLogicalDevice()
 		m_transferFamily = m_graphicsFamily;
 	}
 
-	VkPhysicalDeviceFeatures enabledFeatures = {};
+	VkPhysicalDeviceFeatures enabledFeatures{};
 
 	// Enable sample rate shading filtering if supported.
 	if (physicalDeviceFeatures.sampleRateShading)
@@ -254,7 +241,7 @@ void LogicalDevice::CreateLogicalDevice()
 		Log::Warning("Selected GPU does not support multi viewports!\n");
 	}
 
-	VkDeviceCreateInfo deviceCreateInfo = {};
+	VkDeviceCreateInfo deviceCreateInfo{};
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
 	deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();

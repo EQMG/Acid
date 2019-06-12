@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Maths/Vector3.hpp"
+#include "Maths/ElapsedTime.hpp"
 #include "Scenes/Component.hpp"
 #include "Emitters/Emitter.hpp"
 #include "Particle.hpp"
@@ -91,11 +92,11 @@ private:
 	bool m_randomRotation;
 
 	Vector3f m_direction;
-	float m_directionDeviation;
-	float m_speedDeviation;
-	float m_lifeDeviation;
-	float m_stageDeviation;
-	float m_scaleDeviation;
+	float m_directionDeviation{};
+	float m_speedDeviation{};
+	float m_lifeDeviation{};
+	float m_stageDeviation{};
+	float m_scaleDeviation{};
 
 	ElapsedTime m_elapsedEmit;
 };

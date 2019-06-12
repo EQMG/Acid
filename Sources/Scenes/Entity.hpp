@@ -17,14 +17,14 @@ public:
 	 * Creates a new entity and stores it into a structure.
 	 * @param transform The objects initial world position, rotation, and scale.
 	 */
-	explicit Entity(const Transform &transform = Transform());
+	Entity(const Transform &transform = {});
 
 	/**
 	 * Creates a new entity and stores it into a structure.
-	 * @param filename The file to load the component data from.
 	 * @param transform The objects initial world position, rotation, and scale.
+	 * @param filename The file to load the component data from.
 	 */
-	explicit Entity(const std::string &filename, const Transform &transform = Transform());
+	Entity(const Transform &transform, const std::string &filename);
 
 	~Entity();
 
@@ -51,11 +51,11 @@ public:
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false) const
 	{
-		T *alternative = nullptr;
+		T *alternative{};
 
 		for (const auto &component : m_components)
 		{
-			auto casted = dynamic_cast<T *>(component.get());
+			auto casted{dynamic_cast<T *>(component.get())};
 
 			if (casted != nullptr)
 			{
@@ -85,7 +85,7 @@ public:
 
 		for (const auto &component : m_components)
 		{
-			auto casted = dynamic_cast<T *>(component.get());
+			auto casted{dynamic_cast<T *>(component.get())};
 
 			if (casted != nullptr)
 			{
@@ -119,7 +119,7 @@ public:
 	template<typename T, typename... Args>
 	T *AddComponent(Args &&... args)
 	{
-		auto created = new T(std::forward<Args>(args)...);
+		auto created{new T(std::forward<Args>(args)...)};
 		AddComponent(created);
 		return created;
 	}
@@ -143,9 +143,9 @@ public:
 	template<typename T>
 	void RemoveComponent()
 	{
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		for (auto it{m_components.begin()}; it != m_components.end(); ++it)
 		{
-			auto casted = dynamic_cast<T *>((*it).get());
+			auto casted{dynamic_cast<T *>((*it).get())};
 
 			if (casted != nullptr)
 			{
@@ -186,8 +186,8 @@ private:
 	Transform m_localTransform;
 	mutable Transform m_worldTransform;
 	std::vector<std::unique_ptr<Component>> m_components;
-	Entity *m_parent;
+	Entity *m_parent{};
 	std::vector<Entity *> m_children;
-	bool m_removed;
+	bool m_removed{};
 };
 }

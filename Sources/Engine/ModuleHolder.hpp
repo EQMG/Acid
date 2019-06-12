@@ -20,7 +20,7 @@ public:
 	template<typename T>
 	bool Has() const
 	{
-		const auto it = m_modules.find(GetModuleTypeId<T>());
+		const auto it{m_modules.find(GetModuleTypeId<T>())};
 
 		return it != m_modules.end() && it->second != nullptr;
 	}
@@ -33,9 +33,9 @@ public:
 	template<typename T>
 	T *Get() const
 	{
-		const auto typeId = GetModuleTypeId<T>();
+		const auto typeId{GetModuleTypeId<T>()};
 
-		auto it = m_modules.find(typeId);
+		auto it{m_modules.find(typeId)};
 
 		if (it == m_modules.end() || it->second == nullptr)
 		{
@@ -58,7 +58,7 @@ public:
 		// Remove previous Module, if it exists.
 		//Remove<T>();
 
-		const auto typeId = GetModuleTypeId<T>();
+		const auto typeId{GetModuleTypeId<T>()};
 
 		// Insert the stage value
 		m_stages.insert({ StageIndex(stage, m_modules.size()), typeId });
@@ -74,7 +74,7 @@ public:
 	template<typename T>
 	void Remove()
 	{
-		const auto typeId = GetModuleTypeId<T>();
+		const auto typeId{GetModuleTypeId<T>()};
 
 		// Remove the stage value for this Module.
 		RemoveModuleStage(typeId);

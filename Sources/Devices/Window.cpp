@@ -14,19 +14,17 @@ void CallbackError(int32_t error, const char *description)
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 {
-	auto &monitors = Window::Get()->m_monitors;
+	auto &monitors{Window::Get()->m_monitors};
 
 	if (event == GLFW_CONNECTED)
 	{
-		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
+		auto &it{monitors.emplace_back(std::make_unique<Monitor>(monitor))};
 		Window::Get()->m_onMonitorConnect(it.get(), true);
 	}
 	else if (event == GLFW_DISCONNECTED)
 	{
 		for (auto &m : monitors)
 		{
-			m->SetPrimary(m->GetMonitor() == glfwGetPrimaryMonitor());
-
 			if (m->GetMonitor() == monitor)
 			{
 				Window::Get()->m_onMonitorConnect(m.get(), false);
@@ -44,8 +42,7 @@ void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 {
 	if (!Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_position.m_x = static_cast<uint32_t>(xpos);
-		Window::Get()->m_position.m_y = static_cast<uint32_t>(ypos);
+		Window::Get()->m_position = {xpos, ypos};
 	}
 
 	Window::Get()->m_onPosition(Window::Get()->m_position);
@@ -60,13 +57,11 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 
 	if (Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_fullscreenSize.m_x = static_cast<uint32_t>(width);
-		Window::Get()->m_fullscreenSize.m_y = static_cast<uint32_t>(height);
+		Window::Get()->m_fullscreenSize = {width, height};
 	}
 	else
 	{
-		Window::Get()->m_size.m_x = static_cast<uint32_t>(width);
-		Window::Get()->m_size.m_y = static_cast<uint32_t>(height);
+		Window::Get()->m_size = {width, height};
 	}
 
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
@@ -89,8 +84,8 @@ void CallbackFocus(GLFWwindow *window, int32_t focused)
 
 void CallbackIconify(GLFWwindow *window, int32_t iconified)
 {
-	Window::Get()->m_iconified = iconified == GLFW_TRUE;
-	Window::Get()->m_onIconify(iconified == GLFW_TRUE);
+	Window::Get()->m_iconified = iconified;
+	Window::Get()->m_onIconify(iconified);
 }
 
 void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
@@ -99,19 +94,11 @@ void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 }
 
 Window::Window() :
-	m_size(1080, 720),
-	m_fullscreenSize(0, 0),
-	m_aspectRatio(1.5f),
-	m_position(0, 0),
-	m_title("Acid Loading..."),
-	m_borderless(false),
-	m_resizable(true),
-	m_floating(false),
-	m_fullscreen(false),
-	m_closed(false),
-	m_focused(true),
-	m_iconified(false),
-	m_window(nullptr)
+	m_size{1080, 720},
+	m_aspectRatio{1.5f},
+	m_title{"Acid Window"},
+	m_resizable{true},
+	m_focused{true}
 {
 	// Set the error error callback
 	glfwSetErrorCallback(CallbackError);
@@ -131,25 +118,25 @@ Window::Window() :
 	// Set the monitor callback
 	glfwSetMonitorCallback(CallbackMonitor);
 
-	// Configures the window.
-	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // The window will stay hidden until after creation.
-
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Disable context creation.
-
-	// For new GLFW, and macOS.
-	glfwWindowHint(GLFW_STENCIL_BITS, 8); // Fixes 16 bit stencil bits in macOS.
-	glfwWindowHint(GLFW_STEREO, GLFW_FALSE); // No stereo view!
+	// The window will stay hidden until after creation.
+	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+	// Disable context creation.
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); 
+	// Fixes 16 bit stencil bits in macOS.
+	glfwWindowHint(GLFW_STENCIL_BITS, 8);
+	// No stereo view!
+	glfwWindowHint(GLFW_STEREO, GLFW_FALSE); 
 
 	// Get connected monitors.
 	int32_t monitorCount;
-	GLFWmonitor **monitors = glfwGetMonitors(&monitorCount);
+	auto monitors{glfwGetMonitors(&monitorCount)};
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
+	for (uint32_t i{}; i < static_cast<uint32_t>(monitorCount); i++)
 	{
 		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
 
-	auto videoMode = m_monitors[0]->GetVideoMode();
+	auto videoMode{m_monitors[0]->GetVideoMode()};
 
 	// Create a windowed mode window and its context.
 	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
@@ -165,9 +152,9 @@ Window::Window() :
 	glfwSetWindowUserPointer(m_window, this);
 
 	// Window attributes that can change later.
-	glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
-	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
-	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
+	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
+	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
+	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
 
 	// Centre the window position.
 	m_position.m_x = (videoMode.m_width - m_size.m_x) / 2;
@@ -241,14 +228,14 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 		Vector2ui extent;
 		uint32_t components;
 		VkFormat format;
-		auto data = Image::LoadPixels(filename, extent, components, format);
+		auto data{Image::LoadPixels(filename, extent, components, format)};
 
 		if (data == nullptr)
 		{
 			continue;
 		}
 
-		GLFWimage icon = {};
+		GLFWimage icon{};
 		icon.width = extent.m_x;
 		icon.height = extent.m_y;
 		icon.pixels = data.get();
@@ -262,21 +249,21 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 void Window::SetBorderless(const bool &borderless)
 {
 	m_borderless = borderless;
-	glfwSetWindowAttrib(m_window, GLFW_DECORATED, m_borderless ? GLFW_FALSE : GLFW_TRUE);
+	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
 	m_onBorderless(m_borderless);
 }
 
 void Window::SetResizable(const bool &resizable)
 {
 	m_resizable = resizable;
-	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable ? GLFW_TRUE : GLFW_FALSE);
+	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
 	m_onResizable(m_resizable);
 }
 
 void Window::SetFloating(const bool &floating)
 {
 	m_floating = floating;
-	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating ? GLFW_TRUE : GLFW_FALSE);
+	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
 	m_onFloating(m_floating);
 }
 
@@ -284,16 +271,15 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 {
 	m_fullscreen = fullscreen;
 
-	auto selected = monitor != nullptr ? monitor : m_monitors[0].get();
-	auto videoMode = selected->GetVideoMode();
+	auto selected{monitor != nullptr ? monitor : m_monitors[0].get()};
+	auto videoMode{selected->GetVideoMode()};
 
 	if (fullscreen)
 	{
 #if defined(ACID_VERBOSE)
 		printf("Window is going fullscreen\n");
 #endif
-		m_fullscreenSize.m_x = static_cast<uint32_t>(videoMode.m_width);
-		m_fullscreenSize.m_y = static_cast<uint32_t>(videoMode.m_height);
+		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
 		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	}
 	else
@@ -301,8 +287,7 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 #if defined(ACID_VERBOSE)
 		printf("Window is going windowed\n");
 #endif
-		m_position.m_x = (videoMode.m_width - m_size.m_x) / 2;
-		m_position.m_y = (videoMode.m_height - m_size.m_y) / 2;
+		m_position = (Vector2i{videoMode.m_width, videoMode.m_height} - m_size) / 2;
 		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
 	}
 
@@ -367,22 +352,22 @@ std::string Window::StringifyResultGlfw(const int32_t &result)
 
 void Window::CheckGlfw(const int32_t &result)
 {
-	if (result == GLFW_TRUE)
+	if (result)
 	{
 		return;
 	}
 
-	std::string failure = StringifyResultGlfw(result);
+	auto failure{StringifyResultGlfw(result)};
 
-	Log::Error("GLFW error: %s, %i\n", failure.c_str(), result);
+	Log::Error("GLFW error: %s, %i\n", failure, result);
 	Log::Popup("GLFW Error", failure);
 	throw std::runtime_error("GLFW error: " + result);
 }
 
-std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const
+std::pair<const char **, uint32_t> Window::GetInstanceExtensions()
 {
-	uint32_t glfwExtensionCount = 0;
-	const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+	uint32_t glfwExtensionCount;
+	auto glfwExtensions{glfwGetRequiredInstanceExtensions(&glfwExtensionCount)};
 	return std::make_pair(glfwExtensions, glfwExtensionCount);
 }
 

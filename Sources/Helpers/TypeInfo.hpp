@@ -20,7 +20,7 @@ public:
 	template<typename K>
 	static TypeId GetTypeId() noexcept
 	{
-		static const auto id = NextTypeId();
+		static const auto id{NextTypeId()};
 		return id;
 	}
 
@@ -31,7 +31,7 @@ private:
 	 */
 	static TypeId NextTypeId() noexcept
 	{
-		const auto id = m_nextTypeId;
+		const auto id{m_nextTypeId};
 		++m_nextTypeId;
 		return id;
 	}

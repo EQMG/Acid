@@ -7,14 +7,14 @@ namespace acid
 {
 std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 {
-	auto resource = Resources::Get()->Find(metadata);
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
-	auto result = std::make_shared<ModelCube>(Vector3f());
+	auto result{std::make_shared<ModelCube>(Vector3f())};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
 	result->Load();
@@ -23,8 +23,8 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 
 std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
-	auto temp = ModelCube(extents, false);
-	Metadata metadata = Metadata();
+	ModelCube temp{extents, false};
+	Metadata metadata;
 	metadata << temp;
 	return Create(metadata);
 }
@@ -40,38 +40,38 @@ ModelCube::ModelCube(const Vector3f &extents, const bool &load) :
 
 void ModelCube::Load()
 {
-	if (m_extents == Vector3f())
+	if (m_extents == Vector3f::Zero)
 	{
 		return;
 	}
 
-	static std::vector<VertexDefault> vertices = { 
-		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 1.0f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.75f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, -0.5f), Vector2f(0.375f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, -0.5f, 0.5f), Vector2f(0.125f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, -0.5f, -0.5f), Vector2f(0.125f, 0.5f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.875f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.75f), Vector3f(-1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, -0.5f), Vector2f(0.625f, 0.5f), Vector3f(0.0f, 0.0f, -1.0f)),
-		VertexDefault(Vector3f(0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.25f), Vector3f(1.0f, 0.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.625f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f)),
-		VertexDefault(Vector3f(0.5f, -0.5f, 0.5f), Vector2f(0.375f, 0.25f), Vector3f(0.0f, -1.0f, 0.0f)),
-		VertexDefault(Vector3f(-0.5f, 0.5f, 0.5f), Vector2f(0.875f, 0.25f), Vector3f(0.0f, 1.0f, 0.0f)), 
+	static std::vector<VertexDefault> vertices{ 
+		{Vector3f{-0.5f, -0.5f, 0.5f}, Vector2f{0.375f, 1.0f}, Vector3f{-1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, 0.5f}, Vector2f{0.625f, 1.0f}, Vector3f{-1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, -0.5f, -0.5f}, Vector2f{0.375f, 0.75f}, Vector3f{-1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, -0.5f}, Vector2f{0.625f, 0.75f}, Vector3f{0.0f, 0.0f, -1.0f}},
+		{Vector3f{0.5f, -0.5f, 0.5f}, Vector2f{0.375f, 0.25f}, Vector3f{1.0f, 0.0f, 0.0f}},
+		{Vector3f{0.5f, 0.5f, 0.5f}, Vector2f{0.625f, 0.25f}, Vector3f{0.0f, 0.0f, 1.0f}},
+		{Vector3f{0.5f, -0.5f, -0.5f}, Vector2f{0.375f, 0.5f}, Vector3f{0.0f, 0.0f, -1.0f}},
+		{Vector3f{0.5f, 0.5f, -0.5f}, Vector2f{0.625f, 0.5f}, Vector3f{1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, -0.5f, -0.5f}, Vector2f{0.375f, 0.75f}, Vector3f{0.0f, 0.0f, -1.0f}},
+		{Vector3f{0.5f, -0.5f, -0.5f}, Vector2f{0.375f, 0.5f}, Vector3f{1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, -0.5f, 0.5f}, Vector2f{0.375f, 0.0f}, Vector3f{0.0f, 0.0f, 1.0f}},
+		{Vector3f{0.5f, -0.5f, 0.5f}, Vector2f{0.375f, 0.25f}, Vector3f{0.0f, 0.0f, 1.0f}},
+		{Vector3f{0.5f, -0.5f, -0.5f}, Vector2f{0.375f, 0.5f}, Vector3f{0.0f, -1.0f, 0.0f}},
+		{Vector3f{-0.5f, -0.5f, 0.5f}, Vector2f{0.125f, 0.25f}, Vector3f{0.0f, -1.0f, 0.0f}},
+		{Vector3f{-0.5f, -0.5f, -0.5f}, Vector2f{0.125f, 0.5f}, Vector3f{0.0f, -1.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, -0.5f}, Vector2f{0.875f, 0.5f}, Vector3f{0.0f, 1.0f, 0.0f}},
+		{Vector3f{0.5f, 0.5f, 0.5f}, Vector2f{0.625f, 0.25f}, Vector3f{0.0f, 1.0f, 0.0f}},
+		{Vector3f{0.5f, 0.5f, -0.5f}, Vector2f{0.625f, 0.5f}, Vector3f{0.0f, 1.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, -0.5f}, Vector2f{0.625f, 0.75f}, Vector3f{-1.0f, 0.0f, 0.0f}},
+		{Vector3f{0.5f, 0.5f, -0.5f}, Vector2f{0.625f, 0.5f}, Vector3f{0.0f, 0.0f, -1.0f}},
+		{Vector3f{0.5f, 0.5f, 0.5f}, Vector2f{0.625f, 0.25f}, Vector3f{1.0f, 0.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, 0.5f}, Vector2f{0.625f, 0.0f}, Vector3f{0.0f, 0.0f, 1.0f}},
+		{Vector3f{0.5f, -0.5f, 0.5f}, Vector2f{0.375f, 0.25f}, Vector3f{0.0f, -1.0f, 0.0f}},
+		{Vector3f{-0.5f, 0.5f, 0.5f}, Vector2f{0.875f, 0.25f}, Vector3f{0.0f, 1.0f, 0.0f}}
 	};
-	static std::vector<uint32_t> indices = { 
+	static std::vector<uint32_t> indices{ 
 		1, 2, 0, // Front
 		3, 6, 8, 
 		7, 4, 9, // Back
@@ -96,14 +96,14 @@ void ModelCube::Load()
 
 const Metadata &operator>>(const Metadata &metadata, ModelCube &model)
 {
-	metadata.GetChild("Extents", model.m_extents);
+	metadata.GetChild("extents", model.m_extents);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const ModelCube &model)
 {
-	metadata.SetChild<std::string>("Type", "ModelCube");
-	metadata.SetChild("Extents", model.m_extents);
+	metadata.SetChild<std::string>("type", "ModelCube");
+	metadata.SetChild("extents", model.m_extents);
 	return metadata;
 }
 }

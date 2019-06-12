@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixelSize) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Pixel.frag" }, {}),
-	m_pixelSize(pixelSize)
+	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Pixel.frag"}},
+	m_pixelSize{pixelSize}
 {
 }
 
@@ -15,12 +15,9 @@ void FilterPixel::Render(const CommandBuffer &commandBuffer)
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
-	//m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-	//m_descriptorSet.Push("samplerColour", GetAttachment("samplerColour", "resolved"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
-	bool updateSuccess = m_descriptorSet.Update(m_pipeline);
 
-	if (!updateSuccess)
+	if (!m_descriptorSet.Update(m_pipeline))
 	{
 		return;
 	}
