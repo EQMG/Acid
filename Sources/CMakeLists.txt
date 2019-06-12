@@ -6,6 +6,11 @@ add_library(Acid::Acid ALIAS Acid)
 include(CMakeSources.cmake)
 
 target_compile_features(Acid PUBLIC cxx_std_17)
+if(BUILD_SHARED_LIBS)
+	target_compile_definitions(Acid PRIVATE ACID_EXPORTS)
+else()
+	target_compile_definitions(Acid PUBLIC ACID_STATIC_DEFINE)
+endif()
 target_compile_definitions(Acid
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
@@ -42,8 +47,6 @@ target_include_directories(Acid
 		PUBLIC
 		# Helps the includes find what they need at build-time
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Generated exports location
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>

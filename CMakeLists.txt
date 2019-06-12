@@ -32,21 +32,6 @@ endif()
 # Used to include Acid cmake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 
-# Checks if interprocedural optimization is supported by the compiler
-#set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
-#if(NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"))
-#    include(CheckIPOSupported)
-#    check_ipo_supported(RESULT CMAKE_INTERPROCEDURAL_OPTIMIZATION)
-#endif()
-
-# Use ccache if it is installed, will cach previous compilations
-find_program(CCACHE_FOUND "ccache")
-if(CCACHE_FOUND)
-	message(STATUS "Using ccache for building.")
-	set_property(GLOBAL PROPERTY LAUNCH_COMPILE ccache)
-	set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
-endif()
-
 # Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
 # Finds and loads Vulkan, env "VULKAN_SDK" must be set

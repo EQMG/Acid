@@ -437,10 +437,6 @@ set(_temp_acid_sources
 		Uis/UiStartLogo.cpp
 		)
 
-# Generates exports for shared builds
-include(GenerateExportHeader)
-generate_export_header(Acid)
-
 # Adds the precompiled header
 include(PrecompiledHeader)
 add_precompiled_header(Acid

@@ -192,30 +192,30 @@ public:
 
 	friend const Metadata &operator>>(const Metadata &metadata, PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.GetChild("Shader Stages", pipelineCreate.m_shaderStages);
-		//metadata.GetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);
-		metadata.GetChild("Defines", pipelineCreate.m_defines);
-		metadata.GetChild("Mode", pipelineCreate.m_mode);
-		metadata.GetChild("Depth", pipelineCreate.m_depth);
-		metadata.GetChild("Polygon Mode", pipelineCreate.m_polygonMode);
-		metadata.GetChild("Cull Mode", pipelineCreate.m_cullMode);
-		metadata.GetChild("Front Face", pipelineCreate.m_frontFace);
-		metadata.GetChild("Push Descriptors", pipelineCreate.m_pushDescriptors);
+		metadata.GetChild("shaderStages", pipelineCreate.m_shaderStages);
+		//metadata.GetChild("vertexInputs", pipelineCreate.m_vertexInputs);
+		metadata.GetChild("defines", pipelineCreate.m_defines);
+		metadata.GetChild("mode", pipelineCreate.m_mode);
+		metadata.GetChild("depth", pipelineCreate.m_depth);
+		metadata.GetChild("polygonMode", pipelineCreate.m_polygonMode);
+		metadata.GetChild("cullMode", pipelineCreate.m_cullMode);
+		metadata.GetChild("frontFace", pipelineCreate.m_frontFace);
+		metadata.GetChild("pushDescriptors", pipelineCreate.m_pushDescriptors);
 		return metadata;
 
 	}
 
 	friend Metadata &operator<<(Metadata &metadata, const PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.SetChild("Shader Stages", pipelineCreate.m_shaderStages);
-		//metadata.SetChild("Vertex Inputs", pipelineCreate.m_vertexInputs);
-		metadata.SetChild("Defines", pipelineCreate.m_defines);
-		metadata.SetChild("Mode", pipelineCreate.m_mode);
-		metadata.SetChild("Depth", pipelineCreate.m_depth);
-		metadata.SetChild("Polygon Mode", pipelineCreate.m_polygonMode);
-		metadata.SetChild("Cull Mode", pipelineCreate.m_cullMode);
-		metadata.SetChild("Front Face", pipelineCreate.m_frontFace);
-		metadata.SetChild("Push Descriptors", pipelineCreate.m_pushDescriptors);
+		metadata.SetChild("shaderStages", pipelineCreate.m_shaderStages);
+		//metadata.SetChild("vertexInputs", pipelineCreate.m_vertexInputs);
+		metadata.SetChild("defines", pipelineCreate.m_defines);
+		metadata.SetChild("mode", pipelineCreate.m_mode);
+		metadata.SetChild("depth", pipelineCreate.m_depth);
+		metadata.SetChild("polygonMode", pipelineCreate.m_polygonMode);
+		metadata.SetChild("cullMode", pipelineCreate.m_cullMode);
+		metadata.SetChild("frontFace", pipelineCreate.m_frontFace);
+		metadata.SetChild("pushDescriptors", pipelineCreate.m_pushDescriptors);
 		return metadata;
 
 	}

@@ -59,11 +59,13 @@ public:
 	public:
 		std::string key{"value"};
 		std::vector<float> values{190.0f, 11.0f, -0.001f};
+		std::vector<Vector3f> vectors{Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
 
 		friend const Metadata &operator>>(const Metadata &metadata, Objects &objects)
 		{
 			metadata.GetChild("key", objects.key);
 			metadata.GetChild("values", objects.values);
+			metadata.GetChild("vectors", objects.vectors);
 			return metadata;
 		}
 
@@ -71,6 +73,7 @@ public:
 		{
 			metadata.SetChild("key", objects.key);
 			metadata.SetChild("values", objects.values);
+			metadata.SetChild("vectors", objects.vectors);
 			return metadata;
 		}
 	} objects;
@@ -78,6 +81,7 @@ public:
 	std::string paragraph{"Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"};
 	std::unique_ptr<std::string> content{std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")};
 
+	Time timeNow{Time::Now()};
 	std::vector<std::string> json{"rigid", "better for data interchange"};
 	std::vector<std::string> yaml{"slim and flexible", "better for configuration", "supports comments"};
 	std::map<int32_t, std::string> map{{10, "Hello World"}, {-2, "Negaitive Keys"}, {400, "Larger Key"}};
@@ -91,6 +95,7 @@ public:
 
 	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
 	{
+		metadata.GetChild("timeNow", example1.timeNow);
 		metadata.GetChild("paragraph", example1.paragraph);
 		metadata.GetChild("content", example1.content);
 		metadata.GetChild("xml", example1.xml);
@@ -109,6 +114,7 @@ public:
 
 	friend Metadata &operator<<(Metadata &metadata, const Example1 &example1)
 	{
+		metadata.SetChild("timeNow", example1.timeNow);
 		metadata.SetChild("paragraph", example1.paragraph);
 		metadata.SetChild("content", example1.content);
 		metadata.SetChild("xml", example1.xml);
