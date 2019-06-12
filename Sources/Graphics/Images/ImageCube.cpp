@@ -215,7 +215,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 			offset = pixels.get();
 		}
 
-		memcpy(offset, resultSide.get(), sizeSide);
+		std::memcpy(offset, resultSide.get(), sizeSide);
 		offset += sizeSide;
 	}
 

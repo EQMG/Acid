@@ -1,6 +1,8 @@
 #include "SubrenderDeferred.hpp"
 
 #include "Files/FileSystem.hpp"
+#include "Files/File.hpp"
+#include "Serialized/Yaml/Yaml.hpp"
 #include "Lights/Light.hpp"
 #include "Models/VertexDefault.hpp"
 #include "Shadows/Shadows.hpp"
@@ -21,9 +23,9 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	m_brdf{Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)},
 	m_fog{Colour::White, 0.001f, 2.0f, -0.1f, 0.3f}
 {
-	//Metadata metadata;
-	//metadata << *m_pipeline.GetShader();
-	//File("Shaders/Deferred.yaml", new Yaml(&metadata)).Write();
+	Metadata metadata;
+	metadata << *m_pipeline.GetShader();
+	File{"Deferred/Shader.yaml", std::make_unique<Yaml>(&metadata)}.Write();
 }
 
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
@@ -128,13 +130,13 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 
 #if defined(ACID_VERBOSE)
 	// Saves the BRDF Image.
-	/*Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
+	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
 	{
-		auto path{std::filesystem::current_path() / "Brdf.png"};
+		auto path{"Deferred/Brdf.png"};
 		Vector2ui extent;
 		auto pixels{image->GetPixels(extent)};
 		Image::WritePixels(path, pixels.get(), extent);
-	}, brdfImage.get());*/
+	}, brdfImage.get());
 #endif
 
 	return brdfImage;
@@ -169,13 +171,13 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 
 #if defined(ACID_VERBOSE)
 	// Saves the irradiance Image.
-	/*Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
+	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
 	{
-		auto path{std::filesystem::current_path() / "Irradiance.png"};
+		auto path{"Deferred/Irradiance.png"};
 		Vector2ui extent;
 		auto pixels{image->GetPixels(extent)};
 		Image::WritePixels(path, pixels.get(), extent);
-	}, irradianceCubemap.get());*/
+	}, irradianceCubemap.get());
 #endif
 
 	return irradianceCubemap;
@@ -240,17 +242,17 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	}
 
 #if defined(ACID_VERBOSE)
-	/*for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
+	for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
 		{
-			auto path{std::filesystem::current_path() / ("Prefiltered_" + String::To(i) + ".png")};
+			auto path{"Deferred/Prefiltered_" + String::To(i) + ".png"};
 			Vector2ui extent;
 			auto pixels{image->GetPixels(extent, i)};
 			Image::WritePixels(path, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
-	}*/
+	}
 #endif
 
 	return prefilteredCubemap;

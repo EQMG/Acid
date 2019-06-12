@@ -136,15 +136,13 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector
 	return pixels;
 }
 
-void Image::WritePixels(const std::string &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
+void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
 {
-	//int32_t len;
-	//std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));
-
-	if (stbi_write_png(filename.c_str(), extent.m_x, extent.m_y, components, pixels, extent.m_x * components) != 1)
-	{
-		Log::Error("Unable to write pixels: '%s'\n", filename);
-	}
+	std::filesystem::create_directory(filename.parent_path());
+	std::ofstream os{filename, std::ios::binary | std::ios::out};
+	int32_t len;
+	std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));
+	os.write(reinterpret_cast<char *>(png.get()), len);
 }
 
 uint32_t Image::GetMipLevels(const VkExtent3D &extent)
@@ -408,7 +406,7 @@ void Image::InsertImageMemoryBarrier(const CommandBuffer &commandBuffer, const V
 	const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask,
 	const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
-	VkImageMemoryBarrier imageMemoryBarrier;
+	VkImageMemoryBarrier imageMemoryBarrier{};
 	imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	imageMemoryBarrier.srcAccessMask = srcAccessMask;
 	imageMemoryBarrier.dstAccessMask = dstAccessMask;
@@ -429,7 +427,7 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 {
 	CommandBuffer commandBuffer;
 
-	VkBufferImageCopy region;
+	VkBufferImageCopy region{};
 	region.bufferOffset = 0;
 	region.bufferRowLength = 0;
 	region.bufferImageHeight = 0;
@@ -451,7 +449,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 	auto surface{Graphics::Get()->GetSurface()};
 
 	// Checks blit swapchain support.
-	bool supportsBlit = true;
+	auto supportsBlit{true};
 	VkFormatProperties formatProperties;
 
 	// Check if the device supports blitting from optimal images (the swapchain images are in optimal format).

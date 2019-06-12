@@ -34,7 +34,7 @@ Plugins::Plugins() :
 	{
 		if (action == InputAction::Press)
 		{
-			FileSystem::Touch(m_loadedPath.string());
+			std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type{Time::Now()});
 		}
 	});
 }

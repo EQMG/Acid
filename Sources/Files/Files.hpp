@@ -28,7 +28,7 @@ class ACID_EXPORT IFStream :
 	public std::istream
 {
 public:
-	explicit IFStream(const std::string &filename);
+	explicit IFStream(const std::filesystem::path &filename);
 
 	virtual ~IFStream();
 };
@@ -38,7 +38,7 @@ class ACID_EXPORT OFStream :
 	public std::ostream
 {
 public:
-	explicit OFStream(const std::string &filename, const FileMode &writeMode = FileMode::Write);
+	explicit OFStream(const std::filesystem::path &filename, const FileMode &writeMode = FileMode::Write);
 
 	virtual ~OFStream();
 };
@@ -48,7 +48,7 @@ class ACID_EXPORT FStream :
 	public std::iostream
 {
 public:
-	explicit FStream(const std::string &filename, const FileMode &openMode = FileMode::Read);
+	explicit FStream(const std::filesystem::path &filename, const FileMode &openMode = FileMode::Read);
 
 	virtual ~FStream();
 };
@@ -76,13 +76,13 @@ public:
 	 * Adds an file search path.
 	 * @param path The path to add.
 	 */
-	void AddSearchPath(const std::string &path);
+	void AddSearchPath(const std::filesystem::path &path);
 
 	/**
 	 * Removes a file search path.
 	 * @param path The path to remove.
 	 */
-	void RemoveSearchPath(const std::string &path);
+	void RemoveSearchPath(const std::filesystem::path &path);
 
 	/**
 	 * Clears all file search paths.
@@ -94,14 +94,14 @@ public:
 	 * @param path The path to look for.
 	 * @return If the path is found in one of the searches.
 	 */
-	static bool ExistsInPath(const std::string &path);
+	static bool ExistsInPath(const std::filesystem::path &path);
 
 	/**
 	 * Reads a file found by real or partial path.
 	 * @param path The path to read.
 	 * @return The data read from the file.
 	 */
-	static std::optional<std::string> Read(const std::string &path);
+	static std::optional<std::string> Read(const std::filesystem::path &path);
 
 	/**
 	 * Finds all the files in a path.
@@ -109,7 +109,7 @@ public:
 	 * @param recursive If paths will be recursively searched.
 	 * @return The files found.
 	 */
-	static std::vector<std::string> FilesInPath(const std::string &path, const bool &recursive = true);
+	static std::vector<std::string> FilesInPath(const std::filesystem::path &path, const bool &recursive = true);
 
 	/**
 	 * Gets the next line from a stream.
@@ -120,6 +120,6 @@ public:
 	static std::istream &SafeGetLine(std::istream &is, std::string &t);
 
 private:
-	std::vector<std::string> m_searchPaths;
+	std::vector<std::filesystem::path> m_searchPaths;
 };
 }

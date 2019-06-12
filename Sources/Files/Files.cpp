@@ -172,8 +172,8 @@ PHYSFS_File *OpenWithMode(char const *filename, FileMode openMode)
 	return file;
 }
 
-IFStream::IFStream(const std::string &filename) :
-	BaseFStream{OpenWithMode(filename.c_str(), FileMode::Read)},
+IFStream::IFStream(const std::filesystem::path &filename) :
+	BaseFStream{OpenWithMode(filename.string().c_str(), FileMode::Read)},
 	std::istream{new FBuffer(file)}
 {
 }
@@ -183,8 +183,8 @@ IFStream::~IFStream()
 	delete rdbuf();
 }
 
-OFStream::OFStream(const std::string &filename, const FileMode &writeMode) :
-	BaseFStream{OpenWithMode(filename.c_str(), writeMode)},
+OFStream::OFStream(const std::filesystem::path &filename, const FileMode &writeMode) :
+	BaseFStream{OpenWithMode(filename.string().c_str(), writeMode)},
 	std::ostream{new FBuffer(file)}
 {
 }
@@ -194,8 +194,8 @@ OFStream::~OFStream()
 	delete rdbuf();
 }
 
-FStream::FStream(const std::string &filename, const FileMode &openMode) :
-	BaseFStream{OpenWithMode(filename.c_str(), openMode)},
+FStream::FStream(const std::filesystem::path &filename, const FileMode &openMode) :
+	BaseFStream{OpenWithMode(filename.string().c_str(), openMode)},
 	std::iostream{new FBuffer(file)}
 {
 }
@@ -219,14 +219,14 @@ void Files::Update()
 {
 }
 
-void Files::AddSearchPath(const std::string &path)
+void Files::AddSearchPath(const std::filesystem::path &path)
 {
 	if (std::find(m_searchPaths.begin(), m_searchPaths.end(), path) != m_searchPaths.end())
 	{
 		return;
 	}
 
-	if (PHYSFS_mount(path.c_str(), nullptr, true) == 0)
+	if (PHYSFS_mount(path.string().c_str(), nullptr, true) == 0)
 	{
 		Log::Error("File System error while adding a path or zip(%s): %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		return;
@@ -235,7 +235,7 @@ void Files::AddSearchPath(const std::string &path)
 	m_searchPaths.emplace_back(path);
 }
 
-void Files::RemoveSearchPath(const std::string &path)
+void Files::RemoveSearchPath(const std::filesystem::path &path)
 {
 	auto it{std::find(m_searchPaths.begin(), m_searchPaths.end(), path)};
 
@@ -244,7 +244,7 @@ void Files::RemoveSearchPath(const std::string &path)
 		return;
 	}
 
-	if (PHYSFS_unmount(path.c_str()) == 0)
+	if (PHYSFS_unmount(path.string().c_str()) == 0)
 	{
 		Log::Error("File System error while removing a path: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		return;
@@ -255,35 +255,38 @@ void Files::RemoveSearchPath(const std::string &path)
 
 void Files::ClearSearchPath()
 {
-	for (const auto &path : std::vector<std::string>{m_searchPaths})
+	for (const auto &path : std::vector<std::filesystem::path>{m_searchPaths})
 	{
 		RemoveSearchPath(path);
 	}
 }
 
-bool Files::ExistsInPath(const std::string &path)
+bool Files::ExistsInPath(const std::filesystem::path &path)
 {
 	if (PHYSFS_isInit() == 0)
 	{
 		return false;
 	}
 
-	return PHYSFS_exists(path.c_str()) != 0;
+	return PHYSFS_exists(path.string().c_str()) != 0;
 }
 
-std::optional<std::string> Files::Read(const std::string &path)
+std::optional<std::string> Files::Read(const std::filesystem::path &path)
 {
-	auto fsFile{PHYSFS_openRead(path.c_str())};
+	auto fsFile{PHYSFS_openRead(path.string().c_str())};
 
 	if (fsFile == nullptr)
 	{
-		if (!FileSystem::Exists(path) || !FileSystem::IsFile(path))
+		if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
 		{
 			Log::Error("Error while opening file to load %s: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return std::nullopt;
 		}
 
-		return FileSystem::ReadTextFile(path);
+		std::ifstream is{path};
+		std::stringstream buffer;
+		buffer << is.rdbuf();
+		return buffer.str();
 	}
 
 	auto size{PHYSFS_fileLength(fsFile)};
@@ -298,10 +301,10 @@ std::optional<std::string> Files::Read(const std::string &path)
 	return std::string(data.begin(), data.end());
 }
 
-std::vector<std::string> Files::FilesInPath(const std::string &path, const bool &recursive)
+std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, const bool &recursive)
 {
 	std::vector<std::string> files;
-	auto rc{PHYSFS_enumerateFiles(path.c_str())};
+	auto rc{PHYSFS_enumerateFiles(path.string().c_str())};
 	
 	for (auto i{rc}; *i != nullptr; i++)
 	{

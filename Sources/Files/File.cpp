@@ -6,7 +6,7 @@
 
 namespace acid
 {
-File::File(std::string filename, std::unique_ptr<Metadata> &&metadata) :
+File::File(std::filesystem::path filename, std::unique_ptr<Metadata> &&metadata) :
 	m_filename{std::move(filename)},
 	m_metadata{std::move(metadata)}
 {
@@ -20,19 +20,19 @@ void File::Load()
 
 	if (Files::ExistsInPath(m_filename))
 	{
-		IFStream inStream(m_filename);
+		IFStream inStream{m_filename};
 		m_metadata->Load(&inStream);
 	}
-	else if (FileSystem::Exists(m_filename))
+	else if (std::filesystem::exists(m_filename))
 	{
-		std::ifstream inStream(m_filename);
+		std::ifstream inStream{m_filename};
 		m_metadata->Load(&inStream);
 		inStream.close();
 	}
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("File '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("File '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
@@ -44,20 +44,20 @@ void File::Write() const
 
 	if (Files::ExistsInPath(m_filename))
 	{
-		OFStream outStream(m_filename);
-		m_metadata->Write(&outStream);
+		OFStream os{m_filename};
+		m_metadata->Write(&os);
 	}
-	else // if (FileSystem::Exists(m_filename))
+	else // if (std::filesystem::exists(m_filename))
 	{
-		FileSystem::Create(m_filename);
-		std::ofstream outStream(m_filename);
-		m_metadata->Write(&outStream);
-		outStream.close();
+		std::filesystem::create_directory(m_filename.parent_path());
+		std::ofstream os{m_filename};
+		m_metadata->Write(&os);
+		os.close();
 	}
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("File '%s' saved in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("File '%ls' saved in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

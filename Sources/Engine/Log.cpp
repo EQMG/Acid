@@ -15,10 +15,9 @@ std::ofstream Log::STREAM = std::ofstream();
 
 void Log::Print(const std::string_view &style, const std::string_view &colour, const std::optional<std::string> &type, const std::string &string)
 {
-	auto typeString{""}; // Time::GetDateTime("[%H:%M:%S] ") + (type ? "[" + *type + "] " : "");
 	std::lock_guard<std::mutex> lock(MUTEX);
-	std::cout << style << colour << typeString << string << Style::Default;
-	STREAM << typeString << string;
+	std::cout << style << colour << string << Style::Default;
+	STREAM << string;
 }
 
 void Log::PopupMessage(const std::string &title, const std::string &message)
@@ -30,7 +29,6 @@ void Log::PopupMessage(const std::string &title, const std::string &message)
 
 void Log::OpenLog(const std::string &filename)
 {
-	FileSystem::Create(filename);
 	std::lock_guard<std::mutex> lock(MUTEX);
 	STREAM.open(filename);
 }

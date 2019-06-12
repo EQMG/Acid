@@ -89,7 +89,7 @@ MainGame::MainGame() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([]()
 			{
-				Graphics::Get()->CaptureScreenshot("Screenshots/" + Time::GetDateTime() + ".png");
+				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});

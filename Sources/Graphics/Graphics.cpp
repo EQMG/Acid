@@ -180,7 +180,7 @@ void Graphics::UpdateSurfaceCapabilities()
 	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, *m_surface, &m_surface->m_capabilities));
 }
 
-void Graphics::CaptureScreenshot(const std::string &filename) const
+void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart{Time::Now()};
@@ -190,8 +190,8 @@ void Graphics::CaptureScreenshot(const std::string &filename) const
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, { extent.m_x, extent.m_y, 1 },
-		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
+	auto supportsBlit{Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {extent.m_x, extent.m_y, 1},
+		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0)};
 
 	// Get layout of the image (including row pitch).
 	VkImageSubresource imageSubresource{};
@@ -214,12 +214,11 @@ void Graphics::CaptureScreenshot(const std::string &filename) const
 	vkDestroyImage(*m_logicalDevice, dstImage, nullptr);
 
 	// Creates the screenshot image file and writes to it.
-	FileSystem::ClearFile(filename);
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Screenshot '%s' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Screenshot '%ls' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

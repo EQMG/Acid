@@ -41,9 +41,9 @@ public:
 
 	/**
 	 * Takes a screenshot of the current image of the display and saves it into a image file.
-	 * @param filename The file to save the screenshot to.
+	 * @param filename The file to save the screenshot as.
 	 */
-	void CaptureScreenshot(const std::string &filename) const;
+	void CaptureScreenshot(const std::filesystem::path &filename) const;
 
 	/**
 	 * Checks whether a Subrender exists or not.
