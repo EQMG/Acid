@@ -42,7 +42,7 @@ void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
 {
 	if (!Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_position = Vector2i{xpos, ypos};
+		Window::Get()->m_position = {xpos, ypos};
 	}
 
 	Window::Get()->m_onPosition(Window::Get()->m_position);
@@ -57,11 +57,11 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 
 	if (Window::Get()->m_fullscreen)
 	{
-		Window::Get()->m_fullscreenSize = Vector2i{width, height};
+		Window::Get()->m_fullscreenSize = {width, height};
 	}
 	else
 	{
-		Window::Get()->m_size = Vector2i{width, height};
+		Window::Get()->m_size = {width, height};
 	}
 
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
@@ -131,7 +131,7 @@ Window::Window() :
 	int32_t monitorCount;
 	auto monitors{glfwGetMonitors(&monitorCount)};
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
+	for (uint32_t i{}; i < static_cast<uint32_t>(monitorCount); i++)
 	{
 		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
@@ -279,7 +279,7 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 #if defined(ACID_VERBOSE)
 		printf("Window is going fullscreen\n");
 #endif
-		m_fullscreenSize = Vector2i{videoMode.m_width, videoMode.m_height};
+		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
 		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	}
 	else
@@ -364,9 +364,9 @@ void Window::CheckGlfw(const int32_t &result)
 	throw std::runtime_error("GLFW error: " + result);
 }
 
-std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const
+std::pair<const char **, uint32_t> Window::GetInstanceExtensions()
 {
-	uint32_t glfwExtensionCount = 0;
+	uint32_t glfwExtensionCount;
 	auto glfwExtensions{glfwGetRequiredInstanceExtensions(&glfwExtensionCount)};
 	return std::make_pair(glfwExtensions, glfwExtensionCount);
 }

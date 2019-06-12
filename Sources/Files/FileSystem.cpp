@@ -24,11 +24,11 @@ typedef struct stat STAT;
 namespace acid
 {
 #if defined(ACID_BUILD_WINDOWS)
-const char FileSystem::Separator = '\\';
-const char FileSystem::AltSeparator = '/';
+const char FileSystem::Separator{'\\'};
+const char FileSystem::AltSeparator{'/'};
 #else
-const char FileSystem::Separator = '/';
-const char FileSystem::AltSeparator = '\\';
+const char FileSystem::Separator{'/'};
+const char FileSystem::AltSeparator{'\\'};
 #endif
 
 bool FileSystem::Exists(const std::string &path)
@@ -423,7 +423,7 @@ std::string FileSystem::FileSuffix(const std::string &path)
 std::string FileSystem::JoinPath(const std::vector<std::string> &parts)
 {
 	std::string joined;
-	std::size_t i = 0;
+	std::size_t i{};
 
 	for (const auto &part : parts)
 	{
@@ -441,7 +441,7 @@ std::string FileSystem::JoinPath(const std::vector<std::string> &parts)
 std::vector<std::string> FileSystem::SplitPath(const std::string &path, const char &delim)
 {
 	std::vector<std::string> split;
-	std::string::size_type previousIndex = 0;
+	std::string::size_type previousIndex{};
 	auto separatorIndex{path.find(delim)};
 
 	while (separatorIndex != std::string::npos)

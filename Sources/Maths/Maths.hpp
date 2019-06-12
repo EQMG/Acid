@@ -11,7 +11,7 @@ class ACID_EXPORT Maths
 {
 public:
 	template<typename T>
-	static constexpr T Pi = T(3.14159265358979323846264338327950288L);
+	static constexpr T Pi{T(3.14159265358979323846264338327950288L)};
 
 	/**
 	 * Generates a random value from between a range.

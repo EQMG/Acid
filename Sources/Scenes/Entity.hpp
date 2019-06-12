@@ -17,14 +17,14 @@ public:
 	 * Creates a new entity and stores it into a structure.
 	 * @param transform The objects initial world position, rotation, and scale.
 	 */
-	explicit Entity(const Transform &transform = Transform());
+	Entity(const Transform &transform = {});
 
 	/**
 	 * Creates a new entity and stores it into a structure.
-	 * @param filename The file to load the component data from.
 	 * @param transform The objects initial world position, rotation, and scale.
+	 * @param filename The file to load the component data from.
 	 */
-	explicit Entity(const std::string &filename, const Transform &transform = Transform());
+	Entity(const Transform &transform, const std::string &filename);
 
 	~Entity();
 
@@ -51,7 +51,7 @@ public:
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false) const
 	{
-		T *alternative = nullptr;
+		T *alternative{};
 
 		for (const auto &component : m_components)
 		{

@@ -91,7 +91,7 @@ public:
 
 	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
 	{
-		example1.paragraph = metadata.GetChild<std::string>("paragraph");
+		metadata.GetChild("paragraph", example1.paragraph);
 		metadata.GetChild("content", example1.content);
 		metadata.GetChild("xml", example1.xml);
 		metadata.GetChild("json", example1.json);

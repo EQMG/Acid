@@ -32,7 +32,7 @@ void LogicalDevice::CreateQueueIndices()
 
 	std::optional<uint32_t> graphicsFamily, presentFamily, computeFamily, transferFamily;
 
-	for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
+	for (uint32_t i{}; i < deviceQueueFamilyPropertyCount; i++)
 	{
 		// Check for graphics support.
 		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
@@ -43,7 +43,7 @@ void LogicalDevice::CreateQueueIndices()
 		}
 
 		// Check for presentation support.
-		VkBool32 presentSupport = VK_FALSE;
+		VkBool32 presentSupport;
 		vkGetPhysicalDeviceSurfaceSupportKHR(*m_physicalDevice, i, *m_surface, &presentSupport);
 
 		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)

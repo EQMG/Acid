@@ -35,7 +35,7 @@ void ParticleSystem::Update()
 
 		if (!emitters.empty())
 		{
-			for (uint32_t i = 0; i < elapsed; i++)
+			for (uint32_t i{}; i < elapsed; i++)
 			{
 				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
 			}
@@ -76,7 +76,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 	auto x{rootOneMinusZSquared * std::cos(theta)};
 	auto y{rootOneMinusZSquared * std::sin(theta)};
 
-	auto direction{Vector4f(x, y, z, 1.0f)};
+	Vector4f direction{x, y, z, 1.0f};
 
 	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
 	{
@@ -93,7 +93,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 		direction.m_z *= -1.0f;
 	}
 
-	return Vector3f(direction);
+	return {direction};
 }
 
 void ParticleSystem::SetPps(const float &pps)

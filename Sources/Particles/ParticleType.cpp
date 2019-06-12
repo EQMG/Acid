@@ -8,9 +8,9 @@
 
 namespace acid
 {
-static const uint32_t MAX_INSTANCES = 1024;
-//static const uint32_t INSTANCE_STEPS = 128;
-static const float FRUSTUM_BUFFER = 1.4f;
+static const uint32_t MAX_INSTANCES{1024};
+//static const uint32_t INSTANCE_STEPS{128};
+static const float FRUSTUM_BUFFER{1.4f};
 
 std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 {
@@ -82,9 +82,9 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		auto instance{&instances[m_instances]};
 		instance->m_modelMatrix = Matrix4{}.Translate(particle.GetPosition());
 
-		for (int32_t row = 0; row < 3; row++)
+		for (uint32_t row{}; row < 3; row++)
 		{
-			for (int32_t col = 0; col < 3; col++)
+			for (uint32_t col{}; col < 3; col++)
 			{
 				instance->m_modelMatrix[row][col] = viewMatrix[col][row];
 			}

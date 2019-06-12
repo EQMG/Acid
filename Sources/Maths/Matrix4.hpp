@@ -19,7 +19,7 @@ public:
 	 * Constructor for Matrix4. The matrix is initialised to the identity.
 	 * @param diagonal The value set to the diagonals. 
 	 **/
-	explicit Matrix4(const float &diagonal = 1.0f);
+	Matrix4(const float &diagonal = 1.0f);
 
 	/**
 	 * Constructor for Matrix4.
@@ -151,7 +151,7 @@ public:
 	 * Gets the submatrix of this matrix.
 	 * @return The submatrix. 
 	 **/
-	Matrix3 GetSubmatrix(const int32_t &row, const int32_t &col) const;
+	Matrix3 GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
 
 	/**
 	 * Creates a new transformation matrix for a object in 3d space.
@@ -309,7 +309,7 @@ struct hash<acid::Matrix4>
 {
 	size_t operator()(const acid::Matrix4 &matrix) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);
 		acid::Maths::HashCombine(seed, matrix[2]);

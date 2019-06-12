@@ -10,7 +10,7 @@ ColliderCube::ColliderCube(const Vector3f &extents, const Transform &localTransf
 	m_shape{std::make_unique<btBoxShape>(Convert(extents / 2.0f))},
 	m_extents{extents}
 {
-	m_localTransform.SetScaling(m_extents);
+	m_localTransform.SetScale(m_extents);
 }
 
 ColliderCube::~ColliderCube()
@@ -35,7 +35,7 @@ void ColliderCube::SetExtents(const Vector3f &extents)
 {
 	m_extents = extents;
 	m_shape->setImplicitShapeDimensions(Convert(m_extents));
-	m_localTransform.SetScaling(m_extents);
+	m_localTransform.SetScale(m_extents);
 }
 
 const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider)

@@ -19,15 +19,15 @@ public:
 	 * @param transform The objects initial world position, rotation, and scale.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const Transform &transform = Transform());
+	Entity *CreateEntity(const Transform &transform = {});
 
 	/**
 	 * Creates a new entity from a prefab that starts in this structure.
-	 * @param filename The file to load the component data from.
 	 * @param transform The objects initial world position, rotation, and scale.
+	 * @param filename The file to load the component data from.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const std::string &filename, const Transform &transform = Transform());
+	Entity *CreateEntity(const Transform &transform, const std::string &filename);
 
 	/**
 	 * Adds a new object to the spatial structure.

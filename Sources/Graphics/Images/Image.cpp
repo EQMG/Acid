@@ -11,7 +11,7 @@
 
 namespace acid
 {
-static const float ANISOTROPY = 16.0f;
+static const float ANISOTROPY{16.0f};
 
 Image::Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
 	const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers) :
@@ -257,7 +257,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 
 	CommandBuffer commandBuffer;
 
-	for (uint32_t i = 1; i < mipLevels; i++)
+	for (uint32_t i{1}; i < mipLevels; i++)
 	{
 		VkImageMemoryBarrier barrier0{};
 		barrier0.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;

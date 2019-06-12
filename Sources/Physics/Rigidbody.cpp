@@ -98,9 +98,9 @@ void Rigidbody::Update()
 	auto &transform{GetParent()->GetLocalTransform()};
 	btTransform motionTransform;
 	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
-	transform = Collider::Convert(motionTransform, transform.GetScaling());
+	transform = Collider::Convert(motionTransform, transform.GetScale());
 
-	m_shape->setLocalScaling(Collider::Convert(transform.GetScaling()));
+	m_shape->setLocalScaling(Collider::Convert(transform.GetScale()));
 	//m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
 	m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
 	m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
@@ -189,7 +189,7 @@ void Rigidbody::RecalculateMass()
 		return;
 	}
 
-	bool isDynamic = m_mass != 0.0f;
+	auto isDynamic{m_mass != 0.0f};
 
 	btVector3 localInertia;
 

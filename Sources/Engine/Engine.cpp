@@ -19,7 +19,7 @@
 
 namespace acid
 {
-Engine *Engine::INSTANCE = nullptr;
+Engine *Engine::INSTANCE{nullptr};
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0{std::move(argv0)},

@@ -49,7 +49,7 @@ public:
 
 		// Allocate new vector.
 		std::vector<T> copy(s);
-		std::size_t i = 0;
+		std::size_t i{};
 
 		// Check for a split buffer.
 		if (m_tail > m_head || m_elements > 0)
@@ -117,13 +117,13 @@ public:
 
 	const T &back() const
 	{
-		std::size_t i = m_head + (m_data.capacity() - 1);
+		std::size_t i{m_head + (m_data.capacity() - 1)};
 		return m_data[i % m_data.capacity()];
 	}
 
 	T &back()
 	{
-		std::size_t i = m_head + (m_data.capacity() - 1);
+		std::size_t i{m_head + (m_data.capacity() - 1)};
 		return m_data[i % m_data.capacity()];
 	}
 
@@ -152,7 +152,7 @@ public:
 	template<typename... Args>
 	bool push(Args &&... values)
 	{
-		std::size_t numElements = NumArgs(values...);
+		std::size_t numElements{NumArgs(values...)};
 
 		if (m_elements + numElements > m_data.capacity())
 		{
@@ -200,7 +200,7 @@ private:
 	template<typename... K>
 	std::size_t NumArgs(K...)
 	{
-		const int n = sizeof...(K);
+		const int n{sizeof...(K)};
 		return n;
 	}
 

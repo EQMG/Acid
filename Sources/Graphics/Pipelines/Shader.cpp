@@ -194,7 +194,7 @@ std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) c
 std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 {
 	std::vector<VkPushConstantRange> pushConstantRanges;
-	uint32_t currentOffset = 0;
+	uint32_t currentOffset{};
 
 	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 	{
@@ -228,7 +228,7 @@ std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &locati
 
 VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)
 {
-	std::string fileExt = String::Lowercase(FileSystem::FileSuffix(filename));
+	auto fileExt{String::Lowercase(FileSystem::FileSuffix(filename))};
 
 	if (fileExt == ".comp")
 	{
@@ -434,7 +434,7 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 	program.buildReflection();
 	//program.dumpReflection();
 
-	for (uint32_t dim = 0; dim < 3; ++dim)
+	for (uint32_t dim{}; dim < 3; ++dim)
 	{
 		auto localSize{program.getLocalSize(dim)};
 
@@ -444,17 +444,17 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 		}
 	}
 
-	for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
+	for (int32_t i{program.getNumLiveUniformBlocks() - 1}; i >= 0; i--)
 	{
 		LoadUniformBlock(program, moduleFlag, i);
 	}
 
-	for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
+	for (int32_t i{}; i < program.getNumLiveUniformVariables(); i++)
 	{
 		LoadUniform(program, moduleFlag, i);
 	}
 
-	for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
+	for (int32_t i{}; i < program.getNumLiveAttributes(); i++)
 	{
 		LoadVertexAttribute(program, moduleFlag, i);
 	}
@@ -584,7 +584,7 @@ void Shader::CreateReflection()
 	}
 
 	// Process attribute descriptions.
-	uint32_t currentOffset = 4;
+	uint32_t currentOffset{4};
 
 	for (const auto &[attributeName, attribute] : m_attributes)
 	{
@@ -637,13 +637,11 @@ std::string Shader::ToString() const
 		}
 	}
 
-	for (uint32_t dim = 0; dim < m_localSizes.size(); dim++)
+	for (uint32_t dim{}; dim < m_localSizes.size(); dim++)
 	{
-		static const std::string AXES[] = { "X", "Y", "Z" };
-
 		if (m_localSizes[dim])
 		{
-			stream << "Local size " << AXES[dim] << ": " << *m_localSizes[dim] << " \n";
+			stream << "Local size " << "XYZ"[dim] << ": " << *m_localSizes[dim] << " \n";
 		}
 	}
 
@@ -762,7 +760,7 @@ void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShade
 int32_t Shader::ComputeSize(const glslang::TType *ttype)
 {
 	// TODO: glslang::TType::computeNumComponents is available but has many issues resolved in this method.
-	int32_t components = 0;
+	int32_t components{};
 
 	if (ttype->getBasicType() == glslang::EbtStruct || ttype->getBasicType() == glslang::EbtBlock)
 	{
@@ -782,9 +780,9 @@ int32_t Shader::ComputeSize(const glslang::TType *ttype)
 
 	if (ttype->getArraySizes() != nullptr)
 	{
-		int32_t arraySize = 1;
+		int32_t arraySize{1};
 
-		for (int32_t d = 0; d < ttype->getArraySizes()->getNumDims(); ++d)
+		for (int32_t d{}; d < ttype->getArraySizes()->getNumDims(); ++d)
 		{
 			auto dimSize{ttype->getArraySizes()->getDimSize(d)};
 

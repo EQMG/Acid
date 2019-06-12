@@ -13,9 +13,9 @@ Entity *SceneStructure::CreateEntity(const Transform &transform)
 	return m_objects.emplace_back(std::make_unique<Entity>(transform)).get();
 }
 
-Entity *SceneStructure::CreateEntity(const std::string &filename, const Transform &transform)
+Entity *SceneStructure::CreateEntity(const Transform &transform, const std::string &filename)
 {
-	return m_objects.emplace_back(std::make_unique<Entity>(filename, transform)).get();
+	return m_objects.emplace_back(std::make_unique<Entity>(transform, filename)).get();
 }
 
 void SceneStructure::Add(Entity *object)
@@ -111,12 +111,12 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 
 /*std::vector<Entity *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)
 {
-	return std::vector<Entity *>();
+	return {};
 }*/
 
 /*std::vector<Entity *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max)
 {
-	return std::vector<Entity *>();
+	return {};
 }*/
 
 bool SceneStructure::Contains(Entity *object)

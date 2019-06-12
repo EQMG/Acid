@@ -113,7 +113,7 @@ Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint,
 
 void ShadowBox::UpdateOrthoProjectionMatrix()
 {
-	m_projectionMatrix = Matrix4{};
+	m_projectionMatrix = {};
 	m_projectionMatrix[0][0] = 2.0f / GetWidth();
 	m_projectionMatrix[1][1] = 2.0f / GetHeight();
 	m_projectionMatrix[2][2] = -2.0f / GetDepth();
@@ -124,12 +124,12 @@ void ShadowBox::UpdateCenter()
 {
 	Vector4f centre{(m_minExtents + m_maxExtents) / 2.0f};
 	auto invertedLight{m_lightViewMatrix.Inverse()};
-	m_centre = Vector3f(invertedLight.Transform(centre));
+	m_centre = {invertedLight.Transform(centre)};
 }
 
 void ShadowBox::UpdateLightViewMatrix()
 {
-	m_lightViewMatrix = Matrix4{};
+	m_lightViewMatrix = {};
 	auto pitch{std::acos(Vector2f{m_lightDirection.m_x, m_lightDirection.m_z}.Length())};
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3f::Right);
 	auto yaw{std::atan(m_lightDirection.m_x / m_lightDirection.m_z)};

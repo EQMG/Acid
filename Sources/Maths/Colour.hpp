@@ -198,7 +198,7 @@ struct hash<acid::Colour>
 {
 	size_t operator()(const acid::Colour &colour) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, colour.m_r);
 		acid::Maths::HashCombine(seed, colour.m_g);
 		acid::Maths::HashCombine(seed, colour.m_b);

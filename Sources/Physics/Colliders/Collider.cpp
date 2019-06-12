@@ -79,6 +79,6 @@ Transform Collider::Convert(const btTransform &transform, const Vector3f &scalin
 	auto position{transform.getOrigin()};
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
-	return Transform{Convert(position), Vector3f{pitch, yaw, roll}, scaling};
+	return {Convert(position), {pitch, yaw, roll}, scaling};
 }
 }

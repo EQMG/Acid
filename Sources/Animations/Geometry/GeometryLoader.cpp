@@ -18,7 +18,7 @@ GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<Ve
 
 	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
 
-	for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++)
+	for (uint32_t i{}; i < indexRawData.size() / indexCount; i++)
 	{
 		auto positionIndex{String::From<uint32_t>(indexRawData[indexCount * i])};
 		auto normalIndex{String::From<uint32_t>(indexRawData[indexCount * i + 1])};
@@ -49,7 +49,7 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const
 
 	std::vector<Vector3f> positions;
 
-	for (uint32_t i = 0; i < positionsCount / 3; i++)
+	for (uint32_t i{}; i < positionsCount / 3; i++)
 	{
 		Vector4f position{String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[i * 3 + 1]),
 			String::From<float>(positionsRawData[3 * i + 2])};
@@ -68,7 +68,7 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const
 
 	std::vector<Vector2f> uvs;
 
-	for (uint32_t i = 0; i < uvsCount / 2; i++)
+	for (uint32_t i{}; i < uvsCount / 2; i++)
 	{
 		Vector2f uv{String::From<float>(uvsRawData[2 * i]), 1.0f - String::From<float>(uvsRawData[2 * i + 1])};
 		uvs.emplace_back(uv);
@@ -86,7 +86,7 @@ std::vector<Vector3f> GeometryLoader::GetNormals() const
 
 	std::vector<Vector3f> normals;
 
-	for (uint32_t i = 0; i < normalsCount / 3; i++)
+	for (uint32_t i{}; i < normalsCount / 3; i++)
 	{
 		Vector4f normal{String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), String::From<float>(normalsRawData[3 * i + 2])};
 		normals.emplace_back(m_correction.Transform(normal));

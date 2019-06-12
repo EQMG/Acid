@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 
 	// Runs the game loop.
-	auto exitCode = engine->Run();
+	auto exitCode{engine->Run()};
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

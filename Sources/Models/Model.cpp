@@ -53,7 +53,7 @@ std::vector<float> Model::GetPointCloud() const
 {
 	if (m_vertexBuffer == nullptr)
 	{
-		return std::vector<float>();
+		return {};
 	}
 
 	// TODO: Fix Vulkan memory mapping error.
@@ -61,7 +61,7 @@ std::vector<float> Model::GetPointCloud() const
 	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(indices.data()));
 	m_vertexBuffer->UnmapMemory();
 
-	std::vector<float> vertices(m_vertexBuffer->GetSize() / sizeof(float));
+	std::vector<float> vertices(m_vertexBuffer->GetSize() / sizeof(float)); // TODO C++20: {...}
 	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(vertices.data()));
 	m_vertexBuffer->UnmapMemory();
 

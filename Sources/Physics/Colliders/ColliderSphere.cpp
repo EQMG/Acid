@@ -10,7 +10,7 @@ ColliderSphere::ColliderSphere(const float &radius, const Transform &localTransf
 	m_shape{std::make_unique<btSphereShape>(radius)},
 	m_radius{radius}
 {
-	m_localTransform.SetScaling({m_radius, m_radius, m_radius});
+	m_localTransform.SetScale({m_radius, m_radius, m_radius});
 }
 
 ColliderSphere::~ColliderSphere()
@@ -35,7 +35,7 @@ void ColliderSphere::SetRadius(const float &radius)
 {
 	m_radius = radius;
 	m_shape->setUnscaledRadius(m_radius);
-	m_localTransform.SetScaling({m_radius, m_radius, m_radius});
+	m_localTransform.SetScale({m_radius, m_radius, m_radius});
 }
 
 const Metadata &operator>>(const Metadata &metadata, ColliderSphere &collider)

@@ -11,7 +11,7 @@ ColliderCone::ColliderCone(const float &radius, const float &height, const Trans
 	m_radius{radius},
 	m_height{height}
 {
-	m_localTransform.SetScaling({m_radius, m_height, m_radius});
+	m_localTransform.SetScale({m_radius, m_height, m_radius});
 }
 
 ColliderCone::~ColliderCone()
@@ -36,14 +36,14 @@ void ColliderCone::SetRadius(const float &radius)
 {
 	m_radius = radius;
 	m_shape->setRadius(m_radius);
-	m_localTransform.SetScaling({m_radius, m_height, m_radius});
+	m_localTransform.SetScale({m_radius, m_height, m_radius});
 }
 
 void ColliderCone::SetHeight(const float &height)
 {
 	m_height = height;
 	m_shape->setHeight(m_height);
-	m_localTransform.SetScaling({m_radius, m_height, m_radius});
+	m_localTransform.SetScale({m_radius, m_height, m_radius});
 }
 
 const Metadata &operator>>(const Metadata &metadata, ColliderCone &collider)

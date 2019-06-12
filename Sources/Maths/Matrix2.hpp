@@ -17,7 +17,7 @@ public:
 	 * Constructor for Matrix2. The matrix is initialised to the identity.
 	 * @param diagonal The value set to the diagonals. 
 	 **/
-	explicit Matrix2(const float &diagonal = 1.0f);
+	Matrix2(const float &diagonal = 1.0f);
 
 	/**
 	 * Constructor for Matrix2.
@@ -113,7 +113,7 @@ public:
 	 * Gets the submatrix of this matrix.
 	 * @return The submatrix. 
 	 **/
-	float GetSubmatrix(const int32_t &row, const int32_t &col) const;
+	float GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
 
 	std::string ToString() const;
 
@@ -184,7 +184,7 @@ struct hash<acid::Matrix2>
 {
 	size_t operator()(const acid::Matrix2 &matrix) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);
 		return seed;

@@ -88,7 +88,7 @@ void KinematicCharacter::Update()
 
 	auto &transform{GetParent()->GetLocalTransform()};
 	auto worldTransform{m_ghostObject->getWorldTransform()};
-	transform = Collider::Convert(worldTransform, transform.GetScaling());
+	transform = Collider::Convert(worldTransform, transform.GetScale());
 
 	m_linearVelocity = Collider::Convert(m_controller->getLinearVelocity());
 	m_angularVelocity = Collider::Convert(m_controller->getAngularVelocity());

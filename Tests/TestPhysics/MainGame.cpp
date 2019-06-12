@@ -25,11 +25,11 @@ int main(int argc, char **argv)
 	using namespace test;
 
 	// Creates the engine.
-	auto engine = std::make_unique<Engine>(argv[0]);
+	auto engine{std::make_unique<Engine>(argv[0])};
 	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
-	auto exitCode = engine->Run();
+	auto exitCode{engine->Run()};
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -40,9 +40,9 @@ int main(int argc, char **argv)
 namespace test
 {
 MainGame::MainGame() :
-	m_buttonFullscreen(Key::F11),
-	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
+	m_buttonFullscreen{Key::F11},
+	m_buttonScreenshot{Key::F9},
+	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
 	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
@@ -106,7 +106,7 @@ MainGame::MainGame() :
 	//Engine::Get()->RemoveModule<Shadows>();
 
 	// Registers components.
-	auto &componentRegister = Scenes::Get()->GetComponentRegister();
+	auto &componentRegister{Scenes::Get()->GetComponentRegister()};
 	componentRegister.Add<HeightDespawn>("HeightDespawn");
 	componentRegister.Add<NameTag>("NameTag");
 	componentRegister.Add<PlayerFps>("PlayerFps");
@@ -117,8 +117,8 @@ MainGame::MainGame() :
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
-		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
+	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
+		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());

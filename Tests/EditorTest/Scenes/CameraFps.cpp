@@ -29,22 +29,22 @@ void CameraFps::Start()
 
 void CameraFps::Update()
 {
-	auto delta = Engine::Get()->GetDelta().AsSeconds();
+	auto delta{Engine::Get()->GetDelta().AsSeconds()};
 
-	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>(); scenePlayer != nullptr)
+	if (auto scenePlayer{Scenes::Get()->GetStructure()->GetComponent<PlayerFps>()}; scenePlayer != nullptr)
 	{
-		auto playerPosition = scenePlayer->GetParent()->GetWorldTransform().GetPosition();
+		auto playerPosition{scenePlayer->GetParent()->GetWorldTransform().GetPosition()};
 		m_velocity = (playerPosition - m_position) / delta;
 		m_position = playerPosition + VIEW_OFFSET;
 	}
 
 	if (!Scenes::Get()->IsPaused())
 	{
-		Vector2f rotationDelta = Mouse::Get()->GetDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
+		auto rotationDelta{Mouse::Get()->GetDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE};
 
 		if (m_joystickVertical.IsConnected())
 		{
-			rotationDelta += Vector2f{m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()} *SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f{m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()} * SENSITIVITY_JOYSTICK;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;
@@ -58,7 +58,7 @@ void CameraFps::Update()
 	m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
 	m_viewRay.Update(m_position, {0.5f, 0.5f}, m_viewMatrix, m_projectionMatrix);
 
-	//auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
+	//auto raytest{Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f))};
 	//Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
 }
 }

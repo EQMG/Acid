@@ -12,7 +12,7 @@ const Vector2f UiAnchor::LeftBottom{0.0f, 1.0f};
 const Vector2f UiAnchor::CentreBottom{0.5f, 1.0f};
 const Vector2f UiAnchor::RightBottom{1.0f, 1.0f};
 
-UiTransform::UiTransform(const Vector2i &size, const Vector2f &anchor, const Vector2i &position) :
+UiTransform::UiTransform(const Vector2f &size, const Vector2f &anchor, const Vector2f &position) :
 	m_size{size},
 	m_anchor0{anchor},
 	m_anchor1{anchor},
@@ -20,7 +20,7 @@ UiTransform::UiTransform(const Vector2i &size, const Vector2f &anchor, const Vec
 {
 }
 
-UiTransform::UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &position) :
+UiTransform::UiTransform(const Vector2f &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2f &position) :
 	m_size{size},
 	m_anchor0{anchor0},
 	m_anchor1{anchor1},

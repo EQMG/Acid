@@ -18,7 +18,7 @@ FtpResponse Ftp::Connect(const IpAddress &server, const uint16_t &port, const Ti
 	// Connect to the server.
 	if (m_commandSocket.Connect(server, port, timeout) != Socket::Status::Done)
 	{
-		return FtpResponse(FtpResponse::Status::ConnectionFailed);
+		return {FtpResponse::Status::ConnectionFailed};
 	}
 
 	// Get the response to the connection.
@@ -62,7 +62,7 @@ FtpResponse Ftp::KeepAlive()
 
 FtpResponseDirectory Ftp::GetWorkingDirectory()
 {
-	return FtpResponseDirectory(SendCommand("PWD"));
+	return {SendCommand("PWD")};
 }
 
 FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
@@ -87,7 +87,7 @@ FtpResponseListing Ftp::GetDirectoryListing(const std::string &directory)
 		}
 	}
 
-	return FtpResponseListing(response, directoryData.str());
+	return {response, directoryData.str()};
 }
 
 FtpResponse Ftp::ChangeDirectory(const std::string &directory)
@@ -262,8 +262,8 @@ FtpResponse Ftp::GetResponse()
 {
 	// We'll use a variable to keep track of the last valid code.
 	// It is useful in case of multi-lines responses, because the end of such a response will start by the same code.
-	uint32_t lastCode = 0;
-	bool isInsideMultiline = false;
+	uint32_t lastCode{};
+	bool isInsideMultiline{};
 	std::string message;
 
 	for (;;)

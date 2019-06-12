@@ -140,9 +140,9 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector2f:\n");
-		Vector2f a(3.0f, -7.2f);
-		Vector2f b(-1.74f, 15.4f);
-		Vector2ui c(5, 2);
+		Vector2f a{3.0f, -7.2f};
+		Vector2f b{-1.74f, 15.4f};
+		Vector2ui c{5, 2};
 
 		Log::Out("  %s + %f = %s\n", a.ToString(), 20.0f, (a + 20.0f).ToString());
 		Log::Out("  %f * %s = %s\n", -1.11f, a.ToString(), (-1.11f * a).ToString());
@@ -170,12 +170,12 @@ int main(int argc, char **argv)
 		Log::Out("\n");
 	}
 	{
-		constexpr auto compileTime = Vector3f(10.0f, -9.0f, 8.0f) + Vector3d(-7.0, -6.0, 5.0);
+		constexpr auto compileTime = Vector3f{10.0f, -9.0f, 8.0f} + Vector3d{-7.0, -6.0, 5.0};
 
 		Log::Out("Vector3:\n");
-		Vector3f a(12.9f, -2.0f, 6.7f);
-		Vector3f b(-9.7f, 15.9f, -13.8f);
-		Vector3ui c(5, 2, 1);
+		Vector3f a{12.9f, -2.0f, 6.7f};
+		Vector3f b{-9.7f, 15.9f, -13.8f};
+		Vector3ui c{5, 2, 1};
 
 		Log::Out("  %s + %s = %s\n", a.ToString(), b.ToString(), (a + b).ToString());
 		Log::Out("  %s - %s = %s\n", a.ToString(), b.ToString(), (a - b).ToString());
@@ -203,9 +203,9 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector4:\n");
-		Vector4f a(12.9f, -2.0f, 6.7f, 11.11f);
-		Vector4f b(-9.7f, 15.9f, -13.8f, -2.246f);
-		Vector4ui c(5, 2, 1, 3);
+		Vector4f a{12.9f, -2.0f, 6.7f, 11.11f};
+		Vector4f b{-9.7f, 15.9f, -13.8f, -2.246f};
+		Vector4ui c{5, 2, 1, 3};
 
 		Log::Out("  %s + %s = %s\n", a.ToString(), b.ToString(), (a + b).ToString());
 		Log::Out("  %s - %s = %s\n", a.ToString(), b.ToString(), (a - b).ToString());

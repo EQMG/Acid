@@ -35,9 +35,9 @@ std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *
 
 	Matrix4 transform;
 
-	for (int32_t row = 0; row < 4; row++)
+	for (int32_t row{}; row < 4; row++)
 	{
-		for (int32_t col = 0; col < 4; col++)
+		for (int32_t col{}; col < 4; col++)
 		{
 			transform[row][col] = String::From<float>(matrixData[row * 4 + col]);
 		}
@@ -56,7 +56,7 @@ std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *
 
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
 {
-	for (uint32_t i = 0; i < m_boneOrder.size(); i++)
+	for (uint32_t i{}; i < m_boneOrder.size(); i++)
 	{
 		if (m_boneOrder[i] == name)
 		{

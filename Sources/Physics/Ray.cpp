@@ -42,7 +42,7 @@ Vector3f Ray::ConvertToScreenSpace(const Vector3f &position) const
 
 	if (coords.m_w < 0.0f)
 	{
-		return Vector3f{};
+		return {};
 	}
 
 	return {(coords.m_x / coords.m_w + 1.0f) / 2.0f, 1.0f - (coords.m_y / coords.m_w + 1.0f) / 2.0f, coords.m_z};

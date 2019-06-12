@@ -11,7 +11,7 @@ UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &c
 	UiObject{parent, transform},
 	m_background{this, {UiMargins::All}, Image2d::Create("Guis/White.png"), colour},
 	m_content{this, {UiMargins::None, PADDING, -PADDING}},
-	m_resizeHandle{this, UiTransform{RESIZE_SIZE, UiAnchor::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour},
+	m_resizeHandle{this, {RESIZE_SIZE, UiAnchor::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour},
 	m_manipulate{manipulate},
 	m_scrollX{this, ScrollBar::Horizontal, {UiMargins::None, {}, Vector2i{-RESIZE_SIZE.m_x, 0}}},
 	m_scrollY{this, ScrollBar::Vertical, {UiMargins::None, {}, Vector2i{0, -RESIZE_SIZE.m_y}}},
@@ -47,7 +47,7 @@ void UiPanel::SetScissor(UiObject *object, const bool &checkSize)
 {
 	auto position{m_background.GetScreenTransform().GetPosition()};
 	auto size{m_background.GetScreenTransform().GetSize()};
-	object->SetScissor(Vector4i(position.m_x, position.m_y, size.m_x, size.m_y));
+	object->SetScissor(Vector4f{position, size});
 
 	if (object->IsEnabled() && checkSize)
 	{

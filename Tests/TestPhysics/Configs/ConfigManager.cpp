@@ -23,14 +23,14 @@ ConfigManager::ConfigManager() :
 void ConfigManager::Load()
 {
 	m_audio.Load();
-	auto audioData = m_audio.GetMetadata();
+	auto audioData{m_audio.GetMetadata()};
 	Audio::Get()->SetGain(Audio::Type::Master, audioData->GetChildDefault<float>("Master Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::General, audioData->GetChildDefault<float>("General Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::Effect, audioData->GetChildDefault<float>("Effect Volume", 1.0f));
 	Audio::Get()->SetGain(Audio::Type::Music, audioData->GetChildDefault<float>("Music Volume", 1.0f));
 
 	m_graphics.Load();
-	auto graphicsData = m_graphics.GetMetadata();
+	auto graphicsData{m_graphics.GetMetadata()};
 	//Renderer::Get()->SetAntialiasing(graphicsData->GetChildDefault<bool>("Antialiasing", true));
 	Window::Get()->SetSize(graphicsData->GetChildDefault<Vector2f>("Size", Vector2i{-1}));
 	Window::Get()->SetPosition(graphicsData->GetChildDefault<Vector2f>("Position", Vector2i{-1}));
@@ -43,14 +43,14 @@ void ConfigManager::Load()
 
 void ConfigManager::Save() const
 {
-	auto audioData = m_audio.GetMetadata();
+	auto audioData{m_audio.GetMetadata()};
 	audioData->SetChild<float>("Master Volume", Audio::Get()->GetGain(Audio::Type::Master));
 	audioData->SetChild<float>("General Volume", Audio::Get()->GetGain(Audio::Type::General));
 	audioData->SetChild<float>("Effect Volume", Audio::Get()->GetGain(Audio::Type::Effect));
 	audioData->SetChild<float>("Music Volume", Audio::Get()->GetGain(Audio::Type::Music));
 	m_audio.Write();
 
-	auto graphicsData = m_graphics.GetMetadata();
+	auto graphicsData{m_graphics.GetMetadata()};
 	//graphicsData->SetChild<bool>("Antialiasing", Renderer::Get()->IsAntialiasing());
 	graphicsData->SetChild<Vector2f>("Size", Window::Get()->GetSize(false));
 	graphicsData->SetChild<Vector2f>("Position", Window::Get()->GetPosition());

@@ -18,7 +18,7 @@ AxisButton::AxisButton(std::unique_ptr<Button> &&negative, std::unique_ptr<Butto
 
 float AxisButton::GetAmount() const
 {
-	auto amount{0.0f};
+	float amount{};
 
 	if (m_positive->IsDown())
 	{

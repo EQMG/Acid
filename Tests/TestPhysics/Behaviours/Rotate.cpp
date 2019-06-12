@@ -9,8 +9,8 @@
 namespace test
 {
 Rotate::Rotate(const Vector3f &direction, const int &test) :
-	m_direction(direction),
-	m_test(test)
+	m_direction{direction},
+	m_test{test}
 {
 }
 
@@ -21,7 +21,7 @@ void Rotate::Start()
 void Rotate::Update()
 {
 	m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
-	auto &transform = GetParent()->GetLocalTransform();
+	auto &transform{GetParent()->GetLocalTransform()};
 	transform.SetRotation(m_rotation);
 
 	if (m_test == 1)

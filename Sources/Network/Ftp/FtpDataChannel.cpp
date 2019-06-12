@@ -24,7 +24,7 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 		{
 			uint8_t data[6]{ 0, 0, 0, 0, 0, 0 };
 			auto str{response.GetFullMessage().substr(begin)};
-			std::size_t index = 0;
+			std::size_t index{};
 
 			for (auto &i : data)
 			{
@@ -40,7 +40,7 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 			}
 
 			// Reconstruct connection port and address.
-			uint16_t port = data[4] * 256 + data[5];
+			auto port{static_cast<uint16_t>(data[4] * 256 + data[5])};
 			IpAddress address{static_cast<uint8_t>(data[0]), static_cast<uint8_t>(data[1]), static_cast<uint8_t>(data[2]), static_cast<uint8_t>(data[3])};
 
 			// Connect the data channel to the server.

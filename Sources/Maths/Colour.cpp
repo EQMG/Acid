@@ -4,23 +4,25 @@
 
 namespace acid
 {
-const Colour Colour::Clear = Colour("#000000", 0.0f);
-const Colour Colour::Black = Colour("#000000");
-const Colour Colour::Grey = Colour("#808080");
-const Colour Colour::Silver = Colour("#C0C0C0");
-const Colour Colour::White = Colour("#FFFFFF");
-const Colour Colour::Maroon = Colour("#800000");
-const Colour Colour::Red = Colour("#FF0000");
-const Colour Colour::Olive = Colour("#808000");
-const Colour Colour::Yellow = Colour("#FFFF00");
-const Colour Colour::Green = Colour("#00FF00");
-const Colour Colour::Lime = Colour("#008000");
-const Colour Colour::Teal = Colour("#008080");
-const Colour Colour::Aqua = Colour("#00FFFF");
-const Colour Colour::Navy = Colour("#000080");
-const Colour Colour::Blue = Colour("#0000FF");
-const Colour Colour::Purple = Colour("#800080");
-const Colour Colour::Fuchsia = Colour("#FF00FF");
+// TODO: Allow hex length to be changed (RGBA), and write value out as hex string instead of RGBA%s.
+
+const Colour Colour::Clear{"#000000", 0.0f};
+const Colour Colour::Black{"#000000"};
+const Colour Colour::Grey{"#808080"};
+const Colour Colour::Silver{"#C0C0C0"};
+const Colour Colour::White{"#FFFFFF"};
+const Colour Colour::Maroon{"#800000"};
+const Colour Colour::Red{"#FF0000"};
+const Colour Colour::Olive{"#808000"};
+const Colour Colour::Yellow{"#FFFF00"};
+const Colour Colour::Green{"#00FF00"};
+const Colour Colour::Lime{"#008000"};
+const Colour Colour::Teal{"#008080"};
+const Colour Colour::Aqua{"#00FFFF"};
+const Colour Colour::Navy{"#000080"};
+const Colour Colour::Blue{"#0000FF"};
+const Colour Colour::Purple{"#800080"};
+const Colour Colour::Fuchsia{"#FF00FF"};
 
 Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 	m_r{r},
@@ -50,27 +52,27 @@ Colour::Colour(std::string hex, const float &a) :
 
 Colour Colour::Add(const Colour &other) const
 {
-	return Colour(m_r + other.m_r, m_g + other.m_g, m_b + other.m_b, m_a + other.m_a);
+	return {m_r + other.m_r, m_g + other.m_g, m_b + other.m_b, m_a + other.m_a};
 }
 
 Colour Colour::Subtract(const Colour &other) const
 {
-	return Colour(m_r - other.m_r, m_g - other.m_g, m_b - other.m_b, m_a - other.m_a);
+	return {m_r - other.m_r, m_g - other.m_g, m_b - other.m_b, m_a - other.m_a};
 }
 
 Colour Colour::Multiply(const Colour &other) const
 {
-	return Colour(m_r * other.m_r, m_g * other.m_g, m_b * other.m_b, m_a * other.m_a);
+	return {m_r * other.m_r, m_g * other.m_g, m_b * other.m_b, m_a * other.m_a};
 }
 
 Colour Colour::Divide(const Colour &other) const
 {
-	return Colour(m_r / other.m_r, m_g / other.m_g, m_b / other.m_b, m_a / other.m_a);
+	return {m_r / other.m_r, m_g / other.m_g, m_b / other.m_b, m_a / other.m_a};
 }
 
 Colour Colour::Scale(const float &scalar) const
 {
-	return Colour(m_r * scalar, m_g * scalar, m_b * scalar, m_a * scalar);
+	return {m_r * scalar, m_g * scalar, m_b * scalar, m_a * scalar};
 }
 
 Colour Colour::Lerp(const Colour &other, const float &progression) const
@@ -89,7 +91,7 @@ Colour Colour::Normalize() const
 		throw std::runtime_error("Can't normalize a zero length vector");
 	}
 
-	return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
+	return {m_r / l, m_g / l, m_b / l, m_a / l};
 }
 
 float Colour::LengthSquared() const
@@ -110,7 +112,7 @@ Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const
 Colour Colour::GetUnit() const
 {
 	auto l{Length()};
-	return Colour(m_r / l, m_g / l, m_b / l, m_a / l);
+	return {m_r / l, m_g / l, m_b / l, m_a / l};
 }
 
 std::string Colour::GetHex() const
@@ -200,42 +202,42 @@ Colour operator/(const Colour &left, const Colour &right)
 
 Colour operator+(const float &value, const Colour &left)
 {
-	return Colour(value, value, value, 0.0f).Add(left);
+	return Colour{value, value, value, 0.0f}.Add(left);
 }
 
 Colour operator-(const float &value, const Colour &left)
 {
-	return Colour(value, value, value, 0.0f).Subtract(left);
+	return Colour{value, value, value, 0.0f}.Subtract(left);
 }
 
 Colour operator*(const float &value, const Colour &left)
 {
-	return Colour(value, value, value).Multiply(left);
+	return Colour{value, value, value}.Multiply(left);
 }
 
 Colour operator/(const float &value, const Colour &left)
 {
-	return Colour(value, value, value).Divide(left);
+	return Colour{value, value, value}.Divide(left);
 }
 
 Colour operator+(const Colour &left, const float &value)
 {
-	return left.Add(Colour(value, value, value, 0.0f));
+	return left.Add({value, value, value, 0.0f});
 }
 
 Colour operator-(const Colour &left, const float &value)
 {
-	return left.Subtract(Colour(value, value, value, 0.0f));
+	return left.Subtract({value, value, value, 0.0f});
 }
 
 Colour operator*(const Colour &left, const float &value)
 {
-	return left.Multiply(Colour(value, value, value));
+	return left.Multiply({value, value, value});
 }
 
 Colour operator/(const Colour &left, const float &value)
 {
-	return left.Divide(Colour(value, value, value));
+	return left.Divide({value, value, value});
 }
 
 Colour &Colour::operator+=(const Colour &other)
@@ -260,22 +262,22 @@ Colour &Colour::operator/=(const Colour &other)
 
 Colour &Colour::operator+=(const float &value)
 {
-	return *this = Add(Colour(value, value, value, 0.0f));
+	return *this = Add({value, value, value, 0.0f});
 }
 
 Colour &Colour::operator-=(const float &value)
 {
-	return *this = Subtract(Colour(value, value, value, 0.0f));
+	return *this = Subtract({value, value, value, 0.0f});
 }
 
 Colour &Colour::operator*=(const float &value)
 {
-	return *this = Multiply(Colour(value, value, value));
+	return *this = Multiply({value, value, value});
 }
 
 Colour &Colour::operator/=(const float &value)
 {
-	return *this = Divide(Colour(value, value, value));
+	return *this = Divide({value, value, value});
 }
 
 const Metadata &operator>>(const Metadata &metadata, Colour &colour)

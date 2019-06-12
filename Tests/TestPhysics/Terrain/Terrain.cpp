@@ -17,7 +17,7 @@ Terrain::Terrain(const float &sideLength, const float &squareSize) :
 
 void Terrain::Start()
 {
-	auto mesh = GetParent()->GetComponent<Mesh>(true);
+	auto mesh{GetParent()->GetComponent<Mesh>(true)};
 
 	if (mesh == nullptr)
 	{
@@ -25,12 +25,12 @@ void Terrain::Start()
 		return;
 	}
 
-	auto vertexCount = CalculateVertexCount(m_sideLength, m_squareSize);
-	auto textureScale = CalculateTextureScale(m_sideLength);
+	auto vertexCount{CalculateVertexCount(m_sideLength, m_squareSize)};
+	auto textureScale{CalculateTextureScale(m_sideLength)};
 	m_heightmap = GenerateHeightmap(vertexCount);
 	mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
 
-	auto colliderHeightfield = GetParent()->GetComponent<ColliderHeightfield>(true);
+	auto colliderHeightfield{GetParent()->GetComponent<ColliderHeightfield>(true)};
 
 	if (colliderHeightfield == nullptr)
 	{
@@ -71,16 +71,16 @@ float Terrain::CalculateTextureScale(const float &sideLength)
 
 std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
 {
-	auto &transform = GetParent()->GetLocalTransform();
+	auto &transform{GetParent()->GetLocalTransform()};
 	std::vector<float> heightmap(vertexCount * vertexCount);
 
-	for (uint32_t row = 0; row < vertexCount; row++)
+	for (uint32_t row{}; row < vertexCount; row++)
 	{
-		for (uint32_t col = 0; col < vertexCount; col++)
+		for (uint32_t col{}; col < vertexCount; col++)
 		{
-			auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
-			auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
-			auto height = 16.0f * m_noise.GetValueFractal(transform.GetPosition().m_x + x, transform.GetPosition().m_z + z);
+			auto x{((row * m_squareSize) - m_sideLength) / 2.0f};
+			auto z{((col * m_squareSize) - m_sideLength) / 2.0f};
+			auto height{16.0f * m_noise.GetValueFractal(transform.GetPosition().m_x + x, transform.GetPosition().m_z + z)};
 			heightmap[row * vertexCount + col] = height;
 
 			if (height < m_minHeight)

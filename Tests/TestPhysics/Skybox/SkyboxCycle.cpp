@@ -20,7 +20,7 @@ void SkyboxCycle::Start()
 
 void SkyboxCycle::Update()
 {
-	auto materialSkybox = GetParent()->GetComponent<MaterialSkybox>();
+	auto materialSkybox{GetParent()->GetComponent<MaterialSkybox>()};
 
 	if (materialSkybox == nullptr)
 	{

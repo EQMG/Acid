@@ -36,7 +36,7 @@ public:
 			{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv) },
 			{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal) }
 		};
-		return Shader::VertexInput{bindingDescriptions, attributeDescriptions};
+		return {bindingDescriptions, attributeDescriptions};
 	}
 
 	Vector3f m_position;
@@ -52,7 +52,7 @@ struct hash<acid::VertexDefault>
 {
 	size_t operator()(const acid::VertexDefault &vertex) const noexcept
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);
 		acid::Maths::HashCombine(seed, vertex.m_normal);

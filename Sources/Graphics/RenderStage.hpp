@@ -83,7 +83,7 @@ private:
 class ACID_EXPORT RenderArea
 {
 public:
-	explicit RenderArea(const Vector2ui &extent = Vector2ui(), const Vector2i &offset = Vector2ui()) :
+	explicit RenderArea(const Vector2ui &extent = {}, const Vector2i &offset = {}) :
 		m_extent{extent},
 		m_offset{offset},
 		m_aspectRatio{1.0f}

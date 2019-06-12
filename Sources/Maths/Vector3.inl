@@ -62,28 +62,28 @@ template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Add(const Vector3<K> &other) const
 {
-	return Vector3<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z);
+	return Vector3<decltype(m_x + other.m_x)>{m_x + other.m_x, m_y + other.m_y, m_z + other.m_z};
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Subtract(const Vector3<K> &other) const
 {
-	return Vector3<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z);
+	return Vector3<decltype(m_x - other.m_x)>{m_x - other.m_x, m_y - other.m_y, m_z - other.m_z};
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Multiply(const Vector3<K> &other) const
 {
-	return Vector3<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z);
+	return Vector3<decltype(m_x * other.m_x)>{m_x * other.m_x, m_y * other.m_y, m_z * other.m_z};
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Divide(const Vector3<K> &other) const
 {
-	return Vector3<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z);
+	return Vector3<decltype(m_x / other.m_x)>{m_x / other.m_x, m_y / other.m_y, m_z / other.m_z};
 }
 
 template<typename T>
@@ -115,7 +115,7 @@ template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Cross(const Vector3<K> &other) const
 {
-	return Vector3<decltype(m_x * other.m_x)>(m_y * other.m_z - m_z * other.m_y, other.m_x * m_z - other.m_z * m_x, m_x * other.m_y - m_y * other.m_x);
+	return Vector3<decltype(m_x * other.m_x)>{m_y *other.m_z - m_z * other.m_y, other.m_x *m_z - other.m_z * m_x, m_x *other.m_y - m_y * other.m_x};
 }
 
 template<typename T>
@@ -132,14 +132,14 @@ template<typename K>
 auto Vector3<T>::Rotate(const Vector3<K> &angle) const
 {
 	auto matrix{Matrix4::TransformationMatrix(Zero, angle, One)};
-	return matrix.Transform(Vector4f(*this));
+	return matrix.Transform(Vector4f{*this});
 }*/
 
 template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Scale(const K &scalar) const
 {
-	return Vector3<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar, m_z * scalar);
+	return Vector3<decltype(m_x * scalar)>{m_x *scalar, m_y *scalar, m_z *scalar};
 }
 
 template<typename T>
@@ -195,14 +195,14 @@ template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Min(const Vector3<K> &other)
 {
-	return Vector3<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z));
+	return Vector3<decltype(std::min(m_x, other.m_x))>{std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z)};
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::Max(const Vector3<K> &other)
 {
-	return Vector3<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z));
+	return Vector3<decltype(std::max(m_x, other.m_x))>{std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z)};
 }
 
 template<typename T>
@@ -242,7 +242,7 @@ auto Vector3<T>::CartesianToPolar() const
 	auto radius{std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z)};
 	auto theta{std::atan2(m_y, m_x)};
 	auto phi{std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z)};
-	return Vector3<decltype(radius)>(radius, theta, phi);
+	return Vector3<decltype(radius)>{radius, theta, phi};
 }
 
 template<typename T>
@@ -251,7 +251,7 @@ auto Vector3<T>::PolarToCartesian() const
 	auto x{m_x * std::sin(m_z) * std::cos(m_y)};
 	auto y{m_x * std::sin(m_z) * std::sin(m_y)};
 	auto z{m_x * std::cos(m_z)};
-	return Vector3<decltype(x)>(x, y, z);
+	return Vector3<decltype(x)>{x, y, z};
 }
 
 template<typename T>
@@ -281,14 +281,14 @@ template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_signed_v<U>, Vector3<T>> Vector3<T>::operator-() const
 {
-	return Vector3(-m_x, -m_y, -m_z);;
+	return {-m_x, -m_y, -m_z};
 }
 
 template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_integral_v<U>, Vector3<T>> Vector3<T>::operator~() const
 {
-	return Vector3(~m_x, ~m_y, ~m_z);
+	return {~m_x, ~m_y, ~m_z};
 }
 
 template<typename T>
@@ -354,25 +354,25 @@ constexpr Vector3<T> &Vector3<T>::operator/=(const Vector3<K> &other)
 template<typename T>
 constexpr Vector3<T> &Vector3<T>::operator+=(const T &other)
 {
-	return *this = Add(Vector3<T>(other));
+	return *this = Add(Vector3<T>{other});
 }
 
 template<typename T>
 constexpr Vector3<T> &Vector3<T>::operator-=(const T &other)
 {
-	return *this = Subtract(Vector3<T>(other));
+	return *this = Subtract(Vector3<T>{other});
 }
 
 template<typename T>
 constexpr Vector3<T> &Vector3<T>::operator*=(const T &other)
 {
-	return *this = Multiply(Vector3<T>(other));
+	return *this = Multiply(Vector3<T>{other});
 }
 
 template<typename T>
 constexpr Vector3<T> &Vector3<T>::operator/=(const T &other)
 {
-	return *this = Divide(Vector3<T>(other));
+	return *this = Divide(Vector3<T>{other});
 }
 
 template<typename K>
@@ -427,97 +427,97 @@ constexpr auto operator/(const Vector3<K> &left, const Vector3<J> &right)
 template<typename K, typename J>
 constexpr auto operator+(const K &left, const Vector3<J> &right)
 {
-	return Vector3<K>(left).Add(right);
+	return Vector3<K>{left}.Add(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const K &left, const Vector3<J> &right)
 {
-	return Vector3<K>(left).Subtract(right);
+	return Vector3<K>{left}.Subtract(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const K &left, const Vector3<J> &right)
 {
-	return Vector3<K>(left).Multiply(right);
+	return Vector3<K>{left}.Multiply(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const K &left, const Vector3<J> &right)
 {
-	return Vector3<K>(left).Divide(right);
+	return Vector3<K>{left}.Divide(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator+(const Vector3<K> &left, const J &right)
 {
-	return left.Add(Vector3<J>(right));
+	return left.Add(Vector3<J>{right});
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const Vector3<K> &left, const J &right)
 {
-	return left.Subtract(Vector3<J>(right));
+	return left.Subtract(Vector3<J>{right});
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const Vector3<K> &left, const J &right)
 {
-	return left.Multiply(Vector3<J>(right));
+	return left.Multiply(Vector3<J>{right});
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const Vector3<K> &left, const J &right)
 {
-	return left.Divide(Vector3<J>(right));
+	return left.Divide(Vector3<J>{right});
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator&(const Vector3<K> &left, const Vector3<J> &right)
 {
-	return Vector3<J>(left.m_x & right.m_x, left.m_y & right.m_y, left.m_z & right.m_z);
+	return {left.m_x & right.m_x, left.m_y & right.m_y, left.m_z & right.m_z};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator|(const Vector3<K> &left, const Vector3<J> &right)
 {
-	return Vector3<J>(left.m_x | right.m_x, left.m_y | right.m_y, left.m_z | right.m_z);
+	return {left.m_x | right.m_x, left.m_y | right.m_y, left.m_z | right.m_z};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator>>(const Vector3<K> &left, const Vector3<J> &right)
 {
-	return Vector3<J>(left.m_x >> right.m_x, left.m_y >> right.m_y, left.m_z >> right.m_z);
+	return {left.m_x >> right.m_x, left.m_y >> right.m_y, left.m_z >> right.m_z};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator<<(const Vector3<K> &left, const Vector3<J> &right)
 {
-	return Vector3<J>(left.m_x << right.m_x, left.m_y << right.m_y, left.m_z << right.m_z);
+	return {left.m_x << right.m_x, left.m_y << right.m_y, left.m_z << right.m_z};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator&(const Vector3<K> &left, const J &right)
 {
-	return Vector3<J>(left.m_x & right, left.m_y & right, left.m_z & right);
+	return {left.m_x & right, left.m_y & right, left.m_z & right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator|(const Vector3<K> &left, const J &right)
 {
-	return Vector3<J>(left.m_x | right, left.m_y | right, left.m_z | right);
+	return {left.m_x | right, left.m_y | right, left.m_z | right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator>>(const Vector3<K> &left, const J &right)
 {
-	return Vector3<J>(left.m_x >> right, left.m_y >> right, left.m_z >> right);
+	return {left.m_x >> right, left.m_y >> right, left.m_z >> right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector3<J>> operator<<(const Vector3<K> &left, const J &right)
 {
-	return Vector3<J>(left.m_x << right, left.m_y << right, left.m_z << right);
+	return {left.m_x << right, left.m_y << right, left.m_z << right};
 }
 }
 
@@ -528,7 +528,7 @@ struct hash<acid::Vector3<T>>
 {
 	size_t operator()(const acid::Vector3<T> &vector) const
 	{
-		size_t seed = 0;
+		size_t seed{};
 		acid::Maths::HashCombine(seed, vector.m_x);
 		acid::Maths::HashCombine(seed, vector.m_y);
 		acid::Maths::HashCombine(seed, vector.m_z);

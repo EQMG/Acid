@@ -11,7 +11,7 @@ class ACID_EXPORT ColliderConvexHull :
 	public Collider
 {
 public:
-	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = Transform());
+	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = {});
 
 	~ColliderConvexHull();
 

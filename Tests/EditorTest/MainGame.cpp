@@ -37,11 +37,11 @@ int main(int argc, char **argv)
 	using namespace test;
 
 	// Creates the engine.
-	auto engine = std::make_unique<Engine>(argv[0]);
+	auto engine{std::make_unique<Engine>(argv[0])};
 	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.
-	int32_t exitCode = engine->Run();
+	auto exitCode{engine->Run()};
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

@@ -239,7 +239,7 @@ void PipelineGraphics::CreateAttributes()
 
 	// TODO: Multisampled pipelines
 	//auto renderStage{Graphics::Get()->GetRenderStage(m_stage.first)};
-	bool multisampled = false; // renderStage->IsMultisampled(m_stage.second);
+	bool multisampled{}; // renderStage->IsMultisampled(m_stage.second);
 
 	m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 	m_multisampleState.rasterizationSamples = multisampled ? physicalDevice->GetMsaaSamples() : VK_SAMPLE_COUNT_1_BIT;
@@ -261,7 +261,7 @@ void PipelineGraphics::CreatePipeline()
 
 	std::vector<VkVertexInputBindingDescription> bindingDescriptions;
 	std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
-	uint32_t lastAttribute = 0;
+	uint32_t lastAttribute{};
 
 	for (const auto &vertexInput : m_vertexInputs)
 	{
@@ -272,7 +272,7 @@ void PipelineGraphics::CreatePipeline()
 
 		for (const auto &attribute : vertexInput.GetAttributeDescriptions())
 		{
-			/*bool shaderContains = false;
+			/*bool shaderContains{};
 
 			for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
 			{
@@ -340,7 +340,7 @@ void PipelineGraphics::CreatePipelineMrt()
 	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates;
 	blendAttachmentStates.reserve(attachmentCount);
 
-	for (uint32_t i = 0; i < attachmentCount; i++)
+	for (uint32_t i{}; i < attachmentCount; i++)
 	{
 		VkPipelineColorBlendAttachmentState blendAttachmentState{};
 		blendAttachmentState.blendEnable = VK_TRUE;

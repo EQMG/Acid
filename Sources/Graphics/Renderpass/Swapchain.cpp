@@ -4,7 +4,7 @@
 
 namespace acid
 {
-static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = { VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR, VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
+static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS{ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR, VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR, };
 
 Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
@@ -23,7 +23,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	auto graphicsFamily{logicalDevice->GetGraphicsFamily()};
 	auto presentFamily{logicalDevice->GetPresentFamily()};
 
-	uint32_t physicalPresentModeCount = 0;
+	uint32_t physicalPresentModeCount;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
 	std::vector<VkPresentModeKHR> physicalPresentModes{physicalPresentModeCount};
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, physicalPresentModes.data());
@@ -102,7 +102,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 
 	if (graphicsFamily != presentFamily)
 	{
-		std::array<uint32_t, 2> queueFamily = { graphicsFamily, presentFamily };
+		std::array<uint32_t, 2> queueFamily{graphicsFamily, presentFamily};
 		swapchainCreateInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 		swapchainCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 		swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
@@ -115,7 +115,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	m_imageViews.resize(m_imageCount);
 	Graphics::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &m_imageCount, m_images.data()));
 
-	for (uint32_t i = 0; i < m_imageCount; i++)
+	for (uint32_t i{}; i < m_imageCount; i++)
 	{
 		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 	}
@@ -143,8 +143,8 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 {
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
-		&m_activeImageIndex);
+	auto acquireResult{vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
+		&m_activeImageIndex)};
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR && acquireResult != VK_ERROR_OUT_OF_DATE_KHR)
 	{

@@ -14,8 +14,7 @@ MaterialTerrain::MaterialTerrain(std::shared_ptr<Image2d> imageR, std::shared_pt
 
 void MaterialTerrain::Start()
 {
-	m_pipelineMaterial = PipelineMaterial::Create({ 1, 0 },
-		PipelineGraphicsCreate({ "Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag" }, { VertexDefault::GetVertexInput() }));
+	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {VertexDefault::GetVertexInput()}});
 }
 
 void MaterialTerrain::Update()

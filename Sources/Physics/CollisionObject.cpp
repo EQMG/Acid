@@ -36,7 +36,7 @@ void CollisionObject::SetChildTransform(Collider *child, const Transform &transf
 		return;
 	}
 
-	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
+	for (int32_t i{}; i < compoundShape->getNumChildShapes(); i++)
 	{
 		if (compoundShape->getChildShape(i) == child->GetCollisionShape())
 		{
@@ -119,7 +119,7 @@ void CollisionObject::CreateShape(const bool &forceSingle)
 
 	auto compoundShape{new btCompoundShape{}};
 
-	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
+	for (int32_t i{}; i < compoundShape->getNumChildShapes(); i++)
 	{
 		compoundShape->removeChildShapeByIndex(i);
 	}

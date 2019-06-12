@@ -58,7 +58,7 @@ void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer comma
 uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
 	const VkMemoryPropertyFlags &requiredProperties)
 {
-	for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
+	for (uint32_t i{}; i < deviceMemoryProperties->memoryTypeCount; ++i)
 	{
 		if (memoryRequirements->memoryTypeBits & (1 << i))
 		{
@@ -100,7 +100,7 @@ void Instance::SetupLayers()
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
 	for (const auto &layerName : ValidationLayers)
 	{
-		bool layerFound = false;
+		bool layerFound{};
 
 		for (const auto &layerProperties : instanceLayerProperties)
 		{
@@ -132,7 +132,7 @@ void Instance::SetupExtensions()
 	// Sets up the extensions.
 	auto instanceExtensions{Window::Get()->GetInstanceExtensions()};
 
-	for (uint32_t i = 0; i < instanceExtensions.second; i++)
+	for (uint32_t i{}; i < instanceExtensions.second; i++)
 	{
 		m_instanceExtensions.emplace_back(instanceExtensions.first[i]);
 	}
@@ -152,9 +152,9 @@ void Instance::CreateInstance()
 {
 	VkApplicationInfo applicationInfo{};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	applicationInfo.pApplicationName = "Acid Application";
+	applicationInfo.pApplicationName = "Application"; // TODO: Push application name and version.
 	applicationInfo.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
-	applicationInfo.pEngineName = "Acid Engine";
+	applicationInfo.pEngineName = "Acid";
 	applicationInfo.engineVersion = VK_MAKE_VERSION(0, 13, 3);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 

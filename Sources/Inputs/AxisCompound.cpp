@@ -10,7 +10,7 @@ namespace acid
 
 float AxisCompound::GetAmount() const
 {
-	auto result{0.0f};
+	float result{};
 
 	for (const auto &axis : m_axes)
 	{

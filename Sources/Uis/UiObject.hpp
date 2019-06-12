@@ -79,9 +79,9 @@ public:
 
 	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
 
-	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
+	const std::optional<Vector4f> &GetScissor() const { return m_scissor; }
 
-	void SetScissor(const std::optional<Vector4i> &scissor) { m_scissor = scissor; }
+	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
 
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 
@@ -130,7 +130,7 @@ private:
 	bool m_enabled;
 	UiTransform m_transform;
 	std::optional<CursorStandard> m_cursorHover;
-	std::optional<Vector4i> m_scissor; 
+	std::optional<Vector4f> m_scissor; 
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;

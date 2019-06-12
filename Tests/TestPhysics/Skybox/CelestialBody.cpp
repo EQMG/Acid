@@ -25,27 +25,25 @@ void CelestialBody::Start()
 
 void CelestialBody::Update()
 {
-	auto &transform = GetParent()->GetLocalTransform();
-	auto componentLight = GetParent()->GetComponent<Light>();
+	auto &transform{GetParent()->GetLocalTransform()};
+	auto componentLight{GetParent()->GetComponent<Light>()};
 
 	switch (m_type)
 	{
 	case Type::Sun:
 	{
-		Vector3f sunPosition = World::Get()->GetLightDirection() * Vector3f { -6048.0f, -6048.0f, -6048.0f };
+		auto sunPosition{World::Get()->GetLightDirection() * Vector3f{-6048.0f, -6048.0f, -6048.0f}};
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform.SetPosition(sunPosition);
 
 		if (componentLight != nullptr)
 		{
-			auto sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
+			auto sunColour{SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor())};
 			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
 			componentLight->SetColour(sunColour);
 		}
 
-		auto filterLensflare = Graphics::Get()->GetSubrender<FilterLensflare>();
-
-		if (filterLensflare != nullptr)
+		if (auto filterLensflare{Graphics::Get()->GetSubrender<FilterLensflare>()}; filterLensflare != nullptr)
 		{
 			filterLensflare->SetSunPosition(transform.GetPosition());
 			filterLensflare->SetSunHeight(transform.GetPosition().m_y);
@@ -54,13 +52,13 @@ void CelestialBody::Update()
 		break;
 	case Type::Moon:
 	{
-		Vector3f moonPosition = World::Get()->GetLightDirection() * Vector3f{6048.0f, 6048.0f, 6048.0f};
+		auto moonPosition{World::Get()->GetLightDirection() * Vector3f{6048.0f, 6048.0f, 6048.0f}};
 		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform.SetPosition(moonPosition);
 
 		if (componentLight != nullptr)
 		{
-			auto moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
+			auto moonColour{MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor())};
 			componentLight->SetColour(moonColour);
 		}
 	}

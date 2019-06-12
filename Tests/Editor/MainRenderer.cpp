@@ -106,6 +106,6 @@ void MainRenderer::Update()
 		renderpassCreate1->GetViewport().SetScale({0.5f, 1.0f});
 	}
 
-	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
+	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(Key::I));
 }
 }

@@ -28,7 +28,7 @@ public:
 	class VertexInput
 	{
 	public:
-		explicit VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
+		VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
 			m_binding(0),
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions))

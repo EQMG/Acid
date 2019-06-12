@@ -150,7 +150,7 @@ size_t BaseFStream::length()
 
 PHYSFS_File *OpenWithMode(char const *filename, FileMode openMode)
 {
-	PHYSFS_File *file = NULL;
+	PHYSFS_File *file{};
 
 	switch (openMode)
 	{

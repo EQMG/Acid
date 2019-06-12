@@ -32,7 +32,7 @@ public:
 		ComponentCreate componentCreate;
 		componentCreate.m_create = []() -> Component *
 		{
-			return new T();
+			return new T{};
 		};
 		componentCreate.m_decode = [](const Metadata &metadata, Component *component) -> const Metadata &
 		{

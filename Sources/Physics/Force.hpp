@@ -16,7 +16,7 @@ public:
 	 * @param force The vector of the force is applied.
 	 * @param position The position offset from the centre of the shape to apply the force.
 	 */
-	explicit Force(const Vector3f &force, const Vector3f &position = Vector3f());
+	explicit Force(const Vector3f &force, const Vector3f &position = {});
 
 	/**
 	 * Creates a new force that times-out.
@@ -24,7 +24,7 @@ public:
 	 * @param time How long the force will be applied for.
 	 * @param position The position offset from the centre of the shape to apply the force.
 	 */
-	Force(const Vector3f &force, const Time &time, const Vector3f &position = Vector3f());
+	Force(const Vector3f &force, const Time &time, const Vector3f &position = {});
 
 	void Update();
 

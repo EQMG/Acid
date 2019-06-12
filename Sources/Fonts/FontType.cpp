@@ -8,7 +8,7 @@
 
 namespace acid
 {
-static const uint32_t MAX_VISIBLE_GLYPHS = 4096;
+static const uint32_t MAX_VISIBLE_GLYPHS{4096};
 
 std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 {
@@ -194,17 +194,17 @@ void FontType::LoadFont(const std::string &filename)
 		throw std::runtime_error("Freetype failed to set char size");
 	}
 
-	uint32_t totalPoints = 0;
-	uint32_t totalCells = 0;
+	uint32_t totalPoints{};
+	uint32_t totalCells{};
 
-	uint32_t glyphCount = face->num_glyphs;
-	m_charmap = std::map<wchar_t, uint32_t>();
+	auto glyphCount{static_cast<uint32_t>(face->num_glyphs)};
+	m_charmap = {};
 	m_glyphInfos = std::vector<HostGlyphInfo>(glyphCount);
 	std::vector<Outline> outlines(glyphCount);
 
 	FT_UInt glyphIndex;
 	auto charcode{FT_Get_First_Char(face, &glyphIndex)};
-	uint32_t i = 0;
+	uint32_t i{};
 
 	while (glyphIndex != 0)
 	{
@@ -250,10 +250,10 @@ void FontType::LoadFont(const std::string &filename)
 	auto cells{reinterpret_cast<uint32_t *>(glyphData + m_glyphCellsOffset)};
 	auto points{reinterpret_cast<Vector2f *>(glyphData + m_glyphPointsOffset)};
 
-	uint32_t pointOffset = 0;
-	uint32_t cellOffset = 0;
+	uint32_t pointOffset{};
+	uint32_t cellOffset{};
 
-	for (uint32_t j = 0; j < m_glyphInfos.size(); j++)
+	for (uint32_t j{}; j < m_glyphInfos.size(); j++)
 	{
 		auto o{&outlines[j]};
 		auto dgi{&deviceGlyphInfos[j]};

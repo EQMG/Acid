@@ -291,7 +291,7 @@ private:
 	UniformHandler m_uniformObject;
 
 	std::unique_ptr<Model> m_model;
-	uint32_t m_numberLines = 0;
+	uint32_t m_numberLines{};
 	Vector2f m_lastSize;
 
 	float m_fontSize;

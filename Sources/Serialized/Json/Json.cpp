@@ -20,10 +20,10 @@ void Json::Load(std::istream *inStream)
 	ClearAttributes();
 
 	auto topSection{std::make_unique<Section>(nullptr, "", "")};
-	Section *currentSection = nullptr;
+	Section *currentSection{};
 	std::stringstream summation;
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream->peek() != -1)
@@ -158,7 +158,7 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 {
 	std::stringstream indents;
 
-	for (int32_t i = 0; i < indentation; i++)
+	for (int32_t i{}; i < indentation; i++)
 	{
 		indents << "  ";
 	}

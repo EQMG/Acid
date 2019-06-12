@@ -11,12 +11,12 @@ Entity::Entity(const Transform &transform) :
 {
 }
 
-Entity::Entity(const std::string &filename, const Transform &transform) :
-	m_localTransform{transform}
+Entity::Entity(const Transform &transform, const std::string &filename) :
+	m_localTransform{transform},
+	m_name{FileSystem::FileName(filename)}
 {
 	auto entityPrefab{EntityPrefab::Create(filename)};
 	*entityPrefab >> *this;
-	m_name = FileSystem::FileName(filename);
 }
 
 Entity::~Entity()

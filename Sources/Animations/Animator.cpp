@@ -44,7 +44,7 @@ std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const
 	auto previousFrame{allFrames[0]};
 	auto nextFrame{allFrames[0]};
 
-	for (uint32_t i = 1; i < allFrames.size(); i++)
+	for (uint32_t i{1}; i < allFrames.size(); i++)
 	{
 		nextFrame = allFrames[i];
 

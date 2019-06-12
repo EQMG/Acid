@@ -23,9 +23,9 @@ void OverlayDebug::UpdateObject()
 
 	if (World::Get() != nullptr)
 	{
-		auto timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
-		auto hour = static_cast<int32_t>(timePercent);
-		auto minute = static_cast<int32_t>((timePercent - hour) * 60.0f);
+		auto timePercent{(World::Get()->GetDayFactor() * 24.0f) + 6.0f};
+		auto hour{static_cast<int32_t>(timePercent)};
+		auto minute{static_cast<int32_t>((timePercent - hour) * 60.0f)};
 
 		if (hour > 24)
 		{

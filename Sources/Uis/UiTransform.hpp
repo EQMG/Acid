@@ -50,7 +50,7 @@ public:
 	 * @param anchor The reference anchor where the rectangle will be placed relative in the parent.
 	 * @param position The pixel offset from the anchor position.
 	 */
-	UiTransform(const Vector2i &size, const Vector2f &anchor = UiAnchor::LeftTop, const Vector2i &position = {});
+	UiTransform(const Vector2f &size, const Vector2f &anchor = UiAnchor::LeftTop, const Vector2f &position = {});
 
 	/**
 	 * Creates a new UiTransform.
@@ -59,7 +59,7 @@ public:
 	 * @param anchor1 The anchor inside of this rectangle.
 	 * @param position The pixel offset from the anchor position.
 	 */
-	UiTransform(const Vector2i &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2i &position);
+	UiTransform(const Vector2f &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2f &position);
 
 	/**
 	 * Creates a new UiTransform.

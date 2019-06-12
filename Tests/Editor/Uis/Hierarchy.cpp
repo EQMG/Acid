@@ -6,7 +6,7 @@ namespace test
 {
 int32_t GetNextY()
 {
-	static uint32_t i = 0;
+	static uint32_t i{};
 	return i++ * (UiInputButton::Size.m_y + 6);
 }
 

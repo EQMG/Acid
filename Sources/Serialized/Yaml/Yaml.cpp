@@ -21,9 +21,9 @@ void Yaml::Load(std::istream *inStream)
 
 	auto topSection{std::make_unique<Section>(nullptr, "", 0, false)};
 	auto currentSection{topSection.get()};
-	uint32_t lastIndentation = 0;
+	uint32_t lastIndentation{};
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream->peek() != -1)
@@ -37,9 +37,9 @@ void Yaml::Load(std::istream *inStream)
 			continue;
 		}
 
-		uint32_t indentation = 0;
-		uint32_t arrayLevels = 0;
-		bool comment = false;
+		uint32_t indentation{};
+		uint32_t arrayLevels{};
+		bool comment{};
 
 		for (auto it{linebuf.begin()}; it != linebuf.end(); ++it)
 		{
@@ -70,7 +70,7 @@ void Yaml::Load(std::istream *inStream)
 
 		if (indentation < lastIndentation)
 		{
-			for (uint32_t i = 0; i < (lastIndentation - indentation) / 2; i++)
+			for (uint32_t i{}; i < (lastIndentation - indentation) / 2; i++)
 			{
 				if (currentSection->m_parent != nullptr)
 				{
@@ -80,7 +80,7 @@ void Yaml::Load(std::istream *inStream)
 		}
 		else if (indentation > lastIndentation)
 		{
-			for (uint32_t i = 0; i < ((indentation - lastIndentation) / 2) - 1; i++)
+			for (uint32_t i{}; i < ((indentation - lastIndentation) / 2) - 1; i++)
 			{
 				auto section{new Section(currentSection, "", lastIndentation + (i * 2), arrayLevels)};
 				currentSection->m_children.emplace_back(section);
@@ -127,7 +127,7 @@ void Yaml::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 	auto name{String::Trim(source->m_content.substr(0, source->m_content.find(':')))};
 	auto value{String::Trim(String::ReplaceFirst(source->m_content, name, ""))};
 	value = String::Trim(value.erase(0, 1));
-	bool singleArray = false;
+	bool singleArray{};
 
 	if (source->m_arrayLevels != 0 && value.empty())
 	{
@@ -167,12 +167,12 @@ void Yaml::AppendData(const Metadata *source, const Metadata *parent, std::ostre
 {
 	std::stringstream indents;
 
-	for (int32_t i = 0; i < indentation; i++)
+	for (int32_t i{}; i < indentation; i++)
 	{
 		indents << "  ";
 	}
 
-	bool wroteIntents = false;
+	bool wroteIntents{};
 
 	if (parent != nullptr && !(parent->GetChildren()[0].get() == source && parent->GetName().empty() && parent->GetValue().empty()))
 	{

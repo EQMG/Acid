@@ -42,7 +42,7 @@ public:
 	 * It should be used for optimization purposes, and only if you got that representation from IpAddress::toInteger().
 	 * @param address 4 bytes of the address packed into a 32-bits integer. 
 	 **/
-	explicit IpAddress(const uint32_t &address);
+	IpAddress(const uint32_t &address);
 
 	/**
 	 * Get a string representation of the address.

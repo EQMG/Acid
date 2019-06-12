@@ -2,20 +2,12 @@
 
 namespace acid
 {
-const Quaternion Quaternion::Zero = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
-const Quaternion Quaternion::One = Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
-const Quaternion Quaternion::PositiveInfinity = Quaternion(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(),
-	+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
-const Quaternion Quaternion::NegativeInfinity = Quaternion(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
-	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
-
-Quaternion::Quaternion() :
-	m_x{0.0f},
-	m_y{0.0f},
-	m_z{0.0f},
-	m_w{1.0f}
-{
-}
+const Quaternion Quaternion::Zero{0.0f, 0.0f, 0.0f, 0.0f};
+const Quaternion Quaternion::One{1.0f, 1.0f, 1.0f, 1.0f};
+const Quaternion Quaternion::PositiveInfinity{+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(),
+	+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity()};
+const Quaternion Quaternion::NegativeInfinity{-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
+	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()};
 
 Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) :
 	m_x{x},
@@ -25,11 +17,7 @@ Quaternion::Quaternion(const float &x, const float &y, const float &z, const flo
 {
 }
 
-Quaternion::Quaternion(const Vector3f &source) :
-	m_x{0.0f},
-	m_y{0.0f},
-	m_z{0.0f},
-	m_w{1.0f}
+Quaternion::Quaternion(const Vector3f &source)
 {
 	auto sx{std::sin(source.m_x * 0.5f)};
 	auto cx{Maths::CosFromSin(sx, source.m_x * 0.5f)};
@@ -109,23 +97,23 @@ Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vecto
 
 Quaternion Quaternion::Add(const Quaternion &other) const
 {
-	return Quaternion(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w);
+	return {m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w};
 }
 
 Quaternion Quaternion::Subtract(const Quaternion &other) const
 {
-	return Quaternion(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w);
+	return {m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w};
 }
 
 Quaternion Quaternion::Multiply(const Quaternion &other) const
 {
-	return Quaternion(m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y, m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
-		m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x, m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z);
+	return {m_x * other.m_w + m_w * other.m_x + m_y * other.m_z - m_z * other.m_y, m_y * other.m_w + m_w * other.m_y + m_z * other.m_x - m_x * other.m_z,
+		m_z * other.m_w + m_w * other.m_z + m_x * other.m_y - m_y * other.m_x, m_w * other.m_w - m_x * other.m_x - m_y * other.m_y - m_z * other.m_z};
 }
 
 Vector3f Quaternion::Multiply(const Vector3f &other) const
 {
-	auto q{Vector3f(m_x, m_y, m_z)};
+	Vector3f q{m_x, m_y, m_z};
 	auto cross1{q.Cross(other)};
 	auto cross2{q.Cross(cross1)};
 	return other + 2.0f * (cross1 * m_w + cross2);
@@ -135,8 +123,8 @@ Quaternion Quaternion::MultiplyInverse(const Quaternion &other) const
 {
 	auto n{other.LengthSquared()};
 	n = n == 0.0f ? n : 1.0f / n;
-	return Quaternion((m_x * other.m_w - m_w * other.m_x - m_y * other.m_z + m_z * other.m_y) * n, (m_y * other.m_w - m_w * other.m_y - m_z * other.m_x + m_x * other.m_z) * n,
-		(m_z * other.m_w - m_w * other.m_z - m_x * other.m_y + m_y * other.m_x) * n, (m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z) * n);
+	return {(m_x * other.m_w - m_w * other.m_x - m_y * other.m_z + m_z * other.m_y) * n, (m_y * other.m_w - m_w * other.m_y - m_z * other.m_x + m_x * other.m_z) * n,
+		(m_z * other.m_w - m_w * other.m_z - m_x * other.m_y + m_y * other.m_x) * n, (m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z) * n};
 }
 
 float Quaternion::Dot(const Quaternion &other) const
@@ -175,13 +163,13 @@ Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression) 
 
 Quaternion Quaternion::Scale(const float &scalar) const
 {
-	return Quaternion(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
+	return {m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar};
 }
 
 Quaternion Quaternion::Normalize() const
 {
 	auto l{Length()};
-	return Quaternion(m_x / l, m_y / l, m_z / l, m_w / l);
+	return {m_x / l, m_y / l, m_z / l, m_w / l};
 }
 
 float Quaternion::LengthSquared() const
@@ -281,7 +269,7 @@ bool Quaternion::operator==(const Quaternion &other) const
 
 Quaternion Quaternion::operator-() const
 {
-	return Quaternion(-m_x, -m_y, -m_z, -m_w);
+	return {-m_x, -m_y, -m_z, -m_w};
 }
 
 const float &Quaternion::operator[](const uint32_t &index) const

@@ -16,7 +16,7 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 	m_noise{Resources::Get()->GetThreadPool().Enqueue(ComputeNoise, SSAO_NOISE_DIM)},
 	m_kernel(SSAO_KERNEL_SIZE)
 {
-	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
+	for (uint32_t i{}; i < SSAO_KERNEL_SIZE; ++i)
 	{
 		Vector3f sample{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f)};
 		sample = sample.Normalize();
@@ -68,9 +68,9 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 {
 	std::vector<Vector3f> ssaoNoise(size * size);
 
-	for (uint32_t i = 0; i < size * size; i++)
+	for (uint32_t i{}; i < size * size; i++)
 	{
-		Vector3f noise = Vector3f(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
+		Vector3f noise{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f}; // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
 		noise = noise.Normalize();
 		ssaoNoise[i] = noise;
 	}
@@ -82,8 +82,8 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 	// Saves the noise Image.
 	/*std::string filename = std::filesystem::current_path() / "SSAO_Noise.png";
 	FileSystem::ClearFile(filename);
-	uint32_t width = 0;
-	uint32_t height = 0;
+	uint32_t width;
+	uint32_t height;
 	auto pixels{noiseImage->GetPixels(width, height, 1)};
 	Image::WritePixels(filename, pixels.get(), width, height);*/
 #endif

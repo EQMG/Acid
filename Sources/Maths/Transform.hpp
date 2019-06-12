@@ -16,17 +16,9 @@ public:
 	 * Creates a new transform.
 	 * @param position The position.
 	 * @param rotation The rotation.
-	 * @param scaling The scale.
-	 */
-	explicit Transform(const Vector3f &position = Vector3f(), const Vector3f &rotation = Vector3f(), const Vector3f &scaling = Vector3f(1.0f));
-
-	/**
-	 * Creates a new transform.
-	 * @param position The position.
-	 * @param rotation The rotation.
 	 * @param scale The scale.
 	 */
-	Transform(const Vector3f &position, const Vector3f &rotation, const float &scale);
+	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = {1.0f});
 
 	/**
 	 * Multiplies this transform with another transform.
@@ -45,9 +37,9 @@ public:
 
 	void SetRotation(const Vector3f &rotation);
 
-	const Vector3f &GetScaling() const { return m_scaling; }
+	const Vector3f &GetScale() const { return m_scale; }
 
-	void SetScaling(const Vector3f &scaling);
+	void SetScale(const Vector3f &scale);
 
 	const bool &IsDirty() const { return m_dirty; }
 
@@ -72,7 +64,7 @@ public:
 private:
 	Vector3f m_position;
 	Vector3f m_rotation;
-	Vector3f m_scaling;
+	Vector3f m_scale;
 	mutable Matrix4 m_worldMatrix;
 	mutable bool m_dirty;
 };

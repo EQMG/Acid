@@ -56,14 +56,14 @@ public:
 		float m_advanceX;
 	};
 
-	static constexpr uint32_t PadTop = 0;
-	static constexpr uint32_t PadLeft = 1;
-	static constexpr uint32_t PadBottom = 2;
-	static constexpr uint32_t PadRight = 3;
-	static constexpr int32_t DesiredPassing = 8;
+	static constexpr uint32_t PadTop{0};
+	static constexpr uint32_t PadLeft{1};
+	static constexpr uint32_t PadBottom{2};
+	static constexpr uint32_t PadRight{3};
+	static constexpr int32_t DesiredPassing{8};
 
-	static constexpr float LineHeight = 0.03f;
-	static constexpr int32_t SpaceAscii = 32;
+	static constexpr float LineHeight{0.03f};
+	static constexpr int32_t SpaceAscii{32};
 
 	/**
 	 * Creates a new meta file.

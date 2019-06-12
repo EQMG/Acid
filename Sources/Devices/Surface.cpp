@@ -16,7 +16,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 
 	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, m_surface, &m_capabilities));
 
-	uint32_t surfaceFormatCount = 0;
+	uint32_t surfaceFormatCount{};
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, nullptr);
 	std::vector<VkSurfaceFormatKHR> surfaceFormats{surfaceFormatCount};
 	vkGetPhysicalDeviceSurfaceFormatsKHR(*m_physicalDevice, m_surface, &surfaceFormatCount, surfaceFormats.data());
@@ -30,7 +30,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 	{
 		// Iterate over the list of available surface format and
 		// check for the presence of VK_FORMAT_B8G8R8A8_UNORM
-		bool found_B8G8R8A8_UNORM = false;
+		bool found_B8G8R8A8_UNORM{};
 
 		for (auto &surfaceFormat : surfaceFormats)
 		{

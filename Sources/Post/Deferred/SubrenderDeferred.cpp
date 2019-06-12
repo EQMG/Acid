@@ -12,7 +12,7 @@
 
 namespace acid
 {
-static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
+static const uint32_t MAX_LIGHTS{32}; // TODO: Make configurable.
 
 SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	Subrender{pipelineStage},
@@ -42,7 +42,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 	// Updates uniforms.
 	std::vector<DeferredLight> deferredLights{MAX_LIGHTS};
-	uint32_t lightCount = 0;
+	uint32_t lightCount{};
 
 	auto sceneLights{Scenes::Get()->GetStructure()->QueryComponents<Light>()};
 
@@ -190,8 +190,8 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
-	auto prefilteredCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
-		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
+	auto prefilteredCubemap{std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
+		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true)};
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer{true, VK_QUEUE_COMPUTE_BIT};
@@ -201,9 +201,9 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	PushHandler pushHandler{*compute.GetShader()->GetUniformBlock("PushObject")};
 
 	// TODO: Use image barriers between rendering (single command buffer), rework write descriptor passing. Image class also needs a restructure.
-	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
+	for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
-		VkImageView levelView = VK_NULL_HANDLE;
+		VkImageView levelView{VK_NULL_HANDLE};
 		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 6, 0);
 
 		commandBuffer.Begin();
@@ -240,7 +240,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	}
 
 #if defined(ACID_VERBOSE)
-	/*for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
+	/*for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)

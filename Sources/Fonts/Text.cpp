@@ -69,10 +69,10 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 
 	auto scissor{GetScissor()};
 	VkRect2D scissorRect{};
-	scissorRect.offset.x = scissor ? scissor->m_x : 0;
-	scissorRect.offset.y = scissor ? scissor->m_y : 0;
-	scissorRect.extent.width = scissor ? scissor->m_z : Window::Get()->GetSize().m_x;
-	scissorRect.extent.height = scissor ? scissor->m_w : Window::Get()->GetSize().m_y;
+	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
+	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;
+	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->m_z) : Window::Get()->GetSize().m_x;
+	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->m_w) : Window::Get()->GetSize().m_y;
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
@@ -83,7 +83,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 void Text::SetFontSize(const float &fontSize)
 {
 	m_fontSize = fontSize;
-	m_lastSize = Vector2f{};
+	m_lastSize = {};
 }
 
 void Text::SetString(const std::string &string)
@@ -196,7 +196,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	auto formattedText{String::ReplaceAll(m_string, "\t", "	")};
 	auto textLines{String::Split(formattedText, "\n", true)};
 
-	for (uint32_t i = 0; i < textLines.size(); i++)
+	for (uint32_t i{}; i < textLines.size(); i++)
 	{
 		if (textLines.at(i).empty())
 		{
@@ -264,8 +264,8 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 	std::vector<VertexDefault> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
-	auto cursorX{0.0f};
-	auto cursorY{0.0f};
+	float cursorX{};
+	float cursorY{};
 	auto lineOrder{static_cast<int32_t>(lines.size())};
 
 	for (const auto &line : lines)

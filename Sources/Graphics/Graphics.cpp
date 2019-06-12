@@ -29,7 +29,7 @@ Graphics::~Graphics()
 
 	vkDestroyPipelineCache(*m_logicalDevice, m_pipelineCache, nullptr);
 
-	for (size_t i = 0; i < m_flightFences.size(); i++)
+	for (size_t i{}; i < m_flightFences.size(); i++)
 	{
 		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
@@ -242,7 +242,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 
 	if (m_flightFences.size() != m_swapchain->GetImageCount())
 	{
-		for (size_t i = 0; i < m_flightFences.size(); i++)
+		for (std::size_t i{}; i < m_flightFences.size(); i++)
 		{
 			vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 			vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
@@ -261,7 +261,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-		for (size_t i = 0; i < m_flightFences.size(); i++)
+		for (std::size_t i{}; i < m_flightFences.size(); i++)
 		{
 			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
 

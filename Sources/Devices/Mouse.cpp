@@ -13,7 +13,7 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePosition = Vector2d(xpos, ypos);
+	Mouse::Get()->m_mousePosition = {xpos, ypos};
 	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
 }
 
@@ -25,7 +25,7 @@ void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-	Mouse::Get()->m_mouseWheelDelta = Vector2d(yoffset, yoffset);
+	Mouse::Get()->m_mouseWheelDelta = {yoffset, yoffset};
 	Mouse::Get()->m_onScroll(Mouse::Get()->m_mouseWheelDelta);
 }
 
@@ -33,7 +33,7 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 {
 	std::vector<std::string> files{static_cast<uint32_t>(count)};
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(count); i++)
+	for (uint32_t i{}; i < static_cast<uint32_t>(count); i++)
 	{
 		files[i] = paths[i];
 	}

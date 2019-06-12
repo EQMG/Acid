@@ -21,11 +21,11 @@ void Xml::Load(std::istream *inStream)
 	ClearAttributes();
 
 	auto topNode{std::make_unique<Node>(nullptr, "", "")};
-	Node *currentSection = nullptr;
+	Node *currentSection{};
 	std::stringstream summation;
-	bool end = false;
+	bool end{};
 
-	size_t lineNum = 0;
+	std::size_t lineNum{};
 	std::string linebuf;
 
 	while (inStream->peek() != -1)
@@ -201,7 +201,7 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 {
 	std::stringstream indents;
 
-	for (int32_t i = 0; i < indentation; i++)
+	for (int32_t i{}; i < indentation; i++)
 	{
 		indents << "  ";
 	}

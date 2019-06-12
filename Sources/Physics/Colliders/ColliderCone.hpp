@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCone :
 	public Collider
 {
 public:
-	explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = Transform());
+	explicit ColliderCone(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCone();
 

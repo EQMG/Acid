@@ -88,7 +88,7 @@ void HttpResponse::Parse(const std::string &data)
 			std::istreambuf_iterator<char> it{in};
 			std::istreambuf_iterator<char> itEnd;
 
-			for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++)
+			for (std::size_t i{}; ((i < length) && (it != itEnd)); i++)
 			{
 				m_body.push_back(*it++);
 			}
