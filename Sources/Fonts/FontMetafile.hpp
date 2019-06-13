@@ -69,11 +69,11 @@ public:
 	 * Creates a new meta file.
 	 * @param filename The font file to load from.
 	 */
-	explicit FontMetafile(std::string filename);
+	explicit FontMetafile(std::filesystem::path filename);
 
 	std::optional<Character> GetCharacter(const int32_t &ascii) const;
 
-	const std::string &GetFileName() const { return m_filename; }
+	const std::filesystem::path &GetFilename() const { return m_filename; }
 
 	const float &GetSpaceWidth() const { return m_spaceWidth; }
 
@@ -125,7 +125,7 @@ private:
 	std::map<int32_t, Character> m_characters;
 	std::map<std::string, std::string> m_values;
 
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	float m_verticalPerPixelSize{};
 	float m_horizontalPerPixelSize{};
 	int32_t m_imageWidth{};

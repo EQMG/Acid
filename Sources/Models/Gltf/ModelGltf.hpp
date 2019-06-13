@@ -24,14 +24,14 @@ public:
 	 * @param filename The file to load the GLTF model from.
 	 * @return The GLTF model with the requested values.
 	 */
-	static std::shared_ptr<ModelGltf> Create(const std::string &filename);
+	static std::shared_ptr<ModelGltf> Create(const std::filesystem::path &filename);
 
 	/**
 	 * Creates a new GLTF model.
 	 * @param filename The file to load the GLTF model from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelGltf#Load} can be called later.
 	 */
-	explicit ModelGltf(std::string filename, const bool &load = true);
+	explicit ModelGltf(std::filesystem::path filename, const bool &load = true);
 
 	void Load() override;
 
@@ -43,7 +43,7 @@ private:
 	//struct Node;
 	//struct Skin;
 
-	std::string m_filename;
+	std::filesystem::path m_filename;
 
 	//std::vector<Node *> nodes;
 	//std::vector<Node *> linearNodes;

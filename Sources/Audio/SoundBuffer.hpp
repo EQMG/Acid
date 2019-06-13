@@ -25,20 +25,20 @@ public:
 	 * @param filename The file to load the sound buffer from.
 	 * @return The sound buffer with the requested values.
 	 */
-	static std::shared_ptr<SoundBuffer> Create(const std::string &filename);
+	static std::shared_ptr<SoundBuffer> Create(const std::filesystem::path &filename);
 
 	/**
 	 * Creates a new sound buffer.
 	 * @param filename The file to load the sound buffer from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link SoundBuffer#Load} can be called later.
 	 */
-	explicit SoundBuffer(std::string filename, const bool &load = true);
+	explicit SoundBuffer(std::filesystem::path filename, const bool &load = true);
 
 	~SoundBuffer();
 
 	void Load() override;
 
-	const std::string &GetFilename() const { return m_filename; };
+	const std::filesystem::path &GetFilename() const { return m_filename; };
 
 	const uint32_t &GetBuffer() const { return m_buffer; }
 
@@ -47,11 +47,11 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
 
 private:
-	static uint32_t LoadBufferWav(const std::string &filename);
+	static uint32_t LoadBufferWav(const std::filesystem::path &filename);
 
-	static uint32_t LoadBufferOgg(const std::string &filename);
+	static uint32_t LoadBufferOgg(const std::filesystem::path &filename);
 
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	uint32_t m_buffer{};
 };
 }

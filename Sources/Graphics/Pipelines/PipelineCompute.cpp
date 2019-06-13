@@ -5,7 +5,7 @@
 
 namespace acid
 {
-PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines, const bool &pushDescriptors) :
+PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines, const bool &pushDescriptors) :
 	m_shaderStage{std::move(shaderStage)},
 	m_defines{std::move(defines)},
 	m_pushDescriptors{pushDescriptors},
@@ -25,7 +25,7 @@ PipelineCompute::PipelineCompute(std::string shaderStage, std::vector<Shader::De
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
 	//Log::Out("%s", m_shader->ToString());
-	Log::Out("Pipeline compute '%s' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Pipeline compute '%ls' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

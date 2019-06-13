@@ -7,7 +7,7 @@ namespace acid
 {
 const std::vector<VkDynamicState> DYNAMIC_STATES{ VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
 
-PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
+PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
 	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
 	const bool &pushDescriptors) :
 	m_stage{std::move(stage)},
@@ -51,7 +51,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::string> shaderS
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
 	//Log::Out("%s\n", m_shader->ToString());
-	Log::Out("Pipeline graphics '%s' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Pipeline graphics '%ls' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

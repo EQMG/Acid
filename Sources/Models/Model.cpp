@@ -10,7 +10,7 @@ std::shared_ptr<Model> Model::Create(const Metadata &metadata)
 	return Scenes::Get()->GetModelRegister().Create(metadata);
 }
 
-std::shared_ptr<Model> Model::Create(const std::string &filename)
+std::shared_ptr<Model> Model::Create(const std::filesystem::path &filename)
 {
 	return Scenes::Get()->GetModelRegister().Create(filename);
 }

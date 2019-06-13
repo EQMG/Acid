@@ -20,7 +20,7 @@ public:
 	 * @param shaderStages The pipelines shader stages.
 	 * @param defines A list of names that will be added as a define.
 	 */
-	PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::string> &shaderStages, const std::vector<Shader::Define> &defines = {});
+	PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::filesystem::path> &shaderStages, const std::vector<Shader::Define> &defines = {});
 
 	virtual ~PostFilter() = default;
 

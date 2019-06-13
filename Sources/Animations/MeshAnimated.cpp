@@ -8,7 +8,7 @@
 
 namespace acid
 {
-MeshAnimated::MeshAnimated(std::string filename) :
+MeshAnimated::MeshAnimated(std::filesystem::path filename) :
 	m_filename{std::move(filename)}
 {
 	Load();

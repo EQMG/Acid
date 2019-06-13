@@ -80,12 +80,10 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
 
 #if defined(ACID_VERBOSE)
 	// Saves the noise Image.
-	/*std::string filename = std::filesystem::current_path() / "SSAO_Noise.png";
-	FileSystem::ClearFile(filename);
-	uint32_t width;
-	uint32_t height;
-	auto pixels{noiseImage->GetPixels(width, height, 1)};
-	Image::WritePixels(filename, pixels.get(), width, height);*/
+	/*auto filename{"SSAO_Noise.png"};
+	Vector2ui extent;
+	auto pixels{noiseImage->GetPixels(extent, 1)};
+	Image::WritePixels(filename, pixels.get(), extent);*/
 #endif
 
 	return noiseImage;

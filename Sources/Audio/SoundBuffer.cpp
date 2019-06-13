@@ -6,7 +6,6 @@
 #include <al.h>
 #endif
 #include "Files/Files.hpp"
-#include "Files/FileSystem.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.c"
@@ -29,7 +28,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename)
 {
 	SoundBuffer temp{filename, false};
 	Metadata metadata;
@@ -37,7 +36,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::string &filename)
 	return Create(metadata);
 }
 
-SoundBuffer::SoundBuffer(std::string filename, const bool &load) :
+SoundBuffer::SoundBuffer(std::filesystem::path filename, const bool &load) :
 	m_filename{std::move(filename)}
 {
 	if (load)
@@ -58,7 +57,7 @@ void SoundBuffer::Load()
 		return;
 	}
 
-	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
+	auto fileExt{m_filename.extension().string()};
 
 	if (fileExt == ".wav")
 	{
@@ -70,7 +69,7 @@ void SoundBuffer::Load()
 	}
 }
 
-uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
+uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart{Time::Now()};
@@ -143,12 +142,12 @@ uint32_t SoundBuffer::LoadBufferWav(const std::string &filename)
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Sound WAV '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Sound WAV '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }
 
-uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
+uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart{Time::Now()};
@@ -181,7 +180,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::string &filename)
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Sound OGG '%s' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Sound OGG '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }

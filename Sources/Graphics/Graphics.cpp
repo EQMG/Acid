@@ -2,7 +2,6 @@
 
 #include <SPIRV/GlslangToSpv.h>
 #include "Devices/Window.hpp"
-#include "Files/FileSystem.hpp"
 #include "Subrender.hpp"
 
 namespace acid

@@ -76,13 +76,13 @@ public:
 	 * Adds an file search path.
 	 * @param path The path to add.
 	 */
-	void AddSearchPath(const std::filesystem::path &path);
+	void AddSearchPath(const std::string &path);
 
 	/**
 	 * Removes a file search path.
 	 * @param path The path to remove.
 	 */
-	void RemoveSearchPath(const std::filesystem::path &path);
+	void RemoveSearchPath(const std::string &path);
 
 	/**
 	 * Clears all file search paths.
@@ -120,6 +120,6 @@ public:
 	static std::istream &SafeGetLine(std::istream &is, std::string &t);
 
 private:
-	std::vector<std::filesystem::path> m_searchPaths;
+	std::vector<std::string> m_searchPaths;
 };
 }

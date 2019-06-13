@@ -26,7 +26,7 @@ std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<FontType> FontType::Create(const std::string &filename, const std::string &style)
+std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, const std::string &style)
 {
 	FontType temp{filename, style, false};
 	Metadata metadata;
@@ -34,7 +34,7 @@ std::shared_ptr<FontType> FontType::Create(const std::string &filename, const st
 	return Create(metadata);
 }
 
-FontType::FontType(std::string filename, std::string style, const bool &load) :
+FontType::FontType(std::filesystem::path filename, std::string style, const bool &load) :
 	m_filename{std::move(filename)},
 	m_style{std::move(style)}
 {
@@ -139,9 +139,9 @@ void FontType::Load()
 		return;
 	}
 
-	m_image = Image2d::Create(m_filename + "/" + m_style + ".png");
-	m_metadata = std::make_unique<FontMetafile>(m_filename + "/" + m_style + ".fnt");
-	LoadFont(m_filename + "/" + m_style + ".ttf");
+	m_image = Image2d::Create(m_filename / (m_style + ".png"));
+	m_metadata = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
+	LoadFont(m_filename / (m_style + ".ttf"));
 }
 
 const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
@@ -163,7 +163,7 @@ uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
 	return (value + alignment - 1) / alignment * alignment;
 }
 
-void FontType::LoadFont(const std::string &filename)
+void FontType::LoadFont(const std::filesystem::path &filename)
 {
 	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
 

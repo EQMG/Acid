@@ -24,7 +24,7 @@ public:
 	 * @param transform The objects initial world position, rotation, and scale.
 	 * @param filename The file to load the component data from.
 	 */
-	Entity(const Transform &transform, const std::string &filename);
+	Entity(const Transform &transform, const std::filesystem::path &filename);
 
 	~Entity();
 

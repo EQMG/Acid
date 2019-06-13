@@ -1,6 +1,5 @@
 #include "ModelRegister.hpp"
 
-#include "Files/FileSystem.hpp"
 #include "Gltf/ModelGltf.hpp"
 #include "Obj/ModelObj.hpp"
 #include "Shapes/ModelCube.hpp"
@@ -46,9 +45,9 @@ std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 	return ((*it).second)(metadata);
 }
 
-std::shared_ptr<Model> ModelRegister::Create(const std::string &filename) const
+std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filename) const
 {
-	auto fileExt{String::Lowercase(FileSystem::FileSuffix(filename))};
+	auto fileExt{filename.extension().string()};
 	auto it{m_modelExtensions.find(fileExt)};
 
 	if (it == m_modelExtensions.end())

@@ -1,6 +1,5 @@
 #include "Scene1.hpp"
 
-#include <Files/FileSystem.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Inputs/ButtonJoystick.hpp>
 #include <Lights/Light.hpp>

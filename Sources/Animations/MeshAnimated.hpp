@@ -16,7 +16,7 @@ class ACID_EXPORT MeshAnimated :
 	public Mesh
 {
 public:
-	explicit MeshAnimated(std::string filename = "");
+	explicit MeshAnimated(std::filesystem::path filename = "");
 
 	void Update() override;
 
@@ -42,7 +42,7 @@ private:
 
 	static void AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices);
 
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	std::shared_ptr<Model> m_model;
 	std::unique_ptr<Joint> m_headJoint;
 	std::unique_ptr<Animator> m_animator;

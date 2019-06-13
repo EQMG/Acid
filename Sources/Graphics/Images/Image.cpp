@@ -2,7 +2,6 @@
 
 #include "Graphics/Graphics.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
-#include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -111,7 +110,7 @@ void Image::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const u
 	CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_extent, layerCount, baseArrayLayer);
 }
 
-std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::string &filename, Vector2ui &extent, uint32_t &components, VkFormat &format)
+std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filename, Vector2ui &extent, uint32_t &components, VkFormat &format)
 {
 	auto fileLoaded{Files::Read(filename)};
 

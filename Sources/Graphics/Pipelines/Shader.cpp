@@ -3,7 +3,6 @@
 #include <SPIRV/GlslangToSpv.h>
 #include <glslang/Public/ShaderLang.h>
 #include "Graphics/Graphics.hpp"
-#include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Helpers/String.hpp"
 #include "Graphics/Buffers/StorageBuffer.hpp"
@@ -19,8 +18,8 @@ class ShaderIncluder :
 public:
 	IncludeResult *includeLocal(const char *headerName, const char *includerName, size_t inclusionDepth) override
 	{
-		auto directory{FileSystem::ParentDirectory(includerName)};
-		auto fileLoaded{Files::Read(directory + "/" + headerName)};
+		auto directory{std::filesystem::path{includerName}.parent_path()};
+		auto fileLoaded{Files::Read(directory / headerName)};
 
 		if (!fileLoaded)
 		{
@@ -226,9 +225,9 @@ std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &locati
 	return it->second;
 }
 
-VkShaderStageFlagBits Shader::GetShaderStage(const std::string &filename)
+VkShaderStageFlagBits Shader::GetShaderStage(const std::filesystem::path &filename)
 {
-	auto fileExt{String::Lowercase(FileSystem::FileSuffix(filename))};
+	auto fileExt{filename.extension()};
 
 	if (fileExt == ".comp")
 	{
@@ -377,7 +376,7 @@ TBuiltInResource GetResources()
 	return resources;
 }
 
-VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag)
+VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag)
 {
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 
@@ -395,9 +394,10 @@ VkShaderModule Shader::CreateShaderModule(const std::string &moduleName, const s
 	messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
-	auto shaderName{moduleName.c_str()};
+	auto shaderName{moduleName.string()};
+	auto shaderNameCstr{shaderName.c_str()};
 	auto shaderSource{moduleCode.c_str()};
-	shader.setStringsWithLengthsAndNames(&shaderSource, nullptr, &shaderName, 1);
+	shader.setStringsWithLengthsAndNames(&shaderSource, nullptr, &shaderNameCstr, 1);
 	shader.setPreamble(preamble.c_str());
 
 	shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 110);

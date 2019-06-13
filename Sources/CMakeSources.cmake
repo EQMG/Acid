@@ -37,7 +37,6 @@ set(_temp_acid_headers
 		Engine/ModuleHolder.hpp
 		Files/File.hpp
 		Files/Files.hpp
-		Files/FileSystem.hpp
 		Files/FileWatcher.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
@@ -268,7 +267,6 @@ set(_temp_acid_sources
 		Engine/ModuleHolder.cpp
 		Files/File.cpp
 		Files/Files.cpp
-		Files/FileSystem.cpp
 		Files/FileWatcher.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp

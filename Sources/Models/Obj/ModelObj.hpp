@@ -23,14 +23,14 @@ public:
 	 * @param filename The file to load the OBJ model from.
 	 * @return The OBJ model with the requested values.
 	 */
-	static std::shared_ptr<ModelObj> Create(const std::string &filename);
+	static std::shared_ptr<ModelObj> Create(const std::filesystem::path &filename);
 
 	/**
 	 * Creates a new OBJ model.
 	 * @param filename The file to load the OBJ model from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelObj#Load} can be called later.
 	 */
-	explicit ModelObj(std::string filename, const bool &load = true);
+	explicit ModelObj(std::filesystem::path filename, const bool &load = true);
 
 	void Load() override;
 
@@ -39,6 +39,6 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
 
 private:
-	std::string m_filename;
+	std::filesystem::path m_filename;
 };
 }

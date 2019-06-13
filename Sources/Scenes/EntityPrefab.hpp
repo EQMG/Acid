@@ -26,20 +26,20 @@ public:
 	 * @param filename The entity prefab to load the entity prefab from.
 	 * @return The entity prefab with the requested values.
 	 */
-	static std::shared_ptr<EntityPrefab> Create(const std::string &filename);
+	static std::shared_ptr<EntityPrefab> Create(const std::filesystem::path &filename);
 
 	/**
 	 * Creates a new entity prefab.
 	 * @param filename The file to load the entity prefab from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link EntityPrefab#Load} can be called later.
 	 */
-	explicit EntityPrefab(std::string filename, const bool &load = true);
+	explicit EntityPrefab(std::filesystem::path filename, const bool &load = true);
 
 	void Load() override;
 
 	void Write() const;
 
-	const std::string &GetFilename() const { return m_filename; }
+	const std::filesystem::path &GetFilename() const { return m_filename; }
 
 	Metadata *GetParent() const { return m_file->GetMetadata(); }
 
@@ -52,7 +52,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab);
 
 private:
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	std::unique_ptr<File> m_file;
 };
 }

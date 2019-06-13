@@ -3,7 +3,6 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 
 #include "tiny_obj_loader.h"
-#include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
@@ -14,7 +13,7 @@ class MaterialStreamReader :
 	public tinyobj::MaterialReader
 {
 public:
-	explicit MaterialStreamReader(std::string folder) :
+	explicit MaterialStreamReader(std::filesystem::path folder) :
 		m_folder{std::move(folder)}
 	{
 	}
@@ -24,7 +23,7 @@ public:
 		(void) err;
 		(void) matId;
 
-		auto filepath{m_folder + "/" + matId};
+		auto filepath{m_folder / matId};
 
 		if (!Files::ExistsInPath(filepath))
 		{
@@ -39,13 +38,13 @@ public:
 			return false;
 		}
 
-		IFStream inStream(filepath);
+		IFStream inStream{filepath};
 		tinyobj::LoadMtl(matMap, materials, &inStream, warn, err);
 		return true;
 	}
 
 private:
-	std::string m_folder;
+	std::filesystem::path m_folder;
 };
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
@@ -64,7 +63,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
+std::shared_ptr<ModelObj> ModelObj::Create(const std::filesystem::path &filename)
 {
 	ModelObj temp{filename, false};
 	Metadata metadata;
@@ -72,7 +71,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const std::string &filename)
 	return Create(metadata);
 }
 
-ModelObj::ModelObj(std::string filename, const bool &load) :
+ModelObj::ModelObj(std::filesystem::path filename, const bool &load) :
 	m_filename(std::move(filename))
 {
 	if (load)
@@ -92,7 +91,7 @@ void ModelObj::Load()
 	auto debugStart{Time::Now()};
 #endif
 
-	auto folder{FileSystem::ParentDirectory(m_filename)};
+	auto folder{m_filename.parent_path()};
 	IFStream inStream(m_filename);
 	MaterialStreamReader materialReader(folder);
 
@@ -131,7 +130,7 @@ void ModelObj::Load()
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Model OBJ '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Model OBJ '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);

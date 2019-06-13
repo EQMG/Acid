@@ -17,7 +17,6 @@ const float JUMP_SPEED{4.1f};
 const float NOCLIP_SPEED{3.0f};
 
 PlayerFps::PlayerFps() :
-	m_noclipEnabled(false),
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::S), std::make_unique<ButtonKeyboard>(Key::W)),
 		std::make_unique<AxisJoystick>(0, 1)},
 	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),

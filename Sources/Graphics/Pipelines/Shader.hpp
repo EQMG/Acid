@@ -360,7 +360,7 @@ public:
 
 	Shader();
 
-	const std::string &GetName() const { return m_stages.back(); }
+	const std::filesystem::path &GetName() const { return m_stages.back(); }
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
@@ -402,9 +402,9 @@ public:
 
 	const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
 
-	static VkShaderStageFlagBits GetShaderStage(const std::string &filename);
+	static VkShaderStageFlagBits GetShaderStage(const std::filesystem::path &filename);
 
-	VkShaderModule CreateShaderModule(const std::string &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag);
+	VkShaderModule CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag);
 
 	void CreateReflection();
 
@@ -421,7 +421,7 @@ private:
 
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
-	std::vector<std::string> m_stages;
+	std::vector<std::filesystem::path> m_stages;
 	std::map<std::string, Uniform> m_uniforms;
 	std::map<std::string, UniformBlock> m_uniformBlocks;
 	std::map<std::string, Attribute> m_attributes;

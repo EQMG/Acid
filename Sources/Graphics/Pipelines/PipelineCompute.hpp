@@ -19,11 +19,11 @@ public:
 	 * @param defines A list of defines added to the top of each shader.
 	 * @param pushDescriptors If no actual descriptor sets are allocated but instead pushed.
 	 */
-	explicit PipelineCompute(std::string shaderStage, std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
+	explicit PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines = {}, const bool &pushDescriptors = false);
 
 	~PipelineCompute();
 
-	const std::string &GetShaderStage() const { return m_shaderStage; }
+	const std::filesystem::path &GetShaderStage() const { return m_shaderStage; }
 
 	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
 
@@ -54,7 +54,7 @@ private:
 
 	void CreatePipelineCompute();
 
-	std::string m_shaderStage;
+	std::filesystem::path m_shaderStage;
 	std::vector<Shader::Define> m_defines;
 	bool m_pushDescriptors;
 

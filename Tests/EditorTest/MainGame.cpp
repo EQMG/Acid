@@ -1,7 +1,6 @@
 #include "MainGame.hpp"
 
 #include <Files/Files.hpp>
-#include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>

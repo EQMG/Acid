@@ -5,7 +5,6 @@
 #if defined(ACID_BUILD_WINDOWS)
 #include <Windows.h>
 #endif
-#include "Files/FileSystem.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid

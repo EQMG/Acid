@@ -5,7 +5,6 @@
 #define TINYGLTF_IMPLEMENTATION
 
 #include "tiny_gltf.h"
-#include "Files/FileSystem.hpp"
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
@@ -28,7 +27,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ModelGltf> ModelGltf::Create(const std::string &filename)
+std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filename)
 {
 	ModelGltf temp{filename, false};
 	Metadata metadata;
@@ -36,7 +35,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const std::string &filename)
 	return Create(metadata);
 }
 
-ModelGltf::ModelGltf(std::string filename, const bool &load) :
+ModelGltf::ModelGltf(std::filesystem::path filename, const bool &load) :
 	m_filename{std::move(filename)}
 {
 	if (load)
@@ -56,7 +55,7 @@ void ModelGltf::Load()
 	auto debugStart{Time::Now()};
 #endif
 
-	auto folder{FileSystem::ParentDirectory(m_filename)};
+	auto folder{m_filename.parent_path()};
 	auto fileLoaded{Files::Read(m_filename)};
 
 	if (!fileLoaded)
@@ -70,7 +69,7 @@ void ModelGltf::Load()
 	tinygltf::TinyGLTF gltfContext;
 	std::string warn, err;
 
-	if (String::Lowercase(FileSystem::FileSuffix(m_filename)) == ".glb")
+	if (m_filename.extension() == ".glb")
 	{
 		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size())))
 		{
@@ -79,7 +78,7 @@ void ModelGltf::Load()
 	}
 	else
 	{
-		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder))
+		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder.string()))
 		{
 			throw std::runtime_error(warn + err);
 		}
@@ -128,7 +127,7 @@ void ModelGltf::Load()
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Model GLTF '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	Log::Out("Model GLTF '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 
 	Initialize(vertices, indices);

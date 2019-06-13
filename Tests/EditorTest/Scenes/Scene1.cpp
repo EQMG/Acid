@@ -3,7 +3,6 @@
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
-#include <Files/FileSystem.hpp>
 #include <Devices/Mouse.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>

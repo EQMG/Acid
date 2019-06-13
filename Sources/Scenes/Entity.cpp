@@ -1,6 +1,5 @@
 #include "Entity.hpp"
 
-#include "Files/FileSystem.hpp"
 #include "Scenes.hpp"
 #include "EntityPrefab.hpp"
 
@@ -11,9 +10,8 @@ Entity::Entity(const Transform &transform) :
 {
 }
 
-Entity::Entity(const Transform &transform, const std::string &filename) :
-	m_localTransform{transform},
-	m_name{FileSystem::FileName(filename)}
+Entity::Entity(const Transform &transform, const std::filesystem::path &filename) :
+	m_localTransform{transform}
 {
 	auto entityPrefab{EntityPrefab::Create(filename)};
 	*entityPrefab >> *this;

@@ -4,7 +4,6 @@
 #include "Serialized/Json/Json.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Serialized/Yaml/Yaml.hpp"
-#include "Files/FileSystem.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
 #include "Scenes.hpp"
@@ -27,7 +26,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
+std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &filename)
 {
 	EntityPrefab temp{filename, false};
 	Metadata metadata;
@@ -35,7 +34,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::string &filename)
 	return Create(metadata);
 }
 
-EntityPrefab::EntityPrefab(std::string filename, const bool &load) :
+EntityPrefab::EntityPrefab(std::filesystem::path filename, const bool &load) :
 	m_filename{std::move(filename)}
 {
 	if (load)
@@ -51,7 +50,7 @@ void EntityPrefab::Load()
 		return;
 	}
 
-	auto fileExt{String::Lowercase(FileSystem::FileSuffix(m_filename))};
+	auto fileExt{m_filename.extension()};
 
 	if (fileExt == ".json")
 	{

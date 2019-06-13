@@ -36,7 +36,6 @@
 #include "Engine/ModuleHolder.hpp"
 #include "Files/File.hpp"
 #include "Files/Files.hpp"
-#include "Files/FileSystem.hpp"
 #include "Files/FileWatcher.hpp"
 #include "Fonts/FontMetafile.hpp"
 #include "Fonts/FontType.hpp"

@@ -25,7 +25,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const PlayerFps &player);
 
 private:
-	bool m_noclipEnabled;
+	bool m_noclipEnabled{};
 
 	AxisCompound m_inputForward;
 	AxisCompound m_inputStrafe;

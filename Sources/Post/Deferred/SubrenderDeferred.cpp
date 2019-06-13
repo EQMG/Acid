@@ -1,6 +1,5 @@
 #include "SubrenderDeferred.hpp"
 
-#include "Files/FileSystem.hpp"
 #include "Files/File.hpp"
 #include "Serialized/Yaml/Yaml.hpp"
 #include "Lights/Light.hpp"

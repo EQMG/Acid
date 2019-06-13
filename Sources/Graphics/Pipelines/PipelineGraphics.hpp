@@ -41,7 +41,7 @@ public:
 	 * @param frontFace The direction to render faces.
 	 * @param pushDescriptors If no actual descriptor sets are allocated but instead pushed.
 	 */
-	PipelineGraphics(Stage stage, std::vector<std::string> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
+	PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
 		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
 		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
 		const bool &pushDescriptors = false);
@@ -72,7 +72,7 @@ public:
 
 	const Stage &GetStage() const { return m_stage; }
 
-	const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
+	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
 
 	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 
@@ -122,7 +122,7 @@ private:
 	void CreatePipelineMrt();
 
 	Stage m_stage;
-	std::vector<std::string> m_shaderStages;
+	std::vector<std::filesystem::path> m_shaderStages;
 	std::vector<Shader::VertexInput> m_vertexInputs;
 	std::vector<Shader::Define> m_defines;
 	Mode m_mode;
@@ -162,7 +162,7 @@ private:
 class ACID_EXPORT PipelineGraphicsCreate
 {
 public:
-	PipelineGraphicsCreate(std::vector<std::string> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
+	PipelineGraphicsCreate(std::vector<std::filesystem::path> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
 		const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
 		const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
 		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false) :
@@ -220,7 +220,7 @@ public:
 
 	}
 
-	const std::vector<std::string> &GetShaderStages() const { return m_shaderStages; }
+	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
 
 	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 
@@ -241,7 +241,7 @@ public:
 	const bool &GetPushDescriptors() const { return m_pushDescriptors; }
 
 private:
-	std::vector<std::string> m_shaderStages;
+	std::vector<std::filesystem::path> m_shaderStages;
 	std::vector<Shader::VertexInput> m_vertexInputs;
 	std::vector<Shader::Define> m_defines;
 

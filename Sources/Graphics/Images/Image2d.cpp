@@ -24,7 +24,7 @@ std::shared_ptr<Image2d> Image2d::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<Image2d> Image2d::Create(const std::string &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
 {
 	Image2d temp{filename, filter, addressMode, anisotropic, mipmap, false};
 	Metadata metadata;
@@ -32,7 +32,7 @@ std::shared_ptr<Image2d> Image2d::Create(const std::string &filename, const VkFi
 	return Create(metadata);
 }
 
-Image2d::Image2d(std::string filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
+Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
 	m_filename{std::move(filename)},
 	m_filter{filter},
 	m_addressMode{addressMode},
@@ -116,7 +116,7 @@ void Image2d::Load()
 		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
 		auto debugEnd{Time::Now()};
-		Log::Out("Image 2D '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+		Log::Out("Image 2D '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 

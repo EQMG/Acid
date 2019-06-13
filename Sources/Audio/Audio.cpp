@@ -7,7 +7,6 @@
 #include <al.h>
 #include <alc.h>
 #endif
-#include "Files/FileSystem.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid

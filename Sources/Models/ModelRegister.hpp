@@ -52,7 +52,7 @@ public:
 			return;
 		}
 
-		auto modelCreate = [](const std::string &filename) -> std::shared_ptr<Model>
+		auto modelCreate = [](const std::filesystem::path &filename) -> std::shared_ptr<Model>
 		{
 			return T::Create(filename);
 		};
@@ -77,11 +77,11 @@ public:
 	 * @param filename The models filename to load from.
 	 * @return The new model.
 	 */
-	std::shared_ptr<Model> Create(const std::string &filename) const;
+	std::shared_ptr<Model> Create(const std::filesystem::path &filename) const;
 
 private:
 	using ModelMetadataCreate = std::function<std::shared_ptr<Model>(const Metadata &)>;
-	using ModelFilenameCreate = std::function<std::shared_ptr<Model>(const std::string &)>;
+	using ModelFilenameCreate = std::function<std::shared_ptr<Model>(const std::filesystem::path &)>;
 	std::map<std::string, ModelMetadataCreate> m_modelMetadatas;
 	std::map<std::string, ModelFilenameCreate> m_modelExtensions;
 };

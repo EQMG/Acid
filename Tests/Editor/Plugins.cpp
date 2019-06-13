@@ -4,7 +4,6 @@
 
 #include <Engine/cr.h>
 #include <Devices/Keyboard.hpp>
-#include <Files/FileSystem.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
@@ -19,7 +18,9 @@ Plugins::Plugins() :
 	m_panels{&Uis::Get()->GetCanvas()},
 	m_buttonReload{Key::R}
 {
-	cr_plugin_load(*m_plugin, m_loadedPath.string().c_str());
+	auto pathStr{m_loadedPath.string()};
+	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
+	cr_plugin_load(*m_plugin, pathStr.c_str());
 
 	// Watches the plugin path.
 	m_watcher.OnChange().Add([this](std::string path, FileWatcher::Status status)

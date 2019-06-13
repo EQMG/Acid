@@ -5,7 +5,7 @@
 
 namespace acid
 {
-FontMetafile::FontMetafile(std::string filename) :
+FontMetafile::FontMetafile(std::filesystem::path filename) :
 	m_filename{std::move(filename)}
 {
 	IFStream inStream{m_filename};

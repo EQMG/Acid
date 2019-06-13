@@ -25,7 +25,7 @@ public:
 	 * @param filename The file to load the model from.
 	 * @return The model with the requested values.
 	 */
-	static std::shared_ptr<Model> Create(const std::string &filename);
+	static std::shared_ptr<Model> Create(const std::filesystem::path &filename);
 
 	/**
 	 * Creates a new empty model.

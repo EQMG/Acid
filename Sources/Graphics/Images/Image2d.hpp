@@ -31,7 +31,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @return The 2D image with the requested values.
 	 */
-	static std::shared_ptr<Image2d> Create(const std::string &filename, const VkFilter &filter = VK_FILTER_LINEAR,
+	static std::shared_ptr<Image2d> Create(const std::filesystem::path &filename, const VkFilter &filter = VK_FILTER_LINEAR,
 		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
 
 	/**
@@ -43,7 +43,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @param load If this resource will be loaded immediately, otherwise {@link Image2d#Load} can be called later.
 	 */
-	explicit Image2d(std::string filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+	explicit Image2d(std::filesystem::path filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
 		const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 	/**
@@ -89,7 +89,7 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
-	const std::string &GetFilename() const { return m_filename; };
+	const std::filesystem::path &GetFilename() const { return m_filename; };
 
 	const VkFilter &GetFilter() const { return m_filter; }
 
@@ -126,7 +126,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
 
 private:
-	std::string m_filename;
+	std::filesystem::path m_filename;
 
 	VkFilter m_filter;
 	VkSamplerAddressMode m_addressMode;

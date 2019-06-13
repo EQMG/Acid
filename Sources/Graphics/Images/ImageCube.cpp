@@ -23,7 +23,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 	return result;
 }
 
-std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 	const bool &anisotropic, const bool &mipmap)
 {
 	ImageCube temp{filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false};
@@ -32,7 +32,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::string &filename, const 
 	return Create(metadata);
 }
 
-ImageCube::ImageCube(std::string filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap,
+ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap,
 	const bool &load) :
 	m_filename{std::move(filename)},
 	m_fileSuffix{std::move(fileSuffix)},
@@ -118,7 +118,7 @@ void ImageCube::Load()
 		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
 		auto debugEnd{Time::Now()};
-		Log::Out("Image Cube '%s' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+		Log::Out("Image Cube '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	}
 
@@ -236,7 +236,7 @@ void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, con
 	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
+std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
 	uint32_t &components, VkFormat &format)
 {
 	std::unique_ptr<uint8_t[]> result{};
@@ -244,7 +244,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 
 	for (const auto &side : fileSides)
 	{
-		auto filenameSide{std::string(filename).append("/").append(side).append(fileSuffix)};
+		auto filenameSide{filename / (side + fileSuffix)};
 		auto resultSide{Image::LoadPixels(filenameSide, extent, components, format)};
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
@@ -254,7 +254,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::string &filename, co
 			offset = result.get();
 		}
 
-		memcpy(offset, resultSide.get(), sizeSide);
+		std::memcpy(offset, resultSide.get(), sizeSide);
 		offset += sizeSide;
 	}
 

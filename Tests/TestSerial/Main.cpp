@@ -82,6 +82,7 @@ public:
 	std::unique_ptr<std::string> content{std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")};
 
 	Time timeNow{Time::Now()};
+	std::filesystem::path currentPath{std::filesystem::current_path()};
 	std::vector<std::string> json{"rigid", "better for data interchange"};
 	std::vector<std::string> yaml{"slim and flexible", "better for configuration", "supports comments"};
 	std::map<int32_t, std::string> map{{10, "Hello World"}, {-2, "Negaitive Keys"}, {400, "Larger Key"}};
@@ -96,6 +97,7 @@ public:
 	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
 	{
 		metadata.GetChild("timeNow", example1.timeNow);
+		metadata.GetChild("currentPath", example1.currentPath);
 		metadata.GetChild("paragraph", example1.paragraph);
 		metadata.GetChild("content", example1.content);
 		metadata.GetChild("xml", example1.xml);
@@ -115,6 +117,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Example1 &example1)
 	{
 		metadata.SetChild("timeNow", example1.timeNow);
+		metadata.SetChild("currentPath", example1.currentPath);
 		metadata.SetChild("paragraph", example1.paragraph);
 		metadata.SetChild("content", example1.content);
 		metadata.SetChild("xml", example1.xml);

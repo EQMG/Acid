@@ -32,7 +32,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @return The cubemap image with the requested values.
 	 */
-	static std::shared_ptr<ImageCube> Create(const std::string &filename, const std::string &fileSuffix, const VkFilter &filter = VK_FILTER_LINEAR,
+	static std::shared_ptr<ImageCube> Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter = VK_FILTER_LINEAR,
 		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true);
 
 	/**
@@ -45,7 +45,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ImageCube#Load} can be called later.
 	 */
-	explicit ImageCube(std::string filename, std::string fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
+	explicit ImageCube(std::filesystem::path filename, std::string fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
 		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
 
 	/**
@@ -100,10 +100,10 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
 
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::string &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
+	static std::unique_ptr<uint8_t[]> LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
 		uint32_t &components, VkFormat &format);
 
-	const std::string &GetFilename() const { return m_filename; };
+	const std::filesystem::path &GetFilename() const { return m_filename; };
 
 	const std::string &GetFileSuffix() { return m_fileSuffix; };
 
@@ -144,7 +144,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
 
 private:
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	std::string m_fileSuffix;
 	std::vector<std::string> m_fileSides{"Right", "Left", "Top", "Bottom", "Back", "Front"};
 

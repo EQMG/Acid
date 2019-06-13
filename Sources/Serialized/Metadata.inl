@@ -107,6 +107,7 @@ void Metadata::SetResource(const std::string &name, const std::shared_ptr<T> &va
 
 	*child << *value;
 }
+
 template<typename T>
 const Metadata &operator>>(const Metadata &metadata, T &object)
 {
@@ -176,6 +177,18 @@ template<typename T>
 Metadata &operator<<(Metadata &metadata, const std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
 {
 	metadata.SetString(string);
+	return metadata;
+}
+
+inline const Metadata &operator>>(const Metadata &metadata, std::filesystem::path &object)
+{
+	object = metadata.GetString();
+	return metadata;
+}
+
+inline Metadata &operator<<(Metadata &metadata, const std::filesystem::path &object)
+{
+	metadata.SetString(object.string());
 	return metadata;
 }
 
