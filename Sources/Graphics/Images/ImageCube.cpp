@@ -176,7 +176,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {extent.m_x, extent.m_y, 1}, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource{};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -190,7 +190,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(result.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(result.get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
@@ -201,8 +201,8 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
 {
-	std::unique_ptr<uint8_t[]> pixels = nullptr;
-	uint8_t *offset = nullptr;
+	std::unique_ptr<uint8_t[]> pixels;
+	uint8_t *offset{};
 
 	for (uint32_t i{}; i < 6; i++)
 	{
@@ -219,7 +219,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 		offset += sizeSide;
 	}
 
-	extent.m_x *= 6;
+	extent.m_y *= 6;
 	return pixels;
 }
 

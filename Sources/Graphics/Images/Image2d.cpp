@@ -179,7 +179,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t 
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { extent.m_x, extent.m_y, 1 }, m_layout, mipLevel, 0);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {extent.m_x, extent.m_y, 1}, m_layout, mipLevel, 0);
 
 	VkImageSubresource dstImageSubresource{};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -193,7 +193,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t 
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(pixels.get(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(pixels.get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
