@@ -706,7 +706,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 
 	if (reflection.getBinding() == -1)
 	{
-		auto splitName{String::Split(reflection.name, ".")};
+		auto splitName{String::Split(reflection.name, '.')};
 
 		if (splitName.size() > 1)
 		{

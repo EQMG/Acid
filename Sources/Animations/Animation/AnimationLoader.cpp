@@ -31,7 +31,7 @@ std::string AnimationLoader::FindRootJointName() const
 std::vector<Time> AnimationLoader::GetKeyTimes() const
 {
 	auto timeData{m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array")};
-	auto rawTimes{String::Split(timeData->GetValue(), " ")};
+	auto rawTimes{String::Split(timeData->GetValue(), ' ')};
 	
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
@@ -60,7 +60,7 @@ void AnimationLoader::LoadJointTransforms(const Metadata *jointData, const std::
 	auto transformData{jointData->FindChildWithAttribute("source", "id", dataId)};
 
 	auto data{transformData->FindChild("float_array")->GetValue()};
-	auto splitData{String::Split(data, " ")};
+	auto splitData{String::Split(data, ' ')};
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }
 
@@ -74,7 +74,7 @@ std::string AnimationLoader::GetJointName(const Metadata *jointData)
 {
 	auto channelNode{jointData->FindChild("channel")};
 	auto data{channelNode->FindAttribute("target")};
-	auto splitData{String::Split(*data, "/")};
+	auto splitData{String::Split(*data, '/')};
 	return splitData[0];
 }
 

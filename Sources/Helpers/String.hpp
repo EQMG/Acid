@@ -15,10 +15,9 @@ public:
 	 * Splits a string by a separator.
 	 * @param str The string.
 	 * @param sep The separator.
-	 * @param trim If each object should be trimmed.
 	 * @return The split string vector.
 	 */
-	static std::vector<std::string> Split(const std::string &str, const std::string &sep, bool trim = false);
+	static std::vector<std::string> Split(const std::string &str, const char &sep);
 
 	/**
 	 * Gets if a string starts with a token.
@@ -58,15 +57,6 @@ public:
 	 * @return The trimmed string.
 	 */
 	static std::string Trim(std::string str, std::string_view whitespace = " \t\n\r");
-
-	/**
-	 * Takes a substring of a string between two bounds.
-	 * @param str The string.
-	 * @param start The left bound.
-	 * @param end The right bound.
-	 * @return The substring of the string.
-	 */
-	static std::string Substring(std::string str, uint32_t start, uint32_t end);
 
 	/**
 	 * Removes all tokens from a string.

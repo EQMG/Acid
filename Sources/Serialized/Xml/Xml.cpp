@@ -115,8 +115,8 @@ void Xml::AddChildren(const Metadata *source, Metadata *destination)
 void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 {
 	auto firstSpace{String::FindCharPos(source->m_attributes, ' ')};
-	auto name{String::Trim(String::Substring(source->m_attributes, 0, firstSpace))};
-	auto attributes{String::Substring(source->m_attributes, firstSpace + 1, static_cast<int32_t>(source->m_attributes.size()))};
+	auto name{String::Trim(source->m_attributes.substr(0, firstSpace))};
+	auto attributes{source->m_attributes.substr(firstSpace + 1, source->m_attributes.size() - (firstSpace + 1))};
 	attributes = String::Trim(attributes);
 
 	if (attributes[attributes.size() - 1] == '/' || attributes[attributes.size() - 1] == '?')

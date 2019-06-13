@@ -29,7 +29,7 @@ std::unique_ptr<JointData> SkeletonLoader::ExtractMainJointData(const Metadata *
 {
 	auto nameId{*jointNode->FindAttribute("id")};
 	auto index{GetBoneIndex(nameId)};
-	auto matrixData{String::Split(jointNode->FindChild("matrix")->GetValue(), " ")};
+	auto matrixData{String::Split(jointNode->FindChild("matrix")->GetValue(), ' ')};
 
 	assert(matrixData.size() == 16);
 

@@ -83,6 +83,7 @@ target_link_libraries(Acid
 		)
 
 set_target_properties(Acid PROPERTIES
+		INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
 		FOLDER "Acid"
 		)
 

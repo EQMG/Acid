@@ -2,28 +2,18 @@
 
 namespace acid
 {
-std::vector<std::string> String::Split(const std::string &str, const std::string &sep, bool trim)
+std::vector<std::string> String::Split(const std::string &str, const char &sep)
 {
-	std::unique_ptr<char[]> copy{new char[strlen(str.c_str()) + 1]};
-	std::strcpy(copy.get(), str.c_str());
+	std::vector<std::string> tokens;
+	std::string token;
+	std::istringstream tokenStream{str};
 
-	std::vector<std::string> splitVector;
-	auto current{std::strtok(copy.get(), sep.c_str())};
-
-	while (current != nullptr)
+	while (std::getline(tokenStream, token, sep))
 	{
-		auto currentS{std::string{current}};
-
-		if (trim)
-		{
-			currentS = Trim(currentS);
-		}
-
-		splitVector.emplace_back(currentS);
-		current = std::strtok(nullptr, sep.c_str());
+		tokens.push_back(token);
 	}
 
-	return splitVector;
+	return tokens;
 }
 
 bool String::StartsWith(std::string_view str, std::string_view token)
@@ -67,12 +57,6 @@ std::string String::Trim(std::string str, std::string_view whitespace)
 	auto trimmed{str};
 	trimmed = trimmed.substr(strBegin, strRange);
 	return trimmed;
-}
-
-std::string String::Substring(std::string str, uint32_t start, uint32_t end)
-{
-	str = str.substr(start, end - start);
-	return str;
 }
 
 std::string String::RemoveAll(std::string str, char token)

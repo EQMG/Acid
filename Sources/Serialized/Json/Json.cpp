@@ -45,7 +45,7 @@ void Json::Load(std::istream *inStream)
 
 				if (!summation.str().empty())
 				{
-					auto contentSplit{String::Split(summation.str(), "\"")};
+					auto contentSplit{String::Split(summation.str(), '\"')};
 
 					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
 					{
@@ -111,16 +111,16 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
 	}
 
-	auto contentSplit{String::Split(source->m_content, ",", true)};
+	auto contentSplit{String::Split(source->m_content, ',')};
 
 	for (const auto &data : contentSplit)
 	{
 		std::string name;
-		auto value{data};
+		auto value{String::Trim(data)};
 
-		if (String::Contains(data, ":"))
+		if (String::Contains(value, ":"))
 		{
-			name = String::Trim(data.substr(0, data.find(':')));
+			name = String::Trim(value.substr(0, value.find(':')));
 			value = String::Trim(String::ReplaceFirst(value, name, ""));
 			value = String::Trim(value.erase(0, 1));
 			name = name.substr(1, name.size() - 2);

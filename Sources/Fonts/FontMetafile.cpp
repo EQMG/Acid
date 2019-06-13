@@ -50,11 +50,11 @@ std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t 
 void FontMetafile::ProcessNextLine(const std::string &line)
 {
 	m_values.clear();
-	auto parts{String::Split(line, " ")};
+	auto parts{String::Split(line, ' ')};
 
 	for (const auto &part : parts)
 	{
-		auto pairs{String::Split(part, "=")};
+		auto pairs{String::Split(part, '=')};
 
 		if (pairs.size() == 2)
 		{
@@ -115,7 +115,7 @@ void FontMetafile::LoadCharacterData()
 
 std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
 {
-	auto numbers{String::Split(m_values.at(variable), ",")};
+	auto numbers{String::Split(m_values.at(variable), ',')};
 
 	std::vector<int32_t> values;
 	values.reserve(numbers.size());

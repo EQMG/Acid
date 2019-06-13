@@ -194,7 +194,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	Word currentWord;
 
 	auto formattedText{String::ReplaceAll(m_string, "\t", "	")};
-	auto textLines{String::Split(formattedText, "\n", true)};
+	auto textLines{String::Split(formattedText, '\n')};
 
 	for (uint32_t i{}; i < textLines.size(); i++)
 	{
