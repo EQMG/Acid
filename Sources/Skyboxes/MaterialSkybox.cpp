@@ -39,14 +39,14 @@ void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 
 const Metadata &operator>>(const Metadata &metadata, MaterialSkybox &material)
 {
-	metadata.GetResource("image", material.m_image);
+	metadata.GetChild("image", material.m_image);
 	metadata.GetChild("baseColour", material.m_baseColour);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const MaterialSkybox &material)
 {
-	metadata.SetResource("image", material.m_image);
+	metadata.SetChild("image", material.m_image);
 	metadata.SetChild("baseColour", material.m_baseColour);
 	return metadata;
 }

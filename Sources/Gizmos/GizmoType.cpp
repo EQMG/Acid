@@ -22,7 +22,7 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 	auto result{std::make_shared<GizmoType>(nullptr)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
-	result->Load();
+	//result->Load();
 	return result;
 }
 
@@ -109,7 +109,7 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 
 const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType)
 {
-	metadata.GetResource("model", gizmoType.m_model);
+	metadata.GetChild("model", gizmoType.m_model);
 	metadata.GetChild("lineThickness", gizmoType.m_lineThickness);
 	metadata.GetChild("colour", gizmoType.m_colour);
 	return metadata;
@@ -117,7 +117,7 @@ const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType)
 
 Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType)
 {
-	metadata.SetResource("model", gizmoType.m_model);
+	metadata.SetChild("model", gizmoType.m_model);
 	metadata.SetChild("lineThickness", gizmoType.m_lineThickness);
 	metadata.SetChild("colour", gizmoType.m_colour);
 	return metadata;

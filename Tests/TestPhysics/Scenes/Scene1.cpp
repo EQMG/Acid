@@ -1,5 +1,6 @@
 #include "Scene1.hpp"
 
+#include <Audio/Sound.hpp>
 #include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
@@ -312,7 +313,7 @@ void Scene1::Start()
 	cylinder->AddComponent<ShadowRender>();
 
 	auto smokeSystem{GetStructure()->CreateEntity({{-15.0f, 4.0f, 12.0f}}, "Objects/Smoke/Smoke.json")};
-	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg, SOUND_TYPE_MUSIC, true, true);
+	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 
 	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.json"};
 	prefabSmokeSystem << *smokeSystem;

@@ -36,8 +36,6 @@ public:
 
 	~SoundBuffer();
 
-	void Load() override;
-
 	const std::filesystem::path &GetFilename() const { return m_filename; };
 
 	const uint32_t &GetBuffer() const { return m_buffer; }
@@ -47,6 +45,8 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
 
 private:
+	void Load();
+
 	static uint32_t LoadBufferWav(const std::filesystem::path &filename);
 
 	static uint32_t LoadBufferOgg(const std::filesystem::path &filename);

@@ -108,66 +108,6 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const 
 	return WriteDescriptorSet(descriptorWrite, imageInfo);
 }
 
-void ImageCube::Load()
-{
-	if (!m_filename.empty() && m_loadPixels == nullptr)
-	{
-#if defined(ACID_VERBOSE)
-		auto debugStart{Time::Now()};
-#endif
-		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
-#if defined(ACID_VERBOSE)
-		auto debugEnd{Time::Now()};
-		Log::Out("Image Cube '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
-#endif
-	}
-
-	if (m_extent.m_x == 0 || m_extent.m_y == 0)
-	{
-		return;
-	}
-
-	m_mipLevels = m_mipmap ? Image::GetMipLevels({ m_extent.m_x, m_extent.m_y, 1 }) : 1;
-
-	Image::CreateImage(m_image, m_memory, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		m_mipLevels, 6, VK_IMAGE_TYPE_2D);
-	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
-	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
-
-	if (m_loadPixels != nullptr || m_mipmap)
-	{
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
-	}
-
-	if (m_loadPixels != nullptr)
-	{
-		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
-
-		void *data;
-		bufferStaging.MapMemory(&data);
-		std::memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
-		bufferStaging.UnmapMemory();
-
-		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, 6, 0);
-	}
-
-	if (m_mipmap)
-	{
-		Image::CreateMipmaps(m_image, { m_extent.m_x, m_extent.m_y, 1 }, m_format, m_layout, m_mipLevels, 0, 6);
-	}
-	else if (m_loadPixels != nullptr)
-	{
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
-	}
-	else
-	{
-		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
-	}
-
-	m_loadPixels = nullptr;
-}
-
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
@@ -283,5 +223,65 @@ Metadata &operator<<(Metadata &metadata, const ImageCube &image)
 	metadata.SetChild("anisotropic", image.m_anisotropic);
 	metadata.SetChild("mipmap", image.m_mipmap);
 	return metadata;
+}
+
+void ImageCube::Load()
+{
+	if (!m_filename.empty() && m_loadPixels == nullptr)
+	{
+#if defined(ACID_VERBOSE)
+		auto debugStart{Time::Now()};
+#endif
+		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
+#if defined(ACID_VERBOSE)
+		auto debugEnd{Time::Now()};
+		Log::Out("Image Cube '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+#endif
+	}
+
+	if (m_extent.m_x == 0 || m_extent.m_y == 0)
+	{
+		return;
+	}
+
+	m_mipLevels = m_mipmap ? Image::GetMipLevels({m_extent.m_x, m_extent.m_y, 1}) : 1;
+
+	Image::CreateImage(m_image, m_memory, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_samples, VK_IMAGE_TILING_OPTIMAL, m_usage, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+		m_mipLevels, 6, VK_IMAGE_TYPE_2D);
+	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
+	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
+
+	if (m_loadPixels != nullptr || m_mipmap)
+	{
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
+	}
+
+	if (m_loadPixels != nullptr)
+	{
+		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+
+		void *data;
+		bufferStaging.MapMemory(&data);
+		std::memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
+		bufferStaging.UnmapMemory();
+
+		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 6, 0);
+	}
+
+	if (m_mipmap)
+	{
+		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 6);
+	}
+	else if (m_loadPixels != nullptr)
+	{
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
+	}
+	else
+	{
+		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
+	}
+
+	m_loadPixels = nullptr;
 }
 }

@@ -38,13 +38,13 @@ public:
 	 */
 	explicit ModelDisk(const float &innerRadius = 0.5f, const float &outerRadius = 1.0f, const uint32_t &slices = 20, const uint32_t &loops = 4, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelDisk &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelDisk &model);
 
 private:
+	void Load();
+
 	float m_innerRadius;
 	float m_outerRadius;
 	uint32_t m_slices;

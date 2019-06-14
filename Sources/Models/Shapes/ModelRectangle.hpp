@@ -34,13 +34,13 @@ public:
 	 */
 	explicit ModelRectangle(const float &min = 0.0f, const float &max = 1.0f, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelRectangle &model);
 
 private:
+	void Load();
+
 	float m_min;
 	float m_max;
 };

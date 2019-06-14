@@ -24,7 +24,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 	auto result{std::make_shared<ParticleType>(nullptr)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
-	result->Load();
+	//result->Load();
 	return result;
 }
 
@@ -132,7 +132,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 
 const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType)
 {
-	metadata.GetResource("image", particleType.m_image);
+	metadata.GetChild("image", particleType.m_image);
 	metadata.GetChild("numberOfRows", particleType.m_numberOfRows);
 	metadata.GetChild("colourOffset", particleType.m_colourOffset);
 	metadata.GetChild("lifeLength", particleType.m_lifeLength);
@@ -143,7 +143,7 @@ const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType)
 
 Metadata &operator<<(Metadata &metadata, const ParticleType &particleType)
 {
-	metadata.SetResource("image", particleType.m_image);
+	metadata.SetChild("image", particleType.m_image);
 	metadata.SetChild("numberOfRows", particleType.m_numberOfRows);
 	metadata.SetChild("colourOffset", particleType.m_colourOffset);
 	metadata.SetChild("lifeLength", particleType.m_lifeLength);

@@ -6,7 +6,6 @@
 #include <al.h>
 #endif
 #include "Files/Files.hpp"
-#include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.c"
 
@@ -41,13 +40,25 @@ SoundBuffer::SoundBuffer(std::filesystem::path filename, const bool &load) :
 {
 	if (load)
 	{
-		SoundBuffer::Load();
+		Load();
 	}
 }
 
 SoundBuffer::~SoundBuffer()
 {
 	alDeleteBuffers(1, &m_buffer);
+}
+
+const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer)
+{
+	metadata.GetChild("filename", soundBuffer.m_filename);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer)
+{
+	metadata.SetChild("filename", soundBuffer.m_filename);
+	return metadata;
 }
 
 void SoundBuffer::Load()
@@ -183,17 +194,5 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 	Log::Out("Sound OGG '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
-}
-
-const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer)
-{
-	metadata.GetChild("filename", soundBuffer.m_filename);
-	return metadata;
-}
-
-Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer)
-{
-	metadata.SetChild("filename", soundBuffer.m_filename);
-	return metadata;
 }
 }

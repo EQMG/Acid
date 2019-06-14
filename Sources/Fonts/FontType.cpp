@@ -132,18 +132,6 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	return true;
 }
 
-void FontType::Load()
-{
-	if (m_filename.empty() || m_style.empty())
-	{
-		return;
-	}
-
-	m_image = Image2d::Create(m_filename / (m_style + ".png"));
-	m_metadata = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
-	LoadFont(m_filename / (m_style + ".ttf"));
-}
-
 const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
 {
 	metadata.GetChild("filename", fontType.m_filename);
@@ -156,6 +144,18 @@ Metadata &operator<<(Metadata &metadata, const FontType &fontType)
 	metadata.SetChild("filename", fontType.m_filename);
 	metadata.SetChild("style", fontType.m_style);
 	return metadata;
+}
+
+void FontType::Load()
+{
+	if (m_filename.empty() || m_style.empty())
+	{
+		return;
+	}
+
+	m_image = Image2d::Create(m_filename / (m_style + ".png"));
+	m_metadata = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
+	LoadFont(m_filename / (m_style + ".ttf"));
 }
 
 uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)

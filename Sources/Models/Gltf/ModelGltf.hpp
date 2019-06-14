@@ -33,13 +33,13 @@ public:
 	 */
 	explicit ModelGltf(std::filesystem::path filename, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelGltf &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelGltf &model);
 
 private:
+	void Load();
+
 	//struct Node;
 	//struct Skin;
 

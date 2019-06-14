@@ -140,7 +140,7 @@ void Sound::SetPitch(const float &pitch)
 
 const Metadata &operator>>(const Metadata &metadata, Sound &sound)
 {
-	metadata.GetResource("buffer", sound.m_buffer);
+	metadata.GetChild("buffer", sound.m_buffer);
 	metadata.GetChild("type", sound.m_type);
 	metadata.GetChild("gain", sound.m_gain);
 	metadata.GetChild("pitch", sound.m_pitch);
@@ -149,7 +149,7 @@ const Metadata &operator>>(const Metadata &metadata, Sound &sound)
 
 Metadata &operator<<(Metadata &metadata, const Sound &sound)
 {
-	metadata.SetResource("buffer", sound.m_buffer);
+	metadata.SetChild("buffer", sound.m_buffer);
 	metadata.SetChild("type", sound.m_type);
 	metadata.SetChild("gain", sound.m_gain);
 	metadata.SetChild("pitch", sound.m_pitch);

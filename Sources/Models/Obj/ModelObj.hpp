@@ -32,13 +32,13 @@ public:
 	 */
 	explicit ModelObj(std::filesystem::path filename, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelObj &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
 
 private:
+	void Load();
+
 	std::filesystem::path m_filename;
 };
 }

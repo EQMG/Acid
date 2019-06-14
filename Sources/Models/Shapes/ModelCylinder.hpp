@@ -42,13 +42,13 @@ public:
 	explicit ModelCylinder(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2,
 		const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelCylinder &model);
 
 private:
+	void Load();
+
 	float m_radiusBase;
 	float m_radiusTop;
 	float m_height;

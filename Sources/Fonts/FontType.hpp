@@ -71,8 +71,6 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
-	void Load() override;
-
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
 	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
@@ -102,6 +100,8 @@ private:
 		//Rect cbox;
 		CellInfo cellInfo;
 	};
+
+	void Load();
 
 	static uint32_t AlignUint32(const uint32_t &value, const uint32_t &alignment);
 

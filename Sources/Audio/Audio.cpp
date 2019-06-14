@@ -11,10 +11,10 @@
 
 namespace acid
 {
-Audio::Audio()
+Audio::Audio() :
+	m_device{alcOpenDevice(nullptr)},
+	m_context{alcCreateContext(m_device, nullptr)}
 {
-	m_device = alcOpenDevice(nullptr);
-	m_context = alcCreateContext(m_device, nullptr);
 	alcMakeContextCurrent(m_context);
 
 #if defined(ACID_VERBOSE)

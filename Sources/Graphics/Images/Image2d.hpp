@@ -71,8 +71,6 @@ public:
 
 	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
-	void Load() override;
-
 	/**
 	 * Copies the images pixels from memory.
 	 * @param extent The sampled images extent.
@@ -126,6 +124,8 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
 
 private:
+	void Load();
+
 	std::filesystem::path m_filename;
 
 	VkFilter m_filter;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helpers/ConstExpr.hpp"
+#include "Resources/Resource.hpp"
 #include "Metadata.hpp"
 
 namespace acid
@@ -63,52 +64,6 @@ void Metadata::SetChild(const std::string &name, const T &value)
 }
 
 template<typename T>
-std::shared_ptr<T> Metadata::GetResource(const std::string &name) const
-{
-	auto child{FindChild(name)};
-
-	if (child == nullptr)
-	{
-		return nullptr;
-	}
-
-	return T::Create(*child);
-}
-
-template<typename T>
-void Metadata::GetResource(const std::string &name, std::shared_ptr<T> &dest) const
-{
-	auto child{FindChild(name)};
-
-	if (child == nullptr)
-	{
-		dest = nullptr;
-		return;
-	}
-
-	dest = T::Create(*child);
-}
-
-template<typename T>
-void Metadata::SetResource(const std::string &name, const std::shared_ptr<T> &value)
-{
-	auto child{FindChild(name)};
-
-	if (child == nullptr)
-	{
-		child = AddChild(std::make_unique<Metadata>(name));
-	}
-
-	if (value == nullptr)
-	{
-		child->SetValue("null");
-		return;
-	}
-
-	*child << *value;
-}
-
-template<typename T>
 const Metadata &operator>>(const Metadata &metadata, T &object)
 {
 	object = String::From<T>(metadata.GetValue());
@@ -147,10 +102,19 @@ Metadata &operator<<(Metadata &metadata, const std::unique_ptr<T> &object)
 template<typename T>
 const Metadata &operator>>(const Metadata &metadata, std::shared_ptr<T> &object)
 {
-	T x;
-	metadata >> x;
-	object = std::make_shared<T>(std::move(x));
-	return metadata;
+	// TODO: Abstract Resource streams out from shared_ptr.
+	if constexpr (std::is_base_of_v<Resource, T>)
+	{
+		object = T::Create(metadata);
+		return metadata;
+	}
+	else
+	{
+		auto x = new T();
+		metadata >> *x;
+		object = std::make_shared<T>(x);
+		return metadata;
+	}
 }
 
 template<typename T>

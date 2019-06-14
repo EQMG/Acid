@@ -13,12 +13,5 @@ public:
 	Resource() = default;
 
 	virtual ~Resource() = default;
-
-	/**
-	 * Used by the resource after it has been decoded, and in constructors.
-	 */
-	virtual void Load()
-	{
-	}
 };
 }

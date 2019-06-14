@@ -73,8 +73,6 @@ public:
 
 	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
-	void Load() override;
-
 	/**
 	 * Copies the images pixels from memory.
 	 * @param extent The sampled images extent.
@@ -144,6 +142,8 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
 
 private:
+	void Load();
+
 	std::filesystem::path m_filename;
 	std::string m_fileSuffix;
 	std::vector<std::string> m_fileSides{"Right", "Left", "Top", "Bottom", "Back", "Front"};

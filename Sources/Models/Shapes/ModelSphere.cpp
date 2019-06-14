@@ -37,8 +37,25 @@ ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, con
 {
 	if (load)
 	{
-		ModelSphere::Load();
+		Load();
 	}
+}
+
+const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
+{
+	metadata.GetChild("latitudeBands", model.m_latitudeBands);
+	metadata.GetChild("longitudeBands", model.m_longitudeBands);
+	metadata.GetChild("radius", model.m_radius);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
+{
+	metadata.SetChild<std::string>("type", "ModelSphere");
+	metadata.SetChild("latitudeBands", model.m_latitudeBands);
+	metadata.SetChild("longitudeBands", model.m_longitudeBands);
+	metadata.SetChild("radius", model.m_radius);
+	return metadata;
 }
 
 void ModelSphere::Load()
@@ -86,22 +103,5 @@ void ModelSphere::Load()
 	}
 
 	Initialize(vertices, indices);
-}
-
-const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
-{
-	metadata.GetChild("latitudeBands", model.m_latitudeBands);
-	metadata.GetChild("longitudeBands", model.m_longitudeBands);
-	metadata.GetChild("radius", model.m_radius);
-	return metadata;
-}
-
-Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
-{
-	metadata.SetChild<std::string>("type", "ModelSphere");
-	metadata.SetChild("latitudeBands", model.m_latitudeBands);
-	metadata.SetChild("longitudeBands", model.m_longitudeBands);
-	metadata.SetChild("radius", model.m_radius);
-	return metadata;
 }
 }

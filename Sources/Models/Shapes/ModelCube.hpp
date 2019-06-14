@@ -32,13 +32,13 @@ public:
 	 */
 	explicit ModelCube(const Vector3f &extents = {1.0f}, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelCube &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelCube &model);
 
 private:
+	void Load();
+
 	Vector3f m_extents;
 };
 }

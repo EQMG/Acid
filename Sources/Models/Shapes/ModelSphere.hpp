@@ -36,13 +36,13 @@ public:
 	 */
 	explicit ModelSphere(const float &radius = 1.0f, const uint32_t &latitudeBands = 20, const uint32_t &longitudeBands = 20, const bool &load = true);
 
-	void Load() override;
-
 	friend const Metadata &operator>>(const Metadata &metadata, ModelSphere &model);
 
 	friend Metadata &operator<<(Metadata &metadata, const ModelSphere &model);
 
 private:
+	void Load();
+
 	float m_radius;
 	uint32_t m_latitudeBands;
 	uint32_t m_longitudeBands;

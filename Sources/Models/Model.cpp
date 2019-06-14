@@ -45,10 +45,6 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 	return true;
 }
 
-void Model::Load()
-{
-}
-
 std::vector<float> Model::GetPointCloud() const
 {
 	if (m_vertexBuffer == nullptr)

@@ -47,8 +47,6 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1) const;
 
-	void Load() override;
-
 	std::vector<float> GetPointCloud() const;
 
 	const Vector3f &GetMinExtents() const { return m_minExtents; }

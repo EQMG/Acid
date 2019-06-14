@@ -79,12 +79,12 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material)
 {
 	metadata.GetChild("baseDiffuse", material.m_baseDiffuse);
-	metadata.GetResource("imageDiffuse", material.m_imageDiffuse);
+	metadata.GetChild("imageDiffuse", material.m_imageDiffuse);
 
 	metadata.GetChild("metallic", material.m_metallic);
 	metadata.GetChild("roughness", material.m_roughness);
-	metadata.GetResource("imageMaterial", material.m_imageMaterial);
-	metadata.GetResource("imageNormal", material.m_imageNormal);
+	metadata.GetChild("imageMaterial", material.m_imageMaterial);
+	metadata.GetChild("imageNormal", material.m_imageNormal);
 
 	metadata.GetChild("castsShadows", material.m_castsShadows);
 	metadata.GetChild("ignoreLighting", material.m_ignoreLighting);
@@ -95,12 +95,12 @@ const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material)
 Metadata &operator<<(Metadata &metadata, const MaterialDefault &material)
 {
 	metadata.SetChild("baseDiffuse", material.m_baseDiffuse);
-	metadata.SetResource("imageDiffuse", material.m_imageDiffuse);
+	metadata.SetChild("imageDiffuse", material.m_imageDiffuse);
 
 	metadata.SetChild("metallic", material.m_metallic);
 	metadata.SetChild("roughness", material.m_roughness);
-	metadata.SetResource("imageMaterial", material.m_imageMaterial);
-	metadata.SetResource("imageNormal", material.m_imageNormal);
+	metadata.SetChild("imageMaterial", material.m_imageMaterial);
+	metadata.SetChild("imageNormal", material.m_imageNormal);
 
 	metadata.SetChild("castsShadows", material.m_castsShadows);
 	metadata.SetChild("ignoreLighting", material.m_ignoreLighting);

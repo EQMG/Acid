@@ -76,8 +76,21 @@ ModelObj::ModelObj(std::filesystem::path filename, const bool &load) :
 {
 	if (load)
 	{
-		ModelObj::Load();
+		Load();
 	}
+}
+
+const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
+{
+	metadata.GetChild("filename", model.m_filename);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ModelObj &model)
+{
+	metadata.SetChild<std::string>("type", "ModelObj");
+	metadata.SetChild("filename", model.m_filename);
+	return metadata;
 }
 
 void ModelObj::Load()
@@ -134,18 +147,5 @@ void ModelObj::Load()
 #endif
 
 	Initialize(vertices, indices);
-}
-
-const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
-{
-	metadata.GetChild("filename", model.m_filename);
-	return metadata;
-}
-
-Metadata &operator<<(Metadata &metadata, const ModelObj &model)
-{
-	metadata.SetChild<std::string>("type", "ModelObj");
-	metadata.SetChild("filename", model.m_filename);
-	return metadata;
 }
 }

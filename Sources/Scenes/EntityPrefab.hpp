@@ -35,7 +35,7 @@ public:
 	 */
 	explicit EntityPrefab(std::filesystem::path filename, const bool &load = true);
 
-	void Load() override;
+	void Load();
 
 	void Write() const;
 

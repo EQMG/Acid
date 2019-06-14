@@ -60,15 +60,6 @@ public:
 	template<typename T>
 	void SetChild(const std::string &name, const T &value);
 
-	template<typename T>
-	std::shared_ptr<T> GetResource(const std::string &name) const;
-
-	template<typename T>
-	void GetResource(const std::string &name, std::shared_ptr<T> &dest) const;
-
-	template<typename T>
-	void SetResource(const std::string &name, const std::shared_ptr<T> &value);
-
 	const std::map<std::string, std::string> &GetAttributes() const { return m_attributes; }
 
 	void SetAttributes(const std::map<std::string, std::string> &attributes) { m_attributes = attributes; }

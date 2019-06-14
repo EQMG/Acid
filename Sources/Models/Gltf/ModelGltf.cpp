@@ -40,8 +40,21 @@ ModelGltf::ModelGltf(std::filesystem::path filename, const bool &load) :
 {
 	if (load)
 	{
-		ModelGltf::Load();
+		Load();
 	}
+}
+
+const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
+{
+	metadata.GetChild("filename", model.m_filename);
+	return metadata;
+}
+
+Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
+{
+	metadata.SetChild<std::string>("type", "ModelGltf");
+	metadata.SetChild("filename", model.m_filename);
+	return metadata;
 }
 
 void ModelGltf::Load()
@@ -131,18 +144,5 @@ void ModelGltf::Load()
 #endif
 
 	Initialize(vertices, indices);
-}
-
-const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
-{
-	metadata.GetChild("filename", model.m_filename);
-	return metadata;
-}
-
-Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
-{
-	metadata.SetChild<std::string>("type", "ModelGltf");
-	metadata.SetChild("filename", model.m_filename);
-	return metadata;
 }
 }

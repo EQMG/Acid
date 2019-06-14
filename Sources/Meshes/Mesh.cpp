@@ -17,13 +17,13 @@ void Mesh::Update()
 
 const Metadata &operator>>(const Metadata &metadata, Mesh &mesh)
 {
-	metadata.GetResource("model", mesh.m_model);
+	metadata.GetChild("model", mesh.m_model);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Mesh &mesh)
 {
-	metadata.SetResource("model", mesh.m_model);
+	metadata.SetChild("model", mesh.m_model);
 	return metadata;
 }
 }

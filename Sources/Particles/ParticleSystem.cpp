@@ -160,18 +160,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 
 const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)
 {
-	auto typesNode{metadata.FindChild("types")};
-
-	particleSystem.m_types.clear();
-
-	if (typesNode != nullptr)
-	{
-		for (const auto &typeNode : typesNode->GetChildren())
-		{
-			particleSystem.m_types.emplace_back(ParticleType::Create(*typeNode));
-		}
-	}
-
+	metadata.GetChild("types", particleSystem.m_types);
 	metadata.GetChild("pps", particleSystem.m_pps);
 	metadata.GetChild("averageSpeed", particleSystem.m_averageSpeed);
 	metadata.GetChild("gravityEffect", particleSystem.m_gravityEffect);
@@ -187,18 +176,7 @@ const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSys
 
 Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
 {
-	auto typesNode{metadata.FindChild("types")};
-
-	if (typesNode == nullptr)
-	{
-		typesNode = metadata.AddChild(std::make_unique<Metadata>("types"));
-	}
-
-	for (const auto &type : particleSystem.m_types)
-	{
-		*typesNode->AddChild(std::make_unique<Metadata>()) << type;
-	}
-
+	metadata.SetChild("types", particleSystem.m_types);
 	metadata.SetChild("pps", particleSystem.m_pps);
 	metadata.SetChild("averageSpeed", particleSystem.m_averageSpeed);
 	metadata.SetChild("gravityEffect", particleSystem.m_gravityEffect);

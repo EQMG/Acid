@@ -35,29 +35,8 @@ ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &l
 {
 	if (load)
 	{
-		ModelRectangle::Load();
+		Load();
 	}
-}
-
-void ModelRectangle::Load()
-{
-	if (m_min == m_max)
-	{
-		return;
-	}
-
-	std::vector<VertexDefault> vertices{ 
-		{Vector3f{m_min, m_min, 0.0f}, Vector2f{0.0f, 0.0f}, Vector3f{}},
-		{Vector3f{m_max, m_min, 0.0f}, Vector2f{1.0f, 0.0f}, Vector3f{}}, 
-		{Vector3f{m_max, m_max, 0.0f}, Vector2f{1.0f, 1.0f}, Vector3f{}},
-		{Vector3f{m_min, m_max, 0.0f}, Vector2f{0.0f, 1.0f}, Vector3f{}}
-	};
-	static std::vector<uint32_t> indices{ 
-		0, 1, 2, 
-		2, 3, 0 
-	};
-
-	Initialize(vertices, indices);
 }
 
 const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model)
@@ -73,5 +52,26 @@ Metadata &operator<<(Metadata &metadata, const ModelRectangle &model)
 	metadata.SetChild("min", model.m_min);
 	metadata.SetChild("max", model.m_max);
 	return metadata;
+}
+
+void ModelRectangle::Load()
+{
+	if (m_min == m_max)
+	{
+		return;
+	}
+
+	std::vector<VertexDefault> vertices{
+		{{m_min, m_min, 0.0f}, {0.0f, 0.0f}, {}},
+		{{m_max, m_min, 0.0f}, {1.0f, 0.0f}, {}},
+		{{m_max, m_max, 0.0f}, {1.0f, 1.0f}, {}},
+		{{m_min, m_max, 0.0f}, {0.0f, 1.0f}, {}}
+	};
+	static std::vector<uint32_t> indices{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	Initialize(vertices, indices);
 }
 }
