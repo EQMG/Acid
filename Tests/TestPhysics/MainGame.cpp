@@ -66,7 +66,7 @@ MainGame::MainGame() :
 	});
 	Timers::Get()->Every(4s, []()
 	{
-		Log::Out("Timer Every Tick\n");
+		Log::Out("Timer Every Tick: %i fps\n", Engine::Get()->GetFps());
 	});
 	Timers::Get()->Repeat(2s, 3, []()
 	{

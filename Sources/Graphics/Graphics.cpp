@@ -170,7 +170,7 @@ void Graphics::CheckVk(const VkResult &result)
 	auto failure{StringifyResultVk(result)};
 
 	Log::Error("Vulkan error: %s, %i\n", failure, result);
-	Log::Popup("Vulkan Error", failure);
+	//Log::Popup("Vulkan Error", failure);
 	throw std::runtime_error("Vulkan error: " + failure);
 }
 

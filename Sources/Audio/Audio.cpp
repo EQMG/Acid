@@ -101,7 +101,7 @@ void Audio::CheckAl(const int32_t &result)
 	auto failure{StringifyResultAl(result)};
 
 	Log::Error("OpenAL error: %s, %i\n", failure, result);
-	Log::Popup("OpenAL Error", failure);
+	//Log::Popup("OpenAL Error", failure);
 	throw std::runtime_error("OpenAL Error: " + result);
 }
 

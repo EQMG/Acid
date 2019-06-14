@@ -12,7 +12,6 @@ UniformHandler::UniformHandler(const Shader::UniformBlock &uniformBlock, const b
 	m_multipipeline{multipipeline},
 	m_uniformBlock{uniformBlock},
 	m_size{static_cast<uint32_t>(m_uniformBlock->GetSize())},
-	m_data{std::make_unique<char[]>(m_size)},
 	m_uniformBuffer{std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size))},
 	m_handlerStatus{Buffer::Status::Normal}
 {
@@ -28,7 +27,7 @@ bool UniformHandler::Update(const std::optional<Shader::UniformBlock> &uniformBl
 		}
 
 		m_uniformBlock = uniformBlock;
-		m_data = std::make_unique<char[]>(m_size);
+		m_bound = false;
 		m_uniformBuffer = std::make_unique<UniformBuffer>(static_cast<VkDeviceSize>(m_size));
 		m_handlerStatus = Buffer::Status::Changed;
 		return false;
@@ -36,7 +35,12 @@ bool UniformHandler::Update(const std::optional<Shader::UniformBlock> &uniformBl
 
 	if (m_handlerStatus != Buffer::Status::Normal)
 	{
-		m_uniformBuffer->Update(m_data.get());
+		if (m_bound)
+		{
+			m_uniformBuffer->UnmapMemory();
+			m_bound = false;
+		}
+
 		m_handlerStatus = Buffer::Status::Normal;
 	}
 

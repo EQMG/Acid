@@ -23,14 +23,20 @@ public:
 			return;
 		}
 
-		if (!m_uniformBlock)
+		if (!m_uniformBlock || !m_storageBuffer)
 		{
 			return;
 		}
 
-		if (std::memcmp(m_data.get(), data, size) != 0)
+		if (!m_bound)
 		{
-			std::memcpy(m_data.get(), data, size);
+			m_storageBuffer->MapMemory(&m_data);
+			m_bound = true;
+		}
+
+		if (std::memcmp(static_cast<char *>(m_data), data, size) != 0)
+		{
+			std::memcpy(static_cast<char *>(m_data), data, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
@@ -38,14 +44,20 @@ public:
 	template<typename T>
 	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
 	{
-		if (!m_uniformBlock)
+		if (!m_uniformBlock || !m_storageBuffer)
 		{
 			return;
 		}
 
-		if (std::memcmp(m_data.get() + offset, &object, size) != 0)
+		if (!m_bound)
 		{
-			std::memcpy(m_data.get() + offset, &object, size);
+			m_storageBuffer->MapMemory(&m_data);
+			m_bound = true;
+		}
+
+		if (std::memcmp(static_cast<char *>(m_data) + offset, &object, size) != 0)
+		{
+			std::memcpy(static_cast<char *>(m_data) + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
@@ -83,7 +95,8 @@ private:
 	bool m_multipipeline;
 	std::optional<Shader::UniformBlock> m_uniformBlock;
 	uint32_t m_size{};
-	std::unique_ptr<char[]> m_data;
+	void *m_data{};
+	bool m_bound{};
 	std::unique_ptr<StorageBuffer> m_storageBuffer;
 	Buffer::Status m_handlerStatus;
 };
