@@ -418,7 +418,7 @@ Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix,
 Vector3f Matrix4::Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
 	Vector3f result;
-	// TODO: Create
+	// TODO: Write unproject method
 	return result;
 }
 

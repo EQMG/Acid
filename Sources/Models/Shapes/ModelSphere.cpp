@@ -67,7 +67,8 @@ void ModelSphere::Load()
 
 	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
-	// TODO: Reserve.
+	vertices.reserve((m_longitudeBands + 1) * (m_latitudeBands + 1));
+	indices.reserve(m_longitudeBands * m_latitudeBands * 6);
 
 	for (uint32_t i{}; i < m_longitudeBands + 1; i++)
 	{

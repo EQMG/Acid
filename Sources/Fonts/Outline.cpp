@@ -83,7 +83,6 @@ void OutlineConvert(FT_Outline *outline, Outline *o)
 
 void OutlineDecompose(FT_Outline *outline, Outline *o)
 {
-	//memset(o, 0, sizeof(Outline)); // TODO: Remove
 	*o = {};
 
 	FT_BBox outlineBbox;
@@ -403,10 +402,9 @@ void InitWipcells(const Outline *o, WipCell *cells)
 	{
 		for (uint32_t x{}; x < o->m_cellCount.m_x; x++)
 		{
-			// TODO: Remove static_cast and cast in Vector.
 			Rect bbox{ 
-				o->m_bbox.m_min + ((Vector2f{static_cast<float>(x), static_cast<float>(y)} / o->m_cellCount) * size),
-				o->m_bbox.m_min + ((Vector2f{static_cast<float>(x + 1), static_cast<float>(y + 1)} / o->m_cellCount) * size)
+				o->m_bbox.m_min + ((Vector2f{x, y} / o->m_cellCount) * size),
+				o->m_bbox.m_min + ((Vector2f{x + 1, y + 1} / o->m_cellCount) * size)
 			};
 
 			auto i{y * o->m_cellCount.m_x + x};

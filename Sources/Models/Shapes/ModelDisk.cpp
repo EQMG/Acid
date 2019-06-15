@@ -70,7 +70,8 @@ void ModelDisk::Load()
 
 	std::vector<VertexDefault> vertices;
 	std::vector<uint32_t> indices;
-	// TODO: Reserve.
+	vertices.reserve(m_slices * (m_loops + 1));
+	indices.reserve(m_slices * m_loops * 6);
 
 	for (uint32_t i{}; i < m_slices; i++)
 	{
