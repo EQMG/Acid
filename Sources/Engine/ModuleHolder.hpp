@@ -40,7 +40,6 @@ public:
 		if (it == m_modules.end() || it->second == nullptr)
 		{
 			throw std::runtime_error("Module Holder does not have requested Module");
-			return nullptr;
 		}
 
 		return static_cast<T *>(it->second.get());
@@ -61,7 +60,7 @@ public:
 		const auto typeId{GetModuleTypeId<T>()};
 
 		// Insert the stage value
-		m_stages.insert({ StageIndex(stage, m_modules.size()), typeId });
+		m_stages.insert({StageIndex(stage, m_modules.size()), typeId});
 
 		// Then, add the Module
 		m_modules[typeId] = std::move(module);

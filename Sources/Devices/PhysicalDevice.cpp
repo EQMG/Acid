@@ -13,7 +13,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 {
 	uint32_t physicalDeviceCount;
 	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, nullptr);
-	std::vector<VkPhysicalDevice> physicalDevices{physicalDeviceCount};
+	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, physicalDevices.data());
 
 	m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
@@ -60,7 +60,7 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	// Checks if the requested extensions are supported.
 	uint32_t extensionPropertyCount;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, nullptr);
-	std::vector<VkExtensionProperties> extensionProperties{extensionPropertyCount};
+	std::vector<VkExtensionProperties> extensionProperties(extensionPropertyCount);
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
 
 	// Iterates through all extensions requested.

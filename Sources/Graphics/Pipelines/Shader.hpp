@@ -37,15 +37,15 @@ public:
 
 		friend const Metadata &operator>>(const Metadata &metadata, VertexInput &vertexInput)
 		{
-			//metadata.GetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
-			//metadata.GetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
+			metadata.GetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
+			metadata.GetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
 			return metadata;
 		}
 
 		friend Metadata &operator<<(Metadata &metadata, const VertexInput &vertexInput)
 		{
-			//metadata.SetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
-			//metadata.SetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
+			metadata.SetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
+			metadata.SetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
 			return metadata;
 		}
 
@@ -440,4 +440,38 @@ private:
 
 	mutable std::vector<std::string> m_notFoundNames;
 };
+
+inline const Metadata &operator>>(const Metadata &metadata, VkVertexInputBindingDescription &bindingDescription)
+{
+	metadata.GetChild("binding", bindingDescription.binding);
+	metadata.GetChild("stride", bindingDescription.stride);
+	metadata.GetChild("inputRate", bindingDescription.inputRate);
+	return metadata;
+}
+
+inline Metadata &operator<<(Metadata &metadata, const VkVertexInputBindingDescription &bindingDescription)
+{
+	metadata.SetChild("binding", bindingDescription.binding);
+	metadata.SetChild("stride", bindingDescription.stride);
+	metadata.SetChild("inputRate", bindingDescription.inputRate);
+	return metadata;
+}
+
+inline const Metadata &operator>>(const Metadata &metadata, VkVertexInputAttributeDescription &attributeDescription)
+{
+	metadata.GetChild("location", attributeDescription.location);
+	metadata.GetChild("binding", attributeDescription.binding);
+	metadata.GetChild("format", attributeDescription.format);
+	metadata.GetChild("offset", attributeDescription.offset);
+	return metadata;
+}
+
+inline Metadata &operator<<(Metadata &metadata, const VkVertexInputAttributeDescription &attributeDescription)
+{
+	metadata.SetChild("location", attributeDescription.location);
+	metadata.SetChild("binding", attributeDescription.binding);
+	metadata.SetChild("format", attributeDescription.format);
+	metadata.SetChild("offset", attributeDescription.offset);
+	return metadata;
+}
 }

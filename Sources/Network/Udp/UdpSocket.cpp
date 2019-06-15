@@ -15,7 +15,7 @@ static const uint32_t MAX_DATAGRAM_SIZE{65507};
 
 UdpSocket::UdpSocket() :
 	Socket{Type::Udp},
-	m_buffer(MAX_DATAGRAM_SIZE) // TODO: C++20: {}
+	m_buffer(MAX_DATAGRAM_SIZE)
 {
 }
 

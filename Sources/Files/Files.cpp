@@ -296,7 +296,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 	}
 
 	auto size{PHYSFS_fileLength(fsFile)};
-	std::vector<uint8_t> data(size); // TODO C++20: {size}
+	std::vector<uint8_t> data(size);
 	PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
 	if (PHYSFS_close(fsFile) == 0)

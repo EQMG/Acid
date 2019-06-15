@@ -23,6 +23,9 @@ Engine *Engine::INSTANCE{nullptr};
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0{std::move(argv0)},
+	m_engineVersion{0, 13, 4},
+	m_gameVersion{0, 1, 0},
+	m_gameName{"Acid Game"},
 	m_fpsLimit{-1.0f},
 	m_running{true},
 	m_elapsedUpdate{14.705ms},

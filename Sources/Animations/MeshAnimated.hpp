@@ -2,6 +2,7 @@
 
 #include "Maths/Matrix4.hpp"
 #include "Meshes/Mesh.hpp"
+#include "Graphics/Buffers/StorageHandler.hpp"
 #include "Animation/AnimationLoader.hpp"
 #include "Geometry/GeometryLoader.hpp"
 #include "Geometry/VertexAnimated.hpp"
@@ -28,7 +29,7 @@ public:
 
 	void SetModel(const std::shared_ptr<Model> &model) override { m_model = model; }
 
-	const std::vector<Matrix4> &GetJointTransforms() const { return m_jointMatrices; }
+	StorageHandler &GetStorgeAnimation() { return m_storageAnimation; }
 
 	friend const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated);
 
@@ -48,6 +49,6 @@ private:
 	std::unique_ptr<Animator> m_animator;
 	std::unique_ptr<Animation> m_animation;
 
-	std::vector<Matrix4> m_jointMatrices;
+	StorageHandler m_storageAnimation;
 };
 }

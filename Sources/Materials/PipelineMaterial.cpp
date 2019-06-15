@@ -7,7 +7,7 @@ namespace acid
 {
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metadata)
 {
-	/*auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(metadata)};
 
 	if (resource != nullptr)
 	{
@@ -17,9 +17,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 	auto result{std::make_shared<PipelineMaterial>()};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
 	metadata >> *result;
-	result->Load();
-	return result;*/
-	return nullptr;
+	//result->Load();
+	return result;
 }
 
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
@@ -37,7 +36,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 
 	auto result{std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate)};
 	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	//metadata >> *result;
+	metadata >> *result;
 	//result->Load();
 	return result;
 }

@@ -23,10 +23,9 @@ void MeshAnimated::Update()
 
 	if (m_headJoint != nullptr)
 	{
-		m_jointMatrices.clear();
-		m_jointMatrices.resize(MaxJoints);
-		AddJointsToArray(*m_headJoint, m_jointMatrices);
-		//m_jointMatrices.shrink_to_fit();
+		std::vector<Matrix4> jointMatrices(MaxJoints);
+		AddJointsToArray(*m_headJoint, jointMatrices);
+		m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 	}
 }
 

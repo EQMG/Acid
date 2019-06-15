@@ -315,7 +315,7 @@ void Scene1::Start()
 	auto smokeSystem{GetStructure()->CreateEntity({{-15.0f, 4.0f, 12.0f}}, "Objects/Smoke/Smoke.json")};
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 
-	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.json"};
+	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.yaml"};
 	prefabSmokeSystem << *smokeSystem;
 	prefabSmokeSystem.Write();
 }

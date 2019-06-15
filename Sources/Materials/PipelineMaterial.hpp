@@ -32,7 +32,7 @@ public:
 	 * @param pipelineStage Stage the pipeline will be executed on.
 	 * @param pipelineCreate Information used to define pipeline properties.
 	 */
-	PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate);
+	PipelineMaterial(Pipeline::Stage pipelineStage = {}, PipelineGraphicsCreate pipelineCreate = {});
 
 	/**
 	 * Binds this pipeline to the current renderpass.

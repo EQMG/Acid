@@ -20,15 +20,15 @@ void Light::Update()
 
 const Metadata &operator>>(const Metadata &metadata, Light &light)
 {
-	metadata.GetChild("Colour", light.m_colour);
-	metadata.GetChild("Radius", light.m_radius);
+	metadata.GetChild("colour", light.m_colour);
+	metadata.GetChild("radius", light.m_radius);
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Light &light)
 {
-	metadata.SetChild("Colour", light.m_colour);
-	metadata.SetChild("Radius", light.m_radius);
+	metadata.SetChild("colour", light.m_colour);
+	metadata.SetChild("radius", light.m_radius);
 	return metadata;
 }
 }

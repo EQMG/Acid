@@ -50,6 +50,11 @@ class ACID_EXPORT Engine :
 	public NonCopyable
 {
 public:
+	struct Version
+	{
+		uint32_t m_major, m_minor, m_patch;
+	};
+
 	/**
 	 * Gets the engines instance.
 	 * @return The current engine instance.
@@ -68,6 +73,42 @@ public:
 	 * @return {@code EXIT_SUCCESS} or {@code EXIT_FAILURE}
 	 */
 	int32_t Run();
+
+	/**
+	 * Gets the first argument passed to main.
+	 * @return The first argument passed to main.
+	 */
+	const std::string &GetArgv0() const { return m_argv0; };
+
+	/**
+	 * Gets the engine's version.
+	 * @return The engine's version.
+	 */
+	const Version &GetEngineVersion() const { return m_engineVersion; }
+
+	/**
+	 * Gets the game's version.
+	 * @return The game's version.
+	 */
+	const Version &GetGameVersion() const { return m_gameVersion; }
+
+	/**
+	 * Sets the games version, for driver support.
+	 * @param T The game version.
+	 */
+	void SetGameVersion(const Version &gameVersion) { m_gameVersion = gameVersion; }
+
+	/**
+	 * Gets the game's name.
+	 * @return The game's name.
+	 */
+	const std::string &GetGameName() const { return m_gameName; }
+
+	/**
+	 * Sets the game's name, for driver support.
+	 * @param T The gam'e name.
+	 */
+	void SetGameName(const std::string &gameName) { m_gameName = gameName; }
 
 	/**
 	 * Checks whether a Module exists or not.
@@ -127,12 +168,6 @@ public:
 	void SetGame(std::unique_ptr<Game> &&game) { m_game = std::move(game); }
 
 	/**
-	 * Gets the first argument passed to main.
-	 * @return The first argument passed to main.
-	 */
-	const std::string &GetArgv0() const { return m_argv0; };
-
-	/**
 	 * Gets the fps limit.
 	 * @return The frame per second limit.
 	 */
@@ -182,10 +217,14 @@ public:
 private:
 	ACID_STATE static Engine *INSTANCE;
 
+	std::string m_argv0;
+	Version m_engineVersion;
+	Version m_gameVersion;
+	std::string m_gameName;
+
 	ModuleHolder m_modules;
 	std::unique_ptr<Game> m_game;
 
-	std::string m_argv0;
 	float m_fpsLimit;
 	bool m_running;
 

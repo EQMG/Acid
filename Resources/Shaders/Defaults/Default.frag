@@ -10,9 +10,6 @@
 
 layout(binding = 1) uniform UniformObject
 {
-#if ANIMATED
-	mat4 jointTransforms[MAX_JOINTS];
-#endif
 	mat4 transform;
 
 	vec4 baseDiffuse;
@@ -23,13 +20,13 @@ layout(binding = 1) uniform UniformObject
 } object;
 
 #if DIFFUSE_MAPPING
-layout(binding = 2) uniform sampler2D samplerDiffuse;
+layout(binding = 3) uniform sampler2D samplerDiffuse;
 #endif
 #if MATERIAL_MAPPING
-layout(binding = 3) uniform sampler2D samplerMaterial;
+layout(binding = 4) uniform sampler2D samplerMaterial;
 #endif
 #if NORMAL_MAPPING
-layout(binding = 4) uniform sampler2D samplerNormal;
+layout(binding = 5) uniform sampler2D samplerNormal;
 #endif
 
 layout(location = 0) in vec3 inPosition;

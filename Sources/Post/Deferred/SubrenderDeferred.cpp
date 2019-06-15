@@ -42,7 +42,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	}
 
 	// Updates uniforms.
-	std::vector<DeferredLight> deferredLights{MAX_LIGHTS};
+	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
 	uint32_t lightCount{};
 
 	auto sceneLights{Scenes::Get()->GetStructure()->QueryComponents<Light>()};

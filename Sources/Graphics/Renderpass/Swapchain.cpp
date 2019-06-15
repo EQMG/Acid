@@ -25,7 +25,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 
 	uint32_t physicalPresentModeCount;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
-	std::vector<VkPresentModeKHR> physicalPresentModes{physicalPresentModeCount};
+	std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, physicalPresentModes.data());
 
 	for (const auto &presentMode : physicalPresentModes)

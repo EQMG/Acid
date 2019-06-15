@@ -28,7 +28,7 @@ std::vector<float> SkinLoader::LoadWeights() const
 	auto weightsNode{m_skinData->FindChildWithAttribute("source", "id", weightsDataId)->FindChild("float_array")};
 
 	auto rawDatas{String::Split(weightsNode->GetValue(), ' ')};
-	std::vector<float> weights(rawDatas.size()); // TODO C++20: {rawDatas.size()}
+	std::vector<float> weights(rawDatas.size());
 
 	for (uint32_t i{}; i < weights.size(); i++)
 	{

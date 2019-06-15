@@ -24,16 +24,18 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 void MaterialDefault::Start()
 {
 	auto mesh{GetParent()->GetComponent<Mesh>(true)};
+	auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
 
-	if (mesh == nullptr)
+	if (mesh == nullptr && meshAnimated == nullptr)
 	{
 		Log::Error("Cannot have a material attached to a object without a mesh!\n");
 		return;
 	}
 
-	m_animated = dynamic_cast<MeshAnimated *>(mesh) != nullptr;
+	m_animated = meshAnimated != nullptr;
+	auto vertexInput{m_animated ? meshAnimated->GetVertexInput() : mesh->GetVertexInput()};
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
-		{mesh->GetVertexInput()}, GetDefines(), PipelineGraphics::Mode::Mrt});
+		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
 }
 
 void MaterialDefault::Update()
@@ -42,13 +44,6 @@ void MaterialDefault::Update()
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
-	if (m_animated)
-	{
-		auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
-		auto joints{meshAnimated->GetJointTransforms()}; // TODO: Move into storage buffer and update every frame.
-		uniformObject.Push("jointTransforms", *joints.data(), sizeof(Matrix4) * joints.size());
-	}
-
 	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
 	uniformObject.Push("baseDiffuse", m_baseDiffuse);
 	uniformObject.Push("metallic", m_metallic);
@@ -59,6 +54,12 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 
 void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
+	if (m_animated)
+	{
+		auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
+		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
+	}
+
 	descriptorSet.Push("samplerDiffuse", m_imageDiffuse);
 	descriptorSet.Push("samplerMaterial", m_imageMaterial);
 	descriptorSet.Push("samplerNormal", m_imageNormal);

@@ -462,7 +462,7 @@ bool TryToFitInCellCount(Outline *o)
 {
 	bool result{true};
 
-	std::vector<WipCell> cells{o->m_cellCount.m_x * o->m_cellCount.m_y};
+	std::vector<WipCell> cells(o->m_cellCount.m_x * o->m_cellCount.m_y);
 	InitWipcells(o, cells.data());
 
 	Outline u = {};

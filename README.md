@@ -47,25 +47,25 @@ This project is being worked on part-time by a single developer, this is under h
 # Code Snippets
 ```cpp
 // Imports a 2D texture using nearest filtering.
-auto guiBlack = Image2d::Create("Guis/Black.png", VK_FILTER_NEAREST);
+auto guiBlack{Image2d::Create("Guis/Black.png", VK_FILTER_NEAREST)};
 
 // Imports a 3D cubemap (face names defined in Cubemap.cpp).
-auto skyboxSnowy = ImageCube::Create("Objects/SkyboxSnowy", ".png");
+auto skyboxSnowy{ImageCube::Create("Objects/SkyboxSnowy", ".png")};
 
 // Imports a OBJ model.
-auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
+auto dragon{ModelObj::Create("Objects/Testing/ModelDragon.obj")};
 
 // Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
-auto sphere = ModelSphere::Create(20, 20, 1.0f);
+auto sphere{ModelSphere::Create(20, 20, 1.0f)};
 
 // Plays a 3D sound (sound buffer resource internally managed), at (10, 0, 0), at half volume.
-auto jump = Sound("Sounds/Jump.ogg", Transform(10.0f * Vector3f::Right), Audio::Type::Effect, false, true, 0.5f);
+auto jump{Sound("Sounds/Jump.ogg", {10.0f * Vector3f::Right}, Audio::Type::Effect, false, true, 0.5f)};
 
 // Loads a entity from a prefab file.
-auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json", Transform::Identity);
+auto playerObject{GetStructure()->CreateEntity({}, "Objects/Player/Player.json")};
 
 // Creates a entity.
-auto sphere = GetStructure()->CreateEntity(Transform(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, 180.0_deg, 0.0f), 3.0f));
+auto sphere{GetStructure()->CreateEntity({{6.7f, 6.7f, -8.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}, 3.0f})};
 sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
 sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
 sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
@@ -74,34 +74,34 @@ sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Te
 sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material attached.
 
 // Vector maths.
-Vector2f a(3.0f, -7.2f);
-Vector2f b(-1.74f, 15.4f);
-Vector2f c = a * b;
+Vector2f a{3.0f, -7.2f};
+Vector2f b{-1.74f, 15.4f};
+Vector2f c{a * b};
 // Distance between the two points.
-float dist = a.Distance(b);
+float dist{a.Distance(b)};
 // Right shift of the x and y bits by 1.
-Vector2i rshift = Vector2i(5, 9) >> 1;
+Vector2i rshift = Vector2i{5, 9} >> 1;
 
 // Split a string by spaces.
-std::string stringSource = "Hello world!";
-std::vector<std::string> stringSplit = String::Split(stringSource, " ");
+std::string stringSource{"Hello world!"};
+std::vector<std::string> stringSplit{String::Split(stringSource, ' ')};
 
 // Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
 Window::Get()->OnSize().Add([](Vector2ui size)
 {
-	Log::Out("Hello world: %s\n", size.ToString().c_str());
+	Log::Out("Hello world: %s\n", size.ToString());
 });
 
 // A value container that calls a delegate on value assignments.
 DelegateValue<Vector3f> da;
 da.Add([](Vector3f value)
 {
-	Log::Out("New Value: %s\n", value.ToString().c_str());
+	Log::Out("New Value: %s\n", value.ToString());
 });
-da = Vector3f(10.0f, -4.11f, 99.991f);
+da = {10.0f, -4.11f, 99.991f};
 
 // Time addition.
-Time dateTime = 4h + 2min + 11s + 9ms + 1us + 4ns;
+Time dateTime{4h + 2min + 11s + 9ms + 1us + 4ns};
 
 // Calls the function once after 150 milliseconds.
 Timers::Get()->Once(150ms, []()
@@ -116,7 +116,7 @@ Timers::Get()->Every(4s, []()
 // Calls the funcion every 7 seconds 3 times.
 Timers::Get()->Repeat(7s, 3, []()
 {
-	static uint32_t i = 0;
+	static uint32_t i{};
 	Log::Out("Timer Repeat Tick #%i\n", i);
 	i++;
 });

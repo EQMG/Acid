@@ -27,7 +27,7 @@ void LogicalDevice::CreateQueueIndices()
 {
 	uint32_t deviceQueueFamilyPropertyCount;
 	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
-	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties{deviceQueueFamilyPropertyCount};
+	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
 	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
 
 	std::optional<uint32_t> graphicsFamily, presentFamily, computeFamily, transferFamily;

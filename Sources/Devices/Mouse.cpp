@@ -31,7 +31,7 @@ void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
 {
-	std::vector<std::string> files{static_cast<uint32_t>(count)};
+	std::vector<std::string> files(static_cast<uint32_t>(count));
 
 	for (uint32_t i{}; i < static_cast<uint32_t>(count); i++)
 	{

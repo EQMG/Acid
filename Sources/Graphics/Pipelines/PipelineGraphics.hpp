@@ -193,7 +193,7 @@ public:
 	friend const Metadata &operator>>(const Metadata &metadata, PipelineGraphicsCreate &pipelineCreate)
 	{
 		metadata.GetChild("shaderStages", pipelineCreate.m_shaderStages);
-		//metadata.GetChild("vertexInputs", pipelineCreate.m_vertexInputs);
+		metadata.GetChild("vertexInputs", pipelineCreate.m_vertexInputs);
 		metadata.GetChild("defines", pipelineCreate.m_defines);
 		metadata.GetChild("mode", pipelineCreate.m_mode);
 		metadata.GetChild("depth", pipelineCreate.m_depth);
@@ -208,7 +208,7 @@ public:
 	friend Metadata &operator<<(Metadata &metadata, const PipelineGraphicsCreate &pipelineCreate)
 	{
 		metadata.SetChild("shaderStages", pipelineCreate.m_shaderStages);
-		//metadata.SetChild("vertexInputs", pipelineCreate.m_vertexInputs);
+		metadata.SetChild("vertexInputs", pipelineCreate.m_vertexInputs);
 		metadata.SetChild("defines", pipelineCreate.m_defines);
 		metadata.SetChild("mode", pipelineCreate.m_mode);
 		metadata.SetChild("depth", pipelineCreate.m_depth);

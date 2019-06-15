@@ -14,7 +14,7 @@ class RingBuffer :
 {
 public:
 	explicit RingBuffer(const std::size_t &capacity) :
-		m_data(capacity) // TODO C++20: {capacity}
+		m_data(capacity)
 	{
 		if (capacity == 0)
 		{

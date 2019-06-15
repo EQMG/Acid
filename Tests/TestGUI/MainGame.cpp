@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 
 	// Creates the engine.
 	auto engine{std::make_unique<Engine>(argv[0])};
+	engine->SetGameName("Test GUI");
 	engine->SetGame(std::make_unique<MainGame>());
 
 	// Runs the game loop.

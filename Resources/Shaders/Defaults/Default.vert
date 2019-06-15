@@ -15,9 +15,6 @@ layout(binding = 0) uniform UniformScene
 
 layout(binding = 1) uniform UniformObject
 {
-#if ANIMATED
-	mat4 jointTransforms[MAX_JOINTS];
-#endif
 	mat4 transform;
 
 	vec4 baseDiffuse;
@@ -26,6 +23,12 @@ layout(binding = 1) uniform UniformObject
 	float ignoreFog;
 	float ignoreLighting;
 } object;
+#if ANIMATED
+layout(binding = 2) buffer BufferAnimation
+{
+	mat4 jointTransforms[];
+} animation;
+#endif
 
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inUV;
@@ -52,7 +55,7 @@ void main()
 
 	for (int i = 0; i < MAX_WEIGHTS; i++)
 	{
-		mat4 jointTransform = object.jointTransforms[inJointIds[i]];
+		mat4 jointTransform = animation.jointTransforms[inJointIds[i]];
 		vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
 		position += posePosition * inWeights[i];
 
