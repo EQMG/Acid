@@ -12,7 +12,8 @@ using namespace acid;
 namespace test
 {
 class Scene1 :
-	public Scene
+	public Scene,
+	public Observer
 {
 public:
 	Scene1();

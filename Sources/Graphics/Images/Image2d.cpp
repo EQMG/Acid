@@ -103,7 +103,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const Vk
 	descriptorWrite.descriptorCount = 1;
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
-	return WriteDescriptorSet(descriptorWrite, imageInfo);
+	return {descriptorWrite, imageInfo};
 }
 
 std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const

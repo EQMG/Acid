@@ -105,7 +105,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const 
 	descriptorWrite.descriptorCount = 1;
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
-	return WriteDescriptorSet(descriptorWrite, imageInfo);
+	return {descriptorWrite, imageInfo};
 }
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const

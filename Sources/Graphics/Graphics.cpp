@@ -300,8 +300,8 @@ const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::
 		return it->second;
 	}
 
-	m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId));
-	return m_commandPools.find(threadId)->second; // TODO: Cleanup.
+	// TODO: Cleanup and fix crashes
+	return m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
 }
 
 void Graphics::CreatePipelineCache()

@@ -223,7 +223,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		descriptorWrite.descriptorCount = 1;
 		descriptorWrite.descriptorType = *compute.GetShader()->GetDescriptorType(descriptorWrite.dstBinding);
 		//descriptorWrite.pImageInfo = &imageInfo;
-		auto writeDescriptorSet{WriteDescriptorSet(descriptorWrite, imageInfo)};
+		WriteDescriptorSet writeDescriptorSet{descriptorWrite, imageInfo};
 
 		pushHandler.Push("roughness", static_cast<float>(i) / static_cast<float>(prefilteredCubemap->GetMipLevels() - 1));
 

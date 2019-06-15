@@ -11,25 +11,9 @@ namespace acid
 MeshAnimated::MeshAnimated(std::filesystem::path filename) :
 	m_filename{std::move(filename)}
 {
-	Load();
 }
 
-void MeshAnimated::Update()
-{
-	if (m_animator != nullptr)
-	{
-		m_animator->Update();
-	}
-
-	if (m_headJoint != nullptr)
-	{
-		std::vector<Matrix4> jointMatrices(MaxJoints);
-		AddJointsToArray(*m_headJoint, jointMatrices);
-		m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
-	}
-}
-
-void MeshAnimated::Load()
+void MeshAnimated::Start()
 {
 	if (m_filename.empty())
 	{
@@ -55,6 +39,21 @@ void MeshAnimated::Load()
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator->DoAnimation(m_animation.get());
+}
+
+void MeshAnimated::Update()
+{
+	if (m_animator != nullptr)
+	{
+		m_animator->Update();
+	}
+
+	if (m_headJoint != nullptr)
+	{
+		std::vector<Matrix4> jointMatrices(MaxJoints);
+		AddJointsToArray(*m_headJoint, jointMatrices);
+		m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
+	}
 }
 
 std::unique_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)

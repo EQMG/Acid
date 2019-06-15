@@ -38,26 +38,12 @@ Colour::Colour(std::string hex, const float &a) :
 		hex.erase(0, 1);
 	}
 
+	assert(hex.size() == 6);
 	auto hexValue{std::stoul(hex, nullptr, 16)};
 
-	// TODO: Cleanup. Also when size is 8, a is ignored...
-	if (hex.size() == 8)
-	{
-		m_r = static_cast<float>((hexValue >> 24) & 0xff) / 255.0f;
-		m_g = static_cast<float>((hexValue >> 16) & 0xff) / 255.0f;
-		m_b = static_cast<float>((hexValue >> 8) & 0xff) / 255.0f;
-		m_a = static_cast<float>((hexValue >> 0) & 0xff) / 255.0f;
-	}
-	else if (hex.size() == 6)
-	{
-		m_r = static_cast<float>((hexValue >> 16) & 0xff) / 255.0f;
-		m_g = static_cast<float>((hexValue >> 8) & 0xff) / 255.0f;
-		m_b = static_cast<float>((hexValue >> 0) & 0xff) / 255.0f;
-	}
-	else
-	{
-		throw std::runtime_error("Hex size must be 6 or 8");
-	}
+	m_r = static_cast<float>((hexValue >> 16) & 0xff) / 255.0f;
+	m_g = static_cast<float>((hexValue >> 8) & 0xff) / 255.0f;
+	m_b = static_cast<float>((hexValue >> 0) & 0xff) / 255.0f;
 }
 
 Colour Colour::Add(const Colour &other) const
@@ -130,22 +116,10 @@ std::string Colour::GetHex() const
 	std::stringstream stream;
 	stream << "#";
 
-	// TODO: Cleanup
-	if (m_a == 1.0f)
-	{
-		auto hexValue = ((static_cast<uint32_t>(m_r * 255.0f) & 0xff) << 24) +
-			((static_cast<uint32_t>(m_g * 255.0f) & 0xff) << 16) +
-			((static_cast<uint32_t>(m_b * 255.0f) & 0xff) << 8) +
-			((static_cast<uint32_t>(m_a * 255.0f) & 0xff) << 0);
-		stream << std::hex << std::setfill('0') << std::setw(8) << hexValue;
-	}
-	else
-	{
-		auto hexValue = ((static_cast<uint32_t>(m_r * 255.0f) & 0xff) << 16) +
-			((static_cast<uint32_t>(m_g * 255.0f) & 0xff) << 8) +
-			((static_cast<uint32_t>(m_b * 255.0f) & 0xff) << 0);
-		stream << std::hex << std::setfill('0') << std::setw(6) << hexValue;
-	}
+	auto hexValue = ((static_cast<uint32_t>(m_r * 255.0f) & 0xff) << 16) +
+		((static_cast<uint32_t>(m_g * 255.0f) & 0xff) << 8) +
+		((static_cast<uint32_t>(m_b * 255.0f) & 0xff) << 0);
+	stream << std::hex << std::setfill('0') << std::setw(6) << hexValue;
 
 	return stream.str();
 }
@@ -304,15 +278,31 @@ Colour &Colour::operator/=(const float &value)
 
 const Metadata &operator>>(const Metadata &metadata, Colour &colour)
 {
-	std::string hex;
-	metadata >> hex;
-	colour = hex;
+	// Loads from hex if RGBA is not provided.
+	if (metadata.GetChildren().empty())
+	{
+		std::string hex;
+		metadata >> hex;
+		colour = hex;
+	}
+	else
+	{
+		metadata.GetChild("r", colour.m_r);
+		metadata.GetChild("g", colour.m_g);
+		metadata.GetChild("b", colour.m_b);
+		metadata.GetChild("a", colour.m_a);
+	}
+
 	return metadata;
 }
 
 Metadata &operator<<(Metadata &metadata, const Colour &colour)
 {
-	metadata << colour.GetHex();
+	//metadata << colour.GetHex();
+	metadata.SetChild("r", colour.m_r);
+	metadata.SetChild("g", colour.m_g);
+	metadata.SetChild("b", colour.m_b);
+	metadata.SetChild("a", colour.m_a);
 	return metadata;
 }
 

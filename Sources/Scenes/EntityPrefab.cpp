@@ -39,7 +39,7 @@ EntityPrefab::EntityPrefab(std::filesystem::path filename, const bool &load) :
 {
 	if (load)
 	{
-		EntityPrefab::Load();
+		Load();
 	}
 }
 

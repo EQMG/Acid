@@ -50,6 +50,6 @@ WriteDescriptorSet StorageBuffer::GetWriteDescriptor(const uint32_t &binding, co
 	descriptorWrite.descriptorCount = 1;
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pBufferInfo = &bufferInfo;
-	return WriteDescriptorSet(descriptorWrite, bufferInfo);
+	return {descriptorWrite, bufferInfo};
 }
 }

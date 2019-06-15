@@ -55,13 +55,13 @@ Scene1::Scene1() :
 	{
 		if (action == InputAction::Press)
 		{
-			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+			auto cameraPosition{Scenes::Get()->GetCamera()->GetPosition()};
+			auto cameraRotation{Scenes::Get()->GetCamera()->GetRotation()};
 
-			auto sphere = GetStructure()->CreateEntity(Transform(cameraPosition, Vector3f(), 1.0f));
+			auto sphere = GetStructure()->CreateEntity({cameraPosition, {}, 1.0f});
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
-			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
+			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion{cameraRotation} * Vector3f::Front).Normalize(), 2s));
 			sphere->AddComponent<ColliderSphere>(); 
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
@@ -69,13 +69,13 @@ Scene1::Scene1() :
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<HeightDespawn>(-75.0f); 
 
-			auto sphereLight = GetStructure()->CreateEntity(Transform(Vector3f(0.0f, 0.7f, 0.0f)));
+			auto sphereLight = GetStructure()->CreateEntity({{0.0f, 0.7f, 0.0f}});
 			sphereLight->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 
-			//auto gizmoType1 = GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f);
-			//Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType1, Transform(cameraPosition, cameraRotation), Colour::PURPLE));
-			//auto collisionObject = sphere->GetComponent<CollisionObject>();
+			//auto gizmoType1{GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f)};
+			//Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType1,{cameraPosition, cameraRotation}, Colour::Purple));
+			//auto collisionObject{sphere->GetComponent<CollisionObject>()};
 			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName());});
 			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName());});
 		}
@@ -137,25 +137,25 @@ Scene1::Scene1() :
 		Mouse::Get()->SetCursorHidden(true);
 	});
 
-	Mouse::Get()->OnDrop().Add([this](std::vector<std::string> paths)
+	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths)
 	{
 		for (const auto &path : paths)
 		{
 			Log::Out("File dropped: '%s'\n", path);
 		}
-	});
-	Window::Get()->OnMonitorConnect().Add([this](Monitor *monitor, bool connected)
+	}, this);
+	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected)
 	{
 		Log::Out("Monitor '%s' action: %i\n", monitor->GetName(), connected);
-	});
-	Window::Get()->OnClose().Add([this]()
+	}, this);
+	Window::Get()->OnClose().Add([]()
 	{
 		Log::Out("Window has closed!\n");
-	});
-	Window::Get()->OnIconify().Add([this](bool iconified)
+	}, this);
+	Window::Get()->OnIconify().Add([](bool iconified)
 	{
 		Log::Out("Iconified: %i\n", iconified);
-	});
+	}, this);
 }
 
 void Scene1::Start()
@@ -164,13 +164,14 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	// Player.
-	auto playerObject{GetStructure()->CreateEntity({{0.0f, 2.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}}, "Objects/Player/Player.json")};
+	GetStructure()->CreateEntity({{0.0f, 2.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}}, "Objects/Player/Player.json");
 	
 	// Skybox.
-	auto skyboxObject{GetStructure()->CreateEntity({{}, {}, 2048.0f}, "Objects/SkyboxClouds/SkyboxClouds.json")};
+	GetStructure()->CreateEntity({{}, {}, 2048.0f}, "Objects/SkyboxClouds/SkyboxClouds.json");
 	
 	// Animated model.
-	auto animatedObject{GetStructure()->CreateEntity({{5.0f, 0.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}, 0.3f})};
+	//GetStructure()->CreateEntity({{5.0f, 0.0f, 0.0f}, {}, 0.3f}, "Objects/Animated/Animated.json");
+	auto animatedObject{GetStructure()->CreateEntity({{5.0f, 0.0f, 0.0f}, {}, 0.3f})};
 	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animatedObject->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//animatedObject->AddComponent<Rigidbody>(0.0f);
@@ -178,14 +179,7 @@ void Scene1::Start()
 	animatedObject->AddComponent<MeshRender>();
 	animatedObject->AddComponent<ShadowRender>();
 
-	// Animated model.
-	//auto animatedObject{GetStructure()->CreateEntity({{5.0f, 0.0f, 0.0f}, {0.0f, Maths::Radians(180.0f), 0.0f}, 0.3f})};
-	//animatedObject->AddComponent<Mesh>(ModelGltf::Create("Objects/Animated/Model.glb"));
-	//animatedObject->AddComponent<MaterialDefault>();
-	//animatedObject->AddComponent<MeshRender>();
-	//animatedObject->AddComponent<ShadowRender>();
-
-	EntityPrefab prefabAnimated{"Prefabs/Animated.yaml"};
+	EntityPrefab prefabAnimated{"Prefabs/Animated.json"};
 	prefabAnimated << *animatedObject;
 	prefabAnimated.Write();
 

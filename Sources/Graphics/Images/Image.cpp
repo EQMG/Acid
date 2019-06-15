@@ -61,7 +61,7 @@ WriteDescriptorSet Image::GetWriteDescriptor(const uint32_t &binding, const VkDe
 	descriptorWrite.descriptorCount = 1;
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
-	return WriteDescriptorSet(descriptorWrite, imageInfo);
+	return {descriptorWrite, imageInfo};
 }
 
 std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const

@@ -121,7 +121,10 @@ bool Rigidbody::InFrustum(const Frustum &frustum)
 
 void Rigidbody::ClearForces()
 {
-	m_rigidBody->clearForces();
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->clearForces();
+	}
 }
 
 void Rigidbody::SetMass(const float &mass)
@@ -133,31 +136,51 @@ void Rigidbody::SetMass(const float &mass)
 void Rigidbody::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
-	m_rigidBody->setGravity(Collider::Convert(gravity));
+
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->setGravity(Collider::Convert(gravity));
+	}
 }
 
 void Rigidbody::SetLinearFactor(const Vector3f &linearFactor)
 {
 	m_linearFactor = linearFactor;
-	m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
+
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
+	}
 }
 
 void Rigidbody::SetAngularFactor(const Vector3f &angularFactor)
 {
 	m_angularFactor = angularFactor;
-	m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
+
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
+	}
 }
 
 void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity)
 {
 	m_linearVelocity = linearVelocity;
-	m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
+
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
+	}
 }
 
 void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 {
 	m_angularVelocity = angularVelocity;
-	m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
+
+	if (m_rigidBody != nullptr)
+	{
+		m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
+	}
 }
 
 const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)

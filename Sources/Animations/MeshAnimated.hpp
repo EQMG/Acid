@@ -19,9 +19,9 @@ class ACID_EXPORT MeshAnimated :
 public:
 	explicit MeshAnimated(std::filesystem::path filename = "");
 
+	void Start() override;
+		
 	void Update() override;
-
-	void Load(); // override
 
 	const std::shared_ptr<Model> &GetModel() const override { return m_model; }
 

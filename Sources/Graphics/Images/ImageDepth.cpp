@@ -81,6 +81,6 @@ WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const
 	descriptorWrite.descriptorCount = 1;
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
-	return WriteDescriptorSet(descriptorWrite, imageInfo);
+	return {descriptorWrite, imageInfo};
 }
 }
