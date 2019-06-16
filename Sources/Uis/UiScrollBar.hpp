@@ -30,9 +30,9 @@ public:
 	static const uint32_t Size;
 
 private:
-	float ScrollByDelta(const float &delta);
+	float ScrollByDelta(const float &delta) const;
 
-	float ScrollByPosition(const float &position);
+	float ScrollByPosition(const float &position) const;
 
 	Gui m_background;
 	Gui m_scroll;

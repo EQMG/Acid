@@ -85,12 +85,12 @@ void Pannable::UpdateObject()
 
 	auto offset{GetTransform().GetPosition()};
 
-	m_zoom *= powf(1.3f, 0.1f * Mouse::Get()->GetWheelDelta().m_y);
+	m_zoom *= powf(1.3f, Mouse::Get()->GetScrollDelta().m_y);
 	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant({m_zoom});
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
 	{
-		offset -= Mouse::Get()->GetDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 
 	GetTransform().SetPosition(offset);

@@ -40,7 +40,7 @@ void CameraFps::Update()
 
 	if (!Scenes::Get()->IsPaused())
 	{
-		auto rotationDelta{Mouse::Get()->GetDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE};
+		auto rotationDelta{Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE};
 
 		if (m_joystickVertical.IsConnected())
 		{

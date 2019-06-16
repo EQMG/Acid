@@ -13,8 +13,8 @@ void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos)
 {
-	Mouse::Get()->m_mousePosition = {xpos, ypos};
-	Mouse::Get()->m_onPosition(Mouse::Get()->m_mousePosition);
+	Mouse::Get()->m_position = {xpos, ypos};
+	Mouse::Get()->m_onPosition(Mouse::Get()->m_position);
 }
 
 void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
@@ -25,8 +25,8 @@ void CallbackCursorEnter(GLFWwindow *window, int32_t entered)
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-	Mouse::Get()->m_mouseWheelDelta = {yoffset, yoffset};
-	Mouse::Get()->m_onScroll(Mouse::Get()->m_mouseWheelDelta);
+	Mouse::Get()->m_scroll = {yoffset, yoffset};
+	Mouse::Get()->m_onScroll(Mouse::Get()->m_scroll);
 }
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths)
@@ -59,15 +59,13 @@ void Mouse::Update()
 {
 	auto delta{Engine::Get()->GetDelta().AsSeconds()};
 
-	// Updates the mouses delta.
-	m_mouseDelta = delta * (m_lastMousePosition - m_mousePosition);
+	// Updates the position delta.
+	m_positionDelta = delta * (m_lastPosition - m_position);
+	m_lastPosition = m_position;
 
-	// Sets the last position of the current.
-	m_lastMousePosition = m_mousePosition;
-
-	// TODO: Scroll callback is not called when wheel delta goes to zero.
-	m_mouseWheelDelta.m_x = SmoothScrollWheel(m_mouseWheelDelta.m_x, delta);
-	m_mouseWheelDelta.m_y = SmoothScrollWheel(m_mouseWheelDelta.m_y, delta);
+	// Updates the scroll delta.
+	m_scrollDelta = delta * (m_lastScroll - m_scroll);
+	m_lastScroll = m_scroll;
 }
 
 void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
@@ -152,9 +150,15 @@ InputAction Mouse::GetButton(const MouseButton &mouseButton) const
 
 void Mouse::SetPosition(const Vector2d &position)
 {
-	m_lastMousePosition = position;
-	m_mousePosition = position;
-	glfwSetCursorPos(Window::Get()->GetWindow(), m_mousePosition.m_x, m_mousePosition.m_y);
+	m_lastPosition = position;
+	m_position = position;
+	glfwSetCursorPos(Window::Get()->GetWindow(), m_position.m_x, m_position.m_y);
+}
+
+void Mouse::SetScroll(const Vector2d &scroll)
+{
+	m_lastScroll = scroll;
+	m_scroll = scroll;
 }
 
 void Mouse::SetCursorHidden(const bool &hidden)
@@ -165,7 +169,7 @@ void Mouse::SetCursorHidden(const bool &hidden)
 
 		if (!hidden && m_cursorHidden)
 		{
-			SetPosition(m_mousePosition);
+			SetPosition(m_position);
 		}
 	}
 

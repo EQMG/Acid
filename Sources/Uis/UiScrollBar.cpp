@@ -19,7 +19,7 @@ UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransf
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled())
 		{
 			Vector2f position;
-			position[m_index] = ScrollByDelta(-0.06f * wheelDelta[m_index]);
+			position[m_index] = ScrollByDelta(wheelDelta[m_index]);
 			m_scroll.GetTransform().SetPosition(position);
 		}
 	}, this);
@@ -71,7 +71,7 @@ void UiScrollBar::SetSize(const Vector2f &size)
 	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
 }
 
-float UiScrollBar::ScrollByDelta(const float &delta)
+float UiScrollBar::ScrollByDelta(const float &delta) const
 {
 	auto puckLength{m_scroll.GetScreenTransform().m_size[m_index]};
 	auto barLength{GetParent()->GetScreenTransform().m_size[m_index]};
@@ -81,7 +81,7 @@ float UiScrollBar::ScrollByDelta(const float &delta)
 	return std::clamp(value, 0.0f, maxValue);
 }
 
-float UiScrollBar::ScrollByPosition(const float &position)
+float UiScrollBar::ScrollByPosition(const float &position) const
 {
 	auto puckLength{m_scroll.GetScreenTransform().m_size[m_index]};
 	auto barLength{GetParent()->GetScreenTransform().m_size[m_index]};

@@ -96,7 +96,7 @@ public:
 	 * Gets the mouses position.
 	 * @return The mouses position.
 	 */
-	const Vector2d &GetPosition() const { return m_mousePosition; }
+	const Vector2d &GetPosition() const { return m_position; }
 
 	/**
 	 * Sets the mouse position.
@@ -105,16 +105,28 @@ public:
 	void SetPosition(const Vector2d &position);
 
 	/**
-	 * Gets the mouse delta.
-	 * @return The mouse delta.
+	 * Gets the mouse position delta.
+	 * @return The mouse position delta.
 	 */
-	const Vector2d &GetDelta() const { return m_mouseDelta; }
+	const Vector2d &GetPositionDelta() const { return m_positionDelta; }
 
 	/**
-	 * Gets the mouse wheel delta.
-	 * @return The mouse wheel delta.
+	 * Gets the mouses virtual scroll position.
+	 * @return The mouses virtual scroll position.
 	 */
-	const Vector2d &GetWheelDelta() const { return m_mouseWheelDelta; }
+	const Vector2d &GetScroll() const { return m_scroll; }
+
+	/**
+	 * Sets the mouse virtual scroll position.
+	 * @param scroll The new mouse virtual scroll position.
+	 */
+	void SetScroll(const Vector2d &scroll);
+
+	/**
+	 * Gets the mouse scroll delta.
+	 * @return The mouse scroll delta.
+	 */
+	const Vector2d &GetScrollDelta() const { return m_scrollDelta; }
 
 	/**
 	 * Gets if the display is selected.
@@ -153,7 +165,7 @@ public:
 	Delegate<void(bool)> &OnEnter() { return m_onEnter; }
 
 	/**
-	 * Called when the scroll wheel changes velocity.
+	 * Called when the scroll wheel changes.
 	 * @return The delegate.
 	 */
 	Delegate<void(Vector2d)> &OnScroll() { return m_onScroll; }
@@ -181,10 +193,12 @@ private:
 	std::optional<CursorStandard> m_currentStandard;
 	GLFWcursor *m_cursor{};
 
-	Vector2d m_lastMousePosition;
-	Vector2d m_mousePosition;
-	Vector2d m_mouseDelta;
-	Vector2d m_mouseWheelDelta;
+	Vector2d m_lastPosition;
+	Vector2d m_position;
+	Vector2d m_positionDelta;
+	Vector2d m_lastScroll;
+	Vector2d m_scroll;
+	Vector2d m_scrollDelta;
 	bool m_windowSelected{};
 	bool m_cursorHidden{};
 

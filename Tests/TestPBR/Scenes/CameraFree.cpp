@@ -54,7 +54,7 @@ void CameraFree::Update()
 		positionDelta *= m_inputSprint.IsDown() ? -RUN_SPEED : -WALK_SPEED;
 		m_velocity = m_velocity.SmoothDamp(positionDelta, delta * DAMP);
 
-		Vector2f rotationDelta = Mouse::Get()->GetDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
+		Vector2f rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
 
 		if (m_joystickVertical.IsConnected())
 		{

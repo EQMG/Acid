@@ -1,9 +1,7 @@
 #include "Socket.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -17,9 +15,9 @@
 namespace acid
 {
 Socket::Socket(const Type &type) :
-	m_type(type),
-	m_socket(InvalidSocketHandle()),
-	m_isBlocking(true)
+	m_type{type},
+	m_socket{InvalidSocketHandle()},
+	m_isBlocking{true}
 {
 }
 
