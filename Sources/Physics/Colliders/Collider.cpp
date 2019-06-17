@@ -2,6 +2,7 @@
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Scenes/Entity.hpp"
+#include "Maths/Transform.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid
@@ -24,9 +25,9 @@ Collider::~Collider()
 
 void Collider::Update()
 {
-	if (m_gizmo != nullptr)
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr && m_gizmo != nullptr)
 	{
-		m_gizmo->SetTransform(GetParent()->GetWorldTransform() * m_localTransform);
+		m_gizmo->SetTransform(*transform * m_localTransform);
 	}
 }
 
@@ -34,7 +35,7 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 {
 	m_localTransform = localTransform;
 
-	auto collisionObject{GetParent()->GetComponent<CollisionObject>()};
+	auto collisionObject{GetEntity()->GetComponent<CollisionObject>()};
 
 	if (collisionObject != nullptr)
 	{

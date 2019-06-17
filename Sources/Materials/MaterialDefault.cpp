@@ -2,6 +2,7 @@
 
 #include "Animations/MeshAnimated.hpp"
 #include "Engine/Log.hpp"
+#include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
 
@@ -23,8 +24,8 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 
 void MaterialDefault::Start()
 {
-	auto mesh{GetParent()->GetComponent<Mesh>(true)};
-	auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
+	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
 
 	if (mesh == nullptr && meshAnimated == nullptr)
 	{
@@ -44,7 +45,11 @@ void MaterialDefault::Update()
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
-	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		uniformObject.Push("transform", transform->GetWorldMatrix());
+	}
+
 	uniformObject.Push("baseDiffuse", m_baseDiffuse);
 	uniformObject.Push("metallic", m_metallic);
 	uniformObject.Push("roughness", m_roughness);
@@ -56,7 +61,7 @@ void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
 	if (m_animated)
 	{
-		auto meshAnimated{GetParent()->GetComponent<MeshAnimated>()};
+		auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
 		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
 	}
 

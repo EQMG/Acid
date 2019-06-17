@@ -2,6 +2,7 @@
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
+#include <Serialized/Metadata.hpp>
 
 using namespace acid;
 

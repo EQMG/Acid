@@ -2,6 +2,7 @@
 
 #include <Skyboxes/MaterialSkybox.hpp>
 #include <Maths/Colour.hpp>
+#include <Maths/Transform.hpp>
 #include "World/World.hpp"
 
 namespace test
@@ -20,7 +21,7 @@ void SkyboxCycle::Start()
 
 void SkyboxCycle::Update()
 {
-	auto materialSkybox{GetParent()->GetComponent<MaterialSkybox>()};
+	auto materialSkybox{GetEntity()->GetComponent<MaterialSkybox>()};
 
 	if (materialSkybox == nullptr)
 	{
@@ -40,15 +41,22 @@ void SkyboxCycle::Update()
 		materialSkybox->SetFogLimits({-1000000.0f});
 	}
 
+	auto transform{GetEntity()->GetComponent<Transform>()};
+
+	if (transform == nullptr)
+	{
+		return;
+	}
+
 	if (m_enableRotation)
 	{
 		materialSkybox->SetBlend(World::Get()->GetStarIntensity());
-		GetParent()->GetLocalTransform().SetRotation(World::Get()->GetSkyboxRotation());
+		transform->SetLocalRotation(World::Get()->GetSkyboxRotation());
 	}
 	else
 	{
 		materialSkybox->SetBlend(1.0f);
-		GetParent()->GetLocalTransform().SetRotation({});
+		transform->SetLocalRotation({});
 	}
 }
 

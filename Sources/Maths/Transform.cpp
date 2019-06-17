@@ -1,13 +1,29 @@
 ﻿#include "Transform.hpp"
 
+#include "Scenes/Entity.hpp"
+
 namespace acid
 {
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scale) :
 	m_position{position},
 	m_rotation{rotation},
-	m_scale{scale},
-	m_dirty{true}
+	m_scale{scale}
 {
+}
+
+Transform::~Transform()
+{
+	delete m_worldTransform;
+
+	if (m_parent != nullptr)
+	{
+		m_parent->RemoveChild(this);
+	}
+
+	for (auto &child : m_children)
+	{
+		child->m_parent = nullptr;
+	}
 }
 
 Transform Transform::Multiply(const Transform &other) const
@@ -17,46 +33,58 @@ Transform Transform::Multiply(const Transform &other) const
 
 Matrix4 Transform::GetWorldMatrix() const
 {
-	if (m_dirty)
-	{
-		m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scale);
-		m_dirty = false;
-	}
-
-	return m_worldMatrix;
+	auto worldTransform{GetWorldTransform()};
+	return Matrix4::TransformationMatrix(worldTransform->m_position, worldTransform->m_rotation, worldTransform->m_scale);
 }
 
-void Transform::SetPosition(const Vector3f &position)
+Vector3f Transform::GetPosition() const
 {
-	if (m_position != position)
+	return GetWorldTransform()->m_position;
+}
+
+Vector3f Transform::GetRotation() const
+{
+	return GetWorldTransform()->m_rotation;
+}
+
+Vector3f Transform::GetScale() const
+{
+	return GetWorldTransform()->m_scale;
+}
+
+void Transform::SetLocalPosition(const Vector3f &localPosition)
+{
+	m_position = localPosition;
+}
+
+void Transform::SetLocalRotation(const Vector3f &localRotation)
+{
+	m_rotation = localRotation;
+}
+
+void Transform::SetLocalScale(const Vector3f &localScale)
+{
+	m_scale = localScale;
+}
+
+void Transform::SetParent(Transform *parent)
+{
+	if (m_parent != nullptr)
 	{
-		m_position = position;
-		m_dirty = true;
+		m_parent->RemoveChild(this);
+	}
+	
+	m_parent = parent;
+
+	if (m_parent != nullptr)
+	{
+		m_parent->AddChild(this);
 	}
 }
 
-void Transform::SetRotation(const Vector3f &rotation)
+void Transform::SetParent(Entity *parent)
 {
-	if (m_rotation != rotation)
-	{
-		m_rotation = rotation;
-		m_dirty = true;
-	}
-}
-
-void Transform::SetScale(const Vector3f &scale)
-{
-	if (m_scale != scale)
-	{
-		m_scale = scale;
-		m_dirty = true;
-	}
-}
-
-void Transform::SetDirty(const bool &dirty) const
-{
-	m_dirty = dirty;
-	m_worldMatrix = Matrix4::TransformationMatrix(m_position, m_rotation, m_scale);
+	SetParent(parent->GetComponent<Transform>());
 }
 
 std::string Transform::ToString() const
@@ -106,5 +134,37 @@ std::ostream &operator<<(std::ostream &stream, const Transform &transform)
 {
 	stream << transform.ToString();
 	return stream;
+}
+
+const Transform *Transform::GetWorldTransform() const
+{
+	if (m_parent == nullptr)
+	{
+		if (m_worldTransform != nullptr)
+		{
+			delete m_worldTransform;
+			m_worldTransform = nullptr;
+		}
+
+		return this;
+	}
+
+	if (m_worldTransform == nullptr)
+	{
+		m_worldTransform = new Transform();
+	}
+
+	*m_worldTransform = *m_parent->GetWorldTransform() * *this;
+	return m_worldTransform;
+}
+
+void Transform::AddChild(Transform *child)
+{
+	m_children.emplace_back(child);
+}
+
+void Transform::RemoveChild(Transform *child)
+{
+	m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
 }
 }

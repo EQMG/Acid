@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
-#include "Maths/Transform.hpp"
 #include "Component.hpp"
 
 namespace acid
@@ -14,19 +13,15 @@ class ACID_EXPORT Entity :
 {
 public:
 	/**
-	 * Creates a new entity and stores it into a structure.
-	 * @param transform The objects initial world position, rotation, and scale.
+	 * Creates a new entity.
 	 */
-	Entity(const Transform &transform = {});
+	Entity() = default;
 
 	/**
-	 * Creates a new entity and stores it into a structure.
-	 * @param transform The objects initial world position, rotation, and scale.
-	 * @param filename The file to load the component data from.
+	 * Creates a new entity from a entity prefab file.
+	 * @param filename The file to load components from.
 	 */
-	Entity(const Transform &transform, const std::filesystem::path &filename);
-
-	~Entity();
+	Entity(const std::filesystem::path &filename);
 
 	void Update();
 
@@ -149,45 +144,23 @@ public:
 
 			if (casted != nullptr)
 			{
-				(*it)->SetParent(nullptr);
+				(*it)->SetEntity(nullptr);
 				m_components.erase(it);
 			}
 		}
 	}
 
-	const std::string GetName() const { return m_name; }
+	const std::string &GetName() const { return m_name; }
 
 	void SetName(const std::string &name) { m_name = name; }
-
-	Transform &GetLocalTransform() { return m_localTransform; }
-
-	void SetLocalTransform(const Transform &localTransform) { m_localTransform = localTransform; }
-
-	Transform GetWorldTransform() const;
-
-	Matrix4 GetWorldMatrix() const;
 
 	const bool &IsRemoved() const { return m_removed; }
 
 	void SetRemoved(const bool &removed) { m_removed = removed; }
 
-	Entity *GetParent() const { return m_parent; }
-
-	void SetParent(Entity *parent);
-
-	const std::vector<Entity *> &GetChildren() const { return m_children; }
-
-	void AddChild(Entity *child);
-
-	void RemoveChild(Entity *child);
-
 private:
 	std::string m_name;
-	Transform m_localTransform;
-	mutable Transform m_worldTransform;
 	std::vector<std::unique_ptr<Component>> m_components;
-	Entity *m_parent{};
-	std::vector<Entity *> m_children;
 	bool m_removed{};
 };
 }

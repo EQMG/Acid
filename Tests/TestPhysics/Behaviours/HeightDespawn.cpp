@@ -1,5 +1,6 @@
 #include "HeightDespawn.hpp"
 
+#include <Maths/Transform.hpp>
 #include <Scenes/Entity.hpp>
 
 namespace test
@@ -15,9 +16,11 @@ void HeightDespawn::Start()
 
 void HeightDespawn::Update()
 {
-	if (GetParent()->GetWorldTransform().GetPosition().m_y < m_removeHeight)
+	auto transform{GetEntity()->GetComponent<Transform>()};
+
+	if (transform != nullptr && transform->GetPosition().m_y < m_removeHeight)
 	{
-		GetParent()->SetRemoved(true);
+		GetEntity()->SetRemoved(true);
 	}
 }
 

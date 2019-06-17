@@ -99,7 +99,7 @@ void CollisionObject::SetFrictionSpinning(const float &frictionSpinning)
 
 void CollisionObject::CreateShape(const bool &forceSingle)
 {
-	auto colliders{GetParent()->GetComponents<Collider>()};
+	auto colliders{GetEntity()->GetComponents<Collider>()};
 
 	if (forceSingle) // && colliders.size() == 1
 	{

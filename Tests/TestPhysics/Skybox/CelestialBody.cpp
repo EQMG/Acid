@@ -4,6 +4,7 @@
 #include <Lights/Light.hpp>
 #include <Graphics/Graphics.hpp>
 #include "World/World.hpp"
+#include "Maths/Transform.hpp"
 
 namespace test
 {
@@ -25,8 +26,14 @@ void CelestialBody::Start()
 
 void CelestialBody::Update()
 {
-	auto &transform{GetParent()->GetLocalTransform()};
-	auto componentLight{GetParent()->GetComponent<Light>()};
+	auto transform{GetEntity()->GetComponent<Transform>()};
+
+	if (transform == nullptr)
+	{
+		return;
+	}
+
+	auto light{GetEntity()->GetComponent<Light>()};
 
 	switch (m_type)
 	{
@@ -34,19 +41,19 @@ void CelestialBody::Update()
 	{
 		auto sunPosition{World::Get()->GetLightDirection() * Vector3f{-6048.0f, -6048.0f, -6048.0f}};
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
-		transform.SetPosition(sunPosition);
+		transform->SetLocalPosition(sunPosition);
 
-		if (componentLight != nullptr)
+		if (light != nullptr)
 		{
 			auto sunColour{SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor())};
 			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
-			componentLight->SetColour(sunColour);
+			light->SetColour(sunColour);
 		}
 
 		if (auto filterLensflare{Graphics::Get()->GetSubrender<FilterLensflare>()}; filterLensflare != nullptr)
 		{
-			filterLensflare->SetSunPosition(transform.GetPosition());
-			filterLensflare->SetSunHeight(transform.GetPosition().m_y);
+			filterLensflare->SetSunPosition(transform->GetPosition());
+			filterLensflare->SetSunHeight(transform->GetPosition().m_y);
 		}
 	}
 		break;
@@ -54,12 +61,12 @@ void CelestialBody::Update()
 	{
 		auto moonPosition{World::Get()->GetLightDirection() * Vector3f{6048.0f, 6048.0f, 6048.0f}};
 		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
-		transform.SetPosition(moonPosition);
+		transform->SetLocalPosition(moonPosition);
 
-		if (componentLight != nullptr)
+		if (light != nullptr)
 		{
 			auto moonColour{MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor())};
-			componentLight->SetColour(moonColour);
+			light->SetColour(moonColour);
 		}
 	}
 		break;

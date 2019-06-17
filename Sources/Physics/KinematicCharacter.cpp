@@ -4,6 +4,7 @@
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <BulletDynamics/Character/btKinematicCharacterController.h>
+#include "Maths/Transform.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid
@@ -54,7 +55,7 @@ void KinematicCharacter::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform{Collider::Convert(GetParent()->GetWorldTransform())};
+	auto worldTransform{Collider::Convert(*GetEntity()->GetComponent<Transform>())};
 
 	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
 	m_ghostObject->setWorldTransform(worldTransform);
@@ -86,7 +87,7 @@ void KinematicCharacter::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
-	auto &transform{GetParent()->GetLocalTransform()};
+	auto &transform{*GetEntity()->GetComponent<Transform>()};
 	auto worldTransform{m_ghostObject->getWorldTransform()};
 	transform = Collider::Convert(worldTransform, transform.GetScale());
 
@@ -101,7 +102,7 @@ bool KinematicCharacter::InFrustum(const Frustum &frustum)
 
 	if (m_body != nullptr && m_shape != nullptr)
 	{
-		m_shape->getAabb(Collider::Convert(GetParent()->GetWorldTransform()), min, max);
+		m_shape->getAabb(Collider::Convert(*GetEntity()->GetComponent<Transform>()), min, max);
 	}
 
 	return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));

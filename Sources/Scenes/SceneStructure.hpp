@@ -14,20 +14,20 @@ class ACID_EXPORT SceneStructure :
 public:
 	SceneStructure();
 
-	/**
-	 * Creates a new entity that starts in this structure.
-	 * @param transform The objects initial world position, rotation, and scale.
-	 * @return The newly created entity.
-	 */
-	Entity *CreateEntity(const Transform &transform = {});
+	Entity *GetEntity(const std::string &name) const;
 
 	/**
-	 * Creates a new entity from a prefab that starts in this structure.
-	 * @param transform The objects initial world position, rotation, and scale.
+	 * Creates a new entity.
+	 * @return The newly created entity.
+	 */
+	Entity *CreateEntity();
+
+	/**
+	 * Creates a new entity from a prefab.
 	 * @param filename The file to load the component data from.
 	 * @return The newly created entity.
 	 */
-	Entity *CreateEntity(const Transform &transform, const std::string &filename);
+	Entity *CreateEntity(const std::string &filename);
 
 	/**
 	 * Adds a new object to the spatial structure.

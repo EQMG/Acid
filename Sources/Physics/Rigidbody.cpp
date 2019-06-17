@@ -5,6 +5,7 @@
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <LinearMath/btDefaultMotionState.h>
+#include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
@@ -51,7 +52,7 @@ void Rigidbody::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform{Collider::Convert(GetParent()->GetWorldTransform())};
+	auto worldTransform{Collider::Convert(*GetEntity()->GetComponent<Transform>())};
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 	auto motionState{new btDefaultMotionState{worldTransform}};
@@ -95,7 +96,7 @@ void Rigidbody::Update()
 		++it;
 	}
 
-	auto &transform{GetParent()->GetLocalTransform()};
+	auto &transform{*GetEntity()->GetComponent<Transform>()};
 	btTransform motionTransform;
 	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
 	transform = Collider::Convert(motionTransform, transform.GetScale());
@@ -216,7 +217,7 @@ void Rigidbody::RecalculateMass()
 
 	btVector3 localInertia;
 
-	auto shape{GetParent()->GetComponent<Collider>()};
+	auto shape{GetEntity()->GetComponent<Collider>()};
 
 	if (shape != nullptr && isDynamic)
 	{

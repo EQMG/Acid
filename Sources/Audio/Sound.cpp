@@ -5,6 +5,7 @@
 #else
 #include <al.h>
 #endif
+#include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 
 namespace acid
@@ -49,7 +50,10 @@ void Sound::Start()
 
 void Sound::Update()
 {
-	SetPosition(GetParent()->GetWorldTransform().GetPosition());
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		SetPosition(transform->GetPosition());
+	}
 }
 
 void Sound::Play(const bool &loop)

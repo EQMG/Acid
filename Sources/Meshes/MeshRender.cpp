@@ -2,6 +2,7 @@
 
 #include "Materials/Material.hpp"
 #include "Physics/Rigidbody.hpp"
+#include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 
@@ -13,7 +14,7 @@ void MeshRender::Start()
 
 void MeshRender::Update()
 {
-	auto material{GetParent()->GetComponent<Material>()};
+	auto material{GetEntity()->GetComponent<Material>()};
 
 	if (material == nullptr)
 	{
@@ -27,7 +28,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	if (auto rigidbody{GetParent()->GetComponent<Rigidbody>()}; rigidbody != nullptr)
+	if (auto rigidbody{GetEntity()->GetComponent<Rigidbody>()}; rigidbody != nullptr)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -36,8 +37,8 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Gets required components.
-	auto material{GetParent()->GetComponent<Material>()};
-	auto mesh{GetParent()->GetComponent<Mesh>()};
+	auto material{GetEntity()->GetComponent<Material>()};
+	auto mesh{GetEntity()->GetComponent<Mesh>()};
 
 	if (material == nullptr || mesh == nullptr)
 	{
@@ -80,8 +81,11 @@ bool MeshRender::operator<(const MeshRender &other) const
 {
 	auto camera{Scenes::Get()->GetCamera()};
 
-	auto thisDistance2{(camera->GetPosition() - GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
-	auto otherDistance2{(camera->GetPosition() - other.GetParent()->GetWorldTransform().GetPosition()).LengthSquared()};
+	auto transform0{GetEntity()->GetComponent<Transform>()};
+	auto transform1{other.GetEntity()->GetComponent<Transform>()};
+
+	auto thisDistance2{(camera->GetPosition() - transform0->GetPosition()).LengthSquared()};
+	auto otherDistance2{(camera->GetPosition() - transform1->GetPosition()).LengthSquared()};
 
 	return thisDistance2 > otherDistance2;
 }

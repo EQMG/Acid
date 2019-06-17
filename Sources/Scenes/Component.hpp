@@ -13,11 +13,6 @@ class ACID_EXPORT Component :
 	public Observer
 {
 public:
-	Component() :
-		m_enabled{true}
-	{
-	}
-
 	virtual ~Component() = default;
 
 	/**
@@ -46,21 +41,21 @@ public:
 	 * Gets the entity this component is attached to.
 	 * @return The entity this component is attached to.
 	 */
-	Entity *GetParent() const { return m_parent; }
+	Entity *GetEntity() const { return m_entity; }
 
 	/**
-	 * Sets the parent entity that this component is attached to.
-	 * @param parent The new parent this is attached to.
+	 * Sets the entity that this component is attached to.
+	 * @param entity The new entity this is attached to.
 	 */
-	void SetParent(Entity *parent) { m_parent = parent; }
+	void SetEntity(Entity *entity) { m_entity = entity; }
 
 private:
 	friend class Entity;
 
 	bool m_started{};
-	bool m_enabled;
+	bool m_enabled{true};
 	bool m_removed{};
-	Entity *m_parent{};
+	Entity *m_entity{};
 };
 
 }

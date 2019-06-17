@@ -37,7 +37,7 @@ void PlayerFps::Start()
 
 void PlayerFps::Update()
 {
-	auto character = GetParent()->GetComponent<KinematicCharacter>();
+	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 
 	if (character == nullptr || !character->IsShapeCreated())
 	{
@@ -88,10 +88,12 @@ void PlayerFps::Update()
 		}
 	}
 
-	auto &transform = GetParent()->GetLocalTransform();
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-
-	transform.SetRotation({0.0f, cameraRotation.m_y, 0.0f});
+	
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
+	}
 
 	auto walkDirection = direction;
 	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));

@@ -3,6 +3,7 @@
 #include <utility>
 #include <Scenes/Entity.hpp>
 #include <Models/VertexDefault.hpp>
+#include <Maths/Transform.hpp>
 
 namespace test
 {
@@ -23,7 +24,10 @@ void MaterialTerrain::Update()
 
 void MaterialTerrain::PushUniforms(UniformHandler &uniformObject)
 {
-	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		uniformObject.Push("transform", transform->GetWorldMatrix());
+	}
 }
 
 void MaterialTerrain::PushDescriptors(DescriptorsHandler &descriptorSet)

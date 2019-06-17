@@ -8,14 +8,27 @@ SceneStructure::SceneStructure()
 {
 }
 
-Entity *SceneStructure::CreateEntity(const Transform &transform)
+Entity *SceneStructure::GetEntity(const std::string &name) const
 {
-	return m_objects.emplace_back(std::make_unique<Entity>(transform)).get();
+	for (auto &object : m_objects)
+	{
+		if (object->GetName() == name)
+		{
+			return object.get();
+		}
+	}
+
+	return nullptr;
 }
 
-Entity *SceneStructure::CreateEntity(const Transform &transform, const std::string &filename)
+Entity *SceneStructure::CreateEntity()
 {
-	return m_objects.emplace_back(std::make_unique<Entity>(transform, filename)).get();
+	return m_objects.emplace_back(std::make_unique<Entity>()).get();
+}
+
+Entity *SceneStructure::CreateEntity(const std::string &filename)
+{
+	return m_objects.emplace_back(std::make_unique<Entity>(filename)).get();
 }
 
 void SceneStructure::Add(Entity *object)

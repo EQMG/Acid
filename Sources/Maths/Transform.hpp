@@ -3,13 +3,15 @@
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
+#include "Scenes/Component.hpp"
 
 namespace acid
 {
 /**
  * @brief Holds position, rotation, and scale components.
  */
-class ACID_EXPORT Transform
+class ACID_EXPORT Transform :
+	public Component
 {
 public:
 	/**
@@ -18,7 +20,9 @@ public:
 	 * @param rotation The rotation.
 	 * @param scale The scale.
 	 */
-	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = {1.0f});
+	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = 1.0f);
+
+	~Transform();
 
 	/**
 	 * Multiplies this transform with another transform.
@@ -29,21 +33,31 @@ public:
 
 	Matrix4 GetWorldMatrix() const;
 
-	const Vector3f &GetPosition() const { return m_position; }
+	Vector3f GetPosition() const;
 
-	void SetPosition(const Vector3f &position);
+	Vector3f GetRotation() const;
 
-	const Vector3f &GetRotation() const { return m_rotation; }
+	Vector3f GetScale() const;
 
-	void SetRotation(const Vector3f &rotation);
+	const Vector3f &GetLocalPosition() const { return m_position; }
 
-	const Vector3f &GetScale() const { return m_scale; }
+	void SetLocalPosition(const Vector3f &localPosition);
 
-	void SetScale(const Vector3f &scale);
+	const Vector3f &GetLocalRotation() const { return m_rotation; }
 
-	const bool &IsDirty() const { return m_dirty; }
+	void SetLocalRotation(const Vector3f &localRotation);
 
-	void SetDirty(const bool &dirty) const;
+	const Vector3f &GetLocalScale() const { return m_scale; }
+
+	void SetLocalScale(const Vector3f &localScale);
+
+	Transform *GetParent() const { return m_parent; }
+
+	void SetParent(Transform *parent);
+
+	void SetParent(Entity *parent);
+
+	const std::vector<Transform *> &GetChildren() const { return m_children; }
 
 	std::string ToString() const;
 
@@ -62,10 +76,18 @@ public:
 	friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 
 private:
+	const Transform *GetWorldTransform() const;
+
+	void AddChild(Transform *child);
+
+	void RemoveChild(Transform *child);
+
 	Vector3f m_position;
 	Vector3f m_rotation;
 	Vector3f m_scale;
-	mutable Matrix4 m_worldMatrix;
-	mutable bool m_dirty;
+
+	Transform *m_parent{};
+	std::vector<Transform *> m_children;
+	mutable Transform *m_worldTransform{};
 };
 }

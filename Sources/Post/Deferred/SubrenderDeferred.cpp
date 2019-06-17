@@ -59,7 +59,12 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 		DeferredLight deferredLight{};
 		deferredLight.m_colour = light->GetColour();
-		deferredLight.m_position = light->GetParent()->GetWorldTransform().GetPosition();
+		
+		if (auto transform{light->GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+		{
+			deferredLight.m_position = transform->GetPosition();
+		}
+
 		deferredLight.m_radius = light->GetRadius();
 		deferredLights[lightCount] = deferredLight;
 		lightCount++;

@@ -18,9 +18,9 @@ const float NOCLIP_SPEED{3.0f};
 
 PlayerFps::PlayerFps() :
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::S), std::make_unique<ButtonKeyboard>(Key::W)),
-	std::make_unique<AxisJoystick>(0, 1)},
+		std::make_unique<AxisJoystick>(0, 1)},
 	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
-	std::make_unique<AxisJoystick>(0, 0)},
+		std::make_unique<AxisJoystick>(0, 0)},
 	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)},
 	m_inputJump{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)},
 	m_inputCrouch{std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)},
@@ -37,7 +37,7 @@ void PlayerFps::Start()
 
 void PlayerFps::Update()
 {
-	auto character = GetParent()->GetComponent<KinematicCharacter>();
+	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 
 	if (character == nullptr || !character->IsShapeCreated())
 	{
@@ -88,10 +88,12 @@ void PlayerFps::Update()
 		}
 	}
 
-	auto &transform = GetParent()->GetLocalTransform();
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-	transform.SetRotation({0.0f, cameraRotation.m_y, 0.0f});
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
+	}
 
 	auto walkDirection = direction;
 	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));

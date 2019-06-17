@@ -25,10 +25,14 @@ void MaterialSkybox::Update()
 
 void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 {
-	uniformObject.Push("transform", GetParent()->GetWorldMatrix());
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		uniformObject.Push("transform", transform->GetWorldMatrix());
+		uniformObject.Push("fogLimits", transform->GetScale().m_y * m_fogLimits);
+	}
+
 	uniformObject.Push("baseColour", m_baseColour);
 	uniformObject.Push("fogColour", m_fogColour);
-	uniformObject.Push("fogLimits", GetParent()->GetLocalTransform().GetScale().m_y * m_fogLimits);
 	uniformObject.Push("blendFactor", m_blend);
 }
 

@@ -33,9 +33,11 @@ void CameraFps::Update()
 
 	if (auto scenePlayer{Scenes::Get()->GetStructure()->GetComponent<PlayerFps>()}; scenePlayer != nullptr)
 	{
-		auto playerPosition{scenePlayer->GetParent()->GetWorldTransform().GetPosition()};
-		m_velocity = (playerPosition - m_position) / delta;
-		m_position = playerPosition + VIEW_OFFSET;
+		if (auto transformPlayer{scenePlayer->GetEntity()->GetComponent<Transform>()}; transformPlayer != nullptr)
+		{
+			m_velocity = (transformPlayer->GetPosition() - m_position) / delta;
+			m_position = transformPlayer->GetPosition() + VIEW_OFFSET;
+		}
 	}
 
 	if (!Scenes::Get()->IsPaused())

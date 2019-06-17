@@ -27,7 +27,6 @@ public:
 private:
 	ButtonCompound m_buttonSpawnSphere;
 	ButtonCompound m_buttonCaptureMouse;
-	ButtonKeyboard m_buttonSave;
 	Sound m_soundScreenshot;
 
 	UiStartLogo m_uiStartLogo;

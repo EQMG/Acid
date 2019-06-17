@@ -1,5 +1,6 @@
 #include "ShadowRender.hpp"
 
+#include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
 #include "Shadows.hpp"
@@ -20,11 +21,18 @@ void ShadowRender::Update()
 
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
+	auto transform{GetEntity()->GetComponent<Transform>()};
+
+	if (transform == nullptr)
+	{
+		return false;
+	}
+
 	// Update push constants.
-	m_pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * GetParent()->GetWorldMatrix());
+	m_pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
 
 	// Gets required components.
-	auto mesh{GetParent()->GetComponent<Mesh>()};
+	auto mesh{GetEntity()->GetComponent<Mesh>()};
 
 	if (mesh == nullptr || mesh->GetModel() == nullptr)
 	{

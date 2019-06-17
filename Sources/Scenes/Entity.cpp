@@ -5,24 +5,10 @@
 
 namespace acid
 {
-Entity::Entity(const Transform &transform) :
-	m_localTransform{transform}
-{
-}
-
-Entity::Entity(const Transform &transform, const std::filesystem::path &filename) :
-	m_localTransform{transform}
+Entity::Entity(const std::filesystem::path &filename)
 {
 	auto entityPrefab{EntityPrefab::Create(filename)};
 	*entityPrefab >> *this;
-}
-
-Entity::~Entity()
-{
-	if (m_parent != nullptr)
-	{
-		m_parent->RemoveChild(this);
-	}
 }
 
 void Entity::Update()
@@ -35,9 +21,9 @@ void Entity::Update()
 			continue;
 		}
 
-		if ((*it)->GetParent() != this)
+		if ((*it)->GetEntity() != this)
 		{
-			(*it)->SetParent(this);
+			(*it)->SetEntity(this);
 		}
 
 		if ((*it)->IsEnabled())
@@ -62,7 +48,7 @@ Component *Entity::AddComponent(Component *component)
 		return nullptr;
 	}
 
-	component->SetParent(this);
+	component->SetEntity(this);
 	m_components.emplace_back(component);
 	return component;
 }
@@ -82,59 +68,5 @@ void Entity::RemoveComponent(const std::string &name)
 		auto componentName{Scenes::Get()->GetComponentRegister().FindName(c.get())};
 		return componentName && name == *componentName;
 	}), m_components.end());
-}
-
-Transform Entity::GetWorldTransform() const
-{
-	if (m_localTransform.IsDirty())
-	{
-		if (m_parent != nullptr)
-		{
-			m_worldTransform = m_parent->GetWorldTransform() * m_localTransform;
-		}
-		else
-		{
-			m_worldTransform = m_localTransform;
-		}
-
-		for (const auto &child : m_children)
-		{
-			child->m_localTransform.SetDirty(true);
-		}
-
-		m_localTransform.SetDirty(false);
-	}
-
-	return m_worldTransform;
-}
-
-Matrix4 Entity::GetWorldMatrix() const
-{
-	return GetWorldTransform().GetWorldMatrix();
-}
-
-void Entity::SetParent(Entity *parent)
-{
-	if (m_parent != nullptr)
-	{
-		m_parent->RemoveChild(this);
-	}
-
-	m_parent = parent;
-
-	if (m_parent != nullptr)
-	{
-		m_parent->AddChild(this);
-	}
-}
-
-void Entity::AddChild(Entity *child)
-{
-	m_children.emplace_back(child);
-}
-
-void Entity::RemoveChild(Entity *child)
-{
-	m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
 }
 }

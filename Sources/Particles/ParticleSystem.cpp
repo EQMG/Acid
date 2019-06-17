@@ -1,6 +1,7 @@
 ﻿#include "ParticleSystem.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Particles.hpp"
 
@@ -31,7 +32,7 @@ void ParticleSystem::Update()
 
 	if (auto elapsed{m_elapsedEmit.GetElapsed()}; elapsed)
 	{
-		auto emitters{GetParent()->GetComponents<Emitter>()};
+		auto emitters{GetEntity()->GetComponents<Emitter>()};
 
 		if (!emitters.empty())
 		{
@@ -109,7 +110,12 @@ void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviat
 
 Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
-	auto spawnPos{emitter.GeneratePosition() + GetParent()->GetWorldTransform().GetPosition()};
+	auto spawnPos{emitter.GeneratePosition()};
+
+	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	{
+		spawnPos += transform->GetPosition();
+	}
 
 	Vector3f velocity;
 
