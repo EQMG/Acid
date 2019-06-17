@@ -27,7 +27,7 @@ public:
 	 * @param rootJoint The root joint of the joint hierarchy which makes up the "skeleton" of the entity.
 	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
 	 **/
-	void Update(Joint *rootJoint, std::vector<Matrix4> &jointMatrices);
+	void Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices);
 
 	/**
 	 * Increases the current animation time which allows the animation to progress. If the current animation has reached the end then the timer is reset, causing the animation to loop.
@@ -107,7 +107,7 @@ public:
 	 * @param parentTransform The desired model-space transform of the parent joint for the pose.
 	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
 	 **/
-	static void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices);
+	static void CalculateJointPose(const std::map<std::string, Matrix4> &currentPose, const Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices);
 
 	const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 

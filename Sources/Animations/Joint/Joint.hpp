@@ -1,42 +1,9 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
 #include "Maths/Matrix4.hpp"
 
 namespace acid
 {
-class ACID_EXPORT JointData :
-	public NonCopyable
-{
-public:
-	JointData(const uint32_t &index, std::string nameId, const Matrix4 &bindLocalTransform) :
-		m_index{index},
-		m_nameId{std::move(nameId)},
-		m_bindLocalTransform{bindLocalTransform}
-	{
-	}
-
-	const uint32_t &GetIndex() const { return m_index; }
-
-	const std::string &GetNameId() const { return m_nameId; }
-
-	const Matrix4 &GetBindLocalTransform() const { return m_bindLocalTransform; }
-
-	const std::vector<std::unique_ptr<JointData>> &GetChildren() const { return m_children; }
-
-	void AddChild(std::unique_ptr<JointData> &&child)
-	{
-		m_children.emplace_back(std::move(child));
-	}
-
-private:
-	uint32_t m_index;
-	std::string m_nameId;
-	Matrix4 m_bindLocalTransform;
-
-	std::vector<std::unique_ptr<JointData>> m_children;
-};
-
 /**
  * @brief Class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
  * It also contains the name of the bone, and a list of all the child joints.
@@ -52,10 +19,14 @@ private:
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
  **/
-class ACID_EXPORT Joint :
-	public NonCopyable
+class ACID_EXPORT Joint
 {
 public:
+	/**
+	 * Creates a new skeleton joint.
+	 **/
+	Joint() = default;
+
 	/**
 	 * Creates a new skeleton joint.
 	 * @param index The joint's index (ID).
@@ -85,20 +56,14 @@ public:
 
 	void SetName(const std::string &name) { m_name = name; }
 
-	const std::vector<std::unique_ptr<Joint>> &GetChildren() const { return m_children; }
+	const std::vector<Joint> &GetChildren() const { return m_children; }
 
 	/**
 	 * Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
 	 * which is why they are stored in a list (e.g. a "hand" joint may have multiple "finger" children joints).
 	 * @param child The new child joint of this joint.
 	 **/
-	void AddChild(std::unique_ptr<Joint> &&child);
-
-	/**
-	 * Adds this joint to an array, they for each child calls the same method.
-	 * @param children The array to add this and children into.
-	 **/
-	void AddSelfAndChildren(std::vector<Joint *> &children);
+	void AddChild(const Joint &child);
 
 	const Matrix4 &GetLocalBindTransform() const { return m_localBindTransform; }
 
@@ -115,9 +80,9 @@ public:
 	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 
 private:
-	uint32_t m_index;
+	uint32_t m_index{};
 	std::string m_name;
-	std::vector<std::unique_ptr<Joint>> m_children;
+	std::vector<Joint> m_children;
 
 	Matrix4 m_localBindTransform;
 	Matrix4 m_inverseBindTransform;

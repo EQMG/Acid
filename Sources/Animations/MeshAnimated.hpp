@@ -40,13 +40,11 @@ public:
 	static constexpr uint32_t MaxWeights{3};
 
 private:
-	static std::unique_ptr<Joint> CreateJoints(const JointData &data);
-
 	Animator m_animator;
 
 	std::filesystem::path m_filename;
 	std::shared_ptr<Model> m_model;
-	std::unique_ptr<Joint> m_headJoint;
+	Joint m_headJoint;
 	std::unique_ptr<Animation> m_animation;
 
 	StorageHandler m_storageAnimation;

@@ -12,12 +12,12 @@ public:
 
 	const uint32_t &GetJointCount() const { return m_jointCount; }
 
-	const JointData *GetHeadJoint() const { return m_headJoint.get(); }
+	const Joint &GetHeadJoint() const { return m_headJoint; }
 
 private:
-	std::unique_ptr<JointData> LoadJointData(const Metadata *jointNode, const bool &isRoot);
+	Joint LoadJointData(const Metadata *jointNode, const bool &isRoot);
 
-	std::unique_ptr<JointData> ExtractMainJointData(const Metadata *jointNode, const bool &isRoot);
+	Joint ExtractMainJointData(const Metadata *jointNode, const bool &isRoot);
 
 	std::optional<uint32_t> GetBoneIndex(const std::string &name);
 
@@ -26,6 +26,6 @@ private:
 	Matrix4 m_correction;
 
 	uint32_t m_jointCount{};
-	std::unique_ptr<JointData> m_headJoint;
+	Joint m_headJoint;
 };
 }
