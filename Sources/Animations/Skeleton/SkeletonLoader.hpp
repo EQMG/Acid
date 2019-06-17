@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Serialized/Metadata.hpp"
-#include "Animations/Joint/Joint.hpp"
+#include "Joint.hpp"
 
 namespace acid
 {

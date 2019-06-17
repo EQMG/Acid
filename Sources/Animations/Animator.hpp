@@ -2,7 +2,7 @@
 
 #include "Maths/Time.hpp"
 #include "Animation/Animation.hpp"
-#include "Joint/Joint.hpp"
+#include "Skeleton/Joint.hpp"
 
 namespace acid
 {

@@ -28,6 +28,26 @@ public:
 		return !(*this == other);
 	}
 
+	friend const Metadata &operator>>(const Metadata &metadata, VertexAnimated &vertexAnimated)
+	{
+		metadata.GetChild("position", vertexAnimated.m_position);
+		metadata.GetChild("uv", vertexAnimated.m_uv);
+		metadata.GetChild("normal", vertexAnimated.m_normal);
+		metadata.GetChild("jointId", vertexAnimated.m_jointId);
+		metadata.GetChild("vertexWeight", vertexAnimated.m_vertexWeight);
+		return metadata;
+	}
+
+	friend Metadata &operator<<(Metadata &metadata, const VertexAnimated &vertexAnimated)
+	{
+		metadata.SetChild("position", vertexAnimated.m_position);
+		metadata.SetChild("uv", vertexAnimated.m_uv);
+		metadata.SetChild("normal", vertexAnimated.m_normal);
+		metadata.SetChild("jointId", vertexAnimated.m_jointId);
+		metadata.SetChild("vertexWeight", vertexAnimated.m_vertexWeight);
+		return metadata;
+	}
+
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 

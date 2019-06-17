@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Time.hpp"
-#include "Animations/Keyframe/Keyframe.hpp"
+#include "Keyframe.hpp"
 
 namespace acid
 {
@@ -30,6 +30,10 @@ public:
 	 * @return The array of the animation's keyframes.
 	 **/
 	const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
+
+	friend const Metadata &operator>>(const Metadata &metadata, Animation &animation);
+
+	friend Metadata &operator<<(Metadata &metadata, const Animation &animation);
 
 private:
 	Time m_length;

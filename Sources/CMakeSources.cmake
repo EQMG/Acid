@@ -3,13 +3,13 @@ set(_temp_acid_headers
 		Acid.hpp
 		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
+		Animations/Animation/Keyframe.hpp
+		Animations/Animation/JointTransform.hpp
 		Animations/Animator.hpp
 		Animations/Geometry/GeometryLoader.hpp
 		Animations/Geometry/VertexAnimated.hpp
-		Animations/Joint/Joint.hpp
-		Animations/Joint/JointTransform.hpp
-		Animations/Keyframe/Keyframe.hpp
 		Animations/MeshAnimated.hpp
+		Animations/Skeleton/Joint.hpp
 		Animations/Skeleton/SkeletonLoader.hpp
 		Animations/Skin/SkinLoader.hpp
 		Animations/Skin/VertexWeights.hpp
@@ -237,12 +237,12 @@ set(_temp_acid_sources
 		StdAfx.cpp
 		Animations/Animation/Animation.cpp
 		Animations/Animation/AnimationLoader.cpp
+		Animations/Animation/Keyframe.cpp
+		Animations/Animation/JointTransform.cpp
 		Animations/Animator.cpp
 		Animations/Geometry/GeometryLoader.cpp
-		Animations/Joint/Joint.cpp
-		Animations/Joint/JointTransform.cpp
-		Animations/Keyframe/Keyframe.cpp
 		Animations/MeshAnimated.cpp
+		Animations/Skeleton/Joint.cpp
 		Animations/Skeleton/SkeletonLoader.cpp
 		Animations/Skin/SkinLoader.cpp
 		Animations/Skin/VertexWeights.cpp

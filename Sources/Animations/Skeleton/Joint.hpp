@@ -79,6 +79,10 @@ public:
 
 	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 
+	friend const Metadata &operator>>(const Metadata &metadata, Joint &joint);
+
+	friend Metadata &operator<<(Metadata &metadata, const Joint &joint);
+
 private:
 	uint32_t m_index{};
 	std::string m_name;

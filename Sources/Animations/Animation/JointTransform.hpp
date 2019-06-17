@@ -15,6 +15,11 @@ class ACID_EXPORT JointTransform
 public:
 	/**
 	 * Creates a new joint transformation.
+	 **/
+	JointTransform() = default;
+
+	/**
+	 * Creates a new joint transformation.
 	 * @param position The position of the joint relative to the parent joint (local-space) at a certain keyframe.
 	 * @param rotation The rotation of the joint relative to te parent joint (local-space) at a certain keyframe.
 	 **/
@@ -64,6 +69,10 @@ public:
 	const Quaternion &GetRotation() const { return m_rotation; }
 
 	void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
+
+	friend const Metadata &operator>>(const Metadata &metadata, JointTransform &jointTransform);
+
+	friend Metadata &operator<<(Metadata &metadata, const JointTransform &jointTransform);
 
 private:
 	Vector3f m_position;

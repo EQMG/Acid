@@ -3,6 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Scenes/Entity.hpp"
+#include "Serialized/Json/Json.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
@@ -38,6 +39,19 @@ void MeshAnimated::Start()
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator.DoAnimation(m_animation.get());
+
+	/*{
+		File fileModel{"Animation/JointsModel.json", std::make_unique<Json>()};
+		fileModel.GetMetadata()->SetChild("headJoint", m_headJoint);
+		fileModel.GetMetadata()->SetChild("vertices", geometryLoader.GetVertices());
+		fileModel.GetMetadata()->SetChild("indices", geometryLoader.GetIndices());
+		fileModel.Write();
+	}
+	{
+		File fileAnimation0{"Animation/Animation0.json", std::make_unique<Json>()};
+		*fileAnimation0.GetMetadata() << *m_animation;
+		fileAnimation0.Write();
+	}*/
 }
 
 void MeshAnimated::Update()
