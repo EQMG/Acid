@@ -105,16 +105,6 @@ public:
 	void SetLocalBindTransform(const Matrix4 &localBindTransform) { m_localBindTransform = localBindTransform; }
 
 	/**
-	 * The animated transform is the transform that gets loaded up to the shader and is used to deform the vertices of the "skin". It represents the
-	 * transformation from the joint's bind position (in model-space) to the joint's desired animation pose (also in model-space).
-	 * This matrix is calculated by taking the desired model-space transform of the joint and multiplying it by the inverse of the starting model-space transform of the joint.
-	 * @return The transformation matrix of the joint which is used to deform associated vertices of the skin in the shaders.
-	 **/
-	const Matrix4 &GetAnimatedTransform() const { return m_animatedTransform; }
-
-	void SetAnimatedTransform(const Matrix4 &animatedTransform) { m_animatedTransform = animatedTransform; }
-
-	/**
 	 * This returns the inverted model-space bind transform.
 	 * The bind transform is the original model-space transform of the joint (when no animation is applied).
 	 * This returns the inverse of that, which is used to calculate the animated transform matrix which gets used to transform vertices in the shader.
@@ -130,7 +120,6 @@ private:
 	std::vector<std::unique_ptr<Joint>> m_children;
 
 	Matrix4 m_localBindTransform;
-	Matrix4 m_animatedTransform;
 	Matrix4 m_inverseBindTransform;
 };
 }

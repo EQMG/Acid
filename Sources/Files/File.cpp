@@ -48,7 +48,11 @@ void File::Write() const
 	}
 	else // if (std::filesystem::exists(m_filename))
 	{
-		std::filesystem::create_directory(m_filename.parent_path());
+		if (auto parentPath{m_filename.parent_path()}; !parentPath.empty())
+		{
+			std::filesystem::create_directory(parentPath);
+		}
+
 		std::ofstream os{m_filename};
 		m_metadata->Write(&os);
 		os.close();

@@ -161,20 +161,20 @@ void Scene1::Start()
 	auto skybox{GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json")};
 	skybox->AddComponent<Transform>(Vector3f{}, Vector3f{}, 2048.0f);
 	
-	// Animated model.
-	//GetStructure()->CreateEntity({{5.0f, 0.0f, 0.0f}, {}, 0.3f}, "Objects/Animated/Animated.json");
+	//auto animated{GetStructure()->CreateEntity("Objects/Animated/Animated.json")};
+	//animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 
-	auto animatedObject{GetStructure()->CreateEntity()};
-	animatedObject->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
-	animatedObject->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
-	animatedObject->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
-	//animatedObject->AddComponent<Rigidbody>(0.0f);
-	//animatedObject->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
-	animatedObject->AddComponent<MeshRender>();
-	animatedObject->AddComponent<ShadowRender>();
+	auto animated{GetStructure()->CreateEntity()};
+	animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
+	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+	animated->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
+	//animated->AddComponent<Rigidbody>(0.0f);
+	//animated->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
+	animated->AddComponent<MeshRender>();
+	animated->AddComponent<ShadowRender>();
 
 	EntityPrefab prefabAnimated{"Prefabs/Animated.json"};
-	prefabAnimated << *animatedObject;
+	prefabAnimated << *animated;
 	prefabAnimated.Write();
 
 	auto sun{GetStructure()->CreateEntity()};

@@ -22,16 +22,12 @@ class ACID_EXPORT Animator
 {
 public:
 	/**
-	 * Creates a new animator.
-	 * @param rootJoint The root joint of the joint hierarchy which makes up the "skeleton" of the entity.
-	 **/
-	explicit Animator(Joint *rootJoint);
-
-	/**
 	 * This method should be called each frame to update the animation currently being played. This increases the animation time (and loops it back to zero if necessary),
 	 * finds the pose that the entity should be in at that time of the animation, and then applied that pose to all the entity's joints.
+	 * @param rootJoint The root joint of the joint hierarchy which makes up the "skeleton" of the entity.
+	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
 	 **/
-	void Update();
+	void Update(Joint *rootJoint, std::vector<Matrix4> &jointMatrices);
 
 	/**
 	 * Increases the current animation time which allows the animation to progress. If the current animation has reached the end then the timer is reset, causing the animation to loop.
@@ -109,8 +105,9 @@ public:
 	 * @param currentPose A map of the local-space transforms for all the joints for the desired pose. The map is indexed by the name of the joint which the transform corresponds to.
 	 * @param joint The current joint which the pose should be applied to.
 	 * @param parentTransform The desired model-space transform of the parent joint for the pose.
+	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
 	 **/
-	static void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform);
+	static void ApplyPoseToJoints(const std::map<std::string, Matrix4> &currentPose, Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices);
 
 	const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
 
@@ -121,8 +118,6 @@ public:
 	void DoAnimation(Animation *animation);
 
 private:
-	Joint *m_rootJoint;
-
 	Time m_animationTime;
 	Animation *m_currentAnimation{};
 };

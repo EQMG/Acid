@@ -34,7 +34,7 @@ void MaterialDefault::Start()
 	}
 
 	m_animated = meshAnimated != nullptr;
-	auto vertexInput{m_animated ? meshAnimated->GetVertexInput() : mesh->GetVertexInput()};
+	auto vertexInput{m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput()};
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
 }

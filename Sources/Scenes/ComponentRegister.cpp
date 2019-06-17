@@ -7,6 +7,7 @@
 #include "Emitters/EmitterSphere.hpp"
 #include "Lights/Light.hpp"
 #include "Materials/MaterialDefault.hpp"
+#include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Meshes/MeshRender.hpp"
 #include "Particles/ParticleSystem.hpp"
@@ -41,6 +42,7 @@ ComponentRegister::ComponentRegister()
 	Add<Light>("Light");
 	Add<MaterialDefault>("MaterialDefault");
 	Add<MaterialSkybox>("MaterialSkybox");
+	Add<Transform>("Transform");
 	Add<Mesh>("Mesh");
 	Add<MeshAnimated>("MeshAnimated");
 	Add<MeshRender>("MeshRender");

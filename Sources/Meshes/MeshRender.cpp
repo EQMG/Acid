@@ -5,6 +5,7 @@
 #include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Animations/MeshAnimated.hpp"
 
 namespace acid
 {
@@ -39,13 +40,14 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	// Gets required components.
 	auto material{GetEntity()->GetComponent<Material>()};
 	auto mesh{GetEntity()->GetComponent<Mesh>()};
+	auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
 
-	if (material == nullptr || mesh == nullptr)
+	if (material == nullptr || (mesh == nullptr && meshAnimated == nullptr))
 	{
 		return false;
 	}
 
-	auto meshModel{mesh->GetModel()};
+	auto meshModel{meshAnimated != nullptr ? meshAnimated->GetModel() : mesh->GetModel()};
 	auto materialPipeline{material->GetPipelineMaterial()};
 
 	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)

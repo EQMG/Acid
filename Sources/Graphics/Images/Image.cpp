@@ -137,7 +137,11 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
 {
-	std::filesystem::create_directory(filename.parent_path());
+	if (auto parentPath{filename.parent_path()}; !parentPath.empty())
+	{
+		std::filesystem::create_directory(parentPath);
+	}
+
 	std::ofstream os{filename, std::ios::binary | std::ios::out};
 	int32_t len;
 	std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));

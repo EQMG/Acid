@@ -23,11 +23,11 @@ public:
 
 	void Update() override;
 
-	virtual const std::shared_ptr<Model> &GetModel() const { return m_model; }
+	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) { return VertexDefault::GetVertexInput(binding); }
 
-	virtual Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) const { return VertexDefault::GetVertexInput(binding); }
+	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 
-	virtual void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
 	friend const Metadata &operator>>(const Metadata &metadata, Mesh &mesh);
 

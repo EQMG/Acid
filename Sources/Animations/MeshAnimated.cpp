@@ -2,6 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
+#include "Scenes/Entity.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
@@ -33,25 +34,19 @@ void MeshAnimated::Start()
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint = CreateJoints(*skeletonLoader.GetHeadJoint());
 	m_headJoint->CalculateInverseBindTransform(Matrix4{});
-	m_animator = std::make_unique<Animator>(m_headJoint.get());
 
 	AnimationLoader animationLoader{file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), correction};
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
-	m_animator->DoAnimation(m_animation.get());
+	m_animator.DoAnimation(m_animation.get());
 }
 
 void MeshAnimated::Update()
 {
-	if (m_animator != nullptr)
-	{
-		m_animator->Update();
-	}
-
 	if (m_headJoint != nullptr)
 	{
 		std::vector<Matrix4> jointMatrices(MaxJoints);
-		AddJointsToArray(*m_headJoint, jointMatrices);
+		m_animator.Update(m_headJoint.get(), jointMatrices);
 		m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 	}
 }
@@ -66,19 +61,6 @@ std::unique_ptr<Joint> MeshAnimated::CreateJoints(const JointData &data)
 	}
 
 	return joint;
-}
-
-void MeshAnimated::AddJointsToArray(const Joint &headJoint, std::vector<Matrix4> &jointMatrices)
-{
-	if (headJoint.GetIndex() < jointMatrices.size())
-	{
-		jointMatrices[headJoint.GetIndex()] = headJoint.GetAnimatedTransform();
-	}
-
-	for (const auto &childJoint : headJoint.GetChildren())
-	{
-		AddJointsToArray(*childJoint, jointMatrices);
-	}
 }
 
 const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated)
