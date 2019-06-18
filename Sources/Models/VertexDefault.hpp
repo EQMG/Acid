@@ -9,6 +9,8 @@ namespace acid
 class ACID_EXPORT VertexDefault
 {
 public:
+	VertexDefault() = default;
+
 	VertexDefault(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
 		m_position{position},
 		m_uv{uv},

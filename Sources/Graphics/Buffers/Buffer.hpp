@@ -27,9 +27,9 @@ public:
 
 	virtual ~Buffer();
 
-	void MapMemory(void **data);
+	void MapMemory(void **data) const;
 
-	void UnmapMemory();
+	void UnmapMemory() const;
 
 	const VkDeviceSize &GetSize() const { return m_size; }
 
@@ -38,6 +38,9 @@ public:
 	const VkDeviceMemory &GetBufferMemory() const { return m_bufferMemory; }
 
 	static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
+
+	static void InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
+		const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset = 0, const VkDeviceSize &size = VK_WHOLE_SIZE);
 
 protected:
 	VkDeviceSize m_size;

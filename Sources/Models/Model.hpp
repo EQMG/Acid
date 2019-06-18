@@ -47,6 +47,17 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1) const;
 
+	template<typename T>
+	std::vector<T> GetVertices() const;
+
+	template<typename T>
+	void SetVertices(const std::vector<T> &vertices);
+
+	std::vector<uint32_t> GetIndices() const;
+
+	void SetIndices(const std::vector<uint32_t> &indices);
+
+	template<typename T>
 	std::vector<float> GetPointCloud() const;
 
 	const Vector3f &GetMinExtents() const { return m_minExtents; }
@@ -69,7 +80,7 @@ public:
 
 	const uint32_t &GetIndexCount() const { return m_indexCount; }
 
-	VkIndexType GetIndexType() const { return VK_INDEX_TYPE_UINT32; }
+	static VkIndexType GetIndexType() { return VK_INDEX_TYPE_UINT32; }
 
 	friend const Metadata &operator>>(const Metadata &metadata, Model &model);
 
@@ -77,57 +88,7 @@ public:
 
 protected:
 	template<typename T>
-	void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {})
-	{
-		m_vertexBuffer = nullptr;
-		m_indexBuffer = nullptr;
-
-		if (!vertices.empty())
-		{
-			Buffer vertexStaging{sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-				vertices.data()};
-			m_vertexBuffer = std::make_unique<Buffer>(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
-				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-			m_vertexCount = static_cast<uint32_t>(vertices.size());
-
-			CommandBuffer commandBuffer;
-
-			VkBufferCopy copyRegion{};
-			copyRegion.size = sizeof(T) * vertices.size();
-			vkCmdCopyBuffer(commandBuffer, vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
-
-			commandBuffer.SubmitIdle();
-		}
-
-		if (!indices.empty())
-		{
-			Buffer indexStaging{sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data()};
-			m_indexBuffer = std::make_unique<Buffer>(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
-				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-			m_indexCount = static_cast<uint32_t>(indices.size());
-
-			CommandBuffer commandBuffer;
-
-			VkBufferCopy copyRegion{};
-			copyRegion.size = sizeof(uint32_t) * indices.size();
-			vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
-
-			commandBuffer.SubmitIdle();
-		}
-
-		m_minExtents = Vector3f::PositiveInfinity;
-		m_maxExtents = Vector3f::NegativeInfinity;
-
-		for (const auto &vertex : vertices)
-		{
-			auto position{Vector3f(vertex.m_position)};
-			m_minExtents = m_minExtents.Min(position);
-			m_maxExtents = m_maxExtents.Max(position);
-		}
-
-		m_radius = std::max(m_minExtents.Length(), m_maxExtents.Length());
-	}
+	void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {});
 
 private:
 	std::unique_ptr<Buffer> m_vertexBuffer;
@@ -140,3 +101,5 @@ private:
 	float m_radius{};
 };
 }
+
+#include "Model.inl"

@@ -41,11 +41,15 @@ void MeshAnimated::Start()
 	m_animator.DoAnimation(m_animation.get());
 
 	/*{
-		File fileModel{"Animation/JointsModel.json", std::make_unique<Json>()};
-		fileModel.GetMetadata()->SetChild("headJoint", m_headJoint);
-		fileModel.GetMetadata()->SetChild("vertices", geometryLoader.GetVertices());
-		fileModel.GetMetadata()->SetChild("indices", geometryLoader.GetIndices());
+		File fileModel{"Animation/Model.json", std::make_unique<Json>()};
+		fileModel.GetMetadata()->SetChild("vertices", m_model->GetVertices<VertexAnimated>());
+		fileModel.GetMetadata()->SetChild("indices", m_model->GetIndices());
 		fileModel.Write();
+	}
+	{
+		File fileJoints{"Animation/Joints.json", std::make_unique<Json>()};
+		*fileJoints.GetMetadata() << m_headJoint;
+		fileJoints.Write();
 	}
 	{
 		File fileAnimation0{"Animation/Animation0.json", std::make_unique<Json>()};

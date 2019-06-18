@@ -68,13 +68,13 @@ Buffer::~Buffer()
 	vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
 }
 
-void Buffer::MapMemory(void **data)
+void Buffer::MapMemory(void **data) const
 {
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	Graphics::CheckVk(vkMapMemory(*logicalDevice, GetBufferMemory(), 0, m_size, 0, data));
 }
 
-void Buffer::UnmapMemory()
+void Buffer::UnmapMemory() const
 {
 	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
 	vkUnmapMemory(*logicalDevice, GetBufferMemory());
@@ -96,5 +96,20 @@ uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryProper
 	}
 
 	throw std::runtime_error("Failed to find a valid memory type for buffer");
+}
+
+void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, 
+	const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset, const VkDeviceSize &size)
+{
+	VkBufferMemoryBarrier bufferMemoryBarrier{};
+	bufferMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+	bufferMemoryBarrier.srcAccessMask = srcAccessMask;
+	bufferMemoryBarrier.dstAccessMask = dstAccessMask;
+	bufferMemoryBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	bufferMemoryBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	bufferMemoryBarrier.buffer = buffer;
+	bufferMemoryBarrier.offset = offset;
+	bufferMemoryBarrier.size = size;
+	vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, 0, 0, nullptr, 1, &bufferMemoryBarrier, 0, nullptr);
 }
 }

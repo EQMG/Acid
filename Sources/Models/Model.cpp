@@ -45,31 +45,52 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 	return true;
 }
 
-std::vector<float> Model::GetPointCloud() const
+std::vector<uint32_t> Model::GetIndices() const
 {
-	if (m_vertexBuffer == nullptr)
+	Buffer indexStaging{m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+
+	CommandBuffer commandBuffer;
+
+	VkBufferCopy copyRegion{};
+	copyRegion.size = indexStaging.GetSize();
+	vkCmdCopyBuffer(commandBuffer, m_indexBuffer->GetBuffer(), indexStaging.GetBuffer(), 1, &copyRegion);
+
+	commandBuffer.SubmitIdle();
+
+	uint32_t *indicesArray;
+	indexStaging.MapMemory(reinterpret_cast<void **>(&indicesArray));
+	std::vector<uint32_t> indices(m_indexCount);
+
+	for (uint32_t i{}; i < m_indexCount; i++)
 	{
-		return {};
+		indices[i] = indicesArray[i];
 	}
 
-	// TODO: Fix Vulkan memory mapping error.
-	std::vector<uint32_t> indices(m_indexBuffer->GetSize() / sizeof(uint32_t));
-	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(indices.data()));
-	m_vertexBuffer->UnmapMemory();
+	indexStaging.UnmapMemory();
+	return indices;
+}
 
-	std::vector<float> vertices(m_vertexBuffer->GetSize() / sizeof(float));
-	m_vertexBuffer->MapMemory(reinterpret_cast<void **>(vertices.data()));
-	m_vertexBuffer->UnmapMemory();
+void Model::SetIndices(const std::vector<uint32_t> &indices)
+{
+	m_indexBuffer = nullptr;
+	m_indexCount = static_cast<uint32_t>(indices.size());
 
-	std::vector<float> pointCloud;
-	pointCloud.reserve(indices.size());
-
-	for (auto index : indices)
+	if (!indices.empty())
 	{
-		pointCloud.emplace_back(vertices[index]);
-	}
+		Buffer indexStaging{sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data()};
+		m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-	return pointCloud;
+		CommandBuffer commandBuffer;
+
+		VkBufferCopy copyRegion{};
+		copyRegion.size = indexStaging.GetSize();
+		vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
+
+		commandBuffer.SubmitIdle();
+	}
 }
 
 const Metadata &operator>>(const Metadata &metadata, Model &model)
