@@ -5,7 +5,7 @@
 namespace acid
 {
 template<typename T>
-std::vector<T> Model::GetVertices() const
+std::vector<T> Model::GetVertices(const std::size_t &offset) const
 {
 	Buffer vertexStaging{m_vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
@@ -18,13 +18,15 @@ std::vector<T> Model::GetVertices() const
 
 	commandBuffer.SubmitIdle();
 
-	T *verticesArray;
-	vertexStaging.MapMemory(reinterpret_cast<void **>(&verticesArray));
+	void *verticesMemory;
+	vertexStaging.MapMemory(&verticesMemory);
 	std::vector<T> vertices(m_vertexCount);
+
+	auto sizeOfSrcT{vertexStaging.GetSize() / m_vertexCount};
 
 	for (uint32_t i{}; i < m_vertexCount; i++)
 	{
-		vertices[i] = verticesArray[i];
+		std::memcpy(&vertices[i], static_cast<char *>(verticesMemory) + (i * sizeOfSrcT) + offset, sizeof(T));
 	}
 
 	vertexStaging.UnmapMemory();
@@ -52,28 +54,6 @@ void Model::SetVertices(const std::vector<T> &vertices)
 
 		commandBuffer.SubmitIdle();
 	}
-}
-
-template<typename T>
-std::vector<float> Model::GetPointCloud() const
-{
-	if (m_vertexBuffer == nullptr)
-	{
-		return {};
-	}
-
-	auto indices{GetIndices()};
-	auto vertices{GetVertices<T>()};
-
-	std::vector<float> pointCloud;
-	pointCloud.reserve(indices.size());
-
-	for (auto index : indices)
-	{
-		pointCloud.emplace_back(vertices.m_position[index]);
-	}
-
-	return pointCloud;
 }
 
 template<typename T>

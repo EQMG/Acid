@@ -23,18 +23,18 @@ ColliderConvexHull::~ColliderConvexHull()
 
 void ColliderConvexHull::Start()
 {
-	/*auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
 
 	if (mesh != nullptr && mesh->GetModel() != nullptr)
 	{
 		Initialize(mesh->GetModel()->GetPointCloud());
-	}*/
+	}
 }
 
 void ColliderConvexHull::Update()
 {
 	// TODO
-	/*auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
 
 	if (mesh == nullptr || mesh->GetModel() != nullptr)
 	{
@@ -54,7 +54,7 @@ void ColliderConvexHull::Update()
 	{
 		m_model = mesh->GetModel();
 		Initialize(m_model->GetPointCloud());
-	}*/
+	}
 }
 
 btCollisionShape *ColliderConvexHull::GetCollisionShape() const

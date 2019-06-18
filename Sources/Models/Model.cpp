@@ -45,7 +45,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 	return true;
 }
 
-std::vector<uint32_t> Model::GetIndices() const
+std::vector<uint32_t> Model::GetIndices(const std::size_t &offset) const
 {
 	Buffer indexStaging{m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
@@ -58,13 +58,15 @@ std::vector<uint32_t> Model::GetIndices() const
 
 	commandBuffer.SubmitIdle();
 
-	uint32_t *indicesArray;
-	indexStaging.MapMemory(reinterpret_cast<void **>(&indicesArray));
+	void *indicesMemory;
+	indexStaging.MapMemory(&indicesMemory);
 	std::vector<uint32_t> indices(m_indexCount);
+
+	auto sizeOfSrcT{indexStaging.GetSize() / m_indexCount};
 
 	for (uint32_t i{}; i < m_indexCount; i++)
 	{
-		indices[i] = indicesArray[i];
+		std::memcpy(&indices[i], static_cast<char *>(indicesMemory) + (i * sizeOfSrcT) + offset, sizeof(uint32_t));
 	}
 
 	indexStaging.UnmapMemory();
@@ -91,6 +93,31 @@ void Model::SetIndices(const std::vector<uint32_t> &indices)
 
 		commandBuffer.SubmitIdle();
 	}
+}
+
+std::vector<float> Model::GetPointCloud() const
+{
+	if (m_vertexBuffer == nullptr)
+	{
+		return {};
+	}
+
+	// This assumes a Vector3f attribute is the first vertex attribute.
+	auto indices{GetIndices()};
+	auto vertices{GetVertices<Vector3f>()};
+
+	std::vector<float> pointCloud;
+	pointCloud.reserve(indices.size());
+
+	for (const auto &index : indices)
+	{
+		auto vertex{vertices[index]};
+		pointCloud.emplace_back(vertex.m_x);
+		pointCloud.emplace_back(vertex.m_y);
+		pointCloud.emplace_back(vertex.m_z);
+	}
+
+	return pointCloud;
 }
 
 const Metadata &operator>>(const Metadata &metadata, Model &model)
