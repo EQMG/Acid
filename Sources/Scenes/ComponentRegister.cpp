@@ -27,28 +27,28 @@ namespace acid
 {
 ComponentRegister::ComponentRegister()
 {
-	Add<ColliderCapsule>("ColliderCapsule");
-	Add<ColliderCone>("ColliderCone");
-	Add<ColliderConvexHull>("ColliderConvexHull");
-	Add<ColliderCube>("ColliderCube");
-	Add<ColliderCylinder>("ColliderCylinder");
-	Add<ColliderHeightfield>("ColliderHeightfield");
-	Add<ColliderSphere>("ColliderSphere");
-	Add<EmitterCircle>("EmitterCircle");
-	Add<EmitterLine>("EmitterLine");
-	Add<EmitterPoint>("EmitterPoint");
-	Add<EmitterSphere>("EmitterSphere");
-	Add<KinematicCharacter>("KinematicCharacter");
-	Add<Light>("Light");
-	Add<MaterialDefault>("MaterialDefault");
-	Add<MaterialSkybox>("MaterialSkybox");
-	Add<Transform>("Transform");
-	Add<Mesh>("Mesh");
-	Add<MeshAnimated>("MeshAnimated");
-	Add<MeshRender>("MeshRender");
-	Add<ParticleSystem>("ParticleSystem");
-	Add<Rigidbody>("Rigidbody");
-	Add<ShadowRender>("ShadowRender");
+	Add<ColliderCapsule>("colliderCapsule");
+	Add<ColliderCone>("colliderCone");
+	Add<ColliderConvexHull>("colliderConvexHull");
+	Add<ColliderCube>("colliderCube");
+	Add<ColliderCylinder>("colliderCylinder");
+	Add<ColliderHeightfield>("colliderHeightfield");
+	Add<ColliderSphere>("colliderSphere");
+	Add<EmitterCircle>("emitterCircle");
+	Add<EmitterLine>("emitterLine");
+	Add<EmitterPoint>("emitterPoint");
+	Add<EmitterSphere>("emitterSphere");
+	Add<KinematicCharacter>("kinematicCharacter");
+	Add<Light>("light");
+	Add<MaterialDefault>("materialDefault");
+	Add<MaterialSkybox>("materialSkybox");
+	Add<Transform>("transform");
+	Add<Mesh>("mesh");
+	Add<MeshAnimated>("meshAnimated");
+	Add<MeshRender>("meshRender");
+	Add<ParticleSystem>("particleSystem");
+	Add<Rigidbody>("rigidbody");
+	Add<ShadowRender>("shadowRender");
 }
 
 void ComponentRegister::Remove(const std::string &name)

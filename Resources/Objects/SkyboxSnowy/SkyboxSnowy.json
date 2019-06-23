@@ -1,13 +1,13 @@
 {
-  "Mesh": {
+  "mesh": {
     "model": {
-      "type": "ModelSphere",
+      "type": "sphere",
       "latitudeBands": 10,
       "longitudeBands": 10,
       "radius": 1.0
     }
   },
-  "MaterialSkybox": {
+  "materialSkybox": {
     "image": {
       "filename": "Objects/SkyboxSnowy",
       "fileSuffix": ".png",
@@ -21,10 +21,10 @@
     },
     "baseColour": "#FFFFFF"
   },
-  "SkyboxCycle": {
+  "skyboxCycle": {
     "enableFog": false,
     "enableRotation": false
   },
-  "MeshRender": {
+  "meshRender": {
   }
 }

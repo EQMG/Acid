@@ -1,5 +1,5 @@
 {
-  "ParticleSystem": {
+  "particleSystem": {
     "types": [
       {
         "image": {
@@ -73,7 +73,7 @@
     "stageDeviation": 0.000000,
     "scaleDeviation": 0.100000
   },
-  "EmitterSphere": {
+  "emitterSphere": {
     "radius": 3.000000
   }
 }

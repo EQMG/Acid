@@ -27,13 +27,14 @@
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Graphics/Graphics.hpp>
+#include <Serialized/Json/Json.hpp>
+#include <Serialized/Yaml/Yaml.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Terrain/MaterialTerrain.hpp>
 #include <Terrain/Terrain.hpp>
 #include <Uis/Uis.hpp>
-#include <Serialized/Yaml/Yaml.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
@@ -96,12 +97,16 @@ Scene1::Scene1() :
 		{
 			Resources::Get()->GetThreadPool().Enqueue([this]()
 			{
-				File sceneFile{"Scene1.yaml", std::make_unique<Yaml>()};
-				auto sceneNode{sceneFile.GetMetadata()->AddChild(std::make_unique<Metadata>("Scene"))};
+				File sceneFile{"Scene1.json", std::make_unique<Json>()};
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto entityNode{sceneNode->AddChild(std::make_unique<Metadata>("\"" + entity->GetName() + "\""))};
+					auto entityNode{sceneFile.GetMetadata()->AddChild(std::make_unique<Metadata>())};
+
+					if (!entity->GetName().empty())
+					{
+						entityNode->SetChild("name", entity->GetName());
+					}
 
 					for (auto &component : entity->GetComponents())
 					{

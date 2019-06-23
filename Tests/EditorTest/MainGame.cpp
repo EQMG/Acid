@@ -93,7 +93,7 @@ MainGame::MainGame() :
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Add<PlayerFps>("PlayerFps");
+	componentRegister.Add<PlayerFps>("playerFps");
 
 	// Sets values to modules.
 	//Window::Get()->SetTitle("Test Physics");
@@ -111,7 +111,7 @@ MainGame::~MainGame()
 
 	// Deregisters components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Remove("PlayerFps");
+	componentRegister.Remove("playerFps");
 
 	//Renderer::Get()->SetManager(nullptr);
 	Scenes::Get()->SetScene(nullptr);

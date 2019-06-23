@@ -12,16 +12,16 @@ namespace acid
 {
 ModelRegister::ModelRegister()
 {
-	AddMetadata<ModelGltf>("ModelGltf");
+	AddMetadata<ModelGltf>("gltf");
 	AddExtension<ModelGltf>(".gltf");
 	AddExtension<ModelGltf>(".glb");
-	AddMetadata<ModelObj>("ModelObj");
+	AddMetadata<ModelObj>("obj");
 	AddExtension<ModelObj>(".obj");
-	AddMetadata<ModelCube>("ModelCube");
-	AddMetadata<ModelCylinder>("ModelCylinder");
-	AddMetadata<ModelDisk>("ModelDisk");
-	AddMetadata<ModelRectangle>("ModelRectangle");
-	AddMetadata<ModelSphere>("ModelSphere");
+	AddMetadata<ModelCube>("cube");
+	AddMetadata<ModelCylinder>("cylinder");
+	AddMetadata<ModelDisk>("disk");
+	AddMetadata<ModelRectangle>("rectangle");
+	AddMetadata<ModelSphere>("sphere");
 }
 
 void ModelRegister::Remove(const std::string &name)
@@ -42,7 +42,7 @@ std::shared_ptr<Model> ModelRegister::Create(const Metadata &metadata) const
 		return nullptr;
 	}
 
-	return ((*it).second)(metadata);
+	return (*it).second(metadata);
 }
 
 std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filename) const
@@ -56,6 +56,6 @@ std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filena
 		return nullptr;
 	}
 
-	return ((*it).second)(filename);
+	return (*it).second(filename);
 }
 }

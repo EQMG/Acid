@@ -1,5 +1,5 @@
 {
-   "KinematicCharacter": {
+   "kinematicCharacter": {
       "friction": 0.0,
       "frictionRolling": 0.0,
       "frictionSpinning": 0.0,
@@ -14,7 +14,7 @@
       "maxHeight": 1.5,
       "interpolate": true
    },
-   "ColliderCapsule": {
+   "colliderCapsule": {
       "radius": "0.2",
       "height": "1.8",
       "localTransform": {
@@ -35,6 +35,6 @@
          }
       }
    },
-   "PlayerFps": {
+   "playerFps": {
    }
 }

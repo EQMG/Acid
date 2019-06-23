@@ -107,13 +107,13 @@ MainGame::MainGame() :
 
 	// Registers components.
 	auto &componentRegister{Scenes::Get()->GetComponentRegister()};
-	componentRegister.Add<HeightDespawn>("HeightDespawn");
-	componentRegister.Add<NameTag>("NameTag");
-	componentRegister.Add<PlayerFps>("PlayerFps");
-	componentRegister.Add<CelestialBody>("CelestialBody");
-	componentRegister.Add<SkyboxCycle>("SkyboxCycle");
-	componentRegister.Add<MaterialTerrain>("MaterialTerrain");
-	componentRegister.Add<Terrain>("Terrain");
+	componentRegister.Add<HeightDespawn>("heightDespawn");
+	componentRegister.Add<NameTag>("nameTag");
+	componentRegister.Add<PlayerFps>("playerFps");
+	componentRegister.Add<CelestialBody>("celestialBody");
+	componentRegister.Add<SkyboxCycle>("skyboxCycle");
+	componentRegister.Add<MaterialTerrain>("materialTerrain");
+	componentRegister.Add<Terrain>("terrain");
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");

@@ -1,8 +1,8 @@
 {
-  "MeshAnimated": {
+  "meshAnimated": {
     "filename": "Objects/Animated/Model.dae"
   },
-  "MaterialDefault": {
+  "materialDefault": {
     "baseDiffuse": "#ffffff",
     "imageDiffuse": {
       "filename": "Objects/Animated/Diffuse.png",
@@ -19,8 +19,8 @@
     "ignoreLighting": false,
     "ignoreFog": false
   },
-  "MeshRender": {
+  "meshRender": {
   },
-  "ShadowRender": {
+  "shadowRender": {
   }
 }

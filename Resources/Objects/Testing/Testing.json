@@ -1,14 +1,14 @@
 {
-  "Mesh": {
+  "mesh": {
     "model": {
-      "type": "ModelObj",
-      "filename": "Entities/Testing/Model.obj"
+      "type": "obj",
+      "filename": "Objects/Testing/Model.obj"
     }
   },
-  "MaterialDefault": {
+  "materialDefault": {
     "baseDiffuse": "#C7BEBE",
     "imageDiffuse": {
-      "filename": "Entities/Testing/Diffuse.png",
+      "filename": "Objects/Testing/Diffuse.png",
       "filter": 1,
       "addressMode": 2,
       "anisotropic": true,
@@ -17,14 +17,14 @@
     "metallic": 0.0,
     "roughness": 0.0,
     "imageMaterial": {
-      "filename": "Entities/Testing/Material.png",
+      "filename": "Objects/Testing/Material.png",
       "filter": 1,
       "addressMode": 2,
       "anisotropic": true,
       "mipmap": true
     },
     "imageNormal": {
-      "filename": "Entities/Testing/Normal.png",
+      "filename": "Objects/Testing/Normal.png",
       "filter": 1,
       "addressMode": 2,
       "anisotropic": true,
@@ -34,7 +34,7 @@
     "ignoreLighting": false,
     "ignoreFog": false
   },
-  "Rigidbody": {
+  "rigidbody": {
     "mass": 2.0,
     "friction": 0.2,
     "localTransform": {
@@ -61,10 +61,10 @@
       "z": 1.0
     }
   },
-  "ColliderSphere": {
+  "colliderSphere": {
     "radius": 1.0
   },
-  "Light": {
+  "light": {
     "colour": "#3319CC",
     "radius": 1.33, 
     "localOffset": {
@@ -73,6 +73,6 @@
       "z": 0.0
     }
   },
-  "MeshRender": {
+  "meshRender": {
   }
 }
