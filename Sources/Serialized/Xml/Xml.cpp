@@ -194,7 +194,8 @@ void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 	{
 		if (depth != 1)
 		{
-			thisValue = parent->AddChild(std::make_unique<Metadata>(name, source->m_content, parseAttributes));
+			thisValue = parent->AddChild(std::make_unique<Metadata>(name, source->m_content));
+			thisValue->SetAttributes(parseAttributes);
 		}
 		else
 		{

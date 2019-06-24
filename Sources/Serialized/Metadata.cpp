@@ -4,10 +4,9 @@
 
 namespace acid
 {
-Metadata::Metadata(const std::string &name, const std::string &value, std::map<std::string, std::string> attributes) :
+Metadata::Metadata(const std::string &name, const std::string &value) :
 	m_name{String::Trim(String::RemoveAll(name, '\"'))}, // TODO: Remove first and last.
-	m_value{String::Trim(value)},
-	m_attributes{std::move(attributes)}
+	m_value{String::Trim(value)}
 {
 }
 
@@ -21,7 +20,8 @@ void Metadata::Write(std::ostream *outStream, const Format &format) const
 
 std::unique_ptr<Metadata> Metadata::Clone() const
 {
-	auto clone{std::make_unique<Metadata>(m_name, m_value, m_attributes)};
+	auto clone{std::make_unique<Metadata>(m_name, m_value)};
+	clone->m_attributes = m_attributes;
 
 	for (const auto &child : m_children)
 	{

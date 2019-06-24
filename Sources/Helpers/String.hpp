@@ -120,7 +120,7 @@ public:
 	 * @return The value as a string.
 	 */
 	template<typename T>
-	static std::string To(const T &val)
+	static std::string To(T val)
 	{
 		if constexpr (std::is_enum_v<T>)
 		{
@@ -131,13 +131,13 @@ public:
 		{
 			return val ? "true" : "false";
 		}
-		else if constexpr (std::is_same_v<std::string, T>)
+		else if constexpr (std::is_same_v<std::string, T> || std::is_same_v<const char *, T>)
 		{
 			return val;
 		}
 		else
 		{
-			return std::to_string(static_cast<T>(val));
+			return std::to_string(val);
 		}
 	}
 

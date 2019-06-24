@@ -17,7 +17,7 @@ public:
 		Beautified, Minified
 	};
 
-	explicit Metadata(const std::string &name = "", const std::string &value = "", std::map<std::string, std::string> attributes = {});
+	explicit Metadata(const std::string &name = "", const std::string &value = "");
 
 	virtual void Load(std::istream *inStream);
 
@@ -29,9 +29,11 @@ public:
 
 	void SetName(const std::string &name) { m_name = name; }
 
-	const std::string &GetValue() const { return m_value; }
+	template<typename T = std::string>
+	T GetValue() const;
 
-	void SetValue(const std::string &value) { m_value = value; }
+	template<typename T = std::string>
+	void SetValue(const T &value);
 
 	std::string GetString() const;
 

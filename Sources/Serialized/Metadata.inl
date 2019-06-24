@@ -7,6 +7,18 @@
 namespace acid
 {
 template<typename T>
+T Metadata::GetValue() const
+{
+	return String::From<T>(m_value);
+}
+
+template<typename T>
+void Metadata::SetValue(const T &value)
+{
+	m_value = String::To(value);
+}
+
+template<typename T>
 T Metadata::GetChild(const std::string &name) const
 {
 	auto child{FindChild(name)};
@@ -73,7 +85,7 @@ const Metadata &operator>>(const Metadata &metadata, T &object)
 template<typename T>
 Metadata &operator<<(Metadata &metadata, const T &object)
 {
-	metadata.SetValue(String::To(object));
+	metadata.SetValue(object);
 	return metadata;
 }
 

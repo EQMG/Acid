@@ -196,7 +196,9 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 	}
 	else if (source->GetValue().empty())
 	{
-		*outStream << "\"" << source->GetName() << "\": " << openBrace;
+		*outStream << "\"" << source->GetName();
+		*outStream << (format != Format::Minified ? "\": " : "\":");
+		*outStream << openBrace;
 	}
 	else
 	{
@@ -206,12 +208,14 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 		}
 		else
 		{
-			*outStream << "\"" << source->GetName() << "\": " << String::FixReturnTokens(source->GetValue());
+			*outStream << "\"" << source->GetName();
+			*outStream << (format != Format::Minified ? "\": " : "\":");
+			*outStream << String::FixReturnTokens(source->GetValue());
 		}
 
 		if (!(end && source->GetAttributes().empty()))
 		{
-			*outStream << ", ";
+			*outStream << (format != Format::Minified ? ", " : ",");
 		}
 	}
 
@@ -222,11 +226,11 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 
 	for (const auto &attribute : source->GetAttributes())
 	{
-		*outStream << indents.str() << "  \"_" << attribute.first + "\": \"" << attribute.second << "\"";
+		*outStream << indents.str() << "  \"_" << attribute.first << "\": \"" << attribute.second << "\"";
 
 		if (!(end && source->GetChildren().empty()))
 		{
-			*outStream << ", ";
+			*outStream << (format != Format::Minified ? ", " : ",");
 		}
 
 		if (format != Format::Minified)

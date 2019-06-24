@@ -142,7 +142,11 @@ int main(int argc, char **argv)
 		auto source{R"({"message":"hello world","value":3})"};
 		Json json;
 		json.Load(source);
-		//json["value"]->SetValue(3 * json["value"]->GetValue<int32_t>());
+
+		//*json["newSection"]["values"] << std::vector{10, 11, -1, 2};
+
+		auto value{json["value"]};
+		value->SetValue(3 * value->GetValue<int32_t>() + 2);
 
 		Log::Out("%s\n", json.Write(Metadata::Format::Minified));
 		//Log::Out("%s\n", Xml{"source", &json}.Write(Metadata::Format::Minified));
