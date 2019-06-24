@@ -9,24 +9,6 @@ class ACID_EXPORT Json :
 	public Metadata
 {
 public:
-	class Section :
-		public NonCopyable
-	{
-	public:
-		Section(Section *parent, std::string name, std::string content) :
-			m_parent{parent},
-			m_name{std::move(name)},
-			m_content{std::move(content)}
-		{
-		}
-
-		Section *m_parent;
-		std::vector<std::unique_ptr<Section>> m_children;
-
-		std::string m_name;
-		std::string m_content;
-	};
-
 	Json() = default;
 
 	explicit Json(Metadata *metadata);
@@ -40,9 +22,14 @@ public:
 	std::string Write(const Format &format = Format::Beautified) const;
 
 private:
+	enum class Token
+	{
+		Unknown, String, Number, CroushOpen, CroushClose, BracketOpen, BracketClose, Comma, Colon, Boolean, Null
+	};
+
 	static void AddChildren(const Metadata *source, Metadata *destination);
 
-	static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
+	static Metadata *Convert(Metadata *current, std::vector<std::pair<Token, std::string>> v, const int32_t &i, int32_t &r);
 
 	static void AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end = false);
 };

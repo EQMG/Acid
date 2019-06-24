@@ -40,7 +40,7 @@ std::vector<float> SkinLoader::LoadWeights() const
 
 std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weightsDataNode) const
 {
-	auto rawData{String::Split(weightsDataNode->FindChild("vcount")->GetString(), ' ')};
+	auto rawData{String::Split(weightsDataNode->FindChild("vcount")->GetValue(), ' ')};
 	std::vector<uint32_t> counts(rawData.size());
 
 	for (uint32_t i{}; i < rawData.size(); i++)
@@ -53,7 +53,7 @@ std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weigh
 
 void SkinLoader::GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
 {
-	auto rawData{String::Split(weightsDataNode->FindChild("v")->GetString(), ' ')};
+	auto rawData{String::Split(weightsDataNode->FindChild("v")->GetValue(), ' ')};
 	uint32_t pointer{};
 
 	for (auto count : counts)

@@ -17,7 +17,14 @@ public:
 		Beautified, Minified
 	};
 
-	explicit Metadata(const std::string &name = "", const std::string &value = "");
+	enum class Type
+	{
+		String, Object, Array, Boolean, Number, Null, Unknown
+	};
+
+	Metadata() = default;
+
+	explicit Metadata(std::string name, std::string value = "", std::vector<std::unique_ptr<Metadata>> &&children = {});
 
 	virtual void Load(std::istream *inStream);
 
@@ -35,9 +42,9 @@ public:
 	template<typename T = std::string>
 	void SetValue(const T &value);
 
-	std::string GetString() const;
+	const Type &GetType() const { return m_type; }
 
-	void SetString(const std::string &data);
+	void SetType(const Type &type) { m_type = type; }
 
 	const std::vector<std::unique_ptr<Metadata>> &GetChildren() const { return m_children; }
 
@@ -90,6 +97,7 @@ public:
 protected:
 	std::string m_name;
 	std::string m_value;
+	Type m_type{Type::Unknown};
 	std::vector<std::unique_ptr<Metadata>> m_children;
 	std::map<std::string, std::string> m_attributes;
 };

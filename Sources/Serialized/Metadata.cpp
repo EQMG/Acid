@@ -4,9 +4,10 @@
 
 namespace acid
 {
-Metadata::Metadata(const std::string &name, const std::string &value) :
-	m_name{String::Trim(String::RemoveAll(name, '\"'))}, // TODO: Remove first and last.
-	m_value{String::Trim(value)}
+Metadata::Metadata(std::string name, std::string value, std::vector<std::unique_ptr<Metadata>> &&children) :
+	m_name{std::move(name)},
+	m_value{std::move(value)},
+	m_children{std::move(children)}
 {
 }
 
@@ -29,33 +30,6 @@ std::unique_ptr<Metadata> Metadata::Clone() const
 	}
 
 	return clone;
-}
-
-std::string Metadata::GetString() const
-{
-	auto string{m_value};
-
-	if (string.empty())
-	{
-		return string;
-	}
-
-	if (string.front() == '\"')
-	{
-		string.erase(0, 1);
-	}
-
-	if (string.back() == '\"')
-	{
-		string.pop_back();
-	}
-
-	return string;
-}
-
-void Metadata::SetString(const std::string &data)
-{
-	m_value = "\"" + data + "\"";
 }
 
 std::vector<Metadata *> Metadata::FindChildren(const std::string &name) const

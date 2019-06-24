@@ -85,7 +85,7 @@ public:
 	std::filesystem::path currentPath{std::filesystem::current_path()};
 	std::vector<std::string> json{"rigid", "better for data interchange"};
 	std::vector<std::string> yaml{"slim and flexible", "better for configuration", "supports comments"};
-	std::map<int32_t, std::string> map{{10, "Hello World"}, {-2, "Negaitive Keys"}, {400, "Larger Key"}};
+	std::map<int32_t, std::string> map{{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
 	std::map<int32_t, std::vector<std::string>> vectorMap{{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
 	std::vector<std::pair<std::string, BitMask<ExampleType>>> types{{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
 		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}};
@@ -138,7 +138,12 @@ public:
 
 int main(int argc, char **argv)
 {
-	{
+	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
+	jsonLoader.Load();
+	jsonLoader.SetFilename("Serial/Example2.json");
+	jsonLoader.Write();
+
+	/*{
 		auto source{R"({"message":"hello world","value":3})"};
 		Json json;
 		json.Load(source);
@@ -150,14 +155,14 @@ int main(int argc, char **argv)
 
 		Log::Out("%s\n", json.Write(Metadata::Format::Minified));
 		//Log::Out("%s\n", Xml{"source", &json}.Write(Metadata::Format::Minified));
-	}
+	}*/
 
-	test::Example1 example1;
+	/*test::Example1 example1;
 	Metadata metadata;
 	metadata << example1;
 
-	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();
-	File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
+	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();*/
+	/*File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
 	File{"Serial/Example1.yaml", std::make_unique<Yaml>(&metadata)}.Write();
 
 	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
@@ -167,7 +172,7 @@ int main(int argc, char **argv)
 	jsonLoader.Write();
 
 	test::Example1 example2;
-	*jsonLoader.GetMetadata() >> example2;
+	*jsonLoader.GetMetadata() >> example2;*/
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

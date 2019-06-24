@@ -145,26 +145,26 @@ Metadata &operator<<(Metadata &metadata, const std::shared_ptr<T> &object)
 template<typename T>
 const Metadata &operator>>(const Metadata &metadata, std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
 {
-	string = metadata.GetString();
+	string = metadata.GetValue();
 	return metadata;
 }
 
 template<typename T>
 Metadata &operator<<(Metadata &metadata, const std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
 {
-	metadata.SetString(string);
+	metadata.SetValue(string);
 	return metadata;
 }
 
 inline const Metadata &operator>>(const Metadata &metadata, std::filesystem::path &object)
 {
-	object = metadata.GetString();
+	object = metadata.GetValue();
 	return metadata;
 }
 
 inline Metadata &operator<<(Metadata &metadata, const std::filesystem::path &object)
 {
-	metadata.SetString(object.string());
+	metadata.SetValue(object.string());
 	return metadata;
 }
 
@@ -207,7 +207,7 @@ Metadata &operator<<(Metadata &metadata, const std::pair<T, K> &pair)
 template<typename T>
 const Metadata &operator>>(const Metadata &metadata, std::optional<T> &optional)
 {
-	if (metadata.GetValue() != "nullopt")
+	if (metadata.GetValue() != "null")
 	{
 		T x;
 		metadata >> x;
@@ -230,7 +230,8 @@ Metadata &operator<<(Metadata &metadata, const std::optional<T> &optional)
 	}
 	else
 	{
-		metadata.SetValue("nullopt");
+		metadata.SetValue("null");
+		metadata.SetType(Metadata::Type::Null);
 	}
 
 	return metadata;
