@@ -15,7 +15,7 @@ void Metadata::Load(std::istream *inStream)
 {
 }
 
-void Metadata::Write(std::ostream *outStream) const
+void Metadata::Write(std::ostream *outStream, const Format &format) const
 {
 }
 
@@ -167,6 +167,11 @@ void Metadata::RemoveAttribute(const std::string &attribute)
 	{
 		m_attributes.erase(it);
 	}
+}
+
+Metadata *Metadata::operator[](const std::string &string) const
+{
+	return FindChild(string);
 }
 
 bool Metadata::operator==(const Metadata &other) const

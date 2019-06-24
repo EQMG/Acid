@@ -102,10 +102,23 @@ void Yaml::Load(std::istream *inStream)
 	Convert(topSection.get(), this, true);
 }
 
-void Yaml::Write(std::ostream *outStream) const
+void Yaml::Write(std::ostream *outStream, const Format &format) const
 {
 	*outStream << "---\n";
 	AppendData(this, nullptr, outStream, 0);
+}
+
+void Yaml::Load(const std::string &string)
+{
+	std::stringstream stream{string};
+	Load(&stream);
+}
+
+std::string Yaml::Write(const Format &format) const
+{
+	std::stringstream stream;
+	Write(&stream, format);
+	return stream.str();
 }
 
 void Yaml::AddChildren(const Metadata *source, Metadata *destination)

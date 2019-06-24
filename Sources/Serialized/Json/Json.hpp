@@ -27,19 +27,23 @@ public:
 		std::string m_content;
 	};
 
-	Json();
+	Json() = default;
 
 	explicit Json(Metadata *metadata);
 
 	void Load(std::istream *inStream) override;
 
-	void Write(std::ostream *outStream) const override;
+	void Write(std::ostream *outStream, const Format &format = Format::Beautified) const override;
+
+	void Load(const std::string &string);
+
+	std::string Write(const Format &format = Format::Beautified) const;
 
 private:
 	static void AddChildren(const Metadata *source, Metadata *destination);
 
 	static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
 
-	static void AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const bool &end = false);
+	static void AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end = false);
 };
 }

@@ -5,10 +5,6 @@
 
 namespace acid
 {
-Json::Json()
-{
-}
-
 Json::Json(Metadata *metadata)
 {
 	AddChildren(metadata, this);
@@ -83,9 +79,22 @@ void Json::Load(std::istream *inStream)
 	Convert(topSection.get(), this, true);
 }
 
-void Json::Write(std::ostream *outStream) const
+void Json::Write(std::ostream *outStream, const Format &format) const
 {
-	AppendData(this, outStream, 0);
+	AppendData(this, outStream, 0, format);
+}
+
+void Json::Load(const std::string &string)
+{
+	std::stringstream stream{string};
+	Load(&stream);
+}
+
+std::string Json::Write(const Format &format) const
+{
+	std::stringstream stream;
+	Write(&stream, format);
+	return stream.str();
 }
 
 void Json::AddChildren(const Metadata *source, Metadata *destination)
@@ -154,13 +163,16 @@ void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSec
 	}
 }
 
-void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const bool &end)
+void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end)
 {
 	std::stringstream indents;
 
-	for (int32_t i{}; i < indentation; i++)
+	if (format != Format::Minified)
 	{
-		indents << "  ";
+		for (int32_t i{}; i < indentation; i++)
+		{
+			indents << "  ";
+		}
 	}
 
 	auto openBrace{'{'};
@@ -180,11 +192,11 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 
 	if (source->GetName().empty() && source->GetValue().empty())
 	{
-		*outStream << openBrace << '\n';
+		*outStream << openBrace;
 	}
 	else if (source->GetValue().empty())
 	{
-		*outStream << "\"" << source->GetName() << "\": " << openBrace << '\n';
+		*outStream << "\"" << source->GetName() << "\": " << openBrace;
 	}
 	else
 	{
@@ -201,7 +213,10 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 		{
 			*outStream << ", ";
 		}
+	}
 
+	if (format != Format::Minified)
+	{
 		*outStream << '\n';
 	}
 
@@ -214,25 +229,29 @@ void Json::AppendData(const Metadata *source, std::ostream *outStream, const int
 			*outStream << ", ";
 		}
 
-		*outStream << '\n';
+		if (format != Format::Minified)
+		{
+			*outStream << '\n';
+		}
 	}
 
 	for (const auto &child : source->GetChildren())
 	{
-		AppendData(child.get(), outStream, indentation + 1, child == source->GetChildren().back());
+		AppendData(child.get(), outStream, indentation + 1, format, child == source->GetChildren().back());
 	}
 
 	if (source->GetValue().empty())
 	{
-		*outStream << indents.str();
+		*outStream << indents.str() << closeBrace;
 
-		if (end || indentation == 0)
+		if (!(end || indentation == 0))
 		{
-			*outStream << closeBrace << '\n';
+			*outStream << ',';
 		}
-		else
+
+		if (format != Format::Minified)
 		{
-			*outStream << closeBrace << ",\n";
+			*outStream << '\n';
 		}
 	}
 }

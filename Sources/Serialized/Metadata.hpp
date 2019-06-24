@@ -12,11 +12,16 @@ class ACID_EXPORT Metadata :
 	public NonCopyable
 {
 public:
+	enum class Format
+	{
+		Beautified, Minified
+	};
+
 	explicit Metadata(const std::string &name = "", const std::string &value = "", std::map<std::string, std::string> attributes = {});
 
 	virtual void Load(std::istream *inStream);
 
-	virtual void Write(std::ostream *outStream) const;
+	virtual void Write(std::ostream *outStream, const Format &format = Format::Beautified) const;
 
 	std::unique_ptr<Metadata> Clone() const;
 
@@ -71,6 +76,8 @@ public:
 	void SetAttribute(const std::string &attribute, const std::string &value);
 
 	void RemoveAttribute(const std::string &attribute);
+
+	Metadata *operator[](const std::string &string) const;
 
 	bool operator==(const Metadata &other) const;
 

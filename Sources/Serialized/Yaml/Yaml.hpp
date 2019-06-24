@@ -35,7 +35,11 @@ public:
 
 	void Load(std::istream *inStream) override;
 
-	void Write(std::ostream *outStream) const override;
+	void Write(std::ostream *outStream, const Format &format = Format::Beautified) const override;
+
+	void Load(const std::string &string);
+
+	std::string Write(const Format &format = Format::Beautified) const;
 
 private:
 	static void AddChildren(const Metadata *source, Metadata *destination);

@@ -92,10 +92,29 @@ void Xml::Load(std::istream *inStream)
 	}
 }
 
-void Xml::Write(std::ostream *outStream) const
+void Xml::Write(std::ostream *outStream, const Format &format) const
 {
-	*outStream << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-	AppendData(this, outStream, 0);
+	*outStream << R"(<?xml version="1.0" encoding="utf-8"?>)";
+	
+	if (format != Format::Minified)
+	{
+		*outStream << '\n';
+	}
+
+	AppendData(this, outStream, 0, format);
+}
+
+void Xml::Load(const std::string &string)
+{
+	std::stringstream stream{string};
+	Load(&stream);
+}
+
+std::string Xml::Write(const Format &format) const
+{
+	std::stringstream stream;
+	Write(&stream, format);
+	return stream.str();
 }
 
 void Xml::AddChildren(const Metadata *source, Metadata *destination)
@@ -197,13 +216,16 @@ void Xml::Convert(const Node *source, Metadata *parent, const uint32_t &depth)
 	}
 }
 
-void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation)
+void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format)
 {
 	std::stringstream indents;
 
-	for (int32_t i{}; i < indentation; i++)
+	if (format != Format::Minified)
 	{
-		indents << "  ";
+		for (int32_t i{}; i < indentation; i++)
+		{
+			indents << "  ";
+		}
 	}
 
 	auto name{String::ReplaceAll(source->GetName(), " ", "_")};
@@ -222,11 +244,16 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 
 	if (source->GetName()[0] == '?')
 	{
-		*outStream << "<" << nameAndAttribs << "?>\n";
+		*outStream << "<" << nameAndAttribs << "?>";
+
+		if (format != Format::Minified)
+		{
+			*outStream << '\n';
+		}
 
 		for (const auto &child : source->GetChildren())
 		{
-			AppendData(child.get(), outStream, indentation);
+			AppendData(child.get(), outStream, indentation, format);
 		}
 
 		return;
@@ -234,7 +261,13 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 
 	if (source->GetChildren().empty() && source->GetValue().empty())
 	{
-		*outStream << "<" << nameAndAttribs << "/>\n";
+		*outStream << "<" << nameAndAttribs << "/>";
+
+		if (format != Format::Minified)
+		{
+			*outStream << '\n';
+		}
+
 		return;
 	}
 
@@ -242,16 +275,24 @@ void Xml::AppendData(const Metadata *source, std::ostream *outStream, const int3
 
 	if (!source->GetChildren().empty())
 	{
-		*outStream << '\n';
+		if (format != Format::Minified)
+		{
+			*outStream << '\n';
+		}
 
 		for (const auto &child : source->GetChildren())
 		{
-			AppendData(child.get(), outStream, indentation + 1);
+			AppendData(child.get(), outStream, indentation + 1, format);
 		}
 
 		*outStream << indents.str();
 	}
 
-	*outStream << "</" << name << ">\n";
+	*outStream << "</" << name << '>';
+
+	if (format != Format::Minified)
+	{
+		*outStream << '\n';
+	}
 }
 }
