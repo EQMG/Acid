@@ -138,12 +138,7 @@ public:
 
 int main(int argc, char **argv)
 {
-	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
-	jsonLoader.Load();
-	jsonLoader.SetFilename("Serial/Example2.json");
-	jsonLoader.Write();
-
-	/*{
+	{
 		auto source{R"({"message":"hello world","value":3})"};
 		Json json;
 		json.Load(source);
@@ -155,14 +150,14 @@ int main(int argc, char **argv)
 
 		Log::Out("%s\n", json.Write(Metadata::Format::Minified));
 		//Log::Out("%s\n", Xml{"source", &json}.Write(Metadata::Format::Minified));
-	}*/
+	}
 
-	/*test::Example1 example1;
+	test::Example1 example1;
 	Metadata metadata;
 	metadata << example1;
 
-	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();*/
-	/*File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
+	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();
+	File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
 	File{"Serial/Example1.yaml", std::make_unique<Yaml>(&metadata)}.Write();
 
 	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
@@ -172,7 +167,7 @@ int main(int argc, char **argv)
 	jsonLoader.Write();
 
 	test::Example1 example2;
-	*jsonLoader.GetMetadata() >> example2;*/
+	*jsonLoader.GetMetadata() >> example2;
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

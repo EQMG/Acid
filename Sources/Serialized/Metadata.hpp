@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Helpers/String.hpp"
 #include "Helpers/NonCopyable.hpp"
 
 namespace acid
@@ -15,11 +14,6 @@ public:
 	enum class Format
 	{
 		Beautified, Minified
-	};
-
-	enum class Type
-	{
-		String, Object, Array, Boolean, Number, Null, Unknown
 	};
 
 	Metadata() = default;
@@ -41,10 +35,6 @@ public:
 
 	template<typename T = std::string>
 	void SetValue(const T &value);
-
-	const Type &GetType() const { return m_type; }
-
-	void SetType(const Type &type) { m_type = type; }
 
 	const std::vector<std::unique_ptr<Metadata>> &GetChildren() const { return m_children; }
 
@@ -97,7 +87,6 @@ public:
 protected:
 	std::string m_name;
 	std::string m_value;
-	Type m_type{Type::Unknown};
 	std::vector<std::unique_ptr<Metadata>> m_children;
 	std::map<std::string, std::string> m_attributes;
 };

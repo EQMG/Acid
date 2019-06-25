@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helpers/ConstExpr.hpp"
+#include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
 #include "Metadata.hpp"
 

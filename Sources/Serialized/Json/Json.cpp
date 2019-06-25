@@ -10,218 +10,73 @@ Json::Json(Metadata *metadata)
 	AddChildren(metadata, this);
 }
 
-bool IsWhitespace(const char c)
-{
-	return std::string{" \n\r  "}.find(c) != std::string::npos;
-}
-
-int32_t NextWhitespace(const std::string &source, int32_t i)
-{
-	while (i < static_cast<int32_t>(source.length()))
-	{
-		if (source[i] == '"')
-		{
-			i++;
-			
-			while (i < static_cast<int32_t>(source.length()) && (source[i] != '"' || source[i - 1] == '\\'))
-			{
-				i++;
-			}
-		}
-
-		if (source[i] == '\'')
-		{
-			i++;
-			
-			while (i < static_cast<int32_t>(source.length()) && (source[i] != '\'' || source[i - 1] == '\\'))
-			{
-				i++;
-			}
-		}
-
-		if (IsWhitespace(source[i]))
-		{
-			return i;
-		}
-
-		i++;
-	}
-
-	return source.length();
-}
-
-int32_t SkipWhitespaces(const std::string &source, int32_t i)
-{
-	while (i < static_cast<int32_t>(source.length()))
-	{
-		if (!IsWhitespace(source[i]))
-		{
-			return i;
-		}
-
-		i++;
-	}
-
-	return -1;
-}
-
 void Json::Load(std::istream *inStream)
 {
 	ClearChildren();
 	ClearAttributes();
 
-	std::string tmp;
-	std::string source;
+	auto topSection{std::make_unique<Section>(nullptr, "", "")};
+	Section *currentSection{};
+	std::stringstream summation;
 
-	while (std::getline(*inStream, tmp))
+	std::size_t lineNum{};
+	std::string linebuf;
+
+	while (inStream->peek() != -1)
 	{
-		source += tmp;
-	}
+		Files::SafeGetLine(*inStream, linebuf);
+		lineNum++;
 
-	std::vector<std::pair<Token, std::string>> tokens;
-
-	source += " ";
-
-	auto index{SkipWhitespaces(source, 0)};
-	
-	while (index >= 0)
-	{
-		auto next{NextWhitespace(source, index)};
-		auto str{source.substr(index, next - index)};
-
-		size_t k{};
-
-		while (k < str.length())
+		for (const auto &c : linebuf)
 		{
-			if (str[k] == '"')
+			if (c == '{' || c == '[')
 			{
-				auto tmpK{k + 1};
-
-				while (tmpK < str.length() && (str[tmpK] != '"' || str[tmpK - 1] == '\\'))
+				if (currentSection == nullptr)
 				{
-					tmpK++;
+					currentSection = topSection.get();
+					continue;
 				}
 
-				tokens.emplace_back(Token::String, str.substr(k + 1, tmpK - k - 1));
-				k = tmpK + 1;
-				continue;
-			}
-			if (str[k] == '\'')
-			{
-				auto tmpK{k + 1};
+				std::string name;
 
-				while (tmpK < str.length() && (str[tmpK] != '\'' || str[tmpK - 1] == '\\'))
+				if (!summation.str().empty())
 				{
-					tmpK++;
+					auto contentSplit{String::Split(summation.str(), '\"')};
+
+					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
+					{
+						name = contentSplit.at(contentSplit.size() - 2);
+					}
 				}
 
-				tokens.emplace_back(Token::String, str.substr(k + 1, tmpK - k - 1));
-				k = tmpK + 1;
-				continue;
+				currentSection->m_content += summation.str();
+				summation.str({});
+
+				auto section{new Section(currentSection, name, "")};
+				currentSection->m_children.emplace_back(section);
+				currentSection = section;
 			}
-			if (str[k] == '-' || (str[k] <= '9' && str[k] >= '0'))
+			else if (c == '}' || c == ']')
 			{
-				auto tmpK{k};
+				currentSection->m_content += summation.str();
+				summation.str({});
 
-				if (str[tmpK] == '-')
+				if (currentSection->m_parent != nullptr)
 				{
-					tmpK++;
-				}
-
-				while (tmpK < str.size() && ((str[tmpK] <= '9' && str[tmpK] >= '0') || str[tmpK] == '.'))
-				{
-					tmpK++;
-				}
-
-				tokens.emplace_back(Token::Number, str.substr(k, tmpK - k));
-				k = tmpK;
-				continue;
-			}
-			/*static const std::vector<std::pair<std::string, Token>> MATCHES{std::pair("null", Token::Null),
-				std::pair("true", Token::Boolean), std::pair("false", Token::Boolean),
-				std::pair(",", Token::Comma), std::pair(":", Token::Colon),
-				std::pair("}", Token::CroushClose), std::pair("{", Token::CroushOpen),
-				std::pair("]", Token::BracketClose), std::pair("[", Token::BracketOpen)
-			};
-			bool matched{};
-			for (const auto &match : MATCHES)
-			{
-				if (str[k] == match.first[0] && k + match.first.size() - 1 < str.length() && str.substr(k, match.first.size()) == match.first)
-				{
-					tokens.emplace_back(match.second, match.first);
-					k += match.first.size();
-					matched = true;
-					break;
+					currentSection = currentSection->m_parent;
 				}
 			}
-			if (matched)
+			else if (c == '\n')
 			{
-				continue;
-			}*/
-			if (str[k] == 't' && k + 3 < str.length() && str.substr(k, 4) == "true")
-			{
-				tokens.emplace_back(Token::Boolean, "true");
-				k += 4;
-				continue;
 			}
-			if (str[k] == 'f' && k + 4 < str.length() && str.substr(k, 5) == "false")
+			else
 			{
-				tokens.emplace_back(Token::Boolean, "false");
-				k += 5;
-				continue;
+				summation << c;
 			}
-			if (str[k] == 'n' && k + 3 < str.length() && str.substr(k, 4) == "null")
-			{
-				tokens.emplace_back(Token::Null, "null");
-				k += 4;
-				continue;
-			}
-			if (str[k] == ',')
-			{
-				tokens.emplace_back(Token::Comma, ",");
-				k++;
-				continue;
-			}
-			if (str[k] == '}')
-			{
-				tokens.emplace_back(Token::CroushClose, "}");
-				k++;
-				continue;
-			}
-			if (str[k] == '{')
-			{
-				tokens.emplace_back(Token::CroushOpen, "{");
-				k++;
-				continue;
-			}
-			if (str[k] == ']')
-			{
-				tokens.emplace_back(Token::BracketClose, "]");
-				k++;
-				continue;
-			}
-			if (str[k] == '[')
-			{
-				tokens.emplace_back(Token::BracketOpen, "[");
-				k++;
-				continue;
-			}
-			if (str[k] == ':')
-			{
-				tokens.emplace_back(Token::Colon, ":");
-				k++;
-				continue;
-			}
-
-			tokens.emplace_back(Token::Unknown, str.substr(k));
-			k = str.length();
 		}
-
-		index = SkipWhitespaces(source, next);
 	}
 
-	int32_t k{};
-	Convert(this, tokens, 0, k);
+	Convert(topSection.get(), this, true);
 }
 
 void Json::Write(std::ostream *outStream, const Format &format) const
@@ -256,82 +111,56 @@ void Json::AddChildren(const Metadata *source, Metadata *destination)
 	}
 }
 
-Metadata *Json::Convert(Metadata *current, std::vector<std::pair<Token, std::string>> v, const int32_t &i, int32_t &r)
+void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
 {
-	if (v[i].first == Token::CroushOpen)
+	auto thisValue{parent};
+
+	if (!isTopSection)
 	{
-		auto k{i + 1};
+		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
+	}
 
-		while (v[k].first != Token::CroushClose)
+	auto contentSplit{String::Split(source->m_content, ',')};
+
+	for (const auto &data : contentSplit)
+	{
+		std::string name;
+		auto value{String::Trim(data)};
+
+		if (String::Contains(value, ":"))
 		{
-			auto key = v[k].second;
-			k += 2; // k+1 should be ':'
-			auto j{k};
-			auto vv{current->AddChild(std::make_unique<Metadata>(key))};
-			Convert(vv, v, k, j);
-			k = j;
-
-			if (v[k].first == Token::Comma)
-			{
-				k++;
-			}
+			name = String::Trim(value.substr(0, value.find(':')));
+			value = String::Trim(String::ReplaceFirst(value, name, ""));
+			value = String::Trim(value.erase(0, 1));
+			name = name.substr(1, name.size() - 2);
 		}
 
-		current->SetType(Type::Object);
-		r = k + 1;
-		return current;
-	}
-	if (v[i].first == Token::BracketOpen)
-	{
-		auto k{i + 1};
-
-		while (v[k].first != Token::BracketClose)
+		if (value.empty())
 		{
-			auto j{k};
-			auto vv{current->AddChild(std::make_unique<Metadata>())};
-			Convert(vv, v, k, j);
-			k = j;
-			
-			if (v[k].first == Token::Comma)
-			{
-				k++;
-			}
+			continue;
 		}
 
-		current->SetType(Type::Array);
-		r = k + 1;
-		return current;
-	}
-	if (v[i].first == Token::Number)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Number);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::String)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::String);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::Boolean)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Boolean);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::Null)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Null);
-		r = i + 1;
-		return current;
+		if (String::StartsWith(name, "_"))
+		{
+			name = name.erase(0, 1);
+
+			if (!value.empty())
+			{
+				value = value.substr(1, value.size() - 2);
+			}
+
+			thisValue->SetAttribute(name, value);
+		}
+		else
+		{
+			thisValue->AddChild(std::make_unique<Metadata>(name, value));
+		}
 	}
 
-	return nullptr;
+	for (const auto &child : source->m_children)
+	{
+		Convert(child.get(), thisValue, false);
+	}
 }
 
 void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end)
