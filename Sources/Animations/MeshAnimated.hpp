@@ -32,9 +32,9 @@ public:
 
 	StorageHandler &GetStorgeAnimation() { return m_storageAnimation; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated);
+	friend const Node &operator>>(const Node &node, MeshAnimated &meshAnimated);
 
-	friend Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated);
+	friend Node &operator<<(Node &node, const MeshAnimated &meshAnimated);
 
 	static constexpr uint32_t MaxJoints{50};
 	static constexpr uint32_t MaxWeights{3};

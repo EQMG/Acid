@@ -17,10 +17,10 @@ class ACID_EXPORT ImageCube :
 public:
 	/**
 	 * Creates a new cubemap image, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The cubemap image with the requested values.
 	 */
-	static std::shared_ptr<ImageCube> Create(const Metadata &metadata);
+	static std::shared_ptr<ImageCube> Create(const Node &node);
 
 	/**
 	 * Creates a new cubemap image.
@@ -137,9 +137,9 @@ public:
 
 	const VkFormat &GetFormat() const { return m_format; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, ImageCube &image);
+	friend const Node &operator>>(const Node &node, ImageCube &image);
 
-	friend Metadata &operator<<(Metadata &metadata, const ImageCube &image);
+	friend Node &operator<<(Node &node, const ImageCube &image);
 
 private:
 	void Load();

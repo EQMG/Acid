@@ -114,20 +114,20 @@ Transform &Transform::operator*=(const Transform &other)
 	return *this = Multiply(other);
 }
 
-const Metadata &operator>>(const Metadata &metadata, Transform &transform)
+const Node &operator>>(const Node &node, Transform &transform)
 {
-	metadata.GetChild("position", transform.m_position);
-	metadata.GetChild("rotation", transform.m_rotation);
-	metadata.GetChild("scale", transform.m_scale);
-	return metadata;
+	node["position"].Get( transform.m_position);
+	node["rotation"].Get( transform.m_rotation);
+	node["scale"].Get(transform.m_scale);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Transform &transform)
+Node &operator<<(Node &node, const Transform &transform)
 {
-	metadata.SetChild("position", transform.m_position);
-	metadata.SetChild("rotation", transform.m_rotation);
-	metadata.SetChild("scale", transform.m_scale);
-	return metadata;
+	node["position"].Set(transform.m_position);
+	node["rotation"].Set(transform.m_rotation);
+	node["scale"].Set(transform.m_scale);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Transform &transform)
@@ -151,7 +151,7 @@ const Transform *Transform::GetWorldTransform() const
 
 	if (m_worldTransform == nullptr)
 	{
-		m_worldTransform = new Transform();
+		m_worldTransform = new Transform{};
 	}
 
 	*m_worldTransform = *m_parent->GetWorldTransform() * *this;

@@ -41,17 +41,17 @@ void MaterialSkybox::PushDescriptors(DescriptorsHandler &descriptorSet)
 	descriptorSet.Push("samplerColour", m_image);
 }
 
-const Metadata &operator>>(const Metadata &metadata, MaterialSkybox &material)
+const Node &operator>>(const Node &node, MaterialSkybox &material)
 {
-	metadata.GetChild("image", material.m_image);
-	metadata.GetChild("baseColour", material.m_baseColour);
-	return metadata;
+	node["image"].Get(material.m_image);
+	node["baseColour"].Get(material.m_baseColour);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const MaterialSkybox &material)
+Node &operator<<(Node &node, const MaterialSkybox &material)
 {
-	metadata.SetChild("image", material.m_image);
-	metadata.SetChild("baseColour", material.m_baseColour);
-	return metadata;
+	node["image"].Set(material.m_image);
+	node["baseColour"].Set(material.m_baseColour);
+	return node;
 }
 }

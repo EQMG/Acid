@@ -53,13 +53,13 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return mesh->GetModel()->CmdRender(commandBuffer);
 }
 
-const Metadata &operator>>(const Metadata &metadata, ShadowRender &shadowRender)
+const Node &operator>>(const Node &node, ShadowRender &shadowRender)
 {
-	return metadata;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ShadowRender &shadowRender)
+Node &operator<<(Node &node, const ShadowRender &shadowRender)
 {
-	return metadata;
+	return node;
 }
 }

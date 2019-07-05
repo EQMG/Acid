@@ -26,24 +26,24 @@ std::string Fog::ToString() const
 	return stream.str();
 }
 
-const Metadata &operator>>(const Metadata &metadata, Fog &fog)
+const Node &operator>>(const Node &node, Fog &fog)
 {
-	metadata.GetChild("colour", fog.m_colour);
-	metadata.GetChild("density", fog.m_density);
-	metadata.GetChild("gradient", fog.m_gradient);
-	metadata.GetChild("lowerLimit", fog.m_lowerLimit);
-	metadata.GetChild("upperLimit", fog.m_upperLimit);
-	return metadata;
+	node["colour"].Get(fog.m_colour);
+	node["density"].Get(fog.m_density);
+	node["gradient"].Get(fog.m_gradient);
+	node["lowerLimit"].Get(fog.m_lowerLimit);
+	node["upperLimit"].Get(fog.m_upperLimit);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Fog &fog)
+Node &operator<<(Node &node, const Fog &fog)
 {
-	metadata.SetChild("colour", fog.m_colour);
-	metadata.SetChild("density", fog.m_density);
-	metadata.SetChild("gradient", fog.m_gradient);
-	metadata.SetChild("lowerLimit", fog.m_lowerLimit);
-	metadata.SetChild("upperLimit", fog.m_upperLimit);
-	return metadata;
+	node["colour"].Set(fog.m_colour);
+	node["density"].Set(fog.m_density);
+	node["gradient"].Set(fog.m_gradient);
+	node["lowerLimit"].Set(fog.m_lowerLimit);
+	node["upperLimit"].Set(fog.m_upperLimit);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Fog &fog)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Maths.hpp"
 #include "Vector4.hpp"
 
@@ -354,23 +354,23 @@ constexpr Vector4<T> &Vector4<T>::operator/=(const T &other)
 }
 
 template<typename K>
-const Metadata &operator>>(const Metadata &metadata, Vector4<K> &vector)
+const Node &operator>>(const Node &node, Vector4<K> &vector)
 {
-	metadata.GetChild("x", vector.m_x);
-	metadata.GetChild("y", vector.m_y);
-	metadata.GetChild("z", vector.m_z);
-	metadata.GetChild("w", vector.m_w);
-	return metadata;
+	node["x"].Get(vector.m_x);
+	node["y"].Get(vector.m_y);
+	node["z"].Get(vector.m_z);
+	node["w"].Get(vector.m_w);
+	return node;
 }
 
 template<typename K>
-Metadata &operator<<(Metadata &metadata, const Vector4<K> &vector)
+Node &operator<<(Node &node, const Vector4<K> &vector)
 {
-	metadata.SetChild("x", vector.m_x);
-	metadata.SetChild("y", vector.m_y);
-	metadata.SetChild("z", vector.m_z);
-	metadata.SetChild("w", vector.m_w);
-	return metadata;
+	node["x"].Set(vector.m_x);
+	node["y"].Set(vector.m_y);
+	node["z"].Set(vector.m_z);
+	node["w"].Set(vector.m_w);
+	return node;
 }
 
 template<typename K>

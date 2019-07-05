@@ -31,9 +31,9 @@ public:
 	 **/
 	const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, Animation &animation);
+	friend const Node &operator>>(const Node &node, Animation &animation);
 
-	friend Metadata &operator<<(Metadata &metadata, const Animation &animation);
+	friend Node &operator<<(Node &node, const Animation &animation);
 
 private:
 	Time m_length;

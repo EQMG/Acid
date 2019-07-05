@@ -24,9 +24,9 @@ public:
 
 	void SetAxis(const Vector3f &axis) { m_axis = axis; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, EmitterLine &emitter);
+	friend const Node &operator>>(const Node &node, EmitterLine &emitter);
 
-	friend Metadata &operator<<(Metadata &metadata, const EmitterLine &emitter);
+	friend Node &operator<<(Node &node, const EmitterLine &emitter);
 
 private:
 	float m_length;

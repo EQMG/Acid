@@ -60,17 +60,17 @@ void SkyboxCycle::Update()
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, SkyboxCycle &skyboxCycle)
+const Node &operator>>(const Node &node, SkyboxCycle &skyboxCycle)
 {
-	metadata.GetChild("enableFog", skyboxCycle.m_enableFog);
-	metadata.GetChild("enableRotation", skyboxCycle.m_enableRotation);
-	return metadata;
+	node["enableFog"].Get(skyboxCycle.m_enableFog);
+	node["enableRotation"].Get(skyboxCycle.m_enableRotation);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const SkyboxCycle &skyboxCycle)
+Node &operator<<(Node &node, const SkyboxCycle &skyboxCycle)
 {
-	metadata.SetChild("enableFog", skyboxCycle.m_enableFog);
-	metadata.SetChild("enableRotation", skyboxCycle.m_enableRotation);
-	return metadata;
+	node["enableFog"].Set(skyboxCycle.m_enableFog);
+	node["enableRotation"].Set(skyboxCycle.m_enableRotation);
+	return node;
 }
 }

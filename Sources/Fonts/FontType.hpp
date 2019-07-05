@@ -46,10 +46,10 @@ public:
 
 	/**
 	 * Creates a new font type, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The font type with the requested values.
 	 */
-	static std::shared_ptr<FontType> Create(const Metadata &metadata);
+	static std::shared_ptr<FontType> Create(const Node &node);
 
 	/**
 	 * Creates a new font type, or finds one with the same values.
@@ -73,11 +73,11 @@ public:
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 
-	const FontMetafile *GetMetadata() const { return m_metadata.get(); }
+	const FontMetafile *GetNode() const { return m_node.get(); }
 
-	friend const Metadata &operator>>(const Metadata &metadata, FontType &fontType);
+	friend const Node &operator>>(const Node &node, FontType &fontType);
 
-	friend Metadata &operator<<(Metadata &metadata, const FontType &fontType);
+	friend Node &operator<<(Node &node, const FontType &fontType);
 
 private:
 	struct CellInfo
@@ -122,7 +122,7 @@ private:
 	uint32_t m_glyphPointsOffset{};
 
 	std::shared_ptr<Image2d> m_image;
-	std::unique_ptr<FontMetafile> m_metadata;
+	std::unique_ptr<FontMetafile> m_node;
 
 	DescriptorsHandler m_descriptorSet;
 	std::unique_ptr<StorageBuffer> m_storageGlyphs;

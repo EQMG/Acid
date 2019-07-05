@@ -1,6 +1,6 @@
 #include "MaterialDefault.hpp"
 
-#include "Animations/MeshAnimated.hpp"
+//#include "Animations/MeshAnimated.hpp"
 #include "Engine/Log.hpp"
 #include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
@@ -25,16 +25,16 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 void MaterialDefault::Start()
 {
 	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
-	auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
+	//auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
 
-	if (mesh == nullptr && meshAnimated == nullptr)
+	if (mesh == nullptr) // && meshAnimated == nullptr
 	{
 		Log::Error("Cannot have a material attached to a object without a mesh!\n");
 		return;
 	}
 
-	m_animated = meshAnimated != nullptr;
-	auto vertexInput{m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput()};
+	m_animated = false; //  meshAnimated != nullptr;
+	auto vertexInput{Mesh::GetVertexInput()}; // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() };
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
 }
@@ -59,11 +59,11 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 
 void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
-	if (m_animated)
+	/*if (m_animated)
 	{
 		auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
 		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
-	}
+	}*/
 
 	descriptorSet.Push("samplerDiffuse", m_imageDiffuse);
 	descriptorSet.Push("samplerMaterial", m_imageMaterial);
@@ -72,45 +72,41 @@ void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 
 std::vector<Shader::Define> MaterialDefault::GetDefines() const
 {
-	std::vector<Shader::Define> defines;
-	defines.emplace_back("DIFFUSE_MAPPING", String::To<int32_t>(m_imageDiffuse != nullptr));
-	defines.emplace_back("MATERIAL_MAPPING", String::To<int32_t>(m_imageMaterial != nullptr));
-	defines.emplace_back("NORMAL_MAPPING", String::To<int32_t>(m_imageNormal != nullptr));
-	defines.emplace_back("ANIMATED", String::To<int32_t>(m_animated));
-	defines.emplace_back("MAX_JOINTS", String::To(MeshAnimated::MaxJoints));
-	defines.emplace_back("MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights));
-	return defines;
+	return {
+		{"DIFFUSE_MAPPING", String::To<int32_t>(m_imageDiffuse != nullptr)},
+		{"MATERIAL_MAPPING", String::To<int32_t>(m_imageMaterial != nullptr)},
+		{"NORMAL_MAPPING", String::To<int32_t>(m_imageNormal != nullptr)},
+		{"ANIMATED", String::To<int32_t>(m_animated)}
+		//{"MAX_JOINTS", String::To(MeshAnimated::MaxJoints)},
+		//{"MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights)}
+	};
 }
 
-const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material)
+const Node &operator>>(const Node &node, MaterialDefault &material)
 {
-	metadata.GetChild("baseDiffuse", material.m_baseDiffuse);
-	metadata.GetChild("imageDiffuse", material.m_imageDiffuse);
-
-	metadata.GetChild("metallic", material.m_metallic);
-	metadata.GetChild("roughness", material.m_roughness);
-	metadata.GetChild("imageMaterial", material.m_imageMaterial);
-	metadata.GetChild("imageNormal", material.m_imageNormal);
-
-	metadata.GetChild("castsShadows", material.m_castsShadows);
-	metadata.GetChild("ignoreLighting", material.m_ignoreLighting);
-	metadata.GetChild("ignoreFog", material.m_ignoreFog);
-	return metadata;
+	node["baseDiffuse"].Get(material.m_baseDiffuse);
+	node["imageDiffuse"].Get(material.m_imageDiffuse);
+	node["metallic"].Get(material.m_metallic);
+	node["roughness"].Get(material.m_roughness);
+	node["imageMaterial"].Get(material.m_imageMaterial);
+	node["imageNormal"].Get(material.m_imageNormal);
+	node["castsShadows"].Get(material.m_castsShadows);
+	node["ignoreLighting"].Get(material.m_ignoreLighting);
+	node["ignoreFog"].Get(material.m_ignoreFog);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const MaterialDefault &material)
+Node &operator<<(Node &node, const MaterialDefault &material)
 {
-	metadata.SetChild("baseDiffuse", material.m_baseDiffuse);
-	metadata.SetChild("imageDiffuse", material.m_imageDiffuse);
-
-	metadata.SetChild("metallic", material.m_metallic);
-	metadata.SetChild("roughness", material.m_roughness);
-	metadata.SetChild("imageMaterial", material.m_imageMaterial);
-	metadata.SetChild("imageNormal", material.m_imageNormal);
-
-	metadata.SetChild("castsShadows", material.m_castsShadows);
-	metadata.SetChild("ignoreLighting", material.m_ignoreLighting);
-	metadata.SetChild("ignoreFog", material.m_ignoreFog);
-	return metadata;
+	node["baseDiffuse"].Set(material.m_baseDiffuse);
+	node["imageDiffuse"].Set(material.m_imageDiffuse);
+	node["metallic"].Set(material.m_metallic);
+	node["roughness"].Set(material.m_roughness);
+	node["imageMaterial"].Set(material.m_imageMaterial);
+	node["imageNormal"].Set(material.m_imageNormal);
+	node["castsShadows"].Set(material.m_castsShadows);
+	node["ignoreLighting"].Set(material.m_ignoreLighting);
+	node["ignoreFog"].Set(material.m_ignoreFog);
+	return node;
 }
 }

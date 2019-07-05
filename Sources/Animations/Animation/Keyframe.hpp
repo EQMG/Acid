@@ -42,9 +42,9 @@ public:
 	 **/
 	const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, Keyframe &keyframe);
+	friend const Node &operator>>(const Node &node, Keyframe &keyframe);
 
-	friend Metadata &operator<<(Metadata &metadata, const Keyframe &keyframe);
+	friend Node &operator<<(Node &node, const Keyframe &keyframe);
 
 private:
 	Time m_timeStamp;

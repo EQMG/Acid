@@ -190,7 +190,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	auto maxLength{m_lastSize.m_x};
 
 	std::vector<Line> lines;
-	Line currentLine{m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+	Line currentLine{m_fontType->GetNode()->GetSpaceWidth(), maxLength};
 	Word currentWord;
 
 	auto formattedText{String::ReplaceAll(m_string, "\t", "	")};
@@ -212,7 +212,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 				if (!currentLine.AddWord(currentWord))
 				{
 					lines.emplace_back(currentLine);
-					currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+					currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
 					currentLine.AddWord(currentWord);
 				}
 
@@ -220,7 +220,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 				continue;
 			}
 
-			if (auto character{m_fontType->GetMetadata()->GetCharacter(ascii)}; character)
+			if (auto character{m_fontType->GetNode()->GetCharacter(ascii)}; character)
 			{
 				currentWord.AddCharacter(*character, m_kerning);
 			}
@@ -230,7 +230,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 		{
 			auto wordAdded{currentLine.AddWord(currentWord)};
 			lines.emplace_back(currentLine);
-			currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+			currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
 
 			if (!wordAdded)
 			{
@@ -252,7 +252,7 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 	if (!added)
 	{
 		lines.emplace_back(currentLine);
-		currentLine = {m_fontType->GetMetadata()->GetSpaceWidth(), maxLength};
+		currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
 		currentLine.AddWord(currentWord);
 	}
 
@@ -300,7 +300,7 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 			}
 			else
 			{
-				cursorX += m_fontType->GetMetadata()->GetSpaceWidth();
+				cursorX += m_fontType->GetNode()->GetSpaceWidth();
 			}
 		}
 

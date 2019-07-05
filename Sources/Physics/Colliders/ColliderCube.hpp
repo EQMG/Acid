@@ -24,9 +24,9 @@ public:
 
 	void SetExtents(const Vector3f &extents);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ColliderCube &collider);
+	friend const Node &operator>>(const Node &node, ColliderCube &collider);
 
-	friend Metadata &operator<<(Metadata &metadata, const ColliderCube &collider);
+	friend Node &operator<<(Node &node, const ColliderCube &collider);
 
 private:
 	std::unique_ptr<btBoxShape> m_shape;

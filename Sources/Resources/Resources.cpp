@@ -24,18 +24,18 @@ void Resources::Update()
 	}
 }
 
-std::shared_ptr<Resource> Resources::Find(const Metadata &metadata) const
+std::shared_ptr<Resource> Resources::Find(const Node &node) const
 {
 	for (const auto &[key, resource] : m_resources)
 	{
-		if (*key == metadata)
+		if (key == node)
 		{
 			return resource;
 		}
 	}
 
 	return nullptr;
-	/*auto it{m_resources.find(metadata)};
+	/*auto it{m_resources.find(node)};
 
 	if (it == m_resources.end())
 	{
@@ -45,14 +45,14 @@ std::shared_ptr<Resource> Resources::Find(const Metadata &metadata) const
 	return it->second;*/
 }
 
-void Resources::Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource)
+void Resources::Add(const Node &node, const std::shared_ptr<Resource> &resource)
 {
-	if (Find(metadata) != nullptr)
+	if (Find(node) != nullptr)
 	{
 		return;
 	}
 
-	m_resources.emplace(metadata.Clone(), resource);
+	m_resources.emplace(node, resource);
 }
 
 void Resources::Remove(const std::shared_ptr<Resource> &resource)

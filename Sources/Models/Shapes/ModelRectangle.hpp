@@ -13,10 +13,10 @@ class ACID_EXPORT ModelRectangle :
 public:
 	/**
 	 * Creates a new rectangle model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The rectangle model with the requested values.
 	 */
-	static std::shared_ptr<ModelRectangle> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelRectangle> Create(const Node &node);
 
 	/**
 	 * Creates a new rectangle model, or finds one with the same values.
@@ -34,9 +34,9 @@ public:
 	 */
 	explicit ModelRectangle(const float &min = 0.0f, const float &max = 1.0f, const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model);
+	friend const Node &operator>>(const Node &node, ModelRectangle &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelRectangle &model);
+	friend Node &operator<<(Node &node, const ModelRectangle &model);
 
 private:
 	void Load();

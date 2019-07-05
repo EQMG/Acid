@@ -35,15 +35,15 @@ Vector3f EmitterSphere::GeneratePosition() const
 	return m_radius * distance * RandomUnitVector();
 }
 
-const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter)
+const Node &operator>>(const Node &node, EmitterSphere &emitter)
 {
-	metadata.GetChild("radius", emitter.m_radius);
-	return metadata;
+	node["radius"].Get(emitter.m_radius);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter)
+Node &operator<<(Node &node, const EmitterSphere &emitter)
 {
-	metadata.SetChild("radius", emitter.m_radius);
-	return metadata;
+	node["radius"].Set(emitter.m_radius);
+	return node;
 }
 }

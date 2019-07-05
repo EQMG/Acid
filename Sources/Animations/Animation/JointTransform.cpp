@@ -31,17 +31,17 @@ Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end,
 	return start + (end - start) * progression;
 }
 
-const Metadata &operator>>(const Metadata &metadata, JointTransform &jointTransform)
+const Node &operator>>(const Node &node, JointTransform &jointTransform)
 {
-	metadata.GetChild("position", jointTransform.m_position);
-	metadata.GetChild("rotation", jointTransform.m_rotation);
-	return metadata;
+	node.GetChild("position", jointTransform.m_position);
+	node.GetChild("rotation", jointTransform.m_rotation);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const JointTransform &jointTransform)
+Node &operator<<(Node &node, const JointTransform &jointTransform)
 {
-	metadata.SetChild("position", jointTransform.m_position);
-	metadata.SetChild("rotation", jointTransform.m_rotation);
-	return metadata;
+	node.SetChild("position", jointTransform.m_position);
+	node.SetChild("rotation", jointTransform.m_rotation);
+	return node;
 }
 }

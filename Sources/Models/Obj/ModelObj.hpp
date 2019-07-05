@@ -13,10 +13,10 @@ class ACID_EXPORT ModelObj :
 public:
 	/**
 	 * Creates a new OBJ model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The OBJ model with the requested values.
 	 */
-	static std::shared_ptr<ModelObj> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelObj> Create(const Node &node);
 
 	/**
 	 * Creates a new OBJ model, or finds one with the same values.
@@ -32,9 +32,9 @@ public:
 	 */
 	explicit ModelObj(std::filesystem::path filename, const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelObj &model);
+	friend const Node &operator>>(const Node &node, ModelObj &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelObj &model);
+	friend Node &operator<<(Node &node, const ModelObj &model);
 
 private:
 	void Load();

@@ -32,9 +32,9 @@ public:
 
 	void SetRadius(const float &radius) { m_radius = radius; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, Light &light);
+	friend const Node &operator>>(const Node &node, Light &light);
 
-	friend Metadata &operator<<(Metadata &metadata, const Light &light);
+	friend Node &operator<<(Node &node, const Light &light);
 
 private:
 	Colour m_colour;

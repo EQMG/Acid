@@ -24,15 +24,15 @@ void HeightDespawn::Update()
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, HeightDespawn &heightDespawn)
+const Node &operator>>(const Node &node, HeightDespawn &heightDespawn)
 {
-	metadata.GetChild("removeHeight", heightDespawn.m_removeHeight);
-	return metadata;
+	node["removeHeight"].Get(heightDespawn.m_removeHeight);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const HeightDespawn &heightDespawn)
+Node &operator<<(Node &node, const HeightDespawn &heightDespawn)
 {
-	metadata.SetChild("removeHeight", heightDespawn.m_removeHeight);
-	return metadata;
+	node["removeHeight"].Set(heightDespawn.m_removeHeight);
+	return node;
 }
 }

@@ -30,24 +30,24 @@ public:
 		return !(*this == other);
 	}
 
-	friend const Metadata &operator>>(const Metadata &metadata, VertexAnimated &vertexAnimated)
+	friend const Node &operator>>(const Node &node, VertexAnimated &vertexAnimated)
 	{
-		metadata.GetChild("position", vertexAnimated.m_position);
-		metadata.GetChild("uv", vertexAnimated.m_uv);
-		metadata.GetChild("normal", vertexAnimated.m_normal);
-		metadata.GetChild("jointId", vertexAnimated.m_jointId);
-		metadata.GetChild("vertexWeight", vertexAnimated.m_vertexWeight);
-		return metadata;
+		node["position"].Get(vertexAnimated.m_position);
+		node["uv"].Get(vertexAnimated.m_uv);
+		node["normal"].Get(vertexAnimated.m_normal);
+		node["jointId"].Get(vertexAnimated.m_jointId);
+		node["vertexWeight"].Get(vertexAnimated.m_vertexWeight);
+		return node;
 	}
 
-	friend Metadata &operator<<(Metadata &metadata, const VertexAnimated &vertexAnimated)
+	friend Node &operator<<(Node &node, const VertexAnimated &vertexAnimated)
 	{
-		metadata.SetChild("position", vertexAnimated.m_position);
-		metadata.SetChild("uv", vertexAnimated.m_uv);
-		metadata.SetChild("normal", vertexAnimated.m_normal);
-		metadata.SetChild("jointId", vertexAnimated.m_jointId);
-		metadata.SetChild("vertexWeight", vertexAnimated.m_vertexWeight);
-		return metadata;
+		node["position"].Set(vertexAnimated.m_position);
+		node["uv"].Set(vertexAnimated.m_uv);
+		node["normal"].Set(vertexAnimated.m_normal);
+		node["jointId"].Set(vertexAnimated.m_jointId);
+		node["vertexWeight"].Set(vertexAnimated.m_vertexWeight);
+		return node;
 	}
 
 	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)

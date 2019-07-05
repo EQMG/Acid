@@ -5,9 +5,9 @@
 
 namespace acid
 {
-File::File(std::filesystem::path filename, std::unique_ptr<Metadata> &&metadata) :
+File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
 	m_filename{std::move(filename)},
-	m_metadata{std::move(metadata)}
+	m_node{std::move(node)}
 {
 }
 
@@ -20,12 +20,12 @@ void File::Load()
 	if (Files::ExistsInPath(m_filename))
 	{
 		IFStream inStream{m_filename};
-		m_metadata->Load(&inStream);
+		m_node->Load(inStream);
 	}
 	else if (std::filesystem::exists(m_filename))
 	{
 		std::ifstream inStream{m_filename};
-		m_metadata->Load(&inStream);
+		m_node->Load(inStream);
 		inStream.close();
 	}
 
@@ -44,7 +44,7 @@ void File::Write() const
 	if (Files::ExistsInPath(m_filename))
 	{
 		OFStream os{m_filename};
-		m_metadata->Write(&os);
+		m_node->Write(os);
 	}
 	else // if (std::filesystem::exists(m_filename))
 	{
@@ -54,7 +54,7 @@ void File::Write() const
 		}
 
 		std::ofstream os{m_filename};
-		m_metadata->Write(&os);
+		m_node->Write(os);
 		os.close();
 	}
 
@@ -66,6 +66,6 @@ void File::Write() const
 
 void File::Clear()
 {
-	m_metadata->ClearChildren();
+	m_node->ClearProperties();
 }
 }

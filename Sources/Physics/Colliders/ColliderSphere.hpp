@@ -24,9 +24,9 @@ public:
 
 	void SetRadius(const float &radius);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ColliderSphere &collider);
+	friend const Node &operator>>(const Node &node, ColliderSphere &collider);
 
-	friend Metadata &operator<<(Metadata &metadata, const ColliderSphere &collider);
+	friend Node &operator<<(Node &node, const ColliderSphere &collider);
 
 private:
 	std::unique_ptr<btSphereShape> m_shape;

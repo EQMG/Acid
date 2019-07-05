@@ -40,15 +40,15 @@ void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int3
 	m_shape = std::make_unique<btHeightfieldTerrainShape>(heightStickWidth, heightStickLength, heightfieldData, 1.0f, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 }
 
-const Metadata &operator>>(const Metadata &metadata, ColliderHeightfield &collider)
+const Node &operator>>(const Node &node, ColliderHeightfield &collider)
 {
-	metadata.GetChild("localTransform", collider.m_localTransform);
-	return metadata;
+	node["localTransform"].Get(collider.m_localTransform);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ColliderHeightfield &collider)
+Node &operator<<(Node &node, const ColliderHeightfield &collider)
 {
-	metadata.SetChild("localTransform", collider.m_localTransform);
-	return metadata;
+	node["localTransform"].Set(collider.m_localTransform);
+	return node;
 }
 }

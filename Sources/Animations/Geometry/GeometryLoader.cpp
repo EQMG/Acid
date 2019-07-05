@@ -4,7 +4,7 @@
 
 namespace acid
 {
-GeometryLoader::GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
+GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
 	m_meshData{libraryGeometries->FindChild("geometry")->FindChild("mesh")},
 	m_vertexWeights{std::move(vertexWeights)},
 	m_correction{correction}

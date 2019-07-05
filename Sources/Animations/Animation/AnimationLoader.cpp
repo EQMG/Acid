@@ -4,7 +4,7 @@
 
 namespace acid
 {
-AnimationLoader::AnimationLoader(const Metadata *libraryAnimations, const Metadata *libraryVisualScenes, const Matrix4 &correction) :
+AnimationLoader::AnimationLoader(const Node *libraryAnimations, const Node *libraryVisualScenes, const Matrix4 &correction) :
 	m_libraryAnimations{libraryAnimations},
 	m_libraryVisualScenes{libraryVisualScenes},
 	m_correction{correction}
@@ -52,7 +52,7 @@ void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 	}
 }
 
-void AnimationLoader::LoadJointTransforms(const Metadata *jointData, const std::string &rootNodeId)
+void AnimationLoader::LoadJointTransforms(const Node *jointData, const std::string &rootNodeId)
 {
 	auto jointNameId{GetJointName(jointData)};
 	auto dataId{GetDataId(jointData)};
@@ -64,13 +64,13 @@ void AnimationLoader::LoadJointTransforms(const Metadata *jointData, const std::
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }
 
-std::string AnimationLoader::GetDataId(const Metadata *jointData)
+std::string AnimationLoader::GetDataId(const Node *jointData)
 {
 	auto node{jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT")};
 	return node->FindAttribute("source")->substr(1);
 }
 
-std::string AnimationLoader::GetJointName(const Metadata *jointData)
+std::string AnimationLoader::GetJointName(const Node *jointData)
 {
 	auto channelNode{jointData->FindChild("channel")};
 	auto data{channelNode->FindAttribute("target")};

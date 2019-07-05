@@ -28,32 +28,32 @@ void MeshAnimated::Start()
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
 	static const auto Correction{Matrix4{}.Rotate(Maths::Radians(-90.0f), Vector3f::Right)};
 
-	SkinLoader skinLoader{file.GetMetadata()->FindChild("library_controllers"), MaxWeights};
-	SkeletonLoader skeletonLoader{file.GetMetadata()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction};
-	GeometryLoader geometryLoader{file.GetMetadata()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), Correction};
+	SkinLoader skinLoader{file.GetNode()->FindChild("library_controllers"), MaxWeights};
+	SkeletonLoader skeletonLoader{file.GetNode()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction};
+	GeometryLoader geometryLoader{file.GetNode()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), Correction};
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint = skeletonLoader.GetHeadJoint();
 
-	AnimationLoader animationLoader{file.GetMetadata()->FindChild("library_animations"), file.GetMetadata()->FindChild("library_visual_scenes"), Correction};
+	AnimationLoader animationLoader{file.GetNode()->FindChild("library_animations"), file.GetNode()->FindChild("library_visual_scenes"), Correction};
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator.DoAnimation(m_animation.get());
 
 	/*{
 		File fileModel{"Animation/Model.json", std::make_unique<Json>()};
-		fileModel.GetMetadata()->SetChild("vertices", m_model->GetVertices<VertexAnimated>());
-		fileModel.GetMetadata()->SetChild("indices", m_model->GetIndices());
+		fileModel.GetNode()->SetChild("vertices", m_model->GetVertices<VertexAnimated>());
+		fileModel.GetNode()->SetChild("indices", m_model->GetIndices());
 		fileModel.Write();
 	}
 	{
 		File fileJoints{"Animation/Joints.json", std::make_unique<Json>()};
-		*fileJoints.GetMetadata() << m_headJoint;
+		*fileJoints.GetNode() << m_headJoint;
 		fileJoints.Write();
 	}
 	{
 		File fileAnimation0{"Animation/Animation0.json", std::make_unique<Json>()};
-		*fileAnimation0.GetMetadata() << *m_animation;
+		*fileAnimation0.GetNode() << *m_animation;
 		fileAnimation0.Write();
 	}*/
 }
@@ -65,15 +65,15 @@ void MeshAnimated::Update()
 	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 }
 
-const Metadata &operator>>(const Metadata &metadata, MeshAnimated &meshAnimated)
+const Node &operator>>(const Node &node, MeshAnimated &meshAnimated)
 {
-	metadata.GetChild("filename", meshAnimated.m_filename);
-	return metadata;
+	node["filename"].Get(meshAnimated.m_filename);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const MeshAnimated &meshAnimated)
+Node &operator<<(Node &node, const MeshAnimated &meshAnimated)
 {
-	metadata.SetChild("filename", meshAnimated.m_filename);
-	return metadata;
+	node["filename"].Set(meshAnimated.m_filename);
+	return node;
 }
 }

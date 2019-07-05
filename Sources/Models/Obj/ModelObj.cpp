@@ -47,9 +47,9 @@ private:
 	std::filesystem::path m_folder;
 };
 
-std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
+std::shared_ptr<ModelObj> ModelObj::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -57,8 +57,8 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelObj>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -66,9 +66,9 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Metadata &metadata)
 std::shared_ptr<ModelObj> ModelObj::Create(const std::filesystem::path &filename)
 {
 	ModelObj temp{filename, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelObj::ModelObj(std::filesystem::path filename, const bool &load) :
@@ -80,17 +80,17 @@ ModelObj::ModelObj(std::filesystem::path filename, const bool &load) :
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelObj &model)
+const Node &operator>>(const Node &node, ModelObj &model)
 {
-	metadata.GetChild("filename", model.m_filename);
-	return metadata;
+	node["filename"].Get(model.m_filename);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelObj &model)
+Node &operator<<(Node &node, const ModelObj &model)
 {
-	metadata.SetChild<std::string>("type", "ModelObj");
-	metadata.SetChild("filename", model.m_filename);
-	return metadata;
+	node["type"].Set("ModelObj");
+	node["filename"].Set(model.m_filename);
+	return node;
 }
 
 void ModelObj::Load()

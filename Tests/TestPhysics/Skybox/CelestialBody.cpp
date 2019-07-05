@@ -75,15 +75,15 @@ void CelestialBody::Update()
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody)
+const Node &operator>>(const Node &node, CelestialBody &celestialBody)
 {
-	metadata.GetChild("type", celestialBody.m_type);
-	return metadata;
+	node["type"].Get(celestialBody.m_type);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody)
+Node &operator<<(Node &node, const CelestialBody &celestialBody)
 {
-	metadata.SetChild("type", celestialBody.m_type);
-	return metadata;
+	node["type"].Set(celestialBody.m_type);
+	return node;
 }
 }

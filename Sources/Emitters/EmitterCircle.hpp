@@ -24,9 +24,9 @@ public:
 
 	void SetHeading(const Vector3f &heading) { m_heading = heading; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, EmitterCircle &emitter);
+	friend const Node &operator>>(const Node &node, EmitterCircle &emitter);
 
-	friend Metadata &operator<<(Metadata &metadata, const EmitterCircle &emitter);
+	friend Node &operator<<(Node &node, const EmitterCircle &emitter);
 
 private:
 	float m_radius;

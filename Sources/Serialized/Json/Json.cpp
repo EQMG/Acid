@@ -1,261 +1,247 @@
 #include "Json.hpp"
 
-#include "Files/Files.hpp"
 #include "Helpers/String.hpp"
+
+// TODO: Fix loading and writing chars like /n, /", ... \"http://google.com\"
 
 namespace acid
 {
-Json::Json(Metadata *metadata)
+Json::Json(const Node &node) :
+	Node{node}
 {
-	AddChildren(metadata, this);
+	SetType(Type::Object);
 }
 
-void Json::Load(std::istream *inStream)
+void Json::Load(std::istream &stream)
 {
-	ClearChildren();
-	ClearAttributes();
+	std::vector<std::pair<Type, std::string>> tokens;
 
-	auto topSection{std::make_unique<Section>(nullptr, "", "")};
-	Section *currentSection{};
-	std::stringstream summation;
+	std::stringstream current;
+	bool inString{};
 
-	std::size_t lineNum{};
-	std::string linebuf;
-
-	while (inStream->peek() != -1)
+	// Read stream until end of file.
+	while (!stream.eof())
 	{
-		Files::SafeGetLine(*inStream, linebuf);
-		lineNum++;
+		char c;
+		stream.get(c);
 
-		for (const auto &c : linebuf)
+		// On start of string switch in/out of stream space and ignore this char.
+		if (c == '"' || c == '\'')
+		{			 
+			inString ^= 1;
+			continue;
+		}
+
+		// When not reading a string tokens can be found.
+		if (!inString)
 		{
-			if (c == '{' || c == '[')
+			// Tokens used to read json nodes.
+			if (std::string{":{},[]"}.find(c) != std::string::npos)
 			{
-				if (currentSection == nullptr)
-				{
-					currentSection = topSection.get();
-					continue;
-				}
-
-				std::string name;
-
-				if (!summation.str().empty())
-				{
-					auto contentSplit{String::Split(summation.str(), '\"')};
-
-					if (static_cast<int32_t>(contentSplit.size()) - 2 >= 0)
-					{
-						name = contentSplit.at(contentSplit.size() - 2);
-					}
-				}
-
-				currentSection->m_content += summation.str();
-				summation.str({});
-
-				auto section{new Section(currentSection, name, "")};
-				currentSection->m_children.emplace_back(section);
-				currentSection = section;
+				AddToken(tokens, current);
+				tokens.emplace_back(Type::Unknown, std::string{c});
+				continue;
 			}
-			else if (c == '}' || c == ']')
-			{
-				currentSection->m_content += summation.str();
-				summation.str({});
 
-				if (currentSection->m_parent != nullptr)
-				{
-					currentSection = currentSection->m_parent;
-				}
-			}
-			else if (c == '\n')
+			// On whitespace save current as a string.
+			if (String::IsWhitespace(c))
 			{
-			}
-			else
-			{
-				summation << c;
+				AddToken(tokens, current);
+				continue;
 			}
 		}
+
+		// Add this char to the current builder stream.
+		current << c;
 	}
 
-	Convert(topSection.get(), this, true);
+	// Converts the list of tokens into nodes.
+	int32_t k{};
+	Convert(*this, tokens, 0, k);
 }
 
-void Json::Write(std::ostream *outStream, const Format &format) const
+void Json::Write(std::ostream &stream, const Format &format) const
 {
-	AppendData(this, outStream, 0, format);
+	// Json files are wrapped with an extra set of braces.
+	AppendData({"", {{"", *this}}}, stream, 0, format);
 }
 
 void Json::Load(const std::string &string)
 {
 	std::stringstream stream{string};
-	Load(&stream);
+	Load(stream);
 }
 
 std::string Json::Write(const Format &format) const
 {
 	std::stringstream stream;
-	Write(&stream, format);
+	Write(stream, format);
 	return stream.str();
 }
 
-void Json::AddChildren(const Metadata *source, Metadata *destination)
+void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stringstream &current)
 {
-	for (const auto &child : source->GetChildren())
+	if (auto str{current.str()}; !str.empty())
 	{
-		auto created{destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()))};
-		AddChildren(child.get(), created);
-	}
-
-	for (const auto &attribute : source->GetAttributes())
-	{
-		destination->SetAttribute(attribute.first, attribute.second);
-	}
-}
-
-void Json::Convert(const Section *source, Metadata *parent, const bool &isTopSection)
-{
-	auto thisValue{parent};
-
-	if (!isTopSection)
-	{
-		thisValue = parent->AddChild(std::make_unique<Metadata>(source->m_name));
-	}
-
-	auto contentSplit{String::Split(source->m_content, ',')};
-
-	for (const auto &data : contentSplit)
-	{
-		std::string name;
-		auto value{String::Trim(data)};
-
-		if (String::Contains(value, ":"))
+		// Finds the node value type of the string and adds it to the tokens vector.
+		if (String::IsNumber(str))
 		{
-			name = String::Trim(value.substr(0, value.find(':')));
-			value = String::Trim(String::ReplaceFirst(value, name, ""));
-			value = String::Trim(value.erase(0, 1));
-			name = name.substr(1, name.size() - 2);
+			tokens.emplace_back(Type::Number, str);
 		}
-
-		if (value.empty())
+		else if (str == "null")
 		{
-			continue;
+			tokens.emplace_back(Type::Null, str);
 		}
-
-		if (String::StartsWith(name, "_"))
+		else if (str == "true" || str == "false")
 		{
-			name = name.erase(0, 1);
-
-			if (!value.empty())
-			{
-				value = value.substr(1, value.size() - 2);
-			}
-
-			thisValue->SetAttribute(name, value);
+			tokens.emplace_back(Type::Boolean, str);
 		}
 		else
 		{
-			thisValue->AddChild(std::make_unique<Metadata>(name, value));
+			tokens.emplace_back(Type::String, str);
 		}
 	}
 
-	for (const auto &child : source->m_children)
-	{
-		Convert(child.get(), thisValue, false);
-	}
+	// Clears the current summation stream.
+	current.str({});
 }
 
-void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end)
+void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r)
 {
-	std::stringstream indents;
-
-	if (format != Format::Minified)
+	if (v[i].second == "{")
 	{
-		for (int32_t i{}; i < indentation; i++)
+		auto k{i + 1};
+
+		while (v[k].second != "}")
 		{
-			indents << "  ";
+			auto key{v[k].second};
+			k += 2; // k + 1 should be ':'
+			Convert(current.AddProperty(key), v, k, k);
+
+			if (v[k].second == ",")
+			{
+				k++;
+			}
 		}
+
+		current.SetType(Type::Object);
+		r = k + 1;
 	}
-
-	auto openBrace{'{'};
-	auto closeBrace{'}'};
-
-	for (const auto &child : source->GetChildren())
+	else if (v[i].second == "[")
 	{
-		if (child->GetName().empty())
+		auto k{i + 1};
+
+		while (v[k].second != "]")
 		{
-			openBrace = '[';
-			closeBrace = ']';
-			break;
+			Convert(current.AddProperty(), v, k, k);
+
+			if (v[k].second == ",")
+			{
+				k++;
+			}
 		}
-	}
 
-	*outStream << indents.str();
-
-	if (source->GetName().empty() && source->GetValue().empty())
-	{
-		*outStream << openBrace;
-	}
-	else if (source->GetValue().empty())
-	{
-		*outStream << "\"" << source->GetName();
-		*outStream << (format != Format::Minified ? "\": " : "\":");
-		*outStream << openBrace;
+		current.SetType(Type::Array);
+		r = k + 1;
 	}
 	else
 	{
-		if (source->GetName().empty())
+		current.SetValue(String::UnfixReturnTokens(v[i].second));
+		current.SetType(v[i].first);
+		r = i + 1;
+	}
+}
+
+void Json::AppendData(const Node &source, std::ostream &stream, const int32_t &indentation, const Format &format)
+{
+	// Creates a string for the indentation level.
+	std::string indents(2 * indentation, ' ');
+
+	// Only output the value if no properties exist.
+	if (source.GetProperties().empty())
+	{
+		auto value{String::FixReturnTokens(source.GetValue<std::string>())};
+
+		if (source.GetType() == Type::String)
 		{
-			*outStream << String::FixReturnTokens(source->GetValue());
+			stream << '\"' << value << '\"';
 		}
 		else
 		{
-			*outStream << "\"" << source->GetName();
-			*outStream << (format != Format::Minified ? "\": " : "\":");
-			*outStream << String::FixReturnTokens(source->GetValue());
-		}
-
-		if (!(end && source->GetAttributes().empty()))
-		{
-			*outStream << (format != Format::Minified ? ", " : ",");
+			stream << value;
 		}
 	}
 
-	if (format != Format::Minified)
+	// Output each property.
+	for (auto it{source.GetProperties().begin()}; it < source.GetProperties().end(); ++it)
 	{
-		*outStream << '\n';
-	}
+		std::string openString;
+		std::string closeString;
 
-	for (const auto &attribute : source->GetAttributes())
-	{
-		*outStream << indents.str() << "  \"_" << attribute.first << "\": \"" << attribute.second << "\"";
-
-		if (!(end && source->GetChildren().empty()))
+		// Gets array or object type braces.
+		if (!it->second.GetProperties().empty())
 		{
-			*outStream << (format != Format::Minified ? ", " : ",");
+			openString = "{";
+			closeString = "}";
+
+			// Sets the braces to an array style if all properties have no names.
+			for (const auto &[propertyName2, property2] : it->second.GetProperties())
+			{
+				if (propertyName2.empty())
+				{
+					openString = "[";
+					closeString = "]";
+					break;
+				}
+			}
+
+			if (format != Format::Minified)
+			{
+				openString += '\n';
+				closeString.insert(0, indents);
+			}
+		}
+		else if (it->second.GetType() == Type::Object)
+		{
+			openString = "{";
+			closeString = "}";
+		}
+		else if (it->second.GetType() == Type::Array)
+		{
+			openString = "[";
+			closeString = "]";
+		}
+
+		// Separate properties by comma.
+		if (it != source.GetProperties().end() - 1)
+		{
+			closeString += ',';
 		}
 
 		if (format != Format::Minified)
 		{
-			*outStream << '\n';
+			stream << indents;
 		}
-	}
 
-	for (const auto &child : source->GetChildren())
-	{
-		AppendData(child.get(), outStream, indentation + 1, format, child == source->GetChildren().back());
-	}
-
-	if (source->GetValue().empty())
-	{
-		*outStream << indents.str() << closeBrace;
-
-		if (!(end || indentation == 0))
+		// Output name for property if it exists.
+		if (!it->first.empty())
 		{
-			*outStream << ',';
+			stream << "\"" << it->first << "\":";
+
+			if (format != Format::Minified)
+			{
+				stream << ' ';
+			}
 		}
+
+		// Appends the current stream with the property data.
+		stream << openString;
+		AppendData(it->second, stream, indentation + 1, format);
+		stream << closeString;
 
 		if (format != Format::Minified)
 		{
-			*outStream << '\n';
+			stream << '\n';
 		}
 	}
 }

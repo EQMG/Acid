@@ -3,14 +3,14 @@
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Image.hpp"
 
 namespace acid
 {
-std::shared_ptr<Image2d> Image2d::Create(const Metadata &metadata)
+std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -18,8 +18,8 @@ std::shared_ptr<Image2d> Image2d::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<Image2d>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -27,9 +27,9 @@ std::shared_ptr<Image2d> Image2d::Create(const Metadata &metadata)
 std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
 {
 	Image2d temp{filename, filter, addressMode, anisotropic, mipmap, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
@@ -150,24 +150,24 @@ void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const
 	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
 }
 
-const Metadata &operator>>(const Metadata &metadata, Image2d &image)
+const Node &operator>>(const Node &node, Image2d &image)
 {
-	metadata.GetChild("filename", image.m_filename);
-	metadata.GetChild("filter", image.m_filter);
-	metadata.GetChild("addressMode", image.m_addressMode);
-	metadata.GetChild("anisotropic", image.m_anisotropic);
-	metadata.GetChild("mipmap", image.m_mipmap);
-	return metadata;
+	node["filename"].Get(image.m_filename);
+	node["filter"].Get(image.m_filter);
+	node["addressMode"].Get(image.m_addressMode);
+	node["anisotropic"].Get(image.m_anisotropic);
+	node["mipmap"].Get(image.m_mipmap);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Image2d &image)
+Node &operator<<(Node &node, const Image2d &image)
 {
-	metadata.SetChild("filename", image.m_filename);
-	metadata.SetChild("filter", image.m_filter);
-	metadata.SetChild("addressMode", image.m_addressMode);
-	metadata.SetChild("anisotropic", image.m_anisotropic);
-	metadata.SetChild("mipmap", image.m_mipmap);
-	return metadata;
+	node["filename"].Set(image.m_filename);
+	node["filter"].Set(image.m_filter);
+	node["addressMode"].Set(image.m_addressMode);
+	node["anisotropic"].Set(image.m_anisotropic);
+	node["mipmap"].Set(image.m_mipmap);
+	return node;
 }
 
 void Image2d::Load()

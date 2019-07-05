@@ -2,7 +2,7 @@
 
 namespace acid
 {
-SkinLoader::SkinLoader(const Metadata *libraryControllers, const uint32_t &maxWeights) :
+SkinLoader::SkinLoader(const Node *libraryControllers, const uint32_t &maxWeights) :
 	m_skinData{libraryControllers->FindChild("controller")->FindChild("skin")},
 	m_maxWeights{maxWeights}
 {
@@ -38,7 +38,7 @@ std::vector<float> SkinLoader::LoadWeights() const
 	return weights;
 }
 
-std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weightsDataNode) const
+std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Node *weightsDataNode) const
 {
 	auto rawData{String::Split(weightsDataNode->FindChild("vcount")->GetValue(), ' ')};
 	std::vector<uint32_t> counts(rawData.size());
@@ -51,7 +51,7 @@ std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Metadata *weigh
 	return counts;
 }
 
-void SkinLoader::GetSkinWeights(const Metadata *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
+void SkinLoader::GetSkinWeights(const Node *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights)
 {
 	auto rawData{String::Split(weightsDataNode->FindChild("v")->GetValue(), ' ')};
 	uint32_t pointer{};

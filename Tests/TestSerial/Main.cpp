@@ -8,10 +8,10 @@
 #include <Helpers/EnumClass.hpp>
 #include <Maths/Matrix4.hpp>
 #include <Maths/Vector2.hpp>
-#include <Serialized/Metadata.hpp>
+#include <Serialized/Node.hpp>
 #include <Serialized/Json/Json.hpp>
-#include <Serialized/Xml/Xml.hpp>
-#include <Serialized/Yaml/Yaml.hpp>
+//#include <Serialized/Xml/Xml.hpp>
+//#include <Serialized/Yaml/Yaml.hpp>
 
 using namespace acid;
 
@@ -37,20 +37,20 @@ public:
 		std::optional<float> optional0{};
 		std::optional<std::string> optional1{"Hello optional string!"};
 
-		friend const Metadata &operator>>(const Metadata &metadata, XML &xml)
+		friend const Node &operator>>(const Node &node, XML &xml)
 		{
-			metadata.GetChild("data", xml.data);
-			metadata.GetChild("optional0", xml.optional0);
-			metadata.GetChild("optional1", xml.optional1);
-			return metadata;
+			node["data"].Get(xml.data);
+			node["optional0"].Get(xml.optional0);
+			node["optional1"].Get(xml.optional1);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const XML &xml)
+		friend Node &operator<<(Node &node, const XML &xml)
 		{
-			metadata.SetChild("data", xml.data);
-			metadata.SetChild("optional0", xml.optional0);
-			metadata.SetChild("optional1", xml.optional1);
-			return metadata;
+			node["data"].Set(xml.data);
+			node["optional0"].Set(xml.optional0);
+			node["optional1"].Set(xml.optional1);
+			return node;
 		}
 	} xml;
 
@@ -61,20 +61,20 @@ public:
 		std::vector<float> values{190.0f, 11.0f, -0.001f};
 		std::vector<Vector3f> vectors{Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
 
-		friend const Metadata &operator>>(const Metadata &metadata, Objects &objects)
+		friend const Node &operator>>(const Node &node, Objects &objects)
 		{
-			metadata.GetChild("key", objects.key);
-			metadata.GetChild("values", objects.values);
-			metadata.GetChild("vectors", objects.vectors);
-			return metadata;
+			node["key"].Get(objects.key);
+			node["values"].Get(objects.values);
+			node["vectors"].Get(objects.vectors);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const Objects &objects)
+		friend Node &operator<<(Node &node, const Objects &objects)
 		{
-			metadata.SetChild("key", objects.key);
-			metadata.SetChild("values", objects.values);
-			metadata.SetChild("vectors", objects.vectors);
-			return metadata;
+			node["key"].Set(objects.key);
+			node["values"].Set(objects.values);
+			node["vectors"].Set(objects.vectors);
+			return node;
 		}
 	} objects;
 
@@ -94,44 +94,44 @@ public:
 	//std::array<double, 5> array{-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
 	//float cArray[3]{0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 
-	friend const Metadata &operator>>(const Metadata &metadata, Example1 &example1)
+	friend const Node &operator>>(const Node &node, Example1 &example1)
 	{
-		metadata.GetChild("timeNow", example1.timeNow);
-		metadata.GetChild("currentPath", example1.currentPath);
-		metadata.GetChild("paragraph", example1.paragraph);
-		metadata.GetChild("content", example1.content);
-		metadata.GetChild("xml", example1.xml);
-		metadata.GetChild("json", example1.json);
-		metadata.GetChild("yaml", example1.yaml);
-		metadata.GetChild("map", example1.map);
-		metadata.GetChild("vectorMap", example1.vectorMap);
-		//metadata.GetChild("array", example1.array);
-		//metadata.GetChild("cArray", example1.cArray);
-		//metadata.GetChild("vectorMatrixMap", example1.vectorMatrixMap);
-		metadata.GetChild("types", example1.types);
-		//metadata.GetChild("uniqueVector", example1.uniqueVector);
-		metadata.GetChild("objects", example1.objects);
-		return metadata;
+		node["timeNow"].Get(example1.timeNow);
+		node["currentPath"].Get(example1.currentPath);
+		node["paragraph"].Get(example1.paragraph);
+		node["content"].Get(example1.content);
+		node["xml"].Get(example1.xml);
+		node["json"].Get(example1.json);
+		node["yaml"].Get(example1.yaml);
+		node["map"].Get(example1.map);
+		node["vectorMap"].Get(example1.vectorMap);
+		//node["array"].Get(example1.array);
+		//node["cArray"].Get(example1.cArray);
+		//node["vectorMatrixMap"].Get(example1.vectorMatrixMap);
+		node["types"].Get(example1.types);
+		//node["uniqueVector"].Get(example1.uniqueVector);
+		node["objects"].Get(example1.objects);
+		return node;
 	}
 
-	friend Metadata &operator<<(Metadata &metadata, const Example1 &example1)
+	friend Node &operator<<(Node &node, const Example1 &example1)
 	{
-		metadata.SetChild("timeNow", example1.timeNow);
-		metadata.SetChild("currentPath", example1.currentPath);
-		metadata.SetChild("paragraph", example1.paragraph);
-		metadata.SetChild("content", example1.content);
-		metadata.SetChild("xml", example1.xml);
-		metadata.SetChild("json", example1.json);
-		metadata.SetChild("yaml", example1.yaml);
-		metadata.SetChild("map", example1.map);
-		metadata.SetChild("vectorMap", example1.vectorMap);
-		//metadata.SetChild("array", example1.array);
-		//metadata.SetChild("cArray", example1.cArray);
-		//metadata.SetChild("vectorMatrixMap", example1.vectorMatrixMap);
-		metadata.SetChild("types", example1.types);
-		//metadata.SetChild("uniqueVector", example1.uniqueVector);
-		metadata.SetChild("objects", example1.objects);
-		return metadata;
+		node["timeNow"].Set(example1.timeNow);
+		node["currentPath"].Set(example1.currentPath);
+		node["paragraph"].Set(example1.paragraph);
+		node["content"].Set(example1.content);
+		node["xml"].Set(example1.xml);
+		node["json"].Set(example1.json);
+		node["yaml"].Set(example1.yaml);
+		node["map"].Set(example1.map);
+		node["vectorMap"].Set(example1.vectorMap);
+		//node["array"].Set(example1.array);
+		//node["cArray"].Set(example1.cArray);
+		//node["vectorMatrixMap"].Set(example1.vectorMatrixMap);
+		node["types"].Set(example1.types);
+		//node["uniqueVector"].Set(example1.uniqueVector);
+		node["objects"].Set(example1.objects);
+		return node;
 	}
 };
 }
@@ -146,28 +146,28 @@ int main(int argc, char **argv)
 		//*json["newSection"]["values"] << std::vector{10, 11, -1, 2};
 
 		auto value{json["value"]};
-		value->SetValue(3 * value->GetValue<int32_t>() + 2);
+		value->Set(3 * value->Get<int32_t>() + 2);
 
-		Log::Out("%s\n", json.Write(Metadata::Format::Minified));
-		//Log::Out("%s\n", Xml{"source", &json}.Write(Metadata::Format::Minified));
+		Log::Out("%s\n", json.Write(Node::Format::Minified));
+		//Log::Out("%s\n", Xml{"source", &json}.Write(Node::Format::Minified));
 	}
 
 	test::Example1 example1;
-	Metadata metadata;
-	metadata << example1;
+	Node node;
+	node << example1;
 
-	File{"Serial/Example1.json", std::make_unique<Json>(&metadata)}.Write();
-	File{"Serial/Example1.xml", std::make_unique<Xml>("Example", &metadata)}.Write();
-	File{"Serial/Example1.yaml", std::make_unique<Yaml>(&metadata)}.Write();
+	File{"Serial/Example1.json", std::make_unique<Json>(node)}.Write();
+	//File{"Serial/Example1.xml", std::make_unique<Xml>("Example", node)}.Write();
+	//File{"Serial/Example1.yaml", std::make_unique<Yaml>(node)}.Write();
 
 	File jsonLoader{"Serial/Example1.json", std::make_unique<Json>()};
 	jsonLoader.Load();
-	//jsonLoader.GetMetadata()["objects"]["key"]->SetValue("modified");
+	//jsonLoader.GetNode()["objects"]["key"]->SetValue("modified");
 	jsonLoader.SetFilename("Serial/Example2.json");
 	jsonLoader.Write();
 
 	test::Example1 example2;
-	*jsonLoader.GetMetadata() >> example2;
+	*jsonLoader.GetNode() >> example2;
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

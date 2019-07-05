@@ -13,10 +13,10 @@ class ACID_EXPORT ModelCylinder :
 public:
 	/**
 	 * Creates a new cylinder model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The cylinder model with the requested values.
 	 */
-	static std::shared_ptr<ModelCylinder> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelCylinder> Create(const Node &node);
 
 	/**
 	 * Creates a new cylinder model, or finds one with the same values.
@@ -42,9 +42,9 @@ public:
 	explicit ModelCylinder(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2,
 		const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model);
+	friend const Node &operator>>(const Node &node, ModelCylinder &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelCylinder &model);
+	friend Node &operator<<(Node &node, const ModelCylinder &model);
 
 private:
 	void Load();

@@ -46,19 +46,19 @@ void ColliderCapsule::SetHeight(const float &height)
 	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
 }
 
-const Metadata &operator>>(const Metadata &metadata, ColliderCapsule &collider)
+const Node &operator>>(const Node &node, ColliderCapsule &collider)
 {
-	metadata.GetChild("localTransform", collider.m_localTransform);
-	metadata.GetChild("radius", collider.m_radius);
-	metadata.GetChild("height", collider.m_height);
-	return metadata;
+	node["localTransform"].Get(collider.m_localTransform);
+	node["radius"].Get(collider.m_radius);
+	node["height"].Set(collider.m_height);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ColliderCapsule &collider)
+Node &operator<<(Node &node, const ColliderCapsule &collider)
 {
-	metadata.SetChild("localTransform", collider.m_localTransform);
-	metadata.SetChild("radius", collider.m_radius);
-	metadata.SetChild("height", collider.m_height);
-	return metadata;
+	node["localTransform"].Set(collider.m_localTransform);
+	node["radius"].Set(collider.m_radius);
+	node["height"].Set(collider.m_height);
+	return node;
 }
 }

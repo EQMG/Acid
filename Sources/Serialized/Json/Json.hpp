@@ -1,49 +1,30 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
 class ACID_EXPORT Json :
-	public Metadata
+	public Node
 {
 public:
-	class Section :
-		public NonCopyable
-	{
-	public:
-		Section(Section *parent, std::string name, std::string content) :
-			m_parent{parent},
-			m_name{std::move(name)},
-			m_content{std::move(content)}
-		{
-		}
-
-		Section *m_parent;
-		std::vector<std::unique_ptr<Section>> m_children;
-
-		std::string m_name;
-		std::string m_content;
-	};
-
 	Json() = default;
 
-	explicit Json(Metadata *metadata);
+	explicit Json(const Node &node);
 
-	void Load(std::istream *inStream) override;
+	void Load(std::istream &stream) override;
 
-	void Write(std::ostream *outStream, const Format &format = Format::Beautified) const override;
+	void Write(std::ostream &stream, const Format &format = Format::Beautified) const override;
 
 	void Load(const std::string &string);
 
 	std::string Write(const Format &format = Format::Beautified) const;
 
 private:
-	static void AddChildren(const Metadata *source, Metadata *destination);
+	static void AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stringstream &current);
 
-	static void Convert(const Section *source, Metadata *parent, const bool &isTopSection = true);
+	static void Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r);
 
-	static void AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end = false);
+	static void AppendData(const Node &source, std::ostream &outStream, const int32_t &indentation, const Format &format);
 };
 }

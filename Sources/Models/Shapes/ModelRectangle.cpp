@@ -5,9 +5,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
+std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -15,8 +15,8 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelRectangle>(0.0f, 0.0f)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -24,9 +24,9 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Metadata &metadata)
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
 {
 	ModelRectangle temp{min, max, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &load) :
@@ -39,19 +39,19 @@ ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &l
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelRectangle &model)
+const Node &operator>>(const Node &node, ModelRectangle &model)
 {
-	metadata.GetChild("min", model.m_min);
-	metadata.GetChild("max", model.m_max);
-	return metadata;
+	node["min"].Get(model.m_min);
+	node["max"].Get(model.m_max);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelRectangle &model)
+Node &operator<<(Node &node, const ModelRectangle &model)
 {
-	metadata.SetChild<std::string>("type", "ModelRectangle");
-	metadata.SetChild("min", model.m_min);
-	metadata.SetChild("max", model.m_max);
-	return metadata;
+	node["type"].Set("ModelRectangle");
+	node["min"].Set(model.m_min);
+	node["max"].Set(model.m_max);
+	return node;
 }
 
 void ModelRectangle::Load()

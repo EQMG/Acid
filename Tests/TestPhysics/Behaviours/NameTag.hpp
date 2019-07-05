@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, NameTag &nameTag);
+	friend const Node &operator>>(const Node &node, NameTag &nameTag);
 
-	friend Metadata &operator<<(Metadata &metadata, const NameTag &nameTag);
+	friend Node &operator<<(Node &node, const NameTag &nameTag);
 
 private:
 	std::string m_name;

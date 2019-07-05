@@ -19,9 +19,9 @@ public:
 
 	void SetInterval(const Time &interval) { m_interval = interval; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, ElapsedTime &elapsedTime);
+	friend const Node &operator>>(const Node &node, ElapsedTime &elapsedTime);
 
-	friend Metadata &operator<<(Metadata &metadata, const ElapsedTime &elapsedTime);
+	friend Node &operator<<(Node &node, const ElapsedTime &elapsedTime);
 
 private:
 	Time m_startTime;

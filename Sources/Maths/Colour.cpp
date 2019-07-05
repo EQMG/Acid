@@ -276,34 +276,34 @@ Colour &Colour::operator/=(const float &value)
 	return *this = Divide({value, value, value});
 }
 
-const Metadata &operator>>(const Metadata &metadata, Colour &colour)
+const Node &operator>>(const Node &node, Colour &colour)
 {
 	// Loads from hex if RGBA is not provided.
-	if (metadata.GetChildren().empty())
+	if (node.GetProperties().empty())
 	{
 		std::string hex;
-		metadata >> hex;
+		node >> hex;
 		colour = hex;
 	}
 	else
 	{
-		metadata.GetChild("r", colour.m_r);
-		metadata.GetChild("g", colour.m_g);
-		metadata.GetChild("b", colour.m_b);
-		metadata.GetChild("a", colour.m_a);
+		node["r"].Get(colour.m_r);
+		node["g"].Get(colour.m_g);
+		node["b"].Get(colour.m_b);
+		node["a"].Get(colour.m_a);
 	}
 
-	return metadata;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Colour &colour)
+Node &operator<<(Node &node, const Colour &colour)
 {
-	//metadata << colour.GetHex();
-	metadata.SetChild("r", colour.m_r);
-	metadata.SetChild("g", colour.m_g);
-	metadata.SetChild("b", colour.m_b);
-	metadata.SetChild("a", colour.m_a);
-	return metadata;
+	//node << colour.GetHex();
+	node["r"].Set(colour.m_r);
+	node["g"].Set(colour.m_g);
+	node["b"].Set(colour.m_b);
+	node["a"].Set(colour.m_a);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Colour &colour)

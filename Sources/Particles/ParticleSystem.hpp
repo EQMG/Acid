@@ -71,9 +71,9 @@ public:
 
 	void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem);
+	friend const Node &operator>>(const Node &node, ParticleSystem &particleSystem);
 
-	friend Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem);
+	friend Node &operator<<(Node &node, const ParticleSystem &particleSystem);
 
 private:
 	Particle EmitParticle(const Emitter &emitter);

@@ -105,13 +105,13 @@ void PlayerFps::Update()
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 
-const Metadata &operator>>(const Metadata &metadata, PlayerFps &player)
+const Node &operator>>(const Node &node, PlayerFps &player)
 {
-	return metadata;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const PlayerFps &player)
+Node &operator<<(Node &node, const PlayerFps &player)
 {
-	return metadata;
+	return node;
 }
 }

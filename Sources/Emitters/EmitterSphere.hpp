@@ -20,9 +20,9 @@ public:
 
 	void SetRadius(const float &radius) { m_radius = radius; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, EmitterSphere &emitter);
+	friend const Node &operator>>(const Node &node, EmitterSphere &emitter);
 
-	friend Metadata &operator<<(Metadata &metadata, const EmitterSphere &emitter);
+	friend Node &operator<<(Node &node, const EmitterSphere &emitter);
 
 private:
 	float m_radius;

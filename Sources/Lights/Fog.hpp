@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid
@@ -49,9 +49,9 @@ public:
 
 	std::string ToString() const;
 
-	friend const Metadata &operator>>(const Metadata &metadata, Fog &fog);
+	friend const Node &operator>>(const Node &node, Fog &fog);
 
-	friend Metadata &operator<<(Metadata &metadata, const Fog &fog);
+	friend Node &operator<<(Node &node, const Fog &fog);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
 

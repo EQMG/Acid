@@ -13,10 +13,10 @@ class ACID_EXPORT ModelCube :
 public:
 	/**
 	 * Creates a new cube model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The cube model with the requested values.
 	 */
-	static std::shared_ptr<ModelCube> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelCube> Create(const Node &node);
 
 	/**
 	 * Creates a new cube model, or finds one with the same values.
@@ -32,9 +32,9 @@ public:
 	 */
 	explicit ModelCube(const Vector3f &extents = {1.0f}, const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelCube &model);
+	friend const Node &operator>>(const Node &node, ModelCube &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelCube &model);
+	friend Node &operator<<(Node &node, const ModelCube &model);
 
 private:
 	void Load();

@@ -15,15 +15,15 @@ void Mesh::Update()
 {
 }
 
-const Metadata &operator>>(const Metadata &metadata, Mesh &mesh)
+const Node &operator>>(const Node &node, Mesh &mesh)
 {
-	metadata.GetChild("model", mesh.m_model);
-	return metadata;
+	node["model"].Get(mesh.m_model);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Mesh &mesh)
+Node &operator<<(Node &node, const Mesh &mesh)
 {
-	metadata.SetChild("model", mesh.m_model);
-	return metadata;
+	node["model"].Set(mesh.m_model);
+	return node;
 }
 }

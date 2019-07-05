@@ -184,26 +184,26 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody)
+const Node &operator>>(const Node &node, Rigidbody &rigidbody)
 {
-	metadata.GetChild("mass", rigidbody.m_mass);
-	metadata.GetChild("friction", rigidbody.m_friction);
-	metadata.GetChild("frictionRolling", rigidbody.m_frictionRolling);
-	metadata.GetChild("frictionSpinning", rigidbody.m_frictionSpinning);
-	metadata.GetChild("linearFactor", rigidbody.m_linearFactor);
-	metadata.GetChild("angularFactor", rigidbody.m_angularFactor);
-	return metadata;
+	node["mass"].Get(rigidbody.m_mass);
+	node["friction"].Get(rigidbody.m_friction);
+	node["frictionRolling"].Get(rigidbody.m_frictionRolling);
+	node["frictionSpinning"].Get(rigidbody.m_frictionSpinning);
+	node["linearFactor"].Get(rigidbody.m_linearFactor);
+	node["angularFactor"].Get(rigidbody.m_angularFactor);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody)
+Node &operator<<(Node &node, const Rigidbody &rigidbody)
 {
-	metadata.SetChild("mass", rigidbody.m_mass);
-	metadata.SetChild("friction", rigidbody.m_friction);
-	metadata.SetChild("frictionRolling", rigidbody.m_frictionRolling);
-	metadata.SetChild("frictionSpinning", rigidbody.m_frictionSpinning);
-	metadata.SetChild("linearFactor", rigidbody.m_linearFactor);
-	metadata.SetChild("angularFactor", rigidbody.m_angularFactor);
-	return metadata;
+	node["mass"].Set(rigidbody.m_mass);
+	node["friction"].Set(rigidbody.m_friction);
+	node["frictionRolling"].Set(rigidbody.m_frictionRolling);
+	node["frictionSpinning"].Set(rigidbody.m_frictionSpinning);
+	node["linearFactor"].Set(rigidbody.m_linearFactor);
+	node["angularFactor"].Set(rigidbody.m_angularFactor);
+	return node;
 }
 
 void Rigidbody::RecalculateMass()

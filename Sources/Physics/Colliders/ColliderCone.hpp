@@ -28,9 +28,9 @@ public:
 
 	void SetHeight(const float &height);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ColliderCone &collider);
+	friend const Node &operator>>(const Node &node, ColliderCone &collider);
 
-	friend Metadata &operator<<(Metadata &metadata, const ColliderCone &collider);
+	friend Node &operator<<(Node &node, const ColliderCone &collider);
 
 private:
 	std::unique_ptr<btConeShape> m_shape;

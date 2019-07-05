@@ -5,9 +5,9 @@
 
 namespace acid
 {
-std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metadata)
+std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -15,8 +15,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 	}
 
 	auto result{std::make_shared<PipelineMaterial>()};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	//result->Load();
 	return result;
 }
@@ -24,10 +24,10 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Metadata &metad
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 {
 	PipelineMaterial temp{pipelineStage, pipelineCreate};
-	Metadata metadata;
-	metadata << temp;
+	Node node;
+	node << temp;
 
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -35,8 +35,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	}
 
 	auto result{std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	//result->Load();
 	return result;
 }
@@ -66,19 +66,19 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 	return true;
 }
 
-const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline)
+const Node &operator>>(const Node &node, PipelineMaterial &pipeline)
 {
-	metadata.GetChild("renderpass", pipeline.m_pipelineStage.first);
-	metadata.GetChild("subpass", pipeline.m_pipelineStage.second);
-	metadata.GetChild("pipelineCreate", pipeline.m_pipelineCreate);
-	return metadata;
+	node["renderpass"].Get(pipeline.m_pipelineStage.first);
+	node["subpass"].Get(pipeline.m_pipelineStage.second);
+	node["pipelineCreate"].Get(pipeline.m_pipelineCreate);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline)
+Node &operator<<(Node &node, const PipelineMaterial &pipeline)
 {
-	metadata.SetChild("renderpass", pipeline.m_pipelineStage.first);
-	metadata.SetChild("subpass", pipeline.m_pipelineStage.second);
-	metadata.SetChild("pipelineCreate", pipeline.m_pipelineCreate);
-	return metadata;
+	node["renderpass"].Set(pipeline.m_pipelineStage.first);
+	node["subpass"].Set(pipeline.m_pipelineStage.second);
+	node["pipelineCreate"].Set(pipeline.m_pipelineCreate);
+	return node;
 }
 }

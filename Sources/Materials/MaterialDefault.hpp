@@ -62,9 +62,9 @@ public:
 
 	void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, MaterialDefault &material);
+	friend const Node &operator>>(const Node &node, MaterialDefault &material);
 
-	friend Metadata &operator<<(Metadata &metadata, const MaterialDefault &material);
+	friend Node &operator<<(Node &node, const MaterialDefault &material);
 
 private:
 	std::vector<Shader::Define> GetDefines() const;

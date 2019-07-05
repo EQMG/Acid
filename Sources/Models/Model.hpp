@@ -15,10 +15,10 @@ class ACID_EXPORT Model :
 public:
 	/**
 	 * Creates a new model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The model with the requested values.
 	 */
-	static std::shared_ptr<Model> Create(const Metadata &metadata);
+	static std::shared_ptr<Model> Create(const Node &node);
 
 	/**
 	 * Creates a new model, or finds one with the same values.
@@ -81,9 +81,9 @@ public:
 
 	static VkIndexType GetIndexType() { return VK_INDEX_TYPE_UINT32; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, Model &model);
+	friend const Node &operator>>(const Node &node, Model &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const Model &model);
+	friend Node &operator<<(Node &node, const Model &model);
 
 protected:
 	template<typename T>

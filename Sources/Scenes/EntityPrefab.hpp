@@ -16,10 +16,10 @@ class ACID_EXPORT EntityPrefab :
 public:
 	/**
 	 * Creates a new entity prefab, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The entity prefab with the requested values.
 	 */
-	static std::shared_ptr<EntityPrefab> Create(const Metadata &metadata);
+	static std::shared_ptr<EntityPrefab> Create(const Node &node);
 
 	/**
 	 * Creates a new entity prefab, or finds one with the same values.
@@ -41,15 +41,15 @@ public:
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 
-	Metadata *GetParent() const { return m_file->GetMetadata(); }
+	Node *GetParent() const { return m_file->GetNode(); }
 
 	friend const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity);
 
 	friend EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity);
 
-	friend const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab);
+	friend const Node &operator>>(const Node &node, EntityPrefab &entityPrefab);
 
-	friend Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab);
+	friend Node &operator<<(Node &node, const EntityPrefab &entityPrefab);
 
 private:
 	std::filesystem::path m_filename;

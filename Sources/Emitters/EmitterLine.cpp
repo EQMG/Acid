@@ -24,17 +24,17 @@ Vector3f EmitterLine::GeneratePosition() const
 	return m_axis * m_length * Maths::Random(-0.5f, 0.5f);
 }
 
-const Metadata &operator>>(const Metadata &metadata, EmitterLine &emitter)
+const Node &operator>>(const Node &node, EmitterLine &emitter)
 {
-	metadata.GetChild("length", emitter.m_length);
-	metadata.GetChild("axis", emitter.m_axis);
-	return metadata;
+	node["length"].Get(emitter.m_length);
+	node["axis"].Get(emitter.m_axis);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const EmitterLine &emitter)
+Node &operator<<(Node &node, const EmitterLine &emitter)
 {
-	metadata.SetChild("length", emitter.m_length);
-	metadata.SetChild("axis", emitter.m_axis);
-	return metadata;
+	node["length"].Set(emitter.m_length);
+	node["axis"].Set(emitter.m_axis);
+	return node;
 }
 }

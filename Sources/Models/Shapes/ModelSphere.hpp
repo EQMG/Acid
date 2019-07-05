@@ -13,10 +13,10 @@ class ACID_EXPORT ModelSphere :
 public:
 	/**
 	 * Creates a new sphere model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The sphere model with the requested values.
 	 */
-	static std::shared_ptr<ModelSphere> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelSphere> Create(const Node &node);
 
 	/**
 	 * Creates a new sphere model, or finds one with the same values.
@@ -36,9 +36,9 @@ public:
 	 */
 	explicit ModelSphere(const float &radius = 1.0f, const uint32_t &latitudeBands = 20, const uint32_t &longitudeBands = 20, const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelSphere &model);
+	friend const Node &operator>>(const Node &node, ModelSphere &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelSphere &model);
+	friend Node &operator<<(Node &node, const ModelSphere &model);
 
 private:
 	void Load();

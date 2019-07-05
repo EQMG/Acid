@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
 /**
- * @brief Class that represents a readable and writable file format using {@link Metadata} as storage.
+ * @brief Class that represents a readable and writable file format using {@link Node} as storage.
  */
 class ACID_EXPORT File
 {
 public:
-	explicit File(std::filesystem::path filename, std::unique_ptr<Metadata> &&metadata);
+	explicit File(std::filesystem::path filename, std::unique_ptr<Node> &&node);
 
 	void Load();
 
@@ -22,10 +22,10 @@ public:
 
 	void SetFilename(const std::filesystem::path &filename) { m_filename = filename; }
 
-	Metadata *GetMetadata() const { return m_metadata.get(); }
+	Node *GetNode() const { return m_node.get(); }
 
 private:
 	std::filesystem::path m_filename;
-	std::unique_ptr<Metadata> m_metadata;
+	std::unique_ptr<Node> m_node;
 };
 }

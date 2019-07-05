@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Log.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Model.hpp"
 
 namespace acid
@@ -18,24 +18,24 @@ public:
 	ModelRegister();
 
 	/**
-	 * Adds a model type to this register, model created by Metadata object.
+	 * Adds a model type to this register, model created by Node object.
 	 * @tparam T The models type.
 	 * @param name The models type name.
 	 */
 	template<typename T>
-	void AddMetadata(const std::string &name)
+	void AddNode(const std::string &name)
 	{
-		if (m_modelMetadatas.find(name) != m_modelMetadatas.end())
+		if (m_modelNodes.find(name) != m_modelNodes.end())
 		{
-			Log::Warning("Model metadata type '%s' is already registered!\n", name);
+			Log::Warning("Model node type '%s' is already registered!\n", name);
 			return;
 		}
 
-		auto modelCreate = [](const Metadata &metadata) -> std::shared_ptr<Model>
+		auto modelCreate = [](const Node &node) -> std::shared_ptr<Model>
 		{
-			return T::Create(metadata);
+			return T::Create(node);
 		};
-		m_modelMetadatas.emplace(name, modelCreate);
+		m_modelNodes.emplace(name, modelCreate);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public:
 	template<typename T>
 	void AddExtension(const std::string &extension)
 	{
-		if (m_modelMetadatas.find(extension) != m_modelMetadatas.end())
+		if (m_modelNodes.find(extension) != m_modelNodes.end())
 		{
 			Log::Warning("Model extension type '%s' is already registered!\n", extension);
 			return;
@@ -60,17 +60,17 @@ public:
 	}
 
 	/**
-	 * Removes a model type from the metadata or extensions register.
+	 * Removes a model type from the node or extensions register.
 	 * @param name The model types name.
 	 */
 	void Remove(const std::string &name);
 
 	/**
 	 * Creates a new model from the register.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The new model.
 	 */
-	std::shared_ptr<Model> Create(const Metadata &metadata) const;
+	std::shared_ptr<Model> Create(const Node &node) const;
 
 	/**
 	 * Creates a new model from the register.
@@ -80,9 +80,9 @@ public:
 	std::shared_ptr<Model> Create(const std::filesystem::path &filename) const;
 
 private:
-	using ModelMetadataCreate = std::function<std::shared_ptr<Model>(const Metadata &)>;
+	using ModelNodeCreate = std::function<std::shared_ptr<Model>(const Node &)>;
 	using ModelFilenameCreate = std::function<std::shared_ptr<Model>(const std::filesystem::path &)>;
-	std::map<std::string, ModelMetadataCreate> m_modelMetadatas;
+	std::map<std::string, ModelNodeCreate> m_modelNodes;
 	std::map<std::string, ModelFilenameCreate> m_modelExtensions;
 };
 }

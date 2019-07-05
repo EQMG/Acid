@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Maths.hpp"
 
 namespace acid
@@ -163,9 +163,9 @@ public:
 
 	Colour &operator/=(const float &value);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Colour &colour);
+	friend const Node &operator>>(const Node &node, Colour &colour);
 
-	friend Metadata &operator<<(Metadata &metadata, const Colour &colour);
+	friend Node &operator<<(Node &node, const Colour &colour);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 

@@ -25,24 +25,24 @@ void Joint::AddChild(const Joint &child)
 	m_children.emplace_back(child);
 }
 
-const Metadata &operator>>(const Metadata &metadata, Joint &joint)
+const Node &operator>>(const Node &node, Joint &joint)
 {
-	metadata.GetChild("index", joint.m_index);
-	metadata.GetChild("name", joint.m_name);
-	metadata.GetChild("children", joint.m_children);
-	metadata.GetChild("localBindTransform", joint.m_localBindTransform);
-	//metadata.GetChild("inverseBindTransform", joint.m_inverseBindTransform);
-	return metadata;
+	node.GetChild("index", joint.m_index);
+	node.GetChild("name", joint.m_name);
+	node.GetChild("children", joint.m_children);
+	node.GetChild("localBindTransform", joint.m_localBindTransform);
+	//node.GetChild("inverseBindTransform", joint.m_inverseBindTransform);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Joint &joint)
+Node &operator<<(Node &node, const Joint &joint)
 {
-	metadata.SetChild("index", joint.m_index);
-	metadata.SetChild("name", joint.m_name);
-	metadata.SetChild("children", joint.m_children);
-	metadata.SetChild("localBindTransform", joint.m_localBindTransform);
-	//metadata.SetChild("inverseBindTransform", joint.m_inverseBindTransform);
+	node.SetChild("index", joint.m_index);
+	node.SetChild("name", joint.m_name);
+	node.SetChild("children", joint.m_children);
+	node.SetChild("localBindTransform", joint.m_localBindTransform);
+	//node.SetChild("inverseBindTransform", joint.m_inverseBindTransform);
 	// TODO: When loading 'CalculateInverseBindTransform' must be called on the head joint. 
-	return metadata;
+	return node;
 }
 }

@@ -50,10 +50,10 @@ public:
 
 	/**
 	 * Creates a new particle type, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The particle type with the requested values.
 	 */
-	static std::shared_ptr<ParticleType> Create(const Metadata &metadata);
+	static std::shared_ptr<ParticleType> Create(const Node &node);
 
 	/**
 	 * Creates a new particle type, or finds one with the same values.
@@ -108,9 +108,9 @@ public:
 
 	void SetScale(const float &scale) { m_scale = scale; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType);
+	friend const Node &operator>>(const Node &node, ParticleType &particleType);
 
-	friend Metadata &operator<<(Metadata &metadata, const ParticleType &particleType);
+	friend Node &operator<<(Node &node, const ParticleType &particleType);
 
 private:
 	std::shared_ptr<Image2d> m_image;

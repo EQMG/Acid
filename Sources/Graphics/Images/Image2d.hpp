@@ -17,10 +17,10 @@ class ACID_EXPORT Image2d :
 public:
 	/**
 	 * Creates a new 2D image, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The 2D image with the requested values.
 	 */
-	static std::shared_ptr<Image2d> Create(const Metadata &metadata);
+	static std::shared_ptr<Image2d> Create(const Node &node);
 
 	/**
 	 * Creates a new 2D image, or finds one with the same values.
@@ -119,9 +119,9 @@ public:
 
 	const VkFormat &GetFormat() const { return m_format; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, Image2d &image);
+	friend const Node &operator>>(const Node &node, Image2d &image);
 
-	friend Metadata &operator<<(Metadata &metadata, const Image2d &image);
+	friend Node &operator<<(Node &node, const Image2d &image);
 
 private:
 	void Load();

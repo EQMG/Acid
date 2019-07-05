@@ -47,9 +47,9 @@ public:
 
 	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, Rigidbody &rigidbody);
+	friend const Node &operator>>(const Node &node, Rigidbody &rigidbody);
 
-	friend Metadata &operator<<(Metadata &metadata, const Rigidbody &rigidbody);
+	friend Node &operator<<(Node &node, const Rigidbody &rigidbody);
 
 protected:
 	void RecalculateMass() override;

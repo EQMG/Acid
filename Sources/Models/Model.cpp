@@ -5,9 +5,9 @@
 
 namespace acid
 {
-std::shared_ptr<Model> Model::Create(const Metadata &metadata)
+std::shared_ptr<Model> Model::Create(const Node &node)
 {
-	return Scenes::Get()->GetModelRegister().Create(metadata);
+	return Scenes::Get()->GetModelRegister().Create(node);
 }
 
 std::shared_ptr<Model> Model::Create(const std::filesystem::path &filename)
@@ -120,15 +120,15 @@ std::vector<float> Model::GetPointCloud() const
 	return pointCloud;
 }
 
-const Metadata &operator>>(const Metadata &metadata, Model &model)
+const Node &operator>>(const Node &node, Model &model)
 {
 	// TODO: Virtual?
-	return metadata;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Model &model)
+Node &operator<<(Node &node, const Model &model)
 {
 	// TODO: Virtual?
-	return metadata;
+	return node;
 }
 }

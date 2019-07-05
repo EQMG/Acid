@@ -15,7 +15,7 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
-	std::vector<Shader::Define> GetDefines();
+	std::vector<Shader::Define> GetDefines() const;
 
 	static std::shared_ptr<Image2d> ComputeNoise(const uint32_t &size);
 

@@ -174,9 +174,9 @@ public:
 
 	Matrix3 &operator/=(const float &other);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Matrix3 &matrix);
+	friend const Node &operator>>(const Node &node, Matrix3 &matrix);
 
-	friend Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix);
+	friend Node &operator<<(Node &node, const Matrix3 &matrix);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix);
 

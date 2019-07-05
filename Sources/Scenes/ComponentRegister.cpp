@@ -1,6 +1,6 @@
 #include "ComponentRegister.hpp"
 
-#include "Animations/MeshAnimated.hpp"
+//#include "Animations/MeshAnimated.hpp"
 #include "Emitters/EmitterCircle.hpp"
 #include "Emitters/EmitterLine.hpp"
 #include "Emitters/EmitterPoint.hpp"
@@ -44,7 +44,7 @@ ComponentRegister::ComponentRegister()
 	Add<MaterialSkybox>("materialSkybox");
 	Add<Transform>("transform");
 	Add<Mesh>("mesh");
-	Add<MeshAnimated>("meshAnimated");
+	//Add<MeshAnimated>("meshAnimated");
 	Add<MeshRender>("meshRender");
 	Add<ParticleSystem>("particleSystem");
 	Add<Rigidbody>("rigidbody");
@@ -69,7 +69,7 @@ Component *ComponentRegister::Create(const std::string &name) const
 	return ((*it).second).m_create();
 }
 
-void ComponentRegister::Decode(const std::string &name, const Metadata &metadata, Component *component)
+void ComponentRegister::Decode(const std::string &name, const Node &node, Component *component)
 {
 	auto it{m_components.find(name)};
 
@@ -79,10 +79,10 @@ void ComponentRegister::Decode(const std::string &name, const Metadata &metadata
 		return;
 	}
 
-	((*it).second).m_decode(metadata, component);
+	((*it).second).m_decode(node, component);
 }
 
-void ComponentRegister::Encode(const std::string &name, Metadata &metadata, const Component *component)
+void ComponentRegister::Encode(const std::string &name, Node &node, const Component *component)
 {
 	auto it{m_components.find(name)};
 
@@ -92,7 +92,7 @@ void ComponentRegister::Encode(const std::string &name, Metadata &metadata, cons
 		return;
 	}
 
-	((*it).second).m_encode(metadata, component);
+	((*it).second).m_encode(node, component);
 }
 
 std::optional<std::string> ComponentRegister::FindName(Component *compare) const

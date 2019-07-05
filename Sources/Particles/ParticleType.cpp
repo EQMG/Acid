@@ -12,9 +12,9 @@ static const uint32_t MAX_INSTANCES{1024};
 //static const uint32_t INSTANCE_STEPS{128};
 static const float FRUSTUM_BUFFER{1.4f};
 
-std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
+std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -22,8 +22,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ParticleType>(nullptr)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	//result->Load();
 	return result;
 }
@@ -32,9 +32,9 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 	const float &stageCycles, const float &scale)
 {
 	ParticleType temp{image, numberOfRows, colourOffset, lifeLength, stageCycles, scale};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ParticleType::ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
@@ -130,25 +130,25 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return true;
 }
 
-const Metadata &operator>>(const Metadata &metadata, ParticleType &particleType)
+const Node &operator>>(const Node &node, ParticleType &particleType)
 {
-	metadata.GetChild("image", particleType.m_image);
-	metadata.GetChild("numberOfRows", particleType.m_numberOfRows);
-	metadata.GetChild("colourOffset", particleType.m_colourOffset);
-	metadata.GetChild("lifeLength", particleType.m_lifeLength);
-	metadata.GetChild("stageCycles", particleType.m_stageCycles);
-	metadata.GetChild("scale", particleType.m_scale);
-	return metadata;
+	node["image"].Get(particleType.m_image);
+	node["numberOfRows"].Get(particleType.m_numberOfRows);
+	node["colourOffset"].Get(particleType.m_colourOffset);
+	node["lifeLength"].Get(particleType.m_lifeLength);
+	node["stageCycles"].Get(particleType.m_stageCycles);
+	node["scale"].Get(particleType.m_scale);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ParticleType &particleType)
+Node &operator<<(Node &node, const ParticleType &particleType)
 {
-	metadata.SetChild("image", particleType.m_image);
-	metadata.SetChild("numberOfRows", particleType.m_numberOfRows);
-	metadata.SetChild("colourOffset", particleType.m_colourOffset);
-	metadata.SetChild("lifeLength", particleType.m_lifeLength);
-	metadata.SetChild("stageCycles", particleType.m_stageCycles);
-	metadata.SetChild("scale", particleType.m_scale);
-	return metadata;
+	node["image"].Set(particleType.m_image);
+	node["numberOfRows"].Set(particleType.m_numberOfRows);
+	node["colourOffset"].Set(particleType.m_colourOffset);
+	node["lifeLength"].Set(particleType.m_lifeLength);
+	node["stageCycles"].Set(particleType.m_stageCycles);
+	node["scale"].Set(particleType.m_scale);
+	return node;
 }
 }

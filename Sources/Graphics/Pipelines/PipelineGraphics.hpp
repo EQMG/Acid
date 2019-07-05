@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Maths/Vector2.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Pipeline.hpp"
 #include "Graphics/RenderStage.hpp"
 
@@ -190,33 +190,33 @@ public:
 			m_pushDescriptors);
 	}
 
-	friend const Metadata &operator>>(const Metadata &metadata, PipelineGraphicsCreate &pipelineCreate)
+	friend const Node &operator>>(const Node &node, PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.GetChild("shaderStages", pipelineCreate.m_shaderStages);
-		metadata.GetChild("vertexInputs", pipelineCreate.m_vertexInputs);
-		metadata.GetChild("defines", pipelineCreate.m_defines);
-		metadata.GetChild("mode", pipelineCreate.m_mode);
-		metadata.GetChild("depth", pipelineCreate.m_depth);
-		metadata.GetChild("polygonMode", pipelineCreate.m_polygonMode);
-		metadata.GetChild("cullMode", pipelineCreate.m_cullMode);
-		metadata.GetChild("frontFace", pipelineCreate.m_frontFace);
-		metadata.GetChild("pushDescriptors", pipelineCreate.m_pushDescriptors);
-		return metadata;
+		node["shaderStages"].Get(pipelineCreate.m_shaderStages);
+		node["vertexInputs"].Get(pipelineCreate.m_vertexInputs);
+		node["defines"].Get(pipelineCreate.m_defines);
+		node["mode"].Get(pipelineCreate.m_mode);
+		node["depth"].Get(pipelineCreate.m_depth);
+		node["polygonMode"].Get(pipelineCreate.m_polygonMode);
+		node["cullMode"].Get(pipelineCreate.m_cullMode);
+		node["frontFace"].Get(pipelineCreate.m_frontFace);
+		node["pushDescriptors"].Get(pipelineCreate.m_pushDescriptors);
+		return node;
 
 	}
 
-	friend Metadata &operator<<(Metadata &metadata, const PipelineGraphicsCreate &pipelineCreate)
+	friend Node &operator<<(Node &node, const PipelineGraphicsCreate &pipelineCreate)
 	{
-		metadata.SetChild("shaderStages", pipelineCreate.m_shaderStages);
-		metadata.SetChild("vertexInputs", pipelineCreate.m_vertexInputs);
-		metadata.SetChild("defines", pipelineCreate.m_defines);
-		metadata.SetChild("mode", pipelineCreate.m_mode);
-		metadata.SetChild("depth", pipelineCreate.m_depth);
-		metadata.SetChild("polygonMode", pipelineCreate.m_polygonMode);
-		metadata.SetChild("cullMode", pipelineCreate.m_cullMode);
-		metadata.SetChild("frontFace", pipelineCreate.m_frontFace);
-		metadata.SetChild("pushDescriptors", pipelineCreate.m_pushDescriptors);
-		return metadata;
+		node["shaderStages"].Set(pipelineCreate.m_shaderStages);
+		node["vertexInputs"].Set(pipelineCreate.m_vertexInputs);
+		node["defines"].Set(pipelineCreate.m_defines);
+		node["mode"].Set(pipelineCreate.m_mode);
+		node["depth"].Set(pipelineCreate.m_depth);
+		node["polygonMode"].Set(pipelineCreate.m_polygonMode);
+		node["cullMode"].Set(pipelineCreate.m_cullMode);
+		node["frontFace"].Set(pipelineCreate.m_frontFace);
+		node["pushDescriptors"].Set(pipelineCreate.m_pushDescriptors);
+		return node;
 
 	}
 

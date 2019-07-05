@@ -12,7 +12,7 @@ class ACID_EXPORT GeometryLoader :
 	public NonCopyable
 {
 public:
-	GeometryLoader(const Metadata *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);
+	GeometryLoader(const Node *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);
 
 	const std::vector<VertexAnimated> &GetVertices() const { return m_vertices; }
 
@@ -25,7 +25,7 @@ private:
 
 	std::vector<Vector3f> GetNormals() const;
 
-	const Metadata *m_meshData;
+	const Node *m_meshData;
 
 	std::vector<VertexWeights> m_vertexWeights;
 	Matrix4 m_correction;
