@@ -1,15 +1,12 @@
 #include "SocketSelector.hpp"
 
 #if defined(ACID_BUILD_WINDOWS)
-
 #include <WinSock2.h>
-
 #else
 #include <sys/types.h>
 #include <unistd.h>
 #endif
 
-#include "Engine/Log.hpp"
 #include "Socket.hpp"
 
 #ifdef _MSC_VER
@@ -50,7 +47,7 @@ void SocketSelector::Add(Socket &socket)
 #if defined(ACID_BUILD_WINDOWS)
 		if (m_impl->socketCount >= FD_SETSIZE)
 		{
-			Log::Error("The socket can't be added to the selector because the selector is full. This is a limitation of your operating system's FD_SETSIZE setting.\n");
+			std::cerr << "The socket can't be added to the selector because the selector is full. This is a limitation of your operating system's FD_SETSIZE setting.\n";
 			return;
 		}
 
@@ -63,7 +60,7 @@ void SocketSelector::Add(Socket &socket)
 #else
 		if (handle >= FD_SETSIZE)
 		{
-			Log::Error("The socket can't be added to the selector because its ID is too high. This is a limitation of your operating system's FD_SETSIZE setting.\n");
+			std::cerr << "The socket can't be added to the selector because its ID is too high. This is a limitation of your operating system's FD_SETSIZE setting.\n";
 			return;
 		}
 

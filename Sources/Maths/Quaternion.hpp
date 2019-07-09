@@ -168,8 +168,6 @@ public:
 
 	void SetW(const float &w) { m_w = w; }
 
-	std::string ToString() const;
-
 	bool operator==(const Quaternion &other) const;
 
 	bool operator!=(const Quaternion &other) const;

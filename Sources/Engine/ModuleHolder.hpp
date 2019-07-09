@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Module.hpp"
-#include "Log.hpp"
 
 namespace acid
 {
@@ -39,7 +38,7 @@ public:
 
 		if (it == m_modules.end() || it->second == nullptr)
 		{
-			throw std::runtime_error("Module Holder does not have requested Module");
+			throw std::runtime_error{"Module Holder does not have requested Module"};
 		}
 
 		return static_cast<T *>(it->second.get());

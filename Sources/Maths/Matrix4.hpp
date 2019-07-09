@@ -240,8 +240,6 @@ public:
 	 **/
 	static Matrix4 LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up = Vector3f::Up);
 
-	std::string ToString() const;
-
 	bool operator==(const Matrix4 &other) const;
 
 	bool operator!=(const Matrix4 &other) const;

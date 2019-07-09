@@ -108,7 +108,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 		{
 			/*if (*m_transform.m_margins != UiMargins::None)
 			{
-				throw std::runtime_error("UiTransform with a percent margin must have a parent.");
+				throw std::runtime_error{"UiTransform with a percent margin must have a parent"};
 			}*/
 
 			m_screenTransform.m_size = m_transform.GetAnchor1() - m_transform.GetAnchor0();

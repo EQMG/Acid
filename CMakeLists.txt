@@ -79,6 +79,10 @@ if(NOT PHYSFS_FOUND)
 	else()
 		set(PHYSFS_LIBRARY "physfs")
 	endif()
+	# TODO: PhysFS disables rpath on GNU, when disabled Acid will not run on Unix.
+	if(CMAKE_COMPILER_IS_GNUCC)
+		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
+	endif()
 endif()
 
 find_package(Freetype QUIET)

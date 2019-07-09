@@ -84,7 +84,7 @@ Colour Colour::Normalize() const
 
 	if (l == 0.0f)
 	{
-		throw std::runtime_error("Can't normalize a zero length vector");
+		throw std::runtime_error{"Can't normalize a zero length vector"};
 	}
 
 	return {m_r / l, m_g / l, m_b / l, m_a / l};
@@ -124,14 +124,6 @@ std::string Colour::GetHex() const
 	return stream.str();
 }
 
-std::string Colour::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Colour(" << m_r << ", " << m_g << ", " << m_b << ", " << m_a << ")";
-	return stream.str();
-}
-
 bool Colour::operator==(const Colour &other) const
 {
 	return m_r == other.m_r && m_g == other.m_g && m_b == other.m_b && m_a == other.m_a;
@@ -155,7 +147,7 @@ const float &Colour::operator[](const uint32_t &index) const
 	case 3:
 		return m_a;
 	default:
-		throw std::runtime_error("Colour index out of bounds!");
+		throw std::runtime_error{"Colour index out of bounds!"};
 	}
 }
 
@@ -172,7 +164,7 @@ float &Colour::operator[](const uint32_t &index)
 	case 3:
 		return m_a;
 	default:
-		throw std::runtime_error("Colour index out of bounds!");
+		throw std::runtime_error{"Colour index out of bounds!"};
 	}
 }
 
@@ -308,7 +300,6 @@ Metadata &operator<<(Metadata &metadata, const Colour &colour)
 
 std::ostream &operator<<(std::ostream &stream, const Colour &colour)
 {
-	stream << colour.ToString();
-	return stream;
+	return stream << colour.m_r << ", " << colour.m_g << ", " << colour.m_b << ", " << colour.m_a;
 }
 }

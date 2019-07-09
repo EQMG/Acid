@@ -35,6 +35,15 @@ public:
 		{
 		}
 
+		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
+
+		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
+
+		bool operator<(const VertexInput &other) const
+		{
+			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
+		}
+
 		friend const Metadata &operator>>(const Metadata &metadata, VertexInput &vertexInput)
 		{
 			metadata.GetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
@@ -47,15 +56,6 @@ public:
 			metadata.SetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
 			metadata.SetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
 			return metadata;
-		}
-
-		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
-
-		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
-
-		bool operator<(const VertexInput &other) const
-		{
-			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
 		}
 
 	private:
@@ -77,30 +77,6 @@ public:
 			m_writeOnly(writeOnly),
 			m_stageFlags(stageFlags)
 		{
-		}
-
-		friend const Metadata &operator>>(const Metadata &metadata, Uniform &uniform)
-		{
-			metadata.GetChild("binding", uniform.m_binding);
-			metadata.GetChild("offset", uniform.m_offset);
-			metadata.GetChild("size", uniform.m_size);
-			metadata.GetChild("glType", uniform.m_glType);
-			metadata.GetChild("readOnly", uniform.m_readOnly);
-			metadata.GetChild("writeOnly", uniform.m_writeOnly);
-			metadata.GetChild("stageFlags", uniform.m_stageFlags);
-			return metadata;
-		}
-
-		friend Metadata &operator<<(Metadata &metadata, const Uniform &uniform)
-		{
-			metadata.SetChild("binding", uniform.m_binding);
-			metadata.SetChild("offset", uniform.m_offset);
-			metadata.SetChild("size", uniform.m_size);
-			metadata.SetChild("glType", uniform.m_glType);
-			metadata.SetChild("readOnly", uniform.m_readOnly);
-			metadata.SetChild("writeOnly", uniform.m_writeOnly);
-			metadata.SetChild("stageFlags", uniform.m_stageFlags);
-			return metadata;
 		}
 
 		const int32_t &GetBinding() const { return m_binding; }
@@ -128,11 +104,28 @@ public:
 			return !(*this == other);
 		}
 
-		std::string ToString() const
+		friend const Metadata &operator>>(const Metadata &metadata, Uniform &uniform)
 		{
-			std::stringstream stream;
-			stream << "Uniform(binding " << m_binding << ", offset " << m_offset << ", size " << m_size << ", glType " << m_glType << ")";
-			return stream.str();
+			metadata.GetChild("binding", uniform.m_binding);
+			metadata.GetChild("offset", uniform.m_offset);
+			metadata.GetChild("size", uniform.m_size);
+			metadata.GetChild("glType", uniform.m_glType);
+			metadata.GetChild("readOnly", uniform.m_readOnly);
+			metadata.GetChild("writeOnly", uniform.m_writeOnly);
+			metadata.GetChild("stageFlags", uniform.m_stageFlags);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const Uniform &uniform)
+		{
+			metadata.SetChild("binding", uniform.m_binding);
+			metadata.SetChild("offset", uniform.m_offset);
+			metadata.SetChild("size", uniform.m_size);
+			metadata.SetChild("glType", uniform.m_glType);
+			metadata.SetChild("readOnly", uniform.m_readOnly);
+			metadata.SetChild("writeOnly", uniform.m_writeOnly);
+			metadata.SetChild("stageFlags", uniform.m_stageFlags);
+			return metadata;
 		}
 
 	private:
@@ -161,26 +154,6 @@ public:
 			m_stageFlags(stageFlags),
 			m_type(type)
 		{
-		}
-
-		friend const Metadata &operator>>(const Metadata &metadata, UniformBlock &uniformBlock)
-		{
-			metadata.GetChild("binding", uniformBlock.m_binding);
-			metadata.GetChild("size", uniformBlock.m_size);
-			metadata.GetChild("stageFlags", uniformBlock.m_stageFlags);
-			metadata.GetChild("type", uniformBlock.m_type);
-			metadata.GetChild("uniforms", uniformBlock.m_uniforms);
-			return metadata;
-		}
-
-		friend Metadata &operator<<(Metadata &metadata, const UniformBlock &uniformBlock)
-		{
-			metadata.SetChild("binding", uniformBlock.m_binding);
-			metadata.SetChild("size", uniformBlock.m_size);
-			metadata.SetChild("stageFlags", uniformBlock.m_stageFlags);
-			metadata.SetChild("type", uniformBlock.m_type);
-			metadata.SetChild("uniforms", uniformBlock.m_uniforms);
-			return metadata;
 		}
 
 		const int32_t &GetBinding() const { return m_binding; }
@@ -215,11 +188,24 @@ public:
 			return !(*this == other);
 		}
 
-		std::string ToString() const
+		friend const Metadata &operator>>(const Metadata &metadata, UniformBlock &uniformBlock)
 		{
-			std::stringstream stream;
-			stream << "UniformBlock(binding " << m_binding << ", size " << m_size << ", type " << static_cast<uint32_t>(m_type) << ")";
-			return stream.str();
+			metadata.GetChild("binding", uniformBlock.m_binding);
+			metadata.GetChild("size", uniformBlock.m_size);
+			metadata.GetChild("stageFlags", uniformBlock.m_stageFlags);
+			metadata.GetChild("type", uniformBlock.m_type);
+			metadata.GetChild("uniforms", uniformBlock.m_uniforms);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const UniformBlock &uniformBlock)
+		{
+			metadata.SetChild("binding", uniformBlock.m_binding);
+			metadata.SetChild("size", uniformBlock.m_size);
+			metadata.SetChild("stageFlags", uniformBlock.m_stageFlags);
+			metadata.SetChild("type", uniformBlock.m_type);
+			metadata.SetChild("uniforms", uniformBlock.m_uniforms);
+			return metadata;
 		}
 
 	private:
@@ -243,24 +229,6 @@ public:
 		{
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, Attribute &attribute)
-		{
-			metadata.GetChild("set", attribute.m_set);
-			metadata.GetChild("location", attribute.m_location);
-			metadata.GetChild("size", attribute.m_size);
-			metadata.GetChild("glType", attribute.m_glType);
-			return metadata;
-		}
-
-		friend Metadata &operator<<(Metadata &metadata, const Attribute &attribute)
-		{
-			metadata.SetChild("set", attribute.m_set);
-			metadata.SetChild("location", attribute.m_location);
-			metadata.SetChild("size", attribute.m_size);
-			metadata.SetChild("glType", attribute.m_glType);
-			return metadata;
-		}
-
 		const int32_t &GetSet() const { return m_set; }
 
 		const int32_t &GetLocation() const { return m_location; }
@@ -279,11 +247,22 @@ public:
 			return !(*this == other);
 		}
 
-		std::string ToString() const
+		friend const Metadata &operator>>(const Metadata &metadata, Attribute &attribute)
 		{
-			std::stringstream stream;
-			stream << "VertexAttribute(set " << m_set << "', location " << m_location << ", size " << m_size << ", glType " << m_glType << ")";
-			return stream.str();
+			metadata.GetChild("set", attribute.m_set);
+			metadata.GetChild("location", attribute.m_location);
+			metadata.GetChild("size", attribute.m_size);
+			metadata.GetChild("glType", attribute.m_glType);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const Attribute &attribute)
+		{
+			metadata.SetChild("set", attribute.m_set);
+			metadata.SetChild("location", attribute.m_location);
+			metadata.SetChild("size", attribute.m_size);
+			metadata.SetChild("glType", attribute.m_glType);
+			return metadata;
 		}
 
 	private:
@@ -306,24 +285,6 @@ public:
 		{
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, Constant &constant)
-		{
-			metadata.GetChild("binding", constant.m_binding);
-			metadata.GetChild("size", constant.m_size);
-			metadata.GetChild("stageFlags", constant.m_stageFlags);
-			metadata.GetChild("glType", constant.m_glType);
-			return metadata;
-		}
-
-		friend Metadata &operator<<(Metadata &metadata, const Constant &constant)
-		{
-			metadata.SetChild("binding", constant.m_binding);
-			metadata.SetChild("size", constant.m_size);
-			metadata.SetChild("stageFlags", constant.m_stageFlags);
-			metadata.SetChild("glType", constant.m_glType);
-			return metadata;
-		}
-
 		const int32_t &GetBinding() const { return m_binding; }
 
 		const int32_t &GetSize() const { return m_size; }
@@ -342,11 +303,22 @@ public:
 			return !(*this == other);
 		}
 
-		std::string ToString() const
+		friend const Metadata &operator>>(const Metadata &metadata, Constant &constant)
 		{
-			std::stringstream stream;
-			stream << "Constant(binding " << m_binding << "', size " << m_size << ", stageFlags " << m_stageFlags << ", glType " << m_glType << ")";
-			return stream.str();
+			metadata.GetChild("binding", constant.m_binding);
+			metadata.GetChild("size", constant.m_size);
+			metadata.GetChild("stageFlags", constant.m_stageFlags);
+			metadata.GetChild("glType", constant.m_glType);
+			return metadata;
+		}
+
+		friend Metadata &operator<<(Metadata &metadata, const Constant &constant)
+		{
+			metadata.SetChild("binding", constant.m_binding);
+			metadata.SetChild("size", constant.m_size);
+			metadata.SetChild("stageFlags", constant.m_stageFlags);
+			metadata.SetChild("glType", constant.m_glType);
+			return metadata;
 		}
 
 	private:
@@ -363,10 +335,6 @@ public:
 	const std::filesystem::path &GetName() const { return m_stages.back(); }
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
-
-	friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
-
-	friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
 
 	static VkFormat GlTypeToVk(const int32_t &type);
 
@@ -408,7 +376,9 @@ public:
 
 	void CreateReflection();
 
-	std::string ToString() const;
+	friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
+
+	friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
 
 private:
 	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
@@ -417,7 +387,7 @@ private:
 
 	void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
 
-	void LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
+	void LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i);
 
 	static int32_t ComputeSize(const glslang::TType *ttype);
 

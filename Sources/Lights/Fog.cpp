@@ -19,13 +19,6 @@ void Fog::Update()
 {
 }
 
-std::string Fog::ToString() const
-{
-	std::stringstream stream;
-	stream << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
-	return stream.str();
-}
-
 const Metadata &operator>>(const Metadata &metadata, Fog &fog)
 {
 	metadata.GetChild("colour", fog.m_colour);
@@ -44,11 +37,5 @@ Metadata &operator<<(Metadata &metadata, const Fog &fog)
 	metadata.SetChild("lowerLimit", fog.m_lowerLimit);
 	metadata.SetChild("upperLimit", fog.m_upperLimit);
 	return metadata;
-}
-
-std::ostream &operator<<(std::ostream &stream, const Fog &fog)
-{
-	stream << fog.ToString();
-	return stream;
 }
 }

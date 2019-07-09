@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/Log.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Component.hpp"
 
@@ -24,7 +23,7 @@ public:
 	{
 		if (m_components.find(name) != m_components.end())
 		{
-			Log::Warning("Component '%s' is already registered!\n", name);
+			std::cerr << "Component '" << name << "' is already registered!\n";
 			Remove(name);
 			return;
 		}

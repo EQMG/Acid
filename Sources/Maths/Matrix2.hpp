@@ -115,8 +115,6 @@ public:
 	 **/
 	float GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
 
-	std::string ToString() const;
-
 	bool operator==(const Matrix2 &other) const;
 
 	bool operator!=(const Matrix2 &other) const;

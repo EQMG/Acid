@@ -1,6 +1,5 @@
 #include "Http.hpp"
 
-#include "Engine/Log.hpp"
 #include "Helpers/String.hpp"
 
 namespace acid
@@ -27,7 +26,7 @@ void Http::SetHost(const std::string &host, const uint16_t &port)
 	else if (String::Lowercase(host.substr(0, 8)) == "https://")
 	{
 		// HTTPS protocol -- unsupported (requires encryption and certificates and stuff...).
-		Log::Error("HTTPS protocol is not supported by Http\n");
+		std::cerr << "HTTPS protocol is not supported by HTTP\n";
 		m_hostName = "";
 		m_port = 0;
 	}

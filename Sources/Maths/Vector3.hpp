@@ -275,8 +275,6 @@ public:
 	 **/
 	auto PolarToCartesian() const;
 
-	std::string ToString() const;
-
 	template<typename K>
 	constexpr bool operator==(const Vector3<K> &other) const;
 

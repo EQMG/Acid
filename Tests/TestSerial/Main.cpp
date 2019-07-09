@@ -2,7 +2,6 @@
 #include <vector>
 #include <map>
 #include <array>
-#include <Engine/Log.hpp>
 #include <Files/File.hpp>
 #include <Files/Files.hpp>
 #include <Helpers/EnumClass.hpp>
@@ -153,8 +152,8 @@ int main(int argc, char **argv)
 		auto value{json["value"]};
 		value->SetValue(3 * value->GetValue<int32_t>() + 2);
 
-		Log::Out("%s\n", json.Write(Metadata::Format::Minified));
-		//Log::Out("%s\n", Xml{"source", &json}.Write(Metadata::Format::Minified));
+		std::cout << json.Write(Metadata::Format::Minified) << '\n';
+		/std::cout << Xml{"source", &json}.Write(Metadata::Format::Minified) << '\n';
 	}*/
 
 	/*test::Example1 example1;

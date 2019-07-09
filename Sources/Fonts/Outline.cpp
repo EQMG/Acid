@@ -89,7 +89,7 @@ void OutlineDecompose(FT_Outline *outline, Outline *o)
 
 	if (FT_Outline_Get_BBox(outline, &outlineBbox) != 0)
 	{
-		throw std::runtime_error("Freetype failed to get a bbox outline");
+		throw std::runtime_error{"Freetype failed to get a bbox outline"};
 	}
 
 	o->m_bbox.m_min.m_x = static_cast<float>(outlineBbox.xMin) / 64.0f;
@@ -105,7 +105,7 @@ void OutlineDecompose(FT_Outline *outline, Outline *o)
 
 	if (FT_Outline_Decompose(outline, &funcs, o) != 0)
 	{
-		throw std::runtime_error("Freetype failed to decompose a outline");
+		throw std::runtime_error{"Freetype failed to decompose a outline"};
 	}
 
 	if (!o->m_contours.empty())

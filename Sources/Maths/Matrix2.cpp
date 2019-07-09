@@ -142,7 +142,7 @@ Matrix2 Matrix2::Inverse() const
 
 	if (det == 0.0f)
 	{
-		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
+		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
 	}
 	
 	for (uint32_t j{}; j < 2; j++)
@@ -222,14 +222,6 @@ float Matrix2::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
 	}
 
 	return result;
-}
-
-std::string Matrix2::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Matrix2(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ")";
-	return stream.str();
 }
 
 bool Matrix2::operator==(const Matrix2 &other) const
@@ -375,7 +367,6 @@ Metadata &operator<<(Metadata &metadata, const Matrix2 &matrix)
 
 std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)
 {
-	stream << matrix.ToString();
-	return stream;
+	return stream << matrix[0] << ", " << matrix[1];
 }
 }

@@ -157,7 +157,7 @@ Matrix3 Matrix3::Inverse() const
 
 	if (det == 0.0f)
 	{
-		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
+		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
 	}
 
 	for (uint32_t j{}; j < 3; j++)
@@ -239,15 +239,6 @@ Matrix2 Matrix3::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
 	}
 
 	return result;
-}
-
-std::string Matrix3::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Matrix3(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[1][0] << ", " << m_rows[1][1] << ", " << m_rows[1][2] << ", "
-	       << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ")";
-	return stream.str();
 }
 
 bool Matrix3::operator==(const Matrix3 &other) const
@@ -395,7 +386,6 @@ Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix)
 
 std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix)
 {
-	stream << matrix.ToString();
-	return stream;
+	return stream << matrix[0] << ", " << matrix[1] << ", " << matrix[2];
 }
 }

@@ -5,7 +5,6 @@
 #else
 #include <netinet/in.h>
 #endif
-#include "Engine/Log.hpp"
 #include "TcpSocket.hpp"
 
 namespace acid
@@ -53,7 +52,7 @@ Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &addres
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{
 		// Not likely to happen, but...
-		Log::Error("Failed to bind listener socket to port %i\n", port);
+		std::cerr << "Failed to bind listener socket to port :" << port << '\n';
 		return Status::Error;
 	}
 
@@ -61,7 +60,7 @@ Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &addres
 	if (listen(GetHandle(), SOMAXCONN) == -1)
 	{
 		// Oops, socket is deaf.
-		Log::Error("Failed to listen to port %i\n", port);
+		std::cerr << "Failed to listen to port :" << port << '\n';
 		return Status::Error;
 	}
 
@@ -79,7 +78,7 @@ Socket::Status TcpListener::Accept(TcpSocket &socket)
 	// Make sure that we're listening.
 	if (GetHandle() == InvalidSocketHandle())
 	{
-		Log::Error("Failed to accept a new connection, the socket is not listening\n");
+		std::cerr << "Failed to accept a new connection, the socket is not listening\n";
 		return Status::Error;
 	}
 

@@ -250,8 +250,6 @@ public:
 	template<typename K, typename J>
 	constexpr auto SmoothDamp(const Vector4<K> &target, const Vector4<J> &rate) const;
 
-	std::string ToString() const;
-
 	template<typename K>
 	constexpr bool operator==(const Vector4<K> &other) const;
 

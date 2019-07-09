@@ -78,9 +78,9 @@ Vector2f a{3.0f, -7.2f};
 Vector2f b{-1.74f, 15.4f};
 Vector2f c{a * b};
 // Distance between the two points.
-float dist{a.Distance(b)};
+float distance{a.Distance(b)};
 // Right shift of the x and y bits by 1.
-Vector2i rshift = Vector2i{5, 9} >> 1;
+Vector2i rightShift{Vector2i{5, 9} >> 1};
 
 // Split a string by spaces.
 std::string stringSource{"Hello world!"};
@@ -89,14 +89,14 @@ std::vector<std::string> stringSplit{String::Split(stringSource, ' ')};
 // Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
 Window::Get()->OnSize().Add([](Vector2ui size)
 {
-	Log::Out("Hello world: %s\n", size.ToString());
+	std::cout << "Hello world: " << size << '\n';
 });
 
 // A value container that calls a delegate on value assignments.
 DelegateValue<Vector3f> da;
 da.Add([](Vector3f value)
 {
-	Log::Out("New Value: %s\n", value.ToString());
+	std::cout << "New value: " << value << '\n';
 });
 da = {10.0f, -4.11f, 99.991f};
 
@@ -106,18 +106,18 @@ Time dateTime{4h + 2min + 11s + 9ms + 1us + 4ns};
 // Calls the function once after 150 milliseconds.
 Timers::Get()->Once(150ms, []()
 {
-	Log::Out("Timer Hello World!\n");
+	std::cout << "Timer Once After\n";
 });
 // Calls the function every 4 seconds. 
 Timers::Get()->Every(4s, []()
 {
-	Log::Out("Timer Every Tick\n");
+	std::cout << "Timer Every Tick\n";
 });
 // Calls the funcion every 7 seconds 3 times.
 Timers::Get()->Repeat(7s, 3, []()
 {
 	static uint32_t i{};
-	Log::Out("Timer Repeat Tick #%i\n", i);
+	std::cout << "Timer Repeat Tick #" << i << '\n';
 	i++;
 });
 ```

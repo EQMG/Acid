@@ -32,7 +32,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_elapsedRender{-1s}
 {
 	INSTANCE = this;
-	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
+	//Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
 
 	if (!emptyRegister)
 	{

@@ -36,22 +36,22 @@ MainGame::MainGame() :
 	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.
-	m_fileWatcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
+	m_fileWatcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status)
 	{
 		switch (status)
 		{
 		case FileWatcher::Status::Created:
-			Log::Out("Created '%s'\n", path);
+			std::cout << "Created " << path << '\n';
 			break;
 		case FileWatcher::Status::Modified:
-			Log::Out("Modified '%s'\n", path);
+			std::cout << "Modified " << path << '\n';
 			break;
 		case FileWatcher::Status::Erased:
-			Log::Out("Erased '%s'\n", path);
+			std::cout << "Erased " << path << '\n';
 			break;
 		}
 	});

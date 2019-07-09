@@ -1,7 +1,5 @@
 #include "Metadata.hpp"
 
-#include "Engine/Log.hpp"
-
 namespace acid
 {
 Metadata::Metadata(std::string name, std::string value, std::vector<std::unique_ptr<Metadata>> &&children) :

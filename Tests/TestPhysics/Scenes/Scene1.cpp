@@ -74,12 +74,6 @@ Scene1::Scene1() :
 			auto sphereLight = GetStructure()->CreateEntity();
 			sphereLight->AddComponent<Transform>(Vector3f{0.0f, 0.7f, 0.0f})->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
-
-			//auto gizmoType1{GizmoType::Create(Model::Create("Gizmos/Arrow.obj"), 3.0f)};
-			//Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType1,{cameraPosition, cameraRotation}, Colour::Purple));
-			//auto collisionObject{sphere->GetComponent<CollisionObject>()};
-			//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined collided with '%s'\n", other->GetParent()->GetName());});
-			//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Sphere_Undefined seperated with '%s'\n", other->GetParent()->GetName());});
 		}
 	});
 
@@ -138,20 +132,20 @@ Scene1::Scene1() :
 	{
 		for (const auto &path : paths)
 		{
-			Log::Out("File dropped: '%s'\n", path);
+			std::cout << "File dropped: '" << path << "'\n";
 		}
 	}, this);
 	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected)
 	{
-		Log::Out("Monitor '%s' action: %i\n", monitor->GetName(), connected);
+		std::cout << "Monitor '" << monitor->GetName() << "' action: " << connected << '\n';
 	}, this);
 	Window::Get()->OnClose().Add([]()
 	{
-		Log::Out("Window has closed!\n");
+		std::cout << "Window has closed!\n";
 	}, this);
 	Window::Get()->OnIconify().Add([](bool iconified)
 	{
-		Log::Out("Iconified: %i\n", iconified);
+		std::cout << "Iconified: " << iconified << '\n';
 	}, this);
 }
 

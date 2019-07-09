@@ -23,7 +23,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			std::cerr << "Shader Include could not be loaded: '" << headerName << "'\n";
 			return nullptr;
 		}
 
@@ -38,7 +38,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			std::cerr << "Shader Include could not be loaded: '" << headerName << "'\n", headerName;
 			return nullptr;
 		}
 
@@ -74,27 +74,6 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 	}
 
 	return false;
-}
-
-const Metadata &operator>>(const Metadata &metadata, Shader &shader)
-{
-	metadata.GetChild("stages", shader.m_stages);
-	metadata.GetChild("uniforms", shader.m_uniforms);
-	metadata.GetChild("uniformBlocks", shader.m_uniformBlocks);
-	metadata.GetChild("attributes", shader.m_attributes);
-	metadata.GetChild("constants", shader.m_constants);
-	//metadata.GetChild("localSizes", shader.m_localSizes);
-	return metadata;
-}
-
-Metadata &operator<<(Metadata &metadata, const Shader &shader)
-{
-	metadata.SetChild("stages", shader.m_stages);
-	metadata.SetChild("uniforms", shader.m_uniforms);
-	metadata.SetChild("uniformBlocks", shader.m_uniformBlocks);
-	metadata.SetChild("constants", shader.m_constants);
-	//metadata.SetChild("localSizes", shader.m_localSizes);
-	return metadata;
 }
 
 VkFormat Shader::GlTypeToVk(const int32_t &type)
@@ -412,23 +391,23 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	if (!shader.preprocess(&resources, defaultVersion, ENoProfile, false, false, messages, &str, includer))
 	{
-		Log::Out("%s\n", shader.getInfoLog());
-		Log::Out("%s\n", shader.getInfoDebugLog());
-		Log::Error("SPRIV shader preprocess failed!\n");
+		std::cout << shader.getInfoLog() << '\n';
+		std::cout << shader.getInfoDebugLog() << '\n';
+		std::cerr << "SPRIV shader preprocess failed!\n";
 	}
 
 	if (!shader.parse(&resources, defaultVersion, true, messages, includer))
 	{
-		Log::Out("%s\n", shader.getInfoLog());
-		Log::Out("%s\n", shader.getInfoDebugLog());
-		Log::Error("SPRIV shader parse failed!\n");
+		std::cout << shader.getInfoLog() << '\n';
+		std::cout << shader.getInfoDebugLog() << '\n';
+		std::cerr << "SPRIV shader parse failed!\n";
 	}
 
 	program.addShader(&shader);
 
 	if (!program.link(messages) || !program.mapIO())
 	{
-		Log::Error("Error while linking shader program.\n");
+		std::cerr << "Error while linking shader program.\n";
 	}
 
 	program.buildReflection();
@@ -456,7 +435,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	for (int32_t i{}; i < program.getNumLiveAttributes(); i++)
 	{
-		LoadVertexAttribute(program, moduleFlag, i);
+		LoadAttribute(program, moduleFlag, i);
 	}
 
 	glslang::SpvOptions spvOptions;
@@ -598,54 +577,25 @@ void Shader::CreateReflection()
 	}
 }
 
-std::string Shader::ToString() const
+const Metadata &operator>>(const Metadata &metadata, Shader &shader)
 {
-	std::stringstream stream;
+	metadata.GetChild("stages", shader.m_stages);
+	metadata.GetChild("uniforms", shader.m_uniforms);
+	metadata.GetChild("uniformBlocks", shader.m_uniformBlocks);
+	metadata.GetChild("attributes", shader.m_attributes);
+	metadata.GetChild("constants", shader.m_constants);
+	//metadata.GetChild("localSizes", shader.m_localSizes);
+	return metadata;
+}
 
-	if (!m_attributes.empty())
-	{
-		stream << "Vertex Attributes: \n";
-
-		for (const auto &[attributeName, attribute] : m_attributes)
-		{
-			stream << "  - " << attributeName << ": " << attribute.ToString() << "\n";
-		}
-	}
-
-	if (!m_uniforms.empty())
-	{
-		stream << "Uniforms: \n";
-
-		for (const auto &[uniformName, uniform] : m_uniforms)
-		{
-			stream << "  - " << uniformName << ": " << uniform.ToString() << "\n";
-		}
-	}
-
-	if (!m_uniformBlocks.empty())
-	{
-		stream << "Uniform Blocks: \n";
-
-		for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
-		{
-			stream << "  - " << uniformBlockName << ": " << uniformBlock.ToString() << " \n";
-
-			for (const auto &[uniformName, uniform] : uniformBlock.GetUniforms())
-			{
-				stream << "	- " << uniformName << ": " << uniform.ToString() << " \n";
-			}
-		}
-	}
-
-	for (uint32_t dim{}; dim < m_localSizes.size(); dim++)
-	{
-		if (m_localSizes[dim])
-		{
-			stream << "Local size " << "XYZ"[dim] << ": " << *m_localSizes[dim] << " \n";
-		}
-	}
-
-	return stream.str();
+Metadata &operator<<(Metadata &metadata, const Shader &shader)
+{
+	metadata.SetChild("stages", shader.m_stages);
+	metadata.SetChild("uniforms", shader.m_uniforms);
+	metadata.SetChild("uniformBlocks", shader.m_uniformBlocks);
+	metadata.SetChild("constants", shader.m_constants);
+	//metadata.SetChild("localSizes", shader.m_localSizes);
+	return metadata;
 }
 
 void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)
@@ -736,7 +686,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 	m_uniforms.emplace(reflection.name, Uniform(reflection.getBinding(), reflection.offset, -1, reflection.glDefineType, qualifier.readonly, qualifier.writeonly, stageFlag));
 }
 
-void Shader::LoadVertexAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
 	auto reflection{program.getPipeInput(i)};
 

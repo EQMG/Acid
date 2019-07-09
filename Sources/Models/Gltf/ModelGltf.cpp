@@ -73,8 +73,7 @@ void ModelGltf::Load()
 
 	if (!fileLoaded)
 	{
-
-		Log::Error("GLTF file could not be loaded: '%s'\n", m_filename);
+		std::cerr << "GLTF file could not be loaded: '" << m_filename << "'\n";
 		return;
 	}
 
@@ -86,14 +85,14 @@ void ModelGltf::Load()
 	{
 		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size())))
 		{
-			throw std::runtime_error(warn + err);
+			throw std::runtime_error{warn + err};
 		}
 	}
 	else
 	{
 		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder.string()))
 		{
-			throw std::runtime_error(warn + err);
+			throw std::runtime_error{warn + err};
 		}
 	}
 
@@ -139,8 +138,7 @@ void ModelGltf::Load()
 	auto extensions{gltfModel.extensionsUsed};*/
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Model GLTF '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Model GLTF " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
 #endif
 
 	Initialize(vertices, indices);

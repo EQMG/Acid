@@ -53,26 +53,26 @@ MainGame::MainGame() :
 		}
 	}*/
 
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();
 
-	Log::Out("Current DateTime: %s\n", Time::GetDateTime());
+	std::cout << "Current DateTime: " << Time::GetDateTime() << '\n';
 
 	Timers::Get()->Once(0.333s, []()
 	{
-		Log::Out("Timer Hello World!\n");
+		std::cout << "Timer Hello World!\n";
 	});
 	Timers::Get()->Every(4s, []()
 	{
-		Log::Out("Timer Every Tick: %i fps\n", Engine::Get()->GetFps());
+		std::cout << "Timer Every Tick: " << Engine::Get()->GetFps() << " fps\n";
 	});
 	Timers::Get()->Repeat(2s, 3, []()
 	{
 		static uint32_t i = 0;
-		Log::Out("Timer Repeat Tick #%i\n", i);
+		std::cout << "Timer Repeat Tick #" << i << '\n';
 		i++;
 	});
 

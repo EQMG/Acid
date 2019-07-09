@@ -169,9 +169,7 @@ void Graphics::CheckVk(const VkResult &result)
 
 	auto failure{StringifyResultVk(result)};
 
-	Log::Error("Vulkan error: %s, %i\n", failure, result);
-	//Log::Popup("Vulkan Error", failure);
-	throw std::runtime_error("Vulkan error: " + failure);
+	throw std::runtime_error{"Vulkan error: " + failure};
 }
 
 void Graphics::UpdateSurfaceCapabilities()
@@ -216,8 +214,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Screenshot '%ls' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Screenshot " << filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
 #endif
 }
 
@@ -322,7 +319,7 @@ void Graphics::RecreatePass(RenderStage &renderStage)
 	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 	{
 #if defined(ACID_VERBOSE)
-		Log::Out("Resizing swapchain from (%i, %i) to (%i, %i)\n", m_swapchain->GetExtent().width, m_swapchain->GetExtent().height, displayExtent.width, displayExtent.height);
+		std::cout << "Resizing swapchain from {" << m_swapchain->GetExtent().width << ", " << m_swapchain->GetExtent().height << "} to {" << displayExtent.width << ", " << displayExtent.height << "}\n";
 #endif
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 	}

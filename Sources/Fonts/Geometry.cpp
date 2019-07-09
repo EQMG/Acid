@@ -357,7 +357,7 @@ bool Bezier2LineIsIntersecting(const Vector2f bezier[3], const Vector2f &line0, 
 		xt1 = Bezier2Component(x0, x1, x2, t1);
 		return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) || (IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
 	default:
-		throw std::runtime_error("No quadratic solution could be found.");
+		throw std::runtime_error{"No quadratic solution could be found"};
 	}
 }
 }

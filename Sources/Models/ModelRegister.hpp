@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/Log.hpp"
 #include "Serialized/Metadata.hpp"
 #include "Model.hpp"
 
@@ -27,7 +26,7 @@ public:
 	{
 		if (m_modelMetadatas.find(name) != m_modelMetadatas.end())
 		{
-			Log::Warning("Model metadata type '%s' is already registered!\n", name);
+			std::cerr << "Model metadata type '" << name << "' is already registered!\n";
 			return;
 		}
 
@@ -48,7 +47,7 @@ public:
 	{
 		if (m_modelMetadatas.find(extension) != m_modelMetadatas.end())
 		{
-			Log::Warning("Model extension type '%s' is already registered!\n", extension);
+			std::cerr << "Model extension type '" << extension << "' is already registered!\n";
 			return;
 		}
 

@@ -59,8 +59,6 @@ public:
 
 	const std::vector<Transform *> &GetChildren() const { return m_children; }
 
-	std::string ToString() const;
-
 	bool operator==(const Transform &other) const;
 
 	bool operator!=(const Transform &other) const;

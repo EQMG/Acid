@@ -45,13 +45,11 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 		CreatePipelineMrt();
 		break;
 	default:
-		throw std::runtime_error("Unknown pipeline mode");
+		throw std::runtime_error{"Unknown pipeline mode"};
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	//Log::Out("%s\n", m_shader->ToString());
-	Log::Out("Pipeline graphics '%ls' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Pipeline Graphics " << m_shaderStages.back() << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
 #endif
 }
 
@@ -100,8 +98,7 @@ void PipelineGraphics::CreateShaderProgram()
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Stage could not be loaded: '%s'\n", shaderStage);
-			throw std::runtime_error("Could not create pipeline, missing shader stage");
+			throw std::runtime_error{"Could not create pipeline, missing shader stage"};
 		}
 
 		auto stageFlag{Shader::GetShaderStage(shaderStage)};
@@ -170,7 +167,7 @@ void PipelineGraphics::CreateAttributes()
 
 	if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid)
 	{
-		throw std::runtime_error("Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills.");
+		throw std::runtime_error{"Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills."};
 	}
 
 	m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;

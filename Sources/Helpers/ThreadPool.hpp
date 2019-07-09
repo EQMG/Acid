@@ -47,7 +47,7 @@ decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 
 		if (m_stop)
 		{
-			throw std::runtime_error("Enqueue called on a stopped ThreadPool");
+			throw std::runtime_error{"Enqueue called on a stopped ThreadPool"};
 		}
 
 		m_tasks.emplace([task]()

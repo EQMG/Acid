@@ -20,7 +20,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 
 	if (m_physicalDevice == nullptr)
 	{
-		throw std::runtime_error("Vulkan runtime error, failed to find a suitable GPU");
+		throw std::runtime_error{"Vulkan runtime error, failed to find a suitable GPU"};
 	}
 
 	vkGetPhysicalDeviceProperties(m_physicalDevice, &m_properties);
@@ -29,7 +29,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_msaaSamples = GetMaxUsableSampleCount();
 
 #if defined(ACID_VERBOSE)
-	Log::Out("Selected Physical Device: %i '%s'\n", m_properties.deviceID, m_properties.deviceName);
+	std::cout << "Selected Physical Device: " << m_properties.deviceID << " '" << m_properties.deviceName << "'\n";
 #endif
 }
 
@@ -127,56 +127,53 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount() const
 
 void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties)
 {
-	std::stringstream stream;
-
-	switch (static_cast<int>(physicalDeviceProperties.deviceType))
+	switch (static_cast<int32_t>(physicalDeviceProperties.deviceType))
 	{
 	case 1:
-		stream << "Integrated";
+		std::cout << "Integrated";
 		break;
 	case 2:
-		stream << "Discrete";
+		std::cout << "Discrete";
 		break;
 	case 3:
-		stream << "Virtual";
+		std::cout << "Virtual";
 		break;
 	case 4:
-		stream << "CPU";
+		std::cout << "CPU";
 		break;
 	default:
-		stream << "Other " << physicalDeviceProperties.deviceType;
+		std::cout << "Other " << physicalDeviceProperties.deviceType;
 	}
 
-	stream << " Physical Device: " << physicalDeviceProperties.deviceID;
+	std::cout << " Physical Device: " << physicalDeviceProperties.deviceID;
 
 	switch (physicalDeviceProperties.vendorID)
 	{
 	case 0x8086:
-		stream << " 'Intel'";
+		std::cout << " 'Intel'";
 		break;
 	case 0x10DE:
-		stream << " 'Nvidia'";
+		std::cout << " 'Nvidia'";
 		break;
 	case 0x1002:
-		stream << " 'AMD'";
+		std::cout << " 'AMD'";
 		break;
 	default:
-		stream << " '" << physicalDeviceProperties.vendorID << "'";
+		std::cout << " '" << physicalDeviceProperties.vendorID << "'";
 	}
 
-	stream << " '" << physicalDeviceProperties.deviceName << "'\n";
+	std::cout << " '" << physicalDeviceProperties.deviceName << "'\n";
 
-	uint32_t supportedVersion[]{ VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
-		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion) };
-	stream << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << "\n";
-	stream << "Extensions: ";
+	uint32_t supportedVersion[]{VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)};
+	std::cout << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << "\n";
+	std::cout << "Extensions: ";
 
 	for (const auto &extension : extensionProperties)
 	{
-		stream << extension.extensionName << ", ";
+		std::cout << extension.extensionName << ", ";
 	}
 
-	stream << "\n\n";
-	Log::Out(stream.str());
+	std::cout << "\n\n";
 }
 }
