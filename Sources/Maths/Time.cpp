@@ -131,15 +131,13 @@ Time &Time::operator/=(const int64_t &other)
 
 const Node &operator>>(const Node &node, Time &time)
 {
-	int64_t us;
-	node >> us;
-	time.m_microseconds = std::chrono::microseconds(us);
+	time.m_microseconds = std::chrono::microseconds(node.Get<int64_t>());
 	return node;
 }
 
 Node &operator<<(Node &node, const Time &time)
 {
-	node << time.m_microseconds.count();
+	node.Set(time.m_microseconds.count());
 	return node;
 }
 }

@@ -21,7 +21,7 @@ ConfigManager::ConfigManager() :
 
 void ConfigManager::Load()
 {
-	m_audio.Load();
+	/*m_audio.Load();
 	auto &audioData{m_audio.GetNode()};
 	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::General, audioData["generalVolume"].Get<float>(1.0f));
@@ -37,12 +37,12 @@ void ConfigManager::Load()
 	Window::Get()->SetResizable(graphicsData["resizable"].Get<bool>(true));
 	Window::Get()->SetFloating(graphicsData["floating"].Get<bool>(false));
 	Window::Get()->SetFullscreen(graphicsData["fullscreen"].Get<bool>(false));
-	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].Get<float>(0.0f));
+	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].Get<float>(0.0f));*/
 }
 
 void ConfigManager::Save() const
 {
-	auto &audioData{m_audio.GetNode()};
+	/*auto &audioData{m_audio.GetNode()};
 	audioData["masterVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Master));
 	audioData["generalVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::General));
 	audioData["effectVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Effect));
@@ -58,6 +58,6 @@ void ConfigManager::Save() const
 	graphicsData["floating"].Set<bool>(Window::Get()->IsFloating());
 	graphicsData["fullscreen"].Set<bool>(Window::Get()->IsFullscreen());
 	graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
-	m_graphics.Write();
+	m_graphics.Write();*/
 }
 }

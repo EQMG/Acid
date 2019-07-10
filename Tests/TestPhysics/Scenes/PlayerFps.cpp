@@ -84,7 +84,7 @@ void PlayerFps::Update()
 				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
 			}
 
-			std::cout << "Player Noclip: " << (m_noclipEnabled ? "true\n" : "false\n");
+			std::cout << "Player Noclip: " << std::boolalpha << m_noclipEnabled << '\n';
 		}
 	}
 
