@@ -73,7 +73,7 @@ void ModelGltf::Load()
 
 	if (!fileLoaded)
 	{
-		std::cerr << "GLTF file could not be loaded: '" << m_filename << "'\n";
+		std::cerr << "GLTF file could not be loaded: " << m_filename << '\n';
 		return;
 	}
 
@@ -138,7 +138,7 @@ void ModelGltf::Load()
 	auto extensions{gltfModel.extensionsUsed};*/
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Model GLTF " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "Model GLTF " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 
 	Initialize(vertices, indices);

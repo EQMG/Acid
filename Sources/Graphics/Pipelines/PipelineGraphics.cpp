@@ -49,7 +49,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Pipeline Graphics " << m_shaderStages.back() << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "Pipeline Graphics " << m_shaderStages.back() << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 
@@ -89,7 +89,7 @@ void PipelineGraphics::CreateShaderProgram()
 
 	for (const auto &define : m_defines)
 	{
-		defineBlock << "#define " << define.first << " " << define.second << "\n";
+		defineBlock << "#define " << define.first << " " << define.second << '\n';
 	}
 
 	for (const auto &shaderStage : m_shaderStages)

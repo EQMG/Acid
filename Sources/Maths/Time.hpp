@@ -1,6 +1,9 @@
 #pragma once
 
+#include <chrono>
 #include "Serialized/Metadata.hpp"
+
+using namespace std::chrono_literals;
 
 namespace acid
 {

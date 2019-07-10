@@ -30,7 +30,7 @@ void File::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "File " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "File " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 
@@ -58,7 +58,7 @@ void File::Write() const
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "File " << m_filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "File " << m_filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 

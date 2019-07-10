@@ -1,7 +1,5 @@
 #include "Colour.hpp"
 
-#include <iomanip>
-
 namespace acid
 {
 const Colour Colour::Clear{"#000000", 0.0f};

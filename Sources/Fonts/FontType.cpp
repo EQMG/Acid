@@ -171,7 +171,7 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 
 	if (!fileLoaded)
 	{
-		std::cerr << "Font could not be loaded: '" << filename << "'\n";
+		std::cerr << "Could not load font " << filename << '\n';
 		return;
 	}
 

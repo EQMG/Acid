@@ -23,7 +23,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			std::cerr << "Shader Include could not be loaded: '" << headerName << "'\n";
+			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
 			return nullptr;
 		}
 
@@ -38,7 +38,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			std::cerr << "Shader Include could not be loaded: '" << headerName << "'\n", headerName;
+			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
 			return nullptr;
 		}
 

@@ -31,8 +31,8 @@ PlayerFps::PlayerFps() :
 void PlayerFps::Start()
 {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player collided with '" << other->GetParent()->GetName() << "'\n";});
-	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player seperated with '" << other->GetParent()->GetName() << "'\n";});
+	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player collided with " << std::quoted(other->GetParent()->GetName()) << '\n';});
+	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player seperated with " << std::quoted(other->GetParent()->GetName()) << '\n';});
 }
 
 void PlayerFps::Update()

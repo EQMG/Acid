@@ -113,7 +113,7 @@ void Instance::SetupLayers()
 
 		if (!layerFound)
 		{
-			std::cerr << "Vulkan validation layer not found: '" << layerName << "'\n";
+			std::cerr << "Vulkan validation layer not found: " << std::quoted(layerName) << '\n';
 			continue;
 		}
 

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <thread>
 #include <Network/Ftp/Ftp.hpp>
 #include <Network/Http/Http.hpp>

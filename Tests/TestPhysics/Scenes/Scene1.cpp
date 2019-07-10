@@ -132,12 +132,12 @@ Scene1::Scene1() :
 	{
 		for (const auto &path : paths)
 		{
-			std::cout << "File dropped: '" << path << "'\n";
+			std::cout << "File dropped on window: " << path << '\n';
 		}
 	}, this);
 	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected)
 	{
-		std::cout << "Monitor '" << monitor->GetName() << "' action: " << connected << '\n';
+		std::cout << "Monitor " << std::quoted(monitor->GetName()) << " action: " << connected << '\n';
 	}, this);
 	Window::Get()->OnClose().Add([]()
 	{

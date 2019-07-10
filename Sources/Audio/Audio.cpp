@@ -31,7 +31,7 @@ Audio::Audio() :
 	}
 
 	auto deviceName{alcGetString(m_device, ALC_DEVICE_SPECIFIER)};
-	std::cout << "Selected Audio Device: '" << deviceName << "'\n";
+	std::cout << "Selected Audio Device: " << std::quoted(deviceName) << '\n';
 #endif
 }
 
@@ -100,7 +100,7 @@ void Audio::CheckAl(const int32_t &result)
 
 	auto failure{StringifyResultAl(result)};
 
-	std::cerr << "OpenAL error: " << failure << ", " << result << "\n";
+	std::cerr << "OpenAL error: " << failure << ", " << result << '\n';
 	throw std::runtime_error{"OpenAL Error: " + result};
 }
 

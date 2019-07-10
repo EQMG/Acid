@@ -214,7 +214,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Screenshot " << filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "Screenshot " << filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 

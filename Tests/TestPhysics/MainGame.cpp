@@ -1,6 +1,5 @@
 #include "MainGame.hpp"
 
-#include <iostream>
 #include <Files/Files.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 #include <Devices/Mouse.hpp>

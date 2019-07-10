@@ -82,9 +82,11 @@ void Rigidbody::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
+	auto delta{Engine::Get()->GetDelta()};
+
 	for (auto it{m_forces.begin()}; it != m_forces.end();)
 	{
-		(*it)->Update();
+		(*it)->Update(delta);
 		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
 
 		if ((*it)->IsExpired())

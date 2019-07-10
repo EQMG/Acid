@@ -26,7 +26,7 @@ public:
 	{
 		if (m_modelMetadatas.find(name) != m_modelMetadatas.end())
 		{
-			std::cerr << "Model metadata type '" << name << "' is already registered!\n";
+			std::cerr << "Model metadata type " << std::quoted(name) << " is already registered!\n";
 			return;
 		}
 
@@ -47,7 +47,7 @@ public:
 	{
 		if (m_modelMetadatas.find(extension) != m_modelMetadatas.end())
 		{
-			std::cerr << "Model extension type '" << extension << "' is already registered!\n";
+			std::cerr << "Model extension type " << std::quoted(extension) << " is already registered!\n";
 			return;
 		}
 

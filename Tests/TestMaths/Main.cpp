@@ -1,5 +1,4 @@
-﻿#include <iostream>
-#include <Maths/Time.hpp>
+﻿#include <Maths/Time.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Matrix2.hpp>
 #include <Maths/Matrix3.hpp>

@@ -1,5 +1,4 @@
 #include "Time.hpp"
-#include <iomanip>
 
 namespace acid
 {

@@ -112,7 +112,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Render Stage created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "Render Stage created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 

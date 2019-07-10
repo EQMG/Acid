@@ -116,7 +116,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (!fileLoaded)
 	{
-		std::cerr << "Image could not be loaded: '" << filename << "'\n";
+		std::cerr << "Image could not be loaded: " << filename << '\n';
 		return nullptr;
 	}
 
@@ -129,7 +129,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (pixels == nullptr)
 	{
-		std::cerr << "Unable to load Image: '" << filename << "'\n";
+		std::cerr << "Unable to load Image: " << filename << '\n';
 	}
 
 	return pixels;

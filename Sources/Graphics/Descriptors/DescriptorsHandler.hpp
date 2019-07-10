@@ -55,7 +55,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				std::cerr << "Could not find descriptor in shader '" << m_shader->GetName() << "' of name '" << descriptorName << "'\n";
+				std::cerr << "Could not find descriptor in shader " << m_shader->GetName() << " of name " << std::quoted(descriptorName) << '\n';
 			}
 #endif
 
@@ -69,7 +69,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				std::cerr << "Could not find descriptor in shader '" << m_shader->GetName() << "' of name '" << descriptorName << "' at location '" << *location << "'\n";
+				std::cerr << "Could not find descriptor in shader " << m_shader->GetName() << " of name " << std::quoted(descriptorName) << " at location " << *location << '\n';
 			}
 #endif
 			return;

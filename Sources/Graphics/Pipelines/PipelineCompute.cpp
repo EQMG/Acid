@@ -23,7 +23,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 	CreatePipelineCompute();
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Pipeline Compute " << m_shaderStage << " created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << '\n';
+	std::cout << "Pipeline Compute " << m_shaderStage << " created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 
@@ -52,7 +52,7 @@ void PipelineCompute::CreateShaderProgram()
 
 	for (const auto &define : m_defines)
 	{
-		defineBlock << "#define " << define.first << " " << define.second << "\n";
+		defineBlock << "#define " << define.first << " " << define.second << '\n';
 	}
 
 	auto fileLoaded{Files::Read(m_shaderStage)};

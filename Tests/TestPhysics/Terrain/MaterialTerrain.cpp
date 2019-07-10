@@ -1,6 +1,5 @@
 #include "MaterialTerrain.hpp"
 
-#include <utility>
 #include <Scenes/Entity.hpp>
 #include <Models/VertexDefault.hpp>
 #include <Maths/Transform.hpp>

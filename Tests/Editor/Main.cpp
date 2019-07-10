@@ -1,4 +1,3 @@
-#include <iostream>
 #include <Engine/Engine.hpp>
 #include <Graphics/Graphics.hpp>
 #include "Plugins.hpp"
