@@ -122,8 +122,6 @@ public:
 	 **/
 	Matrix2 GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
 
-	std::string ToString() const;
-
 	bool operator==(const Matrix3 &other) const;
 
 	bool operator!=(const Matrix3 &other) const;

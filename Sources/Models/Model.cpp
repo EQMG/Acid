@@ -38,7 +38,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 	}
 	else
 	{
-		//throw std::runtime_error("Model with no buffers cannot be rendered");
+		//throw std::runtime_error{"Model with no buffers can't be rendered"};
 		return false;
 	}
 

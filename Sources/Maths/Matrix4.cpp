@@ -238,7 +238,7 @@ Matrix4 Matrix4::Inverse() const
 
 	if (det == 0.0f)
 	{
-		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
+		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
 	}
 
 	for (uint32_t j{}; j < 4; j++)
@@ -445,16 +445,6 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 	return result;
 }
 
-std::string Matrix4::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Matrix4(" << m_rows[0][0] << ", " << m_rows[0][1] << ", " << m_rows[0][2] << ", " << m_rows[0][3] << ", \n" << m_rows[1][0] << ", " << m_rows[1][1] << ", "
-	       << m_rows[1][2] << ", " << m_rows[1][3] << ", \n" << m_rows[2][0] << ", " << m_rows[2][1] << ", " << m_rows[2][2] << ", " << m_rows[2][3] << ", \n" << m_rows[3][0]
-	       << ", " << m_rows[3][1] << ", " << m_rows[3][2] << ", " << m_rows[3][3] << ")";
-	return stream.str();
-}
-
 bool Matrix4::operator==(const Matrix4 &other) const
 {
 	return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2] && m_rows[3] == other[3];
@@ -602,7 +592,6 @@ Node &operator<<(Node &node, const Matrix4 &matrix)
 
 std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)
 {
-	stream << matrix.ToString();
-	return stream;
+	return stream << matrix[0] << ", " << matrix[1] << ", " << matrix[2] << ", " << matrix[3];
 }
 }

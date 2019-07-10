@@ -95,7 +95,7 @@ uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryProper
 		}
 	}
 
-	throw std::runtime_error("Failed to find a valid memory type for buffer");
+	throw std::runtime_error{"Failed to find a valid memory type for buffer"};
 }
 
 void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, 

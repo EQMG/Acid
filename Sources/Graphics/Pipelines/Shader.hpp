@@ -35,6 +35,15 @@ public:
 		{
 		}
 
+		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
+
+		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
+
+		bool operator<(const VertexInput &other) const
+		{
+			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
+		}
+
 		friend const Node &operator>>(const Node &node, VertexInput &vertexInput)
 		{
 			node["bindingDescriptions"].Get(vertexInput.m_bindingDescriptions);
@@ -47,15 +56,6 @@ public:
 			node["bindingDescriptions"].Set(vertexInput.m_bindingDescriptions);
 			node["attributeDescriptions"].Set(vertexInput.m_attributeDescriptions);
 			return node;
-		}
-
-		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
-
-		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
-
-		bool operator<(const VertexInput &other) const
-		{
-			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
 		}
 
 	private:
@@ -336,10 +336,6 @@ public:
 
 	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
 
-	friend const Node &operator>>(const Node &node, Shader &shader);
-
-	friend Node &operator<<(Node &node, const Shader &shader);
-
 	static VkFormat GlTypeToVk(const int32_t &type);
 
 	std::optional<uint32_t> GetDescriptorLocation(const std::string &name) const;
@@ -379,6 +375,10 @@ public:
 	VkShaderModule CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag);
 
 	void CreateReflection();
+
+	friend const Node &operator>>(const Node &node, Shader &shader);
+
+	friend Node &operator<<(Node &node, const Shader &shader);
 
 private:
 	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);

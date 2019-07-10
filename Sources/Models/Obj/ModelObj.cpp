@@ -115,7 +115,7 @@ void ModelObj::Load()
 
 	if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, &inStream, &materialReader))
 	{
-		throw std::runtime_error(warn + err);
+		throw std::runtime_error{warn + err};
 	}
 
 	std::vector<VertexDefault> vertices;
@@ -142,8 +142,7 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Model OBJ '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Model OBJ " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 
 	Initialize(vertices, indices);

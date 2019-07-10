@@ -17,6 +17,8 @@ enum class InputAction :
 	Release = 0, Press = 1, Repeat = 2
 };
 
+ENABLE_BITMASK_OPERATORS(InputAction)
+
 enum class InputMod :
 	int32_t
 {

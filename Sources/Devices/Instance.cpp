@@ -17,7 +17,7 @@ const std::vector<const char *> Instance::DeviceExtensions{ VK_KHR_SWAPCHAIN_EXT
 VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,
 	const char *pLayerPrefix, const char *pMessage, void *pUserData)
 {
-	Log::Error("%s\n", pMessage);
+	std::cerr << pMessage << '\n';
 	return static_cast<VkBool32>(false);
 }
 
@@ -69,7 +69,7 @@ uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *d
 		}
 	}
 
-	throw std::runtime_error("Couldn't find a proper memory type");
+	throw std::runtime_error{"Couldn't find a proper memory type"};
 }
 
 Instance::Instance() {
@@ -113,7 +113,7 @@ void Instance::SetupLayers()
 
 		if (!layerFound)
 		{
-			Log::Warning("Vulkan validation layer not found: '%s'\n", layerName);
+			std::cerr << "Vulkan validation layer not found: " << std::quoted(layerName) << '\n';
 			continue;
 		}
 
@@ -187,15 +187,13 @@ void Instance::CreateDebugCallback()
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties)
 {
-	std::stringstream stream;
-	stream << "Instance Layers: ";
+	std::cout << "Instance Layers: ";
 
 	for (const auto &layer : layerProperties)
 	{
-		stream << layer.layerName << ", ";
+		std::cout << layer.layerName << ", ";
 	}
 
-	stream << "\n\n";
-	Log::Out(stream.str());
+	std::cout << "\n\n";
 }
 }

@@ -28,7 +28,7 @@ ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &sam
 
 	if (m_format == VK_FORMAT_UNDEFINED)
 	{
-		throw std::runtime_error("No depth stencil format could be selected");
+		throw std::runtime_error{"No depth stencil format could be selected"};
 	}
 
 	VkImageAspectFlags aspectMask{VK_IMAGE_ASPECT_DEPTH_BIT};

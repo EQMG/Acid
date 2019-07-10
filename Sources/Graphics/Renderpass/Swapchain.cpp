@@ -148,7 +148,7 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR && acquireResult != VK_ERROR_OUT_OF_DATE_KHR)
 	{
-		throw std::runtime_error("Failed to acquire swapchain image");
+		throw std::runtime_error{"Failed to acquire swapchain image"};
 	}
 
 	//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));

@@ -116,7 +116,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (!fileLoaded)
 	{
-		Log::Error("Image could not be loaded: '%s'\n", filename);
+		std::cerr << "Image could not be loaded: " << filename << '\n';
 		return nullptr;
 	}
 
@@ -129,7 +129,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (pixels == nullptr)
 	{
-		Log::Error("Unable to load Image: '%s'\n", filename);
+		std::cerr << "Unable to load Image: " << filename << '\n';
 	}
 
 	return pixels;
@@ -368,7 +368,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		//throw std::runtime_error("Unsupported image layout transition source");
+		//throw std::runtime_error{"Unsupported image layout transition source"};
 		break;
 	}
 
@@ -396,7 +396,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		//throw std::runtime_error("Unsupported image layout transition destination");
+		//throw std::runtime_error{"Unsupported image layout transition destination"};
 		break;
 	}
 
@@ -460,7 +460,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 	{
-		Log::Warning("Device does not support blitting from optimal tiled images, using copy instead of blit!\n");
+		std::cerr << "Device does not support blitting from optimal tiled images, using copy instead of blit!\n";
 		supportsBlit = false;
 	}
 
@@ -469,7 +469,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 	{
-		Log::Warning("Device does not support blitting to linear tiled images, using copy instead of blit!\n");
+		std::cerr << "Device does not support blitting to linear tiled images, using copy instead of blit!\n";
 		supportsBlit = false;
 	}
 

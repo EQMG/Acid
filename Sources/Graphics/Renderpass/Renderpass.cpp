@@ -59,7 +59,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 
 			if (!attachment)
 			{
-				Log::Error("Failed to find a renderpass attachment bound to: %i\n", attachmentBinding);
+				std::cerr << "Failed to find a renderpass attachment bound to: " << attachmentBinding << '\n';
 				continue;
 			}
 

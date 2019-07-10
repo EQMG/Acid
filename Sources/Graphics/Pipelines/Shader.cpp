@@ -23,7 +23,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
 			return nullptr;
 		}
 
@@ -38,7 +38,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			Log::Error("Shader Include could not be loaded: '%s'\n", headerName);
+			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
 			return nullptr;
 		}
 
@@ -74,27 +74,6 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 	}
 
 	return false;
-}
-
-const Node &operator>>(const Node &node, Shader &shader)
-{
-	node["stages"].Get(shader.m_stages);
-	node["uniforms"].Get(shader.m_uniforms);
-	node["uniformBlocks"].Get(shader.m_uniformBlocks);
-	node["attributes"].Get(shader.m_attributes);
-	node["constants"].Get(shader.m_constants);
-	//node["localSizes"].Get(shader.m_localSizes);
-	return node;
-}
-
-Node &operator<<(Node &node, const Shader &shader)
-{
-	node["stages"].Set(shader.m_stages);
-	node["uniforms"].Set(shader.m_uniforms);
-	node["uniformBlocks"].Set(shader.m_uniformBlocks);
-	node["constants"].Set(shader.m_constants);
-	//node["localSizes"].Set(shader.m_localSizes);
-	return node;
 }
 
 VkFormat Shader::GlTypeToVk(const int32_t &type)
@@ -412,23 +391,23 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	if (!shader.preprocess(&resources, defaultVersion, ENoProfile, false, false, messages, &str, includer))
 	{
-		Log::Out("%s\n", shader.getInfoLog());
-		Log::Out("%s\n", shader.getInfoDebugLog());
-		Log::Error("SPRIV shader preprocess failed!\n");
+		std::cout << shader.getInfoLog() << '\n';
+		std::cout << shader.getInfoDebugLog() << '\n';
+		std::cerr << "SPRIV shader preprocess failed!\n";
 	}
 
 	if (!shader.parse(&resources, defaultVersion, true, messages, includer))
 	{
-		Log::Out("%s\n", shader.getInfoLog());
-		Log::Out("%s\n", shader.getInfoDebugLog());
-		Log::Error("SPRIV shader parse failed!\n");
+		std::cout << shader.getInfoLog() << '\n';
+		std::cout << shader.getInfoDebugLog() << '\n';
+		std::cerr << "SPRIV shader parse failed!\n";
 	}
 
 	program.addShader(&shader);
 
 	if (!program.link(messages) || !program.mapIO())
 	{
-		Log::Error("Error while linking shader program.\n");
+		std::cerr << "Error while linking shader program.\n";
 	}
 
 	program.buildReflection();
@@ -596,6 +575,27 @@ void Shader::CreateReflection()
 		m_attributeDescriptions.emplace_back(attributeDescription);
 		currentOffset += attribute.m_size;
 	}
+}
+
+const Node &operator>>(const Node &node, Shader &shader)
+{
+	node["stages"].Get(shader.m_stages);
+	node["uniforms"].Get(shader.m_uniforms);
+	node["uniformBlocks"].Get(shader.m_uniformBlocks);
+	node["attributes"].Get(shader.m_attributes);
+	node["constants"].Get(shader.m_constants);
+	//node["localSizes"].Get(shader.m_localSizes);
+	return node;
+}
+
+Node &operator<<(Node &node, const Shader &shader)
+{
+	node["stages"].Set(shader.m_stages);
+	node["uniforms"].Set(shader.m_uniforms);
+	node["uniformBlocks"].Set(shader.m_uniformBlocks);
+	node["constants"].Set(shader.m_constants);
+	//node["localSizes"].Set(shader.m_localSizes);
+	return node;
 }
 
 void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)

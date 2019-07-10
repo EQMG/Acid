@@ -38,7 +38,7 @@ public:
 	 * Called when a file or directory has changed.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::string, Status)> &OnChange() { return m_onChange; }
+	Delegate<void(std::filesystem::path, Status)> &OnChange() { return m_onChange; }
 
 private:
 	void QueueLoop();
@@ -47,7 +47,7 @@ private:
 
 	std::filesystem::path m_path;
 	Time m_delay;
-	Delegate<void(std::string, Status)> m_onChange;
+	Delegate<void(std::filesystem::path, Status)> m_onChange;
 
 	bool m_running;
 	std::thread m_thread;

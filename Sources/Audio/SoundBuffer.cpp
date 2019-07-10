@@ -90,7 +90,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 
 	if (!fileLoaded)
 	{
-		Log::Error("WAV file could not be loaded: '%s'\n", filename);
+		std::cerr << "WAV file could not be loaded: " << filename << '\n';
 		return 0;
 	}
 
@@ -152,8 +152,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Sound WAV '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Sound WAV " << filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 	return buffer;
 }
@@ -168,7 +167,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 
 	if (!fileLoaded)
 	{
-		Log::Error("OGG file could not be loaded: '%s'\n", filename);
+		std::cerr << "OGG file could not be loaded: " << filename << '\n';
 		return 0;
 	}
 
@@ -179,7 +178,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 
 	if (size == -1)
 	{
-		Log::Error("Error reading the OGG '%s', could not find size! The audio could not be loaded.\n", filename);
+		std::cerr << "Error reading the OGG " << filename << ", could not find size\n";
 	}
 
 	uint32_t buffer;
@@ -190,8 +189,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 	Audio::CheckAl(alGetError());
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Sound OGG '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Sound OGG " << filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 	return buffer;
 }

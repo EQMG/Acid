@@ -47,13 +47,9 @@ public:
 
 	void SetUpperLimit(const float &upperLimit) { m_upperLimit = upperLimit; }
 
-	std::string ToString() const;
-
 	friend const Node &operator>>(const Node &node, Fog &fog);
 
 	friend Node &operator<<(Node &node, const Fog &fog);
-
-	friend std::ostream &operator<<(std::ostream &stream, const Fog &fog);
 
 private:
 	Colour m_colour;

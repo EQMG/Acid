@@ -23,9 +23,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 	CreatePipelineCompute();
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	//Log::Out("%s", m_shader->ToString());
-	Log::Out("Pipeline compute '%ls' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Pipeline Compute " << m_shaderStage << " created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 
@@ -54,15 +52,14 @@ void PipelineCompute::CreateShaderProgram()
 
 	for (const auto &define : m_defines)
 	{
-		defineBlock << "#define " << define.first << " " << define.second << "\n";
+		defineBlock << "#define " << define.first << " " << define.second << '\n';
 	}
 
 	auto fileLoaded{Files::Read(m_shaderStage)};
 
 	if (!fileLoaded)
 	{
-		Log::Error("Shader Stage could not be loaded: '%s'\n", m_shaderStage);
-		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
+		throw std::runtime_error{"Could not create compute pipeline, missing shader stage"};
 	}
 
 	auto stageFlag{Shader::GetShaderStage(m_shaderStage)};

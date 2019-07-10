@@ -76,7 +76,7 @@ void LogicalDevice::CreateQueueIndices()
 
 	if (!graphicsFamily)
 	{
-		throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
+		throw std::runtime_error{"Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT"};
 	}
 }
 
@@ -150,7 +150,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support wireframe pipelines!\n");
+		std::cerr << "Selected GPU does not support wireframe pipelines!\n";
 	}
 
 	if (physicalDeviceFeatures.samplerAnisotropy)
@@ -159,7 +159,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support sampler anisotropy!\n");
+		std::cerr << "Selected GPU does not support sampler anisotropy!\n";
 	}
 
 	if (physicalDeviceFeatures.textureCompressionBC)
@@ -181,7 +181,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support vertex pipeline stores and atomics!\n");
+		std::cerr << "Selected GPU does not support vertex pipeline stores and atomics!\n";
 	}
 
 	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
@@ -190,7 +190,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support fragment stores and atomics!\n");
+		std::cerr << "Selected GPU does not support fragment stores and atomics!\n";
 	}
 
 	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats)
@@ -199,7 +199,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support shader storage extended formats!\n");
+		std::cerr << "Selected GPU does not support shader storage extended formats!\n";
 	}
 
 	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat)
@@ -208,7 +208,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support shader storage write without format!\n");
+		std::cerr << "Selected GPU does not support shader storage write without format!\n";
 	}
 
 	//enabledFeatures.shaderClipDistance = VK_TRUE;
@@ -220,7 +220,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support geometry shaders!\n");
+		std::cerr << "Selected GPU does not support geometry shaders!\n";
 	}
 
 	if (physicalDeviceFeatures.tessellationShader)
@@ -229,7 +229,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support tessellation shaders!\n");
+		std::cerr << "Selected GPU does not support tessellation shaders!\n";
 	}
 
 	if (physicalDeviceFeatures.multiViewport)
@@ -238,7 +238,7 @@ void LogicalDevice::CreateLogicalDevice()
 	}
 	else
 	{
-		Log::Warning("Selected GPU does not support multi viewports!\n");
+		std::cerr << "Selected GPU does not support multi viewports!\n";
 	}
 
 	VkDeviceCreateInfo deviceCreateInfo{};

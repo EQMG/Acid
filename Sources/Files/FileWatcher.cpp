@@ -35,7 +35,7 @@ void FileWatcher::QueueLoop()
 		{
 			if (!std::filesystem::exists(it->first))
 			{
-				m_onChange(it->first, Status::Erased);
+				m_onChange(std::filesystem::path{it->first}, Status::Erased);
 				it = m_paths.erase(it);
 				continue;
 			}

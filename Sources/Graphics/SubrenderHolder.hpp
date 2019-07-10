@@ -27,7 +27,7 @@ public:
 
 		if (it == m_subrenders.end() || it->second == nullptr)
 		{
-			throw std::runtime_error("Subrender Holder does not have requested Subrender");
+			throw std::runtime_error{"Subrender Holder does not have requested Subrender"};
 		}
 
 		return static_cast<T *>(it->second.get());

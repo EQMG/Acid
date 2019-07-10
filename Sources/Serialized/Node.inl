@@ -87,17 +87,17 @@ Node &Node::operator=(const T &rhs)
 }
 
 template<typename T>
-const Node &operator>>(const Node &node, T &object)
+std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object)
 {
-	object = String::From<T>(node.GetValue<std::string>());
+	object = node.GetValue<T>();
 	return node;
 }
 
 template<typename T>
-Node &operator<<(Node &node, const T &object)
+std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, const T &object)
 {
 	node.SetValue(object);
-	node.SetType(Node::Type::String);
+	node.SetType(Node::Type::Number);
 	return node;
 }
 
@@ -121,6 +121,7 @@ Node &operator<<(Node &node, const std::unique_ptr<T> &object)
 	}
 
 	node << *object;
+	node.SetType(Node::Type::Object);
 	return node;
 }
 
@@ -153,6 +154,7 @@ Node &operator<<(Node &node, const std::shared_ptr<T> &object)
 	}
 
 	node << *object;
+	node.SetType(Node::Type::Object);
 	return node;
 }
 
@@ -217,6 +219,7 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(
 	}
 
 	node << ConstExpr::AsRef(object);
+	node.SetType(Node::Type::Object);
 	return node;
 }
 

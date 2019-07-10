@@ -19,13 +19,6 @@ void Fog::Update()
 {
 }
 
-std::string Fog::ToString() const
-{
-	std::stringstream stream;
-	stream << "Fog(" << m_colour << ", " << m_density << ", " << m_gradient << ", " << m_lowerLimit << ", " << m_upperLimit << ")";
-	return stream.str();
-}
-
 const Node &operator>>(const Node &node, Fog &fog)
 {
 	node["colour"].Get(fog.m_colour);
@@ -44,11 +37,5 @@ Node &operator<<(Node &node, const Fog &fog)
 	node["lowerLimit"].Set(fog.m_lowerLimit);
 	node["upperLimit"].Set(fog.m_upperLimit);
 	return node;
-}
-
-std::ostream &operator<<(std::ostream &stream, const Fog &fog)
-{
-	stream << fog.ToString();
-	return stream;
 }
 }

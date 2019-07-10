@@ -61,6 +61,6 @@ void CameraFps::Update()
 	m_viewRay.Update(m_position, {0.5f, 0.5f}, m_viewMatrix, m_projectionMatrix);
 
 	//auto raytest = Scenes::Get()->GetPhysics()->Raytest(m_viewRay.GetOrigin(), m_viewRay.GetPointOnRay(20.0f));
-	//Log::Out("%s: %f\n", raytest.HasHit() ? raytest.GetParent()->GetName() : "", raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()));
+	//std::cout << (raytest.HasHit() ? raytest.GetParent()->GetName() : "") << ": " << raytest.GetPointWorld().Distance(m_viewRay.GetOrigin()) << '\n';
 }
 }

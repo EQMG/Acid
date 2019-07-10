@@ -9,7 +9,7 @@ namespace acid
 void CallbackError(int32_t error, const char *description)
 {
 	Window::CheckGlfw(error);
-	Log::Error("GLFW error: %s, %i\n", description, error);
+	std::cerr << "GLFW error: " << description << ", " << error << '\n';
 }
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
@@ -106,13 +106,13 @@ Window::Window() :
 	// Initialize the GLFW library.
 	if (glfwInit() == GLFW_FALSE)
 	{
-		throw std::runtime_error("GLFW failed to initialize");
+		throw std::runtime_error{"GLFW failed to initialize"};
 	}
 
 	// Checks Vulkan support on GLFW.
 	if (glfwVulkanSupported() == GLFW_FALSE)
 	{
-		throw std::runtime_error("GLFW failed to find Vulkan support");
+		throw std::runtime_error{"GLFW failed to find Vulkan support"};
 	}
 
 	// Set the monitor callback
@@ -145,7 +145,7 @@ Window::Window() :
 	if (m_window == nullptr)
 	{
 		glfwTerminate();
-		throw std::runtime_error("GLFW failed to create the window");
+		throw std::runtime_error{"GLFW failed to create the window"};
 	}
 
 	// Sets the user pointer.
@@ -358,10 +358,7 @@ void Window::CheckGlfw(const int32_t &result)
 	}
 
 	auto failure{StringifyResultGlfw(result)};
-
-	Log::Error("GLFW error: %s, %i\n", failure, result);
-	//Log::Popup("GLFW Error", failure);
-	throw std::runtime_error("GLFW error: " + result);
+	throw std::runtime_error{"GLFW error: " + failure};
 }
 
 std::pair<const char **, uint32_t> Window::GetInstanceExtensions()

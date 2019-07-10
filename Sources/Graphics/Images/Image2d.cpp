@@ -179,8 +179,7 @@ void Image2d::Load()
 #endif
 		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)
-		auto debugEnd{Time::Now()};
-		Log::Out("Image 2D '%ls' loaded in %.3fms\n", m_filename, (debugEnd - debugStart).AsMilliseconds<float>());
+		std::cout << "Image 2D " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 	}
 

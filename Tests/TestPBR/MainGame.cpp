@@ -1,6 +1,5 @@
 #include "MainGame.hpp"
 
-#include <iostream>
 #include <Files/Files.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
@@ -35,7 +34,7 @@ MainGame::MainGame() :
 	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)

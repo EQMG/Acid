@@ -29,8 +29,6 @@
 #include <Shadows/ShadowRender.hpp>
 #include <Uis/Uis.hpp>
 #include <Serialized/Json/Json.hpp>
-#include <Serialized/Xml/Xml.hpp>
-#include <Serialized/Yaml/Yaml.hpp>
 #include "CameraFps.hpp"
 
 namespace test

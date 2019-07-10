@@ -29,8 +29,8 @@ template<typename K, typename J, typename H, typename F>
 constexpr Vector4<T>::Vector4(const K &x, const J &y, const H &z, const F &w) :
 	m_x{static_cast<T>(x)},
 	m_y{static_cast<T>(y)},
-	m_z{static_cast<T>(x)},
-	m_w{static_cast<T>(y)}
+	m_z{static_cast<T>(z)},
+	m_w{static_cast<T>(w)}
 {
 }
 
@@ -140,7 +140,7 @@ auto Vector4<T>::Normalize() const
 
 	if (l == 0)
 	{
-		throw std::runtime_error("Can't normalize a zero length vector");
+		throw std::runtime_error{"Can't normalize a zero length vector"};
 	}
 
 	return *this / l;
@@ -229,15 +229,6 @@ constexpr auto Vector4<T>::SmoothDamp(const Vector4<K> &target, const Vector4<J>
 }
 
 template<typename T>
-std::string Vector4<T>::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Vector4(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
-	return stream.str();
-}
-
-template<typename T>
 template<typename K>
 constexpr bool Vector4<T>::operator==(const Vector4<K> &other) const
 {
@@ -279,7 +270,7 @@ constexpr const T &Vector4<T>::operator[](const uint32_t &index) const
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error("Vector4 index out of bounds!");
+		throw std::runtime_error{"Vector4 index out of bounds!"};
 	}
 }
 
@@ -297,7 +288,7 @@ constexpr T &Vector4<T>::operator[](const uint32_t &index)
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error("Vector4 index out of bounds!");
+		throw std::runtime_error{"Vector4 index out of bounds!"};
 	}
 }
 
@@ -376,8 +367,7 @@ Node &operator<<(Node &node, const Vector4<K> &vector)
 template<typename K>
 std::ostream &operator<<(std::ostream &stream, const Vector4<K> &vector)
 {
-	stream << vector.ToString();
-	return stream;
+	return stream << vector.m_x << ", " << vector.m_y << ", " << vector.m_z << ", " << vector.m_w;
 }
 
 template<typename K, typename J>

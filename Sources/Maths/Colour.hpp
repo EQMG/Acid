@@ -113,8 +113,6 @@ public:
 	 **/
 	std::string GetHex() const;
 
-	std::string ToString() const;
-
 	bool operator==(const Colour &other) const;
 
 	bool operator!=(const Colour &other) const;

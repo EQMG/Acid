@@ -254,14 +254,6 @@ Vector3f Quaternion::ToEuler() const
 	return result;
 }
 
-std::string Quaternion::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Quaternion(" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
-	return stream.str();
-}
-
 bool Quaternion::operator==(const Quaternion &other) const
 {
 	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
@@ -285,7 +277,7 @@ const float &Quaternion::operator[](const uint32_t &index) const
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error("Quaternion index out of bounds!");
+		throw std::runtime_error{"Quaternion index out of bounds!"};
 	}
 }
 
@@ -302,7 +294,7 @@ float &Quaternion::operator[](const uint32_t &index)
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error("Quaternion index out of bounds!");
+		throw std::runtime_error{"Quaternion index out of bounds!"};
 	}
 }
 
@@ -371,7 +363,6 @@ Node &operator<<(Node &node, const Quaternion &quaternion)
 
 std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion)
 {
-	stream << quaternion.ToString();
-	return stream;
+	return stream << quaternion.m_x << ", " << quaternion.m_y << ", " << quaternion.m_z << ", " << quaternion.m_w;
 }
 }

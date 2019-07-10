@@ -2,6 +2,8 @@
 
 #include "Serialized/Node.hpp"
 
+using namespace std::chrono_literals;
+
 namespace acid
 {
 /**

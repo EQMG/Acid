@@ -1,6 +1,5 @@
 #include "FtpDataChannel.hpp"
 
-#include "Engine/Log.hpp"
 #include "Ftp.hpp"
 
 namespace acid
@@ -88,7 +87,7 @@ void FtpDataChannel::Receive(std::ostream &stream)
 
 		if (!stream.good())
 		{
-			Log::Error("FTP Error: Writing to the file has failed\n");
+			std::cerr << "FTP Error: Writing to the file has failed\n";
 			break;
 		}
 	}
@@ -110,7 +109,7 @@ void FtpDataChannel::Send(std::istream &stream)
 
 		if (!stream.good() && !stream.eof())
 		{
-			Log::Error("FTP Error: Reading from the file has failed\n");
+			std::cerr << "FTP Error: Reading from the file has failed\n";
 			break;
 		}
 

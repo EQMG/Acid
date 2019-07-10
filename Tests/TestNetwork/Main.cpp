@@ -1,6 +1,4 @@
-#include <iostream>
 #include <thread>
-#include <Engine/Log.hpp>
 #include <Network/Ftp/Ftp.hpp>
 #include <Network/Http/Http.hpp>
 #include <Network/Udp/UdpSocket.hpp>
@@ -43,10 +41,10 @@ int main(int argc, char **argv)
 		request.SetBody("para1=value1&param2=value2");
 
 		auto response = http.SendRequest(request);
-		Log::Out("Status: %i\n", response.GetStatus());
-		Log::Out("HTTP version: %i.%i\n", response.GetMajorHttpVersion(), response.GetMinorHttpVersion());
-		Log::Out("Content-Type header: %s\n", response.GetField("Content-Type"));
-		Log::Out("Body: %s\n", response.GetBody());
+		std::cout << "Status: " << static_cast<uint32_t>(response.GetStatus()) << '\n'; // TODO: Enum stream operators.
+		std::cout << "HTTP version: " << response.GetMajorHttpVersion() << '.' << response.GetMinorHttpVersion() << '\n';
+		std::cout << "Content-Type header: " << response.GetField("Content-Type") << '\n';
+		std::cout << "Body: " << response.GetBody() << '\n';
 	}
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
 	/*{
@@ -55,11 +53,11 @@ int main(int argc, char **argv)
 		ftp.Login("username", "password");
 		ftp.KeepAlive();
 
-		auto response = ftp.GetWorkingDirectory();
+		auto response{ftp.GetWorkingDirectory()};
 
 		if (response.IsOk())
 		{
-			Log::Out("Current directory: %s\n", response.GetDirectory());
+			std::cout << "Current directory: ", response.GetDirectory() << '\n';
 		}
 
 		ftp.Download("remote_file_name.txt", "local/destination/path", FtpDataChannel::Mode::Ascii);
@@ -83,7 +81,6 @@ int main(int argc, char **argv)
 	unsigned short port = 54000;
 	if (socket.Send(packet.GetData(), packet.GetDataSize(), recipient, port) != SocketStatus::Done)
 	{
-		Log::Error("Error OH NO\n");
 		// error...
 	}*/
 

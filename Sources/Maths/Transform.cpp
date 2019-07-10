@@ -87,13 +87,6 @@ void Transform::SetParent(Entity *parent)
 	SetParent(parent->GetComponent<Transform>());
 }
 
-std::string Transform::ToString() const
-{
-	std::stringstream stream;
-	stream << "Transform(" << m_position << ", " << m_rotation << ", " << m_scale << ")";
-	return stream.str();
-}
-
 bool Transform::operator==(const Transform &other) const
 {
 	return m_position == other.m_position && m_rotation == other.m_rotation && m_scale == other.m_scale;
@@ -132,8 +125,7 @@ Node &operator<<(Node &node, const Transform &transform)
 
 std::ostream &operator<<(std::ostream &stream, const Transform &transform)
 {
-	stream << transform.ToString();
-	return stream;
+	return stream << transform.m_position << ", " << transform.m_rotation << ", " << transform.m_scale;
 }
 
 const Transform *Transform::GetWorldTransform() const

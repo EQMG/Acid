@@ -1,7 +1,6 @@
 #include "MaterialDefault.hpp"
 
 //#include "Animations/MeshAnimated.hpp"
-#include "Engine/Log.hpp"
 #include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
@@ -29,7 +28,7 @@ void MaterialDefault::Start()
 
 	if (mesh == nullptr) // && meshAnimated == nullptr
 	{
-		Log::Error("Cannot have a material attached to a object without a mesh!\n");
+		std::cerr << "Cannot have a material attached to a object without a mesh!\n";
 		return;
 	}
 

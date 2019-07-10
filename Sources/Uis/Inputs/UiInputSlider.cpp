@@ -1,6 +1,5 @@
 ﻿#include "UiInputSlider.hpp"
 
-#include <iomanip>
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 

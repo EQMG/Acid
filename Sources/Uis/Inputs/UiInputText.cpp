@@ -1,5 +1,5 @@
 ﻿#include "UiInputText.hpp"
-#include <utility>
+
 #include "Devices/Keyboard.hpp"
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"

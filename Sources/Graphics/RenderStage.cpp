@@ -112,8 +112,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugEnd{Time::Now()};
-	Log::Out("Render Stage built in %.3fms\n", (debugEnd - debugStart).AsMilliseconds<float>());
+	std::cout << "Render Stage created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
 #endif
 }
 

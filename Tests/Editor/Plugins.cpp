@@ -23,7 +23,7 @@ Plugins::Plugins() :
 	cr_plugin_load(*m_plugin, pathStr.c_str());
 
 	// Watches the plugin path.
-	m_watcher.OnChange().Add([this](std::string path, FileWatcher::Status status)
+	m_watcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status)
 	{
 		if (path == m_loadedPath)
 		{
@@ -35,7 +35,7 @@ Plugins::Plugins() :
 	{
 		if (action == InputAction::Press)
 		{
-		//	std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type{Time::Now()});
+			//std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type{Time::Now()});
 		}
 	});
 }
@@ -49,7 +49,7 @@ void Plugins::Update()
 {
 	if (m_update)
 	{
-		Log::Out("[Host] Updating plugin\n");
+		std::cout << "[Host] Updating plugin\n";
 		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 		m_panels.SetParent(nullptr);
 		cr_plugin_unload(*m_plugin, false, false);

@@ -102,7 +102,7 @@ public:
 
 protected:
 	std::string m_value;
-	Type m_type{};
+	Type m_type{Type::String};
 	Node *m_parent{};
 	std::vector<Property> m_properties;
 };

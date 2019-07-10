@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/Log.hpp"
 #include "Serialized/Node.hpp"
 #include "Model.hpp"
 
@@ -27,7 +26,7 @@ public:
 	{
 		if (m_modelNodes.find(name) != m_modelNodes.end())
 		{
-			Log::Warning("Model node type '%s' is already registered!\n", name);
+			std::cerr << "Model node type " << std::quoted(name) << " is already registered!\n";
 			return;
 		}
 
@@ -48,7 +47,7 @@ public:
 	{
 		if (m_modelNodes.find(extension) != m_modelNodes.end())
 		{
-			Log::Warning("Model extension type '%s' is already registered!\n", extension);
+			std::cerr << "Model extension type " << std::quoted(extension) << " is already registered!\n";
 			return;
 		}
 

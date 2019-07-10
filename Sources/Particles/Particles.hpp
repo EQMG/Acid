@@ -1,7 +1,5 @@
 #pragma once
 
-#include <map>
-#include <vector>
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
 

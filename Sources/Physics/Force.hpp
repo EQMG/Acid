@@ -26,7 +26,7 @@ public:
 	 */
 	Force(const Vector3f &force, const Time &time, const Vector3f &position = {});
 
-	void Update();
+	void Update(const Time &delta);
 
 	bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
 

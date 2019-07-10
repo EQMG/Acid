@@ -1,7 +1,5 @@
 #include "Force.hpp"
 
-#include "Engine/Engine.hpp"
-
 namespace acid
 {
 Force::Force(const Vector3f &force, const Vector3f &position) :
@@ -19,8 +17,8 @@ Force::Force(const Vector3f &force, const Time &time, const Vector3f &position) 
 {
 }
 
-void Force::Update()
+void Force::Update(const Time &delta)
 {
-	m_timeLeft -= Engine::Get()->GetDelta();
+	m_timeLeft -= delta;
 }
 }

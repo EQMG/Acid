@@ -45,7 +45,7 @@ void Timers::Run()
 
 			if (time >= instance->m_next)
 			{
-				//Log::Warning("Timer error: %fms\n", (time - instance->m_next).AsMilliseconds<float>());
+				//std::cerr << "Timer % error: " << (time - instance->m_next).AsMilliseconds<float>() << "ms\n";
 				lock.unlock();
 				instance->m_onTick();
 				lock.lock();

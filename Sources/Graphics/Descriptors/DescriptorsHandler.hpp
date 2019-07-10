@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/Log.hpp"
 #include "Helpers/ConstExpr.hpp"
 #include "Graphics/Descriptors/DescriptorSet.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
@@ -56,7 +55,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				Log::Error("Could not find descriptor in shader '%s' of name '%s'\n", m_shader->GetName(), descriptorName);
+				std::cerr << "Could not find descriptor in shader " << m_shader->GetName() << " of name " << std::quoted(descriptorName) << '\n';
 			}
 #endif
 
@@ -70,7 +69,7 @@ public:
 #if defined(ACID_VERBOSE)
 			if (m_shader->ReportedNotFound(descriptorName, true))
 			{
-				Log::Error("Could not find descriptor in shader '%s' of name '%s' at location '%i'\n", m_shader->GetName(), descriptorName, *location);
+				std::cerr << "Could not find descriptor in shader " << m_shader->GetName() << " of name " << std::quoted(descriptorName) << " at location " << *location << '\n';
 			}
 #endif
 			return;

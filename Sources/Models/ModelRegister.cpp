@@ -38,7 +38,7 @@ std::shared_ptr<Model> ModelRegister::Create(const Node &node) const
 
 	if (it == m_modelNodes.end())
 	{
-		Log::Warning("Could not find registered model by name: '%s'\n", typeName);
+		std::cerr << "Could not find registered model by name: " << std::quoted(typeName) << '\n';
 		return nullptr;
 	}
 
@@ -52,7 +52,7 @@ std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filena
 
 	if (it == m_modelExtensions.end())
 	{
-		Log::Warning("Could not find registered model by extension: '%s'\n", fileExt);
+		std::cerr << "Could not find registered model by extension: " << std::quoted(fileExt) << '\n';
 		return nullptr;
 	}
 

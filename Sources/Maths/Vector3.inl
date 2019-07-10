@@ -149,7 +149,7 @@ auto Vector3<T>::Normalize() const
 
 	if (l == 0)
 	{
-		throw std::runtime_error("Can't normalize a zero length vector");
+		throw std::runtime_error{"Can't normalize a zero length vector"};
 	}
 
 	return *this / l;
@@ -255,15 +255,6 @@ auto Vector3<T>::PolarToCartesian() const
 }
 
 template<typename T>
-std::string Vector3<T>::ToString() const
-{
-	std::stringstream stream;
-	stream.precision(10);
-	stream << "Vector3(" << m_x << ", " << m_y << ", " << m_z << ")";
-	return stream.str();
-}
-
-template<typename T>
 template<typename K>
 constexpr bool Vector3<T>::operator==(const Vector3<K> &other) const
 {
@@ -303,7 +294,7 @@ constexpr const T &Vector3<T>::operator[](const uint32_t &index) const
 	case 2:
 		return m_z;
 	default:
-		throw std::runtime_error("Vector3 index out of bounds!");
+		throw std::runtime_error{"Vector3 index out of bounds!"};
 	}
 }
 
@@ -319,7 +310,7 @@ constexpr T &Vector3<T>::operator[](const uint32_t &index)
 	case 2:
 		return m_z;
 	default:
-		throw std::runtime_error("Vector3 index out of bounds!");
+		throw std::runtime_error{"Vector3 index out of bounds!"};
 	}
 }
 
@@ -396,8 +387,7 @@ Node &operator<<(Node &node, const Vector3<K> &vector)
 template<typename K>
 std::ostream &operator<<(std::ostream &stream, const Vector3<K> &vector)
 {
-	stream << vector.ToString();
-	return stream;
+	return stream << vector.m_x << ", " << vector.m_y << ", " << vector.m_z;
 }
 
 template<typename K, typename J>
