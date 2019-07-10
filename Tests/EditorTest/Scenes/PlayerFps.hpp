@@ -20,9 +20,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, PlayerFps &player);
+	friend const Node &operator>>(const Node &node, PlayerFps &player);
 
-	friend Metadata &operator<<(Metadata &metadata, const PlayerFps &player);
+	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:
 	bool m_noclipEnabled{};

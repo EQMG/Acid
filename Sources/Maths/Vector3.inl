@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Maths.hpp"
 #include "Vector3.hpp"
 
@@ -367,21 +367,21 @@ constexpr Vector3<T> &Vector3<T>::operator/=(const T &other)
 }
 
 template<typename K>
-const Metadata &operator>>(const Metadata &metadata, Vector3<K> &vector)
+const Node &operator>>(const Node &node, Vector3<K> &vector)
 {
-	metadata.GetChild("x", vector.m_x);
-	metadata.GetChild("y", vector.m_y);
-	metadata.GetChild("z", vector.m_z);
-	return metadata;
+	node["x"].Get(vector.m_x);
+	node["y"].Get(vector.m_y);
+	node["z"].Get(vector.m_z);
+	return node;
 }
 
 template<typename K>
-Metadata &operator<<(Metadata &metadata, const Vector3<K> &vector)
+Node &operator<<(Node &node, const Vector3<K> &vector)
 {
-	metadata.SetChild("x", vector.m_x);
-	metadata.SetChild("y", vector.m_y);
-	metadata.SetChild("z", vector.m_z);
-	return metadata;
+	node["x"].Set(vector.m_x);
+	node["y"].Set(vector.m_y);
+	node["z"].Set(vector.m_z);
+	return node;
 }
 
 template<typename K>

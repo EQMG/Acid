@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Helpers/ThreadPool.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Resource.hpp"
 
 namespace acid
@@ -24,9 +24,9 @@ public:
 
 	void Update() override;
 
-	std::shared_ptr<Resource> Find(const Metadata &metadata) const;
+	std::shared_ptr<Resource> Find(const Node &node) const;
 
-	void Add(const Metadata &metadata, const std::shared_ptr<Resource> &resource);
+	void Add(const Node &node, const std::shared_ptr<Resource> &resource);
 
 	void Remove(const std::shared_ptr<Resource> &resource);
 
@@ -37,7 +37,7 @@ public:
 	ThreadPool &GetThreadPool() { return m_threadPool; }
 
 private:
-	std::map<std::unique_ptr<Metadata>, std::shared_ptr<Resource>> m_resources;
+	std::map<Node, std::shared_ptr<Resource>> m_resources;
 	ElapsedTime m_elapsedPurge;
 
 	ThreadPool m_threadPool;

@@ -15,10 +15,10 @@ class ACID_EXPORT SoundBuffer :
 public:
 	/**
 	 * Creates a new sound buffer, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The sound buffer with the requested values.
 	 */
-	static std::shared_ptr<SoundBuffer> Create(const Metadata &metadata);
+	static std::shared_ptr<SoundBuffer> Create(const Node &node);
 
 	/**
 	 * Creates a new sound buffer, or finds one with the same values.
@@ -40,9 +40,9 @@ public:
 
 	const uint32_t &GetBuffer() const { return m_buffer; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer);
+	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer);
 
-	friend Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer);
+	friend Node &operator<<(Node &node, const SoundBuffer &soundBuffer);
 
 private:
 	void Load();

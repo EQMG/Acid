@@ -368,20 +368,20 @@ Matrix3 &Matrix3::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector3f{other, other, other});
 }
 
-const Metadata &operator>>(const Metadata &metadata, Matrix3 &matrix)
+const Node &operator>>(const Node &node, Matrix3 &matrix)
 {
-	metadata.GetChild("m0", matrix.m_rows[0]);
-	metadata.GetChild("m1", matrix.m_rows[1]);
-	metadata.GetChild("m2", matrix.m_rows[2]);
-	return metadata;
+	node["m0"].Get(matrix.m_rows[0]);
+	node["m1"].Get(matrix.m_rows[1]);
+	node["m2"].Get(matrix.m_rows[2]);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Matrix3 &matrix)
+Node &operator<<(Node &node, const Matrix3 &matrix)
 {
-	metadata.SetChild("m0", matrix.m_rows[0]);
-	metadata.SetChild("m1", matrix.m_rows[1]);
-	metadata.SetChild("m2", matrix.m_rows[2]);
-	return metadata;
+	node["m0"].Set(matrix.m_rows[0]);
+	node["m1"].Set(matrix.m_rows[1]);
+	node["m2"].Set(matrix.m_rows[2]);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix3 &matrix)

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <chrono>
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 using namespace std::chrono_literals;
 
@@ -161,9 +160,9 @@ public:
 
 	Time &operator/=(const int64_t &other);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Time &time);
+	friend const Node &operator>>(const Node &node, Time &time);
 
-	friend Metadata &operator<<(Metadata &metadata, const Time &time);
+	friend Node &operator<<(Node &node, const Time &time);
 
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;

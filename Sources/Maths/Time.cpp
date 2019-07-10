@@ -129,17 +129,17 @@ Time &Time::operator/=(const int64_t &other)
 	return *this = *this / other;
 }
 
-const Metadata &operator>>(const Metadata &metadata, Time &time)
+const Node &operator>>(const Node &node, Time &time)
 {
 	int64_t us;
-	metadata >> us;
+	node >> us;
 	time.m_microseconds = std::chrono::microseconds(us);
-	return metadata;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Time &time)
+Node &operator<<(Node &node, const Time &time)
 {
-	metadata << time.m_microseconds.count();
-	return metadata;
+	node << time.m_microseconds.count();
+	return node;
 }
 }

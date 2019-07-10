@@ -13,17 +13,17 @@ void Keyframe::AddJointTransform(const std::string &jointNameId, const Matrix4 &
 	m_pose.emplace(jointNameId, jointLocalTransform);
 }
 
-const Metadata &operator>>(const Metadata &metadata, Keyframe &keyframe)
+const Node &operator>>(const Node &node, Keyframe &keyframe)
 {
-	metadata.GetChild("timeStamp", keyframe.m_timeStamp);
-	metadata.GetChild("pose", keyframe.m_pose);
-	return metadata;
+	node.GetChild("timeStamp", keyframe.m_timeStamp);
+	node.GetChild("pose", keyframe.m_pose);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Keyframe &keyframe)
+Node &operator<<(Node &node, const Keyframe &keyframe)
 {
-	metadata.SetChild("timeStamp", keyframe.m_timeStamp);
-	metadata.SetChild("pose", keyframe.m_pose);
-	return metadata;
+	node.SetChild("timeStamp", keyframe.m_timeStamp);
+	node.SetChild("pose", keyframe.m_pose);
+	return node;
 }
 }

@@ -6,9 +6,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
+std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -16,8 +16,8 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelCylinder>(0.0f, 0.0f)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -25,9 +25,9 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Metadata &metadata)
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
 {
 	ModelCylinder temp{radiusBase, radiusTop, height, slices, stacks, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks, const bool &load) :
@@ -43,25 +43,25 @@ ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, co
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelCylinder &model)
+const Node &operator>>(const Node &node, ModelCylinder &model)
 {
-	metadata.GetChild("radiusBase", model.m_radiusBase);
-	metadata.GetChild("radiusTop", model.m_radiusTop);
-	metadata.GetChild("height", model.m_height);
-	metadata.GetChild("slices", model.m_slices);
-	metadata.GetChild("stacks", model.m_stacks);
-	return metadata;
+	node["radiusBase"].Get(model.m_radiusBase);
+	node["radiusTop"].Get(model.m_radiusTop);
+	node["height"].Get( model.m_height);
+	node["slices"].Get( model.m_slices);
+	node["stacks"].Get( model.m_stacks);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelCylinder &model)
+Node &operator<<(Node &node, const ModelCylinder &model)
 {
-	metadata.SetChild<std::string>("type", "ModelCylinder");
-	metadata.SetChild("radiusBase", model.m_radiusBase);
-	metadata.SetChild("radiusTop", model.m_radiusTop);
-	metadata.SetChild("height", model.m_height);
-	metadata.SetChild("slices", model.m_slices);
-	metadata.SetChild("stacks", model.m_stacks);
-	return metadata;
+	node["type"].Set("ModelCylinder");
+	node["radiusBase"].Set(model.m_radiusBase);
+	node["radiusTop"].Set(model.m_radiusTop);
+	node["height"].Set(model.m_height);
+	node["slices"].Set(model.m_slices);
+	node["stacks"].Set(model.m_stacks);
+	return node;
 }
 
 void ModelCylinder::Load()

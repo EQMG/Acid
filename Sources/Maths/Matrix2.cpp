@@ -351,18 +351,18 @@ Matrix2 &Matrix2::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector2f{other, other});
 }
 
-const Metadata &operator>>(const Metadata &metadata, Matrix2 &matrix)
+const Node &operator>>(const Node &node, Matrix2 &matrix)
 {
-	metadata.GetChild("m0", matrix.m_rows[0]);
-	metadata.GetChild("m1", matrix.m_rows[1]);
-	return metadata;
+	node["m0"].Get(matrix.m_rows[0]);
+	node["m1"].Get(matrix.m_rows[1]);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Matrix2 &matrix)
+Node &operator<<(Node &node, const Matrix2 &matrix)
 {
-	metadata.SetChild("m0", matrix.m_rows[0]);
-	metadata.SetChild("m1", matrix.m_rows[1]);
-	return metadata;
+	node["m0"].Set(matrix.m_rows[0]);
+	node["m1"].Set(matrix.m_rows[1]);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix2 &matrix)

@@ -18,17 +18,17 @@ void Light::Update()
 {
 }
 
-const Metadata &operator>>(const Metadata &metadata, Light &light)
+const Node &operator>>(const Node &node, Light &light)
 {
-	metadata.GetChild("colour", light.m_colour);
-	metadata.GetChild("radius", light.m_radius);
-	return metadata;
+	node["colour"].Get(light.m_colour);
+	node["radius"].Get(light.m_radius);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Light &light)
+Node &operator<<(Node &node, const Light &light)
 {
-	metadata.SetChild("colour", light.m_colour);
-	metadata.SetChild("radius", light.m_radius);
-	return metadata;
+	node["colour"].Set(light.m_colour);
+	node["radius"].Set(light.m_radius);
+	return node;
 }
 }

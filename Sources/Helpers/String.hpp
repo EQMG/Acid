@@ -1,6 +1,5 @@
 #pragma once
 
-#include <locale>
 #include "ConstExpr.hpp"
 
 namespace acid
@@ -35,12 +34,14 @@ public:
 	 */
 	static bool Contains(std::string_view str, std::string_view token);
 
+	static bool IsWhitespace(const char &c);
+
 	/**
-	 * Gets if a string is a integer.
+	 * Gets if a string is a number.
 	 * @param str The string.
-	 * @return If a string is a integer.
+	 * @return If a string is a number.
 	 */
-	static bool IsInteger(std::string_view str);
+	static bool IsNumber(std::string_view str);
 
 	/**
 	 * Gets the first char index in the string.
@@ -100,6 +101,13 @@ public:
 	static std::string FixReturnTokens(const std::string &str);
 
 	/**
+	 * unFixes all tokens return line tokens from a string so it is file write-able.
+	 * @param str The string.
+	 * @return The string with return lines unfixed.
+	 */
+	static std::string UnfixReturnTokens(const std::string &str);
+
+	/**
 	 * Lower cases a string.
 	 * @param str The string.
 	 * @return The lowercased string.
@@ -127,13 +135,17 @@ public:
 			typedef typename std::underlying_type<T>::type safe_type;
 			return std::to_string(static_cast<safe_type>(val));
 		}
+		else if constexpr (std::is_same_v<std::string, T> || std::is_same_v<const char *, T>)
+		{
+			return val;
+		}
 		else if constexpr (std::is_same_v<bool, T>)
 		{
 			return val ? "true" : "false";
 		}
-		else if constexpr (std::is_same_v<std::string, T> || std::is_same_v<const char *, T>)
+		else if constexpr (std::is_same_v<std::nullptr_t, T>)
 		{
-			return val;
+			return "null";
 		}
 		else
 		{
@@ -155,13 +167,13 @@ public:
 			typedef typename std::underlying_type<T>::type safe_type;
 			return static_cast<T>(From<safe_type>(str));
 		}
-		else if constexpr (std::is_same_v<bool, T>)
-		{
-			return Lowercase(str) == "true" || From<std::optional<int32_t>>(str) == 1;
-		}
 		else if constexpr (std::is_same_v<std::string, T>)
 		{
 			return str;
+		}
+		else if constexpr (std::is_same_v<bool, T>)
+		{
+			return Lowercase(str) == "true" || From<std::optional<int32_t>>(str) == 1;
 		}
 		else if constexpr (is_optional_v<T>)
 		{

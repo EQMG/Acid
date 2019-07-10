@@ -1,7 +1,7 @@
 #include "SubrenderDeferred.hpp"
 
 #include "Files/File.hpp"
-#include "Serialized/Yaml/Yaml.hpp"
+#include "Serialized/Json/Json.hpp"
 #include "Lights/Light.hpp"
 #include "Models/VertexDefault.hpp"
 #include "Shadows/Shadows.hpp"
@@ -22,9 +22,9 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	m_brdf{Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)},
 	m_fog{Colour::White, 0.001f, 2.0f, -0.1f, 0.3f}
 {
-	Metadata metadata;
-	metadata << *m_pipeline.GetShader();
-	File{"Deferred/Shader.yaml", std::make_unique<Yaml>(&metadata)}.Write();
+	Node node;
+	node << *m_pipeline.GetShader();
+	File{"Deferred/Shader.json", std::make_unique<Json>(node)}.Write();
 }
 
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)

@@ -22,9 +22,9 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ShadowRender &shadowRender);
+	friend const Node &operator>>(const Node &node, ShadowRender &shadowRender);
 
-	friend Metadata &operator<<(Metadata &metadata, const ShadowRender &shadowRender);
+	friend Node &operator<<(Node &node, const ShadowRender &shadowRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

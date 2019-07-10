@@ -6,9 +6,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
+std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -16,8 +16,8 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelSphere>(0.0f)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -25,9 +25,9 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Metadata &metadata)
 std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands)
 {
 	ModelSphere temp{radius, latitudeBands, longitudeBands, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands, const bool &load) :
@@ -41,21 +41,21 @@ ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, con
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelSphere &model)
+const Node &operator>>(const Node &node, ModelSphere &model)
 {
-	metadata.GetChild("latitudeBands", model.m_latitudeBands);
-	metadata.GetChild("longitudeBands", model.m_longitudeBands);
-	metadata.GetChild("radius", model.m_radius);
-	return metadata;
+	node["latitudeBands"].Get(model.m_latitudeBands);
+	node["longitudeBands"].Get(model.m_longitudeBands);
+	node["radius"].Get(model.m_radius);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelSphere &model)
+Node &operator<<(Node &node, const ModelSphere &model)
 {
-	metadata.SetChild<std::string>("type", "ModelSphere");
-	metadata.SetChild("latitudeBands", model.m_latitudeBands);
-	metadata.SetChild("longitudeBands", model.m_longitudeBands);
-	metadata.SetChild("radius", model.m_radius);
-	return metadata;
+	node["type"].Set("ModelSphere");
+	node["latitudeBands"].Set(model.m_latitudeBands);
+	node["longitudeBands"].Set(model.m_longitudeBands);
+	node["radius"].Set(model.m_radius);
+	return node;
 }
 
 void ModelSphere::Load()

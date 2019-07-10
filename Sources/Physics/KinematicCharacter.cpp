@@ -200,34 +200,34 @@ void KinematicCharacter::SetWalkDirection(const Vector3f &direction)
 	m_controller->setWalkDirection(Collider::Convert(direction));
 }
 
-const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character)
+const Node &operator>>(const Node &node, KinematicCharacter &character)
 {
-	metadata.GetChild("mass", character.m_mass);
-	metadata.GetChild("friction", character.m_friction);
-	metadata.GetChild("frictionRolling", character.m_frictionRolling);
-	metadata.GetChild("frictionSpinning", character.m_frictionSpinning);
-	metadata.GetChild("up", character.m_up);
-	metadata.GetChild("stepHeight", character.m_stepHeight);
-	metadata.GetChild("fallSpeed", character.m_fallSpeed);
-	metadata.GetChild("jumpSpeed", character.m_jumpSpeed);
-	metadata.GetChild("maxHeight", character.m_maxHeight);
-	metadata.GetChild("interpolate", character.m_interpolate);
-	return metadata;
+	node["mass"].Get(character.m_mass);
+	node["friction"].Get(character.m_friction);
+	node["frictionRolling"].Get(character.m_frictionRolling);
+	node["frictionSpinning"].Get(character.m_frictionSpinning);
+	node["up"].Get(character.m_up);
+	node["stepHeight"].Get(character.m_stepHeight);
+	node["fallSpeed"].Get(character.m_fallSpeed);
+	node["jumpSpeed"].Get(character.m_jumpSpeed);
+	node["maxHeight"].Get(character.m_maxHeight);
+	node["interpolate"].Get(character.m_interpolate);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character)
+Node &operator<<(Node &node, const KinematicCharacter &character)
 {
-	metadata.SetChild("mass", character.m_mass);
-	metadata.SetChild("friction", character.m_friction);
-	metadata.SetChild("frictionRolling", character.m_frictionRolling);
-	metadata.SetChild("frictionSpinning", character.m_frictionSpinning);
-	metadata.SetChild("up", character.m_up);
-	metadata.SetChild("stepHeight", character.m_stepHeight);
-	metadata.SetChild("fallSpeed", character.m_fallSpeed);
-	metadata.SetChild("jumpSpeed", character.m_jumpSpeed);
-	metadata.SetChild("maxHeight", character.m_maxHeight);
-	metadata.SetChild("interpolate", character.m_interpolate);
-	return metadata;
+	node["mass"].Set(character.m_mass);
+	node["friction"].Set(character.m_friction);
+	node["frictionRolling"].Set(character.m_frictionRolling);
+	node["frictionSpinning"].Set(character.m_frictionSpinning);
+	node["up"].Set(character.m_up);
+	node["stepHeight"].Set(character.m_stepHeight);
+	node["fallSpeed"].Set(character.m_fallSpeed);
+	node["jumpSpeed"].Set(character.m_jumpSpeed);
+	node["maxHeight"].Set(character.m_maxHeight);
+	node["interpolate"].Set(character.m_interpolate);
+	return node;
 }
 
 void KinematicCharacter::RecalculateMass()

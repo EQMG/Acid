@@ -142,21 +142,21 @@ void Sound::SetPitch(const float &pitch)
 	Audio::CheckAl(alGetError());
 }
 
-const Metadata &operator>>(const Metadata &metadata, Sound &sound)
+const Node &operator>>(const Node &node, Sound &sound)
 {
-	metadata.GetChild("buffer", sound.m_buffer);
-	metadata.GetChild("type", sound.m_type);
-	metadata.GetChild("gain", sound.m_gain);
-	metadata.GetChild("pitch", sound.m_pitch);
-	return metadata;
+	node["buffer"].Get(sound.m_buffer);
+	node["type"].Get(sound.m_type);
+	node["gain"].Get(sound.m_gain);
+	node["pitch"].Get(sound.m_pitch);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Sound &sound)
+Node &operator<<(Node &node, const Sound &sound)
 {
-	metadata.SetChild("buffer", sound.m_buffer);
-	metadata.SetChild("type", sound.m_type);
-	metadata.SetChild("gain", sound.m_gain);
-	metadata.SetChild("pitch", sound.m_pitch);
-	return metadata;
+	node["buffer"].Set(sound.m_buffer);
+	node["type"].Set(sound.m_type);
+	node["gain"].Set(sound.m_gain);
+	node["pitch"].Set(sound.m_pitch);
+	return node;
 }
 }

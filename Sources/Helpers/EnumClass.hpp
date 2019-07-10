@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 // https://dalzhim.github.io/2017/08/11/Improving-the-enum-class-bitmask
 // https://stackoverflow.com/a/8498694/6251899
@@ -74,16 +74,16 @@ struct BitMask
 	{
 	}
 
-	friend const Metadata &operator>>(const Metadata &metadata, BitMask &bitmask)
+	friend const Node &operator>>(const Node &node, BitMask &bitmask)
 	{
-		metadata >> bitmask.m_value;
-		return metadata;
+		node >> bitmask.m_value;
+		return node;
 	}
 
-	friend Metadata &operator<<(Metadata &metadata, const BitMask &bitmask)
+	friend Node &operator<<(Node &node, const BitMask &bitmask)
 	{
-		metadata << bitmask.m_value;
-		return metadata;
+		node << bitmask.m_value;
+		return node;
 	}
 
 	constexpr operator bool() const

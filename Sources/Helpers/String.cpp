@@ -1,5 +1,10 @@
 #include "String.hpp"
 
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+#include <iostream>
+
 namespace acid
 {
 std::vector<std::string> String::Split(const std::string &str, const char &sep)
@@ -31,15 +36,23 @@ bool String::Contains(std::string_view str, std::string_view token)
 	return str.find(token) != std::string::npos;
 }
 
-bool String::IsInteger(std::string_view str)
+bool String::IsWhitespace(const char &c)
 {
-	return str.find_first_not_of("0123456789") == std::string::npos;
+	return std::string{" \n\r  "}.find(c) != std::string::npos;
 }
 
-int String::FindCharPos(std::string_view str, char c)
+bool String::IsNumber(std::string_view str)
+{
+	return !str.empty() && std::find_if(str.begin(), str.end(), [](const auto c)
+	{
+		return std::string{"0123456789.-"}.find(c) == std::string::npos;
+	}) == str.end();
+}
+
+int32_t String::FindCharPos(std::string_view str, char c)
 {
 	auto res{str.find(c)};
-	return res == std::string::npos ? -1 : res;
+	return res == std::string::npos ? -1 : static_cast<int32_t>(res);
 }
 
 std::string String::Trim(std::string str, std::string_view whitespace)
@@ -61,7 +74,7 @@ std::string String::Trim(std::string str, std::string_view whitespace)
 
 std::string String::RemoveAll(std::string str, char token)
 {
-	str.erase(remove(str.begin(), str.end(), token), str.end());
+	str.erase(std::remove(str.begin(), str.end(), token), str.end());
 	return str;
 }
 
@@ -109,6 +122,12 @@ std::string String::FixReturnTokens(const std::string &str)
 {
 	// TODO: Optimize.
 	return ReplaceAll(ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
+}
+
+std::string String::UnfixReturnTokens(const std::string &str)
+{
+	// TODO: Optimize.
+	return ReplaceAll(ReplaceAll(str, "\\n", "\n"), "\\r", "\r");
 }
 
 std::string String::Lowercase(std::string str)

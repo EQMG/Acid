@@ -6,9 +6,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
+std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -16,8 +16,8 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelDisk>(0.0f, 0.0f)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -25,9 +25,9 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const Metadata &metadata)
 std::shared_ptr<ModelDisk> ModelDisk::Create(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops)
 {
 	ModelDisk temp{innerRadius, outerRadius, slices, loops, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const uint32_t &slices, const uint32_t &loops, const bool &load) :
@@ -42,23 +42,23 @@ ModelDisk::ModelDisk(const float &innerRadius, const float &outerRadius, const u
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelDisk &model)
+const Node &operator>>(const Node &node, ModelDisk &model)
 {
-	metadata.GetChild("innerRadius", model.m_innerRadius);
-	metadata.GetChild("outerRadius", model.m_outerRadius);
-	metadata.GetChild("slices", model.m_slices);
-	metadata.GetChild("loops", model.m_loops);
-	return metadata;
+	node["innerRadius"].Get(model.m_innerRadius);
+	node["outerRadius"].Get(model.m_outerRadius);
+	node["slices"].Get(model.m_slices);
+	node["loops"].Get(model.m_loops);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelDisk &model)
+Node &operator<<(Node &node, const ModelDisk &model)
 {
-	metadata.SetChild<std::string>("type", "ModelDisk");
-	metadata.SetChild("innerRadius", model.m_innerRadius);
-	metadata.SetChild("outerRadius", model.m_outerRadius);
-	metadata.SetChild("slices", model.m_slices);
-	metadata.SetChild("loops", model.m_loops);
-	return metadata;
+	node["type"].Set("ModelDisk");
+	node["innerRadius"].Set(model.m_innerRadius);
+	node["outerRadius"].Set(model.m_outerRadius);
+	node["slices"].Set(model.m_slices);
+	node["loops"].Set(model.m_loops);
+	return node;
 }
 
 void ModelDisk::Load()

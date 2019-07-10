@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Scenes/Component.hpp>
-#include <Serialized/Metadata.hpp>
+#include <Serialized/Node.hpp>
 
 using namespace acid;
 
@@ -17,9 +17,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, HeightDespawn &heightDespawn);
+	friend const Node &operator>>(const Node &node, HeightDespawn &heightDespawn);
 
-	friend Metadata &operator<<(Metadata &metadata, const HeightDespawn &heightDespawn);
+	friend Node &operator<<(Node &node, const HeightDespawn &heightDespawn);
 
 private:
 	float m_removeHeight;

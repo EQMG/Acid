@@ -14,10 +14,10 @@ class ACID_EXPORT PipelineMaterial :
 public:
 	/**
 	 * Creates a new material pipeline, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The material pipeline with the requested values.
 	 */
-	static std::shared_ptr<PipelineMaterial> Create(const Metadata &metadata);
+	static std::shared_ptr<PipelineMaterial> Create(const Node &node);
 
 	/**
 	 * Creates a new material pipeline, or finds one with the same values.
@@ -47,9 +47,9 @@ public:
 
 	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 
-	friend const Metadata &operator>>(const Metadata &metadata, PipelineMaterial &pipeline);
+	friend const Node &operator>>(const Node &node, PipelineMaterial &pipeline);
 
-	friend Metadata &operator<<(Metadata &metadata, const PipelineMaterial &pipeline);
+	friend Node &operator<<(Node &node, const PipelineMaterial &pipeline);
 
 private:
 	Pipeline::Stage m_pipelineStage;

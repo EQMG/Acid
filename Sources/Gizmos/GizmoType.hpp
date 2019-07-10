@@ -7,7 +7,7 @@
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 namespace acid
 {
@@ -44,10 +44,10 @@ public:
 
 	/**
 	 * Creates a new gizmo type, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The gizmo type with the requested values.
 	 */
-	static std::shared_ptr<GizmoType> Create(const Metadata &metadata);
+	static std::shared_ptr<GizmoType> Create(const Node &node);
 
 	/**
 	 * Creates a new gizmo type, or finds one with the same values.
@@ -82,9 +82,9 @@ public:
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType);
+	friend const Node &operator>>(const Node &node, GizmoType &gizmoType);
 
-	friend Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType);
+	friend Node &operator<<(Node &node, const GizmoType &gizmoType);
 
 private:
 	std::shared_ptr<Model> m_model;

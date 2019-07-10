@@ -343,22 +343,22 @@ Quaternion &Quaternion::operator*=(const float &other)
 	return *this = Scale(other);
 }
 
-const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion)
+const Node &operator>>(const Node &node, Quaternion &quaternion)
 {
-	metadata.GetChild("x", quaternion.m_x);
-	metadata.GetChild("y", quaternion.m_y);
-	metadata.GetChild("z", quaternion.m_z);
-	metadata.GetChild("w", quaternion.m_w);
-	return metadata;
+	node["x"].Get(quaternion.m_x);
+	node["y"].Get(quaternion.m_y);
+	node["z"].Get(quaternion.m_z);
+	node["w"].Get(quaternion.m_w);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion)
+Node &operator<<(Node &node, const Quaternion &quaternion)
 {
-	metadata.SetChild("x", quaternion.m_x);
-	metadata.SetChild("y", quaternion.m_y);
-	metadata.SetChild("z", quaternion.m_z);
-	metadata.SetChild("w", quaternion.m_w);
-	return metadata;
+	node["x"].Set(quaternion.m_x);
+	node["y"].Set(quaternion.m_y);
+	node["z"].Set(quaternion.m_z);
+	node["w"].Set(quaternion.m_w);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion)

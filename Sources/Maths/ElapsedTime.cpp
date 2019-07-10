@@ -21,15 +21,15 @@ uint32_t ElapsedTime::GetElapsed()
 	return elapsed;
 }
 
-const Metadata &operator>>(const Metadata &metadata, ElapsedTime &elapsedTime)
+const Node &operator>>(const Node &node, ElapsedTime &elapsedTime)
 {
-	metadata >> elapsedTime.m_interval;
-	return metadata;
+	node >> elapsedTime.m_interval;
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ElapsedTime &elapsedTime)
+Node &operator<<(Node &node, const ElapsedTime &elapsedTime)
 {
-	metadata << elapsedTime.m_interval;
-	return metadata;
+	node << elapsedTime.m_interval;
+	return node;
 }
 }

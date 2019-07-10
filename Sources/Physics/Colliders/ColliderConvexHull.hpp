@@ -25,9 +25,9 @@ public:
 
 	void Initialize(const std::vector<float> &pointCloud);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ColliderConvexHull &collider);
+	friend const Node &operator>>(const Node &node, ColliderConvexHull &collider);
 
-	friend Metadata &operator<<(Metadata &metadata, const ColliderConvexHull &collider);
+	friend Node &operator<<(Node &node, const ColliderConvexHull &collider);
 
 private:
 	std::unique_ptr<btConvexHullShape> m_shape;

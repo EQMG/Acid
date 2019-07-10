@@ -1,432 +1,247 @@
 #include "Json.hpp"
 
-#include "Files/Files.hpp"
 #include "Helpers/String.hpp"
+
+// TODO: Fix loading and writing chars like /n, /", ... \"http://google.com\"
 
 namespace acid
 {
-Json::Json(Metadata *metadata)
+Json::Json(const Node &node) :
+	Node{node}
 {
-	AddChildren(metadata, this);
+	SetType(Type::Object);
 }
 
-bool IsWhitespace(const char c)
+void Json::Load(std::istream &stream)
 {
-	return std::string{" \n\r  "}.find(c) != std::string::npos;
-}
+	std::vector<std::pair<Type, std::string>> tokens;
 
-int32_t NextWhitespace(const std::string &source, int32_t i)
-{
-	while (i < static_cast<int32_t>(source.length()))
+	std::stringstream current;
+	bool inString{};
+
+	// Read stream until end of file.
+	while (!stream.eof())
 	{
-		if (source[i] == '"')
+		char c;
+		stream.get(c);
+
+		// On start of string switch in/out of stream space and ignore this char.
+		if (c == '"' || c == '\'')
+		{			 
+			inString ^= 1;
+			continue;
+		}
+
+		// When not reading a string tokens can be found.
+		if (!inString)
 		{
-			i++;
-			
-			while (i < static_cast<int32_t>(source.length()) && (source[i] != '"' || source[i - 1] == '\\'))
+			// Tokens used to read json nodes.
+			if (std::string{":{},[]"}.find(c) != std::string::npos)
 			{
-				i++;
+				AddToken(tokens, current);
+				tokens.emplace_back(Type::Unknown, std::string{c});
+				continue;
+			}
+
+			// On whitespace save current as a string.
+			if (String::IsWhitespace(c))
+			{
+				AddToken(tokens, current);
+				continue;
 			}
 		}
 
-		if (source[i] == '\'')
-		{
-			i++;
-			
-			while (i < static_cast<int32_t>(source.length()) && (source[i] != '\'' || source[i - 1] == '\\'))
-			{
-				i++;
-			}
-		}
-
-		if (IsWhitespace(source[i]))
-		{
-			return i;
-		}
-
-		i++;
+		// Add this char to the current builder stream.
+		current << c;
 	}
 
-	return source.length();
-}
-
-int32_t SkipWhitespaces(const std::string &source, int32_t i)
-{
-	while (i < static_cast<int32_t>(source.length()))
-	{
-		if (!IsWhitespace(source[i]))
-		{
-			return i;
-		}
-
-		i++;
-	}
-
-	return -1;
-}
-
-void Json::Load(std::istream *inStream)
-{
-	ClearChildren();
-	ClearAttributes();
-
-	std::string tmp;
-	std::string source;
-
-	while (std::getline(*inStream, tmp))
-	{
-		source += tmp;
-	}
-
-	std::vector<std::pair<Token, std::string>> tokens;
-
-	source += " ";
-
-	auto index{SkipWhitespaces(source, 0)};
-	
-	while (index >= 0)
-	{
-		auto next{NextWhitespace(source, index)};
-		auto str{source.substr(index, next - index)};
-
-		size_t k{};
-
-		while (k < str.length())
-		{
-			if (str[k] == '"')
-			{
-				auto tmpK{k + 1};
-
-				while (tmpK < str.length() && (str[tmpK] != '"' || str[tmpK - 1] == '\\'))
-				{
-					tmpK++;
-				}
-
-				tokens.emplace_back(Token::String, str.substr(k + 1, tmpK - k - 1));
-				k = tmpK + 1;
-				continue;
-			}
-			if (str[k] == '\'')
-			{
-				auto tmpK{k + 1};
-
-				while (tmpK < str.length() && (str[tmpK] != '\'' || str[tmpK - 1] == '\\'))
-				{
-					tmpK++;
-				}
-
-				tokens.emplace_back(Token::String, str.substr(k + 1, tmpK - k - 1));
-				k = tmpK + 1;
-				continue;
-			}
-			if (str[k] == '-' || (str[k] <= '9' && str[k] >= '0'))
-			{
-				auto tmpK{k};
-
-				if (str[tmpK] == '-')
-				{
-					tmpK++;
-				}
-
-				while (tmpK < str.size() && ((str[tmpK] <= '9' && str[tmpK] >= '0') || str[tmpK] == '.'))
-				{
-					tmpK++;
-				}
-
-				tokens.emplace_back(Token::Number, str.substr(k, tmpK - k));
-				k = tmpK;
-				continue;
-			}
-			/*static const std::vector<std::pair<std::string, Token>> MATCHES{std::pair("null", Token::Null),
-				std::pair("true", Token::Boolean), std::pair("false", Token::Boolean),
-				std::pair(",", Token::Comma), std::pair(":", Token::Colon),
-				std::pair("}", Token::CroushClose), std::pair("{", Token::CroushOpen),
-				std::pair("]", Token::BracketClose), std::pair("[", Token::BracketOpen)
-			};
-			bool matched{};
-			for (const auto &match : MATCHES)
-			{
-				if (str[k] == match.first[0] && k + match.first.size() - 1 < str.length() && str.substr(k, match.first.size()) == match.first)
-				{
-					tokens.emplace_back(match.second, match.first);
-					k += match.first.size();
-					matched = true;
-					break;
-				}
-			}
-			if (matched)
-			{
-				continue;
-			}*/
-			if (str[k] == 't' && k + 3 < str.length() && str.substr(k, 4) == "true")
-			{
-				tokens.emplace_back(Token::Boolean, "true");
-				k += 4;
-				continue;
-			}
-			if (str[k] == 'f' && k + 4 < str.length() && str.substr(k, 5) == "false")
-			{
-				tokens.emplace_back(Token::Boolean, "false");
-				k += 5;
-				continue;
-			}
-			if (str[k] == 'n' && k + 3 < str.length() && str.substr(k, 4) == "null")
-			{
-				tokens.emplace_back(Token::Null, "null");
-				k += 4;
-				continue;
-			}
-			if (str[k] == ',')
-			{
-				tokens.emplace_back(Token::Comma, ",");
-				k++;
-				continue;
-			}
-			if (str[k] == '}')
-			{
-				tokens.emplace_back(Token::CroushClose, "}");
-				k++;
-				continue;
-			}
-			if (str[k] == '{')
-			{
-				tokens.emplace_back(Token::CroushOpen, "{");
-				k++;
-				continue;
-			}
-			if (str[k] == ']')
-			{
-				tokens.emplace_back(Token::BracketClose, "]");
-				k++;
-				continue;
-			}
-			if (str[k] == '[')
-			{
-				tokens.emplace_back(Token::BracketOpen, "[");
-				k++;
-				continue;
-			}
-			if (str[k] == ':')
-			{
-				tokens.emplace_back(Token::Colon, ":");
-				k++;
-				continue;
-			}
-
-			tokens.emplace_back(Token::Unknown, str.substr(k));
-			k = str.length();
-		}
-
-		index = SkipWhitespaces(source, next);
-	}
-
+	// Converts the list of tokens into nodes.
 	int32_t k{};
-	Convert(this, tokens, 0, k);
+	Convert(*this, tokens, 0, k);
 }
 
-void Json::Write(std::ostream *outStream, const Format &format) const
+void Json::Write(std::ostream &stream, const Format &format) const
 {
-	AppendData(this, outStream, 0, format);
+	// Json files are wrapped with an extra set of braces.
+	AppendData({"", {{"", *this}}}, stream, 0, format);
 }
 
 void Json::Load(const std::string &string)
 {
 	std::stringstream stream{string};
-	Load(&stream);
+	Load(stream);
 }
 
 std::string Json::Write(const Format &format) const
 {
 	std::stringstream stream;
-	Write(&stream, format);
+	Write(stream, format);
 	return stream.str();
 }
 
-void Json::AddChildren(const Metadata *source, Metadata *destination)
+void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stringstream &current)
 {
-	for (const auto &child : source->GetChildren())
+	if (auto str{current.str()}; !str.empty())
 	{
-		auto created{destination->AddChild(std::make_unique<Metadata>(child->GetName(), child->GetValue()))};
-		AddChildren(child.get(), created);
-	}
-
-	for (const auto &attribute : source->GetAttributes())
-	{
-		destination->SetAttribute(attribute.first, attribute.second);
-	}
-}
-
-Metadata *Json::Convert(Metadata *current, std::vector<std::pair<Token, std::string>> v, const int32_t &i, int32_t &r)
-{
-	if (v[i].first == Token::CroushOpen)
-	{
-		auto k{i + 1};
-
-		while (v[k].first != Token::CroushClose)
+		// Finds the node value type of the string and adds it to the tokens vector.
+		if (String::IsNumber(str))
 		{
-			auto key = v[k].second;
-			k += 2; // k+1 should be ':'
-			auto j{k};
-			auto vv{current->AddChild(std::make_unique<Metadata>(key))};
-			Convert(vv, v, k, j);
-			k = j;
-
-			if (v[k].first == Token::Comma)
-			{
-				k++;
-			}
+			tokens.emplace_back(Type::Number, str);
 		}
-
-		current->SetType(Type::Object);
-		r = k + 1;
-		return current;
-	}
-	if (v[i].first == Token::BracketOpen)
-	{
-		auto k{i + 1};
-
-		while (v[k].first != Token::BracketClose)
+		else if (str == "null")
 		{
-			auto j{k};
-			auto vv{current->AddChild(std::make_unique<Metadata>())};
-			Convert(vv, v, k, j);
-			k = j;
-			
-			if (v[k].first == Token::Comma)
-			{
-				k++;
-			}
+			tokens.emplace_back(Type::Null, str);
 		}
-
-		current->SetType(Type::Array);
-		r = k + 1;
-		return current;
-	}
-	if (v[i].first == Token::Number)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Number);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::String)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::String);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::Boolean)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Boolean);
-		r = i + 1;
-		return current;
-	}
-	if (v[i].first == Token::Null)
-	{
-		current->SetValue(v[i].second);
-		current->SetType(Type::Null);
-		r = i + 1;
-		return current;
-	}
-
-	return nullptr;
-}
-
-void Json::AppendData(const Metadata *source, std::ostream *outStream, const int32_t &indentation, const Format &format, const bool &end)
-{
-	std::stringstream indents;
-
-	if (format != Format::Minified)
-	{
-		for (int32_t i{}; i < indentation; i++)
+		else if (str == "true" || str == "false")
 		{
-			indents << "  ";
-		}
-	}
-
-	auto openBrace{'{'};
-	auto closeBrace{'}'};
-
-	for (const auto &child : source->GetChildren())
-	{
-		if (child->GetName().empty())
-		{
-			openBrace = '[';
-			closeBrace = ']';
-			break;
-		}
-	}
-
-	*outStream << indents.str();
-
-	if (source->GetName().empty() && source->GetValue().empty())
-	{
-		*outStream << openBrace;
-	}
-	else if (source->GetValue().empty())
-	{
-		*outStream << "\"" << source->GetName();
-		*outStream << (format != Format::Minified ? "\": " : "\":");
-		*outStream << openBrace;
-	}
-	else
-	{
-		if (source->GetName().empty())
-		{
-			*outStream << String::FixReturnTokens(source->GetValue());
+			tokens.emplace_back(Type::Boolean, str);
 		}
 		else
 		{
-			*outStream << "\"" << source->GetName();
-			*outStream << (format != Format::Minified ? "\": " : "\":");
-			*outStream << String::FixReturnTokens(source->GetValue());
-		}
-
-		if (!(end && source->GetAttributes().empty()))
-		{
-			*outStream << (format != Format::Minified ? ", " : ",");
+			tokens.emplace_back(Type::String, str);
 		}
 	}
 
-	if (format != Format::Minified)
+	// Clears the current summation stream.
+	current.str({});
+}
+
+void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r)
+{
+	if (v[i].second == "{")
 	{
-		*outStream << '\n';
+		auto k{i + 1};
+
+		while (v[k].second != "}")
+		{
+			auto key{v[k].second};
+			k += 2; // k + 1 should be ':'
+			Convert(current.AddProperty(key), v, k, k);
+
+			if (v[k].second == ",")
+			{
+				k++;
+			}
+		}
+
+		current.SetType(Type::Object);
+		r = k + 1;
+	}
+	else if (v[i].second == "[")
+	{
+		auto k{i + 1};
+
+		while (v[k].second != "]")
+		{
+			Convert(current.AddProperty(), v, k, k);
+
+			if (v[k].second == ",")
+			{
+				k++;
+			}
+		}
+
+		current.SetType(Type::Array);
+		r = k + 1;
+	}
+	else
+	{
+		current.SetValue(String::UnfixReturnTokens(v[i].second));
+		current.SetType(v[i].first);
+		r = i + 1;
+	}
+}
+
+void Json::AppendData(const Node &source, std::ostream &stream, const int32_t &indentation, const Format &format)
+{
+	// Creates a string for the indentation level.
+	std::string indents(2 * indentation, ' ');
+
+	// Only output the value if no properties exist.
+	if (source.GetProperties().empty())
+	{
+		auto value{String::FixReturnTokens(source.GetValue<std::string>())};
+
+		if (source.GetType() == Type::String)
+		{
+			stream << '\"' << value << '\"';
+		}
+		else
+		{
+			stream << value;
+		}
 	}
 
-	for (const auto &attribute : source->GetAttributes())
+	// Output each property.
+	for (auto it{source.GetProperties().begin()}; it < source.GetProperties().end(); ++it)
 	{
-		*outStream << indents.str() << "  \"_" << attribute.first << "\": \"" << attribute.second << "\"";
+		std::string openString;
+		std::string closeString;
 
-		if (!(end && source->GetChildren().empty()))
+		// Gets array or object type braces.
+		if (!it->second.GetProperties().empty())
 		{
-			*outStream << (format != Format::Minified ? ", " : ",");
+			openString = "{";
+			closeString = "}";
+
+			// Sets the braces to an array style if all properties have no names.
+			for (const auto &[propertyName2, property2] : it->second.GetProperties())
+			{
+				if (propertyName2.empty())
+				{
+					openString = "[";
+					closeString = "]";
+					break;
+				}
+			}
+
+			if (format != Format::Minified)
+			{
+				openString += '\n';
+				closeString.insert(0, indents);
+			}
+		}
+		else if (it->second.GetType() == Type::Object)
+		{
+			openString = "{";
+			closeString = "}";
+		}
+		else if (it->second.GetType() == Type::Array)
+		{
+			openString = "[";
+			closeString = "]";
+		}
+
+		// Separate properties by comma.
+		if (it != source.GetProperties().end() - 1)
+		{
+			closeString += ',';
 		}
 
 		if (format != Format::Minified)
 		{
-			*outStream << '\n';
+			stream << indents;
 		}
-	}
 
-	for (const auto &child : source->GetChildren())
-	{
-		AppendData(child.get(), outStream, indentation + 1, format, child == source->GetChildren().back());
-	}
-
-	if (source->GetValue().empty())
-	{
-		*outStream << indents.str() << closeBrace;
-
-		if (!(end || indentation == 0))
+		// Output name for property if it exists.
+		if (!it->first.empty())
 		{
-			*outStream << ',';
+			stream << "\"" << it->first << "\":";
+
+			if (format != Format::Minified)
+			{
+				stream << ' ';
+			}
 		}
+
+		// Appends the current stream with the property data.
+		stream << openString;
+		AppendData(it->second, stream, indentation + 1, format);
+		stream << closeString;
 
 		if (format != Format::Minified)
 		{
-			*outStream << '\n';
+			stream << '\n';
 		}
 	}
 }

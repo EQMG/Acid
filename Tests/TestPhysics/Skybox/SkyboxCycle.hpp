@@ -2,7 +2,7 @@
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
-#include <Serialized/Metadata.hpp>
+#include <Serialized/Node.hpp>
 
 using namespace acid;
 
@@ -18,9 +18,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, SkyboxCycle &skyboxCycle);
+	friend const Node &operator>>(const Node &node, SkyboxCycle &skyboxCycle);
 
-	friend Metadata &operator<<(Metadata &metadata, const SkyboxCycle &skyboxCycle);
+	friend Node &operator<<(Node &node, const SkyboxCycle &skyboxCycle);
 
 private:
 	bool m_enableFog;

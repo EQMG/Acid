@@ -572,22 +572,22 @@ Matrix4 &Matrix4::operator/=(const float &other)
 	return *this = Scale(1.0f / Vector4f{other, other, other, other});
 }
 
-const Metadata &operator>>(const Metadata &metadata, Matrix4 &matrix)
+const Node &operator>>(const Node &node, Matrix4 &matrix)
 {
-	metadata.GetChild("m0", matrix.m_rows[0]);
-	metadata.GetChild("m1", matrix.m_rows[1]);
-	metadata.GetChild("m2", matrix.m_rows[2]);
-	metadata.GetChild("m3", matrix.m_rows[3]);
-	return metadata;
+	node["m0"].Get(matrix.m_rows[0]);
+	node["m1"].Get(matrix.m_rows[1]);
+	node["m2"].Get(matrix.m_rows[2]);
+	node["m3"].Get(matrix.m_rows[3]);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Matrix4 &matrix)
+Node &operator<<(Node &node, const Matrix4 &matrix)
 {
-	metadata.SetChild("m0", matrix.m_rows[0]);
-	metadata.SetChild("m1", matrix.m_rows[1]);
-	metadata.SetChild("m2", matrix.m_rows[2]);
-	metadata.SetChild("m3", matrix.m_rows[3]);
-	return metadata;
+	node["m0"].Set(matrix.m_rows[0]);
+	node["m1"].Set(matrix.m_rows[1]);
+	node["m2"].Set(matrix.m_rows[2]);
+	node["m3"].Set(matrix.m_rows[3]);
+	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)

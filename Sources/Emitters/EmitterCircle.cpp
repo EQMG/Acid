@@ -45,17 +45,17 @@ Vector3f EmitterCircle::GeneratePosition() const
 	return direction * distance;
 }
 
-const Metadata &operator>>(const Metadata &metadata, EmitterCircle &emitter)
+const Node &operator>>(const Node &node, EmitterCircle &emitter)
 {
-	metadata.GetChild("radius", emitter.m_radius);
-	metadata.GetChild("heading", emitter.m_heading);
-	return metadata;
+	node["radius"].Get(emitter.m_radius);
+	node["heading"].Get(emitter.m_heading);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const EmitterCircle &emitter)
+Node &operator<<(Node &node, const EmitterCircle &emitter)
 {
-	metadata.SetChild("radius", emitter.m_radius);
-	metadata.SetChild("heading", emitter.m_heading);
-	return metadata;
+	node["radius"].Set(emitter.m_radius);
+	node["heading"].Set(emitter.m_heading);
+	return node;
 }
 }

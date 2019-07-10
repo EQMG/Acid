@@ -55,13 +55,13 @@ void FilterSsao::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-std::vector<Shader::Define> FilterSsao::GetDefines()
+std::vector<Shader::Define> FilterSsao::GetDefines() const
 {
-	std::vector<Shader::Define> defines;
-	defines.emplace_back("SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE));
-	defines.emplace_back("SSAO_RADIUS", String::To(SSAO_RADIUS));
-	defines.emplace_back("RANGE_CHECK", "1");
-	return defines;
+	return {
+		{"SSAO_KERNEL_SIZE", String::To(SSAO_KERNEL_SIZE)},
+		{"SSAO_RADIUS", String::To(SSAO_RADIUS)},
+		{"RANGE_CHECK", "1"}
+	};
 }
 
 std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)

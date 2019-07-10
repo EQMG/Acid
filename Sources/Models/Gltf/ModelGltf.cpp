@@ -11,9 +11,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
+std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -21,8 +21,8 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelGltf>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -30,9 +30,9 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Metadata &metadata)
 std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filename)
 {
 	ModelGltf temp{filename, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelGltf::ModelGltf(std::filesystem::path filename, const bool &load) :
@@ -44,17 +44,17 @@ ModelGltf::ModelGltf(std::filesystem::path filename, const bool &load) :
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelGltf &model)
+const Node &operator>>(const Node &node, ModelGltf &model)
 {
-	metadata.GetChild("filename", model.m_filename);
-	return metadata;
+	node["filename"].Get(model.m_filename);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelGltf &model)
+Node &operator<<(Node &node, const ModelGltf &model)
 {
-	metadata.SetChild<std::string>("type", "ModelGltf");
-	metadata.SetChild("filename", model.m_filename);
-	return metadata;
+	node["type"].Set("ModelGltf");
+	node["filename"].Set(model.m_filename);
+	return node;
 }
 
 void ModelGltf::Load()

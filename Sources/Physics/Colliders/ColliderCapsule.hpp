@@ -28,9 +28,9 @@ public:
 
 	void SetHeight(const float &height);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ColliderCapsule &collider);
+	friend const Node &operator>>(const Node &node, ColliderCapsule &collider);
 
-	friend Metadata &operator<<(Metadata &metadata, const ColliderCapsule &collider);
+	friend Node &operator<<(Node &node, const ColliderCapsule &collider);
 
 private:
 	std::unique_ptr<btCapsuleShape> m_shape;

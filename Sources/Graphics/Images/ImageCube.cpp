@@ -7,9 +7,9 @@
 
 namespace acid
 {
-std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
+std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -17,8 +17,8 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ImageCube>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -27,9 +27,9 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filena
 	const bool &anisotropic, const bool &mipmap)
 {
 	ImageCube temp{filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap,
@@ -201,28 +201,28 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &fi
 	return result;
 }
 
-const Metadata &operator>>(const Metadata &metadata, ImageCube &image)
+const Node &operator>>(const Node &node, ImageCube &image)
 {
-	metadata.GetChild("filename", image.m_filename);
-	metadata.GetChild("fileSuffix", image.m_fileSuffix);
-	//metadata.GetChild("fileSides", image.m_fileSides);
-	metadata.GetChild("filter", image.m_filter);
-	metadata.GetChild("addressMode", image.m_addressMode);
-	metadata.GetChild("anisotropic", image.m_anisotropic);
-	metadata.GetChild(",ipmap", image.m_mipmap);
-	return metadata;
+	node["filename"].Get(image.m_filename);
+	node["fileSuffix"].Get(image.m_fileSuffix);
+	//node["fileSides"].Get(image.m_fileSides);
+	node["filter"].Get(image.m_filter);
+	node["addressMode"].Get(image.m_addressMode);
+	node["anisotropic"].Get(image.m_anisotropic);
+	node["mipmap"].Get(image.m_mipmap);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ImageCube &image)
+Node &operator<<(Node &node, const ImageCube &image)
 {
-	metadata.SetChild("filename", image.m_filename);
-	metadata.SetChild("fileSuffix", image.m_fileSuffix);
-	//metadata.SetChild("fileSides", image.m_fileSides);
-	metadata.SetChild("filter", image.m_filter);
-	metadata.SetChild("addressMode", image.m_addressMode);
-	metadata.SetChild("anisotropic", image.m_anisotropic);
-	metadata.SetChild("mipmap", image.m_mipmap);
-	return metadata;
+	node["filename"].Set(image.m_filename);
+	node["fileSuffix"].Set(image.m_fileSuffix);
+	//node["fileSides"].Set(image.m_fileSides);
+	node["filter"].Set(image.m_filter);
+	node["addressMode"].Set(image.m_addressMode);
+	node["anisotropic"].Set(image.m_anisotropic);
+	node["mipmap"].Set(image.m_mipmap);
+	return node;
 }
 
 void ImageCube::Load()

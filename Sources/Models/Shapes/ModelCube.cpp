@@ -5,9 +5,9 @@
 
 namespace acid
 {
-std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
+std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -15,8 +15,8 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<ModelCube>(Vector3f{})};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -24,9 +24,9 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Metadata &metadata)
 std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
 	ModelCube temp{extents, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 ModelCube::ModelCube(const Vector3f &extents, const bool &load) :
@@ -38,17 +38,17 @@ ModelCube::ModelCube(const Vector3f &extents, const bool &load) :
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, ModelCube &model)
+const Node &operator>>(const Node &node, ModelCube &model)
 {
-	metadata.GetChild("extents", model.m_extents);
-	return metadata;
+	node["extents"].Get(model.m_extents);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ModelCube &model)
+Node &operator<<(Node &node, const ModelCube &model)
 {
-	metadata.SetChild<std::string>("type", "ModelCube");
-	metadata.SetChild("extents", model.m_extents);
-	return metadata;
+	node["type"].Set("ModelCube");
+	node["extents"].Set(model.m_extents);
+	return node;
 }
 
 void ModelCube::Load()

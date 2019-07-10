@@ -717,6 +717,7 @@ class Node {
  public:
   Node() : camera(-1), skin(-1), mesh(-1) {}
 
+  // TODO(syoyo): Could use `default`
   Node(const Node &rhs) {
     camera = rhs.camera;
 
@@ -734,6 +735,9 @@ class Node {
     extras = rhs.extras;
   }
   ~Node() {}
+
+  Node &operator=(const Node &rhs) = default;
+
   bool operator==(const Node &) const;
 
   int camera;  // the index of the camera referenced by this node
@@ -794,7 +798,12 @@ struct Light {
 class Model {
  public:
   Model() {}
+
+  Model(const Model &) = default;
+  Model &operator=(const Model &) = default;
+
   ~Model() {}
+
   bool operator==(const Model &) const;
 
   std::vector<Accessor> accessors;
@@ -3094,7 +3103,7 @@ static bool ParseAccessor(Accessor *accessor, std::string *err, const json &o) {
     if (componentType >= TINYGLTF_COMPONENT_TYPE_BYTE &&
         componentType <= TINYGLTF_COMPONENT_TYPE_DOUBLE) {
       // OK
-      accessor->componentType = componentType;
+      accessor->componentType = int(componentType);
     } else {
       std::stringstream ss;
       ss << "Invalid `componentType` in accessor. Got " << componentType
@@ -3457,7 +3466,9 @@ static bool ParseMaterial(Material *material, std::string *err, const json &o) {
     } else {
       Parameter param;
       if (ParseParameterProperty(&param, err, o, it.key(), false)) {
-        material->additionalValues[it.key()] = param;
+        // names of materials have already been parsed. Putting it in this map
+        // doesn't correctly reflext the glTF specification
+        if (it.key() != "name") material->additionalValues[it.key()] = param;
       }
     }
   }

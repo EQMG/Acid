@@ -577,25 +577,25 @@ void Shader::CreateReflection()
 	}
 }
 
-const Metadata &operator>>(const Metadata &metadata, Shader &shader)
+const Node &operator>>(const Node &node, Shader &shader)
 {
-	metadata.GetChild("stages", shader.m_stages);
-	metadata.GetChild("uniforms", shader.m_uniforms);
-	metadata.GetChild("uniformBlocks", shader.m_uniformBlocks);
-	metadata.GetChild("attributes", shader.m_attributes);
-	metadata.GetChild("constants", shader.m_constants);
-	//metadata.GetChild("localSizes", shader.m_localSizes);
-	return metadata;
+	node["stages"].Get(shader.m_stages);
+	node["uniforms"].Get(shader.m_uniforms);
+	node["uniformBlocks"].Get(shader.m_uniformBlocks);
+	node["attributes"].Get(shader.m_attributes);
+	node["constants"].Get(shader.m_constants);
+	//node["localSizes"].Get(shader.m_localSizes);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Shader &shader)
+Node &operator<<(Node &node, const Shader &shader)
 {
-	metadata.SetChild("stages", shader.m_stages);
-	metadata.SetChild("uniforms", shader.m_uniforms);
-	metadata.SetChild("uniformBlocks", shader.m_uniformBlocks);
-	metadata.SetChild("constants", shader.m_constants);
-	//metadata.SetChild("localSizes", shader.m_localSizes);
-	return metadata;
+	node["stages"].Set(shader.m_stages);
+	node["uniforms"].Set(shader.m_uniforms);
+	node["uniformBlocks"].Set(shader.m_uniformBlocks);
+	node["constants"].Set(shader.m_constants);
+	//node["localSizes"].Set(shader.m_localSizes);
+	return node;
 }
 
 void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type)

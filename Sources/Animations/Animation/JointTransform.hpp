@@ -70,9 +70,9 @@ public:
 
 	void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, JointTransform &jointTransform);
+	friend const Node &operator>>(const Node &node, JointTransform &jointTransform);
 
-	friend Metadata &operator<<(Metadata &metadata, const JointTransform &jointTransform);
+	friend Node &operator<<(Node &node, const JointTransform &jointTransform);
 
 private:
 	Vector3f m_position;

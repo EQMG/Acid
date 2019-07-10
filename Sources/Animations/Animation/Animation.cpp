@@ -8,17 +8,17 @@ Animation::Animation(const Time &length, std::vector<Keyframe> keyframes) :
 {
 }
 
-const Metadata &operator>>(const Metadata &metadata, Animation &animation)
+const Node &operator>>(const Node &node, Animation &animation)
 {
-	metadata.GetChild("length", animation.m_length);
-	metadata.GetChild("keyframes", animation.m_keyframes);
-	return metadata;
+	node.GetChild("length", animation.m_length);
+	node.GetChild("keyframes", animation.m_keyframes);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const Animation &animation)
+Node &operator<<(Node &node, const Animation &animation)
 {
-	metadata.SetChild("length", animation.m_length);
-	metadata.SetChild("keyframes", animation.m_keyframes);
-	return metadata;
+	node.SetChild("length", animation.m_length);
+	node.SetChild("keyframes", animation.m_keyframes);
+	return node;
 }
 }

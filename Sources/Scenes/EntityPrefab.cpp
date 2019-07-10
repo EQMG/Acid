@@ -2,17 +2,17 @@
 
 #include "Files/File.hpp"
 #include "Serialized/Json/Json.hpp"
-#include "Serialized/Xml/Xml.hpp"
-#include "Serialized/Yaml/Yaml.hpp"
+//#include "Serialized/Xml/Xml.hpp"
+//#include "Serialized/Yaml/Yaml.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
 #include "Scenes.hpp"
 
 namespace acid
 {
-std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
+std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -20,8 +20,8 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<EntityPrefab>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -29,9 +29,9 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Metadata &metadata)
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &filename)
 {
 	EntityPrefab temp{filename, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 EntityPrefab::EntityPrefab(std::filesystem::path filename, const bool &load) :
@@ -56,14 +56,14 @@ void EntityPrefab::Load()
 	{
 		m_file = std::make_unique<File>(m_filename, std::make_unique<Json>());
 	}
-	else if (fileExt == ".yaml")
+	/*else if (fileExt == ".yaml")
 	{
 		m_file = std::make_unique<File>(m_filename, std::make_unique<Yaml>());
 	}
 	else if (fileExt == ".xml")
 	{
 		m_file = std::make_unique<File>(m_filename, std::make_unique<Xml>("EntityDefinition"));
-	}
+	}*/
 
 	if (m_file != nullptr)
 	{
@@ -78,21 +78,21 @@ void EntityPrefab::Write() const
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 {
-	for (const auto &child : entityPrefab.GetParent()->GetChildren())
+	for (const auto &[propertyName, property]: entityPrefab.GetParent()->GetProperties())
 	{
-		if (child->GetName().empty())
+		if (propertyName.empty())
 		{
 			continue;
 		}
 
-		auto component{Scenes::Get()->GetComponentRegister().Create(child->GetName())};
+		auto component{Scenes::Get()->GetComponentRegister().Create(propertyName)};
 
 		if (component == nullptr)
 		{
 			continue;
 		}
 
-		Scenes::Get()->GetComponentRegister().Decode(child->GetName(), *child, component);
+		Scenes::Get()->GetComponentRegister().Decode(propertyName, property, component);
 		entity.AddComponent(component);
 	}
 
@@ -101,7 +101,7 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 
 EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 {
-	entityPrefab.m_file->GetMetadata()->ClearChildren();
+	entityPrefab.m_file->Clear();
 
 	for (const auto &component : entity.GetComponents())
 	{
@@ -112,22 +112,22 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 			continue;
 		}
 
-		auto child{entityPrefab.m_file->GetMetadata()->AddChild(std::make_unique<Metadata>(*componentName))};
-		Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
+		auto &property{entityPrefab.m_file->GetNode()->AddProperty(*componentName)};
+		Scenes::Get()->GetComponentRegister().Encode(*componentName, property, component.get());
 	}
 
 	return entityPrefab;
 }
 
-const Metadata &operator>>(const Metadata &metadata, EntityPrefab &entityPrefab)
+const Node &operator>>(const Node &node, EntityPrefab &entityPrefab)
 {
-	metadata.GetChild("filename", entityPrefab.m_filename);
-	return metadata;
+	node["filename"].Get(entityPrefab.m_filename);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const EntityPrefab &entityPrefab)
+Node &operator<<(Node &node, const EntityPrefab &entityPrefab)
 {
-	metadata.SetChild("filename", entityPrefab.m_filename);
-	return metadata;
+	node["filename"].Get(entityPrefab.m_filename);
+	return node;
 }
 }

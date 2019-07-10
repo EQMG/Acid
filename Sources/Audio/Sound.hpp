@@ -51,9 +51,9 @@ public:
 
 	void SetPitch(const float &pitch);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Sound &sound);
+	friend const Node &operator>>(const Node &node, Sound &sound);
 
-	friend Metadata &operator<<(Metadata &metadata, const Sound &sound);
+	friend Node &operator<<(Node &node, const Sound &sound);
 
 private:
 	std::shared_ptr<SoundBuffer> m_buffer;

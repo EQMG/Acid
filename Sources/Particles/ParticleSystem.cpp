@@ -164,35 +164,35 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 	return {x, y, z};
 }
 
-const Metadata &operator>>(const Metadata &metadata, ParticleSystem &particleSystem)
+const Node &operator>>(const Node &node, ParticleSystem &particleSystem)
 {
-	metadata.GetChild("types", particleSystem.m_types);
-	metadata.GetChild("pps", particleSystem.m_pps);
-	metadata.GetChild("averageSpeed", particleSystem.m_averageSpeed);
-	metadata.GetChild("gravityEffect", particleSystem.m_gravityEffect);
-	metadata.GetChild("randomRotation", particleSystem.m_randomRotation);
-	metadata.GetChild("direction", particleSystem.m_direction);
-	metadata.GetChild("directionDeviation", particleSystem.m_directionDeviation);
-	metadata.GetChild("speedDeviation", particleSystem.m_speedDeviation);
-	metadata.GetChild("lifeDeviation", particleSystem.m_lifeDeviation);
-	metadata.GetChild("stageDeviation", particleSystem.m_stageDeviation);
-	metadata.GetChild("scaleDeviation", particleSystem.m_scaleDeviation);
-	return metadata;
+	node["types"].Get(particleSystem.m_types);
+	node["pps"].Get(particleSystem.m_pps);
+	node["averageSpeed"].Get(particleSystem.m_averageSpeed);
+	node["gravityEffect"].Get(particleSystem.m_gravityEffect);
+	node["randomRotation"].Get(particleSystem.m_randomRotation);
+	node["direction"].Get(particleSystem.m_direction);
+	node["directionDeviation"].Get(particleSystem.m_directionDeviation);
+	node["speedDeviation"].Get(particleSystem.m_speedDeviation);
+	node["lifeDeviation"].Get(particleSystem.m_lifeDeviation);
+	node["stageDeviation"].Get(particleSystem.m_stageDeviation);
+	node["scaleDeviation"].Get(particleSystem.m_scaleDeviation);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const ParticleSystem &particleSystem)
+Node &operator<<(Node &node, const ParticleSystem &particleSystem)
 {
-	metadata.SetChild("types", particleSystem.m_types);
-	metadata.SetChild("pps", particleSystem.m_pps);
-	metadata.SetChild("averageSpeed", particleSystem.m_averageSpeed);
-	metadata.SetChild("gravityEffect", particleSystem.m_gravityEffect);
-	metadata.SetChild("randomRotation", particleSystem.m_randomRotation);
-	metadata.SetChild("direction", particleSystem.m_direction);
-	metadata.SetChild("directionDeviation", particleSystem.m_directionDeviation);
-	metadata.SetChild("speedDeviation", particleSystem.m_speedDeviation);
-	metadata.SetChild("lifeDeviation", particleSystem.m_lifeDeviation);
-	metadata.SetChild("stageDeviation", particleSystem.m_stageDeviation);
-	metadata.SetChild("scaleDeviation", particleSystem.m_scaleDeviation);
-	return metadata;
+	node["types"].Set(particleSystem.m_types);
+	node["pps"].Set(particleSystem.m_pps);
+	node["averageSpeed"].Set(particleSystem.m_averageSpeed);
+	node["gravityEffect"].Set(particleSystem.m_gravityEffect);
+	node["randomRotation"].Set(particleSystem.m_randomRotation);
+	node["direction"].Set(particleSystem.m_direction);
+	node["directionDeviation"].Set(particleSystem.m_directionDeviation);
+	node["speedDeviation"].Set(particleSystem.m_speedDeviation);
+	node["lifeDeviation"].Set(particleSystem.m_lifeDeviation);
+	node["stageDeviation"].Set(particleSystem.m_stageDeviation);
+	node["scaleDeviation"].Set(particleSystem.m_scaleDeviation);
+	return node;
 }
 }

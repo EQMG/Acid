@@ -10,9 +10,9 @@ namespace acid
 {
 static const uint32_t MAX_VISIBLE_GLYPHS{4096};
 
-std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
+std::shared_ptr<FontType> FontType::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -20,8 +20,8 @@ std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<FontType>("", "")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -29,9 +29,9 @@ std::shared_ptr<FontType> FontType::Create(const Metadata &metadata)
 std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, const std::string &style)
 {
 	FontType temp{filename, style, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 FontType::FontType(std::filesystem::path filename, std::string style, const bool &load) :
@@ -132,18 +132,18 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	return true;
 }
 
-const Metadata &operator>>(const Metadata &metadata, FontType &fontType)
+const Node &operator>>(const Node &node, FontType &fontType)
 {
-	metadata.GetChild("filename", fontType.m_filename);
-	metadata.GetChild("style", fontType.m_style);
-	return metadata;
+	node["filename"].Get(fontType.m_filename);
+	node["style"].Get(fontType.m_style);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const FontType &fontType)
+Node &operator<<(Node &node, const FontType &fontType)
 {
-	metadata.SetChild("filename", fontType.m_filename);
-	metadata.SetChild("style", fontType.m_style);
-	return metadata;
+	node["filename"].Set(fontType.m_filename);
+	node["style"].Set(fontType.m_style);
+	return node;
 }
 
 void FontType::Load()
@@ -154,7 +154,7 @@ void FontType::Load()
 	}
 
 	m_image = Image2d::Create(m_filename / (m_style + ".png"));
-	m_metadata = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
+	m_node = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
 	LoadFont(m_filename / (m_style + ".ttf"));
 }
 

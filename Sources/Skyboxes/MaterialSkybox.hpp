@@ -44,9 +44,9 @@ public:
 
 	void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, MaterialSkybox &material);
+	friend const Node &operator>>(const Node &node, MaterialSkybox &material);
 
-	friend Metadata &operator<<(Metadata &metadata, const MaterialSkybox &material);
+	friend Node &operator<<(Node &node, const MaterialSkybox &material);
 
 private:
 	std::shared_ptr<ImageCube> m_image;

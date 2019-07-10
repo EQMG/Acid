@@ -196,9 +196,9 @@ public:
 
 	Quaternion &operator*=(const float &other);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Quaternion &quaternion);
+	friend const Node &operator>>(const Node &node, Quaternion &quaternion);
 
-	friend Metadata &operator<<(Metadata &metadata, const Quaternion &quaternion);
+	friend Node &operator<<(Node &node, const Quaternion &quaternion);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Quaternion &quaternion);
 

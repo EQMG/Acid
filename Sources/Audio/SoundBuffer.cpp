@@ -11,9 +11,9 @@
 
 namespace acid
 {
-std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -21,8 +21,8 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<SoundBuffer>("")};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	result->Load();
 	return result;
 }
@@ -30,9 +30,9 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Metadata &metadata)
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename)
 {
 	SoundBuffer temp{filename, false};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 SoundBuffer::SoundBuffer(std::filesystem::path filename, const bool &load) :
@@ -49,16 +49,16 @@ SoundBuffer::~SoundBuffer()
 	alDeleteBuffers(1, &m_buffer);
 }
 
-const Metadata &operator>>(const Metadata &metadata, SoundBuffer &soundBuffer)
+const Node &operator>>(const Node &node, SoundBuffer &soundBuffer)
 {
-	metadata.GetChild("filename", soundBuffer.m_filename);
-	return metadata;
+	node["filename"].Get(soundBuffer.m_filename);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const SoundBuffer &soundBuffer)
+Node &operator<<(Node &node, const SoundBuffer &soundBuffer)
 {
-	metadata.SetChild("filename", soundBuffer.m_filename);
-	return metadata;
+	node["filename"].Set(soundBuffer.m_filename);
+	return node;
 }
 
 void SoundBuffer::Load()

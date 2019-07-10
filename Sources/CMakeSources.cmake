@@ -1,18 +1,18 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
 		Acid.hpp
-		Animations/Animation/Animation.hpp
-		Animations/Animation/AnimationLoader.hpp
-		Animations/Animation/Keyframe.hpp
-		Animations/Animation/JointTransform.hpp
-		Animations/Animator.hpp
-		Animations/Geometry/GeometryLoader.hpp
-		Animations/Geometry/VertexAnimated.hpp
-		Animations/MeshAnimated.hpp
-		Animations/Skeleton/Joint.hpp
-		Animations/Skeleton/SkeletonLoader.hpp
-		Animations/Skin/SkinLoader.hpp
-		Animations/Skin/VertexWeights.hpp
+#		Animations/Animation/Animation.hpp
+#		Animations/Animation/AnimationLoader.hpp
+#		Animations/Animation/Keyframe.hpp
+#		Animations/Animation/JointTransform.hpp
+#		Animations/Animator.hpp
+#		Animations/Geometry/GeometryLoader.hpp
+#		Animations/Geometry/VertexAnimated.hpp
+#		Animations/MeshAnimated.hpp
+#		Animations/Skeleton/Joint.hpp
+#		Animations/Skeleton/SkeletonLoader.hpp
+#		Animations/Skin/SkinLoader.hpp
+#		Animations/Skin/VertexWeights.hpp
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
@@ -208,9 +208,8 @@ set(_temp_acid_headers
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
 		Serialized/Json/Json.hpp
-		Serialized/Metadata.hpp
-		Serialized/Xml/Xml.hpp
-		Serialized/Yaml/Yaml.hpp
+		Serialized/Node.hpp
+		Serialized/NodeReturn.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -234,17 +233,17 @@ set(_temp_acid_headers
 		)
 set(_temp_acid_sources
 		StdAfx.cpp
-		Animations/Animation/Animation.cpp
-		Animations/Animation/AnimationLoader.cpp
-		Animations/Animation/Keyframe.cpp
-		Animations/Animation/JointTransform.cpp
-		Animations/Animator.cpp
-		Animations/Geometry/GeometryLoader.cpp
-		Animations/MeshAnimated.cpp
-		Animations/Skeleton/Joint.cpp
-		Animations/Skeleton/SkeletonLoader.cpp
-		Animations/Skin/SkinLoader.cpp
-		Animations/Skin/VertexWeights.cpp
+#		Animations/Animation/Animation.cpp
+#		Animations/Animation/AnimationLoader.cpp
+#		Animations/Animation/Keyframe.cpp
+#		Animations/Animation/JointTransform.cpp
+#		Animations/Animator.cpp
+#		Animations/Geometry/GeometryLoader.cpp
+#		Animations/MeshAnimated.cpp
+#		Animations/Skeleton/Joint.cpp
+#		Animations/Skeleton/SkeletonLoader.cpp
+#		Animations/Skin/SkinLoader.cpp
+#		Animations/Skin/VertexWeights.cpp
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
@@ -408,9 +407,8 @@ set(_temp_acid_sources
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
 		Serialized/Json/Json.cpp
-		Serialized/Metadata.cpp
-		Serialized/Xml/Xml.cpp
-		Serialized/Yaml/Yaml.cpp
+		Serialized/Node.cpp
+		Serialized/NodeReturn.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp

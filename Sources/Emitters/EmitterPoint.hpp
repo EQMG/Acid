@@ -20,9 +20,9 @@ public:
 
 	void SetPoint(const Vector3f &point) { m_point = point; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, EmitterPoint &emitter);
+	friend const Node &operator>>(const Node &node, EmitterPoint &emitter);
 
-	friend Metadata &operator<<(Metadata &metadata, const EmitterPoint &emitter);
+	friend Node &operator<<(Node &node, const EmitterPoint &emitter);
 
 private:
 	Vector3f m_point;

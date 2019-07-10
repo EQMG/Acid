@@ -20,9 +20,9 @@ public:
 
 	void Update() override;
 
-	friend const Metadata &operator>>(const Metadata &metadata, Terrain &terrain);
+	friend const Node &operator>>(const Node &node, Terrain &terrain);
 
-	friend Metadata &operator<<(Metadata &metadata, const Terrain &terrain);
+	friend Node &operator<<(Node &node, const Terrain &terrain);
 
 private:
 	static uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);

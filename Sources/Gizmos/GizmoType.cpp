@@ -10,9 +10,9 @@ static const uint32_t MAX_INSTANCES{512};
 //static const uint32_t INSTANCE_STEPS{128};
 //static const float FRUSTUM_BUFFER{1.4f};
 
-std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
+std::shared_ptr<GizmoType> GizmoType::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(metadata)};
+	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)
 	{
@@ -20,8 +20,8 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 	}
 
 	auto result{std::make_shared<GizmoType>(nullptr)};
-	Resources::Get()->Add(metadata, std::dynamic_pointer_cast<Resource>(result));
-	metadata >> *result;
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
 	//result->Load();
 	return result;
 }
@@ -29,9 +29,9 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Metadata &metadata)
 std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, const float &lineThickness, const Colour &colour)
 {
 	GizmoType temp{model, lineThickness, colour};
-	Metadata metadata;
-	metadata << temp;
-	return Create(metadata);
+	Node node;
+	node << temp;
+	return Create(node);
 }
 
 GizmoType::GizmoType(std::shared_ptr<Model> model, const float &lineThickness, const Colour &colour) :
@@ -107,20 +107,20 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 	return true;
 }
 
-const Metadata &operator>>(const Metadata &metadata, GizmoType &gizmoType)
+const Node &operator>>(const Node &node, GizmoType &gizmoType)
 {
-	metadata.GetChild("model", gizmoType.m_model);
-	metadata.GetChild("lineThickness", gizmoType.m_lineThickness);
-	metadata.GetChild("colour", gizmoType.m_colour);
-	return metadata;
+	node["model"].Get(gizmoType.m_model);
+	node["lineThickness"].Get(gizmoType.m_lineThickness);
+	node["colour"].Get(gizmoType.m_colour);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const GizmoType &gizmoType)
+Node &operator<<(Node &node, const GizmoType &gizmoType)
 {
-	metadata.SetChild("model", gizmoType.m_model);
-	metadata.SetChild("lineThickness", gizmoType.m_lineThickness);
-	metadata.SetChild("colour", gizmoType.m_colour);
-	return metadata;
+	node["model"].Set(gizmoType.m_model);
+	node["lineThickness"].Set(gizmoType.m_lineThickness);
+	node["colour"].Set(gizmoType.m_colour);
+	return node;
 
 }
 }

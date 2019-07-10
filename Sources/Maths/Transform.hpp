@@ -67,9 +67,9 @@ public:
 
 	Transform &operator*=(const Transform &other);
 
-	friend const Metadata &operator>>(const Metadata &metadata, Transform &transform);
+	friend const Node &operator>>(const Node &node, Transform &transform);
 
-	friend Metadata &operator<<(Metadata &metadata, const Transform &transform);
+	friend Node &operator<<(Node &node, const Transform &transform);
 
 	friend std::ostream &operator<<(std::ostream &stream, const Transform &transform);
 

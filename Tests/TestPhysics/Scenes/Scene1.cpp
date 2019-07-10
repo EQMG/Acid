@@ -1,7 +1,7 @@
 #include "Scene1.hpp"
 
 #include <Audio/Sound.hpp>
-#include <Animations/MeshAnimated.hpp>
+//#include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
@@ -28,7 +28,6 @@
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Serialized/Json/Json.hpp>
-#include <Serialized/Yaml/Yaml.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
@@ -95,11 +94,11 @@ Scene1::Scene1() :
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto entityNode{sceneFile.GetMetadata()->AddChild(std::make_unique<Metadata>())};
+					auto &entityNode{sceneFile.GetNode()->AddProperty()};
 
 					if (!entity->GetName().empty())
 					{
-						entityNode->SetChild("name", entity->GetName());
+						entityNode["name"] = entity->GetName();
 					}
 
 					for (auto &component : entity->GetComponents())
@@ -108,8 +107,8 @@ Scene1::Scene1() :
 
 						if (componentName)
 						{
-							auto child{entityNode->AddChild(std::make_unique<Metadata>(*componentName))};
-							Scenes::Get()->GetComponentRegister().Encode(*componentName, *child, component.get());
+							auto child{entityNode.AddProperty(*componentName)};
+							Scenes::Get()->GetComponentRegister().Encode(*componentName, child, component.get());
 						}
 					}
 				}
@@ -163,7 +162,7 @@ void Scene1::Start()
 	//auto animated{GetStructure()->CreateEntity("Objects/Animated/Animated.json")};
 	//animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 
-	auto animated{GetStructure()->CreateEntity()};
+	/*auto animated{GetStructure()->CreateEntity()};
 	animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animated->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
@@ -174,7 +173,7 @@ void Scene1::Start()
 
 	EntityPrefab prefabAnimated{"Prefabs/Animated.json"};
 	prefabAnimated << *animated;
-	prefabAnimated.Write();
+	prefabAnimated.Write();*/
 
 	auto sun{GetStructure()->CreateEntity()};
 	sun->AddComponent<Transform>(Vector3f{1000.0f, 5000.0f, -4000.0f}, Vector3f{}, 18.0f);

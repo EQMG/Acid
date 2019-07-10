@@ -18,9 +18,9 @@ public:
 
 	bool operator<(const MeshRender &other) const;
 
-	friend const Metadata &operator>>(const Metadata &metadata, MeshRender &meshRender);
+	friend const Node &operator>>(const Node &node, MeshRender &meshRender);
 
-	friend Metadata &operator<<(Metadata &metadata, const MeshRender &meshRender);
+	friend Node &operator<<(Node &node, const MeshRender &meshRender);
 
 private:
 	DescriptorsHandler m_descriptorSet;

@@ -2,7 +2,7 @@
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
-#include <Serialized/Metadata.hpp>
+#include <Serialized/Node.hpp>
 
 using namespace acid;
 
@@ -27,9 +27,9 @@ public:
 
 	void SetType(const Type &type) { m_type = type; }
 
-	friend const Metadata &operator>>(const Metadata &metadata, CelestialBody &celestialBody);
+	friend const Node &operator>>(const Node &node, CelestialBody &celestialBody);
 
-	friend Metadata &operator<<(Metadata &metadata, const CelestialBody &celestialBody);
+	friend Node &operator<<(Node &node, const CelestialBody &celestialBody);
 
 private:
 	Type m_type;

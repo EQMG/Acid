@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 
 namespace glslang
 {
@@ -44,18 +44,18 @@ public:
 			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, VertexInput &vertexInput)
+		friend const Node &operator>>(const Node &node, VertexInput &vertexInput)
 		{
-			metadata.GetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
-			metadata.GetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
-			return metadata;
+			node["bindingDescriptions"].Get(vertexInput.m_bindingDescriptions);
+			node["attributeDescriptions"].Get(vertexInput.m_attributeDescriptions);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const VertexInput &vertexInput)
+		friend Node &operator<<(Node &node, const VertexInput &vertexInput)
 		{
-			metadata.SetChild("bindingDescriptions", vertexInput.m_bindingDescriptions);
-			metadata.SetChild("attributeDescriptions", vertexInput.m_attributeDescriptions);
-			return metadata;
+			node["bindingDescriptions"].Set(vertexInput.m_bindingDescriptions);
+			node["attributeDescriptions"].Set(vertexInput.m_attributeDescriptions);
+			return node;
 		}
 
 	private:
@@ -104,28 +104,28 @@ public:
 			return !(*this == other);
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, Uniform &uniform)
+		friend const Node &operator>>(const Node &node, Uniform &uniform)
 		{
-			metadata.GetChild("binding", uniform.m_binding);
-			metadata.GetChild("offset", uniform.m_offset);
-			metadata.GetChild("size", uniform.m_size);
-			metadata.GetChild("glType", uniform.m_glType);
-			metadata.GetChild("readOnly", uniform.m_readOnly);
-			metadata.GetChild("writeOnly", uniform.m_writeOnly);
-			metadata.GetChild("stageFlags", uniform.m_stageFlags);
-			return metadata;
+			node["binding"].Get(uniform.m_binding);
+			node["offset"].Get(uniform.m_offset);
+			node["size"].Get(uniform.m_size);
+			node["glType"].Get(uniform.m_glType);
+			node["readOnly"].Get(uniform.m_readOnly);
+			node["writeOnly"].Get(uniform.m_writeOnly);
+			node["stageFlags"].Get(uniform.m_stageFlags);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const Uniform &uniform)
+		friend Node &operator<<(Node &node, const Uniform &uniform)
 		{
-			metadata.SetChild("binding", uniform.m_binding);
-			metadata.SetChild("offset", uniform.m_offset);
-			metadata.SetChild("size", uniform.m_size);
-			metadata.SetChild("glType", uniform.m_glType);
-			metadata.SetChild("readOnly", uniform.m_readOnly);
-			metadata.SetChild("writeOnly", uniform.m_writeOnly);
-			metadata.SetChild("stageFlags", uniform.m_stageFlags);
-			return metadata;
+			node["binding"].Set(uniform.m_binding);
+			node["offset"].Set(uniform.m_offset);
+			node["size"].Set(uniform.m_size);
+			node["glType"].Set(uniform.m_glType);
+			node["readOnly"].Set(uniform.m_readOnly);
+			node["writeOnly"].Set(uniform.m_writeOnly);
+			node["stageFlags"].Set(uniform.m_stageFlags);
+			return node;
 		}
 
 	private:
@@ -188,24 +188,24 @@ public:
 			return !(*this == other);
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, UniformBlock &uniformBlock)
+		friend const Node &operator>>(const Node &node, UniformBlock &uniformBlock)
 		{
-			metadata.GetChild("binding", uniformBlock.m_binding);
-			metadata.GetChild("size", uniformBlock.m_size);
-			metadata.GetChild("stageFlags", uniformBlock.m_stageFlags);
-			metadata.GetChild("type", uniformBlock.m_type);
-			metadata.GetChild("uniforms", uniformBlock.m_uniforms);
-			return metadata;
+			node["binding"].Get(uniformBlock.m_binding);
+			node["size"].Get(uniformBlock.m_size);
+			node["stageFlags"].Get(uniformBlock.m_stageFlags);
+			node["type"].Get(uniformBlock.m_type);
+			node["uniforms"].Get(uniformBlock.m_uniforms);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const UniformBlock &uniformBlock)
+		friend Node &operator<<(Node &node, const UniformBlock &uniformBlock)
 		{
-			metadata.SetChild("binding", uniformBlock.m_binding);
-			metadata.SetChild("size", uniformBlock.m_size);
-			metadata.SetChild("stageFlags", uniformBlock.m_stageFlags);
-			metadata.SetChild("type", uniformBlock.m_type);
-			metadata.SetChild("uniforms", uniformBlock.m_uniforms);
-			return metadata;
+			node["binding"].Set(uniformBlock.m_binding);
+			node["size"].Set(uniformBlock.m_size);
+			node["stageFlags"].Set(uniformBlock.m_stageFlags);
+			node["type"].Set(uniformBlock.m_type);
+			node["uniforms"].Set(uniformBlock.m_uniforms);
+			return node;
 		}
 
 	private:
@@ -247,22 +247,22 @@ public:
 			return !(*this == other);
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, Attribute &attribute)
+		friend const Node &operator>>(const Node &node, Attribute &attribute)
 		{
-			metadata.GetChild("set", attribute.m_set);
-			metadata.GetChild("location", attribute.m_location);
-			metadata.GetChild("size", attribute.m_size);
-			metadata.GetChild("glType", attribute.m_glType);
-			return metadata;
+			node["set"].Get(attribute.m_set);
+			node["location"].Get(attribute.m_location);
+			node["size"].Get(attribute.m_size);
+			node["glType"].Get(attribute.m_glType);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const Attribute &attribute)
+		friend Node &operator<<(Node &node, const Attribute &attribute)
 		{
-			metadata.SetChild("set", attribute.m_set);
-			metadata.SetChild("location", attribute.m_location);
-			metadata.SetChild("size", attribute.m_size);
-			metadata.SetChild("glType", attribute.m_glType);
-			return metadata;
+			node["set"].Set(attribute.m_set);
+			node["location"].Set(attribute.m_location);
+			node["size"].Set(attribute.m_size);
+			node["glType"].Set(attribute.m_glType);
+			return node;
 		}
 
 	private:
@@ -303,22 +303,22 @@ public:
 			return !(*this == other);
 		}
 
-		friend const Metadata &operator>>(const Metadata &metadata, Constant &constant)
+		friend const Node &operator>>(const Node &node, Constant &constant)
 		{
-			metadata.GetChild("binding", constant.m_binding);
-			metadata.GetChild("size", constant.m_size);
-			metadata.GetChild("stageFlags", constant.m_stageFlags);
-			metadata.GetChild("glType", constant.m_glType);
-			return metadata;
+			node["binding"].Get(constant.m_binding);
+			node["size"].Get(constant.m_size);
+			node["stageFlags"].Get(constant.m_stageFlags);
+			node["glType"].Get(constant.m_glType);
+			return node;
 		}
 
-		friend Metadata &operator<<(Metadata &metadata, const Constant &constant)
+		friend Node &operator<<(Node &node, const Constant &constant)
 		{
-			metadata.SetChild("binding", constant.m_binding);
-			metadata.SetChild("size", constant.m_size);
-			metadata.SetChild("stageFlags", constant.m_stageFlags);
-			metadata.SetChild("glType", constant.m_glType);
-			return metadata;
+			node["binding"].Set(constant.m_binding);
+			node["size"].Set(constant.m_size);
+			node["stageFlags"].Set(constant.m_stageFlags);
+			node["glType"].Set(constant.m_glType);
+			return node;
 		}
 
 	private:
@@ -376,9 +376,9 @@ public:
 
 	void CreateReflection();
 
-	friend const Metadata &operator>>(const Metadata &metadata, Shader &shader);
+	friend const Node &operator>>(const Node &node, Shader &shader);
 
-	friend Metadata &operator<<(Metadata &metadata, const Shader &shader);
+	friend Node &operator<<(Node &node, const Shader &shader);
 
 private:
 	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
@@ -411,37 +411,40 @@ private:
 	mutable std::vector<std::string> m_notFoundNames;
 };
 
-inline const Metadata &operator>>(const Metadata &metadata, VkVertexInputBindingDescription &bindingDescription)
+//REFLECT(VkVertexInputBindingDescription, {"binding", object.binding}, {"stride", object.stride}, {"inputRate", object.inputRate})
+//REFLECT(VkVertexInputAttributeDescription, {"location", object.location}, {"binding", object.binding}, {"format", object.format}, {"offset", object.offset})
+
+inline const Node &operator>>(const Node &node, VkVertexInputBindingDescription &bindingDescription)
 {
-	metadata.GetChild("binding", bindingDescription.binding);
-	metadata.GetChild("stride", bindingDescription.stride);
-	metadata.GetChild("inputRate", bindingDescription.inputRate);
-	return metadata;
+	node["binding"].Get(bindingDescription.binding);
+	node["stride"].Get(bindingDescription.stride);
+	node["inputRate"].Get(bindingDescription.inputRate);
+	return node;
 }
 
-inline Metadata &operator<<(Metadata &metadata, const VkVertexInputBindingDescription &bindingDescription)
+inline Node &operator<<(Node &node, const VkVertexInputBindingDescription &bindingDescription)
 {
-	metadata.SetChild("binding", bindingDescription.binding);
-	metadata.SetChild("stride", bindingDescription.stride);
-	metadata.SetChild("inputRate", bindingDescription.inputRate);
-	return metadata;
+	node["binding"].Set(bindingDescription.binding);
+	node["stride"].Set(bindingDescription.stride);
+	node["inputRate"].Set(bindingDescription.inputRate);
+	return node;
 }
 
-inline const Metadata &operator>>(const Metadata &metadata, VkVertexInputAttributeDescription &attributeDescription)
+inline const Node &operator>>(const Node &node, VkVertexInputAttributeDescription &attributeDescription)
 {
-	metadata.GetChild("location", attributeDescription.location);
-	metadata.GetChild("binding", attributeDescription.binding);
-	metadata.GetChild("format", attributeDescription.format);
-	metadata.GetChild("offset", attributeDescription.offset);
-	return metadata;
+	node["location"].Get(attributeDescription.location);
+	node["binding"].Get(attributeDescription.binding);
+	node["format"].Get(attributeDescription.format);
+	node["offset"].Get(attributeDescription.offset);
+	return node;
 }
 
-inline Metadata &operator<<(Metadata &metadata, const VkVertexInputAttributeDescription &attributeDescription)
+inline Node &operator<<(Node &node, const VkVertexInputAttributeDescription &attributeDescription)
 {
-	metadata.SetChild("location", attributeDescription.location);
-	metadata.SetChild("binding", attributeDescription.binding);
-	metadata.SetChild("format", attributeDescription.format);
-	metadata.SetChild("offset", attributeDescription.offset);
-	return metadata;
+	node["location"].Set(attributeDescription.location);
+	node["binding"].Set(attributeDescription.binding);
+	node["format"].Set(attributeDescription.format);
+	node["offset"].Set(attributeDescription.offset);
+	return node;
 }
 }

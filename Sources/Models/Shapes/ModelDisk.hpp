@@ -13,10 +13,10 @@ class ACID_EXPORT ModelDisk :
 public:
 	/**
 	 * Creates a new disk model, or finds one with the same values.
-	 * @param metadata The metadata to decode values from.
+	 * @param node The node to decode values from.
 	 * @return The disk model with the requested values.
 	 */
-	static std::shared_ptr<ModelDisk> Create(const Metadata &metadata);
+	static std::shared_ptr<ModelDisk> Create(const Node &node);
 
 	/**
 	 * Creates a new disk model, or finds one with the same values.
@@ -38,9 +38,9 @@ public:
 	 */
 	explicit ModelDisk(const float &innerRadius = 0.5f, const float &outerRadius = 1.0f, const uint32_t &slices = 20, const uint32_t &loops = 4, const bool &load = true);
 
-	friend const Metadata &operator>>(const Metadata &metadata, ModelDisk &model);
+	friend const Node &operator>>(const Node &node, ModelDisk &model);
 
-	friend Metadata &operator<<(Metadata &metadata, const ModelDisk &model);
+	friend Node &operator<<(Node &node, const ModelDisk &model);
 
 private:
 	void Load();

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
+SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
 	m_boneOrder{std::move(boneOrder)},
 	m_correction{correction}
 {
@@ -14,7 +14,7 @@ SkeletonLoader::SkeletonLoader(const Metadata *libraryControllers, std::vector<s
 	m_headJoint.CalculateInverseBindTransform(Matrix4{});
 }
 
-Joint SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoot)
+Joint SkeletonLoader::LoadJointData(const Node *jointNode, const bool &isRoot)
 {
 	auto joint{ExtractMainJointData(jointNode, isRoot)};
 
@@ -26,7 +26,7 @@ Joint SkeletonLoader::LoadJointData(const Metadata *jointNode, const bool &isRoo
 	return joint;
 }
 
-Joint SkeletonLoader::ExtractMainJointData(const Metadata *jointNode, const bool &isRoot)
+Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, const bool &isRoot)
 {
 	auto nameId{*jointNode->FindAttribute("id")};
 	auto index{GetBoneIndex(nameId)};

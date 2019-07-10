@@ -51,15 +51,15 @@ void NameTag::Update()
 	//m_text.SetWorldTransform(m_transform);
 }
 
-const Metadata &operator>>(const Metadata &metadata, NameTag &nameTag)
+const Node &operator>>(const Node &node, NameTag &nameTag)
 {
-	metadata.GetChild("heightOffset", nameTag.m_heightOffset);
-	return metadata;
+	node["heightOffset"].Get(nameTag.m_heightOffset);
+	return node;
 }
 
-Metadata &operator<<(Metadata &metadata, const NameTag &nameTag)
+Node &operator<<(Node &node, const NameTag &nameTag)
 {
-	metadata.SetChild("heightOffset", nameTag.m_heightOffset);
-	return metadata;
+	node["heightOffset"].Set(nameTag.m_heightOffset);
+	return node;
 }
 }

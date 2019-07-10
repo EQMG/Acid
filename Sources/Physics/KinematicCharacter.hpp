@@ -75,9 +75,9 @@ public:
 
 	void SetWalkDirection(const Vector3f &direction);
 
-	friend const Metadata &operator>>(const Metadata &metadata, KinematicCharacter &character);
+	friend const Node &operator>>(const Node &node, KinematicCharacter &character);
 
-	friend Metadata &operator<<(Metadata &metadata, const KinematicCharacter &character);
+	friend Node &operator<<(Node &node, const KinematicCharacter &character);
 
 protected:
 	void RecalculateMass() override;

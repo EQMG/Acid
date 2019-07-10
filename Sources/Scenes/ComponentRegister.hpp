@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Metadata.hpp"
+#include "Serialized/Node.hpp"
 #include "Component.hpp"
 
 namespace acid
@@ -33,15 +33,15 @@ public:
 		{
 			return new T{};
 		};
-		componentCreate.m_decode = [](const Metadata &metadata, Component *component) -> const Metadata &
+		componentCreate.m_decode = [](const Node &node, Component *component) -> const Node &
 		{
-			metadata >> *dynamic_cast<T *>(component);
-			return metadata;
+			node >> *dynamic_cast<T *>(component);
+			return node;
 		};
-		componentCreate.m_encode = [](Metadata &metadata, const Component *component) -> Metadata &
+		componentCreate.m_encode = [](Node &node, const Component *component) -> Node &
 		{
-			metadata << *dynamic_cast<const T *>(component);
-			return metadata;
+			node << *dynamic_cast<const T *>(component);
+			return node;
 		};
 		componentCreate.m_isSame = [](Component *component) -> bool
 		{
@@ -64,9 +64,9 @@ public:
 	 */
 	Component *Create(const std::string &name) const;
 
-	void Decode(const std::string &name, const Metadata &metadata, Component *component);
+	void Decode(const std::string &name, const Node &node, Component *component);
 
-	void Encode(const std::string &name, Metadata &metadata, const Component *component);
+	void Encode(const std::string &name, Node &node, const Component *component);
 
 	/**
 	 * Finds the registered name to a component.
@@ -79,8 +79,8 @@ private:
 	struct ComponentCreate
 	{
 		std::function<Component *()> m_create;
-		std::function<const Metadata &(const Metadata &metadata, Component *component)> m_decode;
-		std::function<Metadata &(Metadata &metadata, const Component *component)> m_encode;
+		std::function<const Node &(const Node &node, Component *component)> m_decode;
+		std::function<Node &(Node &node, const Component *component)> m_encode;
 		std::function<bool(Component *)> m_isSame;
 	};
 
