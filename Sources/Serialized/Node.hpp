@@ -34,6 +34,10 @@ public:
 
 	virtual void Write(std::ostream &stream, const Format &format = Format::Beautified) const;
 
+	Node *GetParent() const { return m_parent; }
+
+	void Remove();
+
 	template<typename T>
 	T Get() const;
 
@@ -59,8 +63,6 @@ public:
 
 	void SetType(const Type &type) { m_type = type; }
 
-	Node *GetParent() const { return m_parent; }
-
 	std::string GetName() const;
 
 	void SetName(const std::string &name);
@@ -77,15 +79,17 @@ public:
 
 	NodeReturn GetProperty(const uint32_t &index) const;
 
-	Node &AddProperty(const std::string &name = "", Node &&node = {});
+	Node &AddProperty(const std::string &name, Node &&node);
 
-	Node &AddProperty(const uint32_t &index, Node &&node = {});
+	Node &AddProperty(const uint32_t &index, Node &&node);
 
 	void RemoveProperty(const std::string &name);
 
+	void RemoveProperty(const Node &node);
+
 	const std::vector<Property> &GetProperties() const { return m_properties; };
 
-	void ClearProperties();
+	void ClearProperties() { m_properties.clear(); }
 
 	template <typename T>
 	Node &operator=(const T &rhs);
@@ -101,11 +105,13 @@ public:
 	bool operator<(const Node &other) const;
 
 protected:
-	std::string m_value;
-	Type m_type{Type::String};
 	Node *m_parent{};
+
+	std::string m_value;
+	Type m_type{};
 	std::vector<Property> m_properties;
 };
 }
 
 #include "Node.inl"
+#include "NodeReturn.inl"

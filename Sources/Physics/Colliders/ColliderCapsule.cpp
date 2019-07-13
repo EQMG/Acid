@@ -50,7 +50,7 @@ const Node &operator>>(const Node &node, ColliderCapsule &collider)
 {
 	node["localTransform"].Get(collider.m_localTransform);
 	node["radius"].Get(collider.m_radius);
-	node["height"].Set(collider.m_height);
+	node["height"].Get(collider.m_height);
 	return node;
 }
 

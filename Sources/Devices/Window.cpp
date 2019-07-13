@@ -358,6 +358,7 @@ void Window::CheckGlfw(const int32_t &result)
 	}
 
 	auto failure{StringifyResultGlfw(result)};
+	std::cerr << "GLFW error: " << failure << ", " << result << '\n';
 	throw std::runtime_error{"GLFW error: " + failure};
 }
 

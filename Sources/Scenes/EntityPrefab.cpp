@@ -112,7 +112,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 			continue;
 		}
 
-		auto &property{entityPrefab.m_file->GetNode()->AddProperty(*componentName)};
+		auto &property{entityPrefab.m_file->GetNode()->AddProperty(*componentName, {})};
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, property, component.get());
 	}
 
@@ -127,7 +127,7 @@ const Node &operator>>(const Node &node, EntityPrefab &entityPrefab)
 
 Node &operator<<(Node &node, const EntityPrefab &entityPrefab)
 {
-	node["filename"].Get(entityPrefab.m_filename);
+	node["filename"].Set(entityPrefab.m_filename);
 	return node;
 }
 }

@@ -21,7 +21,7 @@ public:
 	std::string Write(const Format &format = Format::Beautified) const;
 
 private:
-	static void AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stringstream &current);
+	static void AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::string &current);
 
 	static void Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r);
 

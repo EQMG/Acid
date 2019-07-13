@@ -26,12 +26,21 @@ void Node::Write(std::ostream &stream, const Format &format) const
 {
 }
 
+void Node::Remove()
+{
+	if (m_parent == nullptr)
+	{
+		throw std::runtime_error("Cannot remove from parent properties if parent is null");
+	}
+
+	m_parent->RemoveProperty(*this);
+}
+
 std::string Node::GetName() const
 {
 	if (m_parent == nullptr)
 	{
-		//throw std::runtime_error("Cannot get name if parent is null");
-		return "";
+		throw std::runtime_error("Cannot get name if parent is null");
 	}
 
 	for (const auto &[propertyName, property] : m_parent->m_properties)
@@ -119,9 +128,13 @@ void Node::RemoveProperty(const std::string &name)
 	}), m_properties.end());
 }
 
-void Node::ClearProperties()
+void Node::RemoveProperty(const Node &node)
 {
-	m_properties.clear();
+	//node.m_parent = nullptr;
+	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [node](const auto &n)
+	{
+		return n.second == node;
+	}), m_properties.end());
 }
 
 NodeReturn Node::operator[](const std::string &key) const

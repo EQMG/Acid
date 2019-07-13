@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Node.hpp"
 #include "Helpers/ConstExpr.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
-#include "Node.hpp"
 
 namespace acid
 {
@@ -68,7 +68,7 @@ void Node::SetValue(const T &value)
 template<typename T>
 Node &Node::Append(T value)
 {
-	AddProperty() << value;
+	AddProperty("", {}) << value;
 	return *this;
 }
 
@@ -85,6 +85,7 @@ Node &Node::operator=(const T &rhs)
 	Set(rhs);
 	return *this;
 }
+
 
 template<typename T>
 std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object)
@@ -121,7 +122,6 @@ Node &operator<<(Node &node, const std::unique_ptr<T> &object)
 	}
 
 	node << *object;
-	node.SetType(Node::Type::Object);
 	return node;
 }
 
@@ -154,7 +154,6 @@ Node &operator<<(Node &node, const std::shared_ptr<T> &object)
 	}
 
 	node << *object;
-	node.SetType(Node::Type::Object);
 	return node;
 }
 
@@ -219,7 +218,6 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(
 	}
 
 	node << ConstExpr::AsRef(object);
-	node.SetType(Node::Type::Object);
 	return node;
 }
 
@@ -293,7 +291,7 @@ Node &operator<<(Node &node, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
-		node.AddProperty() << x;
+		node.AddProperty("", {}) << x;
 	}
 
 	node.SetType(Node::Type::Array);
@@ -321,7 +319,7 @@ Node &operator<<(Node &node, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{
-		node.AddProperty(String::To(x.first)) << x.second;
+		node.AddProperty(String::To(x.first), {}) << x.second;
 	}
 
 	node.SetType(Node::Type::Array);

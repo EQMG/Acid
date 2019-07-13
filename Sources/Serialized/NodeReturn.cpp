@@ -30,13 +30,15 @@ Node *NodeReturn::get()
 		// This will build the tree of nodes from the return keys tree.
 		for (const auto &key : m_keys)
 		{
-			if (auto name{std::get_if<std::string>(&key)}; name)
+			if (std::holds_alternative<std::string>(key))
 			{
-				m_value = &m_parent->AddProperty(*name);
+				const auto &name{std::get<std::string>(key)};
+				m_value = &m_parent->AddProperty(name, {});
 			}
-			else if (auto index{std::get_if<int32_t>(&key)}; index)
+			else if (std::holds_alternative<int32_t>(key))
 			{
-				m_value = &m_parent->AddProperty(*index);
+				const auto &index{std::get<std::int32_t>(key)};
+				m_value = &m_parent->AddProperty(index, {});
 			}
 			else
 			{

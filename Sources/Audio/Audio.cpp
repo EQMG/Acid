@@ -101,7 +101,7 @@ void Audio::CheckAl(const int32_t &result)
 	auto failure{StringifyResultAl(result)};
 
 	std::cerr << "OpenAL error: " << failure << ", " << result << '\n';
-	throw std::runtime_error{"OpenAL Error: " + result};
+	throw std::runtime_error{"OpenAL Error: " + failure};
 }
 
 float Audio::GetGain(const Type &type) const

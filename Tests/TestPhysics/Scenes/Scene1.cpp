@@ -94,7 +94,7 @@ Scene1::Scene1() :
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto &entityNode{sceneFile.GetNode()->AddProperty()};
+					auto &entityNode{sceneFile.GetNode()->AddProperty("", {})};
 
 					if (!entity->GetName().empty())
 					{
@@ -107,7 +107,7 @@ Scene1::Scene1() :
 
 						if (componentName)
 						{
-							auto child{entityNode.AddProperty(*componentName)};
+							auto child{entityNode.AddProperty(*componentName, {})};
 							Scenes::Get()->GetComponentRegister().Encode(*componentName, child, component.get());
 						}
 					}
@@ -207,7 +207,7 @@ void Scene1::Start()
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
 
-	EntityPrefab prefabTerrain{"Prefabs/Terrain.yaml"};
+	EntityPrefab prefabTerrain{"Prefabs/Terrain.json"};
 	prefabTerrain << *terrain;
 	prefabTerrain.Write();
 
@@ -253,7 +253,7 @@ void Scene1::Start()
 	teapot1->AddComponent<MeshRender>();
 	teapot1->AddComponent<ShadowRender>();
 
-	EntityPrefab prefabTeapot1{"Prefabs/Teapot1.yaml"};
+	EntityPrefab prefabTeapot1{"Prefabs/Teapot1.json"};
 	prefabTeapot1 << *teapot1;
 	prefabTeapot1.Write();
 
@@ -321,7 +321,7 @@ void Scene1::Start()
 	smokeSystem->AddComponent<Transform>(Vector3f{-15.0f, 4.0f, 12.0f});
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 
-	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.yaml"};
+	EntityPrefab prefabSmokeSystem{"Prefabs/SmokeSystem.json"};
 	prefabSmokeSystem << *smokeSystem;
 	prefabSmokeSystem.Write();
 }

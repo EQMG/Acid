@@ -16,15 +16,15 @@ void Json::Load(std::istream &stream)
 {
 	std::vector<std::pair<Type, std::string>> tokens;
 
-	std::stringstream current;
+	std::string current;
 	bool inString{};
 
-	// Read stream until end of file.
-	while (!stream.eof())
-	{
-		char c;
-		stream.get(c);
+	// Reading into a string before iterating is much faster.
+	std::string s{std::istreambuf_iterator<char>{stream}, {}};
 
+	// Read stream until end of file.
+	for (const auto &c : s)
+	{
 		// On start of string switch in/out of stream space and ignore this char.
 		if (c == '"' || c == '\'')
 		{			 
@@ -52,7 +52,7 @@ void Json::Load(std::istream &stream)
 		}
 
 		// Add this char to the current builder stream.
-		current << c;
+		current += c;
 	}
 
 	// Converts the list of tokens into nodes.
@@ -79,31 +79,31 @@ std::string Json::Write(const Format &format) const
 	return stream.str();
 }
 
-void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stringstream &current)
+void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::string &current)
 {
-	if (auto str{current.str()}; !str.empty())
+	if (!current.empty())
 	{
 		// Finds the node value type of the string and adds it to the tokens vector.
-		if (String::IsNumber(str))
+		if (String::IsNumber(current))
 		{
-			tokens.emplace_back(Type::Number, str);
+			tokens.emplace_back(Type::Number, current);
 		}
-		else if (str == "null")
+		else if (current == "null")
 		{
-			tokens.emplace_back(Type::Null, str);
+			tokens.emplace_back(Type::Null, current);
 		}
-		else if (str == "true" || str == "false")
+		else if (current == "true" || current == "false")
 		{
-			tokens.emplace_back(Type::Boolean, str);
+			tokens.emplace_back(Type::Boolean, current);
 		}
 		else
 		{
-			tokens.emplace_back(Type::String, str);
+			tokens.emplace_back(Type::String, current);
 		}
 	}
 
 	// Clears the current summation stream.
-	current.str({});
+	current.clear();
 }
 
 void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r)
@@ -116,7 +116,7 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 		{
 			auto key{v[k].second};
 			k += 2; // k + 1 should be ':'
-			Convert(current.AddProperty(key), v, k, k);
+			Convert(current.AddProperty(key, {}), v, k, k);
 
 			if (v[k].second == ",")
 			{
@@ -133,7 +133,8 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 
 		while (v[k].second != "]")
 		{
-			Convert(current.AddProperty(), v, k, k);
+			// Even though the content of an array is loaded in order, so it is added by empty key.
+			Convert(current.AddProperty("", {}), v, k, k);
 
 			if (v[k].second == ",")
 			{

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "NodeReturn.hpp"
 #include "Node.hpp"
 
 namespace acid
