@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Node.hpp"
 #include "Helpers/ConstExpr.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
+#include "Node.hpp"
 
 namespace acid
 {
@@ -16,9 +16,20 @@ T Node::Get() const
 }
 
 template<typename T>
+T Node::Get(const T &fallback) const
+{
+	if (!IsValid())
+	{
+		return fallback;
+	}
+
+	return Get<T>();
+}
+
+template<typename T>
 void Node::Get(T &dest) const
 {
-	if (!m_value.empty())
+	if (IsValid())
 	{
 		*this >> dest;
 	}
@@ -27,7 +38,7 @@ void Node::Get(T &dest) const
 template<typename T, typename K>
 void Node::Get(T &dest, const K &fallback) const
 {
-	if (!m_value.empty())
+	if (IsValid())
 	{
 		*this >> dest;
 		return;
@@ -43,32 +54,9 @@ void Node::Set(const T &value)
 }
 
 template<typename T>
-T Node::Get(const T &fallback) const
-{
-	if (m_value.empty())
-	{
-		return fallback;
-	}
-
-	return GetValue<T>();
-}
-
-template<typename T>
-T Node::GetValue() const
-{
-	return String::From<T>(m_value);
-}
-
-template<typename T>
-void Node::SetValue(const T &value)
-{
-	m_value = String::To(value);
-}
-
-template<typename T>
 Node &Node::Append(T value)
 {
-	AddProperty("", {}) << value;
+	AddProperty() << value;
 	return *this;
 }
 
@@ -86,28 +74,71 @@ Node &Node::operator=(const T &rhs)
 	return *this;
 }
 
+/*const Node &operator>>(const Node &node, std::nullptr_t &object)
+{
+	object = nullptr;
+	return node;
+}*/
+
+inline Node &operator<<(Node &node, const std::nullptr_t &object)
+{
+	node.SetValue("null");
+	node.SetType(Node::Type::Null);
+	return node;
+}
+
+inline const Node &operator>>(const Node &node, bool &object)
+{
+	object = String::From<bool>(node.GetValue());
+	return node;
+}
+
+inline Node &operator<<(Node &node, const bool &object)
+{
+	node.SetValue(String::To(object));
+	node.SetType(Node::Type::Boolean);
+	return node;
+}
 
 template<typename T>
 std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object)
 {
-	object = node.GetValue<T>();
+	object = String::From<T>(node.GetValue());
 	return node;
 }
 
 template<typename T>
 std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, const T &object)
 {
-	node.SetValue(object);
+	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Number);
+	return node;
+}
+
+/*template<typename T>
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> operator>>(const Node &node, T &object)
+{
+	node >> ConstExpr::AsRef(object);
+	return node;
+}*/
+
+template<typename T>
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(Node &node, const T &object)
+{
+	if (ConstExpr::AsPtr(object) == nullptr)
+	{
+		return node << nullptr;
+	}
+
+	node << ConstExpr::AsRef(object);
 	return node;
 }
 
 template<typename T>
 const Node &operator>>(const Node &node, std::unique_ptr<T> &object)
 {
-	T x;
-	node >> x;
-	object = std::make_unique<T>(std::move(x));
+	object = std::make_unique<T>();
+	node >> *object;
 	return node;
 }
 
@@ -116,9 +147,7 @@ Node &operator<<(Node &node, const std::unique_ptr<T> &object)
 {
 	if (object == nullptr)
 	{
-		node.SetValue("null");
-		node.SetType(Node::Type::Null);
-		return node;
+		return node << nullptr;
 	}
 
 	node << *object;
@@ -136,9 +165,8 @@ const Node &operator>>(const Node &node, std::shared_ptr<T> &object)
 	}
 	else
 	{
-		auto x = new T();
-		node >> *x;
-		object = std::make_shared<T>(x);
+		object = std::make_shared<T>();
+		node >> *object;
 		return node;
 	}
 }
@@ -148,18 +176,16 @@ Node &operator<<(Node &node, const std::shared_ptr<T> &object)
 {
 	if (object == nullptr)
 	{
-		node.SetValue("null");
-		node.SetType(Node::Type::Null);
-		return node;
+		return node << nullptr;
 	}
 
 	node << *object;
 	return node;
 }
 
-inline const Node &operator>>(const Node &node, char *&string)
+/*inline const Node &operator>>(const Node &node, char *&string)
 {
-	std::strcpy(string, node.GetValue<std::string>().c_str());
+	std::strcpy(string, node.GetValue().c_str());
 	return node;
 }
 
@@ -168,17 +194,15 @@ inline Node &operator<<(Node &node, const char *string)
 	node.SetValue(string);
 	node.SetType(Node::Type::String);
 	return node;
-}
+}*/
 
-template<typename T>
-const Node &operator>>(const Node &node, std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
+inline const Node &operator>>(const Node &node, std::string &string)
 {
-	string = node.GetValue<std::string>();
+	string = node.GetValue();
 	return node;
 }
 
-template<typename T>
-Node &operator<<(Node &node, const std::basic_string<T, std::char_traits<T>, std::allocator<T>> &string)
+inline Node &operator<<(Node &node, const std::string &string)
 {
 	node.SetValue(string);
 	node.SetType(Node::Type::String);
@@ -187,7 +211,7 @@ Node &operator<<(Node &node, const std::basic_string<T, std::char_traits<T>, std
 
 inline const Node &operator>>(const Node &node, std::filesystem::path &object)
 {
-	object = node.GetValue<std::string>();
+	object = node.GetValue();
 	return node;
 }
 
@@ -197,27 +221,6 @@ inline Node &operator<<(Node &node, const std::filesystem::path &object)
 	std::replace(str.begin(), str.end(), '\\', '/');
 	node.SetValue(str);
 	node.SetType(Node::Type::String);
-	return node;
-}
-
-template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> operator>>(const Node &node, T &object)
-{
-	node >> ConstExpr::AsRef(object);
-	return node;
-}
-
-template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(Node &node, const T &object)
-{
-	if (ConstExpr::AsPtr(object) == nullptr)
-	{
-		node.SetValue("null");
-		node.SetType(Node::Type::Null);
-		return node;
-	}
-
-	node << ConstExpr::AsRef(object);
 	return node;
 }
 
@@ -240,7 +243,7 @@ Node &operator<<(Node &node, const std::pair<T, K> &pair)
 template<typename T>
 const Node &operator>>(const Node &node, std::optional<T> &optional)
 {
-	if (node.GetValue<std::string>() != "null")
+	if (node.GetValue() != "null")
 	{
 		T x;
 		node >> x;
@@ -259,15 +262,10 @@ Node &operator<<(Node &node, const std::optional<T> &optional)
 {
 	if (optional)
 	{
-		node << *optional;
-	}
-	else
-	{
-		node.SetValue("null");
-		node.SetType(Node::Type::Null);
+		return node << *optional;
 	}
 
-	return node;
+	return node << nullptr;
 }
 
 template<typename T>
@@ -291,7 +289,7 @@ Node &operator<<(Node &node, const std::vector<T> &vector)
 {
 	for (const auto &x : vector)
 	{
-		node.AddProperty("", {}) << x;
+		node.AddProperty() << x;
 	}
 
 	node.SetType(Node::Type::Array);
@@ -319,7 +317,7 @@ Node &operator<<(Node &node, const std::map<T, K> &map)
 {
 	for (const auto &x : map)
 	{
-		node.AddProperty(String::To(x.first), {}) << x.second;
+		node.AddProperty() << x;
 	}
 
 	node.SetType(Node::Type::Array);

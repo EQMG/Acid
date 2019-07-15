@@ -31,12 +31,13 @@
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Terrain/MaterialTerrain.hpp>
-#include <Terrain/Terrain.hpp>
+#include <Skyboxes/MaterialSkybox.hpp>
 #include <Uis/Uis.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
+#include "Terrain/MaterialTerrain.hpp"
+#include "Terrain/Terrain.hpp"
 #include "CameraFps.hpp"
 
 namespace test
@@ -94,7 +95,7 @@ Scene1::Scene1() :
 
 				for (auto &entity : GetStructure()->QueryAll())
 				{
-					auto &entityNode{sceneFile.GetNode()->AddProperty("", {})};
+					auto &entityNode{sceneFile.GetNode()->AddProperty()};
 
 					if (!entity->GetName().empty())
 					{
@@ -158,7 +159,7 @@ void Scene1::Start()
 	
 	auto skybox{GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json")};
 	skybox->AddComponent<Transform>(Vector3f{}, Vector3f{}, 2048.0f);
-	
+
 	//auto animated{GetStructure()->CreateEntity("Objects/Animated/Animated.json")};
 	//animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 

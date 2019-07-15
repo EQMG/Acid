@@ -205,7 +205,7 @@ const Node &operator>>(const Node &node, ImageCube &image)
 {
 	node["filename"].Get(image.m_filename);
 	node["fileSuffix"].Get(image.m_fileSuffix);
-	//node["fileSides"].Get(image.m_fileSides);
+	node["fileSides"].Get(image.m_fileSides);
 	node["filter"].Get(image.m_filter);
 	node["addressMode"].Get(image.m_addressMode);
 	node["anisotropic"].Get(image.m_anisotropic);
@@ -217,7 +217,7 @@ Node &operator<<(Node &node, const ImageCube &image)
 {
 	node["filename"].Set(image.m_filename);
 	node["fileSuffix"].Set(image.m_fileSuffix);
-	//node["fileSides"].Set(image.m_fileSides);
+	node["fileSides"].Set(image.m_fileSides);
 	node["filter"].Set(image.m_filter);
 	node["addressMode"].Set(image.m_addressMode);
 	node["anisotropic"].Set(image.m_anisotropic);

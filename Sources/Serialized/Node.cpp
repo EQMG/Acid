@@ -36,6 +36,11 @@ void Node::Remove()
 	m_parent->RemoveProperty(*this);
 }
 
+bool Node::IsValid() const
+{
+	return !m_value.empty();
+}
+
 std::string Node::GetName() const
 {
 	if (m_parent == nullptr)
@@ -105,6 +110,13 @@ NodeReturn Node::GetProperty(const uint32_t &index) const
 	}
 
 	return {this, index, nullptr};
+}
+
+Node &Node::AddProperty()
+{
+	Node node;
+	node.m_parent = this;
+	return m_properties.emplace_back("", std::move(node)).second;
 }
 
 Node &Node::AddProperty(const std::string &name, Node &&node)

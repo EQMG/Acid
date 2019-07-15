@@ -109,8 +109,8 @@ Transform &Transform::operator*=(const Transform &other)
 
 const Node &operator>>(const Node &node, Transform &transform)
 {
-	node["position"].Get( transform.m_position);
-	node["rotation"].Get( transform.m_rotation);
+	node["position"].Get(transform.m_position);
+	node["rotation"].Get(transform.m_rotation);
 	node["scale"].Get(transform.m_scale);
 	return node;
 }

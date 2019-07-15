@@ -12,7 +12,7 @@ class ACID_EXPORT Node
 public:
 	enum class Type
 	{
-		String, Object, Array, Boolean, Number, Null, Unknown
+		Object, Array, String, Boolean, Number, Null, Unknown
 	};
 
 	enum class Format
@@ -53,11 +53,23 @@ public:
 	template<typename T>
 	void Set(const T &value);
 
-	template<typename T>
-	T GetValue() const;
+	/**
+	 * Gets if the node has a value, or has properties that have values.
+	 * @return If the node is internally valid.
+	 **/
+	bool IsValid() const;
 
-	template<typename T>
-	void SetValue(const T &value);
+	/**
+	 * Gets the internally stored value.
+	 * @return The value.
+	 **/
+	std::string GetValue() const { return m_value; }
+
+	/**
+	 * Sets the internally stored value.
+	 * @param value The new value.
+	 **/
+	void SetValue(const std::string &value) { m_value = value; }
 
 	const Type &GetType() const { return m_type; }
 
@@ -78,6 +90,8 @@ public:
 	NodeReturn GetProperty(const std::string &name) const;
 
 	NodeReturn GetProperty(const uint32_t &index) const;
+
+	Node &AddProperty();
 
 	Node &AddProperty(const std::string &name, Node &&node);
 
@@ -108,7 +122,7 @@ protected:
 	Node *m_parent{};
 
 	std::string m_value;
-	Type m_type{};
+	Type m_type{Type::Object};
 	std::vector<Property> m_properties;
 };
 }
