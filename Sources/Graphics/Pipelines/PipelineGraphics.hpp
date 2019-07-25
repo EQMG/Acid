@@ -202,7 +202,6 @@ public:
 		node["frontFace"].Get(pipelineCreate.m_frontFace);
 		node["pushDescriptors"].Get(pipelineCreate.m_pushDescriptors);
 		return node;
-
 	}
 
 	friend Node &operator<<(Node &node, const PipelineGraphicsCreate &pipelineCreate)
@@ -217,7 +216,6 @@ public:
 		node["frontFace"].Set(pipelineCreate.m_frontFace);
 		node["pushDescriptors"].Set(pipelineCreate.m_pushDescriptors);
 		return node;
-
 	}
 
 	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }

@@ -19,14 +19,14 @@ void ModuleHolder::RemoveModuleStage(const TypeId &id)
 
 void ModuleHolder::UpdateStage(const Module::Stage &stage)
 {
-	for (const auto &typeId : m_stages)
+	for (const auto &[stageIndex, typeId] : m_stages)
 	{
-		if (typeId.first.first != stage)
+		if (stageIndex.first != stage)
 		{
 			continue;
 		}
 
-		auto &module{m_modules[typeId.second]};
+		auto &module{m_modules[typeId]};
 
 		if (module != nullptr)
 		{

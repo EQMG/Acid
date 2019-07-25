@@ -28,9 +28,9 @@ void Animator::IncreaseAnimationTime()
 
 std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const
 {
-	auto frames{GetPreviousAndNextFrames()};
-	auto progression{CalculateProgression(frames.first, frames.second)};
-	return InterpolatePoses(frames.first, frames.second, progression);
+	auto [frame0, frame1]{GetPreviousAndNextFrames()};
+	auto progression{CalculateProgression(frame0, frame1)};
+	return InterpolatePoses(frame0, frame1, progression);
 }
 
 std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const

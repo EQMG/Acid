@@ -50,9 +50,9 @@ void PipelineCompute::CreateShaderProgram()
 {
 	std::stringstream defineBlock;
 
-	for (const auto &define : m_defines)
+	for (const auto &[defineName, defineValue] : m_defines)
 	{
-		defineBlock << "#define " << define.first << " " << define.second << '\n';
+		defineBlock << "#define " << defineName << " " << defineValue << '\n';
 	}
 
 	auto fileLoaded{Files::Read(m_shaderStage)};

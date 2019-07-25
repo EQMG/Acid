@@ -130,11 +130,11 @@ void Instance::SetupLayers()
 void Instance::SetupExtensions()
 {
 	// Sets up the extensions.
-	auto instanceExtensions{Window::Get()->GetInstanceExtensions()};
+	auto [extensions, extensionsCount]{Window::Get()->GetInstanceExtensions()};
 
-	for (uint32_t i{}; i < instanceExtensions.second; i++)
+	for (uint32_t i{}; i < extensionsCount; i++)
 	{
-		m_instanceExtensions.emplace_back(instanceExtensions.first[i]);
+		m_instanceExtensions.emplace_back(extensions[i]);
 	}
 
 	for (const auto &instanceExtension : InstanceExtensions)

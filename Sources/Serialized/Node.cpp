@@ -38,7 +38,14 @@ void Node::Remove()
 
 bool Node::IsValid() const
 {
-	return !m_value.empty();
+	switch (m_type)
+	{
+	case Type::Object:
+	case Type::Array:
+		return !m_properties.empty();
+	default:
+		return !m_value.empty();
+	}
 }
 
 std::string Node::GetName() const
@@ -91,11 +98,11 @@ bool Node::HasProperty(const std::string &name) const
 
 NodeReturn Node::GetProperty(const std::string &name) const
 {
-	for (const auto &property : m_properties)
+	for (const auto &[propertyName, properyValue] : m_properties)
 	{
-		if (property.first == name)
+		if (propertyName == name)
 		{
-			return {this, name, &property.second};
+			return {this, name, &properyValue};
 		}
 	}
 
@@ -127,6 +134,7 @@ Node &Node::AddProperty(const std::string &name, Node &&node)
 
 Node &Node::AddProperty(const uint32_t &index, Node &&node)
 {
+	node.m_parent = this;
 	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), {"", Node{"null", Type::Null}});
 	return m_properties[index].second = node;
 }

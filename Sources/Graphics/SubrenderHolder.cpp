@@ -24,14 +24,14 @@ void SubrenderHolder::RemoveSubrenderStage(const TypeId &id)
 
 void SubrenderHolder::RenderStage(const Pipeline::Stage &stage, const CommandBuffer &commandBuffer)
 {
-	for (const auto &typeId : m_stages)
+	for (const auto &[stageIndex, typeId] : m_stages)
 	{
-		if (typeId.first.first != stage)
+		if (stageIndex.first != stage)
 		{
 			continue;
 		}
 
-		auto &subrender{m_subrenders[typeId.second]};
+		auto &subrender{m_subrenders[typeId]};
 
 		if (subrender != nullptr)
 		{

@@ -26,7 +26,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	PipelineMaterial temp{pipelineStage, pipelineCreate};
 	Node node;
 	node << temp;
-
+	
 	auto resource{Resources::Get()->Find(node)};
 
 	if (resource != nullptr)

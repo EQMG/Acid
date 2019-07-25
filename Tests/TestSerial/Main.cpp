@@ -138,10 +138,10 @@ int main(int argc, char **argv)
 		Json json;
 		json.Load(source);
 
-		//*json["newSection"]["values"] << std::vector{10, 11, -1, 2};
-
 		auto value{json["value"]};
-		value->Set(3 * value->Get<int32_t>() + 2);
+		value.Set(3 * value->Get<int32_t>() + 2);
+
+		json["values"] = std::vector{10, 11, -1, 2};
 
 		std::cout << json.Write(Node::Format::Minified) << '\n';
 		//std::cout << Xml{"source", &json}.Write(Node::Format::Minified) << '\n';
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 
 	test::Example1 example1;
 	Node node;
-	node << example1;
+	node = example1;
 
 	File{"Serial/Example1.json", std::make_unique<Json>(node)}.Write();
 	//File{"Serial/Example1.xml", std::make_unique<Xml>("Example", node)}.Write();

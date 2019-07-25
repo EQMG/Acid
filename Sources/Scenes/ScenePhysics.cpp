@@ -137,11 +137,11 @@ void ScenePhysics::CheckForCollisionEvents()
 	std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(), std::inserter(removedPairs, removedPairs.begin()));
 
 	// Iterate through all of the removed pairs sending separation events for them.
-	for (const auto &removedPair : removedPairs)
+	for (const auto &[removedObject0, removedObject1] : removedPairs)
 	{
 		// Gets the user pointer (entity).
-		auto collisionObjectA{static_cast<CollisionObject *>(removedPair.first->getUserPointer())};
-		auto collisionObjectB{static_cast<CollisionObject *>(removedPair.second->getUserPointer())};
+		auto collisionObjectA{static_cast<CollisionObject *>(removedObject0->getUserPointer())};
+		auto collisionObjectB{static_cast<CollisionObject *>(removedObject1->getUserPointer())};
 
 		collisionObjectA->OnSeparation()(collisionObjectB);
 	}

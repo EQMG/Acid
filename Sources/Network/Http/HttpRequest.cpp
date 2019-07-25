@@ -78,9 +78,9 @@ std::string HttpRequest::Prepare() const
 	out << "HTTP/" << m_majorVersion << "." << m_minorVersion << "\r\n";
 
 	// Write fields.
-	for (const auto &field : m_fields)
+	for (const auto &[fieldName, fieldValue] : m_fields)
 	{
-		out << field.first << ": " << field.second << "\r\n";
+		out << fieldName << ": " << fieldValue << "\r\n";
 	}
 
 	// Use an extra \r\n to separate the header from the body.
