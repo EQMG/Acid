@@ -6,7 +6,6 @@ option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
-option(ACID_LINK_RESOURCES "Links the Resources to the bin directory" ON)
 
 # Sets the install directories defined by GNU
 include(GNUInstallDirs)
@@ -28,6 +27,23 @@ set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "Set RelWithDebInfo library pos
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
+
+# Uses git to find the current git branch and commit.
+execute_process(
+		COMMAND git rev-parse --abbrev-ref HEAD
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		OUTPUT_VARIABLE GIT_BRANCH
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+		ERROR_QUIET
+		)
+
+execute_process(
+		COMMAND git log -1 --format=%h
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		OUTPUT_VARIABLE GIT_COMMIT_HASH
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+		ERROR_QUIET
+		)
 
 # Used to include Acid cmake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)

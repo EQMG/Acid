@@ -4,4 +4,5 @@
 cmake-build-debug/*
 cmake-build-release/*
 Build/*
+Sources/Config.hpp
 .DS_Store

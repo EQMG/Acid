@@ -2,6 +2,7 @@
 
 #include <physfs.h>
 #include "Engine/Engine.hpp"
+#include "Config.hpp"
 
 namespace acid
 {
@@ -210,6 +211,8 @@ FStream::~FStream()
 Files::Files()
 {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
+	// TODO: Only when not installed. 
+	AddSearchPath(ACID_RESOURCES_DEV);
 }
 
 Files::~Files()
