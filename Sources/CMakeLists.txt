@@ -87,15 +87,6 @@ set_target_properties(Acid PROPERTIES
 		FOLDER "Acid"
 		)
 
-# Creates a symbolic link from Resources to Resources/Engine in the binary folder
-if(ACID_LINK_RESOURCES)
-	get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
-	add_custom_command(TARGET Acid POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/Resources
-			COMMAND ${CMAKE_COMMAND} -E create_symlink ${CURRENT_PARENT_DIR}/Resources ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/Resources/Engine
-			)
-endif()
-
 # Installs all headers, preserving their file structure
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
 		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"

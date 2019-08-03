@@ -443,6 +443,13 @@ add_precompiled_header(Acid
 		StdAfx.cpp
 		FORCEINCLUDE
 		)
+		
+# Directory that Acid source resources can be found.
+get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
+set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
+
+# Adds a CMake generated config file
+configure_file(Config.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

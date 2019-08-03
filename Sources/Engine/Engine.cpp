@@ -16,6 +16,7 @@
 #include "Shadows/Shadows.hpp"
 #include "Timers/Timers.hpp"
 #include "Uis/Uis.hpp"
+#include "Config.hpp"
 
 namespace acid
 {
@@ -23,7 +24,7 @@ Engine *Engine::INSTANCE{nullptr};
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0{std::move(argv0)},
-	m_engineVersion{0, 13, 4},
+	m_engineVersion{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
 	m_gameVersion{0, 1, 0},
 	m_gameName{"Acid Game"},
 	m_fpsLimit{-1.0f},
@@ -33,6 +34,11 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 {
 	INSTANCE = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
+
+	Log::Out("Version: %s\nGit: %s on %s\nCompiled on: %s", ACID_VERSION, ACID_COMPILED_COMMIT_HASH, ACID_COMPILED_BRANCH, ACID_COMPILED_SYSTEM);
+	//std::out << "Version: " << ACID_VERSION << std::endl <<
+	//	"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << std::endl <<
+	//	"Compiled on: " << ACID_COMPILED_SYSTEM << std::endl;
 
 	if (!emptyRegister)
 	{
