@@ -35,10 +35,9 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	INSTANCE = this;
 	//Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
 
-	Log::Out("Version: %s\nGit: %s on %s\nCompiled on: %s", ACID_VERSION, ACID_COMPILED_COMMIT_HASH, ACID_COMPILED_BRANCH, ACID_COMPILED_SYSTEM);
-	//std::out << "Version: " << ACID_VERSION << std::endl <<
-	//	"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << std::endl <<
-	//	"Compiled on: " << ACID_COMPILED_SYSTEM << std::endl;
+	std::cout << "Version: " << ACID_VERSION << '\n' <<
+		"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << '\n' <<
+		"Compiled on: " << ACID_COMPILED_SYSTEM << "\n\n";
 
 	if (!emptyRegister)
 	{
