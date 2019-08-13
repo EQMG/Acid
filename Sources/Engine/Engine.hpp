@@ -4,7 +4,7 @@
 #include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"
 #include "ModuleHolder.hpp"
-#include "Game.hpp"
+#include "App.hpp"
 
 namespace acid
 {
@@ -50,11 +50,6 @@ class ACID_EXPORT Engine :
 	public NonCopyable
 {
 public:
-	struct Version
-	{
-		uint32_t m_major, m_minor, m_patch;
-	};
-
 	/**
 	 * Gets the engines instance.
 	 * @return The current engine instance.
@@ -84,31 +79,7 @@ public:
 	 * Gets the engine's version.
 	 * @return The engine's version.
 	 */
-	const Version &GetEngineVersion() const { return m_engineVersion; }
-
-	/**
-	 * Gets the game's version.
-	 * @return The game's version.
-	 */
-	const Version &GetGameVersion() const { return m_gameVersion; }
-
-	/**
-	 * Sets the games version, for driver support.
-	 * @param T The game version.
-	 */
-	void SetGameVersion(const Version &gameVersion) { m_gameVersion = gameVersion; }
-
-	/**
-	 * Gets the game's name.
-	 * @return The game's name.
-	 */
-	const std::string &GetGameName() const { return m_gameName; }
-
-	/**
-	 * Sets the game's name, for driver support.
-	 * @param T The gam'e name.
-	 */
-	void SetGameName(const std::string &gameName) { m_gameName = gameName; }
+	const Version &GetVersion() const { return m_version; }
 
 	/**
 	 * Checks whether a Module exists or not.
@@ -156,16 +127,16 @@ public:
 	}
 
 	/**
-	 * Gets the current game.
+	 * Gets the current application.
 	 * @return The renderer manager.
 	 */
-	Game *GetGame() const { return m_game.get(); }
+	App *GetApp() const { return m_app.get(); }
 
 	/**
-	 * Sets the current game to a new game.
-	 * @param game The new game.
+	 * Sets the current application to a new application.
+	 * @param app The new application.
 	 */
-	void SetGame(std::unique_ptr<Game> &&game) { m_game = std::move(game); }
+	void SetApp(std::unique_ptr<App> &&app) { m_app = std::move(app); }
 
 	/**
 	 * Gets the fps limit.
@@ -218,12 +189,10 @@ private:
 	ACID_STATE static Engine *INSTANCE;
 
 	std::string m_argv0;
-	Version m_engineVersion;
-	Version m_gameVersion;
-	std::string m_gameName;
+	Version m_version;
 
 	ModuleHolder m_modules;
-	std::unique_ptr<Game> m_game;
+	std::unique_ptr<App> m_app;
 
 	float m_fpsLimit;
 	bool m_running;

@@ -1,24 +1,27 @@
 #pragma once
 
-#include <Engine/Game.hpp>
+#include <Engine/App.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/ButtonCompound.hpp>
+#include "Configs/ConfigManager.hpp"
 
 using namespace acid;
 
 namespace test
 {
-class MainGame :
-	public Game
+class MainApp :
+	public App,
+	public Observer
 {
 public:
-	MainGame();
+	MainApp();
 
-	~MainGame();
+	~MainApp();
 
 	void Update() override;
 
 private:
+	std::unique_ptr<ConfigManager> m_configs;
+
 	ButtonKeyboard m_buttonFullscreen;
 	ButtonKeyboard m_buttonScreenshot;
 	ButtonKeyboard m_buttonExit;

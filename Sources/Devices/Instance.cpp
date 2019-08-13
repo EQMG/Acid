@@ -150,14 +150,14 @@ void Instance::SetupExtensions()
 
 void Instance::CreateInstance()
 {
-	const auto &engineVersion{Engine::Get()->GetEngineVersion()};
-	const auto &gameVersion{Engine::Get()->GetGameVersion()};
-	const auto &gameName{Engine::Get()->GetGameName()};
+	const auto &engineVersion{Engine::Get()->GetVersion()};
+	//const auto &appVersion{Engine::Get()->GetApp()->GetVersion()};
+	//const auto &appName{Engine::Get()->GetApp()->GetName()};
 
 	VkApplicationInfo applicationInfo{};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	applicationInfo.pApplicationName = gameName.c_str();
-	applicationInfo.applicationVersion = VK_MAKE_VERSION(gameVersion.m_major, gameVersion.m_minor, gameVersion.m_patch);
+	//applicationInfo.pApplicationName = appName.c_str();
+	//applicationInfo.applicationVersion = VK_MAKE_VERSION(appVersion.m_major, appVersion.m_minor, appVersion.m_patch);
 	applicationInfo.pEngineName = "Acid";
 	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.m_major, engineVersion.m_minor, engineVersion.m_patch);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);

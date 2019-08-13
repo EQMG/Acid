@@ -1,4 +1,4 @@
-#include "MainGame.hpp"
+#include "MainApp.hpp"
 
 #include <Files/Files.hpp>
 #include <Devices/Mouse.hpp>
@@ -14,8 +14,7 @@ int main(int argc, char **argv)
 
 	// Creates the engine.
 	auto engine{std::make_unique<Engine>(argv[0])};
-	engine->SetGameName("Test PBR");
-	engine->SetGame(std::make_unique<MainGame>());
+	engine->SetApp(std::make_unique<MainApp>());
 
 	// Runs the game loop.
 	auto exitCode{engine->Run()};
@@ -28,7 +27,8 @@ int main(int argc, char **argv)
 
 namespace test
 {
-MainGame::MainGame() :
+MainApp::MainApp() :
+	App{"Test PBR", {1, 0, 0}},
 	m_buttonFullscreen{Key::F11},
 	m_buttonScreenshot{Key::F9},
 	m_buttonExit{Key::Delete}
@@ -76,7 +76,7 @@ MainGame::MainGame() :
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
-MainGame::~MainGame()
+MainApp::~MainApp()
 {
 	Files::Get()->ClearSearchPath();
 
@@ -84,7 +84,7 @@ MainGame::~MainGame()
 	Scenes::Get()->SetScene(nullptr);
 }
 
-void MainGame::Update()
+void MainApp::Update()
 {
 }
 }

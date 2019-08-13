@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Game.hpp>
+#include <Engine/App.hpp>
 #include <Files/FileWatcher.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 
@@ -8,13 +8,13 @@ using namespace acid;
 
 namespace test
 {
-class MainGame :
-	public Game
+class MainApp :
+	public App
 {
 public:
-	MainGame();
+	MainApp();
 
-	~MainGame();
+	~MainApp();
 
 	void Update() override;
 

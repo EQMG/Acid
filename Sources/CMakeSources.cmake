@@ -30,8 +30,8 @@ set(_temp_acid_headers
 		Emitters/EmitterLine.hpp
 		Emitters/EmitterPoint.hpp
 		Emitters/EmitterSphere.hpp
+		Engine/App.hpp
 		Engine/Engine.hpp
-		Engine/Game.hpp
 		Engine/Module.hpp
 		Engine/ModuleHolder.hpp
 		Files/File.hpp

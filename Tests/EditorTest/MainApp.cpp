@@ -1,4 +1,4 @@
-#include "MainGame.hpp"
+#include "MainApp.hpp"
 
 #include <Files/Files.hpp>
 #include <Devices/Mouse.hpp>
@@ -20,11 +20,11 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 	{
 	case CR_LOAD:
 		std::cout << "[Guest] Operation load: " << ctx->version << '\n';
-		Engine::Get()->SetGame(std::make_unique<test::MainGame>());
+		Engine::Get()->SetApp(std::make_unique<test::MainApp>());
 		return 0;
 	case CR_UNLOAD:
 		std::cout << "[Guest] Operation unload: " << ctx->version << '\n';
-		Engine::Get()->SetGame(nullptr);
+		Engine::Get()->SetApp(nullptr);
 		return 0;
 	default:
 		return 0;
@@ -37,8 +37,7 @@ int main(int argc, char **argv)
 
 	// Creates the engine.
 	auto engine{std::make_unique<Engine>(argv[0])};
-	engine->SetGameName("Editor Test");
-	engine->SetGame(std::make_unique<MainGame>());
+	engine->SetApp(std::make_unique<MainApp>());
 
 	// Runs the game loop.
 	auto exitCode{engine->Run()};
@@ -52,7 +51,8 @@ int main(int argc, char **argv)
 
 namespace test
 {
-MainGame::MainGame() :
+MainApp::MainApp() :
+	App{"Editor Test", {1, 0, 0}},
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
@@ -104,7 +104,7 @@ MainGame::MainGame() :
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
-MainGame::~MainGame()
+MainApp::~MainApp()
 {
 	std::cout << "[Game] Destructor\n";
 	//Files::Get()->ClearSearchPath();
@@ -118,7 +118,7 @@ MainGame::~MainGame()
 	Uis::Get()->GetCanvas().ClearChildren();
 }
 
-void MainGame::Update()
+void MainApp::Update()
 {
 }
 }

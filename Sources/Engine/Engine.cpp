@@ -24,9 +24,7 @@ Engine *Engine::INSTANCE{nullptr};
 
 Engine::Engine(std::string argv0, const bool &emptyRegister) :
 	m_argv0{std::move(argv0)},
-	m_engineVersion{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
-	m_gameVersion{0, 1, 0},
-	m_gameName{"Acid Game"},
+	m_version{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
 	m_fpsLimit{-1.0f},
 	m_running{true},
 	m_elapsedUpdate{14.705ms},
@@ -39,6 +37,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 		"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << '\n' <<
 		"Compiled on: " << ACID_COMPILED_SYSTEM << "\n\n";
 
+	// TODO: Maybe move each module into a Singleton???
 	if (!emptyRegister)
 	{
 		AddModule<Files>(Module::Stage::Post);
@@ -64,9 +63,9 @@ int32_t Engine::Run()
 {
 	while (m_running)
 	{
-		if (m_game != nullptr)
+		if (m_app != nullptr)
 		{
-			m_game->Update();
+			m_app->Update();
 		}
 
 		m_elapsedRender.SetInterval(Time::Seconds(1.0f / m_fpsLimit));
