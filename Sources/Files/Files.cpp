@@ -288,7 +288,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 	{
 		if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
 		{
-			Log::Error("Error while opening file to load %ls: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+			//Log::Error("Error while opening file to load %ls: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return std::nullopt;
 		}
 
@@ -304,7 +304,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 
 	if (PHYSFS_close(fsFile) == 0)
 	{
-		Log::Error("Error while closing file %ls: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+		//Log::Error("Error while closing file %ls: %s\n", path, PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 	}
 
 	return std::string(data.begin(), data.end());

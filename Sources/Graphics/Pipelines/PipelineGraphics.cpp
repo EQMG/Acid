@@ -51,7 +51,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
 	//Log::Out("%s\n", m_shader->ToString());
-	Log::Out("Pipeline graphics '%ls' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("Pipeline graphics '%ls' created in %.3fms\n", m_shaderStages.back(), (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

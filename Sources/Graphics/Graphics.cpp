@@ -217,7 +217,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Screenshot '%ls' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("Screenshot '%ls' saved in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 

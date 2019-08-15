@@ -36,7 +36,7 @@ MainGame::MainGame() :
 	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	//Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.

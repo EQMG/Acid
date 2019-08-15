@@ -53,7 +53,7 @@ MainGame::MainGame() :
 		}
 	}*/
 
-	Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
+	//Log::Out("Working Directory: %ls\n", std::filesystem::current_path());
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads configs from a config manager.

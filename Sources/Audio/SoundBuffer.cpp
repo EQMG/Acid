@@ -153,7 +153,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Sound WAV '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("Sound WAV '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }
@@ -191,7 +191,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
-	Log::Out("Sound OGG '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("Sound OGG '%ls' loaded in %.3fms\n", filename, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 	return buffer;
 }

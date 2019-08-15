@@ -25,7 +25,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 #if defined(ACID_VERBOSE)
 	auto debugEnd{Time::Now()};
 	//Log::Out("%s", m_shader->ToString());
-	Log::Out("Pipeline compute '%ls' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
+	//Log::Out("Pipeline compute '%ls' created in %.3fms\n", m_shaderStage, (debugEnd - debugStart).AsMilliseconds<float>());
 #endif
 }
 
