@@ -12,7 +12,7 @@ void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrice
 	}
 
 	IncreaseAnimationTime();
-	auto currentPose{CalculateCurrentAnimationPose()};
+	auto currentPose = CalculateCurrentAnimationPose();
 	CalculateJointPose(currentPose, rootJoint, {}, jointMatrices);
 }
 
@@ -29,15 +29,15 @@ void Animator::IncreaseAnimationTime()
 std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const
 {
 	auto [frame0, frame1]{GetPreviousAndNextFrames()};
-	auto progression{CalculateProgression(frame0, frame1)};
+	auto progression = CalculateProgression(frame0, frame1);
 	return InterpolatePoses(frame0, frame1, progression);
 }
 
 std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const
 {
-	auto allFrames{m_currentAnimation->GetKeyframes()};
-	auto previousFrame{allFrames[0]};
-	auto nextFrame{allFrames[0]};
+	auto allFrames = m_currentAnimation->GetKeyframes();
+	auto previousFrame = allFrames[0];
+	auto nextFrame = allFrames[0];
 
 	for (uint32_t i{1}; i < allFrames.size(); i++)
 	{
@@ -56,8 +56,8 @@ std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const
 
 float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const
 {
-	auto totalTime{nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp()};
-	auto currentTime{m_animationTime - previousFrame.GetTimeStamp()};
+	auto totalTime = nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp();
+	auto currentTime = m_animationTime - previousFrame.GetTimeStamp();
 	return static_cast<float>(currentTime / totalTime);
 }
 
@@ -67,9 +67,9 @@ std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previo
 
 	for (const auto &[name, joint] : previousFrame.GetPose())
 	{
-		auto previousTransform{previousFrame.GetPose().find(name)->second};
-		auto nextTransform{nextFrame.GetPose().find(name)->second};
-		auto currentTransform{JointTransform::Interpolate(previousTransform, nextTransform, progression)};
+		auto previousTransform = previousFrame.GetPose().find(name)->second;
+		auto nextTransform = nextFrame.GetPose().find(name)->second;
+		auto currentTransform = JointTransform::Interpolate(previousTransform, nextTransform, progression);
 		currentPose.emplace(name, currentTransform.GetLocalTransform());
 	}
 
@@ -78,8 +78,8 @@ std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previo
 
 void Animator::CalculateJointPose(const std::map<std::string, Matrix4> &currentPose, const Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices)
 {
-	auto currentLocalTransform{currentPose.find(joint.GetName())->second};
-	auto currentTransform{parentTransform * currentLocalTransform};
+	auto currentLocalTransform = currentPose.find(joint.GetName())->second;
+	auto currentTransform = parentTransform * currentLocalTransform;
 
 	for (const auto &childJoint : joint.GetChildren())
 	{

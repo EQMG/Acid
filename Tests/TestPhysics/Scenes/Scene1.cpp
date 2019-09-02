@@ -56,8 +56,8 @@ Scene1::Scene1() :
 	{
 		if (action == InputAction::Press)
 		{
-			auto cameraPosition{Scenes::Get()->GetCamera()->GetPosition()};
-			auto cameraRotation{Scenes::Get()->GetCamera()->GetRotation()};
+			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
+			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = GetStructure()->CreateEntity();
 			sphere->AddComponent<Transform>(cameraPosition, Vector3f{}, 1.0f);
@@ -104,11 +104,11 @@ Scene1::Scene1() :
 
 					for (auto &component : entity->GetComponents())
 					{
-						auto componentName{Scenes::Get()->GetComponentRegister().FindName(component.get())};
+						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
 
 						if (componentName)
 						{
-							auto child{entityNode.AddProperty(*componentName, {})};
+							auto child = entityNode.AddProperty(*componentName, {});
 							Scenes::Get()->GetComponentRegister().Encode(*componentName, child, component.get());
 						}
 					}
@@ -154,16 +154,16 @@ void Scene1::Start()
 	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
-	auto player{GetStructure()->CreateEntity("Objects/Player/Player.json")};
+	auto player = GetStructure()->CreateEntity("Objects/Player/Player.json");
 	player->AddComponent<Transform>(Vector3f{0.0f, 2.0f, 0.0f}, Vector3f{0.0f, Maths::Radians(180.0f), 0.0f});
 	
-	auto skybox{GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json")};
+	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
 	skybox->AddComponent<Transform>(Vector3f{}, Vector3f{}, 2048.0f);
 
-	//auto animated{GetStructure()->CreateEntity("Objects/Animated/Animated.json")};
+	//auto animated = GetStructure()->CreateEntity("Objects/Animated/Animated.json");
 	//animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 
-	/*auto animated{GetStructure()->CreateEntity()};
+	/*auto animated = GetStructure()->CreateEntity();
 	animated->AddComponent<Transform>(Vector3f{5.0f, 0.0f, 0.0f}, Vector3f{}, 0.3f);
 	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animated->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
@@ -176,12 +176,12 @@ void Scene1::Start()
 	prefabAnimated << *animated;
 	prefabAnimated.Write();*/
 
-	auto sun{GetStructure()->CreateEntity()};
+	auto sun = GetStructure()->CreateEntity();
 	sun->AddComponent<Transform>(Vector3f{1000.0f, 5000.0f, -4000.0f}, Vector3f{}, 18.0f);
 	//sun->AddComponent<CelestialBody>(CelestialBody::Type::Sun);
 	sun->AddComponent<Light>(Colour::White);
 
-	auto plane{GetStructure()->CreateEntity()};
+	auto plane = GetStructure()->CreateEntity();
 	plane->AddComponent<Transform>(Vector3f{0.0f, -0.5f, 0.0f}, Vector3f{}, Vector3f{50.0f, 1.0f, 50.0f});
 	plane->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)));
 	plane->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
@@ -190,7 +190,7 @@ void Scene1::Start()
 	plane->AddComponent<MeshRender>();
 	plane->AddComponent<ShadowRender>();
 
-	auto terrain{GetStructure()->CreateEntity()};
+	auto terrain = GetStructure()->CreateEntity();
 	terrain->AddComponent<Transform>(Vector3f{0.0f, -10.0f, 0.0f});
 	terrain->AddComponent<Mesh>(ModelCube::Create({50.0f, 1.0f, 50.0f}));
 	//terrain->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
@@ -198,7 +198,7 @@ void Scene1::Start()
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();
 
-	/*auto terrain{GetStructure()->CreateEntity()};
+	/*auto terrain = GetStructure()->CreateEntity();
 	terrain->AddComponent<Transform>();
 	terrain->AddComponent<Mesh>();
 	terrain->AddComponent<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png"));
@@ -218,7 +218,7 @@ void Scene1::Start()
 	{
 		for (int32_t j{}; j < 5; j++)
 		{
-			auto cube{GetStructure()->CreateEntity()};
+			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f{static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f});
 			cube->AddComponent<Mesh>(ModelCube::Create(Vector3f{1.0f, 1.0f, 1.0f}));
 			cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f);
@@ -229,21 +229,21 @@ void Scene1::Start()
 		}
 	}
 
-	auto suzanne{GetStructure()->CreateEntity()};
+	auto suzanne = GetStructure()->CreateEntity();
 	suzanne->AddComponent<Transform>(Vector3f{-1.0f, 2.0f, 10.0f});
 	suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/Suzanne.obj"));
 	suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.2f, 0.8f);
 	suzanne->AddComponent<MeshRender>();
 	suzanne->AddComponent<ShadowRender>(); 
 	
-	//auto suzanne1{GetStructure()->CreateEntity()};
+	//auto suzanne1 = GetStructure()->CreateEntity();
 	//suzanne1->AddComponent<Transform>(Vector3f{-1.0f, 2.0f, 10.0f});
 	//suzanne1->AddComponent<Mesh>(ModelGltf::Create("Objects/Suzanne/Suzanne.glb"));
 	//suzanne1->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f);
 	//suzanne1->AddComponent<MeshRender>();
 	//suzanne1->AddComponent<ShadowRender>();
 
-	auto teapot1{GetStructure()->CreateEntity()};
+	auto teapot1 = GetStructure()->CreateEntity();
 	teapot1->AddComponent<Transform>(Vector3f{4.0f, 2.0f, 10.0f}, Vector3f{}, 0.2f);
 	teapot1->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
@@ -258,26 +258,26 @@ void Scene1::Start()
 	prefabTeapot1 << *teapot1;
 	prefabTeapot1.Write();
 
-	auto teapotCone{GetStructure()->CreateEntity()};
+	auto teapotCone = GetStructure()->CreateEntity();
 	teapotCone->AddComponent<Transform>(Vector3f{0.0f, 10.0f, 0.0f}, Vector3f{}, 3.0f)->SetParent(teapot1);
 	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 24, 2));
 	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotCone->AddComponent<MeshRender>();
 	teapotCone->AddComponent<ShadowRender>();
 
-	auto teapotConeLight{GetStructure()->CreateEntity()};
+	auto teapotConeLight = GetStructure()->CreateEntity();
 	teapotConeLight->SetName("TeapotConeLight");
 	teapotConeLight->AddComponent<Transform>(Vector3f{0.0f, 2.0f, 0.0f})->SetParent(teapotCone);
 	teapotConeLight->AddComponent<Light>(Colour::Red, 6.0f);
 
-	auto teapotConeSphere{GetStructure()->CreateEntity()};
+	auto teapotConeSphere = GetStructure()->CreateEntity();
 	teapotConeSphere->AddComponent<Transform>(Vector3f{0.0f, 1.5f, 0.0f}, Vector3f{}, 0.5f)->SetParent(teapotCone);
 	teapotConeSphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 32, 32));
 	teapotConeSphere->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotConeSphere->AddComponent<MeshRender>();
 	teapotConeSphere->AddComponent<ShadowRender>();
 
-	auto teapot2{GetStructure()->CreateEntity()};
+	auto teapot2 = GetStructure()->CreateEntity();
 	teapot2->AddComponent<Transform>(Vector3f{7.5f, 2.0f, 10.0f}, Vector3f{}, 0.2f);
 	teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f); 
@@ -288,7 +288,7 @@ void Scene1::Start()
 	teapot2->AddComponent<MeshRender>();
 	teapot2->AddComponent<ShadowRender>();
 
-	auto teapot3{GetStructure()->CreateEntity()};
+	auto teapot3 = GetStructure()->CreateEntity();
 	teapot3->AddComponent<Transform>(Vector3f{11.0f, 2.0f, 10.0f}, Vector3f{}, 0.2f);
 	teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f); 
@@ -309,7 +309,7 @@ void Scene1::Start()
 	cone->AddComponent<MeshRender>();
 	cone->AddComponent<ShadowRender>();
 
-	auto cylinder{GetStructure()->CreateEntity()};
+	auto cylinder = GetStructure()->CreateEntity();
 	cylinder->AddComponent<Transform>(Vector3f{-8.0f, 3.0f, 10.0f}, Vector3f{0.0f, 0.0f, Maths::Radians(90.0f)});
 	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 32, 2));
 	cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
@@ -318,7 +318,7 @@ void Scene1::Start()
 	cylinder->AddComponent<MeshRender>();
 	cylinder->AddComponent<ShadowRender>();
 
-	auto smokeSystem{GetStructure()->CreateEntity("Objects/Smoke/Smoke.json")};
+	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json");
 	smokeSystem->AddComponent<Transform>(Vector3f{-15.0f, 4.0f, 12.0f});
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 
@@ -329,8 +329,8 @@ void Scene1::Start()
 
 void Scene1::Update()
 {
-	auto teapotConeLight{GetStructure()->GetEntity("TeapotConeLight")};
-	auto transform{teapotConeLight->GetComponent<Transform>()};
+	auto teapotConeLight = GetStructure()->GetEntity("TeapotConeLight");
+	auto transform = teapotConeLight->GetComponent<Transform>();
 }
 
 bool Scene1::IsPaused() const

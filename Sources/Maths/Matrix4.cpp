@@ -234,7 +234,7 @@ Matrix4 Matrix4::Inverse() const
 {
 	Matrix4 result;
 
-	auto det{Determinant()};
+	auto det = Determinant();
 
 	if (det == 0.0f)
 	{
@@ -246,12 +246,12 @@ Matrix4 Matrix4::Inverse() const
 		for (uint32_t i{}; i < 4; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
-			auto minorSubmatrix{GetSubmatrix(j, i)};
-			auto minor{minorSubmatrix.Determinant()};
+			auto minorSubmatrix = GetSubmatrix(j, i);
+			auto minor = minorSubmatrix.Determinant();
 
 			// Multiply by (−1)^{i+j}.
-			auto factor{((i + j) % 2 == 1) ? -1.0f : 1.0f};
-			auto cofactor{minor * factor};
+			auto factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+			auto cofactor = minor * factor;
 
 			result[i][j] = cofactor / det;
 		}
@@ -282,11 +282,11 @@ float Matrix4::Determinant() const
 	for (uint32_t i{}; i < 4; i++)
 	{
 		// Get minor of element [0][i].
-		auto minorSubmatrix{GetSubmatrix(0, i)};
-		auto minor{minorSubmatrix.Determinant()};
+		auto minorSubmatrix = GetSubmatrix(0, i);
+		auto minor = minorSubmatrix.Determinant();
 
 		// If this is an odd-numbered row, negate the value.
-		auto factor{(i % 2 == 1) ? -1.0f : 1.0f};
+		auto factor = (i % 2 == 1) ? -1.0f : 1.0f;
 
 		result += factor * m_rows[0][i] * minor;
 	}
@@ -337,7 +337,7 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 {
 	Matrix4 result{0.0f};
 
-	auto f{std::tan(0.5f * fov)};
+	auto f = std::tan(0.5f * fov);
 
 	result[0][0] = 1.0f / (aspectRatio * f);
 	result[1][1] = 1.0f / f;
@@ -351,11 +351,11 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 {
 	Matrix4 result{0.0f};
 
-	auto range{std::tan(0.5f * fov) * zNear};
-	auto left{-range * aspectRatio};
-	auto right{range * aspectRatio};
-	auto bottom{-range};
-	auto top{range};
+	auto range = std::tan(0.5f * fov) * zNear;
+	auto left = -range * aspectRatio;
+	auto right = range * aspectRatio;
+	auto bottom = -range;
+	auto top = range;
 
 	result[0][0] = (2.0f * zNear) / (right - left);
 	result[1][1] = (2.0f * zNear) / (top - bottom);
@@ -426,9 +426,9 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 {
 	Matrix4 result;
 
-	auto f{(centre - eye).Normalize()};
-	auto s{f.Cross(up).Normalize()};
-	auto u{s.Cross(f)};
+	auto f = (centre - eye).Normalize();
+	auto s = f.Cross(up).Normalize();
+	auto u = s.Cross(f);
 
 	result[0][0] = s.m_x;
 	result[1][0] = s.m_y;

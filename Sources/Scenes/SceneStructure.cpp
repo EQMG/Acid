@@ -1,4 +1,4 @@
-﻿#include "SceneStructure.hpp"
+#include "SceneStructure.hpp"
 
 #include "Physics/Rigidbody.hpp"
 
@@ -51,7 +51,7 @@ void SceneStructure::Remove(Entity *object)
 
 void SceneStructure::Move(Entity *object, SceneStructure &structure)
 {
-	for (auto it{--m_objects.end()}; it != m_objects.begin(); --it)
+	for (auto it = --m_objects.end(); it != m_objects.begin(); --it)
 	{
 		if ((*it).get() != object)
 		{
@@ -70,7 +70,7 @@ void SceneStructure::Clear()
 
 void SceneStructure::Update()
 {
-	for (auto it{m_objects.begin()}; it != m_objects.end();)
+	for (auto it = m_objects.begin(); it != m_objects.end();)
 	{
 		if ((*it)->IsRemoved())
 		{
@@ -111,7 +111,7 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 			continue;
 		}
 
-		auto rigidbody{object->GetComponent<Rigidbody>()};
+		auto rigidbody = object->GetComponent<Rigidbody>();
 
 		if (rigidbody == nullptr || rigidbody->InFrustum(range))
 		{

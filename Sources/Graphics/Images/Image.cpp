@@ -27,7 +27,7 @@ Image::Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFor
 
 Image::~Image()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
@@ -66,7 +66,7 @@ WriteDescriptorSet Image::GetWriteDescriptor(const uint32_t &binding, const VkDe
 
 std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	extent.width = int32_t(m_extent.width >> mipLevel);
 	extent.height = int32_t(m_extent.height >> mipLevel);
@@ -84,7 +84,7 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, const uint32_t &
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto pixels{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -112,7 +112,7 @@ void Image::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const u
 
 std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filename, Vector2ui &extent, uint32_t &components, VkFormat &format)
 {
-	auto fileLoaded{Files::Read(filename)};
+	auto fileLoaded = Files::Read(filename);
 
 	if (!fileLoaded)
 	{
@@ -137,7 +137,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components)
 {
-	if (auto parentPath{filename.parent_path()}; !parentPath.empty())
+	if (auto parentPath = filename.parent_path(); !parentPath.empty())
 	{
 		std::filesystem::create_directory(parentPath);
 	}
@@ -169,7 +169,7 @@ bool Image::HasStencil(const VkFormat &format)
 void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D &extent, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
 	const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers, const VkImageType &type)
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	VkImageCreateInfo imageCreateInfo{};
 	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -200,8 +200,8 @@ void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D
 
 void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels)
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	VkSamplerCreateInfo samplerCreateInfo{};
 	samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -227,7 +227,7 @@ void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const
 void Image::CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect,
 	const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	VkImageViewCreateInfo imageViewCreateInfo{};
 	imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -246,7 +246,7 @@ void Image::CreateImageView(const VkImage &image, VkImageView &imageView, const 
 void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels,
 	const uint32_t &baseArrayLayer, const uint32_t &layerCount)
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
 	// Get device properites for the requested Image format.
 	VkFormatProperties formatProperties;
@@ -448,11 +448,11 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &srcFormat, const VkExtent3D &extent,
 	const VkImageLayout &srcImageLayout, const uint32_t &mipLevel, const uint32_t &arrayLayer)
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
-	auto surface{Graphics::Get()->GetSurface()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto surface = Graphics::Get()->GetSurface();
 
 	// Checks blit swapchain support.
-	auto supportsBlit{true};
+	auto supportsBlit = true;
 	VkFormatProperties formatProperties;
 
 	// Check if the device supports blitting from optimal images (the swapchain images are in optimal format).

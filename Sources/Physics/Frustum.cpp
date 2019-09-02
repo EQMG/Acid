@@ -123,7 +123,7 @@ bool Frustum::CubeInFrustum(const Vector3f &min, const Vector3f &max) const
 
 void Frustum::NormalizePlane(const int32_t &side)
 {
-	auto magnitude{std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2])};
+	auto magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2]);
 	m_frustum[side][0] /= magnitude;
 	m_frustum[side][1] /= magnitude;
 	m_frustum[side][2] /= magnitude;

@@ -51,7 +51,7 @@ Socket::Status UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
 	}
 
 	// Bind the socket/
-	auto addr{CreateAddress(address.ToInteger(), port)};
+	auto addr = CreateAddress(address.ToInteger(), port);
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{
@@ -81,10 +81,10 @@ Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const 
 	}
 
 	// Build the target address.
-	auto address{CreateAddress(remoteAddress.ToInteger(), remotePort)};
+	auto address = CreateAddress(remoteAddress.ToInteger(), remotePort);
 
 	// Send the data (unlike TCP, all the data is always sent in one call).
-	auto sent{sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address))};
+	auto sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 	// Check for errors.
 	if (sent < 0)
@@ -110,11 +110,11 @@ Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size
 	}
 
 	// Data that will be filled with the other computer's address.
-	auto address{CreateAddress(INADDR_ANY, 0)};
+	auto address = CreateAddress(INADDR_ANY, 0);
 
 	// Receive a chunk of bytes.
 	SocketAddrLength addressSize{sizeof(address)};
-	auto sizeReceived{recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize)};
+	auto sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.
 	if (sizeReceived < 0)
@@ -141,7 +141,7 @@ Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, c
 	// to the packet's data.
 
 	// Get the data to send from the packet.
-	auto dataSize{packet.OnSend()};
+	auto dataSize = packet.OnSend();
 
 	// Send it.
 	return Send(dataSize.first, dataSize.second, remoteAddress, remotePort);
@@ -153,7 +153,7 @@ Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint
 
 	// Receive the datagram.
 	std::size_t received{};
-	auto status{Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort)};
+	auto status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
 
 	// If we received valid data, we can copy it to the user packet.
 	packet.Clear();

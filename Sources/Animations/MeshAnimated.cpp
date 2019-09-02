@@ -26,7 +26,7 @@ void MeshAnimated::Start()
 	file.Load();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
-	static const auto Correction{Matrix4{}.Rotate(Maths::Radians(-90.0f), Vector3f::Right)};
+	static const auto Correction = Matrix4{}.Rotate(Maths::Radians(-90.0f), Vector3f::Right);
 
 	SkinLoader skinLoader{file.GetNode()->FindChild("library_controllers"), MaxWeights};
 	SkeletonLoader skeletonLoader{file.GetNode()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction};

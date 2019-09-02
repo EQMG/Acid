@@ -21,8 +21,8 @@ Matrix4 JointTransform::GetLocalTransform() const
 
 JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
 {
-	auto position{Interpolate(frameA.GetPosition(), frameB.GetPosition(), progression)};
-	auto rotation{frameA.GetRotation().Slerp(frameB.GetRotation(), progression)};
+	auto position = Interpolate(frameA.GetPosition(), frameB.GetPosition(), progression);
+	auto rotation = frameA.GetRotation().Slerp(frameB.GetRotation(), progression);
 	return {position, rotation};
 }
 

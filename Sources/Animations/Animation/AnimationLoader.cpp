@@ -9,10 +9,10 @@ AnimationLoader::AnimationLoader(const Node *libraryAnimations, const Node *libr
 	m_libraryVisualScenes{libraryVisualScenes},
 	m_correction{correction}
 {
-	auto animationNodes{m_libraryAnimations->FindChildren("animation")};
+	auto animationNodes = m_libraryAnimations->FindChildren("animation");
 
-	auto rootNode{FindRootJointName()};
-	auto times{GetKeyTimes()};
+	auto rootNode = FindRootJointName();
+	auto times = GetKeyTimes();
 	m_lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
@@ -24,14 +24,14 @@ AnimationLoader::AnimationLoader(const Node *libraryAnimations, const Node *libr
 
 std::string AnimationLoader::FindRootJointName() const
 {
-	auto skeleton{m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature")};
+	auto skeleton = m_libraryVisualScenes->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	return *skeleton->FindChild("node")->FindAttribute("id");
 }
 
 std::vector<Time> AnimationLoader::GetKeyTimes() const
 {
-	auto timeData{m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array")};
-	auto rawTimes{String::Split(timeData->GetValue(), ' ')};
+	auto timeData = m_libraryAnimations->FindChild("animation")->FindChild("source")->FindChild("float_array");
+	auto rawTimes = String::Split(timeData->GetValue(), ' ');
 	
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
@@ -54,27 +54,27 @@ void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 
 void AnimationLoader::LoadJointTransforms(const Node *jointData, const std::string &rootNodeId)
 {
-	auto jointNameId{GetJointName(jointData)};
-	auto dataId{GetDataId(jointData)};
+	auto jointNameId = GetJointName(jointData);
+	auto dataId = GetDataId(jointData);
 
-	auto transformData{jointData->FindChildWithAttribute("source", "id", dataId)};
+	auto transformData = jointData->FindChildWithAttribute("source", "id", dataId);
 
-	auto data{transformData->FindChild("float_array")->GetValue()};
-	auto splitData{String::Split(data, ' ')};
+	auto data = transformData->FindChild("float_array")->GetValue();
+	auto splitData = String::Split(data, ' ');
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }
 
 std::string AnimationLoader::GetDataId(const Node *jointData)
 {
-	auto node{jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT")};
+	auto node = jointData->FindChild("sampler")->FindChildWithAttribute("input", "semantic", "OUTPUT");
 	return node->FindAttribute("source")->substr(1);
 }
 
 std::string AnimationLoader::GetJointName(const Node *jointData)
 {
-	auto channelNode{jointData->FindChild("channel")};
-	auto data{channelNode->FindAttribute("target")};
-	auto splitData{String::Split(*data, '/')};
+	auto channelNode = jointData->FindChild("channel");
+	auto data = channelNode->FindAttribute("target");
+	auto splitData = String::Split(*data, '/');
 	return splitData[0];
 }
 

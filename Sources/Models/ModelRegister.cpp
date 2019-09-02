@@ -32,9 +32,9 @@ void ModelRegister::Remove(const std::string &name)
 
 std::shared_ptr<Model> ModelRegister::Create(const Node &node) const
 {
-	auto typeName{node["type"].Get<std::string>()};
+	auto typeName = node["type"].Get<std::string>();
 
-	auto it{m_modelNodes.find(typeName)};
+	auto it = m_modelNodes.find(typeName);
 
 	if (it == m_modelNodes.end())
 	{
@@ -47,8 +47,8 @@ std::shared_ptr<Model> ModelRegister::Create(const Node &node) const
 
 std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filename) const
 {
-	auto fileExt{filename.extension().string()};
-	auto it{m_modelExtensions.find(fileExt)};
+	auto fileExt = filename.extension().string();
+	auto it = m_modelExtensions.find(fileExt);
 
 	if (it == m_modelExtensions.end())
 	{

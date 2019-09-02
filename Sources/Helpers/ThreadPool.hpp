@@ -38,9 +38,9 @@ decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args)
 {
 	using return_type = typename std::result_of<F(Args...)>::type;
 
-	auto task{std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...))};
+	auto task = std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
-	auto result{task->get_future()};
+	auto result = task->get_future();
 
 	{
 		std::unique_lock<std::mutex> lock{m_queueMutex};

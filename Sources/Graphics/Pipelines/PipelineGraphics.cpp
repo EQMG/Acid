@@ -1,4 +1,4 @@
-﻿#include "PipelineGraphics.hpp"
+#include "PipelineGraphics.hpp"
 
 #include "Graphics/Graphics.hpp"
 #include "Files/Files.hpp"
@@ -26,7 +26,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_GRAPHICS}
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
 	std::sort(m_vertexInputs.begin(), m_vertexInputs.end());
@@ -55,7 +55,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 
 PipelineGraphics::~PipelineGraphics()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	for (const auto &shaderModule : m_modules)
 	{
@@ -94,15 +94,15 @@ void PipelineGraphics::CreateShaderProgram()
 
 	for (const auto &shaderStage : m_shaderStages)
 	{
-		auto fileLoaded{Files::Read(shaderStage)};
+		auto fileLoaded = Files::Read(shaderStage);
 
 		if (!fileLoaded)
 		{
 			throw std::runtime_error{"Could not create pipeline, missing shader stage"};
 		}
 
-		auto stageFlag{Shader::GetShaderStage(shaderStage)};
-		auto shaderModule{m_shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag)};
+		auto stageFlag = Shader::GetShaderStage(shaderStage);
+		auto shaderModule = m_shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
 		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo{};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -118,7 +118,7 @@ void PipelineGraphics::CreateShaderProgram()
 
 void PipelineGraphics::CreateDescriptorLayout()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto &descriptorSetLayouts{m_shader->GetDescriptorSetLayouts()};
 
@@ -132,9 +132,9 @@ void PipelineGraphics::CreateDescriptorLayout()
 
 void PipelineGraphics::CreateDescriptorPool()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto descriptorPools{m_shader->GetDescriptorPools()};
+	auto descriptorPools = m_shader->GetDescriptorPools();
 
 	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
@@ -147,9 +147,9 @@ void PipelineGraphics::CreateDescriptorPool()
 
 void PipelineGraphics::CreatePipelineLayout()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto pushConstantRanges{m_shader->GetPushConstantRanges()};
+	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
 	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -162,8 +162,8 @@ void PipelineGraphics::CreatePipelineLayout()
 
 void PipelineGraphics::CreateAttributes()
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid)
 	{
@@ -235,7 +235,7 @@ void PipelineGraphics::CreateAttributes()
 	m_viewportState.scissorCount = 1;
 
 	// TODO: Multisampled pipelines
-	//auto renderStage{Graphics::Get()->GetRenderStage(m_stage.first)};
+	//auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
 	bool multisampled{}; // renderStage->IsMultisampled(m_stage.second);
 
 	m_multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -252,9 +252,9 @@ void PipelineGraphics::CreateAttributes()
 
 void PipelineGraphics::CreatePipeline()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
-	auto pipelineCache{Graphics::Get()->GetPipelineCache()};
-	auto renderStage{Graphics::Get()->GetRenderStage(m_stage.first)};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto pipelineCache = Graphics::Get()->GetPipelineCache();
+	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
 
 	std::vector<VkVertexInputBindingDescription> bindingDescriptions;
 	std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
@@ -331,8 +331,8 @@ void PipelineGraphics::CreatePipelinePolygon()
 
 void PipelineGraphics::CreatePipelineMrt()
 {
-	auto renderStage{Graphics::Get()->GetRenderStage(m_stage.first)};
-	auto attachmentCount{renderStage->GetAttachmentCount(m_stage.second)};
+	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
+	auto attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
 
 	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates;
 	blendAttachmentStates.reserve(attachmentCount);

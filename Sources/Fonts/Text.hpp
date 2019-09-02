@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
@@ -248,7 +248,7 @@ private:
 		 */
 		bool AddWord(const Word &word)
 		{
-			auto additionalLength{word.m_width};
+			auto additionalLength = word.m_width;
 			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
 
 			if (m_currentLineLength + additionalLength <= m_maxLength)

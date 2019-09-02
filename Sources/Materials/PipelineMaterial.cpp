@@ -7,14 +7,14 @@ namespace acid
 {
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
-	auto result{std::make_shared<PipelineMaterial>()};
+	auto result = std::make_shared<PipelineMaterial>();
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	//result->Load();
@@ -27,14 +27,14 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	Node node;
 	node << temp;
 	
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
-	auto result{std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate)};
+	auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	//result->Load();
@@ -49,7 +49,7 @@ PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphi
 
 bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 {
-	auto renderStage{Graphics::Get()->GetRenderStage(m_pipelineStage.first)};
+	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
 
 	if (renderStage == nullptr)
 	{

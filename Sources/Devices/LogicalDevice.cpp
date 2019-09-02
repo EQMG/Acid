@@ -82,7 +82,7 @@ void LogicalDevice::CreateQueueIndices()
 
 void LogicalDevice::CreateLogicalDevice()
 {
-	auto physicalDeviceFeatures{m_physicalDevice->GetFeatures()};
+	auto physicalDeviceFeatures = m_physicalDevice->GetFeatures();
 
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 	float queuePriorities[]{ 0.0f };

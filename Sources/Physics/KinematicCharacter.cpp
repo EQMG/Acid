@@ -22,7 +22,7 @@ KinematicCharacter::KinematicCharacter(const float &mass, const float &friction)
 
 KinematicCharacter::~KinematicCharacter()
 {
-	auto physics{Scenes::Get()->GetPhysics()};
+	auto physics = Scenes::Get()->GetPhysics();
 
 	if (physics != nullptr)
 	{
@@ -55,7 +55,7 @@ void KinematicCharacter::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform{Collider::Convert(*GetEntity()->GetComponent<Transform>())};
+	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
 	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
 	m_ghostObject->setWorldTransform(worldTransform);
@@ -88,7 +88,7 @@ void KinematicCharacter::Update()
 	}
 
 	auto &transform{*GetEntity()->GetComponent<Transform>()};
-	auto worldTransform{m_ghostObject->getWorldTransform()};
+	auto worldTransform = m_ghostObject->getWorldTransform();
 	transform = Collider::Convert(worldTransform, transform.GetScale());
 
 	m_linearVelocity = Collider::Convert(m_controller->getLinearVelocity());

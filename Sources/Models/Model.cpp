@@ -62,7 +62,7 @@ std::vector<uint32_t> Model::GetIndices(const std::size_t &offset) const
 	indexStaging.MapMemory(&indicesMemory);
 	std::vector<uint32_t> indices(m_indexCount);
 
-	auto sizeOfSrcT{indexStaging.GetSize() / m_indexCount};
+	auto sizeOfSrcT = indexStaging.GetSize() / m_indexCount;
 
 	for (uint32_t i{}; i < m_indexCount; i++)
 	{
@@ -103,15 +103,15 @@ std::vector<float> Model::GetPointCloud() const
 	}
 
 	// This assumes a Vector3f attribute is the first vertex attribute.
-	auto indices{GetIndices()};
-	auto vertices{GetVertices<Vector3f>()};
+	auto indices = GetIndices();
+	auto vertices = GetVertices<Vector3f>();
 
 	std::vector<float> pointCloud;
 	pointCloud.reserve(indices.size());
 
 	for (const auto &index : indices)
 	{
-		auto vertex{vertices[index]};
+		auto vertex = vertices[index];
 		pointCloud.emplace_back(vertex.m_x);
 		pointCloud.emplace_back(vertex.m_y);
 		pointCloud.emplace_back(vertex.m_z);

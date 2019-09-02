@@ -7,14 +7,14 @@ namespace acid
 {
 std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
-	auto result{std::make_shared<ModelCube>(Vector3f{})};
+	auto result = std::make_shared<ModelCube>(Vector3f{});
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();

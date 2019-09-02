@@ -17,7 +17,7 @@ Terrain::Terrain(const float &sideLength, const float &squareSize) :
 
 void Terrain::Start()
 {
-	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
 	if (mesh == nullptr)
 	{
@@ -25,12 +25,12 @@ void Terrain::Start()
 		return;
 	}
 
-	auto vertexCount{CalculateVertexCount(m_sideLength, m_squareSize)};
-	auto textureScale{CalculateTextureScale(m_sideLength)};
+	auto vertexCount = CalculateVertexCount(m_sideLength, m_squareSize);
+	auto textureScale = CalculateTextureScale(m_sideLength);
 	m_heightmap = GenerateHeightmap(vertexCount);
 	mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
 
-	auto colliderHeightfield{GetEntity()->GetComponent<ColliderHeightfield>(true)};
+	auto colliderHeightfield = GetEntity()->GetComponent<ColliderHeightfield>(true);
 
 	if (colliderHeightfield == nullptr)
 	{
@@ -71,7 +71,7 @@ float Terrain::CalculateTextureScale(const float &sideLength)
 
 std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
 {
-	auto transform{GetEntity()->GetComponent<Transform>()};
+	auto transform = GetEntity()->GetComponent<Transform>();
 
 	std::vector<float> heightmap(vertexCount * vertexCount);
 
@@ -79,8 +79,8 @@ std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
 	{
 		for (uint32_t col{}; col < vertexCount; col++)
 		{
-			auto x{((row * m_squareSize) - m_sideLength) / 2.0f};
-			auto z{((col * m_squareSize) - m_sideLength) / 2.0f};
+			auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
+			auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 			float height;
 
 			if (transform != nullptr)

@@ -217,7 +217,7 @@ inline const Node &operator>>(const Node &node, std::filesystem::path &object)
 
 inline Node &operator<<(Node &node, const std::filesystem::path &object)
 {
-	auto str{object.string()};
+	auto str = object.string();
 	std::replace(str.begin(), str.end(), '\\', '/');
 	node.SetValue(str);
 	node.SetType(Node::Type::String);

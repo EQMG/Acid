@@ -1,4 +1,4 @@
-﻿#include "FontType.hpp"
+#include "FontType.hpp"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -12,14 +12,14 @@ static const uint32_t MAX_VISIBLE_GLYPHS{4096};
 
 std::shared_ptr<FontType> FontType::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<FontType>(resource);
 	}
 
-	auto result{std::make_shared<FontType>("", "")};
+	auto result = std::make_shared<FontType>("", "");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -56,13 +56,13 @@ void FontType::Update(const std::vector<Text *> &texts)
 	Instance *instances;
 	m_instanceBuffer->MapMemory(reinterpret_cast<void **>(&instances));
 
-	auto extent{Window::Get()->GetSize()};
+	auto extent = Window::Get()->GetSize();
 
 	for (const auto &text : texts)
 	{
-		auto fontSize{text->GetFontSize() * text->GetScreenScale() / 1000.0f};
-		//auto size{text->GetScreenTransform().GetSize()};
-		auto position{text->GetScreenTransform().GetPosition()};
+		auto fontSize = text->GetFontSize() * text->GetScreenScale() / 1000.0f;
+		//auto size = text->GetScreenTransform().GetSize();
+		auto position = text->GetScreenTransform().GetPosition();
 
 		Vector2f localOffset;
 
@@ -73,9 +73,9 @@ void FontType::Update(const std::vector<Text *> &texts)
 				break;
 			}
 
-			auto glyphIndex{m_charmap[c]};
-			auto gi{&m_glyphInfos[glyphIndex]};
-			auto instance{&instances[m_instances]};
+			auto glyphIndex = m_charmap[c];
+			auto gi = &m_glyphInfos[glyphIndex];
+			auto instance = &instances[m_instances];
 
 			if (c == '\n')
 			{
@@ -165,9 +165,9 @@ uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
 
 void FontType::LoadFont(const std::filesystem::path &filename)
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
-	auto fileLoaded{Files::Read(filename)}; // TODO: Use a stream.
+	auto fileLoaded = Files::Read(filename); // TODO: Use a stream.
 
 	if (!fileLoaded)
 	{
@@ -197,13 +197,13 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	uint32_t totalPoints{};
 	uint32_t totalCells{};
 
-	auto glyphCount{static_cast<uint32_t>(face->num_glyphs)};
+	auto glyphCount = static_cast<uint32_t>(face->num_glyphs);
 	m_charmap = {};
 	m_glyphInfos = std::vector<HostGlyphInfo>(glyphCount);
 	std::vector<Outline> outlines(glyphCount);
 
 	FT_UInt glyphIndex;
-	auto charcode{FT_Get_First_Char(face, &glyphIndex)};
+	auto charcode = FT_Get_First_Char(face, &glyphIndex);
 	uint32_t i{};
 
 	while (glyphIndex != 0)
@@ -214,8 +214,8 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 		}
 
 		m_charmap.emplace(static_cast<wchar_t>(charcode), i);
-		auto hgi{&m_glyphInfos[i]};
-		auto o{&outlines[i]};
+		auto hgi = &m_glyphInfos[i];
+		auto o = &outlines[i];
 
 		OutlineConvert(&face->glyph->outline, o);
 
@@ -234,7 +234,7 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	m_glyphCellsSize = sizeof(uint32_t) * totalCells;
 	m_glyphPointsSize = sizeof(Vector2f) * totalPoints;
 
-	auto alignment{static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment)};
+	auto alignment = static_cast<uint32_t>(physicalDevice->GetProperties().limits.minStorageBufferOffsetAlignment);
 	m_glyphInfoOffset = 0;
 	m_glyphCellsOffset = AlignUint32(m_glyphInfoSize, alignment);
 	m_glyphPointsOffset = AlignUint32(m_glyphInfoSize + m_glyphCellsSize, alignment);
@@ -246,17 +246,17 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	char *glyphData;
 	m_storageGlyphs->MapMemory(reinterpret_cast<void **>(&glyphData));
 
-	auto deviceGlyphInfos{reinterpret_cast<DeviceGlyphInfo *>(glyphData + m_glyphInfoOffset)};
-	auto cells{reinterpret_cast<uint32_t *>(glyphData + m_glyphCellsOffset)};
-	auto points{reinterpret_cast<Vector2f *>(glyphData + m_glyphPointsOffset)};
+	auto deviceGlyphInfos = reinterpret_cast<DeviceGlyphInfo *>(glyphData + m_glyphInfoOffset);
+	auto cells = reinterpret_cast<uint32_t *>(glyphData + m_glyphCellsOffset);
+	auto points = reinterpret_cast<Vector2f *>(glyphData + m_glyphPointsOffset);
 
 	uint32_t pointOffset{};
 	uint32_t cellOffset{};
 
 	for (uint32_t j{}; j < m_glyphInfos.size(); j++)
 	{
-		auto o{&outlines[j]};
-		auto dgi{&deviceGlyphInfos[j]};
+		auto o = &outlines[j];
+		auto dgi = &deviceGlyphInfos[j];
 
 		dgi->cellInfo.cellCount = o->m_cellCount;
 		dgi->cellInfo.pointOffset = pointOffset;

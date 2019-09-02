@@ -106,7 +106,7 @@ if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
 			GIT_REPOSITORY https://git.savannah.gnu.org/git/freetype/freetype2.git
-			GIT_TAG master
+			GIT_TAG 9443a1bc3e6cfa315db976ff80f6c5e91b12b387
 			)
 	FetchContent_GetProperties(freetype)
 	if(NOT freetype_POPULATED)

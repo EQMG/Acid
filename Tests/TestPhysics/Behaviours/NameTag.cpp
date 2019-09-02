@@ -29,21 +29,21 @@ void NameTag::Start()
 void NameTag::Update()
 {
 	// Calculates the tag position, this component should be added after a rigidbody body.
-	auto transform{GetEntity()->GetComponent<Transform>()};
+	auto transform = GetEntity()->GetComponent<Transform>();
 
 	if (transform == nullptr)
 	{
 		return;
 	}
 
-	auto worldPosition{transform->GetPosition()};
+	auto worldPosition = transform->GetPosition();
 	worldPosition.m_y += m_heightOffset;
 
 	m_transform.SetLocalPosition(worldPosition);
 	m_transform.SetLocalRotation(Vector3f());
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
-	auto toCamera{Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition)};
+	auto toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);
 	//dynamic_cast<DriverConstant<float> *>(m_text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
 
 	// Will always face the screen, like a particle.

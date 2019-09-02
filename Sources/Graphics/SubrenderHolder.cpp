@@ -9,7 +9,7 @@ void SubrenderHolder::Clear()
 
 void SubrenderHolder::RemoveSubrenderStage(const TypeId &id)
 {
-	for (auto it{m_stages.begin()}; it != m_stages.end();)
+	for (auto it = m_stages.begin(); it != m_stages.end();)
 	{
 		if (it->second == id)
 		{

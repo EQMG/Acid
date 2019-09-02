@@ -110,11 +110,11 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 {
 	if (v[i].second == "{")
 	{
-		auto k{i + 1};
+		auto k = i + 1;
 
 		while (v[k].second != "}")
 		{
-			auto key{v[k].second};
+			auto key = v[k].second;
 			k += 2; // k + 1 should be ':'
 			Convert(current.AddProperty(key, {}), v, k, k);
 
@@ -129,7 +129,7 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 	}
 	else if (v[i].second == "[")
 	{
-		auto k{i + 1};
+		auto k = i + 1;
 
 		while (v[k].second != "]")
 		{
@@ -160,7 +160,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const int32_t &i
 	// Only output the value if no properties exist.
 	if (source.GetProperties().empty())
 	{
-		auto value{String::FixReturnTokens(source.GetValue())};
+		auto value = String::FixReturnTokens(source.GetValue());
 
 		if (source.GetType() == Type::String)
 		{
@@ -173,7 +173,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const int32_t &i
 	}
 
 	// Output each property.
-	for (auto it{source.GetProperties().begin()}; it < source.GetProperties().end(); ++it)
+	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it)
 	{
 		std::string openString;
 		std::string closeString;

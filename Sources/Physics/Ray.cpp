@@ -30,7 +30,7 @@ void Ray::Update(const Vector3f &currentPosition, const Vector2f &mousePosition,
 
 Vector3f Ray::GetPointOnRay(const float &distance) const
 {
-	auto vector{distance * m_currentRay};
+	auto vector = distance * m_currentRay;
 	return m_origin + vector;
 }
 

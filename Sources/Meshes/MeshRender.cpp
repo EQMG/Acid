@@ -15,7 +15,7 @@ void MeshRender::Start()
 
 void MeshRender::Update()
 {
-	auto material{GetEntity()->GetComponent<Material>()};
+	auto material = GetEntity()->GetComponent<Material>();
 
 	if (material == nullptr)
 	{
@@ -29,7 +29,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	if (auto rigidbody{GetEntity()->GetComponent<Rigidbody>()}; rigidbody != nullptr)
+	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody != nullptr)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -38,17 +38,17 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	}
 
 	// Gets required components.
-	auto material{GetEntity()->GetComponent<Material>()};
-	auto mesh{GetEntity()->GetComponent<Mesh>()};
-	//auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
+	auto material = GetEntity()->GetComponent<Material>();
+	auto mesh = GetEntity()->GetComponent<Mesh>();
+	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
 	if (material == nullptr || (mesh == nullptr)) // && meshAnimated == nullptr
 	{
 		return false;
 	}
 
-	auto meshModel{mesh->GetModel()}; // meshAnimated != nullptr ? meshAnimated->GetModel() : 
-	auto materialPipeline{material->GetPipelineMaterial()};
+	auto meshModel = mesh->GetModel(); // meshAnimated != nullptr ? meshAnimated->GetModel() : 
+	auto materialPipeline = material->GetPipelineMaterial();
 
 	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)
 	{
@@ -81,13 +81,13 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 
 bool MeshRender::operator<(const MeshRender &other) const
 {
-	auto camera{Scenes::Get()->GetCamera()};
+	auto camera = Scenes::Get()->GetCamera();
 
-	auto transform0{GetEntity()->GetComponent<Transform>()};
-	auto transform1{other.GetEntity()->GetComponent<Transform>()};
+	auto transform0 = GetEntity()->GetComponent<Transform>();
+	auto transform1 = other.GetEntity()->GetComponent<Transform>();
 
-	auto thisDistance2{(camera->GetPosition() - transform0->GetPosition()).LengthSquared()};
-	auto otherDistance2{(camera->GetPosition() - transform1->GetPosition()).LengthSquared()};
+	auto thisDistance2 = (camera->GetPosition() - transform0->GetPosition()).LengthSquared();
+	auto otherDistance2 = (camera->GetPosition() - transform1->GetPosition()).LengthSquared();
 
 	return thisDistance2 > otherDistance2;
 }

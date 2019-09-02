@@ -18,8 +18,8 @@ class ShaderIncluder :
 public:
 	IncludeResult *includeLocal(const char *headerName, const char *includerName, size_t inclusionDepth) override
 	{
-		auto directory{std::filesystem::path{includerName}.parent_path()};
-		auto fileLoaded{Files::Read(directory / headerName)};
+		auto directory = std::filesystem::path{includerName}.parent_path();
+		auto fileLoaded = Files::Read(directory / headerName);
 
 		if (!fileLoaded)
 		{
@@ -27,14 +27,14 @@ public:
 			return nullptr;
 		}
 
-		auto content{new char[fileLoaded->size()]};
+		auto content = new char[fileLoaded->size()];
 		std::memcpy(content, fileLoaded->c_str(), fileLoaded->size());
 		return new IncludeResult(headerName, content, fileLoaded->size(), content);
 	}
 
 	IncludeResult *includeSystem(const char *headerName, const char *includerName, size_t inclusionDepth) override
 	{
-		auto fileLoaded{Files::Read(headerName)};
+		auto fileLoaded = Files::Read(headerName);
 
 		if (!fileLoaded)
 		{
@@ -42,7 +42,7 @@ public:
 			return nullptr;
 		}
 
-		auto content{new char[fileLoaded->size()]};
+		auto content = new char[fileLoaded->size()];
 		std::memcpy(content, fileLoaded->c_str(), fileLoaded->size());
 		return new IncludeResult(headerName, content, fileLoaded->size(), content);
 	}
@@ -111,7 +111,7 @@ VkFormat Shader::GlTypeToVk(const int32_t &type)
 
 std::optional<uint32_t> Shader::GetDescriptorLocation(const std::string &name) const
 {
-	auto it{m_descriptorLocations.find(name)};
+	auto it = m_descriptorLocations.find(name);
 
 	if (it == m_descriptorLocations.end())
 	{
@@ -123,7 +123,7 @@ std::optional<uint32_t> Shader::GetDescriptorLocation(const std::string &name) c
 
 std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &name) const
 {
-	auto it{m_descriptorSizes.find(name)};
+	auto it = m_descriptorSizes.find(name);
 
 	if (it == m_descriptorSizes.end())
 	{
@@ -135,7 +135,7 @@ std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &name) const
 
 std::optional<Shader::Uniform> Shader::GetUniform(const std::string &name) const
 {
-	auto it{m_uniforms.find(name)};
+	auto it = m_uniforms.find(name);
 
 	if (it == m_uniforms.end())
 	{
@@ -147,7 +147,7 @@ std::optional<Shader::Uniform> Shader::GetUniform(const std::string &name) const
 
 std::optional<Shader::UniformBlock> Shader::GetUniformBlock(const std::string &name) const
 {
-	auto it{m_uniformBlocks.find(name)};
+	auto it = m_uniformBlocks.find(name);
 
 	if (it == m_uniformBlocks.end())
 	{
@@ -159,7 +159,7 @@ std::optional<Shader::UniformBlock> Shader::GetUniformBlock(const std::string &n
 
 std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) const
 {
-	auto it{m_attributes.find(name)};
+	auto it = m_attributes.find(name);
 
 	if (it == m_attributes.end())
 	{
@@ -194,7 +194,7 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 
 std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
 {
-	auto it{m_descriptorTypes.find(location)};
+	auto it = m_descriptorTypes.find(location);
 
 	if (it == m_descriptorTypes.end())
 	{
@@ -206,7 +206,7 @@ std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &locati
 
 VkShaderStageFlagBits Shader::GetShaderStage(const std::filesystem::path &filename)
 {
-	auto fileExt{filename.extension()};
+	auto fileExt = filename.extension();
 
 	if (fileExt == ".comp")
 	{
@@ -357,25 +357,25 @@ TBuiltInResource GetResources()
 
 VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag)
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_stages.emplace_back(moduleName);
 
 	// Starts converting GLSL to SPIR-V.
-	auto language{GetEshLanguage(moduleFlag)};
+	auto language = GetEshLanguage(moduleFlag);
 	glslang::TProgram program;
 	glslang::TShader shader(language);
-	auto resources{GetResources()};
+	auto resources = GetResources();
 
 	// Enable SPIR-V and Vulkan rules when parsing GLSL.
-	auto messages{static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault)};
+	auto messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
 #if defined(ACID_VERBOSE)
 	messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
-	auto shaderName{moduleName.string()};
-	auto shaderNameCstr{shaderName.c_str()};
-	auto shaderSource{moduleCode.c_str()};
+	auto shaderName = moduleName.string();
+	auto shaderNameCstr = shaderName.c_str();
+	auto shaderSource = moduleCode.c_str();
 	shader.setStringsWithLengthsAndNames(&shaderSource, nullptr, &shaderNameCstr, 1);
 	shader.setPreamble(preamble.c_str());
 
@@ -385,7 +385,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	ShaderIncluder includer;
 
-	auto defaultVersion{glslang::EShTargetVulkan_1_1};
+	auto defaultVersion = glslang::EShTargetVulkan_1_1;
 
 	std::string str;
 
@@ -415,7 +415,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	for (uint32_t dim{}; dim < 3; ++dim)
 	{
-		auto localSize{program.getLocalSize(dim)};
+		auto localSize = program.getLocalSize(dim);
 
 		if (localSize > 1)
 		{
@@ -470,7 +470,7 @@ void Shader::CreateReflection()
 	// Process to descriptors.
 	for (const auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 	{
-		auto descriptorType{VK_DESCRIPTOR_TYPE_MAX_ENUM};
+		auto descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
 		switch (uniformBlock.m_type)
 		{
@@ -496,7 +496,7 @@ void Shader::CreateReflection()
 
 	for (const auto &[uniformName, uniform] : m_uniforms)
 	{
-		auto descriptorType{VK_DESCRIPTOR_TYPE_MAX_ENUM};
+		auto descriptorType = VK_DESCRIPTOR_TYPE_MAX_ENUM;
 
 		switch (uniform.m_glType)
 		{
@@ -605,7 +605,7 @@ void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descr
 		return;
 	}
 
-	auto it{descriptorPoolCounts.find(type)};
+	auto it = descriptorPoolCounts.find(type);
 
 	if (it != descriptorPoolCounts.end())
 	{
@@ -619,7 +619,7 @@ void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descr
 
 void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
-	auto reflection{program.getUniformBlock(i)};
+	auto reflection = program.getUniformBlock(i);
 
 	for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks)
 	{
@@ -630,7 +630,7 @@ void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderSt
 		}
 	}
 
-	auto type{UniformBlock::Type::None};
+	auto type = UniformBlock::Type::None;
 
 	if (reflection.getType()->getQualifier().storage == glslang::EvqUniform)
 	{
@@ -652,11 +652,11 @@ void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderSt
 
 void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
-	auto reflection{program.getUniform(i)};
+	auto reflection = program.getUniform(i);
 
 	if (reflection.getBinding() == -1)
 	{
-		auto splitName{String::Split(reflection.name, '.')};
+		auto splitName = String::Split(reflection.name, '.');
 
 		if (splitName.size() > 1)
 		{
@@ -688,7 +688,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 
 void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
 {
-	auto reflection{program.getPipeInput(i)};
+	auto reflection = program.getPipeInput(i);
 
 	if (reflection.name.empty())
 	{
@@ -734,7 +734,7 @@ int32_t Shader::ComputeSize(const glslang::TType *ttype)
 
 		for (int32_t d{}; d < ttype->getArraySizes()->getNumDims(); ++d)
 		{
-			auto dimSize{ttype->getArraySizes()->getDimSize(d)};
+			auto dimSize = ttype->getArraySizes()->getDimSize(d);
 
 			// This only makes sense in paths that have a known array size.
 			if (dimSize != glslang::UnsizedArraySize)

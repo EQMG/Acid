@@ -29,11 +29,11 @@ void CameraFps::Start()
 
 void CameraFps::Update()
 {
-	auto delta{Engine::Get()->GetDelta().AsSeconds()};
+	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (auto scenePlayer{Scenes::Get()->GetStructure()->GetComponent<PlayerFps>()}; scenePlayer != nullptr)
+	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>(); scenePlayer != nullptr)
 	{
-		if (auto transformPlayer{scenePlayer->GetEntity()->GetComponent<Transform>()}; transformPlayer != nullptr)
+		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>(); transformPlayer != nullptr)
 		{
 			m_velocity = (transformPlayer->GetPosition() - m_position) / delta;
 			m_position = transformPlayer->GetPosition() + VIEW_OFFSET;
@@ -42,7 +42,7 @@ void CameraFps::Update()
 
 	if (!Scenes::Get()->IsPaused())
 	{
-		auto rotationDelta{Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE};
+		auto rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
 
 		if (m_joystickVertical.IsConnected())
 		{

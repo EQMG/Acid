@@ -21,7 +21,7 @@ void ShadowRender::Update()
 
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
-	auto transform{GetEntity()->GetComponent<Transform>()};
+	auto transform = GetEntity()->GetComponent<Transform>();
 
 	if (transform == nullptr)
 	{
@@ -32,7 +32,7 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	m_pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
 
 	// Gets required components.
-	auto mesh{GetEntity()->GetComponent<Mesh>()};
+	auto mesh = GetEntity()->GetComponent<Mesh>();
 
 	if (mesh == nullptr || mesh->GetModel() == nullptr)
 	{

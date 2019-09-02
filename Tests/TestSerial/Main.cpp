@@ -134,11 +134,11 @@ public:
 int main(int argc, char **argv)
 {
 	{
-		auto source{R"({"message":"hello world","value":3})"};
+		auto source = R"({"message":"hello world","value":3})";
 		Json json;
 		json.Load(source);
 
-		auto value{json["value"]};
+		auto value = json["value"];
 		value.Set(3 * value->Get<int32_t>() + 2);
 
 		json["values"] = std::vector{10, 11, -1, 2};

@@ -1,4 +1,4 @@
-﻿#include "Particle.hpp"
+#include "Particle.hpp"
 
 #include "Scenes/Scenes.hpp"
 
@@ -25,7 +25,7 @@ Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &p
 
 void Particle::Update()
 {
-	auto delta{Engine::Get()->GetDelta().AsSeconds()};
+	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
 	m_velocity.m_y += -10.0f * m_gravityEffect * delta;
 	m_change = m_velocity;
@@ -44,20 +44,20 @@ void Particle::Update()
 		return;
 	}
 
-	auto cameraToParticle{Scenes::Get()->GetCamera()->GetPosition() - m_position};
+	auto cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - m_position;
 	m_distanceToCamera = cameraToParticle.LengthSquared();
 
-	auto lifeFactor{m_stageCycles * m_elapsedTime / m_lifeLength};
+	auto lifeFactor = m_stageCycles * m_elapsedTime / m_lifeLength;
 
 	if (m_particleType->GetImage() == nullptr)
 	{
 		return;
 	}
 
-	auto stageCount{static_cast<int32_t>(pow(m_particleType->GetNumberOfRows(), 2))};
-	auto atlasProgression{lifeFactor * stageCount};
-	auto index1{static_cast<int32_t>(std::floor(atlasProgression))};
-	auto index2{index1 < stageCount - 1 ? index1 + 1 : index1};
+	auto stageCount = static_cast<int32_t>(pow(m_particleType->GetNumberOfRows(), 2));
+	auto atlasProgression = lifeFactor * stageCount;
+	auto index1 = static_cast<int32_t>(std::floor(atlasProgression));
+	auto index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
 
 	m_imageBlendFactor = std::fmod(atlasProgression, 1.0f);
 	m_imageOffset1 = CalculateImageOffset(index1);
@@ -71,8 +71,8 @@ bool Particle::operator<(const Particle &other) const
 
 Vector2f Particle::CalculateImageOffset(const int32_t &index) const
 {
-	auto column{index % m_particleType->GetNumberOfRows()};
-	auto row{index / m_particleType->GetNumberOfRows()};
+	auto column = index % m_particleType->GetNumberOfRows();
+	auto row = index / m_particleType->GetNumberOfRows();
 	return Vector2f{static_cast<float>(column), static_cast<float>(row)} / m_particleType->GetNumberOfRows();
 }
 }

@@ -1,4 +1,4 @@
-﻿#include "Pannable.hpp"
+#include "Pannable.hpp"
 
 #include <Audio/Audio.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -84,7 +84,7 @@ void Pannable::UpdateObject()
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	auto offset{GetTransform().GetPosition()};
+	auto offset = GetTransform().GetPosition();
 
 	m_zoom *= powf(1.3f, Mouse::Get()->GetScrollDelta().m_y);
 	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant({m_zoom});

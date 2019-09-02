@@ -22,7 +22,7 @@ std::vector<T> Model::GetVertices(const std::size_t &offset) const
 	vertexStaging.MapMemory(&verticesMemory);
 	std::vector<T> vertices(m_vertexCount);
 
-	auto sizeOfSrcT{vertexStaging.GetSize() / m_vertexCount};
+	auto sizeOfSrcT = vertexStaging.GetSize() / m_vertexCount;
 
 	for (uint32_t i{}; i < m_vertexCount; i++)
 	{

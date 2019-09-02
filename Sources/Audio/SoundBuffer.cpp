@@ -13,14 +13,14 @@ namespace acid
 {
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<SoundBuffer>(resource);
 	}
 
-	auto result{std::make_shared<SoundBuffer>("")};
+	auto result = std::make_shared<SoundBuffer>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -68,7 +68,7 @@ void SoundBuffer::Load()
 		return;
 	}
 
-	auto fileExt{m_filename.extension().string()};
+	auto fileExt = m_filename.extension().string();
 
 	if (fileExt == ".wav")
 	{
@@ -83,10 +83,10 @@ void SoundBuffer::Load()
 uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
-	auto fileLoaded{Files::Read(filename)};
+	auto fileLoaded = Files::Read(filename);
 
 	if (!fileLoaded)
 	{
@@ -160,10 +160,10 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
-	auto fileLoaded{Files::Read(filename)};
+	auto fileLoaded = Files::Read(filename);
 
 	if (!fileLoaded)
 	{
@@ -174,7 +174,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 	int32_t channels;
 	int32_t samplesPerSec;
 	int16_t *data;
-	auto size{stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data)};
+	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data);
 
 	if (size == -1)
 	{

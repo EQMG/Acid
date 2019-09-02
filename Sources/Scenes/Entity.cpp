@@ -7,13 +7,13 @@ namespace acid
 {
 Entity::Entity(const std::filesystem::path &filename)
 {
-	auto entityPrefab{EntityPrefab::Create(filename)};
+	auto entityPrefab = EntityPrefab::Create(filename);
 	*entityPrefab >> *this;
 }
 
 void Entity::Update()
 {
-	for (auto it{m_components.begin()}; it != m_components.end();)
+	for (auto it = m_components.begin(); it != m_components.end();)
 	{
 		if ((*it)->IsRemoved())
 		{
@@ -65,7 +65,7 @@ void Entity::RemoveComponent(const std::string &name)
 {
 	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c)
 	{
-		auto componentName{Scenes::Get()->GetComponentRegister().FindName(c.get())};
+		auto componentName = Scenes::Get()->GetComponentRegister().FindName(c.get());
 		return componentName && name == *componentName;
 	}), m_components.end());
 }

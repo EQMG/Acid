@@ -12,17 +12,17 @@ FtpDataChannel::FtpDataChannel(Ftp &owner) :
 FtpResponse FtpDataChannel::Open(const Mode &mode)
 {
 	// Open a data connection in active mode (we connect to the server).
-	auto response{m_ftp.SendCommand("PASV")};
+	auto response = m_ftp.SendCommand("PASV");
 
 	if (response.IsOk())
 	{
 		// Extract the connection address and port from the response
-		auto begin{response.GetFullMessage().find_first_of("0123456789")};
+		auto begin = response.GetFullMessage().find_first_of("0123456789");
 
 		if (begin != std::string::npos)
 		{
 			uint8_t data[6]{ 0, 0, 0, 0, 0, 0 };
-			auto str{response.GetFullMessage().substr(begin)};
+			auto str = response.GetFullMessage().substr(begin);
 			std::size_t index{};
 
 			for (auto &i : data)
@@ -39,7 +39,7 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 			}
 
 			// Reconstruct connection port and address.
-			auto port{static_cast<uint16_t>(data[4] * 256 + data[5])};
+			auto port = static_cast<uint16_t>(data[4] * 256 + data[5]);
 			IpAddress address{static_cast<uint8_t>(data[0]), static_cast<uint8_t>(data[1]), static_cast<uint8_t>(data[2]), static_cast<uint8_t>(data[3])};
 
 			// Connect the data channel to the server.

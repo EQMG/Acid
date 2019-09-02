@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Physics/Rigidbody.hpp"
 #include "Entity.hpp"
@@ -98,7 +98,7 @@ public:
 	{
 		std::vector<T *> components;
 
-		for (auto it{m_objects.begin()}; it != m_objects.end(); ++it)
+		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
 			for (const auto &component : (*it)->GetComponents<T>())
 			{
@@ -121,9 +121,9 @@ public:
 	template<typename T>
 	T *GetComponent(const bool &allowDisabled = false)
 	{
-		for (auto it{m_objects.begin()}; it != m_objects.end(); ++it)
+		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
 		{
-			auto component{(*it)->GetComponent<T>()};
+			auto component = (*it)->GetComponent<T>();
 
 			if (component != nullptr && (component->IsEnabled() || allowDisabled))
 			{

@@ -31,11 +31,11 @@ void MeshPattern::GenerateMesh()
 	{
 		for (uint32_t row{}; row < m_vertexCount - 1; row++)
 		{
-			auto topLeft{(row * m_vertexCount) + col};
-			auto topRight{topLeft + 1};
-			auto bottomLeft{((row + 1) * m_vertexCount) + col};
-			auto bottomRight{bottomLeft + 1};
-			auto mixed{col % 2 == 0};
+			auto topLeft = (row * m_vertexCount) + col;
+			auto topRight = topLeft + 1;
+			auto bottomLeft = ((row + 1) * m_vertexCount) + col;
+			auto bottomRight = bottomLeft + 1;
+			auto mixed = col % 2 == 0;
 
 			if (row % 2 == 0)
 			{
@@ -64,8 +64,8 @@ void MeshPattern::GenerateMesh()
 
 VertexDefault MeshPattern::GetVertex(const uint32_t &col, const uint32_t &row)
 {
-	auto x{((row * m_squareSize) - m_sideLength) / 2.0f};
-	auto z{((col * m_squareSize) - m_sideLength) / 2.0f};
+	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
+	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
 	Vector3f position{x, 0.0f, z};
 	Vector2f uv{static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount)};

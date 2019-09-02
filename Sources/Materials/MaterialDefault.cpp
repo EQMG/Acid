@@ -23,8 +23,8 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 
 void MaterialDefault::Start()
 {
-	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
-	//auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
+	auto mesh = GetEntity()->GetComponent<Mesh>(true);
+	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
 	if (mesh == nullptr) // && meshAnimated == nullptr
 	{
@@ -33,7 +33,7 @@ void MaterialDefault::Start()
 	}
 
 	m_animated = false; //  meshAnimated != nullptr;
-	auto vertexInput{Mesh::GetVertexInput()}; // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() };
+	auto vertexInput = Mesh::GetVertexInput(); // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() ;
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
 }
@@ -44,7 +44,7 @@ void MaterialDefault::Update()
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
-	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
 	{
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 	}
@@ -60,7 +60,7 @@ void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 {
 	/*if (m_animated)
 	{
-		auto meshAnimated{GetEntity()->GetComponent<MeshAnimated>()};
+		auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
 	}*/
 

@@ -9,14 +9,14 @@ SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::
 	m_correction{correction}
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
-	auto headNode{m_armatureData->FindChild("node")};
+	auto headNode = m_armatureData->FindChild("node");
 	m_headJoint = LoadJointData(headNode, true);
 	m_headJoint.CalculateInverseBindTransform(Matrix4{});
 }
 
 Joint SkeletonLoader::LoadJointData(const Node *jointNode, const bool &isRoot)
 {
-	auto joint{ExtractMainJointData(jointNode, isRoot)};
+	auto joint = ExtractMainJointData(jointNode, isRoot);
 
 	for (const auto &childNode : jointNode->FindChildren("node"))
 	{
@@ -28,9 +28,9 @@ Joint SkeletonLoader::LoadJointData(const Node *jointNode, const bool &isRoot)
 
 Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, const bool &isRoot)
 {
-	auto nameId{*jointNode->FindAttribute("id")};
-	auto index{GetBoneIndex(nameId)};
-	auto matrixData{String::Split(jointNode->FindChild("matrix")->GetValue(), ' ')};
+	auto nameId = *jointNode->FindAttribute("id");
+	auto index = GetBoneIndex(nameId);
+	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), ' ');
 
 	assert(matrixData.size() == 16);
 

@@ -10,14 +10,14 @@ namespace acid
 {
 std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<Image2d>(resource);
 	}
 
-	auto result{std::make_shared<Image2d>("")};
+	auto result = std::make_shared<Image2d>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -68,7 +68,7 @@ Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, con
 
 Image2d::~Image2d()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
@@ -108,7 +108,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const Vk
 
 std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	extent = m_extent >> mipLevel;
 
@@ -124,7 +124,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t 
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto pixels{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -175,7 +175,7 @@ void Image2d::Load()
 	if (!m_filename.empty() && m_loadPixels == nullptr)
 	{
 #if defined(ACID_VERBOSE)
-		auto debugStart{Time::Now()};
+		auto debugStart = Time::Now();
 #endif
 		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)

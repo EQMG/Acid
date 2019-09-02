@@ -87,7 +87,7 @@ void PlayerFps::Update()
 
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
-	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
 	{
 		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
 	}

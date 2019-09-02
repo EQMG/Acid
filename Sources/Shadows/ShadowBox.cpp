@@ -1,4 +1,4 @@
-﻿#include "ShadowBox.hpp"
+#include "ShadowBox.hpp"
 
 #include "Devices/Window.hpp"
 #include "Graphics/Graphics.hpp"
@@ -28,7 +28,7 @@ void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, con
 
 bool ShadowBox::IsInBox(const Vector3f &position, const float &radius) const
 {
-	auto entityPos{m_lightViewMatrix.Transform(Vector4f(position))};
+	auto entityPos = m_lightViewMatrix.Transform(Vector4f(position));
 
 	Vector3f closestPoint;
 	closestPoint.m_x = std::clamp(entityPos.m_x, m_minExtents.m_x, m_maxExtents.m_x);
@@ -36,8 +36,8 @@ bool ShadowBox::IsInBox(const Vector3f &position, const float &radius) const
 	closestPoint.m_z = std::clamp(entityPos.m_z, m_minExtents.m_z, m_maxExtents.m_z);
 
 	Vector3f centre{entityPos};
-	auto distance{centre - closestPoint};
-	auto distanceSquared{distance.LengthSquared()};
+	auto distance = centre - closestPoint;
+	auto distanceSquared = distance.LengthSquared();
 
 	return distanceSquared < radius * radius;
 }
@@ -52,12 +52,12 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 
 	Vector3f forwardVector{rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f))};
 
-	auto toFar{forwardVector * m_shadowDistance};
-	auto toNear{forwardVector * camera.GetNearPlane()};
-	auto centreNear{toNear + camera.GetPosition()};
-	auto centreFar{toFar + camera.GetPosition()};
+	auto toFar = forwardVector * m_shadowDistance;
+	auto toNear = forwardVector * camera.GetNearPlane();
+	auto centreNear = toNear + camera.GetPosition();
+	auto centreFar = toFar + camera.GetPosition();
 
-	auto points{CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar)};
+	auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
 	m_minExtents = Vector3f::PositiveInfinity;
 	m_maxExtents = Vector3f::NegativeInfinity;
@@ -83,14 +83,14 @@ void ShadowBox::UpdateSizes(const Camera &camera)
 std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const
 {
 	Vector3f upVector{rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f))};
-	auto rightVector{forwardVector.Cross(upVector)};
-	auto downVector{-upVector};
-	auto leftVector{-rightVector};
+	auto rightVector = forwardVector.Cross(upVector);
+	auto downVector = -upVector;
+	auto leftVector = -rightVector;
 
-	auto farTop{centreFar + (upVector * m_farHeight)};
-	auto farBottom{centreFar + (downVector * m_farHeight)};
-	auto nearTop{centreNear + (upVector * m_nearHeight)};
-	auto nearBottom{centreNear + (downVector * m_nearHeight)};
+	auto farTop = centreFar + (upVector * m_farHeight);
+	auto farBottom = centreFar + (downVector * m_farHeight);
+	auto nearTop = centreNear + (upVector * m_nearHeight);
+	auto nearBottom = centreNear + (downVector * m_nearHeight);
 
 	std::array<Vector4f, 8> points;
 	points[0] = CalculateLightSpaceFrustumCorner(farTop, rightVector, m_farWidth);
@@ -123,16 +123,16 @@ void ShadowBox::UpdateOrthoProjectionMatrix()
 void ShadowBox::UpdateCenter()
 {
 	Vector4f centre{(m_minExtents + m_maxExtents) / 2.0f};
-	auto invertedLight{m_lightViewMatrix.Inverse()};
+	auto invertedLight = m_lightViewMatrix.Inverse();
 	m_centre = {invertedLight.Transform(centre)};
 }
 
 void ShadowBox::UpdateLightViewMatrix()
 {
 	m_lightViewMatrix = {};
-	auto pitch{std::acos(Vector2f{m_lightDirection.m_x, m_lightDirection.m_z}.Length())};
+	auto pitch = std::acos(Vector2f{m_lightDirection.m_x, m_lightDirection.m_z}.Length());
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3f::Right);
-	auto yaw{std::atan(m_lightDirection.m_x / m_lightDirection.m_z)};
+	auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z);
 
 	if (m_lightDirection.m_z > 0.0f)
 	{

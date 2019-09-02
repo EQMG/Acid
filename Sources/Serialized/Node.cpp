@@ -73,7 +73,7 @@ void Node::SetName(const std::string &name)
 		throw std::runtime_error("Cannot set name if parent is null");
 	}
 
-	for (auto it{m_parent->m_properties.begin()}; it < m_parent->m_properties.end(); ++it)
+	for (auto it = m_parent->m_properties.begin(); it < m_parent->m_properties.end(); ++it)
 	{
 		if (it->second == *this)
 		{

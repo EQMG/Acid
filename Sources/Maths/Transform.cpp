@@ -1,4 +1,4 @@
-﻿#include "Transform.hpp"
+#include "Transform.hpp"
 
 #include "Scenes/Entity.hpp"
 
@@ -33,7 +33,7 @@ Transform Transform::Multiply(const Transform &other) const
 
 Matrix4 Transform::GetWorldMatrix() const
 {
-	auto worldTransform{GetWorldTransform()};
+	auto worldTransform = GetWorldTransform();
 	return Matrix4::TransformationMatrix(worldTransform->m_position, worldTransform->m_rotation, worldTransform->m_scale);
 }
 

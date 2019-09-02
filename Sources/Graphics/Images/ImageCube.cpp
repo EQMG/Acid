@@ -1,4 +1,4 @@
-﻿#include "ImageCube.hpp"
+#include "ImageCube.hpp"
 
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
@@ -9,14 +9,14 @@ namespace acid
 {
 std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ImageCube>(resource);
 	}
 
-	auto result{std::make_shared<ImageCube>("")};
+	auto result = std::make_shared<ImageCube>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -70,7 +70,7 @@ ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels,
 
 ImageCube::~ImageCube()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
@@ -110,7 +110,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const 
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	extent = m_extent >> mipLevel;
 
@@ -126,7 +126,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto result{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
+	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -146,7 +146,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 
 	for (uint32_t i{}; i < 6; i++)
 	{
-		auto resultSide{GetPixels(extent, mipLevel, i)};
+		auto resultSide = GetPixels(extent, mipLevel, i);
 		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
 		if (pixels == nullptr)
@@ -184,8 +184,8 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &fi
 
 	for (const auto &side : fileSides)
 	{
-		auto filenameSide{filename / (side + fileSuffix)};
-		auto resultSide{Image::LoadPixels(filenameSide, extent, components, format)};
+		auto filenameSide = filename / (side + fileSuffix);
+		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
 		if (result == nullptr)
@@ -230,7 +230,7 @@ void ImageCube::Load()
 	if (!m_filename.empty() && m_loadPixels == nullptr)
 	{
 #if defined(ACID_VERBOSE)
-		auto debugStart{Time::Now()};
+		auto debugStart = Time::Now();
 #endif
 		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
 #if defined(ACID_VERBOSE)

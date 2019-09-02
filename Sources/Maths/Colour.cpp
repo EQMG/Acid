@@ -37,7 +37,7 @@ Colour::Colour(std::string hex, const float &a) :
 	}
 
 	assert(hex.size() == 6);
-	auto hexValue{std::stoul(hex, nullptr, 16)};
+	auto hexValue = std::stoul(hex, nullptr, 16);
 
 	m_r = static_cast<float>((hexValue >> 16) & 0xff) / 255.0f;
 	m_g = static_cast<float>((hexValue >> 8) & 0xff) / 255.0f;
@@ -71,14 +71,14 @@ Colour Colour::Scale(const float &scalar) const
 
 Colour Colour::Lerp(const Colour &other, const float &progression) const
 {
-	auto ta{*this * (1.0f - progression)};
-	auto tb{other * progression};
+	auto ta = *this * (1.0f - progression);
+	auto tb = other * progression;
 	return ta + tb;
 }
 
 Colour Colour::Normalize() const
 {
-	auto l{Length()};
+	auto l = Length();
 
 	if (l == 0.0f)
 	{
@@ -105,7 +105,7 @@ Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const
 
 Colour Colour::GetUnit() const
 {
-	auto l{Length()};
+	auto l = Length();
 	return {m_r / l, m_g / l, m_b / l, m_a / l};
 }
 

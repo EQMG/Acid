@@ -33,7 +33,7 @@ public:
 		std::lock_guard<std::mutex> lock{delegate.m_mutex};
 		ReturnType returnValues;
 
-		for (auto it{delegate.m_functions.begin()}; it != delegate.m_functions.end();)
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
 			if (it->IsExpired())
 			{
@@ -64,7 +64,7 @@ public:
 			return;
 		}
 
-		for (auto it{delegate.m_functions.begin()}; it != delegate.m_functions.end();)
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
 		{
 			if (it->IsExpired())
 			{

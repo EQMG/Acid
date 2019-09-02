@@ -43,14 +43,14 @@ public:
 			return;
 		}
 
-		auto uniform{m_uniformBlock->GetUniform(uniformName)};
+		auto uniform = m_uniformBlock->GetUniform(uniformName);
 
 		if (!uniform)
 		{
 			return;
 		}
 
-		auto realSize{size};
+		auto realSize = size;
 
 		if (realSize == 0)
 		{

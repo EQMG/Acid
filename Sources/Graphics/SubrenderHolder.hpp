@@ -21,9 +21,9 @@ public:
 	template<typename T>
 	T *Get() const
 	{
-		const auto typeId{GetSubrenderTypeId<T>()};
+		const auto typeId = GetSubrenderTypeId<T>();
 
-		auto it{m_subrenders.find(typeId)};
+		auto it = m_subrenders.find(typeId);
 
 		if (it == m_subrenders.end() || it->second == nullptr)
 		{
@@ -46,7 +46,7 @@ public:
 		// Remove previous Subrender, if it exists.
 		//Remove<T>();
 
-		const auto typeId{GetSubrenderTypeId<T>()};
+		const auto typeId = GetSubrenderTypeId<T>();
 
 		// Insert the stage value
 		m_stages.insert({StageIndex{stage, m_subrenders.size()}, typeId});
@@ -62,7 +62,7 @@ public:
 	template<typename T>
 	void Remove()
 	{
-		const auto typeId{GetSubrenderTypeId<T>()};
+		const auto typeId = GetSubrenderTypeId<T>();
 
 		// Remove the stage value for this Subrender.
 		RemoveSubrenderStage(typeId);

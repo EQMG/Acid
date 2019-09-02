@@ -1,4 +1,4 @@
-﻿#include "ParticleType.hpp"
+#include "ParticleType.hpp"
 
 #include "Resources/Resources.hpp"
 #include "Maths/Maths.hpp"
@@ -14,14 +14,14 @@ static const float FRUSTUM_BUFFER{1.4f};
 
 std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ParticleType>(resource);
 	}
 
-	auto result{std::make_shared<ParticleType>(nullptr)};
+	auto result = std::make_shared<ParticleType>(nullptr);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	//result->Load();
@@ -78,8 +78,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 			continue;
 		}
 
-		auto viewMatrix{Scenes::Get()->GetCamera()->GetViewMatrix()};
-		auto instance{&instances[m_instances]};
+		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
+		auto instance = &instances[m_instances];
 		instance->m_modelMatrix = Matrix4{}.Translate(particle.GetPosition());
 
 		for (uint32_t row{}; row < 3; row++)

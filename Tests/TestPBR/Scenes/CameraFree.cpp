@@ -38,7 +38,7 @@ void CameraFree::Start()
 
 void CameraFree::Update()
 {
-	auto delta{Engine::Get()->GetDelta().AsSeconds()};
+	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
 	if (!Scenes::Get()->IsPaused())
 	{

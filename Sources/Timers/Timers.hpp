@@ -61,7 +61,7 @@ public:
 	Timer *Once(const Time &delay, std::function<void()> &&function, Args ...args)
 	{
 		std::unique_lock<std::mutex> lock{m_mutex};
-		auto instance{std::make_unique<Timer>(delay, 1)};
+		auto instance = std::make_unique<Timer>(delay, 1);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();
@@ -72,7 +72,7 @@ public:
 	Timer *Every(const Time &interval, std::function<void()> &&function, Args ...args)
 	{
 		std::unique_lock<std::mutex> lock{m_mutex};
-		auto instance{std::make_unique<Timer>(interval, std::nullopt)};
+		auto instance = std::make_unique<Timer>(interval, std::nullopt);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();
@@ -83,7 +83,7 @@ public:
 	Timer *Repeat(const Time &interval, const uint32_t &repeat, std::function<void()> &&function, Args ...args)
 	{
 		std::unique_lock<std::mutex> lock{m_mutex};
-		auto instance{std::make_unique<Timer>(interval, repeat)};
+		auto instance = std::make_unique<Timer>(interval, repeat);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
 		m_condition.notify_all();

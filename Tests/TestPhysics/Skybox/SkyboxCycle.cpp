@@ -21,7 +21,7 @@ void SkyboxCycle::Start()
 
 void SkyboxCycle::Update()
 {
-	auto materialSkybox{GetEntity()->GetComponent<MaterialSkybox>()};
+	auto materialSkybox = GetEntity()->GetComponent<MaterialSkybox>();
 
 	if (materialSkybox == nullptr)
 	{
@@ -41,7 +41,7 @@ void SkyboxCycle::Update()
 		materialSkybox->SetFogLimits({-1000000.0f});
 	}
 
-	auto transform{GetEntity()->GetComponent<Transform>()};
+	auto transform = GetEntity()->GetComponent<Transform>();
 
 	if (transform == nullptr)
 	{

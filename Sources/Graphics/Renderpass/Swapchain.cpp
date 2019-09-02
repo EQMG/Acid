@@ -1,4 +1,4 @@
-﻿#include "Swapchain.hpp"
+#include "Swapchain.hpp"
 
 #include "Graphics/Graphics.hpp"
 
@@ -14,14 +14,14 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	m_compositeAlpha{VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR},
 	m_activeImageIndex{std::numeric_limits<uint32_t>::max()}
 {
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
-	auto surface{Graphics::Get()->GetSurface()};
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto surface = Graphics::Get()->GetSurface();
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto surfaceFormat{surface->GetFormat()};
-	auto surfaceCapabilities{surface->GetCapabilities()};
-	auto graphicsFamily{logicalDevice->GetGraphicsFamily()};
-	auto presentFamily{logicalDevice->GetPresentFamily()};
+	auto surfaceFormat = surface->GetFormat();
+	auto surfaceCapabilities = surface->GetCapabilities();
+	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
+	auto presentFamily = logicalDevice->GetPresentFamily();
 
 	uint32_t physicalPresentModeCount;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
@@ -42,7 +42,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		}
 	}
 
-	auto desiredImageCount{surfaceCapabilities.minImageCount + 1};
+	auto desiredImageCount = surfaceCapabilities.minImageCount + 1;
 
 	if (surfaceCapabilities.maxImageCount > 0 && desiredImageCount > surfaceCapabilities.maxImageCount)
 	{
@@ -127,7 +127,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 
 Swapchain::~Swapchain()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroySwapchainKHR(*logicalDevice, m_swapchain, nullptr);
 
@@ -141,7 +141,7 @@ Swapchain::~Swapchain()
 
 VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore)
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto acquireResult{vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&m_activeImageIndex)};

@@ -23,7 +23,7 @@ void VertexWeights::LimitJointNumber(const uint32_t &max)
 	if (m_jointIds.size() > max)
 	{
 		std::vector<float> topWeights(max);
-		auto total{SaveTopWeights(topWeights)};
+		auto total = SaveTopWeights(topWeights);
 		RefillWeightList(topWeights, total);
 		RemoveExcessJointIds(max);
 	}

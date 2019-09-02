@@ -1,4 +1,4 @@
-﻿#include "Rigidbody.hpp"
+#include "Rigidbody.hpp"
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
@@ -19,14 +19,14 @@ Rigidbody::Rigidbody(const float &mass, const float &friction, const Vector3f &l
 
 Rigidbody::~Rigidbody()
 {
-	auto body{btRigidBody::upcast(m_body)};
+	auto body = btRigidBody::upcast(m_body);
 
 	if (body != nullptr && body->getMotionState() != nullptr)
 	{
 		delete body->getMotionState();
 	}
 
-	auto physics{Scenes::Get()->GetPhysics()};
+	auto physics = Scenes::Get()->GetPhysics();
 
 	if (physics != nullptr)
 	{
@@ -52,10 +52,10 @@ void Rigidbody::Start()
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
-	auto worldTransform{Collider::Convert(*GetEntity()->GetComponent<Transform>())};
+	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-	auto motionState{new btDefaultMotionState{worldTransform}};
+	auto motionState = new btDefaultMotionState{worldTransform};
 	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
 
 	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
@@ -82,9 +82,9 @@ void Rigidbody::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
-	auto delta{Engine::Get()->GetDelta()};
+	auto delta = Engine::Get()->GetDelta();
 
-	for (auto it{m_forces.begin()}; it != m_forces.end();)
+	for (auto it = m_forces.begin(); it != m_forces.end();)
 	{
 		(*it)->Update(delta);
 		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
@@ -215,11 +215,11 @@ void Rigidbody::RecalculateMass()
 		return;
 	}
 
-	auto isDynamic{m_mass != 0.0f};
+	auto isDynamic = m_mass != 0.0f;
 
 	btVector3 localInertia;
 
-	auto shape{GetEntity()->GetComponent<Collider>()};
+	auto shape = GetEntity()->GetComponent<Collider>();
 
 	if (shape != nullptr && isDynamic)
 	{

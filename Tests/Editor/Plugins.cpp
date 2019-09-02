@@ -18,7 +18,7 @@ Plugins::Plugins() :
 	m_panels{&Uis::Get()->GetCanvas()},
 	m_buttonReload{Key::R}
 {
-	auto pathStr{m_loadedPath.string()};
+	auto pathStr = m_loadedPath.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 	cr_plugin_load(*m_plugin, pathStr.c_str());
 

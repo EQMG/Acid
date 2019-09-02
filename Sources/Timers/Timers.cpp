@@ -41,7 +41,7 @@ void Timers::Run()
 			});
 
 			auto &instance{m_timers.front()};
-			auto time{Time::Now()};
+			auto time = Time::Now();
 
 			if (time >= instance->m_next)
 			{

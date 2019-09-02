@@ -20,7 +20,7 @@ Graphics::Graphics() :
 
 Graphics::~Graphics()
 {
-	auto graphicsQueue{m_logicalDevice->GetGraphicsQueue()};
+	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -45,7 +45,7 @@ void Graphics::Update()
 
 	m_renderer->Update();
 
-	auto acquireResult{m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame])};
+	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 	{
@@ -90,7 +90,7 @@ void Graphics::Update()
 	// Purges unused command pools.
 	if (m_elapsedPurge.GetElapsed() != 0)
 	{
-		for (auto it{m_commandPools.begin()}; it != m_commandPools.end();)
+		for (auto it = m_commandPools.begin(); it != m_commandPools.end();)
 		{
 			if ((*it).second.use_count() <= 1)
 			{
@@ -167,7 +167,7 @@ void Graphics::CheckVk(const VkResult &result)
 		return;
 	}
 
-	auto failure{StringifyResultVk(result)};
+	auto failure = StringifyResultVk(result);
 
 	throw std::runtime_error{"Vulkan error: " + failure};
 }
@@ -180,10 +180,10 @@ void Graphics::UpdateSurfaceCapabilities()
 void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
-	auto extent{Window::Get()->GetSize()};
+	auto extent = Window::Get()->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
@@ -199,7 +199,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
-	auto pixels{std::make_unique<uint8_t[]>(dstSubresourceLayout.size)};
+	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -278,7 +278,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 
 const Descriptor *Graphics::GetAttachment(const std::string &name) const
 {
-	auto it{m_attachments.find(name)};
+	auto it = m_attachments.find(name);
 
 	if (it == m_attachments.end())
 	{
@@ -290,7 +290,7 @@ const Descriptor *Graphics::GetAttachment(const std::string &name) const
 
 const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId)
 {
-	auto it{m_commandPools.find(threadId)};
+	auto it = m_commandPools.find(threadId);
 
 	if (it != m_commandPools.end())
 	{
@@ -310,7 +310,7 @@ void Graphics::CreatePipelineCache()
 
 void Graphics::RecreatePass(RenderStage &renderStage)
 {
-	auto graphicsQueue{m_logicalDevice->GetGraphicsQueue()};
+	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 	VkExtent2D displayExtent{ Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 
@@ -370,7 +370,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 	scissor.extent = renderArea.extent;
 	vkCmdSetScissor(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &scissor);
 
-	auto clearValues{renderStage.GetClearValues()};
+	auto clearValues = renderStage.GetClearValues();
 
 	VkRenderPassBeginInfo renderPassBeginInfo{};
 	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -386,7 +386,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 
 void Graphics::EndRenderpass(RenderStage &renderStage)
 {
-	auto presentQueue{m_logicalDevice->GetPresentQueue()};
+	auto presentQueue = m_logicalDevice->GetPresentQueue();
 
 	vkCmdEndRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
@@ -398,7 +398,7 @@ void Graphics::EndRenderpass(RenderStage &renderStage)
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
 	
-	if (auto presentResult{m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame])}; 
+	if (auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]); 
 		!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
 	{
 		if (presentResult == VK_ERROR_OUT_OF_DATE_KHR)

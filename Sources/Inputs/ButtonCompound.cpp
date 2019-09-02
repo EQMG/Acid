@@ -33,7 +33,7 @@ void ButtonCompound::ConnectButtons()
 	{
 		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 		{
-			auto isDown{IsDown()};
+			auto isDown = IsDown();
 
 			if (!m_lastDown && isDown)
 			{

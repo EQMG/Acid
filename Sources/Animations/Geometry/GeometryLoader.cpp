@@ -9,22 +9,22 @@ GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<Vertex
 	m_vertexWeights{std::move(vertexWeights)},
 	m_correction{correction}
 {
-	auto positions{GetPositions()};
-	auto uvs{GetUvs()};
-	auto normals{GetNormals()};
+	auto positions = GetPositions();
+	auto uvs = GetUvs();
+	auto normals = GetNormals();
 
-	auto indexCount{static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size())};
-	auto indexRawData{String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), ' ')};
+	auto indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
+	auto indexRawData = String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), ' ');
 
 	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
 
 	for (uint32_t i{}; i < indexRawData.size() / indexCount; i++)
 	{
-		auto positionIndex{String::From<uint32_t>(indexRawData[indexCount * i])};
-		auto normalIndex{String::From<uint32_t>(indexRawData[indexCount * i + 1])};
-		auto uvIndex{String::From<uint32_t>(indexRawData[indexCount * i + 2])};
+		auto positionIndex = String::From<uint32_t>(indexRawData[indexCount * i]);
+		auto normalIndex = String::From<uint32_t>(indexRawData[indexCount * i + 1]);
+		auto uvIndex = String::From<uint32_t>(indexRawData[indexCount * i + 2]);
 
-		auto vertexWeight{m_vertexWeights[positionIndex]};
+		auto vertexWeight = m_vertexWeights[positionIndex];
 		Vector3ui jointIds{vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]};
 		Vector3f weights{vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]};
 
@@ -42,10 +42,10 @@ GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<Vertex
 
 std::vector<Vector3f> GeometryLoader::GetPositions() const
 {
-	auto positionsSource{m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source")->substr(1)};
-	auto positionsData{m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array")};
-	auto positionsCount{String::From<uint32_t>(*positionsData->FindAttribute("count"))};
-	auto positionsRawData{String::Split(positionsData->GetValue(), ' ')};
+	auto positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source")->substr(1);
+	auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
+	auto positionsCount = String::From<uint32_t>(*positionsData->FindAttribute("count"));
+	auto positionsRawData = String::Split(positionsData->GetValue(), ' ');
 
 	std::vector<Vector3f> positions;
 
@@ -61,10 +61,10 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const
 
 std::vector<Vector2f> GeometryLoader::GetUvs() const
 {
-	auto uvsSource{m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source")->substr(1)};
-	auto uvsData{m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array")};
-	auto uvsCount{String::From<uint32_t>(*uvsData->FindAttribute("count"))};
-	auto uvsRawData{String::Split(uvsData->GetValue(), ' ')};
+	auto uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source")->substr(1);
+	auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
+	auto uvsCount = String::From<uint32_t>(*uvsData->FindAttribute("count"));
+	auto uvsRawData = String::Split(uvsData->GetValue(), ' ');
 
 	std::vector<Vector2f> uvs;
 
@@ -79,10 +79,10 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const
 
 std::vector<Vector3f> GeometryLoader::GetNormals() const
 {
-	auto normalsSource{m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source")->substr(1)};
-	auto normalsData{m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array")};
-	auto normalsCount{String::From<uint32_t>(*normalsData->FindAttribute("count"))};
-	auto normalsRawData{String::Split(normalsData->GetValue(), ' ')};
+	auto normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source")->substr(1);
+	auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
+	auto normalsCount = String::From<uint32_t>(*normalsData->FindAttribute("count"));
+	auto normalsRawData = String::Split(normalsData->GetValue(), ' ');
 
 	std::vector<Vector3f> normals;
 

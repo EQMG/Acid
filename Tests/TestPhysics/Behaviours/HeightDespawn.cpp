@@ -16,7 +16,7 @@ void HeightDespawn::Start()
 
 void HeightDespawn::Update()
 {
-	auto transform{GetEntity()->GetComponent<Transform>()};
+	auto transform = GetEntity()->GetComponent<Transform>();
 
 	if (transform != nullptr && transform->GetPosition().m_y < m_removeHeight)
 	{

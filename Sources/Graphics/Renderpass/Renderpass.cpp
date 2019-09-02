@@ -1,4 +1,4 @@
-﻿#include "Renderpass.hpp"
+#include "Renderpass.hpp"
 
 #include "Graphics/Graphics.hpp"
 #include "Graphics/RenderStage.hpp"
@@ -6,14 +6,14 @@
 namespace acid
 {
 Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	// Creates the renderpasses attachment descriptions,
 	std::vector<VkAttachmentDescription> attachmentDescriptions;
 
 	for (const auto &attachment : renderStage.GetAttachments())
 	{
-		auto attachmentSamples{attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT};
+		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 		
 		VkAttachmentDescription attachmentDescription{};
 		attachmentDescription.samples = attachmentSamples;
@@ -55,7 +55,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 
 		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
 		{
-			auto attachment{renderStage.GetAttachment(attachmentBinding)};
+			auto attachment = renderStage.GetAttachment(attachmentBinding);
 
 			if (!attachment)
 			{
@@ -136,7 +136,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 
 Renderpass::~Renderpass()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyRenderPass(*logicalDevice, m_renderpass, nullptr);
 }

@@ -1,4 +1,4 @@
-﻿#include "Noise.hpp"
+#include "Noise.hpp"
 
 #include <random>
 
@@ -217,8 +217,8 @@ void Noise::SetSeed(const uint64_t &seed)
 
 	for (int32_t j{}; j < 256; j++)
 	{
-		auto rng{static_cast<int32_t>(gen() % (256 - j))};
-		auto k{rng + j};
+		auto rng = static_cast<int32_t>(gen() % (256 - j));
+		auto k = rng + j;
 		int32_t l{m_perm[j]};
 		m_perm[j] = m_perm[j + 256] = m_perm[k];
 		m_perm[k] = static_cast<uint8_t>(l);
@@ -454,8 +454,8 @@ void Noise::GradientPerturb(float &x, float &y) const
 
 void Noise::GradientPerturbFractal(float &x, float &y) const
 {
-	auto amp{m_gradientPerturbAmp *m_fractalBounding};
-	auto freq{m_frequency};
+	auto amp = m_gradientPerturbAmp *m_fractalBounding;
+	auto freq = m_frequency;
 	int32_t i{};
 
 	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y);
@@ -679,8 +679,8 @@ void Noise::GradientPerturb(float &x, float &y, float &z) const
 
 void Noise::GradientPerturbFractal(float &x, float &y, float &z) const
 {
-	auto amp{ m_gradientPerturbAmp *m_fractalBounding};
-	auto freq{m_frequency};
+	auto amp =  m_gradientPerturbAmp *m_fractalBounding;
+	auto freq = m_frequency;
 	int32_t i{};
 
 	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y, z);
@@ -713,8 +713,8 @@ float Noise::GetWhiteNoiseInt(int32_t x, int32_t y, int32_t z, int32_t w) const
 
 void Noise::CalculateFractalBounding()
 {
-	auto amp{m_gain};
-	auto ampFractal{1.0f};
+	auto amp = m_gain;
+	auto ampFractal = 1.0f;
 
 	for (int32_t i{1}; i < m_octaves; i++)
 	{
@@ -753,7 +753,7 @@ float Noise::InterpQuintic(const float &t)
 
 float Noise::CubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t)
 {
-	auto p{(d - c) - (a - b)};
+	auto p = (d - c) - (a - b);
 	return t * t * t * p + t * t * ((a - b) - p) + t * (c - a) + b;
 }
 
@@ -789,7 +789,7 @@ uint8_t Noise::Index4d256(const uint8_t &offset, const int32_t &x, const int32_t
 
 float Noise::ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t &y)
 {
-	auto n{seed};
+	auto n = seed;
 	n ^= X_PRIME * x;
 	n ^= Y_PRIME * y;
 	return (n * n * n * 60493) / 2147483648.0f;
@@ -797,7 +797,7 @@ float Noise::ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t 
 
 float Noise::ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z)
 {
-	auto n{seed};
+	auto n = seed;
 	n ^= X_PRIME * x;
 	n ^= Y_PRIME * y;
 	n ^= Z_PRIME * z;
@@ -807,7 +807,7 @@ float Noise::ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t 
 
 float Noise::ValueCoord4d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w)
 {
-	auto n{seed};
+	auto n = seed;
 	n ^= X_PRIME * x;
 	n ^= Y_PRIME * y;
 	n ^= Z_PRIME * z;
@@ -827,28 +827,28 @@ float Noise::ValueCoord3dFast(const uint8_t &offset, const int32_t &x, const int
 
 float Noise::GradCoord2d(const uint8_t &offset, const int32_t &x, const int32_t &y, const float &xd, const float &yd) const
 {
-	auto lutPos{Index2d12(offset, x, y)};
+	auto lutPos = Index2d12(offset, x, y);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos];
 }
 
 float Noise::GradCoord3d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const float &xd, const float &yd, const float &zd) const
 {
-	auto lutPos{Index3d12(offset, x, y, z)};
+	auto lutPos = Index3d12(offset, x, y, z);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos] + zd * GRAD_Z[lutPos];
 }
 
 float Noise::GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd,
 	const float &wd) const
 {
-	auto lutPos{Index4d32(offset, x, y, z, w) << 2};
+	auto lutPos = Index4d32(offset, x, y, z, w) << 2;
 	return xd * GRAD_4D[lutPos] + yd * GRAD_4D[lutPos + 1] + zd * GRAD_4D[lutPos + 2] + wd * GRAD_4D[lutPos + 3];
 }
 
 // 2D
 float Noise::SingleValueFractalFbm(float x, float y) const
 {
-	auto sum{SingleValue(m_perm[0], x, y)};
-	auto amp{1.0f};
+	auto sum = SingleValue(m_perm[0], x, y);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -865,8 +865,8 @@ float Noise::SingleValueFractalFbm(float x, float y) const
 
 float Noise::SingleValueFractalBillow(float x, float y) const
 {
-	auto sum{std::fabs(SingleValue(m_perm[0], x, y)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleValue(m_perm[0], x, y)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -882,8 +882,8 @@ float Noise::SingleValueFractalBillow(float x, float y) const
 
 float Noise::SingleValueFractalRigidMulti(float x, float y) const
 {
-	auto sum{1.0f - std::fabs(SingleValue(m_perm[0], x, y))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleValue(m_perm[0], x, y));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -900,10 +900,10 @@ float Noise::SingleValueFractalRigidMulti(float x, float y) const
 
 float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y) const
 {
-	auto x0{FastFloor(x)};
-	auto y0{FastFloor(y)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
+	auto x0 = FastFloor(x);
+	auto y0 = FastFloor(y);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
 
 	float xs{};
 	float ys{};
@@ -924,15 +924,15 @@ float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y) 
 		break;
 	}
 
-	auto xf0{Lerp(ValueCoord2dFast(offset, x0, y0), ValueCoord2dFast(offset, x1, y0), xs)};
-	auto xf1{Lerp(ValueCoord2dFast(offset, x0, y1), ValueCoord2dFast(offset, x1, y1), xs)};
+	auto xf0 = Lerp(ValueCoord2dFast(offset, x0, y0), ValueCoord2dFast(offset, x1, y0), xs);
+	auto xf1 = Lerp(ValueCoord2dFast(offset, x0, y1), ValueCoord2dFast(offset, x1, y1), xs);
 	return Lerp(xf0, xf1, ys);
 }
 
 float Noise::SinglePerlinFractalFbm(float x, float y) const
 {
-	auto sum{SinglePerlin(m_perm[0], x, y)};
-	auto amp{1.0f};
+	auto sum = SinglePerlin(m_perm[0], x, y);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -949,8 +949,8 @@ float Noise::SinglePerlinFractalFbm(float x, float y) const
 
 float Noise::SinglePerlinFractalBillow(float x, float y) const
 {
-	auto sum{std::fabs(SinglePerlin(m_perm[0], x, y)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SinglePerlin(m_perm[0], x, y)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -967,8 +967,8 @@ float Noise::SinglePerlinFractalBillow(float x, float y) const
 
 float Noise::SinglePerlinFractalRigidMulti(float x, float y) const
 {
-	auto sum{1.0f - std::fabs(SinglePerlin(m_perm[0], x, y))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SinglePerlin(m_perm[0], x, y));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -985,10 +985,10 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y) const
 
 float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y) const
 {
-	auto x0{FastFloor(x)};
-	auto y0{FastFloor(y)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
+	auto x0 = FastFloor(x);
+	auto y0 = FastFloor(y);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
 
 	float xs{};
 	float ys{};
@@ -1009,21 +1009,21 @@ float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y)
 		break;
 	}
 
-	auto xd0{x - static_cast<float>(x0)};
-	auto yd0{y - static_cast<float>(y0)};
-	auto xd1{xd0 - 1.0f};
-	auto yd1{yd0 - 1.0f};
+	auto xd0 = x - static_cast<float>(x0);
+	auto yd0 = y - static_cast<float>(y0);
+	auto xd1 = xd0 - 1.0f;
+	auto yd1 = yd0 - 1.0f;
 
-	auto xf0{Lerp(GradCoord2d(offset, x0, y0, xd0, yd0), GradCoord2d(offset, x1, y0, xd1, yd0), xs)};
-	auto xf1{Lerp(GradCoord2d(offset, x0, y1, xd0, yd1), GradCoord2d(offset, x1, y1, xd1, yd1), xs)};
+	auto xf0 = Lerp(GradCoord2d(offset, x0, y0, xd0, yd0), GradCoord2d(offset, x1, y0, xd1, yd0), xs);
+	auto xf1 = Lerp(GradCoord2d(offset, x0, y1, xd0, yd1), GradCoord2d(offset, x1, y1, xd1, yd1), xs);
 
 	return Lerp(xf0, xf1, ys);
 }
 
 float Noise::SingleSimplexFractalFbm(float x, float y) const
 {
-	auto sum{SingleSimplex(m_perm[0], x, y)};
-	auto amp{1.0f};
+	auto sum = SingleSimplex(m_perm[0], x, y);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1040,8 +1040,8 @@ float Noise::SingleSimplexFractalFbm(float x, float y) const
 
 float Noise::SingleSimplexFractalBillow(float x, float y) const
 {
-	auto sum{std::fabs(SingleSimplex(m_perm[0], x, y)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleSimplex(m_perm[0], x, y)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1058,8 +1058,8 @@ float Noise::SingleSimplexFractalBillow(float x, float y) const
 
 float Noise::SingleSimplexFractalRigidMulti(float x, float y) const
 {
-	auto sum{1.0f - std::fabs(SingleSimplex(m_perm[0], x, y))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleSimplex(m_perm[0], x, y));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1076,8 +1076,8 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y) const
 
 float Noise::singleSimplexFractalBlend(float x, float y) const
 {
-	auto sum{SingleSimplex(m_perm[0], x, y)};
-	auto amp{1.0f};
+	auto sum = SingleSimplex(m_perm[0], x, y);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1094,16 +1094,16 @@ float Noise::singleSimplexFractalBlend(float x, float y) const
 
 float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y) const
 {
-	auto t{(x + y) * F2};
-	auto i{FastFloor(x + t)};
-	auto j{FastFloor(y + t)};
+	auto t = (x + y) * F2;
+	auto i = FastFloor(x + t);
+	auto j = FastFloor(y + t);
 
 	t = (i + j) * G2;
-	auto X0{i - t};
-	auto Y0{j - t};
+	auto X0 = i - t;
+	auto Y0 = j - t;
 
-	auto x0{x - X0};
-	auto y0{y - Y0};
+	auto x0 = x - X0;
+	auto y0 = y - Y0;
 
 	int32_t i1, j1;
 
@@ -1118,10 +1118,10 @@ float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y
 		j1 = 1;
 	}
 
-	auto x1{x0 - static_cast<float>(i1) + G2};
-	auto y1{y0 - static_cast<float>(j1) + G2};
-	auto x2{x0 - 1.0f + 2.0f * G2};
-	auto y2{y0 - 1.0f + 2.0f * G2};
+	auto x1 = x0 - static_cast<float>(i1) + G2;
+	auto y1 = y0 - static_cast<float>(j1) + G2;
+	auto x2 = x0 - 1.0f + 2.0f * G2;
+	auto y2 = y0 - 1.0f + 2.0f * G2;
 
 	float n0, n1, n2;
 
@@ -1166,8 +1166,8 @@ float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y
 
 float Noise::SingleCubicFractalFbm(float x, float y) const
 {
-	auto sum{SingleCubic(m_perm[0], x, y)};
-	auto amp{1.0f};
+	auto sum = SingleCubic(m_perm[0], x, y);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1184,8 +1184,8 @@ float Noise::SingleCubicFractalFbm(float x, float y) const
 
 float Noise::SingleCubicFractalBillow(float x, float y) const
 {
-	auto sum{std::fabs(SingleCubic(m_perm[0], x, y)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleCubic(m_perm[0], x, y)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1202,8 +1202,8 @@ float Noise::SingleCubicFractalBillow(float x, float y) const
 
 float Noise::SingleCubicFractalRigidMulti(float x, float y) const
 {
-	auto sum{1.0f - std::fabs(SingleCubic(m_perm[0], x, y))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleCubic(m_perm[0], x, y));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1220,18 +1220,18 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y) const
 
 float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y) const
 {
-	auto x1{FastFloor(x)};
-	auto y1{FastFloor(y)};
+	auto x1 = FastFloor(x);
+	auto y1 = FastFloor(y);
 
-	auto x0{x1 - 1};
-	auto y0{y1 - 1};
-	auto x2{x1 + 1};
-	auto y2{y1 + 1};
-	auto x3{x1 + 2};
-	auto y3{y1 + 2};
+	auto x0 = x1 - 1;
+	auto y0 = y1 - 1;
+	auto x2 = x1 + 1;
+	auto y2 = y1 + 1;
+	auto x3 = x1 + 2;
+	auto y3 = y1 + 2;
 
-	auto xs{x - static_cast<float>(x1)};
-	auto ys{y - static_cast<float>(y1)};
+	auto xs = x - static_cast<float>(x1);
+	auto ys = y - static_cast<float>(y1);
 
 	return CubicLerp(CubicLerp(ValueCoord2dFast(offset, x0, y0), ValueCoord2dFast(offset, x1, y0), ValueCoord2dFast(offset, x2, y0), ValueCoord2dFast(offset, x3, y0), xs),
 		CubicLerp(ValueCoord2dFast(offset, x0, y1), ValueCoord2dFast(offset, x1, y1), ValueCoord2dFast(offset, x2, y1), ValueCoord2dFast(offset, x3, y1), xs),
@@ -1242,10 +1242,10 @@ float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y) 
 
 float Noise::SingleCellular(const float &x, const float &y) const
 {
-	auto xr{FastRound(x)};
-	auto yr{FastRound(y)};
+	auto xr = FastRound(x);
+	auto yr = FastRound(y);
 
-	auto distance{999999.0f};
+	auto distance = 999999.0f;
 	int32_t xc{};
 	int32_t yc{};
 
@@ -1257,12 +1257,12 @@ float Noise::SingleCellular(const float &x, const float &y) const
 		{
 			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
 			{
-				auto lutPos{Index2d256(0, xi, yi)};
+				auto lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{vecX * vecX + vecY * vecY};
+				auto newDistance = vecX * vecX + vecY * vecY;
 
 				if (newDistance < distance)
 				{
@@ -1278,12 +1278,12 @@ float Noise::SingleCellular(const float &x, const float &y) const
 		{
 			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
 			{
-				auto lutPos{Index2d256(0, xi, yi)};
+				auto lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{(std::fabs(vecX) + std::fabs(vecY))};
+				auto newDistance = (std::fabs(vecX) + std::fabs(vecY));
 
 				if (newDistance < distance)
 				{
@@ -1301,10 +1301,10 @@ float Noise::SingleCellular(const float &x, const float &y) const
 			{
 				uint8_t lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{(std::fabs(vecX) + std::fabs(vecY)) + (vecX * vecX + vecY * vecY)};
+				auto newDistance = (std::fabs(vecX) + std::fabs(vecY)) + (vecX * vecX + vecY * vecY);
 
 				if (newDistance < distance)
 				{
@@ -1337,8 +1337,8 @@ float Noise::SingleCellular(const float &x, const float &y) const
 
 float Noise::SingleCellular2Edge(const float &x, const float &y) const
 {
-	auto xr{FastRound(x)};
-	auto yr{FastRound(y)};
+	auto xr = FastRound(x);
+	auto yr = FastRound(y);
 
 	float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
 
@@ -1350,12 +1350,12 @@ float Noise::SingleCellular2Edge(const float &x, const float &y) const
 		{
 			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
 			{
-				auto lutPos{Index2d256(0, xi, yi)};
+				auto lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{vecX * vecX + vecY * vecY};
+				auto newDistance = vecX * vecX + vecY * vecY;
 
 				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 				{
@@ -1371,12 +1371,12 @@ float Noise::SingleCellular2Edge(const float &x, const float &y) const
 		{
 			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
 			{
-				auto lutPos{Index2d256(0, xi, yi)};
+				auto lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{std::fabs(vecX) + std::fabs(vecY)};
+				auto newDistance = std::fabs(vecX) + std::fabs(vecY);
 
 				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 				{
@@ -1392,12 +1392,12 @@ float Noise::SingleCellular2Edge(const float &x, const float &y) const
 		{
 			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
 			{
-				auto lutPos{Index2d256(0, xi, yi)};
+				auto lutPos = Index2d256(0, xi, yi);
 
-				auto vecX{xi - x + CELL_2D_X[lutPos] * m_cellularJitter};
-				auto vecY{yi - y + CELL_2D_Y[lutPos] * m_cellularJitter};
+				auto vecX = xi - x + CELL_2D_X[lutPos] * m_cellularJitter;
+				auto vecY = yi - y + CELL_2D_Y[lutPos] * m_cellularJitter;
 
-				auto newDistance{(std::fabs(vecX) + std::fabs(vecY)) + (vecX * vecX + vecY * vecY)};
+				auto newDistance = (std::fabs(vecX) + std::fabs(vecY)) + (vecX * vecX + vecY * vecY);
 
 				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 				{
@@ -1429,13 +1429,13 @@ float Noise::SingleCellular2Edge(const float &x, const float &y) const
 
 void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y) const
 {
-	auto xf{x * frequency};
-	auto yf{y * frequency};
+	auto xf = x * frequency;
+	auto yf = y * frequency;
 
-	auto x0{FastFloor(xf)};
-	auto y0{FastFloor(yf)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
+	auto x0 = FastFloor(xf);
+	auto y0 = FastFloor(yf);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
 
 	float xs, ys;
 
@@ -1459,14 +1459,14 @@ void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, c
 	int32_t lutPos0{Index2d256(offset, x0, y0)};
 	int32_t lutPos1{Index2d256(offset, x1, y0)};
 
-	auto lx0x{Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs)};
-	auto ly0x{Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs)};
+	auto lx0x = Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
+	auto ly0x = Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
 
 	lutPos0 = Index2d256(offset, x0, y1);
 	lutPos1 = Index2d256(offset, x1, y1);
 
-	auto lx1x{Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs)};
-	auto ly1x{Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs)};
+	auto lx1x = Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
+	auto ly1x = Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
 
 	x += Lerp(lx0x, lx1x, ys) * warpAmp;
 	y += Lerp(ly0x, ly1x, ys) * warpAmp;
@@ -1475,8 +1475,8 @@ void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, c
 // 3D
 float Noise::SingleValueFractalFbm(float x, float y, float z) const
 {
-	auto sum{SingleValue(m_perm[0], x, y, z)};
-	auto amp{1.0f};
+	auto sum = SingleValue(m_perm[0], x, y, z);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1494,8 +1494,8 @@ float Noise::SingleValueFractalFbm(float x, float y, float z) const
 
 float Noise::SingleValueFractalBillow(float x, float y, float z) const
 {
-	auto sum{std::fabs(SingleValue(m_perm[0], x, y, z)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleValue(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1513,8 +1513,8 @@ float Noise::SingleValueFractalBillow(float x, float y, float z) const
 
 float Noise::SingleValueFractalRigidMulti(float x, float y, float z) const
 {
-	auto sum{1.0f - std::fabs(SingleValue(m_perm[0], x, y, z))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleValue(m_perm[0], x, y, z));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1532,12 +1532,12 @@ float Noise::SingleValueFractalRigidMulti(float x, float y, float z) const
 
 float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y, const float &z) const
 {
-	auto x0{FastFloor(x)};
-	auto y0{FastFloor(y)};
-	auto z0{FastFloor(z)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
-	auto z1{z0 + 1};
+	auto x0 = FastFloor(x);
+	auto y0 = FastFloor(y);
+	auto z0 = FastFloor(z);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
+	auto z1 = z0 + 1;
 
 	float xs{};
 	float ys{};
@@ -1562,21 +1562,21 @@ float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y, 
 		break;
 	}
 
-	auto xf00{Lerp(ValueCoord3dFast(offset, x0, y0, z0), ValueCoord3dFast(offset, x1, y0, z0), xs)};
-	auto xf10{Lerp(ValueCoord3dFast(offset, x0, y1, z0), ValueCoord3dFast(offset, x1, y1, z0), xs)};
-	auto xf01{Lerp(ValueCoord3dFast(offset, x0, y0, z1), ValueCoord3dFast(offset, x1, y0, z1), xs)};
-	auto xf11{Lerp(ValueCoord3dFast(offset, x0, y1, z1), ValueCoord3dFast(offset, x1, y1, z1), xs)};
+	auto xf00 = Lerp(ValueCoord3dFast(offset, x0, y0, z0), ValueCoord3dFast(offset, x1, y0, z0), xs);
+	auto xf10 = Lerp(ValueCoord3dFast(offset, x0, y1, z0), ValueCoord3dFast(offset, x1, y1, z0), xs);
+	auto xf01 = Lerp(ValueCoord3dFast(offset, x0, y0, z1), ValueCoord3dFast(offset, x1, y0, z1), xs);
+	auto xf11 = Lerp(ValueCoord3dFast(offset, x0, y1, z1), ValueCoord3dFast(offset, x1, y1, z1), xs);
 
-	auto yf0{Lerp(xf00, xf10, ys)};
-	auto yf1{Lerp(xf01, xf11, ys)};
+	auto yf0 = Lerp(xf00, xf10, ys);
+	auto yf1 = Lerp(xf01, xf11, ys);
 
 	return Lerp(yf0, yf1, zs);
 }
 
 float Noise::SinglePerlinFractalFbm(float x, float y, float z) const
 {
-	auto sum{SinglePerlin(m_perm[0], x, y, z)};
-	auto amp{1.0f};
+	auto sum = SinglePerlin(m_perm[0], x, y, z);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1594,8 +1594,8 @@ float Noise::SinglePerlinFractalFbm(float x, float y, float z) const
 
 float Noise::SinglePerlinFractalBillow(float x, float y, float z) const
 {
-	auto sum{std::fabs(SinglePerlin(m_perm[0], x, y, z)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SinglePerlin(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1613,8 +1613,8 @@ float Noise::SinglePerlinFractalBillow(float x, float y, float z) const
 
 float Noise::SinglePerlinFractalRigidMulti(float x, float y, float z) const
 {
-	auto sum{1.0f - std::fabs(SinglePerlin(m_perm[0], x, y, z))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SinglePerlin(m_perm[0], x, y, z));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1632,12 +1632,12 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y, float z) const
 
 float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y, const float &z) const
 {
-	auto x0{FastFloor(x)};
-	auto y0{FastFloor(y)};
-	auto z0{FastFloor(z)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
-	auto z1{z0 + 1};
+	auto x0 = FastFloor(x);
+	auto y0 = FastFloor(y);
+	auto z0 = FastFloor(z);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
+	auto z1 = z0 + 1;
 
 	float xs{};
 	float ys{};
@@ -1662,28 +1662,28 @@ float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y,
 		break;
 	}
 
-	auto xd0{x - static_cast<float>(x0)};
-	auto yd0{y - static_cast<float>(y0)};
-	auto zd0{z - static_cast<float>(z0)};
-	auto xd1{xd0 - 1.0f};
-	auto yd1{yd0 - 1.0f};
-	auto zd1{zd0 - 1.0f};
+	auto xd0 = x - static_cast<float>(x0);
+	auto yd0 = y - static_cast<float>(y0);
+	auto zd0 = z - static_cast<float>(z0);
+	auto xd1 = xd0 - 1.0f;
+	auto yd1 = yd0 - 1.0f;
+	auto zd1 = zd0 - 1.0f;
 
-	auto xf00{Lerp(GradCoord3d(offset, x0, y0, z0, xd0, yd0, zd0), GradCoord3d(offset, x1, y0, z0, xd1, yd0, zd0), xs)};
-	auto xf10{Lerp(GradCoord3d(offset, x0, y1, z0, xd0, yd1, zd0), GradCoord3d(offset, x1, y1, z0, xd1, yd1, zd0), xs)};
-	auto xf01{Lerp(GradCoord3d(offset, x0, y0, z1, xd0, yd0, zd1), GradCoord3d(offset, x1, y0, z1, xd1, yd0, zd1), xs)};
-	auto xf11{Lerp(GradCoord3d(offset, x0, y1, z1, xd0, yd1, zd1), GradCoord3d(offset, x1, y1, z1, xd1, yd1, zd1), xs)};
+	auto xf00 = Lerp(GradCoord3d(offset, x0, y0, z0, xd0, yd0, zd0), GradCoord3d(offset, x1, y0, z0, xd1, yd0, zd0), xs);
+	auto xf10 = Lerp(GradCoord3d(offset, x0, y1, z0, xd0, yd1, zd0), GradCoord3d(offset, x1, y1, z0, xd1, yd1, zd0), xs);
+	auto xf01 = Lerp(GradCoord3d(offset, x0, y0, z1, xd0, yd0, zd1), GradCoord3d(offset, x1, y0, z1, xd1, yd0, zd1), xs);
+	auto xf11 = Lerp(GradCoord3d(offset, x0, y1, z1, xd0, yd1, zd1), GradCoord3d(offset, x1, y1, z1, xd1, yd1, zd1), xs);
 
-	auto yf0{Lerp(xf00, xf10, ys)};
-	auto yf1{Lerp(xf01, xf11, ys)};
+	auto yf0 = Lerp(xf00, xf10, ys);
+	auto yf1 = Lerp(xf01, xf11, ys);
 
 	return Lerp(yf0, yf1, zs);
 }
 
 float Noise::SingleSimplexFractalFbm(float x, float y, float z) const
 {
-	auto sum{SingleSimplex(m_perm[0], x, y, z)};
-	auto amp{1.0f};
+	auto sum = SingleSimplex(m_perm[0], x, y, z);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1701,8 +1701,8 @@ float Noise::SingleSimplexFractalFbm(float x, float y, float z) const
 
 float Noise::SingleSimplexFractalBillow(float x, float y, float z) const
 {
-	auto sum{std::fabs(SingleSimplex(m_perm[0], x, y, z)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleSimplex(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1720,8 +1720,8 @@ float Noise::SingleSimplexFractalBillow(float x, float y, float z) const
 
 float Noise::SingleSimplexFractalRigidMulti(float x, float y, float z) const
 {
-	auto sum{1.0f - std::fabs(SingleSimplex(m_perm[0], x, y, z))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleSimplex(m_perm[0], x, y, z));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1739,19 +1739,19 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y, float z) const
 
 float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z) const
 {
-	auto t{(x + y + z) * F3};
-	auto i{FastFloor(x + t)};
-	auto j{FastFloor(y + t)};
-	auto k{FastFloor(z + t)};
+	auto t = (x + y + z) * F3;
+	auto i = FastFloor(x + t);
+	auto j = FastFloor(y + t);
+	auto k = FastFloor(z + t);
 
 	t = (i + j + k) * G3;
-	auto X0{i - t};
-	auto Y0{j - t};
-	auto Z0{k - t};
+	auto X0 = i - t;
+	auto Y0 = j - t;
+	auto Z0 = k - t;
 
-	auto x0{x - X0};
-	auto y0{y - Y0};
-	auto z0{z - Z0};
+	auto x0 = x - X0;
+	auto y0 = y - Y0;
+	auto z0 = z - Z0;
 
 	int32_t i1, j1, k1;
 	int32_t i2, j2, k2;
@@ -1817,15 +1817,15 @@ float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y
 		}
 	}
 
-	auto x1{x0 - i1 + G3};
-	auto y1{y0 - j1 + G3};
-	auto z1{z0 - k1 + G3};
-	auto x2{x0 - i2 + 2.0f * G3};
-	auto y2{y0 - j2 + 2.0f * G3};
-	auto z2{z0 - k2 + 2.0f * G3};
-	auto x3{x0 - 1.0f + 3.0f * G3};
-	auto y3{y0 - 1.0f + 3.0f * G3};
-	auto z3{z0 - 1.0f + 3.0f * G3};
+	auto x1 = x0 - i1 + G3;
+	auto y1 = y0 - j1 + G3;
+	auto z1 = z0 - k1 + G3;
+	auto x2 = x0 - i2 + 2.0f * G3;
+	auto y2 = y0 - j2 + 2.0f * G3;
+	auto z2 = z0 - k2 + 2.0f * G3;
+	auto x3 = x0 - 1.0f + 3.0f * G3;
+	auto y3 = y0 - 1.0f + 3.0f * G3;
+	auto z3 = z0 - 1.0f + 3.0f * G3;
 
 	float n0, n1, n2, n3;
 
@@ -1882,8 +1882,8 @@ float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y
 
 float Noise::SingleCubicFractalFbm(float x, float y, float z) const
 {
-	auto sum{SingleCubic(m_perm[0], x, y, z)};
-	auto amp{1.0f};
+	auto sum = SingleCubic(m_perm[0], x, y, z);
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1901,8 +1901,8 @@ float Noise::SingleCubicFractalFbm(float x, float y, float z) const
 
 float Noise::SingleCubicFractalBillow(float x, float y, float z) const
 {
-	auto sum{std::fabs(SingleCubic(m_perm[0], x, y, z)) * 2.0f - 1.0f};
-	auto amp{1.0f};
+	auto sum = std::fabs(SingleCubic(m_perm[0], x, y, z)) * 2.0f - 1.0f;
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1920,8 +1920,8 @@ float Noise::SingleCubicFractalBillow(float x, float y, float z) const
 
 float Noise::SingleCubicFractalRigidMulti(float x, float y, float z) const
 {
-	auto sum{1.0f - std::fabs(SingleCubic(m_perm[0], x, y, z))};
-	auto amp{1.0f};
+	auto sum = 1.0f - std::fabs(SingleCubic(m_perm[0], x, y, z));
+	auto amp = 1.0f;
 	int32_t i{};
 
 	while (++i < m_octaves)
@@ -1939,23 +1939,23 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y, float z) const
 
 float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y, const float &z) const
 {
-	auto x1{FastFloor(x)};
-	auto y1{FastFloor(y)};
-	auto z1{FastFloor(z)};
+	auto x1 = FastFloor(x);
+	auto y1 = FastFloor(y);
+	auto z1 = FastFloor(z);
 
-	auto x0{x1 - 1};
-	auto y0{y1 - 1};
-	auto z0{z1 - 1};
-	auto x2{x1 + 1};
-	auto y2{y1 + 1};
-	auto z2{z1 + 1};
-	auto x3{x1 + 2};
-	auto y3{y1 + 2};
-	auto z3{z1 + 2};
+	auto x0 = x1 - 1;
+	auto y0 = y1 - 1;
+	auto z0 = z1 - 1;
+	auto x2 = x1 + 1;
+	auto y2 = y1 + 1;
+	auto z2 = z1 + 1;
+	auto x3 = x1 + 2;
+	auto y3 = y1 + 2;
+	auto z3 = z1 + 2;
 
-	auto xs{x - static_cast<float>(x1)};
-	auto ys{y - static_cast<float>(y1)};
-	auto zs{z - static_cast<float>(z1)};
+	auto xs = x - static_cast<float>(x1);
+	auto ys = y - static_cast<float>(y1);
+	auto zs = z - static_cast<float>(z1);
 
 	return CubicLerp(CubicLerp(
 		CubicLerp(ValueCoord3dFast(offset, x0, y0, z0), ValueCoord3dFast(offset, x1, y0, z0), ValueCoord3dFast(offset, x2, y0, z0), ValueCoord3dFast(offset, x3, y0, z0), xs),
@@ -1982,11 +1982,11 @@ float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y, 
 
 float Noise::SingleCellular(const float &x, const float &y, const float &z) const
 {
-	auto xr{FastRound(x)};
-	auto yr{FastRound(y)};
-	auto zr{FastRound(z)};
+	auto xr = FastRound(x);
+	auto yr = FastRound(y);
+	auto zr = FastRound(z);
 
-	auto distance{999999.0f};
+	auto distance = 999999.0f;
 	int32_t xc{};
 	int32_t yc{};
 	int32_t zc{};
@@ -2000,13 +2000,13 @@ float Noise::SingleCellular(const float &x, const float &y, const float &z) cons
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{vecX * vecX + vecY * vecY + vecZ * vecZ};
+					auto newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
 
 					if (newDistance < distance)
 					{
@@ -2026,13 +2026,13 @@ float Noise::SingleCellular(const float &x, const float &y, const float &z) cons
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)};
+					auto newDistance = std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ);
 
 					if (newDistance < distance)
 					{
@@ -2052,13 +2052,13 @@ float Noise::SingleCellular(const float &x, const float &y, const float &z) cons
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{(std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ)};
+					auto newDistance = (std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
 
 					if (newDistance < distance)
 					{
@@ -2095,9 +2095,9 @@ float Noise::SingleCellular(const float &x, const float &y, const float &z) cons
 
 float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z) const
 {
-	auto xr{FastRound(x)};
-	auto yr{FastRound(y)};
-	auto zr{FastRound(z)};
+	auto xr = FastRound(x);
+	auto yr = FastRound(y);
+	auto zr = FastRound(z);
 
 	float distance[FN_CELLULAR_INDEX_MAX + 1] = {999999.0f, 999999.0f, 999999.0f, 999999.0f};
 
@@ -2110,13 +2110,13 @@ float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z)
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{vecX * vecX + vecY * vecY + vecZ * vecZ};
+					auto newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
 
 					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 					{
@@ -2135,13 +2135,13 @@ float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z)
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)};
+					auto newDistance = std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ);
 
 					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 					{
@@ -2160,13 +2160,13 @@ float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z)
 			{
 				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
 				{
-					auto lutPos{Index3d256(0, xi, yi, zi)};
+					auto lutPos = Index3d256(0, xi, yi, zi);
 
-					auto vecX{xi - x + CELL_3D_X[lutPos] * m_cellularJitter};
-					auto vecY{yi - y + CELL_3D_Y[lutPos] * m_cellularJitter};
-					auto vecZ{zi - z + CELL_3D_Z[lutPos] * m_cellularJitter};
+					auto vecX = xi - x + CELL_3D_X[lutPos] * m_cellularJitter;
+					auto vecY = yi - y + CELL_3D_Y[lutPos] * m_cellularJitter;
+					auto vecZ = zi - z + CELL_3D_Z[lutPos] * m_cellularJitter;
 
-					auto newDistance{(std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ)};
+					auto newDistance = (std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
 
 					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
 					{
@@ -2201,16 +2201,16 @@ float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z)
 
 void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const
 {
-	auto xf{x * frequency};
-	auto yf{y * frequency};
-	auto zf{z * frequency};
+	auto xf = x * frequency;
+	auto yf = y * frequency;
+	auto zf = z * frequency;
 
-	auto x0{FastFloor(xf)};
-	auto y0{FastFloor(yf)};
-	auto z0{FastFloor(zf)};
-	auto x1{x0 + 1};
-	auto y1{y0 + 1};
-	auto z1{z0 + 1};
+	auto x0 = FastFloor(xf);
+	auto y0 = FastFloor(yf);
+	auto z0 = FastFloor(zf);
+	auto x1 = x0 + 1;
+	auto y1 = y0 + 1;
+	auto z1 = z0 + 1;
 
 	float xs, ys, zs;
 
@@ -2237,20 +2237,20 @@ void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, c
 	int32_t lutPos0{Index3d256(offset, x0, y0, z0)};
 	int32_t lutPos1{Index3d256(offset, x1, y0, z0)};
 
-	auto lx0x{Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs)};
-	auto ly0x{Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs)};
-	auto lz0x{Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs)};
+	auto lx0x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	auto ly0x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	auto lz0x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
 
 	lutPos0 = Index3d256(offset, x0, y1, z0);
 	lutPos1 = Index3d256(offset, x1, y1, z0);
 
-	auto lx1x{Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs)};
-	auto ly1x{Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs)};
-	auto lz1x{Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs)};
+	auto lx1x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
+	auto ly1x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
+	auto lz1x = Lerp(CELL_3D_Z[lutPos0], CELL_3D_Z[lutPos1], xs);
 
-	auto lx0y{Lerp(lx0x, lx1x, ys)};
-	auto ly0y{Lerp(ly0x, ly1x, ys)};
-	auto lz0y{Lerp(lz0x, lz1x, ys)};
+	auto lx0y = Lerp(lx0x, lx1x, ys);
+	auto ly0y = Lerp(ly0x, ly1x, ys);
+	auto lz0y = Lerp(lz0x, lz1x, ys);
 
 	lutPos0 = Index3d256(offset, x0, y0, z1);
 	lutPos1 = Index3d256(offset, x1, y0, z1);
@@ -2275,20 +2275,20 @@ void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, c
 float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const
 {
 	float n0, n1, n2, n3, n4;
-	auto t{(x + y + z + w) * F4};
-	auto i{FastFloor(x + t)};
-	auto j{FastFloor(y + t)};
-	auto k{FastFloor(z + t)};
-	auto l{FastFloor(w + t)};
+	auto t = (x + y + z + w) * F4;
+	auto i = FastFloor(x + t);
+	auto j = FastFloor(y + t);
+	auto k = FastFloor(z + t);
+	auto l = FastFloor(w + t);
 	t = (i + j + k + l) * G4;
-	auto X0{i - t};
-	auto Y0{j - t};
-	auto Z0{k - t};
-	auto W0{l - t};
-	auto x0{x - X0};
-	auto y0{y - Y0};
-	auto z0{z - Z0};
-	auto w0{w - W0};
+	auto X0 = i - t;
+	auto Y0 = j - t;
+	auto Z0 = k - t;
+	auto W0 = l - t;
+	auto x0 = x - X0;
+	auto y0 = y - Y0;
+	auto z0 = z - Z0;
+	auto w0 = w - W0;
 
 	int32_t rankx{};
 	int32_t ranky{};
@@ -2349,37 +2349,37 @@ float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y
 		rankw++;
 	}
 
-	auto i1{rankx >= 3 ? 1 : 0};
-	auto j1{ranky >= 3 ? 1 : 0};
-	auto k1{rankz >= 3 ? 1 : 0};
-	auto l1{rankw >= 3 ? 1 : 0};
+	auto i1 = rankx >= 3 ? 1 : 0;
+	auto j1 = ranky >= 3 ? 1 : 0;
+	auto k1 = rankz >= 3 ? 1 : 0;
+	auto l1 = rankw >= 3 ? 1 : 0;
 
-	auto i2{rankx >= 2 ? 1 : 0};
-	auto j2{ranky >= 2 ? 1 : 0};
-	auto k2{rankz >= 2 ? 1 : 0};
-	auto l2{rankw >= 2 ? 1 : 0};
+	auto i2 = rankx >= 2 ? 1 : 0;
+	auto j2 = ranky >= 2 ? 1 : 0;
+	auto k2 = rankz >= 2 ? 1 : 0;
+	auto l2 = rankw >= 2 ? 1 : 0;
 
-	auto i3{rankx >= 1 ? 1 : 0};
-	auto j3{ranky >= 1 ? 1 : 0};
-	auto k3{rankz >= 1 ? 1 : 0};
-	auto l3{rankw >= 1 ? 1 : 0};
+	auto i3 = rankx >= 1 ? 1 : 0;
+	auto j3 = ranky >= 1 ? 1 : 0;
+	auto k3 = rankz >= 1 ? 1 : 0;
+	auto l3 = rankw >= 1 ? 1 : 0;
 
-	auto x1{x0 - i1 + G4};
-	auto y1{y0 - j1 + G4};
-	auto z1{z0 - k1 + G4};
-	auto w1{w0 - l1 + G4};
-	auto x2{x0 - i2 + 2.0f * G4};
-	auto y2{y0 - j2 + 2.0f * G4};
-	auto z2{z0 - k2 + 2.0f * G4};
-	auto w2{w0 - l2 + 2.0f * G4};
-	auto x3{x0 - i3 + 3.0f * G4};
-	auto y3{y0 - j3 + 3.0f * G4};
-	auto z3{z0 - k3 + 3.0f * G4};
-	auto w3{w0 - l3 + 3.0f * G4};
-	auto x4{x0 - 1.0f + 4.0f * G4};
-	auto y4{y0 - 1.0f + 4.0f * G4};
-	auto z4{z0 - 1.0f + 4.0f * G4};
-	auto w4{w0 - 1.0f + 4.0f * G4};
+	auto x1 = x0 - i1 + G4;
+	auto y1 = y0 - j1 + G4;
+	auto z1 = z0 - k1 + G4;
+	auto w1 = w0 - l1 + G4;
+	auto x2 = x0 - i2 + 2.0f * G4;
+	auto y2 = y0 - j2 + 2.0f * G4;
+	auto z2 = z0 - k2 + 2.0f * G4;
+	auto w2 = w0 - l2 + 2.0f * G4;
+	auto x3 = x0 - i3 + 3.0f * G4;
+	auto y3 = y0 - j3 + 3.0f * G4;
+	auto z3 = z0 - k3 + 3.0f * G4;
+	auto w3 = w0 - l3 + 3.0f * G4;
+	auto x4 = x0 - 1.0f + 4.0f * G4;
+	auto y4 = y0 - 1.0f + 4.0f * G4;
+	auto z4 = z0 - 1.0f + 4.0f * G4;
+	auto w4 = w0 - 1.0f + 4.0f * G4;
 
 	t = 0.6f - x0 * x0 - y0 * y0 - z0 * z0 - w0 * w0;
 

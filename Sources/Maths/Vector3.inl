@@ -90,7 +90,7 @@ template<typename T>
 template<typename K>
 auto Vector3<T>::Angle(const Vector3<K> &other) const
 {
-	auto dls{Dot(other) / (Length() * other.Length())};
+	auto dls = Dot(other) / (Length() * other.Length());
 
 	if (dls < -1)
 	{
@@ -122,8 +122,8 @@ template<typename T>
 template<typename K, typename J>
 constexpr auto Vector3<T>::Lerp(const Vector3<K> &other, const J &progression) const
 {
-	auto ta{*this * (1 - progression)};
-	auto tb{other * progression};
+	auto ta = *this * (1 - progression);
+	auto tb = other * progression;
 	return ta + tb;
 } 
 
@@ -131,7 +131,7 @@ constexpr auto Vector3<T>::Lerp(const Vector3<K> &other, const J &progression) c
 template<typename K>
 auto Vector3<T>::Rotate(const Vector3<K> &angle) const
 {
-	auto matrix{Matrix4::TransformationMatrix(Zero, angle, One)};
+	auto matrix = Matrix4::TransformationMatrix(Zero, angle, One);
 	return matrix.Transform(Vector4f{*this});
 }*/
 
@@ -145,7 +145,7 @@ constexpr auto Vector3<T>::Scale(const K &scalar) const
 template<typename T>
 auto Vector3<T>::Normalize() const
 {
-	auto l{Length()};
+	auto l = Length();
 
 	if (l == 0)
 	{
@@ -209,9 +209,9 @@ template<typename T>
 template<typename K>
 constexpr auto Vector3<T>::DistanceSquared(const Vector3<K> &other) const
 {
-	auto dx{m_x - other.m_x};
-	auto dy{m_y - other.m_y};
-	auto dz{m_z - other.m_z};
+	auto dx = m_x - other.m_x;
+	auto dy = m_y - other.m_y;
+	auto dz = m_z - other.m_z;
 	return dx * dx + dy * dy + dz * dz;
 }
 
@@ -239,18 +239,18 @@ constexpr auto Vector3<T>::SmoothDamp(const Vector3<K> &target, const Vector3<J>
 template<typename T>
 auto Vector3<T>::CartesianToPolar() const
 {
-	auto radius{std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z)};
-	auto theta{std::atan2(m_y, m_x)};
-	auto phi{std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z)};
+	auto radius = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+	auto theta = std::atan2(m_y, m_x);
+	auto phi = std::atan2(std::sqrt(m_x * m_x + m_y * m_y), m_z);
 	return Vector3<decltype(radius)>{radius, theta, phi};
 }
 
 template<typename T>
 auto Vector3<T>::PolarToCartesian() const
 {
-	auto x{m_x * std::sin(m_z) * std::cos(m_y)};
-	auto y{m_x * std::sin(m_z) * std::sin(m_y)};
-	auto z{m_x * std::cos(m_z)};
+	auto x = m_x * std::sin(m_z) * std::cos(m_y);
+	auto y = m_x * std::sin(m_z) * std::sin(m_y);
+	auto z = m_x * std::cos(m_z);
 	return Vector3<decltype(x)>{x, y, z};
 }
 

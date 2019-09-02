@@ -73,7 +73,7 @@ bool DescriptorsHandler::Update(const Pipeline &pipeline)
 
 		for (const auto &[descriptorName, descriptor] : m_descriptors)
 		{
-			auto writeDescriptorSet{descriptor.m_writeDescriptor.GetWriteDescriptorSet()};
+			auto writeDescriptorSet = descriptor.m_writeDescriptor.GetWriteDescriptorSet();
 			writeDescriptorSet.dstSet = VK_NULL_HANDLE;
 
 			if (!m_pushDescriptors)
@@ -99,7 +99,7 @@ void DescriptorsHandler::BindDescriptor(const CommandBuffer &commandBuffer, cons
 {
 	if (m_pushDescriptors)
 	{
-		auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+		auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 		Instance::FvkCmdPushDescriptorSetKHR(*logicalDevice, commandBuffer, pipeline.GetPipelineBindPoint(), pipeline.GetPipelineLayout(), 0,
 			static_cast<uint32_t>(m_writeDescriptorSets.size()), m_writeDescriptorSets.data());
 	}

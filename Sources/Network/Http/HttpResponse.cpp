@@ -13,7 +13,7 @@ HttpResponse::HttpResponse() :
 
 std::string HttpResponse::GetField(const std::string &field) const
 {
-	auto it{m_fields.find(String::Lowercase(field))};
+	auto it = m_fields.find(String::Lowercase(field));
 
 	if (it != m_fields.end())
 	{
@@ -108,13 +108,13 @@ void HttpResponse::ParseFields(std::istream &in)
 
 	while (std::getline(in, line) && (line.size() > 2))
 	{
-		auto pos{line.find(": ")};
+		auto pos = line.find(": ");
 
 		if (pos != std::string::npos)
 		{
 			// Extract the field name and its value.
-			auto field{line.substr(0, pos)};
-			auto value{line.substr(pos + 2)};
+			auto field = line.substr(0, pos);
+			auto value = line.substr(pos + 2);
 
 			// Remove any trailing '\r'.
 			if (!value.empty() && (*value.rbegin() == '\r'))

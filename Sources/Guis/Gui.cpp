@@ -1,4 +1,4 @@
-﻿#include "Gui.hpp"
+#include "Gui.hpp"
 
 #include "Graphics/Graphics.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
@@ -17,9 +17,9 @@ Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d
 
 void Gui::UpdateObject()
 {
-	auto numberOfRows{m_image != nullptr ? m_numberOfRows : 1};
-	auto column{m_selectedRow % numberOfRows};
-	auto row{m_selectedRow / numberOfRows};
+	auto numberOfRows = m_image != nullptr ? m_numberOfRows : 1;
+	auto column = m_selectedRow % numberOfRows;
+	auto row = m_selectedRow / numberOfRows;
 	m_atlasOffset = Vector2f{static_cast<float>(column), static_cast<float>(row)} / static_cast<float>(numberOfRows);
 
 	m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
@@ -54,7 +54,7 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 		return false;
 	}
 
-	auto scissor{GetScissor()};
+	auto scissor = GetScissor();
 	VkRect2D scissorRect{};
 	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
 	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;

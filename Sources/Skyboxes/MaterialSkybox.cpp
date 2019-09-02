@@ -25,7 +25,7 @@ void MaterialSkybox::Update()
 
 void MaterialSkybox::PushUniforms(UniformHandler &uniformObject)
 {
-	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
 	{
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 		uniformObject.Push("fogLimits", transform->GetScale().m_y * m_fogLimits);

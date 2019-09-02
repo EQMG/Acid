@@ -8,14 +8,14 @@ namespace acid
 {
 std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelDisk>(resource);
 	}
 
-	auto result{std::make_shared<ModelDisk>(0.0f, 0.0f)};
+	auto result = std::make_shared<ModelDisk>(0.0f, 0.0f);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -75,15 +75,15 @@ void ModelDisk::Load()
 
 	for (uint32_t i{}; i < m_slices; i++)
 	{
-		auto iDivSlices{static_cast<float>(i) / static_cast<float>(m_slices)};
-		auto alpha{iDivSlices * 2.0f * Maths::Pi<float>};
-		auto xDir{std::cos(alpha)};
-		auto yDir{std::sin(alpha)};
+		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
+		auto alpha = iDivSlices * 2.0f * Maths::Pi<float>;
+		auto xDir = std::cos(alpha);
+		auto yDir = std::sin(alpha);
 
 		for (uint32_t j{}; j < m_loops + 1; j++)
 		{
-			auto jDivLoops{static_cast<float>(j) / static_cast<float>(m_loops)};
-			auto radius{m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius)};
+			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
+			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
 			Vector3f position{radius * xDir, 0.0f, radius * yDir};
 			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivLoops};
@@ -96,8 +96,8 @@ void ModelDisk::Load()
 	{
 		for (uint32_t j{}; j < m_loops; j++)
 		{
-			auto first{i * (m_loops + 1) + j};
-			auto second{(first + m_loops + 1) % (m_slices * (m_loops + 1))};
+			auto first = i * (m_loops + 1) + j;
+			auto second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
 
 			indices.emplace_back(second + 1);
 			indices.emplace_back(first + 1);

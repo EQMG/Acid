@@ -19,7 +19,7 @@ public:
 		m_file{file}
 	{
 		m_buffer = new char[m_bufferSize];
-		auto end{m_buffer + m_bufferSize};
+		auto end = m_buffer + m_bufferSize;
 		setg(end, end, end);
 		setp(m_buffer, end);
 	}
@@ -38,7 +38,7 @@ private:
 			return traits_type::eof();
 		}
 
-		auto bytesRead{PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize))};
+		auto bytesRead = PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize));
 
 		if (bytesRead < 1)
 		{
@@ -152,7 +152,7 @@ PHYSFS_File *OpenWithMode(const std::filesystem::path &filename, FileMode openMo
 {
 	PHYSFS_File *file{};
 
-	auto pathStr{filename.string()};
+	auto pathStr = filename.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 
 	switch (openMode)
@@ -212,7 +212,9 @@ Files::Files()
 {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	// TODO: Only when not installed. 
-	AddSearchPath(ACID_RESOURCES_DEV);
+	if (std::filesystem::exists(ACID_RESOURCES_DEV)) {
+		AddSearchPath(ACID_RESOURCES_DEV);
+	}
 }
 
 Files::~Files()
@@ -242,7 +244,7 @@ void Files::AddSearchPath(const std::string &path)
 
 void Files::RemoveSearchPath(const std::string &path)
 {
-	auto it{std::find(m_searchPaths.begin(), m_searchPaths.end(), path)};
+	auto it = std::find(m_searchPaths.begin(), m_searchPaths.end(), path);
 
 	if (it == m_searchPaths.end())
 	{
@@ -273,16 +275,16 @@ bool Files::ExistsInPath(const std::filesystem::path &path)
 		return false;
 	}
 
-	auto pathStr{path.string()};
+	auto pathStr = path.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 	return PHYSFS_exists(pathStr.c_str()) != 0;
 }
 
 std::optional<std::string> Files::Read(const std::filesystem::path &path)
 {
-	auto pathStr{path.string()};
+	auto pathStr = path.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
-	auto fsFile{PHYSFS_openRead(pathStr.c_str())};
+	auto fsFile = PHYSFS_openRead(pathStr.c_str());
 
 	if (fsFile == nullptr)
 	{
@@ -298,7 +300,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 		return buffer.str();
 	}
 
-	auto size{PHYSFS_fileLength(fsFile)};
+	auto size = PHYSFS_fileLength(fsFile);
 	std::vector<uint8_t> data(size);
 	PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
@@ -312,19 +314,19 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 
 std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, const bool &recursive)
 {
-	auto pathStr{path.string()};
+	auto pathStr = path.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
-	auto rc{PHYSFS_enumerateFiles(pathStr.c_str())};
+	auto rc = PHYSFS_enumerateFiles(pathStr.c_str());
 	
 	std::vector<std::string> files;
 
-	for (auto i{rc}; *i != nullptr; i++)
+	for (auto i = rc; *i != nullptr; i++)
 	{
 		/*if (IsDirectory(*i))
 		{
 			if (recursive)
 			{
-				auto filesInFound{FilesInPath(*i, recursive)};
+				auto filesInFound = FilesInPath(*i, recursive);
 				files.insert(result.end(), filesInFound.begin(), filesInFound.end());
 			}
 		}
@@ -349,13 +351,13 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t)
 	// such as thread synchronization and updating the stream state.
 
 	std::istream::sentry se{is, true};
-	auto sb{is.rdbuf()};
+	auto sb = is.rdbuf();
 
 	if (se)
 	{
 		for (;;)
 		{
-			auto c{sb->sbumpc()};
+			auto c = sb->sbumpc();
 
 			switch (c)
 			{

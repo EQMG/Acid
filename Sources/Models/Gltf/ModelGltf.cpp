@@ -13,14 +13,14 @@ namespace acid
 {
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelGltf>(resource);
 	}
 
-	auto result{std::make_shared<ModelGltf>("")};
+	auto result = std::make_shared<ModelGltf>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -65,11 +65,11 @@ void ModelGltf::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
-	auto folder{m_filename.parent_path()};
-	auto fileLoaded{Files::Read(m_filename)};
+	auto folder = m_filename.parent_path();
+	auto fileLoaded = Files::Read(m_filename);
 
 	if (!fileLoaded)
 	{
@@ -103,7 +103,7 @@ void ModelGltf::Load()
 	//LoadTextureSamplers(gltfModel);
 	//LoadTextures(gltfModel);
 	//LoadMaterials(gltfModel);
-	auto scale{1.0f};
+	auto scale = 1.0f;
 
 	// TODO: Scene handling with no default scene.
 	/*const tinygltf::Scene &scene = gltfModel.scenes[gltfModel.defaultScene > -1 ? gltfModel.defaultScene : 0];
@@ -135,7 +135,7 @@ void ModelGltf::Load()
 		}
 	}
 
-	auto extensions{gltfModel.extensionsUsed};*/
+	auto extensions = gltfModel.extensionsUsed;*/
 
 #if defined(ACID_VERBOSE)
 	std::cout << "Model GLTF " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";

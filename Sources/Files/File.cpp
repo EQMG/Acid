@@ -1,4 +1,4 @@
-﻿#include "File.hpp"
+#include "File.hpp"
 
 #include "Engine/Engine.hpp"
 #include "Files.hpp"
@@ -14,7 +14,7 @@ File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
 void File::Load()
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -37,7 +37,7 @@ void File::Load()
 void File::Write() const
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(m_filename))
@@ -47,7 +47,7 @@ void File::Write() const
 	}
 	else // if (std::filesystem::exists(m_filename))
 	{
-		if (auto parentPath{m_filename.parent_path()}; !parentPath.empty())
+		if (auto parentPath = m_filename.parent_path(); !parentPath.empty())
 		{
 			std::filesystem::create_directory(parentPath);
 		}

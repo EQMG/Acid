@@ -138,7 +138,7 @@ Matrix2 Matrix2::Inverse() const
 {
 	Matrix2 result;
 
-	auto det{Determinant()};
+	auto det = Determinant();
 
 	if (det == 0.0f)
 	{
@@ -150,11 +150,11 @@ Matrix2 Matrix2::Inverse() const
 		for (uint32_t i{}; i < 2; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
-			auto minor{GetSubmatrix(j, i)};
+			auto minor = GetSubmatrix(j, i);
 
 			// Multiply by (−1)^{i+j}.
-			auto factor{((i + j) % 2 == 1) ? -1.0f : 1.0f};
-			auto cofactor{minor * factor};
+			auto factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+			auto cofactor = minor * factor;
 
 			result[i][j] = cofactor / det;
 		}
@@ -185,10 +185,10 @@ float Matrix2::Determinant() const
 	for (uint32_t i{}; i < 2; i++)
 	{
 		// Get minor of element [0][i].
-		auto minor{GetSubmatrix(0, i)};
+		auto minor = GetSubmatrix(0, i);
 
 		// If this is an odd-numbered row, negate the value.
-		auto factor{(i % 2 == 1) ? -1.0f : 1.0f};
+		auto factor = (i % 2 == 1) ? -1.0f : 1.0f;
 
 		result += factor * m_rows[0][i] * minor;
 	}

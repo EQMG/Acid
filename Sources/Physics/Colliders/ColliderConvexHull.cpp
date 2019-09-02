@@ -23,7 +23,7 @@ ColliderConvexHull::~ColliderConvexHull()
 
 void ColliderConvexHull::Start()
 {
-	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
 	if (mesh != nullptr && mesh->GetModel() != nullptr)
 	{
@@ -34,7 +34,7 @@ void ColliderConvexHull::Start()
 void ColliderConvexHull::Update()
 {
 	// TODO
-	auto mesh{GetEntity()->GetComponent<Mesh>(true)};
+	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
 	if (mesh == nullptr || mesh->GetModel() != nullptr)
 	{

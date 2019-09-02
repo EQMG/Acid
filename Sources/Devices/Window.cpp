@@ -129,14 +129,14 @@ Window::Window() :
 
 	// Get connected monitors.
 	int32_t monitorCount;
-	auto monitors{glfwGetMonitors(&monitorCount)};
+	auto monitors = glfwGetMonitors(&monitorCount);
 
 	for (uint32_t i{}; i < static_cast<uint32_t>(monitorCount); i++)
 	{
 		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
 
-	auto videoMode{m_monitors[0]->GetVideoMode()};
+	auto videoMode = m_monitors[0]->GetVideoMode();
 
 	// Create a windowed mode window and its context.
 	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
@@ -228,7 +228,7 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 		Vector2ui extent;
 		uint32_t components;
 		VkFormat format;
-		auto data{Image::LoadPixels(filename, extent, components, format)};
+		auto data = Image::LoadPixels(filename, extent, components, format);
 
 		if (data == nullptr)
 		{
@@ -271,8 +271,8 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 {
 	m_fullscreen = fullscreen;
 
-	auto selected{monitor != nullptr ? monitor : m_monitors[0].get()};
-	auto videoMode{selected->GetVideoMode()};
+	auto selected = monitor != nullptr ? monitor : m_monitors[0].get();
+	auto videoMode = selected->GetVideoMode();
 
 	if (fullscreen)
 	{
@@ -357,7 +357,7 @@ void Window::CheckGlfw(const int32_t &result)
 		return;
 	}
 
-	auto failure{StringifyResultGlfw(result)};
+	auto failure = StringifyResultGlfw(result);
 	std::cerr << "GLFW error: " << failure << ", " << result << '\n';
 	throw std::runtime_error{"GLFW error: " + failure};
 }
@@ -365,7 +365,7 @@ void Window::CheckGlfw(const int32_t &result)
 std::pair<const char **, uint32_t> Window::GetInstanceExtensions()
 {
 	uint32_t glfwExtensionCount;
-	auto glfwExtensions{glfwGetRequiredInstanceExtensions(&glfwExtensionCount)};
+	auto glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 	return std::make_pair(glfwExtensions, glfwExtensionCount);
 }
 

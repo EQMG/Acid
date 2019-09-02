@@ -153,7 +153,7 @@ Matrix3 Matrix3::Inverse() const
 {
 	Matrix3 result;
 
-	auto det{Determinant()};
+	auto det = Determinant();
 
 	if (det == 0.0f)
 	{
@@ -165,12 +165,12 @@ Matrix3 Matrix3::Inverse() const
 		for (uint32_t i{}; i < 3; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
-			auto minorSubmatrix{GetSubmatrix(j, i)};
-			auto minor{minorSubmatrix.Determinant()};
+			auto minorSubmatrix = GetSubmatrix(j, i);
+			auto minor = minorSubmatrix.Determinant();
 
 			// Multiply by (−1)^{i+j}.
-			auto factor{((i + j) % 2 == 1) ? -1.0f : 1.0f};
-			auto cofactor{minor * factor};
+			auto factor = ((i + j) % 2 == 1) ? -1.0f : 1.0f;
+			auto cofactor = minor * factor;
 
 			result[i][j] = cofactor / det;
 		}
@@ -201,11 +201,11 @@ float Matrix3::Determinant() const
 	for (uint32_t i{}; i < 3; i++)
 	{
 		// Get minor of element [0][i].
-		auto minorSubmatrix{GetSubmatrix(0, i)};
-		auto minor{minorSubmatrix.Determinant()};
+		auto minorSubmatrix = GetSubmatrix(0, i);
+		auto minor = minorSubmatrix.Determinant();
 
 		// If this is an odd-numbered row, negate the value.
-		auto factor{(i % 2 == 1) ? -1.0f : 1.0f};
+		auto factor = (i % 2 == 1) ? -1.0f : 1.0f;
 
 		result += factor * m_rows[0][i] * minor;
 	}

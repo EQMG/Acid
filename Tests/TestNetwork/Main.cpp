@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		ftp.Login("username", "password");
 		ftp.KeepAlive();
 
-		auto response{ftp.GetWorkingDirectory()};
+		auto response = ftp.GetWorkingDirectory();
 
 		if (response.IsOk())
 		{

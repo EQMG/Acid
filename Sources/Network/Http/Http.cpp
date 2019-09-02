@@ -90,7 +90,7 @@ HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 	if (m_connection.Connect(m_host, m_port, timeout) == Socket::Status::Done)
 	{
 		// Convert the request to string and send it through the connected socket.
-		auto requestStr{toSend.Prepare()};
+		auto requestStr = toSend.Prepare();
 
 		if (!requestStr.empty())
 		{

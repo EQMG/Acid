@@ -1,4 +1,4 @@
-﻿#include "UiObject.hpp"
+#include "UiObject.hpp"
 
 #include "Graphics/Graphics.hpp"
 #include "Maths/Visual/DriverConstant.hpp"
@@ -126,14 +126,14 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 		m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor1();
 	}
 
-	auto modelMatrix{Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size))};
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
 
 	bool selected{};
 
 	if (IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 	{
-		auto distance{Mouse::Get()->GetPosition() - m_screenTransform.m_position};
+		auto distance = Mouse::Get()->GetPosition() - m_screenTransform.m_position;
 		selected = distance.m_x <= m_screenTransform.m_size.m_x && distance.m_y <= m_screenTransform.m_size.m_y &&
 			distance.m_x >= 0.0f && distance.m_y >= 0.0f;
 	}

@@ -23,7 +23,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 			for (const auto &subpass : m_subpasses)
 			{
-				if (auto subpassBindings{subpass.GetAttachmentBindings()};
+				if (auto subpassBindings = subpass.GetAttachmentBindings();
 					std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end())
 				{
 					m_subpassAttachmentCount[subpass.GetBinding()]++;
@@ -52,7 +52,7 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 
 void RenderStage::Update()
 {
-	auto lastRenderArea{m_renderArea};
+	auto lastRenderArea = m_renderArea;
 
 	m_renderArea.SetOffset(m_viewport.GetOffset());
 
@@ -74,15 +74,15 @@ void RenderStage::Update()
 void RenderStage::Rebuild(const Swapchain &swapchain)
 {
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
 	Update();
 
-	auto physicalDevice{Graphics::Get()->GetPhysicalDevice()};
-	auto surface{Graphics::Get()->GetSurface()};
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	auto surface = Graphics::Get()->GetSurface();
 
-	auto msaaSamples{physicalDevice->GetMsaaSamples()};
+	auto msaaSamples = physicalDevice->GetMsaaSamples();
 
 	if (m_depthAttachment)
 	{
@@ -148,7 +148,7 @@ std::optional<Attachment> RenderStage::GetAttachment(const uint32_t &binding) co
 
 const Descriptor *RenderStage::GetDescriptor(const std::string &name) const
 {
-	auto it{m_descriptors.find(name)};
+	auto it = m_descriptors.find(name);
 
 	if (it != m_descriptors.end())
 	{

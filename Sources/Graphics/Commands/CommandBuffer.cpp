@@ -7,7 +7,7 @@ namespace acid
 CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
 	m_queueType{queueType}
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_commandPool = Graphics::Get()->GetCommandPool();
 
@@ -26,7 +26,7 @@ CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType
 
 CommandBuffer::~CommandBuffer()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkFreeCommandBuffers(*logicalDevice, m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
 }
@@ -58,8 +58,8 @@ void CommandBuffer::End()
 
 void CommandBuffer::SubmitIdle()
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
-	auto queueSelected{GetQueue()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto queueSelected = GetQueue();
 
 	if (m_running)
 	{
@@ -88,8 +88,8 @@ void CommandBuffer::SubmitIdle()
 
 void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &signalSemaphore, VkFence fence)
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
-	auto queueSelected{GetQueue()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto queueSelected = GetQueue();
 
 	if (m_running)
 	{
@@ -128,7 +128,7 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 
 VkQueue CommandBuffer::GetQueue() const
 {
-	auto logicalDevice{Graphics::Get()->GetLogicalDevice()};
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	switch (m_queueType)
 	{

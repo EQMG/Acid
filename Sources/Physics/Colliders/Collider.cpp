@@ -25,7 +25,7 @@ Collider::~Collider()
 
 void Collider::Update()
 {
-	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr && m_gizmo != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr && m_gizmo != nullptr)
 	{
 		m_gizmo->SetTransform(*transform * m_localTransform);
 	}
@@ -35,7 +35,7 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 {
 	m_localTransform = localTransform;
 
-	auto collisionObject{GetEntity()->GetComponent<CollisionObject>()};
+	auto collisionObject = GetEntity()->GetComponent<CollisionObject>();
 
 	if (collisionObject != nullptr)
 	{
@@ -77,7 +77,7 @@ btTransform Collider::Convert(const Transform &transform)
 
 Transform Collider::Convert(const btTransform &transform, const Vector3f &scaling)
 {
-	auto position{transform.getOrigin()};
+	auto position = transform.getOrigin();
 	float yaw, pitch, roll;
 	transform.getBasis().getEulerYPR(yaw, pitch, roll);
 	return {Convert(position), {pitch, yaw, roll}, scaling};

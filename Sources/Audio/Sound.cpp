@@ -1,4 +1,4 @@
-﻿#include "Sound.hpp"
+#include "Sound.hpp"
 
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
@@ -50,7 +50,7 @@ void Sound::Start()
 
 void Sound::Update()
 {
-	if (auto transform{GetEntity()->GetComponent<Transform>()}; transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
 	{
 		SetPosition(transform->GetPosition());
 	}

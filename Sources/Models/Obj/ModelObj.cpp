@@ -23,7 +23,7 @@ public:
 		(void) err;
 		(void) matId;
 
-		auto filepath{m_folder / matId};
+		auto filepath = m_folder / matId;
 
 		if (!Files::ExistsInPath(filepath))
 		{
@@ -49,14 +49,14 @@ private:
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Node &node)
 {
-	auto resource{Resources::Get()->Find(node)};
+	auto resource = Resources::Get()->Find(node);
 
 	if (resource != nullptr)
 	{
 		return std::dynamic_pointer_cast<ModelObj>(resource);
 	}
 
-	auto result{std::make_shared<ModelObj>("")};
+	auto result = std::make_shared<ModelObj>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -101,10 +101,10 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	auto debugStart{Time::Now()};
+	auto debugStart = Time::Now();
 #endif
 
-	auto folder{m_filename.parent_path()};
+	auto folder = m_filename.parent_path();
 	IFStream inStream(m_filename);
 	MaterialStreamReader materialReader(folder);
 
