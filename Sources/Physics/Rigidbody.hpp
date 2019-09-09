@@ -23,7 +23,7 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit Rigidbody(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
+	explicit Rigidbody(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
 
 	~Rigidbody();
 
@@ -35,7 +35,7 @@ public:
 
 	void ClearForces() override;
 
-	void SetMass(const float &mass) override;
+	void SetMass(float mass) override;
 
 	void SetGravity(const Vector3f &gravity) override;
 

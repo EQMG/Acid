@@ -70,7 +70,7 @@ void Audio::Update()
 	//CheckAl(alGetError());
 }
 
-std::string Audio::StringifyResultAl(const int32_t &result)
+std::string Audio::StringifyResultAl(int32_t result)
 {
 	switch (result)
 	{
@@ -91,7 +91,7 @@ std::string Audio::StringifyResultAl(const int32_t &result)
 	}
 }
 
-void Audio::CheckAl(const int32_t &result)
+void Audio::CheckAl(int32_t result)
 {
 	if (result == AL_NO_ERROR)
 	{
@@ -116,7 +116,7 @@ float Audio::GetGain(const Type &type) const
 	return it->second;
 }
 
-void Audio::SetGain(const Type &type, const float &volume)
+void Audio::SetGain(const Type &type, float volume)
 {
 	auto it = m_gains.find(type);
 

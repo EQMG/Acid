@@ -11,7 +11,7 @@ class ACID_EXPORT UiInputDropdown :
 	public UiObject
 {
 public:
-	UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, std::vector<std::string> options,
+	UiInputDropdown(UiObject *parent, const std::string &title, uint32_t value, std::vector<std::string> options,
 		const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
@@ -20,9 +20,9 @@ public:
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
-	const uint32_t &GetValue() const { return m_value; }
+	uint32_t GetValue() const { return m_value; }
 
-	void SetValue(const uint32_t &value);
+	void SetValue(uint32_t value);
 
 	const std::vector<std::string> &GetOptions() const { return m_options; }
 

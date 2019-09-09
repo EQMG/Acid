@@ -29,7 +29,7 @@ void HttpRequest::SetUri(const std::string &uri)
 	}
 }
 
-void HttpRequest::SetHttpVersion(const uint32_t &major, const uint32_t &minor)
+void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor)
 {
 	m_majorVersion = major;
 	m_minorVersion = minor;

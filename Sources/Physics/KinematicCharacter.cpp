@@ -9,7 +9,7 @@
 
 namespace acid
 {
-KinematicCharacter::KinematicCharacter(const float &mass, const float &friction) :
+KinematicCharacter::KinematicCharacter(float mass, float friction) :
 	CollisionObject{mass, friction},
 	m_up{Vector3f::Up},
 	m_stepHeight{0.0f},
@@ -113,7 +113,7 @@ void KinematicCharacter::ClearForces()
 	//m_controller->clearForces();
 }
 
-void KinematicCharacter::SetMass(const float &mass)
+void KinematicCharacter::SetMass(float mass)
 {
 	m_mass = mass;
 	RecalculateMass();
@@ -155,25 +155,25 @@ void KinematicCharacter::SetUp(const Vector3f &up)
 	m_controller->setUp(Collider::Convert(up));
 }
 
-void KinematicCharacter::SetStepHeight(const float &stepHeight)
+void KinematicCharacter::SetStepHeight(float stepHeight)
 {
 	m_stepHeight = stepHeight;
 	m_controller->setStepHeight(stepHeight);
 }
 
-void KinematicCharacter::SetFallSpeed(const float &fallSpeed)
+void KinematicCharacter::SetFallSpeed(float fallSpeed)
 {
 	m_fallSpeed = fallSpeed;
 	m_controller->setFallSpeed(fallSpeed);
 }
 
-void KinematicCharacter::SetJumpSpeed(const float &jumpSpeed)
+void KinematicCharacter::SetJumpSpeed(float jumpSpeed)
 {
 	m_jumpSpeed = jumpSpeed;
 	m_controller->setJumpSpeed(jumpSpeed);
 }
 
-void KinematicCharacter::SetMaxJumpHeight(const float &maxHeight)
+void KinematicCharacter::SetMaxJumpHeight(float maxHeight)
 {
 	m_maxHeight = maxHeight;
 	m_controller->setMaxJumpHeight(maxHeight);

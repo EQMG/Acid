@@ -33,7 +33,7 @@ public:
 	 * @param byte2 Third byte of the address. 
 	 * @param byte3 Fourth byte of the address. 
 	 **/
-	IpAddress(const uint8_t &byte0, const uint8_t &byte1, const uint8_t &byte2, const uint8_t &byte3);
+	IpAddress(uint8_t byte0, uint8_t byte1, uint8_t byte2, uint8_t byte3);
 
 	/**
 	 * Construct the address from a 32-bits integer.
@@ -42,7 +42,7 @@ public:
 	 * It should be used for optimization purposes, and only if you got that representation from IpAddress::toInteger().
 	 * @param address 4 bytes of the address packed into a 32-bits integer. 
 	 **/
-	IpAddress(const uint32_t &address);
+	IpAddress(uint32_t address);
 
 	/**
 	 * Get a string representation of the address.

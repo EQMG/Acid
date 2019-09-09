@@ -8,7 +8,7 @@ namespace acid
 class ACID_EXPORT SkinLoader
 {
 public:
-	SkinLoader(const Node *libraryControllers, const uint32_t &maxWeights);
+	SkinLoader(const Node *libraryControllers, uint32_t maxWeights);
 
 	const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
 

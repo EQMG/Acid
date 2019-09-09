@@ -2,7 +2,7 @@
 
 namespace acid
 {
-void VertexWeights::AddJointEffect(const uint32_t &jointId, const float &weight)
+void VertexWeights::AddJointEffect(uint32_t jointId, float weight)
 {
 	for (uint32_t i{}; i < m_weights.size(); i++)
 	{
@@ -18,7 +18,7 @@ void VertexWeights::AddJointEffect(const uint32_t &jointId, const float &weight)
 	m_weights.emplace_back(weight);
 }
 
-void VertexWeights::LimitJointNumber(const uint32_t &max)
+void VertexWeights::LimitJointNumber(uint32_t max)
 {
 	if (m_jointIds.size() > max)
 	{
@@ -33,7 +33,7 @@ void VertexWeights::LimitJointNumber(const uint32_t &max)
 	}
 }
 
-void VertexWeights::FillEmptyWeights(const uint32_t &max)
+void VertexWeights::FillEmptyWeights(uint32_t max)
 {
 	while (m_jointIds.size() < max)
 	{
@@ -55,7 +55,7 @@ float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray)
 	return total;
 }
 
-void VertexWeights::RefillWeightList(const std::vector<float> &topWeights, const float &total)
+void VertexWeights::RefillWeightList(const std::vector<float> &topWeights, float total)
 {
 	m_weights.clear();
 
@@ -65,7 +65,7 @@ void VertexWeights::RefillWeightList(const std::vector<float> &topWeights, const
 	}
 }
 
-void VertexWeights::RemoveExcessJointIds(const uint32_t &max)
+void VertexWeights::RemoveExcessJointIds(uint32_t max)
 {
 	while (m_jointIds.size() > max)
 	{

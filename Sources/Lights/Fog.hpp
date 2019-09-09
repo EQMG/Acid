@@ -21,7 +21,7 @@ public:
 	 * @param lowerLimit At what height will the skybox fog begin to appear.
 	 * @param upperLimit At what height will there be skybox no fog.
 	 */
-	explicit Fog(const Colour &colour = Colour::White, const float &density = 0.0f, const float &gradient = -1.0f, const float &lowerLimit = 0.0f, const float &upperLimit = 0.0f);
+	explicit Fog(const Colour &colour = Colour::White, float density = 0.0f, float gradient = -1.0f, float lowerLimit = 0.0f, float upperLimit = 0.0f);
 
 	void Start() override;
 
@@ -31,21 +31,21 @@ public:
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
-	const float &GetDensity() const { return m_density; }
+	float GetDensity() const { return m_density; }
 
-	void SetDensity(const float &density) { m_density = density; }
+	void SetDensity(float density) { m_density = density; }
 
-	const float &GetGradient() const { return m_gradient; }
+	float GetGradient() const { return m_gradient; }
 
-	void SetGradient(const float &gradient) { m_gradient = gradient; }
+	void SetGradient(float gradient) { m_gradient = gradient; }
 
-	const float &GetLowerLimit() const { return m_lowerLimit; }
+	float GetLowerLimit() const { return m_lowerLimit; }
 
-	void SetLowerLimit(const float &lowerLimit) { m_lowerLimit = lowerLimit; }
+	void SetLowerLimit(float lowerLimit) { m_lowerLimit = lowerLimit; }
 
-	const float &GetUpperLimit() const { return m_upperLimit; }
+	float GetUpperLimit() const { return m_upperLimit; }
 
-	void SetUpperLimit(const float &upperLimit) { m_upperLimit = upperLimit; }
+	void SetUpperLimit(float upperLimit) { m_upperLimit = upperLimit; }
 
 	friend const Node &operator>>(const Node &node, Fog &fog);
 

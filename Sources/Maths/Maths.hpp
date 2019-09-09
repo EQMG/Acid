@@ -19,7 +19,7 @@ public:
 	 * @param max The max value. 
 	 * @return The randomly selected value within the range. 
 	 **/
-	static float Random(const float &min = 0.0f, const float &max = 1.0f);
+	static float Random(float min = 0.0f, float max = 1.0f);
 
 	/**
 	 * Generates a single value from a normal distribution, using Box-Muller.
@@ -27,7 +27,7 @@ public:
 	 * @param mean The mean of the distribution. 
 	 * @return A normally distributed value. 
 	 **/
-	static float RandomNormal(const float &standardDeviation, const float &mean);
+	static float RandomNormal(float standardDeviation, float mean);
 
 	/**
 	 * Creates a number between two numbers, logarithmic.
@@ -35,7 +35,7 @@ public:
 	 * @param max The max value. 
 	 * @return The final random number. 
 	 **/
-	static float RandomLog(const float &min, const float &max);
+	static float RandomLog(float min, float max);
 
 	/**
 	 * Converts degrees to radians.
@@ -107,7 +107,7 @@ public:
 	 * @return The rounded value. 
 	 **/
 	template<typename T = float>
-	static T RoundToPlace(const T &value, const int32_t &place)
+	static T RoundToPlace(const T &value, int32_t place)
 	{
 		auto placeMul = std::pow(10, place);
 		return static_cast<T>(std::round(value * placeMul) / placeMul);

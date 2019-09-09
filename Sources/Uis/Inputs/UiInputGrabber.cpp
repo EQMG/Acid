@@ -59,7 +59,7 @@ void UiInputGrabber::UpdateValue()
 	m_textValue.SetString(GetTextString());
 }
 
-UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value, const UiTransform &transform) :
+UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
 	m_port(port),
 	m_value(value)
@@ -80,7 +80,7 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 	});
 }
 
-void UiGrabberJoystick::SetValue(const uint32_t &value)
+void UiGrabberJoystick::SetValue(uint32_t value)
 {
 	m_value = value;
 	UpdateValue();

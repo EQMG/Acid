@@ -10,7 +10,7 @@
 
 namespace acid
 {
-Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, const float &gain, const float &pitch) :
+Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, float gain, float pitch) :
 	m_buffer{SoundBuffer::Create(filename)},
 	m_type{type},
 	m_gain{gain},
@@ -128,14 +128,14 @@ void Sound::SetVelocity(const Vector3f &velocity)
 	Audio::CheckAl(alGetError());
 }
 
-void Sound::SetGain(const float &gain)
+void Sound::SetGain(float gain)
 {
 	m_gain = gain;
 	alSourcef(m_source, AL_GAIN, m_gain * Audio::Get()->GetGain(m_type));
 	Audio::CheckAl(alGetError());
 }
 
-void Sound::SetPitch(const float &pitch)
+void Sound::SetPitch(float pitch)
 {
 	m_pitch = pitch;
 	alSourcef(m_source, AL_PITCH, m_pitch);

@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderCylinder :
 	public Collider
 {
 public:
-	explicit ColliderCylinder(const float &radius = 1.0f, const float &height = 1.0f, const Transform &localTransform = {});
+	explicit ColliderCylinder(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCylinder();
 
@@ -20,13 +20,13 @@ public:
 
 	btCollisionShape *GetCollisionShape() const override;
 
-	const float &GetRadius() const { return m_radius; }
+	float GetRadius() const { return m_radius; }
 
-	void SetRadius(const float &radius);
+	void SetRadius(float radius);
 
-	const float &GetHeight() const { return m_height; }
+	float GetHeight() const { return m_height; }
 
-	void SetHeight(const float &height);
+	void SetHeight(float height);
 
 	friend const Node &operator>>(const Node &node, ColliderCylinder &collider);
 

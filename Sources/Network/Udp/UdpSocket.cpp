@@ -36,7 +36,7 @@ uint16_t UdpSocket::GetLocalPort() const
 	return 0;
 }
 
-Socket::Status UdpSocket::Bind(const uint16_t &port, const IpAddress &address)
+Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address)
 {
 	// Close the socket if it is already bound.
 	Close();
@@ -68,7 +68,7 @@ void UdpSocket::Unbind()
 	Close();
 }
 
-Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort)
+Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddress &remoteAddress, uint16_t remotePort)
 {
 	// Create the internal socket if it doesn't exist.
 	Create();
@@ -95,7 +95,7 @@ Socket::Status UdpSocket::Send(const void *data, const std::size_t &size, const 
 	return Status::Done;
 }
 
-Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
+Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
 {
 	// First clear the variables to fill.
 	received = 0;
@@ -130,7 +130,7 @@ Socket::Status UdpSocket::Receive(void *data, const std::size_t &size, std::size
 	return Status::Done;
 }
 
-Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort)
+Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, uint16_t remotePort)
 {
 	// UDP is a datagram-oriented protocol (as opposed to TCP which is a stream protocol).
 	// Sending one datagram is almost safe: it may be lost but if it's received, then its data

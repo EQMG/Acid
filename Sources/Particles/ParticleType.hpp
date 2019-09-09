@@ -25,7 +25,7 @@ public:
 	class Instance
 	{
 	public:
-		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 		{
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions{
 				{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
@@ -65,8 +65,8 @@ public:
 	 * @param scale The averaged scale for the particle.
 	 * @return The particle type with the requested values.
 	 */
-	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black,
-		const float &lifeLength = 10.0f, const float &stageCycles = 1.0f, const float &scale = 1.0f);
+	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows = 1, const Colour &colourOffset = Colour::Black,
+		float lifeLength = 10.0f, float stageCycles = 1.0f, float scale = 1.0f);
 
 	/**
 	 * Creates a new particle type.
@@ -77,8 +77,8 @@ public:
 	 * @param stageCycles The amount of times stages will be shown.
 	 * @param scale The averaged scale for the particle.
 	 */
-	explicit ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows = 1, const Colour &colourOffset = Colour::Black, const float &lifeLength = 10.0f,
-		const float &stageCycles = 1.0f, const float &scale = 1.0f);
+	explicit ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows = 1, const Colour &colourOffset = Colour::Black, float lifeLength = 10.0f,
+		float stageCycles = 1.0f, float scale = 1.0f);
 
 	void Update(const std::vector<Particle> &particles);
 
@@ -88,25 +88,25 @@ public:
 
 	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 
-	const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
+	uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 
-	void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+	void SetNumberOfRows(uint32_t numberOfRows) { m_numberOfRows = numberOfRows; }
 
 	const Colour &GetColourOffset() const { return m_colourOffset; }
 
 	void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
 
-	const float &GetLifeLength() const { return m_lifeLength; }
+	float GetLifeLength() const { return m_lifeLength; }
 
-	void SetLifeLength(const float &lifeLength) { m_lifeLength = lifeLength; }
+	void SetLifeLength(float lifeLength) { m_lifeLength = lifeLength; }
 
-	const float &GetStageCycles() const { return m_stageCycles; }
+	float GetStageCycles() const { return m_stageCycles; }
 
-	void SetStageCycles(const float &stageCycles) { m_stageCycles = stageCycles; }
+	void SetStageCycles(float stageCycles) { m_stageCycles = stageCycles; }
 
-	const float &GetScale() const { return m_scale; }
+	float GetScale() const { return m_scale; }
 
-	void SetScale(const float &scale) { m_scale = scale; }
+	void SetScale(float scale) { m_scale = scale; }
 
 	friend const Node &operator>>(const Node &node, ParticleType &particleType);
 

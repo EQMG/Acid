@@ -17,7 +17,7 @@ public:
 	 * Constructor for Matrix3. The matrix is initialised to the identity.
 	 * @param diagonal The value set to the diagonals. 
 	 **/
-	Matrix3(const float &diagonal = 1.0f);
+	Matrix3(float diagonal = 1.0f);
 
 	/**
 	 * Constructor for Matrix3.
@@ -120,7 +120,7 @@ public:
 	 * Gets the submatrix of this matrix.
 	 * @return The submatrix. 
 	 **/
-	Matrix2 GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
+	Matrix2 GetSubmatrix(uint32_t row, uint32_t col) const;
 
 	bool operator==(const Matrix3 &other) const;
 
@@ -128,9 +128,9 @@ public:
 
 	Matrix3 operator-() const;
 
-	const Vector3f &operator[](const uint32_t &index) const;
+	const Vector3f &operator[](uint32_t index) const;
 
-	Vector3f &operator[](const uint32_t &index);
+	Vector3f &operator[](uint32_t index);
 
 	friend Matrix3 operator+(const Matrix3 &left, const Matrix3 &right);
 
@@ -148,13 +148,13 @@ public:
 
 	friend Matrix3 operator/(const Matrix3 &left, const Vector3f &right);
 
-	friend Matrix3 operator*(const float &left, const Matrix3 &right);
+	friend Matrix3 operator*(float left, const Matrix3 &right);
 
-	friend Matrix3 operator/(const float &left, const Matrix3 &right);
+	friend Matrix3 operator/(float left, const Matrix3 &right);
 
-	friend Matrix3 operator*(const Matrix3 &left, const float &right);
+	friend Matrix3 operator*(const Matrix3 &left, float right);
 
-	friend Matrix3 operator/(const Matrix3 &left, const float &right);
+	friend Matrix3 operator/(const Matrix3 &left, float right);
 
 	Matrix3 &operator+=(const Matrix3 &other);
 
@@ -168,9 +168,9 @@ public:
 
 	Matrix3 &operator/=(const Vector3f &other);
 
-	Matrix3 &operator*=(const float &other);
+	Matrix3 &operator*=(float other);
 
-	Matrix3 &operator/=(const float &other);
+	Matrix3 &operator/=(float other);
 
 	friend const Node &operator>>(const Node &node, Matrix3 &matrix);
 

@@ -25,7 +25,7 @@ public:
 	 * @param longitudeBands The amount of vertices that will make up the spheres longitude.
 	 * @return The sphere model with the requested values.
 	 */
-	static std::shared_ptr<ModelSphere> Create(const float &radius = 1.0f, const uint32_t &latitudeBands = 20, const uint32_t &longitudeBands = 20);
+	static std::shared_ptr<ModelSphere> Create(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20);
 
 	/**
 	 * Creates a new sphere model.
@@ -34,7 +34,7 @@ public:
 	 * @param longitudeBands The amount of vertices that will make up the spheres longitude.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelSphere#Load} can be called later.
 	 */
-	explicit ModelSphere(const float &radius = 1.0f, const uint32_t &latitudeBands = 20, const uint32_t &longitudeBands = 20, const bool &load = true);
+	explicit ModelSphere(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20, const bool &load = true);
 
 	friend const Node &operator>>(const Node &node, ModelSphere &model);
 

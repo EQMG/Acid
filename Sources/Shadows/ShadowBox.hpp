@@ -28,7 +28,7 @@ public:
 	 * @param shadowOffset The shadows offset.
 	 * @param shadowDistance The shadows distance.
 	 */
-	void Update(const Camera &camera, const Vector3f &lightDirection, const float &shadowOffset, const float &shadowDistance);
+	void Update(const Camera &camera, const Vector3f &lightDirection, float shadowOffset, float shadowDistance);
 
 	/**
 	 * Tests if a bounding sphere intersects the shadow box. Can be used to decide which engine.entities should be rendered in the shadow render pass.
@@ -36,7 +36,7 @@ public:
 	 * @param radius The radius of the bounding sphere.
 	 * @return {@code true} if the sphere intersects the box.
 	 */
-	bool IsInBox(const Vector3f &position, const float &radius) const;
+	bool IsInBox(const Vector3f &position, float radius) const;
 
 	const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
 
@@ -88,7 +88,7 @@ private:
 	 * @param width The distance of the corner from the start point.
 	 * @return The relevant corner vertex of the view frustum in light space.
 	 */
-	Vector4f CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, const float &width) const;
+	Vector4f CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, float width) const;
 
 	void UpdateOrthoProjectionMatrix();
 

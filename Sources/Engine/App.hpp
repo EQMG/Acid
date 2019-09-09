@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * Sets the application's name, for driver support.
-	 * @param T The application's name.
+	 * @param name The application's name.
 	 */
 	void SetName(const std::string &name) { m_name = name; }
 	
@@ -48,7 +48,7 @@ public:
 
 	/**
 	 * Sets the application's version, for driver support.
-	 * @param T The application version.
+	 * @param version The application version.
 	 */
 	void SetVersion(const Version &version) { m_version = version; }
 

@@ -1,6 +1,6 @@
 # 3.11.0 required for cxx_std_17 and FetchContent
 cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
-project(Acid VERSION 0.13.3 LANGUAGES C CXX)
+project(Acid VERSION 0.13.4 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
@@ -74,8 +74,8 @@ find_package(PhysFS QUIET)
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
-			GIT_REPOSITORY https://github.com/Didstopia/physfs.git
-			GIT_TAG master
+			URL https://icculus.org/physfs/downloads/physfs-3.0.2.tar.bz2
+			URL_MD5 dc751294aaf59d1359bbe34e693d1d87
 			)
 	FetchContent_GetProperties(physfs)
 	if(NOT physfs_POPULATED)
@@ -105,8 +105,8 @@ find_package(Freetype QUIET)
 if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
-			GIT_REPOSITORY https://git.savannah.gnu.org/git/freetype/freetype2.git
-			GIT_TAG 9443a1bc3e6cfa315db976ff80f6c5e91b12b387
+			URL https://download.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
+			URL_MD5 c50a3c9e5e62bdc938a6e1598a782947
 			)
 	FetchContent_GetProperties(freetype)
 	if(NOT freetype_POPULATED)
@@ -125,8 +125,8 @@ find_package(glfw3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
-			GIT_REPOSITORY https://github.com/glfw/glfw.git
-			GIT_TAG master
+			URL https://github.com/glfw/glfw/archive/3.3.tar.gz
+			URL_MD5 5be03812f5d109817e6558c3fab7bbe1
 			)
 	FetchContent_GetProperties(glfw3)
 	if(NOT glfw3_POPULATED)
@@ -181,8 +181,8 @@ if(NOT SPIRV_LIBRARY
 		OR NOT SPIRV_INCLUDE_DIR)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
-			GIT_TAG master
+			URL https://github.com/KhronosGroup/glslang/archive/7.12.3352.tar.gz
+			URL_MD5 b31bc89ffa86dbb5ab638c9c2a412302
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
@@ -219,8 +219,8 @@ find_package(Bullet QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3
-			GIT_REPOSITORY https://github.com/bulletphysics/bullet3.git
-			GIT_TAG master
+			URL https://github.com/bulletphysics/bullet3/archive/2.88.tar.gz
+			URL_MD5 d389e7235f00c66abf257bb7b21477ac
 			)
 	FetchContent_GetProperties(bullet3)
 	if(NOT bullet3_POPULATED)

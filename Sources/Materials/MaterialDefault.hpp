@@ -14,8 +14,8 @@ class ACID_EXPORT MaterialDefault :
 	public Material
 {
 public:
-	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, const float &metallic = 0.0f,
-		const float &roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, const bool &castsShadows = true,
+	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,
+		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, const bool &castsShadows = true,
 		const bool &ignoreLighting = false, const bool &ignoreFog = false);
 
 	void Start() override;
@@ -34,13 +34,13 @@ public:
 
 	void SetImageDiffuse(const std::shared_ptr<Image2d> &imageDiffuse) { m_imageDiffuse = imageDiffuse; }
 
-	const float &GetMetallic() const { return m_metallic; }
+	float GetMetallic() const { return m_metallic; }
 
-	void SetMetallic(const float &metallic) { m_metallic = metallic; }
+	void SetMetallic(float metallic) { m_metallic = metallic; }
 
-	const float &GetRoughness() const { return m_roughness; }
+	float GetRoughness() const { return m_roughness; }
 
-	void SetRoughness(const float &roughness) { m_roughness = roughness; }
+	void SetRoughness(float roughness) { m_roughness = roughness; }
 
 	const std::shared_ptr<Image2d> &GetImageMaterial() const { return m_imageMaterial; }
 

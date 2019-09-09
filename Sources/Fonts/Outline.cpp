@@ -219,7 +219,7 @@ bool IsCellFilled(const Outline *o, const Rect &bbox)
 	return v > 0.0f;
 }
 
-bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell &cell)
+bool WipcellAddBezier(const Outline *o, const Outline *u, uint32_t i, uint32_t j, uint32_t contourIndex, WipCell &cell)
 {
 	auto result = true;
 	auto ucontourBegin = u->m_contours[contourIndex].m_begin;
@@ -259,7 +259,7 @@ bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, con
 	return result;
 }
 
-bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell &cell, uint32_t &maxStartLength)
+bool WipcellFinishContour(const Outline *o, const Outline *u, uint32_t contourIndex, WipCell &cell, uint32_t &maxStartLength)
 {
 	bool result{true};
 	auto ucontourBegin = u->m_contours[contourIndex].m_begin;
@@ -323,7 +323,7 @@ bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &co
 	return result;
 }
 
-bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell *cells)
+bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, uint32_t i, uint32_t j, uint32_t contourIndex, WipCell *cells)
 {
 	Rect bezierBbox;
 	Bezier2Bbox(&o->m_points[i], bezierBbox);
@@ -364,7 +364,7 @@ bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t 
 	return result;
 }
 
-bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell *cells, uint32_t &maxStartLength)
+bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, uint32_t contourIndex, WipCell *cells, uint32_t &maxStartLength)
 {
 	bool ret{true};
 
@@ -433,13 +433,13 @@ uint32_t OutlineAddFilledLine(Outline *o)
 	return i;
 }
 
-uint32_t MakeCellFromSingleEdge(const uint32_t &e)
+uint32_t MakeCellFromSingleEdge(uint32_t e)
 {
 	assert(e % 2 == 0);
 	return e << 7 | 1;
 }
 
-void SetFilledCells(const Outline *u, WipCell *cells, const uint32_t &filledCell)
+void SetFilledCells(const Outline *u, WipCell *cells, uint32_t filledCell)
 {
 	for (uint32_t y{}; y < u->m_cellCount.m_y; y++)
 	{
@@ -842,7 +842,7 @@ void OutlineCbox(Outline *o, Rect *cbox)
 	}
 }
 
-uint16_t GenU16Value(const float &x, const float &min, const float &max)
+uint16_t GenU16Value(float x, float min, float max)
 {
 	return static_cast<uint16_t>((x - min) / (max - min) * std::numeric_limits<uint16_t>::max());
 }

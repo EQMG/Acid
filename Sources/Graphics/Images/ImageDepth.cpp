@@ -55,7 +55,7 @@ ImageDepth::~ImageDepth()
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
+VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
 	descriptorSetLayoutBinding.binding = binding;
@@ -66,7 +66,7 @@ VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(const uint32_t &
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet ImageDepth::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo{};
 	imageInfo.sampler = m_sampler;

@@ -134,17 +134,17 @@ public:
 
 	friend Time operator-(const Time &left, const Time &right);
 
-	friend Time operator*(const Time &left, const float &right);
+	friend Time operator*(const Time &left, float right);
 
-	friend Time operator*(const Time &left, const int64_t &right);
+	friend Time operator*(const Time &left, int64_t right);
 
-	friend Time operator*(const float &left, const Time &right);
+	friend Time operator*(float left, const Time &right);
 
-	friend Time operator*(const int64_t &left, const Time &right);
+	friend Time operator*(int64_t left, const Time &right);
 
-	friend Time operator/(const Time &left, const float &right);
+	friend Time operator/(const Time &left, float right);
 
-	friend Time operator/(const Time &left, const int64_t &right);
+	friend Time operator/(const Time &left, int64_t right);
 	
 	friend double operator/(const Time &left, const Time &right);
 
@@ -152,13 +152,13 @@ public:
 
 	Time &operator-=(const Time &other);
 
-	Time &operator*=(const float &other);
+	Time &operator*=(float other);
 
-	Time &operator*=(const int64_t &other);
+	Time &operator*=(int64_t other);
 
-	Time &operator/=(const float &other);
+	Time &operator/=(float other);
 
-	Time &operator/=(const int64_t &other);
+	Time &operator/=(int64_t other);
 
 	friend const Node &operator>>(const Node &node, Time &time);
 

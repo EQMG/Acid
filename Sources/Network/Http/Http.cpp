@@ -8,13 +8,13 @@ Http::Http()
 {
 }
 
-Http::Http(const std::string &host, const uint16_t &port) :
+Http::Http(const std::string &host, uint16_t port) :
 	m_port{port}
 {
 	SetHost(host, port);
 }
 
-void Http::SetHost(const std::string &host, const uint16_t &port)
+void Http::SetHost(const std::string &host, uint16_t port)
 {
 	// Check the protocol.
 	if (String::Lowercase(host.substr(0, 7)) == "http://")

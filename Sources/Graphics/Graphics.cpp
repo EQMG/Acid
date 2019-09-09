@@ -218,7 +218,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 #endif
 }
 
-RenderStage *Graphics::GetRenderStage(const uint32_t &index) const
+RenderStage *Graphics::GetRenderStage(uint32_t index) const
 {
 	if (m_renderStages.empty() || m_renderStages.size() < index)
 	{

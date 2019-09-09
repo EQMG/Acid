@@ -61,7 +61,7 @@ float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyfra
 	return static_cast<float>(currentTime / totalTime);
 }
 
-std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression) const
+std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, float progression) const
 {
 	std::map<std::string, Matrix4> currentPose;
 

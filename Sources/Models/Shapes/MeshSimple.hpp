@@ -9,12 +9,12 @@ class ACID_EXPORT MeshSimple :
 	public Model
 {
 public:
-	MeshSimple(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &uvScale);
+	MeshSimple(float sideLength, float squareSize, uint32_t vertexCount, float uvScale);
 
 protected:
 	void GenerateMesh();
 
-	virtual VertexDefault GetVertex(const uint32_t &col, const uint32_t &row);
+	virtual VertexDefault GetVertex(uint32_t col, uint32_t row);
 
 	float m_sideLength;
 	float m_squareSize;

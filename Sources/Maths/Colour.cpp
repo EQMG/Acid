@@ -20,7 +20,7 @@ const Colour Colour::Blue{"#0000FF"};
 const Colour Colour::Purple{"#800080"};
 const Colour Colour::Fuchsia{"#FF00FF"};
 
-Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
+Colour::Colour(float r, float g, float b, float a) :
 	m_r{r},
 	m_g{g},
 	m_b{b},
@@ -28,7 +28,7 @@ Colour::Colour(const float &r, const float &g, const float &b, const float &a) :
 {
 }
 
-Colour::Colour(std::string hex, const float &a) :
+Colour::Colour(std::string hex, float a) :
 	m_a{a}
 {
 	if (hex[0] == '#')
@@ -64,12 +64,12 @@ Colour Colour::Divide(const Colour &other) const
 	return {m_r / other.m_r, m_g / other.m_g, m_b / other.m_b, m_a / other.m_a};
 }
 
-Colour Colour::Scale(const float &scalar) const
+Colour Colour::Scale(float scalar) const
 {
 	return {m_r * scalar, m_g * scalar, m_b * scalar, m_a * scalar};
 }
 
-Colour Colour::Lerp(const Colour &other, const float &progression) const
+Colour Colour::Lerp(const Colour &other, float progression) const
 {
 	auto ta = *this * (1.0f - progression);
 	auto tb = other * progression;
@@ -132,7 +132,7 @@ bool Colour::operator!=(const Colour &other) const
 	return !(*this == other);
 }
 
-const float &Colour::operator[](const uint32_t &index) const
+float Colour::operator[](uint32_t index) const
 {
 	switch (index)
 	{
@@ -149,7 +149,7 @@ const float &Colour::operator[](const uint32_t &index) const
 	}
 }
 
-float &Colour::operator[](const uint32_t &index)
+float &Colour::operator[](uint32_t index)
 {
 	switch (index)
 	{
@@ -186,42 +186,42 @@ Colour operator/(const Colour &left, const Colour &right)
 	return left.Divide(right);
 }
 
-Colour operator+(const float &value, const Colour &left)
+Colour operator+(float value, const Colour &left)
 {
 	return Colour{value, value, value, 0.0f}.Add(left);
 }
 
-Colour operator-(const float &value, const Colour &left)
+Colour operator-(float value, const Colour &left)
 {
 	return Colour{value, value, value, 0.0f}.Subtract(left);
 }
 
-Colour operator*(const float &value, const Colour &left)
+Colour operator*(float value, const Colour &left)
 {
 	return Colour{value, value, value}.Multiply(left);
 }
 
-Colour operator/(const float &value, const Colour &left)
+Colour operator/(float value, const Colour &left)
 {
 	return Colour{value, value, value}.Divide(left);
 }
 
-Colour operator+(const Colour &left, const float &value)
+Colour operator+(const Colour &left, float value)
 {
 	return left.Add({value, value, value, 0.0f});
 }
 
-Colour operator-(const Colour &left, const float &value)
+Colour operator-(const Colour &left, float value)
 {
 	return left.Subtract({value, value, value, 0.0f});
 }
 
-Colour operator*(const Colour &left, const float &value)
+Colour operator*(const Colour &left, float value)
 {
 	return left.Multiply({value, value, value});
 }
 
-Colour operator/(const Colour &left, const float &value)
+Colour operator/(const Colour &left, float value)
 {
 	return left.Divide({value, value, value});
 }
@@ -246,22 +246,22 @@ Colour &Colour::operator/=(const Colour &other)
 	return *this = Divide(other);
 }
 
-Colour &Colour::operator+=(const float &value)
+Colour &Colour::operator+=(float value)
 {
 	return *this = Add({value, value, value, 0.0f});
 }
 
-Colour &Colour::operator-=(const float &value)
+Colour &Colour::operator-=(float value)
 {
 	return *this = Subtract({value, value, value, 0.0f});
 }
 
-Colour &Colour::operator*=(const float &value)
+Colour &Colour::operator*=(float value)
 {
 	return *this = Multiply({value, value, value});
 }
 
-Colour &Colour::operator/=(const float &value)
+Colour &Colour::operator/=(float value)
 {
 	return *this = Divide({value, value, value});
 }

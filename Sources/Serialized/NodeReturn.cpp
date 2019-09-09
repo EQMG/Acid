@@ -86,7 +86,7 @@ NodeReturn NodeReturn::operator[](const std::string &key)
 	return get()->operator[](key);
 }
 
-NodeReturn NodeReturn::operator[](const uint32_t &index)
+NodeReturn NodeReturn::operator[](uint32_t index)
 {
 	if (!has_value())
 	{

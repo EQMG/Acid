@@ -56,7 +56,7 @@ protected:
 	 * @param factor The time into the drivers life.
 	 * @return The calculated value. 
 	 **/
-	virtual T Calculate(const float &factor) = 0;
+	virtual T Calculate(float factor) = 0;
 
 	Time m_length;
 	Time m_actualTime;

@@ -30,13 +30,13 @@ public:
 
 	const VkQueue &GetTransferQueue() const { return m_transferQueue; }
 
-	const uint32_t &GetGraphicsFamily() const { return m_graphicsFamily; }
+	uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
 
-	const uint32_t &GetPresentFamily() const { return m_presentFamily; }
+	uint32_t GetPresentFamily() const { return m_presentFamily; }
 
-	const uint32_t &GetComputeFamily() const { return m_computeFamily; }
+	uint32_t GetComputeFamily() const { return m_computeFamily; }
 
-	const uint32_t &GetTransferFamily() const { return m_transferFamily; }
+	uint32_t GetTransferFamily() const { return m_transferFamily; }
 
 private:
 	friend class Graphics;

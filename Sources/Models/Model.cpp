@@ -19,7 +19,7 @@ Model::Model()
 {
 }
 
-bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances) const
+bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const
 {
 	if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
 	{
@@ -45,7 +45,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instan
 	return true;
 }
 
-std::vector<uint32_t> Model::GetIndices(const std::size_t &offset) const
+std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
 {
 	Buffer indexStaging{m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-ColliderSphere::ColliderSphere(const float &radius, const Transform &localTransform) :
+ColliderSphere::ColliderSphere(float radius, const Transform &localTransform) :
 	Collider{localTransform, GizmoType::Create(Model::Create("Gizmos/Sphere.obj"), 3.0f, Colour::Blue)},
 	m_shape{std::make_unique<btSphereShape>(radius)},
 	m_radius{radius}
@@ -31,7 +31,7 @@ btCollisionShape *ColliderSphere::GetCollisionShape() const
 	return m_shape.get();
 }
 
-void ColliderSphere::SetRadius(const float &radius)
+void ColliderSphere::SetRadius(float radius)
 {
 	m_radius = radius;
 	m_shape->setUnscaledRadius(m_radius);

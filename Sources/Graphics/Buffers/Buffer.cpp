@@ -80,7 +80,7 @@ void Buffer::UnmapMemory() const
 	vkUnmapMemory(*logicalDevice, GetBufferMemory());
 }
 
-uint32_t Buffer::FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties)
+uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties)
 {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto memoryProperties = physicalDevice->GetMemoryProperties();

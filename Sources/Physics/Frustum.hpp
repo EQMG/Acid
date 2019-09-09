@@ -32,7 +32,7 @@ public:
 	 * @param radius The spheres radius.
 	 * @return If the sphere is contained.
 	 */
-	bool SphereInFrustum(const Vector3f &position, const float &radius) const;
+	bool SphereInFrustum(const Vector3f &position, float radius) const;
 
 	/**
 	 * Gets if a cube contained in the frustum.
@@ -43,7 +43,7 @@ public:
 	bool CubeInFrustum(const Vector3f &min, const Vector3f &max) const;
 
 private:
-	void NormalizePlane(const int32_t &side);
+	void NormalizePlane(int32_t side);
 
 	std::array<std::array<float, 4>, 6> m_frustum{};
 };

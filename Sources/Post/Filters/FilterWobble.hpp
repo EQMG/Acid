@@ -8,13 +8,13 @@ class ACID_EXPORT FilterWobble :
 	public PostFilter
 {
 public:
-	explicit FilterWobble(const Pipeline::Stage &pipelineStage, const float &wobbleSpeed = 2.0f);
+	explicit FilterWobble(const Pipeline::Stage &pipelineStage, float wobbleSpeed = 2.0f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const float &GetWobbleSpeed() const { return m_wobbleSpeed; }
+	float GetWobbleSpeed() const { return m_wobbleSpeed; }
 
-	void SetWobbleSpeed(const float &wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
+	void SetWobbleSpeed(float wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
 
 private:
 	PushHandler m_pushScene;

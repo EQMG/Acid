@@ -52,7 +52,7 @@ public:
 	void SetEnd(const T &end) { m_end = end; }
 
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
 

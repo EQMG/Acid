@@ -17,9 +17,9 @@ public:
 
 	void SetSunPosition(const Vector3f &sunPosition);
 
-	const float &GetSunHeight() const { return m_sunHeight; }
+	float GetSunHeight() const { return m_sunHeight; }
 
-	void SetSunHeight(const float &sunHeight) { m_sunHeight = sunHeight; }
+	void SetSunHeight(float sunHeight) { m_sunHeight = sunHeight; }
 
 private:
 	PushHandler m_pushScene;

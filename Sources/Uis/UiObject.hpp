@@ -87,7 +87,7 @@ public:
 
 	void SetAlphaDriver(std::unique_ptr<Driver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
 
-	const float &GetAlpha() const { return m_alpha; }
+	float GetAlpha() const { return m_alpha; }
 	
 	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
 
@@ -99,7 +99,7 @@ public:
 
 	const Matrix4& GetModelView() const { return m_modelView; }
 
-	const float &GetScreenAlpha() const { return m_screenAlpha; }
+	float GetScreenAlpha() const { return m_screenAlpha; }
 
 	const Vector2f &GetScreenScale() const { return m_screenScale; }
 

@@ -50,7 +50,7 @@ public:
 		return node;
 	}
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
 			{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }

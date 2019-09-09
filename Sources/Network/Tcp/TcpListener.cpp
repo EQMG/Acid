@@ -32,7 +32,7 @@ uint16_t TcpListener::GetLocalPort() const
 	return 0;
 }
 
-Socket::Status TcpListener::Listen(const uint16_t &port, const IpAddress &address)
+Socket::Status TcpListener::Listen(uint16_t port, const IpAddress &address)
 {
 	// Close the socket if it is already bound.
 	Close();

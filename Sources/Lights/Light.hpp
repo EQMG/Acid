@@ -18,7 +18,7 @@ public:
 	 * @param colour The colour of the light.
 	 * @param radius How far the light will have influence (-1 sets this to a directional light).
 	 */
-	explicit Light(const Colour &colour = Colour::White, const float &radius = -1.0f);
+	explicit Light(const Colour &colour = Colour::White, float radius = -1.0f);
 
 	void Start() override;
 
@@ -28,9 +28,9 @@ public:
 
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
-	const float &GetRadius() const { return m_radius; }
+	float GetRadius() const { return m_radius; }
 
-	void SetRadius(const float &radius) { m_radius = radius; }
+	void SetRadius(float radius) { m_radius = radius; }
 
 	friend const Node &operator>>(const Node &node, Light &light);
 

@@ -9,22 +9,22 @@ class ACID_EXPORT PipelineBlur :
 	public PostPipeline
 {
 public:
-	explicit PipelineBlur(const Pipeline::Stage &pipelineStage, const float &blur = 2.0f, const FilterBlur::Type &blurType = FilterBlur::Type::_9, const bool &toScreen = false,
-		const float &inputScale = 0.5f, const float &outputScale = 1.0f);
+	explicit PipelineBlur(const Pipeline::Stage &pipelineStage, float blur = 2.0f, const FilterBlur::Type &blurType = FilterBlur::Type::_9, const bool &toScreen = false,
+		float inputScale = 0.5f, float outputScale = 1.0f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const float &GetInputScale() const { return m_inputScale; }
+	float GetInputScale() const { return m_inputScale; }
 
-	void SetInputScale(const float &inputScale) { m_inputScale = inputScale; }
+	void SetInputScale(float inputScale) { m_inputScale = inputScale; }
 
-	const float &GetOutputScale() const { return m_outputScale; }
+	float GetOutputScale() const { return m_outputScale; }
 
-	void SetOutputScale(const float &outputScale) { m_outputScale = outputScale; }
+	void SetOutputScale(float outputScale) { m_outputScale = outputScale; }
 
-	const float &GetBlur() const { return m_blur; }
+	float GetBlur() const { return m_blur; }
 
-	void SetBlur(const float &blur) { m_blur = blur; }
+	void SetBlur(float blur) { m_blur = blur; }
 
 	const Image2d *GetOutput() const { return m_output.get(); }
 

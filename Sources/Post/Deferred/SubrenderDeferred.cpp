@@ -111,7 +111,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
+std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size)
 {
 	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
@@ -146,7 +146,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(const uint32_t &size)
 	return brdfImage;
 }
 
-std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size)
 {
 	if (source == nullptr)
 	{
@@ -187,7 +187,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	return irradianceCubemap;
 }
 
-std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size)
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size)
 {
 	if (source == nullptr)
 	{

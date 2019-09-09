@@ -51,7 +51,7 @@ public:
 	void SetEnd(const T &end) { m_end = end; }
 
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		auto realTime = static_cast<float>(std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength());
 		return m_start + realTime * (m_end - m_start);

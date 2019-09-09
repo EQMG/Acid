@@ -76,7 +76,7 @@ bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound
 	return false;
 }
 
-VkFormat Shader::GlTypeToVk(const int32_t &type)
+VkFormat Shader::GlTypeToVk(int32_t type)
 {
 	switch (type)
 	{
@@ -192,7 +192,7 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 	return pushConstantRanges;
 }
 
-std::optional<VkDescriptorType> Shader::GetDescriptorType(const uint32_t &location) const
+std::optional<VkDescriptorType> Shader::GetDescriptorType(uint32_t location) const
 {
 	auto it = m_descriptorTypes.find(location);
 
@@ -617,7 +617,7 @@ void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descr
 	}
 }
 
-void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i)
 {
 	auto reflection = program.getUniformBlock(i);
 
@@ -650,7 +650,7 @@ void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderSt
 	m_uniformBlocks.emplace(reflection.name, UniformBlock(reflection.getBinding(), reflection.size, stageFlag, type));
 }
 
-void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i)
 {
 	auto reflection = program.getUniform(i);
 
@@ -686,7 +686,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 	m_uniforms.emplace(reflection.name, Uniform(reflection.getBinding(), reflection.offset, -1, reflection.glDefineType, qualifier.readonly, qualifier.writeonly, stageFlag));
 }
 
-void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, const int32_t &i)
+void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i)
 {
 	auto reflection = program.getPipeInput(i);
 

@@ -27,13 +27,13 @@ IpAddress::IpAddress(const std::string &address)
 	Resolve(address);
 }
 
-IpAddress::IpAddress(const uint8_t &byte0, const uint8_t &byte1, const uint8_t &byte2, const uint8_t &byte3) :
+IpAddress::IpAddress(uint8_t byte0, uint8_t byte1, uint8_t byte2, uint8_t byte3) :
 	m_address(htonl((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3)),
 	m_valid(true)
 {
 }
 
-IpAddress::IpAddress(const uint32_t &address) :
+IpAddress::IpAddress(uint32_t address) :
 	m_address(htonl(address)),
 	m_valid(true)
 {

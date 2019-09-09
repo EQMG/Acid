@@ -10,7 +10,7 @@ namespace test
 static const float TEXT_SIZE = 8.0f;
 static const float VIEW_DISTANCE = 16.0f;
 
-NameTag::NameTag(const std::string &name, const float &heightOffset) :
+NameTag::NameTag(const std::string &name, float heightOffset) :
 	m_name{name},
 	m_heightOffset{heightOffset}
 	//m_text{&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre}, TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova"),

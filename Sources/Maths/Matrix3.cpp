@@ -5,7 +5,7 @@
 
 namespace acid
 {
-Matrix3::Matrix3(const float &diagonal)
+Matrix3::Matrix3(float diagonal)
 {
 	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
 	m_rows[0][0] = diagonal;
@@ -213,7 +213,7 @@ float Matrix3::Determinant() const
 	return result;
 }
 
-Matrix2 Matrix3::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
+Matrix2 Matrix3::GetSubmatrix(uint32_t row, uint32_t col) const
 {
 	Matrix2 result;
 	uint32_t colCount{};
@@ -256,13 +256,13 @@ Matrix3 Matrix3::operator-() const
 	return Negate();
 }
 
-const Vector3f &Matrix3::operator[](const uint32_t &index) const
+const Vector3f &Matrix3::operator[](uint32_t index) const
 {
 	assert(index < 3);
 	return m_rows[index];
 }
 
-Vector3f &Matrix3::operator[](const uint32_t &index)
+Vector3f &Matrix3::operator[](uint32_t index)
 {
 	assert(index < 3);
 	return m_rows[index];
@@ -308,22 +308,22 @@ Matrix3 operator/(const Matrix3 &left, const Vector3f &right)
 	return left.Scale(1.0f / right);
 }
 
-Matrix3 operator*(const float &left, const Matrix3 &right)
+Matrix3 operator*(float left, const Matrix3 &right)
 {
 	return right.Scale({left, left, left});
 }
 
-Matrix3 operator/(const float &left, const Matrix3 &right)
+Matrix3 operator/(float left, const Matrix3 &right)
 {
 	return right.Scale(1.0f / Vector3f{left, left, left});
 }
 
-Matrix3 operator*(const Matrix3 &left, const float &right)
+Matrix3 operator*(const Matrix3 &left, float right)
 {
 	return left.Scale({right, right, right});
 }
 
-Matrix3 operator/(const Matrix3 &left, const float &right)
+Matrix3 operator/(const Matrix3 &left, float right)
 {
 	return left.Scale(1.0f / Vector3f{right, right, right});
 }
@@ -358,12 +358,12 @@ Matrix3 &Matrix3::operator/=(const Vector3f &other)
 	return *this = Scale(1.0f / other);
 }
 
-Matrix3 &Matrix3::operator*=(const float &other)
+Matrix3 &Matrix3::operator*=(float other)
 {
 	return *this = Scale({other, other, other});
 }
 
-Matrix3 &Matrix3::operator/=(const float &other)
+Matrix3 &Matrix3::operator/=(float other)
 {
 	return *this = Scale(1.0f / Vector3f{other, other, other});
 }

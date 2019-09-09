@@ -15,7 +15,7 @@ Packet::Packet() :
 {
 }
 
-void Packet::Append(const void *data, const std::size_t &sizeInBytes)
+void Packet::Append(const void *data, std::size_t sizeInBytes)
 {
 	if (data && (sizeInBytes > 0))
 	{
@@ -269,47 +269,47 @@ Packet &Packet::operator<<(const bool &data)
 	return *this;
 }
 
-Packet &Packet::operator<<(const int8_t &data)
+Packet &Packet::operator<<(int8_t data)
 {
 	Append(&data, sizeof(data));
 	return *this;
 }
 
-Packet &Packet::operator<<(const uint8_t &data)
+Packet &Packet::operator<<(uint8_t data)
 {
 	Append(&data, sizeof(data));
 	return *this;
 }
 
-Packet &Packet::operator<<(const int16_t &data)
+Packet &Packet::operator<<(int16_t data)
 {
 	auto toWrite = static_cast<int16_t>(htons(data));
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
 
-Packet &Packet::operator<<(const uint16_t &data)
+Packet &Packet::operator<<(uint16_t data)
 {
 	auto toWrite = static_cast<uint16_t>(htons(data));
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
 
-Packet &Packet::operator<<(const int32_t &data)
+Packet &Packet::operator<<(int32_t data)
 {
 	auto toWrite = static_cast<int32_t>(htonl(data));
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
 
-Packet &Packet::operator<<(const uint32_t &data)
+Packet &Packet::operator<<(uint32_t data)
 {
 	auto toWrite = static_cast<uint32_t>(htonl(data));
 	Append(&toWrite, sizeof(toWrite));
 	return *this;
 }
 
-Packet &Packet::operator<<(const int64_t &data)
+Packet &Packet::operator<<(int64_t data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
 	uint8_t toWrite[]{ static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF),
@@ -319,7 +319,7 @@ Packet &Packet::operator<<(const int64_t &data)
 	return *this;
 }
 
-Packet &Packet::operator<<(const uint64_t &data)
+Packet &Packet::operator<<(uint64_t data)
 {
 	// Since htonll is not available everywhere, we have to convert to network byte order (big endian) manually.
 	uint8_t toWrite[]{ static_cast<uint8_t>((data >> 56) & 0xFF), static_cast<uint8_t>((data >> 48) & 0xFF), static_cast<uint8_t>((data >> 40) & 0xFF),
@@ -329,13 +329,13 @@ Packet &Packet::operator<<(const uint64_t &data)
 	return *this;
 }
 
-Packet &Packet::operator<<(const float &data)
+Packet &Packet::operator<<(float data)
 {
 	Append(&data, sizeof(data));
 	return *this;
 }
 
-Packet &Packet::operator<<(const double &data)
+Packet &Packet::operator<<(double data)
 {
 	Append(&data, sizeof(data));
 	return *this;
@@ -406,12 +406,12 @@ std::pair<const void *, std::size_t> Packet::OnSend()
 	return {GetData(), GetDataSize()};
 }
 
-void Packet::OnReceive(const void *data, const std::size_t &size)
+void Packet::OnReceive(const void *data, std::size_t size)
 {
 	Append(data, size);
 }
 
-bool Packet::CheckSize(const std::size_t &size)
+bool Packet::CheckSize(std::size_t size)
 {
 	m_isValid = m_isValid && (m_readPos + size <= m_data.size());
 	return m_isValid;

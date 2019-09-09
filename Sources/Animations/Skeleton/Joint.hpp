@@ -33,7 +33,7 @@ public:
 	 * @param name The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to.
 	 * @param bindLocalTransform The bone-space transform of the joint in the bind position.
 	 **/
-	Joint(const uint32_t &index, std::string name, const Matrix4 &bindLocalTransform);
+	Joint(uint32_t index, std::string name, const Matrix4 &bindLocalTransform);
 
 	/**
 	 * This is called during set-up, after the joints hierarchy has been created. This calculates the model-space bind transform of this joint like so:
@@ -48,9 +48,9 @@ public:
 	 **/
 	void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
-	const uint32_t &GetIndex() const { return m_index; }
+	uint32_t GetIndex() const { return m_index; }
 
-	void SetIndex(const uint32_t &index) { m_index = index; }
+	void SetIndex(uint32_t index) { m_index = index; }
 
 	const std::string &GetName() const { return m_name; }
 

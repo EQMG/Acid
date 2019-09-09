@@ -180,8 +180,8 @@ static const float CELL_3D_Z[]{-0.6341391283f, -0.7207118346f, 0.9597866014f, 0.
 0.615630723f, 0.3430367014f, 0.8193658136f, -0.5829600957f, 0.07911697781f, 0.7854296063f, -0.4107442306f, 0.4766964066f, -0.9045999527f, -0.1673856787f, 0.2828077348f,
 -0.5902737632f, -0.321506229f, -0.5224513133f, -0.4090169985f, -0.3599685311f};
 
-Noise::Noise(const uint64_t &seed, const float &frequency, const Interp &interp, const Type &type, const int32_t &octaves, const float &lacunarity, const float &gain,
-	const Fractal &fractal, const float &fractalBounding) :
+Noise::Noise(uint64_t seed, float frequency, const Interp &interp, const Type &type, int32_t octaves, float lacunarity, float gain,
+	const Fractal &fractal, float fractalBounding) :
 	m_seed{seed},
 	m_perm{std::unique_ptr<uint8_t[]>(new uint8_t[512])},
 	m_perm12{std::unique_ptr<uint8_t[]>(new uint8_t[512])},
@@ -204,7 +204,7 @@ Noise::Noise(const uint64_t &seed, const float &frequency, const Interp &interp,
 	CalculateFractalBounding();
 }
 
-void Noise::SetSeed(const uint64_t &seed)
+void Noise::SetSeed(uint64_t seed)
 {
 	m_seed = seed;
 
@@ -226,13 +226,13 @@ void Noise::SetSeed(const uint64_t &seed)
 	}
 }
 
-void Noise::SetFractalOctaves(const int32_t &octaves)
+void Noise::SetFractalOctaves(int32_t octaves)
 {
 	m_octaves = octaves;
 	CalculateFractalBounding();
 }
 
-void Noise::SetFractalGain(const float &gain)
+void Noise::SetFractalGain(float gain)
 {
 	m_gain = gain;
 	CalculateFractalBounding();
@@ -244,7 +244,7 @@ void Noise::GetCellularDistance2Indices(int32_t &cellularDistanceIndex0, int32_t
 	cellularDistanceIndex1 = m_cellularDistanceIndex1;
 }
 
-void Noise::SetCellularDistance2Indices(const int32_t &cellularDistanceIndex0, const int32_t &cellularDistanceIndex1)
+void Noise::SetCellularDistance2Indices(int32_t cellularDistanceIndex0, int32_t cellularDistanceIndex1)
 {
 	m_cellularDistanceIndex0 = std::min(cellularDistanceIndex0, cellularDistanceIndex1);
 	m_cellularDistanceIndex1 = std::max(cellularDistanceIndex0, cellularDistanceIndex1);
@@ -726,68 +726,68 @@ void Noise::CalculateFractalBounding()
 }
 
 // Helpers
-int32_t Noise::FastFloor(const float &f)
+int32_t Noise::FastFloor(float f)
 {
 	return (f >= 0 ? static_cast<int>(f) : static_cast<int>(f) - 1);
 }
 
-int32_t Noise::FastRound(const float &f)
+int32_t Noise::FastRound(float f)
 {
 	return (f >= 0) ? static_cast<int>(f + 0.5f) : static_cast<int>(f - 0.5f);
 }
 
-float Noise::Lerp(const float &a, const float &b, const float &t)
+float Noise::Lerp(float a, float b, float t)
 {
 	return a + t * (b - a);
 }
 
-float Noise::InterpHermite(const float &t)
+float Noise::InterpHermite(float t)
 {
 	return t * t * (3.0f - 2.0f * t);
 }
 
-float Noise::InterpQuintic(const float &t)
+float Noise::InterpQuintic(float t)
 {
 	return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f);
 }
 
-float Noise::CubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t)
+float Noise::CubicLerp(float a, float b, float c, float d, float t)
 {
 	auto p = (d - c) - (a - b);
 	return t * t * t * p + t * t * ((a - b) - p) + t * (c - a) + b;
 }
 
-uint8_t Noise::Index2d12(const uint8_t &offset, const int32_t &x, const int32_t &y) const
+uint8_t Noise::Index2d12(uint8_t offset, int32_t x, int32_t y) const
 {
 	return m_perm12[(x & 0xff) + m_perm[(y & 0xff) + offset]];
 }
 
-uint8_t Noise::Index3d12(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const
+uint8_t Noise::Index3d12(uint8_t offset, int32_t x, int32_t y, int32_t z) const
 {
 	return m_perm12[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + offset]]];
 }
 
-uint8_t Noise::Index4d32(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const
+uint8_t Noise::Index4d32(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + m_perm[(w & 0xff) + offset]]]] & 31;
 }
 
-uint8_t Noise::Index2d256(const uint8_t &offset, const int32_t &x, const int32_t &y) const
+uint8_t Noise::Index2d256(uint8_t offset, int32_t x, int32_t y) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + offset]];
 }
 
-uint8_t Noise::Index3d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const
+uint8_t Noise::Index3d256(uint8_t offset, int32_t x, int32_t y, int32_t z) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + offset]]];
 }
 
-uint8_t Noise::Index4d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const
+uint8_t Noise::Index4d256(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w) const
 {
 	return m_perm[(x & 0xff) + m_perm[(y & 0xff) + m_perm[(z & 0xff) + m_perm[(w & 0xff) + offset]]]];
 }
 
-float Noise::ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t &y)
+float Noise::ValueCoord2d(uint64_t seed, int32_t x, int32_t y)
 {
 	auto n = seed;
 	n ^= X_PRIME * x;
@@ -795,7 +795,7 @@ float Noise::ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t 
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float Noise::ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z)
+float Noise::ValueCoord3d(uint64_t seed, int32_t x, int32_t y, int32_t z)
 {
 	auto n = seed;
 	n ^= X_PRIME * x;
@@ -805,7 +805,7 @@ float Noise::ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t 
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float Noise::ValueCoord4d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w)
+float Noise::ValueCoord4d(uint64_t seed, int32_t x, int32_t y, int32_t z, int32_t w)
 {
 	auto n = seed;
 	n ^= X_PRIME * x;
@@ -815,30 +815,30 @@ float Noise::ValueCoord4d(const uint64_t &seed, const int32_t &x, const int32_t 
 	return (n * n * n * 60493) / 2147483648.0f;
 }
 
-float Noise::ValueCoord2dFast(const uint8_t &offset, const int32_t &x, const int32_t &y) const
+float Noise::ValueCoord2dFast(uint8_t offset, int32_t x, int32_t y) const
 {
 	return VAL_LUT[Index2d256(offset, x, y)];
 }
 
-float Noise::ValueCoord3dFast(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const
+float Noise::ValueCoord3dFast(uint8_t offset, int32_t x, int32_t y, int32_t z) const
 {
 	return VAL_LUT[Index3d256(offset, x, y, z)];
 }
 
-float Noise::GradCoord2d(const uint8_t &offset, const int32_t &x, const int32_t &y, const float &xd, const float &yd) const
+float Noise::GradCoord2d(uint8_t offset, int32_t x, int32_t y, float xd, float yd) const
 {
 	auto lutPos = Index2d12(offset, x, y);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos];
 }
 
-float Noise::GradCoord3d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const float &xd, const float &yd, const float &zd) const
+float Noise::GradCoord3d(uint8_t offset, int32_t x, int32_t y, int32_t z, float xd, float yd, float zd) const
 {
 	auto lutPos = Index3d12(offset, x, y, z);
 	return xd * GRAD_X[lutPos] + yd * GRAD_Y[lutPos] + zd * GRAD_Z[lutPos];
 }
 
-float Noise::GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd,
-	const float &wd) const
+float Noise::GradCoord4d(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w, float xd, float yd, float zd,
+	float wd) const
 {
 	auto lutPos = Index4d32(offset, x, y, z, w) << 2;
 	return xd * GRAD_4D[lutPos] + yd * GRAD_4D[lutPos + 1] + zd * GRAD_4D[lutPos + 2] + wd * GRAD_4D[lutPos + 3];
@@ -898,7 +898,7 @@ float Noise::SingleValueFractalRigidMulti(float x, float y) const
 	return sum;
 }
 
-float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y) const
+float Noise::SingleValue(uint8_t offset, float x, float y) const
 {
 	auto x0 = FastFloor(x);
 	auto y0 = FastFloor(y);
@@ -983,7 +983,7 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y) const
 	return sum;
 }
 
-float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y) const
+float Noise::SinglePerlin(uint8_t offset, float x, float y) const
 {
 	auto x0 = FastFloor(x);
 	auto y0 = FastFloor(y);
@@ -1092,7 +1092,7 @@ float Noise::singleSimplexFractalBlend(float x, float y) const
 	return sum * m_fractalBounding;
 }
 
-float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y) const
+float Noise::SingleSimplex(uint8_t offset, float x, float y) const
 {
 	auto t = (x + y) * F2;
 	auto i = FastFloor(x + t);
@@ -1218,7 +1218,7 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y) const
 	return sum;
 }
 
-float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y) const
+float Noise::SingleCubic(uint8_t offset, float x, float y) const
 {
 	auto x1 = FastFloor(x);
 	auto y1 = FastFloor(y);
@@ -1240,7 +1240,7 @@ float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y) 
 		* CUBIC_2D_BOUNDING;
 }
 
-float Noise::SingleCellular(const float &x, const float &y) const
+float Noise::SingleCellular(float x, float y) const
 {
 	auto xr = FastRound(x);
 	auto yr = FastRound(y);
@@ -1335,7 +1335,7 @@ float Noise::SingleCellular(const float &x, const float &y) const
 	}
 }
 
-float Noise::SingleCellular2Edge(const float &x, const float &y) const
+float Noise::SingleCellular2Edge(float x, float y) const
 {
 	auto xr = FastRound(x);
 	auto yr = FastRound(y);
@@ -1427,7 +1427,7 @@ float Noise::SingleCellular2Edge(const float &x, const float &y) const
 	}
 }
 
-void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y) const
+void Noise::SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency, float x, float y) const
 {
 	auto xf = x * frequency;
 	auto yf = y * frequency;
@@ -1530,7 +1530,7 @@ float Noise::SingleValueFractalRigidMulti(float x, float y, float z) const
 	return sum;
 }
 
-float Noise::SingleValue(const uint8_t &offset, const float &x, const float &y, const float &z) const
+float Noise::SingleValue(uint8_t offset, float x, float y, float z) const
 {
 	auto x0 = FastFloor(x);
 	auto y0 = FastFloor(y);
@@ -1630,7 +1630,7 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y, float z) const
 	return sum;
 }
 
-float Noise::SinglePerlin(const uint8_t &offset, const float &x, const float &y, const float &z) const
+float Noise::SinglePerlin(uint8_t offset, float x, float y, float z) const
 {
 	auto x0 = FastFloor(x);
 	auto y0 = FastFloor(y);
@@ -1737,7 +1737,7 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y, float z) const
 	return sum;
 }
 
-float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z) const
+float Noise::SingleSimplex(uint8_t offset, float x, float y, float z) const
 {
 	auto t = (x + y + z) * F3;
 	auto i = FastFloor(x + t);
@@ -1937,7 +1937,7 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y, float z) const
 	return sum;
 }
 
-float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y, const float &z) const
+float Noise::SingleCubic(uint8_t offset, float x, float y, float z) const
 {
 	auto x1 = FastFloor(x);
 	auto y1 = FastFloor(y);
@@ -1980,7 +1980,7 @@ float Noise::SingleCubic(const uint8_t &offset, const float &x, const float &y, 
 					ys), zs) * CUBIC_3D_BOUNDING;
 }
 
-float Noise::SingleCellular(const float &x, const float &y, const float &z) const
+float Noise::SingleCellular(float x, float y, float z) const
 {
 	auto xr = FastRound(x);
 	auto yr = FastRound(y);
@@ -2093,7 +2093,7 @@ float Noise::SingleCellular(const float &x, const float &y, const float &z) cons
 	}
 }
 
-float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z) const
+float Noise::SingleCellular2Edge(float x, float y, float z) const
 {
 	auto xr = FastRound(x);
 	auto yr = FastRound(y);
@@ -2199,7 +2199,7 @@ float Noise::SingleCellular2Edge(const float &x, const float &y, const float &z)
 	}
 }
 
-void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const
+void Noise::SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency, float x, float y, float z) const
 {
 	auto xf = x * frequency;
 	auto yf = y * frequency;
@@ -2272,7 +2272,7 @@ void Noise::SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, c
 }
 
 // 4D
-float Noise::SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const
+float Noise::SingleSimplex(uint8_t offset, float x, float y, float z, float w) const
 {
 	float n0, n1, n2, n3, n4;
 	auto t = (x + y + z + w) * F4;

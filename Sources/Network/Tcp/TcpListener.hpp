@@ -47,7 +47,7 @@ public:
 	 * @param address Address of the interface to listen on. 
 	 * @return Status code. 
 	 **/
-	Status Listen(const uint16_t &port, const IpAddress &address = IpAddress::Any);
+	Status Listen(uint16_t port, const IpAddress &address = IpAddress::Any);
 
 	/**
 	 * Stop listening and close the socket. This function gracefully stops the listener.

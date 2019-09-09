@@ -4,7 +4,7 @@
 
 namespace acid
 {
-ButtonJoystick::ButtonJoystick(const uint32_t &port, const uint32_t &button) :
+ButtonJoystick::ButtonJoystick(uint32_t port, uint32_t button) :
 	m_port{port},
 	m_button{button}
 {

@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterSphere :
 	public Emitter
 {
 public:
-	explicit EmitterSphere(const float &radius = 1.0f);
+	explicit EmitterSphere(float radius = 1.0f);
 
 	void Start() override;
 
@@ -16,9 +16,9 @@ public:
 
 	Vector3f GeneratePosition() const override;
 
-	const float &GetRadius() const { return m_radius; }
+	float GetRadius() const { return m_radius; }
 
-	void SetRadius(const float &radius) { m_radius = radius; }
+	void SetRadius(float radius) { m_radius = radius; }
 
 	friend const Node &operator>>(const Node &node, EmitterSphere &emitter);
 

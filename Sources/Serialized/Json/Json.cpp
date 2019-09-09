@@ -106,7 +106,7 @@ void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::stri
 	current.clear();
 }
 
-void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, const int32_t &i, int32_t &r)
+void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, int32_t i, int32_t &r)
 {
 	if (v[i].second == "{")
 	{
@@ -152,7 +152,7 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 	}
 }
 
-void Json::AppendData(const Node &source, std::ostream &stream, const int32_t &indentation, const Format &format)
+void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentation, const Format &format)
 {
 	// Creates a string for the indentation level.
 	std::string indents(2 * indentation, ' ');

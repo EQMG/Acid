@@ -2,7 +2,7 @@
 
 namespace acid
 {
-ThreadPool::ThreadPool(const uint32_t &threadCount)
+ThreadPool::ThreadPool(uint32_t threadCount)
 {
 	m_workers.reserve(threadCount);
 

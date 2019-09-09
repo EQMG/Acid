@@ -5,7 +5,7 @@
 
 namespace acid
 {
-UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo,
+UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo,
 	const UiTransform &transform) :
 	UiObject{parent, transform},
 	m_slider{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
@@ -68,7 +68,7 @@ void UiInputSlider::UpdateObject()
 	m_slider.GetTransform().SetAnchor1({m_progress - 1.0f, 0.0f});
 }
 
-void UiInputSlider::SetValue(const float &value)
+void UiInputSlider::SetValue(float value)
 {
 	m_value = value;
 	UpdateProgress();

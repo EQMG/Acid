@@ -5,7 +5,7 @@
 
 namespace acid
 {
-Matrix4::Matrix4(const float &diagonal)
+Matrix4::Matrix4(float diagonal)
 {
 	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[0][0] = diagonal;
@@ -178,7 +178,7 @@ Matrix4 Matrix4::Scale(const Vector4f &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Rotate(const float &angle, const Vector3f &axis) const
+Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const
 {
 	Matrix4 result;
 
@@ -294,7 +294,7 @@ float Matrix4::Determinant() const
 	return result;
 }
 
-Matrix3 Matrix4::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
+Matrix3 Matrix4::GetSubmatrix(uint32_t row, uint32_t col) const
 {
 	Matrix3 result;
 	uint32_t colCount{};
@@ -333,7 +333,7 @@ Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3
 	return result;
 }
 
-Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar)
+Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar)
 {
 	Matrix4 result{0.0f};
 
@@ -347,7 +347,7 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 	return result;
 }
 
-Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear)
+Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear)
 {
 	Matrix4 result{0.0f};
 
@@ -365,7 +365,7 @@ Matrix4 Matrix4::PerspectiveMatrix(const float &fov, const float &aspectRatio, c
 	return result;
 }
 
-Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
+Matrix4 Matrix4::OrthographicMatrix(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	Matrix4 result;
 
@@ -378,7 +378,7 @@ Matrix4 Matrix4::OrthographicMatrix(const float &left, const float &right, const
 	return result;
 }
 
-Matrix4 Matrix4::FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar)
+Matrix4 Matrix4::FrustumMatrix(float left, float right, float bottom, float top, float zNear, float zFar)
 {
 	Matrix4 result{0.0f};
 
@@ -460,13 +460,13 @@ Matrix4 Matrix4::operator-() const
 	return Negate();
 }
 
-const Vector4f &Matrix4::operator[](const uint32_t &index) const
+const Vector4f &Matrix4::operator[](uint32_t index) const
 {
 	assert(index < 4);
 	return m_rows[index];
 }
 
-Vector4f &Matrix4::operator[](const uint32_t &index)
+Vector4f &Matrix4::operator[](uint32_t index)
 {
 	assert(index < 4);
 	return m_rows[index];
@@ -512,22 +512,22 @@ Matrix4 operator/(const Matrix4 &left, const Vector4f &right)
 	return left.Scale(1.0f / right);
 }
 
-Matrix4 operator*(const float &left, const Matrix4 &right)
+Matrix4 operator*(float left, const Matrix4 &right)
 {
 	return right.Scale({left, left, left, left});
 }
 
-Matrix4 operator/(const float &left, const Matrix4 &right)
+Matrix4 operator/(float left, const Matrix4 &right)
 {
 	return right.Scale(1.0f / Vector4f{left, left, left, left});
 }
 
-Matrix4 operator*(const Matrix4 &left, const float &right)
+Matrix4 operator*(const Matrix4 &left, float right)
 {
 	return left.Scale({right, right, right, right});
 }
 
-Matrix4 operator/(const Matrix4 &left, const float &right)
+Matrix4 operator/(const Matrix4 &left, float right)
 {
 	return left.Scale(1.0f / Vector4f{right, right, right, right});
 }
@@ -562,12 +562,12 @@ Matrix4 &Matrix4::operator/=(const Vector4f &other)
 	return *this = Scale(1.0f / other);
 }
 
-Matrix4 &Matrix4::operator*=(const float &other)
+Matrix4 &Matrix4::operator*=(float other)
 {
 	return *this = Scale({other, other, other, other});
 }
 
-Matrix4 &Matrix4::operator/=(const float &other)
+Matrix4 &Matrix4::operator/=(float other)
 {
 	return *this = Scale(1.0f / Vector4f{other, other, other, other});
 }

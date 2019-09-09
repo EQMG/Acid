@@ -131,7 +131,7 @@ std::optional<Attachment> RenderStage::GetAttachment(const std::string &name) co
 	return *it;
 }
 
-std::optional<Attachment> RenderStage::GetAttachment(const uint32_t &binding) const
+std::optional<Attachment> RenderStage::GetAttachment(uint32_t binding) const
 {
 	auto it{std::find_if(m_attachments.begin(), m_attachments.end(), [binding](const Attachment &a)
 	{
@@ -158,7 +158,7 @@ const Descriptor *RenderStage::GetDescriptor(const std::string &name) const
 	return nullptr;
 }
 
-const VkFramebuffer &RenderStage::GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const
+const VkFramebuffer &RenderStage::GetActiveFramebuffer(uint32_t activeSwapchainImage) const
 {
 	if (activeSwapchainImage > m_framebuffers->GetFramebuffers().size())
 	{

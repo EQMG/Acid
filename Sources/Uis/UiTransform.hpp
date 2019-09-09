@@ -91,9 +91,9 @@ public:
 
 	void SetMargins(const std::optional<BitMask<UiMargins>> &margins) { m_margins = margins; }
 	
-	const float &GetDepth() const { return m_depth; }
+	float GetDepth() const { return m_depth; }
 
-	void SetDepth(const float &depth) { m_depth = depth; }
+	void SetDepth(float depth) { m_depth = depth; }
 
 	bool operator==(const UiTransform &other) const;
 

@@ -28,8 +28,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength,
-	const float &stageCycles, const float &scale)
+std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength,
+	float stageCycles, float scale)
 {
 	ParticleType temp{image, numberOfRows, colourOffset, lifeLength, stageCycles, scale};
 	Node node;
@@ -37,8 +37,8 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 	return Create(node);
 }
 
-ParticleType::ParticleType(std::shared_ptr<Image2d> image, const uint32_t &numberOfRows, const Colour &colourOffset, const float &lifeLength, const float &stageCycles,
-	const float &scale) :
+ParticleType::ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength, float stageCycles,
+	float scale) :
 	m_image{std::move(image)},
 	m_model{ModelRectangle::Create(-0.5f, 0.5f)},
 	m_numberOfRows{numberOfRows},

@@ -60,13 +60,13 @@ static uint32_t CellAddRange(uint32_t cell, uint32_t from, uint32_t to);
 
 static bool IsCellFilled(const Outline *o, const Rect &bbox);
 
-static bool WipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell &cell);
+static bool WipcellAddBezier(const Outline *o, const Outline *u, uint32_t i, uint32_t j, uint32_t contourIndex, WipCell &cell);
 
-static bool WipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell &cell, uint32_t &maxStartLength);
+static bool WipcellFinishContour(const Outline *o, const Outline *u, uint32_t contourIndex, WipCell &cell, uint32_t &maxStartLength);
 
-static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, const uint32_t &i, const uint32_t &j, const uint32_t &contourIndex, WipCell *cells);
+static bool ForEachWipcellAddBezier(const Outline *o, const Outline *u, uint32_t i, uint32_t j, uint32_t contourIndex, WipCell *cells);
 
-static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, const uint32_t &contourIndex, WipCell *cells, uint32_t &maxStartLength);
+static bool ForEachWipcellFinishContour(const Outline *o, const Outline *u, uint32_t contourIndex, WipCell *cells, uint32_t &maxStartLength);
 
 static void CopyWipcellValues(Outline *u, const WipCell *cells);
 
@@ -74,9 +74,9 @@ static void InitWipcells(const Outline *o, WipCell *cells);
 
 static uint32_t OutlineAddFilledLine(Outline *o);
 
-static uint32_t MakeCellFromSingleEdge(const uint32_t &e);
+static uint32_t MakeCellFromSingleEdge(uint32_t e);
 
-static void SetFilledCells(const Outline *u, WipCell *cells, const uint32_t &filledCell);
+static void SetFilledCells(const Outline *u, WipCell *cells, uint32_t filledCell);
 
 static bool TryToFitInCellCount(Outline *o);
 
@@ -92,7 +92,7 @@ static void OutlineFixThinLines(Outline *o);
 
 void OutlineCbox(Outline *o, Rect *cbox);
 
-static uint16_t GenU16Value(const float &x, const float &min, const float &max);
+static uint16_t GenU16Value(float x, float min, float max);
 
 void OutlineU16Points(Outline *o, Rect *cbox, Vector2us *pout);
 }

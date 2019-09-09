@@ -28,7 +28,7 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(const float &mass = 1.0f, const float &friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
+	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
 
 	virtual ~CollisionObject();
 
@@ -53,9 +53,9 @@ public:
 
 	void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
 
-	const float &GetMass() const { return m_mass; }
+	float GetMass() const { return m_mass; }
 
-	virtual void SetMass(const float &mass) = 0;
+	virtual void SetMass(float mass) = 0;
 
 	const Vector3f &GetGravity() const { return m_gravity; }
 
@@ -69,17 +69,17 @@ public:
 
 	virtual void SetAngularFactor(const Vector3f &angularFactor) = 0;
 
-	const float &GetFriction() const { return m_friction; }
+	float GetFriction() const { return m_friction; }
 
-	void SetFriction(const float &friction);
+	void SetFriction(float friction);
 
-	const float &GetFrictionRolling() const { return m_frictionRolling; }
+	float GetFrictionRolling() const { return m_frictionRolling; }
 
-	void SetFrictionRolling(const float &frictionRolling);
+	void SetFrictionRolling(float frictionRolling);
 
-	const float &GetFrictionSpinning() const { return m_frictionSpinning; }
+	float GetFrictionSpinning() const { return m_frictionSpinning; }
 
-	void SetFrictionSpinning(const float &frictionSpinning);
+	void SetFrictionSpinning(float frictionSpinning);
 
 	const Vector3f &GetLinearVelocity() const { return m_linearVelocity; }
 

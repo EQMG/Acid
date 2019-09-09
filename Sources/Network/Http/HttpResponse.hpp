@@ -101,13 +101,13 @@ public:
 	 * Get the major HTTP version number of the response.
 	 * @return Major HTTP version number. 
 	 **/
-	const uint32_t &GetMajorHttpVersion() const { return m_majorVersion; }
+	uint32_t GetMajorHttpVersion() const { return m_majorVersion; }
 
 	/**
 	 * Get the minor HTTP version number of the response.
 	 * @return Minor HTTP version number. 
 	 **/
-	const uint32_t &GetMinorHttpVersion() const { return m_minorVersion; }
+	uint32_t GetMinorHttpVersion() const { return m_minorVersion; }
 
 	/**
 	 * Get the body of the response.

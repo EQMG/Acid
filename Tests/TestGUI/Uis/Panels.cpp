@@ -2,7 +2,7 @@
 
 namespace test
 {
-int32_t GetNextY(const uint32_t &inc = 1)
+int32_t GetNextY(uint32_t inc = 1)
 {
 	static int32_t i{-1};
 	i += inc;

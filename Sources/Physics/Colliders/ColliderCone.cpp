@@ -5,7 +5,7 @@
 
 namespace acid
 {
-ColliderCone::ColliderCone(const float &radius, const float &height, const Transform &localTransform) :
+ColliderCone::ColliderCone(float radius, float height, const Transform &localTransform) :
 	Collider{localTransform, GizmoType::Create(Model::Create("Gizmos/Cone.obj"), 3.0f, Colour::Green)},
 	m_shape{std::make_unique<btConeShape>(radius, height)},
 	m_radius{radius},
@@ -32,14 +32,14 @@ btCollisionShape *ColliderCone::GetCollisionShape() const
 	return m_shape.get();
 }
 
-void ColliderCone::SetRadius(const float &radius)
+void ColliderCone::SetRadius(float radius)
 {
 	m_radius = radius;
 	m_shape->setRadius(m_radius);
 	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
 }
 
-void ColliderCone::SetHeight(const float &height)
+void ColliderCone::SetHeight(float height)
 {
 	m_height = height;
 	m_shape->setHeight(m_height);

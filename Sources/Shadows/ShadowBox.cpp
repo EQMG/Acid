@@ -13,7 +13,7 @@ ShadowBox::ShadowBox()
 	m_offset = m_offset.Scale(Vector3f(0.5f));
 }
 
-void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, const float &shadowOffset, const float &shadowDistance)
+void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, float shadowOffset, float shadowDistance)
 {
 	m_lightDirection = lightDirection;
 	m_shadowOffset = shadowOffset;
@@ -26,7 +26,7 @@ void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, con
 	UpdateViewShadowMatrix();
 }
 
-bool ShadowBox::IsInBox(const Vector3f &position, const float &radius) const
+bool ShadowBox::IsInBox(const Vector3f &position, float radius) const
 {
 	auto entityPos = m_lightViewMatrix.Transform(Vector4f(position));
 
@@ -104,7 +104,7 @@ std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotat
 	return points;
 }
 
-Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, const float &width) const
+Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, float width) const
 {
 	Vector4f point{startPoint + (direction * width)};
 	point = m_lightViewMatrix.Transform(point);

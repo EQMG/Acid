@@ -64,32 +64,32 @@ Time operator-(const Time &left, const Time &right)
 	return left.m_microseconds - right.m_microseconds;
 }
 
-Time operator*(const Time &left, const float &right)
+Time operator*(const Time &left, float right)
 {
 	return left.m_microseconds * right;
 }
 
-Time operator*(const Time &left, const int64_t &right)
+Time operator*(const Time &left, int64_t right)
 {
 	return left.m_microseconds * right;
 }
 
-Time operator*(const float &left, const Time &right)
+Time operator*(float left, const Time &right)
 {
 	return right * left;
 }
 
-Time operator*(const int64_t &left, const Time &right)
+Time operator*(int64_t left, const Time &right)
 {
 	return right * left;
 }
 
-Time operator/(const Time &left, const float &right)
+Time operator/(const Time &left, float right)
 {
 	return left.m_microseconds / right;
 }
 
-Time operator/(const Time &left, const int64_t &right)
+Time operator/(const Time &left, int64_t right)
 {
 	return left.m_microseconds / right;
 }
@@ -109,22 +109,22 @@ Time &Time::operator-=(const Time &other)
 	return *this = *this - other;
 }
 
-Time &Time::operator*=(const float &other)
+Time &Time::operator*=(float other)
 {
 	return *this = *this * other;
 }
 
-Time &Time::operator*=(const int64_t &other)
+Time &Time::operator*=(int64_t other)
 {
 	return *this = *this * other;
 }
 
-Time &Time::operator/=(const float &other)
+Time &Time::operator/=(float other)
 {
 	return *this = *this / other;
 }
 
-Time &Time::operator/=(const int64_t &other)
+Time &Time::operator/=(int64_t other)
 {
 	return *this = *this / other;
 }

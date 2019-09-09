@@ -36,35 +36,35 @@ public:
 	 * @param port The joystick to check connection with.
 	 * @return If the joystick is connected.
 	 */
-	bool IsConnected(const uint32_t &port) const;
+	bool IsConnected(uint32_t port) const;
 
 	/**
 	 * Gets the name of the joystick.
 	 * @param port The joystick to get the name of.
 	 * @return The joysticks name.
 	 */
-	std::string GetName(const uint32_t &port) const;
+	std::string GetName(uint32_t port) const;
 
 	/**
 	 * Gets the number of axes the joystick contains.
 	 * @param port The joystick to the the axis count from.
 	 * @return The number of axes the joystick contains.
 	 */
-	uint32_t GetAxisCount(const uint32_t &port) const;
+	uint32_t GetAxisCount(uint32_t port) const;
 
 	/**
 	 * Gets the number of buttons the joystick contains.
 	 * @param port The joystick to the the button count from.
 	 * @return The number of buttons the joystick contains.
 	 */
-	uint32_t GetButtonCount(const uint32_t &port) const;
+	uint32_t GetButtonCount(uint32_t port) const;
 
 	/**
 	 * Gets the number of hats the joystick contains.
 	 * @param port The joystick to the the hats count from.
 	 * @return The number of hats the joystick contains.
 	 */
-	uint32_t GetHatCount(const uint32_t &port) const;
+	uint32_t GetHatCount(uint32_t port) const;
 
 	/**
 	 * Gets the value of a joysticks axis.
@@ -72,7 +72,7 @@ public:
 	 * @param axis The axis id to get the value from.
 	 * @return The value of the joystick's axis.
 	 */
-	float GetAxis(const uint32_t &port, const uint32_t &axis) const;
+	float GetAxis(uint32_t port, uint32_t axis) const;
 
 	/**
 	 * Gets the whether a button on a joystick is pressed.
@@ -80,7 +80,7 @@ public:
 	 * @param button The button id to get the value from.
 	 * @return Whether a button on a joystick is pressed.
 	 */
-	InputAction GetButton(const uint32_t &port, const uint32_t &button) const;
+	InputAction GetButton(uint32_t port, uint32_t button) const;
 
 	/**
 	 * Gets the value of a joysticks hat.
@@ -88,7 +88,7 @@ public:
 	 * @param hat The hat id to get the value from.
 	 * @return The value of the joystick's hat.
 	 */
-	BitMask<JoystickHat> GetHat(const uint32_t &port, const uint32_t &hat) const;
+	BitMask<JoystickHat> GetHat(uint32_t port, uint32_t hat) const;
 
 	/**
 	 * Called when a joystick has been connected or disconnected.
@@ -123,7 +123,7 @@ private:
 		std::vector<BitMask<JoystickHat>> m_hats;
 	};
 
-	std::optional<JoystickImpl> GetJoystick(const uint32_t &port) const;
+	std::optional<JoystickImpl> GetJoystick(uint32_t port) const;
 
 	friend void CallbackJoystick(int32_t id, int32_t event);
 

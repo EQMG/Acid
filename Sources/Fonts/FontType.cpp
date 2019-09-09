@@ -158,7 +158,7 @@ void FontType::Load()
 	LoadFont(m_filename / (m_style + ".ttf"));
 }
 
-uint32_t FontType::AlignUint32(const uint32_t &value, const uint32_t &alignment)
+uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment)
 {
 	return (value + alignment - 1) / alignment * alignment;
 }

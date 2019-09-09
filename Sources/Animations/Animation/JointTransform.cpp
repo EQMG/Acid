@@ -19,14 +19,14 @@ Matrix4 JointTransform::GetLocalTransform() const
 	return Matrix4{}.Translate(m_position) * m_rotation.ToRotationMatrix();
 }
 
-JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression)
+JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, float progression)
 {
 	auto position = Interpolate(frameA.GetPosition(), frameB.GetPosition(), progression);
 	auto rotation = frameA.GetRotation().Slerp(frameB.GetRotation(), progression);
 	return {position, rotation};
 }
 
-Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end, const float &progression)
+Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end, float progression)
 {
 	return start + (end - start) * progression;
 }

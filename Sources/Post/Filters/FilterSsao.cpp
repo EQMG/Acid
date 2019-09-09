@@ -64,7 +64,7 @@ std::vector<Shader::Define> FilterSsao::GetDefines() const
 	};
 }
 
-std::shared_ptr<Image2d> FilterSsao::ComputeNoise(const uint32_t &size)
+std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size)
 {
 	std::vector<Vector3f> ssaoNoise(size * size);
 

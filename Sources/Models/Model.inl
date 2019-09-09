@@ -5,7 +5,7 @@
 namespace acid
 {
 template<typename T>
-std::vector<T> Model::GetVertices(const std::size_t &offset) const
+std::vector<T> Model::GetVertices(std::size_t offset) const
 {
 	Buffer vertexStaging{m_vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};

@@ -54,9 +54,9 @@ public:
 
 	void SetGravity(const Vector3f &gravity);
 
-	const float &GetAirDensity() const { return m_airDensity; }
+	float GetAirDensity() const { return m_airDensity; }
 
-	void SetAirDensity(const float &airDensity);
+	void SetAirDensity(float airDensity);
 
 	btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }
 

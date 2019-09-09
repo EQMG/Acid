@@ -24,7 +24,7 @@ public:
 	 * @param max The maximum extents.
 	 * @return The rectangle model with the requested values.
 	 */
-	static std::shared_ptr<ModelRectangle> Create(const float &min = 0.0f, const float &max = 1.0f);
+	static std::shared_ptr<ModelRectangle> Create(float min = 0.0f, float max = 1.0f);
 
 	/**
 	 * Creates a new rectangle model.
@@ -32,7 +32,7 @@ public:
 	 * @param max The maximum extents.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelRectangle#Load} can be called later.
 	 */
-	explicit ModelRectangle(const float &min = 0.0f, const float &max = 1.0f, const bool &load = true);
+	explicit ModelRectangle(float min = 0.0f, float max = 1.0f, const bool &load = true);
 
 	friend const Node &operator>>(const Node &node, ModelRectangle &model);
 

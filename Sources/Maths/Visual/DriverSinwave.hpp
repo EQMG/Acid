@@ -52,7 +52,7 @@ public:
 	void SetMax(const T &max) { m_max = max; }
 
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		auto value = 0.5f + std::sin(2.0f * Maths::Pi<float> * factor) * 0.5f;
 		return m_min + value * (m_max - m_min);

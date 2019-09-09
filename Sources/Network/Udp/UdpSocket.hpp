@@ -63,7 +63,7 @@ public:
 	 * @param address Address of the interface to bind to. 
 	 * @return Status code. 
 	 **/
-	Status Bind(const uint16_t &port, const IpAddress &address = IpAddress::Any);
+	Status Bind(uint16_t port, const IpAddress &address = IpAddress::Any);
 
 	/**
 	 * Unbind the socket from the local port to which it is bound.
@@ -82,7 +82,7 @@ public:
 	 * @param remotePort Port of the receiver to send the data to. 
 	 * @return Status code. 
 	 **/
-	Status Send(const void *data, const std::size_t &size, const IpAddress &remoteAddress, const uint16_t &remotePort);
+	Status Send(const void *data, std::size_t size, const IpAddress &remoteAddress, uint16_t remotePort);
 
 	/**
 	 * Receive raw data from a remote peer.
@@ -96,7 +96,7 @@ public:
 	 * @param remotePort Port of the peer that sent the data. 
 	 * @return Status code. 
 	 **/
-	Status Receive(void *data, const std::size_t &size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
+	Status Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
 
 	/**
 	 * Send a formatted packet of data to a remote peer.
@@ -106,7 +106,7 @@ public:
 	 * @param remotePort Port of the receiver to send the data to. 
 	 * @return Status code. 
 	 **/
-	Status Send(Packet &packet, const IpAddress &remoteAddress, const uint16_t &remotePort);
+	Status Send(Packet &packet, const IpAddress &remoteAddress, uint16_t remotePort);
 
 	/**
 	 * Receive a formatted packet of data from a remote peer.

@@ -22,7 +22,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands)
+std::shared_ptr<ModelSphere> ModelSphere::Create(float radius, uint32_t latitudeBands, uint32_t longitudeBands)
 {
 	ModelSphere temp{radius, latitudeBands, longitudeBands, false};
 	Node node;
@@ -30,7 +30,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const float &radius, const uint
 	return Create(node);
 }
 
-ModelSphere::ModelSphere(const float &radius, const uint32_t &latitudeBands, const uint32_t &longitudeBands, const bool &load) :
+ModelSphere::ModelSphere(float radius, uint32_t latitudeBands, uint32_t longitudeBands, const bool &load) :
 	m_radius(radius),
 	m_latitudeBands(latitudeBands),
 	m_longitudeBands(longitudeBands)

@@ -38,7 +38,7 @@ public:
 
 	const std::filesystem::path &GetFilename() const { return m_filename; };
 
-	const uint32_t &GetBuffer() const { return m_buffer; }
+	uint32_t GetBuffer() const { return m_buffer; }
 
 	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer);
 

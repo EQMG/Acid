@@ -7,7 +7,7 @@
 
 namespace acid
 {
-MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, const float &metallic, const float &roughness,
+MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, float metallic, float roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, const bool &castsShadows, const bool &ignoreLighting, const bool &ignoreFog) :
 	m_baseDiffuse{baseDiffuse},
 	m_imageDiffuse{std::move(imageDiffuse)},

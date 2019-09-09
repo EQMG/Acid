@@ -4,7 +4,7 @@
 
 namespace acid
 {
-QuadraticSolution SolveQuadratic(const float &a, const float &b, const float &c, float &x1, float &x2)
+QuadraticSolution SolveQuadratic(float a, float b, float c, float &x1, float &x2)
 {
 	auto discriminant = b * b - 4.0f * a * c;
 
@@ -49,24 +49,24 @@ QuadraticSolution SolveQuadratic(const float &a, const float &b, const float &c,
 	return QuadraticSolution::None;
 }
 
-float LineVerticalIntersect(const float &x, const Vector2f &p1, const Vector2f &p2)
+float LineVerticalIntersect(float x, const Vector2f &p1, const Vector2f &p2)
 {
 	auto m = (p2.m_y - p1.m_y) / (p2.m_x - p1.m_x);
 	return p1.m_y - m * (p1.m_x - x);
 }
 
-float LineHorizontalIntersect(const float &y, const Vector2f &p1, const Vector2f &p2)
+float LineHorizontalIntersect(float y, const Vector2f &p1, const Vector2f &p2)
 {
 	auto n = (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
 	return p1.m_x - n * (p1.m_y - y);
 }
 
-bool IsBetween(const float &value, const float &min, const float &max)
+bool IsBetween(float value, float min, float max)
 {
 	return value >= min && value <= max;
 }
 
-bool IsBetweenExclusive(const float &value, const float &min, const float &max)
+bool IsBetweenExclusive(float value, float min, float max)
 {
 	return value > min && value < max;
 }
@@ -177,20 +177,20 @@ float LineCalculateT(const Vector2f &a, const Vector2f &b, const Vector2f &p)
 	return std::clamp(t, 0.0f, 1.0f);
 }
 
-void Bezier2Points(Vector2f &q0, Vector2f &q1, Vector2f &r, const Vector2f bezier[3], const float &t)
+void Bezier2Points(Vector2f &q0, Vector2f &q1, Vector2f &r, const Vector2f bezier[3], float t)
 {
 	q0 = bezier[0].Lerp(bezier[1], t);
 	q1 = bezier[1].Lerp(bezier[2], t);
 	r = q0.Lerp(q1, t);
 }
 
-void Bezier2Point(Vector2f &r, const Vector2f bezier[3], const float &t)
+void Bezier2Point(Vector2f &r, const Vector2f bezier[3], float t)
 {
 	Vector2f q0, q1;
 	Bezier2Points(q0, q1, r, bezier, t);
 }
 
-void Bezier2SplitLr(Vector2f left[3], Vector2f right[3], const Vector2f bezier[3], const float &t)
+void Bezier2SplitLr(Vector2f left[3], Vector2f right[3], const Vector2f bezier[3], float t)
 {
 	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
@@ -204,7 +204,7 @@ void Bezier2SplitLr(Vector2f left[3], Vector2f right[3], const Vector2f bezier[3
 	right[2] = bezier[2];
 }
 
-void Bezier2Split5P(Vector2f ret[5], const Vector2f bezier[3], const float &t)
+void Bezier2Split5P(Vector2f ret[5], const Vector2f bezier[3], float t)
 {
 	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
@@ -216,7 +216,7 @@ void Bezier2Split5P(Vector2f ret[5], const Vector2f bezier[3], const float &t)
 	ret[4] = bezier[2];
 }
 
-void Bezier2Split3P(Vector2f ret[3], const Vector2f bezier[3], const float &t)
+void Bezier2Split3P(Vector2f ret[3], const Vector2f bezier[3], float t)
 {
 	Vector2f q0, q1, r;
 	Bezier2Points(q0, q1, r, bezier, t);
@@ -235,7 +235,7 @@ void Bezier2Derivative(const Vector2f bezier[3], Vector2f derivative[2])
 	derivative[1] *= 2.0f;
 }
 
-float Bezier2Component(const float &p0, const float &p1, const float &p2, const float &t)
+float Bezier2Component(float p0, float p1, float p2, float t)
 {
 	return Maths::Lerp(Maths::Lerp(p0, p1, t), Maths::Lerp(p1, p2, t), t);
 }
@@ -282,7 +282,7 @@ void Bezier2Bbox(const Vector2f bezier[3], Rect &bbox)
 	}
 }
 
-void AlignPoint(Vector2f &r, const Vector2f &p, const Vector2f &t, const float &s, const float &c)
+void AlignPoint(Vector2f &r, const Vector2f &p, const Vector2f &t, float s, float c)
 {
 	auto tmp = p - t;
 

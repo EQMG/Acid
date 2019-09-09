@@ -55,7 +55,7 @@ public:
 
 	NodeReturn operator[](const std::string &key);
 
-	NodeReturn operator[](const uint32_t &index);
+	NodeReturn operator[](uint32_t index);
 
 private:
 	Node *m_parent{};

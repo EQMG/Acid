@@ -27,8 +27,8 @@ public:
 	 * @param stacks The amount of stacks between the base and the top.
 	 * @return The cylinder model with the requested values.
 	 */
-	static std::shared_ptr<ModelCylinder> Create(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20,
-		const uint32_t &stacks = 2);
+	static std::shared_ptr<ModelCylinder> Create(float radiusBase = 1.0f, float radiusTop = 1.0f, float height = 2.0f, uint32_t slices = 20,
+		uint32_t stacks = 2);
 
 	/**
 	 * Creates a new cylinder model.
@@ -39,7 +39,7 @@ public:
 	 * @param stacks The amount of stacks between the base and the top.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCylinder#Load} can be called later.
 	 */
-	explicit ModelCylinder(const float &radiusBase = 1.0f, const float &radiusTop = 1.0f, const float &height = 2.0f, const uint32_t &slices = 20, const uint32_t &stacks = 2,
+	explicit ModelCylinder(float radiusBase = 1.0f, float radiusTop = 1.0f, float height = 2.0f, uint32_t slices = 20, uint32_t stacks = 2,
 		const bool &load = true);
 
 	friend const Node &operator>>(const Node &node, ModelCylinder &model);

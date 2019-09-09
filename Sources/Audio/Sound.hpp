@@ -15,7 +15,7 @@ class ACID_EXPORT Sound :
 {
 public:
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, const bool &begin = false,
-		const bool &loop = false, const float &gain = 1.0f, const float &pitch = 1.0f);
+		const bool &loop = false, float gain = 1.0f, float pitch = 1.0f);
 
 	~Sound();
 
@@ -43,13 +43,13 @@ public:
 
 	void SetType(const Audio::Type &type) { m_type = type; }
 
-	const float &GetGain() const { return m_gain; }
+	float GetGain() const { return m_gain; }
 
-	void SetGain(const float &gain);
+	void SetGain(float gain);
 
-	const float &GetPitch() const { return m_pitch; }
+	float GetPitch() const { return m_pitch; }
 
-	void SetPitch(const float &pitch);
+	void SetPitch(float pitch);
 
 	friend const Node &operator>>(const Node &node, Sound &sound);
 

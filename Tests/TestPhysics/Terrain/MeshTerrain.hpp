@@ -12,14 +12,14 @@ class MeshTerrain :
 	public MeshSimple
 {
 public:
-	MeshTerrain(const std::vector<float> &heightmap, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale);
+	MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale);
 
-	VertexDefault GetVertex(const uint32_t &col, const uint32_t &row) override;
+	VertexDefault GetVertex(uint32_t col, uint32_t row) override;
 
 private:
-	Vector3f GetPosition(const float &x, const float &z);
+	Vector3f GetPosition(float x, float z);
 
-	Vector3f GetNormal(const float &x, const float &z);
+	Vector3f GetNormal(float x, float z);
 
 	Colour GetColour(const Vector3f &normal);
 

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, const uint32_t &value, std::vector<std::string> options, const UiTransform &transform) :
+UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, uint32_t value, std::vector<std::string> options, const UiTransform &transform) :
 	UiObject{parent, transform},
 	//m_slider{this, {{0.5f, 0.0f}, UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale}, Image2d::Create("Guis/Button_Filled.png"),
 	//	UiInputButton::PrimaryColour},
@@ -32,7 +32,7 @@ void UiInputDropdown::UpdateObject()
 	//m_slider.GetTransform().SetSize({1.0f, 2.0f * static_cast<float>(m_options.size())});
 }
 
-void UiInputDropdown::SetValue(const uint32_t &value)
+void UiInputDropdown::SetValue(uint32_t value)
 {
 	m_value = value;
 	//m_onValue(m_value);

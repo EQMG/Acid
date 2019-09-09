@@ -21,7 +21,7 @@ public:
 	 * @param mass The mass of the object.
 	 * @param friction The amount of surface friction.
 	 */
-	explicit KinematicCharacter(const float &mass = 1.0f, const float &friction = 0.2f);
+	explicit KinematicCharacter(float mass = 1.0f, float friction = 0.2f);
 
 	~KinematicCharacter();
 
@@ -33,7 +33,7 @@ public:
 
 	void ClearForces() override;
 
-	void SetMass(const float &mass) override;
+	void SetMass(float mass) override;
 
 	void SetGravity(const Vector3f &gravity) override;
 
@@ -49,21 +49,21 @@ public:
 
 	void SetUp(const Vector3f &up);
 
-	const float &GetStepHeight() const { return m_stepHeight; }
+	float GetStepHeight() const { return m_stepHeight; }
 
-	void SetStepHeight(const float &stepHeight);
+	void SetStepHeight(float stepHeight);
 
-	const float &GetFallSpeed() const { return m_fallSpeed; }
+	float GetFallSpeed() const { return m_fallSpeed; }
 
-	void SetFallSpeed(const float &fallSpeed);
+	void SetFallSpeed(float fallSpeed);
 
-	const float &GetJumpSpeed() const { return m_jumpSpeed; }
+	float GetJumpSpeed() const { return m_jumpSpeed; }
 
-	void SetJumpSpeed(const float &jumpSpeed);
+	void SetJumpSpeed(float jumpSpeed);
 
-	const float &GetMaxJumpHeight() const { return m_maxHeight; }
+	float GetMaxJumpHeight() const { return m_maxHeight; }
 
-	void SetMaxJumpHeight(const float &maxHeight);
+	void SetMaxJumpHeight(float maxHeight);
 
 	const bool &IsInterpolate() const { return m_interpolate; }
 

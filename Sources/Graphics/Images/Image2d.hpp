@@ -66,10 +66,10 @@ public:
 
 	~Image2d();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-		const uint32_t &count);
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+		uint32_t count);
 
-	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -77,7 +77,7 @@ public:
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, const uint32_t &mipLevel = 0) const;
+	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, uint32_t mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
@@ -85,7 +85,7 @@ public:
 	 * @param layerCount The amount of layers contained in the pixels.
 	 * @param baseArrayLayer The first layer to copy into.
 	 */
-	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
 
 	const std::filesystem::path &GetFilename() const { return m_filename; };
 
@@ -103,11 +103,11 @@ public:
 
 	const VkImageUsageFlags &GetUsage() const { return m_usage; }
 
-	const uint32_t &GetComponents() const { return m_components; }
+	uint32_t GetComponents() const { return m_components; }
 
 	const Vector2ui &GetExtent() const { return m_extent; }
 
-	const uint32_t &GetMipLevels() const { return m_mipLevels; }
+	uint32_t GetMipLevels() const { return m_mipLevels; }
 
 	const VkImage &GetImage() { return m_image; }
 

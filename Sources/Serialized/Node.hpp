@@ -89,13 +89,13 @@ public:
 
 	NodeReturn GetProperty(const std::string &name) const;
 
-	NodeReturn GetProperty(const uint32_t &index) const;
+	NodeReturn GetProperty(uint32_t index) const;
 
 	Node &AddProperty();
 
 	Node &AddProperty(const std::string &name, Node &&node);
 
-	Node &AddProperty(const uint32_t &index, Node &&node);
+	Node &AddProperty(uint32_t index, Node &&node);
 
 	void RemoveProperty(const std::string &name);
 
@@ -110,7 +110,7 @@ public:
 
 	NodeReturn operator[](const std::string &key) const;
 
-	NodeReturn operator[](const uint32_t &index) const;
+	NodeReturn operator[](uint32_t index) const;
 
 	bool operator==(const Node &other) const;
 

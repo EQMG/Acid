@@ -71,7 +71,7 @@ void UiScrollBar::SetSize(const Vector2f &size)
 	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
 }
 
-float UiScrollBar::ScrollByDelta(const float &delta) const
+float UiScrollBar::ScrollByDelta(float delta) const
 {
 	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
 	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];
@@ -81,7 +81,7 @@ float UiScrollBar::ScrollByDelta(const float &delta) const
 	return std::clamp(value, 0.0f, maxValue);
 }
 
-float UiScrollBar::ScrollByPosition(const float &position) const
+float UiScrollBar::ScrollByPosition(float position) const
 {
 	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
 	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];

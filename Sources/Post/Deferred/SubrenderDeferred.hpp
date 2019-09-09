@@ -23,11 +23,11 @@ public:
 
 	void SetFog(const Fog &fog) { m_fog = fog; }
 
-	static std::unique_ptr<Image2d> ComputeBRDF(const uint32_t &size);
+	static std::unique_ptr<Image2d> ComputeBRDF(uint32_t size);
 
-	static std::unique_ptr<ImageCube> ComputeIrradiance(const std::shared_ptr<ImageCube> &source, const uint32_t &size);
+	static std::unique_ptr<ImageCube> ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size);
 
-	static std::unique_ptr<ImageCube> ComputePrefiltered(const std::shared_ptr<ImageCube> &source, const uint32_t &size);
+	static std::unique_ptr<ImageCube> ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size);
 
 private:
 	struct DeferredLight

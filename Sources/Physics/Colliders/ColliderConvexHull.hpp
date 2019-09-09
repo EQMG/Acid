@@ -21,7 +21,7 @@ public:
 
 	btCollisionShape *GetCollisionShape() const override;
 
-	const uint32_t &GetPointCount() const { return m_pointCount; }
+	uint32_t GetPointCount() const { return m_pointCount; }
 
 	void Initialize(const std::vector<float> &pointCloud);
 

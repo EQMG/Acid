@@ -29,8 +29,8 @@ public:
 		 * @param sizeY The height of the character's quad in screen space.
 		 * @param advanceX How far in pixels the cursor should advance after adding this character.
 		 */
-		Character(const int32_t &id, const float &textureCoordX, const float &textureCoordY, const float &textureSizeX, const float &textureSizeY, const float &offsetX,
-			const float &offsetY, const float &sizeX, const float &sizeY, const float &advanceX) :
+		Character(int32_t id, float textureCoordX, float textureCoordY, float textureSizeX, float textureSizeY, float offsetX,
+			float offsetY, float sizeX, float sizeY, float advanceX) :
 			m_id{id},
 			m_textureCoordX{textureCoordX},
 			m_textureCoordY{textureCoordY},
@@ -71,13 +71,13 @@ public:
 	 */
 	explicit FontMetafile(std::filesystem::path filename);
 
-	std::optional<Character> GetCharacter(const int32_t &ascii) const;
+	std::optional<Character> GetCharacter(int32_t ascii) const;
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 
-	const float &GetSpaceWidth() const { return m_spaceWidth; }
+	float GetSpaceWidth() const { return m_spaceWidth; }
 
-	const float &GetMaxSizeY() const { return m_maxSizeY; }
+	float GetMaxSizeY() const { return m_maxSizeY; }
 
 private:
 	/**

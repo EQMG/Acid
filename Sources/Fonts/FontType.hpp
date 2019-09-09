@@ -24,7 +24,7 @@ public:
 	class Instance
 	{
 	public:
-		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 		{
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
 				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
@@ -103,7 +103,7 @@ private:
 
 	void Load();
 
-	static uint32_t AlignUint32(const uint32_t &value, const uint32_t &alignment);
+	static uint32_t AlignUint32(uint32_t value, uint32_t alignment);
 
 	void LoadFont(const std::filesystem::path &filename);
 

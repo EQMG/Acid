@@ -17,7 +17,7 @@ public:
 	 * @param initialValue The initial value. 
 	 * @param agility The agility for increasing actual. 
 	 **/
-	SmoothFloat(const T &initialValue, const float &agility) :
+	SmoothFloat(const T &initialValue, float agility) :
 		m_agility{agility},
 		m_target{initialValue},
 		m_actual{initialValue}
@@ -57,7 +57,7 @@ public:
 	 * Gets the currently calculated value.
 	 * @return The calculated value. 
 	 **/
-	const float &Get() const { return m_actual; }
+	float Get() const { return m_actual; }
 
 private:
 	float m_agility;

@@ -13,7 +13,7 @@ class RingBuffer :
 	public NonCopyable
 {
 public:
-	explicit RingBuffer(const std::size_t &capacity) :
+	explicit RingBuffer(std::size_t capacity) :
 		m_data(capacity)
 	{
 		if (capacity == 0)
@@ -22,11 +22,11 @@ public:
 		}
 	}
 
-	const std::size_t &size() const { return m_elements; }
+	std::size_t size() const { return m_elements; }
 
 	std::size_t capacity() const { return m_data.capacity(); }
 
-	void resize(const std::size_t &s)
+	void resize(std::size_t s)
 	{
 		if (s == 0)
 		{
@@ -127,23 +127,23 @@ public:
 		return m_data[i % m_data.capacity()];
 	}
 
-	T &operator[](const std::size_t &i)
+	T &operator[](std::size_t i)
 	{
 		return m_data[i];
 	}
 
-	const T &operator[](const std::size_t &i) const
+	const T &operator[](std::size_t i) const
 	{
 		return m_data[i];
 	}
 
-	const T &at(const std::size_t &i) const
+	const T &at(std::size_t i) const
 	{
 		std::size_t ind = m_tail + i;
 		return m_data[ind % m_data.capacity()];
 	}
 
-	T &at(const std::size_t &i)
+	T &at(std::size_t i)
 	{
 		std::size_t ind = m_tail + i;
 		return m_data[ind % m_data.capacity()];
@@ -185,14 +185,14 @@ public:
 
 private:
 	template<typename K, typename Arg1, typename... Args>
-	void MoveAll(std::vector<K> &data, const std::size_t &i, Arg1 &&v1, Args &&... values)
+	void MoveAll(std::vector<K> &data, std::size_t i, Arg1 &&v1, Args &&... values)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 		MoveAll(data, i + 1, values...);
 	}
 
 	template<typename K, typename Arg1>
-	void MoveAll(std::vector<K> &data, const std::size_t &i, Arg1 &&v1)
+	void MoveAll(std::vector<K> &data, std::size_t i, Arg1 &&v1)
 	{
 		data[i % data.size()] = std::forward<Arg1>(v1);
 	}

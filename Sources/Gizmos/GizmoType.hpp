@@ -23,7 +23,7 @@ public:
 	class Instance
 	{
 	public:
-		static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 		{
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
 				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
@@ -56,7 +56,7 @@ public:
 	 * @param colour The default colour for gizmos.
 	 * @return The gizmo type with the requested values.
 	 */
-	static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, const float &lineThickness = 1.0f, const Colour &colour = Colour::White);
+	static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, float lineThickness = 1.0f, const Colour &colour = Colour::White);
 
 	/**
 	 * Creates a new gizmo type.
@@ -64,7 +64,7 @@ public:
 	 * @param lineThickness The thickness that the model will be rendered at.
 	 * @param colour The default colour for gizmos.
 	 */
-	explicit GizmoType(std::shared_ptr<Model> model, const float &lineThickness = 1.0f, const Colour &colour = Colour::White);
+	explicit GizmoType(std::shared_ptr<Model> model, float lineThickness = 1.0f, const Colour &colour = Colour::White);
 
 	void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
 
@@ -74,9 +74,9 @@ public:
 
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
-	const float &GetLineThickness() const { return m_lineThickness; }
+	float GetLineThickness() const { return m_lineThickness; }
 
-	void SetLineThickness(const float &lineThickness) { m_lineThickness = lineThickness; }
+	void SetLineThickness(float lineThickness) { m_lineThickness = lineThickness; }
 
 	const Colour &GetColour() const { return m_colour; }
 

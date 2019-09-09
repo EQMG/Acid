@@ -142,13 +142,13 @@ public:
 	 * Gets the fps limit.
 	 * @return The frame per second limit.
 	 */
-	const float &GetFpsLimit() const { return m_fpsLimit; }
+	float GetFpsLimit() const { return m_fpsLimit; }
 
 	/**
 	 * Sets the fps limit. -1 disables limits.
 	 * @param fpsLimit The new frame per second limit.
 	 */
-	void SetFpsLimit(const float &fpsLimit) { m_fpsLimit = fpsLimit; }
+	void SetFpsLimit(float fpsLimit) { m_fpsLimit = fpsLimit; }
 
 	/**
 	 * Gets if the engine is running.
@@ -172,13 +172,13 @@ public:
 	 * Gets the average UPS over a short interval.
 	 * @return The updates per second.
 	 */
-	const uint32_t &GetUps() const { return m_ups.m_value; }
+	uint32_t GetUps() const { return m_ups.m_value; }
 
 	/**
 	 * Gets the average FPS over a short interval.
 	 * @return The frames per second.
 	 */
-	const uint32_t &GetFps() const { return m_fps.m_value; }
+	uint32_t GetFps() const { return m_fps.m_value; }
 
 	/**
 	 * Requests the engine to stop the game-loop.

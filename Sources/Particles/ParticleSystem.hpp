@@ -23,7 +23,7 @@ public:
 	 * @param averageSpeed Particle average speed.
 	 * @param gravityEffect How much gravity will effect the particles.
 	 */
-	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, const float &pps = 5.0f, const float &averageSpeed = 0.2f, const float &gravityEffect = 1.0f);
+	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, float pps = 5.0f, float averageSpeed = 0.2f, float gravityEffect = 1.0f);
 
 	void Start() override;
 
@@ -33,19 +33,19 @@ public:
 
 	bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
 
-	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const;
+	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const;
 
-	const float &GetPps() const { return m_pps; }
+	float GetPps() const { return m_pps; }
 
-	void SetPps(const float &pps);
+	void SetPps(float pps);
 
-	const float &GetAverageSpeed() const { return m_averageSpeed; }
+	float GetAverageSpeed() const { return m_averageSpeed; }
 
-	void SetAverageSpeed(const float &averageSpeed) { m_averageSpeed = averageSpeed; }
+	void SetAverageSpeed(float averageSpeed) { m_averageSpeed = averageSpeed; }
 
-	const float &GetGravityEffect() const { return m_gravityEffect; }
+	float GetGravityEffect() const { return m_gravityEffect; }
 
-	void SetGravityEffect(const float &gravityEffect) { m_gravityEffect = gravityEffect; }
+	void SetGravityEffect(float gravityEffect) { m_gravityEffect = gravityEffect; }
 
 	const bool &IsRandomRotation() const { return m_randomRotation; }
 
@@ -53,23 +53,23 @@ public:
 
 	const Vector3f &GetDirection() const { return m_direction; }
 
-	void SetDirection(const Vector3f &direction, const float &deviation);
+	void SetDirection(const Vector3f &direction, float deviation);
 
-	const float &GetSpeedDeviation() const { return m_speedDeviation; }
+	float GetSpeedDeviation() const { return m_speedDeviation; }
 
-	void SetSpeedDeviation(const float &speedDeviation) { m_speedDeviation = speedDeviation; }
+	void SetSpeedDeviation(float speedDeviation) { m_speedDeviation = speedDeviation; }
 
-	const float &GetLifeDeviation() const { return m_lifeDeviation; }
+	float GetLifeDeviation() const { return m_lifeDeviation; }
 
-	void SetLifeDeviation(const float &lifeDeviation) { m_lifeDeviation = lifeDeviation; }
+	void SetLifeDeviation(float lifeDeviation) { m_lifeDeviation = lifeDeviation; }
 
-	const float &GetStageDeviation() const { return m_stageDeviation; }
+	float GetStageDeviation() const { return m_stageDeviation; }
 
-	void SetStageDeviation(const float &stageDeviation) { m_stageDeviation = stageDeviation; }
+	void SetStageDeviation(float stageDeviation) { m_stageDeviation = stageDeviation; }
 
-	const float &GetScaleDeviation() const { return m_scaleDeviation; }
+	float GetScaleDeviation() const { return m_scaleDeviation; }
 
-	void SetScaleDeviation(const float &scaleDeviation) { m_scaleDeviation = scaleDeviation; }
+	void SetScaleDeviation(float scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
 	friend const Node &operator>>(const Node &node, ParticleSystem &particleSystem);
 
@@ -78,7 +78,7 @@ public:
 private:
 	Particle EmitParticle(const Emitter &emitter);
 
-	static float GenerateValue(const float &average, const float &errorPercent);
+	static float GenerateValue(float average, float errorPercent);
 
 	float GenerateRotation() const;
 

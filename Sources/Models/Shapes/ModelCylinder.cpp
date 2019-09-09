@@ -22,7 +22,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks)
+std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks)
 {
 	ModelCylinder temp{radiusBase, radiusTop, height, slices, stacks, false};
 	Node node;
@@ -30,7 +30,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const float &radiusBase, co
 	return Create(node);
 }
 
-ModelCylinder::ModelCylinder(const float &radiusBase, const float &radiusTop, const float &height, const uint32_t &slices, const uint32_t &stacks, const bool &load) :
+ModelCylinder::ModelCylinder(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks, const bool &load) :
 	m_radiusBase(radiusBase),
 	m_radiusTop(radiusTop),
 	m_height(height),

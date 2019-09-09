@@ -2,7 +2,7 @@
 
 namespace acid
 {
-FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, const float &pixelSize) :
+FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, float pixelSize) :
 	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Pixel.frag"}},
 	m_pixelSize{pixelSize}
 {

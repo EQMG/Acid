@@ -11,7 +11,7 @@ class NameTag :
 	public Component
 {
 public:
-	explicit NameTag(const std::string &name = "", const float &heightOffset = 0.0f);
+	explicit NameTag(const std::string &name = "", float heightOffset = 0.0f);
 
 	void Start() override;
 

@@ -11,28 +11,28 @@ class ACID_EXPORT UiInputSlider :
 	public UiObject
 {
 public:
-	UiInputSlider(UiObject *parent, const std::string &title, const float &value, const float &valueMin, const float &valueMax, const int32_t &roundTo = 2,
+	UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo = 2,
 		const UiTransform & transform = UiTransform{UiInputButton::Size});
 
 	void UpdateObject() override;
 
-	const float &GetValueMin() const { return m_valueMin; }
+	float GetValueMin() const { return m_valueMin; }
 
-	void SetValueMin(const float &valueMin) { m_valueMin = valueMin; }
+	void SetValueMin(float valueMin) { m_valueMin = valueMin; }
 
-	const float &GetValueMax() const { return m_valueMax; }
+	float GetValueMax() const { return m_valueMax; }
 
-	void SetValueMax(const float &valueMax) { m_valueMax = valueMax; }
+	void SetValueMax(float valueMax) { m_valueMax = valueMax; }
 
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
-	const float &GetValue() const { return m_value; }
+	float GetValue() const { return m_value; }
 
-	void SetValue(const float &value);
+	void SetValue(float value);
 
-	const float &GetProgress() const { return m_progress; }
+	float GetProgress() const { return m_progress; }
 
 	/**
 	 * Called when this value of the input changes.

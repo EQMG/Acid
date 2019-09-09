@@ -23,14 +23,14 @@ public:
 	 * @param b The new B value.
 	 * @param a The new A value.
 	 **/
-	Colour(const float &r, const float &g, const float &b, const float &a = 1.0f);
+	Colour(float r, float g, float b, float a = 1.0f);
 
 	/**
 	 * Constructor for Colour.
 	 * @param hex The new values from HEX.
 	 * @param a The new A value.
 	 **/
-	Colour(std::string hex, const float &a = 1.0f);
+	Colour(std::string hex, float a = 1.0f);
 
 	/**
 	 * Adds this colour to another colour.
@@ -65,7 +65,7 @@ public:
 	 * @param scalar The scalar value.
 	 * @return The scaled colour.
 	 **/
-	Colour Scale(const float &scalar) const;
+	Colour Scale(float scalar) const;
 
 	/**
 	 * Calculates the linear interpolation between this colour and another colour.
@@ -73,7 +73,7 @@ public:
 	 * @param progression The progression.
 	 * @return Left lerp right.
 	 **/
-	Colour Lerp(const Colour &other, const float &progression) const;
+	Colour Lerp(const Colour &other, float progression) const;
 
 	/**
 	 * Normalizes this colour.
@@ -117,9 +117,9 @@ public:
 
 	bool operator!=(const Colour &other) const;
 
-	const float &operator[](const uint32_t &index) const;
+	float operator[](uint32_t index) const;
 
-	float &operator[](const uint32_t &index);
+	float &operator[](uint32_t index);
 
 	friend Colour operator+(const Colour &left, const Colour &right);
 
@@ -129,21 +129,21 @@ public:
 
 	friend Colour operator/(const Colour &left, const Colour &right);
 
-	friend Colour operator+(const float &value, const Colour &left);
+	friend Colour operator+(float value, const Colour &left);
 
-	friend Colour operator-(const float &value, const Colour &left);
+	friend Colour operator-(float value, const Colour &left);
 
-	friend Colour operator*(const float &value, const Colour &left);
+	friend Colour operator*(float value, const Colour &left);
 
-	friend Colour operator/(const float &value, const Colour &left);
+	friend Colour operator/(float value, const Colour &left);
 
-	friend Colour operator+(const Colour &left, const float &value);
+	friend Colour operator+(const Colour &left, float value);
 
-	friend Colour operator-(const Colour &left, const float &value);
+	friend Colour operator-(const Colour &left, float value);
 
-	friend Colour operator*(const Colour &left, const float &value);
+	friend Colour operator*(const Colour &left, float value);
 
-	friend Colour operator/(const Colour &left, const float &value);
+	friend Colour operator/(const Colour &left, float value);
 
 	Colour &operator+=(const Colour &other);
 
@@ -153,13 +153,13 @@ public:
 
 	Colour &operator/=(const Colour &other);
 
-	Colour &operator+=(const float &value);
+	Colour &operator+=(float value);
 
-	Colour &operator-=(const float &value);
+	Colour &operator-=(float value);
 
-	Colour &operator*=(const float &value);
+	Colour &operator*=(float value);
 
-	Colour &operator/=(const float &value);
+	Colour &operator/=(float value);
 
 	friend const Node &operator>>(const Node &node, Colour &colour);
 

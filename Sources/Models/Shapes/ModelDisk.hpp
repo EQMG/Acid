@@ -26,7 +26,7 @@ public:
 	 * @param loops The amount of circles that will be created between the inner and outer radius.
 	 * @return The disk model with the requested values.
 	 */
-	static std::shared_ptr<ModelDisk> Create(const float &innerRadius = 0.5f, const float &outerRadius = 1.0f, const uint32_t &slices = 20, const uint32_t &loops = 4);
+	static std::shared_ptr<ModelDisk> Create(float innerRadius = 0.5f, float outerRadius = 1.0f, uint32_t slices = 20, uint32_t loops = 4);
 
 	/**
 	 * Creates a new disk model.
@@ -36,7 +36,7 @@ public:
 	 * @param loops The amount of circles that will be created between the inner and outer radius.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelDisk#Load} can be called later.
 	 */
-	explicit ModelDisk(const float &innerRadius = 0.5f, const float &outerRadius = 1.0f, const uint32_t &slices = 20, const uint32_t &loops = 4, const bool &load = true);
+	explicit ModelDisk(float innerRadius = 0.5f, float outerRadius = 1.0f, uint32_t slices = 20, uint32_t loops = 4, const bool &load = true);
 
 	friend const Node &operator>>(const Node &node, ModelDisk &model);
 

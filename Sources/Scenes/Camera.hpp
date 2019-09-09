@@ -29,25 +29,25 @@ public:
 	 * Gets the distance of the near pane of the view frustum.
 	 * @return The distance of the near pane of the view frustum.
 	 */
-	const float &GetNearPlane() const { return m_nearPlane; }
+	float GetNearPlane() const { return m_nearPlane; }
 
-	void SetNearPlane(const float &nearPlane) { m_nearPlane = nearPlane; }
+	void SetNearPlane(float nearPlane) { m_nearPlane = nearPlane; }
 
 	/**
 	 * Gets the distance of the view frustum's far plane.
 	 * @return The distance of the view frustum's far plane.
 	 */
-	const float &GetFarPlane() const { return m_farPlane; }
+	float GetFarPlane() const { return m_farPlane; }
 
-	void SetFarPlane(const float &farPlane) { m_farPlane = farPlane; }
+	void SetFarPlane(float farPlane) { m_farPlane = farPlane; }
 
 	/**
 	 * Gets the field of view angle for the view frustum.
 	 * @return The field of view angle for the view frustum.
 	 */
-	const float &GetFieldOfView() const { return m_fieldOfView; }
+	float GetFieldOfView() const { return m_fieldOfView; }
 
-	void SetFieldOfView(const float &fieldOfView) { m_fieldOfView = fieldOfView; }
+	void SetFieldOfView(float fieldOfView) { m_fieldOfView = fieldOfView; }
 
 	const Vector3f &GetPosition() const { return m_position; }
 

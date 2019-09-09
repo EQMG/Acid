@@ -71,8 +71,8 @@ public:
 	 * @param fractal The fractal noise type.
 	 * @param fractalBounding The fractal bounding. 
 	 **/
-	explicit Noise(const uint64_t &seed = 1337, const float &frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, const int32_t &octaves = 3,
-		const float &lacunarity = 2.0f, const float &gain = 0.5f, const Fractal &fractal = Fractal::FBM, const float &fractalBounding = 0.0f);
+	explicit Noise(uint64_t seed = 1337, float frequency = 0.01f, const Interp &interp = Interp::Quintic, const Type &type = Type::Simplex, int32_t octaves = 3,
+		float lacunarity = 2.0f, float gain = 0.5f, const Fractal &fractal = Fractal::FBM, float fractalBounding = 0.0f);
 
 	/**
 	 * Gets the seed used for all noise types.
@@ -84,7 +84,7 @@ public:
 	 * Sets seed used for all noise types.
 	 * @param seed The new seed (Default: 1337). 
 	 **/
-	void SetSeed(const uint64_t &seed);
+	void SetSeed(uint64_t seed);
 
 	/**
 	 * Gets the frequency used for all noise types.
@@ -96,7 +96,7 @@ public:
 	 * Sets the frequency used for all noise types.
 	 * @param frequency The new frequency (Default: 0.01). 
 	 **/
-	void SetFrequency(const float &frequency) { m_frequency = frequency; }
+	void SetFrequency(float frequency) { m_frequency = frequency; }
 
 	/**
 	 * Gets the interpolation method used for supported noise types.
@@ -132,7 +132,7 @@ public:
 	 * Sets the octave count for all fractal noise types.
 	 * @param octaves The new octaves count (Default: 2.0). 
 	 **/
-	void SetFractalOctaves(const int32_t &octaves);
+	void SetFractalOctaves(int32_t octaves);
 
 	/**
 	 * Gets the octave lacunarity for all fractal noise types.
@@ -144,7 +144,7 @@ public:
 	 * Sets the octave octave lacunarity for all fractal noise types.
 	 * @param lacunarity The new octave lacunarity (Default: 0.5). 
 	 **/
-	void SetFractalLacunarity(const float &lacunarity) { m_lacunarity = lacunarity; }
+	void SetFractalLacunarity(float lacunarity) { m_lacunarity = lacunarity; }
 
 	/**
 	 * Gets the octave gain for all fractal noise types.
@@ -156,7 +156,7 @@ public:
 	 * Sets the octave gain for all fractal noise types.
 	 * @param gain The new octave gain. 
 	 **/
-	void SetFractalGain(const float &gain);
+	void SetFractalGain(float gain);
 
 	/**
 	 * Gets the method for combining octaves in all fractal noise types.
@@ -221,7 +221,7 @@ public:
 	 * @param cellularDistanceIndex0 The new cellular distance at index 0 (Default: 0). 
 	 * @param cellularDistanceIndex1 The new cellular distance at index 1 (Default: 1). 
 	 **/
-	void SetCellularDistance2Indices(const int32_t &cellularDistanceIndex0, const int32_t &cellularDistanceIndex1);
+	void SetCellularDistance2Indices(int32_t cellularDistanceIndex0, int32_t cellularDistanceIndex1);
 
 	/**
 	 * Gets the maximum distance a cellular point can move from its grid position.
@@ -234,7 +234,7 @@ public:
 	 * Setting this high will make artifacts more common.
 	 * @param cellularJitter The new cellular maximum distance (Default: 0.45). 
 	 **/
-	void SetCellularJitter(const float &cellularJitter) { m_cellularJitter = cellularJitter; }
+	void SetCellularJitter(float cellularJitter) { m_cellularJitter = cellularJitter; }
 
 	/**
 	 * Gets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
@@ -246,7 +246,7 @@ public:
 	 * Sets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
 	 * @param gradientPerturbAmp The new cellular maximum warp distance (Default: 1.0). 
 	 **/
-	void SetGradientPerturbAmp(const float &gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
+	void SetGradientPerturbAmp(float gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
 
 	//2D
 	float GetValue(float x, float y) const;
@@ -317,46 +317,46 @@ private:
 	void CalculateFractalBounding();
 
 	// Helpers
-	static int32_t FastFloor(const float &f);
+	static int32_t FastFloor(float f);
 
-	static int32_t FastRound(const float &f);
+	static int32_t FastRound(float f);
 
-	static float Lerp(const float &a, const float &b, const float &t);
+	static float Lerp(float a, float b, float t);
 
-	static float InterpHermite(const float &t);
+	static float InterpHermite(float t);
 
-	static float InterpQuintic(const float &t);
+	static float InterpQuintic(float t);
 
-	static float CubicLerp(const float &a, const float &b, const float &c, const float &d, const float &t);
+	static float CubicLerp(float a, float b, float c, float d, float t);
 
-	uint8_t Index2d12(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
+	uint8_t Index2d12(uint8_t offset, int32_t x, int32_t y) const;
 
-	uint8_t Index3d12(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
+	uint8_t Index3d12(uint8_t offset, int32_t x, int32_t y, int32_t z) const;
 
-	uint8_t Index4d32(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const;
+	uint8_t Index4d32(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w) const;
 
-	uint8_t Index2d256(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
+	uint8_t Index2d256(uint8_t offset, int32_t x, int32_t y) const;
 
-	uint8_t Index3d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
+	uint8_t Index3d256(uint8_t offset, int32_t x, int32_t y, int32_t z) const;
 
-	uint8_t Index4d256(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w) const;
+	uint8_t Index4d256(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w) const;
 
-	static float ValueCoord2d(const uint64_t &seed, const int32_t &x, const int32_t &y);
+	static float ValueCoord2d(uint64_t seed, int32_t x, int32_t y);
 
-	static float ValueCoord3d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z);
+	static float ValueCoord3d(uint64_t seed, int32_t x, int32_t y, int32_t z);
 
-	static float ValueCoord4d(const uint64_t &seed, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w);
+	static float ValueCoord4d(uint64_t seed, int32_t x, int32_t y, int32_t z, int32_t w);
 
-	float ValueCoord2dFast(const uint8_t &offset, const int32_t &x, const int32_t &y) const;
+	float ValueCoord2dFast(uint8_t offset, int32_t x, int32_t y) const;
 
-	float ValueCoord3dFast(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z) const;
+	float ValueCoord3dFast(uint8_t offset, int32_t x, int32_t y, int32_t z) const;
 
-	float GradCoord2d(const uint8_t &offset, const int32_t &x, const int32_t &y, const float &xd, const float &yd) const;
+	float GradCoord2d(uint8_t offset, int32_t x, int32_t y, float xd, float yd) const;
 
-	float GradCoord3d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const float &xd, const float &yd, const float &zd) const;
+	float GradCoord3d(uint8_t offset, int32_t x, int32_t y, int32_t z, float xd, float yd, float zd) const;
 
-	float GradCoord4d(const uint8_t &offset, const int32_t &x, const int32_t &y, const int32_t &z, const int32_t &w, const float &xd, const float &yd, const float &zd,
-		const float &wd) const;
+	float GradCoord4d(uint8_t offset, int32_t x, int32_t y, int32_t z, int32_t w, float xd, float yd, float zd,
+		float wd) const;
 
 	// 2D
 	float SingleValueFractalFbm(float x, float y) const;
@@ -365,7 +365,7 @@ private:
 
 	float SingleValueFractalRigidMulti(float x, float y) const;
 
-	float SingleValue(const uint8_t &offset, const float &x, const float &y) const;
+	float SingleValue(uint8_t offset, float x, float y) const;
 
 	float SinglePerlinFractalFbm(float x, float y) const;
 
@@ -373,7 +373,7 @@ private:
 
 	float SinglePerlinFractalRigidMulti(float x, float y) const;
 
-	float SinglePerlin(const uint8_t &offset, const float &x, const float &y) const;
+	float SinglePerlin(uint8_t offset, float x, float y) const;
 
 	float SingleSimplexFractalFbm(float x, float y) const;
 
@@ -383,7 +383,7 @@ private:
 
 	float singleSimplexFractalBlend(float x, float y) const;
 
-	float SingleSimplex(const uint8_t &offset, const float &x, const float &y) const;
+	float SingleSimplex(uint8_t offset, float x, float y) const;
 
 	float SingleCubicFractalFbm(float x, float y) const;
 
@@ -391,13 +391,13 @@ private:
 
 	float SingleCubicFractalRigidMulti(float x, float y) const;
 
-	float SingleCubic(const uint8_t &offset, const float &x, const float &y) const;
+	float SingleCubic(uint8_t offset, float x, float y) const;
 
-	float SingleCellular(const float &x, const float &y) const;
+	float SingleCellular(float x, float y) const;
 
-	float SingleCellular2Edge(const float &x, const float &y) const;
+	float SingleCellular2Edge(float x, float y) const;
 
-	void SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y) const;
+	void SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency, float x, float y) const;
 
 	//3D
 	float SingleValueFractalFbm(float x, float y, float z) const;
@@ -406,7 +406,7 @@ private:
 
 	float SingleValueFractalRigidMulti(float x, float y, float z) const;
 
-	float SingleValue(const uint8_t &offset, const float &x, const float &y, const float &z) const;
+	float SingleValue(uint8_t offset, float x, float y, float z) const;
 
 	float SinglePerlinFractalFbm(float x, float y, float z) const;
 
@@ -414,7 +414,7 @@ private:
 
 	float SinglePerlinFractalRigidMulti(float x, float y, float z) const;
 
-	float SinglePerlin(const uint8_t &offset, const float &x, const float &y, const float &z) const;
+	float SinglePerlin(uint8_t offset, float x, float y, float z) const;
 
 	float SingleSimplexFractalFbm(float x, float y, float z) const;
 
@@ -422,7 +422,7 @@ private:
 
 	float SingleSimplexFractalRigidMulti(float x, float y, float z) const;
 
-	float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z) const;
+	float SingleSimplex(uint8_t offset, float x, float y, float z) const;
 
 	float SingleCubicFractalFbm(float x, float y, float z) const;
 
@@ -430,16 +430,16 @@ private:
 
 	float SingleCubicFractalRigidMulti(float x, float y, float z) const;
 
-	float SingleCubic(const uint8_t &offset, const float &x, const float &y, const float &z) const;
+	float SingleCubic(uint8_t offset, float x, float y, float z) const;
 
-	float SingleCellular(const float &x, const float &y, const float &z) const;
+	float SingleCellular(float x, float y, float z) const;
 
-	float SingleCellular2Edge(const float &x, const float &y, const float &z) const;
+	float SingleCellular2Edge(float x, float y, float z) const;
 
-	void SingleGradientPerturb(const uint8_t &offset, const float &warpAmp, const float &frequency, float x, float y, float z) const;
+	void SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency, float x, float y, float z) const;
 
 	//4D
-	float SingleSimplex(const uint8_t &offset, const float &x, const float &y, const float &z, const float &w) const;
+	float SingleSimplex(uint8_t offset, float x, float y, float z, float w) const;
 
 	uint64_t m_seed;
 	std::unique_ptr<uint8_t[]> m_perm;

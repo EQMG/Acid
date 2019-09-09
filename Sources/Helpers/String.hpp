@@ -16,7 +16,7 @@ public:
 	 * @param sep The separator.
 	 * @return The split string vector.
 	 */
-	static std::vector<std::string> Split(const std::string &str, const char &sep);
+	static std::vector<std::string> Split(const std::string &str, char sep);
 
 	/**
 	 * Gets if a string starts with a token.
@@ -34,7 +34,7 @@ public:
 	 */
 	static bool Contains(std::string_view str, std::string_view token);
 
-	static bool IsWhitespace(const char &c);
+	static bool IsWhitespace(char c);
 
 	/**
 	 * Gets if a string is a number.

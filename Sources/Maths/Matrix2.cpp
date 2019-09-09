@@ -5,7 +5,7 @@
 
 namespace acid
 {
-Matrix2::Matrix2(const float &diagonal)
+Matrix2::Matrix2(float diagonal)
 {
 	std::memset(m_rows, 0, 2 * 2 * sizeof(float));
 	m_rows[0][0] = diagonal;
@@ -196,7 +196,7 @@ float Matrix2::Determinant() const
 	return result;
 }
 
-float Matrix2::GetSubmatrix(const uint32_t &row, const uint32_t &col) const
+float Matrix2::GetSubmatrix(uint32_t row, uint32_t col) const
 {
 	float result{};
 	uint32_t colCount{};
@@ -239,13 +239,13 @@ Matrix2 Matrix2::operator-() const
 	return Negate();
 }
 
-const Vector2f &Matrix2::operator[](const uint32_t &index) const
+const Vector2f &Matrix2::operator[](uint32_t index) const
 {
 	assert(index < 2);
 	return m_rows[index];
 }
 
-Vector2f &Matrix2::operator[](const uint32_t &index)
+Vector2f &Matrix2::operator[](uint32_t index)
 {
 	assert(index < 2);
 	return m_rows[index];
@@ -291,22 +291,22 @@ Matrix2 operator/(const Matrix2 &left, const Vector2f &right)
 	return left.Scale(1.0f / right);
 }
 
-Matrix2 operator*(const float &left, const Matrix2 &right)
+Matrix2 operator*(float left, const Matrix2 &right)
 {
 	return right.Scale({left, left});
 }
 
-Matrix2 operator/(const float &left, const Matrix2 &right)
+Matrix2 operator/(float left, const Matrix2 &right)
 {
 	return right.Scale(1.0f / Vector2f{left, left});
 }
 
-Matrix2 operator*(const Matrix2 &left, const float &right)
+Matrix2 operator*(const Matrix2 &left, float right)
 {
 	return left.Scale({right, right});
 }
 
-Matrix2 operator/(const Matrix2 &left, const float &right)
+Matrix2 operator/(const Matrix2 &left, float right)
 {
 	return left.Scale(1.0f / Vector2f{right, right});
 }
@@ -341,12 +341,12 @@ Matrix2 &Matrix2::operator/=(const Vector2f &other)
 	return *this = Scale(1.0f / other);
 }
 
-Matrix2 &Matrix2::operator*=(const float &other)
+Matrix2 &Matrix2::operator*=(float other)
 {
 	return *this = Scale({other, other});
 }
 
-Matrix2 &Matrix2::operator/=(const float &other)
+Matrix2 &Matrix2::operator/=(float other)
 {
 	return *this = Scale(1.0f / Vector2f{other, other});
 }

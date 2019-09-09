@@ -23,8 +23,8 @@ public:
 	 * @param scale The particles scale.
 	 * @param gravityEffect The particles gravity effect.
 	 */
-	Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles,
-		const float &rotation, const float &scale, const float &gravityEffect);
+	Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, float lifeLength, float stageCycles,
+		float rotation, float scale, float gravityEffect);
 
 	/**
 	 * Updates the particle.
@@ -41,26 +41,26 @@ public:
 
 	const Vector3f &GetChange() const { return m_change; }
 
-	const float &GetLifeLength() const { return m_lifeLength; }
+	float GetLifeLength() const { return m_lifeLength; }
 
-	const float &GetRotation() const { return m_rotation; }
+	float GetRotation() const { return m_rotation; }
 
-	const float &GetScale() const { return m_scale; }
+	float GetScale() const { return m_scale; }
 
-	const float &GetGravityEffect() const { return m_gravityEffect; }
+	float GetGravityEffect() const { return m_gravityEffect; }
 
-	const float &GetElapsedTime() const { return m_elapsedTime; }
+	float GetElapsedTime() const { return m_elapsedTime; }
 
-	const float &GetTransparency() const { return m_transparency; }
+	float GetTransparency() const { return m_transparency; }
 
-	const float &DistanceToCamera() const { return m_distanceToCamera; }
+	float DistanceToCamera() const { return m_distanceToCamera; }
 
 	bool operator<(const Particle &other) const;
 
 private:
 	friend class ParticleType;
 
-	Vector2f CalculateImageOffset(const int32_t &index) const;
+	Vector2f CalculateImageOffset(int32_t index) const;
 
 	std::shared_ptr<ParticleType> m_particleType;
 

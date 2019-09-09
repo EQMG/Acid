@@ -8,7 +8,7 @@
 
 namespace acid
 {
-CollisionObject::CollisionObject(const float &mass, const float &friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
+CollisionObject::CollisionObject(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	m_mass{mass},
 	m_friction{friction},
 	m_frictionRolling{0.1f},
@@ -79,19 +79,19 @@ void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, const bool
 	m_body->setIgnoreCollisionCheck(other->m_body, ignore);
 }
 
-void CollisionObject::SetFriction(const float &friction)
+void CollisionObject::SetFriction(float friction)
 {
 	m_friction = friction;
 	m_body->setFriction(m_friction);
 }
 
-void CollisionObject::SetFrictionRolling(const float &frictionRolling)
+void CollisionObject::SetFrictionRolling(float frictionRolling)
 {
 	m_frictionRolling = frictionRolling;
 	m_body->setRollingFriction(m_frictionRolling);
 }
 
-void CollisionObject::SetFrictionSpinning(const float &frictionSpinning)
+void CollisionObject::SetFrictionSpinning(float frictionSpinning)
 {
 	m_frictionSpinning = frictionSpinning;
 	m_body->setSpinningFriction(m_frictionSpinning);

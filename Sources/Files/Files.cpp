@@ -14,7 +14,7 @@ class FBuffer :
 	public streambuf
 {
 public:
-	explicit FBuffer(PHYSFS_File *file, const std::size_t &bufferSize = 2048) :
+	explicit FBuffer(PHYSFS_File *file, std::size_t bufferSize = 2048) :
 		m_bufferSize{bufferSize},
 		m_file{file}
 	{

@@ -14,7 +14,7 @@ public:
 
 	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
 
-	void Push(void *data, const std::size_t &size)
+	void Push(void *data, std::size_t size)
 	{
 		if (size != m_size)
 		{
@@ -42,7 +42,7 @@ public:
 	}
 
 	template<typename T>
-	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
+	void Push(const T &object, std::size_t offset, std::size_t size)
 	{
 		if (!m_uniformBlock || !m_storageBuffer)
 		{
@@ -63,7 +63,7 @@ public:
 	}
 
 	template<typename T>
-	void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
+	void Push(const std::string &uniformName, const T &object, std::size_t size = 0)
 	{
 		if (!m_uniformBlock)
 		{

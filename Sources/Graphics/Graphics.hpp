@@ -110,7 +110,7 @@ public:
 	 */
 	void SetRenderer(std::unique_ptr<Renderer> &&renderer) { m_renderer = std::move(renderer); }
 
-	RenderStage *GetRenderStage(const uint32_t &index) const;
+	RenderStage *GetRenderStage(uint32_t index) const;
 
 	void SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages);
 

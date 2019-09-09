@@ -24,7 +24,7 @@ public:
 		
 	void Update() override;
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &binding = 0) { return VertexAnimated::GetVertexInput(binding); }
+	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return VertexAnimated::GetVertexInput(binding); }
 
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 

@@ -32,9 +32,9 @@ public:
 
 	void Update() override;
 
-	ACID_NO_EXPORT static std::string StringifyResultAl(const int32_t &result);
+	ACID_NO_EXPORT static std::string StringifyResultAl(int32_t result);
 
-	ACID_NO_EXPORT static void CheckAl(const int32_t &result);
+	ACID_NO_EXPORT static void CheckAl(int32_t result);
 	
 	ACID_NO_EXPORT ALCdevice *GetDevice() const { return m_device; }
 
@@ -42,7 +42,7 @@ public:
 
 	float GetGain(const Type &type) const;
 
-	void SetGain(const Type &type, const float &volume);
+	void SetGain(const Type &type, float volume);
 
 	/**
 	 * Called when a gain value has been modified.

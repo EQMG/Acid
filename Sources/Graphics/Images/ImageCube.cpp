@@ -78,8 +78,8 @@ ImageCube::~ImageCube()
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	const uint32_t &count)
+VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
 	descriptorSetLayoutBinding.binding = binding;
@@ -90,7 +90,7 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(const uint32_t &b
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo{};
 	imageInfo.sampler = m_sampler;
@@ -108,7 +108,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(const uint32_t &binding, const 
 	return {descriptorWrite, imageInfo};
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel, const uint32_t &arrayLayer) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
@@ -139,7 +139,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel) const
 {
 	std::unique_ptr<uint8_t[]> pixels;
 	uint8_t *offset{};
@@ -163,7 +163,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, const uint32_
 	return pixels;
 }
 
-void ImageCube::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
+void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
 {
 	Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};

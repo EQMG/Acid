@@ -80,7 +80,7 @@ public:
 	}
 
 	template<typename ...Args>
-	Timer *Repeat(const Time &interval, const uint32_t &repeat, std::function<void()> &&function, Args ...args)
+	Timer *Repeat(const Time &interval, uint32_t repeat, std::function<void()> &&function, Args ...args)
 	{
 		std::unique_lock<std::mutex> lock{m_mutex};
 		auto instance = std::make_unique<Timer>(interval, repeat);

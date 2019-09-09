@@ -19,7 +19,7 @@ public:
 	 * Constructor for Matrix4. The matrix is initialised to the identity.
 	 * @param diagonal The value set to the diagonals. 
 	 **/
-	Matrix4(const float &diagonal = 1.0f);
+	Matrix4(float diagonal = 1.0f);
 
 	/**
 	 * Constructor for Matrix4.
@@ -121,7 +121,7 @@ public:
 	 * @param axis The vector representing the rotation axis. 
 	 * @return The rotated matrix. 
 	 **/
-	Matrix4 Rotate(const float &angle, const Vector3f &axis) const;
+	Matrix4 Rotate(float angle, const Vector3f &axis) const;
 
 	/**
 	 * Inverts this matrix.
@@ -151,7 +151,7 @@ public:
 	 * Gets the submatrix of this matrix.
 	 * @return The submatrix. 
 	 **/
-	Matrix3 GetSubmatrix(const uint32_t &row, const uint32_t &col) const;
+	Matrix3 GetSubmatrix(uint32_t row, uint32_t col) const;
 
 	/**
 	 * Creates a new transformation matrix for a object in 3d space.
@@ -170,7 +170,7 @@ public:
 	 * @param zFar The cameras far plane. 
 	 * @return The transformation matrix. 
 	 **/
-	static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear, const float &zFar);
+	static Matrix4 PerspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar);
 
 	/**
 	 * Creates a new perspective matrix with a infinite view distance.
@@ -179,7 +179,7 @@ public:
 	 * @param zNear The cameras near plane. 
 	 * @return The transformation matrix. 
 	 **/
-	static Matrix4 PerspectiveMatrix(const float &fov, const float &aspectRatio, const float &zNear);
+	static Matrix4 PerspectiveMatrix(float fov, float aspectRatio, float zNear);
 
 	/**
 	 * Creates a new orthographic matrix.
@@ -191,7 +191,7 @@ public:
 	 * @param zFar The far plane. 
 	 * @return The orthographic matrix. 
 	 **/
-	static Matrix4 OrthographicMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
+	static Matrix4 OrthographicMatrix(float left, float right, float bottom, float top, float zNear, float zFar);
 
 	/**
 	 * Creates a new frustum matrix.
@@ -203,7 +203,7 @@ public:
 	 * @param zFar The far plane. 
 	 * @return The frustum matrix. 
 	 **/
-	static Matrix4 FrustumMatrix(const float &left, const float &right, const float &bottom, const float &top, const float &zNear, const float &zFar);
+	static Matrix4 FrustumMatrix(float left, float right, float bottom, float top, float zNear, float zFar);
 
 	/**
 	 * Creates a new view matrix.
@@ -246,9 +246,9 @@ public:
 
 	Matrix4 operator-() const;
 
-	const Vector4f &operator[](const uint32_t &index) const;
+	const Vector4f &operator[](uint32_t index) const;
 
-	Vector4f &operator[](const uint32_t &index);
+	Vector4f &operator[](uint32_t index);
 
 	friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 
@@ -266,13 +266,13 @@ public:
 
 	friend Matrix4 operator/(const Matrix4 &left, const Vector4f &right);
 
-	friend Matrix4 operator*(const float &left, const Matrix4 &right);
+	friend Matrix4 operator*(float left, const Matrix4 &right);
 
-	friend Matrix4 operator/(const float &left, const Matrix4 &right);
+	friend Matrix4 operator/(float left, const Matrix4 &right);
 
-	friend Matrix4 operator*(const Matrix4 &left, const float &right);
+	friend Matrix4 operator*(const Matrix4 &left, float right);
 
-	friend Matrix4 operator/(const Matrix4 &left, const float &right);
+	friend Matrix4 operator/(const Matrix4 &left, float right);
 
 	Matrix4 &operator+=(const Matrix4 &other);
 
@@ -286,9 +286,9 @@ public:
 
 	Matrix4 &operator/=(const Vector4f &other);
 
-	Matrix4 &operator*=(const float &other);
+	Matrix4 &operator*=(float other);
 
-	Matrix4 &operator/=(const float &other);
+	Matrix4 &operator/=(float other);
 
 	friend const Node &operator>>(const Node &node, Matrix4 &matrix);
 

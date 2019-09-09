@@ -5,8 +5,8 @@
 
 namespace acid
 {
-Text::Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
-	const Colour &textColour, const float &kerning, const float &leading) :
+Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
+	const Colour &textColour, float kerning, float leading) :
 	UiObject{parent, rectangle},
 	m_lastSize{rectangle.GetSize()},
 	m_fontSize{fontSize},
@@ -80,7 +80,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	return m_model->CmdRender(commandBuffer);
 }
 
-void Text::SetFontSize(const float &fontSize)
+void Text::SetFontSize(float fontSize)
 {
 	m_fontSize = fontSize;
 	m_lastSize = {};
@@ -245,7 +245,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	return lines;
 }
 
-void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const
+void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const
 {
 	auto added = currentLine.AddWord(currentWord);
 
@@ -311,7 +311,7 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 	return vertices;
 }
 
-void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices)
+void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices)
 {
 	auto vertexX = cursorX + character.m_offsetX;
 	auto vertexY = cursorY + character.m_offsetY;
@@ -331,7 +331,7 @@ void Text::AddVerticesForCharacter(const float &cursorX, const float &cursorY, c
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 }
 
-void Text::AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices)
+void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices)
 {
 	vertices.emplace_back(VertexDefault{{vx, vy, 0.0f}, {tx, ty}, {}});
 }

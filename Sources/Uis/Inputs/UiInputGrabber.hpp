@@ -43,16 +43,16 @@ class ACID_EXPORT UiGrabberJoystick :
 	public UiInputGrabber
 {
 public:
-	UiGrabberJoystick(UiObject *parent, const std::string &title, const uint32_t &port, const uint32_t &value,
+	UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value,
 		const UiTransform &transform = {UiInputButton::Size});
 
-	const uint32_t &GetPort() const { return m_port; }
+	uint32_t GetPort() const { return m_port; }
 
-	void SetPort(const uint32_t &port) { m_port = port; }
+	void SetPort(uint32_t port) { m_port = port; }
 
-	const uint32_t &GetValue() const { return m_value; }
+	uint32_t GetValue() const { return m_value; }
 
-	void SetValue(const uint32_t &value);
+	void SetValue(uint32_t value);
 
 	/**
 	 * Called when this value of the input changes.

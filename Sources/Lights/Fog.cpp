@@ -2,7 +2,7 @@
 
 namespace acid
 {
-Fog::Fog(const Colour &colour, const float &density, const float &gradient, const float &lowerLimit, const float &upperLimit) :
+Fog::Fog(const Colour &colour, float density, float gradient, float lowerLimit, float upperLimit) :
 	m_colour{colour},
 	m_density{density},
 	m_gradient{gradient},

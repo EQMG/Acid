@@ -14,7 +14,7 @@ class Terrain :
 	public Component
 {
 public:
-	explicit Terrain(const float &sideLength = 200.0f, const float &squareSize = 2.0f);
+	explicit Terrain(float sideLength = 200.0f, float squareSize = 2.0f);
 
 	void Start() override;
 
@@ -25,11 +25,11 @@ public:
 	friend Node &operator<<(Node &node, const Terrain &terrain);
 
 private:
-	static uint32_t CalculateVertexCount(const float &sideLength, const float &squareSize);
+	static uint32_t CalculateVertexCount(float sideLength, float squareSize);
 
-	static float CalculateTextureScale(const float &sideLength);
+	static float CalculateTextureScale(float sideLength);
 
-	std::vector<float> GenerateHeightmap(const uint32_t &vertexCount);
+	std::vector<float> GenerateHeightmap(uint32_t vertexCount);
 
 	Noise m_noise;
 	std::vector<float> m_heightmap;

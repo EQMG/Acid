@@ -34,7 +34,7 @@ public:
 	 * @param distance Distance down the ray to sample.
 	 * @return The destination vector.
 	 */
-	Vector3f GetPointOnRay(const float &distance) const;
+	Vector3f GetPointOnRay(float distance) const;
 
 	/**
 	 * Converts a position from world space to screen space.
@@ -56,7 +56,7 @@ public:
 	const Vector3f &GetCurrentRay() const { return m_currentRay; }
 
 private:
-	void UpdateNormalizedDeviceCoordinates(const float &mouseX, const float &mouseY);
+	void UpdateNormalizedDeviceCoordinates(float mouseX, float mouseY);
 
 	void UpdateEyeCoords();
 

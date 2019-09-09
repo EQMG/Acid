@@ -50,7 +50,7 @@ public:
 	 * @param host Web server to connect to. 
 	 * @param port Port to use for connection. 
 	 **/
-	Http(const std::string &host, const uint16_t &port = 0);
+	Http(const std::string &host, uint16_t port = 0);
 
 	/**
 	 * Set the target host.
@@ -61,7 +61,7 @@ public:
 	 * @param host Web server to connect to. 
 	 * @param port Port to use for connection. 
 	 **/
-	void SetHost(const std::string &host, const uint16_t &port = 0);
+	void SetHost(const std::string &host, uint16_t port = 0);
 
 	/**
 	 * Send a HTTP request and return the server's response.

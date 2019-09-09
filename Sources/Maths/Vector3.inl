@@ -283,7 +283,7 @@ constexpr std::enable_if_t<std::is_integral_v<U>, Vector3<T>> Vector3<T>::operat
 }
 
 template<typename T>
-constexpr const T &Vector3<T>::operator[](const uint32_t &index) const
+constexpr const T &Vector3<T>::operator[](uint32_t index) const
 {
 	switch (index)
 	{
@@ -299,7 +299,7 @@ constexpr const T &Vector3<T>::operator[](const uint32_t &index) const
 }
 
 template<typename T>
-constexpr T &Vector3<T>::operator[](const uint32_t &index)
+constexpr T &Vector3<T>::operator[](uint32_t index)
 {
 	switch (index)
 	{

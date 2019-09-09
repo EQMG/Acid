@@ -176,7 +176,7 @@ void Mouse::SetCursorHidden(const bool &hidden)
 	m_cursorHidden = hidden;
 }
 
-double Mouse::SmoothScrollWheel(double value, const float &delta)
+double Mouse::SmoothScrollWheel(double value, float delta)
 {
 	if (value != 0.0)
 	{

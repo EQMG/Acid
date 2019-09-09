@@ -28,7 +28,7 @@ public:
 		return !(*this == other);
 	}
 
-	static Shader::VertexInput GetVertexInput(const uint32_t &baseBinding = 0)
+	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 	{
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
 			{ baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX }

@@ -35,7 +35,7 @@ FontMetafile::FontMetafile(std::filesystem::path filename) :
 	}
 }
 
-std::optional<FontMetafile::Character> FontMetafile::GetCharacter(const int32_t &ascii) const
+std::optional<FontMetafile::Character> FontMetafile::GetCharacter(int32_t ascii) const
 {
 	auto it = m_characters.find(ascii);
 

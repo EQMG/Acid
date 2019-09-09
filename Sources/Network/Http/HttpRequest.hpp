@@ -74,7 +74,7 @@ public:
 	 * @param major Major HTTP version number. 
 	 * @param minor Minor HTTP version number. 
 	 **/
-	void SetHttpVersion(const uint32_t &major, const uint32_t &minor);
+	void SetHttpVersion(uint32_t major, uint32_t minor);
 
 	/**
 	 * Set the body of the request.

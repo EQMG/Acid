@@ -8,15 +8,15 @@ namespace acid
 class ACID_EXPORT OffsetSize
 {
 public:
-	OffsetSize(const uint32_t &offset, const uint32_t &size) :
+	OffsetSize(uint32_t offset, uint32_t size) :
 		m_offset{offset},
 		m_size{size}
 	{
 	}
 
-	const uint32_t &GetOffset() const { return m_offset; }
+	uint32_t GetOffset() const { return m_offset; }
 
-	const uint32_t &GetSize() const { return m_size; }
+	uint32_t GetSize() const { return m_size; }
 
 	bool operator==(const OffsetSize &other) const
 	{
@@ -61,7 +61,7 @@ private:
 class ACID_EXPORT Descriptor
 {
 public:
-	virtual WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const = 0;
+	virtual WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const = 0;
 
 	Descriptor() = default;
 

@@ -10,7 +10,7 @@ class ACID_EXPORT SkeletonLoader
 public:
 	SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);
 
-	const uint32_t &GetJointCount() const { return m_jointCount; }
+	uint32_t GetJointCount() const { return m_jointCount; }
 
 	const Joint &GetHeadJoint() const { return m_headJoint; }
 

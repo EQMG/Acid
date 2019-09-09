@@ -32,9 +32,9 @@ public:
 
 	void SetBaseColour(const Colour &baseColour) { m_baseColour = baseColour; }
 
-	const float &GetBlend() const { return m_blend; }
+	float GetBlend() const { return m_blend; }
 
-	void SetBlend(const float &blend) { m_blend = blend; }
+	void SetBlend(float blend) { m_blend = blend; }
 
 	const Colour &GetFogColour() const { return m_fogColour; }
 

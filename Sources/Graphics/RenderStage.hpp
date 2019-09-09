@@ -30,7 +30,7 @@ public:
 	 * @param format The format that will be created (only applies to type ATTACHMENT_IMAGE).
 	 * @param clearColour The colour to clear to before rendering to it.
 	 */
-	Attachment(const uint32_t &binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+	Attachment(uint32_t binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const Colour &clearColour = Colour::Black) :
 		m_binding{binding},
 		m_name{std::move(name)},
@@ -41,7 +41,7 @@ public:
 	{
 	}
 
-	const uint32_t &GetBinding() const { return m_binding; }
+	uint32_t GetBinding() const { return m_binding; }
 
 	const std::string &GetName() const { return m_name; }
 
@@ -65,13 +65,13 @@ private:
 class ACID_EXPORT SubpassType
 {
 public:
-	SubpassType(const uint32_t &binding, std::vector<uint32_t> attachmentBindings) :
+	SubpassType(uint32_t binding, std::vector<uint32_t> attachmentBindings) :
 		m_binding{binding},
 		m_attachmentBindings{std::move(attachmentBindings)}
 	{
 	}
 
-	const uint32_t &GetBinding() const { return m_binding; }
+	uint32_t GetBinding() const { return m_binding; }
 
 	const std::vector<uint32_t> &GetAttachmentBindings() const { return m_attachmentBindings; }
 
@@ -102,9 +102,9 @@ public:
 	 * Gets the aspect ratio between the render stages width and height.
 	 * @return The aspect ratio.
 	 */
-	const float &GetAspectRatio() const { return m_aspectRatio; }
+	float GetAspectRatio() const { return m_aspectRatio; }
 
-	void SetAspectRatio(const float &aspectRatio) { m_aspectRatio = aspectRatio; }
+	void SetAspectRatio(float aspectRatio) { m_aspectRatio = aspectRatio; }
 
 	bool operator==(const RenderArea &other) const
 	{
@@ -167,7 +167,7 @@ public:
 
 	std::optional<Attachment> GetAttachment(const std::string &name) const;
 
-	std::optional<Attachment> GetAttachment(const uint32_t &binding) const;
+	std::optional<Attachment> GetAttachment(uint32_t binding) const;
 
 	const std::vector<Attachment> &GetAttachments() const { return m_attachments; }
 
@@ -197,17 +197,17 @@ public:
 
 	const Descriptor *GetDescriptor(const std::string &name) const;
 
-	const VkFramebuffer &GetActiveFramebuffer(const uint32_t &activeSwapchainImage) const;
+	const VkFramebuffer &GetActiveFramebuffer(uint32_t activeSwapchainImage) const;
 
 	const std::vector<VkClearValue> &GetClearValues() const { return m_clearValues; }
 
-	const uint32_t &GetAttachmentCount(const uint32_t &subpass) const { return m_subpassAttachmentCount[subpass]; }
+	uint32_t GetAttachmentCount(uint32_t subpass) const { return m_subpassAttachmentCount[subpass]; }
 
 	bool HasDepth() const { return m_depthAttachment.has_value(); }
 
 	bool HasSwapchain() const { return m_swapchainAttachment.has_value(); }
 
-	bool IsMultisampled(const uint32_t &subpass) const { return m_subpassMultisampled[subpass]; }
+	bool IsMultisampled(uint32_t subpass) const { return m_subpassMultisampled[subpass]; }
 
 private:
 	friend class Graphics;

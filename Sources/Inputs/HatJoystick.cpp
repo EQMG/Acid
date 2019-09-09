@@ -2,7 +2,7 @@
 
 namespace acid
 {
-HatJoystick::HatJoystick(const uint32_t &port, const uint32_t &hat, const BitMask<JoystickHat> &hatFlags) :
+HatJoystick::HatJoystick(uint32_t port, uint32_t hat, const BitMask<JoystickHat> &hatFlags) :
 	m_port{port},
 	m_hat{hat},
 	m_hatFlags{hatFlags}

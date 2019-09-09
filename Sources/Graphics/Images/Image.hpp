@@ -27,17 +27,17 @@ public:
 	 * @param arrayLayers The number of layers in the image.
 	 */
 	Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
-		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers);
+		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, uint32_t mipLevels, uint32_t arrayLayers);
 
 	/*const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic,
-	const VkImageViewType &viewType, const VkImageAspectFlags &imageAspect, const uint32_t &baseMipLevel, const uint32_t &baseArrayLayer*/
+	const VkImageViewType &viewType, const VkImageAspectFlags &imageAspect, uint32_t baseMipLevel, uint32_t baseArrayLayer*/
 
 	~Image();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-		const uint32_t &count);
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+		uint32_t count);
 
-	WriteDescriptorSet GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -46,7 +46,7 @@ public:
 	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, const uint32_t &mipLevel = 0, const uint32_t &arrayLayer = 0) const;
+	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
@@ -54,7 +54,7 @@ public:
 	 * @param layerCount The amount of layers contained in the pixels.
 	 * @param baseArrayLayer The first layer to copy into.
 	 */
-	void SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
 
 	const VkExtent3D &GetExtent() const { return m_extent; }
 
@@ -64,9 +64,9 @@ public:
 
 	const VkImageUsageFlags &GetUsage() const { return m_usage; }
 
-	const uint32_t &GetMipLevels() const { return m_mipLevels; }
+	uint32_t GetMipLevels() const { return m_mipLevels; }
 
-	const uint32_t &GetArrayLevels() const { return m_arrayLayers; }
+	uint32_t GetArrayLevels() const { return m_arrayLayers; }
 
 	const VkFilter &GetFilter() const { return m_filter; }
 
@@ -86,7 +86,7 @@ public:
 
 	static std::unique_ptr<uint8_t[]> LoadPixels(const std::filesystem::path &filename, Vector2ui &extent, uint32_t &components, VkFormat &format);
 
-	static void WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, const int32_t &components = 4);
+	static void WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, int32_t components = 4);
 
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
@@ -105,28 +105,28 @@ public:
 	static bool HasStencil(const VkFormat &format);
 
 	static void CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D &extent, const VkFormat &format, const VkSampleCountFlagBits &samples,
-		const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, const uint32_t &mipLevels, const uint32_t &arrayLayers,
+		const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, uint32_t mipLevels, uint32_t arrayLayers,
 		const VkImageType &type);
 
-	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const uint32_t &mipLevels);
+	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, uint32_t mipLevels);
 
 	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect,
-		const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+		uint32_t mipLevels, uint32_t baseMipLevel, uint32_t layerCount, uint32_t baseArrayLayer);
 
-	static void CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, const uint32_t &mipLevels,
-		const uint32_t &baseArrayLayer, const uint32_t &layerCount);
+	static void CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const VkFormat &format, const VkImageLayout &dstImageLayout, uint32_t mipLevels,
+		uint32_t baseArrayLayer, uint32_t layerCount);
 
 	static void TransitionImageLayout(const VkImage &image, const VkFormat &format, const VkImageLayout &srcImageLayout, const VkImageLayout &dstImageLayout,
-		const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+		const VkImageAspectFlags &imageAspect, uint32_t mipLevels, uint32_t baseMipLevel, uint32_t layerCount, uint32_t baseArrayLayer);
 
 	static void InsertImageMemoryBarrier(const CommandBuffer &commandBuffer, const VkImage &image, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
 		const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask,
-		const VkImageAspectFlags &imageAspect, const uint32_t &mipLevels, const uint32_t &baseMipLevel, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+		const VkImageAspectFlags &imageAspect, uint32_t mipLevels, uint32_t baseMipLevel, uint32_t layerCount, uint32_t baseArrayLayer);
 
-	static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const VkExtent3D &extent, const uint32_t &layerCount, const uint32_t &baseArrayLayer);
+	static void CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, const VkExtent3D &extent, uint32_t layerCount, uint32_t baseArrayLayer);
 
 	static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, const VkFormat &srcFormat, const VkExtent3D &extent,
-		const VkImageLayout &srcImageLayout, const uint32_t &mipLevel, const uint32_t &arrayLayer);
+		const VkImageLayout &srcImageLayout, uint32_t mipLevel, uint32_t arrayLayer);
 
 private:
 	VkExtent3D m_extent;

@@ -17,8 +17,8 @@ void UniformBuffer::Update(const void *newData)
 	UnmapMemory();
 }
 
-VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	const uint32_t &count)
+VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
 	descriptorSetLayoutBinding.binding = binding;
@@ -29,7 +29,7 @@ VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(const uint32_
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet UniformBuffer::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorBufferInfo bufferInfo{};
 	bufferInfo.buffer = m_buffer;

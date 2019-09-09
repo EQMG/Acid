@@ -32,7 +32,7 @@ public:
 
 	const VkExtent2D &GetExtent() const { return m_extent; }
 
-	const uint32_t &GetImageCount() const { return m_imageCount; }
+	uint32_t GetImageCount() const { return m_imageCount; }
 
 	const VkSurfaceTransformFlagsKHR &GetPreTransform() const { return m_preTransform; }
 
@@ -46,7 +46,7 @@ public:
 
 	const VkSwapchainKHR &GetSwapchain() const { return m_swapchain; }
 
-	const uint32_t &GetActiveImageIndex() const { return m_activeImageIndex; }
+	uint32_t GetActiveImageIndex() const { return m_activeImageIndex; }
 
 	bool IsSameExtent(const VkExtent2D &extent2D) { return m_extent.width == extent2D.width && m_extent.height == extent2D.height; }
 

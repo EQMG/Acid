@@ -17,7 +17,7 @@ public:
 private:
 	std::vector<Shader::Define> GetDefines() const;
 
-	static std::shared_ptr<Image2d> ComputeNoise(const uint32_t &size);
+	static std::shared_ptr<Image2d> ComputeNoise(uint32_t size);
 
 	UniformHandler m_uniformScene;
 

@@ -81,7 +81,7 @@ public:
 	 * @return The local-space transforms for all the joints for the desired current pose.
 	 * They are returned in a map, indexed by the name of the joint to which they should be applied. </returns>
 	 **/
-	std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, const float &progression) const;
+	std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, float progression) const;
 
 	/**
 	 * This method applies the current pose to a given joint, and all of its descendants.

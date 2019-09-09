@@ -109,7 +109,7 @@ NodeReturn Node::GetProperty(const std::string &name) const
 	return {this, name, nullptr};
 }
 
-NodeReturn Node::GetProperty(const uint32_t &index) const
+NodeReturn Node::GetProperty(uint32_t index) const
 {
 	if (index < m_properties.size())
 	{
@@ -132,7 +132,7 @@ Node &Node::AddProperty(const std::string &name, Node &&node)
 	return m_properties.emplace_back(name, std::move(node)).second;
 }
 
-Node &Node::AddProperty(const uint32_t &index, Node &&node)
+Node &Node::AddProperty(uint32_t index, Node &&node)
 {
 	node.m_parent = this;
 	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), {"", Node{"null", Type::Null}});
@@ -162,7 +162,7 @@ NodeReturn Node::operator[](const std::string &key) const
 	return GetProperty(key);
 }
 
-NodeReturn Node::operator[](const uint32_t &index) const
+NodeReturn Node::operator[](uint32_t index) const
 {
 	return GetProperty(index);
 }

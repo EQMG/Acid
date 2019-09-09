@@ -15,7 +15,7 @@ public:
 	explicit UniformHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
 
 	template<typename T>
-	void Push(const T &object, const std::size_t &offset, const std::size_t &size)
+	void Push(const T &object, std::size_t offset, std::size_t size)
 	{
 		if (!m_uniformBlock || !m_uniformBuffer)
 		{
@@ -36,7 +36,7 @@ public:
 	}
 
 	template<typename T>
-	void Push(const std::string &uniformName, const T &object, const std::size_t &size = 0)
+	void Push(const std::string &uniformName, const T &object, std::size_t size = 0)
 	{
 		if (!m_uniformBlock || !m_uniformBuffer)
 		{

@@ -5,8 +5,8 @@
 
 namespace acid
 {
-ColliderHeightfield::ColliderHeightfield(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData, const float &minHeight,
-	const float &maxHeight, const bool &flipQuadEdges, const Transform &localTransform) :
+ColliderHeightfield::ColliderHeightfield(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight,
+	float maxHeight, const bool &flipQuadEdges, const Transform &localTransform) :
 	Collider{localTransform}
 {
 	Initialize(heightStickWidth, heightStickLength, heightfieldData, minHeight, maxHeight, flipQuadEdges);
@@ -29,7 +29,7 @@ btCollisionShape *ColliderHeightfield::GetCollisionShape() const
 	return m_shape.get();
 }
 
-void ColliderHeightfield::Initialize(const int32_t &heightStickWidth, const int32_t &heightStickLength, const void *heightfieldData, const float &minHeight, const float &maxHeight,
+void ColliderHeightfield::Initialize(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight, float maxHeight,
 	const bool &flipQuadEdges)
 {
 	if (heightfieldData == nullptr)

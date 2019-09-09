@@ -51,7 +51,7 @@ public:
 	void SetEnd(const T &end) { m_end = end; }
 
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		return m_start + factor * (m_end - m_start);
 	}

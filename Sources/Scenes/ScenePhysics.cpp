@@ -78,7 +78,7 @@ void ScenePhysics::SetGravity(const Vector3f &gravity)
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 }
 
-void ScenePhysics::SetAirDensity(const float &airDensity)
+void ScenePhysics::SetAirDensity(float airDensity)
 {
 	m_airDensity = airDensity;
 	auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());

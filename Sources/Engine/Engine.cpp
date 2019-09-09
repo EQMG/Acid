@@ -35,7 +35,7 @@ Engine::Engine(std::string argv0, const bool &emptyRegister) :
 
 	std::cout << "Version: " << ACID_VERSION << '\n' <<
 		"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << '\n' <<
-		"Compiled on: " << ACID_COMPILED_SYSTEM << "\n\n";
+		"Compiled on: " << ACID_COMPILED_SYSTEM << " from: " << ACID_COMPILED_GENERATOR << " with: " << ACID_COMPILED_COMPILER << "\n\n";
 
 	// TODO: Maybe move each module into a Singleton???
 	if (!emptyRegister)

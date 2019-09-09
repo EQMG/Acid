@@ -40,9 +40,9 @@ public:
 	 * @param kerning The kerning (type character spacing multiplier) of this text.
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
-	Text(UiObject *parent, const UiTransform &rectangle, const float &fontSize, std::string text,
+	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text,
 	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left, 
-		const Colour &textColour = Colour::Black, const float &kerning = 0.0f, const float &leading = 0.0f);
+		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
 
 	void UpdateObject() override;
 
@@ -58,19 +58,19 @@ public:
 	 * Gets the font size.
 	 * @return The font size.
 	 */
-	const float &GetFontSize() const { return m_fontSize; }
+	float GetFontSize() const { return m_fontSize; }
 
 	/**
 	 * Sets the font size.
 	 * @param fontSize The new font size,
 	 */
-	void SetFontSize(const float &fontSize);
+	void SetFontSize(float fontSize);
 
 	/**
 	 * Gets the number of lines in this text.
 	 * @return The number of lines.
 	 */
-	const uint32_t &GetNumberLines() const { return m_numberLines; }
+	uint32_t GetNumberLines() const { return m_numberLines; }
 
 	/**
 	 * Gets the string of text represented.
@@ -94,25 +94,25 @@ public:
 	 * Gets the kerning (type character spacing multiplier) of this text.
 	 * @return The type kerning.
 	 */
-	const float &GetKerning() const { return m_kerning; }
+	float GetKerning() const { return m_kerning; }
 
 	/**
 	 * Sets the kerning (type character spacing multiplier) of this text.
 	 * @param kerning The new kerning.
 	 */
-	void SetKerning(const float &kerning) { m_kerning = kerning; }
+	void SetKerning(float kerning) { m_kerning = kerning; }
 
 	/**
 	 * Gets the leading (vertical line spacing multiplier) of this text.
 	 * @return The line leading.
 	 */
-	const float &GetLeading() const { return m_leading; }
+	float GetLeading() const { return m_leading; }
 
 	/**
 	 * Sets the leading (vertical line spacing multiplier) of this text.
 	 * @param leading The new leading.
 	 */
-	void SetLeading(const float &leading) { m_leading = leading; }
+	void SetLeading(float leading) { m_leading = leading; }
 
 	/**
 	 * Gets the font used by this text.
@@ -214,7 +214,7 @@ private:
 		 * @param character The character to be added.
 		 * @param kerning The character kerning.
 		 */
-		void AddCharacter(const FontMetafile::Character &character, const float &kerning)
+		void AddCharacter(const FontMetafile::Character &character, float kerning)
 		{
 			m_characters.emplace_back(character);
 			m_width += kerning + character.m_advanceX;
@@ -235,7 +235,7 @@ private:
 		 * @param spaceWidth The screen-space width of a space character.
 		 * @param maxLength The screen-space maximum length of a line.
 		 */
-		Line(const float &spaceWidth, const float &maxLength) :
+		Line(float spaceWidth, float maxLength) :
 			m_maxLength(maxLength),
 			m_spaceSize(spaceWidth)
 		{
@@ -279,13 +279,13 @@ private:
 
 	std::vector<Line> CreateStructure() const;
 
-	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, const float &maxLength) const;
+	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
 
 	std::vector<VertexDefault> CreateQuad(const std::vector<Line> &lines);
 
-	static void AddVerticesForCharacter(const float &cursorX, const float &cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices);
+	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices);
 
-	static void AddVertex(const float &vx, const float &vy, const float &tx, const float &ty, std::vector<VertexDefault> &vertices);
+	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices);
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;

@@ -65,7 +65,7 @@ public:
 	void SetPeak(const T &peak) { m_peak = peak; }
 
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		if (factor < m_start)
 		{

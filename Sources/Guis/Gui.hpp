@@ -35,13 +35,13 @@ public:
 
 	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 
-	const uint32_t &GetNumberOfRows() const { return m_numberOfRows; }
+	uint32_t GetNumberOfRows() const { return m_numberOfRows; }
 
-	void SetNumberOfRows(const uint32_t &numberOfRows) { m_numberOfRows = numberOfRows; }
+	void SetNumberOfRows(uint32_t numberOfRows) { m_numberOfRows = numberOfRows; }
 
-	const uint32_t &GetSelectedRow() const { return m_selectedRow; }
+	uint32_t GetSelectedRow() const { return m_selectedRow; }
 
-	void SetSelectedRow(const uint32_t &selectedRow) { m_selectedRow = selectedRow; }
+	void SetSelectedRow(uint32_t selectedRow) { m_selectedRow = selectedRow; }
 
 	const Vector2f &GetAtlasOffset() const { return m_atlasOffset; }
 

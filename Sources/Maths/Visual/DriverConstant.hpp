@@ -36,7 +36,7 @@ public:
 	 **/
 	void SetConstant(const T &constant) { m_constant = constant; };
 protected:
-	T Calculate(const float &factor) override
+	T Calculate(float factor) override
 	{
 		return m_constant;
 	}

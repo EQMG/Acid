@@ -13,7 +13,7 @@ Ftp::~Ftp()
 	Disconnect();
 }
 
-FtpResponse Ftp::Connect(const IpAddress &server, const uint16_t &port, const Time &timeout)
+FtpResponse Ftp::Connect(const IpAddress &server, uint16_t port, const Time &timeout)
 {
 	// Connect to the server.
 	if (m_commandSocket.Connect(server, port, timeout) != Socket::Status::Done)

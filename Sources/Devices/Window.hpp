@@ -57,7 +57,7 @@ public:
 	 * Gets the aspect ratio between the windows width and height.
 	 * @return The aspect ratio.
 	 */
-	const float &GetAspectRatio() const { return m_aspectRatio; }
+	float GetAspectRatio() const { return m_aspectRatio; }
 
 	/**
 	 * Sets the window size.
@@ -240,9 +240,9 @@ public:
 	 */
 	Delegate<void(bool)> &OnIconify() { return m_onIconify; }
 
-	ACID_NO_EXPORT static std::string StringifyResultGlfw(const int32_t &result);
+	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
 
-	ACID_NO_EXPORT static void CheckGlfw(const int32_t &result);
+	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
 
 	static std::pair<const char **, uint32_t> GetInstanceExtensions();
 

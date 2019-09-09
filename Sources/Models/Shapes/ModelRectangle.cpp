@@ -21,7 +21,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const float &max)
+std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max)
 {
 	ModelRectangle temp{min, max, false};
 	Node node;
@@ -29,7 +29,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const float &min, const f
 	return Create(node);
 }
 
-ModelRectangle::ModelRectangle(const float &min, const float &max, const bool &load) :
+ModelRectangle::ModelRectangle(float min, float max, const bool &load) :
 	m_min(min),
 	m_max(max)
 {

@@ -37,7 +37,7 @@ public:
 
 	const VkDeviceMemory &GetBufferMemory() const { return m_bufferMemory; }
 
-	static uint32_t FindMemoryType(const uint32_t &typeFilter, const VkMemoryPropertyFlags &requiredProperties);
+	static uint32_t FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
 	static void InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
 		const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset = 0, const VkDeviceSize &size = VK_WHOLE_SIZE);

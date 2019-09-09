@@ -81,7 +81,7 @@ uint16_t TcpSocket::GetRemotePort() const
 	return 0;
 }
 
-Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout)
+Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, uint16_t remotePort, const Time &timeout)
 {
 	// Disconnect the socket if it is already connected.
 	Disconnect();
@@ -183,7 +183,7 @@ void TcpSocket::Disconnect()
 	m_pendingPacket = {};
 }
 
-Socket::Status TcpSocket::Send(const void *data, const std::size_t &size)
+Socket::Status TcpSocket::Send(const void *data, std::size_t size)
 {
 	if (!IsBlocking())
 	{
@@ -194,7 +194,7 @@ Socket::Status TcpSocket::Send(const void *data, const std::size_t &size)
 	return Send(data, size, sent);
 }
 
-Socket::Status TcpSocket::Send(const void *data, const std::size_t &size, std::size_t &sent)
+Socket::Status TcpSocket::Send(const void *data, std::size_t size, std::size_t &sent)
 {
 	// Check the parameters.
 	if (!data || (size == 0))
@@ -228,7 +228,7 @@ Socket::Status TcpSocket::Send(const void *data, const std::size_t &size, std::s
 	return Status::Done;
 }
 
-Socket::Status TcpSocket::Receive(void *data, const std::size_t &size, std::size_t &received)
+Socket::Status TcpSocket::Receive(void *data, std::size_t size, std::size_t &received)
 {
 	// First clear the variables to fill.
 	received = 0;

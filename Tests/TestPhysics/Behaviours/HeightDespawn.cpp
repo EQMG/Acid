@@ -5,7 +5,7 @@
 
 namespace test
 {
-HeightDespawn::HeightDespawn(const float &removeHeight) :
+HeightDespawn::HeightDespawn(float removeHeight) :
 	m_removeHeight{removeHeight}
 {
 }

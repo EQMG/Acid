@@ -6,7 +6,7 @@
 
 namespace acid
 {
-UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, const int32_t &maxLength, const UiTransform &transform) :
+UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength, const UiTransform &transform) :
 	UiObject{parent, transform},
 	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
 	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,

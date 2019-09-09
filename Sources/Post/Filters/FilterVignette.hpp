@@ -8,21 +8,21 @@ class ACID_EXPORT FilterVignette :
 	public PostFilter
 {
 public:
-	explicit FilterVignette(const Pipeline::Stage &pipelineStage, const float &innerRadius = 0.15f, const float &outerRadius = 1.35f, const float &opacity = 0.85f);
+	explicit FilterVignette(const Pipeline::Stage &pipelineStage, float innerRadius = 0.15f, float outerRadius = 1.35f, float opacity = 0.85f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const float &GetInnerRadius() const { return m_innerRadius; }
+	float GetInnerRadius() const { return m_innerRadius; }
 
-	void SetInnerRadius(const float &innerRadius) { m_innerRadius = innerRadius; }
+	void SetInnerRadius(float innerRadius) { m_innerRadius = innerRadius; }
 
-	const float &GetOuterRadius() const { return m_outerRadius; }
+	float GetOuterRadius() const { return m_outerRadius; }
 
-	void SetOuterRadius(const float &outerRadius) { m_outerRadius = outerRadius; }
+	void SetOuterRadius(float outerRadius) { m_outerRadius = outerRadius; }
 
-	const float &GetOpacity() const { return m_opacity; }
+	float GetOpacity() const { return m_opacity; }
 
-	void SetOpacity(const float &opacity) { m_opacity = opacity; }
+	void SetOpacity(float opacity) { m_opacity = opacity; }
 
 private:
 	PushHandler m_pushScene;

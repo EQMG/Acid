@@ -2,14 +2,14 @@
 
 namespace test
 {
-MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &textureScale) :
+MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale) :
 	MeshSimple{sideLength, squareSize, vertexCount, textureScale},
 	m_heightmap{heightmap}
 {
 	GenerateMesh();
 }
 
-VertexDefault MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
+VertexDefault MeshTerrain::GetVertex(uint32_t col, uint32_t row)
 {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
@@ -21,7 +21,7 @@ VertexDefault MeshTerrain::GetVertex(const uint32_t &col, const uint32_t &row)
 	return {position, uv, normal};
 }
 
-Vector3f MeshTerrain::GetPosition(const float &x, const float &z)
+Vector3f MeshTerrain::GetPosition(float x, float z)
 {
 	auto row = static_cast<int32_t>(((x * 2.0f) + m_sideLength) / m_squareSize);
 	auto col = static_cast<int32_t>(((z * 2.0f) + m_sideLength) / m_squareSize);
@@ -34,7 +34,7 @@ Vector3f MeshTerrain::GetPosition(const float &x, const float &z)
 	return {x, m_heightmap[col * m_vertexCount + row], z};
 }
 
-Vector3f MeshTerrain::GetNormal(const float &x, const float &z)
+Vector3f MeshTerrain::GetNormal(float x, float z)
 {
 	auto positionL = GetPosition(x - 1.0f, z);
 	auto positionR = GetPosition(x + 1.0f, z);

@@ -76,8 +76,8 @@ Image2d::~Image2d()
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(const uint32_t &binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	const uint32_t &count)
+VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count)
 {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
 	descriptorSetLayoutBinding.binding = binding;
@@ -88,7 +88,7 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(const uint32_t &bin
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
+WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
 	VkDescriptorImageInfo imageInfo{};
 	imageInfo.sampler = m_sampler;
@@ -106,7 +106,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(const uint32_t &binding, const Vk
 	return {descriptorWrite, imageInfo};
 }
 
-std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t &mipLevel) const
+std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLevel) const
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
@@ -137,7 +137,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, const uint32_t 
 	return pixels;
 }
 
-void Image2d::SetPixels(const uint8_t *pixels, const uint32_t &layerCount, const uint32_t &baseArrayLayer)
+void Image2d::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
 {
 	Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};

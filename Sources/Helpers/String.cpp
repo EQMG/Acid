@@ -7,7 +7,7 @@
 
 namespace acid
 {
-std::vector<std::string> String::Split(const std::string &str, const char &sep)
+std::vector<std::string> String::Split(const std::string &str, char sep)
 {
 	std::vector<std::string> tokens;
 	std::string token;
@@ -36,7 +36,7 @@ bool String::Contains(std::string_view str, std::string_view token)
 	return str.find(token) != std::string::npos;
 }
 
-bool String::IsWhitespace(const char &c)
+bool String::IsWhitespace(char c)
 {
 	return std::string{" \n\r  "}.find(c) != std::string::npos;
 }

@@ -8,7 +8,7 @@ class ACID_EXPORT EmitterCircle :
 	public Emitter
 {
 public:
-	explicit EmitterCircle(const float &radius = 1.0f, const Vector3f &heading = Vector3f::Up);
+	explicit EmitterCircle(float radius = 1.0f, const Vector3f &heading = Vector3f::Up);
 
 	void Start() override;
 
@@ -16,9 +16,9 @@ public:
 
 	Vector3f GeneratePosition() const override;
 
-	const float &GetRadius() const { return m_radius; }
+	float GetRadius() const { return m_radius; }
 
-	void SetRadius(const float &radius) { m_radius = radius; }
+	void SetRadius(float radius) { m_radius = radius; }
 
 	const Vector3f &GetHeading() const { return m_heading; }
 

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-EmitterCircle::EmitterCircle(const float &radius, const Vector3f &heading) :
+EmitterCircle::EmitterCircle(float radius, const Vector3f &heading) :
 	m_radius{radius},
 	m_heading{heading.Normalize()}
 {

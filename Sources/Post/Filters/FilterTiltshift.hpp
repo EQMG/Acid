@@ -8,26 +8,26 @@ class ACID_EXPORT FilterTiltshift :
 	public PostFilter
 {
 public:
-	explicit FilterTiltshift(const Pipeline::Stage &pipelineStage, const float &blurAmount = 1.0f, const float &centre = 1.1f, const float &stepSize = 0.004f,
-		const float &steps = 3.0f);
+	explicit FilterTiltshift(const Pipeline::Stage &pipelineStage, float blurAmount = 1.0f, float centre = 1.1f, float stepSize = 0.004f,
+		float steps = 3.0f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const float &GetBlurAmount() const { return m_blurAmount; }
+	float GetBlurAmount() const { return m_blurAmount; }
 
-	void SetBlurAmount(const float &blurAmount) { m_blurAmount = blurAmount; }
+	void SetBlurAmount(float blurAmount) { m_blurAmount = blurAmount; }
 
-	const float &GetCentre() const { return m_centre; }
+	float GetCentre() const { return m_centre; }
 
-	void SetCentre(const float &centre) { m_centre = centre; }
+	void SetCentre(float centre) { m_centre = centre; }
 
-	const float &GetStepSize() const { return m_stepSize; }
+	float GetStepSize() const { return m_stepSize; }
 
-	void SetStepSize(const float &stepSize) { m_stepSize = stepSize; }
+	void SetStepSize(float stepSize) { m_stepSize = stepSize; }
 
-	const float &GetSteps() const { return m_steps; }
+	float GetSteps() const { return m_steps; }
 
-	void SetSteps(const float &steps) { m_steps = steps; }
+	void SetSteps(float steps) { m_steps = steps; }
 
 private:
 	PushHandler m_pushScene;

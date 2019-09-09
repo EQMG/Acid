@@ -10,7 +10,7 @@ class ACID_EXPORT ColliderSphere :
 	public Collider
 {
 public:
-	explicit ColliderSphere(const float &radius = 0.5f, const Transform &localTransform = {});
+	explicit ColliderSphere(float radius = 0.5f, const Transform &localTransform = {});
 
 	~ColliderSphere();
 
@@ -20,9 +20,9 @@ public:
 
 	btCollisionShape *GetCollisionShape() const override;
 
-	const float &GetRadius() const { return m_radius; }
+	float GetRadius() const { return m_radius; }
 
-	void SetRadius(const float &radius);
+	void SetRadius(float radius);
 
 	friend const Node &operator>>(const Node &node, ColliderSphere &collider);
 

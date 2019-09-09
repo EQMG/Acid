@@ -9,8 +9,8 @@ class ACID_EXPORT FilterDof :
 	public PostFilter
 {
 public:
-	explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, const float &focusPoint = 8.24f, const float &nearField = 0.3f,
-		const float &nearTransition = 0.125f, const float &farField = 8.0f, const float &farTransition = 3.0f);
+	explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, float focusPoint = 8.24f, float nearField = 0.3f,
+		float nearTransition = 0.125f, float farField = 8.0f, float farTransition = 3.0f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
@@ -18,25 +18,25 @@ public:
 
 	void SetPipelineBlur(PipelineBlur *pipelineBlur) { m_pipelineBlur = pipelineBlur; }
 
-	const float &GetFocusPoint() const { return m_focusPoint; }
+	float GetFocusPoint() const { return m_focusPoint; }
 
-	void SetFocusPoint(const float &focusPoint) { m_focusPoint = focusPoint; }
+	void SetFocusPoint(float focusPoint) { m_focusPoint = focusPoint; }
 
-	const float &GetNearField() const { return m_nearField; }
+	float GetNearField() const { return m_nearField; }
 
-	void SetNearField(const float &nearField) { m_nearField = nearField; }
+	void SetNearField(float nearField) { m_nearField = nearField; }
 
-	const float &GetNearTransition() const { return m_nearTransition; }
+	float GetNearTransition() const { return m_nearTransition; }
 
-	void SetNearTransition(const float &nearTransition) { m_nearTransition = nearTransition; }
+	void SetNearTransition(float nearTransition) { m_nearTransition = nearTransition; }
 
-	const float &GetFarField() const { return m_farField; }
+	float GetFarField() const { return m_farField; }
 
-	void SetFarField(const float &farField) { m_farField = farField; }
+	void SetFarField(float farField) { m_farField = farField; }
 
-	const float &GetFarTransition() const { return m_farTransition; }
+	float GetFarTransition() const { return m_farTransition; }
 
-	void SetFarTransition(const float &farTransition) { m_farTransition = farTransition; }
+	void SetFarTransition(float farTransition) { m_farTransition = farTransition; }
 
 private:
 	PushHandler m_pushScene;

@@ -6,8 +6,8 @@ namespace acid
 {
 static const float FADE_TIME{1.0f};
 
-Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, const float &lifeLength, const float &stageCycles,
-	const float &rotation, const float &scale, const float &gravityEffect) :
+Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, float lifeLength, float stageCycles,
+	float rotation, float scale, float gravityEffect) :
 	m_particleType{std::move(particleType)},
 	m_position{position},
 	m_velocity{velocity},
@@ -69,7 +69,7 @@ bool Particle::operator<(const Particle &other) const
 	return m_distanceToCamera > other.m_distanceToCamera;
 }
 
-Vector2f Particle::CalculateImageOffset(const int32_t &index) const
+Vector2f Particle::CalculateImageOffset(int32_t index) const
 {
 	auto column = index % m_particleType->GetNumberOfRows();
 	auto row = index / m_particleType->GetNumberOfRows();

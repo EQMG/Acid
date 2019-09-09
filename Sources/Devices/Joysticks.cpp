@@ -87,36 +87,36 @@ void Joysticks::Update()
 	}
 }
 
-bool Joysticks::IsConnected(const uint32_t &port) const
+bool Joysticks::IsConnected(uint32_t port) const
 {
 	return GetJoystick(port).has_value();
 }
 
-std::string Joysticks::GetName(const uint32_t &port) const
+std::string Joysticks::GetName(uint32_t port) const
 {
 	auto joystick = GetJoystick(port);
 	return joystick ? joystick->m_name : "";
 }
 
-uint32_t Joysticks::GetAxisCount(const uint32_t &port) const
+uint32_t Joysticks::GetAxisCount(uint32_t port) const
 {
 	auto joystick = GetJoystick(port);
 	return joystick ? static_cast<uint32_t>(joystick->m_axes.size()) : 0;
 }
 
-uint32_t Joysticks::GetButtonCount(const uint32_t &port) const
+uint32_t Joysticks::GetButtonCount(uint32_t port) const
 {
 	auto joystick = GetJoystick(port);
 	return joystick ? static_cast<uint32_t>(joystick->m_buttons.size()) : 0;
 }
 
-uint32_t Joysticks::GetHatCount(const uint32_t &port) const
+uint32_t Joysticks::GetHatCount(uint32_t port) const
 {
 	auto joystick = GetJoystick(port);
 	return joystick ? static_cast<uint32_t>(joystick->m_hats.size()) : 0;
 }
 
-float Joysticks::GetAxis(const uint32_t &port, const uint32_t &axis) const
+float Joysticks::GetAxis(uint32_t port, uint32_t axis) const
 {
 	auto joystick = GetJoystick(port);
 
@@ -128,7 +128,7 @@ float Joysticks::GetAxis(const uint32_t &port, const uint32_t &axis) const
 	return joystick->m_axes[axis];
 }
 
-InputAction Joysticks::GetButton(const uint32_t &port, const uint32_t &button) const
+InputAction Joysticks::GetButton(uint32_t port, uint32_t button) const
 {
 	auto joystick = GetJoystick(port);
 
@@ -140,7 +140,7 @@ InputAction Joysticks::GetButton(const uint32_t &port, const uint32_t &button) c
 	return joystick->m_buttons[button];
 }
 
-BitMask<JoystickHat> Joysticks::GetHat(const uint32_t &port, const uint32_t &hat) const
+BitMask<JoystickHat> Joysticks::GetHat(uint32_t port, uint32_t hat) const
 {
 	auto joystick = GetJoystick(port);
 
@@ -152,7 +152,7 @@ BitMask<JoystickHat> Joysticks::GetHat(const uint32_t &port, const uint32_t &hat
 	return joystick->m_hats[hat];
 }
 
-std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(const uint32_t &port) const
+std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(uint32_t port) const
 {
 	auto it = m_connected.find(port);
 

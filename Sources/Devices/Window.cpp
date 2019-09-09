@@ -319,7 +319,7 @@ const Monitor *Window::GetPrimaryMonitor() const
 	return nullptr;
 }
 
-std::string Window::StringifyResultGlfw(const int32_t &result)
+std::string Window::StringifyResultGlfw(int32_t result)
 {
 	switch (result)
 	{
@@ -350,7 +350,7 @@ std::string Window::StringifyResultGlfw(const int32_t &result)
 	}
 }
 
-void Window::CheckGlfw(const int32_t &result)
+void Window::CheckGlfw(int32_t result)
 {
 	if (result)
 	{

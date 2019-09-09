@@ -2,7 +2,7 @@
 
 namespace acid
 {
-FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, const float &innerRadius, const float &outerRadius, const float &opacity) :
+FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, float innerRadius, float outerRadius, float opacity) :
 	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Vignette.frag"}},
 	m_innerRadius{innerRadius},
 	m_outerRadius{outerRadius},

@@ -262,9 +262,9 @@ public:
 	template<typename U = T>
 	constexpr std::enable_if_t<std::is_integral_v<U>, Vector4> operator~() const;
 
-	constexpr const T &operator[](const uint32_t &index) const;
+	constexpr const T &operator[](uint32_t index) const;
 
-	constexpr T &operator[](const uint32_t &index);
+	constexpr T &operator[](uint32_t index);
 
 	template<typename K>
 	constexpr Vector4 &operator+=(const Vector4<K> &other);

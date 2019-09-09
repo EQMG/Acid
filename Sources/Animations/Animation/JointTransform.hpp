@@ -51,7 +51,7 @@ public:
 	 * Everything else gives a transform somewhere in-between the two.
 	 * @return A new interpolated joint transformation.
 	 **/
-	static JointTransform Interpolate(const JointTransform &frameA, const JointTransform &frameB, const float &progression);
+	static JointTransform Interpolate(const JointTransform &frameA, const JointTransform &frameB, float progression);
 
 	/**
 	 * Linearly interpolates between two translations based on a "progression" value.
@@ -60,7 +60,7 @@ public:
 	 * @param progression A value between 0 and 1 indicating how far to interpolate between the two translations.
 	 * @return The interpolated progressed vector.
 	 **/
-	static Vector3f Interpolate(const Vector3f &start, const Vector3f &end, const float &progression);
+	static Vector3f Interpolate(const Vector3f &start, const Vector3f &end, float progression);
 
 	const Vector3f &GetPosition() const { return m_position; }
 

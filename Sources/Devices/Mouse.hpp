@@ -177,7 +177,7 @@ public:
 	Delegate<void(std::vector<std::string>)> &OnDrop() { return m_onDrop; }
 
 private:
-	static double SmoothScrollWheel(double value, const float &delta);
+	static double SmoothScrollWheel(double value, float delta);
 
 	friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
 

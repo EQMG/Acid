@@ -88,7 +88,7 @@ bool Frustum::PointInFrustum(const Vector3f &position) const
 	return true;
 }
 
-bool Frustum::SphereInFrustum(const Vector3f &position, const float &radius) const
+bool Frustum::SphereInFrustum(const Vector3f &position, float radius) const
 {
 	for (uint32_t i{}; i < 6; i++)
 	{
@@ -121,7 +121,7 @@ bool Frustum::CubeInFrustum(const Vector3f &min, const Vector3f &max) const
 	return true;
 }
 
-void Frustum::NormalizePlane(const int32_t &side)
+void Frustum::NormalizePlane(int32_t side)
 {
 	auto magnitude = std::sqrt(m_frustum[side][0] * m_frustum[side][0] + m_frustum[side][1] * m_frustum[side][1] + m_frustum[side][2] * m_frustum[side][2]);
 	m_frustum[side][0] /= magnitude;

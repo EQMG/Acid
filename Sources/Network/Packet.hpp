@@ -24,7 +24,7 @@ class ACID_EXPORT Packet
 {
 public:
 	/// A bool-like type that cannot be converted to integer or pointer types.
-	typedef bool (Packet::*BoolType)(const std::size_t &);
+	typedef bool (Packet::*BoolType)(std::size_t );
 
 	/**
 	 * Creates an empty packet.
@@ -38,7 +38,7 @@ public:
 	 * @param data Pointer to the sequence of bytes to append. 
 	 * @param sizeInBytes Number of bytes to append. 
 	 **/
-	void Append(const void *data, const std::size_t &sizeInBytes);
+	void Append(const void *data, std::size_t sizeInBytes);
 
 	/**
 	 * Clear the packet, after calling Clear, the packet is empty.
@@ -132,25 +132,25 @@ public:
 
 	Packet &operator<<(const bool &data);
 
-	Packet &operator<<(const int8_t &data);
+	Packet &operator<<(int8_t data);
 
-	Packet &operator<<(const uint8_t &data);
+	Packet &operator<<(uint8_t data);
 
-	Packet &operator<<(const int16_t &data);
+	Packet &operator<<(int16_t data);
 
-	Packet &operator<<(const uint16_t &data);
+	Packet &operator<<(uint16_t data);
 
-	Packet &operator<<(const int32_t &data);
+	Packet &operator<<(int32_t data);
 
-	Packet &operator<<(const uint32_t &data);
+	Packet &operator<<(uint32_t data);
 
-	Packet &operator<<(const int64_t &data);
+	Packet &operator<<(int64_t data);
 
-	Packet &operator<<(const uint64_t &data);
+	Packet &operator<<(uint64_t data);
 
-	Packet &operator<<(const float &data);
+	Packet &operator<<(float data);
 
-	Packet &operator<<(const double &data);
+	Packet &operator<<(double data);
 
 	Packet &operator<<(const char *data);
 
@@ -183,7 +183,7 @@ protected:
 	 * @param data Pointer to the received bytes. 
 	 * @param size Number of bytes. 
 	 **/
-	virtual void OnReceive(const void *data, const std::size_t &size);
+	virtual void OnReceive(const void *data, std::size_t size);
 
 	/**
 	 * Check if the packet can extract a given number of bytes.
@@ -191,7 +191,7 @@ protected:
 	 * @param size Size to check. 
 	 * @return True if \a size bytes can be read from the packet. 
 	 **/
-	bool CheckSize(const std::size_t &size);
+	bool CheckSize(std::size_t size);
 
 	/// Data stored in the packet.
 	std::vector<char> m_data;

@@ -2,7 +2,7 @@
 
 namespace acid
 {
-SkinLoader::SkinLoader(const Node *libraryControllers, const uint32_t &maxWeights) :
+SkinLoader::SkinLoader(const Node *libraryControllers, uint32_t maxWeights) :
 	m_skinData{libraryControllers->FindChild("controller")->FindChild("skin")},
 	m_maxWeights{maxWeights}
 {

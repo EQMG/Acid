@@ -45,15 +45,15 @@ public:
 		Initialize(vertices, indices);
 	}
 
-	bool CmdRender(const CommandBuffer &commandBuffer, const uint32_t &instances = 1) const;
+	bool CmdRender(const CommandBuffer &commandBuffer, uint32_t instances = 1) const;
 
 	template<typename T>
-	std::vector<T> GetVertices(const std::size_t &offset = 0) const;
+	std::vector<T> GetVertices(std::size_t offset = 0) const;
 
 	template<typename T>
 	void SetVertices(const std::vector<T> &vertices);
 
-	std::vector<uint32_t> GetIndices(const std::size_t &offset = 0) const;
+	std::vector<uint32_t> GetIndices(std::size_t offset = 0) const;
 
 	void SetIndices(const std::vector<uint32_t> &indices);
 
@@ -75,9 +75,9 @@ public:
 
 	const Buffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
 
-	const uint32_t &GetVertexCount() const { return m_vertexCount; }
+	uint32_t GetVertexCount() const { return m_vertexCount; }
 
-	const uint32_t &GetIndexCount() const { return m_indexCount; }
+	uint32_t GetIndexCount() const { return m_indexCount; }
 
 	static VkIndexType GetIndexType() { return VK_INDEX_TYPE_UINT32; }
 

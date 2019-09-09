@@ -7,7 +7,7 @@
 
 namespace acid
 {
-ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, const float &pps, const float &averageSpeed, const float &gravityEffect) :
+ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, float pps, float averageSpeed, float gravityEffect) :
 	m_types{std::move(types)},
 	m_pps{pps},
 	m_averageSpeed{averageSpeed},
@@ -68,7 +68,7 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	return false;
 }
 
-Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, const float &angle) const
+Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const
 {
 	auto cosAngle = std::cos(angle);
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
@@ -97,12 +97,12 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 	return {direction};
 }
 
-void ParticleSystem::SetPps(const float &pps)
+void ParticleSystem::SetPps(float pps)
 {
 	m_pps = pps;
 }
 
-void ParticleSystem::SetDirection(const Vector3f &direction, const float &deviation)
+void ParticleSystem::SetDirection(const Vector3f &direction, float deviation)
 {
 	m_direction = direction;
 	m_directionDeviation = deviation * Maths::Pi<float>;
@@ -138,7 +138,7 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	return {emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect};
 }
 
-float ParticleSystem::GenerateValue(const float &average, const float &errorPercent)
+float ParticleSystem::GenerateValue(float average, float errorPercent)
 {
 	auto error = Maths::Random(-1.0f, 1.0f) * errorPercent;
 	return average + (average * error);

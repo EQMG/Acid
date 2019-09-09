@@ -91,7 +91,7 @@ public:
 	 * @param timeout Optional maximum time to wait. 
 	 * @return Status code. 
 	 **/
-	Status Connect(const IpAddress &remoteAddress, const uint16_t &remotePort, const Time &timeout = 0s);
+	Status Connect(const IpAddress &remoteAddress, uint16_t remotePort, const Time &timeout = 0s);
 
 	/**
 	 * Disconnect the socket from its remote peer.
@@ -108,7 +108,7 @@ public:
 	 * @param size Number of bytes to send. 
 	 * @return Status code. 
 	 **/
-	Status Send(const void *data, const std::size_t &size);
+	Status Send(const void *data, std::size_t size);
 
 	/**
 	 * Send raw data to the remote peer. This function will fail if the socket is not connected.
@@ -117,7 +117,7 @@ public:
 	 * @param sent The number of bytes sent will be written here. 
 	 * @return Status code. 
 	 **/
-	Status Send(const void *data, const std::size_t &size, std::size_t &sent);
+	Status Send(const void *data, std::size_t size, std::size_t &sent);
 
 	/**
 	 * Receive raw data from the remote peer.
@@ -128,7 +128,7 @@ public:
 	 * @param received This variable is filled with the actual number of bytes received. 
 	 * @return Status code. 
 	 **/
-	Status Receive(void *data, const std::size_t &size, std::size_t &received);
+	Status Receive(void *data, std::size_t size, std::size_t &received);
 
 	/**
 	 * Send a formatted packet of data to the remote peer.

@@ -6,7 +6,7 @@
 
 namespace test
 {
-Terrain::Terrain(const float &sideLength, const float &squareSize) :
+Terrain::Terrain(float sideLength, float squareSize) :
 	m_noise{25653345, 0.01f, Noise::Interp::Quintic, Noise::Type::PerlinFractal, 5, 2.0f, 0.5f, Noise::Fractal::FBM},
 	m_sideLength{sideLength},
 	m_squareSize{squareSize},
@@ -59,17 +59,17 @@ Node &operator<<(Node &node, const Terrain &terrain)
 	return node;
 }
 
-uint32_t Terrain::CalculateVertexCount(const float &sideLength, const float &squareSize)
+uint32_t Terrain::CalculateVertexCount(float sideLength, float squareSize)
 {
 	return static_cast<uint32_t>((2.0f * sideLength) / static_cast<float>(squareSize)) + 1;
 }
 
-float Terrain::CalculateTextureScale(const float &sideLength)
+float Terrain::CalculateTextureScale(float sideLength)
 {
 	return 0.08f * sideLength;
 }
 
-std::vector<float> Terrain::GenerateHeightmap(const uint32_t &vertexCount)
+std::vector<float> Terrain::GenerateHeightmap(uint32_t vertexCount)
 {
 	auto transform = GetEntity()->GetComponent<Transform>();
 

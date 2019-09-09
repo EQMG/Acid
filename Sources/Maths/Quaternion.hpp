@@ -23,7 +23,7 @@ public:
 	 * @param z Start z. 
 	 * @param w Start w. 
 	 **/
-	Quaternion(const float &x, const float &y, const float &z, const float &w);
+	Quaternion(float x, float y, float z, float w);
 
 	/**
 	 * Constructor for Quaternion.
@@ -94,14 +94,14 @@ public:
 	 * @param progression The progression. 
 	 * @return Left slerp right. 
 	 **/
-	Quaternion Slerp(const Quaternion &other, const float &progression) const;
+	Quaternion Slerp(const Quaternion &other, float progression) const;
 
 	/**
 	 * Scales this quaternion by a scalar.
 	 * @param scalar The scalar value. 
 	 * @return The scaled quaternion. 
 	 **/
-	Quaternion Scale(const float &scalar) const;
+	Quaternion Scale(float scalar) const;
 
 	/**
 	 * Normalizes this quaternion.
@@ -152,21 +152,21 @@ public:
 	 **/
 	Vector3f ToEuler() const;
 
-	const float &GetX() const { return m_x; }
+	float GetX() const { return m_x; }
 
-	void SetX(const float &x) { m_x = x; }
+	void SetX(float x) { m_x = x; }
 
-	const float &GetY() const { return m_y; }
+	float GetY() const { return m_y; }
 
-	void SetY(const float &y) { m_y = y; }
+	void SetY(float y) { m_y = y; }
 
-	const float &GetZ() const { return m_z; }
+	float GetZ() const { return m_z; }
 
-	void SetZ(const float &z) { m_z = z; }
+	void SetZ(float z) { m_z = z; }
 
-	const float &GetW() const { return m_w; }
+	float GetW() const { return m_w; }
 
-	void SetW(const float &w) { m_w = w; }
+	void SetW(float w) { m_w = w; }
 
 	bool operator==(const Quaternion &other) const;
 
@@ -174,9 +174,9 @@ public:
 
 	Quaternion operator-() const;
 
-	const float &operator[](const uint32_t &index) const;
+	float operator[](uint32_t index) const;
 
-	float &operator[](const uint32_t &index);
+	float &operator[](uint32_t index);
 
 	friend Quaternion operator+(const Quaternion &left, const Quaternion &right);
 
@@ -188,13 +188,13 @@ public:
 
 	friend Vector3f operator*(const Quaternion &left, const Vector3f &right);
 
-	friend Quaternion operator*(const float &left, const Quaternion &right);
+	friend Quaternion operator*(float left, const Quaternion &right);
 
-	friend Quaternion operator*(const Quaternion &left, const float &right);
+	friend Quaternion operator*(const Quaternion &left, float right);
 
 	Quaternion &operator*=(const Quaternion &other);
 
-	Quaternion &operator*=(const float &other);
+	Quaternion &operator*=(float other);
 
 	friend const Node &operator>>(const Node &node, Quaternion &quaternion);
 

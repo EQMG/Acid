@@ -2,7 +2,7 @@
 
 namespace acid
 {
-MeshSimple::MeshSimple(const float &sideLength, const float &squareSize, const uint32_t &vertexCount, const float &uvScale) :
+MeshSimple::MeshSimple(float sideLength, float squareSize, uint32_t vertexCount, float uvScale) :
 	m_sideLength(sideLength),
 	m_squareSize(squareSize),
 	m_vertexCount(vertexCount),
@@ -48,7 +48,7 @@ void MeshSimple::GenerateMesh()
 	Initialize(vertices, indices);
 }
 
-VertexDefault MeshSimple::GetVertex(const uint32_t &col, const uint32_t &row)
+VertexDefault MeshSimple::GetVertex(uint32_t col, uint32_t row)
 {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;

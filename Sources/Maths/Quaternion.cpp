@@ -9,7 +9,7 @@ const Quaternion Quaternion::PositiveInfinity{+std::numeric_limits<float>::infin
 const Quaternion Quaternion::NegativeInfinity{-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
 	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()};
 
-Quaternion::Quaternion(const float &x, const float &y, const float &z, const float &w) :
+Quaternion::Quaternion(float x, float y, float z, float w) :
 	m_x{x},
 	m_y{y},
 	m_z{z},
@@ -132,7 +132,7 @@ float Quaternion::Dot(const Quaternion &other) const
 	return m_w * other.m_w + m_x * other.m_x + m_y * other.m_y + m_z * other.m_z;
 }
 
-Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression) const
+Quaternion Quaternion::Slerp(const Quaternion &other, float progression) const
 {
 	auto cosom = m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
 	auto absCosom = std::abs(cosom);
@@ -161,7 +161,7 @@ Quaternion Quaternion::Slerp(const Quaternion &other, const float &progression) 
 	return result;
 }
 
-Quaternion Quaternion::Scale(const float &scalar) const
+Quaternion Quaternion::Scale(float scalar) const
 {
 	return {m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar};
 }
@@ -264,7 +264,7 @@ Quaternion Quaternion::operator-() const
 	return {-m_x, -m_y, -m_z, -m_w};
 }
 
-const float &Quaternion::operator[](const uint32_t &index) const
+float Quaternion::operator[](uint32_t index) const
 {
 	switch (index)
 	{
@@ -281,7 +281,7 @@ const float &Quaternion::operator[](const uint32_t &index) const
 	}
 }
 
-float &Quaternion::operator[](const uint32_t &index)
+float &Quaternion::operator[](uint32_t index)
 {
 	switch (index)
 	{
@@ -323,12 +323,12 @@ Vector3f operator*(const Quaternion &left, const Vector3f &right)
 	return left.Multiply(right);
 }
 
-Quaternion operator*(const float &left, const Quaternion &right)
+Quaternion operator*(float left, const Quaternion &right)
 {
 	return right.Scale(left);
 }
 
-Quaternion operator*(const Quaternion &left, const float &right)
+Quaternion operator*(const Quaternion &left, float right)
 {
 	return left.Scale(right);
 }
@@ -338,7 +338,7 @@ Quaternion &Quaternion::operator*=(const Quaternion &other)
 	return *this = Multiply(other);
 }
 
-Quaternion &Quaternion::operator*=(const float &other)
+Quaternion &Quaternion::operator*=(float other)
 {
 	return *this = Scale(other);
 }

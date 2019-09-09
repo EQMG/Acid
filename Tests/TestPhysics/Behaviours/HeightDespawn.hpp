@@ -11,7 +11,7 @@ class HeightDespawn :
 	public Component
 {
 public:
-	explicit HeightDespawn(const float &removeHeight = -100.0f);
+	explicit HeightDespawn(float removeHeight = -100.0f);
 
 	void Start() override;
 
