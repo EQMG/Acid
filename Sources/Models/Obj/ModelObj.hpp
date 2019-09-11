@@ -30,7 +30,7 @@ public:
 	 * @param filename The file to load the OBJ model from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelObj#Load} can be called later.
 	 */
-	explicit ModelObj(std::filesystem::path filename, const bool &load = true);
+	explicit ModelObj(std::filesystem::path filename, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelObj &model);
 

@@ -61,7 +61,7 @@ public:
 	 * @param argv0 The first argument passed to main.
 	 * @param emptyRegister If the module register will start empty.
 	 */
-	explicit Engine(std::string argv0, const bool &emptyRegister = false);
+	explicit Engine(std::string argv0, bool emptyRegister = false);
 
 	/**
 	 * The update function for the updater.
@@ -154,7 +154,7 @@ public:
 	 * Gets if the engine is running.
 	 * @return If the engine is running.
 	 */
-	const bool &IsRunning() const { return m_running; }
+	bool IsRunning() const { return m_running; }
 
 	/**
 	 * Gets the delta (seconds) between updates.

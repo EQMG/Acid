@@ -30,7 +30,7 @@ public:
 	 * @param format The format that will be created (only applies to type ATTACHMENT_IMAGE).
 	 * @param clearColour The colour to clear to before rendering to it.
 	 */
-	Attachment(uint32_t binding, std::string name, const Type &type, const bool &multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+	Attachment(uint32_t binding, std::string name, const Type &type, bool multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const Colour &clearColour = Colour::Black) :
 		m_binding{binding},
 		m_name{std::move(name)},
@@ -47,7 +47,7 @@ public:
 
 	const Type &GetType() const { return m_type; }
 
-	const bool &IsMultisampled() const { return m_multisampled; }
+	bool IsMultisampled() const { return m_multisampled; }
 
 	const VkFormat &GetFormat() const { return m_format; }
 
@@ -187,7 +187,7 @@ public:
 	 * Gets if the width or height has changed between the last update and now.
 	 * @return If the width or height has changed.
 	 */
-	const bool &IsOutOfDate() const { return m_outOfDate; }
+	bool IsOutOfDate() const { return m_outOfDate; }
 
 	const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
 

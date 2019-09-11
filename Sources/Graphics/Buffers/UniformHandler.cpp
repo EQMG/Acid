@@ -2,13 +2,13 @@
 
 namespace acid
 {
-UniformHandler::UniformHandler(const bool &multipipeline) :
+UniformHandler::UniformHandler(bool multipipeline) :
 	m_multipipeline{multipipeline},
 	m_handlerStatus{Buffer::Status::Normal}
 {
 }
 
-UniformHandler::UniformHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline) :
+UniformHandler::UniformHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
 	m_multipipeline{multipipeline},
 	m_uniformBlock{uniformBlock},
 	m_size{static_cast<uint32_t>(m_uniformBlock->GetSize())},

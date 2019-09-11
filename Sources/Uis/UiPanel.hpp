@@ -33,7 +33,7 @@ public:
 	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
 
 private:
-	void SetScissor(UiObject *object, const bool &checkSize = false);
+	void SetScissor(UiObject *object, bool checkSize = false);
 
 	Gui m_background;
 	UiObject m_content;

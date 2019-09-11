@@ -33,7 +33,7 @@ public:
 	 * @param filename The file to load the entity prefab from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link EntityPrefab#Load} can be called later.
 	 */
-	explicit EntityPrefab(std::filesystem::path filename, const bool &load = true);
+	explicit EntityPrefab(std::filesystem::path filename, bool load = true);
 
 	void Load();
 

@@ -47,9 +47,9 @@ public:
 
 	void SetGravityEffect(float gravityEffect) { m_gravityEffect = gravityEffect; }
 
-	const bool &IsRandomRotation() const { return m_randomRotation; }
+	bool IsRandomRotation() const { return m_randomRotation; }
 
-	void SetRandomRotation(const bool &randomRotation) { m_randomRotation = randomRotation; }
+	void SetRandomRotation(bool randomRotation) { m_randomRotation = randomRotation; }
 
 	const Vector3f &GetDirection() const { return m_direction; }
 

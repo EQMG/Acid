@@ -10,9 +10,9 @@ namespace acid
 class ACID_EXPORT PushHandler
 {
 public:
-	explicit PushHandler(const bool &multipipeline = false);
+	explicit PushHandler(bool multipipeline = false);
 
-	explicit PushHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
+	explicit PushHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
 	template<typename T>
 	void Push(const T &object, std::size_t offset, std::size_t size)

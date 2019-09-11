@@ -18,7 +18,7 @@ public:
 	 * @param useMouse If the ray will use the mouse coords or to start from screenStart.
 	 * @param screenStart If useMouse is false then this will be used as the rays start.
 	 */
-	Ray(const bool &useMouse, const Vector2f &screenStart);
+	Ray(bool useMouse, const Vector2f &screenStart);
 
 	/**
 	 * Updates the ray to a new position.
@@ -43,9 +43,9 @@ public:
 	 */
 	Vector3f ConvertToScreenSpace(const Vector3f &position) const;
 
-	const bool &IsUseMouse() const { return m_useMouse; }
+	bool IsUseMouse() const { return m_useMouse; }
 
-	void SetUseMouse(const bool &useMouse) { m_useMouse = useMouse; }
+	void SetUseMouse(bool useMouse) { m_useMouse = useMouse; }
 
 	const Vector2f &GetScreenStart() const { return m_screenStart; }
 

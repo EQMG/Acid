@@ -185,7 +185,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 	return response;
 }
 
-FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode, const bool &append)
+FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode, bool append)
 {
 	// Get the contents of the file to send.
 	std::ifstream file{localFile.c_str(), std::ios_base::binary};

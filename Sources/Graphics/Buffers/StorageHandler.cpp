@@ -2,13 +2,13 @@
 
 namespace acid
 {
-StorageHandler::StorageHandler(const bool &multipipeline) :
+StorageHandler::StorageHandler(bool multipipeline) :
 	m_multipipeline{multipipeline},
 	m_handlerStatus{Buffer::Status::Reset}
 {
 }
 
-StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline) :
+StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
 	m_multipipeline{multipipeline},
 	m_uniformBlock{uniformBlock},
 	m_size{static_cast<uint32_t>(m_uniformBlock->GetSize())},

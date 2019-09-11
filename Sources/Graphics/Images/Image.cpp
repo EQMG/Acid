@@ -198,7 +198,7 @@ void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D
 	Graphics::CheckVk(vkBindImageMemory(*logicalDevice, image, memory, 0));
 }
 
-void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, uint32_t mipLevels)
+void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, uint32_t mipLevels)
 {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();

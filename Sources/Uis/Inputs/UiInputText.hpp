@@ -32,7 +32,7 @@ public:
 	Delegate<void(std::string)> &OnValue() { return m_onValue; }
 
 private:
-	void SetUpdating(const bool &updating);
+	void SetUpdating(bool updating);
 
 	Gui m_background;
 	Text m_textTitle;

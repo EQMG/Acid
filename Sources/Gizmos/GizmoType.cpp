@@ -97,8 +97,8 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 	// Draws the instanced objects.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkBuffer vertexBuffers[]{ m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer() };
-	VkDeviceSize offsets[]{ 0, 0 };
+	VkBuffer vertexBuffers[2] = {m_model->GetVertexBuffer()->GetBuffer(), m_instanceBuffer.GetBuffer()};
+	VkDeviceSize offsets[2] = {0, 0};
 	vkCmdBindVertexBuffers(commandBuffer, 0, 2, vertexBuffers, offsets);
 	vkCmdBindIndexBuffer(commandBuffer, m_model->GetIndexBuffer()->GetBuffer(), 0, m_model->GetIndexType());
 	vkCmdDrawIndexed(commandBuffer, m_model->GetIndexCount(), m_instances, 0, 0, 0);

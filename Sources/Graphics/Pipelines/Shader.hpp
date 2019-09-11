@@ -67,8 +67,8 @@ public:
 	class Uniform
 	{
 	public:
-		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, const bool &readOnly = false,
-			const bool &writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
+		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, bool readOnly = false,
+			bool writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
@@ -87,9 +87,9 @@ public:
 
 		int32_t GetGlType() const { return m_glType; }
 
-		const bool &IsReadOnly() const { return m_readOnly; }
+		bool IsReadOnly() const { return m_readOnly; }
 
-		const bool &IsWriteOnly() const { return m_writeOnly; }
+		bool IsWriteOnly() const { return m_writeOnly; }
 
 		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
 
@@ -334,7 +334,7 @@ public:
 
 	const std::filesystem::path &GetName() const { return m_stages.back(); }
 
-	bool ReportedNotFound(const std::string &name, const bool &reportIfFound) const;
+	bool ReportedNotFound(const std::string &name, bool reportIfFound) const;
 
 	static VkFormat GlTypeToVk(int32_t type);
 

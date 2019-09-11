@@ -10,7 +10,7 @@
 
 namespace acid
 {
-Sound::Sound(const std::string &filename, const Audio::Type &type, const bool &begin, const bool &loop, float gain, float pitch) :
+Sound::Sound(const std::string &filename, const Audio::Type &type, bool begin, bool loop, float gain, float pitch) :
 	m_buffer{SoundBuffer::Create(filename)},
 	m_type{type},
 	m_gain{gain},
@@ -56,7 +56,7 @@ void Sound::Update()
 	}
 }
 
-void Sound::Play(const bool &loop)
+void Sound::Play(bool loop)
 {
 	alSourcei(m_source, AL_LOOPING, loop);
 	alSourcePlay(m_source);

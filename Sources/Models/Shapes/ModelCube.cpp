@@ -27,7 +27,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 	return Create(node);
 }
 
-ModelCube::ModelCube(const Vector3f &extents, const bool &load) :
+ModelCube::ModelCube(const Vector3f &extents, bool load) :
 	m_extents(extents)
 {
 	if (load)

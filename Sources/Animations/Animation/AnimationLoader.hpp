@@ -28,7 +28,7 @@ private:
 
 	static std::string GetJointName(const Node *jointData);
 
-	void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root);
+	void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root);
 
 	const Node *m_libraryAnimations;
 	const Node *m_libraryVisualScenes;

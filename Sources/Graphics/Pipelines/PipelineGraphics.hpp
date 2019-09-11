@@ -44,7 +44,7 @@ public:
 	PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
 		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
 		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
-		const bool &pushDescriptors = false);
+		bool pushDescriptors = false);
 
 	~PipelineGraphics();
 
@@ -90,7 +90,7 @@ public:
 
 	const VkFrontFace &GetFrontFace() const { return m_frontFace; }
 
-	const bool &IsPushDescriptors() const override { return m_pushDescriptors; }
+	bool IsPushDescriptors() const override { return m_pushDescriptors; }
 
 	const Shader *GetShader() const override { return m_shader.get(); }
 
@@ -165,7 +165,7 @@ public:
 	PipelineGraphicsCreate(std::vector<std::filesystem::path> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
 		const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
 		const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL,
-		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, const bool &pushDescriptors = false) :
+		const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE, bool pushDescriptors = false) :
 		m_shaderStages(std::move(shaderStages)),
 		m_vertexInputs(std::move(vertexInputs)),
 		m_defines(std::move(defines)),
@@ -236,7 +236,7 @@ public:
 
 	const VkFrontFace &GetFrontFace() const { return m_frontFace; }
 
-	const bool &GetPushDescriptors() const { return m_pushDescriptors; }
+	bool GetPushDescriptors() const { return m_pushDescriptors; }
 
 private:
 	std::vector<std::filesystem::path> m_shaderStages;

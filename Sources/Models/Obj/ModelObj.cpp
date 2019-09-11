@@ -69,7 +69,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const std::filesystem::path &filename
 	return Create(node);
 }
 
-ModelObj::ModelObj(std::filesystem::path filename, const bool &load) :
+ModelObj::ModelObj(std::filesystem::path filename, bool load) :
 	m_filename(std::move(filename))
 {
 	if (load)

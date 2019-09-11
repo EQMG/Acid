@@ -181,7 +181,7 @@ public:
 	 * @param append Pass true to append to or false to overwrite the remote file if it already exists. 
 	 * @return Server response to the request. 
 	 **/
-	FtpResponse Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode = FtpDataChannel::Mode::Binary, const bool &append = false);
+	FtpResponse Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode = FtpDataChannel::Mode::Binary, bool append = false);
 
 	/**
 	 * Send a command to the FTP server.

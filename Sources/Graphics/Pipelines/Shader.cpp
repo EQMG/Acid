@@ -61,7 +61,7 @@ Shader::Shader()
 {
 }
 
-bool Shader::ReportedNotFound(const std::string &name, const bool &reportIfFound) const
+bool Shader::ReportedNotFound(const std::string &name, bool reportIfFound) const
 {
 	if (std::find(m_notFoundNames.begin(), m_notFoundNames.end(), name) == m_notFoundNames.end())
 	{

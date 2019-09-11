@@ -15,9 +15,9 @@ public:
 	const Joint &GetHeadJoint() const { return m_headJoint; }
 
 private:
-	Joint LoadJointData(const Node *jointNode, const bool &isRoot);
+	Joint LoadJointData(const Node *jointNode, bool isRoot);
 
-	Joint ExtractMainJointData(const Node *jointNode, const bool &isRoot);
+	Joint ExtractMainJointData(const Node *jointNode, bool isRoot);
 
 	std::optional<uint32_t> GetBoneIndex(const std::string &name);
 

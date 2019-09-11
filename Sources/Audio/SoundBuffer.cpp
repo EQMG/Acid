@@ -33,7 +33,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &fi
 	return Create(node);
 }
 
-SoundBuffer::SoundBuffer(std::filesystem::path filename, const bool &load) :
+SoundBuffer::SoundBuffer(std::filesystem::path filename, bool load) :
 	m_filename{std::move(filename)}
 {
 	if (load)

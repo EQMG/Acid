@@ -32,7 +32,7 @@ public:
 	 * @return The 2D image with the requested values.
 	 */
 	static std::shared_ptr<Image2d> Create(const std::filesystem::path &filename, const VkFilter &filter = VK_FILTER_LINEAR,
-		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, const bool &anisotropic = true, const bool &mipmap = true);
+		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, bool anisotropic = true, bool mipmap = true);
 
 	/**
 	 * Creates a new 2D image.
@@ -44,7 +44,7 @@ public:
 	 * @param load If this resource will be loaded immediately, otherwise {@link Image2d#Load} can be called later.
 	 */
 	explicit Image2d(std::filesystem::path filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
-		const bool &anisotropic = true, const bool &mipmap = true, const bool &load = true);
+		bool anisotropic = true, bool mipmap = true, bool load = true);
 
 	/**
 	 * Creates a new 2D image.
@@ -62,7 +62,7 @@ public:
 	Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
 		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, const bool &anisotropic = false, const bool &mipmap = false);
+		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
 	~Image2d();
 
@@ -93,9 +93,9 @@ public:
 
 	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
 
-	const bool &IsAnisotropic() const { return m_anisotropic; }
+	bool IsAnisotropic() const { return m_anisotropic; }
 
-	const bool &IsMipmap() const { return m_mipmap; }
+	bool IsMipmap() const { return m_mipmap; }
 
 	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
 

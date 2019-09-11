@@ -22,7 +22,7 @@ public:
 
 	const std::optional<uint32_t> &GetRepeat() const { return m_repeat; }
 
-	const bool &IsDestroyed() const { return m_destroyed; }
+	bool IsDestroyed() const { return m_destroyed; }
 
 	void Destroy() { m_destroyed = true; }
 

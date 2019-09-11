@@ -65,9 +65,9 @@ public:
 
 	void SetMaxJumpHeight(float maxHeight);
 
-	const bool &IsInterpolate() const { return m_interpolate; }
+	bool IsInterpolate() const { return m_interpolate; }
 
-	void SetInterpolate(const bool &interpolate);
+	void SetInterpolate(bool interpolate);
 
 	bool IsOnGround() const;
 

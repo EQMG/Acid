@@ -9,7 +9,7 @@ class ACID_EXPORT InputDelay
 public:
 	explicit InputDelay(const Time &delay = 0.06s, const Time &repeat = Time::Seconds(0.06f));
 
-	void Update(const bool &keyIsDown);
+	void Update(bool keyIsDown);
 
 	bool CanInput();
 

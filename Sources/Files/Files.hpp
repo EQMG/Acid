@@ -109,7 +109,7 @@ public:
 	 * @param recursive If paths will be recursively searched.
 	 * @return The files found.
 	 */
-	static std::vector<std::string> FilesInPath(const std::filesystem::path &path, const bool &recursive = true);
+	static std::vector<std::string> FilesInPath(const std::filesystem::path &path, bool recursive = true);
 
 	/**
 	 * Gets the next line from a stream.

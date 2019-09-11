@@ -103,7 +103,7 @@ void UiInputText::UpdateObject()
 	}
 }
 
-void UiInputText::SetUpdating(const bool &updating)
+void UiInputText::SetUpdating(bool updating)
 {
 	m_updating = updating;
 	m_mouseOver = true;

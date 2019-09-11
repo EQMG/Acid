@@ -5,7 +5,7 @@
 
 namespace acid
 {
-UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform) :
+UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, bool value, const UiTransform &transform) :
 	UiObject{parent, transform},
 	m_slider{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
 		UiInputButton::PrimaryColour},
@@ -41,7 +41,7 @@ void UiInputBoolean::UpdateObject()
 {
 }
 
-void UiInputBoolean::SetValue(const bool &value)
+void UiInputBoolean::SetValue(bool value)
 {
 	m_value = value;
 	UpdateValue();

@@ -51,7 +51,7 @@ public:
 
 	void RemoveChild(Collider *child);
 
-	void SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore);
+	void SetIgnoreCollisionCheck(CollisionObject *other, bool ignore);
 
 	float GetMass() const { return m_mass; }
 
@@ -102,7 +102,7 @@ public:
 	Delegate<void(CollisionObject *)> &OnSeparation() { return m_onSeparation; }
 
 protected:
-	void CreateShape(const bool &forceSingle = false);
+	void CreateShape(bool forceSingle = false);
 
 	virtual void RecalculateMass() = 0;
 

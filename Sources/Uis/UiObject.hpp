@@ -67,7 +67,7 @@ public:
 
 	bool IsEnabled() const;
 
-	void SetEnabled(const bool &enabled) { m_enabled = enabled; }
+	void SetEnabled(bool enabled) { m_enabled = enabled; }
 
 	UiTransform &GetTransform() { return m_transform; }
 	

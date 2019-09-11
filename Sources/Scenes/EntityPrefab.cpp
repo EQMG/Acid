@@ -32,7 +32,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &
 	return Create(node);
 }
 
-EntityPrefab::EntityPrefab(std::filesystem::path filename, const bool &load) :
+EntityPrefab::EntityPrefab(std::filesystem::path filename, bool load) :
 	m_filename{std::move(filename)}
 {
 	if (load)

@@ -132,19 +132,19 @@ public:
 	 * Gets if the display is selected.
 	 * @return If the display is selected.
 	 */
-	const bool &IsWindowSelected() const { return m_windowSelected; }
+	bool IsWindowSelected() const { return m_windowSelected; }
 
 	/**
 	 * If the cursor is hidden, the mouse is the display locked if true.
 	 * @return If the cursor is hidden.
 	 */
-	const bool &IsCursorHidden() const { return m_cursorHidden; }
+	bool IsCursorHidden() const { return m_cursorHidden; }
 
 	/**
 	 * Sets if the operating systems cursor is hidden whilst in the display.
 	 * @param hidden If the system cursor should be hidden when not shown.
 	 */
-	void SetCursorHidden(const bool &hidden);
+	void SetCursorHidden(bool hidden);
 
 	/**
 	 * Called when a mouse button changes state.

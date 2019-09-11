@@ -130,7 +130,7 @@ public:
 
 	// Overload of operator << to write data into the data stream
 
-	Packet &operator<<(const bool &data);
+	Packet &operator<<(bool data);
 
 	Packet &operator<<(int8_t data);
 

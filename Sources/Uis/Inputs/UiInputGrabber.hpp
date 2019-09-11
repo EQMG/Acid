@@ -23,7 +23,7 @@ public:
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 protected:
-	void SetUpdating(const bool &updating);
+	void SetUpdating(bool updating);
 
 	void UpdateValue();
 

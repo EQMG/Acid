@@ -32,7 +32,7 @@ std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename
 	return Create(node);
 }
 
-FontType::FontType(std::filesystem::path filename, std::string style, const bool &load) :
+FontType::FontType(std::filesystem::path filename, std::string style, bool load) :
 	m_filename{std::move(filename)},
 	m_style{std::move(style)}
 {
@@ -124,7 +124,7 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
-	VkDeviceSize offsets[]{ 0 };
+	VkDeviceSize offsets[1] = {0};
 	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
 	vkCmdDraw(commandBuffer, 4, m_instances, 0, 0);
 	return true;

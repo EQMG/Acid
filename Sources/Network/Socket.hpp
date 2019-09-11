@@ -101,7 +101,7 @@ public:
 	 * Tell whether the socket is in blocking or non-blocking mode.
 	 * @return True if the socket is blocking, false otherwise. 
 	 **/
-	const bool &IsBlocking() const { return m_isBlocking; }
+	bool IsBlocking() const { return m_isBlocking; }
 
 	/**
 	 * Set the blocking state of the socket.

@@ -36,7 +36,7 @@ public:
 	 * @param loops The amount of circles that will be created between the inner and outer radius.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelDisk#Load} can be called later.
 	 */
-	explicit ModelDisk(float innerRadius = 0.5f, float outerRadius = 1.0f, uint32_t slices = 20, uint32_t loops = 4, const bool &load = true);
+	explicit ModelDisk(float innerRadius = 0.5f, float outerRadius = 1.0f, uint32_t slices = 20, uint32_t loops = 4, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelDisk &model);
 

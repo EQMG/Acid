@@ -25,7 +25,7 @@ public:
 	 * @param useAnd If {@link ButtonCompound#IsDown} will check if all buttons are down instead of just one.
 	 */
 	template <typename... Args>
-	ButtonCompound(const bool &useAnd, Args &&... args) :
+	ButtonCompound(bool useAnd, Args &&... args) :
 		m_useAnd(useAnd)
 	{
 		m_buttons.reserve(sizeof...(Args));

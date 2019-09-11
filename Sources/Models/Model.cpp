@@ -23,16 +23,16 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) co
 {
 	if (m_vertexBuffer && m_indexBuffer)
 	{
-		VkBuffer vertexBuffers[]{m_vertexBuffer->GetBuffer()};
-		VkDeviceSize offsets[]{0};
+		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};
+		VkDeviceSize offsets[1] = {0};
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetBuffer(), 0, GetIndexType());
 		vkCmdDrawIndexed(commandBuffer, m_indexCount, instances, 0, 0, 0);
 	}
 	else if (m_vertexBuffer && !m_indexBuffer)
 	{
-		VkBuffer vertexBuffers[]{m_vertexBuffer->GetBuffer()};
-		VkDeviceSize offsets[]{0};
+		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};
+		VkDeviceSize offsets[1] = {0};
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 		vkCmdDraw(commandBuffer, m_vertexCount, instances, 0, 0);
 	}

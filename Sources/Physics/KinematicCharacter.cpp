@@ -179,7 +179,7 @@ void KinematicCharacter::SetMaxJumpHeight(float maxHeight)
 	m_controller->setMaxJumpHeight(maxHeight);
 }
 
-void KinematicCharacter::SetInterpolate(const bool &interpolate)
+void KinematicCharacter::SetInterpolate(bool interpolate)
 {
 	m_interpolate = interpolate;
 	m_controller->setUpInterpolate(interpolate);

@@ -8,7 +8,7 @@ InputDelay::InputDelay(const Time &delay, const Time &repeat) :
 {
 }
 
-void InputDelay::Update(const bool &keyIsDown)
+void InputDelay::Update(bool keyIsDown)
 {
 	if (keyIsDown)
 	{

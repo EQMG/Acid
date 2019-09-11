@@ -22,7 +22,7 @@ std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap)
+std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap)
 {
 	Image2d temp{filename, filter, addressMode, anisotropic, mipmap, false};
 	Node node;
@@ -30,7 +30,7 @@ std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, 
 	return Create(node);
 }
 
-Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap, const bool &load) :
+Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap, bool load) :
 	m_filename{std::move(filename)},
 	m_filter{filter},
 	m_addressMode{addressMode},
@@ -48,7 +48,7 @@ Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const V
 }
 
 Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
-	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
+	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
 	m_filter{filter},
 	m_addressMode{addressMode},
 	m_anisotropic{anisotropic},

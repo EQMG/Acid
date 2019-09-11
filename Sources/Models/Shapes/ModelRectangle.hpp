@@ -32,7 +32,7 @@ public:
 	 * @param max The maximum extents.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelRectangle#Load} can be called later.
 	 */
-	explicit ModelRectangle(float min = 0.0f, float max = 1.0f, const bool &load = true);
+	explicit ModelRectangle(float min = 0.0f, float max = 1.0f, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelRectangle &model);
 

@@ -93,7 +93,7 @@ inline const Node &operator>>(const Node &node, bool &object)
 	return node;
 }
 
-inline Node &operator<<(Node &node, const bool &object)
+inline Node &operator<<(Node &node, bool object)
 {
 	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Boolean);

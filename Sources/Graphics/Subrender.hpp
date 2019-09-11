@@ -32,9 +32,9 @@ public:
 
 	const Pipeline::Stage &GetStage() const { return m_stage; }
 
-	const bool &IsEnabled() const { return m_enabled; };
+	bool IsEnabled() const { return m_enabled; };
 
-	void SetEnabled(const bool &enable) { m_enabled = enable; }
+	void SetEnabled(bool enable) { m_enabled = enable; }
 
 private:
 	Pipeline::Stage m_stage;

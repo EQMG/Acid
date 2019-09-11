@@ -31,7 +31,7 @@ public:
 	 * @param filename The file to load the GLTF model from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelGltf#Load} can be called later.
 	 */
-	explicit ModelGltf(std::filesystem::path filename, const bool &load = true);
+	explicit ModelGltf(std::filesystem::path filename, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelGltf &model);
 

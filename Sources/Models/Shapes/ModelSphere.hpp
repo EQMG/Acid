@@ -34,7 +34,7 @@ public:
 	 * @param longitudeBands The amount of vertices that will make up the spheres longitude.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelSphere#Load} can be called later.
 	 */
-	explicit ModelSphere(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20, const bool &load = true);
+	explicit ModelSphere(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelSphere &model);
 

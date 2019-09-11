@@ -28,7 +28,7 @@ public:
 
 	virtual const Shader *GetShader() const = 0;
 
-	virtual const bool &IsPushDescriptors() const = 0;
+	virtual bool IsPushDescriptors() const = 0;
 
 	virtual const VkDescriptorSetLayout &GetDescriptorSetLayout() const = 0;
 

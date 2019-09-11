@@ -11,7 +11,7 @@ DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	VkDescriptorSetLayout layouts[1]{ pipeline.GetDescriptorSetLayout() };
+	VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
 
 	VkDescriptorSetAllocateInfo descriptorSetAllocateInfo{};
 	descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;

@@ -29,7 +29,7 @@ public:
 	Image(const VkExtent3D &extent, const VkImageType &imageType, const VkFormat &format, const VkSampleCountFlagBits &samples, const VkImageTiling &tiling,
 		const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, uint32_t mipLevels, uint32_t arrayLayers);
 
-	/*const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic,
+	/*const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic,
 	const VkImageViewType &viewType, const VkImageAspectFlags &imageAspect, uint32_t baseMipLevel, uint32_t baseArrayLayer*/
 
 	~Image();
@@ -72,7 +72,7 @@ public:
 
 	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
 
-	const bool &IsAnisotropic() const { return m_anisotropic; }
+	bool IsAnisotropic() const { return m_anisotropic; }
 
 	const VkImageLayout &GetLayout() const { return m_layout; }
 
@@ -108,7 +108,7 @@ public:
 		const VkImageTiling &tiling, const VkImageUsageFlags &usage, const VkMemoryPropertyFlags &properties, uint32_t mipLevels, uint32_t arrayLayers,
 		const VkImageType &type);
 
-	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, uint32_t mipLevels);
+	static void CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, uint32_t mipLevels);
 
 	static void CreateImageView(const VkImage &image, VkImageView &imageView, const VkImageViewType &type, const VkFormat &format, const VkImageAspectFlags &imageAspect,
 		uint32_t mipLevels, uint32_t baseMipLevel, uint32_t layerCount, uint32_t baseArrayLayer);

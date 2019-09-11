@@ -17,7 +17,7 @@ public:
 	 * @param axis The axis on the joystick being checked.
 	 * @param inverted If the axis direction should be inverted.
 	 */
-	AxisJoystick(uint32_t port, uint32_t axis, const bool &inverted = false);
+	AxisJoystick(uint32_t port, uint32_t axis, bool inverted = false);
 
 	float GetAmount() const override;
 
@@ -31,9 +31,9 @@ public:
 
 	void SetAxis(uint32_t axis) { m_axis = axis; }
 
-	const bool &IsInverted() const { return m_inverted; }
+	bool IsInverted() const { return m_inverted; }
 
-	void SetInverted(const bool &inverted) { m_inverted = inverted; }
+	void SetInverted(bool inverted) { m_inverted = inverted; }
 
 private:
 	uint32_t m_port;

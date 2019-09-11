@@ -29,13 +29,13 @@ public:
 	{
 	}
 
-	const bool &IsEnabled() const { return m_enabled; };
+	bool IsEnabled() const { return m_enabled; };
 
-	void SetEnabled(const bool &enable) { m_enabled = enable; }
+	void SetEnabled(bool enable) { m_enabled = enable; }
 
-	const bool &IsRemoved() const { return m_removed; }
+	bool IsRemoved() const { return m_removed; }
 
-	void SetRemoved(const bool &removed) { m_removed = removed; }
+	void SetRemoved(bool removed) { m_removed = removed; }
 
 	/**
 	 * Gets the entity this component is attached to.

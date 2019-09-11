@@ -11,7 +11,7 @@ class ACID_EXPORT ColliderHeightfield :
 {
 public:
 	explicit ColliderHeightfield(int32_t heightStickWidth = 100, int32_t heightStickLength = 100, const void *heightfieldData = nullptr,
-		float minHeight = -1.0f, float maxHeight = 1.0f, const bool &flipQuadEdges = false, const Transform &localTransform = {});
+		float minHeight = -1.0f, float maxHeight = 1.0f, bool flipQuadEdges = false, const Transform &localTransform = {});
 
 	~ColliderHeightfield();
 
@@ -22,7 +22,7 @@ public:
 	btCollisionShape *GetCollisionShape() const override;
 
 	void Initialize(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight, float maxHeight,
-		const bool &flipQuadEdges);
+		bool flipQuadEdges);
 
 	friend const Node &operator>>(const Node &node, ColliderHeightfield &collider);
 

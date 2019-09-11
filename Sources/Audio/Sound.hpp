@@ -14,8 +14,8 @@ class ACID_EXPORT Sound :
 	public Component
 {
 public:
-	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, const bool &begin = false,
-		const bool &loop = false, float gain = 1.0f, float pitch = 1.0f);
+	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,
+		bool loop = false, float gain = 1.0f, float pitch = 1.0f);
 
 	~Sound();
 
@@ -23,7 +23,7 @@ public:
 
 	void Update() override;
 
-	void Play(const bool &loop = false);
+	void Play(bool loop = false);
 
 	void Pause();
 

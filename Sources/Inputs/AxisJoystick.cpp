@@ -4,7 +4,7 @@
 
 namespace acid
 {
-AxisJoystick::AxisJoystick(uint32_t port, uint32_t axis, const bool &inverted) :
+AxisJoystick::AxisJoystick(uint32_t port, uint32_t axis, bool inverted) :
 	m_port{port},
 	m_axis{axis},
 	m_inverted{inverted}

@@ -5,7 +5,7 @@
 
 namespace acid
 {
-PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, float blur, const FilterBlur::Type &blurType, const bool &toScreen, float inputScale,
+PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, float blur, const FilterBlur::Type &blurType, bool toScreen, float inputScale,
 	float outputScale) :
 	PostPipeline{pipelineStage},
 	m_filterBlurVertical{pipelineStage, {0.0f, blur}, blurType},

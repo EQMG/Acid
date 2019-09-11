@@ -28,7 +28,7 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(float innerRadius, float outerRadiu
 	return Create(node);
 }
 
-ModelDisk::ModelDisk(float innerRadius, float outerRadius, uint32_t slices, uint32_t loops, const bool &load) :
+ModelDisk::ModelDisk(float innerRadius, float outerRadius, uint32_t slices, uint32_t loops, bool load) :
 	m_innerRadius(innerRadius),
 	m_outerRadius(outerRadius),
 	m_slices(slices),

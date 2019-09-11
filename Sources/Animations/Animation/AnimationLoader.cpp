@@ -78,7 +78,7 @@ std::string AnimationLoader::GetJointName(const Node *jointData)
 	return splitData[0];
 }
 
-void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, const bool &root)
+void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root)
 {
 	for (uint32_t i{}; i < m_keyframes.size(); i++)
 	{

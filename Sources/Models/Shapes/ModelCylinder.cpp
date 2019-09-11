@@ -28,7 +28,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float rad
 	return Create(node);
 }
 
-ModelCylinder::ModelCylinder(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks, const bool &load) :
+ModelCylinder::ModelCylinder(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks, bool load) :
 	m_radiusBase(radiusBase),
 	m_radiusTop(radiusTop),
 	m_height(height),

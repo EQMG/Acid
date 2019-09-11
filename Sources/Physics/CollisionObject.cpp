@@ -74,7 +74,7 @@ void CollisionObject::RemoveChild(Collider *child)
 	RecalculateMass();
 }
 
-void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, const bool &ignore)
+void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, bool ignore)
 {
 	m_body->setIgnoreCollisionCheck(other->m_body, ignore);
 }
@@ -97,7 +97,7 @@ void CollisionObject::SetFrictionSpinning(float frictionSpinning)
 	m_body->setSpinningFriction(m_frictionSpinning);
 }
 
-void CollisionObject::CreateShape(const bool &forceSingle)
+void CollisionObject::CreateShape(bool forceSingle)
 {
 	auto colliders = GetEntity()->GetComponents<Collider>();
 

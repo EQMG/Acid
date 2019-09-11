@@ -164,7 +164,7 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 
 	std::cout << " " << std::quoted(physicalDeviceProperties.deviceName) << '\n';
 
-	uint32_t supportedVersion[]{VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+	uint32_t supportedVersion[3] = {VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)};
 	std::cout << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << '\n';
 	std::cout << "Extensions: ";

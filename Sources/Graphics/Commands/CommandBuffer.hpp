@@ -16,7 +16,7 @@ public:
 	 * @param queueType The queue to run this command buffer on.
 	 * @param bufferLevel The buffer level.
 	 */
-	explicit CommandBuffer(const bool &begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT,
+	explicit CommandBuffer(bool begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT,
 		const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 	~CommandBuffer();
@@ -45,7 +45,7 @@ public:
 	 */
 	void Submit(const VkSemaphore &waitSemaphore = VK_NULL_HANDLE, const VkSemaphore &signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
-	const bool &IsRunning() const { return m_running; }
+	bool IsRunning() const { return m_running; }
 
 	operator const VkCommandBuffer &() const { return m_commandBuffer; }
 

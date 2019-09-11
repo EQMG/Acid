@@ -10,9 +10,9 @@ namespace acid
 class ACID_EXPORT StorageHandler
 {
 public:
-	explicit StorageHandler(const bool &multipipeline = false);
+	explicit StorageHandler(bool multipipeline = false);
 
-	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline = false);
+	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
 	void Push(void *data, std::size_t size)
 	{

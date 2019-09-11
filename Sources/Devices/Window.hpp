@@ -51,7 +51,7 @@ public:
 	 * @param checkFullscreen If in fullscreen and true size will be the screens size.
 	 * @return The size of the window.
 	 */
-	const Vector2ui &GetSize(const bool &checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
+	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
 
 	/**
 	 * Gets the aspect ratio between the windows width and height.
@@ -99,74 +99,74 @@ public:
 	 * Gets weather the window is borderless or not.
 	 * @return If the window is borderless.
 	 */
-	const bool &IsBorderless() const { return m_borderless; }
+	bool IsBorderless() const { return m_borderless; }
 
 	/**
 	 * Sets the window to be borderless.
 	 * @param borderless Weather or not to be borderless.
 	 */
-	void SetBorderless(const bool &borderless);
+	void SetBorderless(bool borderless);
 
 	/**
 	 * Gets weather the window is resizable or not.
 	 * @return If the window is resizable.
 	 */
-	const bool &IsResizable() const { return m_resizable; }
+	bool IsResizable() const { return m_resizable; }
 
 	/**
 	 * Sets the window to be resizable.
 	 * @param resizable Weather or not to be resizable.
 	 */
-	void SetResizable(const bool &resizable);
+	void SetResizable(bool resizable);
 
 	/**
 	 * Gets weather the window is floating or not, if floating the window will always display above other windows.
 	 * @return If the window is floating.
 	 */
-	const bool &IsFloating() const { return m_floating; }
+	bool IsFloating() const { return m_floating; }
 
 	/**
 	 * Sets the window to be floating.
 	 * @param floating Weather or not to be floating.
 	 */
-	void SetFloating(const bool &floating);
+	void SetFloating(bool floating);
 
 	/**
 	 * Gets weather the window is fullscreen or not.
 	 * @return Fullscreen or windowed.
 	 */
-	const bool &IsFullscreen() const { return m_fullscreen; }
+	bool IsFullscreen() const { return m_fullscreen; }
 
 	/**
 	 * Sets the window to be fullscreen or windowed.
 	 * @param fullscreen If the window will be fullscreen.
 	 * @param monitor The monitor to display in.
 	 */
-	void SetFullscreen(const bool &fullscreen, Monitor *monitor = nullptr);
+	void SetFullscreen(bool fullscreen, Monitor *monitor = nullptr);
 
 	/**
 	 * Gets if the window is closed.
 	 * @return If the window is closed.
 	 */
-	const bool &IsClosed() const { return m_closed; }
+	bool IsClosed() const { return m_closed; }
 
 	/**
 	 * Gets if the window is selected.
 	 * @return If the window is selected.
 	 */
-	const bool &IsFocused() const { return m_focused; }
+	bool IsFocused() const { return m_focused; }
 
 	/**
 	 * Gets the windows is minimized.
 	 * @return If the window is minimized.
 	 */
-	const bool &IsIconified() const { return m_iconified; }
+	bool IsIconified() const { return m_iconified; }
 
 	/**
 	 * Sets the window to be iconified (minimized).
 	 * @param iconify If the window will be set as iconified.
 	 */
-	void SetIconified(const bool &iconify);
+	void SetIconified(bool iconify);
 
 	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
 

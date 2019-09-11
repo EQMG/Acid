@@ -40,7 +40,7 @@ public:
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCylinder#Load} can be called later.
 	 */
 	explicit ModelCylinder(float radiusBase = 1.0f, float radiusTop = 1.0f, float height = 2.0f, uint32_t slices = 20, uint32_t stacks = 2,
-		const bool &load = true);
+		bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelCylinder &model);
 

@@ -2,12 +2,12 @@
 
 namespace acid
 {
-PushHandler::PushHandler(const bool &multipipeline) :
+PushHandler::PushHandler(bool multipipeline) :
 	m_multipipeline{multipipeline}
 {
 }
 
-PushHandler::PushHandler(const Shader::UniformBlock &uniformBlock, const bool &multipipeline) :
+PushHandler::PushHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
 	m_multipipeline{multipipeline},
 	m_uniformBlock{uniformBlock},
 	m_data{std::make_unique<char[]>(m_uniformBlock->GetSize())}

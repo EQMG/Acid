@@ -5,7 +5,7 @@
 
 namespace acid
 {
-PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines, const bool &pushDescriptors) :
+PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines, bool pushDescriptors) :
 	m_shaderStage{std::move(shaderStage)},
 	m_defines{std::move(defines)},
 	m_pushDescriptors{pushDescriptors},

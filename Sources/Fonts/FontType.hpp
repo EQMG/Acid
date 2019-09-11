@@ -65,7 +65,7 @@ public:
 	 * @param style The style postfix to load as this type.
 	 * @param load If this resource will be loaded immediately, otherwise {@link FontType#Load} can be called later.
 	 */
-	FontType(std::filesystem::path filename, std::string style, const bool &load = true);
+	FontType(std::filesystem::path filename, std::string style, bool load = true);
 
 	void Update(const std::vector<Text *> &texts);
 

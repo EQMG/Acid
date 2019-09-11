@@ -48,7 +48,7 @@ void UiInputGrabber::UpdateObject()
 	}
 }
 
-void UiInputGrabber::SetUpdating(const bool &updating)
+void UiInputGrabber::SetUpdating(bool updating)
 {
 	m_updating = updating;
 	m_mouseOver = true;

@@ -4,7 +4,7 @@
 
 namespace acid
 {
-CommandBuffer::CommandBuffer(const bool &begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
+CommandBuffer::CommandBuffer(bool begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
 	m_queueType{queueType}
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();

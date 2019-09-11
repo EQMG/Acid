@@ -12,7 +12,7 @@ class SkyboxCycle :
 	public Component
 {
 public:
-	explicit SkyboxCycle(const bool &enableFog = true, const bool &enableRotation = false);
+	explicit SkyboxCycle(bool enableFog = true, bool enableRotation = false);
 
 	void Start() override;
 

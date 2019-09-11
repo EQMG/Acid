@@ -246,28 +246,28 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 	glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());
 }
 
-void Window::SetBorderless(const bool &borderless)
+void Window::SetBorderless(bool borderless)
 {
 	m_borderless = borderless;
 	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
 	m_onBorderless(m_borderless);
 }
 
-void Window::SetResizable(const bool &resizable)
+void Window::SetResizable(bool resizable)
 {
 	m_resizable = resizable;
 	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
 	m_onResizable(m_resizable);
 }
 
-void Window::SetFloating(const bool &floating)
+void Window::SetFloating(bool floating)
 {
 	m_floating = floating;
 	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
 	m_onFloating(m_floating);
 }
 
-void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
+void Window::SetFullscreen(bool fullscreen, Monitor *monitor)
 {
 	m_fullscreen = fullscreen;
 
@@ -294,7 +294,7 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 	m_onFullscreen(m_fullscreen);
 }
 
-void Window::SetIconified(const bool &iconify)
+void Window::SetIconified(bool iconify)
 {
 	if (!m_iconified && iconify)
 	{

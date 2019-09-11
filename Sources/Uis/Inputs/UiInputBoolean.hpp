@@ -11,7 +11,7 @@ class ACID_EXPORT UiInputBoolean :
 	public UiObject
 {
 public:
-	UiInputBoolean(UiObject *parent, const std::string &title, const bool &value, const UiTransform &transform = {UiInputButton::Size});
+	UiInputBoolean(UiObject *parent, const std::string &title, bool value, const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 
@@ -19,9 +19,9 @@ public:
 
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
-	const bool &GetValue() const { return m_value; }
+	bool GetValue() const { return m_value; }
 
-	void SetValue(const bool &value);
+	void SetValue(bool value);
 
 	/**
 	 * Called when this value of the input changes.

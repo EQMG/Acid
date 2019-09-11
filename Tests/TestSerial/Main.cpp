@@ -87,7 +87,7 @@ public:
 	//std::vector<std::unique_ptr<float>> uniqueVector{std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
 	//std::map<Vector2f, Matrix4> vectorMatrixMap{{Vector2f{-0.91f, 5998.1f}, Matrix4{1.0f}}, {Vector2f{75.559f, 1.2433f}, Matrix4{0.0f}}}; // Not allowed by Json.
 	//std::array<double, 5> array{-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
-	//float cArray[3]{0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
+	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 
 	friend const Node &operator>>(const Node &node, Example1 &example1)
 	{

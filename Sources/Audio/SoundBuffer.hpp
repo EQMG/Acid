@@ -32,7 +32,7 @@ public:
 	 * @param filename The file to load the sound buffer from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link SoundBuffer#Load} can be called later.
 	 */
-	explicit SoundBuffer(std::filesystem::path filename, const bool &load = true);
+	explicit SoundBuffer(std::filesystem::path filename, bool load = true);
 
 	~SoundBuffer();
 

@@ -14,7 +14,7 @@ SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::
 	m_headJoint.CalculateInverseBindTransform(Matrix4{});
 }
 
-Joint SkeletonLoader::LoadJointData(const Node *jointNode, const bool &isRoot)
+Joint SkeletonLoader::LoadJointData(const Node *jointNode, bool isRoot)
 {
 	auto joint = ExtractMainJointData(jointNode, isRoot);
 
@@ -26,7 +26,7 @@ Joint SkeletonLoader::LoadJointData(const Node *jointNode, const bool &isRoot)
 	return joint;
 }
 
-Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, const bool &isRoot)
+Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
 {
 	auto nameId = *jointNode->FindAttribute("id");
 	auto index = GetBoneIndex(nameId);

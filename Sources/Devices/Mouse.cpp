@@ -161,7 +161,7 @@ void Mouse::SetScroll(const Vector2d &scroll)
 	m_scroll = scroll;
 }
 
-void Mouse::SetCursorHidden(const bool &hidden)
+void Mouse::SetCursorHidden(bool hidden)
 {
 	if (m_cursorHidden != hidden)
 	{

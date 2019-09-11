@@ -312,7 +312,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 	return std::string(data.begin(), data.end());
 }
 
-std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, const bool &recursive)
+std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, bool recursive)
 {
 	auto pathStr = path.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');

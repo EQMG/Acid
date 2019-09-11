@@ -16,7 +16,7 @@ public:
 		Filled, X, Dot, Check
 	};
 
-	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, const bool &value = false,
+	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, bool value = false,
 		const UiTransform &transform = UiTransform{UiInputButton::Size});
 
 	void UpdateObject() override;
@@ -25,9 +25,9 @@ public:
 
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
-	const bool &GetValue() const { return m_value; }
+	bool GetValue() const { return m_value; }
 
-	void SetValue(const bool &value);
+	void SetValue(bool value);
 
 	const Type &GetType() const { return m_type; }
 
@@ -56,7 +56,7 @@ class ACID_EXPORT UiRadioManager :
 	public Observer
 {
 public:
-	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, const bool &multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
+	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, bool multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
 		m_type{type},
 		m_multiple{multiple},
 		m_inputs{inputs}

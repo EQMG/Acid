@@ -2,7 +2,7 @@
 
 namespace acid
 {
-/*ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, const bool &useAnd) :
+/*ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd) :
 	m_buttons{std::move(buttons)},
 	m_useAnd{useAnd}
 {

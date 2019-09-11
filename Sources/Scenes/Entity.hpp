@@ -44,7 +44,7 @@ public:
 	 * @return The found component.
 	 */
 	template<typename T>
-	T *GetComponent(const bool &allowDisabled = false) const
+	T *GetComponent(bool allowDisabled = false) const
 	{
 		T *alternative{};
 
@@ -74,7 +74,7 @@ public:
 	 * @return The components.
 	 */
 	template<typename T>
-	std::vector<T *> GetComponents(const bool &allowDisabled = false) const
+	std::vector<T *> GetComponents(bool allowDisabled = false) const
 	{
 		std::vector<T *> components;
 
@@ -154,9 +154,9 @@ public:
 
 	void SetName(const std::string &name) { m_name = name; }
 
-	const bool &IsRemoved() const { return m_removed; }
+	bool IsRemoved() const { return m_removed; }
 
-	void SetRemoved(const bool &removed) { m_removed = removed; }
+	void SetRemoved(bool removed) { m_removed = removed; }
 
 private:
 	std::string m_name;

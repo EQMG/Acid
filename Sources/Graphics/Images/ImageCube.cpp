@@ -22,7 +22,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 }
 
 std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	const bool &anisotropic, const bool &mipmap)
+	bool anisotropic, bool mipmap)
 {
 	ImageCube temp{filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false};
 	Node node;
@@ -30,8 +30,8 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filena
 	return Create(node);
 }
 
-ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, const bool &anisotropic, const bool &mipmap,
-	const bool &load) :
+ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap,
+	bool load) :
 	m_filename{std::move(filename)},
 	m_fileSuffix{std::move(fileSuffix)},
 	m_filter{filter},
@@ -50,7 +50,7 @@ ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, con
 }
 
 ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
-	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, const bool &anisotropic, const bool &mipmap) :
+	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
 	m_filter{filter},
 	m_addressMode{addressMode},
 	m_anisotropic{anisotropic},

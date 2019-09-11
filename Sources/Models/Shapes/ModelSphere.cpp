@@ -28,7 +28,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(float radius, uint32_t latitude
 	return Create(node);
 }
 
-ModelSphere::ModelSphere(float radius, uint32_t latitudeBands, uint32_t longitudeBands, const bool &load) :
+ModelSphere::ModelSphere(float radius, uint32_t latitudeBands, uint32_t longitudeBands, bool load) :
 	m_radius(radius),
 	m_latitudeBands(latitudeBands),
 	m_longitudeBands(longitudeBands)

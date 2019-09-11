@@ -15,8 +15,8 @@ class ACID_EXPORT MaterialDefault :
 {
 public:
 	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,
-		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, const bool &castsShadows = true,
-		const bool &ignoreLighting = false, const bool &ignoreFog = false);
+		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,
+		bool ignoreLighting = false, bool ignoreFog = false);
 
 	void Start() override;
 
@@ -50,17 +50,17 @@ public:
 
 	void SetImageNormal(const std::shared_ptr<Image2d> &imageNormal) { m_imageNormal = imageNormal; }
 
-	const bool &IsCastsShadows() const { return m_castsShadows; }
+	bool IsCastsShadows() const { return m_castsShadows; }
 
-	void SetCastsShadows(const bool &castsShadows) { m_castsShadows = castsShadows; }
+	void SetCastsShadows(bool castsShadows) { m_castsShadows = castsShadows; }
 
-	const bool &IsIgnoringLighting() const { return m_ignoreLighting; }
+	bool IsIgnoringLighting() const { return m_ignoreLighting; }
 
-	void SetIgnoreLighting(const bool &ignoreLighting) { m_ignoreLighting = ignoreLighting; }
+	void SetIgnoreLighting(bool ignoreLighting) { m_ignoreLighting = ignoreLighting; }
 
-	const bool &IsIgnoringFog() const { return m_ignoreFog; }
+	bool IsIgnoringFog() const { return m_ignoreFog; }
 
-	void SetIgnoreFog(const bool &ignoreFog) { m_ignoreFog = ignoreFog; }
+	void SetIgnoreFog(bool ignoreFog) { m_ignoreFog = ignoreFog; }
 
 	friend const Node &operator>>(const Node &node, MaterialDefault &material);
 

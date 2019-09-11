@@ -43,7 +43,7 @@ void UiPanel::UpdateObject()
 	SetScissor(&m_content, true);
 }
 
-void UiPanel::SetScissor(UiObject *object, const bool &checkSize)
+void UiPanel::SetScissor(UiObject *object, bool checkSize)
 {
 	auto position = m_background.GetScreenTransform().GetPosition();
 	auto size = m_background.GetScreenTransform().GetSize();
