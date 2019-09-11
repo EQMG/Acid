@@ -28,7 +28,7 @@ void Node::Write(std::ostream &stream, const Format &format) const
 
 void Node::Remove()
 {
-	if (m_parent == nullptr)
+	if (!m_parent)
 	{
 		throw std::runtime_error("Cannot remove from parent properties if parent is null");
 	}
@@ -50,7 +50,7 @@ bool Node::IsValid() const
 
 std::string Node::GetName() const
 {
-	if (m_parent == nullptr)
+	if (!m_parent)
 	{
 		throw std::runtime_error("Cannot get name if parent is null");
 	}
@@ -68,7 +68,7 @@ std::string Node::GetName() const
 
 void Node::SetName(const std::string &name)
 {
-	if (m_parent == nullptr)
+	if (!m_parent)
 	{
 		throw std::runtime_error("Cannot set name if parent is null");
 	}

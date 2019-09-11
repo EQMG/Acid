@@ -22,7 +22,7 @@ public:
 	template<typename T>
 	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = std::nullopt)
 	{
-		if (m_shader == nullptr)
+		if (!m_shader)
 		{
 			return;
 		}
@@ -42,7 +42,7 @@ public:
 		}
 
 		// Only non-null descriptors can be mapped.
-		if (ConstExpr::AsPtr(descriptor) == nullptr)
+		if (!ConstExpr::AsPtr(descriptor))
 		{
 			return;
 		}
@@ -84,7 +84,7 @@ public:
 	template<typename T>
 	void Push(const std::string &descriptorName, const T &descriptor, WriteDescriptorSet writeDescriptorSet)
 	{
-		if (m_shader == nullptr)
+		if (!m_shader)
 		{
 			return;
 		}

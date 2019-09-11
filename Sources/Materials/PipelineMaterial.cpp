@@ -7,9 +7,7 @@ namespace acid
 {
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
@@ -26,10 +24,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	PipelineMaterial temp{pipelineStage, pipelineCreate};
 	Node node;
 	node << temp;
-	
-	auto resource = Resources::Get()->Find(node);
 
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
@@ -51,7 +47,7 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 {
 	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
 
-	if (renderStage == nullptr)
+	if (!renderStage)
 	{
 		return false;
 	}

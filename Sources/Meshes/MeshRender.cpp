@@ -17,7 +17,7 @@ void MeshRender::Update()
 {
 	auto material = GetEntity()->GetComponent<Material>();
 
-	if (material == nullptr)
+	if (!material)
 	{
 		return;
 	}
@@ -29,7 +29,7 @@ void MeshRender::Update()
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
 {
 	// Checks if the mesh is in view.
-	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody != nullptr)
+	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody)
 	{
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 		{
@@ -42,15 +42,15 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	auto mesh = GetEntity()->GetComponent<Mesh>();
 	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
-	if (material == nullptr || (mesh == nullptr)) // && meshAnimated == nullptr
+	if (!material || !mesh) // && !meshAnimated
 	{
 		return false;
 	}
 
-	auto meshModel = mesh->GetModel(); // meshAnimated != nullptr ? meshAnimated->GetModel() : 
+	auto meshModel = mesh->GetModel(); // meshAnimated ? meshAnimated->GetModel() : 
 	auto materialPipeline = material->GetPipelineMaterial();
 
-	if (meshModel == nullptr || materialPipeline == nullptr || materialPipeline->GetStage() != pipelineStage)
+	if (!meshModel || !materialPipeline || materialPipeline->GetStage() != pipelineStage)
 	{
 		return false;
 	}

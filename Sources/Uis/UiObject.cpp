@@ -17,7 +17,7 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 	m_screenAlpha{1.0f},
 	m_screenScale{1.0f}
 {
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->AddChild(this);
 	}
@@ -25,7 +25,7 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 
 UiObject::~UiObject()
 {
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->RemoveChild(this);
 	}
@@ -55,7 +55,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	m_screenTransform = m_transform;
 	m_screenTransform.SetAnchor(UiAnchor::LeftTop);
 
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_screenAlpha *= m_parent->m_screenAlpha;
 		m_screenScale *= m_parent->m_screenScale;
@@ -67,7 +67,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 
 	if (m_transform.m_margins)
 	{
-		if (m_parent != nullptr)
+		if (m_parent)
 		{
 			Vector2f leftTop{m_transform.GetAnchor0()};
 
@@ -117,7 +117,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	}
 	else
 	{
-		if (m_parent != nullptr)
+		if (m_parent)
 		{
 			m_screenTransform.m_position += m_parent->m_screenTransform.m_size * m_transform.GetAnchor0();
 			m_screenTransform.m_position += m_parent->m_screenTransform.m_position;
@@ -179,12 +179,12 @@ void UiObject::UpdateObject()
 
 void UiObject::SetParent(UiObject *parent)
 {
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->RemoveChild(this);
 	}
 
-	if (parent != nullptr)
+	if (parent)
 	{
 		parent->AddChild(this);
 	}
@@ -205,7 +205,7 @@ void UiObject::RemoveChild(UiObject *child)
 bool UiObject::IsEnabled() const
 {
 	// TODO: m_enabled getter, update m_enabled on object update.
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		return m_enabled && m_parent->IsEnabled();
 	}

@@ -18,7 +18,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 
 	m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
 
-	if (m_physicalDevice == nullptr)
+	if (!m_physicalDevice)
 	{
 		throw std::runtime_error{"Vulkan runtime error, failed to find a suitable GPU"};
 	}

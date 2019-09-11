@@ -15,7 +15,7 @@ Transform::~Transform()
 {
 	delete m_worldTransform;
 
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->RemoveChild(this);
 	}
@@ -69,14 +69,14 @@ void Transform::SetLocalScale(const Vector3f &localScale)
 
 void Transform::SetParent(Transform *parent)
 {
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->RemoveChild(this);
 	}
 	
 	m_parent = parent;
 
-	if (m_parent != nullptr)
+	if (m_parent)
 	{
 		m_parent->AddChild(this);
 	}
@@ -130,9 +130,9 @@ std::ostream &operator<<(std::ostream &stream, const Transform &transform)
 
 const Transform *Transform::GetWorldTransform() const
 {
-	if (m_parent == nullptr)
+	if (!m_parent)
 	{
-		if (m_worldTransform != nullptr)
+		if (m_worldTransform)
 		{
 			delete m_worldTransform;
 			m_worldTransform = nullptr;
@@ -141,7 +141,7 @@ const Transform *Transform::GetWorldTransform() const
 		return this;
 	}
 
-	if (m_worldTransform == nullptr)
+	if (!m_worldTransform)
 	{
 		m_worldTransform = new Transform{};
 	}

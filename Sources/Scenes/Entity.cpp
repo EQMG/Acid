@@ -43,7 +43,7 @@ void Entity::Update()
 
 Component *Entity::AddComponent(Component *component)
 {
-	if (component == nullptr)
+	if (!component)
 	{
 		return nullptr;
 	}

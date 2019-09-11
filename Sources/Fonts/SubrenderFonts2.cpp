@@ -26,7 +26,7 @@ void SubrenderFonts2::Render(const CommandBuffer &commandBuffer)
 
 		auto object = dynamic_cast<Text *>(screenObject);
 
-		if (object != nullptr)
+		if (object)
 		{
 			auto it = sorted.find(object->GetFontType());
 

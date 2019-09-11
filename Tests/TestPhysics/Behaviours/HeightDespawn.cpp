@@ -18,7 +18,7 @@ void HeightDespawn::Update()
 {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform != nullptr && transform->GetPosition().m_y < m_removeHeight)
+	if (transform && transform->GetPosition().m_y < m_removeHeight)
 	{
 		GetEntity()->SetRemoved(true);
 	}

@@ -47,7 +47,7 @@ std::shared_ptr<Resource> Resources::Find(const Node &node) const
 
 void Resources::Add(const Node &node, const std::shared_ptr<Resource> &resource)
 {
-	if (Find(node) != nullptr)
+	if (Find(node))
 	{
 		return;
 	}

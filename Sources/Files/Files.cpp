@@ -286,7 +286,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 	auto fsFile = PHYSFS_openRead(pathStr.c_str());
 
-	if (fsFile == nullptr)
+	if (!fsFile)
 	{
 		if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
 		{
@@ -320,7 +320,7 @@ std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, c
 	
 	std::vector<std::string> files;
 
-	for (auto i = rc; *i != nullptr; i++)
+	for (auto i = rc; *i; i++)
 	{
 		/*if (IsDirectory(*i))
 		{

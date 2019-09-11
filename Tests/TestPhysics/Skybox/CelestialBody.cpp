@@ -28,7 +28,7 @@ void CelestialBody::Update()
 {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform == nullptr)
+	if (!transform)
 	{
 		return;
 	}
@@ -43,14 +43,14 @@ void CelestialBody::Update()
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(sunPosition);
 
-		if (light != nullptr)
+		if (light)
 		{
 			auto sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
 			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
 			light->SetColour(sunColour);
 		}
 
-		if (auto filterLensflare = Graphics::Get()->GetSubrender<FilterLensflare>(); filterLensflare != nullptr)
+		if (auto filterLensflare = Graphics::Get()->GetSubrender<FilterLensflare>(); filterLensflare)
 		{
 			filterLensflare->SetSunPosition(transform->GetPosition());
 			filterLensflare->SetSunHeight(transform->GetPosition().m_y);
@@ -63,7 +63,7 @@ void CelestialBody::Update()
 		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(moonPosition);
 
-		if (light != nullptr)
+		if (light)
 		{
 			auto moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
 			light->SetColour(moonColour);

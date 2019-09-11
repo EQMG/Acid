@@ -32,7 +32,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	auto camera = Scenes::Get()->GetCamera();
 
 	auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
-	auto skybox = (materialSkybox == nullptr) ? nullptr : materialSkybox->GetImage();
+	auto skybox = materialSkybox ? materialSkybox->GetImage() : nullptr;
 
 	if (m_skybox != skybox)
 	{
@@ -60,7 +60,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 		DeferredLight deferredLight{};
 		deferredLight.m_colour = light->GetColour();
 		
-		if (auto transform = light->GetEntity()->GetComponent<Transform>(); transform != nullptr)
+		if (auto transform = light->GetEntity()->GetComponent<Transform>(); transform)
 		{
 			deferredLight.m_position = transform->GetPosition();
 		}
@@ -148,7 +148,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size)
 
 std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size)
 {
-	if (source == nullptr)
+	if (!source)
 	{
 		return nullptr;
 	}
@@ -189,7 +189,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 
 std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size)
 {
-	if (source == nullptr)
+	if (!source)
 	{
 		return nullptr;
 	}

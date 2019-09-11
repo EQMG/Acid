@@ -11,7 +11,7 @@ Collider::Collider(const Transform &localTransform, const std::shared_ptr<GizmoT
 	m_localTransform{localTransform}
 {
 #if defined(ACID_VERBOSE)
-	if (gizmoType != nullptr)
+	if (gizmoType)
 	{
 		m_gizmo = Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType, localTransform));
 	}
@@ -25,7 +25,7 @@ Collider::~Collider()
 
 void Collider::Update()
 {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr && m_gizmo != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform && m_gizmo)
 	{
 		m_gizmo->SetTransform(*transform * m_localTransform);
 	}
@@ -37,7 +37,7 @@ void Collider::SetLocalTransform(const Transform &localTransform)
 
 	auto collisionObject = GetEntity()->GetComponent<CollisionObject>();
 
-	if (collisionObject != nullptr)
+	if (collisionObject)
 	{
 		collisionObject->SetChildTransform(this, m_localTransform);
 	}

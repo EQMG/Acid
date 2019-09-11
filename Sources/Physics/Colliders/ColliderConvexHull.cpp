@@ -25,7 +25,7 @@ void ColliderConvexHull::Start()
 {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
-	if (mesh != nullptr && mesh->GetModel() != nullptr)
+	if (mesh && mesh->GetModel())
 	{
 		Initialize(mesh->GetModel()->GetPointCloud());
 	}
@@ -36,12 +36,12 @@ void ColliderConvexHull::Update()
 	// TODO
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
-	if (mesh == nullptr || mesh->GetModel() != nullptr)
+	if (!mesh || mesh->GetModel())
 	{
 		return;
 	}
 
-	if (m_shape != nullptr && m_model == nullptr)
+	if (m_shape && !m_model)
 	{
 		if (mesh->GetModel()->GetPointCloud().size() / 3 == m_pointCount)
 		{

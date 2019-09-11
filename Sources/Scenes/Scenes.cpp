@@ -8,7 +8,7 @@ Scenes::Scenes()
 
 void Scenes::Update()
 {
-	if (m_scene == nullptr)
+	if (!m_scene)
 	{
 		return;
 	}
@@ -22,12 +22,12 @@ void Scenes::Update()
 	m_scene->Update();
 	m_scene->GetPhysics()->Update();
 
-	if (m_scene->GetStructure() != nullptr)
+	if (m_scene->GetStructure())
 	{
 		m_scene->GetStructure()->Update();
 	}
 
-	if (m_scene->GetCamera() != nullptr)
+	if (m_scene->GetCamera())
 	{
 		m_scene->GetCamera()->Update();
 	}

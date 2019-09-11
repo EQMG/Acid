@@ -19,7 +19,7 @@ void Terrain::Start()
 {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
-	if (mesh == nullptr)
+	if (!mesh)
 	{
 		std::cerr << "Terrain must be attached to a object with a mesh!\n";
 		return;
@@ -32,9 +32,9 @@ void Terrain::Start()
 
 	auto colliderHeightfield = GetEntity()->GetComponent<ColliderHeightfield>(true);
 
-	if (colliderHeightfield == nullptr)
+	if (!colliderHeightfield)
 	{
-		std::cerr << "Terrain does not contail a heightfield collider!\n";
+		std::cerr << "Terrain does not contain a heightfield collider!\n";
 		return;
 	}
 
@@ -83,7 +83,7 @@ std::vector<float> Terrain::GenerateHeightmap(uint32_t vertexCount)
 			auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 			float height;
 
-			if (transform != nullptr)
+			if (transform)
 			{
 				height = 16.0f * m_noise.GetValueFractal(transform->GetPosition().m_x + x, transform->GetPosition().m_z + z);
 			}

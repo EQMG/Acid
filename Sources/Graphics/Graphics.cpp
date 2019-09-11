@@ -38,7 +38,7 @@ Graphics::~Graphics()
 
 void Graphics::Update()
 {
-	if (m_renderer == nullptr || Window::Get()->IsIconified())
+	if (!m_renderer || Window::Get()->IsIconified())
 	{
 		return;
 	}

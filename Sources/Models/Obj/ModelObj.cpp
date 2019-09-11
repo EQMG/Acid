@@ -49,9 +49,7 @@ private:
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<ModelObj>(resource);
 	}

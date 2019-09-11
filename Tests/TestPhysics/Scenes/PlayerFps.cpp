@@ -39,7 +39,7 @@ void PlayerFps::Update()
 {
 	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 
-	if (character == nullptr || !character->IsShapeCreated())
+	if (!character || !character->IsShapeCreated())
 	{
 		return;
 	}
@@ -90,7 +90,7 @@ void PlayerFps::Update()
 
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 	
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
 	{
 		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
 	}

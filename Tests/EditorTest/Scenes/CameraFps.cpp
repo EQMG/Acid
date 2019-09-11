@@ -31,9 +31,9 @@ void CameraFps::Update()
 {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>(); scenePlayer != nullptr)
+	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>(); scenePlayer)
 	{
-		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>(); transformPlayer != nullptr)
+		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>(); transformPlayer)
 		{
 			m_velocity = (transformPlayer->GetPosition() - m_position) / delta;
 			m_position = transformPlayer->GetPosition() + VIEW_OFFSET;

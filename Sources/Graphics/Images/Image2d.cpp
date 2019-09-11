@@ -10,9 +10,7 @@ namespace acid
 {
 std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<Image2d>(resource);
 	}
@@ -172,7 +170,7 @@ Node &operator<<(Node &node, const Image2d &image)
 
 void Image2d::Load()
 {
-	if (!m_filename.empty() && m_loadPixels == nullptr)
+	if (!m_filename.empty() && !m_loadPixels)
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Time::Now();
@@ -195,13 +193,13 @@ void Image2d::Load()
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
-	if (m_loadPixels != nullptr || m_mipmap)
+	if (m_loadPixels || m_mipmap)
 	{
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
-	if (m_loadPixels != nullptr)
+	if (m_loadPixels)
 	{
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
 		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
@@ -220,7 +218,7 @@ void Image2d::Load()
 		//m_image.CreateMipmaps();
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 1);
 	}
-	else if (m_loadPixels != nullptr)
+	else if (m_loadPixels)
 	{
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);

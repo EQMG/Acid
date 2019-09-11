@@ -6,7 +6,7 @@ namespace acid
 {
 void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices)
 {
-	if (m_currentAnimation == nullptr)
+	if (!m_currentAnimation)
 	{
 		return;
 	}

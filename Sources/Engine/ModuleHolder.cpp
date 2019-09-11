@@ -28,7 +28,7 @@ void ModuleHolder::UpdateStage(const Module::Stage &stage)
 
 		auto &module{m_modules[typeId]};
 
-		if (module != nullptr)
+		if (module)
 		{
 			module->Update();
 		}

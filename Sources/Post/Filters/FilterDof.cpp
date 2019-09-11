@@ -32,7 +32,7 @@ void FilterDof::Render(const CommandBuffer &commandBuffer)
 	// Updates descriptors.
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	m_descriptorSet.Push("samplerDepth", Graphics::Get()->GetAttachment("depth"));
-	m_descriptorSet.Push("samplerBlured", m_pipelineBlur == nullptr ? nullptr : m_pipelineBlur->GetOutput());
+	m_descriptorSet.Push("samplerBlured", m_pipelineBlur ? m_pipelineBlur->GetOutput() : nullptr);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
 	if (!m_descriptorSet.Update(m_pipeline))

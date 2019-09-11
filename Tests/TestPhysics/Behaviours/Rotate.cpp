@@ -23,7 +23,7 @@ void Rotate::Update()
 	m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform == nullptr)
+	if (!transform)
 	{
 		return;
 	}

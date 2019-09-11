@@ -39,7 +39,7 @@ void Particle::Update()
 		m_transparency -= delta / FADE_TIME;
 	}
 
-	if (!IsAlive() || Scenes::Get()->GetCamera() == nullptr)
+	if (!IsAlive() || !Scenes::Get()->GetCamera())
 	{
 		return;
 	}
@@ -49,7 +49,7 @@ void Particle::Update()
 
 	auto lifeFactor = m_stageCycles * m_elapsedTime / m_lifeLength;
 
-	if (m_particleType->GetImage() == nullptr)
+	if (!m_particleType->GetImage())
 	{
 		return;
 	}

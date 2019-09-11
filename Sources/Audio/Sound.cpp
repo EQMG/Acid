@@ -50,7 +50,7 @@ void Sound::Start()
 
 void Sound::Update()
 {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>())
 	{
 		SetPosition(transform->GetPosition());
 	}

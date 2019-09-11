@@ -127,7 +127,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 	components = 4;
 	format = VK_FORMAT_R8G8B8A8_UNORM;
 
-	if (pixels == nullptr)
+	if (!pixels)
 	{
 		std::cerr << "Unable to load Image: " << filename << '\n';
 	}

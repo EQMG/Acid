@@ -95,7 +95,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 	}
 
-	if (oldSwapchain && &oldSwapchain.value() != nullptr)
+	if (oldSwapchain && &oldSwapchain.value())
 	{
 		swapchainCreateInfo.oldSwapchain = oldSwapchain.value()->m_swapchain;
 	}

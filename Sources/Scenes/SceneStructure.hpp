@@ -102,7 +102,7 @@ public:
 		{
 			for (const auto &component : (*it)->GetComponents<T>())
 			{
-				if (component != nullptr && (component->IsEnabled() || allowDisabled))
+				if (component && (component->IsEnabled() || allowDisabled))
 				{
 					components.emplace_back(component);
 				}
@@ -125,7 +125,7 @@ public:
 		{
 			auto component = (*it)->GetComponent<T>();
 
-			if (component != nullptr && (component->IsEnabled() || allowDisabled))
+			if (component && (component->IsEnabled() || allowDisabled))
 			{
 				return component;
 			}

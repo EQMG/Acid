@@ -49,7 +49,7 @@ public:
 
 	void releaseInclude(IncludeResult *result) override
 	{
-		if (result != nullptr)
+		if (result)
 		{
 			delete[] static_cast<char *>(result->userData);
 			delete result;
@@ -728,7 +728,7 @@ int32_t Shader::ComputeSize(const glslang::TType *ttype)
 		components = ttype->getVectorSize();
 	}
 
-	if (ttype->getArraySizes() != nullptr)
+	if (ttype->getArraySizes())
 	{
 		int32_t arraySize{1};
 

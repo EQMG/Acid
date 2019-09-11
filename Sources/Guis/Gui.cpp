@@ -17,7 +17,7 @@ Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d
 
 void Gui::UpdateObject()
 {
-	auto numberOfRows = m_image != nullptr ? m_numberOfRows : 1;
+	auto numberOfRows = m_image ? m_numberOfRows : 1;
 	auto column = m_selectedRow % numberOfRows;
 	auto row = m_selectedRow / numberOfRows;
 	m_atlasOffset = Vector2f{static_cast<float>(column), static_cast<float>(row)} / static_cast<float>(numberOfRows);
@@ -40,7 +40,7 @@ void Gui::UpdateObject()
 bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	// Gets if this should be rendered.
-	if (m_image == nullptr || !IsEnabled())
+	if (!m_image || !IsEnabled())
 	{
 		return false;
 	}

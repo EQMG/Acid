@@ -21,7 +21,7 @@ public:
 	{
 		const auto it = m_modules.find(GetModuleTypeId<T>());
 
-		return it != m_modules.end() && it->second != nullptr;
+		return it != m_modules.end() && it->second;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public:
 
 		auto it = m_modules.find(typeId);
 
-		if (it == m_modules.end() || it->second == nullptr)
+		if (it == m_modules.end() || !it->second)
 		{
 			throw std::runtime_error{"Module Holder does not have requested Module"};
 		}

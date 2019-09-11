@@ -23,7 +23,7 @@ void SkyboxCycle::Update()
 {
 	auto materialSkybox = GetEntity()->GetComponent<MaterialSkybox>();
 
-	if (materialSkybox == nullptr)
+	if (!materialSkybox)
 	{
 		return;
 	}
@@ -43,7 +43,7 @@ void SkyboxCycle::Update()
 
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform == nullptr)
+	if (!transform)
 	{
 		return;
 	}

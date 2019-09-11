@@ -24,7 +24,7 @@ KinematicCharacter::~KinematicCharacter()
 {
 	auto physics = Scenes::Get()->GetPhysics();
 
-	if (physics != nullptr)
+	if (physics)
 	{
 		// TODO: Are these being deleted?
 		physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
@@ -34,18 +34,18 @@ KinematicCharacter::~KinematicCharacter()
 
 void KinematicCharacter::Start()
 {
-	if (m_ghostObject != nullptr)
+	if (m_ghostObject)
 	{
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 	}
 
-	if (m_controller != nullptr)
+	if (m_controller)
 	{
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
 	}
 
 	CreateShape(true);
-	assert((m_shape != nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
+	assert((m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
 
@@ -100,7 +100,7 @@ bool KinematicCharacter::InFrustum(const Frustum &frustum)
 	btVector3 min;
 	btVector3 max;
 
-	if (m_body != nullptr && m_shape != nullptr)
+	if (m_body && m_shape)
 	{
 		m_shape->getAabb(Collider::Convert(*GetEntity()->GetComponent<Transform>()), min, max);
 	}

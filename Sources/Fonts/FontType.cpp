@@ -12,9 +12,7 @@ static const uint32_t MAX_VISIBLE_GLYPHS{4096};
 
 std::shared_ptr<FontType> FontType::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<FontType>(resource);
 	}

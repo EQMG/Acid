@@ -8,9 +8,7 @@ namespace acid
 {
 std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<ModelSphere>(resource);
 	}

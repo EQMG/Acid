@@ -26,7 +26,7 @@ VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const Vk
 {
 	auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
 
-	if (func != nullptr)
+	if (func)
 	{
 		return func(instance, pCreateInfo, pAllocator, pCallback);
 	}
@@ -38,7 +38,7 @@ void Instance::FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugRepo
 {
 	auto func = reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
 
-	if (func != nullptr)
+	if (func)
 	{
 		func(instance, callback, pAllocator);
 	}
@@ -49,7 +49,7 @@ void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer comma
 {
 	auto func = reinterpret_cast<PFN_vkCmdPushDescriptorSetKHR>(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSetKHR"));
 
-	if (func != nullptr)
+	if (func)
 	{
 		func(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
 	}

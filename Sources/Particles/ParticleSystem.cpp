@@ -112,7 +112,7 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 {
 	auto spawnPos = emitter.GeneratePosition();
 
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
 	{
 		spawnPos += transform->GetPosition();
 	}

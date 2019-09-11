@@ -21,14 +21,14 @@ Rigidbody::~Rigidbody()
 {
 	auto body = btRigidBody::upcast(m_body);
 
-	if (body != nullptr && body->getMotionState() != nullptr)
+	if (body && body->getMotionState())
 	{
 		delete body->getMotionState();
 	}
 
 	auto physics = Scenes::Get()->GetPhysics();
 
-	if (physics != nullptr)
+	if (physics)
 	{
 		physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
@@ -36,13 +36,13 @@ Rigidbody::~Rigidbody()
 
 void Rigidbody::Start()
 {
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
 	CreateShape();
-	assert((m_shape == nullptr || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
+	assert((!m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
 
@@ -114,7 +114,7 @@ bool Rigidbody::InFrustum(const Frustum &frustum)
 	btVector3 min;
 	btVector3 max;
 
-	if (m_body != nullptr && m_shape != nullptr)
+	if (m_body && m_shape)
 	{
 		m_rigidBody->getAabb(min, max);
 	}
@@ -124,7 +124,7 @@ bool Rigidbody::InFrustum(const Frustum &frustum)
 
 void Rigidbody::ClearForces()
 {
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->clearForces();
 	}
@@ -140,7 +140,7 @@ void Rigidbody::SetGravity(const Vector3f &gravity)
 {
 	m_gravity = gravity;
 
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->setGravity(Collider::Convert(gravity));
 	}
@@ -150,7 +150,7 @@ void Rigidbody::SetLinearFactor(const Vector3f &linearFactor)
 {
 	m_linearFactor = linearFactor;
 
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 	}
@@ -160,7 +160,7 @@ void Rigidbody::SetAngularFactor(const Vector3f &angularFactor)
 {
 	m_angularFactor = angularFactor;
 
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 	}
@@ -170,7 +170,7 @@ void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity)
 {
 	m_linearVelocity = linearVelocity;
 
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
 	}
@@ -180,7 +180,7 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
 {
 	m_angularVelocity = angularVelocity;
 
-	if (m_rigidBody != nullptr)
+	if (m_rigidBody)
 	{
 		m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
@@ -210,7 +210,7 @@ Node &operator<<(Node &node, const Rigidbody &rigidbody)
 
 void Rigidbody::RecalculateMass()
 {
-	if (m_rigidBody == nullptr)
+	if (!m_rigidBody)
 	{
 		return;
 	}
@@ -221,7 +221,7 @@ void Rigidbody::RecalculateMass()
 
 	auto shape = GetEntity()->GetComponent<Collider>();
 
-	if (shape != nullptr && isDynamic)
+	if (shape && isDynamic)
 	{
 		shape->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
 	}

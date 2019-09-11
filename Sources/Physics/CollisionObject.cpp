@@ -31,7 +31,7 @@ void CollisionObject::SetChildTransform(Collider *child, const Transform &transf
 {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (compoundShape == nullptr)
+	if (!compoundShape)
 	{
 		return;
 	}
@@ -52,7 +52,7 @@ void CollisionObject::AddChild(Collider *child)
 {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (compoundShape == nullptr)
+	if (!compoundShape)
 	{
 		return;
 	}
@@ -65,7 +65,7 @@ void CollisionObject::RemoveChild(Collider *child)
 {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (compoundShape == nullptr)
+	if (!compoundShape)
 	{
 		return;
 	}
@@ -112,7 +112,7 @@ void CollisionObject::CreateShape(const bool &forceSingle)
 		return;
 	}
 
-	if (dynamic_cast<btCompoundShape *>(m_shape.get()) == nullptr)
+	if (!dynamic_cast<btCompoundShape *>(m_shape.get()))
 	{
 		m_shape.release();
 	}

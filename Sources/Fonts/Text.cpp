@@ -53,7 +53,7 @@ void Text::UpdateObject()
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
 {
 	// Gets if this should be rendered.
-	if (m_model == nullptr || m_fontType == nullptr || !IsEnabled())
+	if (!m_model || !m_fontType || !IsEnabled())
 	{
 		return false;
 	}
@@ -166,7 +166,7 @@ float Text::CalculateAntialiasSize() const
 
 bool Text::IsLoaded() const
 {
-	return !m_string.empty() && m_model != nullptr;
+	return !m_string.empty() && m_model;
 }
 
 void Text::LoadText()

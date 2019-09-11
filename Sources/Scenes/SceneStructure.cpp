@@ -113,7 +113,7 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range)
 
 		auto rigidbody = object->GetComponent<Rigidbody>();
 
-		if (rigidbody == nullptr || rigidbody->InFrustum(range))
+		if (!rigidbody || rigidbody->InFrustum(range))
 		{
 			entities.emplace_back(object.get());
 		}

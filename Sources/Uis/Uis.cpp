@@ -31,7 +31,7 @@ void Uis::Update()
 
 	if (lastCursorSelect != m_cursorSelect)
 	{
-		Mouse::Get()->SetCursor(m_cursorSelect != nullptr ? *m_cursorSelect->GetCursorHover() : CursorStandard::Arrow);
+		Mouse::Get()->SetCursor(m_cursorSelect ? *m_cursorSelect->GetCursorHover() : CursorStandard::Arrow);
 	}
 }
 

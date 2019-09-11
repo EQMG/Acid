@@ -9,9 +9,7 @@ namespace acid
 {
 std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<ImageCube>(resource);
 	}
@@ -149,7 +147,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 		auto resultSide = GetPixels(extent, mipLevel, i);
 		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
-		if (pixels == nullptr)
+		if (!pixels)
 		{
 			pixels = std::make_unique<uint8_t[]>(sizeSide * 6);
 			offset = pixels.get();
@@ -188,7 +186,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &fi
 		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
-		if (result == nullptr)
+		if (!result)
 		{
 			result = std::make_unique<uint8_t[]>(sizeSide * fileSides.size());
 			offset = result.get();
@@ -227,7 +225,7 @@ Node &operator<<(Node &node, const ImageCube &image)
 
 void ImageCube::Load()
 {
-	if (!m_filename.empty() && m_loadPixels == nullptr)
+	if (!m_filename.empty() && !m_loadPixels)
 	{
 #if defined(ACID_VERBOSE)
 		auto debugStart = Time::Now();
@@ -250,12 +248,12 @@ void ImageCube::Load()
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 
-	if (m_loadPixels != nullptr || m_mipmap)
+	if (m_loadPixels || m_mipmap)
 	{
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
 
-	if (m_loadPixels != nullptr)
+	if (m_loadPixels)
 	{
 		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
@@ -272,7 +270,7 @@ void ImageCube::Load()
 	{
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 6);
 	}
-	else if (m_loadPixels != nullptr)
+	else if (m_loadPixels)
 	{
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}

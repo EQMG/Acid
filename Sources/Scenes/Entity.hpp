@@ -52,7 +52,7 @@ public:
 		{
 			auto casted = dynamic_cast<T *>(component.get());
 
-			if (casted != nullptr)
+			if (casted)
 			{
 				if (allowDisabled && !casted->IsEnabled())
 				{
@@ -82,7 +82,7 @@ public:
 		{
 			auto casted = dynamic_cast<T *>(component.get());
 
-			if (casted != nullptr)
+			if (casted)
 			{
 				if (allowDisabled && !casted->IsEnabled())
 				{
@@ -142,7 +142,7 @@ public:
 		{
 			auto casted = dynamic_cast<T *>((*it).get());
 
-			if (casted != nullptr)
+			if (casted)
 			{
 				(*it)->SetEntity(nullptr);
 				m_components.erase(it);

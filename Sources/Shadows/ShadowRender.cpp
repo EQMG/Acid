@@ -23,7 +23,7 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform == nullptr)
+	if (!transform)
 	{
 		return false;
 	}
@@ -34,7 +34,7 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	// Gets required components.
 	auto mesh = GetEntity()->GetComponent<Mesh>();
 
-	if (mesh == nullptr || mesh->GetModel() == nullptr)
+	if (!mesh || !mesh->GetModel())
 	{
 		return false;
 	}

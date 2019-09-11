@@ -18,34 +18,28 @@ DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
 
 void DescriptorsHandler::Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize)
 {
-	if (m_shader == nullptr)
+	if (m_shader)
 	{
-		return;
+		uniformHandler.Update(m_shader->GetUniformBlock(descriptorName));
+		Push(descriptorName, uniformHandler.GetUniformBuffer(), offsetSize);
 	}
-
-	uniformHandler.Update(m_shader->GetUniformBlock(descriptorName));
-	Push(descriptorName, uniformHandler.GetUniformBuffer(), offsetSize);
 }
 
 void DescriptorsHandler::Push(const std::string &descriptorName, StorageHandler &storageHandler, const std::optional<OffsetSize> &offsetSize)
 {
-	if (m_shader == nullptr)
+	if (m_shader)
 	{
-		return;
+		storageHandler.Update(m_shader->GetUniformBlock(descriptorName));
+		Push(descriptorName, storageHandler.GetStorageBuffer(), offsetSize);
 	}
-
-	storageHandler.Update(m_shader->GetUniformBlock(descriptorName));
-	Push(descriptorName, storageHandler.GetStorageBuffer(), offsetSize);
 }
 
 void DescriptorsHandler::Push(const std::string &descriptorName, PushHandler &pushHandler, const std::optional<OffsetSize> &offsetSize)
 {
-	if (m_shader == nullptr)
+	if (m_shader)
 	{
-		return;
+		pushHandler.Update(m_shader->GetUniformBlock(descriptorName));
 	}
-
-	pushHandler.Update(m_shader->GetUniformBlock(descriptorName));
 }
 
 bool DescriptorsHandler::Update(const Pipeline &pipeline)

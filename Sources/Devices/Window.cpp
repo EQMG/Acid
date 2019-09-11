@@ -142,7 +142,7 @@ Window::Window() :
 	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
 
 	// Gets any window errors.
-	if (m_window == nullptr)
+	if (!m_window)
 	{
 		glfwTerminate();
 		throw std::runtime_error{"GLFW failed to create the window"};
@@ -230,7 +230,7 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 		VkFormat format;
 		auto data = Image::LoadPixels(filename, extent, components, format);
 
-		if (data == nullptr)
+		if (!data)
 		{
 			continue;
 		}
@@ -271,7 +271,7 @@ void Window::SetFullscreen(const bool &fullscreen, Monitor *monitor)
 {
 	m_fullscreen = fullscreen;
 
-	auto selected = monitor != nullptr ? monitor : m_monitors[0].get();
+	auto selected = monitor ? monitor : m_monitors[0].get();
 	auto videoMode = selected->GetVideoMode();
 
 	if (fullscreen)

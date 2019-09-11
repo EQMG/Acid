@@ -32,7 +32,7 @@ btCollisionShape *ColliderHeightfield::GetCollisionShape() const
 void ColliderHeightfield::Initialize(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight, float maxHeight,
 	const bool &flipQuadEdges)
 {
-	if (heightfieldData == nullptr)
+	if (!heightfieldData)
 	{
 		return;
 	}

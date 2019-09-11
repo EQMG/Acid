@@ -31,7 +31,7 @@ void NameTag::Update()
 	// Calculates the tag position, this component should be added after a rigidbody body.
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform == nullptr)
+	if (!transform)
 	{
 		return;
 	}

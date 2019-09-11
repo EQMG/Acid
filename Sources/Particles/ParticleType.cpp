@@ -14,9 +14,7 @@ static const float FRUSTUM_BUFFER{1.4f};
 
 std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<ParticleType>(resource);
 	}

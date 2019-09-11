@@ -89,7 +89,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain)
 		m_depthStencil = std::make_unique<ImageDepth>(m_renderArea.GetExtent(), m_depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 	}
 
-	if (m_renderpass == nullptr)
+	if (!m_renderpass)
 	{
 		m_renderpass = std::make_unique<Renderpass>(*this, m_depthStencil->GetFormat(), surface->GetFormat().format, msaaSamples);
 	}

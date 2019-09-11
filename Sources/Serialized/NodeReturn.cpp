@@ -20,7 +20,7 @@ NodeReturn::NodeReturn(NodeReturn *parent, std::variant<std::string, int32_t> ke
 
 bool NodeReturn::has_value() const noexcept
 {
-	return m_value != nullptr;
+	return m_value;
 }
 
 Node *NodeReturn::get()

@@ -36,7 +36,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	Graphics::CheckVk(vkAllocateMemory(*logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 	// If a pointer to the buffer data has been passed, map the buffer and copy over the data.
-	if (data != nullptr)
+	if (data)
 	{
 		void *mapped;
 		MapMemory(&mapped);

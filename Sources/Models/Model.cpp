@@ -21,7 +21,7 @@ Model::Model()
 
 bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const
 {
-	if (m_vertexBuffer != nullptr && m_indexBuffer != nullptr)
+	if (m_vertexBuffer && m_indexBuffer)
 	{
 		VkBuffer vertexBuffers[]{m_vertexBuffer->GetBuffer()};
 		VkDeviceSize offsets[]{0};
@@ -29,7 +29,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) co
 		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetBuffer(), 0, GetIndexType());
 		vkCmdDrawIndexed(commandBuffer, m_indexCount, instances, 0, 0, 0);
 	}
-	else if (m_vertexBuffer != nullptr && m_indexBuffer == nullptr)
+	else if (m_vertexBuffer && !m_indexBuffer)
 	{
 		VkBuffer vertexBuffers[]{m_vertexBuffer->GetBuffer()};
 		VkDeviceSize offsets[]{0};
@@ -97,7 +97,7 @@ void Model::SetIndices(const std::vector<uint32_t> &indices)
 
 std::vector<float> Model::GetPointCloud() const
 {
-	if (m_vertexBuffer == nullptr)
+	if (!m_vertexBuffer)
 	{
 		return {};
 	}

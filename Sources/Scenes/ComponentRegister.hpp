@@ -45,7 +45,7 @@ public:
 		};
 		componentCreate.m_isSame = [](Component *component) -> bool
 		{
-			return dynamic_cast<T *>(component) != nullptr; // TODO: Ignore type inheritance
+			return dynamic_cast<T *>(component); // TODO: Ignore type inheritance
 		};
 
 		m_components.emplace(name, componentCreate);

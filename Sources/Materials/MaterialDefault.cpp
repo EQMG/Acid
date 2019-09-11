@@ -26,13 +26,13 @@ void MaterialDefault::Start()
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
-	if (mesh == nullptr) // && meshAnimated == nullptr
+	if (!mesh) // && !meshAnimated
 	{
 		std::cerr << "Cannot have a material attached to a object without a mesh!\n";
 		return;
 	}
 
-	m_animated = false; //  meshAnimated != nullptr;
+	m_animated = false; //  meshAnimated;
 	auto vertexInput = Mesh::GetVertexInput(); // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() ;
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
@@ -44,7 +44,7 @@ void MaterialDefault::Update()
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform != nullptr)
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
 	{
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 	}

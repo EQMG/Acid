@@ -80,7 +80,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	VkFormat format;
 	auto data = Image::LoadPixels(filename, extent, components, format);
 
-	if (data == nullptr)
+	if (!data)
 	{
 		return;
 	}

@@ -26,7 +26,7 @@ void SubrenderFonts::Render(const CommandBuffer &commandBuffer)
 
 		auto object = dynamic_cast<Text *>(screenObject);
 
-		if (object != nullptr)
+		if (object)
 		{
 			object->CmdRender(commandBuffer, m_pipeline);
 		}

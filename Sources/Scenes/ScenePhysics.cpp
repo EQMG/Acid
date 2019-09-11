@@ -69,7 +69,7 @@ Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const
 	m_dynamicsWorld->getCollisionWorld()->rayTest(startBt, endBt, result);
 
 	return Raycast(result.hasHit(), Collider::Convert(result.m_hitPointWorld),
-		result.m_collisionObject != nullptr ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
+		result.m_collisionObject ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 }
 
 void ScenePhysics::SetGravity(const Vector3f &gravity)

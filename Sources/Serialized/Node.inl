@@ -125,7 +125,7 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> opera
 template<typename T>
 std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(Node &node, const T &object)
 {
-	if (ConstExpr::AsPtr(object) == nullptr)
+	if (!ConstExpr::AsPtr(object))
 	{
 		return node << nullptr;
 	}
@@ -145,7 +145,7 @@ const Node &operator>>(const Node &node, std::unique_ptr<T> &object)
 template<typename T>
 Node &operator<<(Node &node, const std::unique_ptr<T> &object)
 {
-	if (object == nullptr)
+	if (!object)
 	{
 		return node << nullptr;
 	}
@@ -174,7 +174,7 @@ const Node &operator>>(const Node &node, std::shared_ptr<T> &object)
 template<typename T>
 Node &operator<<(Node &node, const std::shared_ptr<T> &object)
 {
-	if (object == nullptr)
+	if (!object)
 	{
 		return node << nullptr;
 	}

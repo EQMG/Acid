@@ -12,9 +12,7 @@ namespace acid
 {
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Node &node)
 {
-	auto resource = Resources::Get()->Find(node);
-
-	if (resource != nullptr)
+	if (auto resource = Resources::Get()->Find(node))
 	{
 		return std::dynamic_pointer_cast<EntityPrefab>(resource);
 	}
@@ -65,7 +63,7 @@ void EntityPrefab::Load()
 		m_file = std::make_unique<File>(m_filename, std::make_unique<Xml>("EntityDefinition"));
 	}*/
 
-	if (m_file != nullptr)
+	if (m_file)
 	{
 		m_file->Load();
 	}
@@ -85,15 +83,11 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 			continue;
 		}
 
-		auto component = Scenes::Get()->GetComponentRegister().Create(propertyName);
-
-		if (component == nullptr)
+		if (auto component = Scenes::Get()->GetComponentRegister().Create(propertyName))
 		{
-			continue;
+			Scenes::Get()->GetComponentRegister().Decode(propertyName, property, component);
+			entity.AddComponent(component);
 		}
-
-		Scenes::Get()->GetComponentRegister().Decode(propertyName, property, component);
-		entity.AddComponent(component);
 	}
 
 	return entityPrefab;

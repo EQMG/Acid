@@ -63,7 +63,7 @@ int32_t Engine::Run()
 {
 	while (m_running)
 	{
-		if (m_app != nullptr)
+		if (m_app)
 		{
 			m_app->Update();
 		}
