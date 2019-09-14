@@ -143,8 +143,8 @@ int main(int argc, char **argv)
 
 		json["values"] = std::vector{10, 11, -1, 2};
 
-		std::cout << json.Write(Node::Format::Minified) << '\n';
-		//std::cout << Xml{"source", &json}.Write(Node::Format::Minified) << '\n';
+		Log::Out(json.Write(Node::Format::Minified), '\n');
+		//Log::Out(Xml{"source", &json}.Write(Node::Format::Minified), '\n');
 	}
 
 	test::Example1 example1;

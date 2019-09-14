@@ -34,7 +34,7 @@ MainApp::MainApp() :
 	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
-	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
+	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)

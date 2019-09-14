@@ -5,6 +5,8 @@
 #else
 #include <netinet/in.h>
 #endif
+
+#include "Engine/Log.hpp"
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
 
@@ -55,7 +57,7 @@ Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address)
 
 	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
 	{
-		std::cerr << "Failed to bind socket to port :" << port << '\n';
+		Log::Error("Failed to bind socket to port :", port, '\n');
 		return Status::Error;
 	}
 
@@ -76,7 +78,7 @@ Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddre
 	// Make sure that all the data will fit in one datagram.
 	if (size > MAX_DATAGRAM_SIZE)
 	{
-		std::cerr << "Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MaxDatagramSize)\n";
+		Log::Error("Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MaxDatagramSize)\n");
 		return Status::Error;
 	}
 
@@ -105,7 +107,7 @@ Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	// Check the destination buffer.
 	if (!data)
 	{
-		std::cerr << "Cannot receive data from the network (the destination buffer is invalid)\n";
+		Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
 		return Status::Error;
 	}
 

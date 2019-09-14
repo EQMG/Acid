@@ -140,7 +140,7 @@ void ModelObj::Load()
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Model OBJ " << m_filename << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
+	Log::Out("Model OBJ ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
 	Initialize(vertices, indices);

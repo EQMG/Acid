@@ -32,6 +32,7 @@ set(_temp_acid_headers
 		Emitters/EmitterSphere.hpp
 		Engine/App.hpp
 		Engine/Engine.hpp
+		Engine/Log.hpp
 		Engine/Module.hpp
 		Engine/ModuleHolder.hpp
 		Files/File.hpp
@@ -262,6 +263,7 @@ set(_temp_acid_sources
 		Emitters/EmitterPoint.cpp
 		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
+		Engine/Log.cpp
 		Engine/ModuleHolder.cpp
 		Files/File.cpp
 		Files/Files.cpp

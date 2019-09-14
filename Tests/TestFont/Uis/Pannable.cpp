@@ -33,7 +33,7 @@ Pannable::Pannable(UiObject *parent) :
 			GetTransform().SetPosition({0.5f, 0.5f});
 		}
 
-		std::cout << "Button Reset: " << static_cast<uint32_t>(action) << '\n'; // TODO: Enum stream operators.
+		Log::Out("Button Reset: ", static_cast<uint32_t>(action), '\n'); // TODO: Enum stream operators.
 	});
 
 	m_settings.GetTransform().SetDepth(-4.0f);

@@ -235,7 +235,7 @@ void Files::AddSearchPath(const std::string &path)
 
 	if (PHYSFS_mount(path.c_str(), nullptr, true) == 0)
 	{
-		std::cerr << "Failed to mount path " << path << ", " << PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) << '\n';
+		Log::Error("Failed to mount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		return;
 	}
 
@@ -253,7 +253,7 @@ void Files::RemoveSearchPath(const std::string &path)
 
 	if (PHYSFS_unmount(path.c_str()) == 0)
 	{
-		std::cerr << "Failed to unmount path " << path << ", " << PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) << '\n';
+		Log::Error("Failed to unmount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		return;
 	}
 
@@ -290,7 +290,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 	{
 		if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
 		{
-			std::cerr << "Failed to open file " << path << ", " << PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) << '\n';
+			Log::Error("Failed to open file ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 			return std::nullopt;
 		}
 
@@ -306,7 +306,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 
 	if (PHYSFS_close(fsFile) == 0)
 	{
-		std::cerr << "Failed to close file " << path << ", " << PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()) << '\n';
+		Log::Error("Failed to close file ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 	}
 
 	return std::string(data.begin(), data.end());

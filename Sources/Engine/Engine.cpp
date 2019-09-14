@@ -31,11 +31,11 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	m_elapsedRender{-1s}
 {
 	INSTANCE = this;
-	//Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.log"));
+	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
-	std::cout << "Version: " << ACID_VERSION << '\n' <<
-		"Git: " << ACID_COMPILED_COMMIT_HASH << " on " << ACID_COMPILED_BRANCH << '\n' <<
-		"Compiled on: " << ACID_COMPILED_SYSTEM << " from: " << ACID_COMPILED_GENERATOR << " with: " << ACID_COMPILED_COMPILER << "\n\n";
+	Log::Out("Version: ", ACID_VERSION, '\n');
+	Log::Out("Git: ", ACID_COMPILED_COMMIT_HASH, " on ", ACID_COMPILED_BRANCH, '\n');
+	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 
 	// TODO: Maybe move each module into a Singleton???
 	if (!emptyRegister)

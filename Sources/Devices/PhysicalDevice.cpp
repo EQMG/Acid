@@ -29,7 +29,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	m_msaaSamples = GetMaxUsableSampleCount();
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Selected Physical Device: " << m_properties.deviceID << " " << std::quoted(m_properties.deviceName) << '\n';
+	Log::Out("Selected Physical Device: ", m_properties.deviceID, " ", std::quoted(m_properties.deviceName), '\n');
 #endif
 }
 
@@ -130,50 +130,50 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 	switch (static_cast<int32_t>(physicalDeviceProperties.deviceType))
 	{
 	case 1:
-		std::cout << "Integrated";
+		Log::Out("Integrated");
 		break;
 	case 2:
-		std::cout << "Discrete";
+		Log::Out("Discrete");
 		break;
 	case 3:
-		std::cout << "Virtual";
+		Log::Out("Virtual");
 		break;
 	case 4:
-		std::cout << "CPU";
+		Log::Out("CPU");
 		break;
 	default:
-		std::cout << "Other " << physicalDeviceProperties.deviceType;
+		Log::Out("Other ",  physicalDeviceProperties.deviceType);
 	}
 
-	std::cout << " Physical Device: " << physicalDeviceProperties.deviceID;
+	Log::Out(" Physical Device: ", physicalDeviceProperties.deviceID);
 
 	switch (physicalDeviceProperties.vendorID)
 	{
 	case 0x8086:
-		std::cout << " \"Intel\"";
+		Log::Out(" \"Intel\"");
 		break;
 	case 0x10DE:
-		std::cout << " \"Nvidia\"";
+		Log::Out(" \"Nvidia\"");
 		break;
 	case 0x1002:
-		std::cout << " \"AMD\"";
+		Log::Out(" \"AMD\"");
 		break;
 	default:
-		std::cout << " \"" << physicalDeviceProperties.vendorID << '\"';
+		Log::Out(" \"", physicalDeviceProperties.vendorID, '\"');
 	}
 
-	std::cout << " " << std::quoted(physicalDeviceProperties.deviceName) << '\n';
+	Log::Out(" ", std::quoted(physicalDeviceProperties.deviceName), '\n');
 
 	uint32_t supportedVersion[3] = {VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)};
-	std::cout << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << '\n';
-	std::cout << "Extensions: ";
+	Log::Out("API Version: ", supportedVersion[0], ".", supportedVersion[1], ".", supportedVersion[2], '\n');
+	Log::Out("Extensions: ");
 
 	for (const auto &extension : extensionProperties)
 	{
-		std::cout << extension.extensionName << ", ";
+		Log::Out(extension.extensionName, ", ");
 	}
 
-	std::cout << "\n\n";
+	Log::Out("\n\n");
 }
 }

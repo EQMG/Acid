@@ -19,11 +19,11 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 	switch (operation)
 	{
 	case CR_LOAD:
-		std::cout << "[Guest] Operation load: " << ctx->version << '\n';
+		Log::Out("[Guest] Operation load: ", ctx->version, '\n');
 		Engine::Get()->SetApp(std::make_unique<test::MainApp>());
 		return 0;
 	case CR_UNLOAD:
-		std::cout << "[Guest] Operation unload: " << ctx->version << '\n';
+		Log::Out("[Guest] Operation unload: ", ctx->version, '\n');
 		Engine::Get()->SetApp(nullptr);
 		return 0;
 	default:
@@ -57,10 +57,10 @@ MainApp::MainApp() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)
 {
-	std::cout << "[Game] Constructor\n";
+	Log::Out("[Game] Constructor\n");
 
 	// Registers file search paths.
-	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
+	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
@@ -106,7 +106,7 @@ MainApp::MainApp() :
 
 MainApp::~MainApp()
 {
-	std::cout << "[Game] Destructor\n";
+	Log::Out("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
 
 	// Deregisters components.

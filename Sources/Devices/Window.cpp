@@ -9,7 +9,7 @@ namespace acid
 void CallbackError(int32_t error, const char *description)
 {
 	Window::CheckGlfw(error);
-	std::cerr << "GLFW error: " << description << ", " << error << '\n';
+	Log::Error("GLFW error: ", description, ", ", error, '\n');
 }
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
@@ -358,7 +358,7 @@ void Window::CheckGlfw(int32_t result)
 	}
 
 	auto failure = StringifyResultGlfw(result);
-	std::cerr << "GLFW error: " << failure << ", " << result << '\n';
+	Log::Error("GLFW error: ", failure, ", ", result, '\n');
 	throw std::runtime_error{"GLFW error: " + failure};
 }
 

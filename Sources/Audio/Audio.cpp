@@ -24,14 +24,14 @@ Audio::Audio() :
 
 	while (device && *device != '\0' && next && *next != '\0')
 	{
-		std::cout << "Audio Device: " << device << '\n';
+		Log::Out("Audio Device: ", device, '\n');
 		auto len = std::strlen(device);
 		device += len + 1;
 		next += len + 2;
 	}
 
 	auto deviceName = alcGetString(m_device, ALC_DEVICE_SPECIFIER);
-	std::cout << "Selected Audio Device: " << std::quoted(deviceName) << '\n';
+	Log::Out("Selected Audio Device: ", std::quoted(deviceName), '\n');
 #endif
 }
 
@@ -100,7 +100,7 @@ void Audio::CheckAl(int32_t result)
 
 	auto failure = StringifyResultAl(result);
 
-	std::cerr << "OpenAL error: " << failure << ", " << result << '\n';
+	Log::Error("OpenAL error: ", failure, ", ", result, '\n');
 	throw std::runtime_error{"OpenAL Error: " + failure};
 }
 

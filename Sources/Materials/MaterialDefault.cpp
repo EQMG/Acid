@@ -28,7 +28,7 @@ void MaterialDefault::Start()
 
 	if (!mesh) // && !meshAnimated
 	{
-		std::cerr << "Cannot have a material attached to a object without a mesh!\n";
+		Log::Error("Cannot have a material attached to a object without a mesh!\n");
 		return;
 	}
 

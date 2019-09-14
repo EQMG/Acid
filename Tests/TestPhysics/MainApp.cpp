@@ -52,26 +52,26 @@ MainApp::MainApp() :
 		}
 	}*/
 
-	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
+	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads configs from a config manager.
 	m_configs = std::make_unique<ConfigManager>();
 
-	std::cout << "Current DateTime: " << Time::GetDateTime() << '\n';
+	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 
 	Timers::Get()->Once(0.333s, []()
 	{
-		std::cout << "Timer Hello World!\n";
+		Log::Out("Timer Hello World!\n");
 	});
 	Timers::Get()->Every(4s, []()
 	{
-		std::cout << "Timer Every Tick: " << Engine::Get()->GetFps() << " fps\n";
+		Log::Out("Timer Every Tick: ", Engine::Get()->GetFps(), " fps\n");
 	});
 	Timers::Get()->Repeat(2s, 3, []()
 	{
 		static uint32_t i = 0;
-		std::cout << "Timer Repeat Tick #" << i << '\n';
+		Log::Out("Timer Repeat Tick #", i, '\n');
 		i++;
 	});
 

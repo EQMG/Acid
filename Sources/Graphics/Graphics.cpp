@@ -214,7 +214,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 	Image::WritePixels(filename, pixels.get(), extent);
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Screenshot " << filename << " saved in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
+	Log::Out("Screenshot ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
@@ -319,7 +319,7 @@ void Graphics::RecreatePass(RenderStage &renderStage)
 	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
 	{
 #if defined(ACID_VERBOSE)
-		std::cout << "Resizing swapchain from {" << m_swapchain->GetExtent().width << ", " << m_swapchain->GetExtent().height << "} to {" << displayExtent.width << ", " << displayExtent.height << "}\n";
+		Log::Out("Resizing swapchain from {", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, "} to {", displayExtent.width, ", ", displayExtent.height, "}\n");
 #endif
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 	}

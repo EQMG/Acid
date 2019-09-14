@@ -6,6 +6,8 @@
 #include <sys/select.h>
 #include <netinet/in.h>
 #endif
+
+#include "Engine/Log.hpp"
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
 
@@ -187,7 +189,7 @@ Socket::Status TcpSocket::Send(const void *data, std::size_t size)
 {
 	if (!IsBlocking())
 	{
-		std::cerr << "Warning: Partial sends might not be handled properly.\n";
+		Log::Warning("Partial sends might not be handled properly.\n");
 	}
 
 	std::size_t sent;
@@ -199,7 +201,7 @@ Socket::Status TcpSocket::Send(const void *data, std::size_t size, std::size_t &
 	// Check the parameters.
 	if (!data || (size == 0))
 	{
-		std::cerr << "Cannot send data over the network (no data to send)\n";
+		Log::Error("Cannot send data over the network (no data to send)\n");
 		return Status::Error;
 	}
 
@@ -236,7 +238,7 @@ Socket::Status TcpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	// Check the destination buffer.
 	if (!data)
 	{
-		std::cerr << "Cannot receive data from the network (the destination buffer is invalid)\n";
+		Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
 		return Status::Error;
 	}
 

@@ -27,7 +27,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 	{
 		if (button == MouseButton::Left)
 		{
-			std::cout << "Button #1 pressed!\n";
+			Log::Out("Button #1 pressed!\n");
 		}
 	});
 

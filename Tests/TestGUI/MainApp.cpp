@@ -35,7 +35,7 @@ MainApp::MainApp() :
 	m_buttonExit{Key::Delete}
 {
 	// Registers file search paths.
-	std::cout << "Working Directory: " << std::filesystem::current_path() << '\n';
+	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.
@@ -44,13 +44,13 @@ MainApp::MainApp() :
 		switch (status)
 		{
 		case FileWatcher::Status::Created:
-			std::cout << "Created " << path << '\n';
+			Log::Out("Created ", path, '\n');
 			break;
 		case FileWatcher::Status::Modified:
-			std::cout << "Modified " << path << '\n';
+			Log::Out("Modified ", path, '\n');
 			break;
 		case FileWatcher::Status::Erased:
-			std::cout << "Erased " << path << '\n';
+			Log::Out("Erased ", path, '\n');
 			break;
 		}
 	});

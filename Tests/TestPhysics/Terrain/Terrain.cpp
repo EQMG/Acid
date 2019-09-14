@@ -21,7 +21,7 @@ void Terrain::Start()
 
 	if (!mesh)
 	{
-		std::cerr << "Terrain must be attached to a object with a mesh!\n";
+		Log::Error("Terrain must be attached to a object with a mesh!\n");
 		return;
 	}
 
@@ -34,7 +34,7 @@ void Terrain::Start()
 
 	if (!colliderHeightfield)
 	{
-		std::cerr << "Terrain does not contain a heightfield collider!\n";
+		Log::Error("Terrain does not contain a heightfield collider!\n");
 		return;
 	}
 

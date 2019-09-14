@@ -1,4 +1,5 @@
 #include <thread>
+#include <Engine/Log.hpp>
 #include <Network/Ftp/Ftp.hpp>
 #include <Network/Http/Http.hpp>
 #include <Network/Udp/UdpSocket.hpp>
@@ -41,11 +42,12 @@ int main(int argc, char **argv)
 		request.SetBody("para1=value1&param2=value2");
 
 		auto response = http.SendRequest(request);
-		std::cout << "Status: " << static_cast<uint32_t>(response.GetStatus()) << '\n'; // TODO: Enum stream operators.
-		std::cout << "HTTP version: " << response.GetMajorHttpVersion() << '.' << response.GetMinorHttpVersion() << '\n';
-		std::cout << "Content-Type header: " << response.GetField("Content-Type") << '\n';
-		std::cout << "Body: " << response.GetBody() << '\n';
+		Log::Out("Status: ", static_cast<uint32_t>(response.GetStatus()), '\n'); // TODO: Enum stream operators.
+		Log::Out("HTTP version: ", response.GetMajorHttpVersion(), '.', response.GetMinorHttpVersion(), '\n');
+		Log::Out("Content-Type header: ", response.GetField("Content-Type"), '\n');
+		Log::Out("Body: ", response.GetBody(), '\n');
 	}
+	// TODO: json examples.
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
 	/*{
 		Ftp ftp;
@@ -57,7 +59,7 @@ int main(int argc, char **argv)
 
 		if (response.IsOk())
 		{
-			std::cout << "Current directory: ", response.GetDirectory() << '\n';
+			Log::Out("Current directory: ", response.GetDirectory(), '\n');
 		}
 
 		ftp.Download("remote_file_name.txt", "local/destination/path", FtpDataChannel::Mode::Ascii);

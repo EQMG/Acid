@@ -23,7 +23,7 @@ public:
 	{
 		if (m_components.find(name) != m_components.end())
 		{
-			std::cerr << "Component " << std::quoted(name) << " is already registered!\n";
+			Log::Error("Component ", std::quoted(name), " is already registered!\n");
 			Remove(name);
 			return;
 		}

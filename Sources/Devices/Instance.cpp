@@ -17,7 +17,7 @@ const std::vector<const char *> Instance::DeviceExtensions{ VK_KHR_SWAPCHAIN_EXT
 VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,
 	const char *pLayerPrefix, const char *pMessage, void *pUserData)
 {
-	std::cerr << pMessage << '\n';
+	Log::Error(pMessage, '\n');
 	return static_cast<VkBool32>(false);
 }
 
@@ -113,7 +113,7 @@ void Instance::SetupLayers()
 
 		if (!layerFound)
 		{
-			std::cerr << "Vulkan validation layer not found: " << std::quoted(layerName) << '\n';
+			Log::Error("Vulkan validation layer not found: ", std::quoted(layerName), '\n');
 			continue;
 		}
 
@@ -187,13 +187,13 @@ void Instance::CreateDebugCallback()
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties)
 {
-	std::cout << "Instance Layers: ";
+	Log::Out("Instance Layers: ");
 
 	for (const auto &layer : layerProperties)
 	{
-		std::cout << layer.layerName << ", ";
+		Log::Out(layer.layerName,  ", ");
 	}
 
-	std::cout << "\n\n";
+	Log::Out("\n\n");
 }
 }

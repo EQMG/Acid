@@ -5,6 +5,7 @@
 #include "Maths/Time.hpp"
 #include "ModuleHolder.hpp"
 #include "App.hpp"
+#include "Log.hpp"
 
 namespace acid
 {

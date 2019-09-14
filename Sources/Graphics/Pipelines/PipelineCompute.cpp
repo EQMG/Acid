@@ -23,7 +23,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 	CreatePipelineCompute();
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Pipeline Compute " << m_shaderStage << " created in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
+	Log::Out("Pipeline Compute ", m_shaderStage, " created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 

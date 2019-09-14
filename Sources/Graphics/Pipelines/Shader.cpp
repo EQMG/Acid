@@ -23,7 +23,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
+			Log::Error("Shader Include could not be loaded: ", std::quoted(headerName), '\n');
 			return nullptr;
 		}
 
@@ -38,7 +38,7 @@ public:
 
 		if (!fileLoaded)
 		{
-			std::cerr << "Shader Include could not be loaded: " << std::quoted(headerName) << '\n';
+			Log::Error("Shader Include could not be loaded: ", std::quoted(headerName), '\n');
 			return nullptr;
 		}
 
@@ -391,23 +391,23 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	if (!shader.preprocess(&resources, defaultVersion, ENoProfile, false, false, messages, &str, includer))
 	{
-		std::cout << shader.getInfoLog() << '\n';
-		std::cout << shader.getInfoDebugLog() << '\n';
-		std::cerr << "SPRIV shader preprocess failed!\n";
+		Log::Out(shader.getInfoLog(), '\n');
+		Log::Out(shader.getInfoDebugLog(), '\n');
+		Log::Error("SPRIV shader preprocess failed!\n");
 	}
 
 	if (!shader.parse(&resources, defaultVersion, true, messages, includer))
 	{
-		std::cout << shader.getInfoLog() << '\n';
-		std::cout << shader.getInfoDebugLog() << '\n';
-		std::cerr << "SPRIV shader parse failed!\n";
+		Log::Out(shader.getInfoLog(), '\n');
+		Log::Out(shader.getInfoDebugLog(), '\n');
+		Log::Error("SPRIV shader parse failed!\n");
 	}
 
 	program.addShader(&shader);
 
 	if (!program.link(messages) || !program.mapIO())
 	{
-		std::cerr << "Error while linking shader program.\n";
+		Log::Error("Error while linking shader program.\n");
 	}
 
 	program.buildReflection();

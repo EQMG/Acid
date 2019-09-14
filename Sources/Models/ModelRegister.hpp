@@ -26,7 +26,7 @@ public:
 	{
 		if (m_modelNodes.find(name) != m_modelNodes.end())
 		{
-			std::cerr << "Model node type " << std::quoted(name) << " is already registered!\n";
+			Log::Error("Model node type ", std::quoted(name), " is already registered!\n");
 			return;
 		}
 
@@ -47,7 +47,7 @@ public:
 	{
 		if (m_modelNodes.find(extension) != m_modelNodes.end())
 		{
-			std::cerr << "Model extension type " << std::quoted(extension) << " is already registered!\n";
+			Log::Error("Model extension type ", std::quoted(extension), " is already registered!\n");
 			return;
 		}
 

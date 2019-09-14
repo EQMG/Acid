@@ -10,6 +10,8 @@
 #include <fcntl.h>
 #endif
 
+#include "Engine/Log.hpp"
+
 namespace acid
 {
 Socket::Socket(const Type &type) :
@@ -70,14 +72,14 @@ void Socket::SetHandleBlocking(SocketHandle sock, bool block)
 	{
 		if (fcntl(sock, F_SETFL, status & ~O_NONBLOCK) == -1)
 		{
-			std::cerr << "Failed to set file status flags: " << errno << '\n';
+			Log::Error("Failed to set file status flags: ", errno, '\n');
 		}
 	}
 	else
 	{
 		if (fcntl(sock, F_SETFL, status | O_NONBLOCK) == -1)
 		{
-			std::cerr << "Failed to set file status flags: " << errno << '\n';
+			Log::Error("Failed to set file status flags: ", errno, '\n');
 		}
 	}
 #endif
@@ -179,7 +181,7 @@ void Socket::Create()
 
 		if (handle == InvalidSocketHandle())
 		{
-			std::cerr << "Failed to create socket\n";
+			Log::Error("Failed to create socket\n");
 			return;
 		}
 
@@ -205,14 +207,14 @@ void Socket::Create(SocketHandle handle)
 
 			if (setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{
-				std::cerr << "Failed to set socket option \"TCP_NODELAY\" ; all your TCP packets will be buffered\n";
+				Log::Error("Failed to set socket option \"TCP_NODELAY\" ; all your TCP packets will be buffered\n");
 			}
 
 			// On Mac OS X, disable the SIGPIPE signal on disconnection.
 #if defined(ACID_BUILD_MACOS)
 			if (setsockopt(m_socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1)
 			{
-				std::cerr << "Failed to set socket option \"SO_NOSIGPIPE\"\n";
+				Log::Error("Failed to set socket option \"SO_NOSIGPIPE\"\n");
 			}
 #endif
 		}
@@ -223,7 +225,7 @@ void Socket::Create(SocketHandle handle)
 
 			if (setsockopt(m_socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{
-				std::cerr << "Failed to enable broadcast on UDP socket\n";
+				Log::Error("Failed to enable broadcast on UDP socket\n");
 			}
 		}
 	}

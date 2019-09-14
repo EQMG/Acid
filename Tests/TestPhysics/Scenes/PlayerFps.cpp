@@ -31,8 +31,8 @@ PlayerFps::PlayerFps() :
 void PlayerFps::Start()
 {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
-	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player collided with " << std::quoted(other->GetParent()->GetName()) << '\n';});
-	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ std::cout << "Player seperated with " << std::quoted(other->GetParent()->GetName()) << '\n';});
+	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with ", std::quoted(other->GetParent()->GetName()), '\n';}));
+	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with ", std::quoted(other->GetParent()->GetName()), '\n';}));
 }
 
 void PlayerFps::Update()
@@ -84,7 +84,7 @@ void PlayerFps::Update()
 				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
 			}
 
-			std::cout << "Player Noclip: " << std::boolalpha << m_noclipEnabled << '\n';
+			Log::Out("Player Noclip: ", std::boolalpha, m_noclipEnabled, '\n');
 		}
 	}
 

@@ -49,7 +49,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	}
 
 #if defined(ACID_VERBOSE)
-	std::cout << "Pipeline Graphics " << m_shaderStages.back() << " loaded in " << (Time::Now() - debugStart).AsMilliseconds<float>() << "ms\n";
+	Log::Out("Pipeline Graphics ", m_shaderStages.back(), " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 

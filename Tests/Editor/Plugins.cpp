@@ -49,7 +49,7 @@ void Plugins::Update()
 {
 	if (m_update)
 	{
-		std::cout << "[Host] Updating plugin\n";
+		Log::Out("[Host] Updating plugin\n");
 		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 		m_panels.SetParent(nullptr);
 		cr_plugin_unload(*m_plugin, false, false);

@@ -62,7 +62,7 @@ Component *ComponentRegister::Create(const std::string &name) const
 
 	if (it == m_components.end())
 	{
-		std::cerr << "Could not find registered component: " << std::quoted(name) << '\n';
+		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return nullptr;
 	}
 
@@ -75,7 +75,7 @@ void ComponentRegister::Decode(const std::string &name, const Node &node, Compon
 
 	if (it == m_components.end())
 	{
-		std::cerr << "Could not find registered component: " << std::quoted(name) << '\n';
+		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return;
 	}
 
@@ -88,7 +88,7 @@ void ComponentRegister::Encode(const std::string &name, Node &node, const Compon
 
 	if (it == m_components.end())
 	{
-		std::cerr << "Could not find registered component: " << std::quoted(name) << '\n';
+		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return;
 	}
 

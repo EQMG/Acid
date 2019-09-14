@@ -132,20 +132,20 @@ Scene1::Scene1() :
 	{
 		for (const auto &path : paths)
 		{
-			std::cout << "File dropped on window: " << path << '\n';
+			Log::Out("File dropped on window: ", path, '\n');
 		}
 	}, this);
 	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected)
 	{
-		std::cout << "Monitor " << std::quoted(monitor->GetName()) << " action: " << connected << '\n';
+		Log::Out("Monitor ", std::quoted(monitor->GetName()), " action: ", connected, '\n');
 	}, this);
 	Window::Get()->OnClose().Add([]()
 	{
-		std::cout << "Window has closed!\n";
+		Log::Out("Window has closed!\n");
 	}, this);
 	Window::Get()->OnIconify().Add([](bool iconified)
 	{
-		std::cout << "Iconified: " << iconified << '\n';
+		Log::Out("Iconified: ", iconified, '\n');
 	}, this);
 }
 

@@ -116,7 +116,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (!fileLoaded)
 	{
-		std::cerr << "Image could not be loaded: " << filename << '\n';
+		Log::Error("Image could not be loaded: ", filename, '\n');
 		return nullptr;
 	}
 
@@ -129,7 +129,7 @@ std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filena
 
 	if (!pixels)
 	{
-		std::cerr << "Unable to load Image: " << filename << '\n';
+		Log::Error("Unable to load Image: ", filename, '\n');
 	}
 
 	return pixels;
@@ -460,7 +460,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT))
 	{
-		std::cerr << "Device does not support blitting from optimal tiled images, using copy instead of blit!\n";
+		Log::Warning("Device does not support blitting from optimal tiled images, using copy instead of blit!\n");
 		supportsBlit = false;
 	}
 
@@ -469,7 +469,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 
 	if (!(formatProperties.linearTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
 	{
-		std::cerr << "Device does not support blitting to linear tiled images, using copy instead of blit!\n";
+		Log::Warning("Device does not support blitting to linear tiled images, using copy instead of blit!\n");
 		supportsBlit = false;
 	}
 

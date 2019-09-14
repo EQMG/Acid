@@ -30,6 +30,7 @@
 #include "Emitters/EmitterPoint.hpp"
 #include "Emitters/EmitterSphere.hpp"
 #include "Engine/Engine.hpp"
+#include "Engine/Log.hpp"
 #include "Engine/App.hpp"
 #include "Engine/Module.hpp"
 #include "Engine/ModuleHolder.hpp"
