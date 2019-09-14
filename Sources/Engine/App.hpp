@@ -14,6 +14,7 @@ struct Version
  */
 class ACID_EXPORT App
 {
+	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :
 		m_name{std::move(name)},
@@ -53,8 +54,6 @@ public:
 	void SetVersion(const Version &version) { m_version = version; }
 
 private:
-	friend class Engine;
-
 	std::string m_name;
 	Version m_version;
 };

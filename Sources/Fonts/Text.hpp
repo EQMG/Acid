@@ -19,6 +19,7 @@ namespace acid
 class ACID_EXPORT Text :
 	public UiObject
 {
+	friend class FontType;
 public:
 	/**
 	 * @brief A enum that represents how the text will be justified.
@@ -196,8 +197,6 @@ public:
 	bool IsLoaded() const;
 
 private:
-	friend class FontType;
-
 	/**
 	 * During the loading of a text this represents one word in the text.
 	 */

@@ -5,6 +5,7 @@
 #include <Maths/Vector2.hpp>
 #include <Serialized/Node.hpp>
 #include <Serialized/Json/Json.hpp>
+#include <Zip/ZipArchive.h>
 //#include <Serialized/Xml/Xml.hpp>
 //#include <Serialized/Yaml/Yaml.hpp>
 
@@ -163,6 +164,11 @@ int main(int argc, char **argv)
 
 	test::Example1 example2;
 	*jsonLoader.GetNode() >> example2;
+
+	ZipArchive zip("Serial.zip");
+	zip.AddEntry("hello.txt", "Hello World!");
+	zip.Write();
+	zip.Close();
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

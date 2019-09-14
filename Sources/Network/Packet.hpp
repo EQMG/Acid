@@ -22,6 +22,9 @@ namespace acid
  **/
 class ACID_EXPORT Packet
 {
+	friend class TcpSocket;
+	friend class UdpSocket;
+
 public:
 	/// A bool-like type that cannot be converted to integer or pointer types.
 	typedef bool (Packet::*BoolType)(std::size_t );
@@ -161,9 +164,6 @@ public:
 	Packet &operator<<(const std::wstring &data);
 
 protected:
-	friend class TcpSocket;
-	friend class UdpSocket;
-
 	/**
 	 * Called before the packet is sent over the network.
 	 * This function can be defined by derived classes to transform the data before it is sent;

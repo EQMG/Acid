@@ -9,6 +9,7 @@ namespace acid
  **/
 class ACID_EXPORT HttpRequest
 {
+	friend class Http;
 public:
 	/**
 	 * @brief Enumerate the available HTTP methods for a request, https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods.
@@ -85,7 +86,6 @@ public:
 	void SetBody(const std::string &body) { m_body = body; }
 
 private:
-	friend class Http;
 	using FieldTable = std::map<std::string, std::string>;
 
 	/**

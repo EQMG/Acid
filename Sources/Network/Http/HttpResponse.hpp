@@ -9,6 +9,7 @@ namespace acid
  **/
 class ACID_EXPORT HttpResponse
 {
+	friend class Http;
 public:
 	/**
 	 * Enumerate all the valid status codes for a response.
@@ -138,8 +139,6 @@ private:
 	 * @param in String stream containing the header values. 
 	 **/
 	void ParseFields(std::istream &in);
-
-	friend class Http;
 
 	/// Fields of the header.
 	FieldTable m_fields;

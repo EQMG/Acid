@@ -12,6 +12,7 @@ namespace acid
 class ACID_EXPORT SubrenderHolder :
 	public NonCopyable
 {
+	friend class Graphics;
 public:
 	/**
 	 * Gets a Subrender.
@@ -76,8 +77,6 @@ public:
 	 */
 	void Clear();
 private:
-	friend class Graphics;
-
 	using StageIndex = std::pair<Pipeline::Stage, std::size_t>;
 
 	void RemoveSubrenderStage(const TypeId &id);

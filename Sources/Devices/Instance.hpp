@@ -7,6 +7,7 @@ namespace acid
 {
 class ACID_EXPORT Instance
 {
+	friend class Graphics;
 public:
 	friend VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,
 		const char *pLayerPrefix, const char *pMessage, void *pUserData);
@@ -41,8 +42,6 @@ public:
 	const VkInstance &GetInstance() const { return m_instance; }
 
 private:
-	friend class Graphics;
-
 	void SetupLayers();
 
 	void SetupExtensions();

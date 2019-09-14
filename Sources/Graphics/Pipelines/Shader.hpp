@@ -66,6 +66,7 @@ public:
 
 	class Uniform
 	{
+		friend class Shader;
 	public:
 		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, bool readOnly = false,
 			bool writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
@@ -129,8 +130,6 @@ public:
 		}
 
 	private:
-		friend class Shader;
-
 		int32_t m_binding;
 		int32_t m_offset;
 		int32_t m_size;
@@ -142,6 +141,7 @@ public:
 
 	class UniformBlock
 	{
+		friend class Shader;
 	public:
 		enum class Type
 		{
@@ -209,8 +209,6 @@ public:
 		}
 
 	private:
-		friend class Shader;
-
 		int32_t m_binding;
 		int32_t m_size;
 		VkShaderStageFlags m_stageFlags;
@@ -220,6 +218,7 @@ public:
 
 	class Attribute
 	{
+		friend class Shader;
 	public:
 		explicit Attribute(int32_t set = -1, int32_t location = -1, int32_t size = -1, int32_t glType = -1) :
 			m_set(set),
@@ -266,8 +265,6 @@ public:
 		}
 
 	private:
-		friend class Shader;
-
 		int32_t m_set;
 		int32_t m_location;
 		int32_t m_size;
@@ -276,6 +273,7 @@ public:
 
 	class Constant
 	{
+		friend class Shader;
 	public:
 		explicit Constant(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags &stageFlags = 0, int32_t glType = -1) :
 			m_binding(binding),
@@ -322,8 +320,6 @@ public:
 		}
 
 	private:
-		friend class Shader;
-
 		int32_t m_binding;
 		int32_t m_size;
 		VkShaderStageFlags m_stageFlags;

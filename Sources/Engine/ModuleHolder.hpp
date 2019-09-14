@@ -10,6 +10,7 @@ namespace acid
 class ACID_EXPORT ModuleHolder :
 	public NonCopyable
 {
+	friend class Engine;
 public:
 	/**
 	 * Checks whether a Module exists or not.
@@ -82,8 +83,6 @@ public:
 	}
 
 private:
-	friend class Engine;
-
 	using StageIndex = std::pair<Module::Stage, std::size_t>;
 
 	void RemoveModuleStage(const TypeId &id);

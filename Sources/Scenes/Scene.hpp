@@ -11,6 +11,7 @@ namespace acid
  */
 class ACID_EXPORT Scene
 {
+	friend class Scenes;
 public:
 	/**
 	 * Creates a new scene.
@@ -63,8 +64,6 @@ public:
 	virtual bool IsPaused() const = 0;
 
 private:
-	friend class Scenes;
-
 	std::unique_ptr<Camera> m_camera;
 	std::unique_ptr<SceneStructure> m_structure;
 	std::unique_ptr<ScenePhysics> m_physics;

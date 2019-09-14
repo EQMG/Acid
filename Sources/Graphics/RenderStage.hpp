@@ -158,6 +158,7 @@ private:
 
 class ACID_EXPORT RenderStage
 {
+	friend class Graphics;
 public:
 	explicit RenderStage(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, const Viewport &viewport = Viewport());
 
@@ -210,8 +211,6 @@ public:
 	bool IsMultisampled(uint32_t subpass) const { return m_subpassMultisampled[subpass]; }
 
 private:
-	friend class Graphics;
-
 	std::vector<Attachment> m_attachments;
 	std::vector<SubpassType> m_subpasses;
 

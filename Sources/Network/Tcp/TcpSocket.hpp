@@ -55,6 +55,7 @@ public:
 class ACID_EXPORT TcpSocket :
 	public Socket
 {
+	friend class TcpListener;
 public:
 	/**
 	 * Default constructor.
@@ -150,8 +151,6 @@ public:
 	Status Receive(Packet &packet);
 
 private:
-	friend class TcpListener;
-
 	/// Temporary data of the packet currently being received.
 	PendingPacket m_pendingPacket;
 };

@@ -11,6 +11,7 @@ class Surface;
 
 class ACID_EXPORT LogicalDevice
 {
+	friend class Graphics;
 public:
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
 
@@ -39,8 +40,6 @@ public:
 	uint32_t GetTransferFamily() const { return m_transferFamily; }
 
 private:
-	friend class Graphics;
-
 	void CreateQueueIndices();
 
 	void CreateLogicalDevice();

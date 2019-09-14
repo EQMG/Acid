@@ -41,6 +41,7 @@ using SocketAddrLength = unsigned int;
  **/
 class ACID_EXPORT Socket
 {
+	friend class SocketSelector;
 public:
 	/**
 	 * @brief Status codes that may be returned by socket functions.
@@ -160,8 +161,6 @@ protected:
 	void Close();
 
 private:
-	friend class SocketSelector;
-
 	/// Type of the socket (TCP or UDP).
 	Type m_type;
 	/// Socket descriptor.

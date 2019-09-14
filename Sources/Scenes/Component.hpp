@@ -12,6 +12,7 @@ class Entity;
 class ACID_EXPORT Component :
 	public Observer
 {
+	friend class Entity;
 public:
 	virtual ~Component() = default;
 
@@ -50,8 +51,6 @@ public:
 	void SetEntity(Entity *entity) { m_entity = entity; }
 
 private:
-	friend class Entity;
-
 	bool m_started{};
 	bool m_enabled{true};
 	bool m_removed{};

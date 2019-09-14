@@ -9,6 +9,7 @@ namespace acid
 {
 class ACID_EXPORT Timer
 {
+	friend class Timers;
 public:
 	Timer(const Time &interval, const std::optional<uint32_t> &repeat) :
 		m_interval{interval},
@@ -29,8 +30,6 @@ public:
 	Delegate<void()> &OnTick() { return m_onTick; };
 
 private:
-	friend class Timers;
-
 	Time m_interval;
 	Time m_next;
 	std::optional<uint32_t> m_repeat;

@@ -232,6 +232,10 @@ set(_temp_acid_headers
 		Uis/UiScrollBar.hpp
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
+		Zip/miniz.h
+		Zip/ZipArchive.h
+		Zip/ZipEntry.h
+		Zip/ZipException.h
 		)
 set(_temp_acid_sources
 		StdAfx.cpp
@@ -432,6 +436,9 @@ set(_temp_acid_sources
 		Uis/UiScrollBar.cpp
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
+		Zip/miniz.c
+		Zip/ZipArchive.cpp
+		Zip/ZipEntry.cpp
 		)
 
 # Adds the precompiled header

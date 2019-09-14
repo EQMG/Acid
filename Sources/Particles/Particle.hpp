@@ -11,6 +11,7 @@ namespace acid
  */
 class ACID_EXPORT Particle
 {
+	friend class ParticleType;
 public:
 	/**
 	 * Creates a new particle object.
@@ -58,8 +59,6 @@ public:
 	bool operator<(const Particle &other) const;
 
 private:
-	friend class ParticleType;
-
 	Vector2f CalculateImageOffset(int32_t index) const;
 
 	std::shared_ptr<ParticleType> m_particleType;

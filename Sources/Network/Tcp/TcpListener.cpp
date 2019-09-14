@@ -86,8 +86,8 @@ Socket::Status TcpListener::Accept(TcpSocket &socket)
 
 	// Accept a new connection.
 	sockaddr_in address;
-	SocketAddrLength length{sizeof(address)};
-	SocketHandle remote{accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length)};
+	SocketAddrLength length = sizeof(address);
+	SocketHandle remote = accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length);
 
 	// Check for errors.
 	if (remote == InvalidSocketHandle())

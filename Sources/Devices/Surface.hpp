@@ -10,6 +10,7 @@ class PhysicalDevice;
 
 class ACID_EXPORT Surface
 {
+	friend class Graphics;
 public:
 	Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
 
@@ -24,8 +25,6 @@ public:
 	const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
 
 private:
-	friend class Graphics;
-
 	const Instance *m_instance;
 	const PhysicalDevice *m_physicalDevice;
 

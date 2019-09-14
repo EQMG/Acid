@@ -9,6 +9,7 @@ class Instance;
 
 class ACID_EXPORT PhysicalDevice
 {
+	friend class Graphics;
 public:
 	explicit PhysicalDevice(const Instance *instance);
 
@@ -25,8 +26,6 @@ public:
 	const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
 
 private:
-	friend class Graphics;
-
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
 
 	static int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
