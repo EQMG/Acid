@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
@@ -22,7 +22,7 @@ private:
 	Gui m_guiLogoAcid;
 	Text m_textCopyright;
 
-	bool m_finished{false};
+	bool m_finished = false;
 
 	Delegate<void()> m_onFinished;
 };

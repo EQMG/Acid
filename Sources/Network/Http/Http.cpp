@@ -100,7 +100,7 @@ HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 			{
 				// Wait for the server's response.
 				std::string receivedStr;
-				std::size_t size{};
+				std::size_t size = 0;
 				char buffer[1024];
 
 				while (m_connection.Receive(buffer, sizeof(buffer), size) == Socket::Status::Done)

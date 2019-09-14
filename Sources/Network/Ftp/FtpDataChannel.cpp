@@ -24,7 +24,7 @@ FtpResponse FtpDataChannel::Open(const Mode &mode)
 		{
 			uint8_t data[6] = {0, 0, 0, 0, 0, 0};
 			auto str = response.GetFullMessage().substr(begin);
-			std::size_t index{};
+			std::size_t index = 0;
 
 			for (auto &i : data)
 			{

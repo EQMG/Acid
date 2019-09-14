@@ -13,16 +13,16 @@ class ACID_EXPORT WipCell
 {
 public:
 	Rect m_bbox;
-	uint32_t m_value{};
-	uint32_t m_from{};
-	uint32_t m_to{};
-	uint32_t m_startLength{};
+	uint32_t m_value = 0;
+	uint32_t m_from = 0;
+	uint32_t m_to = 0;
+	uint32_t m_startLength = 0;
 };
 
 class ACID_EXPORT ContourRange
 {
 public:
-	uint32_t m_begin{}, m_end{};
+	uint32_t m_begin = 0, m_end = 0;
 };
 
 class ACID_EXPORT Outline
@@ -37,7 +37,7 @@ public:
 	std::vector<uint32_t> m_cells;
 	Vector2ui m_cellCount;
 
-	uint32_t m_cornerFixBegin{};
+	uint32_t m_cornerFixBegin = 0;
 };
 
 static void OutlineAddOddPoint(Outline *o);

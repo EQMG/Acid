@@ -71,14 +71,14 @@ void ModelDisk::Load()
 	vertices.reserve(m_slices * (m_loops + 1));
 	indices.reserve(m_slices * m_loops * 6);
 
-	for (uint32_t i{}; i < m_slices; i++)
+	for (uint32_t i = 0; i < m_slices; i++)
 	{
 		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
 		auto alpha = iDivSlices * 2.0f * Maths::Pi<float>;
 		auto xDir = std::cos(alpha);
 		auto yDir = std::sin(alpha);
 
-		for (uint32_t j{}; j < m_loops + 1; j++)
+		for (uint32_t j = 0; j < m_loops + 1; j++)
 		{
 			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
 			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
@@ -90,9 +90,9 @@ void ModelDisk::Load()
 		}
 	}
 
-	for (uint32_t i{}; i < m_slices; i++)
+	for (uint32_t i = 0; i < m_slices; i++)
 	{
-		for (uint32_t j{}; j < m_loops; j++)
+		for (uint32_t j = 0; j < m_loops; j++)
 		{
 			auto first = i * (m_loops + 1) + j;
 			auto second = (first + m_loops + 1) % (m_slices * (m_loops + 1));

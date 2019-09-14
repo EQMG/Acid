@@ -9,12 +9,12 @@
 
 namespace test
 {
-const float WALK_SPEED{3.0f};
-const float RUN_SPEED{7.0f};
-const Vector3f DAMP{20.0f, 20.0f, 20.0f};
+const float WALK_SPEED = 3.0f;
+const float RUN_SPEED = 7.0f;
+const Vector3f DAMP(20.0f, 20.0f, 20.0f);
 
-static const Vector2f SENSITIVITY_JOYSTICK{-0.06f};
-static const Vector2f SENSITIVITY_MOUSE{0.15f};
+static const Vector2f SENSITIVITY_JOYSTICK(-0.06f);
+static const Vector2f SENSITIVITY_MOUSE(0.15f);
 
 CameraFree::CameraFree() :
 	m_sensitivity{1.0f},

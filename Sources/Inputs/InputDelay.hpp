@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Engine/Engine.hpp"
 
@@ -24,6 +24,6 @@ public:
 private:
 	ElapsedTime m_elapsedDelay;
 	ElapsedTime m_elapsedRepeat;
-	bool m_delayOver{};
+	bool m_delayOver = false;
 };
 }

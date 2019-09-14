@@ -71,8 +71,8 @@ int main(int argc, char **argv)
 	/*UdpSocket socket;
 
 	std::string name{"Hello world"};
-	uint32_t a{420};
-	float b{6.9f};
+	uint32_t a = 420;
+	float b = 6.9f;
 	Vector3f c{8.1f, -9.11f, 2.083f};
 
 	Packet packet;

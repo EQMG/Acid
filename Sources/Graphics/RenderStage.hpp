@@ -229,6 +229,6 @@ private:
 	std::vector<bool> m_subpassMultisampled;
 
 	RenderArea m_renderArea;
-	bool m_outOfDate{};
+	bool m_outOfDate = false;
 };
 }

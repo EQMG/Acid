@@ -27,7 +27,7 @@ private:
 	Text m_text;
 	UiObject m_content;
 
-	bool m_collapsed{false};
+	bool m_collapsed = false;
 
 	Delegate<void(UiSection *, bool)> m_onCollapsed;
 };

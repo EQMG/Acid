@@ -58,6 +58,6 @@ private:
 
 	VkQueueFlagBits m_queueType;
 	VkCommandBuffer m_commandBuffer{VK_NULL_HANDLE};
-	bool m_running{};
+	bool m_running = false;
 };
 }

@@ -64,7 +64,7 @@ std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
 
 	auto sizeOfSrcT = indexStaging.GetSize() / m_indexCount;
 
-	for (uint32_t i{}; i < m_indexCount; i++)
+	for (uint32_t i = 0; i < m_indexCount; i++)
 	{
 		std::memcpy(&indices[i], static_cast<char *>(indicesMemory) + (i * sizeOfSrcT) + offset, sizeof(uint32_t));
 	}

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
@@ -42,10 +42,10 @@ private:
 	int32_t m_maxLength;
 
 	InputDelay m_inputDelay;
-	int32_t m_lastKey{};
+	int32_t m_lastKey = 0;
 
-	bool m_updating{};
-	bool m_mouseOver{};
+	bool m_updating = false;
+	bool m_mouseOver = false;
 
 	Delegate<void(std::string)> m_onValue;
 };

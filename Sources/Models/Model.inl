@@ -24,7 +24,7 @@ std::vector<T> Model::GetVertices(std::size_t offset) const
 
 	auto sizeOfSrcT = vertexStaging.GetSize() / m_vertexCount;
 
-	for (uint32_t i{}; i < m_vertexCount; i++)
+	for (uint32_t i = 0; i < m_vertexCount; i++)
 	{
 		std::memcpy(&vertices[i], static_cast<char *>(verticesMemory) + (i * sizeOfSrcT) + offset, sizeof(T));
 	}

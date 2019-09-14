@@ -80,13 +80,13 @@ std::string AnimationLoader::GetJointName(const Node *jointData)
 
 void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root)
 {
-	for (uint32_t i{}; i < m_keyframes.size(); i++)
+	for (uint32_t i = 0; i < m_keyframes.size(); i++)
 	{
 		Matrix4 transform;
 
-		for (uint32_t row{}; row < 4; row++)
+		for (uint32_t row = 0; row < 4; row++)
 		{
-			for (uint32_t col{}; col < 4; col++)
+			for (uint32_t col = 0; col < 4; col++)
 			{
 				transform[row][col] = String::From<float>(rawData[16 * i + (row * 4 + col)]);
 			}

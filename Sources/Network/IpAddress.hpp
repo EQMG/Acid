@@ -118,8 +118,8 @@ private:
 	void Resolve(const std::string &address);
 
 	/// Address stored as an unsigned 32 bits integer.
-	uint32_t m_address{};
+	uint32_t m_address = 0;
 	/// Is the address valid?
-	bool m_valid{};
+	bool m_valid = false;
 };
 }

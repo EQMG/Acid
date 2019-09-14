@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Devices/Joysticks.hpp"
 #include "Devices/Keyboard.hpp"
@@ -33,10 +33,10 @@ protected:
 	Text m_textTitle;
 	Text m_textValue;
 
-	int32_t m_lastKey{};
+	int32_t m_lastKey = 0;
 
-	bool m_updating{};
-	bool m_mouseOver{};
+	bool m_updating = false;
+	bool m_mouseOver = false;
 };
 
 class ACID_EXPORT UiGrabberJoystick :

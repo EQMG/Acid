@@ -94,9 +94,9 @@ public:
 private:
 	bool m_multipipeline;
 	std::optional<Shader::UniformBlock> m_uniformBlock;
-	uint32_t m_size{};
-	void *m_data{};
-	bool m_bound{};
+	uint32_t m_size = 0;
+	void *m_data = nullptr;
+	bool m_bound = nullptr;
 	std::unique_ptr<StorageBuffer> m_storageBuffer;
 	Buffer::Status m_handlerStatus;
 };

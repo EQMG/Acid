@@ -103,6 +103,6 @@ public:
 	Vector2f m_anchor0, m_anchor1;
 	Vector2f m_position;
 	std::optional<BitMask<UiMargins>> m_margins;
-	float m_depth{};
+	float m_depth = 0.0f;
 };
 }

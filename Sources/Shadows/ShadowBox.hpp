@@ -102,8 +102,8 @@ private:
 	void UpdateViewShadowMatrix();
 
 	Vector3f m_lightDirection;
-	float m_shadowOffset{};
-	float m_shadowDistance{};
+	float m_shadowOffset = 0.0f;
+	float m_shadowDistance = 0.0f;;
 
 	Matrix4 m_projectionMatrix;
 	Matrix4 m_lightViewMatrix;
@@ -112,8 +112,8 @@ private:
 	Matrix4 m_offset;
 	Vector3f m_centre;
 
-	float m_farHeight{}, m_farWidth{};
-	float m_nearHeight{}, m_nearWidth{};
+	float m_farHeight = 0.0f, m_farWidth = 0.0f;
+	float m_nearHeight = 0.0f, m_nearWidth = 0.0f;
 
 	Vector3f m_minExtents;
 	Vector3f m_maxExtents;

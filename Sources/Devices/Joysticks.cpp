@@ -26,7 +26,7 @@ Joysticks::Joysticks()
 {
 	glfwSetJoystickCallback(CallbackJoystick);
 
-	for (uint32_t i{}; i < GLFW_JOYSTICK_LAST; i++)
+	for (uint32_t i = 0; i < GLFW_JOYSTICK_LAST; i++)
 	{
 		if (glfwJoystickPresent(i))
 		{
@@ -42,11 +42,11 @@ void Joysticks::Update()
 {
 	for (auto &[port, joystick] : m_connected)
 	{
-		int32_t axeCount{};
+		int32_t axeCount = 0;
 		auto axes = glfwGetJoystickAxes(port, &axeCount);
 		joystick.m_axes.resize(static_cast<uint32_t>(axeCount));
 
-		for (uint32_t i{}; i < static_cast<uint32_t>(axeCount); i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(axeCount); i++)
 		{
 			if (joystick.m_axes[i] != axes[i])
 			{
@@ -55,11 +55,11 @@ void Joysticks::Update()
 			}
 		}
 
-		int32_t buttonCount{};
+		int32_t buttonCount = 0;
 		auto buttons = glfwGetJoystickButtons(port, &buttonCount);
 		joystick.m_buttons.resize(static_cast<uint32_t>(buttonCount));
 
-		for (uint32_t i{}; i < static_cast<uint32_t>(buttonCount); i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(buttonCount); i++)
 		{
 			if (buttons[i] != GLFW_RELEASE && joystick.m_buttons[i] != InputAction::Release)
 			{
@@ -72,11 +72,11 @@ void Joysticks::Update()
 			}
 		}
 
-		int32_t hatCount{};
+		int32_t hatCount = 0;
 		auto hats = glfwGetJoystickHats(port, &hatCount);
 		joystick.m_hats.resize(static_cast<uint32_t>(hatCount));
 
-		for (uint32_t i{}; i < static_cast<uint32_t>(hatCount); i++)
+		for (uint32_t i = 0; i < static_cast<uint32_t>(hatCount); i++)
 		{
 			if (joystick.m_hats[i] != MakeBitMask<JoystickHat>(hats[i]))
 			{

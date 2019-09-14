@@ -6,9 +6,9 @@
 
 namespace acid
 {
-static const uint32_t MAX_INSTANCES{512};
-//static const uint32_t INSTANCE_STEPS{128};
-//static const float FRUSTUM_BUFFER{1.4f};
+static const uint32_t MAX_INSTANCES = 512;
+//static const uint32_t INSTANCE_STEPS = 128;
+//static const float FRUSTUM_BUFFER = 1.4f;
 
 std::shared_ptr<GizmoType> GizmoType::Create(const Node &node)
 {

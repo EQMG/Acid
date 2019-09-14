@@ -110,8 +110,8 @@ int main(int argc, char **argv)
 
 		Time d = 5s - 2s;
 		Time e = 10s;
-		double f{d / e};
-		//double g{d.Mod(e)}; // d % e;
+		double f = d / e;
+		//double g = d.Mod(e); // d % e;
 
 		Log::Out("Seconds: ", c.AsSeconds(), '\n');
 		Log::Out("Milliseconds: ", c.AsMilliseconds(), '\n');

@@ -40,6 +40,6 @@ protected:
 	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
 
 private:
-	bool m_wasDown{};
+	bool m_wasDown = false;
 };
 }

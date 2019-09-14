@@ -106,7 +106,7 @@ void ModelGltf::Load()
 	// TODO: Scene handling with no default scene.
 	/*const tinygltf::Scene &scene = gltfModel.scenes[gltfModel.defaultScene > -1 ? gltfModel.defaultScene : 0];
 
-	for (std::size_t i{}; i < scene.nodes.size(); i++)
+	for (std::size_t i = 0; i < scene.nodes.size(); i++)
 	{
 		const tinygltf::Node node = gltfModel.nodes[scene.nodes[i]];
 		LoadNode(nullptr, node, scene.nodes[i], gltfModel, indices, vertices, scale);

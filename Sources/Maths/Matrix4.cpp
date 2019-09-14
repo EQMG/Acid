@@ -43,9 +43,9 @@ Matrix4 Matrix4::Add(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] + other[row][col];
 		}
@@ -58,9 +58,9 @@ Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] - other[row][col];
 		}
@@ -73,9 +73,9 @@ Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
 		}
@@ -88,7 +88,7 @@ Vector4f Matrix4::Multiply(const Vector4f &other) const
 {
 	Vector4f result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
@@ -100,9 +100,9 @@ Matrix4 Matrix4::Divide(const Matrix4 &other) const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2] + m_rows[3][col] / other[row][3];
 		}
@@ -115,7 +115,7 @@ Vector4f Matrix4::Transform(const Vector4f &other) const
 {
 	Vector4f result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
@@ -127,7 +127,7 @@ Matrix4 Matrix4::Translate(const Vector2f &other) const
 {
 	Matrix4 result{*this};
 
-	for (uint32_t col{}; col < 4; col++)
+	for (uint32_t col = 0; col < 4; col++)
 	{
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y;
 	}
@@ -139,7 +139,7 @@ Matrix4 Matrix4::Translate(const Vector3f &other) const
 {
 	Matrix4 result{*this};
 
-	for (uint32_t col{}; col < 4; col++)
+	for (uint32_t col = 0; col < 4; col++)
 	{
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y + m_rows[2][col] * other.m_z;
 	}
@@ -151,9 +151,9 @@ Matrix4 Matrix4::Scale(const Vector3f &other) const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 3; row++)
+	for (uint32_t row = 0; row < 3; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[row][col] * other[row];
 		}
@@ -167,9 +167,9 @@ Matrix4 Matrix4::Scale(const Vector4f &other) const
 {
 	Matrix4 result{*this};
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] *= other[row];
 		}
@@ -203,9 +203,9 @@ Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const
 	f[2][1] = yz * o - xs;
 	f[2][2] = axis.m_z * axis.m_z * o + c;
 
-	for (uint32_t row{}; row < 3; row++)
+	for (uint32_t row = 0; row < 3; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
 		}
@@ -219,9 +219,9 @@ Matrix4 Matrix4::Negate() const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = -m_rows[row][col];
 		}
@@ -241,9 +241,9 @@ Matrix4 Matrix4::Inverse() const
 		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
 	}
 
-	for (uint32_t j{}; j < 4; j++)
+	for (uint32_t j = 0; j < 4; j++)
 	{
-		for (uint32_t i{}; i < 4; i++)
+		for (uint32_t i = 0; i < 4; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
 			auto minorSubmatrix = GetSubmatrix(j, i);
@@ -264,9 +264,9 @@ Matrix4 Matrix4::Transpose() const
 {
 	Matrix4 result;
 
-	for (uint32_t row{}; row < 4; row++)
+	for (uint32_t row = 0; row < 4; row++)
 	{
-		for (uint32_t col{}; col < 4; col++)
+		for (uint32_t col = 0; col < 4; col++)
 		{
 			result[row][col] = m_rows[col][row];
 		}
@@ -277,9 +277,9 @@ Matrix4 Matrix4::Transpose() const
 
 float Matrix4::Determinant() const
 {
-	float result{};
+	float result = 0.0f;
 
-	for (uint32_t i{}; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
 		// Get minor of element [0][i].
 		auto minorSubmatrix = GetSubmatrix(0, i);
@@ -297,16 +297,16 @@ float Matrix4::Determinant() const
 Matrix3 Matrix4::GetSubmatrix(uint32_t row, uint32_t col) const
 {
 	Matrix3 result;
-	uint32_t colCount{};
-	uint32_t rowCount{};
+	uint32_t colCount = 0;
+	uint32_t rowCount = 0;
 
-	for (uint32_t i{}; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
 		if (i != row)
 		{
 			colCount = 0;
 
-			for (uint32_t j{}; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				if (j != col)
 				{

@@ -55,7 +55,7 @@ VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysic
 
 int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device)
 {
-	int32_t score{};
+	int32_t score = 0;
 
 	// Checks if the requested extensions are supported.
 	uint32_t extensionPropertyCount;
@@ -66,7 +66,7 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device)
 	// Iterates through all extensions requested.
 	for (const char *currentExtension : Instance::DeviceExtensions)
 	{
-		bool extensionFound{};
+		bool extensionFound = false;
 
 		// Checks if the extension is in the available extensions.
 		for (const auto &extension : extensionProperties)

@@ -77,7 +77,7 @@ void Frustum::Update(const Matrix4 &view, const Matrix4 &projection)
 
 bool Frustum::PointInFrustum(const Vector3f &position) const
 {
-	for (uint32_t i{}; i < 6; i++)
+	for (uint32_t i = 0; i < 6; i++)
 	{
 		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= 0.0f)
 		{
@@ -90,7 +90,7 @@ bool Frustum::PointInFrustum(const Vector3f &position) const
 
 bool Frustum::SphereInFrustum(const Vector3f &position, float radius) const
 {
-	for (uint32_t i{}; i < 6; i++)
+	for (uint32_t i = 0; i < 6; i++)
 	{
 		if (m_frustum[i][0] * position.m_x + m_frustum[i][1] * position.m_y + m_frustum[i][2] * position.m_z + m_frustum[i][3] <= -radius)
 		{
@@ -103,7 +103,7 @@ bool Frustum::SphereInFrustum(const Vector3f &position, float radius) const
 
 bool Frustum::CubeInFrustum(const Vector3f &min, const Vector3f &max) const
 {
-	for (uint32_t i{}; i < 6; i++)
+	for (uint32_t i = 0; i < 6; i++)
 	{
 		if (m_frustum[i][0] * min.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f
 			&& m_frustum[i][0] * max.m_x + m_frustum[i][1] * min.m_y + m_frustum[i][2] * min.m_z + m_frustum[i][3] <= 0.0f

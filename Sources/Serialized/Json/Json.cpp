@@ -17,7 +17,7 @@ void Json::Load(std::istream &stream)
 	std::vector<std::pair<Type, std::string>> tokens;
 
 	std::string current;
-	bool inString{};
+	bool inString = false;
 
 	// Reading into a string before iterating is much faster.
 	std::string s{std::istreambuf_iterator<char>{stream}, {}};
@@ -56,7 +56,7 @@ void Json::Load(std::istream &stream)
 	}
 
 	// Converts the list of tokens into nodes.
-	int32_t k{};
+	int32_t k = 0;
 	Convert(*this, tokens, 0, k);
 }
 

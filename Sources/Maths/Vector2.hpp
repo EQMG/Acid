@@ -317,7 +317,7 @@ public:
 	ACID_EXPORT static const Vector2 PositiveInfinity;
 	ACID_EXPORT static const Vector2 NegativeInfinity;
 
-	T m_x{}, m_y{};
+	T m_x = 0, m_y = 0;
 };
 
 using Vector2f = Vector2<float>;

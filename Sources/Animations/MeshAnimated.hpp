@@ -36,8 +36,8 @@ public:
 
 	friend Node &operator<<(Node &node, const MeshAnimated &meshAnimated);
 
-	static constexpr uint32_t MaxJoints{50};
-	static constexpr uint32_t MaxWeights{3};
+	static constexpr uint32_t MaxJoints = 50;
+	static constexpr uint32_t MaxWeights = 3;
 
 private:
 	Animator m_animator;

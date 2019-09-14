@@ -46,7 +46,7 @@ public:
 	template<typename T>
 	T *GetComponent(bool allowDisabled = false) const
 	{
-		T *alternative{};
+		T *alternative = nullptr;
 
 		for (const auto &component : m_components)
 		{
@@ -161,6 +161,6 @@ public:
 private:
 	std::string m_name;
 	std::vector<std::unique_ptr<Component>> m_components;
-	bool m_removed{};
+	bool m_removed = false;
 };
 }

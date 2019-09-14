@@ -75,9 +75,9 @@ std::vector<float> Terrain::GenerateHeightmap(uint32_t vertexCount)
 
 	std::vector<float> heightmap(vertexCount * vertexCount);
 
-	for (uint32_t row{}; row < vertexCount; row++)
+	for (uint32_t row = 0; row < vertexCount; row++)
 	{
-		for (uint32_t col{}; col < vertexCount; col++)
+		for (uint32_t col = 0; col < vertexCount; col++)
 		{
 			auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 			auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;

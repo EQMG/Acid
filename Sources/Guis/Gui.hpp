@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
@@ -74,8 +74,8 @@ private:
 
 	std::shared_ptr<Model> m_model;
 	std::shared_ptr<Image2d> m_image;
-	uint32_t m_numberOfRows{1};
-	uint32_t m_selectedRow{};
+	uint32_t m_numberOfRows = 1;
+	uint32_t m_selectedRow = 0;
 	Vector2f m_atlasOffset;
 	Vector2f m_atlasScale;
 	Vector4f m_ninePatches; // TODO: Use UiTransform

@@ -36,10 +36,10 @@ private:
 
 	const Instance *m_instance;
 
-	VkPhysicalDevice m_physicalDevice{VK_NULL_HANDLE};
-	VkPhysicalDeviceProperties m_properties{};
-	VkPhysicalDeviceFeatures m_features{};
-	VkPhysicalDeviceMemoryProperties m_memoryProperties{};
-	VkSampleCountFlagBits m_msaaSamples{VK_SAMPLE_COUNT_1_BIT};
+	VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
+	VkPhysicalDeviceProperties m_properties = {};
+	VkPhysicalDeviceFeatures m_features = {};
+	VkPhysicalDeviceMemoryProperties m_memoryProperties = {};
+	VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 };
 }

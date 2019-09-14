@@ -119,10 +119,10 @@ public:
 	bool operator<(const Node &other) const;
 
 protected:
-	Node *m_parent{};
+	Node *m_parent = nullptr;
 
 	std::string m_value;
-	Type m_type{Type::Object};
+	Type m_type = Type::Object;
 	std::vector<Property> m_properties;
 };
 }

@@ -182,7 +182,7 @@ struct hash<acid::Matrix2>
 {
 	size_t operator()(const acid::Matrix2 &matrix) const
 	{
-		size_t seed{};
+		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);
 		return seed;

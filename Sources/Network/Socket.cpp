@@ -203,7 +203,7 @@ void Socket::Create(SocketHandle handle)
 		if (m_type == Type::Tcp)
 		{
 			// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
-			int32_t yes{1};
+			int32_t yes = 1;
 
 			if (setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{
@@ -221,7 +221,7 @@ void Socket::Create(SocketHandle handle)
 		else
 		{
 			// Enable broadcast by default for UDP sockets.
-			int32_t yes{1};
+			int32_t yes = 1;
 
 			if (setsockopt(m_socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 			{

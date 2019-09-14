@@ -92,12 +92,12 @@ protected:
 private:
 	std::unique_ptr<Buffer> m_vertexBuffer;
 	std::unique_ptr<Buffer> m_indexBuffer;
-	uint32_t m_vertexCount{};
-	uint32_t m_indexCount{};
+	uint32_t m_vertexCount = 0;
+	uint32_t m_indexCount = 0;
 
 	Vector3f m_minExtents;
 	Vector3f m_maxExtents;
-	float m_radius{};
+	float m_radius = 0.0f;
 };
 }
 

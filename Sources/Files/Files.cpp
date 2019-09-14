@@ -150,7 +150,7 @@ size_t BaseFStream::length()
 
 PHYSFS_File *OpenWithMode(const std::filesystem::path &filename, FileMode openMode)
 {
-	PHYSFS_File *file{};
+	PHYSFS_File *file = nullptr;
 
 	auto pathStr = filename.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');

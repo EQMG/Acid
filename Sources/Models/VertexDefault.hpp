@@ -54,7 +54,7 @@ struct hash<acid::VertexDefault>
 {
 	size_t operator()(const acid::VertexDefault &vertex) const noexcept
 	{
-		size_t seed{};
+		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);
 		acid::Maths::HashCombine(seed, vertex.m_normal);

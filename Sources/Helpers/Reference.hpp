@@ -65,6 +65,6 @@ public:
 
 private:
 	// Address of the referenced object.
-	T *m_reference{};
+	T *m_reference = nullptr;
 };
 }

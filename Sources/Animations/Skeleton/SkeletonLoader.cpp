@@ -36,9 +36,9 @@ Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
 
 	Matrix4 transform;
 
-	for (int32_t row{}; row < 4; row++)
+	for (int32_t row = 0; row < 4; row++)
 	{
-		for (int32_t col{}; col < 4; col++)
+		for (int32_t col = 0; col < 4; col++)
 		{
 			transform[row][col] = String::From<float>(matrixData[row * 4 + col]);
 		}
@@ -57,7 +57,7 @@ Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
 
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
 {
-	for (uint32_t i{}; i < m_boneOrder.size(); i++)
+	for (uint32_t i = 0; i < m_boneOrder.size(); i++)
 	{
 		if (m_boneOrder[i] == name)
 		{

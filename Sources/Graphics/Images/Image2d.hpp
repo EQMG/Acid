@@ -136,10 +136,10 @@ private:
 	VkImageLayout m_layout;
 	VkImageUsageFlags m_usage;
 
-	uint32_t m_components{};
+	uint32_t m_components = 0;
 	Vector2ui m_extent;
 	std::unique_ptr<uint8_t[]> m_loadPixels;
-	uint32_t m_mipLevels{};
+	uint32_t m_mipLevels = 0;
 
 	VkImage m_image{VK_NULL_HANDLE};
 	VkDeviceMemory m_memory{VK_NULL_HANDLE};

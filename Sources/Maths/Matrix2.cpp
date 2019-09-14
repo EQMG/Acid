@@ -36,9 +36,9 @@ Matrix2 Matrix2::Add(const Matrix2 &other) const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[row][col] + other[row][col];
 		}
@@ -51,9 +51,9 @@ Matrix2 Matrix2::Subtract(const Matrix2 &other) const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[row][col] - other[row][col];
 		}
@@ -66,9 +66,9 @@ Matrix2 Matrix2::Multiply(const Matrix2 &other) const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1];
 		}
@@ -81,9 +81,9 @@ Matrix2 Matrix2::Divide(const Matrix2 &other) const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1];
 		}
@@ -96,7 +96,7 @@ Vector2f Matrix2::Transform(const Vector2f &other) const
 {
 	Vector2f result;
 
-	for (uint32_t row{}; row < 3; row++)
+	for (uint32_t row = 0; row < 3; row++)
 	{
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y;
 	}
@@ -108,9 +108,9 @@ Matrix2 Matrix2::Scale(const Vector2f &other) const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[row][col] * other[row];
 		}
@@ -123,9 +123,9 @@ Matrix2 Matrix2::Negate() const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = -m_rows[row][col];
 		}
@@ -145,9 +145,9 @@ Matrix2 Matrix2::Inverse() const
 		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
 	}
 	
-	for (uint32_t j{}; j < 2; j++)
+	for (uint32_t j = 0; j < 2; j++)
 	{
-		for (uint32_t i{}; i < 2; i++)
+		for (uint32_t i = 0; i < 2; i++)
 		{
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
 			auto minor = GetSubmatrix(j, i);
@@ -167,9 +167,9 @@ Matrix2 Matrix2::Transpose() const
 {
 	Matrix2 result;
 
-	for (uint32_t row{}; row < 2; row++)
+	for (uint32_t row = 0; row < 2; row++)
 	{
-		for (uint32_t col{}; col < 2; col++)
+		for (uint32_t col = 0; col < 2; col++)
 		{
 			result[row][col] = m_rows[col][row];
 		}
@@ -180,9 +180,9 @@ Matrix2 Matrix2::Transpose() const
 
 float Matrix2::Determinant() const
 {
-	float result{};
+	float result = 0.0f;
 
-	for (uint32_t i{}; i < 2; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		// Get minor of element [0][i].
 		auto minor = GetSubmatrix(0, i);
@@ -198,17 +198,17 @@ float Matrix2::Determinant() const
 
 float Matrix2::GetSubmatrix(uint32_t row, uint32_t col) const
 {
-	float result{};
-	uint32_t colCount{};
-	uint32_t rowCount{};
+	float result = 0.0f;
+	uint32_t colCount = 0;
+	uint32_t rowCount = 0;
 
-	for (uint32_t i{}; i < 2; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		if (i != row)
 		{
 			colCount = 0;
 
-			for (uint32_t j{}; j < 2; j++)
+			for (uint32_t j = 0; j < 2; j++)
 			{
 				if (j != col)
 				{

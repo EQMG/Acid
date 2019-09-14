@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Files/Files.hpp"
 
@@ -56,14 +56,14 @@ public:
 		float m_advanceX;
 	};
 
-	static constexpr uint32_t PadTop{0};
-	static constexpr uint32_t PadLeft{1};
-	static constexpr uint32_t PadBottom{2};
-	static constexpr uint32_t PadRight{3};
-	static constexpr int32_t DesiredPassing{8};
+	static constexpr uint32_t PadTop = 0;
+	static constexpr uint32_t PadLeft = 1;
+	static constexpr uint32_t PadBottom = 2;
+	static constexpr uint32_t PadRight = 3;
+	static constexpr int32_t DesiredPassing = 8;
 
-	static constexpr float LineHeight{0.03f};
-	static constexpr int32_t SpaceAscii{32};
+	static constexpr float LineHeight = 0.03f;
+	static constexpr int32_t SpaceAscii = 32;
 
 	/**
 	 * Creates a new meta file.
@@ -126,13 +126,13 @@ private:
 	std::map<std::string, std::string> m_values;
 
 	std::filesystem::path m_filename;
-	float m_verticalPerPixelSize{};
-	float m_horizontalPerPixelSize{};
-	int32_t m_imageWidth{};
-	float m_spaceWidth{};
+	float m_verticalPerPixelSize = 0.0f;
+	float m_horizontalPerPixelSize = 0.0f;
+	int32_t m_imageWidth = 0;
+	float m_spaceWidth = 0.0f;
 	std::vector<int32_t> m_padding;
-	int32_t m_paddingWidth{};
-	int32_t m_paddingHeight{};
-	float m_maxSizeY{};
+	int32_t m_paddingWidth = 0;
+	int32_t m_paddingHeight = 0;
+	float m_maxSizeY = 0.0f;
 };
 }

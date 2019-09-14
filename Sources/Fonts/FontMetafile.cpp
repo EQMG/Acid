@@ -10,7 +10,7 @@ FontMetafile::FontMetafile(std::filesystem::path filename) :
 {
 	IFStream inStream{m_filename};
 
-	std::size_t lineNum{};
+	std::size_t lineNum = 0;
 	std::string linebuf;
 
 	while (inStream.peek() != -1)

@@ -57,7 +57,7 @@ public:
 
 private:
 	std::shared_ptr<SoundBuffer> m_buffer;
-	uint32_t m_source{};
+	uint32_t m_source = 0;
 
 	Vector3f m_position;
 	Vector3f m_direction;

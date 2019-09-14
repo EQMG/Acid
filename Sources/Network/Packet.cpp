@@ -183,7 +183,7 @@ Packet &Packet::operator>>(double &data)
 Packet &Packet::operator>>(char *data)
 {
 	// First extract string length.
-	uint32_t length{};
+	uint32_t length = 0;
 	*this >> length;
 
 	if ((length > 0) && CheckSize(length))
@@ -202,7 +202,7 @@ Packet &Packet::operator>>(char *data)
 Packet &Packet::operator>>(std::string &data)
 {
 	// First extract string length.
-	uint32_t length{};
+	uint32_t length = 0;
 	*this >> length;
 
 	data.clear();
@@ -222,15 +222,15 @@ Packet &Packet::operator>>(std::string &data)
 Packet &Packet::operator>>(wchar_t *data)
 {
 	// First extract string length.
-	uint32_t length{};
+	uint32_t length = 0;
 	*this >> length;
 
 	if ((length > 0) && CheckSize(length * sizeof(uint32_t)))
 	{
 		// Then extract characters.
-		for (uint32_t i{}; i < length; ++i)
+		for (uint32_t i = 0; i < length; ++i)
 		{
-			uint32_t character{};
+			uint32_t character = 0;
 			*this >> character;
 			data[i] = static_cast<wchar_t>(character);
 		}
@@ -244,7 +244,7 @@ Packet &Packet::operator>>(wchar_t *data)
 Packet &Packet::operator>>(std::wstring &data)
 {
 	// First extract string length.
-	uint32_t length{};
+	uint32_t length = 0;
 	*this >> length;
 
 	data.clear();
@@ -252,9 +252,9 @@ Packet &Packet::operator>>(std::wstring &data)
 	if ((length > 0) && CheckSize(length * sizeof(uint32_t)))
 	{
 		// Then extract characters.
-		for (uint32_t i{}; i < length; ++i)
+		for (uint32_t i = 0; i < length; ++i)
 		{
-			uint32_t character{};
+			uint32_t character = 0;
 			*this >> character;
 			data += static_cast<wchar_t>(character);
 		}
@@ -375,7 +375,7 @@ Packet &Packet::operator<<(const wchar_t *data)
 	*this << length;
 
 	// Then insert characters.
-	for (const wchar_t *c{data}; *c != L'\0'; ++c)
+	for (auto c = data; *c != L'\0'; ++c)
 	{
 		*this << static_cast<uint32_t>(*c);
 	}

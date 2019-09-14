@@ -140,9 +140,9 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel) const
 {
 	std::unique_ptr<uint8_t[]> pixels;
-	uint8_t *offset{};
+	uint8_t *offset = nullptr;
 
-	for (uint32_t i{}; i < 6; i++)
+	for (uint32_t i = 0; i < 6; i++)
 	{
 		auto resultSide = GetPixels(extent, mipLevel, i);
 		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
@@ -177,8 +177,8 @@ void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t b
 std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
 	uint32_t &components, VkFormat &format)
 {
-	std::unique_ptr<uint8_t[]> result{};
-	uint8_t *offset{};
+	std::unique_ptr<uint8_t[]> result;
+	uint8_t *offset = nullptr;
 
 	for (const auto &side : fileSides)
 	{

@@ -66,7 +66,7 @@ std::vector<VideoMode> Monitor::GetVideoModes() const
 	auto videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
 	std::vector<VideoMode> modes(static_cast<uint32_t>(videoModeCount));
 
-	for (uint32_t i{}; i < static_cast<uint32_t>(videoModeCount); i++)
+	for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++)
 	{
 		modes[i] = *reinterpret_cast<const VideoMode *>(&videoModes[i]);
 	}

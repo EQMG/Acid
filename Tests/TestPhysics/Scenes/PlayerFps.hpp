@@ -25,7 +25,7 @@ public:
 	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:
-	bool m_noclipEnabled{};
+	bool m_noclipEnabled = false;
 
 	AxisCompound m_inputForward;
 	AxisCompound m_inputStrafe;

@@ -129,7 +129,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
 
-	bool selected{};
+	bool selected = false;
 
 	if (IsEnabled() && Mouse::Get()->IsWindowSelected() && Window::Get()->IsFocused())
 	{

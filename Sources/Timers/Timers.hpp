@@ -94,7 +94,7 @@ private:
 
 	std::vector<std::unique_ptr<Timer>> m_timers;
 
-	bool m_stop{};
+	bool m_stop = false;
 	std::thread m_worker;
 
 	std::mutex m_mutex;

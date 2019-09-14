@@ -40,7 +40,7 @@ ScenePhysics::ScenePhysics() :
 
 ScenePhysics::~ScenePhysics()
 {
-	for (int32_t i{m_dynamicsWorld->getNumCollisionObjects() - 1}; i >= 0; i--)
+	for (int32_t i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		auto obj = m_dynamicsWorld->getCollisionObjectArray()[i];
 		auto body = btRigidBody::upcast(obj);
@@ -92,7 +92,7 @@ void ScenePhysics::CheckForCollisionEvents()
 	CollisionPairs pairsThisUpdate;
 
 	// Iterate through all of the manifolds in the dispatcher.
-	for (int32_t i{}; i < m_dispatcher->getNumManifolds(); ++i)
+	for (int32_t i = 0; i < m_dispatcher->getNumManifolds(); ++i)
 	{
 		// Get the manifold.
 		auto manifold = m_dispatcher->getManifoldByIndexInternal(i);

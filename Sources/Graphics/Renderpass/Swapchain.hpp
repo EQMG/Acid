@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <vulkan/vulkan.h>
 #include "Helpers/Reference.hpp"
@@ -54,7 +54,7 @@ private:
 	VkExtent2D m_extent;
 	VkPresentModeKHR m_presentMode;
 
-	uint32_t m_imageCount{};
+	uint32_t m_imageCount = 0;
 	VkSurfaceTransformFlagsKHR m_preTransform;
 	VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
 	std::vector<VkImage> m_images;

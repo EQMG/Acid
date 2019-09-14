@@ -191,7 +191,7 @@ private:
 
 	std::optional<std::pair<std::string, CursorHotspot>> m_currentCursor;
 	std::optional<CursorStandard> m_currentStandard;
-	GLFWcursor *m_cursor{};
+	GLFWcursor *m_cursor = nullptr;
 
 	Vector2d m_lastPosition;
 	Vector2d m_position;
@@ -199,8 +199,8 @@ private:
 	Vector2d m_lastScroll;
 	Vector2d m_scroll;
 	Vector2d m_scrollDelta;
-	bool m_windowSelected{};
-	bool m_cursorHidden{};
+	bool m_windowSelected = false;
+	bool m_cursorHidden = false;
 
 	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> m_onButton;
 	Delegate<void(Vector2d)> m_onPosition;

@@ -84,8 +84,8 @@ private:
 	Vector3f m_rotation;
 	Vector3f m_scale;
 
-	Transform *m_parent{};
+	Transform *m_parent = nullptr;
 	std::vector<Transform *> m_children;
-	mutable Transform *m_worldTransform{};
+	mutable Transform *m_worldTransform = nullptr;
 };
 }

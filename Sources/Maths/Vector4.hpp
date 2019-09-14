@@ -291,7 +291,7 @@ public:
 	ACID_EXPORT static const Vector4 PositiveInfinity;
 	ACID_EXPORT static const Vector4 NegativeInfinity;
 
-	T m_x{}, m_y{}, m_z{}, m_w{1};
+	T m_x = 0, m_y = 0, m_z = 0, m_w{1};
 };
 
 using Vector4f = Vector4<float>;

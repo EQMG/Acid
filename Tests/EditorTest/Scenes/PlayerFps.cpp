@@ -10,11 +10,11 @@
 
 namespace test
 {
-const float WALK_SPEED{3.1f};
-const float RUN_SPEED{5.7f};
-const float CROUCH_SPEED{1.2f};
-const float JUMP_SPEED{4.1f};
-const float NOCLIP_SPEED{3.0f};
+const float WALK_SPEED = 3.1f;
+const float RUN_SPEED = 5.7f;
+const float CROUCH_SPEED = 1.2f;
+const float JUMP_SPEED = 4.1f;
+const float NOCLIP_SPEED = 3.0f;
 
 PlayerFps::PlayerFps() :
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::S), std::make_unique<ButtonKeyboard>(Key::W)),

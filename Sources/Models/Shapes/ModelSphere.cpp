@@ -68,12 +68,12 @@ void ModelSphere::Load()
 	vertices.reserve((m_longitudeBands + 1) * (m_latitudeBands + 1));
 	indices.reserve(m_longitudeBands * m_latitudeBands * 6);
 
-	for (uint32_t i{}; i < m_longitudeBands + 1; i++)
+	for (uint32_t i = 0; i < m_longitudeBands + 1; i++)
 	{
 		auto iDivLong = static_cast<float>(i) / static_cast<float>(m_longitudeBands);
 		auto theta = (i == 0 || i == m_longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi<float>;
 
-		for (uint32_t j{}; j < m_latitudeBands + 1; j++)
+		for (uint32_t j = 0; j < m_latitudeBands + 1; j++)
 		{
 			auto jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
 			auto phi = jDivLat * 2.0f * Maths::Pi<float>;
@@ -85,9 +85,9 @@ void ModelSphere::Load()
 		}
 	}
 
-	for (uint32_t i{}; i < m_longitudeBands; i++)
+	for (uint32_t i = 0; i < m_longitudeBands; i++)
 	{
-		for (uint32_t j{}; j < m_latitudeBands; j++)
+		for (uint32_t j = 0; j < m_latitudeBands; j++)
 		{
 			auto first = j + ((m_latitudeBands + 1) * i);
 			auto second = j + ((m_latitudeBands + 1) * (i + 1));

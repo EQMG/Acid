@@ -120,7 +120,7 @@ protected:
 	Vector3f m_angularVelocity;
 
 	std::unique_ptr<btCollisionShape> m_shape;
-	btCollisionObject *m_body{};
+	btCollisionObject *m_body = nullptr;
 
 	std::vector<std::unique_ptr<Force>> m_forces;
 

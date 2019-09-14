@@ -13,7 +13,7 @@
 
 namespace acid
 {
-static const uint32_t MAX_LIGHTS{32}; // TODO: Make configurable.
+static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	Subrender{pipelineStage},
@@ -43,7 +43,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 	// Updates uniforms.
 	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
-	uint32_t lightCount{};
+	uint32_t lightCount = 0;
 
 	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
@@ -207,7 +207,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	PushHandler pushHandler{*compute.GetShader()->GetUniformBlock("PushObject")};
 
 	// TODO: Use image barriers between rendering (single command buffer), rework write descriptor passing. Image class also needs a restructure.
-	for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
+	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		VkImageView levelView{VK_NULL_HANDLE};
 		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 6, 0);
@@ -246,7 +246,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	}
 
 #if defined(ACID_VERBOSE)
-	for (uint32_t i{}; i < prefilteredCubemap->GetMipLevels(); i++)
+	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
 	{
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)

@@ -30,7 +30,7 @@ private:
 
 	std::mutex m_queueMutex;
 	std::condition_variable m_condition;
-	bool m_stop{};
+	bool m_stop = false;
 };
 
 template<typename F, typename ... Args>

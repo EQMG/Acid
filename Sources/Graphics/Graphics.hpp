@@ -148,11 +148,11 @@ private:
 	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
 	ElapsedTime m_elapsedPurge;
 
-	VkPipelineCache m_pipelineCache{VK_NULL_HANDLE};
+	VkPipelineCache m_pipelineCache = VK_NULL_HANDLE;
 	std::vector<VkSemaphore> m_presentCompletes;
 	std::vector<VkSemaphore> m_renderCompletes;
 	std::vector<VkFence> m_flightFences;
-	std::size_t m_currentFrame{};
+	std::size_t m_currentFrame = 0;
 
 	std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers;
 

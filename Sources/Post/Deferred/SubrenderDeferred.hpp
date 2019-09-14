@@ -32,9 +32,9 @@ public:
 private:
 	struct DeferredLight
 	{
-		Colour m_colour{};
-		Vector3f m_position{};
-		float m_radius{};
+		Colour m_colour;
+		Vector3f m_position;
+		float m_radius = 0.0f;
 	};
 
 	DescriptorsHandler m_descriptorSet;

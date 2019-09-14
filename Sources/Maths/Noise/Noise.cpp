@@ -5,10 +5,10 @@
 namespace acid
 {
 // Hashing
-static const int32_t X_PRIME{1619};
-static const int32_t Y_PRIME{31337};
-static const int32_t Z_PRIME{6971};
-static const int32_t W_PRIME{1013};
+static const int32_t X_PRIME = 1619;
+static const int32_t Y_PRIME = 31337;
+static const int32_t Z_PRIME = 6971;
+static const int32_t W_PRIME = 1013;
 
 static const float GRAD_X[] = {1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 static const float GRAD_Y[] = {1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, -1.0f};
@@ -57,7 +57,7 @@ static const float G4 = (5.0f - std::sqrt(5.0f)) / 20.0f;
 static const float CUBIC_2D_BOUNDING = 1.0f / (1.5f * 1.5f);
 static const float CUBIC_3D_BOUNDING = 1.0f / (1.5f * 1.5f * 1.5f);
 
-static const int32_t FN_CELLULAR_INDEX_MAX{3};
+static const int32_t FN_CELLULAR_INDEX_MAX = 3;
 
 static const float CELL_2D_X[] = {-0.6440658039f, -0.08028078721f, 0.9983546168f, 0.9869492062f, 0.9284746418f, 0.6051097552f, -0.794167404f, -0.3488667991f, -0.943136526f,
 -0.9968171318f, 0.8740961579f, 0.1421139764f, 0.4282553608f, -0.9986665833f, 0.9996760121f, -0.06248383632f, 0.7120139305f, 0.8917660409f, 0.1094842955f, -0.8730880804f,
@@ -210,16 +210,16 @@ void Noise::SetSeed(uint64_t seed)
 
 	std::mt19937_64 gen{seed};
 
-	for (int32_t i{}; i < 256; i++)
+	for (int32_t i = 0; i < 256; i++)
 	{
 		m_perm[i] = static_cast<uint8_t>(i);
 	}
 
-	for (int32_t j{}; j < 256; j++)
+	for (int32_t j = 0; j < 256; j++)
 	{
 		auto rng = static_cast<int32_t>(gen() % (256 - j));
 		auto k = rng + j;
-		int32_t l{m_perm[j]};
+		int32_t l = m_perm[j];
 		m_perm[j] = m_perm[j + 256] = m_perm[k];
 		m_perm[k] = static_cast<uint8_t>(l);
 		m_perm12[j] = m_perm12[j + 256] = static_cast<uint8_t>(m_perm[j] % 12);
@@ -456,7 +456,7 @@ void Noise::GradientPerturbFractal(float &x, float &y) const
 {
 	auto amp = m_gradientPerturbAmp *m_fractalBounding;
 	auto freq = m_frequency;
-	int32_t i{};
+	int32_t i = 0;
 
 	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y);
 
@@ -681,7 +681,7 @@ void Noise::GradientPerturbFractal(float &x, float &y, float &z) const
 {
 	auto amp =  m_gradientPerturbAmp *m_fractalBounding;
 	auto freq = m_frequency;
-	int32_t i{};
+	int32_t i = 0;
 
 	SingleGradientPerturb(m_perm[0], amp, m_frequency, x, y, z);
 
@@ -716,7 +716,7 @@ void Noise::CalculateFractalBounding()
 	auto amp = m_gain;
 	auto ampFractal = 1.0f;
 
-	for (int32_t i{1}; i < m_octaves; i++)
+	for (int32_t i = 1; i < m_octaves; i++)
 	{
 		ampFractal += amp;
 		amp *= m_gain;
@@ -849,7 +849,7 @@ float Noise::SingleValueFractalFbm(float x, float y) const
 {
 	auto sum = SingleValue(m_perm[0], x, y);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -867,7 +867,7 @@ float Noise::SingleValueFractalBillow(float x, float y) const
 {
 	auto sum = std::fabs(SingleValue(m_perm[0], x, y)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -884,7 +884,7 @@ float Noise::SingleValueFractalRigidMulti(float x, float y) const
 {
 	auto sum = 1.0f - std::fabs(SingleValue(m_perm[0], x, y));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -905,8 +905,8 @@ float Noise::SingleValue(uint8_t offset, float x, float y) const
 	auto x1 = x0 + 1;
 	auto y1 = y0 + 1;
 
-	float xs{};
-	float ys{};
+	float xs = 0.0f;
+	float ys = 0.0f;
 
 	switch (m_interp)
 	{
@@ -933,7 +933,7 @@ float Noise::SinglePerlinFractalFbm(float x, float y) const
 {
 	auto sum = SinglePerlin(m_perm[0], x, y);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -951,7 +951,7 @@ float Noise::SinglePerlinFractalBillow(float x, float y) const
 {
 	auto sum = std::fabs(SinglePerlin(m_perm[0], x, y)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -969,7 +969,7 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y) const
 {
 	auto sum = 1.0f - std::fabs(SinglePerlin(m_perm[0], x, y));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -990,8 +990,8 @@ float Noise::SinglePerlin(uint8_t offset, float x, float y) const
 	auto x1 = x0 + 1;
 	auto y1 = y0 + 1;
 
-	float xs{};
-	float ys{};
+	float xs = 0.0f;
+	float ys = 0.0f;
 
 	switch (m_interp)
 	{
@@ -1024,7 +1024,7 @@ float Noise::SingleSimplexFractalFbm(float x, float y) const
 {
 	auto sum = SingleSimplex(m_perm[0], x, y);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1042,7 +1042,7 @@ float Noise::SingleSimplexFractalBillow(float x, float y) const
 {
 	auto sum = std::fabs(SingleSimplex(m_perm[0], x, y)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1060,7 +1060,7 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y) const
 {
 	auto sum = 1.0f - std::fabs(SingleSimplex(m_perm[0], x, y));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1078,7 +1078,7 @@ float Noise::singleSimplexFractalBlend(float x, float y) const
 {
 	auto sum = SingleSimplex(m_perm[0], x, y);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1168,7 +1168,7 @@ float Noise::SingleCubicFractalFbm(float x, float y) const
 {
 	auto sum = SingleCubic(m_perm[0], x, y);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1186,7 +1186,7 @@ float Noise::SingleCubicFractalBillow(float x, float y) const
 {
 	auto sum = std::fabs(SingleCubic(m_perm[0], x, y)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1204,7 +1204,7 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y) const
 {
 	auto sum = 1.0f - std::fabs(SingleCubic(m_perm[0], x, y));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1246,16 +1246,16 @@ float Noise::SingleCellular(float x, float y) const
 	auto yr = FastRound(y);
 
 	auto distance = 999999.0f;
-	int32_t xc{};
-	int32_t yc{};
+	int32_t xc = 0;
+	int32_t yc = 0;
 
 	switch (m_cellularDistance)
 	{
 	default:
 	case CellularDistance::Euclidean:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				auto lutPos = Index2d256(0, xi, yi);
 
@@ -1274,9 +1274,9 @@ float Noise::SingleCellular(float x, float y) const
 		}
 		break;
 	case CellularDistance::Manhattan:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				auto lutPos = Index2d256(0, xi, yi);
 
@@ -1295,9 +1295,9 @@ float Noise::SingleCellular(float x, float y) const
 		}
 		break;
 	case CellularDistance::Natural:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				uint8_t lutPos = Index2d256(0, xi, yi);
 
@@ -1346,9 +1346,9 @@ float Noise::SingleCellular2Edge(float x, float y) const
 	{
 	default:
 	case CellularDistance::Euclidean:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				auto lutPos = Index2d256(0, xi, yi);
 
@@ -1357,7 +1357,7 @@ float Noise::SingleCellular2Edge(float x, float y) const
 
 				auto newDistance = vecX * vecX + vecY * vecY;
 
-				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+				for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 				{
 					distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 				}
@@ -1367,9 +1367,9 @@ float Noise::SingleCellular2Edge(float x, float y) const
 		}
 		break;
 	case CellularDistance::Manhattan:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				auto lutPos = Index2d256(0, xi, yi);
 
@@ -1378,7 +1378,7 @@ float Noise::SingleCellular2Edge(float x, float y) const
 
 				auto newDistance = std::fabs(vecX) + std::fabs(vecY);
 
-				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+				for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 				{
 					distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 				}
@@ -1388,9 +1388,9 @@ float Noise::SingleCellular2Edge(float x, float y) const
 		}
 		break;
 	case CellularDistance::Natural:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
 				auto lutPos = Index2d256(0, xi, yi);
 
@@ -1399,7 +1399,7 @@ float Noise::SingleCellular2Edge(float x, float y) const
 
 				auto newDistance = (std::fabs(vecX) + std::fabs(vecY)) + (vecX * vecX + vecY * vecY);
 
-				for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+				for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 				{
 					distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 				}
@@ -1456,8 +1456,8 @@ void Noise::SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency
 		break;
 	}
 
-	int32_t lutPos0{Index2d256(offset, x0, y0)};
-	int32_t lutPos1{Index2d256(offset, x1, y0)};
+	int32_t lutPos0 = Index2d256(offset, x0, y0);
+	int32_t lutPos1 = Index2d256(offset, x1, y0);
 
 	auto lx0x = Lerp(CELL_2D_X[lutPos0], CELL_2D_X[lutPos1], xs);
 	auto ly0x = Lerp(CELL_2D_Y[lutPos0], CELL_2D_Y[lutPos1], xs);
@@ -1477,7 +1477,7 @@ float Noise::SingleValueFractalFbm(float x, float y, float z) const
 {
 	auto sum = SingleValue(m_perm[0], x, y, z);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1496,7 +1496,7 @@ float Noise::SingleValueFractalBillow(float x, float y, float z) const
 {
 	auto sum = std::fabs(SingleValue(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1515,7 +1515,7 @@ float Noise::SingleValueFractalRigidMulti(float x, float y, float z) const
 {
 	auto sum = 1.0f - std::fabs(SingleValue(m_perm[0], x, y, z));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1539,9 +1539,9 @@ float Noise::SingleValue(uint8_t offset, float x, float y, float z) const
 	auto y1 = y0 + 1;
 	auto z1 = z0 + 1;
 
-	float xs{};
-	float ys{};
-	float zs{};
+	float xs = 0.0f;
+	float ys = 0.0f;
+	float zs = 0.0f;
 
 	switch (m_interp)
 	{
@@ -1577,7 +1577,7 @@ float Noise::SinglePerlinFractalFbm(float x, float y, float z) const
 {
 	auto sum = SinglePerlin(m_perm[0], x, y, z);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1596,7 +1596,7 @@ float Noise::SinglePerlinFractalBillow(float x, float y, float z) const
 {
 	auto sum = std::fabs(SinglePerlin(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1615,7 +1615,7 @@ float Noise::SinglePerlinFractalRigidMulti(float x, float y, float z) const
 {
 	auto sum = 1.0f - std::fabs(SinglePerlin(m_perm[0], x, y, z));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1639,9 +1639,9 @@ float Noise::SinglePerlin(uint8_t offset, float x, float y, float z) const
 	auto y1 = y0 + 1;
 	auto z1 = z0 + 1;
 
-	float xs{};
-	float ys{};
-	float zs{};
+	float xs = 0.0f;
+	float ys = 0.0f;
+	float zs = 0.0f;
 
 	switch (m_interp)
 	{
@@ -1684,7 +1684,7 @@ float Noise::SingleSimplexFractalFbm(float x, float y, float z) const
 {
 	auto sum = SingleSimplex(m_perm[0], x, y, z);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1703,7 +1703,7 @@ float Noise::SingleSimplexFractalBillow(float x, float y, float z) const
 {
 	auto sum = std::fabs(SingleSimplex(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1722,7 +1722,7 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y, float z) const
 {
 	auto sum = 1.0f - std::fabs(SingleSimplex(m_perm[0], x, y, z));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1884,7 +1884,7 @@ float Noise::SingleCubicFractalFbm(float x, float y, float z) const
 {
 	auto sum = SingleCubic(m_perm[0], x, y, z);
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1903,7 +1903,7 @@ float Noise::SingleCubicFractalBillow(float x, float y, float z) const
 {
 	auto sum = std::fabs(SingleCubic(m_perm[0], x, y, z)) * 2.0f - 1.0f;
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1922,7 +1922,7 @@ float Noise::SingleCubicFractalRigidMulti(float x, float y, float z) const
 {
 	auto sum = 1.0f - std::fabs(SingleCubic(m_perm[0], x, y, z));
 	auto amp = 1.0f;
-	int32_t i{};
+	int32_t i = 0;
 
 	while (++i < m_octaves)
 	{
@@ -1987,18 +1987,18 @@ float Noise::SingleCellular(float x, float y, float z) const
 	auto zr = FastRound(z);
 
 	auto distance = 999999.0f;
-	int32_t xc{};
-	int32_t yc{};
-	int32_t zc{};
+	int32_t xc = 0;
+	int32_t yc = 0;
+	int32_t zc = 0;
 
 	switch (m_cellularDistance)
 	{
 	case CellularDistance::Euclidean:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2020,11 +2020,11 @@ float Noise::SingleCellular(float x, float y, float z) const
 		}
 		break;
 	case CellularDistance::Manhattan:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2046,11 +2046,11 @@ float Noise::SingleCellular(float x, float y, float z) const
 		}
 		break;
 	case CellularDistance::Natural:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2104,11 +2104,11 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 	switch (m_cellularDistance)
 	{
 	case CellularDistance::Euclidean:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2118,7 +2118,7 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 
 					auto newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
 
-					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+					for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 					{
 						distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 					}
@@ -2129,11 +2129,11 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 		}
 		break;
 	case CellularDistance::Manhattan:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2143,7 +2143,7 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 
 					auto newDistance = std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ);
 
-					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+					for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 					{
 						distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 					}
@@ -2154,11 +2154,11 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 		}
 		break;
 	case CellularDistance::Natural:
-		for (int32_t xi{xr - 1}; xi <= xr + 1; xi++)
+		for (int32_t xi = xr - 1; xi <= xr + 1; xi++)
 		{
-			for (int32_t yi{yr - 1}; yi <= yr + 1; yi++)
+			for (int32_t yi = yr - 1; yi <= yr + 1; yi++)
 			{
-				for (int32_t zi{zr - 1}; zi <= zr + 1; zi++)
+				for (int32_t zi = zr - 1; zi <= zr + 1; zi++)
 				{
 					auto lutPos = Index3d256(0, xi, yi, zi);
 
@@ -2168,7 +2168,7 @@ float Noise::SingleCellular2Edge(float x, float y, float z) const
 
 					auto newDistance = (std::fabs(vecX) + std::fabs(vecY) + std::fabs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
 
-					for (int32_t i{m_cellularDistanceIndex1}; i > 0; i--)
+					for (int32_t i = m_cellularDistanceIndex1; i > 0; i--)
 					{
 						distance[i] = std::fmax(std::fmin(distance[i], newDistance), distance[i - 1]);
 					}
@@ -2234,8 +2234,8 @@ void Noise::SingleGradientPerturb(uint8_t offset, float warpAmp, float frequency
 		break;
 	}
 
-	int32_t lutPos0{Index3d256(offset, x0, y0, z0)};
-	int32_t lutPos1{Index3d256(offset, x1, y0, z0)};
+	int32_t lutPos0 = Index3d256(offset, x0, y0, z0);
+	int32_t lutPos1 = Index3d256(offset, x1, y0, z0);
 
 	auto lx0x = Lerp(CELL_3D_X[lutPos0], CELL_3D_X[lutPos1], xs);
 	auto ly0x = Lerp(CELL_3D_Y[lutPos0], CELL_3D_Y[lutPos1], xs);
@@ -2290,10 +2290,10 @@ float Noise::SingleSimplex(uint8_t offset, float x, float y, float z, float w) c
 	auto z0 = z - Z0;
 	auto w0 = w - W0;
 
-	int32_t rankx{};
-	int32_t ranky{};
-	int32_t rankz{};
-	int32_t rankw{};
+	int32_t rankx = 0;
+	int32_t ranky = 0;
+	int32_t rankz = 0;
+	int32_t rankw = 0;
 
 	if (x0 > y0)
 	{

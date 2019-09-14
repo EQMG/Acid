@@ -67,6 +67,6 @@ private:
 	std::unique_ptr<Camera> m_camera;
 	std::unique_ptr<SceneStructure> m_structure;
 	std::unique_ptr<ScenePhysics> m_physics;
-	bool m_started{};
+	bool m_started = false;
 };
 }

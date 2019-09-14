@@ -220,7 +220,7 @@ private:
 		}
 
 		std::vector<FontMetafile::Character> m_characters;
-		float m_width{};
+		float m_width = 0.0f;
 	};
 
 	/**
@@ -265,8 +265,8 @@ private:
 		float m_spaceSize;
 
 		std::vector<Word> m_words;
-		float m_currentWordsLength{};
-		float m_currentLineLength{};
+		float m_currentWordsLength = 0.0f;
+		float m_currentLineLength = 0.0f;
 	};
 
 	/**
@@ -290,7 +290,7 @@ private:
 	UniformHandler m_uniformObject;
 
 	std::unique_ptr<Model> m_model;
-	uint32_t m_numberLines{};
+	uint32_t m_numberLines = 0;
 	Vector2f m_lastSize;
 
 	float m_fontSize;
@@ -304,13 +304,13 @@ private:
 
 	Colour m_textColour;
 	Colour m_borderColour;
-	bool m_solidBorder{};
-	bool m_glowBorder{};
+	bool m_solidBorder = false;
+	bool m_glowBorder = false;
 
 	std::unique_ptr<Driver<float>> m_glowDriver;
-	float m_glowSize{};
+	float m_glowSize = 0.0f;
 
 	std::unique_ptr<Driver<float>> m_borderDriver;
-	float m_borderSize{};
+	float m_borderSize = 0.0f;
 };
 }

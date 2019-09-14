@@ -84,7 +84,7 @@ public:
 	friend Node &operator<<(Node &node, const Joint &joint);
 
 private:
-	uint32_t m_index{};
+	uint32_t m_index = 0;
 	std::string m_name;
 	std::vector<Joint> m_children;
 

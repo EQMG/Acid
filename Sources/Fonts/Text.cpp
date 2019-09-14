@@ -196,7 +196,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
 	auto textLines = String::Split(formattedText, '\n');
 
-	for (uint32_t i{}; i < textLines.size(); i++)
+	for (uint32_t i = 0; i < textLines.size(); i++)
 	{
 		if (textLines.at(i).empty())
 		{
@@ -264,8 +264,8 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines)
 	std::vector<VertexDefault> vertices;
 	m_numberLines = static_cast<uint32_t>(lines.size());
 
-	float cursorX{};
-	float cursorY{};
+	float cursorX = 0.0f;
+	float cursorY = 0.0f;
 	auto lineOrder = static_cast<int32_t>(lines.size());
 
 	for (const auto &line : lines)

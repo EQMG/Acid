@@ -119,6 +119,6 @@ public:
 
 private:
 	Time m_animationTime;
-	Animation *m_currentAnimation{};
+	Animation *m_currentAnimation = nullptr;
 };
 }

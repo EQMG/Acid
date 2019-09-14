@@ -6,7 +6,7 @@ ThreadPool::ThreadPool(uint32_t threadCount)
 {
 	m_workers.reserve(threadCount);
 
-	for (std::size_t i{}; i < threadCount; ++i)
+	for (std::size_t i = 0; i < threadCount; ++i)
 	{
 		m_workers.emplace_back([this]
 		{

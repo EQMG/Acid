@@ -33,7 +33,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 	m_framebuffers.resize(swapchain.GetImageCount());
 
-	for (uint32_t i{}; i < swapchain.GetImageCount(); i++)
+	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
 	{
 		std::vector<VkImageView> attachments;
 

@@ -507,7 +507,7 @@ struct hash<acid::Vector2<T>>
 {
 	size_t operator()(const acid::Vector2<T> &vector) const
 	{
-		size_t seed{};
+		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.m_x);
 		acid::Maths::HashCombine(seed, vector.m_y);
 		return seed;

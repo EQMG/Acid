@@ -4,7 +4,7 @@
 
 namespace acid
 {
-static const float FADE_TIME{1.0f};
+static const float FADE_TIME = 1.0f;
 
 Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, float lifeLength, float stageCycles,
 	float rotation, float scale, float gravityEffect) :

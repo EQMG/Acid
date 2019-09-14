@@ -214,9 +214,9 @@ void Scene1::Start()
 
 	static const std::vector cubeColours{Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
-	for (int32_t i{}; i < 5; i++)
+	for (int32_t i = 0; i < 5; i++)
 	{
-		for (int32_t j{}; j < 5; j++)
+		for (int32_t j = 0; j < 5; j++)
 		{
 			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f{static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f});

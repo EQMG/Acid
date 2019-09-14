@@ -74,14 +74,14 @@ void ModelCylinder::Load()
 	vertices.reserve((m_slices + 1) * (m_stacks + 1));
 	indices.reserve(m_slices * m_stacks * 6);
 
-	for (uint32_t i{}; i < m_slices + 1; i++)
+	for (uint32_t i = 0; i < m_slices + 1; i++)
 	{
 		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
 		auto alpha = (i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi<float>;
 		auto xDir = std::cos(alpha);
 		auto zDir = std::sin(alpha);
 
-		for (uint32_t j{}; j < m_stacks + 1; j++)
+		for (uint32_t j = 0; j < m_stacks + 1; j++)
 		{
 			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
 			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
@@ -93,9 +93,9 @@ void ModelCylinder::Load()
 		}
 	}
 
-	for (uint32_t i{}; i < m_slices; i++)
+	for (uint32_t i = 0; i < m_slices; i++)
 	{
-		for (uint32_t j{}; j < m_stacks; j++)
+		for (uint32_t j = 0; j < m_stacks; j++)
 		{
 			auto first = j + ((m_stacks + 1) * i);
 			auto second = j + ((m_stacks + 1) * (i + 1));

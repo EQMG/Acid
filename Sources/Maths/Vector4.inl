@@ -499,7 +499,7 @@ struct hash<acid::Vector4<T>>
 {
 	size_t operator()(const acid::Vector4<T> &vector) const
 	{
-		size_t seed{};
+		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.m_x);
 		acid::Maths::HashCombine(seed, vector.m_y);
 		acid::Maths::HashCombine(seed, vector.m_z);

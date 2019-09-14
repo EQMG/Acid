@@ -4,7 +4,7 @@ namespace acid
 {
 void VertexWeights::AddJointEffect(uint32_t jointId, float weight)
 {
-	for (uint32_t i{}; i < m_weights.size(); i++)
+	for (uint32_t i = 0; i < m_weights.size(); i++)
 	{
 		if (weight > m_weights.at(i))
 		{
@@ -44,9 +44,9 @@ void VertexWeights::FillEmptyWeights(uint32_t max)
 
 float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray)
 {
-	float total{};
+	float total = 0.0f;
 
-	for (uint32_t i{}; i < topWeightsArray.size(); i++)
+	for (uint32_t i = 0; i < topWeightsArray.size(); i++)
 	{
 		topWeightsArray[i] = m_weights.at(i);
 		total += topWeightsArray.at(i);

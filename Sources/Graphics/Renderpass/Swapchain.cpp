@@ -115,7 +115,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	m_imageViews.resize(m_imageCount);
 	Graphics::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &m_imageCount, m_images.data()));
 
-	for (uint32_t i{}; i < m_imageCount; i++)
+	for (uint32_t i = 0; i < m_imageCount; i++)
 	{
 		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
 	}

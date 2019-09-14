@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/Log.hpp"
 #include "Serialized/Node.hpp"
 #include "Model.hpp"
 

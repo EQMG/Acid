@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
@@ -121,8 +121,8 @@ private:
 	float m_stageCycles;
 	float m_scale;
 
-	uint32_t m_maxInstances{};
-	uint32_t m_instances{};
+	uint32_t m_maxInstances = 0;
+	uint32_t m_instances = 0;
 
 	DescriptorsHandler m_descriptorSet;
 	InstanceBuffer m_instanceBuffer;

@@ -40,7 +40,7 @@ public:
 		m_valueTime = time;
 	}
 
-	uint32_t m_valueTemp{}, m_value{};
+	uint32_t m_valueTemp = 0, m_value = 0;
 	Time m_valueTime;
 };
 

@@ -19,9 +19,9 @@ namespace acid
 {
 // Define the low-level send/receive flags, which depends on the OS.
 #if defined(ACID_BUILD_LINUX)
-const int32_t flags{MSG_NOSIGNAL};
+const int32_t flags = MSG_NOSIGNAL;
 #else
-const int32_t flags{};
+const int32_t flags = 0;
 #endif
 
 TcpSocket::TcpSocket() :
@@ -206,7 +206,7 @@ Socket::Status TcpSocket::Send(const void *data, std::size_t size, std::size_t &
 	}
 
 	// Loop until every byte has been sent.
-	int32_t result{};
+	int32_t result = 0;
 
 	for (sent = 0; sent < size; sent += result)
 	{
@@ -275,7 +275,7 @@ Socket::Status TcpSocket::Send(Packet &packet)
 	auto dataSize = packet.OnSend();
 
 	// First convert the packet size to network byte order
-	uint32_t packetSize{htonl(static_cast<uint32_t>(dataSize.second))};
+	uint32_t packetSize = htonl(static_cast<uint32_t>(dataSize.second));
 
 	// Allocate memory for the data block to send
 	std::vector<char> blockToSend(sizeof(packetSize) + dataSize.second);
@@ -311,16 +311,16 @@ Socket::Status TcpSocket::Receive(Packet &packet)
 	packet.Clear();
 
 	// We start by getting the size of the incoming packet.
-	uint32_t packetSize{};
-	std::size_t received{};
+	uint32_t packetSize = 0;
+	std::size_t received = 0;
 
 	if (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 	{
 		// Loop until we've received the entire size of the packet (even a 4 byte variable may be received in more than one call).
 		while (m_pendingPacket.m_sizeReceived < sizeof(m_pendingPacket.m_size))
 		{
-			char *data{reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived};
-			Status status{Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received)};
+			auto data = reinterpret_cast<char *>(&m_pendingPacket.m_size) + m_pendingPacket.m_sizeReceived;
+			Status status = Receive(data, sizeof(m_pendingPacket.m_size) - m_pendingPacket.m_sizeReceived, received);
 			m_pendingPacket.m_sizeReceived += received;
 
 			if (status != Status::Done)

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
@@ -51,11 +51,11 @@ private:
 	float m_value;
 	float m_valueMin;
 	float m_valueMax;
-	float m_progress{};
+	float m_progress = 0.0f;
 	int32_t m_roundTo;
 
-	bool m_updating{};
-	bool m_mouseOver{};
+	bool m_updating = false;
+	bool m_mouseOver = false;
 
 	Delegate<void(float)> m_onValue;
 };

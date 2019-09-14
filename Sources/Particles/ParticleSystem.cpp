@@ -36,7 +36,7 @@ void ParticleSystem::Update()
 
 		if (!emitters.empty())
 		{
-			for (uint32_t i{}; i < elapsed; i++)
+			for (uint32_t i = 0; i < elapsed; i++)
 			{
 				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
 			}

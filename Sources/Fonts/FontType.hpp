@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Resources/Resource.hpp"
 #include "Maths/Colour.hpp"
@@ -113,13 +113,13 @@ private:
 	std::map<wchar_t, uint32_t> m_charmap;
 	std::vector<HostGlyphInfo> m_glyphInfos;
 
-	uint32_t m_glyphDataSize{};
-	uint32_t m_glyphInfoSize{};
-	uint32_t m_glyphCellsSize{};
-	uint32_t m_glyphPointsSize{};
-	uint32_t m_glyphInfoOffset{};
-	uint32_t m_glyphCellsOffset{};
-	uint32_t m_glyphPointsOffset{};
+	uint32_t m_glyphDataSize = 0;
+	uint32_t m_glyphInfoSize = 0;
+	uint32_t m_glyphCellsSize = 0;
+	uint32_t m_glyphPointsSize = 0;
+	uint32_t m_glyphInfoOffset = 0;
+	uint32_t m_glyphCellsOffset = 0;
+	uint32_t m_glyphPointsOffset = 0;
 
 	std::shared_ptr<Image2d> m_image;
 	std::unique_ptr<FontMetafile> m_node;
@@ -128,6 +128,6 @@ private:
 	std::unique_ptr<StorageBuffer> m_storageGlyphs;
 	std::unique_ptr<InstanceBuffer> m_instanceBuffer;
 
-	uint32_t m_instances{};
+	uint32_t m_instances = 0;
 };
 }

@@ -262,8 +262,8 @@ FtpResponse Ftp::GetResponse()
 {
 	// We'll use a variable to keep track of the last valid code.
 	// It is useful in case of multi-lines responses, because the end of such a response will start by the same code.
-	uint32_t lastCode{};
-	bool isInsideMultiline{};
+	uint32_t lastCode = 0;
+	bool isInsideMultiline = false;
 	std::string message;
 
 	for (;;)

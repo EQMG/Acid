@@ -58,7 +58,7 @@ void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer comma
 uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
 	const VkMemoryPropertyFlags &requiredProperties)
 {
-	for (uint32_t i{}; i < deviceMemoryProperties->memoryTypeCount; ++i)
+	for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i)
 	{
 		if (memoryRequirements->memoryTypeBits & (1 << i))
 		{
@@ -100,7 +100,7 @@ void Instance::SetupLayers()
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
 	for (const auto &layerName : ValidationLayers)
 	{
-		bool layerFound{};
+		bool layerFound = false;
 
 		for (const auto &layerProperties : instanceLayerProperties)
 		{
@@ -132,7 +132,7 @@ void Instance::SetupExtensions()
 	// Sets up the extensions.
 	auto [extensions, extensionsCount] = Window::Get()->GetInstanceExtensions();
 
-	for (uint32_t i{}; i < extensionsCount; i++)
+	for (uint32_t i = 0; i < extensionsCount; i++)
 	{
 		m_instanceExtensions.emplace_back(extensions[i]);
 	}

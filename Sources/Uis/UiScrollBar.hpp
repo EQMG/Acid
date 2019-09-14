@@ -37,7 +37,7 @@ private:
 	Gui m_background;
 	Gui m_scroll;
 	uint32_t m_index;
-	bool m_updating{};
-	bool m_mouseOver{};
+	bool m_updating = false;
+	bool m_mouseOver = false;
 };
 }

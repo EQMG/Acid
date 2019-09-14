@@ -51,8 +51,8 @@ public:
 	Delegate<void(Type, float)> &OnGain() { return m_onGain; }
 
 private:
-	ALCdevice *m_device{};
-	ALCcontext *m_context{};
+	ALCdevice *m_device = nullptr;
+	ALCcontext *m_context = nullptr;
 
 	std::map<Type, float> m_gains;
 

@@ -131,7 +131,7 @@ Window::Window() :
 	int32_t monitorCount;
 	auto monitors = glfwGetMonitors(&monitorCount);
 
-	for (uint32_t i{}; i < static_cast<uint32_t>(monitorCount); i++)
+	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 	{
 		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}

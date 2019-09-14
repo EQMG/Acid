@@ -185,7 +185,7 @@ public:
 	static const Colour Purple;
 	static const Colour Fuchsia;
 
-	float m_r{}, m_g{}, m_b{}, m_a{1.0f};
+	float m_r = 0.0f, m_g = 0.0f, m_b = 0.0f, m_a = 1.0f;
 };
 }
 
@@ -196,7 +196,7 @@ struct hash<acid::Colour>
 {
 	size_t operator()(const acid::Colour &colour) const
 	{
-		size_t seed{};
+		size_t seed = 0;
 		acid::Maths::HashCombine(seed, colour.m_r);
 		acid::Maths::HashCombine(seed, colour.m_g);
 		acid::Maths::HashCombine(seed, colour.m_b);

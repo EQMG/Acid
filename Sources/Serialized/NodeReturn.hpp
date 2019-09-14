@@ -58,8 +58,8 @@ public:
 	NodeReturn operator[](uint32_t index);
 
 private:
-	Node *m_parent{};
+	Node *m_parent = nullptr;
 	std::vector<std::variant<std::string, int32_t>> m_keys;
-	Node *m_value{};
+	Node *m_value = nullptr;
 };
 }

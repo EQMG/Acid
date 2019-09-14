@@ -51,10 +51,10 @@ public:
 	void SetEntity(Entity *entity) { m_entity = entity; }
 
 private:
-	bool m_started{};
-	bool m_enabled{true};
-	bool m_removed{};
-	Entity *m_entity{};
+	bool m_started = false;
+	bool m_enabled = true;
+	bool m_removed = false;
+	Entity *m_entity = nullptr;
 };
 
 }
