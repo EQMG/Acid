@@ -7,11 +7,11 @@
 namespace acid
 {
 Graphics::Graphics() :
-	m_elapsedPurge{5s},
-	m_instance{std::make_unique<Instance>()},
-	m_physicalDevice{std::make_unique<PhysicalDevice>(m_instance.get())},
-	m_surface{std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())},
-	m_logicalDevice{std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get())}
+	m_elapsedPurge(5s),
+	m_instance(std::make_unique<Instance>()),
+	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
+	m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
+	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get()))
 {
 	glslang::InitializeProcess();
 

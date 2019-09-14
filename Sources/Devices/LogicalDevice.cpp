@@ -8,9 +8,9 @@
 namespace acid
 {
 LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface) :
-	m_instance{instance},
-	m_physicalDevice{physicalDevice},
-	m_surface{surface}
+	m_instance(instance),
+	m_physicalDevice(physicalDevice),
+	m_surface(surface)
 {
 	CreateQueueIndices();
 	CreateLogicalDevice();

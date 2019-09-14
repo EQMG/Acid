@@ -34,7 +34,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filena
 }
 
 ModelGltf::ModelGltf(std::filesystem::path filename, bool load) :
-	m_filename{std::move(filename)}
+	m_filename(std::move(filename))
 {
 	if (load)
 	{

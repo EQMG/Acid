@@ -9,7 +9,7 @@ static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS{ VK_SAMPLE_COUNT
 	VK_SAMPLE_COUNT_4_BIT, VK_SAMPLE_COUNT_2_BIT };
 
 PhysicalDevice::PhysicalDevice(const Instance *instance) :
-	m_instance{instance}
+	m_instance(instance)
 {
 	uint32_t physicalDeviceCount;
 	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, nullptr);

@@ -5,8 +5,8 @@
 namespace acid
 {
 FilterLensflare::FilterLensflare(const Pipeline::Stage &pipelineStage) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Lensflare.frag"}},
-	m_sunHeight{0.0f}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Lensflare.frag"}),
+	m_sunHeight(0.0f)
 {
 }
 

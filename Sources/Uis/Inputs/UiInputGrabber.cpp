@@ -1,4 +1,4 @@
-﻿#include "UiInputGrabber.hpp"
+#include "UiInputGrabber.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
@@ -6,12 +6,12 @@
 namespace acid
 {
 UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform) :
-	UiObject{parent, transform},
-	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
-	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
-	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour}
+	UiObject(parent, transform),
+	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title, 
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
+	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour)
 {
 	SetCursorHover(CursorStandard::Hand);
 

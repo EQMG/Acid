@@ -14,7 +14,7 @@ class MaterialStreamReader :
 {
 public:
 	explicit MaterialStreamReader(std::filesystem::path folder) :
-		m_folder{std::move(folder)}
+		m_folder(std::move(folder))
 	{
 	}
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <vulkan/vulkan.h>
 #include "Helpers/NonCopyable.hpp"
@@ -16,9 +16,7 @@ public:
 	{
 	public:
 		SubpassDescription(const VkPipelineBindPoint &bindPoint, std::vector<VkAttachmentReference> colorAttachments, const std::optional<uint32_t> &depthAttachment) :
-			m_subpassDescription({}),
-			m_colorAttachments(std::move(colorAttachments)),
-			m_depthStencilAttachment({})
+			m_colorAttachments(std::move(colorAttachments))
 		{
 			m_subpassDescription.pipelineBindPoint = bindPoint;
 			m_subpassDescription.colorAttachmentCount = static_cast<uint32_t>(m_colorAttachments.size());
@@ -35,9 +33,9 @@ public:
 		const VkSubpassDescription &GetSubpassDescription() const { return m_subpassDescription; }
 
 	private:
-		VkSubpassDescription m_subpassDescription;
+		VkSubpassDescription m_subpassDescription = {};
 		std::vector<VkAttachmentReference> m_colorAttachments;
-		VkAttachmentReference m_depthStencilAttachment;
+		VkAttachmentReference m_depthStencilAttachment = {};
 	};
 
 	Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);

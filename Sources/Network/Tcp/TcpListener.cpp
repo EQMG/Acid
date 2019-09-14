@@ -12,7 +12,7 @@
 namespace acid
 {
 TcpListener::TcpListener() :
-	Socket{Type::Tcp}
+	Socket(Type::Tcp)
 {
 }
 

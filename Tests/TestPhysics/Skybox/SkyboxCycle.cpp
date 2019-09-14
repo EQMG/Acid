@@ -10,8 +10,8 @@ namespace test
 static const Colour SKYBOX_COLOUR_DAY{"#003C8A"};
 
 SkyboxCycle::SkyboxCycle(bool enableFog, bool enableRotation) :
-	m_enableFog{enableFog},
-	m_enableRotation{enableRotation}
+	m_enableFog(enableFog),
+	m_enableRotation(enableRotation)
 {
 }
 

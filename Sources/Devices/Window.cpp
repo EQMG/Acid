@@ -94,11 +94,11 @@ void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
 }
 
 Window::Window() :
-	m_size{1080, 720},
-	m_aspectRatio{1.5f},
-	m_title{"Acid Window"},
-	m_resizable{true},
-	m_focused{true}
+	m_size(1080, 720),
+	m_aspectRatio(1.5f),
+	m_title("Acid Window"),
+	m_resizable(true),
+	m_focused(true)
 {
 	// Set the error error callback
 	glfwSetErrorCallback(CallbackError);

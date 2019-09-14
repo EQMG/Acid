@@ -21,9 +21,9 @@ public:
 	 * @param length The length between two waves. 
 	 **/
 	DriverSinwave(const T &min, const T &max, const Time &length) :
-		Driver<T>{length},
-		m_min{min},
-		m_max{max}
+		Driver<T>(length),
+		m_min(min),
+		m_max(max)
 	{
 	}
 

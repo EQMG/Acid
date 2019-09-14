@@ -3,7 +3,7 @@
 namespace acid
 {
 FtpResponseDirectory::FtpResponseDirectory(const FtpResponse &response) :
-	FtpResponse{response}
+	FtpResponse(response)
 {
 	if (IsOk())
 	{

@@ -33,10 +33,10 @@ std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model
 }
 
 GizmoType::GizmoType(std::shared_ptr<Model> model, float lineThickness, const Colour &colour) :
-	m_model{std::move(model)},
-	m_lineThickness{lineThickness},
-	m_colour{colour},
-	m_instanceBuffer{sizeof(Instance) * MAX_INSTANCES}
+	m_model(std::move(model)),
+	m_lineThickness(lineThickness),
+	m_colour(colour),
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
 {
 }
 

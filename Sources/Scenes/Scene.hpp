@@ -18,9 +18,9 @@ public:
 	 * @param camera The scenes camera.
 	 */
 	explicit Scene(std::unique_ptr<Camera> &&camera) :
-		m_camera{std::move(camera)},
-		m_structure{std::make_unique<SceneStructure>()},
-		m_physics{std::make_unique<ScenePhysics>()}
+		m_camera(std::move(camera)),
+		m_structure(std::make_unique<SceneStructure>()),
+		m_physics(std::make_unique<ScenePhysics>())
 	{
 	}
 

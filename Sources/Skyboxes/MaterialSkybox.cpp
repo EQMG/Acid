@@ -6,10 +6,10 @@
 namespace acid
 {
 MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &baseColour) :
-	m_image{std::move(image)},
-	m_baseColour{baseColour},
-	m_blend{1.0f},
-	m_fogLimits{-10000.0f}
+	m_image(std::move(image)),
+	m_baseColour(baseColour),
+	m_blend(1.0f),
+	m_fogLimits(-10000.0f)
 {
 }
 

@@ -17,8 +17,8 @@ class ACID_EXPORT App
 	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :
-		m_name{std::move(name)},
-		m_version{version}
+		m_name(std::move(name)),
+		m_version(version)
 	{
 	}
 

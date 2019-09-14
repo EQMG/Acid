@@ -22,9 +22,9 @@
 namespace test
 {
 Scene1::Scene1() :
-	Scene{std::make_unique<CameraFree>()},
-	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
-	m_overlayDebug{&Uis::Get()->GetCanvas()}
+	Scene(std::make_unique<CameraFree>()),
+	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
+	m_overlayDebug(&Uis::Get()->GetCanvas())
 {
 	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

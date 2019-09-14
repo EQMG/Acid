@@ -7,7 +7,7 @@
 namespace acid
 {
 Json::Json(const Node &node) :
-	Node{node}
+	Node(node)
 {
 	SetType(Type::Object);
 }

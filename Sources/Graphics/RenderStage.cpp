@@ -6,9 +6,9 @@
 namespace acid
 {
 RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType> subpasses, const Viewport &viewport) :
-	m_attachments{std::move(images)},
-	m_subpasses{std::move(subpasses)},
-	m_viewport{viewport},
+	m_attachments(std::move(images)),
+	m_subpasses(std::move(subpasses)),
+	m_viewport(viewport),
 	m_subpassAttachmentCount(m_subpasses.size()),
 	m_subpassMultisampled(m_subpasses.size())
 {

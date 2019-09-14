@@ -9,8 +9,8 @@
 namespace test
 {
 ConfigManager::ConfigManager() :
-	m_audio{"Configs/Audio.json", std::make_unique<Json>()},
-	m_graphics{"Configs/Graphics.json", std::make_unique<Json>()}
+	m_audio("Configs/Audio.json", std::make_unique<Json>()),
+	m_graphics("Configs/Graphics.json", std::make_unique<Json>())
 {
 	Load();
 	Timers::Get()->Every(160s, [this]()

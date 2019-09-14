@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 namespace test
 {
 MainApp::MainApp() :
-	App{"Editor Test", {1, 0, 0}},
+	App("Editor Test", {1, 0, 0}),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete)

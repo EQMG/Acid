@@ -3,14 +3,14 @@
 namespace acid
 {
 JointTransform::JointTransform(const Vector3f &position, const Quaternion &rotation) :
-	m_position{position},
-	m_rotation{rotation}
+	m_position(position),
+	m_rotation(rotation)
 {
 }
 
 JointTransform::JointTransform(const Matrix4 &localTransform) :
-	m_position{localTransform[3]},
-	m_rotation{localTransform}
+	m_position(localTransform[3]),
+	m_rotation(localTransform)
 {
 }
 

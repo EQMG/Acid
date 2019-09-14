@@ -96,7 +96,7 @@ private:
 	std::optional<Shader::UniformBlock> m_uniformBlock;
 	uint32_t m_size = 0;
 	void *m_data = nullptr;
-	bool m_bound = nullptr;
+	bool m_bound = false;
 	std::unique_ptr<StorageBuffer> m_storageBuffer;
 	Buffer::Status m_handlerStatus;
 };

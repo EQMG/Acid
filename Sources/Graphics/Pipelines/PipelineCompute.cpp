@@ -6,11 +6,11 @@
 namespace acid
 {
 PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines, bool pushDescriptors) :
-	m_shaderStage{std::move(shaderStage)},
-	m_defines{std::move(defines)},
-	m_pushDescriptors{pushDescriptors},
-	m_shader{std::make_unique<Shader>()},
-	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_COMPUTE}
+	m_shaderStage(std::move(shaderStage)),
+	m_defines(std::move(defines)),
+	m_pushDescriptors(pushDescriptors),
+	m_shader(std::make_unique<Shader>()),
+	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE)
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();

@@ -11,7 +11,7 @@
 namespace acid
 {
 MeshAnimated::MeshAnimated(std::filesystem::path filename) :
-	m_filename{std::move(filename)}
+	m_filename(std::move(filename))
 {
 }
 

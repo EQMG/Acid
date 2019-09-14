@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterGrain::FilterGrain(const Pipeline::Stage &pipelineStage, float strength) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grain.frag"}},
-	m_strength{strength}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grain.frag"}),
+	m_strength(strength)
 {
 }
 

@@ -3,8 +3,8 @@
 namespace acid
 {
 Keyframe::Keyframe(const Time &timeStamp, std::map<std::string, JointTransform> pose) :
-	m_timeStamp{timeStamp},
-	m_pose{std::move(pose)}
+	m_timeStamp(timeStamp),
+	m_pose(std::move(pose))
 {
 }
 

@@ -12,9 +12,9 @@ public:
 	VertexDefault() = default;
 
 	VertexDefault(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
-		m_position{position},
-		m_uv{uv},
-		m_normal{normal}
+		m_position(position),
+		m_uv(uv),
+		m_normal(normal)
 	{
 	}
 

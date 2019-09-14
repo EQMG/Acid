@@ -5,7 +5,7 @@
 namespace acid
 {
 CommandPool::CommandPool(const std::thread::id &threadId) :
-	m_threadId{threadId}
+	m_threadId(threadId)
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto graphicsFamily = logicalDevice->GetGraphicsFamily();

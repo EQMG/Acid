@@ -7,7 +7,7 @@
 namespace acid
 {
 ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, const Transform &localTransform) :
-	Collider{localTransform}
+	Collider(localTransform)
 {
 	if (pointCloud.empty())
 	{

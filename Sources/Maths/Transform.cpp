@@ -5,9 +5,9 @@
 namespace acid
 {
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scale) :
-	m_position{position},
-	m_rotation{rotation},
-	m_scale{scale}
+	m_position(position),
+	m_rotation(rotation),
+	m_scale(scale)
 {
 }
 

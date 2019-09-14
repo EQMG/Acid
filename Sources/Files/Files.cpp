@@ -15,8 +15,8 @@ class FBuffer :
 {
 public:
 	explicit FBuffer(PHYSFS_File *file, std::size_t bufferSize = 2048) :
-		m_bufferSize{bufferSize},
-		m_file{file}
+		m_bufferSize(bufferSize),
+		m_file(file)
 	{
 		m_buffer = new char[m_bufferSize];
 		auto end = m_buffer + m_bufferSize;
@@ -130,7 +130,7 @@ protected:
 };
 
 BaseFStream::BaseFStream(PHYSFS_File *file) :
-	file{file}
+	file(file)
 {
 	if (file == NULL)
 	{
@@ -176,8 +176,8 @@ PHYSFS_File *OpenWithMode(const std::filesystem::path &filename, FileMode openMo
 }
 
 IFStream::IFStream(const std::filesystem::path &filename) :
-	BaseFStream{OpenWithMode(filename, FileMode::Read)},
-	std::istream{new FBuffer(file)}
+	BaseFStream(OpenWithMode(filename, FileMode::Read)),
+	std::istream(new FBuffer(file))
 {
 }
 
@@ -187,8 +187,8 @@ IFStream::~IFStream()
 }
 
 OFStream::OFStream(const std::filesystem::path &filename, const FileMode &writeMode) :
-	BaseFStream{OpenWithMode(filename, writeMode)},
-	std::ostream{new FBuffer(file)}
+	BaseFStream(OpenWithMode(filename, writeMode)),
+	std::ostream(new FBuffer(file))
 {
 }
 
@@ -198,8 +198,8 @@ OFStream::~OFStream()
 }
 
 FStream::FStream(const std::filesystem::path &filename, const FileMode &openMode) :
-	BaseFStream{OpenWithMode(filename, openMode)},
-	std::iostream{new FBuffer(file)}
+	BaseFStream(OpenWithMode(filename, openMode)),
+	std::iostream(new FBuffer(file))
 {
 }
 

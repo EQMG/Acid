@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterDarken::FilterDarken(const Pipeline::Stage &pipelineStage, float factor) :
-	PostFilter{pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Darken.frag" }},
-	m_factor{factor}
+	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Darken.frag" }),
+	m_factor(factor)
 {
 }
 

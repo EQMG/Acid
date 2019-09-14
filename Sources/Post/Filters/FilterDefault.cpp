@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterDefault::FilterDefault(const Pipeline::Stage &pipelineStage, bool lastFilter) :
-	PostFilter{pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Default.frag" }},
-	m_lastFilter{lastFilter}
+	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Default.frag" }),
+	m_lastFilter(lastFilter)
 {
 }
 

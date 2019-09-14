@@ -3,17 +3,17 @@
 namespace acid
 {
 StorageHandler::StorageHandler(bool multipipeline) :
-	m_multipipeline{multipipeline},
-	m_handlerStatus{Buffer::Status::Reset}
+	m_multipipeline(multipipeline),
+	m_handlerStatus(Buffer::Status::Reset)
 {
 }
 
 StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
-	m_multipipeline{multipipeline},
-	m_uniformBlock{uniformBlock},
-	m_size{static_cast<uint32_t>(m_uniformBlock->GetSize())},
-	m_storageBuffer{std::make_unique<StorageBuffer>(static_cast<VkDeviceSize>(m_size))},
-	m_handlerStatus{Buffer::Status::Changed}
+	m_multipipeline(multipipeline),
+	m_uniformBlock(uniformBlock),
+	m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
+	m_storageBuffer(std::make_unique<StorageBuffer>(static_cast<VkDeviceSize>(m_size))),
+	m_handlerStatus(Buffer::Status::Changed)
 {
 }
 

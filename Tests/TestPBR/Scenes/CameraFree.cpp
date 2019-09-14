@@ -17,15 +17,15 @@ static const Vector2f SENSITIVITY_JOYSTICK(-0.06f);
 static const Vector2f SENSITIVITY_MOUSE(0.15f);
 
 CameraFree::CameraFree() :
-	m_sensitivity{1.0f},
-	m_joystickVertical{0, 3},
-	m_joystickHorizontal{0, 2},
+	m_sensitivity(1.0f),
+	m_joystickVertical(0, 3),
+	m_joystickHorizontal(0, 2),
 	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
 		std::make_unique<AxisJoystick>(0, 1)},
 	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
 		std::make_unique<AxisJoystick>(0, 0)},
-	m_inputVertical{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)},
-	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)}
+	m_inputVertical(std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)),
+	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1))
 {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;

@@ -5,9 +5,9 @@
 namespace acid
 {
 DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
-	m_pipelineLayout{pipeline.GetPipelineLayout()},
-	m_pipelineBindPoint{pipeline.GetPipelineBindPoint()},
-	m_descriptorPool{pipeline.GetDescriptorPool()}
+	m_pipelineLayout(pipeline.GetPipelineLayout()),
+	m_pipelineBindPoint(pipeline.GetPipelineBindPoint()),
+	m_descriptorPool(pipeline.GetDescriptorPool())
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 

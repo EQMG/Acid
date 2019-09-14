@@ -5,9 +5,9 @@
 namespace acid
 {
 AnimationLoader::AnimationLoader(const Node *libraryAnimations, const Node *libraryVisualScenes, const Matrix4 &correction) :
-	m_libraryAnimations{libraryAnimations},
-	m_libraryVisualScenes{libraryVisualScenes},
-	m_correction{correction}
+	m_libraryAnimations(libraryAnimations),
+	m_libraryVisualScenes(libraryVisualScenes),
+	m_correction(correction)
 {
 	auto animationNodes = m_libraryAnimations->FindChildren("animation");
 

@@ -3,8 +3,8 @@
 namespace test
 {
 MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale) :
-	MeshSimple{sideLength, squareSize, vertexCount, textureScale},
-	m_heightmap{heightmap}
+	MeshSimple(sideLength, squareSize, vertexCount, textureScale),
+	m_heightmap(heightmap)
 {
 	GenerateMesh();
 }

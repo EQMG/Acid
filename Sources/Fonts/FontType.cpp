@@ -33,8 +33,8 @@ std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename
 }
 
 FontType::FontType(std::filesystem::path filename, std::string style, bool load) :
-	m_filename{std::move(filename)},
-	m_style{std::move(style)}
+	m_filename(std::move(filename)),
+	m_style(std::move(style))
 {
 	if (load)
 	{

@@ -7,11 +7,11 @@
 namespace test
 {
 Terrain::Terrain(float sideLength, float squareSize) :
-	m_noise{25653345, 0.01f, Noise::Interp::Quintic, Noise::Type::PerlinFractal, 5, 2.0f, 0.5f, Noise::Fractal::FBM},
-	m_sideLength{sideLength},
-	m_squareSize{squareSize},
-	m_minHeight{+std::numeric_limits<float>::infinity()},
-	m_maxHeight{-std::numeric_limits<float>::infinity()}
+	m_noise(25653345, 0.01f, Noise::Interp::Quintic, Noise::Type::PerlinFractal, 5, 2.0f, 0.5f, Noise::Fractal::FBM),
+	m_sideLength(sideLength),
+	m_squareSize(squareSize),
+	m_minHeight(+std::numeric_limits<float>::infinity()),
+	m_maxHeight(-std::numeric_limits<float>::infinity())
 {
 }
 

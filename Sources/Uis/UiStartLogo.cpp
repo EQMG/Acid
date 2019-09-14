@@ -1,4 +1,4 @@
-﻿#include "UiStartLogo.hpp"
+#include "UiStartLogo.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Timers/Timers.hpp"
@@ -12,11 +12,11 @@ const Time START_DELAY{3s};
 #endif
 
 UiStartLogo::UiStartLogo(UiObject *parent) :
-	UiObject{parent, {UiMargins::All}},
-	m_guiBackground{this, {UiMargins::All}, Image2d::Create("Guis/Black.png")},
-	m_guiLogoAcid{this, {{300, 300}, UiAnchor::Centre, {0, -100}}, Image2d::Create("Logos/Acid_01.png")},
-	m_textCopyright{this, {{460, 64}, UiAnchor::Centre, {0, 128}}, 12.0f,
-	"Copyright (C) 2019, Equilibrium Games - All Rights Reserved.", FontType::Create("Fonts/ProximaNova"), Text::Justify::Centre, Colour::White}
+	UiObject(parent, {UiMargins::All}),
+	m_guiBackground(this, {UiMargins::All}, Image2d::Create("Guis/Black.png")),
+	m_guiLogoAcid(this, {{300, 300}, UiAnchor::Centre, {0, -100}}, Image2d::Create("Logos/Acid_01.png")),
+	m_textCopyright(this, {{460, 64}, UiAnchor::Centre, {0, 128}}, 12.0f, "Copyright (C) 2019, Equilibrium Games - All Rights Reserved.", 
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Centre, Colour::White)
 {
 	Timers::Get()->Once(START_DELAY, [this]()
 	{

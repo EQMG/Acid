@@ -5,8 +5,8 @@ namespace acid
 uint32_t PostFilter::GlobalSwitching = 0;
 
 PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::filesystem::path> &shaderStages, const std::vector<Shader::Define> &defines) :
-	Subrender{pipelineStage},
-	m_pipeline{pipelineStage, shaderStages, {}, defines, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None}
+	Subrender(pipelineStage),
+	m_pipeline(pipelineStage, shaderStages, {}, defines, PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None)
 {
 }
 

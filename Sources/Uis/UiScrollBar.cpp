@@ -9,10 +9,10 @@ namespace acid
 const uint32_t UiScrollBar::Size{8};
 
 UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform) :
-	UiObject{parent, transform},
-	m_background{this, {UiMargins::All}, Image2d::Create("Guis/White.png"), UiInputButton::PrimaryColour},
-	m_scroll{this, {UiMargins::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour},
-	m_index{type == ScrollBar::Vertical}
+	UiObject(parent, transform),
+	m_background(this, {UiMargins::All}, Image2d::Create("Guis/White.png"), UiInputButton::PrimaryColour),
+	m_scroll(this, {UiMargins::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour),
+	m_index(type == ScrollBar::Vertical)
 {
 	Mouse::Get()->OnScroll().Add([this](Vector2d wheelDelta)
 	{

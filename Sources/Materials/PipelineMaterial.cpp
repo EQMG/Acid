@@ -38,8 +38,8 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 }
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
-	m_pipelineStage{std::move(pipelineStage)},
-	m_pipelineCreate{std::move(pipelineCreate)}
+	m_pipelineStage(std::move(pipelineStage)),
+	m_pipelineCreate(std::move(pipelineCreate))
 {
 }
 

@@ -25,7 +25,7 @@ const int32_t flags = 0;
 #endif
 
 TcpSocket::TcpSocket() :
-	Socket{Type::Tcp}
+	Socket(Type::Tcp)
 {
 }
 

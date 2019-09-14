@@ -8,12 +8,12 @@
 namespace acid
 {
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, float pps, float averageSpeed, float gravityEffect) :
-	m_types{std::move(types)},
-	m_pps{pps},
-	m_averageSpeed{averageSpeed},
-	m_gravityEffect{gravityEffect},
-	m_randomRotation{false},
-	m_elapsedEmit{Time::Seconds(1.0f / m_pps)}
+	m_types(std::move(types)),
+	m_pps(pps),
+	m_averageSpeed(averageSpeed),
+	m_gravityEffect(gravityEffect),
+	m_randomRotation(false),
+	m_elapsedEmit(Time::Seconds(1.0f / m_pps))
 {
 }
 

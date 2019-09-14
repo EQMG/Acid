@@ -7,13 +7,13 @@ namespace acid
 {
 FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, float focusPoint, float nearField, float nearTransition,
 	float farField, float farTransition) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Dof.frag"}},
-	m_pipelineBlur{pipelineBlur},
-	m_focusPoint{focusPoint},
-	m_nearField{nearField},
-	m_nearTransition{nearTransition},
-	m_farField{farField},
-	m_farTransition{farTransition}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Dof.frag"}),
+	m_pipelineBlur(pipelineBlur),
+	m_focusPoint(focusPoint),
+	m_nearField(nearField),
+	m_nearTransition(nearTransition),
+	m_farField(farField),
+	m_farTransition(farTransition)
 {
 }
 

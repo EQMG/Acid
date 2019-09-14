@@ -6,8 +6,8 @@
 namespace acid
 {
 File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
-	m_filename{std::move(filename)},
-	m_node{std::move(node)}
+	m_filename(std::move(filename)),
+	m_node(std::move(node))
 {
 }
 

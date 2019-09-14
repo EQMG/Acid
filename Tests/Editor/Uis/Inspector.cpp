@@ -6,7 +6,7 @@
 namespace test
 {
 Inspector::Inspector(UiObject *parent) :
-	UiPanel(parent, {{1.0f, 0.0f}, UiAnchor::RightTop, {0.3f, 1.0f}}, UiInputButton::BackgroundColour, 
+	UiPanel(parent, {{1.0f, 0.0f}, UiAnchor::RightTop, {0.3f, 1.0f}}, UiInputButton::BackgroundColour,
 		UiManipulate::None, ScrollBar::None),
 	m_section1(&GetContent(), "Section Right", {{0.08f, 0.05f}, UiAnchor::LeftTop}),
 	m_button1(&m_section1.GetContent(), "Button #2", {{0.0f, 0.0f}, UiAnchor::LeftTop}),

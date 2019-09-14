@@ -28,11 +28,11 @@ int main(int argc, char **argv)
 namespace test
 {
 MainApp::MainApp() :
-	App{"Test GUI", {1, 0, 0}},
-	m_fileWatcher{std::filesystem::current_path(), 2s},
-	m_buttonFullscreen{Key::F11},
-	m_buttonScreenshot{Key::F9},
-	m_buttonExit{Key::Delete}
+	App("Test GUI", {1, 0, 0}),
+	m_fileWatcher(std::filesystem::current_path(), 2s),
+	m_buttonFullscreen(Key::F11),
+	m_buttonScreenshot(Key::F9),
+	m_buttonExit(Key::Delete)
 {
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');

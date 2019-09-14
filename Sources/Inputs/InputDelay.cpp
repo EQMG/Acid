@@ -1,10 +1,10 @@
-﻿#include "InputDelay.hpp"
+#include "InputDelay.hpp"
 
 namespace acid
 {
 InputDelay::InputDelay(const Time &delay, const Time &repeat) :
-	m_elapsedDelay{delay},
-	m_elapsedRepeat{repeat}
+	m_elapsedDelay(delay),
+	m_elapsedRepeat(repeat)
 {
 }
 

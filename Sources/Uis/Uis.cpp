@@ -3,7 +3,7 @@
 namespace acid
 {
 Uis::Uis() :
-	m_canvas{nullptr, UiTransform{Window::Get()->GetSize()}}
+	m_canvas(nullptr, UiTransform{Window::Get()->GetSize()})
 {
 	for (auto button : EnumIterator<MouseButton>{})
 	{

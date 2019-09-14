@@ -5,7 +5,7 @@
 namespace acid
 {
 Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data) :
-	m_size{size}
+	m_size(size)
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 

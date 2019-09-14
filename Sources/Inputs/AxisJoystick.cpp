@@ -5,9 +5,9 @@
 namespace acid
 {
 AxisJoystick::AxisJoystick(uint32_t port, uint32_t axis, bool inverted) :
-	m_port{port},
-	m_axis{axis},
-	m_inverted{inverted}
+	m_port(port),
+	m_axis(axis),
+	m_inverted(inverted)
 {
 	Joysticks::Get()->OnAxis().Add([this](uint32_t axis, uint32_t port, float value)
 	{

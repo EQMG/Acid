@@ -8,11 +8,11 @@ static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS{ VK_
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR, };
 
 Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
-	m_extent{extent},
-	m_presentMode{VK_PRESENT_MODE_FIFO_KHR},
-	m_preTransform{VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR},
-	m_compositeAlpha{VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR},
-	m_activeImageIndex{std::numeric_limits<uint32_t>::max()}
+	m_extent(extent),
+	m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
+	m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
+	m_compositeAlpha(VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
+	m_activeImageIndex(std::numeric_limits<uint32_t>::max())
 {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto surface = Graphics::Get()->GetSurface();

@@ -7,17 +7,17 @@ namespace acid
 {
 Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
 	const Colour &textColour, float kerning, float leading) :
-	UiObject{parent, rectangle},
-	m_lastSize{rectangle.GetSize()},
-	m_fontSize{fontSize},
-	m_string{std::move(text)},
-	m_justify{justify},
-	m_fontType{std::move(fontType)},
-	m_kerning{kerning},
-	m_leading{leading},
-	m_textColour{textColour},
-	m_glowDriver{std::make_unique<DriverConstant<float>>(0.0f)},
-	m_borderDriver{std::make_unique<DriverConstant<float>>(0.0f)}
+	UiObject(parent, rectangle),
+	m_lastSize(rectangle.GetSize()),
+	m_fontSize(fontSize),
+	m_string(std::move(text)),
+	m_justify(justify),
+	m_fontType(std::move(fontType)),
+	m_kerning(kerning),
+	m_leading(leading),
+	m_textColour(textColour),
+	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
+	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f))
 {
 	LoadText();
 }

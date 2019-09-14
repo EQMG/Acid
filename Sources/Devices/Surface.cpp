@@ -8,8 +8,8 @@
 namespace acid
 {
 Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
-	m_instance{instance},
-	m_physicalDevice{physicalDevice}
+	m_instance(instance),
+	m_physicalDevice(physicalDevice)
 {
 	// Creates the surface.
 	Window::Get()->CreateSurface(*m_instance, nullptr, &m_surface);

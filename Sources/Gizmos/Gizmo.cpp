@@ -3,9 +3,9 @@
 namespace acid
 {
 Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &colour) :
-	m_gizmoType{gizmoType},
-	m_transform{transform},
-	m_colour{colour ? *colour : gizmoType->GetColour()}
+	m_gizmoType(gizmoType),
+	m_transform(transform),
+	m_colour(colour ? *colour : gizmoType->GetColour())
 {
 }
 

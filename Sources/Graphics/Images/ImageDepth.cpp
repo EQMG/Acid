@@ -9,8 +9,8 @@ static const std::vector<VkFormat> TRY_FORMATS{ VK_FORMAT_D32_SFLOAT_S8_UINT, VK
 	VK_FORMAT_D16_UNORM };
 
 ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &samples) :
-	m_extent{extent},
-	m_format{VK_FORMAT_UNDEFINED}
+	m_extent(extent),
+	m_format(VK_FORMAT_UNDEFINED)
 {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 

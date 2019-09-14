@@ -10,10 +10,10 @@ const Quaternion Quaternion::NegativeInfinity{-std::numeric_limits<float>::infin
 	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()};
 
 Quaternion::Quaternion(float x, float y, float z, float w) :
-	m_x{x},
-	m_y{y},
-	m_z{z},
-	m_w{w}
+	m_x(x),
+	m_y(y),
+	m_z(z),
+	m_w(w)
 {
 }
 
@@ -76,10 +76,10 @@ Quaternion::Quaternion(const Matrix4 &source)
 }
 
 Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ) :
-	m_x{0.0f},
-	m_y{0.0f},
-	m_z{0.0f},
-	m_w{1.0f}
+	m_x(0.0f),
+	m_y(0.0f),
+	m_z(0.0f),
+	m_w(1.0f)
 {
 	Matrix4 rotation;
 

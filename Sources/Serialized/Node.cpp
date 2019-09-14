@@ -3,14 +3,14 @@
 namespace acid
 {
 Node::Node(std::string value, const Type &type) :
-	m_value{std::move(value)},
-	m_type{type}
+	m_value(std::move(value)),
+	m_type(type)
 {
 }
 
 Node::Node(std::string value, std::vector<Property> &&properties) :
-	m_value{std::move(value)},
-	m_properties{std::move(properties)}
+	m_value(std::move(value)),
+	m_properties(std::move(properties))
 {
 	for (auto &[propertyName, property] : m_properties)
 	{

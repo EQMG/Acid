@@ -1,4 +1,4 @@
-﻿#include "EmitterLine.hpp"
+#include "EmitterLine.hpp"
 
 #include "Maths/Maths.hpp"
 #include "Scenes/Entity.hpp"
@@ -6,8 +6,8 @@
 namespace acid
 {
 EmitterLine::EmitterLine(float length, const Vector3f &axis) :
-	m_length{length},
-	m_axis{axis.Normalize()}
+	m_length(length),
+	m_axis(axis.Normalize())
 {
 }
 

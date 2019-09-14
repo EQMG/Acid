@@ -5,15 +5,15 @@
 namespace acid
 {
 NodeReturn::NodeReturn(Node const *parent, std::variant<std::string, int32_t> key, Node const *value) :
-	m_parent{const_cast<Node *>(parent)},
+	m_parent(const_cast<Node *>(parent)),
 	m_keys{std::move(key)},
-	m_value{const_cast<Node *>(value)}
+	m_value(const_cast<Node *>(value))
 {
 }
 
 NodeReturn::NodeReturn(NodeReturn *parent, std::variant<std::string, int32_t> key) :
-	m_parent{parent->m_parent},
-	m_keys{parent->m_keys}
+	m_parent(parent->m_parent),
+	m_keys(parent->m_keys)
 {
 	m_keys.emplace_back(std::move(key));
 }

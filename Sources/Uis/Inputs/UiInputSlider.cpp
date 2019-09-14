@@ -7,18 +7,18 @@ namespace acid
 {
 UiInputSlider::UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo,
 	const UiTransform &transform) :
-	UiObject{parent, transform},
-	m_slider{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
-		UiInputButton::PrimaryColour},
-	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour},
-	m_textTitle{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour},
-	m_textValue{this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour},
-	m_value{value},
-	m_valueMin{valueMin},
-	m_valueMax{valueMax},
-	m_roundTo{roundTo}
+	UiObject(parent, transform),
+	m_slider(this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"),
+		UiInputButton::PrimaryColour),
+	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
+	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
+		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
+	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour),
+	m_value(value),
+	m_valueMin(valueMin),
+	m_valueMax(valueMax),
+	m_roundTo(roundTo)
 {
 	SetCursorHover(CursorStandard::ResizeX);
 

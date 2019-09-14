@@ -26,7 +26,7 @@ template<typename T>
 struct Enumerator
 {
 	constexpr Enumerator(const T &value) :
-		m_value{value}
+		m_value(value)
 	{
 	}
 
@@ -55,22 +55,22 @@ struct BitMask
 	using underlying_type = typename std::underlying_type_t<T>;
 
 	constexpr BitMask() :
-		m_value{static_cast<underlying_type>(0)}
+		m_value(static_cast<underlying_type>(0))
 	{
 	}
 
 	constexpr BitMask(const T &value) :
-		m_value{static_cast<underlying_type>(value)}
+		m_value(static_cast<underlying_type>(value))
 	{
 	}
 
 	constexpr BitMask(const underlying_type &value) :
-		m_value{value}
+		m_value(value)
 	{
 	}
 
 	constexpr BitMask(const Enumerator<T> &enumerator) :
-		m_value{static_cast<underlying_type>(enumerator.m_value)}
+		m_value(static_cast<underlying_type>(enumerator.m_value))
 	{
 	}
 

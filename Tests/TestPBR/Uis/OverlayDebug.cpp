@@ -1,14 +1,14 @@
-﻿#include "OverlayDebug.hpp"
+#include "OverlayDebug.hpp"
 
 #include <Scenes/Scenes.hpp>
 
 namespace test
 {
 OverlayDebug::OverlayDebug(UiObject *parent) :
-	UiObject{parent, {{100, 36}, UiAnchor::LeftBottom}},
-	m_textFrameTime{this, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "", FontType::Create("Fonts/ProximaNova")},
-	m_textFps{this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "", FontType::Create("Fonts/ProximaNova")},
-	m_textUps{this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "", FontType::Create("Fonts/ProximaNova")}
+	UiObject(parent, {{100, 36}, UiAnchor::LeftBottom}),
+	m_textFrameTime(this, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "", FontType::Create("Fonts/ProximaNova")),
+	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "", FontType::Create("Fonts/ProximaNova")),
+	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "", FontType::Create("Fonts/ProximaNova"))
 {
 }
 

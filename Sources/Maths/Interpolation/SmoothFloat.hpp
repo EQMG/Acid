@@ -18,9 +18,9 @@ public:
 	 * @param agility The agility for increasing actual. 
 	 **/
 	SmoothFloat(const T &initialValue, float agility) :
-		m_agility{agility},
-		m_target{initialValue},
-		m_actual{initialValue}
+		m_agility(agility),
+		m_target(initialValue),
+		m_actual(initialValue)
 	{
 	}
 

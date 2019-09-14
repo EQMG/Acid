@@ -14,9 +14,9 @@ static const Vector2f SENSITIVITY_JOYSTICK{-0.06f};
 static const Vector2f SENSITIVITY_MOUSE{0.15f};
 
 CameraFps::CameraFps() :
-	m_sensitivity{1.0f},
-	m_joystickVertical{0, 3},
-	m_joystickHorizontal{0, 2}
+	m_sensitivity(1.0f),
+	m_joystickVertical(0, 3),
+	m_joystickHorizontal(0, 2)
 {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;

@@ -10,20 +10,20 @@ const std::vector<VkDynamicState> DYNAMIC_STATES{ VK_DYNAMIC_STATE_VIEWPORT, VK_
 PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
 	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
 	bool pushDescriptors) :
-	m_stage{std::move(stage)},
-	m_shaderStages{std::move(shaderStages)},
-	m_vertexInputs{std::move(vertexInputs)},
-	m_defines{std::move(defines)},
-	m_mode{mode},
-	m_depth{depth},
-	m_topology{topology},
-	m_polygonMode{polygonMode},
-	m_cullMode{cullMode},
-	m_frontFace{frontFace},
-	m_pushDescriptors{pushDescriptors},
-	m_shader{std::make_unique<Shader>()},
-	m_dynamicStates{DYNAMIC_STATES},
-	m_pipelineBindPoint{VK_PIPELINE_BIND_POINT_GRAPHICS}
+	m_stage(std::move(stage)),
+	m_shaderStages(std::move(shaderStages)),
+	m_vertexInputs(std::move(vertexInputs)),
+	m_defines(std::move(defines)),
+	m_mode(mode),
+	m_depth(depth),
+	m_topology(topology),
+	m_polygonMode(polygonMode),
+	m_cullMode(cullMode),
+	m_frontFace(frontFace),
+	m_pushDescriptors(pushDescriptors),
+	m_shader(std::make_unique<Shader>()),
+	m_dynamicStates(DYNAMIC_STATES),
+	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS)
 {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();

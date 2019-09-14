@@ -31,15 +31,15 @@ std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, 
 }
 
 Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap, bool load) :
-	m_filename{std::move(filename)},
-	m_filter{filter},
-	m_addressMode{addressMode},
-	m_anisotropic{anisotropic},
-	m_mipmap{mipmap},
-	m_samples{VK_SAMPLE_COUNT_1_BIT},
-	m_layout{VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL},
-	m_usage{VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
-	m_format{VK_FORMAT_R8G8B8A8_UNORM}
+	m_filename(std::move(filename)),
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_anisotropic(anisotropic),
+	m_mipmap(mipmap),
+	m_samples(VK_SAMPLE_COUNT_1_BIT),
+	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(VK_FORMAT_R8G8B8A8_UNORM)
 {
 	if (load)
 	{
@@ -49,17 +49,17 @@ Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const V
 
 Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
 	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
-	m_filter{filter},
-	m_addressMode{addressMode},
-	m_anisotropic{anisotropic},
-	m_mipmap{mipmap},
-	m_samples{samples},
-	m_layout{imageLayout},
-	m_usage{usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
-	m_components{4},
-	m_extent{extent},
-	m_loadPixels{std::move(pixels)},
-	m_format{format}
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_anisotropic(anisotropic),
+	m_mipmap(mipmap),
+	m_samples(samples),
+	m_layout(imageLayout),
+	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_components(4),
+	m_extent(extent),
+	m_loadPixels(std::move(pixels)),
+	m_format(format)
 {
 	Image2d::Load();
 }

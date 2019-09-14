@@ -21,10 +21,10 @@ public:
 	 * @param length The time taken to get to the end. 
 	 **/
 	DriverFade(const T &start, const T &end, const T &peak, const Time &length) :
-		Driver<T>{length},
-		m_start{start},
-		m_end{end},
-		m_peak{peak}
+		Driver<T>(length),
+		m_start(start),
+		m_end(end),
+		m_peak(peak)
 	{
 	}
 

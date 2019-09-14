@@ -6,12 +6,12 @@ namespace acid
 {
 FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour, float curveAmountX, float curveAmountY, float scanLineSize,
 	float scanIntensity) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Crt.frag"}},
-	m_screenColour{screenColour},
-	m_curveAmountX{curveAmountX},
-	m_curveAmountY{curveAmountY},
-	m_scanLineSize{scanLineSize},
-	m_scanIntensity{scanIntensity}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Crt.frag"}),
+	m_screenColour(screenColour),
+	m_curveAmountX(curveAmountX),
+	m_curveAmountY(curveAmountY),
+	m_scanLineSize(scanLineSize),
+	m_scanIntensity(scanIntensity)
 {
 }
 

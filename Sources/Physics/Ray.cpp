@@ -3,8 +3,8 @@
 namespace acid
 {
 Ray::Ray(bool useMouse, const Vector2f &screenStart) :
-	m_useMouse{useMouse},
-	m_screenStart{screenStart}
+	m_useMouse(useMouse),
+	m_screenStart(screenStart)
 {
 }
 

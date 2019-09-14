@@ -3,8 +3,8 @@
 namespace acid
 {
 AxisButton::AxisButton(std::unique_ptr<Button> &&negative, std::unique_ptr<Button> &&positive) :
-	m_negative{std::move(negative)},
-	m_positive{std::move(positive)}
+	m_negative(std::move(negative)),
+	m_positive(std::move(positive))
 {
 	m_negative->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

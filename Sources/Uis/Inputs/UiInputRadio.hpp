@@ -57,9 +57,9 @@ class ACID_EXPORT UiRadioManager :
 {
 public:
 	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, bool multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
-		m_type{type},
-		m_multiple{multiple},
-		m_inputs{inputs}
+		m_type(type),
+		m_multiple(multiple),
+		m_inputs(inputs)
 	{
 		for (auto &input : inputs)
 		{

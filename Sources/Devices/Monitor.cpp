@@ -6,7 +6,7 @@
 namespace acid
 {
 Monitor::Monitor(GLFWmonitor *monitor) :
-	m_monitor{monitor}
+	m_monitor(monitor)
 {
 }
 

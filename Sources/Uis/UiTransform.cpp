@@ -13,25 +13,25 @@ const Vector2f UiAnchor::CentreBottom{0.5f, 1.0f};
 const Vector2f UiAnchor::RightBottom{1.0f, 1.0f};
 
 UiTransform::UiTransform(const Vector2f &size, const Vector2f &anchor, const Vector2f &position) :
-	m_size{size},
-	m_anchor0{anchor},
-	m_anchor1{anchor},
-	m_position{position}
+	m_size(size),
+	m_anchor0(anchor),
+	m_anchor1(anchor),
+	m_position(position)
 {
 }
 
 UiTransform::UiTransform(const Vector2f &size, const Vector2f &anchor0, const Vector2f &anchor1, const Vector2f &position) :
-	m_size{size},
-	m_anchor0{anchor0},
-	m_anchor1{anchor1},
-	m_position{position}
+	m_size(size),
+	m_anchor0(anchor0),
+	m_anchor1(anchor1),
+	m_position(position)
 {
 }
 
 UiTransform::UiTransform(const BitMask<UiMargins> &margins, const Vector2f &anchor0, const Vector2f &anchor1) :
-	m_anchor0{anchor0},
-	m_anchor1{anchor1},
-	m_margins{margins}
+	m_anchor0(anchor0),
+	m_anchor1(anchor1),
+	m_margins(margins)
 {
 }
 

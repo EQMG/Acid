@@ -3,9 +3,9 @@
 namespace acid
 {
 Joint::Joint(uint32_t index, std::string name, const Matrix4 &bindLocalTransform) :
-	m_index{index},
-	m_name{std::move(name)},
-	m_localBindTransform{bindLocalTransform}
+	m_index(index),
+	m_name(std::move(name)),
+	m_localBindTransform(bindLocalTransform)
 {
 }
 

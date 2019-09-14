@@ -28,10 +28,10 @@ int main(int argc, char **argv)
 namespace test
 {
 MainApp::MainApp() :
-	App{"Test PBR", {1, 0, 0}},
-	m_buttonFullscreen{Key::F11},
-	m_buttonScreenshot{Key::F9},
-	m_buttonExit{Key::Delete}
+	App("Test PBR", {1, 0, 0}),
+	m_buttonFullscreen(Key::F11),
+	m_buttonScreenshot(Key::F9),
+	m_buttonExit(Key::Delete)
 {
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');

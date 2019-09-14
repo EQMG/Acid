@@ -20,7 +20,7 @@ public:
 	 */
 	template<typename Rep, typename Period>
 	constexpr Time(const std::chrono::duration<Rep, Period> &duration) :
-		m_microseconds{std::chrono::duration_cast<std::chrono::microseconds>(duration).count()}
+		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
 	{
 	}
 

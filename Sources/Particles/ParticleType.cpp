@@ -37,14 +37,14 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 
 ParticleType::ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength, float stageCycles,
 	float scale) :
-	m_image{std::move(image)},
-	m_model{ModelRectangle::Create(-0.5f, 0.5f)},
-	m_numberOfRows{numberOfRows},
-	m_colourOffset{colourOffset},
-	m_lifeLength{lifeLength},
-	m_stageCycles{stageCycles},
-	m_scale{scale},
-	m_instanceBuffer{sizeof(Instance) * MAX_INSTANCES}
+	m_image(std::move(image)),
+	m_model(ModelRectangle::Create(-0.5f, 0.5f)),
+	m_numberOfRows(numberOfRows),
+	m_colourOffset(colourOffset),
+	m_lifeLength(lifeLength),
+	m_stageCycles(stageCycles),
+	m_scale(scale),
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
 {
 }
 

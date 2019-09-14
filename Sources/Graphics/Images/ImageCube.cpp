@@ -32,16 +32,16 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filena
 
 ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap,
 	bool load) :
-	m_filename{std::move(filename)},
-	m_fileSuffix{std::move(fileSuffix)},
-	m_filter{filter},
-	m_addressMode{addressMode},
-	m_anisotropic{anisotropic},
-	m_mipmap{mipmap},
-	m_samples{VK_SAMPLE_COUNT_1_BIT},
-	m_layout{VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL},
-	m_usage{VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
-	m_format{VK_FORMAT_R8G8B8A8_UNORM}
+	m_filename(std::move(filename)),
+	m_fileSuffix(std::move(fileSuffix)),
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_anisotropic(anisotropic),
+	m_mipmap(mipmap),
+	m_samples(VK_SAMPLE_COUNT_1_BIT),
+	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
+	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(VK_FORMAT_R8G8B8A8_UNORM)
 {
 	if (load)
 	{
@@ -51,17 +51,17 @@ ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, con
 
 ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
 	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
-	m_filter{filter},
-	m_addressMode{addressMode},
-	m_anisotropic{anisotropic},
-	m_mipmap{mipmap},
-	m_samples{samples},
-	m_layout{layout},
-	m_usage{usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT},
-	m_components{4},
-	m_extent{extent},
-	m_loadPixels{std::move(pixels)},
-	m_format{format}
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_anisotropic(anisotropic),
+	m_mipmap(mipmap),
+	m_samples(samples),
+	m_layout(layout),
+	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_components(4),
+	m_extent(extent),
+	m_loadPixels(std::move(pixels)),
+	m_format(format)
 {
 	ImageCube::Load();
 }

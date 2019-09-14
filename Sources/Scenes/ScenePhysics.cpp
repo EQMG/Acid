@@ -16,13 +16,13 @@
 namespace acid
 {
 ScenePhysics::ScenePhysics() :
-	m_collisionConfiguration{std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()},
-	m_broadphase{std::make_unique<btDbvtBroadphase>()},
-	m_dispatcher{std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())},
-	m_solver{std::make_unique<btSequentialImpulseConstraintSolver>()},
-	m_dynamicsWorld{std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())},
-	m_gravity{0.0f, -9.81f, 0.0f},
-	m_airDensity{1.2f}
+	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
+	m_broadphase(std::make_unique<btDbvtBroadphase>()),
+	m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
+	m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
+	m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
+	m_gravity(0.0f, -9.81f, 0.0f),
+	m_airDensity(1.2f)
 {
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 	m_dynamicsWorld->getDispatchInfo().m_enableSPU = true;

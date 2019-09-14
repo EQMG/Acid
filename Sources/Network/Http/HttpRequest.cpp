@@ -5,9 +5,9 @@
 namespace acid
 {
 HttpRequest::HttpRequest(const std::string &uri, const Method &method, const std::string &body) :
-	m_method{method},
-	m_majorVersion{1},
-	m_minorVersion{0}
+	m_method(method),
+	m_majorVersion(1),
+	m_minorVersion(0)
 {
 	SetUri(uri);
 	SetBody(body);

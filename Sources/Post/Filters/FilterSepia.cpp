@@ -3,7 +3,7 @@
 namespace acid
 {
 FilterSepia::FilterSepia(const Pipeline::Stage &pipelineStage) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Sepia.frag"}}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Sepia.frag"})
 {
 }
 

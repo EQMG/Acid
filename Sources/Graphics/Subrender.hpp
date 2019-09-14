@@ -17,8 +17,8 @@ public:
 	 * @param stage The stage this renderer will be used in.
 	 */
 	explicit Subrender(Pipeline::Stage stage) :
-		m_stage{std::move(stage)},
-		m_enabled{true}
+		m_stage(std::move(stage)),
+		m_enabled(true)
 	{
 	}
 

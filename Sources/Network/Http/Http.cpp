@@ -10,7 +10,7 @@ Http::Http()
 }
 
 Http::Http(const std::string &host, uint16_t port) :
-	m_port{port}
+	m_port(port)
 {
 	SetHost(host, port);
 }

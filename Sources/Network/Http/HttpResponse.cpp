@@ -5,9 +5,9 @@
 namespace acid
 {
 HttpResponse::HttpResponse() :
-	m_status{Status::ConnectionFailed},
-	m_majorVersion{0},
-	m_minorVersion{0}
+	m_status(Status::ConnectionFailed),
+	m_majorVersion(0),
+	m_minorVersion(0)
 {
 }
 

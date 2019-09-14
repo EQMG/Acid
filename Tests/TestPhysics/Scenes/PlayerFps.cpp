@@ -21,10 +21,10 @@ PlayerFps::PlayerFps() :
 		std::make_unique<AxisJoystick>(0, 1)},
 	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::D), std::make_unique<ButtonKeyboard>(Key::A)),
 		std::make_unique<AxisJoystick>(0, 0)},
-	m_inputSprint{std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)},
-	m_inputJump{std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)},
-	m_inputCrouch{std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)},
-	m_toggleNoclip{std::make_unique<ButtonKeyboard>(Key::N)}
+	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)),
+	m_inputJump(std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)),
+	m_inputCrouch(std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)),
+	m_toggleNoclip(std::make_unique<ButtonKeyboard>(Key::N))
 {
 }
 

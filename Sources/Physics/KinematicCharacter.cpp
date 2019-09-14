@@ -10,13 +10,13 @@
 namespace acid
 {
 KinematicCharacter::KinematicCharacter(float mass, float friction) :
-	CollisionObject{mass, friction},
-	m_up{Vector3f::Up},
-	m_stepHeight{0.0f},
-	m_fallSpeed{55.0f},
-	m_jumpSpeed{10.0f},
-	m_maxHeight{1.5f},
-	m_interpolate{true}
+	CollisionObject(mass, friction),
+	m_up(Vector3f::Up),
+	m_stepHeight(0.0f),
+	m_fallSpeed(55.0f),
+	m_jumpSpeed(10.0f),
+	m_maxHeight(1.5f),
+	m_interpolate(true)
 {
 }
 

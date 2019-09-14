@@ -6,7 +6,7 @@
 namespace acid
 {
 FtpDataChannel::FtpDataChannel(Ftp &owner) :
-	m_ftp{owner}
+	m_ftp(owner)
 {
 }
 

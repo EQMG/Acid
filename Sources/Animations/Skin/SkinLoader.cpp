@@ -3,8 +3,8 @@
 namespace acid
 {
 SkinLoader::SkinLoader(const Node *libraryControllers, uint32_t maxWeights) :
-	m_skinData{libraryControllers->FindChild("controller")->FindChild("skin")},
-	m_maxWeights{maxWeights}
+	m_skinData(libraryControllers->FindChild("controller")->FindChild("skin")),
+	m_maxWeights(maxWeights)
 {
 	LoadJointsList();
 	auto weights = LoadWeights();

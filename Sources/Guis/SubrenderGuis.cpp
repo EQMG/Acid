@@ -7,8 +7,8 @@
 namespace acid
 {
 SubrenderGuis::SubrenderGuis(const Pipeline::Stage &pipelineStage) :
-	Subrender{pipelineStage},
-	m_pipeline{pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexDefault::GetVertexInput()}}
+	Subrender(pipelineStage),
+	m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexDefault::GetVertexInput()})
 {
 }
 

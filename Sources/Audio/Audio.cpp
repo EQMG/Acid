@@ -12,8 +12,8 @@
 namespace acid
 {
 Audio::Audio() :
-	m_device{alcOpenDevice(nullptr)},
-	m_context{alcCreateContext(m_device, nullptr)}
+	m_device(alcOpenDevice(nullptr)),
+	m_context(alcCreateContext(m_device, nullptr))
 {
 	alcMakeContextCurrent(m_context);
 

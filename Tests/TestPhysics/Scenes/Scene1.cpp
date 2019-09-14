@@ -45,12 +45,12 @@ namespace test
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene{std::make_unique<CameraFps>()},
-	m_buttonSpawnSphere{std::make_unique<ButtonMouse>(MouseButton::Left)},
-	m_buttonCaptureMouse{std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)},
-	m_buttonSave{Key::K},
-	m_uiStartLogo{&Uis::Get()->GetCanvas()},
-	m_overlayDebug{&Uis::Get()->GetCanvas()}
+	Scene(std::make_unique<CameraFps>()),
+	m_buttonSpawnSphere(std::make_unique<ButtonMouse>(MouseButton::Left)),
+	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
+	m_buttonSave(Key::K),
+	m_uiStartLogo(&Uis::Get()->GetCanvas()),
+	m_overlayDebug(&Uis::Get()->GetCanvas())
 {
 	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
 	{

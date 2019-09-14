@@ -7,9 +7,9 @@
 namespace acid
 {
 SubrenderFonts2::SubrenderFonts2(const Pipeline::Stage &pipelineStage) :
-	Subrender{pipelineStage},
-	m_pipeline{pipelineStage, {"Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag"}, {FontType::Instance::GetVertexInput()}, {}, PipelineGraphics::Mode::Polygon,
-	PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, VK_FRONT_FACE_COUNTER_CLOCKWISE}
+	Subrender(pipelineStage),
+	m_pipeline(pipelineStage, {"Shaders/Fonts2/Font.vert", "Shaders/Fonts2/Font.frag"}, {FontType::Instance::GetVertexInput()}, {}, PipelineGraphics::Mode::Polygon,
+	PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP, VK_POLYGON_MODE_FILL, VK_CULL_MODE_BACK_BIT, VK_FRONT_FACE_COUNTER_CLOCKWISE)
 {
 }
 

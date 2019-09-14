@@ -13,7 +13,7 @@ class ACID_EXPORT Observer
 {
 public:
 	Observer() :
-		m_valid{std::make_shared<bool>(true)}
+		m_valid(std::make_shared<bool>(true))
 	{
 	}
 
@@ -181,7 +181,7 @@ class DelegateValue :
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) :
-		m_value{std::forward<Args>(args)...}
+		m_value(std::forward<Args>(args)...)
 	{
 	}
 

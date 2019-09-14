@@ -1,4 +1,4 @@
-﻿#include "UiInputButton.hpp"
+#include "UiInputButton.hpp"
 
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
@@ -19,10 +19,10 @@ const Colour UiInputButton::SelectedColour{"#FEA62A"};
 const Colour UiInputButton::ButtonColour{"#3C3B3C"};
 
 UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform) :
-	UiObject{parent, transform},
-	m_background{this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"), ButtonColour},
-	m_text{this, {UiMargins::None, Padding, -Padding}, FontSize, string,
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, ValueColour}
+	UiObject(parent, transform),
+	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"), ButtonColour),
+	m_text(this, {UiMargins::None, Padding, -Padding}, FontSize, string,
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, ValueColour)
 {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected)

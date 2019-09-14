@@ -8,18 +8,18 @@ static const float FADE_TIME = 1.0f;
 
 Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, float lifeLength, float stageCycles,
 	float rotation, float scale, float gravityEffect) :
-	m_particleType{std::move(particleType)},
-	m_position{position},
-	m_velocity{velocity},
-	m_lifeLength{lifeLength},
-	m_stageCycles{stageCycles},
-	m_rotation{rotation},
-	m_scale{scale},
-	m_gravityEffect{gravityEffect},
-	m_elapsedTime{0.0f},
-	m_transparency{1.0f},
-	m_imageBlendFactor{0.0f},
-	m_distanceToCamera{0.0f}
+	m_particleType(std::move(particleType)),
+	m_position(position),
+	m_velocity(velocity),
+	m_lifeLength(lifeLength),
+	m_stageCycles(stageCycles),
+	m_rotation(rotation),
+	m_scale(scale),
+	m_gravityEffect(gravityEffect),
+	m_elapsedTime(0.0f),
+	m_transparency(1.0f),
+	m_imageBlendFactor(0.0f),
+	m_distanceToCamera(0.0f)
 {
 }
 

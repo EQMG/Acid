@@ -3,7 +3,7 @@
 namespace acid
 {
 FtpResponseListing::FtpResponseListing(const FtpResponse &response, const std::string &data) :
-	FtpResponse{response}
+	FtpResponse(response)
 {
 	if (IsOk())
 	{

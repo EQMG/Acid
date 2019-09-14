@@ -3,11 +3,11 @@
 namespace acid
 {
 Fog::Fog(const Colour &colour, float density, float gradient, float lowerLimit, float upperLimit) :
-	m_colour{colour},
-	m_density{density},
-	m_gradient{gradient},
-	m_lowerLimit{lowerLimit},
-	m_upperLimit{upperLimit}
+	m_colour(colour),
+	m_density(density),
+	m_gradient(gradient),
+	m_lowerLimit(lowerLimit),
+	m_upperLimit(upperLimit)
 {
 }
 

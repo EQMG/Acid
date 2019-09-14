@@ -7,7 +7,7 @@
 namespace acid
 {
 EmitterSphere::EmitterSphere(float radius) :
-	m_radius{radius}
+	m_radius(radius)
 {
 }
 

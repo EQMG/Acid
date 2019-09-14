@@ -5,8 +5,8 @@
 namespace acid
 {
 SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
-	m_boneOrder{std::move(boneOrder)},
-	m_correction{correction}
+	m_boneOrder(std::move(boneOrder)),
+	m_correction(correction)
 {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	auto headNode = m_armatureData->FindChild("node");

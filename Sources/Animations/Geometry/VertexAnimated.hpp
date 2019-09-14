@@ -12,11 +12,11 @@ public:
 	VertexAnimated() = default;
 
 	VertexAnimated(const Vector3f &position, const Vector2f &uv, const Vector3f &normal, const Vector3ui &jointId, const Vector3f &vertexWeight) :
-		m_position{position},
-		m_uv{uv},
-		m_normal{normal},
-		m_jointId{jointId},
-		m_vertexWeight{vertexWeight}
+		m_position(position),
+		m_uv(uv),
+		m_normal(normal),
+		m_jointId(jointId),
+		m_vertexWeight(vertexWeight)
 	{
 	}
 

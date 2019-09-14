@@ -3,8 +3,8 @@
 namespace acid
 {
 FilterFxaa::FilterFxaa(const Pipeline::Stage &pipelineStage, float spanMax) :
-	PostFilter{pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag"}},
-	m_spanMax{spanMax}
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag"}),
+	m_spanMax(spanMax)
 {
 }
 

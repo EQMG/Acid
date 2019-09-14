@@ -21,15 +21,15 @@ const Colour Colour::Purple{"#800080"};
 const Colour Colour::Fuchsia{"#FF00FF"};
 
 Colour::Colour(float r, float g, float b, float a) :
-	m_r{r},
-	m_g{g},
-	m_b{b},
-	m_a{a}
+	m_r(r),
+	m_g(g),
+	m_b(b),
+	m_a(a)
 {
 }
 
 Colour::Colour(std::string hex, float a) :
-	m_a{a}
+	m_a(a)
 {
 	if (hex[0] == '#')
 	{
