@@ -165,10 +165,15 @@ int main(int argc, char **argv)
 	test::Example1 example2;
 	*jsonLoader.GetNode() >> example2;
 
+	/*ZipArchive zip0("Serial.zip");
+	zip0.AddEntry("hello.txt", "Hello World!");
+	zip0.Write();
+	zip0.Close();*/
 	ZipArchive zip("Serial.zip");
-	zip.AddEntry("hello.txt", "Hello World!");
-	zip.Write();
-	zip.Close();
+	for (const auto &entry : zip.GetEntryNames())
+		Log::Out(entry, '\n');
+	zip.ExtractAll("Extracted");
+	//zip.ExtractDir("Serial", "Extracted");
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";

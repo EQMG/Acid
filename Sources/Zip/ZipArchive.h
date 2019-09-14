@@ -54,15 +54,15 @@ public:
 	explicit ZipArchive() = default;
 
 	/**
-	 * @brief Constructor. Constructs an archive object, using the fileName input parameter. If the file already exists,
+	 * @brief Constructor. Constructs an archive object, using the filename input parameter. If the file already exists,
 	 * it will be opened. Otherwise, a new object will be created.
 	 * @details
 	 * #### Implementation details
 	 * The constructors tries to open an std::ifstream. If it is valid, it means that a file already exists
 	 * and will be opened. Otherwise, the file does not exist and will be created.
-	 * @param fileName The name of the file to open or create.
+	 * @param filename The name of the file to open or create.
 	 */
-	explicit ZipArchive(const std::string &fileName);
+	explicit ZipArchive(const std::filesystem::path &filename);
 
 	/**
 	 * @brief Destructor.
@@ -77,20 +77,20 @@ public:
 	 * #### Implementation details
 	 * A new archive file is created and initialized and thereafter closed, creating an empty archive file.
 	 * After ensuring that the file is valid (i.e. not somehow corrupted), it is opened using the Open() member function.
-	 * @param fileName The filename for the new archive.
+	 * @param filename The filename for the new archive.
 	 */
-	void Create(const std::string &fileName);
+	void Create(const std::filesystem::path &filename);
 
 	/**
 	 * @brief Open an existing archive file with the given filename.
 	 * @details
 	 * ##### Implementation details
 	 * The archive file is opened and meta data for all the entries in the archive is loaded into memory.
-	 * @param fileName The filename of the archive to open.
+	 * @param filename The filename of the archive to open.
 	 * @note If more than one entry with the same name exists in the archive, only the newest one will be loaded.
 	 * When saving the archive, only the loaded entries will be kept; other entries with the same name will be deleted.
 	 */
-	void Open(const std::string &fileName);
+	void Open(const std::filesystem::path &filename);
 
 	/**
 	 * @brief Close the archive for reading and writing.
@@ -173,7 +173,7 @@ public:
 	 * @param filename The new filename.
 	 * @note If no filename is provided, the file will be saved with the existing name, overwriting any existing data.
 	 */
-	void Write(std::string filename = "");
+	void Write(std::filesystem::path filename = "");
 
 	/**
 	 * @brief
@@ -198,24 +198,21 @@ public:
 	 * @brief Extract the entry with the provided name to the destination path.
 	 * @param name The name of the entry to extract.
 	 * @param dest The path to extract the entry to.
-	 * @todo To be implemented
 	 */
-	void ExtractEntry(const std::string &name, const std::string &dest) {}
+	void ExtractEntry(const std::string &name, const std::filesystem::path &dest);
 
 	/**
 	 * @brief Extract all entries in the given directory to the destination path.
 	 * @param dir The name of the directory to extract.
 	 * @param dest The path to extract the entry to.
-	 * @todo To be implemented
 	 */
-	void ExtractDir(const std::string &dir, const std::string &dest) {}
+	void ExtractDir(const std::string &dir, const std::filesystem::path &dest);
 
 	/**
 	 * @brief Extract all archive contents to the destination path.
 	 * @param dest The path to extract the entry to.
-	 * @todo To be implemented
 	 */
-	void ExtractAll(const std::string &dest) {}
+	void ExtractAll(const std::filesystem::path &dest);
 
 	/**
 	 * @brief Add a new entry to the archive.
@@ -262,7 +259,7 @@ private:
 	static std::string GenerateRandomName(int length);
 
 	mz_zip_archive m_archive = {}; /// The struct used by miniz, to handle archive files.
-	std::string m_archivePath; /// The path of the archive file.
+	std::filesystem::path m_archivePath; /// The path of the archive file.
 	bool m_isOpen = false; /// A flag indicating if the file is currently open for reading and writing.
 
 	std::vector<std::unique_ptr<ZipEntry>> m_zipEntries; /// Data structure for all entries in the archive.

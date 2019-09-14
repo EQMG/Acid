@@ -49,7 +49,7 @@ void File::Write() const
 	{
 		if (auto parentPath = m_filename.parent_path(); !parentPath.empty())
 		{
-			std::filesystem::create_directory(parentPath);
+			std::filesystem::create_directories(parentPath);
 		}
 
 		std::ofstream os{m_filename};

@@ -139,7 +139,7 @@ void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pi
 {
 	if (auto parentPath = filename.parent_path(); !parentPath.empty())
 	{
-		std::filesystem::create_directory(parentPath);
+		std::filesystem::create_directories(parentPath);
 	}
 
 	std::ofstream os{filename, std::ios::binary | std::ios::out};

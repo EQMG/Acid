@@ -2,17 +2,18 @@
 
 #include <random>
 
+#include "Helpers/String.hpp"
 #include "ZipException.h"
 
 namespace acid {
-ZipArchive::ZipArchive(const std::string &fileName) : m_archivePath(fileName) {
-	std::ifstream f(fileName.c_str());
+ZipArchive::ZipArchive(const std::filesystem::path &filename) : m_archivePath(filename) {
+	std::ifstream f(filename.c_str());
 	if (f.good()) {
 		f.close();
-		Open(fileName);
+		Open(filename);
 	} else {
 		f.close();
-		Create(fileName);
+		Create(filename);
 	}
 
 }
@@ -21,10 +22,12 @@ ZipArchive::~ZipArchive() {
 	Close();
 }
 
-void ZipArchive::Create(const std::string &fileName) {
+void ZipArchive::Create(const std::filesystem::path &filename) {
+	auto filenameU8 = filename.u8string();
+	
 	// Prepare an archive file;
 	mz_zip_archive archive = {};
-	mz_zip_writer_init_file(&archive, fileName.c_str(), 0);
+	mz_zip_writer_init_file(&archive, filenameU8.c_str(), 0);
 
 	// Finalize and close the temporary archive
 	mz_zip_writer_finalize_archive(&archive);
@@ -32,19 +35,20 @@ void ZipArchive::Create(const std::string &fileName) {
 
 	// Validate the temporary file
 	mz_zip_error errordata;
-	if (!mz_zip_validate_file_archive(fileName.c_str(), 0, &errordata))
+	if (!mz_zip_validate_file_archive(filenameU8.c_str(), 0, &errordata))
 		ThrowException(errordata, "Archive creation failed!");
 
-	Open(fileName);
+	Open(filename);
 }
 
-void ZipArchive::Open(const std::string &fileName) {
+void ZipArchive::Open(const std::filesystem::path &filename) {
 	// Open the archive file for reading.
 	if (m_isOpen)
 		mz_zip_reader_end(&m_archive);
-	m_archivePath = fileName;
-	if (!mz_zip_reader_init_file(&m_archive, m_archivePath.c_str(), 0))
-		ThrowException(m_archive.m_last_error, "Error opening archive file " + fileName + ".");
+	m_archivePath = filename;
+	auto archivePathU8 = m_archivePath.u8string();
+	if (!mz_zip_reader_init_file(&m_archive, archivePathU8.c_str(), 0))
+		ThrowException(m_archive.m_last_error, "Error opening archive file " + archivePathU8 + ".");
 	m_isOpen = true;
 
 	// Iterate through the archive and add the entries to the internal data structure
@@ -152,16 +156,17 @@ bool ZipArchive::HasEntry(const std::string &entryName) const {
 	return std::find(result.begin(), result.end(), entryName) != result.end();
 }
 
-void ZipArchive::Write(std::string filename) {
+void ZipArchive::Write(std::filesystem::path filename) {
 	if (filename.empty())
 		filename = m_archivePath;
 
 	// Generate a random file name with the same path as the current file
-	auto tempPath = filename.substr(0, filename.rfind('/') + 1) + GenerateRandomName(20);
+	auto tempPath = filename.parent_path() / GenerateRandomName(20);
+	auto tempPathU8 = tempPath.u8string();
 
 	// Prepare an temporary archive file with the random filename;
 	mz_zip_archive tempArchive = {};
-	mz_zip_writer_init_file(&tempArchive, tempPath.c_str(), 0);
+	mz_zip_writer_init_file(&tempArchive, tempPathU8.c_str(), 0);
 
 	// Iterate through the ZipEntries and add entries to the temporary file
 	for (const auto &file : m_zipEntries) {
@@ -185,13 +190,13 @@ void ZipArchive::Write(std::string filename) {
 
 	// Validate the temporary file
 	mz_zip_error errordata;
-	if (!mz_zip_validate_file_archive(tempPath.c_str(), 0, &errordata))
+	if (!mz_zip_validate_file_archive(tempPathU8.c_str(), 0, &errordata))
 		ThrowException(errordata, "Invalid archive");
 
 	// Close the current archive, delete the file with input filename (if it exists), rename the temporary and call Open.
 	Close();
-	std::remove(filename.c_str());
-	std::rename(tempPath.c_str(), filename.c_str());
+	std::filesystem::remove(filename);
+	std::filesystem::rename(tempPath, filename);
 	Open(filename);
 
 }
@@ -222,6 +227,40 @@ ZipEntry *ZipArchive::GetEntry(const std::string &name) {
 
 	// Return ZipEntry object with the file data.
 	return (*result).get();
+}
+
+void ZipArchive::ExtractEntry(const std::string &name, const std::filesystem::path &dest) {
+	// Look up ZipEntry object.
+	const auto &result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+		return name == entry->GetFilename();
+	});
+
+	if (auto parentPath = dest.parent_path(); !parentPath.empty()) {
+		std::filesystem::create_directories(parentPath);
+	}
+	
+	auto destU8 = dest.u8string();
+	
+	// Extract the data from the archive to the ZipEntry object.
+	(*result)->m_entryData.resize((*result)->GetUncompressedSize());
+	mz_zip_reader_extract_file_to_file(&m_archive, name.c_str(), destU8.c_str(), 0);
+
+	// Check that the operation was successful
+	if ((*result)->m_entryData.data() == nullptr)
+		ThrowException(m_archive.m_last_error, "Error extracting archive entry.");
+}
+
+void ZipArchive::ExtractDir(const std::string &dir, const std::filesystem::path &dest) {
+	for (const auto &entry : GetEntryNames(false)) {
+		if (String::StartsWith(entry, dir))
+			ExtractEntry(entry, dest / String::ReplaceFirst(entry, dir + "/", ""));
+	}
+}
+
+void ZipArchive::ExtractAll(const std::filesystem::path &dest) {
+	for (const auto &entry : GetEntryNames(false)) {
+		ExtractEntry(entry, dest / entry);
+	}
 }
 
 ZipEntry *ZipArchive::AddEntry(const std::string &name, const ZipEntryData &data) {
