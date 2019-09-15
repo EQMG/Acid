@@ -22,7 +22,7 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node)
 
 std::shared_ptr<ModelDisk> ModelDisk::Create(float innerRadius, float outerRadius, uint32_t slices, uint32_t loops)
 {
-	ModelDisk temp{innerRadius, outerRadius, slices, loops, false};
+	ModelDisk temp(innerRadius, outerRadius, slices, loops, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -83,10 +83,10 @@ void ModelDisk::Load()
 			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
 			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
 
-			Vector3f position{radius * xDir, 0.0f, radius * yDir};
-			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivLoops};
-			Vector3f normal{0.0f, 1.0f, 0.0f};
-			vertices.emplace_back(VertexDefault{position, uvs, normal});
+			Vector3f position(radius * xDir, 0.0f, radius * yDir);
+			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivLoops);
+			Vector3f normal(0.0f, 1.0f, 0.0f);
+			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
 

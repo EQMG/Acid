@@ -9,7 +9,7 @@ void CallbackJoystick(int32_t id, int32_t event)
 	if (event == GLFW_CONNECTED)
 	{
 		printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(id), id);
-		Joysticks::JoystickImpl joystick{};
+		Joysticks::JoystickImpl joystick = {};
 		joystick.m_name = glfwGetJoystickName(id);
 		Joysticks::Get()->m_connected.emplace(id, joystick);
 		Joysticks::Get()->m_onConnect(id, true);
@@ -30,7 +30,7 @@ Joysticks::Joysticks()
 	{
 		if (glfwJoystickPresent(i))
 		{
-			JoystickImpl joystick{};
+			JoystickImpl joystick = {};
 			joystick.m_name = glfwGetJoystickName(i);
 			m_connected.emplace(i, joystick);
 			m_onConnect(i, true);

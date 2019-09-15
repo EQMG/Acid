@@ -59,7 +59,7 @@ public:
 	template<typename ...Args>
 	Timer *Once(const Time &delay, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock{m_mutex};
+		std::unique_lock<std::mutex> lock(m_mutex);
 		auto instance = std::make_unique<Timer>(delay, 1);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
@@ -70,7 +70,7 @@ public:
 	template<typename ...Args>
 	Timer *Every(const Time &interval, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock{m_mutex};
+		std::unique_lock<std::mutex> lock(m_mutex);
 		auto instance = std::make_unique<Timer>(interval, std::nullopt);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));
@@ -81,7 +81,7 @@ public:
 	template<typename ...Args>
 	Timer *Repeat(const Time &interval, uint32_t repeat, std::function<void()> &&function, Args ...args)
 	{
-		std::unique_lock<std::mutex> lock{m_mutex};
+		std::unique_lock<std::mutex> lock(m_mutex);
 		auto instance = std::make_unique<Timer>(interval, repeat);
 		instance->m_onTick.Add(std::move(function), args...);
 		m_timers.emplace_back(std::move(instance));

@@ -48,7 +48,7 @@ void AnimationLoader::CreateKeyframe(const std::vector<Time> &times)
 {
 	for (const auto &time : times)
 	{
-		m_keyframes.emplace_back(Keyframe{time, {}});
+		m_keyframes.emplace_back(Keyframe(time, {}));
 	}
 }
 

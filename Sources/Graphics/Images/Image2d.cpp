@@ -24,7 +24,7 @@ std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 
 std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap)
 {
-	Image2d temp{filename, filter, addressMode, anisotropic, mipmap, false};
+	Image2d temp(filename, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -77,7 +77,7 @@ Image2d::~Image2d()
 VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 	uint32_t count)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -88,12 +88,12 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, c
 
 WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorImageInfo imageInfo{};
+	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = m_layout;
 
-	VkWriteDescriptorSet descriptorWrite{};
+	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
@@ -114,7 +114,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLev
 	VkDeviceMemory dstImageMemory;
 	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {extent.m_x, extent.m_y, 1}, m_layout, mipLevel, 0);
 
-	VkImageSubresource dstImageSubresource{};
+	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	dstImageSubresource.mipLevel = 0;
 	dstImageSubresource.arrayLayer = 0;
@@ -137,8 +137,8 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLev
 
 void Image2d::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
 {
-	Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+	Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	void *data;
 	bufferStaging.MapMemory(&data);
@@ -202,8 +202,8 @@ void Image2d::Load()
 	if (m_loadPixels)
 	{
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);

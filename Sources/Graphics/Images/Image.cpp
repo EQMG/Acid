@@ -37,7 +37,7 @@ Image::~Image()
 
 VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage, uint32_t count)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -48,12 +48,12 @@ VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(uint32_t binding, con
 
 WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorImageInfo imageInfo{};
+	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = m_layout;
 
-	VkWriteDescriptorSet descriptorWrite{};
+	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
@@ -76,7 +76,7 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, uint32_t mipLeve
 	VkDeviceMemory dstImageMemory;
 	CopyImage(m_image, dstImage, dstImageMemory, m_format, m_extent, m_layout, mipLevel, arrayLayer);
 
-	VkImageSubresource dstImageSubresource{};
+	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	dstImageSubresource.mipLevel = 0;
 	dstImageSubresource.arrayLayer = 0;
@@ -99,8 +99,8 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, uint32_t mipLeve
 
 void Image::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
 {
-	Buffer bufferStaging{m_extent.width * m_extent.height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+	Buffer bufferStaging(m_extent.width * m_extent.height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	void *data;
 	bufferStaging.MapMemory(&data);
@@ -142,7 +142,7 @@ void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pi
 		std::filesystem::create_directories(parentPath);
 	}
 
-	std::ofstream os{filename, std::ios::binary | std::ios::out};
+	std::ofstream os(filename, std::ios::binary | std::ios::out);
 	int32_t len;
 	std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));
 	os.write(reinterpret_cast<char *>(png.get()), len);
@@ -155,14 +155,14 @@ uint32_t Image::GetMipLevels(const VkExtent3D &extent)
 
 bool Image::HasDepth(const VkFormat &format)
 {
-	static const std::vector<VkFormat> DEPTH_FORMATS{ VK_FORMAT_D16_UNORM, VK_FORMAT_X8_D24_UNORM_PACK32, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D16_UNORM_S8_UINT,
+	static const std::vector<VkFormat> DEPTH_FORMATS = { VK_FORMAT_D16_UNORM, VK_FORMAT_X8_D24_UNORM_PACK32, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D16_UNORM_S8_UINT,
 		VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D32_SFLOAT_S8_UINT };
 	return std::find(DEPTH_FORMATS.begin(), DEPTH_FORMATS.end(), format) != std::end(DEPTH_FORMATS);
 }
 
 bool Image::HasStencil(const VkFormat &format)
 {
-	static const std::vector<VkFormat> STENCIL_FORMATS{ VK_FORMAT_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D32_SFLOAT_S8_UINT };
+	static const std::vector<VkFormat> STENCIL_FORMATS = { VK_FORMAT_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D32_SFLOAT_S8_UINT };
 	return std::find(STENCIL_FORMATS.begin(), STENCIL_FORMATS.end(), format) != std::end(STENCIL_FORMATS);
 }
 
@@ -171,7 +171,7 @@ void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	VkImageCreateInfo imageCreateInfo{};
+	VkImageCreateInfo imageCreateInfo = {};
 	imageCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 	imageCreateInfo.flags = arrayLayers == 6 ? VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT : 0;
 	imageCreateInfo.imageType = type;
@@ -189,7 +189,7 @@ void Image::CreateImage(VkImage &image, VkDeviceMemory &memory, const VkExtent3D
 	VkMemoryRequirements memoryRequirements;
 	vkGetImageMemoryRequirements(*logicalDevice, image, &memoryRequirements);
 
-	VkMemoryAllocateInfo memoryAllocateInfo{};
+	VkMemoryAllocateInfo memoryAllocateInfo = {};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	memoryAllocateInfo.allocationSize = memoryRequirements.size;
 	memoryAllocateInfo.memoryTypeIndex = Buffer::FindMemoryType(memoryRequirements.memoryTypeBits, properties);
@@ -203,7 +203,7 @@ void Image::CreateImageSampler(VkSampler &sampler, const VkFilter &filter, const
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	VkSamplerCreateInfo samplerCreateInfo{};
+	VkSamplerCreateInfo samplerCreateInfo = {};
 	samplerCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
 	samplerCreateInfo.magFilter = filter;
 	samplerCreateInfo.minFilter = filter;
@@ -229,7 +229,7 @@ void Image::CreateImageView(const VkImage &image, VkImageView &imageView, const 
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	VkImageViewCreateInfo imageViewCreateInfo{};
+	VkImageViewCreateInfo imageViewCreateInfo = {};
 	imageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 	imageViewCreateInfo.image = image;
 	imageViewCreateInfo.viewType = type;
@@ -260,7 +260,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 
 	for (uint32_t i = 1; i < mipLevels; i++)
 	{
-		VkImageMemoryBarrier barrier0{};
+		VkImageMemoryBarrier barrier0 = {};
 		barrier0.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 		barrier0.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 		barrier0.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
@@ -276,7 +276,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		barrier0.subresourceRange.layerCount = layerCount;
 		vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier0);
 
-		VkImageBlit imageBlit{};
+		VkImageBlit imageBlit = {};
 		imageBlit.srcOffsets[1] = { int32_t(extent.width >> (i - 1)), int32_t(extent.height >> (i - 1)), 1 };
 		imageBlit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		imageBlit.srcSubresource.mipLevel = i - 1;
@@ -289,7 +289,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		imageBlit.dstSubresource.layerCount = layerCount;
 		vkCmdBlitImage(commandBuffer, image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageBlit, VK_FILTER_LINEAR);
 
-		VkImageMemoryBarrier barrier1{};
+		VkImageMemoryBarrier barrier1 = {};
 		barrier1.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 		barrier1.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 		barrier1.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
@@ -306,7 +306,7 @@ void Image::CreateMipmaps(const VkImage &image, const VkExtent3D &extent, const 
 		vkCmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier1);
 	}
 
-	VkImageMemoryBarrier barrier{};
+	VkImageMemoryBarrier barrier = {};
 	barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 	barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
@@ -330,7 +330,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 {
 	CommandBuffer commandBuffer;
 
-	VkImageMemoryBarrier imageMemoryBarrier{};
+	VkImageMemoryBarrier imageMemoryBarrier = {};
 	imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	imageMemoryBarrier.oldLayout = srcImageLayout;
 	imageMemoryBarrier.newLayout = dstImageLayout;
@@ -368,7 +368,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		//throw std::runtime_error{"Unsupported image layout transition source"};
+		//throw std::runtime_error("Unsupported image layout transition source");
 		break;
 	}
 
@@ -396,7 +396,7 @@ void Image::TransitionImageLayout(const VkImage &image, const VkFormat &format, 
 		imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		break;
 	default:
-		//throw std::runtime_error{"Unsupported image layout transition destination"};
+		//throw std::runtime_error("Unsupported image layout transition destination");
 		break;
 	}
 
@@ -409,7 +409,7 @@ void Image::InsertImageMemoryBarrier(const CommandBuffer &commandBuffer, const V
 	const VkImageLayout &oldImageLayout, const VkImageLayout &newImageLayout, const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask,
 	const VkImageAspectFlags &imageAspect, uint32_t mipLevels, uint32_t baseMipLevel, uint32_t layerCount, uint32_t baseArrayLayer)
 {
-	VkImageMemoryBarrier imageMemoryBarrier{};
+	VkImageMemoryBarrier imageMemoryBarrier = {};
 	imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	imageMemoryBarrier.srcAccessMask = srcAccessMask;
 	imageMemoryBarrier.dstAccessMask = dstAccessMask;
@@ -430,7 +430,7 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 {
 	CommandBuffer commandBuffer;
 
-	VkBufferImageCopy region{};
+	VkBufferImageCopy region = {};
 	region.bufferOffset = 0;
 	region.bufferRowLength = 0;
 	region.bufferImageHeight = 0;
@@ -491,9 +491,9 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 	if (supportsBlit)
 	{
 		// Define the region to blit (we will blit the whole swapchain image).
-		VkOffset3D blitSize{ static_cast<int32_t>(extent.width), static_cast<int32_t>(extent.height), static_cast<int32_t>(extent.depth) };
+		VkOffset3D blitSize = { static_cast<int32_t>(extent.width), static_cast<int32_t>(extent.height), static_cast<int32_t>(extent.depth) };
 		
-		VkImageBlit imageBlitRegion{};
+		VkImageBlit imageBlitRegion = {};
 		imageBlitRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		imageBlitRegion.srcSubresource.mipLevel = mipLevel;
 		imageBlitRegion.srcSubresource.baseArrayLayer = arrayLayer;
@@ -509,7 +509,7 @@ bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory
 	else
 	{
 		// Otherwise use image copy (requires us to manually flip components).
-		VkImageCopy imageCopyRegion{};
+		VkImageCopy imageCopyRegion = {};
 		imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 		imageCopyRegion.srcSubresource.mipLevel = mipLevel;
 		imageCopyRegion.srcSubresource.baseArrayLayer = arrayLayer;

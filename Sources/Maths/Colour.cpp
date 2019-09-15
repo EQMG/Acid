@@ -2,23 +2,23 @@
 
 namespace acid
 {
-const Colour Colour::Clear{"#000000", 0.0f};
-const Colour Colour::Black{"#000000"};
-const Colour Colour::Grey{"#808080"};
-const Colour Colour::Silver{"#C0C0C0"};
-const Colour Colour::White{"#FFFFFF"};
-const Colour Colour::Maroon{"#800000"};
-const Colour Colour::Red{"#FF0000"};
-const Colour Colour::Olive{"#808000"};
-const Colour Colour::Yellow{"#FFFF00"};
-const Colour Colour::Green{"#00FF00"};
-const Colour Colour::Lime{"#008000"};
-const Colour Colour::Teal{"#008080"};
-const Colour Colour::Aqua{"#00FFFF"};
-const Colour Colour::Navy{"#000080"};
-const Colour Colour::Blue{"#0000FF"};
-const Colour Colour::Purple{"#800080"};
-const Colour Colour::Fuchsia{"#FF00FF"};
+const Colour Colour::Clear("#000000", 0.0f);
+const Colour Colour::Black("#000000");
+const Colour Colour::Grey("#808080");
+const Colour Colour::Silver("#C0C0C0");
+const Colour Colour::White("#FFFFFF");
+const Colour Colour::Maroon("#800000");
+const Colour Colour::Red("#FF0000");
+const Colour Colour::Olive("#808000");
+const Colour Colour::Yellow("#FFFF00");
+const Colour Colour::Green("#00FF00");
+const Colour Colour::Lime("#008000");
+const Colour Colour::Teal("#008080");
+const Colour Colour::Aqua("#00FFFF");
+const Colour Colour::Navy("#000080");
+const Colour Colour::Blue("#0000FF");
+const Colour Colour::Purple("#800080");
+const Colour Colour::Fuchsia("#FF00FF");
 
 Colour::Colour(float r, float g, float b, float a) :
 	m_r(r),
@@ -82,7 +82,7 @@ Colour Colour::Normalize() const
 
 	if (l == 0.0f)
 	{
-		throw std::runtime_error{"Can't normalize a zero length vector"};
+		throw std::runtime_error("Can't normalize a zero length vector");
 	}
 
 	return {m_r / l, m_g / l, m_b / l, m_a / l};
@@ -145,7 +145,7 @@ float Colour::operator[](uint32_t index) const
 	case 3:
 		return m_a;
 	default:
-		throw std::runtime_error{"Colour index out of bounds!"};
+		throw std::runtime_error("Colour index out of bounds!");
 	}
 }
 
@@ -162,7 +162,7 @@ float &Colour::operator[](uint32_t index)
 	case 3:
 		return m_a;
 	default:
-		throw std::runtime_error{"Colour index out of bounds!"};
+		throw std::runtime_error("Colour index out of bounds!");
 	}
 }
 
@@ -188,22 +188,22 @@ Colour operator/(const Colour &left, const Colour &right)
 
 Colour operator+(float value, const Colour &left)
 {
-	return Colour{value, value, value, 0.0f}.Add(left);
+	return Colour(value, value, value, 0.0f).Add(left);
 }
 
 Colour operator-(float value, const Colour &left)
 {
-	return Colour{value, value, value, 0.0f}.Subtract(left);
+	return Colour(value, value, value, 0.0f).Subtract(left);
 }
 
 Colour operator*(float value, const Colour &left)
 {
-	return Colour{value, value, value}.Multiply(left);
+	return Colour(value, value, value).Multiply(left);
 }
 
 Colour operator/(float value, const Colour &left)
 {
-	return Colour{value, value, value}.Divide(left);
+	return Colour(value, value, value).Divide(left);
 }
 
 Colour operator+(const Colour &left, float value)

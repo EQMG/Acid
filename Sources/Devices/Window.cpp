@@ -14,11 +14,11 @@ void CallbackError(int32_t error, const char *description)
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
 {
-	auto &monitors{Window::Get()->m_monitors};
+	auto &monitors = Window::Get()->m_monitors;
 
 	if (event == GLFW_CONNECTED)
 	{
-		auto &it{monitors.emplace_back(std::make_unique<Monitor>(monitor))};
+		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
 		Window::Get()->m_onMonitorConnect(it.get(), true);
 	}
 	else if (event == GLFW_DISCONNECTED)
@@ -106,13 +106,13 @@ Window::Window() :
 	// Initialize the GLFW library.
 	if (glfwInit() == GLFW_FALSE)
 	{
-		throw std::runtime_error{"GLFW failed to initialize"};
+		throw std::runtime_error("GLFW failed to initialize");
 	}
 
 	// Checks Vulkan support on GLFW.
 	if (glfwVulkanSupported() == GLFW_FALSE)
 	{
-		throw std::runtime_error{"GLFW failed to find Vulkan support"};
+		throw std::runtime_error("GLFW failed to find Vulkan support");
 	}
 
 	// Set the monitor callback
@@ -145,7 +145,7 @@ Window::Window() :
 	if (!m_window)
 	{
 		glfwTerminate();
-		throw std::runtime_error{"GLFW failed to create the window"};
+		throw std::runtime_error("GLFW failed to create the window");
 	}
 
 	// Sets the user pointer.
@@ -235,7 +235,7 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 			continue;
 		}
 
-		GLFWimage icon{};
+		GLFWimage icon = {};
 		icon.width = extent.m_x;
 		icon.height = extent.m_y;
 		icon.pixels = data.get();
@@ -287,7 +287,7 @@ void Window::SetFullscreen(bool fullscreen, Monitor *monitor)
 #if defined(ACID_VERBOSE)
 		printf("Window is going windowed\n");
 #endif
-		m_position = (Vector2i{videoMode.m_width, videoMode.m_height} - m_size) / 2;
+		m_position = (Vector2i(videoMode.m_width, videoMode.m_height) - m_size) / 2;
 		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
 	}
 
@@ -359,7 +359,7 @@ void Window::CheckGlfw(int32_t result)
 
 	auto failure = StringifyResultGlfw(result);
 	Log::Error("GLFW error: ", failure, ", ", result, '\n');
-	throw std::runtime_error{"GLFW error: " + failure};
+	throw std::runtime_error("GLFW error: " + failure);
 }
 
 std::pair<const char **, uint32_t> Window::GetInstanceExtensions()

@@ -27,7 +27,7 @@ Gizmo *Gizmos::AddGizmo(std::unique_ptr<Gizmo> &&gizmo)
 
 	if (it == m_gizmos.end())
 	{
-		m_gizmos.emplace(gizmo->GetGizmoType(), std::vector<std::unique_ptr<Gizmo>>{});
+		m_gizmos.emplace(gizmo->GetGizmoType(), std::vector<std::unique_ptr<Gizmo>>());
 		it = m_gizmos.find(gizmo->GetGizmoType());
 	}
 

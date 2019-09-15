@@ -22,37 +22,37 @@ void MeshAnimated::Start()
 		return;
 	}
 
-	File file{m_filename, std::make_unique<Xml>("COLLADA")};
+	File file(m_filename, std::make_unique<Xml>("COLLADA"));
 	file.Load();
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
-	static const auto Correction = Matrix4{}.Rotate(Maths::Radians(-90.0f), Vector3f::Right);
+	static const auto Correction = Matrix4().Rotate(Maths::Radians(-90.0f), Vector3f::Right);
 
-	SkinLoader skinLoader{file.GetNode()->FindChild("library_controllers"), MaxWeights};
-	SkeletonLoader skeletonLoader{file.GetNode()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction};
-	GeometryLoader geometryLoader{file.GetNode()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), Correction};
+	SkinLoader skinLoader(file.GetNode()->FindChild("library_controllers"), MaxWeights);
+	SkeletonLoader skeletonLoader(file.GetNode()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction);
+	GeometryLoader geometryLoader(file.GetNode()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), Correction);
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint = skeletonLoader.GetHeadJoint();
 
-	AnimationLoader animationLoader{file.GetNode()->FindChild("library_animations"), file.GetNode()->FindChild("library_visual_scenes"), Correction};
+	AnimationLoader animationLoader(file.GetNode()->FindChild("library_animations"), file.GetNode()->FindChild("library_visual_scenes"), Correction);
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator.DoAnimation(m_animation.get());
 
 	/*{
-		File fileModel{"Animation/Model.json", std::make_unique<Json>()};
+		File fileModel("Animation/Model.json", std::make_unique<Json>());
 		fileModel.GetNode()->SetChild("vertices", m_model->GetVertices<VertexAnimated>());
 		fileModel.GetNode()->SetChild("indices", m_model->GetIndices());
 		fileModel.Write();
 	}
 	{
-		File fileJoints{"Animation/Joints.json", std::make_unique<Json>()};
+		File fileJoints("Animation/Joints.json", std::make_unique<Json>());
 		*fileJoints.GetNode() << m_headJoint;
 		fileJoints.Write();
 	}
 	{
-		File fileAnimation0{"Animation/Animation0.json", std::make_unique<Json>()};
+		File fileAnimation0("Animation/Animation0.json", std::make_unique<Json>());
 		*fileAnimation0.GetNode() << *m_animation;
 		fileAnimation0.Write();
 	}*/

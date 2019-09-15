@@ -92,7 +92,7 @@ private:
 
 	static uint32_t GetNewIndex(uint32_t latestIndex = 0);
 	static ZipEntryInfo CreateInfo(const std::string &name);
-	
+
 	ZipEntryInfo m_entryInfo = {};
 	ZipEntryData m_entryData;
 	bool m_isModified = false;

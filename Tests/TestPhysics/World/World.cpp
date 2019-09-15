@@ -8,9 +8,9 @@
 
 namespace test
 {
-static const Colour FOG_COLOUR_SUNRISE{"#ee9a90"};
-static const Colour FOG_COLOUR_NIGHT{"#0D0D1A"};
-static const Colour FOG_COLOUR_DAY{"#e6e6e6"};
+static const Colour FOG_COLOUR_SUNRISE("#ee9a90");
+static const Colour FOG_COLOUR_NIGHT("#0D0D1A");
+static const Colour FOG_COLOUR_DAY("#e6e6e6");
 
 World::World() :
 	m_driverDay(DriverLinear<float>(0.0f, 1.0f, 300s)),

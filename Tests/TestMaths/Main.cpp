@@ -17,7 +17,7 @@ using namespace acid;
 int main(int argc, char **argv)
 {
 	{
-		RingBuffer<int32_t> buffer{4};
+		RingBuffer<int32_t> buffer(4);
 
 		if (!buffer.push(1, 2, 3, 4))
 		{
@@ -130,9 +130,9 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector2f:\n");
-		Vector2f a{3.0f, -7.2f};
-		Vector2f b{-1.74f, 15.4f};
-		Vector2ui c{5, 2};
+		Vector2f a(3.0f, -7.2f);
+		Vector2f b(-1.74f, 15.4f);
+		Vector2ui c(5, 2);
 
 		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
 		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
@@ -160,12 +160,12 @@ int main(int argc, char **argv)
 		Log::Out('\n');
 	}
 	{
-		constexpr auto compileTime = Vector3f{10.0f, -9.0f, 8.0f} + Vector3d{-7.0, -6.0, 5.0};
+		constexpr auto compileTime = Vector3f(10.0f, -9.0f, 8.0f) + Vector3d(-7.0, -6.0, 5.0);
 
 		Log::Out("Vector3:\n");
-		Vector3f a{12.9f, -2.0f, 6.7f};
-		Vector3f b{-9.7f, 15.9f, -13.8f};
-		Vector3ui c{5, 2, 1};
+		Vector3f a(12.9f, -2.0f, 6.7f);
+		Vector3f b(-9.7f, 15.9f, -13.8f);
+		Vector3ui c(5, 2, 1);
 		
 		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
 		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
 		Log::Out("normalize {", a, "} = {", a.Normalize(), "}\n");
 		Log::Out("length {", a, "} = {", a.Length(), "}\n");
 		Log::Out("{", a, "} distance {", b, "} = {", a.Distance(b), "}\n");
-		//Log::Out("{", a, "} rotate {", Vector3f{1.22f, 0.0f, 0.0f}, "} = {", a.Rotate(Vector3f{1.22f, 0.0f, 0.0f}), "}\n");
+		//Log::Out("{", a, "} rotate {", Vector3f(1.22f, 0.0f, 0.0f), "} = {", a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)), "}\n");
 		Log::Out('\n');
 
 		Log::Out("{", c, "} & ", 9, " = {", (c & 9), "}\n");
@@ -195,9 +195,9 @@ int main(int argc, char **argv)
 	}
 	{
 		Log::Out("Vector4:\n");
-		Vector4f a{12.9f, -2.0f, 6.7f, 11.11f};
-		Vector4f b{-9.7f, 15.9f, -13.8f, -2.246f};
-		Vector4ui c{5, 2, 1, 3};
+		Vector4f a(12.9f, -2.0f, 6.7f, 11.11f);
+		Vector4f b(-9.7f, 15.9f, -13.8f, -2.246f);
+		Vector4ui c(5, 2, 1, 3);
 
 		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
 		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");

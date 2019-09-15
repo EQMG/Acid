@@ -20,7 +20,7 @@
 
 namespace acid
 {
-Engine *Engine::INSTANCE{nullptr};
+Engine *Engine::Instance = nullptr;
 
 Engine::Engine(std::string argv0, bool emptyRegister) :
 	m_argv0(std::move(argv0)),
@@ -30,7 +30,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	m_elapsedUpdate(14.705ms),
 	m_elapsedRender(-1s)
 {
-	INSTANCE = this;
+	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
 	Log::Out("Version: ", ACID_VERSION, '\n');

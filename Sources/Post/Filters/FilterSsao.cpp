@@ -18,7 +18,7 @@ FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 {
 	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i)
 	{
-		Vector3f sample{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f)};
+		Vector3f sample(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f));
 		sample = sample.Normalize();
 		sample *= Maths::Random(0.0f, 1.0f);
 		auto scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
@@ -70,7 +70,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size)
 
 	for (uint32_t i = 0; i < size * size; i++)
 	{
-		Vector3f noise{Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f}; // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
+		Vector3f noise(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
 		noise = noise.Normalize();
 		ssaoNoise[i] = noise;
 	}

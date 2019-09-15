@@ -20,7 +20,7 @@ void StorageBuffer::Update(const void *newData)
 VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 	uint32_t count)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -31,7 +31,7 @@ VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(uint32_t bind
 
 WriteDescriptorSet StorageBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorBufferInfo bufferInfo{};
+	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
 	bufferInfo.offset = 0;
 	bufferInfo.range = m_size;
@@ -42,7 +42,7 @@ WriteDescriptorSet StorageBuffer::GetWriteDescriptor(uint32_t binding, const VkD
 		bufferInfo.range = offsetSize->GetSize();
 	}
 
-	VkWriteDescriptorSet descriptorWrite{};
+	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;

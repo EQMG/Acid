@@ -9,8 +9,8 @@ namespace acid
 UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength, const UiTransform &transform) :
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
+	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title, 
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
 	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, value,
 		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(std::move(value)),

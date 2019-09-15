@@ -5,7 +5,7 @@
 
 namespace acid
 {
-const std::vector<VkDynamicState> DYNAMIC_STATES{ VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
+const std::vector<VkDynamicState> DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
 
 PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
 	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
@@ -45,7 +45,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 		CreatePipelineMrt();
 		break;
 	default:
-		throw std::runtime_error{"Unknown pipeline mode"};
+		throw std::runtime_error("Unknown pipeline mode");
 	}
 
 #if defined(ACID_VERBOSE)
@@ -98,13 +98,13 @@ void PipelineGraphics::CreateShaderProgram()
 
 		if (!fileLoaded)
 		{
-			throw std::runtime_error{"Could not create pipeline, missing shader stage"};
+			throw std::runtime_error("Could not create pipeline, missing shader stage");
 		}
 
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
 		auto shaderModule = m_shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
 
-		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo{};
+		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipelineShaderStageCreateInfo.stage = stageFlag;
 		pipelineShaderStageCreateInfo.module = shaderModule;
@@ -120,9 +120,9 @@ void PipelineGraphics::CreateDescriptorLayout()
 {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto &descriptorSetLayouts{m_shader->GetDescriptorSetLayouts()};
+	auto &descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
-	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo{};
+	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 	descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
@@ -136,7 +136,7 @@ void PipelineGraphics::CreateDescriptorPool()
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
 
-	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
+	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
@@ -151,7 +151,7 @@ void PipelineGraphics::CreatePipelineLayout()
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
-	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
+	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipelineLayoutCreateInfo.setLayoutCount = 1;
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
@@ -167,7 +167,7 @@ void PipelineGraphics::CreateAttributes()
 
 	if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid)
 	{
-		throw std::runtime_error{"Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills."};
+		throw std::runtime_error("Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills.");
 	}
 
 	m_inputAssemblyState.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -285,7 +285,7 @@ void PipelineGraphics::CreatePipeline()
 				continue;
 			}*/
 
-			auto &newAttribute{attributeDescriptions.emplace_back(attribute)};
+			auto &newAttribute = attributeDescriptions.emplace_back(attribute);
 			newAttribute.location += lastAttribute;
 		}
 
@@ -301,7 +301,7 @@ void PipelineGraphics::CreatePipeline()
 	m_vertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 	m_vertexInputStateCreateInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
-	VkGraphicsPipelineCreateInfo pipelineCreateInfo{};
+	VkGraphicsPipelineCreateInfo pipelineCreateInfo = {};
 	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 	pipelineCreateInfo.stageCount = static_cast<uint32_t>(m_stages.size());
 	pipelineCreateInfo.pStages = m_stages.data();
@@ -339,7 +339,7 @@ void PipelineGraphics::CreatePipelineMrt()
 
 	for (uint32_t i = 0; i < attachmentCount; i++)
 	{
-		VkPipelineColorBlendAttachmentState blendAttachmentState{};
+		VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 		blendAttachmentState.blendEnable = VK_TRUE;
 		blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 		blendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;

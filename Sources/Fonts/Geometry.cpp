@@ -107,10 +107,10 @@ bool IsLineSegmentIntersectingBbox(const Rect &bbox, const Vector2f &p1, const V
 	auto yLeft = LineVerticalIntersect(bbox.m_min.m_x, p1, p2);
 	auto yRight = LineVerticalIntersect(bbox.m_max.m_x, p1, p2);
 
-	Vector2f top{xTop, bbox.m_max.m_y};
-	Vector2f bottom{xBottom, bbox.m_min.m_y};
-	Vector2f left{bbox.m_min.m_x, yLeft};
-	Vector2f right{bbox.m_max.m_x, yRight};
+	Vector2f top(xTop, bbox.m_max.m_y);
+	Vector2f bottom(xBottom, bbox.m_min.m_y);
+	Vector2f left(bbox.m_min.m_x, yLeft);
+	Vector2f right(bbox.m_max.m_x, yRight);
 
 	if (IsBetween(xTop, bbox.m_min.m_x, bbox.m_max.m_x) && IsIntersectionInLineSegment(p1, p2, top))
 	{
@@ -147,10 +147,10 @@ bool BboxBezier2Intersect(const Rect &bbox, const Vector2f bezier[3])
 		return true;
 	}
 
-	Vector2f bl{bbox.m_min.m_x, bbox.m_min.m_y};
-	Vector2f br{bbox.m_max.m_x, bbox.m_min.m_y};
-	Vector2f tl{bbox.m_min.m_x, bbox.m_max.m_y};
-	Vector2f tr{bbox.m_max.m_x, bbox.m_max.m_y};
+	Vector2f bl(bbox.m_min.m_x, bbox.m_min.m_y);
+	Vector2f br(bbox.m_max.m_x, bbox.m_min.m_y);
+	Vector2f tl(bbox.m_min.m_x, bbox.m_max.m_y);
+	Vector2f tr(bbox.m_max.m_x, bbox.m_max.m_y);
 
 	return Bezier2LineIsIntersecting(bezier, bl, br) || Bezier2LineIsIntersecting(bezier, br, tr) || Bezier2LineIsIntersecting(bezier, tr, tl)
 		|| Bezier2LineIsIntersecting(bezier, tl, bl);
@@ -161,7 +161,7 @@ float LineSignedDistance(const Vector2f &a, const Vector2f &b, const Vector2f &p
 	auto lineDir = b - a;
 	assert(lineDir.Length() > 0.0f);
 
-	Vector2f perpDir{-lineDir.m_y, lineDir.m_x};
+	Vector2f perpDir(-lineDir.m_y, lineDir.m_x);
 	perpDir = perpDir.Normalize();
 
 	auto dirToA = a - p;
@@ -357,7 +357,7 @@ bool Bezier2LineIsIntersecting(const Vector2f bezier[3], const Vector2f &line0, 
 		xt1 = Bezier2Component(x0, x1, x2, t1);
 		return (IsBetween(t0, 0, 1) && IsBetween(xt0, 0, l)) || (IsBetween(t1, 0, 1) && IsBetween(xt1, 0, l));
 	default:
-		throw std::runtime_error{"No quadratic solution could be found"};
+		throw std::runtime_error("No quadratic solution could be found");
 	}
 }
 }

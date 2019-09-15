@@ -8,39 +8,39 @@ namespace acid
 {
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &a):
-	m_x{a},
-	m_y{a}
+	m_x(a),
+	m_y(a)
 {
 }
 
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &x, const T &y):
-	m_x{x},
-	m_y{y}
+	m_x(x),
+	m_y(y)
 {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector2<T>::Vector2(const K &x, const J &y) :
-	m_x{static_cast<T>(x)},
-	m_y{static_cast<T>(y)}
+	m_x(static_cast<T>(x)),
+	m_y(static_cast<T>(y))
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector2<K> &source) :
-	m_x{static_cast<T>(source.m_x)},
-	m_y{static_cast<T>(source.m_y)}
+	m_x(static_cast<T>(source.m_x)),
+	m_y(static_cast<T>(source.m_y))
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector3<K> &source):
-	m_x{static_cast<T>(source.m_x)},
-	m_y{static_cast<T>(source.m_y)}
+	m_x(static_cast<T>(source.m_x)),
+	m_y(static_cast<T>(source.m_y))
 {
 }
 
@@ -48,28 +48,28 @@ template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Add(const Vector2<K> &other) const
 {
-	return Vector2<decltype(m_x + other.m_x)>{m_x + other.m_x, m_y + other.m_y};
+	return Vector2<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Subtract(const Vector2<K> &other) const
 {
-	return Vector2<decltype(m_x - other.m_x)>{m_x - other.m_x, m_y - other.m_y};
+	return Vector2<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Multiply(const Vector2<K> &other) const
 {
-	return Vector2<decltype(m_x * other.m_x)>{m_x * other.m_x, m_y * other.m_y};
+	return Vector2<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Divide(const Vector2<K> &other) const
 {
-	return Vector2<decltype(m_x / other.m_x)>{m_x / other.m_x, m_y / other.m_y};
+	return Vector2<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y);
 }
 
 template<typename T>
@@ -110,14 +110,14 @@ template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Scale(const K &scalar) const
 {
-	return Vector2<decltype(m_x * scalar)>{m_x * scalar, m_y * scalar};
+	return Vector2<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar);
 }
 
 template<typename T>
 template<typename K>
 auto Vector2<T>::Rotate(const K &angle) const
 {
-	return Vector2<decltype(m_x * angle)>{m_x * std::cos(angle) - m_y * std::sin(angle), m_x * std::sin(angle) + m_y * std::cos(angle)};
+	return Vector2<decltype(m_x * angle)>(m_x * std::cos(angle) - m_y * std::sin(angle), m_x * std::sin(angle) + m_y * std::cos(angle));
 }
 
 template<typename T>
@@ -126,7 +126,7 @@ auto Vector2<T>::Rotate(const K &angle, const Vector2<J> &rotationAxis) const
 {
 	auto x = ((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x);
 	auto y = ((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y);
-	return Vector2<decltype(x)>{x, y};
+	return Vector2<decltype(x)>(x, y);
 }
 
 template<typename T>
@@ -136,7 +136,7 @@ auto Vector2<T>::Normalize() const
 
 	if (l == 0)
 	{
-		throw std::runtime_error{"Can't normalize a zero length vector"};
+		throw std::runtime_error("Can't normalize a zero length vector");
 	}
 
 	return *this / l;
@@ -157,7 +157,7 @@ auto Vector2<T>::Length() const
 template<typename T>
 auto Vector2<T>::Abs() const
 {
-	return Vector2<T>{std::abs(m_x), std::abs(m_y)};
+	return Vector2<T>(std::abs(m_x), std::abs(m_y));
 }
 
 template<typename T>
@@ -182,14 +182,14 @@ template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Min(const Vector2<K> &other)
 {
-	return Vector2<decltype(std::min(m_x, other.m_x))>{std::min(m_x, other.m_x), std::min(m_y, other.m_y)};
+	return Vector2<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Max(const Vector2<K> &other)
 {
-	return Vector2<decltype(std::max(m_x, other.m_x))>{std::max(m_x, other.m_x), std::max(m_y, other.m_y)};
+	return Vector2<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y));
 }
 
 template<typename T>
@@ -237,7 +237,7 @@ auto Vector2<T>::CartesianToPolar() const
 {
 	auto radius = std::sqrt(m_x * m_x + m_y * m_y);
 	auto theta = std::atan2(m_y, m_x);
-	return Vector2<decltype(radius)>{radius, theta};
+	return Vector2<decltype(radius)>(radius, theta);
 }
 
 template<typename T>
@@ -245,7 +245,7 @@ auto Vector2<T>::PolarToCartesian() const
 {
 	auto x = m_x * std::cos(m_y);
 	auto y = m_x * std::sin(m_y);
-	return Vector2<decltype(x)>{x, y};
+	return Vector2<decltype(x)>(x, y);
 }
 
 template<typename T>
@@ -286,7 +286,7 @@ constexpr const T &Vector2<T>::operator[](uint32_t index) const
 	case 1:
 		return m_y;
 	default:
-		throw std::runtime_error{"Vector2 index out of bounds!"};
+		throw std::runtime_error("Vector2 index out of bounds!");
 	}
 }
 
@@ -300,7 +300,7 @@ constexpr T &Vector2<T>::operator[](uint32_t index)
 	case 1:
 		return m_y;
 	default:
-		throw std::runtime_error{"Vector2 index out of bounds!"};
+		throw std::runtime_error("Vector2 index out of bounds!");
 	}
 }
 
@@ -335,25 +335,25 @@ constexpr Vector2<T> &Vector2<T>::operator/=(const Vector2<K> &other)
 template<typename T>
 constexpr Vector2<T> &Vector2<T>::operator+=(const T &other)
 {
-	return *this = Add(Vector2<T>{other});
+	return *this = Add(Vector2<T>(other));
 }
 
 template<typename T>
 constexpr Vector2<T> &Vector2<T>::operator-=(const T &other)
 {
-	return *this = Subtract(Vector2<T>{other});
+	return *this = Subtract(Vector2<T>(other));
 }
 
 template<typename T>
 constexpr Vector2<T> &Vector2<T>::operator*=(const T &other)
 {
-	return *this = Multiply(Vector2<T>{other});
+	return *this = Multiply(Vector2<T>(other));
 }
 
 template<typename T>
 constexpr Vector2<T> &Vector2<T>::operator/=(const T &other)
 {
-	return *this = Divide(Vector2<T>{other});
+	return *this = Divide(Vector2<T>(other));
 }
 
 template<typename K>
@@ -405,49 +405,49 @@ constexpr auto operator/(const Vector2<K> &left, const Vector2<J> &right)
 template<typename K, typename J>
 constexpr auto operator+(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>{left}.Add(right);
+	return Vector2<K>(left).Add(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>{left}.Subtract(right);
+	return Vector2<K>(left).Subtract(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>{left}.Multiply(right);
+	return Vector2<K>(left).Multiply(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const K &left, const Vector2<J> &right)
 {
-	return Vector2<K>{left}.Divide(right);
+	return Vector2<K>(left).Divide(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator+(const Vector2<K> &left, const J &right)
 {
-	return left.Add(Vector2<J>{right});
+	return left.Add(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const Vector2<K> &left, const J &right)
 {
-	return left.Subtract(Vector2<J>{right});
+	return left.Subtract(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const Vector2<K> &left, const J &right)
 {
-	return left.Multiply(Vector2<J>{right});
+	return left.Multiply(Vector2<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const Vector2<K> &left, const J &right)
 {
-	return left.Divide(Vector2<J>{right});
+	return left.Divide(Vector2<J>(right));
 }
 
 template<typename K, typename J>

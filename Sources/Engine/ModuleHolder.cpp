@@ -26,9 +26,7 @@ void ModuleHolder::UpdateStage(const Module::Stage &stage)
 			continue;
 		}
 
-		auto &module{m_modules[typeId]};
-
-		if (module)
+		if (auto &module = m_modules[typeId])
 		{
 			module->Update();
 		}

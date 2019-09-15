@@ -8,12 +8,12 @@
 
 namespace test
 {
-static const Colour SUN_COLOUR_SUNRISE{"#ee9a90"};
-static const Colour SUN_COLOUR_NIGHT{"#0D0D1A"};
-static const Colour SUN_COLOUR_DAY{"#ffffff"};
+static const Colour SUN_COLOUR_SUNRISE("#ee9a90");
+static const Colour SUN_COLOUR_NIGHT("#0D0D1A");
+static const Colour SUN_COLOUR_DAY("#ffffff");
 
-static const Colour MOON_COLOUR_NIGHT{"#666699"};
-static const Colour MOON_COLOUR_DAY{"#000000"};
+static const Colour MOON_COLOUR_NIGHT("#666699");
+static const Colour MOON_COLOUR_DAY("#000000");
 
 CelestialBody::CelestialBody(const Type &type) :
 	m_type(type)
@@ -39,7 +39,7 @@ void CelestialBody::Update()
 	{
 	case Type::Sun:
 	{
-		auto sunPosition = World::Get()->GetLightDirection() * Vector3f{-6048.0f, -6048.0f, -6048.0f};
+		auto sunPosition = World::Get()->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(sunPosition);
 
@@ -59,7 +59,7 @@ void CelestialBody::Update()
 		break;
 	case Type::Moon:
 	{
-		auto moonPosition = World::Get()->GetLightDirection() * Vector3f{6048.0f, 6048.0f, 6048.0f};
+		auto moonPosition = World::Get()->GetLightDirection() * Vector3f(6048.0f, 6048.0f, 6048.0f);
 		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(moonPosition);
 

@@ -8,59 +8,59 @@ namespace acid
 {
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &a):
-	m_x{a},
-	m_y{a},
-	m_z{a},
-	m_w{a}
+	m_x(a),
+	m_y(a),
+	m_z(a),
+	m_w(a)
 {
 }
 
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &x, const T &y, const T &z, const T &w):
-	m_x{x},
-	m_y{y},
-	m_z{z},
-	m_w{w}
+	m_x(x),
+	m_y(y),
+	m_z(z),
+	m_w(w)
 {
 }
 
 template<typename T>
 template<typename K, typename J, typename H, typename F>
 constexpr Vector4<T>::Vector4(const K &x, const J &y, const H &z, const F &w) :
-	m_x{static_cast<T>(x)},
-	m_y{static_cast<T>(y)},
-	m_z{static_cast<T>(z)},
-	m_w{static_cast<T>(w)}
+	m_x(static_cast<T>(x)),
+	m_y(static_cast<T>(y)),
+	m_z(static_cast<T>(z)),
+	m_w(static_cast<T>(w))
 {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector4<T>::Vector4(const Vector2<K> &left, const Vector2<J> &right):
-	m_x{static_cast<T>(left.m_x)},
-	m_y{static_cast<T>(left.m_y)},
-	m_z{static_cast<T>(right.m_x)},
-	m_w{static_cast<T>(right.m_y)}
+	m_x(static_cast<T>(left.m_x)),
+	m_y(static_cast<T>(left.m_y)),
+	m_z(static_cast<T>(right.m_x)),
+	m_w(static_cast<T>(right.m_y))
 {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector4<T>::Vector4(const Vector3<K> &source, const J &w):
-	m_x{static_cast<T>(source.m_x)},
-	m_y{static_cast<T>(source.m_y)},
-	m_z{static_cast<T>(source.m_z)},
-	m_w{static_cast<T>(w)}
+	m_x(static_cast<T>(source.m_x)),
+	m_y(static_cast<T>(source.m_y)),
+	m_z(static_cast<T>(source.m_z)),
+	m_w(static_cast<T>(w))
 {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector4<T>::Vector4(const Vector4<K> &source):
-	m_x{static_cast<T>(source.m_x)},
-	m_y{static_cast<T>(source.m_y)},
-	m_z{static_cast<T>(source.m_z)},
-	m_w{static_cast<T>(source.m_w)}
+	m_x(static_cast<T>(source.m_x)),
+	m_y(static_cast<T>(source.m_y)),
+	m_z(static_cast<T>(source.m_z)),
+	m_w(static_cast<T>(source.m_w))
 {
 }
 
@@ -68,28 +68,28 @@ template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Add(const Vector4<K> &other) const
 {
-	return Vector4<decltype(m_x + other.m_x)>{m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w};
+	return Vector4<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Subtract(const Vector4<K> &other) const
 {
-	return Vector4<decltype(m_x - other.m_x)>{m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w};
+	return Vector4<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Multiply(const Vector4<K> &other) const
 {
-	return Vector4<decltype(m_x * other.m_x)>{m_x * other.m_x, m_y * other.m_y, m_z * other.m_z, m_w * other.m_w};
+	return Vector4<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z, m_w * other.m_w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Divide(const Vector4<K> &other) const
 {
-	return Vector4<decltype(m_x / other.m_x)>{m_x / other.m_x, m_y / other.m_y, m_z / other.m_z, m_w / other.m_w};
+	return Vector4<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z, m_w / other.m_w);
 }
 
 template<typename T>
@@ -130,7 +130,7 @@ template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Scale(const K &scalar) const
 {
-	return Vector4<decltype(m_x * scalar)>{m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar};
+	return Vector4<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
 }
 
 template<typename T>
@@ -140,7 +140,7 @@ auto Vector4<T>::Normalize() const
 
 	if (l == 0)
 	{
-		throw std::runtime_error{"Can't normalize a zero length vector"};
+		throw std::runtime_error("Can't normalize a zero length vector");
 	}
 
 	return *this / l;
@@ -186,14 +186,14 @@ template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Min(const Vector4<K> &other)
 {
-	return Vector4<decltype(std::min(m_x, other.m_x))>{std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z), std::min(m_w, other.m_w)};
+	return Vector4<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z), std::min(m_w, other.m_w));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Max(const Vector4<K> &other)
 {
-	return Vector4<decltype(std::max(m_x, other.m_x))>{std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w)};
+	return Vector4<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w));
 }
 
 template<typename T>
@@ -270,7 +270,7 @@ constexpr const T &Vector4<T>::operator[](uint32_t index) const
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error{"Vector4 index out of bounds!"};
+		throw std::runtime_error("Vector4 index out of bounds!");
 	}
 }
 
@@ -288,7 +288,7 @@ constexpr T &Vector4<T>::operator[](uint32_t index)
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error{"Vector4 index out of bounds!"};
+		throw std::runtime_error("Vector4 index out of bounds!");
 	}
 }
 
@@ -323,25 +323,25 @@ constexpr Vector4<T> &Vector4<T>::operator/=(const Vector4<K> &other)
 template<typename T>
 constexpr Vector4<T> &Vector4<T>::operator+=(const T &other)
 {
-	return *this = Add(Vector4<T>{other});
+	return *this = Add(Vector4<T>(other));
 }
 
 template<typename T>
 constexpr Vector4<T> &Vector4<T>::operator-=(const T &other)
 {
-	return *this = Subtract(Vector4<T>{other});
+	return *this = Subtract(Vector4<T>(other));
 }
 
 template<typename T>
 constexpr Vector4<T> &Vector4<T>::operator*=(const T &other)
 {
-	return *this = Multiply(Vector4<T>{other});
+	return *this = Multiply(Vector4<T>(other));
 }
 
 template<typename T>
 constexpr Vector4<T> &Vector4<T>::operator/=(const T &other)
 {
-	return *this = Divide(Vector4<T>{other});
+	return *this = Divide(Vector4<T>(other));
 }
 
 template<typename K>
@@ -397,49 +397,49 @@ constexpr auto operator/(const Vector4<K> &left, const Vector4<J> &right)
 template<typename K, typename J>
 constexpr auto operator+(const K &left, const Vector4<J> &right)
 {
-	return Vector4<K>{left}.Add(right);
+	return Vector4<K>(left).Add(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const K &left, const Vector4<J> &right)
 {
-	return Vector4<K>{left}.Subtract(right);
+	return Vector4<K>(left).Subtract(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const K &left, const Vector4<J> &right)
 {
-	return Vector4<K>{left}.Multiply(right);
+	return Vector4<K>(left).Multiply(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const K &left, const Vector4<J> &right)
 {
-	return Vector4<K>{left}.Divide(right);
+	return Vector4<K>(left).Divide(right);
 }
 
 template<typename K, typename J>
 constexpr auto operator+(const Vector4<K> &left, const J &right)
 {
-	return left.Add(Vector4<J>{right});
+	return left.Add(Vector4<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator-(const Vector4<K> &left, const J &right)
 {
-	return left.Subtract(Vector4<J>{right});
+	return left.Subtract(Vector4<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator*(const Vector4<K> &left, const J &right)
 {
-	return left.Multiply(Vector4<J>{right});
+	return left.Multiply(Vector4<J>(right));
 }
 
 template<typename K, typename J>
 constexpr auto operator/(const Vector4<K> &left, const J &right)
 {
-	return left.Divide(Vector4<J>{right});
+	return left.Divide(Vector4<J>(right));
 }
 
 template<typename K, typename J>

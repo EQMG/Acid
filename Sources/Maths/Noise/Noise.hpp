@@ -237,13 +237,13 @@ public:
 	void SetCellularJitter(float cellularJitter) { m_cellularJitter = cellularJitter; }
 
 	/**
-	 * Gets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
+	 * Gets the maximum warp distance from original location when using GradientPerturb(Fractal}(...).
 	 * @return The cellular maximum warp distance. 
 	 **/
 	float GetGradientPerturbAmp() const { return m_gradientPerturbAmp; }
 
 	/**
-	 * Sets the maximum warp distance from original location when using GradientPerturb{Fractal}(...).
+	 * Sets the maximum warp distance from original location when using GradientPerturb(Fractal}(...).
 	 * @param gradientPerturbAmp The new cellular maximum warp distance (Default: 1.0). 
 	 **/
 	void SetGradientPerturbAmp(float gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }

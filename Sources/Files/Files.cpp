@@ -262,10 +262,15 @@ void Files::RemoveSearchPath(const std::string &path)
 
 void Files::ClearSearchPath()
 {
-	for (const auto &path : std::vector<std::string>{m_searchPaths})
+	for (const auto &searchPath : m_searchPaths)
 	{
-		RemoveSearchPath(path);
+		if (PHYSFS_unmount(searchPath.c_str()) == 0)
+		{
+			Log::Error("Failed to unmount path ", searchPath, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
+		}
 	}
+	
+	m_searchPaths.clear();
 }
 
 bool Files::ExistsInPath(const std::filesystem::path &path)
@@ -294,7 +299,7 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path)
 			return std::nullopt;
 		}
 
-		std::ifstream is{path};
+		std::ifstream is(path);
 		std::stringstream buffer;
 		buffer << is.rdbuf();
 		return buffer.str();
@@ -350,7 +355,7 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t)
 	// The sentry object performs various tasks,
 	// such as thread synchronization and updating the stream state.
 
-	std::istream::sentry se{is, true};
+	std::istream::sentry se(is, true);
 	auto sb = is.rdbuf();
 
 	if (se)

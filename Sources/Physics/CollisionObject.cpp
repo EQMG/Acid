@@ -117,7 +117,7 @@ void CollisionObject::CreateShape(bool forceSingle)
 		m_shape.release();
 	}
 
-	auto compoundShape = new btCompoundShape{};
+	auto compoundShape = new btCompoundShape();
 
 	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 	{

@@ -41,7 +41,7 @@ Vector3f EmitterCircle::GeneratePosition() const
 
 	auto randX = b * std::cos(2.0f * Maths::Pi<float> * (a / b));
 	auto randY = b * std::sin(2.0f * Maths::Pi<float> * (a / b));
-	auto distance = Vector3f{randX, randY, 0.0f}.Length();
+	auto distance = Vector3f(randX, randY, 0.0f).Length();
 	return direction * distance;
 }
 

@@ -20,7 +20,7 @@ void Json::Load(std::istream &stream)
 	bool inString = false;
 
 	// Reading into a string before iterating is much faster.
-	std::string s{std::istreambuf_iterator<char>{stream}, {}};
+	std::string s(std::istreambuf_iterator<char>(stream), {});
 
 	// Read stream until end of file.
 	for (const auto &c : s)
@@ -36,7 +36,7 @@ void Json::Load(std::istream &stream)
 		if (!inString)
 		{
 			// Tokens used to read json nodes.
-			if (std::string{":{},[]"}.find(c) != std::string::npos)
+			if (std::string(":{},[]").find(c) != std::string::npos)
 			{
 				AddToken(tokens, current);
 				tokens.emplace_back(Type::Unknown, std::string{c});
@@ -68,7 +68,7 @@ void Json::Write(std::ostream &stream, const Format &format) const
 
 void Json::Load(const std::string &string)
 {
-	std::stringstream stream{string};
+	std::stringstream stream(string);
 	Load(stream);
 }
 

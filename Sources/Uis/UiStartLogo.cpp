@@ -6,9 +6,9 @@
 namespace acid
 {
 #if defined(ACID_VERBOSE)
-const Time START_DELAY{1s};
+const Time START_DELAY = 1s;
 #else
-const Time START_DELAY{3s};
+const Time START_DELAY = 3s;
 #endif
 
 UiStartLogo::UiStartLogo(UiObject *parent) :

@@ -55,7 +55,7 @@ public:
 	 * Gets the engines instance.
 	 * @return The current engine instance.
 	 */
-	static Engine *Get() { return INSTANCE; }
+	static Engine *Get() { return Instance; }
 
 	/**
 	 * Carries out the setup for basic engine components and the engine. Call {@link Engine#Run} after creating a instance.
@@ -187,7 +187,7 @@ public:
 	void RequestClose() { m_running = false; }
 
 private:
-	ACID_STATE static Engine *INSTANCE;
+	ACID_STATE static Engine *Instance;
 
 	std::string m_argv0;
 	Version m_version;

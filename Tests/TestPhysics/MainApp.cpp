@@ -105,7 +105,7 @@ MainApp::MainApp() :
 	//Engine::Get()->RemoveModule<Shadows>();
 
 	// Registers components.
-	auto &componentRegister{Scenes::Get()->GetComponentRegister()};
+	auto &componentRegister = Scenes::Get()->GetComponentRegister();
 	componentRegister.Add<HeightDespawn>("heightDespawn");
 	componentRegister.Add<NameTag>("nameTag");
 	componentRegister.Add<PlayerFps>("playerFps");

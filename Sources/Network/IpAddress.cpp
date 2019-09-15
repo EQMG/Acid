@@ -13,10 +13,10 @@
 
 namespace acid
 {
-const IpAddress IpAddress::None{};
-const IpAddress IpAddress::Any{0, 0, 0, 0};
-const IpAddress IpAddress::LocalHost{127, 0, 0, 1};
-const IpAddress IpAddress::Broadcast{255, 255, 255, 255};
+const IpAddress IpAddress::None;
+const IpAddress IpAddress::Any(0, 0, 0, 0);
+const IpAddress IpAddress::LocalHost(127, 0, 0, 1);
+const IpAddress IpAddress::Broadcast(255, 255, 255, 255);
 
 IpAddress::IpAddress()
 {
@@ -41,7 +41,7 @@ IpAddress::IpAddress(uint32_t address) :
 
 std::string IpAddress::ToString() const
 {
-	in_addr address{};
+	in_addr address = {};
 	address.s_addr = m_address;
 	return inet_ntoa(address);
 }
@@ -102,8 +102,8 @@ IpAddress IpAddress::GetPublicAddress(const Time &timeout)
 	// and parse the result to extract our IP address
 	// (not very hard: the web page contains only our IP address).
 
-	Http server{"www.sfml-dev.org"};
-	HttpRequest request{"/ip-provider.php", HttpRequest::Method::Get};
+	Http server("www.sfml-dev.org");
+	HttpRequest request("/ip-provider.php", HttpRequest::Method::Get);
 	auto page = server.SendRequest(request, timeout);
 
 	if (page.GetStatus() == HttpResponse::Status::Ok)
@@ -154,7 +154,7 @@ std::istream &operator>>(std::istream &stream, IpAddress &address)
 {
 	std::string str;
 	stream >> str;
-	address = IpAddress{str};
+	address = IpAddress(str);
 
 	return stream;
 }
@@ -188,7 +188,7 @@ void IpAddress::Resolve(const std::string &address)
 		else
 		{
 			// Not a valid address, try to convert it as a host name.
-			addrinfo hints{};
+			addrinfo hints = {};
 			hints.ai_family = AF_INET;
 			addrinfo *result = nullptr;
 

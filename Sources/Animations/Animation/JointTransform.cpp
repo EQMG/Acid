@@ -16,7 +16,7 @@ JointTransform::JointTransform(const Matrix4 &localTransform) :
 
 Matrix4 JointTransform::GetLocalTransform() const
 {
-	return Matrix4{}.Translate(m_position) * m_rotation.ToRotationMatrix();
+	return Matrix4().Translate(m_position) * m_rotation.ToRotationMatrix();
 }
 
 JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, float progression)

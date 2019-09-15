@@ -4,39 +4,29 @@
 #include "ConstExpr.hpp"
 #include "NonCopyable.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename>
 class Delegate;
 
-class ACID_EXPORT Observer
-{
+class ACID_EXPORT Observer {
 public:
-	Observer() :
-		m_valid(std::make_shared<bool>(true))
-	{
-	}
-
+	Observer() : m_valid(std::make_shared<bool>(true)) {}
 	virtual ~Observer() = default;
 
 	std::shared_ptr<bool> m_valid;
 };
 
 template<typename TReturnType, typename ...TArgs>
-class Invoker
-{
+class Invoker {
 public:
 	using ReturnType = std::vector<TReturnType>;
 
-	static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params)
-	{
-		std::lock_guard<std::mutex> lock{delegate.m_mutex};
+	static ReturnType Invoke(Delegate<TReturnType(TArgs ...)> &delegate, TArgs ... params) {
+		std::lock_guard<std::mutex> lock(delegate.m_mutex);
 		ReturnType returnValues;
 
-		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
-		{
-			if (it->IsExpired())
-			{
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();) {
+			if (it->IsExpired()) {
 				it = delegate.m_functions.erase(it);
 				continue;
 			}
@@ -50,24 +40,19 @@ public:
 };
 
 template<typename... TArgs>
-class Invoker<void, TArgs...>
-{
+class Invoker<void, TArgs...> {
 public:
 	using ReturnType = void;
 
-	static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params)
-	{
-		std::lock_guard<std::mutex> lock{delegate.m_mutex};
+	static void Invoke(Delegate<void(TArgs ...)> &delegate, TArgs ... params) {
+		std::lock_guard<std::mutex> lock(delegate.m_mutex);
 
-		if (delegate.m_functions.empty())
-		{
+		if (delegate.m_functions.empty()) {
 			return;
 		}
 
-		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();)
-		{
-			if (it->IsExpired())
-			{
+		for (auto it = delegate.m_functions.begin(); it != delegate.m_functions.end();) {
+			if (it->IsExpired()) {
 				it = delegate.m_functions.erase(it);
 				continue;
 			}
@@ -79,24 +64,19 @@ public:
 };
 
 template<typename TReturnType, typename ...TArgs>
-class Delegate<TReturnType(TArgs ...)>
-{
+class Delegate<TReturnType(TArgs ...)> {
 public:
 	using Invoker = acid::Invoker<TReturnType, TArgs...>;
 	using FunctionType = std::function<TReturnType(TArgs ...)>;
 	using ObserversType = std::vector<std::weak_ptr<bool>>;
 
-	struct FunctionPair
-	{
+	struct FunctionPair {
 		FunctionType m_function;
 		ObserversType m_observers;
 
-		bool IsExpired()
-		{
-			for (const auto &observer : m_observers)
-			{
-				if (observer.expired())
-				{
+		bool IsExpired() {
+			for (const auto &observer : m_observers) {
+				if (observer.expired()) {
 					return true;
 				}
 			}
@@ -110,62 +90,51 @@ public:
 	virtual ~Delegate() = default;
 
 	template<typename ...KArgs>
-	void Add(FunctionType &&function, KArgs ...args)
-	{
-		std::lock_guard<std::mutex> lock{m_mutex};
+	void Add(FunctionType &&function, KArgs ...args) {
+		std::lock_guard<std::mutex> lock(m_mutex);
 		ObserversType observers;
 
-		if constexpr (sizeof...(args) != 0)
-		{
-			for (const auto &arg : { args... })
-			{
+		if constexpr (sizeof...(args) != 0) {
+			for (const auto &arg : {args...}) {
 				observers.emplace_back(ConstExpr::AsPtr(arg)->m_valid);
 			}
 		}
 
-		m_functions.emplace_back(FunctionPair{ std::move(function), observers });
+		m_functions.emplace_back(FunctionPair{std::move(function), observers});
 	}
 
-	void Remove(const FunctionType &function)
-	{
-		std::lock_guard<std::mutex> lock{m_mutex};
-		m_functions.erase(std::remove_if(m_functions.begin(), m_functions.end(), [function](FunctionPair &f)
-		{
+	void Remove(const FunctionType &function) {
+		std::lock_guard<std::mutex> lock(m_mutex);
+		m_functions.erase(std::remove_if(m_functions.begin(), m_functions.end(), [function](FunctionPair &f) {
 			return Hash(f.m_function) == Hash(function);
 		}), m_functions.end());
 	}
 
-	void Clear()
-	{
-		std::lock_guard<std::mutex> lock{m_mutex};
+	void Clear() {
+		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functions.clear();
 	}
 
-	typename Invoker::ReturnType Invoke(TArgs ... args)
-	{
+	typename Invoker::ReturnType Invoke(TArgs ... args) {
 		return Invoker::Invoke(*this, args...);
 	}
 
-	Delegate &operator+=(FunctionType &&function)
-	{
+	Delegate &operator+=(FunctionType &&function) {
 		return Add(std::move(function));
 	}
 
-	Delegate &operator-=(const FunctionType function)
-	{
+	Delegate &operator-=(const FunctionType function) {
 		return Remove(function);
 	}
 
-	typename Invoker::ReturnType operator()(TArgs ... args)
-	{
+	typename Invoker::ReturnType operator()(TArgs ... args) {
 		return Invoker::Invoke(*this, args...);
 	}
 
 private:
 	friend Invoker;
 
-	static constexpr size_t Hash(const FunctionType &function)
-	{
+	static constexpr size_t Hash(const FunctionType &function) {
 		return function.target_type().hash_code();
 	}
 
@@ -176,28 +145,20 @@ private:
 template<typename T>
 class DelegateValue :
 	public Delegate<void(T)>,
-	public NonCopyable
-{
+	public NonCopyable {
 public:
 	template<typename ...Args>
-	DelegateValue(Args ...args) :
-		m_value(std::forward<Args>(args)...)
-	{
-	}
-
+	DelegateValue(Args ...args) : m_value(std::forward<Args>(args)...) {}
 	virtual ~DelegateValue() = default;
 
-	DelegateValue &operator=(T value)
-	{
+	DelegateValue &operator=(T value) {
 		m_value = value;
 		Invoke(m_value);
 		return *this;
 	}
 
 	const T &Get() const { return m_value; }
-
 	const T &operator*() const { return m_value; }
-
 	const T *operator->() const { return &m_value; }
 
 protected:

@@ -76,7 +76,7 @@ void LogicalDevice::CreateQueueIndices()
 
 	if (!graphicsFamily)
 	{
-		throw std::runtime_error{"Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT"};
+		throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
 	}
 }
 
@@ -89,7 +89,7 @@ void LogicalDevice::CreateLogicalDevice()
 
 	if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
 	{
-		VkDeviceQueueCreateInfo graphicsQueueCreateInfo{};
+		VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
 		graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
 		graphicsQueueCreateInfo.queueCount = 1;
@@ -103,7 +103,7 @@ void LogicalDevice::CreateLogicalDevice()
 
 	if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily)
 	{
-		VkDeviceQueueCreateInfo computeQueueCreateInfo{};
+		VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
 		computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		computeQueueCreateInfo.queueFamilyIndex = m_computeFamily;
 		computeQueueCreateInfo.queueCount = 1;
@@ -117,7 +117,7 @@ void LogicalDevice::CreateLogicalDevice()
 
 	if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily)
 	{
-		VkDeviceQueueCreateInfo transferQueueCreateInfo{};
+		VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
 		transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		transferQueueCreateInfo.queueFamilyIndex = m_transferFamily;
 		transferQueueCreateInfo.queueCount = 1;
@@ -129,7 +129,7 @@ void LogicalDevice::CreateLogicalDevice()
 		m_transferFamily = m_graphicsFamily;
 	}
 
-	VkPhysicalDeviceFeatures enabledFeatures{};
+	VkPhysicalDeviceFeatures enabledFeatures = {};
 
 	// Enable sample rate shading filtering if supported.
 	if (physicalDeviceFeatures.sampleRateShading)
@@ -241,7 +241,7 @@ void LogicalDevice::CreateLogicalDevice()
 		Log::Warning("Selected GPU does not support multi viewports!\n");
 	}
 
-	VkDeviceCreateInfo deviceCreateInfo{};
+	VkDeviceCreateInfo deviceCreateInfo = {};
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
 	deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();

@@ -7,12 +7,12 @@ namespace acid
 template<typename T>
 std::vector<T> Model::GetVertices(std::size_t offset) const
 {
-	Buffer vertexStaging{m_vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+	Buffer vertexStaging(m_vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	CommandBuffer commandBuffer;
 
-	VkBufferCopy copyRegion{};
+	VkBufferCopy copyRegion = {};
 	copyRegion.size = vertexStaging.GetSize();
 	vkCmdCopyBuffer(commandBuffer, m_vertexBuffer->GetBuffer(), vertexStaging.GetBuffer(), 1, &copyRegion);
 
@@ -41,14 +41,14 @@ void Model::SetVertices(const std::vector<T> &vertices)
 
 	if (!vertices.empty())
 	{
-		Buffer vertexStaging{sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-			vertices.data()};
+		Buffer vertexStaging(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			vertices.data());
 		m_vertexBuffer = std::make_unique<Buffer>(vertexStaging.GetSize(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
 		CommandBuffer commandBuffer;
 
-		VkBufferCopy copyRegion{};
+		VkBufferCopy copyRegion = {};
 		copyRegion.size = vertexStaging.GetSize();
 		vkCmdCopyBuffer(commandBuffer, vertexStaging.GetBuffer(), m_vertexBuffer->GetBuffer(), 1, &copyRegion);
 
@@ -67,7 +67,7 @@ void Model::Initialize(const std::vector<T> &vertices, const std::vector<uint32_
 
 	for (const auto &vertex : vertices)
 	{
-		Vector3f position{vertex.m_position};
+		Vector3f position(vertex.m_position);
 		m_minExtents = m_minExtents.Min(position);
 		m_maxExtents = m_maxExtents.Max(position);
 	}

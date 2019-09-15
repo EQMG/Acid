@@ -36,7 +36,7 @@ Vector3f Ray::GetPointOnRay(float distance) const
 
 Vector3f Ray::ConvertToScreenSpace(const Vector3f &position) const
 {
-	Vector4f coords{position};
+	Vector4f coords(position);
 	coords = m_viewMatrix.Transform(coords);
 	coords = m_projectionMatrix.Transform(coords);
 

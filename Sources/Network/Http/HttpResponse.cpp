@@ -71,7 +71,7 @@ void HttpResponse::Parse(const std::string &data)
 	if (String::Lowercase(GetField("transfer-encoding")) != "chunked")
 	{
 		// Not chunked - just read everything at once.
-		std::copy(std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}, std::back_inserter(m_body));
+		std::copy(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>(), std::back_inserter(m_body));
 	}
 	else
 	{
@@ -85,7 +85,7 @@ void HttpResponse::Parse(const std::string &data)
 			in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 			// Copy the actual content data.
-			std::istreambuf_iterator<char> it{in};
+			std::istreambuf_iterator<char> it = in;
 			std::istreambuf_iterator<char> itEnd;
 
 			for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++)

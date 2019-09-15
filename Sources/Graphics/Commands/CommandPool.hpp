@@ -22,7 +22,7 @@ public:
 	const std::thread::id &GetThreadId() const { return m_threadId; }
 
 private:
-	VkCommandPool m_commandPool{VK_NULL_HANDLE};
+	VkCommandPool m_commandPool = VK_NULL_HANDLE;
 	std::thread::id m_threadId;
 };
 }

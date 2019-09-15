@@ -38,7 +38,7 @@ public:
 			return false;
 		}
 
-		IFStream inStream{filepath};
+		IFStream inStream(filepath);
 		tinyobj::LoadMtl(matMap, materials, &inStream, warn, err);
 		return true;
 	}
@@ -63,7 +63,7 @@ std::shared_ptr<ModelObj> ModelObj::Create(const Node &node)
 
 std::shared_ptr<ModelObj> ModelObj::Create(const std::filesystem::path &filename)
 {
-	ModelObj temp{filename, false};
+	ModelObj temp(filename, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -113,7 +113,7 @@ void ModelObj::Load()
 
 	if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, &inStream, &materialReader))
 	{
-		throw std::runtime_error{warn + err};
+		throw std::runtime_error(warn + err);
 	}
 
 	std::vector<VertexDefault> vertices;
@@ -124,10 +124,10 @@ void ModelObj::Load()
 	{
 		for (const auto &index : shape.mesh.indices)
 		{
-			Vector3f position{attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]};
-			Vector2f uv{attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
-			Vector3f normal{attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]};
-			VertexDefault vertex{position, uv, normal};
+			Vector3f position(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
+			Vector2f uv(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
+			Vector3f normal(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
+			VertexDefault vertex(position, uv, normal);
 
 			if (uniqueVertices.count(vertex) == 0)
 			{

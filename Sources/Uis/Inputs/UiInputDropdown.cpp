@@ -10,8 +10,8 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, uin
 	//m_slider(this, {{0.5f, 0.0f}, UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale), Image2d::Create("Guis/Button_Filled.png"),
 	//	UiInputButton::PrimaryColour},
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::TitleColour),
+	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title, 
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::TitleColour),
 	m_value(value),
 	m_options(std::move(options))
 {

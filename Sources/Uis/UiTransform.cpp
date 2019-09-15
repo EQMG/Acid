@@ -2,15 +2,15 @@
 
 namespace acid
 {
-const Vector2f UiAnchor::LeftTop{0.0f, 0.0f};
-const Vector2f UiAnchor::CentreTop{0.5f, 0.0f};
-const Vector2f UiAnchor::RightTop{1.0f, 0.0f};
-const Vector2f UiAnchor::LeftCentre{0.0f, 0.5f};
-const Vector2f UiAnchor::Centre{0.5f, 0.5f};
-const Vector2f UiAnchor::RightCentre{1.0f, 0.5f};
-const Vector2f UiAnchor::LeftBottom{0.0f, 1.0f};
-const Vector2f UiAnchor::CentreBottom{0.5f, 1.0f};
-const Vector2f UiAnchor::RightBottom{1.0f, 1.0f};
+const Vector2f UiAnchor::LeftTop(0.0f, 0.0f);
+const Vector2f UiAnchor::CentreTop(0.5f, 0.0f);
+const Vector2f UiAnchor::RightTop(1.0f, 0.0f);
+const Vector2f UiAnchor::LeftCentre(0.0f, 0.5f);
+const Vector2f UiAnchor::Centre(0.5f, 0.5f);
+const Vector2f UiAnchor::RightCentre(1.0f, 0.5f);
+const Vector2f UiAnchor::LeftBottom(0.0f, 1.0f);
+const Vector2f UiAnchor::CentreBottom(0.5f, 1.0f);
+const Vector2f UiAnchor::RightBottom(1.0f, 1.0f);
 
 UiTransform::UiTransform(const Vector2f &size, const Vector2f &anchor, const Vector2f &position) :
 	m_size(size),

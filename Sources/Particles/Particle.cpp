@@ -73,6 +73,6 @@ Vector2f Particle::CalculateImageOffset(int32_t index) const
 {
 	auto column = index % m_particleType->GetNumberOfRows();
 	auto row = index / m_particleType->GetNumberOfRows();
-	return Vector2f{static_cast<float>(column), static_cast<float>(row)} / m_particleType->GetNumberOfRows();
+	return Vector2f(static_cast<float>(column), static_cast<float>(row)) / m_particleType->GetNumberOfRows();
 }
 }

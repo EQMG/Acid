@@ -158,7 +158,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 			}
 
 			// Create the file and truncate it if necessary.
-			std::ofstream file{(path + filename).c_str(), std::ios_base::binary | std::ios_base::trunc};
+			std::ofstream file((path + filename).c_str(), std::ios_base::binary | std::ios_base::trunc);
 
 			if (!file)
 			{
@@ -188,7 +188,7 @@ FtpResponse Ftp::Download(const std::string &remoteFile, const std::string &loca
 FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode, bool append)
 {
 	// Get the contents of the file to send.
-	std::ifstream file{localFile.c_str(), std::ios_base::binary};
+	std::ifstream file(localFile.c_str(), std::ios_base::binary);
 
 	if (!file)
 	{
@@ -213,7 +213,7 @@ FtpResponse Ftp::Upload(const std::string &localFile, const std::string &remoteP
 	}
 
 	// Open a data channel using the given transfer mode.
-	FtpDataChannel data{*this};
+	FtpDataChannel data(*this);
 	auto response = data.Open(mode);
 
 	if (response.IsOk())

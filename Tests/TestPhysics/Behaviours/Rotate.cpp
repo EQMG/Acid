@@ -32,7 +32,7 @@ void Rotate::Update()
 
 	if (m_test == 1)
 	{
-		Quaternion rotation{m_rotation};
+		Quaternion rotation(m_rotation);
 		transform->SetLocalRotation(rotation.ToEuler());
 	}
 	else if (m_test == 2)

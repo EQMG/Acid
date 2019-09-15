@@ -208,7 +208,7 @@ void Noise::SetSeed(uint64_t seed)
 {
 	m_seed = seed;
 
-	std::mt19937_64 gen{seed};
+	std::mt19937_64 gen(seed);
 
 	for (int32_t i = 0; i < 256; i++)
 	{

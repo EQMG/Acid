@@ -29,7 +29,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength,
 	float stageCycles, float scale)
 {
-	ParticleType temp{image, numberOfRows, colourOffset, lifeLength, stageCycles, scale};
+	ParticleType temp(image, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -78,7 +78,7 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 
 		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
 		auto instance = &instances[m_instances];
-		instance->m_modelMatrix = Matrix4{}.Translate(particle.GetPosition());
+		instance->m_modelMatrix = Matrix4().Translate(particle.GetPosition());
 
 		for (uint32_t row = 0; row < 3; row++)
 		{

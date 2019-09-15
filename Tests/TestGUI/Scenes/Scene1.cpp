@@ -6,7 +6,7 @@
 
 namespace test
 {
-const Time UI_SLIDE_TIME{0.2s};
+const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<Camera>()),

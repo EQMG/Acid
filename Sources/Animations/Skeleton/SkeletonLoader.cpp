@@ -11,7 +11,7 @@ SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	auto headNode = m_armatureData->FindChild("node");
 	m_headJoint = LoadJointData(headNode, true);
-	m_headJoint.CalculateInverseBindTransform(Matrix4{});
+	m_headJoint.CalculateInverseBindTransform({});
 }
 
 Joint SkeletonLoader::LoadJointData(const Node *jointNode, bool isRoot)

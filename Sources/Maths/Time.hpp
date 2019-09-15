@@ -167,6 +167,6 @@ public:
 private:
 	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
 
-	std::chrono::microseconds m_microseconds{};
+	std::chrono::microseconds m_microseconds = 0ms;
 };
 }

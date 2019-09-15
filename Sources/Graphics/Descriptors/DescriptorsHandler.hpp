@@ -78,7 +78,7 @@ public:
 
 		// Adds the new descriptor value.
 		auto writeDescriptor = ConstExpr::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
-		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location });
+		m_descriptors.emplace(descriptorName, DescriptorValue{ConstExpr::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location});
 		m_changed = true;
 	}
 
@@ -100,7 +100,7 @@ public:
 		auto location = m_shader->GetDescriptorLocation(descriptorName);
 		//auto descriptorType = m_shader->GetDescriptorType(*location);
 
-		m_descriptors.emplace(descriptorName, DescriptorValue{ ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), std::nullopt, *location });
+		m_descriptors.emplace(descriptorName, DescriptorValue{ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), std::nullopt, *location});
 		m_changed = true;
 	}
 

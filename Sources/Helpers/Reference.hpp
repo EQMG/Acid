@@ -2,19 +2,12 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
-class Reference
-{
+class Reference {
 public:
 	Reference() noexcept = default;
-
-	Reference(T &reference) noexcept :
-		m_reference{std::addressof(reference)}
-	{
-	}
-
+	Reference(T &reference) noexcept : m_reference(std::addressof(reference)) {}
 	~Reference() = default;
 
 	/**
@@ -48,18 +41,14 @@ public:
 	 * @return The invoked result.
 	 */
 	template<typename... Args>
-	std::invoke_result_t<T &, Args...> operator()(Args &&...args) const
-	{
+	std::invoke_result_t<T &, Args...> operator()(Args &&...args) const {
 		return std::invoke(get(), std::forward<Args>(args)...);
 	}
 
-	bool operator==(const Reference &other) const noexcept
-	{
-		return m_reference == other.m_reference;
-	}
+	bool operator==(const Reference &other) const noexcept {
+		return m_reference == other.m_reference; }
 
-	bool operator!=(const Reference &other) const noexcept
-	{
+	bool operator!=(const Reference &other) const noexcept {
 		return !(*this == other);
 	}
 

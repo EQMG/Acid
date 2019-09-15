@@ -5,7 +5,7 @@
 
 namespace acid
 {
-static const std::vector<VkFormat> TRY_FORMATS{ VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT,
+static const std::vector<VkFormat> TRY_FORMATS = { VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_D16_UNORM_S8_UINT,
 	VK_FORMAT_D16_UNORM };
 
 ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &samples) :
@@ -16,7 +16,7 @@ ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &sam
 
 	for (const auto &format : TRY_FORMATS)
 	{
-		VkFormatProperties formatProperties{};
+		VkFormatProperties formatProperties = {};
 		vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &formatProperties);
 
 		if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
@@ -28,10 +28,10 @@ ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &sam
 
 	if (m_format == VK_FORMAT_UNDEFINED)
 	{
-		throw std::runtime_error{"No depth stencil format could be selected"};
+		throw std::runtime_error("No depth stencil format could be selected");
 	}
 
-	VkImageAspectFlags aspectMask{VK_IMAGE_ASPECT_DEPTH_BIT};
+	VkImageAspectFlags aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
 
 	if (Image::HasStencil(m_format))
 	{
@@ -57,7 +57,7 @@ ImageDepth::~ImageDepth()
 
 VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -68,12 +68,12 @@ VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding
 
 WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorImageInfo imageInfo{};
+	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-	VkWriteDescriptorSet descriptorWrite{};
+	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;

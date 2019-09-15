@@ -46,8 +46,8 @@ void Text::UpdateObject()
 
 	m_uniformObject.Push("colour", m_textColour);
 	m_uniformObject.Push("borderColour", m_borderColour);
-	m_uniformObject.Push("borderSizes", Vector2f{GetTotalBorderSize(), GetGlowSize()});
-	m_uniformObject.Push("edgeData", Vector2f{CalculateEdgeStart(), CalculateAntialiasSize()});
+	m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
+	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
@@ -68,7 +68,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	}
 
 	auto scissor = GetScissor();
-	VkRect2D scissorRect{};
+	VkRect2D scissorRect = {};
 	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
 	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;
 	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->m_z) : Window::Get()->GetSize().m_x;
@@ -190,7 +190,7 @@ std::vector<Text::Line> Text::CreateStructure() const
 	auto maxLength = m_lastSize.m_x;
 
 	std::vector<Line> lines;
-	Line currentLine{m_fontType->GetNode()->GetSpaceWidth(), maxLength};
+	Line currentLine(m_fontType->GetNode()->GetSpaceWidth(), maxLength);
 	Word currentWord;
 
 	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
@@ -333,6 +333,6 @@ void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontMetaf
 
 void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices)
 {
-	vertices.emplace_back(VertexDefault{{vx, vy, 0.0f}, {tx, ty}, {}});
+	vertices.emplace_back(VertexDefault({vx, vy, 0.0f}, {tx, ty}, {}));
 }
 }

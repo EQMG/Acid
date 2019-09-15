@@ -77,7 +77,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 	auto x = rootOneMinusZSquared * std::cos(theta);
 	auto y = rootOneMinusZSquared * std::sin(theta);
 
-	Vector4f direction{x, y, z, 1.0f};
+	Vector4f direction(x, y, z, 1.0f);
 
 	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
 	{

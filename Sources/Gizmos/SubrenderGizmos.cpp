@@ -19,7 +19,7 @@ void SubrenderGizmos::Render(const CommandBuffer &commandBuffer)
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 	m_uniformScene.Push("view", camera->GetViewMatrix());
 
-	auto &gizmos{Gizmos::Get()->GetGizmos()};
+	auto &gizmos = Gizmos::Get()->GetGizmos();
 
 	m_pipeline.BindPipeline(commandBuffer);
 

@@ -20,7 +20,7 @@ void Gui::UpdateObject()
 	auto numberOfRows = m_image ? m_numberOfRows : 1;
 	auto column = m_selectedRow % numberOfRows;
 	auto row = m_selectedRow / numberOfRows;
-	m_atlasOffset = Vector2f{static_cast<float>(column), static_cast<float>(row)} / static_cast<float>(numberOfRows);
+	m_atlasOffset = Vector2f(static_cast<float>(column), static_cast<float>(row)) / static_cast<float>(numberOfRows);
 
 	m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
 
@@ -55,7 +55,7 @@ bool Gui::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &
 	}
 
 	auto scissor = GetScissor();
-	VkRect2D scissorRect{};
+	VkRect2D scissorRect = {};
 	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
 	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;
 	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->m_z) : Window::Get()->GetSize().m_x;

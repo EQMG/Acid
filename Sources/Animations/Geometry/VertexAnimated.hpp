@@ -52,17 +52,17 @@ public:
 
 	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 	{
-		std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = { 
 			{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }
 		};
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions{
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
 			{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position) },
 			{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv) },
 			{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal) },
 			{ 3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId) },
 			{ 4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight) }
 		};
-		return Shader::VertexInput{bindingDescriptions, attributeDescriptions};
+		return {bindingDescriptions, attributeDescriptions};
 	}
 
 	Vector3f m_position;

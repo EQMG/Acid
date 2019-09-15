@@ -3,11 +3,11 @@
 namespace acid
 {
 Uis::Uis() :
-	m_canvas(nullptr, UiTransform{Window::Get()->GetSize()})
+	m_canvas(nullptr, {Window::Get()->GetSize()})
 {
-	for (auto button : EnumIterator<MouseButton>{})
+	for (auto button : EnumIterator<MouseButton>())
 	{
-		m_selectors.emplace(button, SelectorMouse{});
+		m_selectors.emplace(button, SelectorMouse());
 	}
 
 }

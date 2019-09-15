@@ -27,7 +27,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node)
 
 std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filename)
 {
-	ModelGltf temp{filename, false};
+	ModelGltf temp(filename, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -83,14 +83,14 @@ void ModelGltf::Load()
 	{
 		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size())))
 		{
-			throw std::runtime_error{warn + err};
+			throw std::runtime_error(warn + err);
 		}
 	}
 	else
 	{
 		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder.string()))
 		{
-			throw std::runtime_error{warn + err};
+			throw std::runtime_error(warn + err);
 		}
 	}
 

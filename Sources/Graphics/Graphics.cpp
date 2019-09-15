@@ -49,7 +49,7 @@ void Graphics::Update()
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 	{
-		VkExtent2D displayExtent{ Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+		VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 		return;
 	}
@@ -169,7 +169,7 @@ void Graphics::CheckVk(const VkResult &result)
 
 	auto failure = StringifyResultVk(result);
 
-	throw std::runtime_error{"Vulkan error: " + failure};
+	throw std::runtime_error("Vulkan error: " + failure);
 }
 
 void Graphics::UpdateSurfaceCapabilities()
@@ -187,11 +187,11 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	auto supportsBlit{Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {extent.m_x, extent.m_y, 1},
-		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0)};
+	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {extent.m_x, extent.m_y, 1},
+		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
-	VkImageSubresource imageSubresource{};
+	VkImageSubresource imageSubresource = {};
 	imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	imageSubresource.mipLevel = 0;
 	imageSubresource.arrayLayer = 0;
@@ -249,10 +249,10 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		m_flightFences.resize(m_swapchain->GetImageCount());
 		m_commandBuffers.resize(m_swapchain->GetImageCount());
 
-		VkSemaphoreCreateInfo semaphoreCreateInfo{};
+		VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 		semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		VkFenceCreateInfo fenceCreateInfo{};
+		VkFenceCreateInfo fenceCreateInfo = {};
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
@@ -303,7 +303,7 @@ const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::
 
 void Graphics::CreatePipelineCache()
 {
-	VkPipelineCacheCreateInfo pipelineCacheCreateInfo{};
+	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 }
@@ -312,7 +312,7 @@ void Graphics::RecreatePass(RenderStage &renderStage)
 {
 	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent{ Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
@@ -352,11 +352,11 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 	}
 
-	VkRect2D renderArea{};
+	VkRect2D renderArea = {};
 	renderArea.offset = { renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y };
 	renderArea.extent = { renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y };
 
-	VkViewport viewport{};
+	VkViewport viewport = {};
 	viewport.x = 0.0f;
 	viewport.y = 0.0f;
 	viewport.width = static_cast<float>(renderArea.extent.width);
@@ -365,14 +365,14 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 	viewport.maxDepth = 1.0f;
 	vkCmdSetViewport(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &viewport);
 
-	VkRect2D scissor{};
+	VkRect2D scissor = {};
 	scissor.offset = renderArea.offset;
 	scissor.extent = renderArea.extent;
 	vkCmdSetScissor(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], 0, 1, &scissor);
 
 	auto clearValues = renderStage.GetClearValues();
 
-	VkRenderPassBeginInfo renderPassBeginInfo{};
+	VkRenderPassBeginInfo renderPassBeginInfo = {};
 	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	renderPassBeginInfo.renderPass = *renderStage.GetRenderpass();
 	renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(m_swapchain->GetActiveImageIndex());

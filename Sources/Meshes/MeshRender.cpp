@@ -62,7 +62,7 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 		return false;
 	}
 
-	auto &pipeline{*materialPipeline->GetPipeline()};
+	auto &pipeline = *materialPipeline->GetPipeline();
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);

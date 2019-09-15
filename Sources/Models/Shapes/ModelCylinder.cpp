@@ -22,7 +22,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node)
 
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks)
 {
-	ModelCylinder temp{radiusBase, radiusTop, height, slices, stacks, false};
+	ModelCylinder temp(radiusBase, radiusTop, height, slices, stacks, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -86,10 +86,10 @@ void ModelCylinder::Load()
 			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
 			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
 
-			Vector3f position{xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius};
-			Vector2f uvs{1.0f - iDivSlices, 1.0f - jDivStacks};
-			Vector3f normal{xDir, 0.0f, zDir};
-			vertices.emplace_back(VertexDefault{position, uvs, normal});
+			Vector3f position(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
+			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivStacks);
+			Vector3f normal(xDir, 0.0f, zDir);
+			vertices.emplace_back(VertexDefault(position, uvs, normal));
 		}
 	}
 

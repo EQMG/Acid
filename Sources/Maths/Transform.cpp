@@ -28,7 +28,7 @@ Transform::~Transform()
 
 Transform Transform::Multiply(const Transform &other) const
 {
-	return {Vector3f{GetWorldMatrix().Transform(Vector4f{other.m_position})}, m_rotation + other.m_rotation, m_scale * other.m_scale};
+	return {Vector3f(GetWorldMatrix().Transform(Vector4f(other.m_position))), m_rotation + other.m_rotation, m_scale * other.m_scale};
 }
 
 Matrix4 Transform::GetWorldMatrix() const
@@ -143,7 +143,7 @@ const Transform *Transform::GetWorldTransform() const
 
 	if (!m_worldTransform)
 	{
-		m_worldTransform = new Transform{};
+		m_worldTransform = new Transform();
 	}
 
 	*m_worldTransform = *m_parent->GetWorldTransform() * *this;

@@ -25,10 +25,10 @@ GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<Vertex
 		auto uvIndex = String::From<uint32_t>(indexRawData[indexCount * i + 2]);
 
 		auto vertexWeight = m_vertexWeights[positionIndex];
-		Vector3ui jointIds{vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]};
-		Vector3f weights{vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]};
+		Vector3ui jointIds(vertexWeight.GetJointIds()[0], vertexWeight.GetJointIds()[1], vertexWeight.GetJointIds()[2]);
+		Vector3f weights(vertexWeight.GetWeights()[0], vertexWeight.GetWeights()[1], vertexWeight.GetWeights()[2]);
 
-		VertexAnimated vertex{positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights};
+		VertexAnimated vertex(positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights);
 
 		if (uniqueVertices.count(vertex) == 0)
 		{
@@ -51,8 +51,8 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++)
 	{
-		Vector4f position{String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[i * 3 + 1]),
-			String::From<float>(positionsRawData[3 * i + 2])};
+		Vector4f position(String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[i * 3 + 1]),
+			String::From<float>(positionsRawData[3 * i + 2]));
 		positions.emplace_back(m_correction.Transform(position));
 	}
 
@@ -70,7 +70,7 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const
 
 	for (uint32_t i = 0; i < uvsCount / 2; i++)
 	{
-		Vector2f uv{String::From<float>(uvsRawData[2 * i]), 1.0f - String::From<float>(uvsRawData[2 * i + 1])};
+		Vector2f uv(String::From<float>(uvsRawData[2 * i]), 1.0f - String::From<float>(uvsRawData[2 * i + 1]));
 		uvs.emplace_back(uv);
 	}
 
@@ -88,7 +88,7 @@ std::vector<Vector3f> GeometryLoader::GetNormals() const
 
 	for (uint32_t i = 0; i < normalsCount / 3; i++)
 	{
-		Vector4f normal{String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), String::From<float>(normalsRawData[3 * i + 2])};
+		Vector4f normal(String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), String::From<float>(normalsRawData[3 * i + 2]));
 		normals.emplace_back(m_correction.Transform(normal));
 	}
 

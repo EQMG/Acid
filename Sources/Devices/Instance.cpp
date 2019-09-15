@@ -69,7 +69,7 @@ uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *d
 		}
 	}
 
-	throw std::runtime_error{"Couldn't find a proper memory type"};
+	throw std::runtime_error("Couldn't find a proper memory type");
 }
 
 Instance::Instance() {
@@ -150,11 +150,11 @@ void Instance::SetupExtensions()
 
 void Instance::CreateInstance()
 {
-	const auto &engineVersion{Engine::Get()->GetVersion()};
-	//const auto &appVersion{Engine::Get()->GetApp()->GetVersion()};
-	//const auto &appName{Engine::Get()->GetApp()->GetName()};
+	const auto &engineVersion = Engine::Get()->GetVersion();
+	//const auto &appVersion = Engine::Get()->GetApp()->GetVersion();
+	//const auto &appName = Engine::Get()->GetApp()->GetName();
 
-	VkApplicationInfo applicationInfo{};
+	VkApplicationInfo applicationInfo = {};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	//applicationInfo.pApplicationName = appName.c_str();
 	//applicationInfo.applicationVersion = VK_MAKE_VERSION(appVersion.m_major, appVersion.m_minor, appVersion.m_patch);
@@ -162,7 +162,7 @@ void Instance::CreateInstance()
 	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.m_major, engineVersion.m_minor, engineVersion.m_patch);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
-	VkInstanceCreateInfo instanceCreateInfo{};
+	VkInstanceCreateInfo instanceCreateInfo = {};
 	instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instanceCreateInfo.pApplicationInfo = &applicationInfo;
 	instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayers.size());
@@ -175,7 +175,7 @@ void Instance::CreateInstance()
 void Instance::CreateDebugCallback()
 {
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
-	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo{};
+	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
 	debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 	debugReportCallbackCreateInfo.pNext = nullptr;
 	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;

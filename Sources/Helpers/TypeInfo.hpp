@@ -2,13 +2,11 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 using TypeId = std::size_t;
 
 template<typename T>
-class TypeInfo
-{
+class TypeInfo {
 public:
 	TypeInfo() = delete;
 
@@ -18,8 +16,7 @@ public:
 	 * @return The type ID.
 	 */
 	template<typename K>
-	static TypeId GetTypeId() noexcept
-	{
+	static TypeId GetTypeId() noexcept {
 		static const auto id = NextTypeId();
 		return id;
 	}
@@ -29,8 +26,7 @@ private:
 	 * Get the next type ID for T
 	 * @return The next type ID for T.
 	 */
-	static TypeId NextTypeId() noexcept
-	{
+	static TypeId NextTypeId() noexcept {
 		const auto id = m_nextTypeId;
 		++m_nextTypeId;
 		return id;

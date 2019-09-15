@@ -19,7 +19,7 @@ class ACID_EXPORT UiScrollBar :
 	public UiObject
 {
 public:
-	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform = {Vector2ui{Size}});
+	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform = {Vector2ui(Size)});
 
 	void UpdateObject() override;
 

@@ -12,7 +12,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
-	auto result = std::make_shared<ModelCube>(Vector3f{});
+	auto result = std::make_shared<ModelCube>(Vector3f());
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
@@ -21,7 +21,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
 
 std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 {
-	ModelCube temp{extents, false};
+	ModelCube temp(extents, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -56,7 +56,7 @@ void ModelCube::Load()
 		return;
 	}
 
-	static std::vector<VertexDefault> vertices{
+	std::vector<VertexDefault> vertices = {
 		{{-0.5f, -0.5f, 0.5f}, {0.375f, 1.0f}, {-1.0f, 0.0f, 0.0f}},
 		{{-0.5f, 0.5f, 0.5f}, {0.625f, 1.0f}, {-1.0f, 0.0f, 0.0f}},
 		{{-0.5f, -0.5f, -0.5f}, {0.375f, 0.75f}, {-1.0f, 0.0f, 0.0f}},
@@ -82,7 +82,7 @@ void ModelCube::Load()
 		{{0.5f, -0.5f, 0.5f}, {0.375f, 0.25f}, {0.0f, -1.0f, 0.0f}},
 		{{-0.5f, 0.5f, 0.5f}, {0.875f, 0.25f}, {0.0f, 1.0f, 0.0f}}
 	};
-	static std::vector<uint32_t> indices{
+	static std::vector<uint32_t> indices = {
 		1, 2, 0, // Front
 		3, 6, 8,
 		7, 4, 9, // Back

@@ -125,7 +125,7 @@ Vector4f Matrix4::Transform(const Vector4f &other) const
 
 Matrix4 Matrix4::Translate(const Vector2f &other) const
 {
-	Matrix4 result{*this};
+	Matrix4 result(*this);
 
 	for (uint32_t col = 0; col < 4; col++)
 	{
@@ -137,7 +137,7 @@ Matrix4 Matrix4::Translate(const Vector2f &other) const
 
 Matrix4 Matrix4::Translate(const Vector3f &other) const
 {
-	Matrix4 result{*this};
+	Matrix4 result(*this);
 
 	for (uint32_t col = 0; col < 4; col++)
 	{
@@ -165,7 +165,7 @@ Matrix4 Matrix4::Scale(const Vector3f &other) const
 
 Matrix4 Matrix4::Scale(const Vector4f &other) const
 {
-	Matrix4 result{*this};
+	Matrix4 result(*this);
 
 	for (uint32_t row = 0; row < 4; row++)
 	{
@@ -238,7 +238,7 @@ Matrix4 Matrix4::Inverse() const
 
 	if (det == 0.0f)
 	{
-		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
+		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
 	}
 
 	for (uint32_t j = 0; j < 4; j++)
@@ -335,7 +335,7 @@ Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3
 
 Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar)
 {
-	Matrix4 result{0.0f};
+	Matrix4 result(0.0f);
 
 	auto f = std::tan(0.5f * fov);
 
@@ -349,7 +349,7 @@ Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, fl
 
 Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear)
 {
-	Matrix4 result{0.0f};
+	Matrix4 result(0.0f);
 
 	auto range = std::tan(0.5f * fov) * zNear;
 	auto left = -range * aspectRatio;
@@ -380,7 +380,7 @@ Matrix4 Matrix4::OrthographicMatrix(float left, float right, float bottom, float
 
 Matrix4 Matrix4::FrustumMatrix(float left, float right, float bottom, float top, float zNear, float zFar)
 {
-	Matrix4 result{0.0f};
+	Matrix4 result(0.0f);
 
 	result[0][0] = (2.0f * zNear) / (right - left);
 	result[1][1] = (2.0f * zNear) / (top - bottom);
@@ -405,11 +405,11 @@ Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 
 Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
 {
-	Vector4f point4{worldSpace, 1.0f};
+	Vector4f point4(worldSpace, 1.0f);
 	point4 = viewMatrix.Transform(point4);
 	point4 = projectionMatrix.Transform(point4);
 
-	Vector3f result{point4};
+	Vector3f result(point4);
 	result.m_x /= result.m_z;
 	result.m_y /= result.m_z;
 	return result;
@@ -514,22 +514,22 @@ Matrix4 operator/(const Matrix4 &left, const Vector4f &right)
 
 Matrix4 operator*(float left, const Matrix4 &right)
 {
-	return right.Scale({left, left, left, left});
+	return right.Scale(Vector4f(left));
 }
 
 Matrix4 operator/(float left, const Matrix4 &right)
 {
-	return right.Scale(1.0f / Vector4f{left, left, left, left});
+	return right.Scale(1.0f / Vector4f(left));
 }
 
 Matrix4 operator*(const Matrix4 &left, float right)
 {
-	return left.Scale({right, right, right, right});
+	return left.Scale(Vector4f(right));
 }
 
 Matrix4 operator/(const Matrix4 &left, float right)
 {
-	return left.Scale(1.0f / Vector4f{right, right, right, right});
+	return left.Scale(1.0f / Vector4f(right));
 }
 
 Matrix4 &Matrix4::operator+=(const Matrix4 &other)
@@ -564,12 +564,12 @@ Matrix4 &Matrix4::operator/=(const Vector4f &other)
 
 Matrix4 &Matrix4::operator*=(float other)
 {
-	return *this = Scale({other, other, other, other});
+	return *this = Scale(Vector4f(other));
 }
 
 Matrix4 &Matrix4::operator/=(float other)
 {
-	return *this = Scale(1.0f / Vector4f{other, other, other, other});
+	return *this = Scale(1.0f / Vector4f(other));
 }
 
 const Node &operator>>(const Node &node, Matrix4 &matrix)

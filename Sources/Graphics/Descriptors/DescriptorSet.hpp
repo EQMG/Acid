@@ -25,6 +25,6 @@ private:
 	VkPipelineLayout m_pipelineLayout;
 	VkPipelineBindPoint m_pipelineBindPoint;
 	VkDescriptorPool m_descriptorPool;
-	VkDescriptorSet m_descriptorSet{VK_NULL_HANDLE};
+	VkDescriptorSet m_descriptorSet = VK_NULL_HANDLE;
 };
 }

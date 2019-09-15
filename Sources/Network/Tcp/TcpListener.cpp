@@ -22,7 +22,7 @@ uint16_t TcpListener::GetLocalPort() const
 	{
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size{sizeof(address)};
+		SocketAddrLength size = sizeof(address);
 
 		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{

@@ -41,10 +41,10 @@ void Scene1::Start()
 	GetPhysics()->SetAirDensity(1.0f);
 
 	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json");
-	skybox->AddComponent<Transform>(Vector3f{}, Vector3f{}, 1024.0f);
+	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), 1024.0f);
 
 	auto sun = GetStructure()->CreateEntity();
-	sun->AddComponent<Transform>(Vector3f{1000.0f, 5000.0f, -4000.0f}, Vector3f{}, 18.0f);
+	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f);
 	sun->AddComponent<Light>(Colour::White);
 
 	for (uint32_t i = 0; i < 6; i++)
@@ -52,7 +52,7 @@ void Scene1::Start()
 		for (uint32_t j = 0; j < 6; j++)
 		{
 			auto sphere = GetStructure()->CreateEntity();
-			sphere->AddComponent<Transform>(Vector3f{i, j, -6.0f}, Vector3f{}, 0.5f);
+			sphere->AddComponent<Transform>(Vector3f(i, j, -6.0f), Vector3f(), 0.5f);
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
 			sphere->AddComponent<MaterialDefault>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
 				nullptr, // Image2d::Create("Objects/Testing/Material.png")
@@ -61,7 +61,7 @@ void Scene1::Start()
 			sphere->AddComponent<ShadowRender>();
 
 			auto teapot = GetStructure()->CreateEntity();
-			teapot->AddComponent<Transform>(Vector3f{i * 1.6f, j, 6.0f}, Vector3f{}, 0.14f);
+			teapot->AddComponent<Transform>(Vector3f(i * 1.6f, j, 6.0f), Vector3f(), 0.14f);
 			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
 			teapot->AddComponent<MeshRender>();
@@ -70,7 +70,7 @@ void Scene1::Start()
 	}
 
 	/*auto dragon = GetStructure()->CreateEntity();
-	dragon->AddComponent<Transform>(Vector3f{6.0f, 0.0f, 0.0f}, Vector3f{0.0f, Maths::Radians(-90.0f), 0.0f}, 0.4f);
+	dragon->AddComponent<Transform>(Vector3f(6.0f, 0.0f, 0.0f), Vector3f(0.0f, Maths::Radians(-90.0f), 0.0f), 0.4f);
 	dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
 	dragon->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f);
 	dragon->AddComponent<MeshRender>();

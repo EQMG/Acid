@@ -38,7 +38,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) co
 	}
 	else
 	{
-		//throw std::runtime_error{"Model with no buffers can't be rendered"};
+		//throw std::runtime_error("Model with no buffers can't be rendered");
 		return false;
 	}
 
@@ -47,12 +47,12 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) co
 
 std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
 {
-	Buffer indexStaging{m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+	Buffer indexStaging(m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	CommandBuffer commandBuffer;
 
-	VkBufferCopy copyRegion{};
+	VkBufferCopy copyRegion = {};
 	copyRegion.size = indexStaging.GetSize();
 	vkCmdCopyBuffer(commandBuffer, m_indexBuffer->GetBuffer(), indexStaging.GetBuffer(), 1, &copyRegion);
 
@@ -80,14 +80,14 @@ void Model::SetIndices(const std::vector<uint32_t> &indices)
 
 	if (!indices.empty())
 	{
-		Buffer indexStaging{sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data()};
+		Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
 		m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
 		CommandBuffer commandBuffer;
 
-		VkBufferCopy copyRegion{};
+		VkBufferCopy copyRegion = {};
 		copyRegion.size = indexStaging.GetSize();
 		vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
 

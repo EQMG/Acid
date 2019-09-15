@@ -59,7 +59,7 @@ void KinematicCharacter::Start()
 
 	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
 	m_ghostObject->setWorldTransform(worldTransform);
-	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback{});
+	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	m_ghostObject->setCollisionShape(m_shape.get());
 	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	m_ghostObject->setFriction(m_friction);
@@ -87,7 +87,7 @@ void KinematicCharacter::Update()
 		m_body->setCollisionShape(m_shape.get());
 	}
 
-	auto &transform{*GetEntity()->GetComponent<Transform>()};
+	auto &transform = *GetEntity()->GetComponent<Transform>();
 	auto worldTransform = m_ghostObject->getWorldTransform();
 	transform = Collider::Convert(worldTransform, transform.GetScale());
 

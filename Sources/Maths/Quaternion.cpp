@@ -2,12 +2,12 @@
 
 namespace acid
 {
-const Quaternion Quaternion::Zero{0.0f, 0.0f, 0.0f, 0.0f};
-const Quaternion Quaternion::One{1.0f, 1.0f, 1.0f, 1.0f};
-const Quaternion Quaternion::PositiveInfinity{+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(),
-	+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity()};
-const Quaternion Quaternion::NegativeInfinity{-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
-	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity()};
+const Quaternion Quaternion::Zero(0.0f, 0.0f, 0.0f, 0.0f);
+const Quaternion Quaternion::One(1.0f, 1.0f, 1.0f, 1.0f);
+const Quaternion Quaternion::PositiveInfinity(+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity(),
+	+std::numeric_limits<float>::infinity(), +std::numeric_limits<float>::infinity());
+const Quaternion Quaternion::NegativeInfinity(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(),
+	-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
 
 Quaternion::Quaternion(float x, float y, float z, float w) :
 	m_x(x),
@@ -113,7 +113,7 @@ Quaternion Quaternion::Multiply(const Quaternion &other) const
 
 Vector3f Quaternion::Multiply(const Vector3f &other) const
 {
-	Vector3f q{m_x, m_y, m_z};
+	Vector3f q(m_x, m_y, m_z);
 	auto cross1 = q.Cross(other);
 	auto cross2 = q.Cross(cross1);
 	return other + 2.0f * (cross1 * m_w + cross2);
@@ -277,7 +277,7 @@ float Quaternion::operator[](uint32_t index) const
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error{"Quaternion index out of bounds!"};
+		throw std::runtime_error("Quaternion index out of bounds!");
 	}
 }
 
@@ -294,7 +294,7 @@ float &Quaternion::operator[](uint32_t index)
 	case 3:
 		return m_w;
 	default:
-		throw std::runtime_error{"Quaternion index out of bounds!"};
+		throw std::runtime_error("Quaternion index out of bounds!");
 	}
 }
 

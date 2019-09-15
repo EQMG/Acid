@@ -9,7 +9,7 @@ int32_t GetNextY(uint32_t inc = 1)
 	return i * (UiInputButton::Size.m_y + 6);
 }
 
-Vector2i SIZE3{(UiInputButton::Size - Vector2i{5, 0}) * Vector2f{1.0f / 3.0f, 1.0f}};
+Vector2i SIZE3((UiInputButton::Size - Vector2i(5, 0)) * Vector2f(1.0f / 3.0f, 1.0f));
 
 Panels::Panels(UiObject *parent) :
 	UiObject(parent, {UiMargins::All}),

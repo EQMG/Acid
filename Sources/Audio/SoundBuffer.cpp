@@ -27,7 +27,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node)
 
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename)
 {
-	SoundBuffer temp{filename, false};
+	SoundBuffer temp(filename, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -140,7 +140,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 
 	chunkId[4] = '\0';
 
-	std::unique_ptr<uint8_t[]> data{new uint8_t[size]};
+	std::unique_ptr<uint8_t[]> data(new uint8_t[size]);
 	file.read(reinterpret_cast<char *>(data.get()), size);
 
 	uint32_t buffer;

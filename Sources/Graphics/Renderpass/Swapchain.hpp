@@ -59,9 +59,9 @@ private:
 	VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
 	std::vector<VkImage> m_images;
 	std::vector<VkImageView> m_imageViews;
-	VkSwapchainKHR m_swapchain{VK_NULL_HANDLE};
+	VkSwapchainKHR m_swapchain = VK_NULL_HANDLE;
 
-	VkFence m_fenceImage{VK_NULL_HANDLE};
+	VkFence m_fenceImage = VK_NULL_HANDLE;
 	uint32_t m_activeImageIndex;
 };
 }

@@ -13,7 +13,7 @@ DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 
 	VkDescriptorSetLayout layouts[1] = {pipeline.GetDescriptorSetLayout()};
 
-	VkDescriptorSetAllocateInfo descriptorSetAllocateInfo{};
+	VkDescriptorSetAllocateInfo descriptorSetAllocateInfo = {};
 	descriptorSetAllocateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 	descriptorSetAllocateInfo.descriptorPool = m_descriptorPool;
 	descriptorSetAllocateInfo.descriptorSetCount = 1;

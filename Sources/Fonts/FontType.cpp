@@ -26,7 +26,7 @@ std::shared_ptr<FontType> FontType::Create(const Node &node)
 
 std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, const std::string &style)
 {
-	FontType temp{filename, style, false};
+	FontType temp(filename, style, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -177,19 +177,19 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 
 	if (FT_Init_FreeType(&library) != 0)
 	{
-		throw std::runtime_error{"Freetype failed to initialize"};
+		throw std::runtime_error("Freetype failed to initialize");
 	}
 
 	FT_Face face;
 
 	if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0)
 	{
-		throw std::runtime_error{"Freetype failed to create face from memory"};
+		throw std::runtime_error("Freetype failed to create face from memory");
 	}
 
 	if (FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96) != 0)
 	{
-		throw std::runtime_error{"Freetype failed to set char size"};
+		throw std::runtime_error("Freetype failed to set char size");
 	}
 
 	uint32_t totalPoints = 0;
@@ -208,7 +208,7 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	{
 		if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING) != 0)
 		{
-			throw std::runtime_error{"Freetype failed to load a glyph"};
+			throw std::runtime_error("Freetype failed to load a glyph");
 		}
 
 		m_charmap.emplace(static_cast<wchar_t>(charcode), i);
@@ -277,12 +277,12 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 
 	if (FT_Done_Face(face) != 0)
 	{
-		throw std::runtime_error{"Freetype failed to destory face"};
+		throw std::runtime_error("Freetype failed to destory face");
 	}
 
 	if (FT_Done_FreeType(library) != 0)
 	{
-		throw std::runtime_error{"Freetype failed to destory library"};
+		throw std::runtime_error("Freetype failed to destory library");
 	}
 }
 }

@@ -60,14 +60,14 @@ private:
 
 	std::unique_ptr<Shader> m_shader;
 
-	VkShaderModule m_shaderModule{VK_NULL_HANDLE};
-	VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo{};
+	VkShaderModule m_shaderModule = VK_NULL_HANDLE;
+	VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo = {};
 
-	VkDescriptorSetLayout m_descriptorSetLayout{VK_NULL_HANDLE};
-	VkDescriptorPool m_descriptorPool{VK_NULL_HANDLE};
+	VkDescriptorSetLayout m_descriptorSetLayout = VK_NULL_HANDLE;
+	VkDescriptorPool m_descriptorPool = VK_NULL_HANDLE;
 
-	VkPipeline m_pipeline{VK_NULL_HANDLE};
-	VkPipelineLayout m_pipelineLayout{VK_NULL_HANDLE};
+	VkPipeline m_pipeline = VK_NULL_HANDLE;
+	VkPipelineLayout m_pipelineLayout = VK_NULL_HANDLE;
 	VkPipelineBindPoint m_pipelineBindPoint;
 };
 }

@@ -68,7 +68,7 @@ private:
 	bool m_multipipeline;
 	std::optional<Shader::UniformBlock> m_uniformBlock;
 	uint32_t m_size = 0;
-	void *m_data{};
+	void *m_data = nullptr;
 	bool m_bound = false;
 	std::unique_ptr<UniformBuffer> m_uniformBuffer;
 	Buffer::Status m_handlerStatus;

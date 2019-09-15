@@ -13,10 +13,10 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	auto presentFamily = logicalDevice->GetPresentFamily();
 	auto computeFamily = logicalDevice->GetComputeFamily();
 
-	std::array queueFamily{ graphicsFamily, presentFamily, computeFamily };
+	std::array queueFamily = { graphicsFamily, presentFamily, computeFamily };
 
 	// Create the buffer handle.
-	VkBufferCreateInfo bufferCreateInfo{};
+	VkBufferCreateInfo bufferCreateInfo = {};
 	bufferCreateInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 	bufferCreateInfo.size = size;
 	bufferCreateInfo.usage = usage;
@@ -29,7 +29,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	VkMemoryRequirements memoryRequirements;
 	vkGetBufferMemoryRequirements(*logicalDevice, m_buffer, &memoryRequirements);
 
-	VkMemoryAllocateInfo memoryAllocateInfo{};
+	VkMemoryAllocateInfo memoryAllocateInfo = {};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	memoryAllocateInfo.allocationSize = memoryRequirements.size;
 	memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
@@ -45,7 +45,7 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 		// If host coherency hasn't been requested, do a manual flush to make writes visible.
 		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
 		{
-			VkMappedMemoryRange mappedMemoryRange{};
+			VkMappedMemoryRange mappedMemoryRange = {};
 			mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 			mappedMemoryRange.memory = m_bufferMemory;
 			mappedMemoryRange.offset = 0;
@@ -95,13 +95,13 @@ uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags
 		}
 	}
 
-	throw std::runtime_error{"Failed to find a valid memory type for buffer"};
+	throw std::runtime_error("Failed to find a valid memory type for buffer");
 }
 
 void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, 
 	const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset, const VkDeviceSize &size)
 {
-	VkBufferMemoryBarrier bufferMemoryBarrier{};
+	VkBufferMemoryBarrier bufferMemoryBarrier = {};
 	bufferMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	bufferMemoryBarrier.srcAccessMask = srcAccessMask;
 	bufferMemoryBarrier.dstAccessMask = dstAccessMask;

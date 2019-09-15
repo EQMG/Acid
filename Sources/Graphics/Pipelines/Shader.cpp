@@ -18,7 +18,7 @@ class ShaderIncluder :
 public:
 	IncludeResult *includeLocal(const char *headerName, const char *includerName, size_t inclusionDepth) override
 	{
-		auto directory = std::filesystem::path{includerName}.parent_path();
+		auto directory = std::filesystem::path(includerName).parent_path();
 		auto fileLoaded = Files::Read(directory / headerName);
 
 		if (!fileLoaded)
@@ -181,7 +181,7 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const
 			continue;
 		}
 
-		VkPushConstantRange pushConstantRange{};
+		VkPushConstantRange pushConstantRange = {};
 		pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
 		pushConstantRange.offset = currentOffset;
 		pushConstantRange.size = static_cast<uint32_t>(uniformBlock.GetSize());
@@ -259,7 +259,7 @@ EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag)
 
 TBuiltInResource GetResources()
 {
-	TBuiltInResource resources{};
+	TBuiltInResource resources = {};
 	resources.maxLights = 32;
 	resources.maxClipPlanes = 6;
 	resources.maxTextureUnits = 32;
@@ -453,7 +453,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 	std::vector<uint32_t> spirv;
 	GlslangToSpv(*program.getIntermediate(static_cast<EShLanguage>(language)), spirv, &logger, &spvOptions);
 
-	VkShaderModuleCreateInfo shaderModuleCreateInfo{};
+	VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 	shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 	shaderModuleCreateInfo.codeSize = spirv.size() * sizeof(uint32_t);
 	shaderModuleCreateInfo.pCode = spirv.data();
@@ -523,7 +523,7 @@ void Shader::CreateReflection()
 
 	for (const auto &[type, descriptorCount] : descriptorPoolCounts)
 	{
-		VkDescriptorPoolSize descriptorPoolSize{};
+		VkDescriptorPoolSize descriptorPoolSize = {};
 		descriptorPoolSize.type = type;
 		descriptorPoolSize.descriptorCount = descriptorCount;
 		m_descriptorPools.emplace_back(descriptorPoolSize);
@@ -567,7 +567,7 @@ void Shader::CreateReflection()
 
 	for (const auto &[attributeName, attribute] : m_attributes)
 	{
-		VkVertexInputAttributeDescription attributeDescription{};
+		VkVertexInputAttributeDescription attributeDescription = {};
 		attributeDescription.location = static_cast<uint32_t>(attribute.m_location);
 		attributeDescription.binding = 0;
 		attributeDescription.format = GlTypeToVk(attribute.m_glType);
@@ -682,7 +682,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 		}
 	}
 
-	auto &qualifier{reflection.getType()->getQualifier()};
+	auto &qualifier = reflection.getType()->getQualifier();
 	m_uniforms.emplace(reflection.name, Uniform(reflection.getBinding(), reflection.offset, -1, reflection.glDefineType, qualifier.readonly, qualifier.writeonly, stageFlag));
 }
 
@@ -703,7 +703,7 @@ void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStage
 		}
 	}
 
-	auto &qualifier{reflection.getType()->getQualifier()};
+	auto &qualifier = reflection.getType()->getQualifier();
 	m_attributes.emplace(reflection.name, Attribute(qualifier.layoutSet, qualifier.layoutLocation, ComputeSize(reflection.getType()), reflection.glDefineType));
 }
 

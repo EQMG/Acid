@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 {
 	// TODO: Download a ZIP from Google Drive.
 	/*{
-		Http http{"http://drive.google.com/"};
+		Http http("http://drive.google.com/");
 
 		HttpRequest request;
 		request.SetMethod(HttpRequest::Method::Get);
@@ -24,14 +24,14 @@ int main(int argc, char **argv)
 		auto fileSize = page.GetBody().size();
 
 		auto fileContainer = page.GetBody();
-		std::ofstream file{std::filesystem::current_path() / "Data-Sponza.zip", std::ios::out | std::ios::binary};
+		std::ofstream file(std::filesystem::current_path() / "Data-Sponza.zip", std::ios::out | std::ios::binary);
 		file.write(fileContainer.c_str(), fileSize);
 		file.close();
 	}*/
 
 	// https://www.sfml-dev.org/tutorials/2.5/network-http.php
 	{
-		Http http{"http://equilibrium.games/"};
+		Http http("http://equilibrium.games/");
 
 		HttpRequest request;
 		request.SetMethod(HttpRequest::Method::Post);
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
 	/*{
 		Ftp ftp;
-		ftp.Connect(IpAddress{"ftp.myserver.org"}, 21);
+		ftp.Connect(IpAddress("ftp.myserver.org"), 21);
 		ftp.Login("username", "password");
 		ftp.KeepAlive();
 
@@ -70,10 +70,10 @@ int main(int argc, char **argv)
 
 	/*UdpSocket socket;
 
-	std::string name{"Hello world"};
+	std::string name("Hello world");
 	uint32_t a = 420;
 	float b = 6.9f;
-	Vector3f c{8.1f, -9.11f, 2.083f};
+	Vector3f c(8.1f, -9.11f, 2.083f);
 
 	Packet packet;
 	packet << name << a << b << c; // Sending data.

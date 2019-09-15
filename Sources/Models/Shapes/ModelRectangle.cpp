@@ -21,7 +21,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node)
 
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max)
 {
-	ModelRectangle temp{min, max, false};
+	ModelRectangle temp(min, max, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -59,13 +59,13 @@ void ModelRectangle::Load()
 		return;
 	}
 
-	std::vector<VertexDefault> vertices{
+	std::vector<VertexDefault> vertices = {
 		{{m_min, m_min, 0.0f}, {0.0f, 0.0f}, {}},
 		{{m_max, m_min, 0.0f}, {1.0f, 0.0f}, {}},
 		{{m_max, m_max, 0.0f}, {1.0f, 1.0f}, {}},
 		{{m_min, m_max, 0.0f}, {0.0f, 1.0f}, {}}
 	};
-	static std::vector<uint32_t> indices{
+	static std::vector<uint32_t> indices = {
 		0, 1, 2,
 		2, 3, 0
 	};

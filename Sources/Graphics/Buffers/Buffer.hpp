@@ -44,7 +44,7 @@ public:
 
 protected:
 	VkDeviceSize m_size;
-	VkBuffer m_buffer{VK_NULL_HANDLE};
-	VkDeviceMemory m_bufferMemory{VK_NULL_HANDLE};
+	VkBuffer m_buffer = VK_NULL_HANDLE;
+	VkDeviceMemory m_bufferMemory = VK_NULL_HANDLE;
 };
 }

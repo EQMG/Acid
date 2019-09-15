@@ -35,7 +35,7 @@ uint16_t TcpSocket::GetLocalPort() const
 	{
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size{sizeof(address)};
+		SocketAddrLength size = sizeof(address);
 
 		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -53,7 +53,7 @@ IpAddress TcpSocket::GetRemoteAddress() const
 	{
 		// Retrieve informations about the remote end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size{sizeof(address)};
+		SocketAddrLength size = sizeof(address);
 
 		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -71,7 +71,7 @@ uint16_t TcpSocket::GetRemotePort() const
 	{
 		// Retrieve informations about the remote end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size{sizeof(address)};
+		SocketAddrLength size = sizeof(address);
 
 		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -144,7 +144,7 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, uint16_t remot
 		FD_SET(GetHandle(), &selector);
 
 		// Setup the timeout.
-		timeval time{};
+		timeval time = {};
 		time.tv_sec = static_cast<long>(timeout.AsMicroseconds() / 1000000);
 		time.tv_usec = static_cast<long>(timeout.AsMicroseconds() % 1000000);
 

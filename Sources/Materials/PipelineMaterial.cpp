@@ -21,7 +21,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
 
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
 {
-	PipelineMaterial temp{pipelineStage, pipelineCreate};
+	PipelineMaterial temp(pipelineStage, pipelineCreate);
 	Node node;
 	node << temp;
 

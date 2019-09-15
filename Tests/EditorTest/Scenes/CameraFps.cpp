@@ -9,9 +9,9 @@
 
 namespace test
 {
-static const Vector3f VIEW_OFFSET{0.0f, 1.8f, 0.0f};
-static const Vector2f SENSITIVITY_JOYSTICK{-0.06f};
-static const Vector2f SENSITIVITY_MOUSE{0.15f};
+static const Vector3f VIEW_OFFSET(0.0f, 1.8f, 0.0f);
+static const Vector2f SENSITIVITY_JOYSTICK(-0.06f);
+static const Vector2f SENSITIVITY_MOUSE(0.15f);
 
 CameraFps::CameraFps() :
 	m_sensitivity(1.0f),
@@ -46,7 +46,7 @@ void CameraFps::Update()
 
 		if (m_joystickVertical.IsConnected())
 		{
-			rotationDelta += Vector2f{m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()} * SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;

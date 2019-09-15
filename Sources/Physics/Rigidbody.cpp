@@ -55,8 +55,8 @@ void Rigidbody::Start()
 	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
-	auto motionState = new btDefaultMotionState{worldTransform};
-	btRigidBody::btRigidBodyConstructionInfo cInfo{m_mass, motionState, m_shape.get(), localInertia};
+	auto motionState = new btDefaultMotionState(worldTransform);
+	btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, motionState, m_shape.get(), localInertia);
 
 	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
 	//m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
@@ -98,7 +98,7 @@ void Rigidbody::Update()
 		++it;
 	}
 
-	auto &transform{*GetEntity()->GetComponent<Transform>()};
+	auto &transform = *GetEntity()->GetComponent<Transform>();
 	btTransform motionTransform;
 	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
 	transform = Collider::Convert(motionTransform, transform.GetScale());

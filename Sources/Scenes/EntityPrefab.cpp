@@ -26,7 +26,7 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Node &node)
 
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &filename)
 {
-	EntityPrefab temp{filename, false};
+	EntityPrefab temp(filename, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -106,7 +106,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity)
 			continue;
 		}
 
-		auto &property{entityPrefab.m_file->GetNode()->AddProperty(*componentName, {})};
+		auto &property = entityPrefab.m_file->GetNode()->AddProperty(*componentName, {});
 		Scenes::Get()->GetComponentRegister().Encode(*componentName, property, component.get());
 	}
 

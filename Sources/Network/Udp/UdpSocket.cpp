@@ -26,7 +26,7 @@ uint16_t UdpSocket::GetLocalPort() const
 	{
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
-		SocketAddrLength size{sizeof(address)};
+		SocketAddrLength size = sizeof(address);
 
 		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 		{
@@ -115,7 +115,7 @@ Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	auto address = CreateAddress(INADDR_ANY, 0);
 
 	// Receive a chunk of bytes.
-	SocketAddrLength addressSize{sizeof(address)};
+	SocketAddrLength addressSize = sizeof(address);
 	auto sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.

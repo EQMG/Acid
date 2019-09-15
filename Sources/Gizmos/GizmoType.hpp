@@ -25,17 +25,17 @@ public:
 	public:
 		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
 		{
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions{ 
+			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
 				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
-			std::vector<VkVertexInputAttributeDescription> attributeDescriptions{
+			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
 				{ 0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0]) },
 				{ 1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1]) },
 				{ 2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2]) },
 				{ 3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3]) },
 				{ 4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour) }
 			};
-			return Shader::VertexInput(bindingDescriptions, attributeDescriptions);
+			return {bindingDescriptions, attributeDescriptions};
 		}
 
 		Matrix4 m_modelMatrix;

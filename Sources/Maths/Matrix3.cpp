@@ -157,7 +157,7 @@ Matrix3 Matrix3::Inverse() const
 
 	if (det == 0.0f)
 	{
-		throw std::runtime_error{"Can't invert a matrix with a determinant of zero"};
+		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
 	}
 
 	for (uint32_t j = 0; j < 3; j++)
@@ -310,22 +310,22 @@ Matrix3 operator/(const Matrix3 &left, const Vector3f &right)
 
 Matrix3 operator*(float left, const Matrix3 &right)
 {
-	return right.Scale({left, left, left});
+	return right.Scale(Vector3(left));
 }
 
 Matrix3 operator/(float left, const Matrix3 &right)
 {
-	return right.Scale(1.0f / Vector3f{left, left, left});
+	return right.Scale(1.0f / Vector3(left));
 }
 
 Matrix3 operator*(const Matrix3 &left, float right)
 {
-	return left.Scale({right, right, right});
+	return left.Scale(Vector3(right));
 }
 
 Matrix3 operator/(const Matrix3 &left, float right)
 {
-	return left.Scale(1.0f / Vector3f{right, right, right});
+	return left.Scale(1.0f / Vector3(right));
 }
 
 Matrix3 &Matrix3::operator+=(const Matrix3 &other)
@@ -360,12 +360,12 @@ Matrix3 &Matrix3::operator/=(const Vector3f &other)
 
 Matrix3 &Matrix3::operator*=(float other)
 {
-	return *this = Scale({other, other, other});
+	return *this = Scale(Vector3(other));
 }
 
 Matrix3 &Matrix3::operator/=(float other)
 {
-	return *this = Scale(1.0f / Vector3f{other, other, other});
+	return *this = Scale(1.0f / Vector3(other));
 }
 
 const Node &operator>>(const Node &node, Matrix3 &matrix)

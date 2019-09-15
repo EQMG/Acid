@@ -207,7 +207,7 @@ public:
 	static const Quaternion PositiveInfinity;
 	static const Quaternion NegativeInfinity;
 
-	float m_x = 0.0f, m_y = 0.0f, m_z = 0.0f, m_w{1.0f};
+	float m_x = 0.0f, m_y = 0.0f, m_z = 0.0f, m_w = 1.0f;
 };
 }
 

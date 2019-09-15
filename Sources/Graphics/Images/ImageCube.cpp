@@ -24,7 +24,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
 	bool anisotropic, bool mipmap)
 {
-	ImageCube temp{filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false};
+	ImageCube temp(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
 	node << temp;
 	return Create(node);
@@ -79,7 +79,7 @@ ImageCube::~ImageCube()
 VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 	uint32_t count)
 {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding{};
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
 	descriptorSetLayoutBinding.descriptorCount = 1;
@@ -90,12 +90,12 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding,
 
 WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
 {
-	VkDescriptorImageInfo imageInfo{};
+	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
 	imageInfo.imageLayout = m_layout;
 
-	VkWriteDescriptorSet descriptorWrite{};
+	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 	descriptorWrite.dstSet = VK_NULL_HANDLE; // Will be set in the descriptor handler.
 	descriptorWrite.dstBinding = binding;
@@ -116,7 +116,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 	VkDeviceMemory dstImageMemory;
 	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {extent.m_x, extent.m_y, 1}, m_layout, mipLevel, arrayLayer);
 
-	VkImageSubresource dstImageSubresource{};
+	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 	dstImageSubresource.mipLevel = 0;
 	dstImageSubresource.arrayLayer = 0;
@@ -163,8 +163,8 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 
 void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
 {
-	Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+	Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 	void *data;
 	bufferStaging.MapMemory(&data);
@@ -255,8 +255,8 @@ void ImageCube::Load()
 
 	if (m_loadPixels)
 	{
-		Buffer bufferStaging{m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT};
+		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);

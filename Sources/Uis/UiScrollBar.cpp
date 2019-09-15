@@ -6,7 +6,7 @@
 
 namespace acid
 {
-const uint32_t UiScrollBar::Size{8};
+const uint32_t UiScrollBar::Size = 8;
 
 UiScrollBar::UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform) :
 	UiObject(parent, transform),

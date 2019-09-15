@@ -8,7 +8,7 @@ namespace acid
 FontMetafile::FontMetafile(std::filesystem::path filename) :
 	m_filename(std::move(filename))
 {
-	IFStream inStream{m_filename};
+	IFStream inStream(m_filename);
 
 	std::size_t lineNum = 0;
 	std::string linebuf;
@@ -109,7 +109,7 @@ void FontMetafile::LoadCharacterData()
 		m_maxSizeY = quadHeight;
 	}
 
-	Character character{id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance};
+	Character character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
 	m_characters.emplace(character.m_id, character);
 }
 

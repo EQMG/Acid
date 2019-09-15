@@ -20,10 +20,10 @@ CameraFree::CameraFree() :
 	m_sensitivity(1.0f),
 	m_joystickVertical(0, 3),
 	m_joystickHorizontal(0, 2),
-	m_inputForward{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
-		std::make_unique<AxisJoystick>(0, 1)},
-	m_inputStrafe{std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
-		std::make_unique<AxisJoystick>(0, 0)},
+	m_inputForward(std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::W), std::make_unique<ButtonKeyboard>(Key::S)),
+		std::make_unique<AxisJoystick>(0, 1)),
+	m_inputStrafe(std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
+		std::make_unique<AxisJoystick>(0, 0)),
 	m_inputVertical(std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)),
 	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1))
 {
@@ -58,7 +58,7 @@ void CameraFree::Update()
 
 		if (m_joystickVertical.IsConnected())
 		{
-			rotationDelta += Vector2f{m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()} * SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;

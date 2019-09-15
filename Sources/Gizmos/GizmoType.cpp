@@ -26,7 +26,7 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Node &node)
 
 std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, float lineThickness, const Colour &colour)
 {
-	GizmoType temp{model, lineThickness, colour};
+	GizmoType temp(model, lineThickness, colour);
 	Node node;
 	node << temp;
 	return Create(node);

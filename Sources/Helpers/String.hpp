@@ -2,13 +2,11 @@
 
 #include "ConstExpr.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Helper class for C++ strings.
  */
-class ACID_EXPORT String
-{
+class ACID_EXPORT String {
 public:
 	/**
 	 * Splits a string by a separator.
@@ -128,36 +126,21 @@ public:
 	 * @return The value as a string.
 	 */
 	template<typename T>
-	static std::string To(T val)
-	{
-		if constexpr (std::is_same_v<std::string, T> || std::is_same_v<const char *, T>)
-		{
+	static std::string To(T val) {
+		if constexpr (std::is_same_v<std::string, T> || std::is_same_v<const char *, T>) {
 			return val;
-		}
-		else if constexpr (std::is_enum_v<T>)
-		{
+		} else if constexpr (std::is_enum_v<T>) {
 			typedef typename std::underlying_type<T>::type safe_type;
 			return std::to_string(static_cast<safe_type>(val));
-		}
-		else if constexpr (std::is_same_v<bool, T>)
-		{
+		} else if constexpr (std::is_same_v<bool, T>) {
 			return val ? "true" : "false";
-		}
-		else if constexpr (std::is_same_v<std::nullptr_t, T>)
-		{
+		} else if constexpr (std::is_same_v<std::nullptr_t, T>) {
 			return "null";
-		}
-		else if constexpr (is_optional_v<T>)
-		{
+		} else if constexpr (is_optional_v<T>) {
 			if (!val.has_value())
-			{
 				return "null";
-			}
-
 			return To(*val);
-		}
-		else
-		{
+		} else {
 			return std::to_string(val);
 		}
 	}
@@ -169,36 +152,23 @@ public:
 	 * @return The string as a value.
 	 */
 	template<typename T>
-	static T From(const std::string &str)
-	{
-		if constexpr (std::is_same_v<std::string, T>)
-		{
+	static T From(const std::string &str) {
+		if constexpr (std::is_same_v<std::string, T>) {
 			return str;
-		}
-		else if constexpr (std::is_enum_v<T>)
-		{
+		} else if constexpr (std::is_enum_v<T>) {
 			typedef typename std::underlying_type<T>::type safe_type;
 			return static_cast<T>(From<safe_type>(str));
-		}
-		else if constexpr (std::is_same_v<bool, T>)
-		{
+		} else if constexpr (std::is_same_v<bool, T>) {
 			return str == "true" || From<std::optional<int32_t>>(str) == 1;
-		}
-		else if constexpr (is_optional_v<T>)
-		{
+		} else if constexpr (is_optional_v<T>) {
 			typedef typename T::value_type base_type;
 			base_type temp;
 			std::istringstream iss(str);
 
 			if ((iss >> temp).fail())
-			{
 				return std::nullopt;
-			}
-
 			return temp;
-		}
-		else
-		{
+		} else {
 			T temp;
 			std::istringstream iss(str);
 			iss >> temp;

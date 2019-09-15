@@ -24,7 +24,7 @@ ZipArchive::~ZipArchive() {
 
 void ZipArchive::Create(const std::filesystem::path &filename) {
 	auto filenameU8 = filename.u8string();
-	
+
 	// Prepare an archive file;
 	mz_zip_archive archive = {};
 	mz_zip_writer_init_file(&archive, filenameU8.c_str(), 0);
@@ -238,9 +238,9 @@ void ZipArchive::ExtractEntry(const std::string &name, const std::filesystem::pa
 	if (auto parentPath = dest.parent_path(); !parentPath.empty()) {
 		std::filesystem::create_directories(parentPath);
 	}
-	
+
 	auto destU8 = dest.u8string();
-	
+
 	// Extract the data from the archive to the ZipEntry object.
 	(*result)->m_entryData.resize((*result)->GetUncompressedSize());
 	mz_zip_reader_extract_file_to_file(&m_archive, name.c_str(), destU8.c_str(), 0);

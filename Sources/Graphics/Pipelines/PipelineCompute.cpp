@@ -59,7 +59,7 @@ void PipelineCompute::CreateShaderProgram()
 
 	if (!fileLoaded)
 	{
-		throw std::runtime_error{"Could not create compute pipeline, missing shader stage"};
+		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
 	}
 
 	auto stageFlag = Shader::GetShaderStage(m_shaderStage);
@@ -79,7 +79,7 @@ void PipelineCompute::CreateDescriptorLayout()
 
 	auto descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
 
-	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo{};
+	VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo = {};
 	descriptorSetLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 	descriptorSetLayoutCreateInfo.flags = m_pushDescriptors ? VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR : 0;
 	descriptorSetLayoutCreateInfo.bindingCount = static_cast<uint32_t>(descriptorSetLayouts.size());
@@ -93,7 +93,7 @@ void PipelineCompute::CreateDescriptorPool()
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
 
-	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo{};
+	VkDescriptorPoolCreateInfo descriptorPoolCreateInfo = {};
 	descriptorPoolCreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 	descriptorPoolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 	descriptorPoolCreateInfo.maxSets = 8192; // 16384;
@@ -108,7 +108,7 @@ void PipelineCompute::CreatePipelineLayout()
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
 
-	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
+	VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 	pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 	pipelineLayoutCreateInfo.setLayoutCount = 1;
 	pipelineLayoutCreateInfo.pSetLayouts = &m_descriptorSetLayout;
@@ -122,7 +122,7 @@ void PipelineCompute::CreatePipelineCompute()
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto pipelineCache = Graphics::Get()->GetPipelineCache();
 
-	VkComputePipelineCreateInfo pipelineCreateInfo{};
+	VkComputePipelineCreateInfo pipelineCreateInfo = {};
 	pipelineCreateInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
 	pipelineCreateInfo.stage = m_shaderStageCreateInfo;
 	pipelineCreateInfo.layout = m_pipelineLayout;

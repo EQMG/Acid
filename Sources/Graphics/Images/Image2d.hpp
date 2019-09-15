@@ -141,10 +141,10 @@ private:
 	std::unique_ptr<uint8_t[]> m_loadPixels;
 	uint32_t m_mipLevels = 0;
 
-	VkImage m_image{VK_NULL_HANDLE};
-	VkDeviceMemory m_memory{VK_NULL_HANDLE};
-	VkSampler m_sampler{VK_NULL_HANDLE};
-	VkImageView m_view{VK_NULL_HANDLE};
+	VkImage m_image = VK_NULL_HANDLE;
+	VkDeviceMemory m_memory = VK_NULL_HANDLE;
+	VkSampler m_sampler = VK_NULL_HANDLE;
+	VkImageView m_view = VK_NULL_HANDLE;
 	VkFormat m_format;
 };
 }

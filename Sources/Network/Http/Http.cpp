@@ -50,7 +50,7 @@ void Http::SetHost(const std::string &host, uint16_t port)
 HttpResponse Http::SendRequest(const HttpRequest &request, const Time &timeout)
 {
 	// First make sure that the request is valid -- add missing mandatory fields.
-	HttpRequest toSend{request};
+	HttpRequest toSend(request);
 
 	if (!toSend.HasField("From"))
 	{

@@ -31,7 +31,7 @@ Vector3f EmitterSphere::GeneratePosition() const
 
 	auto randX = b * std::cos(2.0f * Maths::Pi<float> * (a / b));
 	auto randY = b * std::sin(2.0f * Maths::Pi<float> * (a / b));
-	auto distance = Vector2f{randX, randY}.Length();
+	auto distance = Vector2f(randX, randY).Length();
 	return m_radius * distance * RandomUnitVector();
 }
 

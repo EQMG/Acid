@@ -4,19 +4,19 @@
 
 namespace acid
 {
-static std::random_device RANDOM_DEVICE;
-static std::mt19937 RANDOM_GENERATOR(RANDOM_DEVICE());
+static std::random_device RandomDevice;
+static std::mt19937 RandomGenerator(RandomDevice());
 
 float Maths::Random(float min, float max)
 {
-	std::uniform_real_distribution dist{min, max};
-	return dist(RANDOM_GENERATOR);
+	std::uniform_real_distribution dist(min, max);
+	return dist(RandomGenerator);
 }
 
 float Maths::RandomNormal(float standardDeviation, float mean)
 {
-	std::normal_distribution dist{mean, standardDeviation};
-	return dist(RANDOM_GENERATOR);
+	std::normal_distribution dist(mean, standardDeviation);
+	return dist(RandomGenerator);
 }
 
 float Maths::RandomLog(float min, float max)
