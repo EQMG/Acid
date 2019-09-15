@@ -36,7 +36,8 @@ Pannable::Pannable(UiObject *parent) :
 	m_masterVolume.OnValue().Add([this](float value) {
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 	});
-	m_antialiasing.OnValue().Add([this](bool value) { });
+	m_antialiasing.OnValue().Add([this](bool value) {
+	});
 
 	m_body.SetString( //L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum\n"
@@ -79,7 +80,7 @@ void Pannable::UpdateObject() {
 	auto offset = GetTransform().GetPosition();
 
 	m_zoom *= powf(1.3f, Mouse::Get()->GetScrollDelta().m_y);
-	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant({m_zoom});
+	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant(Vector3f(m_zoom));
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release) {
 		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();

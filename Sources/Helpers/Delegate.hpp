@@ -13,7 +13,7 @@ public:
 	Observer() :
 		m_valid(std::make_shared<bool>(true)) {
 	}
-	
+
 	virtual ~Observer() = default;
 
 	std::shared_ptr<bool> m_valid;

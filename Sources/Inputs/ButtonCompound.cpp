@@ -33,7 +33,7 @@ void ButtonCompound::ConnectButtons() {
 			} else if (m_lastDown && !isDown) {
 				m_lastDown = false;
 				m_onButton(InputAction::Release, 0);
-			} else if (m_lastDown &&isDown) // TODO: This will be sent for every button, only count one per cycle.
+			} else if (m_lastDown && isDown) // TODO: This will be sent for every button, only count one per cycle.
 			{
 				m_onButton(InputAction::Repeat, 0);
 			}

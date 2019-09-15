@@ -15,7 +15,9 @@ namespace acid {
 class ACID_EXPORT Attachment {
 public:
 	enum class Type {
-		Image, Depth, Swapchain
+		Image,
+		Depth,
+		Swapchain
 	};
 
 	/**
@@ -141,7 +143,7 @@ public:
 
 	std::optional<Attachment> GetAttachment(const std::string &name) const;
 	std::optional<Attachment> GetAttachment(uint32_t binding) const;
-	
+
 	const Descriptor *GetDescriptor(const std::string &name) const;
 	const VkFramebuffer &GetActiveFramebuffer(uint32_t activeSwapchainImage) const;
 

@@ -24,11 +24,16 @@ public:
 	Node &operator*() { return *get(); }
 	Node *operator->() { return get(); }
 
-	template<typename T> T Get();
-	template<typename T> T Get(const T &fallback);
-	template<typename T> void Get(T &dest);
-	template<typename T, typename K> void Get(T &dest, const K &fallback);
-	template<typename T> void Set(const T &value);
+	template<typename T>
+	T Get();
+	template<typename T>
+	T Get(const T &fallback);
+	template<typename T>
+	void Get(T &dest);
+	template<typename T, typename K>
+	void Get(T &dest, const K &fallback);
+	template<typename T>
+	void Set(const T &value);
 
 	std::string GetName() const;
 	void SetName(const std::string &name);

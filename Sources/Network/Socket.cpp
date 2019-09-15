@@ -75,8 +75,7 @@ void Socket::SetHandleBlocking(SocketHandle sock, bool block) {
 
 Socket::Status Socket::GetErrorStatus() {
 #if defined(ACID_BUILD_WINDOWS)
-	switch (WSAGetLastError())
-	{
+	switch (WSAGetLastError()) {
 	case WSAEWOULDBLOCK:
 		return Status::NotReady;
 	case WSAEALREADY:
@@ -129,16 +128,13 @@ Socket::Status Socket::GetErrorStatus() {
 // Windows needs some initialization and cleanup to get
 // sockets working properly... so let's create a class that will
 // do it automatically
-struct SocketInitializer
-{
-	SocketInitializer()
-	{
+struct SocketInitializer {
+	SocketInitializer() {
 		WSADATA init;
 		WSAStartup(MAKEWORD(2, 2), &init);
 	}
 
-	~SocketInitializer()
-	{
+	~SocketInitializer() {
 		WSACleanup();
 	}
 };

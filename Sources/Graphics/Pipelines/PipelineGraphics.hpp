@@ -15,11 +15,15 @@ class Image2d;
 class ACID_EXPORT PipelineGraphics : public Pipeline {
 public:
 	enum class Mode {
-		Polygon, Mrt
+		Polygon,
+		Mrt
 	};
 
 	enum class Depth {
-		None = 0, Read = 1, Write = 2, ReadWrite = Read | Write
+		None = 0,
+		Read = 1,
+		Write = 2,
+		ReadWrite = Read | Write
 	};
 
 	/**

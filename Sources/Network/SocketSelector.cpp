@@ -40,14 +40,12 @@ void SocketSelector::Add(Socket &socket) {
 
 	if (handle != Socket::InvalidSocketHandle()) {
 #if defined(ACID_BUILD_WINDOWS)
-		if (m_impl->socketCount >= FD_SETSIZE)
-		{
+		if (m_impl->socketCount >= FD_SETSIZE) {
 			Log::Error("The socket can't be added to the selector because the selector is full. This is a limitation of your operating system's FD_SETSIZE setting.\n");
 			return;
 		}
 
-		if (FD_ISSET(handle, &m_impl->allSockets))
-		{
+		if (FD_ISSET(handle, &m_impl->allSockets)) {
 			return;
 		}
 
@@ -71,8 +69,7 @@ void SocketSelector::Remove(Socket &socket) {
 
 	if (handle != Socket::InvalidSocketHandle()) {
 #if defined(ACID_BUILD_WINDOWS)
-		if (!FD_ISSET(handle, &m_impl->allSockets))
-		{
+		if (!FD_ISSET(handle, &m_impl->allSockets)) {
 			return;
 		}
 

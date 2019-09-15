@@ -24,7 +24,7 @@ public:
 
 	void Start() override;
 	void Update() override;
-	
+
 	bool InFrustum(const Frustum &frustum) override;
 	void ClearForces() override;
 	void SetMass(float mass) override;

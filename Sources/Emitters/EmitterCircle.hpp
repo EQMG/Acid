@@ -5,7 +5,7 @@
 namespace acid {
 class ACID_EXPORT EmitterCircle : public Emitter {
 public:
-	explicit EmitterCircle(float radius = 1.0f, const Vector3f & heading = Vector3f::Up);
+	explicit EmitterCircle(float radius = 1.0f, const Vector3f &heading = Vector3f::Up);
 
 	void Start() override;
 	void Update() override;

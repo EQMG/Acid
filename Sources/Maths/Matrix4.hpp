@@ -245,7 +245,7 @@ public:
 	bool operator!=(const Matrix4 &other) const;
 
 	Matrix4 operator-() const;
-	
+
 	friend Matrix4 operator+(const Matrix4 &left, const Matrix4 &right);
 	friend Matrix4 operator-(const Matrix4 &left, const Matrix4 &right);
 	friend Matrix4 operator*(const Matrix4 &left, const Matrix4 &right);

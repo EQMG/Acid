@@ -59,7 +59,7 @@ public:
 		friend class Shader;
 	public:
 		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, bool readOnly = false,
-			bool writeOnly = false, const VkShaderStageFlags & stageFlags = 0) :
+			bool writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
@@ -122,10 +122,13 @@ public:
 		friend class Shader;
 	public:
 		enum class Type {
-			None, Uniform, Storage, Push
+			None,
+			Uniform,
+			Storage,
+			Push
 		};
 
-		explicit UniformBlock(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags & stageFlags = 0, const Type & type = Type::Uniform) :
+		explicit UniformBlock(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags &stageFlags = 0, const Type &type = Type::Uniform) :
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
@@ -231,7 +234,7 @@ public:
 	class Constant {
 		friend class Shader;
 	public:
-		explicit Constant(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags & stageFlags = 0, int32_t glType = -1) :
+		explicit Constant(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags &stageFlags = 0, int32_t glType = -1) :
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
@@ -296,7 +299,7 @@ public:
 	const std::map<std::string, UniformBlock> &GetUniformBlocks() const { return m_uniformBlocks; };
 	const std::map<std::string, Attribute> &GetAttributes() const { return m_attributes; };
 	const std::map<std::string, Constant> &GetConstants() const { return m_constants; };
-	const std::array<std::optional<uint32_t>, 3> & GetLocalSizes() const { return m_localSizes; }
+	const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return m_localSizes; }
 	const std::vector<VkDescriptorSetLayoutBinding> &GetDescriptorSetLayouts() const { return m_descriptorSetLayouts; }
 	const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
 	const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }

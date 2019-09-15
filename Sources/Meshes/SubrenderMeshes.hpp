@@ -8,7 +8,9 @@ namespace acid {
 class ACID_EXPORT SubrenderMeshes : public Subrender {
 public:
 	enum class Sort {
-		None, Front, Back
+		None,
+		Front,
+		Back
 	};
 
 	explicit SubrenderMeshes(const Pipeline::Stage &pipelineStage, Sort sort = Sort::None);

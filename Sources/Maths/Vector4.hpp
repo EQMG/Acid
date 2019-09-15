@@ -25,7 +25,7 @@ public:
 	 * Constructor for Vector4.
 	 * @param a The value to set all components to.
 	 **/
-	constexpr Vector4(const T &a);
+	constexpr explicit Vector4(const T &a);
 
 	/**
 	 * Constructor for Vector4.
@@ -68,7 +68,7 @@ public:
 	 * @param w Start w.
 	 **/
 	template<typename K, typename J = T>
-	explicit constexpr Vector4(const Vector3<K> & source, const J & w = 1);
+	explicit constexpr Vector4(const Vector3<K> &source, const J &w = 1);
 
 	/**
 	 * Constructor for Vector4.
@@ -141,7 +141,7 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	constexpr auto Lerp(const Vector4<K> & other, const J & progression) const;
+	constexpr auto Lerp(const Vector4<K> &other, const J &progression) const;
 
 	/**
 	 * Scales this vector by a scalar.
@@ -150,7 +150,7 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	constexpr auto Scale(const K & scalar) const;
+	constexpr auto Scale(const K &scalar) const;
 
 	/**
 	 * Normalizes this vector.
@@ -251,16 +251,24 @@ public:
 	constexpr const T &operator[](uint32_t index) const;
 	constexpr T &operator[](uint32_t index);
 
-	template<typename K> constexpr bool operator==(const Vector4<K> &other) const;
-	template<typename K> constexpr bool operator!=(const Vector4<K> &other) const;
+	template<typename K>
+	constexpr bool operator==(const Vector4<K> &other) const;
+	template<typename K>
+	constexpr bool operator!=(const Vector4<K> &other) const;
 
-	template<typename U = T> constexpr std::enable_if_t<std::is_signed_v<U>, Vector4> operator-() const;
-	template<typename U = T> constexpr std::enable_if_t<std::is_integral_v<U>, Vector4> operator~() const;
+	template<typename U = T>
+	constexpr std::enable_if_t<std::is_signed_v<U>, Vector4> operator-() const;
+	template<typename U = T>
+	constexpr std::enable_if_t<std::is_integral_v<U>, Vector4> operator~() const;
 
-	template<typename K> constexpr Vector4 &operator+=(const Vector4<K> &other);
-	template<typename K> constexpr Vector4 &operator-=(const Vector4<K> &other);
-	template<typename K> constexpr Vector4 &operator*=(const Vector4<K> &other);
-	template<typename K> constexpr Vector4 &operator/=(const Vector4<K> &other);
+	template<typename K>
+	constexpr Vector4 &operator+=(const Vector4<K> &other);
+	template<typename K>
+	constexpr Vector4 &operator-=(const Vector4<K> &other);
+	template<typename K>
+	constexpr Vector4 &operator*=(const Vector4<K> &other);
+	template<typename K>
+	constexpr Vector4 &operator/=(const Vector4<K> &other);
 	constexpr Vector4 &operator+=(const T &other);
 	constexpr Vector4 &operator-=(const T &other);
 	constexpr Vector4 &operator*=(const T &other);

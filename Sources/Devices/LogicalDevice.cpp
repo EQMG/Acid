@@ -75,7 +75,7 @@ void LogicalDevice::CreateLogicalDevice() {
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 	float queuePriorities[1] = {0.0f};
 
-	if (m_supportedQueues &VK_QUEUE_GRAPHICS_BIT) {
+	if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT) {
 		VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
 		graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
@@ -86,37 +86,25 @@ void LogicalDevice::CreateLogicalDevice() {
 		m_graphicsFamily = VK_NULL_HANDLE;
 	}
 
-	if (m_supportedQueues &VK_QUEUE_COMPUTE_BIT
-	&&
-	m_computeFamily != m_graphicsFamily
-	)
-	{
+	if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily) {
 		VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
 		computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		computeQueueCreateInfo.queueFamilyIndex = m_computeFamily;
 		computeQueueCreateInfo.queueCount = 1;
 		computeQueueCreateInfo.pQueuePriorities = queuePriorities;
 		queueCreateInfos.emplace_back(computeQueueCreateInfo);
-	}
-	else
-	{
+	} else {
 		m_computeFamily = m_graphicsFamily;
 	}
 
-	if (m_supportedQueues &VK_QUEUE_TRANSFER_BIT
-	&&
-	m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily
-	)
-	{
+	if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily) {
 		VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
 		transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		transferQueueCreateInfo.queueFamilyIndex = m_transferFamily;
 		transferQueueCreateInfo.queueCount = 1;
 		transferQueueCreateInfo.pQueuePriorities = queuePriorities;
 		queueCreateInfos.emplace_back(transferQueueCreateInfo);
-	}
-	else
-	{
+	} else {
 		m_transferFamily = m_graphicsFamily;
 	}
 

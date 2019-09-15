@@ -10,7 +10,7 @@ namespace acid {
 class ACID_EXPORT Gizmos : public Module {
 public:
 	using GizmosContainer = std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>;
-	
+
 	/**
 	 * Gets the engines instance.
 	 * @return The current module instance.

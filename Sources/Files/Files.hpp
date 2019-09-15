@@ -54,7 +54,7 @@ public:
 	static Files *Get() { return Engine::Get()->GetModule<Files>(); }
 
 	Files();
-	
+
 	~Files();
 
 	void Update() override;

@@ -16,7 +16,7 @@ HatJoystick::HatJoystick(uint32_t port, uint32_t hat, const BitMask<JoystickHat>
 			} else if (m_lastDown && !isDown) {
 				m_lastDown = false;
 				m_onButton(InputAction::Release, 0);
-			} else if (m_lastDown &&isDown) {
+			} else if (m_lastDown && isDown) {
 				m_onButton(InputAction::Repeat, 0);
 			}
 		}

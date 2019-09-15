@@ -84,21 +84,17 @@ void Instance::SetupLayers() {
 
 	// Sets up the layers.
 #if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
-	for (const auto &layerName : ValidationLayers)
-	{
+	for (const auto &layerName : ValidationLayers) {
 		bool layerFound = false;
 
-		for (const auto &layerProperties : instanceLayerProperties)
-		{
-			if (strcmp(layerName, layerProperties.layerName) == 0)
-			{
+		for (const auto &layerProperties : instanceLayerProperties) {
+			if (strcmp(layerName, layerProperties.layerName) == 0) {
 				layerFound = true;
 				break;
 			}
 		}
 
-		if (!layerFound)
-		{
+		if (!layerFound) {
 			Log::Error("Vulkan validation layer not found: ", std::quoted(layerName), '\n');
 			continue;
 		}

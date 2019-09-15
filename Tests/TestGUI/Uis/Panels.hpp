@@ -34,7 +34,9 @@ public:
 		}
 	}
 
-	void UpdateObject() override { }
+	void UpdateObject() override {
+	}
+
 private:
 	std::vector<std::unique_ptr<Gui>> m_slots;
 	//std::vector<std::unique_ptr<Text>> m_slotTitles;

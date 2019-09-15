@@ -89,7 +89,7 @@ bool KinematicCharacter::InFrustum(const Frustum &frustum) {
 	btVector3 min;
 	btVector3 max;
 
-	if (m_body &&m_shape) {
+	if (m_body && m_shape) {
 		m_shape->getAabb(Collider::Convert(*GetEntity()->GetComponent<Transform>()), min, max);
 	}
 

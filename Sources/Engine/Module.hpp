@@ -13,7 +13,11 @@ public:
 	 * @brief Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
 	 */
 	enum class Stage {
-		Always, Pre, Normal, Post, Render
+		Always,
+		Pre,
+		Normal,
+		Post,
+		Render
 	};
 
 	virtual ~Module() = default;

@@ -19,9 +19,8 @@ T Node::Get(const T &fallback) const {
 		return fallback;
 	}
 
-	return Get < T > (
-	)
-	;
+	return Get<T>(
+		);
 }
 
 template<typename T>

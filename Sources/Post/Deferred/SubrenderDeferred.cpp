@@ -125,8 +125,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 
 #if defined(ACID_VERBOSE)
 	// Saves the BRDF Image.
-	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image)
-	{
+	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
 		auto path = "Deferred/Brdf.png";
 		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
@@ -164,8 +163,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 
 #if defined(ACID_VERBOSE)
 	// Saves the irradiance Image.
-	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image)
-	{
+	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		auto path = "Deferred/Irradiance.png";
 		Vector2ui extent;
 		auto pixels = image->GetPixels(extent);
@@ -232,11 +230,9 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	}
 
 #if defined(ACID_VERBOSE)
-	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
-	{
+	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		// Saves the prefiltered Image.
-		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i)
-		{
+		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {
 			auto path = "Deferred/Prefiltered_" + String::To(i) + ".png";
 			Vector2ui extent;
 			auto pixels = image->GetPixels(extent, i);

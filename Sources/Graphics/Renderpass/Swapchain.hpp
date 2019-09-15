@@ -38,7 +38,7 @@ public:
 	uint32_t GetActiveImageIndex() const { return m_activeImageIndex; }
 
 	operator const VkSwapchainKHR &() const { return m_swapchain; }
-	
+
 private:
 	VkExtent2D m_extent;
 	VkPresentModeKHR m_presentMode;

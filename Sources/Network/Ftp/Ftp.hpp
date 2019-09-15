@@ -57,7 +57,7 @@ public:
 	 * @param timeout Maximum time to wait.
 	 * @return Server response to the request.
 	 **/
-	FtpResponse Connect(const IpAddress &server, uint16_t port = 21, const Time & timeout = 0s);
+	FtpResponse Connect(const IpAddress &server, uint16_t port = 21, const Time &timeout = 0s);
 
 	/**
 	 * Close the connection with the server.

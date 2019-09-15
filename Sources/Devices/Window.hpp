@@ -171,7 +171,7 @@ public:
 	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
 
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
-	
+
 	const Monitor *GetPrimaryMonitor() const;
 
 	/**

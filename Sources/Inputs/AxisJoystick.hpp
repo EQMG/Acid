@@ -17,7 +17,7 @@ public:
 	AxisJoystick(uint32_t port, uint32_t axis, bool inverted = false);
 
 	float GetAmount() const override;
-	
+
 	bool IsConnected() const;
 
 	uint32_t GetPort() const { return m_port; }

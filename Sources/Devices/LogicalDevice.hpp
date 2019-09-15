@@ -8,8 +8,7 @@ class Instance;
 class PhysicalDevice;
 class Surface;
 
-class ACID_EXPORT LogicalDevice
-{
+class ACID_EXPORT LogicalDevice {
 	friend class Graphics;
 public:
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);

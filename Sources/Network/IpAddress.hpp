@@ -102,7 +102,7 @@ public:
 	static const IpAddress LocalHost;
 	/// The "broadcast" address (for sending UDP messages to everyone on a local network).
 	static const IpAddress Broadcast;
-	
+
 private:
 	/**
 	 * Resolve the given address string.

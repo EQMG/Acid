@@ -60,7 +60,7 @@ public:
 	 * @param scale The averaged scale for the particle.
 	 * @return The particle type with the requested values.
 	 */
-	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows = 1, const Colour & colourOffset = Colour::Black,
+	static std::shared_ptr<ParticleType> Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows = 1, const Colour &colourOffset = Colour::Black,
 		float lifeLength = 10.0f, float stageCycles = 1.0f, float scale = 1.0f);
 
 	/**
@@ -72,7 +72,7 @@ public:
 	 * @param stageCycles The amount of times stages will be shown.
 	 * @param scale The averaged scale for the particle.
 	 */
-	explicit ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows = 1, const Colour & colourOffset = Colour::Black, float lifeLength = 10.0f,
+	explicit ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows = 1, const Colour &colourOffset = Colour::Black, float lifeLength = 10.0f,
 		float stageCycles = 1.0f, float scale = 1.0f);
 
 	void Update(const std::vector<Particle> &particles);

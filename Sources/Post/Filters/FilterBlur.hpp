@@ -7,7 +7,9 @@ namespace acid {
 class ACID_EXPORT FilterBlur : public PostFilter {
 public:
 	enum class Type {
-		_5 = 5, _9 = 9, _13 = 13
+		_5 = 5,
+		_9 = 9,
+		_13 = 13
 	};
 
 	explicit FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type = Type::_9);

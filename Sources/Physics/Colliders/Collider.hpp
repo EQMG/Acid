@@ -40,7 +40,7 @@ public:
 	static btQuaternion Convert(const Quaternion &quaternion);
 	static Quaternion Convert(const btQuaternion &quaternion);
 	static btTransform Convert(const Transform &transform);
-	static Transform Convert(const btTransform &transform, const Vector3f &scaling = {1.0f});
+	static Transform Convert(const btTransform &transform, const Vector3f &scaling = Vector3f(1.0f));
 
 protected:
 	Transform m_localTransform;

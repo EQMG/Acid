@@ -25,7 +25,8 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f & linearFactor = {1.0f}, const Vector3f & angularFactor = {1.0f});
+	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = Vector3f(1.0f), 
+		const Vector3f &angularFactor = Vector3f(1.0f));
 
 	virtual ~CollisionObject();
 

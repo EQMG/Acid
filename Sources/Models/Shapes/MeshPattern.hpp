@@ -10,7 +10,7 @@ public:
 
 protected:
 	virtual VertexDefault GetVertex(uint32_t col, uint32_t row);
-	
+
 	void GenerateMesh();
 
 	float m_sideLength;

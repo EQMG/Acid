@@ -47,7 +47,7 @@ Scene1::Scene1() :
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = GetStructure()->CreateEntity();
-			sphere->AddComponent<Transform>(cameraPosition, Vector3f(), 1.0f);
+			sphere->AddComponent<Transform>(cameraPosition, Vector3f());
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
@@ -86,10 +86,10 @@ void Scene1::Start() {
 	player->AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f));
 
 	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
-	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), 2048.0f);
+	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), Vector3f(2048.0f));
 
 	auto sun = GetStructure()->CreateEntity();
-	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f);
+	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));
 	//sun->AddComponent<CelestialBody>(CelestialBody::Type::Sun);
 	sun->AddComponent<Light>(Colour::White);
 

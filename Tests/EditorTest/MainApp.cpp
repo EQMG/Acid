@@ -14,10 +14,8 @@
 
 #include <Engine/cr.h>
 
-CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
-{
-	switch (operation)
-	{
+CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation) {
+	switch (operation) {
 	case CR_LOAD:
 		Log::Out("[Guest] Operation load: ", ctx->version, '\n');
 		Engine::Get()->SetApp(std::make_unique<test::MainApp>());

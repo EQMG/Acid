@@ -7,11 +7,11 @@ template<typename T>
 class Reference {
 public:
 	Reference() noexcept = default;
-	
+
 	Reference(T &reference) noexcept :
 		m_reference(std::addressof(reference)) {
 	}
-	
+
 	~Reference() = default;
 
 	/**

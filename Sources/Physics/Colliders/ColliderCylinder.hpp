@@ -7,7 +7,7 @@ class btCylinderShape;
 namespace acid {
 class ACID_EXPORT ColliderCylinder : public Collider {
 public:
-	explicit ColliderCylinder(float radius = 1.0f, float height = 1.0f, const Transform & localTransform = {});
+	explicit ColliderCylinder(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCylinder();
 

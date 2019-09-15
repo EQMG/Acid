@@ -28,7 +28,7 @@ public:
 	virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 	const Pipeline::Stage &GetStage() const { return m_stage; }
-	
+
 	bool IsEnabled() const { return m_enabled; };
 	void SetEnabled(bool enable) { m_enabled = enable; }
 

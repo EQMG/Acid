@@ -7,79 +7,65 @@ namespace acid {
  * @brief Class that handles a storage buffer.
  */
 class ACID_EXPORT
-StorageHandler
-{
+	StorageHandler {
 public:
 	explicit StorageHandler(bool multipipeline = false);
 	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
-	void Push(void *data, std::size_t size)
-	{
-		if (size != m_size)
-		{
+	void Push(void *data, std::size_t size) {
+		if (size != m_size) {
 			m_size = static_cast<uint32_t>(size);
 			m_handlerStatus = Buffer::Status::Reset;
 			return;
 		}
 
-		if (!m_uniformBlock || !m_storageBuffer)
-		{
+		if (!m_uniformBlock || !m_storageBuffer) {
 			return;
 		}
 
-		if (!m_bound)
-		{
+		if (!m_bound) {
 			m_storageBuffer->MapMemory(&m_data);
 			m_bound = true;
 		}
 
-		if (std::memcmp(static_cast<char *>(m_data), data, size) != 0)
-		{
+		if (std::memcmp(static_cast<char *>(m_data), data, size) != 0) {
 			std::memcpy(static_cast<char *>(m_data), data, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
 
 	template<typename T>
-	void Push(const T &object, std::size_t offset, std::size_t size)
-	{
-		if (!m_uniformBlock || !m_storageBuffer)
-		{
+	void Push(const T &object, std::size_t offset, std::size_t size) {
+		if (!m_uniformBlock || !m_storageBuffer) {
 			return;
 		}
 
-		if (!m_bound)
-		{
+		if (!m_bound) {
 			m_storageBuffer->MapMemory(&m_data);
 			m_bound = true;
 		}
 
-		if (std::memcmp(static_cast<char *>(m_data) + offset, &object, size) != 0)
-		{
+		if (std::memcmp(static_cast<char *>(m_data) + offset, &object, size) != 0) {
 			std::memcpy(static_cast<char *>(m_data) + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
 
 	template<typename T>
-	void Push(const std::string &uniformName, const T &object, std::size_t size = 0)
-	{
-		if (!m_uniformBlock)
-		{
+	void Push(const std::string &uniformName, const T &object, std::size_t size = 0) {
+		if (!m_uniformBlock) {
 			return;
 		}
 
 		auto uniform = m_uniformBlock->GetUniform(uniformName);
 
-		if (!uniform)
-		{
+		if (!uniform) {
 			return;
 		}
 
 		auto realSize = size;
 
-		if (realSize == 0)
-		{
+		if (realSize == 0) {
 			realSize = std::min(sizeof(object), static_cast<std::size_t>(uniform->GetSize()));
 		}
 

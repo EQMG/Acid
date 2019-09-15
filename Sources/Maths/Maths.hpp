@@ -42,7 +42,7 @@ public:
 	 * @return The radians value.
 	 **/
 	template<typename T = float>
-	static constexpr T Radians(const T & degrees) {
+	static constexpr T Radians(const T &degrees) {
 		return static_cast<T>(degrees * Pi<long double> / 180);
 	}
 
@@ -53,7 +53,7 @@ public:
 	 * @return The degrees value.
 	 **/
 	template<typename T = float>
-	static constexpr T Degrees(const T & radians) {
+	static constexpr T Degrees(const T &radians) {
 		return static_cast<T>(radians * 180 / Pi<long double>);
 	}
 
@@ -64,7 +64,7 @@ public:
 	 * @return The normalized angle.
 	 **/
 	template<typename T = float>
-	static T WrapDegrees(const T & degrees) {
+	static T WrapDegrees(const T &degrees) {
 		auto x = std::fmod(degrees, 360);
 
 		if (x < 0) {
@@ -81,7 +81,7 @@ public:
 	 * @return The normalized angle.
 	 **/
 	template<typename T = float>
-	static T WrapRadians(const T & radians) {
+	static T WrapRadians(const T &radians) {
 		auto x = std::fmod(radians, 2 * Pi<T>);
 
 		if (x < 0) {
@@ -99,7 +99,7 @@ public:
 	 * @return The rounded value.
 	 **/
 	template<typename T = float>
-	static T RoundToPlace(const T & value, int32_t place) {
+	static T RoundToPlace(const T &value, int32_t place) {
 		auto placeMul = std::pow(10, place);
 		return static_cast<T>(std::round(value * placeMul) / placeMul);
 	}
@@ -112,7 +112,7 @@ public:
 	 * @return Returns a value with deadband applied.
 	 **/
 	template<typename T = float>
-	static T Deadband(const T & min, const T & value) {
+	static T Deadband(const T &min, const T &value) {
 		return std::fabs(value) >= std::fabs(min) ? value : 0.0f;
 	}
 
@@ -126,7 +126,7 @@ public:
 	 * @return If both are almost equal.
 	 **/
 	template<typename T = float, typename K = float>
-	static bool AlmostEqual(const T & a, const T & b, const K & eps) {
+	static bool AlmostEqual(const T &a, const T &b, const K &eps) {
 		return std::fabs(a - b) < eps;
 	}
 
@@ -140,7 +140,7 @@ public:
 	 * @return The changed value.
 	 **/
 	template<typename T = float, typename K = float>
-	static constexpr auto SmoothDamp(const T & current, const T & target, const K & rate) {
+	static constexpr auto SmoothDamp(const T &current, const T &target, const K &rate) {
 		return current + ((target - current) * rate);
 	}
 
@@ -154,7 +154,7 @@ public:
 	 * @return Returns a interpolation value.
 	 **/
 	template<typename T = float, typename K = float>
-	static constexpr auto Lerp(const T & a, const T & b, const K & factor) {
+	static constexpr auto Lerp(const T &a, const T &b, const K &factor) {
 		return a * (1 - factor) + b * factor;
 	}
 
@@ -168,7 +168,7 @@ public:
 	 * @return Returns a interpolated value.
 	 **/
 	template<typename T = float, typename K = float>
-	static auto CosLerp(const T & a, const T & b, const K & factor) {
+	static auto CosLerp(const T &a, const T &b, const K &factor) {
 		auto ft = factor * Pi<T>;
 		auto f = 1 - std::cos(ft) / 2;
 		return (a * (1 - f)) + (b * f);
@@ -184,7 +184,7 @@ public:
 	 * @return The resulting stepped value.
 	 **/
 	template<typename T = float, typename K = float>
-	static constexpr auto SmoothlyStep(const T & edge0, const T & edge1, const K & x) {
+	static constexpr auto SmoothlyStep(const T &edge0, const T &edge1, const K &x) {
 		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0, 1);
 		return s * s * (3 - 2 * s);
 	}
@@ -198,7 +198,7 @@ public:
 	 * @return The resulting cosign.
 	 **/
 	template<typename T = float, typename K = float>
-	static auto CosFromSin(const T & sin, const K & angle) {
+	static auto CosFromSin(const T &sin, const K &angle) {
 		// sin(x)^2 + cos(x)^2 = 1
 		auto cos = std::sqrt(1 - sin * sin);
 		auto a = angle + (Pi<T> / 2);

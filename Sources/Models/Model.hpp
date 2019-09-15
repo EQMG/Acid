@@ -43,8 +43,10 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, uint32_t instances = 1) const;
 
-	template<typename T> std::vector<T> GetVertices(std::size_t offset = 0) const;
-	template<typename T> void SetVertices(const std::vector<T> &vertices);
+	template<typename T>
+	std::vector<T> GetVertices(std::size_t offset = 0) const;
+	template<typename T>
+	void SetVertices(const std::vector<T> &vertices);
 
 	std::vector<uint32_t> GetIndices(std::size_t offset = 0) const;
 	void SetIndices(const std::vector<uint32_t> &indices);

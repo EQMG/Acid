@@ -15,11 +15,8 @@ ThreadPool::ThreadPool(uint32_t threadCount) {
 						return m_stop || !m_tasks.empty();
 					});
 
-					if (m_stop &&m_tasks
-					.
-					empty()
-					)
-					return;
+					if (m_stop && m_tasks.empty())
+						return;
 
 					task = std::move(m_tasks.front());
 					m_tasks.pop();

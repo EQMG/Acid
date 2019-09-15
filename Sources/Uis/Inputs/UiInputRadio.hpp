@@ -9,7 +9,10 @@ namespace acid {
 class ACID_EXPORT UiInputRadio : public UiObject {
 public:
 	enum class Type {
-		Filled, X, Dot, Check
+		Filled,
+		X,
+		Dot,
+		Check
 	};
 
 	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, bool value = false,
@@ -66,7 +69,7 @@ public:
 	}
 
 	const UiInputRadio::Type &GetMarkType() const { return m_type; }
-	
+
 	void SetMarkType(const UiInputRadio::Type &type) {
 		m_type = type;
 

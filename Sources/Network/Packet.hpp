@@ -25,7 +25,7 @@ class ACID_EXPORT Packet {
 
 public:
 	/// A bool-like type that cannot be converted to integer or pointer types.
-	typedef bool (Packet:: *BoolType)(std::size_t);
+	typedef bool (Packet::*BoolType)(std::size_t);
 
 	/**
 	 * Creates an empty packet.

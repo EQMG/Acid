@@ -9,11 +9,18 @@ namespace acid {
 class ACID_EXPORT Node {
 public:
 	enum class Type {
-		Object, Array, String, Boolean, Number, Null, Unknown
+		Object,
+		Array,
+		String,
+		Boolean,
+		Number,
+		Null,
+		Unknown
 	};
 
 	enum class Format {
-		Beautified, Minified
+		Beautified,
+		Minified
 	};
 
 	using Property = std::pair<std::string, Node>;
@@ -31,11 +38,16 @@ public:
 
 	void Remove();
 
-	template<typename T> T Get() const;
-	template<typename T> T Get(const T &fallback) const;
-	template<typename T> void Get(T &dest) const;
-	template<typename T, typename K> void Get(T &dest, const K &fallback) const;
-	template<typename T> void Set(const T &value);
+	template<typename T>
+	T Get() const;
+	template<typename T>
+	T Get(const T &fallback) const;
+	template<typename T>
+	void Get(T &dest) const;
+	template<typename T, typename K>
+	void Get(T &dest, const K &fallback) const;
+	template<typename T>
+	void Set(const T &value);
 
 	/**
 	 * Gets if the node has a value, or has properties that have values.
@@ -52,8 +64,10 @@ public:
 	std::string GetName() const;
 	void SetName(const std::string &name);
 
-	template<typename T> Node &Append(T value);
-	template<typename ...Args> Node &Append(Args ... args);
+	template<typename T>
+	Node &Append(T value);
+	template<typename ...Args>
+	Node &Append(Args ... args);
 
 	bool HasProperty(const std::string &name) const;
 	NodeReturn GetProperty(const std::string &name) const;

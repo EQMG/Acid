@@ -34,23 +34,45 @@ class ACID_EXPORT
 	Noise {
 public:
 	enum class Type {
-		Value, ValueFractal, Perlin, PerlinFractal, Simplex, SimplexFractal, Cellular, WhiteNoise, Cubic, CubicFractal
+		Value,
+		ValueFractal,
+		Perlin,
+		PerlinFractal,
+		Simplex,
+		SimplexFractal,
+		Cellular,
+		WhiteNoise,
+		Cubic,
+		CubicFractal
 	};
 
 	enum class Interp {
-		Linear, Hermite, Quintic
+		Linear,
+		Hermite,
+		Quintic
 	};
 
 	enum class Fractal {
-		FBM, Billow, RigidMulti
+		FBM,
+		Billow,
+		RigidMulti
 	};
 
 	enum class CellularDistance {
-		Euclidean, Manhattan, Natural
+		Euclidean,
+		Manhattan,
+		Natural
 	};
 
 	enum class CellularReturn {
-		CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div
+		CellValue,
+		NoiseLookup,
+		Distance,
+		Distance2,
+		Distance2Add,
+		Distance2Sub,
+		Distance2Mul,
+		Distance2Div
 	};
 
 	/**
@@ -65,8 +87,8 @@ public:
 	 * @param fractal The fractal noise type.
 	 * @param fractalBounding The fractal bounding.
 	 **/
-	explicit Noise(uint64_t seed = 1337, float frequency = 0.01f, const Interp & interp = Interp::Quintic, const Type & type = Type::Simplex, int32_t octaves = 3,
-		float lacunarity = 2.0f, float gain = 0.5f, const Fractal & fractal = Fractal::FBM, float fractalBounding = 0.0f);
+	explicit Noise(uint64_t seed = 1337, float frequency = 0.01f, Interp interp = Interp::Quintic, Type type = Type::Simplex, int32_t octaves = 3,
+		float lacunarity = 2.0f, float gain = 0.5f, Fractal fractal = Fractal::FBM, float fractalBounding = 0.0f);
 
 	/**
 	 * Gets the seed used for all noise types.
@@ -102,7 +124,7 @@ public:
 	 * Sets the interpolation method used to smooth between noise values.
 	 * @param interp The new interpolation method (Default: Quintic).
 	 **/
-	void SetInterp(const Interp &interp) { m_interp = interp; }
+	void SetInterp(Interp interp) { m_interp = interp; }
 
 	/**
 	 * Gets the type of noise.
@@ -114,7 +136,7 @@ public:
 	 * Sets the type of noise.
 	 * @param type The new noise type.
 	 **/
-	void SetType(const Type &type) { m_type = type; }
+	void SetType(Type type) { m_type = type; }
 
 	/**
 	 * Gets the octave count for all fractal noise types.
@@ -162,7 +184,7 @@ public:
 	 * Sets the method for combining octaves in all fractal noise types.
 	 * @param fractal The new method for combining octaves (Default: FBM).
 	 **/
-	void SetFractal(const Fractal &fractal) { m_fractal = fractal; }
+	void SetFractal(Fractal fractal) { m_fractal = fractal; }
 
 	/**
 	 * Gets the distance function used in cellular noise calculations.
@@ -174,7 +196,7 @@ public:
 	 * Sets the distance function used in cellular noise calculations.
 	 * @param cellularDistance'> The new cellular distance function (Default: Euclidean).
 	 **/
-	void SetCellularDistance(const CellularDistance &cellularDistance) { m_cellularDistance = cellularDistance; }
+	void SetCellularDistance(CellularDistance cellularDistance) { m_cellularDistance = cellularDistance; }
 
 	/**
 	 * Gets the return type from cellular noise calculations.
@@ -187,7 +209,7 @@ public:
 	 * Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function.
 	 * @param cellularReturn> The new cellular return type (Default: CellValue).
 	 **/
-	void SetCellularReturn(const CellularReturn &cellularReturn) { m_cellularReturn = cellularReturn; }
+	void SetCellularReturn(CellularReturn cellularReturn) { m_cellularReturn = cellularReturn; }
 
 	/**
 	 * Gets the noise used to calculate a cell value if the cellular return type is NoiseLookup.
@@ -200,7 +222,7 @@ public:
 	 * The lookup value is acquired through GetNoise() so ensure you SetType() on the noise lookup, value, Perlin or simplex is recommended.
 	 * @param noise The new cellular noise lookup.
 	 **/
-	void SetCellularNoiseLookup(Noise *noise) { m_cellularNoiseLookup.reset(noise); }
+	void SetCellularNoiseLookup(std::unique_ptr<Noise> &&noise) { m_cellularNoiseLookup = std::move(noise); }
 
 	/**
 	 * Gets the 2 distance indices used for distance2 return types.

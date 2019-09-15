@@ -105,9 +105,7 @@ Time &Time::operator/=(int64_t other) {
 }
 
 const Node &operator>>(const Node &node, Time &time) {
-	time.m_microseconds = std::chrono::microseconds(node.Get < int64_t > ()
-	)
-	;
+	time.m_microseconds = std::chrono::microseconds(node.Get<int64_t>());
 	return node;
 }
 

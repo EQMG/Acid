@@ -22,7 +22,7 @@ public:
 	bool operator!=(const Gizmo &other) const;
 
 	std::shared_ptr<GizmoType> GetGizmoType() const { return m_gizmoType; }
-	
+
 	const Transform &GetTransform() const { return m_transform; }
 	Transform &GetTransform() { return m_transform; }
 	void SetTransform(const Transform &transform) { m_transform = transform; }

@@ -26,14 +26,14 @@ public:
 		}
 
 		ComponentCreate componentCreate;
-		componentCreate.m_create = []() -> Component * {
+		componentCreate.m_create = []() -> Component* {
 			return new T();
 		};
-		componentCreate.m_decode = [](const Node &node, Component *component) -> const Node & {
+		componentCreate.m_decode = [](const Node &node, Component *component) -> const Node& {
 			node >> *dynamic_cast<T *>(component);
 			return node;
 		};
-		componentCreate.m_encode = [](Node &node, const Component *component) -> Node & {
+		componentCreate.m_encode = [](Node &node, const Component *component) -> Node& {
 			node << *dynamic_cast<const T *>(component);
 			return node;
 		};
@@ -49,14 +49,14 @@ public:
 	 * @param name The components name.
 	 */
 	void Remove(const std::string &name);
-	
+
 	/**
 	 * Creates a new component from the register.
 	 * @param name The component name to create.
 	 * @return The new component.
 	 */
 	Component *Create(const std::string &name) const;
-	
+
 	/**
 	 * Finds the registered name to a component.
 	 * @param compare The components to get the registered name of.

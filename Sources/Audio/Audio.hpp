@@ -13,7 +13,10 @@ namespace acid {
 class ACID_EXPORT Audio : public Module {
 public:
 	enum class Type {
-		Master, General, Effect, Music
+		Master,
+		General,
+		Effect,
+		Music
 	};
 
 	/**
@@ -23,7 +26,7 @@ public:
 	static Audio *Get() { return Engine::Get()->GetModule<Audio>(); }
 
 	Audio();
-	
+
 	~Audio();
 
 	void Update() override;

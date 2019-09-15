@@ -22,7 +22,10 @@ public:
 	 * @brief A enum that represents how the text will be justified.
 	 */
 	enum class Justify {
-		Left, Centre, Right, Fully
+		Left,
+		Centre,
+		Right,
+		Fully
 	};
 
 	/**

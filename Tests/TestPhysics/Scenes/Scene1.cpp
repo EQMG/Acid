@@ -56,7 +56,7 @@ Scene1::Scene1() :
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 			auto sphere = GetStructure()->CreateEntity();
-			sphere->AddComponent<Transform>(cameraPosition, Vector3f(), 1.0f);
+			sphere->AddComponent<Transform>(cameraPosition, Vector3f());
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
@@ -138,13 +138,13 @@ void Scene1::Start() {
 	player->AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f));
 
 	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
-	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), 2048.0f);
+	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), Vector3f(2048.0f));
 
 	//auto animated = GetStructure()->CreateEntity("Objects/Animated/Animated.json");
-	//animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), 0.3f);
+	//animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
 
 	/*auto animated = GetStructure()->CreateEntity();
-	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), 0.3f);
+	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
 	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
 	animated->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//animated->AddComponent<Rigidbody>(0.0f);
@@ -157,7 +157,7 @@ void Scene1::Start() {
 	prefabAnimated.Write();*/
 
 	auto sun = GetStructure()->CreateEntity();
-	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f);
+	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));
 	//sun->AddComponent<CelestialBody>(CelestialBody::Type::Sun);
 	sun->AddComponent<Light>(Colour::White);
 
@@ -222,7 +222,7 @@ void Scene1::Start() {
 	//suzanne1->AddComponent<ShadowRender>();
 
 	auto teapot1 = GetStructure()->CreateEntity();
-	teapot1->AddComponent<Transform>(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), 0.2f);
+	teapot1->AddComponent<Transform>(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot1->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot1->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png"));
 	//teapot1->AddComponent<Rigidbody>(1.0f);
@@ -237,7 +237,7 @@ void Scene1::Start() {
 	prefabTeapot1.Write();
 
 	auto teapotCone = GetStructure()->CreateEntity();
-	teapotCone->AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), 3.0f)->SetParent(teapot1);
+	teapotCone->AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1);
 	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 24, 2));
 	teapotCone->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotCone->AddComponent<MeshRender>();
@@ -249,14 +249,14 @@ void Scene1::Start() {
 	teapotConeLight->AddComponent<Light>(Colour::Red, 6.0f);
 
 	auto teapotConeSphere = GetStructure()->CreateEntity();
-	teapotConeSphere->AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), 0.5f)->SetParent(teapotCone);
+	teapotConeSphere->AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), Vector3f(0.5f))->SetParent(teapotCone);
 	teapotConeSphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 32, 32));
 	teapotConeSphere->AddComponent<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f);
 	teapotConeSphere->AddComponent<MeshRender>();
 	teapotConeSphere->AddComponent<ShadowRender>();
 
 	auto teapot2 = GetStructure()->CreateEntity();
-	teapot2->AddComponent<Transform>(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), 0.2f);
+	teapot2->AddComponent<Transform>(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f);
 	//teapot2->AddComponent<Rigidbody>(1.0f);
@@ -267,7 +267,7 @@ void Scene1::Start() {
 	teapot2->AddComponent<ShadowRender>();
 
 	auto teapot3 = GetStructure()->CreateEntity();
-	teapot3->AddComponent<Transform>(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), 0.2f);
+	teapot3->AddComponent<Transform>(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
 	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f);
 	//teapot3->AddComponent<Rigidbody>(1.0f);

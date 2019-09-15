@@ -193,8 +193,8 @@ static const float CELL_3D_Z[] = {
 	-0.5902737632f, -0.321506229f, -0.5224513133f, -0.4090169985f, -0.3599685311f
 };
 
-Noise::Noise(uint64_t seed, float frequency, const Interp &interp, const Type &type, int32_t octaves, float lacunarity, float gain,
-	const Fractal &fractal, float fractalBounding) :
+Noise::Noise(uint64_t seed, float frequency, Interp interp, Type type, int32_t octaves, float lacunarity, float gain,
+	Fractal fractal, float fractalBounding) :
 	m_seed(seed),
 	m_perm(std::make_unique<uint8_t[]>(512)),
 	m_perm12(std::make_unique<uint8_t[]>(512)),

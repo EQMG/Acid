@@ -9,7 +9,7 @@ namespace acid {
 class ACID_EXPORT UiInputSlider : public UiObject {
 public:
 	UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo = 2,
-		const UiTransform & transform = {UiInputButton::Size});
+		const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 

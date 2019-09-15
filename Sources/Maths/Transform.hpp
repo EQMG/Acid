@@ -17,7 +17,7 @@ public:
 	 * @param rotation The rotation.
 	 * @param scale The scale.
 	 */
-	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = 1.0f);
+	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = Vector3f(1.0f));
 
 	~Transform();
 

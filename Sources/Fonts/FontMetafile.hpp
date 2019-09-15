@@ -104,7 +104,7 @@ private:
 	 * @return The value of the variable.
 	 */
 	template<typename T = int32_t>
-	T GetValueOfVariable(const std::string & variable) {
+	T GetValueOfVariable(const std::string &variable) {
 		return String::From<T>(m_values.at(variable));
 	}
 

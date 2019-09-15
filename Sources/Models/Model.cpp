@@ -16,7 +16,7 @@ Model::Model() {
 }
 
 bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const {
-	if (m_vertexBuffer &&m_indexBuffer) {
+	if (m_vertexBuffer && m_indexBuffer) {
 		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};
 		VkDeviceSize offsets[1] = {0};
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
@@ -88,9 +88,8 @@ std::vector<float> Model::GetPointCloud() const {
 
 	// This assumes a Vector3f attribute is the first vertex attribute.
 	auto indices = GetIndices();
-	auto vertices = GetVertices < Vector3f > (
-	)
-	;
+	auto vertices = GetVertices<Vector3f>(
+		);
 
 	std::vector<float> pointCloud;
 	pointCloud.reserve(indices.size());

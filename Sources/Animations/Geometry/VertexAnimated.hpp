@@ -5,9 +5,7 @@
 #include "Graphics/Pipelines/Shader.hpp"
 
 namespace acid {
-class ACID_EXPORT
-VertexAnimated
-{
+class ACID_EXPORT VertexAnimated {
 public:
 	VertexAnimated() = default;
 
@@ -16,36 +14,32 @@ public:
 		m_uv(uv),
 		m_normal(normal),
 		m_jointId(jointId),
-		m_vertexWeight(vertexWeight)
-	{
+		m_vertexWeight(vertexWeight) {
 	}
 
 	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-			{ baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX }
+			{baseBinding, sizeof(VertexAnimated), VK_VERTEX_INPUT_RATE_VERTEX}
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position) },
-			{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv) },
-			{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal) },
-			{ 3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId) },
-			{ 4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight) }
+			{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_position)},
+			{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexAnimated, m_uv)},
+			{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_normal)},
+			{3, baseBinding, VK_FORMAT_R32G32B32_SINT, offsetof(VertexAnimated, m_jointId)},
+			{4, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexAnimated, m_vertexWeight)}
 		};
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
-	bool operator==(const VertexAnimated &other) const
-	{
+	bool operator==(const VertexAnimated &other) const {
 		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal && m_jointId == other.m_jointId && m_vertexWeight == other.m_vertexWeight;
 	}
 
-	bool operator!=(const VertexAnimated &other) const
-	{
+	bool operator!=(const VertexAnimated &other) const {
 		return !(*this == other);
 	}
 
-	friend const Node &operator>>(const Node &node, VertexAnimated &vertexAnimated)
-	{
+	friend const Node &operator>>(const Node &node, VertexAnimated &vertexAnimated) {
 		node["position"].Get(vertexAnimated.m_position);
 		node["uv"].Get(vertexAnimated.m_uv);
 		node["normal"].Get(vertexAnimated.m_normal);
@@ -54,8 +48,7 @@ public:
 		return node;
 	}
 
-	friend Node &operator<<(Node &node, const VertexAnimated &vertexAnimated)
-	{
+	friend Node &operator<<(Node &node, const VertexAnimated &vertexAnimated) {
 		node["position"].Set(vertexAnimated.m_position);
 		node["uv"].Set(vertexAnimated.m_uv);
 		node["normal"].Set(vertexAnimated.m_normal);

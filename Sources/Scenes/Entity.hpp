@@ -134,7 +134,7 @@ public:
 
 	const std::string &GetName() const { return m_name; }
 	void SetName(const std::string &name) { m_name = name; }
-	
+
 	bool IsRemoved() const { return m_removed; }
 	void SetRemoved(bool removed) { m_removed = removed; }
 

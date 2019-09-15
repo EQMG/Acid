@@ -59,11 +59,7 @@ void Mouse::Update() {
 }
 
 void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot) {
-	if (m_currentCursor &&m_currentCursor
-	->
-	first == filename && m_currentCursor->second == hotspot
-	)
-	{
+	if (m_currentCursor && m_currentCursor->first == filename && m_currentCursor->second == hotspot) {
 		return;
 	}
 

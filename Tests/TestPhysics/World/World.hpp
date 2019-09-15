@@ -22,7 +22,7 @@ public:
 	World();
 
 	void Update() override;
-	
+
 	float GetDayFactor() const;
 	float GetSunriseFactor() const;
 	float GetShadowFactor() const;

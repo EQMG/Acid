@@ -20,14 +20,14 @@ public:
 	 * @param extents The size (width, height, depth) to load from.
 	 * @return The cube model with the requested values.
 	 */
-	static std::shared_ptr<ModelCube> Create(const Vector3f &extents = {1.0f});
+	static std::shared_ptr<ModelCube> Create(const Vector3f &extents = Vector3f(1.0f));
 
 	/**
 	 * Creates a new cube model.
 	 * @param extents The size (width, height, depth) to load from.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCube#Load} can be called later.
 	 */
-	explicit ModelCube(const Vector3f &extents = {1.0f}, bool load = true);
+	explicit ModelCube(const Vector3f &extents = Vector3f(1.0f), bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelCube &model);
 	friend Node &operator<<(Node &node, const ModelCube &model);

@@ -12,45 +12,37 @@ public:
 	explicit UniformHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
 	template<typename T>
-	void Push(const T &object, std::size_t offset, std::size_t size)
-	{
-		if (!m_uniformBlock || !m_uniformBuffer)
-		{
+	void Push(const T &object, std::size_t offset, std::size_t size) {
+		if (!m_uniformBlock || !m_uniformBuffer) {
 			return;
 		}
 
-		if (!m_bound)
-		{
+		if (!m_bound) {
 			m_uniformBuffer->MapMemory(&m_data);
 			m_bound = true;
 		}
 
-		if (std::memcmp(static_cast<char *>(m_data), &object, size) != 0)
-		{
+		if (std::memcmp(static_cast<char *>(m_data), &object, size) != 0) {
 			std::memcpy(static_cast<char *>(m_data) + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
 	}
 
 	template<typename T>
-	void Push(const std::string &uniformName, const T &object, std::size_t size = 0)
-	{
-		if (!m_uniformBlock || !m_uniformBuffer)
-		{
+	void Push(const std::string &uniformName, const T &object, std::size_t size = 0) {
+		if (!m_uniformBlock || !m_uniformBuffer) {
 			return;
 		}
 
 		auto uniform = m_uniformBlock->GetUniform(uniformName);
 
-		if (!uniform)
-		{
+		if (!uniform) {
 			return;
 		}
 
 		auto realSize = size;
 
-		if (realSize == 0)
-		{
+		if (realSize == 0) {
 			realSize = std::min(sizeof(object), static_cast<std::size_t>(uniform->GetSize()));
 		}
 

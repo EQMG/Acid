@@ -28,7 +28,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename Rep = float>
-	static constexpr Time Seconds(const Rep & seconds) {
+	static constexpr Time Seconds(const Rep &seconds) {
 		return Time(std::chrono::duration<Rep>(seconds));
 	}
 
@@ -39,7 +39,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename Rep = int32_t>
-	static constexpr Time Milliseconds(const Rep & milliseconds) {
+	static constexpr Time Milliseconds(const Rep &milliseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
 	}
 
@@ -50,7 +50,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename Rep = int64_t>
-	static constexpr Time Microseconds(const Rep & microseconds) {
+	static constexpr Time Microseconds(const Rep &microseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
 	}
 

@@ -18,7 +18,7 @@ public:
 	 */
 	virtual void Start() {
 	}
-	
+
 	/**
 	 * Run when updating the entity this is attached to.
 	 */
@@ -36,7 +36,7 @@ public:
 	 * @return The entity this component is attached to.
 	 */
 	Entity *GetEntity() const { return m_entity; }
-	
+
 	/**
 	 * Sets the entity that this component is attached to.
 	 * @param entity The new entity this is attached to.

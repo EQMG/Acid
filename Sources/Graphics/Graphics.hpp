@@ -45,17 +45,17 @@ public:
 	 * @tparam T The Subrender type.
 	 * @return If the Subrender has the System.
 	 */
-	 /*template<typename T>
-	 bool HasSubrender() const
-	 {
-		 return m_subrenderHolder.Has<T>();
-	 }*/
+	/*template<typename T>
+	bool HasSubrender() const
+	{
+		return m_subrenderHolder.Has<T>();
+	}*/
 
-	 /**
-	  * Gets a Subrender.
-	  * @tparam T The Subrender type.
-	  * @return The Subrender.
-	  */
+	/**
+	 * Gets a Subrender.
+	 * @tparam T The Subrender type.
+	 * @return The Subrender.
+	 */
 	template<typename T>
 	T *GetSubrender() const {
 		return m_subrenderHolder.Get<T>();
@@ -88,7 +88,7 @@ public:
 	void ClearSubrenders() {
 		m_subrenderHolder.Clear();
 	}
-	
+
 	const std::shared_ptr<CommandPool> &GetCommandPool(const std::thread::id &threadId = std::this_thread::get_id());
 
 	/**

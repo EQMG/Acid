@@ -20,8 +20,7 @@ Audio::Audio() :
 	auto device = devices;
 	auto next = devices + 1;
 
-	while (device && *device != '\0' && next && *next != '\0')
-	{
+	while (device && *device != '\0' && next && *next != '\0') {
 		Log::Out("Audio Device: ", device, '\n');
 		auto len = std::strlen(device);
 		device += len + 1;

@@ -30,7 +30,7 @@ void SkyboxCycle::Update() {
 	} else {
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(Colour::Black);
-		materialSkybox->SetFogLimits({-1000000.0f});
+		materialSkybox->SetFogLimits(Vector3f(-1000000.0f));
 	}
 
 	auto transform = GetEntity()->GetComponent<Transform>();

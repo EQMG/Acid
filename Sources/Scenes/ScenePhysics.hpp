@@ -46,7 +46,7 @@ public:
 
 	const Vector3f &GetGravity() const { return m_gravity; }
 	void SetGravity(const Vector3f &gravity);
-	
+
 	float GetAirDensity() const { return m_airDensity; }
 	void SetAirDensity(float airDensity);
 

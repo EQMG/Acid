@@ -17,12 +17,12 @@ public:
 
 	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-			{ baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX }
+			{baseBinding, sizeof(VertexDefault), VK_VERTEX_INPUT_RATE_VERTEX}
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			{ 0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_position) },
-			{ 1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv) },
-			{ 2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal) }
+			{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_position)},
+			{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexDefault, m_uv)},
+			{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexDefault, m_normal)}
 		};
 		return {bindingDescriptions, attributeDescriptions};
 	}
