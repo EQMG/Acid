@@ -3,13 +3,15 @@
 #include "Maths/Vector3.hpp"
 #include "Scenes/Component.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Component interface that defines a emitter volume.
  */
-class ACID_EXPORT Emitter :
-	public Component
+class ACID_EXPORT
+Emitter
+:
+public
+Component
 {
 public:
 	virtual ~Emitter() = default;

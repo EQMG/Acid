@@ -3,9 +3,9 @@
 #include <vulkan/vulkan.h>
 #include "StdAfx.hpp"
 
-namespace acid
-{
-class ACID_EXPORT OffsetSize
+namespace acid {
+class ACID_EXPORT
+OffsetSize
 {
 public:
 	OffsetSize(uint32_t offset, uint32_t size) :
@@ -33,7 +33,8 @@ private:
 	uint32_t m_size;
 };
 
-class ACID_EXPORT WriteDescriptorSet
+class ACID_EXPORT
+WriteDescriptorSet
 {
 public:
 	WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :
@@ -58,7 +59,8 @@ private:
 	std::unique_ptr<VkDescriptorBufferInfo> m_bufferInfo;
 };
 
-class ACID_EXPORT Descriptor
+class ACID_EXPORT
+Descriptor
 {
 public:
 	virtual WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const = 0;

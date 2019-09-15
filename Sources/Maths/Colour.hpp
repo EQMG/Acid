@@ -3,12 +3,12 @@
 #include "Serialized/Node.hpp"
 #include "Maths.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Holds a RGBA colour.
  **/
-class ACID_EXPORT Colour
+class ACID_EXPORT
+Colour
 {
 public:
 	/**
@@ -189,13 +189,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::Colour>
-{
-	size_t operator()(const acid::Colour &colour) const
-	{
+struct hash<acid::Colour> {
+	size_t operator()(const acid::Colour &colour) const {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, colour.m_r);
 		acid::Maths::HashCombine(seed, colour.m_g);

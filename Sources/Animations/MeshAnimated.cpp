@@ -8,17 +8,13 @@
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 
-namespace acid
-{
+namespace acid {
 MeshAnimated::MeshAnimated(std::filesystem::path filename) :
-	m_filename(std::move(filename))
-{
+	m_filename(std::move(filename)) {
 }
 
-void MeshAnimated::Start()
-{
-	if (m_filename.empty())
-	{
+void MeshAnimated::Start() {
+	if (m_filename.empty()) {
 		return;
 	}
 
@@ -58,21 +54,18 @@ void MeshAnimated::Start()
 	}*/
 }
 
-void MeshAnimated::Update()
-{
+void MeshAnimated::Update() {
 	std::vector<Matrix4> jointMatrices(MaxJoints);
 	m_animator.Update(m_headJoint, jointMatrices);
 	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 }
 
-const Node &operator>>(const Node &node, MeshAnimated &meshAnimated)
-{
+const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {
 	node["filename"].Get(meshAnimated.m_filename);
 	return node;
 }
 
-Node &operator<<(Node &node, const MeshAnimated &meshAnimated)
-{
+Node &operator<<(Node &node, const MeshAnimated &meshAnimated) {
 	node["filename"].Set(meshAnimated.m_filename);
 	return node;
 }

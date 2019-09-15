@@ -6,16 +6,13 @@
 #include "Scenes/Scenes.hpp"
 #include "Particle.hpp"
 
-namespace acid
-{
+namespace acid {
 static const uint32_t MAX_INSTANCES = 1024;
 //static const uint32_t INSTANCE_STEPS = 128;
 static const float FRUSTUM_BUFFER = 1.4f;
 
-std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+std::shared_ptr<ParticleType> ParticleType::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ParticleType>(resource);
 	}
 
@@ -27,8 +24,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const Node &node)
 }
 
 std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d> &image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength,
-	float stageCycles, float scale)
-{
+	float stageCycles, float scale) {
 	ParticleType temp(image, numberOfRows, colourOffset, lifeLength, stageCycles, scale);
 	Node node;
 	node << temp;
@@ -44,35 +40,29 @@ ParticleType::ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows
 	m_lifeLength(lifeLength),
 	m_stageCycles(stageCycles),
 	m_scale(scale),
-	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
-{
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES) {
 }
 
-void ParticleType::Update(const std::vector<Particle> &particles)
-{
+void ParticleType::Update(const std::vector<Particle> &particles) {
 	// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
 	//uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(particles.size()) / static_cast<float>(INSTANCE_STEPS)));
 	//m_maxInstances = std::max(m_maxInstances, instances);
 	m_maxInstances = MAX_INSTANCES;
 	m_instances = 0;
 
-	if (particles.empty())
-	{
+	if (particles.empty()) {
 		return;
 	}
 
 	Instance *instances;
 	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
-	for (const auto &particle : particles)
-	{
-		if (m_instances >= m_maxInstances)
-		{
+	for (const auto &particle : particles) {
+		if (m_instances >= m_maxInstances) {
 			break;
 		}
 
-		if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale()))
-		{
+		if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale())) {
 			continue;
 		}
 
@@ -80,10 +70,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 		auto instance = &instances[m_instances];
 		instance->m_modelMatrix = Matrix4().Translate(particle.GetPosition());
 
-		for (uint32_t row = 0; row < 3; row++)
-		{
-			for (uint32_t col = 0; col < 3; col++)
-			{
+		for (uint32_t row = 0; row < 3; row++) {
+			for (uint32_t col = 0; col < 3; col++) {
 				instance->m_modelMatrix[row][col] = viewMatrix[col][row];
 			}
 		}
@@ -101,10 +89,8 @@ void ParticleType::Update(const std::vector<Particle> &particles)
 	m_instanceBuffer.UnmapMemory();
 }
 
-bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
-{
-	if (m_instances == 0)
-	{
+bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene) {
+	if (m_instances == 0) {
 		return false;
 	}
 
@@ -112,8 +98,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	m_descriptorSet.Push("UniformScene", uniformScene);
 	m_descriptorSet.Push("samplerColour", m_image);
 
-	if (!m_descriptorSet.Update(pipeline))
-	{
+	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
 	}
 
@@ -128,8 +113,7 @@ bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return true;
 }
 
-const Node &operator>>(const Node &node, ParticleType &particleType)
-{
+const Node &operator>>(const Node &node, ParticleType &particleType) {
 	node["image"].Get(particleType.m_image);
 	node["numberOfRows"].Get(particleType.m_numberOfRows);
 	node["colourOffset"].Get(particleType.m_colourOffset);
@@ -139,8 +123,7 @@ const Node &operator>>(const Node &node, ParticleType &particleType)
 	return node;
 }
 
-Node &operator<<(Node &node, const ParticleType &particleType)
-{
+Node &operator<<(Node &node, const ParticleType &particleType) {
 	node["image"].Set(particleType.m_image);
 	node["numberOfRows"].Set(particleType.m_numberOfRows);
 	node["colourOffset"].Set(particleType.m_colourOffset);

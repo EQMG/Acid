@@ -11,8 +11,7 @@ layout(location = 0) in vec2 inUV;
 const float gamma = 2.0f;
 const float inverseGamma = 1.0f / gamma;
 
-vec3 uncharted2(vec3 hdr)
-{
+vec3 uncharted2(vec3 hdr) {
 	float A = 0.15f;
 	float B = 0.50f;
 	float C = 0.10f;
@@ -22,8 +21,7 @@ vec3 uncharted2(vec3 hdr)
 	return ((hdr * (A * hdr + C * B) + D * E) / (hdr * (A * hdr + B) + D * F)) - E / F;
 }
 
-void main() 
-{
+void main() {
 	vec3 textureColour = texture(samplerColour, inUV).rgb;
 	vec4 colour = vec4(pow(uncharted2(textureColour), vec3(inverseGamma)), 1.0f);
 	

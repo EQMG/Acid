@@ -2,8 +2,7 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
 class Vector2;
 
@@ -15,20 +14,19 @@ class Vector4;
  * @tparam T The value type.
  */
 template<typename T>
-class Vector3
-{
+class Vector3 {
 public:
 	/**
 	 * Constructor for Vector3.
 	 **/
 	constexpr Vector3() = default;
-	
+
 	/**
 	 * Constructor for Vector3.
 	 * @param a The value to set all components to.
 	 **/
 	constexpr Vector3(const T &a);
-	
+
 	/**
 	 * Constructor for Vector3.
 	 * @param x Start x.
@@ -58,7 +56,7 @@ public:
 	 **/
 	template<typename K, typename J = T>
 	explicit constexpr Vector3(const Vector2<K> &source, const J &z = 0);
-	
+
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
@@ -66,7 +64,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr Vector3(const Vector3<K> &source);
-	
+
 	/**
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
@@ -74,7 +72,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr Vector3(const Vector4<K> &source);
-	
+
 	/**
 	 * Adds this vector to another vector.
 	 * @tparam K The others type.
@@ -83,7 +81,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Add(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Subtracts this vector to another vector.
 	 * @tparam K The others type.
@@ -92,7 +90,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Subtract(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Multiplies this vector with another vector.
 	 * @tparam K The others type.
@@ -101,7 +99,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Multiply(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Divides this vector by another vector.
 	 * @tparam K The others type.
@@ -110,7 +108,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Divide(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Calculates the angle between this vector and another vector.
 	 * @tparam K The others type.
@@ -119,7 +117,7 @@ public:
 	 **/
 	template<typename K>
 	auto Angle(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Calculates the dot product of the this vector and another vector.
 	 * @tparam K The others type.
@@ -128,7 +126,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Dot(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Calculates the cross product of the this vector and another vector.
 	 * @tparam K The others type.
@@ -137,7 +135,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Cross(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Calculates the linear interpolation between this vector and another vector.
 	 * @tparam K The others type.
@@ -148,7 +146,7 @@ public:
 	 **/
 	template<typename K, typename J = float>
 	constexpr auto Lerp(const Vector3<K> &other, const J &progression) const;
-	
+
 	/**
 	 * Scales this vector by a scalar.
 	 * @tparam K The scalar type.
@@ -157,7 +155,7 @@ public:
 	 **/
 	template<typename K = float>
 	constexpr auto Scale(const K &scalar) const;
-	
+
 	/**
 	 * Rotates this vector by a angle around the origin.
 	 * @tparam K The rotations type.
@@ -166,19 +164,19 @@ public:
 	 **/
 	//template<typename K = float>
 	//auto Rotate(const Vector3<K> &angle) const; 
-	
+
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
 	 **/
 	auto Normalize() const;
-	
+
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared.
 	 **/
 	constexpr auto LengthSquared() const;
-	
+
 	/**
 	 * Gets the length of this vector.
 	 * @return The length.
@@ -196,19 +194,19 @@ public:
 	 * @return The minimal components.
 	 **/
 	constexpr auto Min() const;
-	
+
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components.
 	 **/
 	constexpr auto Max() const;
-	
+
 	/**
 	 * Gets the minimal and maximal values in the vector.
 	 * @return The minimal and maximal components.
 	 */
 	constexpr auto MinMax() const;
-	
+
 	/**
 	 * Gets the lowest vector size between this vector and other.
 	 * @tparam K The others type.
@@ -217,7 +215,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Min(const Vector3<K> &other);
-	
+
 	/**
 	 * Gets the maximum vector size between this vector and other.
 	 * @tparam K The others type.
@@ -226,7 +224,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto Max(const Vector3<K> &other);
-	
+
 	/**
 	 * Gets the distance between this vector and another vector.
 	 * @tparam K The others type.
@@ -235,7 +233,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto DistanceSquared(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Gets the between this vector and another vector.
 	 * @tparam K The others type.
@@ -244,7 +242,7 @@ public:
 	 **/
 	template<typename K>
 	auto Distance(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Gets the vector distance between this vector and another vector.
 	 * @tparam K The others type.
@@ -253,7 +251,7 @@ public:
 	 **/
 	template<typename K>
 	constexpr auto DistanceVector(const Vector3<K> &other) const;
-	
+
 	/**
 	 * Gradually changes this vector to a target.
 	 * @param target The target vector.
@@ -262,13 +260,13 @@ public:
 	 **/
 	template<typename K, typename J>
 	constexpr auto SmoothDamp(const Vector3<K> &target, const Vector3<J> &rate) const;
-	
+
 	/**
 	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
 	 * @return The polar coordinates (radius, theta).
 	 **/
 	auto CartesianToPolar() const;
-	
+
 	/**
 	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
 	 * @return The cartesian coordinates (x, y).
@@ -311,16 +309,26 @@ public:
 
 	constexpr Vector3 &operator/=(const T &other);
 
-	ACID_EXPORT static const Vector3 Zero;
-	ACID_EXPORT static const Vector3 One;
-	ACID_EXPORT static const Vector3 Left;
-	ACID_EXPORT static const Vector3 Right;
-	ACID_EXPORT static const Vector3 Up;
-	ACID_EXPORT static const Vector3 Down;
-	ACID_EXPORT static const Vector3 Front;
-	ACID_EXPORT static const Vector3 Back;
-	ACID_EXPORT static const Vector3 PositiveInfinity;
-	ACID_EXPORT static const Vector3 NegativeInfinity;
+	ACID_EXPORT
+	static const Vector3 Zero;
+	ACID_EXPORT
+	static const Vector3 One;
+	ACID_EXPORT
+	static const Vector3 Left;
+	ACID_EXPORT
+	static const Vector3 Right;
+	ACID_EXPORT
+	static const Vector3 Up;
+	ACID_EXPORT
+	static const Vector3 Down;
+	ACID_EXPORT
+	static const Vector3 Front;
+	ACID_EXPORT
+	static const Vector3 Back;
+	ACID_EXPORT
+	static const Vector3 PositiveInfinity;
+	ACID_EXPORT
+	static const Vector3 NegativeInfinity;
 
 	T m_x = 0, m_y = 0, m_z = 0;
 };

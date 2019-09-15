@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a cylinder model.
  */
-class ACID_EXPORT ModelCylinder :
-	public Model
+class ACID_EXPORT
+ModelCylinder
+:
+public
+Model
 {
 public:
 	/**

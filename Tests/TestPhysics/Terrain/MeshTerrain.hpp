@@ -6,11 +6,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class MeshTerrain :
-	public MeshSimple
-{
+	public MeshSimple {
 public:
 	MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale);
 

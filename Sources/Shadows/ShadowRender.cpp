@@ -5,26 +5,20 @@
 #include "Scenes/Entity.hpp"
 #include "Shadows.hpp"
 
-namespace acid
-{
-ShadowRender::ShadowRender()
-{
+namespace acid {
+ShadowRender::ShadowRender() {
 }
 
-void ShadowRender::Start()
-{
+void ShadowRender::Start() {
 }
 
-void ShadowRender::Update()
-{
+void ShadowRender::Update() {
 }
 
-bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
-{
+bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (!transform)
-	{
+	if (!transform) {
 		return false;
 	}
 
@@ -34,16 +28,14 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	// Gets required components.
 	auto mesh = GetEntity()->GetComponent<Mesh>();
 
-	if (!mesh || !mesh->GetModel())
-	{
+	if (!mesh || !mesh->GetModel()) {
 		return false;
 	}
 
 	// Updates descriptors.
 	m_descriptorSet.Push("PushObject", m_pushObject);
 
-	if (!m_descriptorSet.Update(pipeline))
-	{
+	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
 	}
 
@@ -53,13 +45,11 @@ bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineG
 	return mesh->GetModel()->CmdRender(commandBuffer);
 }
 
-const Node &operator>>(const Node &node, ShadowRender &shadowRender)
-{
+const Node &operator>>(const Node &node, ShadowRender &shadowRender) {
 	return node;
 }
 
-Node &operator<<(Node &node, const ShadowRender &shadowRender)
-{
+Node &operator<<(Node &node, const ShadowRender &shadowRender) {
 	return node;
 }
 }

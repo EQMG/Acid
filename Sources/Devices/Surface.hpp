@@ -3,12 +3,12 @@
 #include <vulkan/vulkan.h>
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 class Instance;
 class PhysicalDevice;
 
-class ACID_EXPORT Surface
+class ACID_EXPORT
+Surface
 {
 	friend class Graphics;
 public:

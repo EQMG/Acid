@@ -6,10 +6,12 @@
 #include "Inputs/InputDelay.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputText :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputText
+:
+public
+UiObject
 {
 public:
 	UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength,

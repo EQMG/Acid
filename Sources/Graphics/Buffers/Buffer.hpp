@@ -3,12 +3,12 @@
 #include <vulkan/vulkan.h>
 #include "Graphics/Descriptors/DescriptorSet.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Interface that represents a buffer.
  */
-class ACID_EXPORT Buffer
+class ACID_EXPORT
+Buffer
 {
 public:
 	enum class Status

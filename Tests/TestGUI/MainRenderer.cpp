@@ -6,10 +6,8 @@
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 
-namespace test
-{
-MainRenderer::MainRenderer()
-{
+namespace test {
+MainRenderer::MainRenderer() {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
 	std::vector<Attachment> renderpassAttachments0 = {
@@ -28,8 +26,7 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->AddSubrender<SubrenderFonts2>({0, 0});
 }
 
-void MainRenderer::Update()
-{
+void MainRenderer::Update() {
 	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
 	//renderpassCreate0->GetViewport().SetScale(0.8f);
 }

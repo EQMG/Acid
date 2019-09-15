@@ -4,12 +4,12 @@
 
 using namespace std::chrono_literals;
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a time value stored in microseconds.
  */
-class ACID_EXPORT Time
+class ACID_EXPORT
+Time
 {
 public:
 	constexpr Time() = default;

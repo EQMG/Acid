@@ -26,12 +26,12 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that can generate 2D, 3D and 4D noise values.
  */
-class ACID_EXPORT Noise
+class ACID_EXPORT
+Noise
 {
 public:
 	enum class Type

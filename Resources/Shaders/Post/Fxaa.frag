@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
-{
+layout(push_constant) uniform PushScene {
 	float spanMax;
 } scene;
 
@@ -16,8 +15,7 @@ layout(location = 0) in vec2 inUV;
 const float reduceMin = 1.0f / 128.0f;
 const float reduceMul = 1.0f / 8.0f;
 
-void main() 
-{
+void main() {
 	ivec2 originalSize = textureSize(samplerColour, 0);
 	vec2 resolution = vec2(originalSize.x, originalSize.y);
 
@@ -54,12 +52,9 @@ void main()
 
   	vec4 colour;
 
-	if ((lumaB < lumaMin) || (lumaB > lumaMax)) 
-	{
+	if ((lumaB < lumaMin) || (lumaB > lumaMax)) {
 		colour = vec4(rgbA, 1.0f);
-	} 
-	else
-	{
+	} else {
 		colour = vec4(rgbB, 1.0f);
 	}
 	

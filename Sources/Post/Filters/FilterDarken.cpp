@@ -1,15 +1,12 @@
 #include "FilterDarken.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterDarken::FilterDarken(const Pipeline::Stage &pipelineStage, float factor) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Darken.frag" }),
-	m_factor(factor)
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Darken.frag"}),
+	m_factor(factor) {
 }
 
-void FilterDarken::Render(const CommandBuffer &commandBuffer)
-{
+void FilterDarken::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("factor", m_factor);
 
@@ -17,8 +14,7 @@ void FilterDarken::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

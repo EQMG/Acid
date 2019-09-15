@@ -3,13 +3,15 @@
 #include "Models/Model.hpp"
 #include "Graphics/Images/Image2d.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a GLTF model.
  */
-class ACID_EXPORT ModelGltf :
-	public Model
+class ACID_EXPORT
+ModelGltf
+:
+public
+Model
 {
 public:
 	/**

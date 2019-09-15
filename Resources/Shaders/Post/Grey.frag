@@ -8,8 +8,7 @@ layout(binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUV;
 
-void main() 
-{
+void main() {
 	vec3 textureColour = texture(samplerColour, inUV).rgb;
 	float grey = dot(textureColour, vec3(0.299f, 0.587f, 0.114f));
 	colour = vec4(grey, grey, grey, 1.0f);

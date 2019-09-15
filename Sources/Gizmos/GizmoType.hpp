@@ -9,15 +9,17 @@
 #include "Resources/Resource.hpp"
 #include "Serialized/Node.hpp"
 
-namespace acid
-{
+namespace acid {
 class Gizmo;
 
 /**
  * @brief Resource that represents a gizmo type.
  */
-class ACID_EXPORT GizmoType :
-	public Resource
+class ACID_EXPORT
+GizmoType
+:
+public
+Resource
 {
 public:
 	class Instance

@@ -5,13 +5,15 @@
 #include "Graphics/Images/Image2d.hpp"
 #include "Material.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents the default material shader.
  */
-class ACID_EXPORT MaterialDefault :
-	public Material
+class ACID_EXPORT
+MaterialDefault
+:
+public
+Material
 {
 public:
 	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,

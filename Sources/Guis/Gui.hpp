@@ -9,13 +9,15 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a image UI.
  */
-class ACID_EXPORT Gui :
-	public UiObject
+class ACID_EXPORT
+Gui
+:
+public
+UiObject
 {
 public:
 	/**

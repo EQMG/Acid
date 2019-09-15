@@ -2,16 +2,14 @@
 
 #include "Driver.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A driver that fades from start to end.
  * @tparam T The type to be driven.
  **/
 template<typename T>
 class DriverFade :
-	public Driver<T>
-{
+	public Driver<T> {
 public:
 	/**
 	 * Creates a new fade driver.
@@ -24,9 +22,7 @@ public:
 		Driver<T>(length),
 		m_start(start),
 		m_end(end),
-		m_peak(peak)
-	{
-	}
+		m_peak(peak) { }
 
 	/**
 	 * Gets the start interval.
@@ -65,15 +61,12 @@ public:
 	void SetPeak(const T &peak) { m_peak = peak; }
 
 protected:
-	T Calculate(float factor) override
-	{
-		if (factor < m_start)
-		{
+	T Calculate(float factor) override {
+		if (factor < m_start) {
 			return factor / m_start * m_peak;
 		}
 
-		if (factor > m_end)
-		{
+		if (factor > m_end) {
 			return (1.0f - (factor - m_end) / (1.0f - m_end)) * m_peak;
 		}
 

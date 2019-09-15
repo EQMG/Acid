@@ -4,7 +4,6 @@
 
 layout(location = 0) out vec4 outShadow;
 
-void main()
-{
+void main() {
 	outShadow = vec4(1.0f);
 }

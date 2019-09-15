@@ -2,32 +2,27 @@
 
 #include "Animations/MeshAnimated.hpp"
 
-namespace acid
-{
+namespace acid {
 SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
 	m_boneOrder(std::move(boneOrder)),
-	m_correction(correction)
-{
+	m_correction(correction) {
 	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
 	auto headNode = m_armatureData->FindChild("node");
 	m_headJoint = LoadJointData(headNode, true);
 	m_headJoint.CalculateInverseBindTransform({});
 }
 
-Joint SkeletonLoader::LoadJointData(const Node *jointNode, bool isRoot)
-{
+Joint SkeletonLoader::LoadJointData(const Node *jointNode, bool isRoot) {
 	auto joint = ExtractMainJointData(jointNode, isRoot);
 
-	for (const auto &childNode : jointNode->FindChildren("node"))
-	{
+	for (const auto &childNode : jointNode->FindChildren("node")) {
 		joint.AddChild(LoadJointData(childNode, false));
 	}
 
 	return joint;
 }
 
-Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
-{
+Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot) {
 	auto nameId = *jointNode->FindAttribute("id");
 	auto index = GetBoneIndex(nameId);
 	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), ' ');
@@ -36,18 +31,15 @@ Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
 
 	Matrix4 transform;
 
-	for (int32_t row = 0; row < 4; row++)
-	{
-		for (int32_t col = 0; col < 4; col++)
-		{
+	for (int32_t row = 0; row < 4; row++) {
+		for (int32_t col = 0; col < 4; col++) {
 			transform[row][col] = String::From<float>(matrixData[row * 4 + col]);
 		}
 	}
-	
+
 	transform = transform.Transpose();
 
-	if (isRoot)
-	{
+	if (isRoot) {
 		transform = m_correction * transform;
 	}
 
@@ -55,12 +47,9 @@ Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot)
 	return {*index, nameId, transform};
 }
 
-std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name)
-{
-	for (uint32_t i = 0; i < m_boneOrder.size(); i++)
-	{
-		if (m_boneOrder[i] == name)
-		{
+std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name) {
+	for (uint32_t i = 0; i < m_boneOrder.size(); i++) {
+		if (m_boneOrder[i] == name) {
 			return i;
 		}
 	}

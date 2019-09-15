@@ -2,8 +2,7 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
 class Vector3;
 
@@ -12,8 +11,7 @@ class Vector3;
  * @tparam T The value type.
  */
 template<typename T>
-class Vector2
-{
+class Vector2 {
 public:
 	/**
 	 * Constructor for Vector2.
@@ -122,7 +120,7 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	constexpr auto Lerp(const Vector2<K> & other, const J & progression) const;
+	constexpr auto Lerp(const Vector2<K> &other, const J &progression) const;
 
 	/**
 	 * Scales this vector by a scalar.
@@ -131,7 +129,7 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	constexpr auto Scale(const K & scalar) const;
+	constexpr auto Scale(const K &scalar) const;
 
 	/**
 	 * Rotates this vector by a angle around the origin.
@@ -140,7 +138,7 @@ public:
 	 * @return The rotated vector.
 	 **/
 	template<typename K = float>
-	auto Rotate(const K & angle) const;
+	auto Rotate(const K &angle) const;
 
 	/**
 	 * Rotates this vector by a angle around a rotation axis.
@@ -308,14 +306,22 @@ public:
 
 	constexpr Vector2 &operator/=(const T &other);
 
-	ACID_EXPORT static const Vector2 Zero;
-	ACID_EXPORT static const Vector2 One;
-	ACID_EXPORT static const Vector2 Left;
-	ACID_EXPORT static const Vector2 Right;
-	ACID_EXPORT static const Vector2 Up;
-	ACID_EXPORT static const Vector2 Down;
-	ACID_EXPORT static const Vector2 PositiveInfinity;
-	ACID_EXPORT static const Vector2 NegativeInfinity;
+	ACID_EXPORT
+	static const Vector2 Zero;
+	ACID_EXPORT
+	static const Vector2 One;
+	ACID_EXPORT
+	static const Vector2 Left;
+	ACID_EXPORT
+	static const Vector2 Right;
+	ACID_EXPORT
+	static const Vector2 Up;
+	ACID_EXPORT
+	static const Vector2 Down;
+	ACID_EXPORT
+	static const Vector2 PositiveInfinity;
+	ACID_EXPORT
+	static const Vector2 NegativeInfinity;
 
 	T m_x = 0, m_y = 0;
 };

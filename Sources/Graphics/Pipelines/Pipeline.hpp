@@ -4,12 +4,12 @@
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Shader.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that is used to represent a pipeline.
  */
-class ACID_EXPORT Pipeline
+class ACID_EXPORT
+Pipeline
 {
 public:
 	/**

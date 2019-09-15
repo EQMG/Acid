@@ -4,14 +4,15 @@
 
 struct PHYSFS_File;
 
-namespace acid
-{
-enum class FileMode
-{
-	Read, Write, Append
+namespace acid {
+enum class FileMode {
+	Read,
+	Write,
+	Append
 };
 
-class ACID_EXPORT BaseFStream
+class ACID_EXPORT
+BaseFStream
 {
 protected:
 	PHYSFS_File *file;
@@ -23,9 +24,14 @@ public:
 	size_t length();
 };
 
-class ACID_EXPORT IFStream :
-	public BaseFStream,
-	public std::istream
+class ACID_EXPORT
+IFStream
+:
+public
+BaseFStream
+,
+public
+std::istream
 {
 public:
 	explicit IFStream(const std::filesystem::path &filename);
@@ -33,9 +39,14 @@ public:
 	virtual ~IFStream();
 };
 
-class ACID_EXPORT OFStream :
-	public BaseFStream,
-	public std::ostream
+class ACID_EXPORT
+OFStream
+:
+public
+BaseFStream
+,
+public
+std::ostream
 {
 public:
 	explicit OFStream(const std::filesystem::path &filename, const FileMode &writeMode = FileMode::Write);
@@ -43,9 +54,14 @@ public:
 	virtual ~OFStream();
 };
 
-class ACID_EXPORT FStream :
-	public BaseFStream,
-	public std::iostream
+class ACID_EXPORT
+FStream
+:
+public
+BaseFStream
+,
+public
+std::iostream
 {
 public:
 	explicit FStream(const std::filesystem::path &filename, const FileMode &openMode = FileMode::Read);
@@ -56,8 +72,11 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT Files :
-	public Module
+class ACID_EXPORT
+Files
+:
+public
+Module
 {
 public:
 	/**

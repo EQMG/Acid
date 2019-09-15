@@ -3,18 +3,17 @@
 #include <vulkan/vulkan.h>
 #include "Serialized/Node.hpp"
 
-namespace glslang
-{
+namespace glslang {
 class TProgram;
 class TType;
 }
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that loads and processes a shader, and provides a reflection.
  */
-class ACID_EXPORT Shader
+class ACID_EXPORT
+Shader
 {
 public:
 	/**
@@ -410,24 +409,21 @@ private:
 //REFLECT(VkVertexInputBindingDescription, {"binding", object.binding}, {"stride", object.stride}, {"inputRate", object.inputRate})
 //REFLECT(VkVertexInputAttributeDescription, {"location", object.location}, {"binding", object.binding}, {"format", object.format}, {"offset", object.offset})
 
-inline const Node &operator>>(const Node &node, VkVertexInputBindingDescription &bindingDescription)
-{
+inline const Node &operator>>(const Node &node, VkVertexInputBindingDescription &bindingDescription) {
 	node["binding"].Get(bindingDescription.binding);
 	node["stride"].Get(bindingDescription.stride);
 	node["inputRate"].Get(bindingDescription.inputRate);
 	return node;
 }
 
-inline Node &operator<<(Node &node, const VkVertexInputBindingDescription &bindingDescription)
-{
+inline Node &operator<<(Node &node, const VkVertexInputBindingDescription &bindingDescription) {
 	node["binding"].Set(bindingDescription.binding);
 	node["stride"].Set(bindingDescription.stride);
 	node["inputRate"].Set(bindingDescription.inputRate);
 	return node;
 }
 
-inline const Node &operator>>(const Node &node, VkVertexInputAttributeDescription &attributeDescription)
-{
+inline const Node &operator>>(const Node &node, VkVertexInputAttributeDescription &attributeDescription) {
 	node["location"].Get(attributeDescription.location);
 	node["binding"].Get(attributeDescription.binding);
 	node["format"].Get(attributeDescription.format);
@@ -435,8 +431,7 @@ inline const Node &operator>>(const Node &node, VkVertexInputAttributeDescriptio
 	return node;
 }
 
-inline Node &operator<<(Node &node, const VkVertexInputAttributeDescription &attributeDescription)
-{
+inline Node &operator<<(Node &node, const VkVertexInputAttributeDescription &attributeDescription) {
 	node["location"].Set(attributeDescription.location);
 	node["binding"].Set(attributeDescription.binding);
 	node["format"].Set(attributeDescription.format);

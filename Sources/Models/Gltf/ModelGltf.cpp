@@ -9,12 +9,9 @@
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelGltf>(resource);
 	}
 
@@ -25,8 +22,7 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filename)
-{
+std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filename) {
 	ModelGltf temp(filename, false);
 	Node node;
 	node << temp;
@@ -34,31 +30,25 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filena
 }
 
 ModelGltf::ModelGltf(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename))
-{
-	if (load)
-	{
+	m_filename(std::move(filename)) {
+	if (load) {
 		Load();
 	}
 }
 
-const Node &operator>>(const Node &node, ModelGltf &model)
-{
+const Node &operator>>(const Node &node, ModelGltf &model) {
 	node["filename"].Get(model.m_filename);
 	return node;
 }
 
-Node &operator<<(Node &node, const ModelGltf &model)
-{
+Node &operator<<(Node &node, const ModelGltf &model) {
 	node["type"].Set("ModelGltf");
 	node["filename"].Set(model.m_filename);
 	return node;
 }
 
-void ModelGltf::Load()
-{
-	if (m_filename.empty())
-	{
+void ModelGltf::Load() {
+	if (m_filename.empty()) {
 		return;
 	}
 
@@ -69,8 +59,7 @@ void ModelGltf::Load()
 	auto folder = m_filename.parent_path();
 	auto fileLoaded = Files::Read(m_filename);
 
-	if (!fileLoaded)
-	{
+	if (!fileLoaded) {
 		Log::Error("GLTF file could not be loaded: ", m_filename, '\n');
 		return;
 	}
@@ -79,17 +68,12 @@ void ModelGltf::Load()
 	tinygltf::TinyGLTF gltfContext;
 	std::string warn, err;
 
-	if (m_filename.extension() == ".glb")
-	{
-		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size())))
-		{
+	if (m_filename.extension() == ".glb") {
+		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()))) {
 			throw std::runtime_error(warn + err);
 		}
-	}
-	else
-	{
-		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder.string()))
-		{
+	} else {
+		if (!gltfContext.LoadASCIIFromString(&gltfModel, &err, &warn, fileLoaded->c_str(), static_cast<uint32_t>(fileLoaded->size()), folder.string())) {
 			throw std::runtime_error(warn + err);
 		}
 	}

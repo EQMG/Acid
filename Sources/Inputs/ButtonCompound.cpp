@@ -1,7 +1,6 @@
 #include "ButtonCompound.hpp"
 
-namespace acid
-{
+namespace acid {
 /*ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd) :
 	m_buttons(std::move(buttons)),
 	m_useAnd(useAnd)
@@ -9,17 +8,13 @@ namespace acid
 	ConnectButtons();
 }*/
 
-bool ButtonCompound::IsDown() const
-{
-	for (const auto &button : m_buttons)
-	{
-		if (m_useAnd && !button->IsDown())
-		{
+bool ButtonCompound::IsDown() const {
+	for (const auto &button : m_buttons) {
+		if (m_useAnd && !button->IsDown()) {
 			return false;
 		}
 
-		if (!m_useAnd && button->IsDown())
-		{
+		if (!m_useAnd && button->IsDown()) {
 			return true;
 		}
 	}
@@ -27,25 +22,18 @@ bool ButtonCompound::IsDown() const
 	return m_useAnd;
 }
 
-void ButtonCompound::ConnectButtons()
-{
-	for (auto &button : m_buttons)
-	{
-		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-		{
+void ButtonCompound::ConnectButtons() {
+	for (auto &button : m_buttons) {
+		button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 			auto isDown = IsDown();
 
-			if (!m_lastDown && isDown)
-			{
+			if (!m_lastDown && isDown) {
 				m_lastDown = true;
 				m_onButton(InputAction::Press, 0);
-			}
-			else if (m_lastDown && !isDown)
-			{
+			} else if (m_lastDown && !isDown) {
 				m_lastDown = false;
 				m_onButton(InputAction::Release, 0);
-			}
-			else if (m_lastDown && isDown) // TODO: This will be sent for every button, only count one per cycle.
+			} else if (m_lastDown &&isDown) // TODO: This will be sent for every button, only count one per cycle.
 			{
 				m_onButton(InputAction::Repeat, 0);
 			}

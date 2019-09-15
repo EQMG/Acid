@@ -3,9 +3,9 @@
 #include "Serialized/Node.hpp"
 #include "Joint.hpp"
 
-namespace acid
-{
-class ACID_EXPORT SkeletonLoader
+namespace acid {
+class ACID_EXPORT
+SkeletonLoader
 {
 public:
 	SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);

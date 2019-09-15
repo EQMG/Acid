@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterVignette :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterVignette
+:
+public
+PostFilter
 {
 public:
 	explicit FilterVignette(const Pipeline::Stage &pipelineStage, float innerRadius = 0.15f, float outerRadius = 1.35f, float opacity = 0.85f);

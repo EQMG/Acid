@@ -3,14 +3,18 @@
 #include "Helpers/NonCopyable.hpp"
 #include "Button.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Combines multiple button inputs into a single button.
  */
-class ACID_EXPORT ButtonCompound :
-	public Button,
-	public NonCopyable
+class ACID_EXPORT
+ButtonCompound
+:
+public
+Button
+,
+public
+NonCopyable
 {
 public:
 	/**

@@ -6,10 +6,12 @@
 #include "Animations/Skin/VertexWeights.hpp"
 #include "VertexAnimated.hpp"
 
-namespace acid
-{
-class ACID_EXPORT GeometryLoader :
-	public NonCopyable
+namespace acid {
+class ACID_EXPORT
+GeometryLoader
+:
+public
+NonCopyable
 {
 public:
 	GeometryLoader(const Node *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);

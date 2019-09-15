@@ -4,9 +4,9 @@
 #include "Helpers/Reference.hpp"
 #include "StdAfx.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Swapchain
+namespace acid {
+class ACID_EXPORT
+Swapchain
 {
 public:
 	explicit Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain = {});

@@ -3,41 +3,31 @@
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"
 
-namespace acid
-{
-std::shared_ptr<Model> Model::Create(const Node &node)
-{
+namespace acid {
+std::shared_ptr<Model> Model::Create(const Node &node) {
 	return Scenes::Get()->GetModelRegister().Create(node);
 }
 
-std::shared_ptr<Model> Model::Create(const std::filesystem::path &filename)
-{
+std::shared_ptr<Model> Model::Create(const std::filesystem::path &filename) {
 	return Scenes::Get()->GetModelRegister().Create(filename);
 }
 
-Model::Model()
-{
+Model::Model() {
 }
 
-bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const
-{
-	if (m_vertexBuffer && m_indexBuffer)
-	{
+bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const {
+	if (m_vertexBuffer &&m_indexBuffer) {
 		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};
 		VkDeviceSize offsets[1] = {0};
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 		vkCmdBindIndexBuffer(commandBuffer, m_indexBuffer->GetBuffer(), 0, GetIndexType());
 		vkCmdDrawIndexed(commandBuffer, m_indexCount, instances, 0, 0, 0);
-	}
-	else if (m_vertexBuffer && !m_indexBuffer)
-	{
+	} else if (m_vertexBuffer && !m_indexBuffer) {
 		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};
 		VkDeviceSize offsets[1] = {0};
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 		vkCmdDraw(commandBuffer, m_vertexCount, instances, 0, 0);
-	}
-	else
-	{
+	} else {
 		//throw std::runtime_error("Model with no buffers can't be rendered");
 		return false;
 	}
@@ -45,8 +35,7 @@ bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) co
 	return true;
 }
 
-std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
-{
+std::vector<uint32_t> Model::GetIndices(std::size_t offset) const {
 	Buffer indexStaging(m_indexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -64,8 +53,7 @@ std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
 
 	auto sizeOfSrcT = indexStaging.GetSize() / m_indexCount;
 
-	for (uint32_t i = 0; i < m_indexCount; i++)
-	{
+	for (uint32_t i = 0; i < m_indexCount; i++) {
 		std::memcpy(&indices[i], static_cast<char *>(indicesMemory) + (i * sizeOfSrcT) + offset, sizeof(uint32_t));
 	}
 
@@ -73,13 +61,11 @@ std::vector<uint32_t> Model::GetIndices(std::size_t offset) const
 	return indices;
 }
 
-void Model::SetIndices(const std::vector<uint32_t> &indices)
-{
+void Model::SetIndices(const std::vector<uint32_t> &indices) {
 	m_indexBuffer = nullptr;
 	m_indexCount = static_cast<uint32_t>(indices.size());
 
-	if (!indices.empty())
-	{
+	if (!indices.empty()) {
 		Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
 		m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
@@ -95,22 +81,21 @@ void Model::SetIndices(const std::vector<uint32_t> &indices)
 	}
 }
 
-std::vector<float> Model::GetPointCloud() const
-{
-	if (!m_vertexBuffer)
-	{
+std::vector<float> Model::GetPointCloud() const {
+	if (!m_vertexBuffer) {
 		return {};
 	}
 
 	// This assumes a Vector3f attribute is the first vertex attribute.
 	auto indices = GetIndices();
-	auto vertices = GetVertices<Vector3f>();
+	auto vertices = GetVertices < Vector3f > (
+	)
+	;
 
 	std::vector<float> pointCloud;
 	pointCloud.reserve(indices.size());
 
-	for (const auto &index : indices)
-	{
+	for (const auto &index : indices) {
 		auto vertex = vertices[index];
 		pointCloud.emplace_back(vertex.m_x);
 		pointCloud.emplace_back(vertex.m_y);
@@ -120,14 +105,12 @@ std::vector<float> Model::GetPointCloud() const
 	return pointCloud;
 }
 
-const Node &operator>>(const Node &node, Model &model)
-{
+const Node &operator>>(const Node &node, Model &model) {
 	// TODO: Virtual?
 	return node;
 }
 
-Node &operator<<(Node &node, const Model &model)
-{
+Node &operator<<(Node &node, const Model &model) {
 	// TODO: Virtual?
 	return node;
 }

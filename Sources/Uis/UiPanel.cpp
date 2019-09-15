@@ -2,8 +2,7 @@
 
 #include "Inputs/UiInputButton.hpp"
 
-namespace acid
-{
+namespace acid {
 static const Vector2i RESIZE_SIZE(16, 16);
 static const Vector2i PADDING(16, 16);
 
@@ -15,14 +14,12 @@ UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &c
 	m_manipulate(manipulate),
 	m_scrollX(this, ScrollBar::Horizontal, {UiMargins::None, {}, {-RESIZE_SIZE.m_x, 0}}),
 	m_scrollY(this, ScrollBar::Vertical, {UiMargins::None, {}, {0, -RESIZE_SIZE.m_y}}),
-	m_scrollBars(scrollBars)
-{
+	m_scrollBars(scrollBars) {
 	m_resizeHandle.SetCursorHover(CursorStandard::ResizeX);
 	m_resizeHandle.SetEnabled(m_manipulate & UiManipulate::Resize);
 }
 
-void UiPanel::UpdateObject()
-{
+void UiPanel::UpdateObject() {
 	auto contentSize = (m_max - m_min) / GetScreenTransform().GetSize();
 	m_scrollX.SetEnabled(m_scrollBars & ScrollBar::Horizontal && contentSize.m_x > 1.05f);
 	m_scrollY.SetEnabled(m_scrollBars & ScrollBar::Vertical && contentSize.m_y > 1.05f);
@@ -43,20 +40,17 @@ void UiPanel::UpdateObject()
 	SetScissor(&m_content, true);
 }
 
-void UiPanel::SetScissor(UiObject *object, bool checkSize)
-{
+void UiPanel::SetScissor(UiObject *object, bool checkSize) {
 	auto position = m_background.GetScreenTransform().GetPosition();
 	auto size = m_background.GetScreenTransform().GetSize();
 	object->SetScissor(Vector4f(position, size));
 
-	if (object->IsEnabled() && checkSize)
-	{
+	if (object->IsEnabled() && checkSize) {
 		m_min = m_min.Min(object->GetScreenTransform().GetPosition());
 		m_max = m_max.Max(object->GetScreenTransform().GetPosition() + object->GetScreenTransform().GetSize());
 	}
 
-	for (auto &child : object->GetChildren())
-	{
+	for (auto &child : object->GetChildren()) {
 		SetScissor(child, checkSize);
 	}
 }

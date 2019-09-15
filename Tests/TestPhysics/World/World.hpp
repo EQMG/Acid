@@ -7,14 +7,12 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 /**
  * Module used for managing the world.
  */
 class World :
-	public Module
-{
+	public Module {
 public:
 	/**
 	 * Gets the engines instance.

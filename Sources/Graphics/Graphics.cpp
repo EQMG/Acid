@@ -4,22 +4,19 @@
 #include "Devices/Window.hpp"
 #include "Subrender.hpp"
 
-namespace acid
-{
+namespace acid {
 Graphics::Graphics() :
 	m_elapsedPurge(5s),
 	m_instance(std::make_unique<Instance>()),
 	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
 	m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
-	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get()))
-{
+	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get())) {
 	glslang::InitializeProcess();
 
 	CreatePipelineCache();
 }
 
-Graphics::~Graphics()
-{
+Graphics::~Graphics() {
 	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
@@ -28,18 +25,15 @@ Graphics::~Graphics()
 
 	vkDestroyPipelineCache(*m_logicalDevice, m_pipelineCache, nullptr);
 
-	for (std::size_t i = 0; i < m_flightFences.size(); i++)
-	{
+	for (std::size_t i = 0; i < m_flightFences.size(); i++) {
 		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
 		vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
 	}
 }
 
-void Graphics::Update()
-{
-	if (!m_renderer || Window::Get()->IsIconified())
-	{
+void Graphics::Update() {
+	if (!m_renderer || Window::Get()->IsIconified()) {
 		return;
 	}
 
@@ -47,38 +41,32 @@ void Graphics::Update()
 
 	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
-	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-	{
-		VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
+		VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);
 		return;
 	}
 
-	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR)
-	{
+	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR) {
 		return;
 	}
 
 	Pipeline::Stage stage;
 
-	for (auto &renderStage : m_renderStages)
-	{
+	for (auto &renderStage : m_renderStages) {
 		renderStage->Update();
 
-		if (!StartRenderpass(*renderStage))
-		{
+		if (!StartRenderpass(*renderStage)) {
 			return;
 		}
 
-		for (const auto &subpass : renderStage->GetSubpasses())
-		{
+		for (const auto &subpass : renderStage->GetSubpasses()) {
 			stage.second = subpass.GetBinding();
 
 			// Renders subpass subrender pipelines.
 			m_subrenderHolder.RenderStage(stage, *m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
-			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding())
-			{
+			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding()) {
 				vkCmdNextSubpass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], VK_SUBPASS_CONTENTS_INLINE);
 			}
 		}
@@ -88,12 +76,9 @@ void Graphics::Update()
 	}
 
 	// Purges unused command pools.
-	if (m_elapsedPurge.GetElapsed() != 0)
-	{
-		for (auto it = m_commandPools.begin(); it != m_commandPools.end();)
-		{
-			if ((*it).second.use_count() <= 1)
-			{
+	if (m_elapsedPurge.GetElapsed() != 0) {
+		for (auto it = m_commandPools.begin(); it != m_commandPools.end();) {
+			if ((*it).second.use_count() <= 1) {
 				it = m_commandPools.erase(it);
 				continue;
 			}
@@ -103,10 +88,8 @@ void Graphics::Update()
 	}
 }
 
-std::string Graphics::StringifyResultVk(const VkResult &result)
-{
-	switch (result)
-	{
+std::string Graphics::StringifyResultVk(const VkResult &result) {
+	switch (result) {
 	case VK_SUCCESS:
 		return "Success";
 	case VK_NOT_READY:
@@ -143,8 +126,8 @@ std::string Graphics::StringifyResultVk(const VkResult &result)
 		return "A requested format is not supported on this device";
 	case VK_ERROR_SURFACE_LOST_KHR:
 		return "A surface is no longer available";
-	//case VK_ERROR_OUT_OF_POOL_MEMORY:
-	//	return "A allocation failed due to having no more space in the descriptor pool";
+		//case VK_ERROR_OUT_OF_POOL_MEMORY:
+		//	return "A allocation failed due to having no more space in the descriptor pool";
 	case VK_SUBOPTIMAL_KHR:
 		return "A swapchain no longer matches the surface properties exactly, but can still be used";
 	case VK_ERROR_OUT_OF_DATE_KHR:
@@ -160,10 +143,8 @@ std::string Graphics::StringifyResultVk(const VkResult &result)
 	}
 }
 
-void Graphics::CheckVk(const VkResult &result)
-{
-	if (result >= 0)
-	{
+void Graphics::CheckVk(const VkResult &result) {
+	if (result >= 0) {
 		return;
 	}
 
@@ -172,13 +153,11 @@ void Graphics::CheckVk(const VkResult &result)
 	throw std::runtime_error("Vulkan error: " + failure);
 }
 
-void Graphics::UpdateSurfaceCapabilities()
-{
+void Graphics::UpdateSurfaceCapabilities() {
 	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, *m_surface, &m_surface->m_capabilities));
 }
 
-void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
-{
+void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
@@ -218,27 +197,22 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const
 #endif
 }
 
-RenderStage *Graphics::GetRenderStage(uint32_t index) const
-{
-	if (m_renderStages.empty() || m_renderStages.size() < index)
-	{
+RenderStage *Graphics::GetRenderStage(uint32_t index) const {
+	if (m_renderStages.empty() || m_renderStages.size() < index) {
 		return nullptr;
 	}
 
 	return m_renderStages.at(index).get();
 }
 
-void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages)
-{
-	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages) {
+	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 
 	m_renderStages = std::move(renderStages);
 	m_swapchain = std::make_unique<Swapchain>(displayExtent);
 
-	if (m_flightFences.size() != m_swapchain->GetImageCount())
-	{
-		for (std::size_t i = 0; i < m_flightFences.size(); i++)
-		{
+	if (m_flightFences.size() != m_swapchain->GetImageCount()) {
+		for (std::size_t i = 0; i < m_flightFences.size(); i++) {
 			vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
 			vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
 			vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
@@ -256,8 +230,7 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-		for (std::size_t i = 0; i < m_flightFences.size(); i++)
-		{
+		for (std::size_t i = 0; i < m_flightFences.size(); i++) {
 			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
 
 			CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
@@ -268,32 +241,27 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		}
 	}
 
-	for (const auto &renderStage : m_renderStages)
-	{
+	for (const auto &renderStage : m_renderStages) {
 		renderStage->Rebuild(*m_swapchain);
 	}
 
 	RecreateAttachmentsMap();
 }
 
-const Descriptor *Graphics::GetAttachment(const std::string &name) const
-{
+const Descriptor *Graphics::GetAttachment(const std::string &name) const {
 	auto it = m_attachments.find(name);
 
-	if (it == m_attachments.end())
-	{
+	if (it == m_attachments.end()) {
 		return nullptr;
 	}
 
 	return it->second;
 }
 
-const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId)
-{
+const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId) {
 	auto it = m_commandPools.find(threadId);
 
-	if (it != m_commandPools.end())
-	{
+	if (it != m_commandPools.end()) {
 		return it->second;
 	}
 
@@ -301,23 +269,20 @@ const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::
 	return m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
 }
 
-void Graphics::CreatePipelineCache()
-{
+void Graphics::CreatePipelineCache() {
 	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 }
 
-void Graphics::RecreatePass(RenderStage &renderStage)
-{
+void Graphics::RecreatePass(RenderStage &renderStage) {
 	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent))
-	{
+	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent)) {
 #if defined(ACID_VERBOSE)
 		Log::Out("Resizing swapchain from {", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, "} to {", displayExtent.width, ", ", displayExtent.height, "}\n");
 #endif
@@ -328,33 +293,28 @@ void Graphics::RecreatePass(RenderStage &renderStage)
 	RecreateAttachmentsMap(); // TODO: Maybe not recreate on a single change.
 }
 
-void Graphics::RecreateAttachmentsMap()
-{
+void Graphics::RecreateAttachmentsMap() {
 	m_attachments.clear();
 
-	for (const auto &renderStage : m_renderStages)
-	{
+	for (const auto &renderStage : m_renderStages) {
 		m_attachments.insert(renderStage->m_descriptors.begin(), renderStage->m_descriptors.end());
 	}
 }
 
-bool Graphics::StartRenderpass(RenderStage &renderStage)
-{
-	if (renderStage.IsOutOfDate())
-	{
+bool Graphics::StartRenderpass(RenderStage &renderStage) {
+	if (renderStage.IsOutOfDate()) {
 		RecreatePass(renderStage);
 		return false;
 	}
 
-	if (!m_commandBuffers[m_swapchain->GetActiveImageIndex()]->IsRunning())
-	{
+	if (!m_commandBuffers[m_swapchain->GetActiveImageIndex()]->IsRunning()) {
 		CheckVk(vkWaitForFences(*m_logicalDevice, 1, &m_flightFences[m_currentFrame], VK_TRUE, std::numeric_limits<uint64_t>::max()));
 		m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 	}
 
 	VkRect2D renderArea = {};
-	renderArea.offset = { renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y };
-	renderArea.extent = { renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y };
+	renderArea.offset = {renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y};
+	renderArea.extent = {renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y};
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
@@ -384,25 +344,21 @@ bool Graphics::StartRenderpass(RenderStage &renderStage)
 	return true;
 }
 
-void Graphics::EndRenderpass(RenderStage &renderStage)
-{
+void Graphics::EndRenderpass(RenderStage &renderStage) {
 	auto presentQueue = m_logicalDevice->GetPresentQueue();
 
 	vkCmdEndRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
-	if (!renderStage.HasSwapchain())
-	{
+	if (!renderStage.HasSwapchain()) {
 		return;
 	}
 
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
-	
-	if (auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]); 
-		!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR))
-	{
-		if (presentResult == VK_ERROR_OUT_OF_DATE_KHR)
-		{
+
+	if (auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
+		!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR)) {
+		if (presentResult == VK_ERROR_OUT_OF_DATE_KHR) {
 			RecreatePass(renderStage);
 			return;
 		}

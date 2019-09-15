@@ -6,12 +6,9 @@
 #include "Serialized/Node.hpp"
 #include "Image.hpp"
 
-namespace acid
-{
-std::shared_ptr<Image2d> Image2d::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<Image2d> Image2d::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<Image2d>(resource);
 	}
 
@@ -22,8 +19,7 @@ std::shared_ptr<Image2d> Image2d::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap)
-{
+std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap) {
 	Image2d temp(filename, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
 	node << temp;
@@ -39,10 +35,8 @@ Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const V
 	m_samples(VK_SAMPLE_COUNT_1_BIT),
 	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
 	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_format(VK_FORMAT_R8G8B8A8_UNORM)
-{
-	if (load)
-	{
+	m_format(VK_FORMAT_R8G8B8A8_UNORM) {
+	if (load) {
 		Image2d::Load();
 	}
 }
@@ -59,13 +53,11 @@ Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, con
 	m_components(4),
 	m_extent(extent),
 	m_loadPixels(std::move(pixels)),
-	m_format(format)
-{
+	m_format(format) {
 	Image2d::Load();
 }
 
-Image2d::~Image2d()
-{
+Image2d::~Image2d() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
@@ -75,8 +67,7 @@ Image2d::~Image2d()
 }
 
 VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count)
-{
+	uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
@@ -86,8 +77,7 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, c
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
-{
+WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
@@ -104,8 +94,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescrip
 	return {descriptorWrite, imageInfo};
 }
 
-std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLevel) const
-{
+std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLevel) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	extent = m_extent >> mipLevel;
@@ -135,8 +124,7 @@ std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLev
 	return pixels;
 }
 
-void Image2d::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
-{
+void Image2d::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer) {
 	Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -145,11 +133,10 @@ void Image2d::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t bas
 	std::memcpy(data, pixels, bufferStaging.GetSize());
 	bufferStaging.UnmapMemory();
 
-	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
+	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, layerCount, baseArrayLayer);
 }
 
-const Node &operator>>(const Node &node, Image2d &image)
-{
+const Node &operator>>(const Node &node, Image2d &image) {
 	node["filename"].Get(image.m_filename);
 	node["filter"].Get(image.m_filter);
 	node["addressMode"].Get(image.m_addressMode);
@@ -158,8 +145,7 @@ const Node &operator>>(const Node &node, Image2d &image)
 	return node;
 }
 
-Node &operator<<(Node &node, const Image2d &image)
-{
+Node &operator<<(Node &node, const Image2d &image) {
 	node["filename"].Set(image.m_filename);
 	node["filter"].Set(image.m_filter);
 	node["addressMode"].Set(image.m_addressMode);
@@ -168,10 +154,8 @@ Node &operator<<(Node &node, const Image2d &image)
 	return node;
 }
 
-void Image2d::Load()
-{
-	if (!m_filename.empty() && !m_loadPixels)
-	{
+void Image2d::Load() {
+	if (!m_filename.empty() && !m_loadPixels) {
 #if defined(ACID_VERBOSE)
 		auto debugStart = Time::Now();
 #endif
@@ -181,8 +165,7 @@ void Image2d::Load()
 #endif
 	}
 
-	if (m_extent.m_x == 0 || m_extent.m_y == 0)
-	{
+	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
 		return;
 	}
 
@@ -193,14 +176,12 @@ void Image2d::Load()
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
-	if (m_loadPixels || m_mipmap)
-	{
+	if (m_loadPixels || m_mipmap) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
-	if (m_loadPixels)
-	{
+	if (m_loadPixels) {
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
 		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -213,18 +194,13 @@ void Image2d::Load()
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 1, 0);
 	}
 
-	if (m_mipmap)
-	{
+	if (m_mipmap) {
 		//m_image.CreateMipmaps();
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 1);
-	}
-	else if (m_loadPixels)
-	{
+	} else if (m_loadPixels) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
-	}
-	else
-	{
+	} else {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}

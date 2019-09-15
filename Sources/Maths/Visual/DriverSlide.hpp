@@ -2,16 +2,14 @@
 
 #include "Driver.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A driver that slides to its destination using cosine interpolation.
  * @tparam T The type to be driven.
  **/
 template<typename T>
 class DriverSlide :
-	public Driver<T>
-{
+	public Driver<T> {
 public:
 	/**
 	 * Creates a new slide driver.
@@ -22,9 +20,7 @@ public:
 	DriverSlide(const T &start, const T &end, const Time &length) :
 		Driver<T>(length),
 		m_start(start),
-		m_end(end)
-	{
-	}
+		m_end(end) { }
 
 	/**
 	 * Gets the start time.
@@ -51,8 +47,7 @@ public:
 	void SetEnd(const T &end) { m_end = end; }
 
 protected:
-	T Calculate(float factor) override
-	{
+	T Calculate(float factor) override {
 		auto realTime = static_cast<float>(std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength());
 		return m_start + realTime * (m_end - m_start);
 		//return Maths::CosInterpolate(m_start, m_end, realTime);

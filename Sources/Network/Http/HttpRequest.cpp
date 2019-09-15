@@ -2,48 +2,40 @@
 
 #include "Helpers/String.hpp"
 
-namespace acid
-{
+namespace acid {
 HttpRequest::HttpRequest(const std::string &uri, const Method &method, const std::string &body) :
 	m_method(method),
 	m_majorVersion(1),
-	m_minorVersion(0)
-{
+	m_minorVersion(0) {
 	SetUri(uri);
 	SetBody(body);
 }
 
-void HttpRequest::SetField(const std::string &field, const std::string &value)
-{
+void HttpRequest::SetField(const std::string &field, const std::string &value) {
 	m_fields[String::Lowercase(field)] = value;
 }
 
-void HttpRequest::SetUri(const std::string &uri)
-{
+void HttpRequest::SetUri(const std::string &uri) {
 	m_uri = uri;
 
 	// Make sure it starts with a '/'.
-	if (m_uri.empty() || (m_uri[0] != '/'))
-	{
+	if (m_uri.empty() || (m_uri[0] != '/')) {
 		m_uri.insert(0, "/");
 	}
 }
 
-void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor)
-{
+void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor) {
 	m_majorVersion = major;
 	m_minorVersion = minor;
 }
 
-std::string HttpRequest::Prepare() const
-{
+std::string HttpRequest::Prepare() const {
 	std::ostringstream out;
 
 	// Convert the method to its string representation.
 	std::string method;
 
-	switch (m_method)
-	{
+	switch (m_method) {
 	case Method::Get:
 		method = "GET";
 		break;
@@ -78,8 +70,7 @@ std::string HttpRequest::Prepare() const
 	out << "HTTP/" << m_majorVersion << "." << m_minorVersion << "\r\n";
 
 	// Write fields.
-	for (const auto &[fieldName, fieldValue] : m_fields)
-	{
+	for (const auto &[fieldName, fieldValue] : m_fields) {
 		out << fieldName << ": " << fieldValue << "\r\n";
 	}
 
@@ -92,8 +83,7 @@ std::string HttpRequest::Prepare() const
 	return out.str();
 }
 
-bool HttpRequest::HasField(const std::string &field) const
-{
+bool HttpRequest::HasField(const std::string &field) const {
 	return m_fields.find(String::Lowercase(field)) != m_fields.end();
 }
 }

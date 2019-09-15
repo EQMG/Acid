@@ -8,12 +8,12 @@
 #include "Renderpass/Renderpass.hpp"
 #include "Renderpass/Swapchain.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents an attachment in a renderpass.
  */
-class ACID_EXPORT Attachment
+class ACID_EXPORT
+Attachment
 {
 public:
 	enum class Type
@@ -62,7 +62,8 @@ private:
 	Colour m_clearColour;
 };
 
-class ACID_EXPORT SubpassType
+class ACID_EXPORT
+SubpassType
 {
 public:
 	SubpassType(uint32_t binding, std::vector<uint32_t> attachmentBindings) :
@@ -80,7 +81,8 @@ private:
 	std::vector<uint32_t> m_attachmentBindings;
 };
 
-class ACID_EXPORT RenderArea
+class ACID_EXPORT
+RenderArea
 {
 public:
 	explicit RenderArea(const Vector2ui &extent = {}, const Vector2i &offset = {}) :
@@ -122,7 +124,8 @@ private:
 	float m_aspectRatio;
 };
 
-class ACID_EXPORT Viewport
+class ACID_EXPORT
+Viewport
 {
 public:
 	Viewport() :
@@ -156,7 +159,8 @@ private:
 	Vector2i m_offset;
 };
 
-class ACID_EXPORT RenderStage
+class ACID_EXPORT
+RenderStage
 {
 	friend class Graphics;
 public:

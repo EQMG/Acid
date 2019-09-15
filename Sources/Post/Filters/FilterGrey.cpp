@@ -1,19 +1,15 @@
 #include "FilterGrey.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterGrey::FilterGrey(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grey.frag"})
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grey.frag"}) {
 }
 
-void FilterGrey::Render(const CommandBuffer &commandBuffer)
-{
+void FilterGrey::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

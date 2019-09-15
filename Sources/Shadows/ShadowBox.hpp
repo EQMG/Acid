@@ -4,14 +4,14 @@
 #include "Maths/Vector4.hpp"
 #include "Scenes/Camera.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents the 3D area of the world in which engine.shadows will be cast (basically represents the orthographic projection area for the shadow render pass).
  * It can be updated each frame to optimize the area, making it as small as possible (to allow for optimal shadow map resolution) while not being too small to avoid objects not having shadows when they should.
  * This class also provides functionality to test whether an object is inside this shadow box. Everything inside the box will be rendered to the shadow map in the shadow render pass.
  */
-class ACID_EXPORT ShadowBox
+class ACID_EXPORT
+ShadowBox
 {
 public:
 	/**

@@ -12,8 +12,7 @@ layout(location = 4) in float inTransparency;
 
 layout(location = 0) out vec4 outColour;
 
-void main() 
-{
+void main() {
 	vec4 colour1 = texture(samplerColour, inCoords1);
 	vec4 colour2 = texture(samplerColour, inCoords2);
 

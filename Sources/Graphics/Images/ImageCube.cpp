@@ -5,12 +5,9 @@
 #include "Resources/Resources.hpp"
 #include "Image.hpp"
 
-namespace acid
-{
-std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ImageCube> ImageCube::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ImageCube>(resource);
 	}
 
@@ -22,8 +19,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Node &node)
 }
 
 std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
-	bool anisotropic, bool mipmap)
-{
+	bool anisotropic, bool mipmap) {
 	ImageCube temp(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
 	node << temp;
@@ -41,10 +37,8 @@ ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, con
 	m_samples(VK_SAMPLE_COUNT_1_BIT),
 	m_layout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL),
 	m_usage(VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_format(VK_FORMAT_R8G8B8A8_UNORM)
-{
-	if (load)
-	{
+	m_format(VK_FORMAT_R8G8B8A8_UNORM) {
+	if (load) {
 		ImageCube::Load();
 	}
 }
@@ -61,13 +55,11 @@ ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels,
 	m_components(4),
 	m_extent(extent),
 	m_loadPixels(std::move(pixels)),
-	m_format(format)
-{
+	m_format(format) {
 	ImageCube::Load();
 }
 
-ImageCube::~ImageCube()
-{
+ImageCube::~ImageCube() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyImageView(*logicalDevice, m_view, nullptr);
@@ -77,8 +69,7 @@ ImageCube::~ImageCube()
 }
 
 VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count)
-{
+	uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
@@ -88,8 +79,7 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding,
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
-{
+WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
@@ -106,8 +96,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescr
 	return {descriptorWrite, imageInfo};
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const
-{
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	extent = m_extent >> mipLevel;
@@ -137,18 +126,15 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 	return result;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel) const
-{
+std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel) const {
 	std::unique_ptr<uint8_t[]> pixels;
 	uint8_t *offset = nullptr;
 
-	for (uint32_t i = 0; i < 6; i++)
-	{
+	for (uint32_t i = 0; i < 6; i++) {
 		auto resultSide = GetPixels(extent, mipLevel, i);
 		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
 
-		if (!pixels)
-		{
+		if (!pixels) {
 			pixels = std::make_unique<uint8_t[]>(sizeSide * 6);
 			offset = pixels.get();
 		}
@@ -161,8 +147,7 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 	return pixels;
 }
 
-void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer)
-{
+void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer) {
 	Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -171,23 +156,20 @@ void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t b
 	memcpy(data, pixels, bufferStaging.GetSize());
 	bufferStaging.UnmapMemory();
 
-	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, { m_extent.m_x, m_extent.m_y, 1 }, layerCount, baseArrayLayer);
+	Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, layerCount, baseArrayLayer);
 }
 
 std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
-	uint32_t &components, VkFormat &format)
-{
+	uint32_t &components, VkFormat &format) {
 	std::unique_ptr<uint8_t[]> result;
 	uint8_t *offset = nullptr;
 
-	for (const auto &side : fileSides)
-	{
+	for (const auto &side : fileSides) {
 		auto filenameSide = filename / (side + fileSuffix);
 		auto resultSide = Image::LoadPixels(filenameSide, extent, components, format);
 		int32_t sizeSide = extent.m_x * extent.m_y * components;
 
-		if (!result)
-		{
+		if (!result) {
 			result = std::make_unique<uint8_t[]>(sizeSide * fileSides.size());
 			offset = result.get();
 		}
@@ -199,8 +181,7 @@ std::unique_ptr<uint8_t[]> ImageCube::LoadPixels(const std::filesystem::path &fi
 	return result;
 }
 
-const Node &operator>>(const Node &node, ImageCube &image)
-{
+const Node &operator>>(const Node &node, ImageCube &image) {
 	node["filename"].Get(image.m_filename);
 	node["fileSuffix"].Get(image.m_fileSuffix);
 	node["fileSides"].Get(image.m_fileSides);
@@ -211,8 +192,7 @@ const Node &operator>>(const Node &node, ImageCube &image)
 	return node;
 }
 
-Node &operator<<(Node &node, const ImageCube &image)
-{
+Node &operator<<(Node &node, const ImageCube &image) {
 	node["filename"].Set(image.m_filename);
 	node["fileSuffix"].Set(image.m_fileSuffix);
 	node["fileSides"].Set(image.m_fileSides);
@@ -223,10 +203,8 @@ Node &operator<<(Node &node, const ImageCube &image)
 	return node;
 }
 
-void ImageCube::Load()
-{
-	if (!m_filename.empty() && !m_loadPixels)
-	{
+void ImageCube::Load() {
+	if (!m_filename.empty() && !m_loadPixels) {
 #if defined(ACID_VERBOSE)
 		auto debugStart = Time::Now();
 #endif
@@ -236,8 +214,7 @@ void ImageCube::Load()
 #endif
 	}
 
-	if (m_extent.m_x == 0 || m_extent.m_y == 0)
-	{
+	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
 		return;
 	}
 
@@ -248,13 +225,11 @@ void ImageCube::Load()
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 
-	if (m_loadPixels || m_mipmap)
-	{
+	if (m_loadPixels || m_mipmap) {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
 
-	if (m_loadPixels)
-	{
+	if (m_loadPixels) {
 		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -266,16 +241,11 @@ void ImageCube::Load()
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 6, 0);
 	}
 
-	if (m_mipmap)
-	{
+	if (m_mipmap) {
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 6);
-	}
-	else if (m_loadPixels)
-	{
+	} else if (m_loadPixels) {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
-	}
-	else
-	{
+	} else {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
 

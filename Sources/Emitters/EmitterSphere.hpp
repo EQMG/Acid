@@ -2,10 +2,12 @@
 
 #include "Emitter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT EmitterSphere :
-	public Emitter
+namespace acid {
+class ACID_EXPORT
+EmitterSphere
+:
+public
+Emitter
 {
 public:
 	explicit EmitterSphere(float radius = 1.0f);

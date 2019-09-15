@@ -19,24 +19,19 @@
 #include <Uis/Uis.hpp>
 #include "CameraFree.hpp"
 
-namespace test
-{
+namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFree>()),
 	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
-{
-	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 }
 
-void Scene1::Start()
-{
+void Scene1::Start() {
 	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
@@ -47,10 +42,8 @@ void Scene1::Start()
 	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), 18.0f);
 	sun->AddComponent<Light>(Colour::White);
 
-	for (uint32_t i = 0; i < 6; i++)
-	{
-		for (uint32_t j = 0; j < 6; j++)
-		{
+	for (uint32_t i = 0; i < 6; i++) {
+		for (uint32_t j = 0; j < 6; j++) {
 			auto sphere = GetStructure()->CreateEntity();
 			sphere->AddComponent<Transform>(Vector3f(i, j, -6.0f), Vector3f(), 0.5f);
 			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
@@ -77,12 +70,10 @@ void Scene1::Start()
 	dragon->AddComponent<ShadowRender>();*/
 }
 
-void Scene1::Update()
-{
+void Scene1::Update() {
 }
 
-bool Scene1::IsPaused() const
-{
+bool Scene1::IsPaused() const {
 	return false;
 }
 }

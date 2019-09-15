@@ -3,13 +3,13 @@
 #include "Maths/Time.hpp"
 #include "Keyframe.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents an animation that can be carried out by an animated entity.
  * It contains the length of the animation in seconds, and a list of {@link Keyframe}s.
  **/
-class ACID_EXPORT Animation
+class ACID_EXPORT
+Animation
 {
 public:
 	/**

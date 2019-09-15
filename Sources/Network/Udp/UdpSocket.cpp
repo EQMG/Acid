@@ -10,26 +10,21 @@
 #include "Network/IpAddress.hpp"
 #include "Network/Packet.hpp"
 
-namespace acid
-{
+namespace acid {
 static const uint32_t MAX_DATAGRAM_SIZE = 65507;
 
 UdpSocket::UdpSocket() :
 	Socket(Type::Udp),
-	m_buffer(MAX_DATAGRAM_SIZE)
-{
+	m_buffer(MAX_DATAGRAM_SIZE) {
 }
 
-uint16_t UdpSocket::GetLocalPort() const
-{
-	if (GetHandle() != InvalidSocketHandle())
-	{
+uint16_t UdpSocket::GetLocalPort() const {
+	if (GetHandle() != InvalidSocketHandle()) {
 		// Retrieve informations about the local end of the socket.
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
-		{
+		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
 			return ntohs(address.sin_port);
 		}
 	}
@@ -38,8 +33,7 @@ uint16_t UdpSocket::GetLocalPort() const
 	return 0;
 }
 
-Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address)
-{
+Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address) {
 	// Close the socket if it is already bound.
 	Close();
 
@@ -47,16 +41,14 @@ Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address)
 	Create();
 
 	// Check if the address is valid/
-	if ((address == IpAddress::None) || (address == IpAddress::Broadcast))
-	{
+	if ((address == IpAddress::None) || (address == IpAddress::Broadcast)) {
 		return Status::Error;
 	}
 
 	// Bind the socket/
 	auto addr = CreateAddress(address.ToInteger(), port);
 
-	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1)
-	{
+	if (bind(GetHandle(), reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) == -1) {
 		Log::Error("Failed to bind socket to port :", port, '\n');
 		return Status::Error;
 	}
@@ -64,20 +56,17 @@ Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address)
 	return Status::Done;
 }
 
-void UdpSocket::Unbind()
-{
+void UdpSocket::Unbind() {
 	// Simply close the socket.
 	Close();
 }
 
-Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddress &remoteAddress, uint16_t remotePort)
-{
+Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddress &remoteAddress, uint16_t remotePort) {
 	// Create the internal socket if it doesn't exist.
 	Create();
 
 	// Make sure that all the data will fit in one datagram.
-	if (size > MAX_DATAGRAM_SIZE)
-	{
+	if (size > MAX_DATAGRAM_SIZE) {
 		Log::Error("Cannot send data over the network (the number of bytes to send is greater than UdpSocket::MaxDatagramSize)\n");
 		return Status::Error;
 	}
@@ -89,24 +78,21 @@ Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddre
 	auto sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 	// Check for errors.
-	if (sent < 0)
-	{
+	if (sent < 0) {
 		return GetErrorStatus();
 	}
 
 	return Status::Done;
 }
 
-Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort)
-{
+Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort) {
 	// First clear the variables to fill.
 	received = 0;
 	remoteAddress = IpAddress();
 	remotePort = 0;
 
 	// Check the destination buffer.
-	if (!data)
-	{
+	if (!data) {
 		Log::Error("Cannot receive data from the network (the destination buffer is invalid)\n");
 		return Status::Error;
 	}
@@ -119,8 +105,7 @@ Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	auto sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.
-	if (sizeReceived < 0)
-	{
+	if (sizeReceived < 0) {
 		return GetErrorStatus();
 	}
 
@@ -132,8 +117,7 @@ Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	return Status::Done;
 }
 
-Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, uint16_t remotePort)
-{
+Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, uint16_t remotePort) {
 	// UDP is a datagram-oriented protocol (as opposed to TCP which is a stream protocol).
 	// Sending one datagram is almost safe: it may be lost but if it's received, then its data
 	// is guaranteed to be ok. However, splitting a packet into multiple datagrams would be highly
@@ -149,8 +133,7 @@ Socket::Status UdpSocket::Send(Packet &packet, const IpAddress &remoteAddress, u
 	return Send(dataSize.first, dataSize.second, remoteAddress, remotePort);
 }
 
-Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort)
-{
+Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort) {
 	// See the detailed comment in send(Packet) above.
 
 	// Receive the datagram.
@@ -160,8 +143,7 @@ Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint
 	// If we received valid data, we can copy it to the user packet.
 	packet.Clear();
 
-	if ((status == Status::Done) && (received > 0))
-	{
+	if ((status == Status::Done) && (received > 0)) {
 		packet.OnReceive(&m_buffer[0], received);
 	}
 

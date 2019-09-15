@@ -1,36 +1,29 @@
 #include "MeshSimple.hpp"
 
-namespace acid
-{
+namespace acid {
 MeshSimple::MeshSimple(float sideLength, float squareSize, uint32_t vertexCount, float uvScale) :
 	m_sideLength(sideLength),
 	m_squareSize(squareSize),
 	m_vertexCount(vertexCount),
-	m_uvScale(uvScale)
-{
+	m_uvScale(uvScale) {
 }
 
-void MeshSimple::GenerateMesh()
-{
+void MeshSimple::GenerateMesh() {
 	std::vector<VertexDefault> vertices;
 	vertices.reserve(m_vertexCount * m_vertexCount);
 	std::vector<uint32_t> indices;
 	indices.reserve(6 * (m_vertexCount - 1) * (m_vertexCount - 1));
 
 	// Creates and stores vertices.
-	for (uint32_t col = 0; col < m_vertexCount; col++)
-	{
-		for (uint32_t row = 0; row < m_vertexCount; row++)
-		{
+	for (uint32_t col = 0; col < m_vertexCount; col++) {
+		for (uint32_t row = 0; row < m_vertexCount; row++) {
 			vertices.emplace_back(GetVertex(col, row));
 		}
 	}
 
 	// Creates and stores indices.
-	for (uint32_t col = 0; col < m_vertexCount - 1; col++)
-	{
-		for (uint32_t row = 0; row < m_vertexCount - 1; row++)
-		{
+	for (uint32_t col = 0; col < m_vertexCount - 1; col++) {
+		for (uint32_t row = 0; row < m_vertexCount - 1; row++) {
 			auto topLeft = (row * m_vertexCount) + col;
 			auto topRight = topLeft + 1;
 			auto bottomLeft = ((row + 1) * m_vertexCount) + col;
@@ -48,8 +41,7 @@ void MeshSimple::GenerateMesh()
 	Initialize(vertices, indices);
 }
 
-VertexDefault MeshSimple::GetVertex(uint32_t col, uint32_t row)
-{
+VertexDefault MeshSimple::GetVertex(uint32_t col, uint32_t row) {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 

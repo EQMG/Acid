@@ -11,38 +11,35 @@
 
 using namespace acid;
 
-enum class ExampleType
-{
-	A = 1, B = 2, C = 4, D = 8
+enum class ExampleType {
+	A = 1,
+	B = 2,
+	C = 4,
+	D = 8
 };
+
 // TODO: Allow bitmask macro to work in namespaces outside of acid.
-namespace acid
-{
+namespace acid {
 ENABLE_BITMASK_OPERATORS(ExampleType)
 }
 
-namespace test
-{
-class Example1
-{
+namespace test {
+class Example1 {
 public:
-	class XML
-	{
+	class XML {
 	public:
 		std::vector<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
 		std::optional<float> optional0;
 		std::optional<std::string> optional1 = "Hello optional string!";
 
-		friend const Node &operator>>(const Node &node, XML &xml)
-		{
+		friend const Node &operator>>(const Node &node, XML &xml) {
 			node["data"].Get(xml.data);
 			node["optional0"].Get(xml.optional0);
 			node["optional1"].Get(xml.optional1);
 			return node;
 		}
 
-		friend Node &operator<<(Node &node, const XML &xml)
-		{
+		friend Node &operator<<(Node &node, const XML &xml) {
 			node["data"].Set(xml.data);
 			node["optional0"].Set(xml.optional0);
 			node["optional1"].Set(xml.optional1);
@@ -50,23 +47,20 @@ public:
 		}
 	} xml;
 
-	class Objects
-	{
+	class Objects {
 	public:
 		std::string key = "value";
 		std::vector<float> values = {190.0f, 11.0f, -0.001f};
 		std::vector<Vector3f> vectors = {Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
 
-		friend const Node &operator>>(const Node &node, Objects &objects)
-		{
+		friend const Node &operator>>(const Node &node, Objects &objects) {
 			node["key"].Get(objects.key);
 			node["values"].Get(objects.values);
 			node["vectors"].Get(objects.vectors);
 			return node;
 		}
 
-		friend Node &operator<<(Node &node, const Objects &objects)
-		{
+		friend Node &operator<<(Node &node, const Objects &objects) {
 			node["key"].Set(objects.key);
 			node["values"].Set(objects.values);
 			node["vectors"].Set(objects.vectors);
@@ -75,7 +69,8 @@ public:
 	} objects;
 
 	std::string paragraph = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n";
-	std::unique_ptr<std::string> content = std::make_unique<std::string>("Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+	std::unique_ptr<std::string> content = std::make_unique<std::string>(
+		"Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
 
 	Time timeNow = Time::Now();
 	std::filesystem::path currentPath = std::filesystem::current_path();
@@ -83,15 +78,16 @@ public:
 	std::vector<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
 	std::map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
 	std::map<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
-	std::vector<std::pair<std::string, BitMask<ExampleType>>> types = {{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
-		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}};
+	std::vector<std::pair<std::string, BitMask<ExampleType>>> types = {
+		{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
+		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
+	};
 	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
 	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
 	//std::array<double, 5> array = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
 	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 
-	friend const Node &operator>>(const Node &node, Example1 &example1)
-	{
+	friend const Node &operator>>(const Node &node, Example1 &example1) {
 		node["timeNow"].Get(example1.timeNow);
 		node["currentPath"].Get(example1.currentPath);
 		node["paragraph"].Get(example1.paragraph);
@@ -110,8 +106,7 @@ public:
 		return node;
 	}
 
-	friend Node &operator<<(Node &node, const Example1 &example1)
-	{
+	friend Node &operator<<(Node &node, const Example1 &example1) {
 		node["timeNow"].Set(example1.timeNow);
 		node["currentPath"].Set(example1.currentPath);
 		node["paragraph"].Set(example1.paragraph);
@@ -132,8 +127,7 @@ public:
 };
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	{
 		auto source = R"({"message":"hello world","value":3})";
 		Json json;
@@ -142,7 +136,7 @@ int main(int argc, char **argv)
 		auto value = json["value"];
 		value.Set(3 * value->Get<int32_t>() + 2);
 
-		json["values"] = std::vector{ 10, 11, -1, 2};
+		json["values"] = std::vector{10, 11, -1, 2};
 
 		Log::Out(json.Write(Node::Format::Minified), '\n');
 		//Log::Out(Xml("source", &json).Write(Node::Format::Minified), '\n');

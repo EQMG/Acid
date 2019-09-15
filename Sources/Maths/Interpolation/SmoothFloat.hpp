@@ -2,15 +2,13 @@
 
 #include "Maths/Time.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that smoothly increases its value.
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class SmoothFloat
-{
+class SmoothFloat {
 public:
 	/**
 	 * Creates a new smooth float.
@@ -20,16 +18,13 @@ public:
 	SmoothFloat(const T &initialValue, float agility) :
 		m_agility(agility),
 		m_target(initialValue),
-		m_actual(initialValue)
-	{
-	}
+		m_actual(initialValue) { }
 
 	/**
 	 * Updates the driver with the passed time.
 	 * @param delta The time between the last update. 
 	 **/
-	void Update(const Time &delta)
-	{
+	void Update(const Time &delta) {
 		auto offset = m_target - m_actual;
 		auto change = offset * delta.AsSeconds() * m_agility;
 		m_actual += change;

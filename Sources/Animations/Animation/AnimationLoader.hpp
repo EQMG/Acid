@@ -4,9 +4,9 @@
 #include "Serialized/Node.hpp"
 #include "Animation.hpp"
 
-namespace acid
-{
-class ACID_EXPORT AnimationLoader
+namespace acid {
+class ACID_EXPORT
+AnimationLoader
 {
 public:
 	AnimationLoader(const Node *libraryAnimations, const Node *libraryVisualScenes, const Matrix4 &correction);

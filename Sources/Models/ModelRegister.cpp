@@ -9,10 +9,8 @@
 #include "Shapes/ModelRectangle.hpp"
 #include "Shapes/ModelSphere.hpp"
 
-namespace acid
-{
-ModelRegister::ModelRegister()
-{
+namespace acid {
+ModelRegister::ModelRegister() {
 	AddNode<ModelGltf>("gltf");
 	AddExtension<ModelGltf>(".gltf");
 	AddExtension<ModelGltf>(".glb");
@@ -25,20 +23,17 @@ ModelRegister::ModelRegister()
 	AddNode<ModelSphere>("sphere");
 }
 
-void ModelRegister::Remove(const std::string &name)
-{
+void ModelRegister::Remove(const std::string &name) {
 	m_modelNodes.erase(name);
 	m_modelExtensions.erase(name);
 }
 
-std::shared_ptr<Model> ModelRegister::Create(const Node &node) const
-{
+std::shared_ptr<Model> ModelRegister::Create(const Node &node) const {
 	auto typeName = node["type"].Get<std::string>();
 
 	auto it = m_modelNodes.find(typeName);
 
-	if (it == m_modelNodes.end())
-	{
+	if (it == m_modelNodes.end()) {
 		Log::Error("Could not find registered model by name: ", std::quoted(typeName), '\n');
 		return nullptr;
 	}
@@ -46,13 +41,11 @@ std::shared_ptr<Model> ModelRegister::Create(const Node &node) const
 	return (*it).second(node);
 }
 
-std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filename) const
-{
+std::shared_ptr<Model> ModelRegister::Create(const std::filesystem::path &filename) const {
 	auto fileExt = filename.extension().string();
 	auto it = m_modelExtensions.find(fileExt);
 
-	if (it == m_modelExtensions.end())
-	{
+	if (it == m_modelExtensions.end()) {
 		Log::Error("Could not find registered model by extension: ", std::quoted(fileExt), '\n');
 		return nullptr;
 	}

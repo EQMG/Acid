@@ -4,12 +4,12 @@
 #include "Graphics/Pipelines/Pipeline.hpp"
 #include "Helpers/TypeInfo.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
-class ACID_EXPORT Subrender
+class ACID_EXPORT
+Subrender
 {
 public:
 	/**
@@ -41,7 +41,8 @@ private:
 	bool m_enabled;
 };
 
-template class ACID_EXPORT TypeInfo<Subrender>;
+template class ACID_EXPORT
+TypeInfo<Subrender>;
 
 /**
  * Gets the Type ID for the Subrender.
@@ -49,8 +50,7 @@ template class ACID_EXPORT TypeInfo<Subrender>;
  * @return The Type ID.
  */
 template<typename T>
-TypeId GetSubrenderTypeId() noexcept
-{
+TypeId GetSubrenderTypeId() noexcept {
 	static_assert(std::is_base_of<Subrender, T>::value, "T must be a Subrender.");
 
 	return TypeInfo<Subrender>::GetTypeId<T>();

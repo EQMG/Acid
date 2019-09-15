@@ -4,10 +4,12 @@
 
 class btCapsuleShape;
 
-namespace acid
-{
-class ACID_EXPORT ColliderCapsule :
-	public Collider
+namespace acid {
+class ACID_EXPORT
+ColliderCapsule
+:
+public
+Collider
 {
 public:
 	explicit ColliderCapsule(float radius = 0.5f, float height = 1.0f, const Transform &localTransform = {});

@@ -2,13 +2,15 @@
 
 #include "Axis.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Axis input from a joystick input device.
  */
-class ACID_EXPORT AxisJoystick :
-	public Axis
+class ACID_EXPORT
+AxisJoystick
+:
+public
+Axis
 {
 public:
 	/**

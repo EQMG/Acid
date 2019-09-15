@@ -3,13 +3,15 @@
 #include "Graphics/Descriptors/Descriptor.hpp"
 #include "Image.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a depth stencil image.
  */
-class ACID_EXPORT ImageDepth :
-	public Descriptor
+class ACID_EXPORT
+ImageDepth
+:
+public
+Descriptor
 {
 public:
 	explicit ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);

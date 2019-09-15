@@ -13,8 +13,7 @@
 #include "Physics/Colliders/Collider.hpp"
 #include "Physics/CollisionObject.hpp"
 
-namespace acid
-{
+namespace acid {
 ScenePhysics::ScenePhysics() :
 	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
 	m_broadphase(std::make_unique<btDbvtBroadphase>()),
@@ -22,8 +21,7 @@ ScenePhysics::ScenePhysics() :
 	m_solver(std::make_unique<btSequentialImpulseConstraintSolver>()),
 	m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
 	m_gravity(0.0f, -9.81f, 0.0f),
-	m_airDensity(1.2f)
-{
+	m_airDensity(1.2f) {
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 	m_dynamicsWorld->getDispatchInfo().m_enableSPU = true;
 	m_dynamicsWorld->getSolverInfo().m_minimumSolverBatchSize = 128;
@@ -38,15 +36,12 @@ ScenePhysics::ScenePhysics() :
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 }
 
-ScenePhysics::~ScenePhysics()
-{
-	for (int32_t i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-	{
+ScenePhysics::~ScenePhysics() {
+	for (int32_t i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--) {
 		auto obj = m_dynamicsWorld->getCollisionObjectArray()[i];
 		auto body = btRigidBody::upcast(obj);
 
-		if (body && body->getMotionState())
-		{
+		if (body && body->getMotionState()) {
 			delete body->getMotionState();
 			body->setMotionState(nullptr);
 		}
@@ -55,14 +50,12 @@ ScenePhysics::~ScenePhysics()
 	}
 }
 
-void ScenePhysics::Update()
-{
+void ScenePhysics::Update() {
 	m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
 	CheckForCollisionEvents();
 }
 
-Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const
-{
+Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const {
 	auto startBt = Collider::Convert(start);
 	auto endBt = Collider::Convert(end);
 	btCollisionWorld::ClosestRayResultCallback result(startBt, endBt);
@@ -72,34 +65,29 @@ Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const
 		result.m_collisionObject ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 }
 
-void ScenePhysics::SetGravity(const Vector3f &gravity)
-{
+void ScenePhysics::SetGravity(const Vector3f &gravity) {
 	m_gravity = gravity;
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 }
 
-void ScenePhysics::SetAirDensity(float airDensity)
-{
+void ScenePhysics::SetAirDensity(float airDensity) {
 	m_airDensity = airDensity;
 	auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 	softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 }
 
-void ScenePhysics::CheckForCollisionEvents()
-{
+void ScenePhysics::CheckForCollisionEvents() {
 	// Keep a list of the collision pairs found during the current update.
 	CollisionPairs pairsThisUpdate;
 
 	// Iterate through all of the manifolds in the dispatcher.
-	for (int32_t i = 0; i < m_dispatcher->getNumManifolds(); ++i)
-	{
+	for (int32_t i = 0; i < m_dispatcher->getNumManifolds(); ++i) {
 		// Get the manifold.
 		auto manifold = m_dispatcher->getManifoldByIndexInternal(i);
 
 		// Ignore manifolds that have no contact points..
-		if (manifold->getNumContacts() == 0)
-		{
+		if (manifold->getNumContacts() == 0) {
 			continue;
 		}
 
@@ -119,8 +107,7 @@ void ScenePhysics::CheckForCollisionEvents()
 		pairsThisUpdate.insert(thisPair);
 
 		// If this pair doesn't exist in the list from the previous update, it is a new pair and we must send a collision event.
-		if (m_pairsLastUpdate.find(thisPair) == m_pairsLastUpdate.end())
-		{
+		if (m_pairsLastUpdate.find(thisPair) == m_pairsLastUpdate.end()) {
 			// Gets the user pointer (entity).
 			auto collisionObjectA = static_cast<CollisionObject *>(sortedBodyA->getUserPointer());
 			auto collisionObjectB = static_cast<CollisionObject *>(sortedBodyB->getUserPointer());
@@ -137,8 +124,7 @@ void ScenePhysics::CheckForCollisionEvents()
 	std::set_difference(m_pairsLastUpdate.begin(), m_pairsLastUpdate.end(), pairsThisUpdate.begin(), pairsThisUpdate.end(), std::inserter(removedPairs, removedPairs.begin()));
 
 	// Iterate through all of the removed pairs sending separation events for them.
-	for (const auto &[removedObject0, removedObject1] : removedPairs)
-	{
+	for (const auto &[removedObject0, removedObject1] : removedPairs) {
 		// Gets the user pointer (entity).
 		auto collisionObjectA = static_cast<CollisionObject *>(removedObject0->getUserPointer());
 		auto collisionObjectB = static_cast<CollisionObject *>(removedObject1->getUserPointer());

@@ -8,8 +8,7 @@ layout(binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUV;
 
-void main() 
-{
+void main() {
 	vec3 textureColour = texture(samplerColour, inUV).rgb;
 	vec4 colour = vec4(1.0f - textureColour, 1.0f);
 	

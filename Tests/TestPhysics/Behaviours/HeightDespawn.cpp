@@ -3,35 +3,28 @@
 #include <Maths/Transform.hpp>
 #include <Scenes/Entity.hpp>
 
-namespace test
-{
+namespace test {
 HeightDespawn::HeightDespawn(float removeHeight) :
-	m_removeHeight(removeHeight)
-{
+	m_removeHeight(removeHeight) {
 }
 
-void HeightDespawn::Start()
-{
+void HeightDespawn::Start() {
 }
 
-void HeightDespawn::Update()
-{
+void HeightDespawn::Update() {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (transform && transform->GetPosition().m_y < m_removeHeight)
-	{
+	if (transform && transform->GetPosition().m_y < m_removeHeight) {
 		GetEntity()->SetRemoved(true);
 	}
 }
 
-const Node &operator>>(const Node &node, HeightDespawn &heightDespawn)
-{
+const Node &operator>>(const Node &node, HeightDespawn &heightDespawn) {
 	node["removeHeight"].Get(heightDespawn.m_removeHeight);
 	return node;
 }
 
-Node &operator<<(Node &node, const HeightDespawn &heightDespawn)
-{
+Node &operator<<(Node &node, const HeightDespawn &heightDespawn) {
 	node["removeHeight"].Set(heightDespawn.m_removeHeight);
 	return node;
 }

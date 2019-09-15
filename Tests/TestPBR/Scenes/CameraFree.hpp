@@ -9,11 +9,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class CameraFree :
-	public Camera
-{
+	public Camera {
 public:
 	CameraFree();
 

@@ -12,13 +12,15 @@
 #include "RenderStage.hpp"
 #include "SubrenderHolder.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
-class ACID_EXPORT Graphics :
-	public Module
+class ACID_EXPORT
+Graphics
+:
+public
+Module
 {
 public:
 	/**

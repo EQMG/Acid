@@ -1,17 +1,14 @@
 #include "FilterVignette.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, float innerRadius, float outerRadius, float opacity) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Vignette.frag"}),
 	m_innerRadius(innerRadius),
 	m_outerRadius(outerRadius),
-	m_opacity(opacity)
-{
+	m_opacity(opacity) {
 }
 
-void FilterVignette::Render(const CommandBuffer &commandBuffer)
-{
+void FilterVignette::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("innerRadius", m_innerRadius);
 	m_pushScene.Push("outerRadius", m_outerRadius);
@@ -21,8 +18,7 @@ void FilterVignette::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

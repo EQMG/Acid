@@ -36,5 +36,6 @@ private:
 	static TypeId m_nextTypeId;
 };
 
-template<typename K> TypeId TypeInfo<K>::m_nextTypeId = 0;
+template<typename K>
+TypeId TypeInfo<K>::m_nextTypeId = 0;
 }

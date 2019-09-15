@@ -4,13 +4,15 @@
 #include "Resources/Resource.hpp"
 #include "Audio.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a sound buffer.
  */
-class ACID_EXPORT SoundBuffer :
-	public Resource
+class ACID_EXPORT
+SoundBuffer
+:
+public
+Resource
 {
 public:
 	/**

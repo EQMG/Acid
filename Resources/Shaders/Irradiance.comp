@@ -12,8 +12,7 @@ const float PI = 3.1415926535897932384626433832795f;
 const float deltaPhi = (2.0f * PI) / 180.0f;
 const float deltaTheta = (0.5f * PI) / 64.0f;
 
-vec3 cubeDir(vec2 texCoord, uint side)
-{
+vec3 cubeDir(vec2 texCoord, uint side) {
 	vec2 tex = texCoord * 2.0f - 1.0f;
 	if(side == 0) return vec3(1.0f, -tex.y, -tex.x); // Front
 	if(side == 1) return vec3(-1.0f, -tex.y, tex.x); // Back
@@ -24,12 +23,10 @@ vec3 cubeDir(vec2 texCoord, uint side)
 	return vec3(1.0);
 }
 
-void main()
-{
+void main() {
 	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
 
-	for (uint i = 0; i != 6; ++i)
-	{
+	for (uint i = 0; i != 6; ++i) {
 		vec3 N = normalize(cubeDir(uv, i));
 		vec3 up = vec3(0.0f, 1.0f, 0.0f);
 		vec3 right = normalize(cross(up, N));
@@ -41,10 +38,8 @@ void main()
 		vec3 colour = vec3(0.0f);
 		uint sampleCount = 0u;
 
-		for (float phi = 0.0f; phi < TWO_PI; phi += deltaPhi)
-		{
-			for (float theta = 0.0f; theta < HALF_PI; theta += deltaTheta)
-			{
+		for (float phi = 0.0f; phi < TWO_PI; phi += deltaPhi) {
+			for (float theta = 0.0f; theta < HALF_PI; theta += deltaTheta) {
 				vec3 tempVec = cos(phi) * right + sin(phi) * up;
 				vec3 sampleVector = cos(theta) * N + sin(theta) * tempVec;
 				colour += texture(samplerColour, sampleVector).rgb * cos(theta) * sin(theta);

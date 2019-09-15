@@ -7,13 +7,15 @@
 struct btDefaultMotionState;
 class btRigidBody;
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT Rigidbody :
-	public CollisionObject
+class ACID_EXPORT
+Rigidbody
+:
+public
+CollisionObject
 {
 public:
 	/**

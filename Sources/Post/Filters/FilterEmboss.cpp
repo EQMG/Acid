@@ -1,19 +1,15 @@
 #include "FilterEmboss.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterEmboss::FilterEmboss(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Emboss.frag"})
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Emboss.frag"}) {
 }
 
-void FilterEmboss::Render(const CommandBuffer &commandBuffer)
-{
+void FilterEmboss::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

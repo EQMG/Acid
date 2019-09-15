@@ -4,13 +4,15 @@
 #include "Pipelines/Pipeline.hpp"
 #include "Subrender.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that contains and manages subrenders registered to a render manager.
  */
-class ACID_EXPORT SubrenderHolder :
-	public NonCopyable
+class ACID_EXPORT
+SubrenderHolder
+:
+public
+NonCopyable
 {
 	friend class Graphics;
 public:

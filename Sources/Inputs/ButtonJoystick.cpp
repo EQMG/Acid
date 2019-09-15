@@ -2,23 +2,18 @@
 
 #include "Devices/Joysticks.hpp"
 
-namespace acid
-{
+namespace acid {
 ButtonJoystick::ButtonJoystick(uint32_t port, uint32_t button) :
 	m_port(port),
-	m_button(button)
-{
-	Joysticks::Get()->OnButton().Add([this](uint32_t button, uint32_t port, InputAction action)
-	{
-		if (port == m_port && button == m_button)
-		{
+	m_button(button) {
+	Joysticks::Get()->OnButton().Add([this](uint32_t button, uint32_t port, InputAction action) {
+		if (port == m_port && button == m_button) {
 			m_onButton(action, 0);
 		}
 	}, this);
 }
 
-bool ButtonJoystick::IsDown() const
-{
+bool ButtonJoystick::IsDown() const {
 	return Joysticks::Get()->GetButton(m_port, m_button) != InputAction::Release;
 }
 }

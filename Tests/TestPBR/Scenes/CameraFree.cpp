@@ -7,8 +7,7 @@
 #include <Inputs/ButtonJoystick.hpp>
 #include <Inputs/AxisJoystick.hpp>
 
-namespace test
-{
+namespace test {
 const float WALK_SPEED = 3.0f;
 const float RUN_SPEED = 7.0f;
 const Vector3f DAMP(20.0f, 20.0f, 20.0f);
@@ -25,27 +24,22 @@ CameraFree::CameraFree() :
 	m_inputStrafe(std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::A), std::make_unique<ButtonKeyboard>(Key::D)),
 		std::make_unique<AxisJoystick>(0, 0)),
 	m_inputVertical(std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonKeyboard>(Key::ControlLeft)),
-	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1))
-{
+	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)) {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;
 	m_fieldOfView = Maths::Radians(70.0f);
 }
 
-void CameraFree::Start()
-{
+void CameraFree::Start() {
 }
 
-void CameraFree::Update()
-{
+void CameraFree::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (!Scenes::Get()->IsPaused())
-	{
+	if (!Scenes::Get()->IsPaused()) {
 		Vector3f positionDelta;
 
-		if (!Scenes::Get()->IsPaused())
-		{
+		if (!Scenes::Get()->IsPaused()) {
 			positionDelta.m_x = m_inputStrafe.GetAmount();
 			positionDelta.m_y = m_inputVertical.GetAmount();
 			positionDelta.m_z = m_inputForward.GetAmount();
@@ -56,8 +50,7 @@ void CameraFree::Update()
 
 		Vector2f rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
 
-		if (m_joystickVertical.IsConnected())
-		{
+		if (m_joystickVertical.IsConnected()) {
 			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
 		}
 

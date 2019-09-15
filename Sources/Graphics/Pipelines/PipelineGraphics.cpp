@@ -3,9 +3,8 @@
 #include "Graphics/Graphics.hpp"
 #include "Files/Files.hpp"
 
-namespace acid
-{
-const std::vector<VkDynamicState> DYNAMIC_STATES = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH };
+namespace acid {
+const std::vector<VkDynamicState> DYNAMIC_STATES = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH};
 
 PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
 	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
@@ -23,8 +22,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	m_pushDescriptors(pushDescriptors),
 	m_shader(std::make_unique<Shader>()),
 	m_dynamicStates(DYNAMIC_STATES),
-	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS)
-{
+	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS) {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
@@ -36,8 +34,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	CreatePipelineLayout();
 	CreateAttributes();
 
-	switch (m_mode)
-	{
+	switch (m_mode) {
 	case Mode::Polygon:
 		CreatePipelinePolygon();
 		break;
@@ -53,12 +50,10 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 #endif
 }
 
-PipelineGraphics::~PipelineGraphics()
-{
+PipelineGraphics::~PipelineGraphics() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &shaderModule : m_modules)
-	{
+	for (const auto &shaderModule : m_modules) {
 		vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
 	}
 
@@ -68,36 +63,29 @@ PipelineGraphics::~PipelineGraphics()
 	vkDestroyDescriptorSetLayout(*logicalDevice, m_descriptorSetLayout, nullptr);
 }
 
-const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const
-{
+const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const {
 	return Graphics::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetDepthStencil();
 }
 
-const Image2d *PipelineGraphics::GetImage(uint32_t index, const std::optional<uint32_t> &stage) const
-{
+const Image2d *PipelineGraphics::GetImage(uint32_t index, const std::optional<uint32_t> &stage) const {
 	return Graphics::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetFramebuffers()->GetAttachment(index);
 }
 
-RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage) const
-{
+RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage) const {
 	return Graphics::Get()->GetRenderStage(stage ? *stage : m_stage.first)->GetRenderArea();
 }
 
-void PipelineGraphics::CreateShaderProgram()
-{
+void PipelineGraphics::CreateShaderProgram() {
 	std::stringstream defineBlock;
 
-	for (const auto &[defineName, defineValue] : m_defines)
-	{
+	for (const auto &[defineName, defineValue] : m_defines) {
 		defineBlock << "#define " << defineName << " " << defineValue << '\n';
 	}
 
-	for (const auto &shaderStage : m_shaderStages)
-	{
+	for (const auto &shaderStage : m_shaderStages) {
 		auto fileLoaded = Files::Read(shaderStage);
 
-		if (!fileLoaded)
-		{
+		if (!fileLoaded) {
 			throw std::runtime_error("Could not create pipeline, missing shader stage");
 		}
 
@@ -116,8 +104,7 @@ void PipelineGraphics::CreateShaderProgram()
 	m_shader->CreateReflection();
 }
 
-void PipelineGraphics::CreateDescriptorLayout()
-{
+void PipelineGraphics::CreateDescriptorLayout() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto &descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
@@ -130,8 +117,7 @@ void PipelineGraphics::CreateDescriptorLayout()
 	Graphics::CheckVk(vkCreateDescriptorSetLayout(*logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 }
 
-void PipelineGraphics::CreateDescriptorPool()
-{
+void PipelineGraphics::CreateDescriptorPool() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
@@ -145,8 +131,7 @@ void PipelineGraphics::CreateDescriptorPool()
 	Graphics::CheckVk(vkCreateDescriptorPool(*logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 }
 
-void PipelineGraphics::CreatePipelineLayout()
-{
+void PipelineGraphics::CreatePipelineLayout() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
@@ -160,13 +145,11 @@ void PipelineGraphics::CreatePipelineLayout()
 	Graphics::CheckVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 }
 
-void PipelineGraphics::CreateAttributes()
-{
+void PipelineGraphics::CreateAttributes() {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid)
-	{
+	if (m_polygonMode == VK_POLYGON_MODE_LINE && !logicalDevice->GetEnabledFeatures().fillModeNonSolid) {
 		throw std::runtime_error("Cannot create graphics pipeline with line polygon mode when logical device does not support non solid fills.");
 	}
 
@@ -210,8 +193,7 @@ void PipelineGraphics::CreateAttributes()
 	m_depthStencilState.front = m_depthStencilState.back;
 	m_depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
 
-	switch (m_depth)
-	{
+	switch (m_depth) {
 	case Depth::None:
 		m_depthStencilState.depthTestEnable = VK_FALSE;
 		m_depthStencilState.depthWriteEnable = VK_FALSE;
@@ -250,8 +232,7 @@ void PipelineGraphics::CreateAttributes()
 	m_tessellationState.patchControlPoints = 3;
 }
 
-void PipelineGraphics::CreatePipeline()
-{
+void PipelineGraphics::CreatePipeline() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto pipelineCache = Graphics::Get()->GetPipelineCache();
 	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
@@ -260,15 +241,12 @@ void PipelineGraphics::CreatePipeline()
 	std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
 	uint32_t lastAttribute = 0;
 
-	for (const auto &vertexInput : m_vertexInputs)
-	{
-		for (const auto &binding : vertexInput.GetBindingDescriptions())
-		{
+	for (const auto &vertexInput : m_vertexInputs) {
+		for (const auto &binding : vertexInput.GetBindingDescriptions()) {
 			bindingDescriptions.emplace_back(binding);
 		}
 
-		for (const auto &attribute : vertexInput.GetAttributeDescriptions())
-		{
+		for (const auto &attribute : vertexInput.GetAttributeDescriptions()) {
 			/*bool shaderContains = false;
 
 			for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
@@ -289,8 +267,7 @@ void PipelineGraphics::CreatePipeline()
 			newAttribute.location += lastAttribute;
 		}
 
-		if (!vertexInput.GetAttributeDescriptions().empty())
-		{
+		if (!vertexInput.GetAttributeDescriptions().empty()) {
 			lastAttribute = attributeDescriptions.back().location + 1;
 		}
 	}
@@ -324,21 +301,18 @@ void PipelineGraphics::CreatePipeline()
 	Graphics::CheckVk(vkCreateGraphicsPipelines(*logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &m_pipeline));
 }
 
-void PipelineGraphics::CreatePipelinePolygon()
-{
+void PipelineGraphics::CreatePipelinePolygon() {
 	CreatePipeline();
 }
 
-void PipelineGraphics::CreatePipelineMrt()
-{
+void PipelineGraphics::CreatePipelineMrt() {
 	auto renderStage = Graphics::Get()->GetRenderStage(m_stage.first);
 	auto attachmentCount = renderStage->GetAttachmentCount(m_stage.second);
 
 	std::vector<VkPipelineColorBlendAttachmentState> blendAttachmentStates;
 	blendAttachmentStates.reserve(attachmentCount);
 
-	for (uint32_t i = 0; i < attachmentCount; i++)
-	{
+	for (uint32_t i = 0; i < attachmentCount; i++) {
 		VkPipelineColorBlendAttachmentState blendAttachmentState = {};
 		blendAttachmentState.blendEnable = VK_TRUE;
 		blendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;

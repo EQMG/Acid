@@ -2,9 +2,9 @@
 
 #include "Time.hpp"
 
-namespace acid
-{
-class ACID_EXPORT ElapsedTime
+namespace acid {
+class ACID_EXPORT
+ElapsedTime
 {
 public:
 	explicit ElapsedTime(const Time &interval = -1s);

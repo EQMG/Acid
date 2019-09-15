@@ -4,10 +4,12 @@
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
-namespace acid
-{
-class ACID_EXPORT SubrenderMeshes :
-	public Subrender
+namespace acid {
+class ACID_EXPORT
+SubrenderMeshes
+:
+public
+Subrender
 {
 public:
 	enum class Sort

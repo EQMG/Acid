@@ -4,12 +4,12 @@
 #include "Serialized/Node.hpp"
 #include "Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that holds registered model types.
  */
-class ACID_EXPORT ModelRegister
+class ACID_EXPORT
+ModelRegister
 {
 public:
 	/**

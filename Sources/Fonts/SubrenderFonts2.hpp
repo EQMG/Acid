@@ -3,10 +3,12 @@
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
-namespace acid
-{
-class ACID_EXPORT SubrenderFonts2 :
-	public Subrender
+namespace acid {
+class ACID_EXPORT
+SubrenderFonts2
+:
+public
+Subrender
 {
 public:
 	explicit SubrenderFonts2(const Pipeline::Stage &pipelineStage);

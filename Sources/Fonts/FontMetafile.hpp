@@ -2,12 +2,12 @@
 
 #include "Files/Files.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Provides functionality for getting the values from a font file.
  */
-class ACID_EXPORT FontMetafile
+class ACID_EXPORT
+FontMetafile
 {
 public:
 	/**

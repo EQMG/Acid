@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a OBL model.
  */
-class ACID_EXPORT ModelObj :
-	public Model
+class ACID_EXPORT
+ModelObj
+:
+public
+Model
 {
 public:
 	/**

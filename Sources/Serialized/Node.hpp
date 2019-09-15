@@ -2,12 +2,12 @@
 
 #include "NodeReturn.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that is used to represent a tree of values, used in serialization.
  */
-class ACID_EXPORT Node
+class ACID_EXPORT
+Node
 {
 public:
 	enum class Type

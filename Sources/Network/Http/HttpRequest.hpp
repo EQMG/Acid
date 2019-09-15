@@ -2,12 +2,12 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Defines a HTTP request.
  **/
-class ACID_EXPORT HttpRequest
+class ACID_EXPORT
+HttpRequest
 {
 	friend class Http;
 public:

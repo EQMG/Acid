@@ -31,8 +31,7 @@
 #include <Serialized/Json/Json.hpp>
 #include "CameraFps.hpp"
 
-namespace test
-{
+namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
@@ -41,12 +40,9 @@ Scene1::Scene1() :
 	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
 	m_soundScreenshot("Sounds/Screenshot.ogg"),
 	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
-{
-	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
@@ -67,10 +63,8 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
@@ -78,15 +72,13 @@ Scene1::Scene1() :
 	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
 	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 
-	m_uiStartLogo.OnFinished().Add([this]()
-	{
+	m_uiStartLogo.OnFinished().Add([this]() {
 		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
 		Mouse::Get()->SetCursorHidden(true);
 	});
 }
 
-void Scene1::Start()
-{
+void Scene1::Start() {
 	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
@@ -110,12 +102,10 @@ void Scene1::Start()
 	plane->AddComponent<MeshRender>();
 	plane->AddComponent<ShadowRender>();
 
-	static const std::vector cubeColours = { Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White };
+	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
-	for (int32_t i = 0; i < 5; i++)
-	{
-		for (int32_t j = 0; j < 5; j++)
-		{
+	for (int32_t i = 0; i < 5; i++) {
+		for (int32_t j = 0; j < 5; j++) {
 			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f));
 			cube->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)));
@@ -151,12 +141,10 @@ void Scene1::Start()
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 }
 
-void Scene1::Update()
-{
+void Scene1::Update() {
 }
 
-bool Scene1::IsPaused() const
-{
+bool Scene1::IsPaused() const {
 	return !m_uiStartLogo.IsFinished();
 }
 }

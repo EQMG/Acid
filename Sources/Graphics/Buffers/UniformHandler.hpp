@@ -2,12 +2,12 @@
 
 #include "UniformBuffer.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that handles a uniform buffer.
  */
-class ACID_EXPORT UniformHandler
+class ACID_EXPORT
+UniformHandler
 {
 public:
 	explicit UniformHandler(bool multipipeline = false);

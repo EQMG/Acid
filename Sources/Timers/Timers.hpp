@@ -5,9 +5,9 @@
 #include "Helpers/Delegate.hpp"
 #include "Maths/Time.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Timer
+namespace acid {
+class ACID_EXPORT
+Timer
 {
 	friend class Timers;
 public:
@@ -40,8 +40,11 @@ private:
 /**
  * @brief Module used for timed events.
  */
-class ACID_EXPORT Timers :
-	public Module
+class ACID_EXPORT
+Timers
+:
+public
+Module
 {
 public:
 	/**

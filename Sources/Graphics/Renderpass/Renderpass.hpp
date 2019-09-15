@@ -3,12 +3,12 @@
 #include <vulkan/vulkan.h>
 #include "Helpers/NonCopyable.hpp"
 
-namespace acid
-{
+namespace acid {
 class ImageDepth;
 class RenderStage;
 
-class ACID_EXPORT Renderpass
+class ACID_EXPORT
+Renderpass
 {
 public:
 	class SubpassDescription :

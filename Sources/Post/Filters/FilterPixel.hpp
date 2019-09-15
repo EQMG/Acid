@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterPixel :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterPixel
+:
+public
+PostFilter
 {
 public:
 	explicit FilterPixel(const Pipeline::Stage &pipelineStage, float pixelSize = 2.0f);

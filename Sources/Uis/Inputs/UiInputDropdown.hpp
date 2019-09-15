@@ -5,10 +5,12 @@
 #include "Uis/UiObject.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputDropdown :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputDropdown
+:
+public
+UiObject
 {
 public:
 	UiInputDropdown(UiObject *parent, const std::string &title, uint32_t value, std::vector<std::string> options,

@@ -3,10 +3,8 @@
 #include "Matrix2.hpp"
 #include "Matrix3.hpp"
 
-namespace acid
-{
-Matrix4::Matrix4(float diagonal)
-{
+namespace acid {
+Matrix4::Matrix4(float diagonal) {
 	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[0][0] = diagonal;
 	m_rows[1][1] = diagonal;
@@ -14,39 +12,32 @@ Matrix4::Matrix4(float diagonal)
 	m_rows[3][3] = diagonal;
 }
 
-Matrix4::Matrix4(const Matrix2 &source)
-{
+Matrix4::Matrix4(const Matrix2 &source) {
 	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[2][2] = 1.0f;
 	m_rows[3][3] = 1.0f;
 	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
 }
 
-Matrix4::Matrix4(const Matrix3 &source)
-{
+Matrix4::Matrix4(const Matrix3 &source) {
 	std::memset(m_rows, 0, 4 * sizeof(Vector4f));
 	m_rows[3][3] = 1.0f;
 	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3f));
 }
 
-Matrix4::Matrix4(const float *source)
-{
+Matrix4::Matrix4(const float *source) {
 	std::memcpy(m_rows, source, 4 * 4 * sizeof(float));
 }
 
-Matrix4::Matrix4(const Vector4f *source)
-{
+Matrix4::Matrix4(const Vector4f *source) {
 	std::memcpy(m_rows, source, 4 * sizeof(Vector4f));
 }
 
-Matrix4 Matrix4::Add(const Matrix4 &other) const
-{
+Matrix4 Matrix4::Add(const Matrix4 &other) const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[row][col] + other[row][col];
 		}
 	}
@@ -54,14 +45,11 @@ Matrix4 Matrix4::Add(const Matrix4 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Subtract(const Matrix4 &other) const
-{
+Matrix4 Matrix4::Subtract(const Matrix4 &other) const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[row][col] - other[row][col];
 		}
 	}
@@ -69,14 +57,11 @@ Matrix4 Matrix4::Subtract(const Matrix4 &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Multiply(const Matrix4 &other) const
-{
+Matrix4 Matrix4::Multiply(const Matrix4 &other) const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2] + m_rows[3][col] * other[row][3];
 		}
 	}
@@ -84,26 +69,21 @@ Matrix4 Matrix4::Multiply(const Matrix4 &other) const
 	return result;
 }
 
-Vector4f Matrix4::Multiply(const Vector4f &other) const
-{
+Vector4f Matrix4::Multiply(const Vector4f &other) const {
 	Vector4f result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
+	for (uint32_t row = 0; row < 4; row++) {
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
 
 	return result;
 }
 
-Matrix4 Matrix4::Divide(const Matrix4 &other) const
-{
+Matrix4 Matrix4::Divide(const Matrix4 &other) const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2] + m_rows[3][col] / other[row][3];
 		}
 	}
@@ -111,50 +91,41 @@ Matrix4 Matrix4::Divide(const Matrix4 &other) const
 	return result;
 }
 
-Vector4f Matrix4::Transform(const Vector4f &other) const
-{
+Vector4f Matrix4::Transform(const Vector4f &other) const {
 	Vector4f result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
+	for (uint32_t row = 0; row < 4; row++) {
 		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z + m_rows[3][row] * other.m_w;
 	}
 
 	return result;
 }
 
-Matrix4 Matrix4::Translate(const Vector2f &other) const
-{
+Matrix4 Matrix4::Translate(const Vector2f &other) const {
 	Matrix4 result(*this);
 
-	for (uint32_t col = 0; col < 4; col++)
-	{
+	for (uint32_t col = 0; col < 4; col++) {
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y;
 	}
 
 	return result;
 }
 
-Matrix4 Matrix4::Translate(const Vector3f &other) const
-{
+Matrix4 Matrix4::Translate(const Vector3f &other) const {
 	Matrix4 result(*this);
 
-	for (uint32_t col = 0; col < 4; col++)
-	{
+	for (uint32_t col = 0; col < 4; col++) {
 		result[3][col] += m_rows[0][col] * other.m_x + m_rows[1][col] * other.m_y + m_rows[2][col] * other.m_z;
 	}
 
 	return result;
 }
 
-Matrix4 Matrix4::Scale(const Vector3f &other) const
-{
+Matrix4 Matrix4::Scale(const Vector3f &other) const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 3; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 3; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[row][col] * other[row];
 		}
 	}
@@ -163,14 +134,11 @@ Matrix4 Matrix4::Scale(const Vector3f &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Scale(const Vector4f &other) const
-{
+Matrix4 Matrix4::Scale(const Vector4f &other) const {
 	Matrix4 result(*this);
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] *= other[row];
 		}
 	}
@@ -178,8 +146,7 @@ Matrix4 Matrix4::Scale(const Vector4f &other) const
 	return result;
 }
 
-Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const
-{
+Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const {
 	Matrix4 result;
 
 	auto c = std::cos(angle);
@@ -203,10 +170,8 @@ Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const
 	f[2][1] = yz * o - xs;
 	f[2][2] = axis.m_z * axis.m_z * o + c;
 
-	for (uint32_t row = 0; row < 3; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 3; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[0][col] * f[row][0] + m_rows[1][col] * f[row][1] + m_rows[2][col] * f[row][2];
 		}
 	}
@@ -215,14 +180,11 @@ Matrix4 Matrix4::Rotate(float angle, const Vector3f &axis) const
 	return result;
 }
 
-Matrix4 Matrix4::Negate() const
-{
+Matrix4 Matrix4::Negate() const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = -m_rows[row][col];
 		}
 	}
@@ -230,21 +192,17 @@ Matrix4 Matrix4::Negate() const
 	return result;
 }
 
-Matrix4 Matrix4::Inverse() const
-{
+Matrix4 Matrix4::Inverse() const {
 	Matrix4 result;
 
 	auto det = Determinant();
 
-	if (det == 0.0f)
-	{
+	if (det == 0.0f) {
 		throw std::runtime_error("Can't invert a matrix with a determinant of zero");
 	}
 
-	for (uint32_t j = 0; j < 4; j++)
-	{
-		for (uint32_t i = 0; i < 4; i++)
-		{
+	for (uint32_t j = 0; j < 4; j++) {
+		for (uint32_t i = 0; i < 4; i++) {
 			// Get minor of element [j][i] - not [i][j], this is where the transpose happens.
 			auto minorSubmatrix = GetSubmatrix(j, i);
 			auto minor = minorSubmatrix.Determinant();
@@ -260,14 +218,11 @@ Matrix4 Matrix4::Inverse() const
 	return result;
 }
 
-Matrix4 Matrix4::Transpose() const
-{
+Matrix4 Matrix4::Transpose() const {
 	Matrix4 result;
 
-	for (uint32_t row = 0; row < 4; row++)
-	{
-		for (uint32_t col = 0; col < 4; col++)
-		{
+	for (uint32_t row = 0; row < 4; row++) {
+		for (uint32_t col = 0; col < 4; col++) {
 			result[row][col] = m_rows[col][row];
 		}
 	}
@@ -275,12 +230,10 @@ Matrix4 Matrix4::Transpose() const
 	return result;
 }
 
-float Matrix4::Determinant() const
-{
+float Matrix4::Determinant() const {
 	float result = 0.0f;
 
-	for (uint32_t i = 0; i < 4; i++)
-	{
+	for (uint32_t i = 0; i < 4; i++) {
 		// Get minor of element [0][i].
 		auto minorSubmatrix = GetSubmatrix(0, i);
 		auto minor = minorSubmatrix.Determinant();
@@ -294,22 +247,17 @@ float Matrix4::Determinant() const
 	return result;
 }
 
-Matrix3 Matrix4::GetSubmatrix(uint32_t row, uint32_t col) const
-{
+Matrix3 Matrix4::GetSubmatrix(uint32_t row, uint32_t col) const {
 	Matrix3 result;
 	uint32_t colCount = 0;
 	uint32_t rowCount = 0;
 
-	for (uint32_t i = 0; i < 4; i++)
-	{
-		if (i != row)
-		{
+	for (uint32_t i = 0; i < 4; i++) {
+		if (i != row) {
 			colCount = 0;
 
-			for (uint32_t j = 0; j < 4; j++)
-			{
-				if (j != col)
-				{
+			for (uint32_t j = 0; j < 4; j++) {
+				if (j != col) {
 					result[rowCount][colCount] = m_rows[i][j];
 					colCount++;
 				}
@@ -322,8 +270,7 @@ Matrix3 Matrix4::GetSubmatrix(uint32_t row, uint32_t col) const
 	return result;
 }
 
-Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3f &rotation, const Vector3f &scale)
-{
+Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3f &rotation, const Vector3f &scale) {
 	Matrix4 result;
 	result = result.Translate(translation);
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
@@ -333,8 +280,7 @@ Matrix4 Matrix4::TransformationMatrix(const Vector3f &translation, const Vector3
 	return result;
 }
 
-Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar)
-{
+Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, float zFar) {
 	Matrix4 result(0.0f);
 
 	auto f = std::tan(0.5f * fov);
@@ -347,8 +293,7 @@ Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear, fl
 	return result;
 }
 
-Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear)
-{
+Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear) {
 	Matrix4 result(0.0f);
 
 	auto range = std::tan(0.5f * fov) * zNear;
@@ -365,8 +310,7 @@ Matrix4 Matrix4::PerspectiveMatrix(float fov, float aspectRatio, float zNear)
 	return result;
 }
 
-Matrix4 Matrix4::OrthographicMatrix(float left, float right, float bottom, float top, float zNear, float zFar)
-{
+Matrix4 Matrix4::OrthographicMatrix(float left, float right, float bottom, float top, float zNear, float zFar) {
 	Matrix4 result;
 
 	result[0][0] = 2.0f / (right - left);
@@ -378,8 +322,7 @@ Matrix4 Matrix4::OrthographicMatrix(float left, float right, float bottom, float
 	return result;
 }
 
-Matrix4 Matrix4::FrustumMatrix(float left, float right, float bottom, float top, float zNear, float zFar)
-{
+Matrix4 Matrix4::FrustumMatrix(float left, float right, float bottom, float top, float zNear, float zFar) {
 	Matrix4 result(0.0f);
 
 	result[0][0] = (2.0f * zNear) / (right - left);
@@ -392,8 +335,7 @@ Matrix4 Matrix4::FrustumMatrix(float left, float right, float bottom, float top,
 	return result;
 }
 
-Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
-{
+Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation) {
 	Matrix4 result;
 
 	result = result.Rotate(rotation.m_x, Vector3f::Right);
@@ -403,8 +345,7 @@ Matrix4 Matrix4::ViewMatrix(const Vector3f &position, const Vector3f &rotation)
 	return result;
 }
 
-Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
-{
+Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) {
 	Vector4f point4(worldSpace, 1.0f);
 	point4 = viewMatrix.Transform(point4);
 	point4 = projectionMatrix.Transform(point4);
@@ -415,15 +356,13 @@ Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix,
 	return result;
 }
 
-Vector3f Matrix4::Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix)
-{
+Vector3f Matrix4::Unproject(const Vector3f &screenSpace, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) {
 	Vector3f result;
 	// TODO: Write unproject method
 	return result;
 }
 
-Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up)
-{
+Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vector3f &up) {
 	Matrix4 result;
 
 	auto f = (centre - eye).Normalize();
@@ -445,135 +384,109 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 	return result;
 }
 
-bool Matrix4::operator==(const Matrix4 &other) const
-{
+bool Matrix4::operator==(const Matrix4 &other) const {
 	return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2] && m_rows[3] == other[3];
 }
 
-bool Matrix4::operator!=(const Matrix4 &other) const
-{
+bool Matrix4::operator!=(const Matrix4 &other) const {
 	return !(*this == other);
 }
 
-Matrix4 Matrix4::operator-() const
-{
+Matrix4 Matrix4::operator-() const {
 	return Negate();
 }
 
-const Vector4f &Matrix4::operator[](uint32_t index) const
-{
+const Vector4f &Matrix4::operator[](uint32_t index) const {
 	assert(index < 4);
 	return m_rows[index];
 }
 
-Vector4f &Matrix4::operator[](uint32_t index)
-{
+Vector4f &Matrix4::operator[](uint32_t index) {
 	assert(index < 4);
 	return m_rows[index];
 }
 
-Matrix4 operator+(const Matrix4 &left, const Matrix4 &right)
-{
+Matrix4 operator+(const Matrix4 &left, const Matrix4 &right) {
 	return left.Add(right);
 }
 
-Matrix4 operator-(const Matrix4 &left, const Matrix4 &right)
-{
+Matrix4 operator-(const Matrix4 &left, const Matrix4 &right) {
 	return left.Subtract(right);
 }
 
-Matrix4 operator*(const Matrix4 &left, const Matrix4 &right)
-{
+Matrix4 operator*(const Matrix4 &left, const Matrix4 &right) {
 	return left.Multiply(right);
 }
 
-Matrix4 operator/(const Matrix4 &left, const Matrix4 &right)
-{
+Matrix4 operator/(const Matrix4 &left, const Matrix4 &right) {
 	return left.Divide(right);
 }
 
-Matrix4 operator*(const Vector4f &left, const Matrix4 &right)
-{
+Matrix4 operator*(const Vector4f &left, const Matrix4 &right) {
 	return right.Scale(left);
 }
 
-Matrix4 operator/(const Vector4f &left, const Matrix4 &right)
-{
+Matrix4 operator/(const Vector4f &left, const Matrix4 &right) {
 	return right.Scale(1.0f / left);
 }
 
-Matrix4 operator*(const Matrix4 &left, const Vector4f &right)
-{
+Matrix4 operator*(const Matrix4 &left, const Vector4f &right) {
 	return left.Scale(right);
 }
 
-Matrix4 operator/(const Matrix4 &left, const Vector4f &right)
-{
+Matrix4 operator/(const Matrix4 &left, const Vector4f &right) {
 	return left.Scale(1.0f / right);
 }
 
-Matrix4 operator*(float left, const Matrix4 &right)
-{
+Matrix4 operator*(float left, const Matrix4 &right) {
 	return right.Scale(Vector4f(left));
 }
 
-Matrix4 operator/(float left, const Matrix4 &right)
-{
+Matrix4 operator/(float left, const Matrix4 &right) {
 	return right.Scale(1.0f / Vector4f(left));
 }
 
-Matrix4 operator*(const Matrix4 &left, float right)
-{
+Matrix4 operator*(const Matrix4 &left, float right) {
 	return left.Scale(Vector4f(right));
 }
 
-Matrix4 operator/(const Matrix4 &left, float right)
-{
+Matrix4 operator/(const Matrix4 &left, float right) {
 	return left.Scale(1.0f / Vector4f(right));
 }
 
-Matrix4 &Matrix4::operator+=(const Matrix4 &other)
-{
+Matrix4 &Matrix4::operator+=(const Matrix4 &other) {
 	return *this = Add(other);
 }
 
-Matrix4 &Matrix4::operator-=(const Matrix4 &other)
-{
+Matrix4 &Matrix4::operator-=(const Matrix4 &other) {
 	return *this = Subtract(other);
 }
 
-Matrix4 &Matrix4::operator*=(const Matrix4 &other)
-{
+Matrix4 &Matrix4::operator*=(const Matrix4 &other) {
 	return *this = Multiply(other);
 }
 
-Matrix4 &Matrix4::operator/=(const Matrix4 &other)
-{
+Matrix4 &Matrix4::operator/=(const Matrix4 &other) {
 	return *this = Divide(other);
 }
 
-Matrix4 &Matrix4::operator*=(const Vector4f &other)
-{
+Matrix4 &Matrix4::operator*=(const Vector4f &other) {
 	return *this = Scale(other);
 }
 
-Matrix4 &Matrix4::operator/=(const Vector4f &other)
-{
+Matrix4 &Matrix4::operator/=(const Vector4f &other) {
 	return *this = Scale(1.0f / other);
 }
 
-Matrix4 &Matrix4::operator*=(float other)
-{
+Matrix4 &Matrix4::operator*=(float other) {
 	return *this = Scale(Vector4f(other));
 }
 
-Matrix4 &Matrix4::operator/=(float other)
-{
+Matrix4 &Matrix4::operator/=(float other) {
 	return *this = Scale(1.0f / Vector4f(other));
 }
 
-const Node &operator>>(const Node &node, Matrix4 &matrix)
-{
+const Node &operator>>(const Node &node, Matrix4 &matrix) {
 	node["m0"].Get(matrix.m_rows[0]);
 	node["m1"].Get(matrix.m_rows[1]);
 	node["m2"].Get(matrix.m_rows[2]);
@@ -581,8 +494,7 @@ const Node &operator>>(const Node &node, Matrix4 &matrix)
 	return node;
 }
 
-Node &operator<<(Node &node, const Matrix4 &matrix)
-{
+Node &operator<<(Node &node, const Matrix4 &matrix) {
 	node["m0"].Set(matrix.m_rows[0]);
 	node["m1"].Set(matrix.m_rows[1]);
 	node["m2"].Set(matrix.m_rows[2]);
@@ -590,8 +502,7 @@ Node &operator<<(Node &node, const Matrix4 &matrix)
 	return node;
 }
 
-std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix)
-{
+std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix) {
 	return stream << matrix[0] << ", " << matrix[1] << ", " << matrix[2] << ", " << matrix[3];
 }
 }

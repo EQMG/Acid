@@ -2,9 +2,9 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
-class ACID_EXPORT VertexWeights
+namespace acid {
+class ACID_EXPORT
+VertexWeights
 {
 public:
 	void AddJointEffect(uint32_t jointId, float weight);

@@ -3,10 +3,12 @@
 #include "Models/Model.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-class ACID_EXPORT MeshPattern :
-	public Model
+namespace acid {
+class ACID_EXPORT
+MeshPattern
+:
+public
+Model
 {
 public:
 	MeshPattern(float sideLength, float squareSize, uint32_t vertexCount, float uvScale);

@@ -2,15 +2,17 @@
 
 #include "Network/Tcp/TcpSocket.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Ftp;
-class ACID_EXPORT FtpResponse;
+namespace acid {
+class ACID_EXPORT
+Ftp;
+class ACID_EXPORT
+FtpResponse;
 
 /**
  * @brief Utility class for exchanging datas with the server on the data channel.
  **/
-class ACID_EXPORT FtpDataChannel
+class ACID_EXPORT
+FtpDataChannel
 {
 public:
 	/**

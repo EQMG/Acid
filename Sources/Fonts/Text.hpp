@@ -11,13 +11,15 @@
 #include "Uis/UiObject.hpp"
 #include "FontType.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a text in a GUI.
  */
-class ACID_EXPORT Text :
-	public UiObject
+class ACID_EXPORT
+Text
+:
+public
+UiObject
 {
 	friend class FontType;
 public:

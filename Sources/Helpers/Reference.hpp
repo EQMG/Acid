@@ -46,7 +46,8 @@ public:
 	}
 
 	bool operator==(const Reference &other) const noexcept {
-		return m_reference == other.m_reference; }
+		return m_reference == other.m_reference;
+	}
 
 	bool operator!=(const Reference &other) const noexcept {
 		return !(*this == other);

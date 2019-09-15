@@ -8,11 +8,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Terrain :
-	public Component
-{
+	public Component {
 public:
 	explicit Terrain(float sideLength = 200.0f, float squareSize = 2.0f);
 

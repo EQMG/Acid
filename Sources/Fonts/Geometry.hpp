@@ -2,14 +2,17 @@
 
 #include "Maths/Vector2.hpp"
 
-namespace acid
-{
-enum class QuadraticSolution
-{
-	None, All, Touch, One, Two
+namespace acid {
+enum class QuadraticSolution {
+	None,
+	All,
+	Touch,
+	One,
+	Two
 };
 
-class ACID_EXPORT Rect
+class ACID_EXPORT
+Rect
 {
 public:
 	Vector2f m_min;

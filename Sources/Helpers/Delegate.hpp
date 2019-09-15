@@ -8,7 +8,9 @@ namespace acid {
 template<typename>
 class Delegate;
 
-class ACID_EXPORT Observer {
+class ACID_EXPORT
+Observer
+{
 public:
 	Observer() : m_valid(std::make_shared<bool>(true)) {}
 	virtual ~Observer() = default;
@@ -149,6 +151,7 @@ class DelegateValue :
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) : m_value(std::forward<Args>(args)...) {}
+
 	virtual ~DelegateValue() = default;
 
 	DelegateValue &operator=(T value) {

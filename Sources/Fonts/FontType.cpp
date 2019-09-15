@@ -6,14 +6,11 @@
 #include "Graphics/Graphics.hpp"
 #include "Text.hpp"
 
-namespace acid
-{
+namespace acid {
 static const uint32_t MAX_VISIBLE_GLYPHS = 4096;
 
-std::shared_ptr<FontType> FontType::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+std::shared_ptr<FontType> FontType::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<FontType>(resource);
 	}
 
@@ -24,8 +21,7 @@ std::shared_ptr<FontType> FontType::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, const std::string &style)
-{
+std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, const std::string &style) {
 	FontType temp(filename, style, false);
 	Node node;
 	node << temp;
@@ -34,20 +30,16 @@ std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename
 
 FontType::FontType(std::filesystem::path filename, std::string style, bool load) :
 	m_filename(std::move(filename)),
-	m_style(std::move(style))
-{
-	if (load)
-	{
+	m_style(std::move(style)) {
+	if (load) {
 		FontType::Load();
 	}
 }
 
-void FontType::Update(const std::vector<Text *> &texts)
-{
+void FontType::Update(const std::vector<Text *> &texts) {
 	m_instances = 0;
 
-	if (texts.empty())
-	{
+	if (texts.empty()) {
 		return;
 	}
 
@@ -56,18 +48,15 @@ void FontType::Update(const std::vector<Text *> &texts)
 
 	auto extent = Window::Get()->GetSize();
 
-	for (const auto &text : texts)
-	{
+	for (const auto &text : texts) {
 		auto fontSize = text->GetFontSize() * text->GetScreenScale() / 1000.0f;
 		//auto size = text->GetScreenTransform().GetSize();
 		auto position = text->GetScreenTransform().GetPosition();
 
 		Vector2f localOffset;
 
-		for (const auto &c : text->GetString())
-		{
-			if (m_instances >= MAX_VISIBLE_GLYPHS)
-			{
+		for (const auto &c : text->GetString()) {
+			if (m_instances >= MAX_VISIBLE_GLYPHS) {
 				break;
 			}
 
@@ -75,8 +64,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 			auto gi = &m_glyphInfos[glyphIndex];
 			auto instance = &instances[m_instances];
 
-			if (c == '\n')
-			{
+			if (c == '\n') {
 				localOffset.m_x = 0.0f;
 				localOffset.m_y += gi->vertAdvance * fontSize.m_y;
 				continue;
@@ -87,8 +75,7 @@ void FontType::Update(const std::vector<Text *> &texts)
 			instance->m_rect.m_max.m_x = ((position.m_x + localOffset.m_x) + gi->bbox.m_max.m_x * fontSize.m_x) / (extent.m_x / 2.0f) - 1.0f;
 			instance->m_rect.m_max.m_y = ((position.m_y + localOffset.m_y) - gi->bbox.m_max.m_y * fontSize.m_y) / (extent.m_y / 2.0f) - 1.0f;
 
-			if (instance->m_rect.m_min.m_x <= 1.0f && instance->m_rect.m_max.m_x >= -1.0f && instance->m_rect.m_max.m_y <= 1.0f && instance->m_rect.m_min.m_y >= -1.0f)
-			{
+			if (instance->m_rect.m_min.m_x <= 1.0f && instance->m_rect.m_max.m_x >= -1.0f && instance->m_rect.m_max.m_y <= 1.0f && instance->m_rect.m_min.m_y >= -1.0f) {
 				instance->m_glyphIndex = glyphIndex;
 				instance->m_sharpness = fontSize.m_x;
 				instance->m_colour = text->m_textColour;
@@ -104,10 +91,8 @@ void FontType::Update(const std::vector<Text *> &texts)
 	m_instanceBuffer->UnmapMemory();
 }
 
-bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline)
-{
-	if (m_instances == 0)
-	{
+bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
+	if (m_instances == 0) {
 		return false;
 	}
 
@@ -116,8 +101,7 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	m_descriptorSet.Push("BufferCell", *m_storageGlyphs, OffsetSize(m_glyphCellsOffset, m_glyphCellsSize));
 	m_descriptorSet.Push("BufferPoint", *m_storageGlyphs, OffsetSize(m_glyphPointsOffset, m_glyphPointsSize));
 
-	if (!m_descriptorSet.Update(pipeline))
-	{
+	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
 	}
 
@@ -130,24 +114,20 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	return true;
 }
 
-const Node &operator>>(const Node &node, FontType &fontType)
-{
+const Node &operator>>(const Node &node, FontType &fontType) {
 	node["filename"].Get(fontType.m_filename);
 	node["style"].Get(fontType.m_style);
 	return node;
 }
 
-Node &operator<<(Node &node, const FontType &fontType)
-{
+Node &operator<<(Node &node, const FontType &fontType) {
 	node["filename"].Set(fontType.m_filename);
 	node["style"].Set(fontType.m_style);
 	return node;
 }
 
-void FontType::Load()
-{
-	if (m_filename.empty() || m_style.empty())
-	{
+void FontType::Load() {
+	if (m_filename.empty() || m_style.empty()) {
 		return;
 	}
 
@@ -156,39 +136,33 @@ void FontType::Load()
 	LoadFont(m_filename / (m_style + ".ttf"));
 }
 
-uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment)
-{
+uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {
 	return (value + alignment - 1) / alignment * alignment;
 }
 
-void FontType::LoadFont(const std::filesystem::path &filename)
-{
+void FontType::LoadFont(const std::filesystem::path &filename) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
 	auto fileLoaded = Files::Read(filename); // TODO: Use a stream.
 
-	if (!fileLoaded)
-	{
+	if (!fileLoaded) {
 		Log::Error("Could not load font ", filename, '\n');
 		return;
 	}
 
 	FT_Library library;
 
-	if (FT_Init_FreeType(&library) != 0)
-	{
+	if (FT_Init_FreeType(&library) != 0) {
 		throw std::runtime_error("Freetype failed to initialize");
 	}
 
 	FT_Face face;
 
-	if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0)
-	{
+	if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0) {
 		throw std::runtime_error("Freetype failed to create face from memory");
 	}
 
-	if (FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96) != 0)
-	{
+	if (FT_Set_Char_Size(face, 0, 1000 * 64, 96, 96) != 0) {
 		throw std::runtime_error("Freetype failed to set char size");
 	}
 
@@ -204,10 +178,8 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	auto charcode = FT_Get_First_Char(face, &glyphIndex);
 	uint32_t i = 0;
 
-	while (glyphIndex != 0)
-	{
-		if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING) != 0)
-		{
+	while (glyphIndex != 0) {
+		if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING) != 0) {
 			throw std::runtime_error("Freetype failed to load a glyph");
 		}
 
@@ -251,8 +223,7 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
 
-	for (uint32_t j = 0; j < m_glyphInfos.size(); j++)
-	{
+	for (uint32_t j = 0; j < m_glyphInfos.size(); j++) {
 		auto o = &outlines[j];
 		auto dgi = &deviceGlyphInfos[j];
 
@@ -275,13 +246,11 @@ void FontType::LoadFont(const std::filesystem::path &filename)
 	assert(pointOffset == totalPoints);
 	assert(cellOffset == totalCells);
 
-	if (FT_Done_Face(face) != 0)
-	{
+	if (FT_Done_Face(face) != 0) {
 		throw std::runtime_error("Freetype failed to destory face");
 	}
 
-	if (FT_Done_FreeType(library) != 0)
-	{
+	if (FT_Done_FreeType(library) != 0) {
 		throw std::runtime_error("Freetype failed to destory library");
 	}
 }

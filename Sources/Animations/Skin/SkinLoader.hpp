@@ -3,9 +3,9 @@
 #include "Serialized/Node.hpp"
 #include "VertexWeights.hpp"
 
-namespace acid
-{
-class ACID_EXPORT SkinLoader
+namespace acid {
+class ACID_EXPORT
+SkinLoader
 {
 public:
 	SkinLoader(const Node *libraryControllers, uint32_t maxWeights);

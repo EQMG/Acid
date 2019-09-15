@@ -7,8 +7,7 @@
 
 using namespace acid;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	// TODO: Download a ZIP from Google Drive.
 	/*{
 		Http http("http://drive.google.com/");

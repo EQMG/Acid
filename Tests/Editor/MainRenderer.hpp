@@ -4,11 +4,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class MainRenderer :
-	public Renderer
-{
+	public Renderer {
 public:
 	MainRenderer();
 

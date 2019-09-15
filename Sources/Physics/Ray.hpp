@@ -5,12 +5,12 @@
 #include "Maths/Vector3.hpp"
 #include "Maths/Vector4.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a 3 dimensional ray.
  */
-class ACID_EXPORT Ray
+class ACID_EXPORT
+Ray
 {
 public:
 	/**

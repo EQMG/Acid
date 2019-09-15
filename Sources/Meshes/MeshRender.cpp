@@ -7,18 +7,14 @@
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 
-namespace acid
-{
-void MeshRender::Start()
-{
+namespace acid {
+void MeshRender::Start() {
 }
 
-void MeshRender::Update()
-{
+void MeshRender::Update() {
 	auto material = GetEntity()->GetComponent<Material>();
 
-	if (!material)
-	{
+	if (!material) {
 		return;
 	}
 
@@ -26,13 +22,10 @@ void MeshRender::Update()
 	material->PushUniforms(m_uniformObject);
 }
 
-bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage)
-{
+bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
 	// Checks if the mesh is in view.
-	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody)
-	{
-		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
-		{
+	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody) {
+		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum())) {
 			return false;
 		}
 	}
@@ -50,15 +43,13 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	auto meshModel = mesh->GetModel(); // meshAnimated ? meshAnimated->GetModel() : 
 	auto materialPipeline = material->GetPipelineMaterial();
 
-	if (!meshModel || !materialPipeline || materialPipeline->GetStage() != pipelineStage)
-	{
+	if (!meshModel || !materialPipeline || materialPipeline->GetStage() != pipelineStage) {
 		return false;
 	}
 
 	// Binds the material pipeline.
 
-	if (!materialPipeline->BindPipeline(commandBuffer))
-	{
+	if (!materialPipeline->BindPipeline(commandBuffer)) {
 		return false;
 	}
 
@@ -69,8 +60,7 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
 	material->PushDescriptors(m_descriptorSet);
 
-	if (!m_descriptorSet.Update(pipeline))
-	{
+	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
 	}
 
@@ -79,8 +69,7 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	return meshModel->CmdRender(commandBuffer);
 }
 
-bool MeshRender::operator<(const MeshRender &other) const
-{
+bool MeshRender::operator<(const MeshRender &other) const {
 	auto camera = Scenes::Get()->GetCamera();
 
 	auto transform0 = GetEntity()->GetComponent<Transform>();
@@ -92,13 +81,11 @@ bool MeshRender::operator<(const MeshRender &other) const
 	return thisDistance2 > otherDistance2;
 }
 
-const Node &operator>>(const Node &node, MeshRender &meshRender)
-{
+const Node &operator>>(const Node &node, MeshRender &meshRender) {
 	return node;
 }
 
-Node &operator<<(Node &node, const MeshRender &meshRender)
-{
+Node &operator<<(Node &node, const MeshRender &meshRender) {
 	return node;
 }
 }

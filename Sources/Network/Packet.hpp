@@ -2,8 +2,7 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Packets provide a safe and easy way to serialize data,
  * in order to send it over the network using sockets (acid::TcpSocket, acid::UdpSocket).
@@ -20,7 +19,8 @@ namespace acid
  * Indeed, the native C++ types may have different sizes on two platforms and your data may be
  * corrupted if that happens.
  **/
-class ACID_EXPORT Packet
+class ACID_EXPORT
+Packet
 {
 	friend class TcpSocket;
 	friend class UdpSocket;

@@ -24,12 +24,10 @@
 #include <Shadows/SubrenderShadows.hpp>
 #include "Devices/Keyboard.hpp"
 
-namespace test
-{
-MainRenderer::MainRenderer()
-{
+namespace test {
+MainRenderer::MainRenderer() {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
-	
+
 	std::vector<Attachment> renderpassAttachments0 = {
 		{0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM}
 	};
@@ -81,8 +79,7 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->AddSubrender<SubrenderFonts>({1, 2});
 }
 
-void MainRenderer::Update()
-{
+void MainRenderer::Update() {
 	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
 	//renderpassCreate0->GetViewport().SetSize(Shadows::Get()->GetShadowSize());
 

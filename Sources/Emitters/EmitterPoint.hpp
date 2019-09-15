@@ -2,10 +2,12 @@
 
 #include "Emitter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT EmitterPoint :
-	public Emitter
+namespace acid {
+class ACID_EXPORT
+EmitterPoint
+:
+public
+Emitter
 {
 public:
 	EmitterPoint();

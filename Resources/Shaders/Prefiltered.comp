@@ -4,8 +4,7 @@
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
-layout(push_constant) uniform PushObject
-{
+layout(push_constant) uniform PushObject {
 	float roughness;
 } object;
 
@@ -16,8 +15,7 @@ layout(binding = 1) uniform samplerCube samplerColour;
 const float PI = 3.1415926535897932384626433832795f;
 const uint samples = 32u;
 
-vec3 cubeDir(vec2 texCoord, uint side)
-{
+vec3 cubeDir(vec2 texCoord, uint side) {
 	vec2 tex = texCoord * 2.0f - 1.0f;
 	if(side == 0) return vec3(1.0f, -tex.y, -tex.x); // Front
 	if(side == 1) return vec3(-1.0f, -tex.y, tex.x); // Back
@@ -29,8 +27,7 @@ vec3 cubeDir(vec2 texCoord, uint side)
 }
 
 // Based omn http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
-float random(vec2 co)
-{
+float random(vec2 co) {
 	float a = 12.9898f;
 	float b = 78.233f;
 	float c = 43758.5453f;
@@ -39,8 +36,7 @@ float random(vec2 co)
 	return fract(sin(sn) * c);
 }
 
-vec2 hammersley2d(uint i, uint N) 
-{
+vec2 hammersley2d(uint i, uint N) {
 	// Radical inverse based on http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
 	uint bits = (i << 16u) | (i >> 16u);
 	bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
@@ -52,8 +48,7 @@ vec2 hammersley2d(uint i, uint N)
 }
 
 // Based on http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf
-vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal) 
-{
+vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal) {
 	// Maps a 2D point to a hemisphere with spread based on roughness
 	float alpha = roughness * roughness;
 	float phi = 2.0f * PI * Xi.x + random(normal.xz) * 0.1f;
@@ -71,31 +66,27 @@ vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal)
 }
 
 // Normal Distribution function
-float D_GGX(float dotNH, float roughness)
-{
+float D_GGX(float dotNH, float roughness){
 	float alpha = roughness * roughness;
 	float alpha2 = alpha * alpha;
 	float denom = dotNH * dotNH * (alpha2 - 1.0f) + 1.0f;
 	return alpha2 / (PI * denom * denom); 
 }
 
-vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
-{
+vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness) {
 	vec3 N = R;
 	vec3 V = R;
 	vec3 colour = vec3(0.0f);
 	float totalWeight = 0.0f;
 	float envMapDim = float(textureSize(envmap, 0).s);
 
-	for (uint i = 0u; i < samples; i++)
-	{
+	for (uint i = 0u; i < samples; i++) {
 		vec2 Xi = hammersley2d(i, samples);
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
 		vec3 L = 2.0f * dot(V, H) * H - V;
 		float dotNL = clamp(dot(N, L), 0.0f, 1.0f);
 
-		if(dotNL > 0.0f)
-		{
+		if (dotNL > 0.0f) {
 			// Filtering based on https://placeholderart.wordpress.com/2015/07/28/implementation-notes-runtime-environment-map-filtering-for-image-based-lighting/
 
 			float dotNH = clamp(dot(N, H), 0.0f, 1.0f);
@@ -118,12 +109,10 @@ vec3 prefilterEnvMap(samplerCube envmap, vec3 R, float roughness)
 	return (colour / totalWeight);
 }
 
-void main()
-{
+void main() {
 	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
 
-	for (uint i = 0; i != 6; ++i)
-	{
+	for (uint i = 0; i != 6; ++i) {
 		vec3 R = normalize(cubeDir(uv, i));
 		imageStore(outColour, ivec3(gl_GlobalInvocationID.xy, i), vec4(prefilterEnvMap(samplerColour, R, object.roughness), 1.0f));
 	}

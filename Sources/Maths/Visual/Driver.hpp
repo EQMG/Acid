@@ -2,24 +2,20 @@
 
 #include "Maths/Time.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a driver that changes over time.
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class Driver
-{
+class Driver {
 public:
 	/**
 	 * Creates a new driver with a length.
 	 * @param length The drivers length. 
 	 **/
 	explicit Driver(const Time &length) :
-		m_length(length)
-	{
-	}
+		m_length(length) { }
 
 	virtual ~Driver() = default;
 
@@ -29,8 +25,7 @@ public:
 	 * @return The calculated value. 
 	 **/
 
-	T Update(const Time &delta)
-	{
+	T Update(const Time &delta) {
 		m_actualTime += delta;
 		m_currentTime += delta;
 		m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));

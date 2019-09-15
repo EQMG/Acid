@@ -2,17 +2,16 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
-struct Version
-{
+namespace acid {
+struct Version {
 	uint32_t m_major, m_minor, m_patch;
 };
 
 /**
  * @brief Class that represents a application.
  */
-class ACID_EXPORT App
+class ACID_EXPORT
+App
 {
 	friend class Engine;
 public:

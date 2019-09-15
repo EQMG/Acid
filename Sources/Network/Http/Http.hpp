@@ -5,8 +5,7 @@
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A very simple HTTP client that allows you to communicate with a web server.
  * You can retrieve web pages, send data to an interactive resource,
@@ -33,7 +32,8 @@ namespace acid
  * return the corresponding acid::HttpResponse
  * from the server.
  **/
-class ACID_EXPORT Http
+class ACID_EXPORT
+Http
 {
 public:
 	/**

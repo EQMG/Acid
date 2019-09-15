@@ -4,15 +4,21 @@
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a cubemap image.
  */
-class ACID_EXPORT ImageCube :
-	public NonCopyable,
-	public Descriptor,
-	public Resource
+class ACID_EXPORT
+ImageCube
+:
+public
+NonCopyable
+,
+public
+Descriptor
+,
+public
+Resource
 {
 public:
 	/**

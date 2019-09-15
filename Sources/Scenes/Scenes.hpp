@@ -6,13 +6,15 @@
 #include "ComponentRegister.hpp"
 #include "SceneStructure.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for managing game scenes.
  */
-class ACID_EXPORT Scenes :
-	public Module
+class ACID_EXPORT
+Scenes
+:
+public
+Module
 {
 public:
 	/**

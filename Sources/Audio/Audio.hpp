@@ -6,13 +6,15 @@
 typedef struct ALCdevice_struct ALCdevice;
 typedef struct ALCcontext_struct ALCcontext;
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for loading, managing and playing a variety of different sound types.
  */
-class ACID_EXPORT Audio :
-	public Module
+class ACID_EXPORT
+Audio
+:
+public
+Module
 {
 public:
 	enum class Type

@@ -7,13 +7,15 @@
 class btPairCachingGhostObject;
 class btKinematicCharacterController;
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a kinematic character controller.
  */
-class ACID_EXPORT KinematicCharacter :
-	public CollisionObject
+class ACID_EXPORT
+KinematicCharacter
+:
+public
+CollisionObject
 {
 public:
 	/**

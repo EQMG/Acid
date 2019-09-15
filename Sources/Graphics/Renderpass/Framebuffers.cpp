@@ -5,19 +5,15 @@
 #include "Graphics/Graphics.hpp"
 #include "Graphics/RenderStage.hpp"
 
-namespace acid
-{
+namespace acid {
 Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
-	const VkSampleCountFlagBits &samples)
-{
+	const VkSampleCountFlagBits &samples) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &attachment : renderStage.GetAttachments())
-	{
+	for (const auto &attachment : renderStage.GetAttachments()) {
 		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 
-		switch (attachment.GetType())
-		{
+		switch (attachment.GetType()) {
 		case Attachment::Type::Image:
 			m_imageAttachments.emplace_back(std::make_unique<Image2d>(extent, nullptr, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 				VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, attachmentSamples));
@@ -33,14 +29,11 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 	m_framebuffers.resize(swapchain.GetImageCount());
 
-	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++)
-	{
+	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++) {
 		std::vector<VkImageView> attachments;
 
-		for (const auto &attachment : renderStage.GetAttachments())
-		{
-			switch (attachment.GetType())
-			{
+		for (const auto &attachment : renderStage.GetAttachments()) {
+			switch (attachment.GetType()) {
 			case Attachment::Type::Image:
 				attachments.emplace_back(GetAttachment(attachment.GetBinding())->GetView());
 				break;
@@ -65,12 +58,10 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 	}
 }
 
-Framebuffers::~Framebuffers()
-{
+Framebuffers::~Framebuffers() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &framebuffer : m_framebuffers)
-	{
+	for (const auto &framebuffer : m_framebuffers) {
 		vkDestroyFramebuffer(*logicalDevice, framebuffer, nullptr);
 	}
 }

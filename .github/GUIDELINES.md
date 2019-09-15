@@ -68,11 +68,10 @@ namespace Examples {
 	}
 
 	int32_t Example::DoStuff(bool doThing) {
-		m_list.emplace_back(m_x + m_list.size());
 		printf("X: %i\n", m_x);
 
 		if (doThing) {
-			for (auto item : m_list) {
+			for (const auto &item : m_list) {
 				printf("Item: %i\n", m_x);
 			}
 		} else {

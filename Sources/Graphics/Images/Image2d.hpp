@@ -4,15 +4,21 @@
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a 2D image.
  */
-class ACID_EXPORT Image2d :
-	public NonCopyable,
-	public Descriptor,
-	public Resource
+class ACID_EXPORT
+Image2d
+:
+public
+NonCopyable
+,
+public
+Descriptor
+,
+public
+Resource
 {
 public:
 	/**

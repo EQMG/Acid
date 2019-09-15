@@ -7,13 +7,15 @@
 #include "Particle.hpp"
 #include "ParticleType.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem :
-	public Component
+class ACID_EXPORT
+ParticleSystem
+:
+public
+Component
 {
 public:
 	/**

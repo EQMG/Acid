@@ -2,12 +2,12 @@
 
 #include "StorageBuffer.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that handles a storage buffer.
  */
-class ACID_EXPORT StorageHandler
+class ACID_EXPORT
+StorageHandler
 {
 public:
 	explicit StorageHandler(bool multipipeline = false);

@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a cube model.
  */
-class ACID_EXPORT ModelCube :
-	public Model
+class ACID_EXPORT
+ModelCube
+:
+public
+Model
 {
 public:
 	/**

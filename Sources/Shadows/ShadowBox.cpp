@@ -4,17 +4,14 @@
 #include "Graphics/Graphics.hpp"
 #include "Maths/Maths.hpp"
 
-namespace acid
-{
-ShadowBox::ShadowBox()
-{
+namespace acid {
+ShadowBox::ShadowBox() {
 	// Creates the offset for part of the conversion to shadow map space.
 	m_offset = m_offset.Translate(Vector3f(0.5f));
 	m_offset = m_offset.Scale(Vector3f(0.5f));
 }
 
-void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, float shadowOffset, float shadowDistance)
-{
+void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, float shadowOffset, float shadowDistance) {
 	m_lightDirection = lightDirection;
 	m_shadowOffset = shadowOffset;
 	m_shadowDistance = shadowDistance;
@@ -26,8 +23,7 @@ void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, flo
 	UpdateViewShadowMatrix();
 }
 
-bool ShadowBox::IsInBox(const Vector3f &position, float radius) const
-{
+bool ShadowBox::IsInBox(const Vector3f &position, float radius) const {
 	auto entityPos = m_lightViewMatrix.Transform(Vector4f(position));
 
 	Vector3f closestPoint;
@@ -42,8 +38,7 @@ bool ShadowBox::IsInBox(const Vector3f &position, float radius) const
 	return distanceSquared < radius * radius;
 }
 
-void ShadowBox::UpdateShadowBox(const Camera &camera)
-{
+void ShadowBox::UpdateShadowBox(const Camera &camera) {
 	UpdateSizes(camera);
 
 	Matrix4 rotation;
@@ -62,8 +57,7 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 	m_minExtents = Vector3f::PositiveInfinity;
 	m_maxExtents = Vector3f::NegativeInfinity;
 
-	for (const auto &point : points)
-	{
+	for (const auto &point : points) {
 		Vector3f extent(point);
 		m_minExtents = m_minExtents.Min(extent);
 		m_maxExtents = m_minExtents.Max(extent);
@@ -72,16 +66,14 @@ void ShadowBox::UpdateShadowBox(const Camera &camera)
 	m_maxExtents.m_z += m_shadowOffset;
 }
 
-void ShadowBox::UpdateSizes(const Camera &camera)
-{
+void ShadowBox::UpdateSizes(const Camera &camera) {
 	m_farWidth = m_shadowDistance * std::tan(camera.GetFieldOfView());
 	m_nearWidth = camera.GetNearPlane() * std::tan(camera.GetFieldOfView());
 	m_farHeight = m_farWidth / Window::Get()->GetAspectRatio();
 	m_nearHeight = m_nearWidth / Window::Get()->GetAspectRatio();
 }
 
-std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const
-{
+std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const {
 	Vector3f upVector(rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f)));
 	auto rightVector = forwardVector.Cross(upVector);
 	auto downVector = -upVector;
@@ -104,15 +96,13 @@ std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotat
 	return points;
 }
 
-Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, float width) const
-{
+Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, float width) const {
 	Vector4f point(startPoint + (direction * width));
 	point = m_lightViewMatrix.Transform(point);
 	return point;
 }
 
-void ShadowBox::UpdateOrthoProjectionMatrix()
-{
+void ShadowBox::UpdateOrthoProjectionMatrix() {
 	m_projectionMatrix = {};
 	m_projectionMatrix[0][0] = 2.0f / GetWidth();
 	m_projectionMatrix[1][1] = 2.0f / GetHeight();
@@ -120,22 +110,19 @@ void ShadowBox::UpdateOrthoProjectionMatrix()
 	m_projectionMatrix[3][3] = 1.0f;
 }
 
-void ShadowBox::UpdateCenter()
-{
+void ShadowBox::UpdateCenter() {
 	Vector4f centre((m_minExtents + m_maxExtents) / 2.0f);
 	auto invertedLight = m_lightViewMatrix.Inverse();
 	m_centre = {invertedLight.Transform(centre)};
 }
 
-void ShadowBox::UpdateLightViewMatrix()
-{
+void ShadowBox::UpdateLightViewMatrix() {
 	m_lightViewMatrix = {};
 	auto pitch = std::acos(Vector2f(m_lightDirection.m_x, m_lightDirection.m_z).Length());
 	m_lightViewMatrix = m_lightViewMatrix.Rotate(pitch, Vector3f::Right);
 	auto yaw = std::atan(m_lightDirection.m_x / m_lightDirection.m_z);
 
-	if (m_lightDirection.m_z > 0.0f)
-	{
+	if (m_lightDirection.m_z > 0.0f) {
 		yaw -= Maths::Pi<float>;
 	}
 
@@ -143,8 +130,7 @@ void ShadowBox::UpdateLightViewMatrix()
 	m_lightViewMatrix = m_lightViewMatrix.Translate(m_centre);
 }
 
-void ShadowBox::UpdateViewShadowMatrix()
-{
+void ShadowBox::UpdateViewShadowMatrix() {
 	m_projectionViewMatrix = m_projectionMatrix * m_lightViewMatrix;
 	m_shadowMapSpaceMatrix = m_offset * m_projectionViewMatrix;
 }

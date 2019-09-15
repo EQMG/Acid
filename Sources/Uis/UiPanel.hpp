@@ -5,20 +5,21 @@
 #include "UiScrollBar.hpp"
 #include "Inputs/UiInputButton.hpp"
 
-namespace acid
-{
-enum class UiManipulate
-{
-	None = 0, 
-	Resize = 1, 
+namespace acid {
+enum class UiManipulate {
+	None = 0,
+	Resize = 1,
 	Move = 2,
 	All = Resize | Move
 };
 
 ENABLE_BITMASK_OPERATORS(UiManipulate)
 
-class ACID_EXPORT UiPanel :
-	public UiObject
+class ACID_EXPORT
+UiPanel
+:
+public
+UiObject
 {
 public:
 	UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour = UiInputButton::BackgroundColour,

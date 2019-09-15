@@ -15,18 +15,14 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Inventory :
-	public UiObject
-{
+	public UiObject {
 public:
-	explicit Inventory(UiObject* parent) :
-		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom))
-	{
+	explicit Inventory(UiObject *parent) :
+		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom)) {
 		SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.9f), Vector2f(1.2f), 6s));
-		for (uint32_t i = 0; i < 10; i++)
-		{
+		for (uint32_t i = 0; i < 10; i++) {
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);
 
 			auto slot = std::make_unique<Gui>(this, UiTransform(Vector2i(48, 48), UiAnchor::LeftTop, Vector2i(48 * i, 0)), Image2d::Create("Guis/White.png"));
@@ -39,17 +35,14 @@ public:
 		}
 	}
 
-	void UpdateObject() override
-	{
-	}
+	void UpdateObject() override { }
 private:
 	std::vector<std::unique_ptr<Gui>> m_slots;
 	//std::vector<std::unique_ptr<Text>> m_slotTitles;
 };
 
 class Panels :
-	public UiObject
-{
+	public UiObject {
 public:
 	explicit Panels(UiObject *parent);
 

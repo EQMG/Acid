@@ -4,9 +4,9 @@
 #include "Maths/Vector3.hpp"
 #include "Graphics/Pipelines/Shader.hpp"
 
-namespace acid
-{
-class ACID_EXPORT VertexAnimated
+namespace acid {
+class ACID_EXPORT
+VertexAnimated
 {
 public:
 	VertexAnimated() = default;
@@ -73,13 +73,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::VertexAnimated>
-{
-	size_t operator()(const acid::VertexAnimated &vertex) const noexcept
-	{
+struct hash<acid::VertexAnimated> {
+	size_t operator()(const acid::VertexAnimated &vertex) const noexcept {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);

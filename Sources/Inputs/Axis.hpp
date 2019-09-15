@@ -2,13 +2,15 @@
 
 #include "Helpers/Delegate.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_EXPORT Axis :
-	public Observer
+class ACID_EXPORT
+Axis
+:
+public
+Observer
 {
 public:
 	virtual ~Axis() = default;

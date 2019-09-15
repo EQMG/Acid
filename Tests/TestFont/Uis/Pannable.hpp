@@ -12,11 +12,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Pannable :
-	public UiObject
-{
+	public UiObject {
 public:
 	explicit Pannable(UiObject *parent);
 

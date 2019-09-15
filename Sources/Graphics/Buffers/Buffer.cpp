@@ -2,18 +2,16 @@
 
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data) :
-	m_size(size)
-{
+	m_size(size) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
 	auto presentFamily = logicalDevice->GetPresentFamily();
 	auto computeFamily = logicalDevice->GetComputeFamily();
 
-	std::array queueFamily = { graphicsFamily, presentFamily, computeFamily };
+	std::array queueFamily = {graphicsFamily, presentFamily, computeFamily};
 
 	// Create the buffer handle.
 	VkBufferCreateInfo bufferCreateInfo = {};
@@ -36,15 +34,13 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	Graphics::CheckVk(vkAllocateMemory(*logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
 
 	// If a pointer to the buffer data has been passed, map the buffer and copy over the data.
-	if (data)
-	{
+	if (data) {
 		void *mapped;
 		MapMemory(&mapped);
 		std::memcpy(mapped, data, size);
 
 		// If host coherency hasn't been requested, do a manual flush to make writes visible.
-		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0)
-		{
+		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0) {
 			VkMappedMemoryRange mappedMemoryRange = {};
 			mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 			mappedMemoryRange.memory = m_bufferMemory;
@@ -60,37 +56,31 @@ Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const 
 	Graphics::CheckVk(vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0));
 }
 
-Buffer::~Buffer()
-{
+Buffer::~Buffer() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
 	vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
 }
 
-void Buffer::MapMemory(void **data) const
-{
+void Buffer::MapMemory(void **data) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	Graphics::CheckVk(vkMapMemory(*logicalDevice, GetBufferMemory(), 0, m_size, 0, data));
 }
 
-void Buffer::UnmapMemory() const
-{
+void Buffer::UnmapMemory() const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	vkUnmapMemory(*logicalDevice, GetBufferMemory());
 }
 
-uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties)
-{
+uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 	auto memoryProperties = physicalDevice->GetMemoryProperties();
 
-	for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
-	{
+	for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++) {
 		uint32_t memoryTypeBits = 1 << i;
 
-		if (typeFilter & memoryTypeBits && (memoryProperties.memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties)
-		{
+		if (typeFilter & memoryTypeBits && (memoryProperties.memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties) {
 			return i;
 		}
 	}
@@ -98,9 +88,8 @@ uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags
 	throw std::runtime_error("Failed to find a valid memory type for buffer");
 }
 
-void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask, 
-	const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset, const VkDeviceSize &size)
-{
+void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
+	const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset, const VkDeviceSize &size) {
 	VkBufferMemoryBarrier bufferMemoryBarrier = {};
 	bufferMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	bufferMemoryBarrier.srcAccessMask = srcAccessMask;

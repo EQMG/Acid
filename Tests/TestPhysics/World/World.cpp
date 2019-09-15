@@ -6,8 +6,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Shadows/Shadows.hpp>
 
-namespace test
-{
+namespace test {
 static const Colour FOG_COLOUR_SUNRISE("#ee9a90");
 static const Colour FOG_COLOUR_NIGHT("#0D0D1A");
 static const Colour FOG_COLOUR_DAY("#e6e6e6");
@@ -15,13 +14,11 @@ static const Colour FOG_COLOUR_DAY("#e6e6e6");
 World::World() :
 	m_driverDay(DriverLinear<float>(0.0f, 1.0f, 300s)),
 	m_factorDay(0.0f),
-	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
-{
+	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
 	m_driverDay.Update(50s); // Starts during daytime.
 }
 
-void World::Update()
-{
+void World::Update() {
 	m_factorDay = m_driverDay.Update(Engine::Get()->GetDelta());
 
 	m_skyboxRotation = {360.0f * m_factorDay, 0.0f, 0.0f};
@@ -42,13 +39,11 @@ void World::Update()
 		lensflare->SetSunHeight(1000.0f);
 	}*/
 
-	if (auto deferred = Graphics::Get()->GetSubrender<SubrenderDeferred>(); deferred)
-	{
+	if (auto deferred = Graphics::Get()->GetSubrender<SubrenderDeferred>(); deferred) {
 		deferred->SetFog(m_fog);
 	}
 
-	if (Shadows::Get())
-	{
+	if (Shadows::Get()) {
 		Shadows::Get()->SetLightDirection(-m_lightDirection);
 		//Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
 		//Shadows::Get()->SetShadowBoxDistance(40.0f);
@@ -57,23 +52,19 @@ void World::Update()
 	}
 }
 
-float World::GetDayFactor() const
-{
+float World::GetDayFactor() const {
 	return m_factorDay;
 }
 
-float World::GetSunriseFactor() const
-{
+float World::GetSunriseFactor() const {
 	return std::clamp(-(std::sin(2.0f * Maths::Pi<float> * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 }
 
-float World::GetShadowFactor() const
-{
+float World::GetShadowFactor() const {
 	return std::clamp(1.7f * std::sin(2.0f * Maths::Pi<float> * GetDayFactor()), 0.0f, 1.0f);
 }
 
-float World::GetStarIntensity() const
-{
+float World::GetStarIntensity() const {
 	return std::clamp(1.0f - GetShadowFactor(), 0.0f, 1.0f);
 }
 }

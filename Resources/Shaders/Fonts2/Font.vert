@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-struct Glyph
-{
+struct Glyph {
     vec4 bbox;
 
     // point offset
@@ -13,8 +12,7 @@ struct Glyph
     uvec4 cellInfo;
 };
 
-layout(binding = 0) buffer BufferGlyph
-{
+layout(binding = 0) buffer BufferGlyph {
 	Glyph glyphs[];
 } bufferGlyph;
 
@@ -29,13 +27,11 @@ layout(location = 2) out float outSharpness;
 layout(location = 3) out vec2 outCellCoord;
 layout(location = 4) out vec4 outColour;
 
-out gl_PerVertex
-{
+out gl_PerVertex {
     vec4 gl_Position;
 };
 
-void main()
-{
+void main() {
     Glyph gi = bufferGlyph.glyphs[inGlyphIndex];
 
     vec2 pos[4];

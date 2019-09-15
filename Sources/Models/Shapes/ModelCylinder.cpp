@@ -4,12 +4,9 @@
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelCylinder>(resource);
 	}
 
@@ -20,8 +17,7 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks)
-{
+std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks) {
 	ModelCylinder temp(radiusBase, radiusTop, height, slices, stacks, false);
 	Node node;
 	node << temp;
@@ -33,26 +29,22 @@ ModelCylinder::ModelCylinder(float radiusBase, float radiusTop, float height, ui
 	m_radiusTop(radiusTop),
 	m_height(height),
 	m_slices(slices),
-	m_stacks(stacks)
-{
-	if (load)
-	{
+	m_stacks(stacks) {
+	if (load) {
 		Load();
 	}
 }
 
-const Node &operator>>(const Node &node, ModelCylinder &model)
-{
+const Node &operator>>(const Node &node, ModelCylinder &model) {
 	node["radiusBase"].Get(model.m_radiusBase);
 	node["radiusTop"].Get(model.m_radiusTop);
-	node["height"].Get( model.m_height);
-	node["slices"].Get( model.m_slices);
-	node["stacks"].Get( model.m_stacks);
+	node["height"].Get(model.m_height);
+	node["slices"].Get(model.m_slices);
+	node["stacks"].Get(model.m_stacks);
 	return node;
 }
 
-Node &operator<<(Node &node, const ModelCylinder &model)
-{
+Node &operator<<(Node &node, const ModelCylinder &model) {
 	node["type"].Set("ModelCylinder");
 	node["radiusBase"].Set(model.m_radiusBase);
 	node["radiusTop"].Set(model.m_radiusTop);
@@ -62,10 +54,8 @@ Node &operator<<(Node &node, const ModelCylinder &model)
 	return node;
 }
 
-void ModelCylinder::Load()
-{
-	if (m_radiusBase == 0.0f && m_radiusTop == 0.0f)
-	{
+void ModelCylinder::Load() {
+	if (m_radiusBase == 0.0f && m_radiusTop == 0.0f) {
 		return;
 	}
 
@@ -74,15 +64,13 @@ void ModelCylinder::Load()
 	vertices.reserve((m_slices + 1) * (m_stacks + 1));
 	indices.reserve(m_slices * m_stacks * 6);
 
-	for (uint32_t i = 0; i < m_slices + 1; i++)
-	{
+	for (uint32_t i = 0; i < m_slices + 1; i++) {
 		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
 		auto alpha = (i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi<float>;
 		auto xDir = std::cos(alpha);
 		auto zDir = std::sin(alpha);
 
-		for (uint32_t j = 0; j < m_stacks + 1; j++)
-		{
+		for (uint32_t j = 0; j < m_stacks + 1; j++) {
 			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
 			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
 
@@ -93,10 +81,8 @@ void ModelCylinder::Load()
 		}
 	}
 
-	for (uint32_t i = 0; i < m_slices; i++)
-	{
-		for (uint32_t j = 0; j < m_stacks; j++)
-		{
+	for (uint32_t i = 0; i < m_slices; i++) {
+		for (uint32_t j = 0; j < m_stacks; j++) {
 			auto first = j + ((m_stacks + 1) * i);
 			auto second = j + ((m_stacks + 1) * (i + 1));
 

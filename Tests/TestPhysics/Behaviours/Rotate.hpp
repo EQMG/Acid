@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Rotate :
-	public Component
-{
+	public Component {
 public:
 	explicit Rotate(const Vector3f &direction = Vector3f(), const int &test = 0);
 

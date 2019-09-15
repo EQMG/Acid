@@ -4,17 +4,16 @@
 #include "Maths/Time.hpp"
 #include "Helpers/Delegate.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that can listen to file changes on a path recursively.
  */
-class FileWatcher
-{
+class FileWatcher {
 public:
-	enum class Status
-	{
-		Created, Modified, Erased
+	enum class Status {
+		Created,
+		Modified,
+		Erased
 	};
 
 	/**

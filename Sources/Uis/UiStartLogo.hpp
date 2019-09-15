@@ -3,10 +3,12 @@
 #include "Fonts/Text.hpp"
 #include "Guis/Gui.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiStartLogo :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiStartLogo
+:
+public
+UiObject
 {
 public:
 	explicit UiStartLogo(UiObject *parent);

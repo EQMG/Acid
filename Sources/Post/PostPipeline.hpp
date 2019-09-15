@@ -2,13 +2,15 @@
 
 #include "Graphics/Subrender.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a system of post effects.
  */
-class ACID_EXPORT PostPipeline :
-	public Subrender
+class ACID_EXPORT
+PostPipeline
+:
+public
+Subrender
 {
 public:
 	/**

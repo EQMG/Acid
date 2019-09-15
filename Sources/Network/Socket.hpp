@@ -4,8 +4,7 @@
 
 struct sockaddr_in;
 
-namespace acid
-{
+namespace acid {
 // Define the low-level socket handle type, specific to each platform.
 #if defined(ACID_BUILD_WINDOWS)
 #if defined(_WIN64)
@@ -39,7 +38,8 @@ using SocketAddrLength = unsigned int;
  * applications that run an endless loop that can poll the socket often enough,
  * and cannot afford blocking this loop.
  **/
-class ACID_EXPORT Socket
+class ACID_EXPORT
+Socket
 {
 	friend class SocketSelector;
 public:

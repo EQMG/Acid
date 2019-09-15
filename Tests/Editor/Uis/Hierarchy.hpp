@@ -11,11 +11,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Hierarchy :
-	public UiPanel
-{
+	public UiPanel {
 public:
 	explicit Hierarchy(UiObject *parent);
 

@@ -11,11 +11,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Inspector :
-	public UiPanel
-{
+	public UiPanel {
 public:
 	explicit Inspector(UiObject *parent);
 

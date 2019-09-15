@@ -5,41 +5,35 @@
 #include "Resources/Resource.hpp"
 #include "Node.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
-T Node::Get() const
-{
+T Node::Get() const {
 	T value;
 	*this >> value;
 	return value;
 }
 
 template<typename T>
-T Node::Get(const T &fallback) const
-{
-	if (!IsValid())
-	{
+T Node::Get(const T &fallback) const {
+	if (!IsValid()) {
 		return fallback;
 	}
 
-	return Get<T>();
+	return Get < T > (
+	)
+	;
 }
 
 template<typename T>
-void Node::Get(T &dest) const
-{
-	if (IsValid())
-	{
+void Node::Get(T &dest) const {
+	if (IsValid()) {
 		*this >> dest;
 	}
 }
 
 template<typename T, typename K>
-void Node::Get(T &dest, const K &fallback) const
-{
-	if (IsValid())
-	{
+void Node::Get(T &dest, const K &fallback) const {
+	if (IsValid()) {
 		*this >> dest;
 		return;
 	}
@@ -48,28 +42,24 @@ void Node::Get(T &dest, const K &fallback) const
 }
 
 template<typename T>
-void Node::Set(const T &value)
-{
+void Node::Set(const T &value) {
 	*this << value;
 }
 
 template<typename T>
-Node &Node::Append(T value)
-{
+Node &Node::Append(T value) {
 	AddProperty() << value;
 	return *this;
 }
 
 template<typename ...Args>
-Node &Node::Append(Args ...args)
-{
+Node &Node::Append(Args ...args) {
 	(Append(args), ...);
 	return *this;
 }
 
 template<typename T>
-Node &Node::operator=(const T &rhs)
-{
+Node &Node::operator=(const T &rhs) {
 	Set(rhs);
 	return *this;
 }
@@ -80,36 +70,31 @@ Node &Node::operator=(const T &rhs)
 	return node;
 }*/
 
-inline Node &operator<<(Node &node, const std::nullptr_t &object)
-{
+inline Node &operator<<(Node &node, const std::nullptr_t &object) {
 	node.SetValue("null");
 	node.SetType(Node::Type::Null);
 	return node;
 }
 
-inline const Node &operator>>(const Node &node, bool &object)
-{
+inline const Node &operator>>(const Node &node, bool &object) {
 	object = String::From<bool>(node.GetValue());
 	return node;
 }
 
-inline Node &operator<<(Node &node, bool object)
-{
+inline Node &operator<<(Node &node, bool object) {
 	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Boolean);
 	return node;
 }
 
 template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object)
-{
+std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object) {
 	object = String::From<T>(node.GetValue());
 	return node;
 }
 
 template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, const T &object)
-{
+std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, const T &object) {
 	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Number);
 	return node;
@@ -123,10 +108,8 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> opera
 }*/
 
 template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(Node &node, const T &object)
-{
-	if (!ConstExpr::AsPtr(object))
-	{
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(Node &node, const T &object) {
+	if (!ConstExpr::AsPtr(object)) {
 		return node << nullptr;
 	}
 
@@ -135,18 +118,15 @@ std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, Node &> operator<<(
 }
 
 template<typename T>
-const Node &operator>>(const Node &node, std::unique_ptr<T> &object)
-{
+const Node &operator>>(const Node &node, std::unique_ptr<T> &object) {
 	object = std::make_unique<T>();
 	node >> *object;
 	return node;
 }
 
 template<typename T>
-Node &operator<<(Node &node, const std::unique_ptr<T> &object)
-{
-	if (!object)
-	{
+Node &operator<<(Node &node, const std::unique_ptr<T> &object) {
+	if (!object) {
 		return node << nullptr;
 	}
 
@@ -155,16 +135,12 @@ Node &operator<<(Node &node, const std::unique_ptr<T> &object)
 }
 
 template<typename T>
-const Node &operator>>(const Node &node, std::shared_ptr<T> &object)
-{
+const Node &operator>>(const Node &node, std::shared_ptr<T> &object) {
 	// TODO: Abstract Resource streams out from shared_ptr.
-	if constexpr (std::is_base_of_v<Resource, T>)
-	{
+	if constexpr (std::is_base_of_v<Resource, T>) {
 		object = T::Create(node);
 		return node;
-	}
-	else
-	{
+	} else {
 		object = std::make_shared<T>();
 		node >> *object;
 		return node;
@@ -172,10 +148,8 @@ const Node &operator>>(const Node &node, std::shared_ptr<T> &object)
 }
 
 template<typename T>
-Node &operator<<(Node &node, const std::shared_ptr<T> &object)
-{
-	if (!object)
-	{
+Node &operator<<(Node &node, const std::shared_ptr<T> &object) {
+	if (!object) {
 		return node << nullptr;
 	}
 
@@ -196,27 +170,23 @@ inline Node &operator<<(Node &node, const char *string)
 	return node;
 }*/
 
-inline const Node &operator>>(const Node &node, std::string &string)
-{
+inline const Node &operator>>(const Node &node, std::string &string) {
 	string = node.GetValue();
 	return node;
 }
 
-inline Node &operator<<(Node &node, const std::string &string)
-{
+inline Node &operator<<(Node &node, const std::string &string) {
 	node.SetValue(string);
 	node.SetType(Node::Type::String);
 	return node;
 }
 
-inline const Node &operator>>(const Node &node, std::filesystem::path &object)
-{
+inline const Node &operator>>(const Node &node, std::filesystem::path &object) {
 	object = node.GetValue();
 	return node;
 }
 
-inline Node &operator<<(Node &node, const std::filesystem::path &object)
-{
+inline Node &operator<<(Node &node, const std::filesystem::path &object) {
 	auto str = object.string();
 	std::replace(str.begin(), str.end(), '\\', '/');
 	node.SetValue(str);
@@ -225,32 +195,26 @@ inline Node &operator<<(Node &node, const std::filesystem::path &object)
 }
 
 template<typename T, typename K>
-const Node &operator>>(const Node &node, std::pair<T, K> &pair)
-{
+const Node &operator>>(const Node &node, std::pair<T, K> &pair) {
 	pair.first = String::From<T>(node.GetName());
 	node >> pair.second;
 	return node;
 }
 
 template<typename T, typename K>
-Node &operator<<(Node &node, const std::pair<T, K> &pair)
-{
+Node &operator<<(Node &node, const std::pair<T, K> &pair) {
 	node.SetName(String::To(pair.first));
 	node << pair.second;
 	return node;
 }
 
 template<typename T>
-const Node &operator>>(const Node &node, std::optional<T> &optional)
-{
-	if (node.GetValue() != "null")
-	{
+const Node &operator>>(const Node &node, std::optional<T> &optional) {
+	if (node.GetValue() != "null") {
 		T x;
 		node >> x;
 		optional = std::move(x);
-	}
-	else
-	{
+	} else {
 		optional = std::nullopt;
 	}
 
@@ -258,10 +222,8 @@ const Node &operator>>(const Node &node, std::optional<T> &optional)
 }
 
 template<typename T>
-Node &operator<<(Node &node, const std::optional<T> &optional)
-{
-	if (optional)
-	{
+Node &operator<<(Node &node, const std::optional<T> &optional) {
+	if (optional) {
 		return node << *optional;
 	}
 
@@ -269,13 +231,11 @@ Node &operator<<(Node &node, const std::optional<T> &optional)
 }
 
 template<typename T>
-const Node &operator>>(const Node &node, std::vector<T> &vector)
-{
+const Node &operator>>(const Node &node, std::vector<T> &vector) {
 	vector = {};
 	vector.reserve(node.GetProperties().size());
 
-	for (const auto &[propertyName, property] : node.GetProperties())
-	{
+	for (const auto &[propertyName, property] : node.GetProperties()) {
 		T x;
 		property >> x;
 		vector.emplace_back(std::move(x));
@@ -285,10 +245,8 @@ const Node &operator>>(const Node &node, std::vector<T> &vector)
 }
 
 template<typename T>
-Node &operator<<(Node &node, const std::vector<T> &vector)
-{
-	for (const auto &x : vector)
-	{
+Node &operator<<(Node &node, const std::vector<T> &vector) {
+	for (const auto &x : vector) {
 		node.AddProperty() << x;
 	}
 
@@ -297,12 +255,10 @@ Node &operator<<(Node &node, const std::vector<T> &vector)
 }
 
 template<typename T, typename K>
-const Node &operator>>(const Node &node, std::map<T, K> &map)
-{
+const Node &operator>>(const Node &node, std::map<T, K> &map) {
 	map = {};
 
-	for (const auto &[propertyName, property] : node.GetProperties())
-	{
+	for (const auto &[propertyName, property] : node.GetProperties()) {
 		std::pair<T, K> pair;
 		pair.first = String::From<T>(propertyName);
 		property >> pair.second;
@@ -313,10 +269,8 @@ const Node &operator>>(const Node &node, std::map<T, K> &map)
 }
 
 template<typename T, typename K>
-Node &operator<<(Node &node, const std::map<T, K> &map)
-{
-	for (const auto &x : map)
-	{
+Node &operator<<(Node &node, const std::map<T, K> &map) {
+	for (const auto &x : map) {
 		node.AddProperty() << x;
 	}
 

@@ -1,20 +1,14 @@
 #include "Resources.hpp"
 
-namespace acid
-{
+namespace acid {
 Resources::Resources() :
-	m_elapsedPurge(5s)
-{
+	m_elapsedPurge(5s) {
 }
 
-void Resources::Update()
-{
-	if (m_elapsedPurge.GetElapsed() != 0)
-	{
-		for (auto it = m_resources.begin(); it != m_resources.end();)
-		{
-			if ((*it).second.use_count() <= 1)
-			{
+void Resources::Update() {
+	if (m_elapsedPurge.GetElapsed() != 0) {
+		for (auto it = m_resources.begin(); it != m_resources.end();) {
+			if ((*it).second.use_count() <= 1) {
 				it = m_resources.erase(it);
 				continue;
 			}
@@ -24,12 +18,9 @@ void Resources::Update()
 	}
 }
 
-std::shared_ptr<Resource> Resources::Find(const Node &node) const
-{
-	for (const auto &[key, resource] : m_resources)
-	{
-		if (key == node)
-		{
+std::shared_ptr<Resource> Resources::Find(const Node &node) const {
+	for (const auto &[key, resource] : m_resources) {
+		if (key == node) {
 			return resource;
 		}
 	}
@@ -45,22 +36,18 @@ std::shared_ptr<Resource> Resources::Find(const Node &node) const
 	return it->second;*/
 }
 
-void Resources::Add(const Node &node, const std::shared_ptr<Resource> &resource)
-{
-	if (Find(node))
-	{
+void Resources::Add(const Node &node, const std::shared_ptr<Resource> &resource) {
+	if (Find(node)) {
 		return;
 	}
 
 	m_resources.emplace(node, resource);
 }
 
-void Resources::Remove(const std::shared_ptr<Resource> &resource)
-{
+void Resources::Remove(const std::shared_ptr<Resource> &resource) {
 	for (auto it = m_resources.begin(); it != m_resources.end(); ++it) // TODO: Clean remove.
 	{
-		if ((*it).second == resource)
-		{
+		if ((*it).second == resource) {
 			m_resources.erase(it);
 		}
 	}

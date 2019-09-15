@@ -2,15 +2,13 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UniformScene
-{
+layout(binding = 0) uniform UniformScene {
 	mat4 projection;
 	mat4 view;
 	vec3 cameraPos;
 } scene;
 
-layout(binding = 1) uniform UniformObject
-{
+layout(binding = 1) uniform UniformObject {
 	mat4 transform;
 } object;
 
@@ -22,13 +20,11 @@ layout(location = 0) out vec3 outPosition;
 layout(location = 1) out vec2 outUV;
 layout(location = 2) out vec3 outNormal;
 
-out gl_PerVertex
-{
+out gl_PerVertex {
 	vec4 gl_Position;
 };
 
-void main()
-{
+void main() {
 	vec4 worldPosition = object.transform * vec4(inPosition, 1.0f);
     mat3 normalMatrix = transpose(inverse(mat3(object.transform)));
 

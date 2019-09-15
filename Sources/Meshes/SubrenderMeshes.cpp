@@ -3,17 +3,14 @@
 #include "Scenes/Scenes.hpp"
 #include "MeshRender.hpp"
 
-namespace acid
-{
+namespace acid {
 SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
 	Subrender(pipelineStage),
 	m_sort(sort),
-	m_uniformScene(true)
-{
+	m_uniformScene(true) {
 }
 
-void SubrenderMeshes::Render(const CommandBuffer &commandBuffer)
-{
+void SubrenderMeshes::Render(const CommandBuffer &commandBuffer) {
 	auto camera = Scenes::Get()->GetCamera();
 	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
 	m_uniformScene.Push("view", camera->GetViewMatrix());
@@ -21,18 +18,15 @@ void SubrenderMeshes::Render(const CommandBuffer &commandBuffer)
 
 	auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
 
-	if (m_sort != Sort::None)
-	{
+	if (m_sort != Sort::None) {
 		std::sort(sceneMeshRenders.begin(), sceneMeshRenders.end());
 
-		if (m_sort == Sort::Front)
-		{
+		if (m_sort == Sort::Front) {
 			std::reverse(sceneMeshRenders.begin(), sceneMeshRenders.end());
 		}
 	}
 
-	for (const auto &meshRender : sceneMeshRenders)
-	{
+	for (const auto &meshRender : sceneMeshRenders) {
 		meshRender->CmdRender(commandBuffer, m_uniformScene, GetStage());
 	}
 }

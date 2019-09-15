@@ -3,8 +3,7 @@
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
-namespace acid
-{
+namespace acid {
 UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, bool value, const UiTransform &transform) :
 	UiObject(parent, transform),
 	m_background(this, {{19, 19}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
@@ -12,17 +11,14 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	m_text(this, {{131, 19}, UiAnchor::LeftCentre, {24, 0}}, UiInputButton::FontSize, string,
 		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
-	m_type(type)
-{
+	m_type(type) {
 	SetCursorHover(CursorStandard::Hand);
-	OnSelected().Add([this](bool selected)
-	{
-		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+	OnSelected().Add([this](bool selected) {
+		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
+			UiInputButton::SlideTime));
 	});
-	OnClick().Add([this](MouseButton button)
-	{
-		if (button == MouseButton::Left)
-		{
+	OnClick().Add([this](MouseButton button) {
+		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
 
 			m_value = !m_value;
@@ -36,27 +32,22 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Ty
 	UpdateValue();
 }
 
-void UiInputRadio::UpdateObject()
-{
+void UiInputRadio::UpdateObject() {
 }
 
-void UiInputRadio::SetValue(bool value)
-{
+void UiInputRadio::SetValue(bool value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);
 }
 
-void UiInputRadio::SetType(const Type &type)
-{
+void UiInputRadio::SetType(const Type &type) {
 	m_type = type;
 	UpdateValue();
 }
 
-void UiInputRadio::UpdateValue()
-{
-	switch (m_type)
-	{
+void UiInputRadio::UpdateValue() {
+	switch (m_type) {
 	case Type::Filled:
 		m_fill.SetImage(Image2d::Create("Guis/Radio_Filled.png"));
 		break;

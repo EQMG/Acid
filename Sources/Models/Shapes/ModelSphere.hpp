@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a sphere model.
  */
-class ACID_EXPORT ModelSphere :
-	public Model
+class ACID_EXPORT
+ModelSphere
+:
+public
+Model
 {
 public:
 	/**

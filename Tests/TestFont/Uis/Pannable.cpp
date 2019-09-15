@@ -6,8 +6,7 @@
 #include <Graphics/Graphics.hpp>
 #include <Uis/Uis.hpp>
 
-namespace test
-{
+namespace test {
 Pannable::Pannable(UiObject *parent) :
 	UiObject(parent, {UiMargins::All}),
 	m_buttonReset(Key::Enter),
@@ -23,12 +22,9 @@ Pannable::Pannable(UiObject *parent) :
 	m_textFrameTime(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova"),
 		Text::Justify::Left),
 	m_textFps(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "FPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left),
-	m_textUps(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left)
-{
-	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_textUps(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left) {
+	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			m_zoom = 1.0f;
 			GetTransform().SetPosition({0.5f, 0.5f});
 		}
@@ -37,15 +33,12 @@ Pannable::Pannable(UiObject *parent) :
 	});
 
 	m_settings.GetTransform().SetDepth(-4.0f);
-	m_masterVolume.OnValue().Add([this](float value)
-	{
+	m_masterVolume.OnValue().Add([this](float value) {
 		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
 	});
-	m_antialiasing.OnValue().Add([this](bool value)
-	{
-	});
+	m_antialiasing.OnValue().Add([this](bool value) { });
 
-	m_body.SetString(//L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
+	m_body.SetString( //L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum\n"
 		"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et\n"
 		"arcu scelerisque, eget viverra ante dapibus. Proin enim neque, vehicula id congue quis, consequat sit amet tortor.Aenean ac\n"
@@ -78,8 +71,7 @@ Pannable::Pannable(UiObject *parent) :
 		"auctor arcu a purus bibendum, eget blandit nisi lobortis.");
 }
 
-void Pannable::UpdateObject()
-{
+void Pannable::UpdateObject() {
 	m_textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
@@ -89,8 +81,7 @@ void Pannable::UpdateObject()
 	m_zoom *= powf(1.3f, Mouse::Get()->GetScrollDelta().m_y);
 	dynamic_cast<DriverConstant<Vector2f> *>(GetScaleDriver())->SetConstant({m_zoom});
 
-	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release)
-	{
+	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release) {
 		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 

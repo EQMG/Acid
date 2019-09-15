@@ -2,12 +2,12 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that holds many various math functions.
  **/
-class ACID_EXPORT Maths
+class ACID_EXPORT
+Maths
 {
 public:
 	template<typename T>

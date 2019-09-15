@@ -10,15 +10,17 @@ class btTransform;
 class btCollisionShape;
 class btCollisionObject;
 
-namespace acid
-{
+namespace acid {
 class Frustum;
 
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT CollisionObject :
-	public Component
+class ACID_EXPORT
+CollisionObject
+:
+public
+Component
 {
 public:
 	/**

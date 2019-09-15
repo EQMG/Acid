@@ -4,11 +4,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class FilterBlit :
-	public PostFilter
-{
+	public PostFilter {
 public:
 	explicit FilterBlit(const Pipeline::Stage &pipelineStage);
 

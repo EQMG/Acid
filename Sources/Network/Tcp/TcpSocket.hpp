@@ -3,8 +3,7 @@
 #include "Maths/Time.hpp"
 #include "Network/Socket.hpp"
 
-namespace acid
-{
+namespace acid {
 class IpAddress;
 class Packet;
 
@@ -31,7 +30,8 @@ class Packet;
  * The socket is automatically disconnected when it is destroyed, but if you want to
  * explicitly close the connection while the socket instance is still alive, you can call disconnect.
  **/
-class ACID_EXPORT PendingPacket
+class ACID_EXPORT
+PendingPacket
 {
 public:
 	PendingPacket() :
@@ -52,8 +52,11 @@ public:
 /**
  * @brief Specialized socket using the TCP protocol
  **/
-class ACID_EXPORT TcpSocket :
-	public Socket
+class ACID_EXPORT
+TcpSocket
+:
+public
+Socket
 {
 	friend class TcpListener;
 public:

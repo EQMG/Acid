@@ -4,15 +4,15 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
-namespace acid
-{
+namespace acid {
 class Matrix2;
 class Matrix3;
 
 /**
  * @brief Holds a row major 4x4 matrix.
  **/
-class ACID_EXPORT Matrix4
+class ACID_EXPORT
+Matrix4
 {
 public:
 	/**
@@ -300,13 +300,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::Matrix4>
-{
-	size_t operator()(const acid::Matrix4 &matrix) const
-	{
+struct hash<acid::Matrix4> {
+	size_t operator()(const acid::Matrix4 &matrix) const {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);

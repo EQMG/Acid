@@ -2,10 +2,12 @@
 
 #include "Emitter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT EmitterLine :
-	public Emitter
+namespace acid {
+class ACID_EXPORT
+EmitterLine
+:
+public
+Emitter
 {
 public:
 	explicit EmitterLine(float length = 1.0f, const Vector3f &axis = Vector3f::Right);

@@ -1,32 +1,26 @@
 #include "Joint.hpp"
 
-namespace acid
-{
+namespace acid {
 Joint::Joint(uint32_t index, std::string name, const Matrix4 &bindLocalTransform) :
 	m_index(index),
 	m_name(std::move(name)),
-	m_localBindTransform(bindLocalTransform)
-{
+	m_localBindTransform(bindLocalTransform) {
 }
 
-void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform)
-{
+void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform) {
 	auto bindTransform = parentBindTransform * m_localBindTransform;
 	m_inverseBindTransform = bindTransform.Inverse();
 
-	for (auto &child : m_children)
-	{
+	for (auto &child : m_children) {
 		child.CalculateInverseBindTransform(bindTransform);
 	}
 }
 
-void Joint::AddChild(const Joint &child)
-{
+void Joint::AddChild(const Joint &child) {
 	m_children.emplace_back(child);
 }
 
-const Node &operator>>(const Node &node, Joint &joint)
-{
+const Node &operator>>(const Node &node, Joint &joint) {
 	node.GetChild("index", joint.m_index);
 	node.GetChild("name", joint.m_name);
 	node.GetChild("children", joint.m_children);
@@ -35,8 +29,7 @@ const Node &operator>>(const Node &node, Joint &joint)
 	return node;
 }
 
-Node &operator<<(Node &node, const Joint &joint)
-{
+Node &operator<<(Node &node, const Joint &joint) {
 	node.SetChild("index", joint.m_index);
 	node.SetChild("name", joint.m_name);
 	node.SetChild("children", joint.m_children);

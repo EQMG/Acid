@@ -4,12 +4,12 @@
 #include "Serialized/Node.hpp"
 #include "Component.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that holds registered component types.
  */
-class ACID_EXPORT ComponentRegister
+class ACID_EXPORT
+ComponentRegister
 {
 public:
 	ComponentRegister();

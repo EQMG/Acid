@@ -3,15 +3,13 @@
 #include "Graphics/Graphics.hpp"
 #include "Files/Files.hpp"
 
-namespace acid
-{
+namespace acid {
 PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<Shader::Define> defines, bool pushDescriptors) :
 	m_shaderStage(std::move(shaderStage)),
 	m_defines(std::move(defines)),
 	m_pushDescriptors(pushDescriptors),
 	m_shader(std::make_unique<Shader>()),
-	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE)
-{
+	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE) {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
@@ -27,8 +25,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 #endif
 }
 
-PipelineCompute::~PipelineCompute()
-{
+PipelineCompute::~PipelineCompute() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyShaderModule(*logicalDevice, m_shaderModule, nullptr);
@@ -39,26 +36,22 @@ PipelineCompute::~PipelineCompute()
 	vkDestroyPipelineLayout(*logicalDevice, m_pipelineLayout, nullptr);
 }
 
-void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const
-{
+void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const {
 	auto groupCountX = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_x) / static_cast<float>(*m_shader->GetLocalSizes()[0])));
 	auto groupCountY = static_cast<uint32_t>(std::ceil(static_cast<float>(extent.m_y) / static_cast<float>(*m_shader->GetLocalSizes()[1])));
 	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
 }
 
-void PipelineCompute::CreateShaderProgram()
-{
+void PipelineCompute::CreateShaderProgram() {
 	std::stringstream defineBlock;
 
-	for (const auto &[defineName, defineValue] : m_defines)
-	{
+	for (const auto &[defineName, defineValue] : m_defines) {
 		defineBlock << "#define " << defineName << " " << defineValue << '\n';
 	}
 
 	auto fileLoaded = Files::Read(m_shaderStage);
 
-	if (!fileLoaded)
-	{
+	if (!fileLoaded) {
 		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
 	}
 
@@ -73,8 +66,7 @@ void PipelineCompute::CreateShaderProgram()
 	m_shader->CreateReflection();
 }
 
-void PipelineCompute::CreateDescriptorLayout()
-{
+void PipelineCompute::CreateDescriptorLayout() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto descriptorSetLayouts = m_shader->GetDescriptorSetLayouts();
@@ -87,8 +79,7 @@ void PipelineCompute::CreateDescriptorLayout()
 	Graphics::CheckVk(vkCreateDescriptorSetLayout(*logicalDevice, &descriptorSetLayoutCreateInfo, nullptr, &m_descriptorSetLayout));
 }
 
-void PipelineCompute::CreateDescriptorPool()
-{
+void PipelineCompute::CreateDescriptorPool() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto descriptorPools = m_shader->GetDescriptorPools();
@@ -102,8 +93,7 @@ void PipelineCompute::CreateDescriptorPool()
 	Graphics::CheckVk(vkCreateDescriptorPool(*logicalDevice, &descriptorPoolCreateInfo, nullptr, &m_descriptorPool));
 }
 
-void PipelineCompute::CreatePipelineLayout()
-{
+void PipelineCompute::CreatePipelineLayout() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto pushConstantRanges = m_shader->GetPushConstantRanges();
@@ -117,8 +107,7 @@ void PipelineCompute::CreatePipelineLayout()
 	Graphics::CheckVk(vkCreatePipelineLayout(*logicalDevice, &pipelineLayoutCreateInfo, nullptr, &m_pipelineLayout));
 }
 
-void PipelineCompute::CreatePipelineCompute()
-{
+void PipelineCompute::CreatePipelineCompute() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto pipelineCache = Graphics::Get()->GetPipelineCache();
 

@@ -1,15 +1,12 @@
 #include "Timers.hpp"
 
-namespace acid
-{
-Timers::Timers()
-{
+namespace acid {
+Timers::Timers() {
 	std::unique_lock<std::mutex> lock(m_mutex);
 	m_worker = std::thread(std::bind(&Timers::Run, this));
 }
 
-Timers::~Timers()
-{
+Timers::~Timers() {
 	{
 		std::unique_lock<std::mutex> lock(m_mutex);
 		m_stop = true;
@@ -19,32 +16,24 @@ Timers::~Timers()
 	m_worker.join();
 }
 
-void Timers::Update()
-{
+void Timers::Update() {
 }
 
-void Timers::Run()
-{
+void Timers::Run() {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
-	while (!m_stop)
-	{
-		if (m_timers.empty())
-		{
+	while (!m_stop) {
+		if (m_timers.empty()) {
 			m_condition.wait(lock);
-		}
-		else
-		{
-			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<Timer> &a, const std::unique_ptr<Timer> &b)
-			{
+		} else {
+			std::sort(m_timers.begin(), m_timers.end(), [](const std::unique_ptr<Timer> &a, const std::unique_ptr<Timer> &b) {
 				return a->m_next < b->m_next;
 			});
 
 			auto &instance = m_timers.front();
 			auto time = Time::Now();
 
-			if (time >= instance->m_next)
-			{
+			if (time >= instance->m_next) {
 				//Log::Error("Timer % error: ", (time - instance->m_next).AsMilliseconds<float>(), "ms\n");
 				lock.unlock();
 				instance->m_onTick();
@@ -52,18 +41,14 @@ void Timers::Run()
 
 				instance->m_next += instance->m_interval;
 
-				if (instance->m_repeat)
-				{
+				if (instance->m_repeat) {
 					(*instance->m_repeat)--;
 
-					if (*instance->m_repeat == 0)
-					{
+					if (*instance->m_repeat == 0) {
 						m_timers.erase(std::remove(m_timers.begin(), m_timers.end(), instance), m_timers.end());
 					}
 				}
-			}
-			else
-			{
+			} else {
 				std::chrono::microseconds timePoint(instance->m_next - time);
 				m_condition.wait_for(lock, timePoint);
 			}

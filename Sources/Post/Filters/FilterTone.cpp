@@ -1,19 +1,15 @@
 #include "FilterTone.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterTone::FilterTone(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Tone.frag"})
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Tone.frag"}) {
 }
 
-void FilterTone::Render(const CommandBuffer &commandBuffer)
-{
+void FilterTone::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

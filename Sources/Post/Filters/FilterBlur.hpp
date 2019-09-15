@@ -3,10 +3,12 @@
 #include "Maths/Vector2.hpp"
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterBlur :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterBlur
+:
+public
+PostFilter
 {
 public:
 	enum class Type

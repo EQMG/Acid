@@ -1,19 +1,15 @@
 #include "FilterNegative.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterNegative::FilterNegative(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Negative.frag"})
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Negative.frag"}) {
 }
 
-void FilterNegative::Render(const CommandBuffer &commandBuffer)
-{
+void FilterNegative::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

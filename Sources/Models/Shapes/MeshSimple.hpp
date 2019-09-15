@@ -3,10 +3,12 @@
 #include "Models/Model.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-class ACID_EXPORT MeshSimple :
-	public Model
+namespace acid {
+class ACID_EXPORT
+MeshSimple
+:
+public
+Model
 {
 public:
 	MeshSimple(float sideLength, float squareSize, uint32_t vertexCount, float uvScale);

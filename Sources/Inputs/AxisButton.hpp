@@ -3,13 +3,15 @@
 #include "Axis.hpp"
 #include "Button.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Axis composed of two buttons.
  */
-class ACID_EXPORT AxisButton :
-	public Axis
+class ACID_EXPORT
+AxisButton
+:
+public
+Axis
 {
 public:
 	/**

@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class ConfigManager :
-	public Observer
-{
+	public Observer {
 public:
 	ConfigManager();
 

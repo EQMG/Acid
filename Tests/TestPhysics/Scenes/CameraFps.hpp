@@ -6,11 +6,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class CameraFps :
-	public Camera
-{
+	public Camera {
 public:
 	CameraFps();
 

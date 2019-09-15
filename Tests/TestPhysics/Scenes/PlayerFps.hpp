@@ -8,11 +8,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class PlayerFps :
-	public Component
-{
+	public Component {
 public:
 	PlayerFps();
 

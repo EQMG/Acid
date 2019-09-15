@@ -3,12 +3,9 @@
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelRectangle>(resource);
 	}
 
@@ -19,8 +16,7 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max)
-{
+std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max) {
 	ModelRectangle temp(min, max, false);
 	Node node;
 	node << temp;
@@ -29,33 +25,27 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max)
 
 ModelRectangle::ModelRectangle(float min, float max, bool load) :
 	m_min(min),
-	m_max(max)
-{
-	if (load)
-	{
+	m_max(max) {
+	if (load) {
 		Load();
 	}
 }
 
-const Node &operator>>(const Node &node, ModelRectangle &model)
-{
+const Node &operator>>(const Node &node, ModelRectangle &model) {
 	node["min"].Get(model.m_min);
 	node["max"].Get(model.m_max);
 	return node;
 }
 
-Node &operator<<(Node &node, const ModelRectangle &model)
-{
+Node &operator<<(Node &node, const ModelRectangle &model) {
 	node["type"].Set("ModelRectangle");
 	node["min"].Set(model.m_min);
 	node["max"].Set(model.m_max);
 	return node;
 }
 
-void ModelRectangle::Load()
-{
-	if (m_min == m_max)
-	{
+void ModelRectangle::Load() {
+	if (m_min == m_max) {
 		return;
 	}
 

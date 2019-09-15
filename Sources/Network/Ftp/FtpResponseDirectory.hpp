@@ -2,13 +2,15 @@
 
 #include "FtpResponse.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Specialization of FTP response returning a directory.
  **/
-class ACID_EXPORT FtpResponseDirectory :
-	public FtpResponse
+class ACID_EXPORT
+FtpResponseDirectory
+:
+public
+FtpResponse
 {
 public:
 	/**

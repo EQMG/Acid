@@ -3,8 +3,7 @@
 #include "Network/Socket.hpp"
 #include "Network/IpAddress.hpp"
 
-namespace acid
-{
+namespace acid {
 class TcpSocket;
 
 /**
@@ -22,8 +21,11 @@ class TcpSocket;
  * A listener is automatically closed on destruction, like all other types of socket.
  * However if you want to stop listening before the socket is destroyed, you can call its Close() function.
  **/
-class ACID_EXPORT TcpListener :
-	public Socket
+class ACID_EXPORT
+TcpListener
+:
+public
+Socket
 {
 public:
 	/**

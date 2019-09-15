@@ -1,11 +1,9 @@
 #include "StorageHandler.hpp"
 
-namespace acid
-{
+namespace acid {
 StorageHandler::StorageHandler(bool multipipeline) :
 	m_multipipeline(multipipeline),
-	m_handlerStatus(Buffer::Status::Reset)
-{
+	m_handlerStatus(Buffer::Status::Reset) {
 }
 
 StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
@@ -13,16 +11,12 @@ StorageHandler::StorageHandler(const Shader::UniformBlock &uniformBlock, bool mu
 	m_uniformBlock(uniformBlock),
 	m_size(static_cast<uint32_t>(m_uniformBlock->GetSize())),
 	m_storageBuffer(std::make_unique<StorageBuffer>(static_cast<VkDeviceSize>(m_size))),
-	m_handlerStatus(Buffer::Status::Changed)
-{
+	m_handlerStatus(Buffer::Status::Changed) {
 }
 
-bool StorageHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock)
-{
-	if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && !m_uniformBlock) || (!m_multipipeline && m_uniformBlock != uniformBlock))
-	{
-		if ((m_size == 0 && !m_uniformBlock) || (m_uniformBlock && m_uniformBlock != uniformBlock && static_cast<uint32_t>(m_uniformBlock->GetSize()) == m_size))
-		{
+bool StorageHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock) {
+	if (m_handlerStatus == Buffer::Status::Reset || (m_multipipeline && !m_uniformBlock) || (!m_multipipeline && m_uniformBlock != uniformBlock)) {
+		if ((m_size == 0 && !m_uniformBlock) || (m_uniformBlock && m_uniformBlock != uniformBlock && static_cast<uint32_t>(m_uniformBlock->GetSize()) == m_size)) {
 			m_size = static_cast<uint32_t>(uniformBlock->GetSize());
 		}
 
@@ -33,10 +27,8 @@ bool StorageHandler::Update(const std::optional<Shader::UniformBlock> &uniformBl
 		return false;
 	}
 
-	if (m_handlerStatus != Buffer::Status::Normal)
-	{
-		if (m_bound)
-		{
+	if (m_handlerStatus != Buffer::Status::Normal) {
+		if (m_bound) {
 			m_storageBuffer->UnmapMemory();
 			m_bound = false;
 		}

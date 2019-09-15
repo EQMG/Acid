@@ -2,12 +2,12 @@
 
 #include "Graphics/Pipelines/Pipeline.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that handles a pipeline push constant.
  */
-class ACID_EXPORT PushHandler
+class ACID_EXPORT
+PushHandler
 {
 public:
 	explicit PushHandler(bool multipipeline = false);

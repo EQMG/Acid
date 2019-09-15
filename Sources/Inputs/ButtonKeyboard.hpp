@@ -3,13 +3,15 @@
 #include "Devices/Keyboard.hpp"
 #include "Button.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Button input from the keyboard input device.
  */
-class ACID_EXPORT ButtonKeyboard :
-	public Button
+class ACID_EXPORT
+ButtonKeyboard
+:
+public
+Button
 {
 public:
 	/**

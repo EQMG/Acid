@@ -5,8 +5,7 @@
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
 
-namespace acid
-{
+namespace acid {
 MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, float metallic, float roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, bool castsShadows, bool ignoreLighting, bool ignoreFog) :
 	m_baseDiffuse(baseDiffuse),
@@ -17,12 +16,10 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 	m_imageNormal(std::move(imageNormal)),
 	m_castsShadows(castsShadows),
 	m_ignoreLighting(ignoreLighting),
-	m_ignoreFog(ignoreFog)
-{
+	m_ignoreFog(ignoreFog) {
 }
 
-void MaterialDefault::Start()
-{
+void MaterialDefault::Start() {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
@@ -34,18 +31,17 @@ void MaterialDefault::Start()
 
 	m_animated = false; //  meshAnimated;
 	auto vertexInput = Mesh::GetVertexInput(); // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() ;
-	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
-		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt});
+	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
+		{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
+		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt
+	});
 }
 
-void MaterialDefault::Update()
-{
+void MaterialDefault::Update() {
 }
 
-void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
-{
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
-	{
+void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 	}
 
@@ -56,8 +52,7 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject)
 	uniformObject.Push("ignoreLighting", static_cast<float>(m_ignoreLighting));
 }
 
-void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
-{
+void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet) {
 	/*if (m_animated)
 	{
 		auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
@@ -69,8 +64,7 @@ void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet)
 	descriptorSet.Push("samplerNormal", m_imageNormal);
 }
 
-std::vector<Shader::Define> MaterialDefault::GetDefines() const
-{
+std::vector<Shader::Define> MaterialDefault::GetDefines() const {
 	return {
 		{"DIFFUSE_MAPPING", String::To<int32_t>(m_imageDiffuse != nullptr)},
 		{"MATERIAL_MAPPING", String::To<int32_t>(m_imageMaterial != nullptr)},
@@ -81,8 +75,7 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const
 	};
 }
 
-const Node &operator>>(const Node &node, MaterialDefault &material)
-{
+const Node &operator>>(const Node &node, MaterialDefault &material) {
 	node["baseDiffuse"].Get(material.m_baseDiffuse);
 	node["imageDiffuse"].Get(material.m_imageDiffuse);
 	node["metallic"].Get(material.m_metallic);
@@ -95,8 +88,7 @@ const Node &operator>>(const Node &node, MaterialDefault &material)
 	return node;
 }
 
-Node &operator<<(Node &node, const MaterialDefault &material)
-{
+Node &operator<<(Node &node, const MaterialDefault &material) {
 	node["baseDiffuse"].Set(material.m_baseDiffuse);
 	node["imageDiffuse"].Set(material.m_imageDiffuse);
 	node["metallic"].Set(material.m_metallic);

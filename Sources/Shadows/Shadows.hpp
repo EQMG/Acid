@@ -4,13 +4,15 @@
 #include "Maths/Vector3.hpp"
 #include "ShadowBox.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for managing a shadow map.
  */
-class ACID_EXPORT Shadows :
-	public Module
+class ACID_EXPORT
+Shadows
+:
+public
+Module
 {
 public:
 	/**

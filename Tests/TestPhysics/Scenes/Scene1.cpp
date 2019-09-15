@@ -40,8 +40,7 @@
 #include "Terrain/Terrain.hpp"
 #include "CameraFps.hpp"
 
-namespace test
-{
+namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
@@ -50,12 +49,9 @@ Scene1::Scene1() :
 	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
 	m_buttonSave(Key::K),
 	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
-{
-	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
@@ -64,12 +60,12 @@ Scene1::Scene1() :
 			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
 			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
-			sphere->AddComponent<ColliderSphere>(); 
+			sphere->AddComponent<ColliderSphere>();
 			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
 			sphere->AddComponent<MeshRender>();
 			sphere->AddComponent<ShadowRender>();
-			sphere->AddComponent<HeightDespawn>(-75.0f); 
+			sphere->AddComponent<HeightDespawn>(-75.0f);
 
 			auto sphereLight = GetStructure()->CreateEntity();
 			sphereLight->AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
@@ -77,37 +73,28 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 
-	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
-			Resources::Get()->GetThreadPool().Enqueue([this]()
-			{
+	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
+			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile("Scene1.json", std::make_unique<Json>());
 
-				for (auto &entity : GetStructure()->QueryAll())
-				{
+				for (auto &entity : GetStructure()->QueryAll()) {
 					auto &entityNode = sceneFile.GetNode()->AddProperty();
 
-					if (!entity->GetName().empty())
-					{
+					if (!entity->GetName().empty()) {
 						entityNode["name"] = entity->GetName();
 					}
 
-					for (auto &component : entity->GetComponents())
-					{
+					for (auto &component : entity->GetComponents()) {
 						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
 
-						if (componentName)
-						{
+						if (componentName) {
 							auto child = entityNode.AddProperty(*componentName, {});
 							Scenes::Get()->GetComponentRegister().Encode(*componentName, child, component.get());
 						}
@@ -122,41 +109,34 @@ Scene1::Scene1() :
 	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
 	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 
-	m_uiStartLogo.OnFinished().Add([this]()
-	{
+	m_uiStartLogo.OnFinished().Add([this]() {
 		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
 		Mouse::Get()->SetCursorHidden(true);
 	});
 
-	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths)
-	{
-		for (const auto &path : paths)
-		{
+	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths) {
+		for (const auto &path : paths) {
 			Log::Out("File dropped on window: ", path, '\n');
 		}
 	}, this);
-	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected)
-	{
+	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected) {
 		Log::Out("Monitor ", std::quoted(monitor->GetName()), " action: ", connected, '\n');
 	}, this);
-	Window::Get()->OnClose().Add([]()
-	{
+	Window::Get()->OnClose().Add([]() {
 		Log::Out("Window has closed!\n");
 	}, this);
-	Window::Get()->OnIconify().Add([](bool iconified)
-	{
+	Window::Get()->OnIconify().Add([](bool iconified) {
 		Log::Out("Iconified: ", iconified, '\n');
 	}, this);
 }
 
-void Scene1::Start()
-{
+void Scene1::Start() {
 	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
 	GetPhysics()->SetAirDensity(1.0f);
 
 	auto player = GetStructure()->CreateEntity("Objects/Player/Player.json");
 	player->AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f));
-	
+
 	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
 	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), 2048.0f);
 
@@ -214,10 +194,8 @@ void Scene1::Start()
 
 	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
-	for (int32_t i = 0; i < 5; i++)
-	{
-		for (int32_t j = 0; j < 5; j++)
-		{
+	for (int32_t i = 0; i < 5; i++) {
+		for (int32_t j = 0; j < 5; j++) {
 			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f));
 			cube->AddComponent<Mesh>(ModelCube::Create({1.0f, 1.0f, 1.0f}));
@@ -234,8 +212,8 @@ void Scene1::Start()
 	suzanne->AddComponent<Mesh>(ModelObj::Create("Objects/Suzanne/Suzanne.obj"));
 	suzanne->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.2f, 0.8f);
 	suzanne->AddComponent<MeshRender>();
-	suzanne->AddComponent<ShadowRender>(); 
-	
+	suzanne->AddComponent<ShadowRender>();
+
 	//auto suzanne1 = GetStructure()->CreateEntity();
 	//suzanne1->AddComponent<Transform>(Vector3f(-1.0f, 2.0f, 10.0f));
 	//suzanne1->AddComponent<Mesh>(ModelGltf::Create("Objects/Suzanne/Suzanne.glb"));
@@ -280,7 +258,7 @@ void Scene1::Start()
 	auto teapot2 = GetStructure()->CreateEntity();
 	teapot2->AddComponent<Transform>(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), 0.2f);
 	teapot2->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f); 
+	teapot2->AddComponent<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f);
 	//teapot2->AddComponent<Rigidbody>(1.0f);
 	//teapot2->AddComponent<ColliderConvexHull>();
 	teapot2->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 1);
@@ -291,7 +269,7 @@ void Scene1::Start()
 	auto teapot3 = GetStructure()->CreateEntity();
 	teapot3->AddComponent<Transform>(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), 0.2f);
 	teapot3->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f); 
+	teapot3->AddComponent<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f);
 	//teapot3->AddComponent<Rigidbody>(1.0f);
 	//teapot3->AddComponent<ColliderConvexHull>();
 	teapot3->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 2);
@@ -327,14 +305,12 @@ void Scene1::Start()
 	prefabSmokeSystem.Write();
 }
 
-void Scene1::Update()
-{
+void Scene1::Update() {
 	auto teapotConeLight = GetStructure()->GetEntity("TeapotConeLight");
 	auto transform = teapotConeLight->GetComponent<Transform>();
 }
 
-bool Scene1::IsPaused() const
-{
+bool Scene1::IsPaused() const {
 	return !m_uiStartLogo.IsFinished();
 }
 }

@@ -10,15 +10,17 @@
 #include "FontMetafile.hpp"
 #include "Outline.hpp"
 
-namespace acid
-{
+namespace acid {
 class Text;
 
 /**
  * @brief Resource that is used when creating a font mesh.
  */
-class ACID_EXPORT FontType :
-	public Resource
+class ACID_EXPORT
+FontType
+:
+public
+Resource
 {
 public:
 	class Instance

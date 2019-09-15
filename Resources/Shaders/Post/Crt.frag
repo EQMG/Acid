@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
-{
+layout(push_constant) uniform PushScene {
 	vec4 screenColour;
 	float curveAmountX;
 	float curveAmountY;
@@ -18,8 +17,7 @@ layout(binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUV;
 
-void main() 
-{
+void main() {
 	vec2 tc = vec2(inUV.x, inUV.y);
 
 	// Distance from the center
@@ -43,8 +41,7 @@ void main()
 	colour.rgb += sin((tc.y + scene.moveTime) * scene.scanLineSize) * scene.scanIntensity;
 
 	// Cutoff
-	if (tc.y > 1.0f || tc.x < 0.0f || tc.x > 1.0f || tc.y < 0.0f)
-	{
+	if (tc.y > 1.0f || tc.x < 0.0f || tc.x > 1.0f || tc.y < 0.0f) {
 		colour = vec4(0.0f);
 	}
 

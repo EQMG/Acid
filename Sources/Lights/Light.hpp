@@ -4,13 +4,15 @@
 #include "Maths/Vector3.hpp"
 #include "Scenes/Component.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Component that represents a point light.
  */
-class ACID_EXPORT Light :
-	public Component
+class ACID_EXPORT
+Light
+:
+public
+Component
 {
 public:
 	/**

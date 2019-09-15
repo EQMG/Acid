@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a disk model.
  */
-class ACID_EXPORT ModelDisk :
-	public Model
+class ACID_EXPORT
+ModelDisk
+:
+public
+Model
 {
 public:
 	/**

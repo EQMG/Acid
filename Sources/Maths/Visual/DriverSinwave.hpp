@@ -3,16 +3,14 @@
 #include "Maths/Maths.hpp"
 #include "Driver.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A driver that uses a sine wave.
  * @tparam T The type to be driven.
  **/
 template<typename T>
 class DriverSinwave :
-	public Driver<T>
-{
+	public Driver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
@@ -23,9 +21,7 @@ public:
 	DriverSinwave(const T &min, const T &max, const Time &length) :
 		Driver<T>(length),
 		m_min(min),
-		m_max(max)
-	{
-	}
+		m_max(max) { }
 
 	/**
 	 * Gets the min value.
@@ -52,8 +48,7 @@ public:
 	void SetMax(const T &max) { m_max = max; }
 
 protected:
-	T Calculate(float factor) override
-	{
+	T Calculate(float factor) override {
 		auto value = 0.5f + std::sin(2.0f * Maths::Pi<float> * factor) * 0.5f;
 		return m_min + value * (m_max - m_min);
 	}

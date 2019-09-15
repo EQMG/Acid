@@ -11,31 +11,27 @@
 #include "Scenes/Scenes.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
-namespace acid
-{
+namespace acid {
 static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, {}, 
+	m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, {},
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
-	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f)
-{
+	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
 	Node node;
 	node << *m_pipeline.GetShader();
 	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write();
 }
 
-void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
-{
+void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 	auto camera = Scenes::Get()->GetCamera();
 
 	auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
 	auto skybox = materialSkybox ? materialSkybox->GetImage() : nullptr;
 
-	if (m_skybox != skybox)
-	{
+	if (m_skybox != skybox) {
 		m_skybox = skybox;
 		m_irradiance = Resources::Get()->GetThreadPool().Enqueue(ComputeIrradiance, m_skybox, 64);
 		m_prefiltered = Resources::Get()->GetThreadPool().Enqueue(ComputePrefiltered, m_skybox, 512);
@@ -47,8 +43,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
-	for (const auto &light : sceneLights)
-	{
+	for (const auto &light : sceneLights) {
 		//auto position = *light->GetPosition();
 		//float radius = light->GetRadius();
 
@@ -59,9 +54,8 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 
 		DeferredLight deferredLight = {};
 		deferredLight.m_colour = light->GetColour();
-		
-		if (auto transform = light->GetEntity()->GetComponent<Transform>(); transform)
-		{
+
+		if (auto transform = light->GetEntity()->GetComponent<Transform>(); transform) {
 			deferredLight.m_position = transform->GetPosition();
 		}
 
@@ -69,8 +63,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 		deferredLights[lightCount] = deferredLight;
 		lightCount++;
 
-		if (lightCount >= MAX_LIGHTS)
-		{
+		if (lightCount >= MAX_LIGHTS) {
 			break;
 		}
 	}
@@ -99,8 +92,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
 	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 
@@ -111,8 +103,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size)
-{
+std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
@@ -146,10 +137,8 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size)
 	return brdfImage;
 }
 
-std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size)
-{
-	if (!source)
-	{
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size) {
+	if (!source) {
 		return nullptr;
 	}
 
@@ -187,10 +176,8 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	return irradianceCubemap;
 }
 
-std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size)
-{
-	if (!source)
-	{
+std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size) {
+	if (!source) {
 		return nullptr;
 	}
 
@@ -207,8 +194,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	PushHandler pushHandler(*compute.GetShader()->GetUniformBlock("PushObject"));
 
 	// TODO: Use image barriers between rendering (single command buffer), rework write descriptor passing. Image class also needs a restructure.
-	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++)
-	{
+	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		VkImageView levelView = VK_NULL_HANDLE;
 		Image::CreateImageView(prefilteredCubemap->GetImage(), levelView, VK_IMAGE_VIEW_TYPE_CUBE, prefilteredCubemap->GetFormat(), VK_IMAGE_ASPECT_COLOR_BIT, 1, i, 6, 0);
 

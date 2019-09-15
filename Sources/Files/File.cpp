@@ -3,27 +3,21 @@
 #include "Engine/Engine.hpp"
 #include "Files.hpp"
 
-namespace acid
-{
+namespace acid {
 File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
 	m_filename(std::move(filename)),
-	m_node(std::move(node))
-{
+	m_node(std::move(node)) {
 }
 
-void File::Load()
-{
+void File::Load() {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
 
-	if (Files::ExistsInPath(m_filename))
-	{
+	if (Files::ExistsInPath(m_filename)) {
 		IFStream inStream(m_filename);
 		m_node->Load(inStream);
-	}
-	else if (std::filesystem::exists(m_filename))
-	{
+	} else if (std::filesystem::exists(m_filename)) {
 		std::ifstream inStream(m_filename);
 		m_node->Load(inStream);
 		inStream.close();
@@ -34,21 +28,17 @@ void File::Load()
 #endif
 }
 
-void File::Write() const
-{
+void File::Write() const {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
 
-	if (Files::ExistsInPath(m_filename))
-	{
+	if (Files::ExistsInPath(m_filename)) {
 		OFStream os(m_filename);
 		m_node->Write(os);
-	}
-	else // if (std::filesystem::exists(m_filename))
+	} else // if (std::filesystem::exists(m_filename))
 	{
-		if (auto parentPath = m_filename.parent_path(); !parentPath.empty())
-		{
+		if (auto parentPath = m_filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
 
@@ -62,8 +52,7 @@ void File::Write() const
 #endif
 }
 
-void File::Clear()
-{
+void File::Clear() {
 	m_node->ClearProperties();
 }
 }

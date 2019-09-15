@@ -2,8 +2,7 @@
 
 #include "Maths/Matrix4.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a joint in a "skeleton". It contains the index of the joint which determines where in the vertex shader uniform array the joint matrix for this joint is loaded up to.
  * It also contains the name of the bone, and a list of all the child joints.
@@ -19,7 +18,8 @@ namespace acid
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
  **/
-class ACID_EXPORT Joint
+class ACID_EXPORT
+Joint
 {
 public:
 	/**

@@ -9,20 +9,23 @@
 
 struct GLFWwindow;
 
-namespace acid
-{
+namespace acid {
 enum class InputAction :
-	int32_t
-{
-	Release = 0, Press = 1, Repeat = 2
+	int32_t {
+	Release = 0,
+	Press = 1,
+	Repeat = 2
 };
 
 ENABLE_BITMASK_OPERATORS(InputAction)
 
 enum class InputMod :
-	int32_t
-{
-	None = 0, Shift = 1, Control = 2, Alt = 4, Super = 8
+	int32_t {
+	None = 0,
+	Shift = 1,
+	Control = 2,
+	Alt = 4,
+	Super = 8
 };
 
 ENABLE_BITMASK_OPERATORS(InputMod)
@@ -30,8 +33,11 @@ ENABLE_BITMASK_OPERATORS(InputMod)
 /**
  * @brief Module used for managing a window.
  */
-class ACID_EXPORT Window :
-	public Module
+class ACID_EXPORT
+Window
+:
+public
+Module
 {
 public:
 	/**

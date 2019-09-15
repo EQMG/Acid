@@ -4,28 +4,22 @@
 #include "Maths/Vector2.hpp"
 #include "Scenes/Entity.hpp"
 
-namespace acid
-{
+namespace acid {
 EmitterSphere::EmitterSphere(float radius) :
-	m_radius(radius)
-{
+	m_radius(radius) {
 }
 
-void EmitterSphere::Start()
-{
+void EmitterSphere::Start() {
 }
 
-void EmitterSphere::Update()
-{
+void EmitterSphere::Update() {
 }
 
-Vector3f EmitterSphere::GeneratePosition() const
-{
+Vector3f EmitterSphere::GeneratePosition() const {
 	auto a = Maths::Random(0.0f, 1.0f);
 	auto b = Maths::Random(0.0f, 1.0f);
 
-	if (a > b)
-	{
+	if (a > b) {
 		std::swap(a, b);
 	}
 
@@ -35,14 +29,12 @@ Vector3f EmitterSphere::GeneratePosition() const
 	return m_radius * distance * RandomUnitVector();
 }
 
-const Node &operator>>(const Node &node, EmitterSphere &emitter)
-{
+const Node &operator>>(const Node &node, EmitterSphere &emitter) {
 	node["radius"].Get(emitter.m_radius);
 	return node;
 }
 
-Node &operator<<(Node &node, const EmitterSphere &emitter)
-{
+Node &operator<<(Node &node, const EmitterSphere &emitter) {
 	node["radius"].Set(emitter.m_radius);
 	return node;
 }

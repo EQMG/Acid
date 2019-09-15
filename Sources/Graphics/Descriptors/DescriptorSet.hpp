@@ -3,12 +3,12 @@
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Pipelines/Pipeline.hpp"
 
-namespace acid
-{
+namespace acid {
 class Descriptor;
 class WriteDescriptorSet;
 
-class ACID_EXPORT DescriptorSet
+class ACID_EXPORT
+DescriptorSet
 {
 public:
 	explicit DescriptorSet(const Pipeline &pipeline);

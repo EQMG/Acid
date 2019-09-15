@@ -6,11 +6,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class SkyboxCycle :
-	public Component
-{
+	public Component {
 public:
 	explicit SkyboxCycle(bool enableFog = true, bool enableRotation = false);
 

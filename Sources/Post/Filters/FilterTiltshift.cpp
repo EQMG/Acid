@@ -1,18 +1,15 @@
 #include "FilterTiltshift.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterTiltshift::FilterTiltshift(const Pipeline::Stage &pipelineStage, float blurAmount, float centre, float stepSize, float steps) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Tiltshift.frag" }),
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Tiltshift.frag"}),
 	m_blurAmount(blurAmount),
 	m_centre(centre),
 	m_stepSize(stepSize),
-	m_steps(steps)
-{
+	m_steps(steps) {
 }
 
-void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
-{
+void FilterTiltshift::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("blurAmount", m_blurAmount);
 	m_pushScene.Push("centre", m_centre);
@@ -23,8 +20,7 @@ void FilterTiltshift::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

@@ -5,10 +5,12 @@
 #include "Uis/UiObject.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputBoolean :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputBoolean
+:
+public
+UiObject
 {
 public:
 	UiInputBoolean(UiObject *parent, const std::string &title, bool value, const UiTransform &transform = {UiInputButton::Size});

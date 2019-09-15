@@ -4,12 +4,12 @@
 #include "Maths/Vector3.hpp"
 #include "ParticleType.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A instance of a particle type.
  */
-class ACID_EXPORT Particle
+class ACID_EXPORT
+Particle
 {
 	friend class ParticleType;
 public:

@@ -2,10 +2,12 @@
 
 #include "Serialized/Node.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Json :
-	public Node
+namespace acid {
+class ACID_EXPORT
+Json
+:
+public
+Node
 {
 public:
 	Json() = default;

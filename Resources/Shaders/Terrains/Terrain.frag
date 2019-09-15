@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 1) uniform UniformObject
-{
+layout(binding = 1) uniform UniformObject {
 	mat4 transform;
 } object;
 
@@ -19,11 +18,10 @@ layout(location = 1) out vec4 outDiffuse;
 layout(location = 2) out vec4 outNormal;
 layout(location = 3) out vec4 outMaterial;
 
-void main()
-{
-//	vec4 diffuse = vec4(0.0f, 0.0f, 0.0f, 1.0f);
-//	diffuse.rgb += inTexture.r * texture(samplerR, inUV).rgb;
-//	diffuse.rgb += inTexture.g * texture(samplerG, inUV).rgb;
+void main() {
+	//vec4 diffuse = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	//diffuse.rgb += inTexture.r * texture(samplerR, inUV).rgb;
+	//diffuse.rgb += inTexture.g * texture(samplerG, inUV).rgb;
 	vec4 diffuse = texture(samplerR, inUV);
 	
 	outPosition = vec4(inPosition, 1.0f);

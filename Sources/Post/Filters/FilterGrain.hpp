@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterGrain :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterGrain
+:
+public
+PostFilter
 {
 public:
 	explicit FilterGrain(const Pipeline::Stage &pipelineStage, float strength = 2.3f);

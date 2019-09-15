@@ -3,12 +3,9 @@
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ModelCube> ModelCube::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelCube>(resource);
 	}
 
@@ -19,8 +16,7 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
-{
+std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents) {
 	ModelCube temp(extents, false);
 	Node node;
 	node << temp;
@@ -28,31 +24,25 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents)
 }
 
 ModelCube::ModelCube(const Vector3f &extents, bool load) :
-	m_extents(extents)
-{
-	if (load)
-	{
+	m_extents(extents) {
+	if (load) {
 		Load();
 	}
 }
 
-const Node &operator>>(const Node &node, ModelCube &model)
-{
+const Node &operator>>(const Node &node, ModelCube &model) {
 	node["extents"].Get(model.m_extents);
 	return node;
 }
 
-Node &operator<<(Node &node, const ModelCube &model)
-{
+Node &operator<<(Node &node, const ModelCube &model) {
 	node["type"].Set("ModelCube");
 	node["extents"].Set(model.m_extents);
 	return node;
 }
 
-void ModelCube::Load()
-{
-	if (m_extents == Vector3f::Zero)
-	{
+void ModelCube::Load() {
+	if (m_extents == Vector3f::Zero) {
 		return;
 	}
 
@@ -97,8 +87,7 @@ void ModelCube::Load()
 		15, 23, 16,
 	};
 
-	for (auto &vertex : vertices)
-	{
+	for (auto &vertex : vertices) {
 		vertex.m_position *= m_extents;
 	}
 

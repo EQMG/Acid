@@ -2,8 +2,7 @@
 
 #include "Driver.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A driver that has a constant value.
  * @tparam T The type to be driven.
@@ -11,8 +10,7 @@ namespace acid
 
 template<typename T>
 class DriverConstant :
-	public Driver<T>
-{
+	public Driver<T> {
 public:
 	/**
 	 * Creates a new constant driver.
@@ -20,9 +18,7 @@ public:
 	 **/
 	explicit DriverConstant(const T &constant) :
 		Driver<T>(-1s),
-		m_constant(constant)
-	{
-	}
+		m_constant(constant) { }
 
 	/**
 	 * Gets the constant.
@@ -36,8 +32,7 @@ public:
 	 **/
 	void SetConstant(const T &constant) { m_constant = constant; };
 protected:
-	T Calculate(float factor) override
-	{
+	T Calculate(float factor) override {
 		return m_constant;
 	}
 

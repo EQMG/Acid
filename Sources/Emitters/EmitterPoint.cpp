@@ -2,33 +2,26 @@
 
 #include "Scenes/Entity.hpp"
 
-namespace acid
-{
-EmitterPoint::EmitterPoint()
-{
+namespace acid {
+EmitterPoint::EmitterPoint() {
 }
 
-void EmitterPoint::Start()
-{
+void EmitterPoint::Start() {
 }
 
-void EmitterPoint::Update()
-{
+void EmitterPoint::Update() {
 }
 
-Vector3f EmitterPoint::GeneratePosition() const
-{
+Vector3f EmitterPoint::GeneratePosition() const {
 	return m_point;
 }
 
-const Node &operator>>(const Node &node, EmitterPoint &emitter)
-{
+const Node &operator>>(const Node &node, EmitterPoint &emitter) {
 	node["point"].Get(emitter.m_point);
 	return node;
 }
 
-Node &operator<<(Node &node, const EmitterPoint &emitter)
-{
+Node &operator<<(Node &node, const EmitterPoint &emitter) {
 	node["point"].Set(emitter.m_point);
 	return node;
 }

@@ -3,12 +3,12 @@
 #include "Maths/Vector3.hpp"
 #include "Maths/Time.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a force that is attached to a {@link Rigidbody}.
  */
-class ACID_EXPORT Force
+class ACID_EXPORT
+Force
 {
 public:
 	/**

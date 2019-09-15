@@ -4,12 +4,12 @@
 #include "ScenePhysics.hpp"
 #include "SceneStructure.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that is used to represent a scene.
  */
-class ACID_EXPORT Scene
+class ACID_EXPORT
+Scene
 {
 	friend class Scenes;
 public:

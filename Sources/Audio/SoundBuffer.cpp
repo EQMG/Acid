@@ -9,12 +9,9 @@
 #include "Resources/Resources.hpp"
 #include "stb_vorbis.c"
 
-namespace acid
-{
-std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<SoundBuffer>(resource);
 	}
 
@@ -25,8 +22,7 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename)
-{
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename) {
 	SoundBuffer temp(filename, false);
 	Node node;
 	node << temp;
@@ -34,60 +30,48 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &fi
 }
 
 SoundBuffer::SoundBuffer(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename))
-{
-	if (load)
-	{
+	m_filename(std::move(filename)) {
+	if (load) {
 		Load();
 	}
 }
 
-SoundBuffer::~SoundBuffer()
-{
+SoundBuffer::~SoundBuffer() {
 	alDeleteBuffers(1, &m_buffer);
 }
 
-const Node &operator>>(const Node &node, SoundBuffer &soundBuffer)
-{
+const Node &operator>>(const Node &node, SoundBuffer &soundBuffer) {
 	node["filename"].Get(soundBuffer.m_filename);
 	return node;
 }
 
-Node &operator<<(Node &node, const SoundBuffer &soundBuffer)
-{
+Node &operator<<(Node &node, const SoundBuffer &soundBuffer) {
 	node["filename"].Set(soundBuffer.m_filename);
 	return node;
 }
 
-void SoundBuffer::Load()
-{
-	if (m_filename.empty())
-	{
+void SoundBuffer::Load() {
+	if (m_filename.empty()) {
 		return;
 	}
 
 	auto fileExt = m_filename.extension().string();
 
-	if (fileExt == ".wav")
-	{
+	if (fileExt == ".wav") {
 		m_buffer = LoadBufferWav(m_filename);
-	}
-	else if (fileExt == ".ogg")
-	{
+	} else if (fileExt == ".ogg") {
 		m_buffer = LoadBufferOgg(m_filename);
 	}
 }
 
-uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
-{
+uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename) {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
 
 	auto fileLoaded = Files::Read(filename);
 
-	if (!fileLoaded)
-	{
+	if (!fileLoaded) {
 		Log::Error("WAV file could not be loaded: ", filename, '\n');
 		return 0;
 	}
@@ -129,8 +113,7 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 	file.read(reinterpret_cast<char *>(&blockAlign), 2);
 	file.read(reinterpret_cast<char *>(&bitsPerSample), 2);
 
-	if (size > 16)
-	{
+	if (size > 16) {
 		file.seekg(static_cast<int>(file.tellg()) + (size - 16));
 	}
 
@@ -155,16 +138,14 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename)
 	return buffer;
 }
 
-uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
-{
+uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename) {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
 
 	auto fileLoaded = Files::Read(filename);
 
-	if (!fileLoaded)
-	{
+	if (!fileLoaded) {
 		Log::Error("OGG file could not be loaded: ", filename, '\n');
 		return 0;
 	}
@@ -174,8 +155,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename)
 	int16_t *data;
 	auto size = stb_vorbis_decode_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()), &channels, &samplesPerSec, &data);
 
-	if (size == -1)
-	{
+	if (size == -1) {
 		Log::Error("Error reading the OGG ", filename, ", could not find size\n");
 	}
 

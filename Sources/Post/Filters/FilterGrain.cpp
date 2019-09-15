@@ -1,15 +1,12 @@
 #include "FilterGrain.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterGrain::FilterGrain(const Pipeline::Stage &pipelineStage, float strength) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Grain.frag"}),
-	m_strength(strength)
-{
+	m_strength(strength) {
 }
 
-void FilterGrain::Render(const CommandBuffer &commandBuffer)
-{
+void FilterGrain::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("strength", m_strength);
 
@@ -17,8 +14,7 @@ void FilterGrain::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

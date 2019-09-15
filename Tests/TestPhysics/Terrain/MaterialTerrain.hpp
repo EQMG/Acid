@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class MaterialTerrain :
-	public Material
-{
+	public Material {
 public:
 	explicit MaterialTerrain(std::shared_ptr<Image2d> imageR = nullptr, std::shared_ptr<Image2d> imageG = nullptr);
 

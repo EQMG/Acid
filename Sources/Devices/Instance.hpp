@@ -3,9 +3,9 @@
 #include <vulkan/vulkan.h>
 #include "StdAfx.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Instance
+namespace acid {
+class ACID_EXPORT
+Instance
 {
 	friend class Graphics;
 public:

@@ -3,15 +3,17 @@
 #include "Files/File.hpp"
 #include "Resources/Resource.hpp"
 
-namespace acid
-{
+namespace acid {
 class Entity;
 
 /**
  * @brief Resource that represents a entity prefab.
  */
-class ACID_EXPORT EntityPrefab :
-	public Resource
+class ACID_EXPORT
+EntityPrefab
+:
+public
+Resource
 {
 public:
 	/**

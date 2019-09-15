@@ -3,12 +3,9 @@
 #include "Resources/Resources.hpp"
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
-std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
@@ -19,14 +16,12 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate)
-{
+std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage &pipelineStage, const PipelineGraphicsCreate &pipelineCreate) {
 	PipelineMaterial temp(pipelineStage, pipelineCreate);
 	Node node;
 	node << temp;
 
-	if (auto resource = Resources::Get()->Find(node))
-	{
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
 	}
 
@@ -39,21 +34,17 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
 	m_pipelineStage(std::move(pipelineStage)),
-	m_pipelineCreate(std::move(pipelineCreate))
-{
+	m_pipelineCreate(std::move(pipelineCreate)) {
 }
 
-bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
-{
+bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer) {
 	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
 
-	if (!renderStage)
-	{
+	if (!renderStage) {
 		return false;
 	}
 
-	if (m_renderStage != renderStage)
-	{
+	if (m_renderStage != renderStage) {
 		m_renderStage = renderStage;
 		m_pipeline.reset(m_pipelineCreate.Create(m_pipelineStage));
 	}
@@ -62,16 +53,14 @@ bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer)
 	return true;
 }
 
-const Node &operator>>(const Node &node, PipelineMaterial &pipeline)
-{
+const Node &operator>>(const Node &node, PipelineMaterial &pipeline) {
 	node["renderpass"].Get(pipeline.m_pipelineStage.first);
 	node["subpass"].Get(pipeline.m_pipelineStage.second);
 	node["pipelineCreate"].Get(pipeline.m_pipelineCreate);
 	return node;
 }
 
-Node &operator<<(Node &node, const PipelineMaterial &pipeline)
-{
+Node &operator<<(Node &node, const PipelineMaterial &pipeline) {
 	node["renderpass"].Set(pipeline.m_pipelineStage.first);
 	node["subpass"].Set(pipeline.m_pipelineStage.second);
 	node["pipelineCreate"].Set(pipeline.m_pipelineCreate);

@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(set = 0, binding = 0) uniform UniformScene
-{
+layout(set = 0, binding = 0) uniform UniformScene {
 	mat4 projection;
 	mat4 view;
 } scene;
@@ -22,13 +21,11 @@ layout(location = 2) out vec4 outColourOffset;
 layout(location = 3) out float outBlendFactor;
 layout(location = 4) out float outTransparency;
 
-out gl_PerVertex
-{
+out gl_PerVertex {
 	vec4 gl_Position;
 };
 
-void main()
-{
+void main() {
 	vec4 worldPosition = inModelMatrix * vec4(inPosition, 1.0f);
 
 	gl_Position = scene.projection * scene.view * worldPosition;

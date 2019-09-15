@@ -5,61 +5,48 @@
 #include "Scenes/Entity.hpp"
 #include "Particles.hpp"
 
-namespace acid
-{
+namespace acid {
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, float pps, float averageSpeed, float gravityEffect) :
 	m_types(std::move(types)),
 	m_pps(pps),
 	m_averageSpeed(averageSpeed),
 	m_gravityEffect(gravityEffect),
 	m_randomRotation(false),
-	m_elapsedEmit(Time::Seconds(1.0f / m_pps))
-{
+	m_elapsedEmit(Time::Seconds(1.0f / m_pps)) {
 }
 
-void ParticleSystem::Start()
-{
+void ParticleSystem::Start() {
 }
 
-void ParticleSystem::Update()
-{
-	if (m_types.empty())
-	{
+void ParticleSystem::Update() {
+	if (m_types.empty()) {
 		return;
 	}
 
 	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed)
-	{
+	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed) {
 		auto emitters = GetEntity()->GetComponents<Emitter>();
 
-		if (!emitters.empty())
-		{
-			for (uint32_t i = 0; i < elapsed; i++)
-			{
+		if (!emitters.empty()) {
+			for (uint32_t i = 0; i < elapsed; i++) {
 				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
 			}
 		}
 	}
 }
 
-void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type)
-{
-	if (std::find(m_types.begin(), m_types.end(), type) != m_types.end())
-	{
+void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type) {
+	if (std::find(m_types.begin(), m_types.end(), type) != m_types.end()) {
 		return;
 	}
 
 	m_types.emplace_back(type);
 }
 
-bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &type)
-{
-	for (auto it = m_types.begin(); it != m_types.end(); ++it)
-	{
-		if (*it == type)
-		{
+bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &type) {
+	for (auto it = m_types.begin(); it != m_types.end(); ++it) {
+		if (*it == type) {
 			m_types.erase(it);
 			return true;
 		}
@@ -68,8 +55,7 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	return false;
 }
 
-Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const
-{
+Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const {
 	auto cosAngle = std::cos(angle);
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 	auto z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
@@ -79,8 +65,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 
 	Vector4f direction(x, y, z, 1.0f);
 
-	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f))
-	{
+	if (coneDirection.m_x != 0.0f || coneDirection.m_y != 0.0f || (coneDirection.m_z != 1.0f && coneDirection.m_z != -1.0f)) {
 		auto rotateAxis = coneDirection.Cross(Vector3f::Front);
 		rotateAxis.Normalize();
 		auto rotateAngle = std::acos(coneDirection.Dot(Vector3f::Front));
@@ -88,43 +73,34 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 		Matrix4 rotationMatrix;
 		rotationMatrix = rotationMatrix.Rotate(-rotateAngle, rotateAxis);
 		direction = rotationMatrix.Transform(direction);
-	}
-	else if (coneDirection.m_z == -1.0f)
-	{
+	} else if (coneDirection.m_z == -1.0f) {
 		direction.m_z *= -1.0f;
 	}
 
 	return {direction};
 }
 
-void ParticleSystem::SetPps(float pps)
-{
+void ParticleSystem::SetPps(float pps) {
 	m_pps = pps;
 }
 
-void ParticleSystem::SetDirection(const Vector3f &direction, float deviation)
-{
+void ParticleSystem::SetDirection(const Vector3f &direction, float deviation) {
 	m_direction = direction;
 	m_directionDeviation = deviation * Maths::Pi<float>;
 }
 
-Particle ParticleSystem::EmitParticle(const Emitter &emitter)
-{
+Particle ParticleSystem::EmitParticle(const Emitter &emitter) {
 	auto spawnPos = emitter.GeneratePosition();
 
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
-	{
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
 		spawnPos += transform->GetPosition();
 	}
 
 	Vector3f velocity;
 
-	if (m_direction != Vector3f::Zero)
-	{
+	if (m_direction != Vector3f::Zero) {
 		velocity = RandomUnitVectorWithinCone(m_direction, m_directionDeviation);
-	}
-	else
-	{
+	} else {
 		velocity = GenerateRandomUnitVector();
 	}
 
@@ -138,24 +114,20 @@ Particle ParticleSystem::EmitParticle(const Emitter &emitter)
 	return {emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect};
 }
 
-float ParticleSystem::GenerateValue(float average, float errorPercent)
-{
+float ParticleSystem::GenerateValue(float average, float errorPercent) {
 	auto error = Maths::Random(-1.0f, 1.0f) * errorPercent;
 	return average + (average * error);
 }
 
-float ParticleSystem::GenerateRotation() const
-{
-	if (m_randomRotation)
-	{
+float ParticleSystem::GenerateRotation() const {
+	if (m_randomRotation) {
 		return Maths::Random(0.0f, Maths::Pi<float>);
 	}
 
 	return 0.0f;
 }
 
-Vector3f ParticleSystem::GenerateRandomUnitVector() const
-{
+Vector3f ParticleSystem::GenerateRandomUnitVector() const {
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 	auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
@@ -164,8 +136,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const
 	return {x, y, z};
 }
 
-const Node &operator>>(const Node &node, ParticleSystem &particleSystem)
-{
+const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 	node["types"].Get(particleSystem.m_types);
 	node["pps"].Get(particleSystem.m_pps);
 	node["averageSpeed"].Get(particleSystem.m_averageSpeed);
@@ -180,8 +151,7 @@ const Node &operator>>(const Node &node, ParticleSystem &particleSystem)
 	return node;
 }
 
-Node &operator<<(Node &node, const ParticleSystem &particleSystem)
-{
+Node &operator<<(Node &node, const ParticleSystem &particleSystem) {
 	node["types"].Set(particleSystem.m_types);
 	node["pps"].Set(particleSystem.m_pps);
 	node["averageSpeed"].Set(particleSystem.m_averageSpeed);

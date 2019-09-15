@@ -14,68 +14,58 @@
 
 using namespace acid;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	{
 		RingBuffer<int32_t> buffer(4);
 
-		if (!buffer.push(1, 2, 3, 4))
-		{
+		if (!buffer.push(1, 2, 3, 4)) {
 			return false;
 		}
 
 		buffer[1] = 11;
 
-		for (const auto &i : buffer)
-		{
+		for (const auto &i : buffer) {
 			Log::Out(i, ", ");
 		}
 		Log::Out('\n');
 
-		if (buffer.front() != 1)
-		{
+		if (buffer.front() != 1) {
 			return false;
 		}
 
 		buffer.pop();
 
-		if (buffer.front() != 11)
-		{
+		if (buffer.front() != 11) {
 			return false;
 		}
 
 		buffer.pop();
 
-		if (buffer.front() != 3)
-		{
+		if (buffer.front() != 3) {
 			return false;
 		}
 
 		buffer.pop();
 
-		if (!buffer.push(5))
-		{
+		if (!buffer.push(5)) {
 			return false;
 		}
 
 		buffer.resize(2);
 
-		if (buffer.front() != 4)
-		{
+		if (buffer.front() != 4) {
 			return false;
 		}
 
 		buffer.pop();
 
-		if (buffer.front() != 5)
-		{
+		if (buffer.front() != 5) {
 			return false;
 		}
 
 		buffer.pop();
 
-		if (buffer.size() != 0)
-		{
+		if (buffer.size() != 0) {
 			return false;
 		}
 		Log::Out('\n');
@@ -166,7 +156,7 @@ int main(int argc, char **argv)
 		Vector3f a(12.9f, -2.0f, 6.7f);
 		Vector3f b(-9.7f, 15.9f, -13.8f);
 		Vector3ui c(5, 2, 1);
-		
+
 		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
 		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
 		Log::Out("{", a, "} + {", b, "} = {", (a + b), "}\n");
@@ -203,7 +193,7 @@ int main(int argc, char **argv)
 		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
 		Log::Out("{", a, "} + {", b, "} = {", (a + b), "}\n");
 		Log::Out("{", a, "} - {", b, "} = {", (a - b), "}\n");
-		Log::Out("{", a, "} * {", b, "} = {", (a *b), "}\n");
+		Log::Out("{", a, "} * {", b, "} = {", (a * b), "}\n");
 		Log::Out("{", a, "} / {", b, "} = {", (a / b), "}\n");
 		Log::Out("{", a, "} angle {", b, "} = ", a.Angle(b), "\n");
 		Log::Out("{", a, "} dot {", b, "} = ", a.Dot(b), "\n");

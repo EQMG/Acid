@@ -5,16 +5,18 @@
 #include "Pipeline.hpp"
 #include "Graphics/RenderStage.hpp"
 
-namespace acid
-{
+namespace acid {
 class ImageDepth;
 class Image2d;
 
 /**
  * @brief Class that represents a graphics pipeline.
  */
-class ACID_EXPORT PipelineGraphics :
-	public Pipeline
+class ACID_EXPORT
+PipelineGraphics
+:
+public
+Pipeline
 {
 public:
 	enum class Mode
@@ -159,7 +161,8 @@ private:
 	VkPipelineTessellationStateCreateInfo m_tessellationState = {};
 };
 
-class ACID_EXPORT PipelineGraphicsCreate
+class ACID_EXPORT
+PipelineGraphicsCreate
 {
 public:
 	PipelineGraphicsCreate(std::vector<std::filesystem::path> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},

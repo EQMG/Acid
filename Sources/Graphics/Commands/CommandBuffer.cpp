@@ -2,11 +2,9 @@
 
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 CommandBuffer::CommandBuffer(bool begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
-	m_queueType(queueType)
-{
+	m_queueType(queueType) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_commandPool = Graphics::Get()->GetCommandPool();
@@ -18,23 +16,19 @@ CommandBuffer::CommandBuffer(bool begin, const VkQueueFlagBits &queueType, const
 	commandBufferAllocateInfo.commandBufferCount = 1;
 	Graphics::CheckVk(vkAllocateCommandBuffers(*logicalDevice, &commandBufferAllocateInfo, &m_commandBuffer));
 
-	if (begin)
-	{
+	if (begin) {
 		Begin();
 	}
 }
 
-CommandBuffer::~CommandBuffer()
-{
+CommandBuffer::~CommandBuffer() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkFreeCommandBuffers(*logicalDevice, m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
 }
 
-void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
-{
-	if (m_running)
-	{
+void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage) {
+	if (m_running) {
 		return;
 	}
 
@@ -45,10 +39,8 @@ void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage)
 	m_running = true;
 }
 
-void CommandBuffer::End()
-{
-	if (!m_running)
-	{
+void CommandBuffer::End() {
+	if (!m_running) {
 		return;
 	}
 
@@ -56,13 +48,11 @@ void CommandBuffer::End()
 	m_running = false;
 }
 
-void CommandBuffer::SubmitIdle()
-{
+void CommandBuffer::SubmitIdle() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto queueSelected = GetQueue();
 
-	if (m_running)
-	{
+	if (m_running) {
 		End();
 	}
 
@@ -86,13 +76,11 @@ void CommandBuffer::SubmitIdle()
 	vkDestroyFence(*logicalDevice, fence, nullptr);
 }
 
-void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &signalSemaphore, VkFence fence)
-{
+void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &signalSemaphore, VkFence fence) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto queueSelected = GetQueue();
 
-	if (m_running)
-	{
+	if (m_running) {
 		End();
 	}
 
@@ -101,8 +89,7 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &m_commandBuffer;
 
-	if (waitSemaphore != VK_NULL_HANDLE)
-	{
+	if (waitSemaphore != VK_NULL_HANDLE) {
 		// Pipeline stages used to wait at for graphics queue submissions.
 		static VkPipelineStageFlags submitPipelineStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 
@@ -111,14 +98,12 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 		submitInfo.pWaitSemaphores = &waitSemaphore;
 	}
 
-	if (signalSemaphore != VK_NULL_HANDLE)
-	{
+	if (signalSemaphore != VK_NULL_HANDLE) {
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = &signalSemaphore;
 	}
 
-	if (fence != VK_NULL_HANDLE)
-	{
+	if (fence != VK_NULL_HANDLE) {
 		Graphics::CheckVk(vkResetFences(*logicalDevice, 1, &fence));
 		//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 	}
@@ -126,12 +111,10 @@ void CommandBuffer::Submit(const VkSemaphore &waitSemaphore, const VkSemaphore &
 	Graphics::CheckVk(vkQueueSubmit(queueSelected, 1, &submitInfo, fence));
 }
 
-VkQueue CommandBuffer::GetQueue() const
-{
+VkQueue CommandBuffer::GetQueue() const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	switch (m_queueType)
-	{
+	switch (m_queueType) {
 	case VK_QUEUE_GRAPHICS_BIT:
 		return logicalDevice->GetGraphicsQueue();
 	case VK_QUEUE_COMPUTE_BIT:

@@ -4,13 +4,15 @@
 #include "Serialized/Node.hpp"
 #include "Scenes/Component.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Component that represents a 3d fog.
  */
-class ACID_EXPORT Fog :
-	public Component
+class ACID_EXPORT
+Fog
+:
+public
+Component
 {
 public:
 	/**

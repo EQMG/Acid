@@ -2,13 +2,15 @@
 
 #include "Module.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that contains and manages modules registered to a engine.
  */
-class ACID_EXPORT ModuleHolder :
-	public NonCopyable
+class ACID_EXPORT
+ModuleHolder
+:
+public
+NonCopyable
 {
 	friend class Engine;
 public:

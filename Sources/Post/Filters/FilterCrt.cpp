@@ -2,8 +2,7 @@
 
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour, float curveAmountX, float curveAmountY, float scanLineSize,
 	float scanIntensity) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Crt.frag"}),
@@ -11,12 +10,10 @@ FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenC
 	m_curveAmountX(curveAmountX),
 	m_curveAmountY(curveAmountY),
 	m_scanLineSize(scanLineSize),
-	m_scanIntensity(scanIntensity)
-{
+	m_scanIntensity(scanIntensity) {
 }
 
-void FilterCrt::Render(const CommandBuffer &commandBuffer)
-{
+void FilterCrt::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("screenColour", m_screenColour);
 	m_pushScene.Push("curveAmountX", m_curveAmountX * m_pipeline.GetRenderArea().GetAspectRatio());
@@ -29,8 +26,7 @@ void FilterCrt::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

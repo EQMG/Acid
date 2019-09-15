@@ -4,63 +4,47 @@
 #include "Graphics/Graphics.hpp"
 #include "Graphics/Images/Image.hpp"
 
-namespace acid
-{
-void CallbackError(int32_t error, const char *description)
-{
+namespace acid {
+void CallbackError(int32_t error, const char *description) {
 	Window::CheckGlfw(error);
 	Log::Error("GLFW error: ", description, ", ", error, '\n');
 }
 
-void CallbackMonitor(GLFWmonitor *monitor, int32_t event)
-{
+void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 	auto &monitors = Window::Get()->m_monitors;
 
-	if (event == GLFW_CONNECTED)
-	{
+	if (event == GLFW_CONNECTED) {
 		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
 		Window::Get()->m_onMonitorConnect(it.get(), true);
-	}
-	else if (event == GLFW_DISCONNECTED)
-	{
-		for (auto &m : monitors)
-		{
-			if (m->GetMonitor() == monitor)
-			{
+	} else if (event == GLFW_DISCONNECTED) {
+		for (auto &m : monitors) {
+			if (m->GetMonitor() == monitor) {
 				Window::Get()->m_onMonitorConnect(m.get(), false);
 			}
 		}
 
-		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [monitor](std::unique_ptr<Monitor> &m)
-		{
+		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [monitor](std::unique_ptr<Monitor> &m) {
 			return monitor == m->GetMonitor();
 		}));
 	}
 }
 
-void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos)
-{
-	if (!Window::Get()->m_fullscreen)
-	{
+void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos) {
+	if (!Window::Get()->m_fullscreen) {
 		Window::Get()->m_position = {xpos, ypos};
 	}
 
 	Window::Get()->m_onPosition(Window::Get()->m_position);
 }
 
-void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
-{
-	if (width <= 0 || height <= 0)
-	{
+void CallbackSize(GLFWwindow *window, int32_t width, int32_t height) {
+	if (width <= 0 || height <= 0) {
 		return;
 	}
 
-	if (Window::Get()->m_fullscreen)
-	{
+	if (Window::Get()->m_fullscreen) {
 		Window::Get()->m_fullscreenSize = {width, height};
-	}
-	else
-	{
+	} else {
 		Window::Get()->m_size = {width, height};
 	}
 
@@ -69,27 +53,23 @@ void CallbackSize(GLFWwindow *window, int32_t width, int32_t height)
 	Window::Get()->m_onSize(Window::Get()->m_size);
 }
 
-void CallbackClose(GLFWwindow *window)
-{
+void CallbackClose(GLFWwindow *window) {
 	Window::Get()->m_closed = false;
 	Engine::Get()->RequestClose();
 	Window::Get()->m_onClose();
 }
 
-void CallbackFocus(GLFWwindow *window, int32_t focused)
-{
+void CallbackFocus(GLFWwindow *window, int32_t focused) {
 	Window::Get()->m_focused = static_cast<bool>(focused);
 	Window::Get()->m_onFocus(focused == GLFW_TRUE);
 }
 
-void CallbackIconify(GLFWwindow *window, int32_t iconified)
-{
+void CallbackIconify(GLFWwindow *window, int32_t iconified) {
 	Window::Get()->m_iconified = iconified;
 	Window::Get()->m_onIconify(iconified);
 }
 
-void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height)
-{
+void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height) {
 	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 }
 
@@ -98,20 +78,17 @@ Window::Window() :
 	m_aspectRatio(1.5f),
 	m_title("Acid Window"),
 	m_resizable(true),
-	m_focused(true)
-{
+	m_focused(true) {
 	// Set the error error callback
 	glfwSetErrorCallback(CallbackError);
 
 	// Initialize the GLFW library.
-	if (glfwInit() == GLFW_FALSE)
-	{
+	if (glfwInit() == GLFW_FALSE) {
 		throw std::runtime_error("GLFW failed to initialize");
 	}
 
 	// Checks Vulkan support on GLFW.
-	if (glfwVulkanSupported() == GLFW_FALSE)
-	{
+	if (glfwVulkanSupported() == GLFW_FALSE) {
 		throw std::runtime_error("GLFW failed to find Vulkan support");
 	}
 
@@ -121,18 +98,17 @@ Window::Window() :
 	// The window will stay hidden until after creation.
 	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 	// Disable context creation.
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); 
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	// Fixes 16 bit stencil bits in macOS.
 	glfwWindowHint(GLFW_STENCIL_BITS, 8);
 	// No stereo view!
-	glfwWindowHint(GLFW_STEREO, GLFW_FALSE); 
+	glfwWindowHint(GLFW_STEREO, GLFW_FALSE);
 
 	// Get connected monitors.
 	int32_t monitorCount;
 	auto monitors = glfwGetMonitors(&monitorCount);
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
-	{
+	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++) {
 		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
 
@@ -142,8 +118,7 @@ Window::Window() :
 	m_window = glfwCreateWindow(m_fullscreen ? m_fullscreenSize.m_x : m_size.m_x, m_fullscreen ? m_fullscreenSize.m_y : m_size.m_y, m_title.c_str(), nullptr, nullptr);
 
 	// Gets any window errors.
-	if (!m_window)
-	{
+	if (!m_window) {
 		glfwTerminate();
 		throw std::runtime_error("GLFW failed to create the window");
 	}
@@ -162,8 +137,7 @@ Window::Window() :
 	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
 
 	// Sets fullscreen if enabled.
-	if (m_fullscreen)
-	{
+	if (m_fullscreen) {
 		SetFullscreen(true);
 	}
 
@@ -179,8 +153,7 @@ Window::Window() :
 	glfwSetFramebufferSizeCallback(m_window, CallbackFrame);
 }
 
-Window::~Window()
-{
+Window::~Window() {
 	// Free the window callbacks and destroy the window.
 	glfwDestroyWindow(m_window);
 
@@ -190,48 +163,41 @@ Window::~Window()
 	m_closed = true;
 }
 
-void Window::Update()
-{
+void Window::Update() {
 	// Polls for window events.
 	glfwPollEvents();
 }
 
-void Window::SetSize(const Vector2i &size)
-{
+void Window::SetSize(const Vector2i &size) {
 	m_size.m_x = size.m_x == -1 ? m_size.m_x : size.m_x;
 	m_size.m_y = size.m_y == -1 ? m_size.m_y : size.m_y;
 	m_aspectRatio = static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y);
 	glfwSetWindowSize(m_window, m_size.m_x, m_size.m_y);
 }
 
-void Window::SetPosition(const Vector2i &position)
-{
+void Window::SetPosition(const Vector2i &position) {
 	m_position.m_x = position.m_x == -1 ? m_position.m_x : position.m_x;
 	m_position.m_y = position.m_y == -1 ? m_position.m_y : position.m_y;
 	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
 }
 
-void Window::SetTitle(const std::string &title)
-{
+void Window::SetTitle(const std::string &title) {
 	m_title = title;
 	glfwSetWindowTitle(m_window, m_title.c_str());
 	m_onTitle(m_title);
 }
 
-void Window::SetIcons(const std::vector<std::string> &filenames)
-{
+void Window::SetIcons(const std::vector<std::string> &filenames) {
 	std::vector<GLFWimage> icons;
 	std::vector<std::unique_ptr<uint8_t[]>> pixels;
 
-	for (const auto &filename : filenames)
-	{
+	for (const auto &filename : filenames) {
 		Vector2ui extent;
 		uint32_t components;
 		VkFormat format;
 		auto data = Image::LoadPixels(filename, extent, components, format);
 
-		if (!data)
-		{
+		if (!data) {
 			continue;
 		}
 
@@ -246,44 +212,37 @@ void Window::SetIcons(const std::vector<std::string> &filenames)
 	glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());
 }
 
-void Window::SetBorderless(bool borderless)
-{
+void Window::SetBorderless(bool borderless) {
 	m_borderless = borderless;
 	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
 	m_onBorderless(m_borderless);
 }
 
-void Window::SetResizable(bool resizable)
-{
+void Window::SetResizable(bool resizable) {
 	m_resizable = resizable;
 	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
 	m_onResizable(m_resizable);
 }
 
-void Window::SetFloating(bool floating)
-{
+void Window::SetFloating(bool floating) {
 	m_floating = floating;
 	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
 	m_onFloating(m_floating);
 }
 
-void Window::SetFullscreen(bool fullscreen, Monitor *monitor)
-{
+void Window::SetFullscreen(bool fullscreen, Monitor *monitor) {
 	m_fullscreen = fullscreen;
 
 	auto selected = monitor ? monitor : m_monitors[0].get();
 	auto videoMode = selected->GetVideoMode();
 
-	if (fullscreen)
-	{
+	if (fullscreen) {
 #if defined(ACID_VERBOSE)
 		printf("Window is going fullscreen\n");
 #endif
 		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
 		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
-	}
-	else
-	{
+	} else {
 #if defined(ACID_VERBOSE)
 		printf("Window is going windowed\n");
 #endif
@@ -294,24 +253,17 @@ void Window::SetFullscreen(bool fullscreen, Monitor *monitor)
 	m_onFullscreen(m_fullscreen);
 }
 
-void Window::SetIconified(bool iconify)
-{
-	if (!m_iconified && iconify)
-	{
+void Window::SetIconified(bool iconify) {
+	if (!m_iconified && iconify) {
 		glfwIconifyWindow(m_window);
-	}
-	else if (m_iconified && !iconify)
-	{
+	} else if (m_iconified && !iconify) {
 		glfwRestoreWindow(m_window);
 	}
 }
 
-const Monitor *Window::GetPrimaryMonitor() const
-{
-	for (const auto &monitor : m_monitors)
-	{
-		if (monitor->IsPrimary())
-		{
+const Monitor *Window::GetPrimaryMonitor() const {
+	for (const auto &monitor : m_monitors) {
+		if (monitor->IsPrimary()) {
 			return monitor.get();
 		}
 	}
@@ -319,10 +271,8 @@ const Monitor *Window::GetPrimaryMonitor() const
 	return nullptr;
 }
 
-std::string Window::StringifyResultGlfw(int32_t result)
-{
-	switch (result)
-	{
+std::string Window::StringifyResultGlfw(int32_t result) {
+	switch (result) {
 	case GLFW_TRUE:
 		return "Success";
 	case GLFW_NOT_INITIALIZED:
@@ -350,10 +300,8 @@ std::string Window::StringifyResultGlfw(int32_t result)
 	}
 }
 
-void Window::CheckGlfw(int32_t result)
-{
-	if (result)
-	{
+void Window::CheckGlfw(int32_t result) {
+	if (result) {
 		return;
 	}
 
@@ -362,15 +310,13 @@ void Window::CheckGlfw(int32_t result)
 	throw std::runtime_error("GLFW error: " + failure);
 }
 
-std::pair<const char **, uint32_t> Window::GetInstanceExtensions()
-{
+std::pair<const char **, uint32_t> Window::GetInstanceExtensions() {
 	uint32_t glfwExtensionCount;
 	auto glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 	return std::make_pair(glfwExtensions, glfwExtensionCount);
 }
 
-VkResult Window::CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const
-{
+VkResult Window::CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const {
 	return glfwCreateWindowSurface(instance, m_window, allocator, surface);
 }
 }

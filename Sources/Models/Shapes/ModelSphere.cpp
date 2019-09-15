@@ -4,12 +4,9 @@
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
-namespace acid
-{
-std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+namespace acid {
+std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelSphere>(resource);
 	}
 
@@ -20,8 +17,7 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<ModelSphere> ModelSphere::Create(float radius, uint32_t latitudeBands, uint32_t longitudeBands)
-{
+std::shared_ptr<ModelSphere> ModelSphere::Create(float radius, uint32_t latitudeBands, uint32_t longitudeBands) {
 	ModelSphere temp(radius, latitudeBands, longitudeBands, false);
 	Node node;
 	node << temp;
@@ -31,24 +27,20 @@ std::shared_ptr<ModelSphere> ModelSphere::Create(float radius, uint32_t latitude
 ModelSphere::ModelSphere(float radius, uint32_t latitudeBands, uint32_t longitudeBands, bool load) :
 	m_radius(radius),
 	m_latitudeBands(latitudeBands),
-	m_longitudeBands(longitudeBands)
-{
-	if (load)
-	{
+	m_longitudeBands(longitudeBands) {
+	if (load) {
 		Load();
 	}
 }
 
-const Node &operator>>(const Node &node, ModelSphere &model)
-{
+const Node &operator>>(const Node &node, ModelSphere &model) {
 	node["latitudeBands"].Get(model.m_latitudeBands);
 	node["longitudeBands"].Get(model.m_longitudeBands);
 	node["radius"].Get(model.m_radius);
 	return node;
 }
 
-Node &operator<<(Node &node, const ModelSphere &model)
-{
+Node &operator<<(Node &node, const ModelSphere &model) {
 	node["type"].Set("ModelSphere");
 	node["latitudeBands"].Set(model.m_latitudeBands);
 	node["longitudeBands"].Set(model.m_longitudeBands);
@@ -56,10 +48,8 @@ Node &operator<<(Node &node, const ModelSphere &model)
 	return node;
 }
 
-void ModelSphere::Load()
-{
-	if (m_radius == 0.0f)
-	{
+void ModelSphere::Load() {
+	if (m_radius == 0.0f) {
 		return;
 	}
 
@@ -68,13 +58,11 @@ void ModelSphere::Load()
 	vertices.reserve((m_longitudeBands + 1) * (m_latitudeBands + 1));
 	indices.reserve(m_longitudeBands * m_latitudeBands * 6);
 
-	for (uint32_t i = 0; i < m_longitudeBands + 1; i++)
-	{
+	for (uint32_t i = 0; i < m_longitudeBands + 1; i++) {
 		auto iDivLong = static_cast<float>(i) / static_cast<float>(m_longitudeBands);
 		auto theta = (i == 0 || i == m_longitudeBands) ? 0.0f : iDivLong * 2.0f * Maths::Pi<float>;
 
-		for (uint32_t j = 0; j < m_latitudeBands + 1; j++)
-		{
+		for (uint32_t j = 0; j < m_latitudeBands + 1; j++) {
 			auto jDivLat = static_cast<float>(j) / static_cast<float>(m_latitudeBands);
 			auto phi = jDivLat * 2.0f * Maths::Pi<float>;
 
@@ -85,10 +73,8 @@ void ModelSphere::Load()
 		}
 	}
 
-	for (uint32_t i = 0; i < m_longitudeBands; i++)
-	{
-		for (uint32_t j = 0; j < m_latitudeBands; j++)
-		{
+	for (uint32_t i = 0; i < m_longitudeBands; i++) {
+		for (uint32_t j = 0; j < m_latitudeBands; j++) {
 			auto first = j + ((m_latitudeBands + 1) * i);
 			auto second = j + ((m_latitudeBands + 1) * (i + 1));
 

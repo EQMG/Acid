@@ -6,8 +6,7 @@
 //layout(constant_id = 1) const float SSAO_RADIUS = 0.5f;
 //layout(constant_id = 2) const bool RANGE_CHECK = true;
 
-layout(binding = 0) uniform UniformScene
-{
+layout(binding = 0) uniform UniformScene {
 	vec3 kernel[SSAO_KERNEL_SIZE];
 
 	mat4 projection;
@@ -23,8 +22,7 @@ layout(binding = 3) uniform sampler2D samplerNoise;
 
 layout(location = 0) in vec2 inUV;
 
-void main() 
-{
+void main() {
 	// Get G-Buffer values.
 	vec3 worldPosition = texture(samplerPosition, inUV).rgb;
 
@@ -44,8 +42,7 @@ void main()
 	// Calculate occlusion value.
 	float occlusion = 0.0f;
 
-	for (int i = 0; i < SSAO_KERNEL_SIZE; i++)
-	{
+	for (int i = 0; i < SSAO_KERNEL_SIZE; i++) {
 		vec3 samplePos = TBN * scene.kernel[i];
 		samplePos = samplePos * SSAO_RADIUS + worldPosition;
 

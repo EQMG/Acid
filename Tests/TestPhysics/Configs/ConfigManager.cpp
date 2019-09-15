@@ -6,21 +6,17 @@
 #include <Timers/Timers.hpp>
 #include <Serialized/Json/Json.hpp>
 
-namespace test
-{
+namespace test {
 ConfigManager::ConfigManager() :
 	m_audio("Configs/Audio.json", std::make_unique<Json>()),
-	m_graphics("Configs/Graphics.json", std::make_unique<Json>())
-{
+	m_graphics("Configs/Graphics.json", std::make_unique<Json>()) {
 	Load();
-	Timers::Get()->Every(160s, [this]()
-	{
+	Timers::Get()->Every(160s, [this]() {
 		Save();
 	}, this);
 }
 
-void ConfigManager::Load()
-{
+void ConfigManager::Load() {
 	/*m_audio.Load();
 	auto &audioData = m_audio.GetNode();
 	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].Get<float>(1.0f));
@@ -40,8 +36,7 @@ void ConfigManager::Load()
 	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].Get<float>(0.0f));*/
 }
 
-void ConfigManager::Save() const
-{
+void ConfigManager::Save() const {
 	/*auto &audioData = m_audio.GetNode();
 	audioData["masterVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Master));
 	audioData["generalVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::General));

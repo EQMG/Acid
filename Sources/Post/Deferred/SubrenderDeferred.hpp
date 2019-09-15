@@ -9,10 +9,12 @@
 #include "Graphics/Images/ImageCube.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
-namespace acid
-{
-class ACID_EXPORT SubrenderDeferred :
-	public Subrender
+namespace acid {
+class ACID_EXPORT
+SubrenderDeferred
+:
+public
+Subrender
 {
 public:
 	explicit SubrenderDeferred(const Pipeline::Stage &pipelineStage);

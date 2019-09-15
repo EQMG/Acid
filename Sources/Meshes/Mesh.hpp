@@ -4,13 +4,15 @@
 #include "Models/VertexDefault.hpp"
 #include "Scenes/Component.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Component that represents a model/mesh.
  */
-class ACID_EXPORT Mesh :
-	public Component
+class ACID_EXPORT
+Mesh
+:
+public
+Component
 {
 public:
 	/**

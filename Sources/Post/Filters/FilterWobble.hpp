@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterWobble :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterWobble
+:
+public
+PostFilter
 {
 public:
 	explicit FilterWobble(const Pipeline::Stage &pipelineStage, float wobbleSpeed = 2.0f);

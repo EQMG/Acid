@@ -9,13 +9,15 @@
 #include "Geometry/VertexAnimated.hpp"
 #include "Animator.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents an animated armature with a skin mesh.
  **/
-class ACID_EXPORT MeshAnimated :
-	public Component
+class ACID_EXPORT
+MeshAnimated
+:
+public
+Component
 {
 public:
 	explicit MeshAnimated(std::filesystem::path filename = "");

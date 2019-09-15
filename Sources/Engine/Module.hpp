@@ -3,13 +3,15 @@
 #include "Helpers/NonCopyable.hpp"
 #include "Helpers/TypeInfo.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A interface used for defining engine modules.
  */
-class ACID_EXPORT Module :
-	public NonCopyable
+class ACID_EXPORT
+Module
+:
+public
+NonCopyable
 {
 public:
 	/**
@@ -28,7 +30,8 @@ public:
 	virtual void Update() = 0;
 };
 
-template class ACID_EXPORT TypeInfo<Module>;
+template class ACID_EXPORT
+TypeInfo<Module>;
 
 /**
  * Gets the Type ID for the Module.
@@ -36,8 +39,7 @@ template class ACID_EXPORT TypeInfo<Module>;
  * @return The Type ID.
  */
 template<typename T>
-TypeId GetModuleTypeId() noexcept
-{
+TypeId GetModuleTypeId() noexcept {
 	static_assert(std::is_base_of<Module, T>::value, "T must be a Module.");
 
 	return TypeInfo<Module>::GetTypeId<T>();

@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Scene1 :
-	public Scene
-{
+	public Scene {
 public:
 	Scene1();
 

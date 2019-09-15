@@ -3,8 +3,7 @@
 #extension GL_ARB_shading_language_420pack : enable
 #extension GL_GOOGLE_include_directive : require
 
-layout(binding = 0) uniform UniformScene
-{
+layout(binding = 0) uniform UniformScene {
 	mat4 view;
 	mat4 shadowSpace;
 	vec3 cameraPosition;
@@ -16,15 +15,13 @@ layout(binding = 0) uniform UniformScene
 	float fogGradient;
 } scene;
 
-struct Light
-{
+struct Light {
 	vec4 colour;
 	vec3 position;
 	float radius;
 };
 
-layout(binding = 1) buffer BufferLights
-{
+layout(binding = 1) buffer BufferLights {
 	Light lights[];
 } bufferLights;
 
@@ -44,8 +41,7 @@ layout(location = 0) out vec4 outColour;
 //#include <Shaders/Noise.glsl>
 #include "Lighting.glsl"
 
-void main()
-{
+void main() {
 	vec3 worldPosition = texture(samplerPosition, inUV).rgb;
 	vec4 screenPosition = scene.view * vec4(worldPosition, 1.0f);
 
@@ -62,14 +58,12 @@ void main()
 	vec3 V = normalize(scene.cameraPosition - worldPosition);
 	vec3 R = reflect(-V, N); 
 
-	if (!ignoreLighting && normal != vec3(0.0f))
-	{
+	if (!ignoreLighting && normal != vec3(0.0f)) {
 		vec3 F0 = vec3(0.04f); 
 		F0 = mix(F0, diffuse.rgb, metallic);
 		vec3 Lo = vec3(0.0f);
 
-		for (int i = 0; i < scene.lightsCount; i++)
-		{
+		for (int i = 0; i < scene.lightsCount; i++) {
 			Light light = bufferLights.lights[i];
 			vec3 L = light.position - worldPosition;
 			float Dl = length(L);
@@ -99,14 +93,11 @@ void main()
 		// Shadow mapping
 		//vec4 shadowCoords = scene.shadowSpace * vec4(worldPosition, 1.0f);
 		//outColour *= shadowFactor(shadowCoords);
-	}
-	else
-	{
+	} else {
 		outColour = vec4(diffuse.rgb, 1.0f);
 	}
 
-	if (!ignoreFog && normal != vec3(0.0f))
-	{
+	if (!ignoreFog && normal != vec3(0.0f)) {
 		float fogFactor = exp(-pow(length(screenPosition.xyz) * scene.fogDensity, scene.fogGradient));
 		fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 		outColour = mix(scene.fogColour, outColour, fogFactor);

@@ -3,10 +3,12 @@
 #include "Maths/Vector3.hpp"
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterLensflare :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterLensflare
+:
+public
+PostFilter
 {
 public:
 	explicit FilterLensflare(const Pipeline::Stage &pipelineStage);
@@ -25,6 +27,6 @@ private:
 	PushHandler m_pushScene;
 
 	Vector3f m_sunPosition;
-	float m_sunHeight;
+	float m_sunHeight = 0.0f;
 };
 }

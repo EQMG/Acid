@@ -31,8 +31,7 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation)
 	}
 }
 #else
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	using namespace test;
 
 	// Creates the engine.
@@ -49,41 +48,32 @@ int main(int argc, char **argv)
 }
 #endif
 
-namespace test
-{
+namespace test {
 MainApp::MainApp() :
 	App("Editor Test", {1, 0, 0}),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
-{
+	m_buttonExit(Key::Delete) {
 	Log::Out("[Game] Constructor\n");
 
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
-	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
-			Resources::Get()->GetThreadPool().Enqueue([]()
-			{
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
+			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
 	});
@@ -104,8 +94,7 @@ MainApp::MainApp() :
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
-MainApp::~MainApp()
-{
+MainApp::~MainApp() {
 	Log::Out("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
 
@@ -118,7 +107,6 @@ MainApp::~MainApp()
 	Uis::Get()->GetCanvas().ClearChildren();
 }
 
-void MainApp::Update()
-{
+void MainApp::Update() {
 }
 }

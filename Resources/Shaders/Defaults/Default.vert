@@ -6,15 +6,13 @@
 //layout(constant_id = 1) const int MAX_JOINTS = 64;
 //layout(constant_id = 2) const int MAX_WEIGHTS = 64;
 
-layout(binding = 0) uniform UniformScene
-{
+layout(binding = 0) uniform UniformScene {
 	mat4 projection;
 	mat4 view;
 	vec3 cameraPos;
 } scene;
 
-layout(binding = 1) uniform UniformObject
-{
+layout(binding = 1) uniform UniformObject {
 	mat4 transform;
 
 	vec4 baseDiffuse;
@@ -24,8 +22,7 @@ layout(binding = 1) uniform UniformObject
 	float ignoreLighting;
 } object;
 #if ANIMATED
-layout(binding = 2) buffer BufferAnimation
-{
+layout(binding = 2) buffer BufferAnimation {
 	mat4 jointTransforms[];
 } animation;
 #endif
@@ -42,19 +39,16 @@ layout(location = 0) out vec3 outPosition;
 layout(location = 1) out vec2 outUV;
 layout(location = 2) out vec3 outNormal;
 
-out gl_PerVertex
-{
+out gl_PerVertex {
 	vec4 gl_Position;
 };
 
-void main()
-{
+void main() {
 #if ANIMATED
 	vec4 position = vec4(0.0f);
 	vec4 normal = vec4(0.0f);
 
-	for (int i = 0; i < MAX_WEIGHTS; i++)
-	{
+	for (int i = 0; i < MAX_WEIGHTS; i++) {
 		mat4 jointTransform = animation.jointTransforms[inJointIds[i]];
 		vec4 posePosition = jointTransform * vec4(inPosition, 1.0f);
 		position += posePosition * inWeights[i];

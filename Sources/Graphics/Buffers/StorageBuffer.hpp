@@ -4,11 +4,15 @@
 #include "Graphics/Descriptors/Descriptor.hpp"
 #include "Buffer.hpp"
 
-namespace acid
-{
-class ACID_EXPORT StorageBuffer :
-	public Descriptor,
-	public Buffer
+namespace acid {
+class ACID_EXPORT
+StorageBuffer
+:
+public
+Descriptor
+,
+public
+Buffer
 {
 public:
 	explicit StorageBuffer(const VkDeviceSize &size, const void *data = nullptr);

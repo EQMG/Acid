@@ -5,10 +5,12 @@
 #include "Uis/UiObject.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputSlider :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputSlider
+:
+public
+UiObject
 {
 public:
 	UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo = 2,

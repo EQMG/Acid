@@ -7,9 +7,9 @@
 #include "App.hpp"
 #include "Log.hpp"
 
-namespace acid
-{
-class ACID_EXPORT Delta
+namespace acid {
+class ACID_EXPORT
+Delta
 {
 public:
 	void Update()
@@ -24,7 +24,8 @@ public:
 	Time m_change;
 };
 
-class ACID_EXPORT ChangePerSecond
+class ACID_EXPORT
+ChangePerSecond
 {
 public:
 	void Update(const Time &time)
@@ -47,8 +48,11 @@ public:
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
-class ACID_EXPORT Engine :
-	public NonCopyable
+class ACID_EXPORT
+Engine
+:
+public
+NonCopyable
 {
 public:
 	/**

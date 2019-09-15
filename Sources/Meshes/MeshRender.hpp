@@ -4,10 +4,12 @@
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Mesh.hpp"
 
-namespace acid
-{
-class ACID_EXPORT MeshRender :
-	public Component
+namespace acid {
+class ACID_EXPORT
+MeshRender
+:
+public
+Component
 {
 public:
 	void Start() override;

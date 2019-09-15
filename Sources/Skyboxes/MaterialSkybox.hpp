@@ -5,13 +5,15 @@
 #include "Maths/Vector2.hpp"
 #include "Graphics/Images/ImageCube.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a skybox material shader.
  */
-class ACID_EXPORT MaterialSkybox :
-	public Material
+class ACID_EXPORT
+MaterialSkybox
+:
+public
+Material
 {
 public:
 	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);

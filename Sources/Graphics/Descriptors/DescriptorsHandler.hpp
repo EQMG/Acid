@@ -8,12 +8,12 @@
 #include "Graphics/Buffers/PushHandler.hpp"
 #include "Graphics/Pipelines/Shader.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that handles a descriptor set.
  */
-class ACID_EXPORT DescriptorsHandler
+class ACID_EXPORT
+DescriptorsHandler
 {
 public:
 	DescriptorsHandler();

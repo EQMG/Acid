@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterTiltshift :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterTiltshift
+:
+public
+PostFilter
 {
 public:
 	explicit FilterTiltshift(const Pipeline::Stage &pipelineStage, float blurAmount = 1.0f, float centre = 1.1f, float stepSize = 0.004f,

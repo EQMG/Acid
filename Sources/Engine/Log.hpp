@@ -8,7 +8,9 @@ namespace acid {
 /**
  * @brief A logging class used in Acid, will write output to the standard stream and into a file.
  */
-class ACID_EXPORT Log {
+class ACID_EXPORT
+Log
+{
 public:
 	class Style {
 	public:

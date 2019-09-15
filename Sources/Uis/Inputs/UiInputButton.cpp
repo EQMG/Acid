@@ -3,8 +3,7 @@
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
-namespace acid
-{
+namespace acid {
 const Vector2i UiInputButton::Size(150, 22);
 const Vector2i UiInputButton::Padding(5, 5);
 const float UiInputButton::FontSize(11.0f);
@@ -22,18 +21,15 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"), ButtonColour),
 	m_text(this, {UiMargins::None, Padding, -Padding}, FontSize, string,
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, ValueColour)
-{
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
-	OnSelected().Add([this](bool selected)
-	{
+	OnSelected().Add([this](bool selected) {
 		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
 	});
 
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 }
 
-void UiInputButton::UpdateObject()
-{
+void UiInputButton::UpdateObject() {
 }
 }

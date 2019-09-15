@@ -3,14 +3,16 @@
 #include "Graphics/Images/Image2d.hpp"
 #include "Swapchain.hpp"
 
-namespace acid
-{
+namespace acid {
 class ImageDepth;
 class Renderpass;
 class RenderStage;
 
-class ACID_EXPORT Framebuffers :
-	public NonCopyable
+class ACID_EXPORT
+Framebuffers
+:
+public
+NonCopyable
 {
 public:
 	Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,

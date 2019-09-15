@@ -3,73 +3,57 @@
 #include "Maths/Visual/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
-namespace acid
-{
+namespace acid {
 UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform) :
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title, 
+	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
 		FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
 	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour)
-{
+		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
 
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 }
 
-void UiInputGrabber::UpdateObject()
-{
-	if (Uis::Get()->WasDown(MouseButton::Left))
-	{
-		if (m_background.IsSelected())
-		{
+void UiInputGrabber::UpdateObject() {
+	if (Uis::Get()->WasDown(MouseButton::Left)) {
+		if (m_background.IsSelected()) {
 			SetUpdating(true);
 			CancelEvent(MouseButton::Left);
-		}
-		else if (m_updating)
-		{
+		} else if (m_updating) {
 			SetUpdating(false);
 			CancelEvent(MouseButton::Left);
 		}
 	}
-	if (!m_updating)
-	{
-		if (m_background.IsSelected() && !m_mouseOver)
-		{
+	if (!m_updating) {
+		if (m_background.IsSelected() && !m_mouseOver) {
 			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
 			m_mouseOver = true;
-		}
-		else if (!m_background.IsSelected() && m_mouseOver)
-		{
+		} else if (!m_background.IsSelected() && m_mouseOver) {
 			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
 			m_mouseOver = false;
 		}
 	}
 }
 
-void UiInputGrabber::SetUpdating(bool updating)
-{
+void UiInputGrabber::SetUpdating(bool updating) {
 	m_updating = updating;
 	m_mouseOver = true;
 }
 
-void UiInputGrabber::UpdateValue()
-{
+void UiInputGrabber::UpdateValue() {
 	m_textValue.SetString(GetTextString());
 }
 
 UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
 	m_port(port),
-	m_value(value)
-{
+	m_value(value) {
 	UpdateValue();
 
-	Joysticks::Get()->OnButton().Add([this](uint32_t port, uint32_t button, InputAction action)
-	{
-		if (!m_updating || port != m_port)
-		{
+	Joysticks::Get()->OnButton().Add([this](uint32_t port, uint32_t button, InputAction action) {
+		if (!m_updating || port != m_port) {
 			return;
 		}
 
@@ -80,8 +64,7 @@ UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title,
 	});
 }
 
-void UiGrabberJoystick::SetValue(uint32_t value)
-{
+void UiGrabberJoystick::SetValue(uint32_t value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);
@@ -89,14 +72,11 @@ void UiGrabberJoystick::SetValue(uint32_t value)
 
 UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
-	m_value(value)
-{
+	m_value(value) {
 	UpdateValue();
 
-	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods)
-	{
-		if (!m_updating)
-		{
+	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
+		if (!m_updating) {
 			return;
 		}
 
@@ -107,8 +87,7 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 	});
 }
 
-void UiGrabberKeyboard::SetValue(const Key &value)
-{
+void UiGrabberKeyboard::SetValue(const Key &value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);
@@ -116,21 +95,16 @@ void UiGrabberKeyboard::SetValue(const Key &value)
 
 UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
-	m_value(value)
-{
+	m_value(value) {
 	UpdateValue();
 
-	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods)
-	{
-		if (!m_updating || action != InputAction::Press)
-		{
+	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
+		if (!m_updating || action != InputAction::Press) {
 			return;
 		}
 
-		if (button == MouseButton::Left)
-		{
-			if (!m_background.IsSelected())
-			{
+		if (button == MouseButton::Left) {
+			if (!m_background.IsSelected()) {
 				SetUpdating(false);
 				return;
 			}
@@ -145,8 +119,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 	});
 }
 
-void UiGrabberMouse::SetValue(const MouseButton &value)
-{
+void UiGrabberMouse::SetValue(const MouseButton &value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);

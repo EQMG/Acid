@@ -6,40 +6,32 @@
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 
-namespace acid
-{
+namespace acid {
 CollisionObject::CollisionObject(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	m_mass(mass),
 	m_friction(friction),
 	m_frictionRolling(0.1f),
 	m_frictionSpinning(0.2f),
 	m_linearFactor(linearFactor),
-	m_angularFactor(angularFactor)
-{
+	m_angularFactor(angularFactor) {
 }
 
-CollisionObject::~CollisionObject()
-{
+CollisionObject::~CollisionObject() {
 }
 
-Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force)
-{
+Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force) {
 	return m_forces.emplace_back(std::move(force)).get();
 }
 
-void CollisionObject::SetChildTransform(Collider *child, const Transform &transform)
-{
+void CollisionObject::SetChildTransform(Collider *child, const Transform &transform) {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (!compoundShape)
-	{
+	if (!compoundShape) {
 		return;
 	}
 
-	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
-	{
-		if (compoundShape->getChildShape(i) == child->GetCollisionShape())
-		{
+	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++) {
+		if (compoundShape->getChildShape(i) == child->GetCollisionShape()) {
 			compoundShape->updateChildTransform(i, Collider::Convert(transform));
 			break;
 		}
@@ -48,12 +40,10 @@ void CollisionObject::SetChildTransform(Collider *child, const Transform &transf
 	RecalculateMass();
 }
 
-void CollisionObject::AddChild(Collider *child)
-{
+void CollisionObject::AddChild(Collider *child) {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (!compoundShape)
-	{
+	if (!compoundShape) {
 		return;
 	}
 
@@ -61,12 +51,10 @@ void CollisionObject::AddChild(Collider *child)
 	RecalculateMass();
 }
 
-void CollisionObject::RemoveChild(Collider *child)
-{
+void CollisionObject::RemoveChild(Collider *child) {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
 
-	if (!compoundShape)
-	{
+	if (!compoundShape) {
 		return;
 	}
 
@@ -74,31 +62,26 @@ void CollisionObject::RemoveChild(Collider *child)
 	RecalculateMass();
 }
 
-void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, bool ignore)
-{
+void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, bool ignore) {
 	m_body->setIgnoreCollisionCheck(other->m_body, ignore);
 }
 
-void CollisionObject::SetFriction(float friction)
-{
+void CollisionObject::SetFriction(float friction) {
 	m_friction = friction;
 	m_body->setFriction(m_friction);
 }
 
-void CollisionObject::SetFrictionRolling(float frictionRolling)
-{
+void CollisionObject::SetFrictionRolling(float frictionRolling) {
 	m_frictionRolling = frictionRolling;
 	m_body->setRollingFriction(m_frictionRolling);
 }
 
-void CollisionObject::SetFrictionSpinning(float frictionSpinning)
-{
+void CollisionObject::SetFrictionSpinning(float frictionSpinning) {
 	m_frictionSpinning = frictionSpinning;
 	m_body->setSpinningFriction(m_frictionSpinning);
 }
 
-void CollisionObject::CreateShape(bool forceSingle)
-{
+void CollisionObject::CreateShape(bool forceSingle) {
 	auto colliders = GetEntity()->GetComponents<Collider>();
 
 	if (forceSingle) // && colliders.size() == 1
@@ -106,26 +89,22 @@ void CollisionObject::CreateShape(bool forceSingle)
 		m_shape.reset(colliders[0]->GetCollisionShape());
 		return;
 	}
-	if (colliders.empty())
-	{
+	if (colliders.empty()) {
 		m_shape = nullptr;
 		return;
 	}
 
-	if (!dynamic_cast<btCompoundShape *>(m_shape.get()))
-	{
+	if (!dynamic_cast<btCompoundShape *>(m_shape.get())) {
 		m_shape.release();
 	}
 
 	auto compoundShape = new btCompoundShape();
 
-	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
-	{
+	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++) {
 		compoundShape->removeChildShapeByIndex(i);
 	}
 
-	for (const auto &collider : colliders)
-	{
+	for (const auto &collider : colliders) {
 		compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
 	}
 

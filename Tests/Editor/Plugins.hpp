@@ -9,14 +9,12 @@ using namespace acid;
 
 struct cr_plugin;
 
-namespace test
-{
+namespace test {
 /**
  * Module used for managing the world.
  */
 class Plugins :
-	public Module
-{
+	public Module {
 public:
 	/**
 	 * Gets the engines instance.

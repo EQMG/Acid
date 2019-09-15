@@ -6,11 +6,9 @@
 
 struct GLFWcursor;
 
-namespace acid
-{
+namespace acid {
 enum class MouseButton :
-	int32_t
-{
+	int32_t {
 	_1 = 0,
 	_2 = 1,
 	_3 = 2,
@@ -26,13 +24,15 @@ enum class MouseButton :
 	Last = _8
 };
 
-enum class CursorHotspot
-{
-	UpperLeft, UpperRight, BottomLeft, BottomRight, Centered
+enum class CursorHotspot {
+	UpperLeft,
+	UpperRight,
+	BottomLeft,
+	BottomRight,
+	Centered
 };
 
-enum class CursorStandard
-{
+enum class CursorStandard {
 	Arrow = 0x00036001,
 	IBeam = 0x00036002,
 	Crosshair = 0x00036003,
@@ -44,8 +44,11 @@ enum class CursorStandard
 /**
  * @brief Module used for managing a virtual mouse.
  */
-class ACID_EXPORT Mouse :
-	public Module
+class ACID_EXPORT
+Mouse
+:
+public
+Module
 {
 public:
 	/**

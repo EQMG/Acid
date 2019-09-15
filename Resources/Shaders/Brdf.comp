@@ -10,8 +10,7 @@ const float PI = 3.1415926535897932384626433832795f;
 const uint NUM_SAMPLES = 1024u;
 
 // Based omn http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
-float random(vec2 co)
-{
+float random(vec2 co) {
 	float a = 12.9898f;
 	float b = 78.233f;
 	float c = 43758.5453f;
@@ -20,8 +19,7 @@ float random(vec2 co)
 	return fract(sin(sn) * c);
 }
 
-vec2 hammersley2d(uint i, uint N) 
-{
+vec2 hammersley2d(uint i, uint N) {
 	// Radical inverse based on http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
 	uint bits = (i << 16u) | (i >> 16u);
 	bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
@@ -33,8 +31,7 @@ vec2 hammersley2d(uint i, uint N)
 }
 
 // Based on http://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_slides.pdf
-vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal) 
-{
+vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal) {
 	// Maps a 2D point to a hemisphere with spread based on roughness
 	float alpha = roughness * roughness;
 	float phi = 2.0f * PI * Xi.x + random(normal.xz) * 0.1f;
@@ -52,24 +49,21 @@ vec3 importanceSample_GGX(vec2 Xi, float roughness, vec3 normal)
 }
 
 // Geometric Shadowing function
-float G_SchlicksmithGGX(float dotNL, float dotNV, float roughness)
-{
+float G_SchlicksmithGGX(float dotNL, float dotNV, float roughness) {
 	float k = (roughness * roughness) / 2.0f;
 	float GL = dotNL / (dotNL * (1.0f - k) + k);
 	float GV = dotNV / (dotNV * (1.0f - k) + k);
 	return GL * GV;
 }
 
-vec2 BRDF(float NoV, float roughness)
-{
+vec2 BRDF(float NoV, float roughness) {
 	// Normal always points along z-axis for the 2D lookup 
 	const vec3 N = vec3(0.0f, 0.0f, 1.0f);
 	vec3 V = vec3(sqrt(1.0f - NoV * NoV), 0.0f, NoV);
 
 	vec2 LUT = vec2(0.0f);
 
-	for (uint i = 0u; i < NUM_SAMPLES; i++)
-	{
+	for (uint i = 0u; i < NUM_SAMPLES; i++) {
 		vec2 Xi = hammersley2d(i, NUM_SAMPLES);
 		vec3 H = importanceSample_GGX(Xi, roughness, N);
 		vec3 L = 2.0f * dot(V, H) * H - V;
@@ -79,8 +73,7 @@ vec2 BRDF(float NoV, float roughness)
 		float dotVH = max(dot(V, H), 0.0f); 
 		float dotNH = max(dot(H, N), 0.0f);
 
-		if (dotNL > 0.0f)
-		{
+		if (dotNL > 0.0f) {
 			float G = G_SchlicksmithGGX(dotNL, dotNV, roughness);
 			float G_Vis = (G * dotVH) / (dotNH * dotNV);
 			float Fc = pow(1.0f - dotVH, 5.0f);
@@ -91,8 +84,7 @@ vec2 BRDF(float NoV, float roughness)
 	return LUT / float(NUM_SAMPLES);
 }
 
-void main()
-{
+void main() {
 	vec2 uv = (gl_GlobalInvocationID.xy + vec2(0.5f)) / vec2(imageSize(outColour).xy);
 	imageStore(outColour, ivec2(gl_GlobalInvocationID.xy), vec4(BRDF(uv.x, 1.0f - uv.y), 0.0f, 1.0f));
 }

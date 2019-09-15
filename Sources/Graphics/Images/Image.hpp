@@ -5,13 +5,15 @@
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A representation of a Vulkan image, sampler, and view.
  */
-class ACID_EXPORT Image :
-	public Descriptor
+class ACID_EXPORT
+Image
+:
+public
+Descriptor
 {
 public:
 	/**

@@ -3,13 +3,15 @@
 #include "Engine/Engine.hpp"
 #include "Gizmo.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for that manages debug gizmos.
  */
-class ACID_EXPORT Gizmos :
-	public Module
+class ACID_EXPORT
+Gizmos
+:
+public
+Module
 {
 public:
 	/**

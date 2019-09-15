@@ -4,14 +4,18 @@
 #include "Axis.hpp"
 #include "Button.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Button from a joystick.
  */
-class ACID_EXPORT HatJoystick :
-	public Axis,
-	public Button
+class ACID_EXPORT
+HatJoystick
+:
+public
+Axis
+,
+public
+Button
 {
 public:
 	/**

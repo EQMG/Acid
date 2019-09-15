@@ -2,12 +2,12 @@
 
 #include "Serialized/Node.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a readable and writable file format using {@link Node} as storage.
  */
-class ACID_EXPORT File
+class ACID_EXPORT
+File
 {
 public:
 	explicit File(std::filesystem::path filename, std::unique_ptr<Node> &&node);

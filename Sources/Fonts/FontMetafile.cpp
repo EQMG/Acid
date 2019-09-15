@@ -3,70 +3,55 @@
 #include "Helpers/String.hpp"
 #include "Resources/Resources.hpp"
 
-namespace acid
-{
+namespace acid {
 FontMetafile::FontMetafile(std::filesystem::path filename) :
-	m_filename(std::move(filename))
-{
+	m_filename(std::move(filename)) {
 	IFStream inStream(m_filename);
 
 	std::size_t lineNum = 0;
 	std::string linebuf;
 
-	while (inStream.peek() != -1)
-	{
+	while (inStream.peek() != -1) {
 		Files::SafeGetLine(inStream, linebuf);
 		lineNum++;
 
 		ProcessNextLine(linebuf);
 
-		if (String::Contains(linebuf, "info"))
-		{
+		if (String::Contains(linebuf, "info")) {
 			LoadPaddingData();
-		}
-		else if (String::Contains(linebuf, "common"))
-		{
+		} else if (String::Contains(linebuf, "common")) {
 			LoadLineSizes();
-		}
-		else if (String::Contains(linebuf, "char") && !String::Contains(linebuf, "chars"))
-		{
+		} else if (String::Contains(linebuf, "char") && !String::Contains(linebuf, "chars")) {
 			LoadCharacterData();
 		}
 	}
 }
 
-std::optional<FontMetafile::Character> FontMetafile::GetCharacter(int32_t ascii) const
-{
+std::optional<FontMetafile::Character> FontMetafile::GetCharacter(int32_t ascii) const {
 	auto it = m_characters.find(ascii);
 
-	if (it != m_characters.end())
-	{
+	if (it != m_characters.end()) {
 		return it->second;
 	}
 
 	return std::nullopt;
 }
 
-void FontMetafile::ProcessNextLine(const std::string &line)
-{
+void FontMetafile::ProcessNextLine(const std::string &line) {
 	m_values.clear();
 	auto parts = String::Split(line, ' ');
 
-	for (const auto &part : parts)
-	{
+	for (const auto &part : parts) {
 		auto pairs = String::Split(part, '=');
 
-		if (pairs.size() == 2)
-		{
+		if (pairs.size() == 2) {
 			m_values.emplace(pairs.at(0), pairs.at(1));
 		}
 	}
 }
 
-void FontMetafile::LoadPaddingData()
-{
-	for (const auto &padding : GetValuesOfVariable("padding"))
-	{
+void FontMetafile::LoadPaddingData() {
+	for (const auto &padding : GetValuesOfVariable("padding")) {
 		m_padding.emplace_back(padding);
 	}
 
@@ -74,20 +59,17 @@ void FontMetafile::LoadPaddingData()
 	m_paddingHeight = m_padding.at(PadTop) + m_padding.at(PadBottom);
 }
 
-void FontMetafile::LoadLineSizes()
-{
+void FontMetafile::LoadLineSizes() {
 	auto lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
 	m_verticalPerPixelSize = LineHeight / static_cast<float>(lineHeightPixels);
 	m_horizontalPerPixelSize = m_verticalPerPixelSize;
 	m_imageWidth = GetValueOfVariable("scaleW");
 }
 
-void FontMetafile::LoadCharacterData()
-{
+void FontMetafile::LoadCharacterData() {
 	auto id = GetValueOfVariable("id");
 
-	if (id == SpaceAscii)
-	{
+	if (id == SpaceAscii) {
 		m_spaceWidth = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 		return;
 	}
@@ -104,8 +86,7 @@ void FontMetafile::LoadCharacterData()
 	auto yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize;
 	auto xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
-	if (quadHeight > m_maxSizeY)
-	{
+	if (quadHeight > m_maxSizeY) {
 		m_maxSizeY = quadHeight;
 	}
 
@@ -113,15 +94,13 @@ void FontMetafile::LoadCharacterData()
 	m_characters.emplace(character.m_id, character);
 }
 
-std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable)
-{
+std::vector<int32_t> FontMetafile::GetValuesOfVariable(const std::string &variable) {
 	auto numbers = String::Split(m_values.at(variable), ',');
 
 	std::vector<int32_t> values;
 	values.reserve(numbers.size());
 
-	for (const auto &number : numbers)
-	{
+	for (const auto &number : numbers) {
 		values.emplace_back(String::From<int32_t>(number));
 	}
 

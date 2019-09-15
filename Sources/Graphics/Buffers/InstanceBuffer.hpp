@@ -2,10 +2,12 @@
 
 #include "Buffer.hpp"
 
-namespace acid
-{
-class ACID_EXPORT InstanceBuffer :
-	public Buffer
+namespace acid {
+class ACID_EXPORT
+InstanceBuffer
+:
+public
+Buffer
 {
 public:
 	explicit InstanceBuffer(const VkDeviceSize &size);

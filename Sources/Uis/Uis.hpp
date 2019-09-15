@@ -4,13 +4,15 @@
 #include "Devices/Mouse.hpp"
 #include "UiObject.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for managing gui textures in a container.
  */
-class ACID_EXPORT Uis :
-	public Module
+class ACID_EXPORT
+Uis
+:
+public
+Module
 {
 public:
 	/**

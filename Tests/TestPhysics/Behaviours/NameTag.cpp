@@ -5,34 +5,30 @@
 #include <Uis/Uis.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 
-namespace test
-{
+namespace test {
 static const float TEXT_SIZE = 8.0f;
 static const float VIEW_DISTANCE = 16.0f;
 
 NameTag::NameTag(const std::string &name, float heightOffset) :
 	m_name(name),
 	m_heightOffset(heightOffset)
-	//m_text(&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova"),
-	//	Text::Justify::Left}
+//m_text(&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova"),
+//	Text::Justify::Left}
 {
 	//m_text.SetTextColour("#ffffff");
 	//m_text.SetBorderColour("#262626");
 	//m_text.SetBorderDriver(std::make_unique<DriverConstant<float>>(0.1f));
 }
 
-void NameTag::Start()
-{
+void NameTag::Start() {
 	//m_text.SetString(m_name);
 }
 
-void NameTag::Update()
-{
+void NameTag::Update() {
 	// Calculates the tag position, this component should be added after a rigidbody body.
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (!transform)
-	{
+	if (!transform) {
 		return;
 	}
 
@@ -51,14 +47,12 @@ void NameTag::Update()
 	//m_text.SetWorldTransform(m_transform);
 }
 
-const Node &operator>>(const Node &node, NameTag &nameTag)
-{
+const Node &operator>>(const Node &node, NameTag &nameTag) {
 	node["heightOffset"].Get(nameTag.m_heightOffset);
 	return node;
 }
 
-Node &operator<<(Node &node, const NameTag &nameTag)
-{
+Node &operator<<(Node &node, const NameTag &nameTag) {
 	node["heightOffset"].Set(nameTag.m_heightOffset);
 	return node;
 }

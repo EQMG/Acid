@@ -2,16 +2,12 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterLensflare::FilterLensflare(const Pipeline::Stage &pipelineStage) :
-	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Lensflare.frag"}),
-	m_sunHeight(0.0f)
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Lensflare.frag"}) {
 }
 
-void FilterLensflare::Render(const CommandBuffer &commandBuffer)
-{
+void FilterLensflare::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("sunPosition", m_sunPosition);
 	m_pushScene.Push("displaySize", m_pipeline.GetRenderArea().GetExtent());
@@ -22,8 +18,7 @@ void FilterLensflare::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerMaterial", GetAttachment("samplerMaterial", "material"));
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 
@@ -35,8 +30,7 @@ void FilterLensflare::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 
-void FilterLensflare::SetSunPosition(const Vector3f &sunPosition)
-{
+void FilterLensflare::SetSunPosition(const Vector3f &sunPosition) {
 	auto camera = Scenes::Get()->GetCamera();
 	m_sunPosition = Matrix4::Project(sunPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());
 }

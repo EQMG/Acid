@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
-{
+layout(push_constant) uniform PushScene {
 	float nearPlane;
 	float farPlane;
 
@@ -22,14 +21,12 @@ layout(binding = 3) uniform sampler2D samplerBlured;
 
 layout(location = 0) in vec2 inUV;
 
-float linearDepth(float depth)
-{
+float linearDepth(float depth) {
 	float z = depth * 2.0f - 1.0f;
 	return (2.0f * scene.nearPlane * scene.farPlane) / (scene.farPlane + scene.nearPlane - z * (scene.farPlane - scene.nearPlane));
 }
 
-void main() 
-{
+void main() {
 	float depth = linearDepth(texture(samplerDepth, inUV).r);
 	vec3 textureColour = texture(samplerColour, inUV).rgb;
 	vec3 textureBlured = texture(samplerBlured, inUV).rgb;

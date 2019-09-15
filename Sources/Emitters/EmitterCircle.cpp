@@ -2,28 +2,22 @@
 
 #include "Scenes/Entity.hpp"
 
-namespace acid
-{
+namespace acid {
 EmitterCircle::EmitterCircle(float radius, const Vector3f &heading) :
 	m_radius(radius),
-	m_heading(heading.Normalize())
-{
+	m_heading(heading.Normalize()) {
 }
 
-void EmitterCircle::Start()
-{
+void EmitterCircle::Start() {
 }
 
-void EmitterCircle::Update()
-{
+void EmitterCircle::Update() {
 }
 
-Vector3f EmitterCircle::GeneratePosition() const
-{
+Vector3f EmitterCircle::GeneratePosition() const {
 	Vector3f direction;
 
-	do
-	{
+	do {
 		auto randomVector = RandomUnitVector();
 		direction = randomVector.Cross(m_heading);
 	} while (direction.Length() == 0.0f);
@@ -34,8 +28,7 @@ Vector3f EmitterCircle::GeneratePosition() const
 	auto a = Maths::Random(0.0f, 1.0f);
 	auto b = Maths::Random(0.0f, 1.0f);
 
-	if (a > b)
-	{
+	if (a > b) {
 		std::swap(a, b);
 	}
 
@@ -45,15 +38,13 @@ Vector3f EmitterCircle::GeneratePosition() const
 	return direction * distance;
 }
 
-const Node &operator>>(const Node &node, EmitterCircle &emitter)
-{
+const Node &operator>>(const Node &node, EmitterCircle &emitter) {
 	node["radius"].Get(emitter.m_radius);
 	node["heading"].Get(emitter.m_heading);
 	return node;
 }
 
-Node &operator<<(Node &node, const EmitterCircle &emitter)
-{
+Node &operator<<(Node &node, const EmitterCircle &emitter) {
 	node["radius"].Set(emitter.m_radius);
 	node["heading"].Set(emitter.m_heading);
 	return node;

@@ -11,8 +11,7 @@ layout(location = 0) in vec2 inUV;
 const vec4 lumcoeff = vec4(0.299f, 0.587f, 0.114f, 0.0f);
 const float epsilon = 0.001f;
 
-void main()
-{
+void main() {
 	vec4 tc_sampler[6];
 	vec2 tc_offset[6];
 
@@ -23,8 +22,7 @@ void main()
 	tc_offset[4] = vec2(0.0f, epsilon);
 	tc_offset[5] = vec2(epsilon, epsilon);
 
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		tc_sampler[i] = texture(samplerColour, inUV + tc_offset[i]);
 	}
 

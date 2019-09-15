@@ -18,8 +18,7 @@
 #include "Uis/Uis.hpp"
 #include "Config.hpp"
 
-namespace acid
-{
+namespace acid {
 Engine *Engine::Instance = nullptr;
 
 Engine::Engine(std::string argv0, bool emptyRegister) :
@@ -28,8 +27,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	m_fpsLimit(-1.0f),
 	m_running(true),
 	m_elapsedUpdate(14.705ms),
-	m_elapsedRender(-1s)
-{
+	m_elapsedRender(-1s) {
 	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
@@ -38,8 +36,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 
 	// TODO: Maybe move each module into a Singleton???
-	if (!emptyRegister)
-	{
+	if (!emptyRegister) {
 		AddModule<Files>(Module::Stage::Post);
 		AddModule<Timers>(Module::Stage::Post);
 		AddModule<Resources>(Module::Stage::Post);
@@ -50,7 +47,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 		AddModule<Keyboard>(Module::Stage::Pre);
 		AddModule<Mouse>(Module::Stage::Pre);
 		AddModule<Graphics>(Module::Stage::Render);
-		
+
 		AddModule<Scenes>(Module::Stage::Normal);
 		AddModule<Gizmos>(Module::Stage::Normal);
 		AddModule<Particles>(Module::Stage::Normal);
@@ -59,12 +56,9 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	}
 }
 
-int32_t Engine::Run()
-{
-	while (m_running)
-	{
-		if (m_app)
-		{
+int32_t Engine::Run() {
+	while (m_running) {
+		if (m_app) {
 			m_app->Update();
 		}
 
@@ -73,8 +67,7 @@ int32_t Engine::Run()
 		// Always-Update.
 		m_modules.UpdateStage(Module::Stage::Always);
 
-		if (m_elapsedUpdate.GetElapsed() != 0)
-		{
+		if (m_elapsedUpdate.GetElapsed() != 0) {
 			// Resets the timer.
 			m_ups.Update(Time::Now());
 
@@ -92,14 +85,12 @@ int32_t Engine::Run()
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f))
-		{
+		if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f)) {
 			continue;
 		}
 
 		// Renders when needed.
-		if (m_elapsedRender.GetElapsed() != 0)
-		{
+		if (m_elapsedRender.GetElapsed() != 0) {
 			// Resets the timer.
 			m_fps.Update(Time::Now());
 

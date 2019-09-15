@@ -9,10 +9,8 @@
 #include <Graphics/Graphics.hpp>
 #include <Shadows/SubrenderShadows.hpp>
 
-namespace test
-{
-MainRenderer::MainRenderer()
-{
+namespace test {
+MainRenderer::MainRenderer() {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
 	std::vector<Attachment> renderpassAttachments0 = {
@@ -23,7 +21,7 @@ MainRenderer::MainRenderer()
 	};
 	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport({4096, 4096})));
 
-	std::vector<Attachment> renderpassAttachments1 { 
+	std::vector<Attachment> renderpassAttachments1{
 		{0, "depth", Attachment::Type::Depth, false},
 		{1, "swapchain", Attachment::Type::Swapchain},
 		{2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT},
@@ -53,7 +51,6 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->AddSubrender<SubrenderFonts>({1, 2});
 }
 
-void MainRenderer::Update()
-{
+void MainRenderer::Update() {
 }
 }

@@ -3,16 +3,14 @@
 #include "Maths/Maths.hpp"
 #include "Driver.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A bounce driver that uses a sine wave.
  * @tparam T The type to be driven.
  **/
 template<typename T>
 class DriverBounce :
-	public Driver<T>
-{
+	public Driver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
@@ -23,9 +21,7 @@ public:
 	DriverBounce(const T &start, const T &end, const Time &length) :
 		Driver<T>(length),
 		m_start(start),
-		m_end(end)
-	{
-	}
+		m_end(end) { }
 
 	/**
 	 * Gets the start time.
@@ -52,12 +48,10 @@ public:
 	void SetEnd(const T &end) { m_end = end; }
 
 protected:
-	T Calculate(float factor) override
-	{
+	T Calculate(float factor) override {
 		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
 
-		if (Driver<T>::m_actualTime > Driver<T>::GetLength() / 2.0f)
-		{
+		if (Driver<T>::m_actualTime > Driver<T>::GetLength() / 2.0f) {
 			value = 0.0f;
 		}
 

@@ -1,15 +1,12 @@
 #include "FilterPixel.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterPixel::FilterPixel(const Pipeline::Stage &pipelineStage, float pixelSize) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Pixel.frag"}),
-	m_pixelSize(pixelSize)
-{
+	m_pixelSize(pixelSize) {
 }
 
-void FilterPixel::Render(const CommandBuffer &commandBuffer)
-{
+void FilterPixel::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("pixelSize", m_pixelSize);
 
@@ -17,8 +14,7 @@ void FilterPixel::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

@@ -5,10 +5,12 @@
 #include "Uis/UiObject.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputRadio :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputRadio
+:
+public
+UiObject
 {
 public:
 	enum class Type
@@ -52,8 +54,11 @@ private:
 	Delegate<void(bool)> m_onValue;
 };
 
-class ACID_EXPORT UiRadioManager :
-	public Observer
+class ACID_EXPORT
+UiRadioManager
+:
+public
+Observer
 {
 public:
 	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, bool multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :

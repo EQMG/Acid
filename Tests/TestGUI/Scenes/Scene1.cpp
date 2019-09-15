@@ -4,8 +4,7 @@
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Uis/Uis.hpp>
 
-namespace test
-{
+namespace test {
 const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
@@ -13,12 +12,9 @@ Scene1::Scene1() :
 	m_buttonPause(Key::Escape),
 	m_uiStartLogo(&Uis::Get()->GetCanvas()),
 	m_uiPanels(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas())
-{
-	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	m_buttonPause.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			TogglePause();
 		}
 	});
@@ -27,40 +23,31 @@ Scene1::Scene1() :
 	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 	m_uiPanels.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 
-	m_uiStartLogo.OnFinished().Add([this]()
-	{
+	m_uiStartLogo.OnFinished().Add([this]() {
 		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
 		//m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
 		TogglePause();
 	});
 }
 
-void Scene1::Start()
-{
+void Scene1::Start() {
 }
 
-void Scene1::Update()
-{
+void Scene1::Update() {
 }
 
-bool Scene1::IsPaused() const
-{
+bool Scene1::IsPaused() const {
 	return !m_uiStartLogo.IsFinished() || m_uiPanels.GetAlpha() > 0.0f;
 }
 
-void Scene1::TogglePause()
-{
-	if (!m_uiStartLogo.IsFinished())
-	{
+void Scene1::TogglePause() {
+	if (!m_uiStartLogo.IsFinished()) {
 		return;
 	}
 
-	if (IsPaused())
-	{
+	if (IsPaused()) {
 		m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_uiPanels.GetAlpha(), 0.0f, UI_SLIDE_TIME));
-	}
-	else
-	{
+	} else {
 		m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_uiPanels.GetAlpha(), 1.0f, UI_SLIDE_TIME));
 	}
 }

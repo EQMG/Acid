@@ -3,12 +3,12 @@
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.
  **/
-class ACID_EXPORT Quaternion
+class ACID_EXPORT
+Quaternion
 {
 public:
 	/**
@@ -211,13 +211,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::Quaternion>
-{
-	size_t operator()(const acid::Quaternion &quaternion) const
-	{
+struct hash<acid::Quaternion> {
+	size_t operator()(const acid::Quaternion &quaternion) const {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, quaternion.m_x);
 		acid::Maths::HashCombine(seed, quaternion.m_y);

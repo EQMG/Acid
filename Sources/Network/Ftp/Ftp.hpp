@@ -7,8 +7,7 @@
 #include "FtpResponseDirectory.hpp"
 #include "FtpResponseListing.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A very simple FTP client that allows you to communicate with a FTP server.
  * The FTP protocol allows you to manipulate a remote file system
@@ -33,7 +32,8 @@ namespace acid
  * This is important to know if you don't want to block your application while
  * the server is completing the task.
  **/
-class ACID_EXPORT Ftp
+class ACID_EXPORT
+Ftp
 {
 public:
 	/**

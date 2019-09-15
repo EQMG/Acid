@@ -3,8 +3,7 @@
 #include "Devices/Window.hpp"
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, float blur, const FilterBlur::Type &blurType, bool toScreen, float inputScale,
 	float outputScale) :
 	PostPipeline(pipelineStage),
@@ -13,18 +12,14 @@ PipelineBlur::PipelineBlur(const Pipeline::Stage &pipelineStage, float blur, con
 	m_toScreen(toScreen),
 	m_inputScale(inputScale),
 	m_outputScale(outputScale),
-	m_blur(blur)
-{
+	m_blur(blur) {
 }
 
-void PipelineBlur::Render(const CommandBuffer &commandBuffer)
-{
-	if (!m_toScreen)
-	{
+void PipelineBlur::Render(const CommandBuffer &commandBuffer) {
+	if (!m_toScreen) {
 		auto size = Window::Get()->GetSize();
 
-		if (size != m_lastSize)
-		{
+		if (size != m_lastSize) {
 			auto newSize = m_outputScale * size;
 			m_output = std::make_unique<Image2d>(newSize, nullptr, VK_FORMAT_R8G8B8A8_UNORM);
 

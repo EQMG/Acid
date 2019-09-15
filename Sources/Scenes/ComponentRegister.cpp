@@ -23,10 +23,8 @@
 #include "Shadows/ShadowRender.hpp"
 #include "Skyboxes/MaterialSkybox.hpp"
 
-namespace acid
-{
-ComponentRegister::ComponentRegister()
-{
+namespace acid {
+ComponentRegister::ComponentRegister() {
 	Add<ColliderCapsule>("colliderCapsule");
 	Add<ColliderCone>("colliderCone");
 	Add<ColliderConvexHull>("colliderConvexHull");
@@ -51,17 +49,14 @@ ComponentRegister::ComponentRegister()
 	Add<ShadowRender>("shadowRender");
 }
 
-void ComponentRegister::Remove(const std::string &name)
-{
+void ComponentRegister::Remove(const std::string &name) {
 	m_components.erase(name);
 }
 
-Component *ComponentRegister::Create(const std::string &name) const
-{
+Component *ComponentRegister::Create(const std::string &name) const {
 	auto it = m_components.find(name);
 
-	if (it == m_components.end())
-	{
+	if (it == m_components.end()) {
 		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return nullptr;
 	}
@@ -69,12 +64,10 @@ Component *ComponentRegister::Create(const std::string &name) const
 	return ((*it).second).m_create();
 }
 
-void ComponentRegister::Decode(const std::string &name, const Node &node, Component *component)
-{
+void ComponentRegister::Decode(const std::string &name, const Node &node, Component *component) {
 	auto it = m_components.find(name);
 
-	if (it == m_components.end())
-	{
+	if (it == m_components.end()) {
 		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return;
 	}
@@ -82,12 +75,10 @@ void ComponentRegister::Decode(const std::string &name, const Node &node, Compon
 	((*it).second).m_decode(node, component);
 }
 
-void ComponentRegister::Encode(const std::string &name, Node &node, const Component *component)
-{
+void ComponentRegister::Encode(const std::string &name, Node &node, const Component *component) {
 	auto it = m_components.find(name);
 
-	if (it == m_components.end())
-	{
+	if (it == m_components.end()) {
 		Log::Error("Could not find registered component: ", std::quoted(name), '\n');
 		return;
 	}
@@ -95,12 +86,10 @@ void ComponentRegister::Encode(const std::string &name, Node &node, const Compon
 	((*it).second).m_encode(node, component);
 }
 
-std::optional<std::string> ComponentRegister::FindName(Component *compare) const
-{
+std::optional<std::string> ComponentRegister::FindName(Component *compare) const {
 	for (const auto &[name, component] : m_components) // TODO: Clean remove.
 	{
-		if (component.m_isSame(compare))
-		{
+		if (component.m_isSame(compare)) {
 			return name;
 		}
 	}

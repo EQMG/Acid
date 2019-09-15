@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 1) uniform UniformObject 
-{
+layout(binding = 1) uniform UniformObject {
 	mat4 transform;
 	vec4 baseColour;
 	vec4 fogColour;
@@ -21,8 +20,7 @@ layout(location = 1) out vec4 outDiffuse;
 layout(location = 2) out vec4 outNormal;
 layout(location = 3) out vec4 outMaterial;
 
-void main() 
-{
+void main() {
 	vec3 cubemapColour = texture(samplerColour, inUVW).rgb;
 	vec3 colour = mix(object.baseColour.rgb, cubemapColour, object.blendFactor);
 

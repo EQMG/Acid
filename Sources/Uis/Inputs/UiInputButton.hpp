@@ -4,10 +4,12 @@
 #include "Guis/Gui.hpp"
 #include "Uis/UiObject.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputButton :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputButton
+:
+public
+UiObject
 {
 public:
 	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = {Size});

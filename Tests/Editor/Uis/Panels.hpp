@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Panels :
-	public UiObject
-{
+	public UiObject {
 public:
 	explicit Panels(UiObject *parent);
 

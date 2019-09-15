@@ -4,13 +4,15 @@
 #include "Maths/Vector2.hpp"
 #include "Pipeline.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a compute compute pipeline.
  */
-class ACID_EXPORT PipelineCompute :
-	public Pipeline
+class ACID_EXPORT
+PipelineCompute
+:
+public
+Pipeline
 {
 public:
 	/**

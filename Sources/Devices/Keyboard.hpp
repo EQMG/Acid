@@ -3,11 +3,9 @@
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
 
-namespace acid
-{
+namespace acid {
 enum class Key :
-	int32_t
-{
+	int32_t {
 	Unknown = -1,
 	Space = 32,
 	Apostrophe = 39,
@@ -136,8 +134,11 @@ enum class Key :
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT Keyboard :
-	public Module
+class ACID_EXPORT
+Keyboard
+:
+public
+Module
 {
 public:
 	/**

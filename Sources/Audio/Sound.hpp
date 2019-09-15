@@ -5,13 +5,15 @@
 #include "SoundBuffer.hpp"
 #include "Audio.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a playable sound.
  */
-class ACID_EXPORT Sound :
-	public Component
+class ACID_EXPORT
+Sound
+:
+public
+Component
 {
 public:
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,

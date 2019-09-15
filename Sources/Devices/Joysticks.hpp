@@ -4,12 +4,14 @@
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
 
-namespace acid
-{
+namespace acid {
 enum class JoystickHat :
-	int32_t
-{
-	Centered = 0, Up = 1, Right = 2, Down = 4, Left = 8
+	int32_t {
+	Centered = 0,
+	Up = 1,
+	Right = 2,
+	Down = 4,
+	Left = 8
 };
 
 ENABLE_BITMASK_OPERATORS(JoystickHat)
@@ -17,8 +19,11 @@ ENABLE_BITMASK_OPERATORS(JoystickHat)
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
-class ACID_EXPORT Joysticks :
-	public Module
+class ACID_EXPORT
+Joysticks
+:
+public
+Module
 {
 public:
 	/**

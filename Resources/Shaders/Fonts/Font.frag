@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(binding = 0) uniform UniformObject
-{
+layout(binding = 0) uniform UniformObject {
 	mat4 modelView;
 	float alpha;
 
@@ -19,8 +18,7 @@ layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
-void main() 
-{
+void main() {
 	float distance = texture(samplerColour, inUV).a;
 	float alpha = smoothstep((1.0f - object.edgeData.x) - object.edgeData.y, 1.0f - object.edgeData.x, distance);
 	float outlineAlpha = smoothstep((1.0f - object.borderSizes.x) - object.borderSizes.y, 1.0f - object.borderSizes.x, distance);
@@ -30,8 +28,7 @@ void main()
 	outColour = vec4(overallColour, overallAlpha);
 	outColour.a *= object.alpha;
 
-	if (outColour.a < 0.05f)
-	{
+	if (outColour.a < 0.05f) {
 		outColour = vec4(0.0f);
 		discard;
 	}

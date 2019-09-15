@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class HeightDespawn :
-	public Component
-{
+	public Component {
 public:
 	explicit HeightDespawn(float removeHeight = -100.0f);
 

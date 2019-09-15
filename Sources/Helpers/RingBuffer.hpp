@@ -74,7 +74,7 @@ public:
 
 	auto begin() { return m_data.begin(); }
 	auto begin() const { return m_data.begin(); }
-	
+
 	auto end() { return m_data.end(); }
 	auto end() const { return m_data.end(); }
 
@@ -152,7 +152,7 @@ private:
 	}
 
 	template<typename... K>
-	std::size_t NumArgs(K...) {
+	std::size_t NumArgs(K ...) {
 		const std::size_t n = sizeof...(K);
 		return n;
 	}

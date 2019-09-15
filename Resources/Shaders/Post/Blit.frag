@@ -8,7 +8,6 @@ layout(location = 0) in vec2 inUV;
 
 layout(location = 0) out vec4 outColour;
 
-void main() 
-{
+void main() {
 	outColour = texture(samplerColour, inUV);
 }

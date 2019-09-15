@@ -4,9 +4,9 @@
 #include "Maths/Vector3.hpp"
 #include "Graphics/Pipelines/Shader.hpp"
 
-namespace acid
-{
-class ACID_EXPORT VertexDefault
+namespace acid {
+class ACID_EXPORT
+VertexDefault
 {
 public:
 	VertexDefault() = default;
@@ -47,13 +47,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::VertexDefault>
-{
-	size_t operator()(const acid::VertexDefault &vertex) const noexcept
-	{
+struct hash<acid::VertexDefault> {
+	size_t operator()(const acid::VertexDefault &vertex) const noexcept {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vertex.m_position);
 		acid::Maths::HashCombine(seed, vertex.m_uv);

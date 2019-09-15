@@ -2,11 +2,9 @@
 
 #include "Model.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
-std::vector<T> Model::GetVertices(std::size_t offset) const
-{
+std::vector<T> Model::GetVertices(std::size_t offset) const {
 	Buffer vertexStaging(m_vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
@@ -24,8 +22,7 @@ std::vector<T> Model::GetVertices(std::size_t offset) const
 
 	auto sizeOfSrcT = vertexStaging.GetSize() / m_vertexCount;
 
-	for (uint32_t i = 0; i < m_vertexCount; i++)
-	{
+	for (uint32_t i = 0; i < m_vertexCount; i++) {
 		std::memcpy(&vertices[i], static_cast<char *>(verticesMemory) + (i * sizeOfSrcT) + offset, sizeof(T));
 	}
 
@@ -34,13 +31,11 @@ std::vector<T> Model::GetVertices(std::size_t offset) const
 }
 
 template<typename T>
-void Model::SetVertices(const std::vector<T> &vertices)
-{
+void Model::SetVertices(const std::vector<T> &vertices) {
 	m_vertexBuffer = nullptr;
 	m_vertexCount = static_cast<uint32_t>(vertices.size());
 
-	if (!vertices.empty())
-	{
+	if (!vertices.empty()) {
 		Buffer vertexStaging(sizeof(T) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
 			vertices.data());
 		m_vertexBuffer = std::make_unique<Buffer>(vertexStaging.GetSize(), VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
@@ -57,16 +52,14 @@ void Model::SetVertices(const std::vector<T> &vertices)
 }
 
 template<typename T>
-void Model::Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices)
-{
+void Model::Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices) {
 	SetVertices(vertices);
 	SetIndices(indices);
 
 	m_minExtents = Vector3f::PositiveInfinity;
 	m_maxExtents = Vector3f::NegativeInfinity;
 
-	for (const auto &vertex : vertices)
-	{
+	for (const auto &vertex : vertices) {
 		Vector3f position(vertex.m_position);
 		m_minExtents = m_minExtents.Min(position);
 		m_maxExtents = m_maxExtents.Max(position);

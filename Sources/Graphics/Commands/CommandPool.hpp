@@ -3,12 +3,12 @@
 #include <vulkan/vulkan.h>
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a command pool.
  */
-class ACID_EXPORT CommandPool
+class ACID_EXPORT
+CommandPool
 {
 public:
 	explicit CommandPool(const std::thread::id &threadId = std::this_thread::get_id());

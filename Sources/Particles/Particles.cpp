@@ -2,27 +2,20 @@
 
 #include "Scenes/Scenes.hpp"
 
-namespace acid
-{
-Particles::Particles()
-{
+namespace acid {
+Particles::Particles() {
 }
 
-void Particles::Update()
-{
-	if (Scenes::Get()->IsPaused())
-	{
+void Particles::Update() {
+	if (Scenes::Get()->IsPaused()) {
 		return;
 	}
 
-	for (auto it = m_particles.begin(); it != m_particles.end();)
-	{
-		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();)
-		{
+	for (auto it = m_particles.begin(); it != m_particles.end();) {
+		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();) {
 			(*it1).Update();
 
-			if (!(*it1).IsAlive())
-			{
+			if (!(*it1).IsAlive()) {
 				it1 = (*it).second.erase(it1);
 				continue;
 			}
@@ -30,8 +23,7 @@ void Particles::Update()
 			++it1;
 		}
 
-		if (it->second.empty())
-		{
+		if (it->second.empty()) {
 			it = m_particles.erase(it);
 			continue;
 		}
@@ -42,12 +34,10 @@ void Particles::Update()
 	}
 }
 
-void Particles::AddParticle(Particle &&particle)
-{
+void Particles::AddParticle(Particle &&particle) {
 	auto it = m_particles.find(particle.GetParticleType());
 
-	if (it == m_particles.end())
-	{
+	if (it == m_particles.end()) {
 		m_particles.emplace(particle.GetParticleType(), std::vector<Particle>());
 		it = m_particles.find(particle.GetParticleType());
 	}
@@ -68,8 +58,7 @@ void Particles::AddParticle(Particle &&particle)
 	}
 }*/
 
-void Particles::Clear()
-{
+void Particles::Clear() {
 	m_particles.clear();
 }
 }

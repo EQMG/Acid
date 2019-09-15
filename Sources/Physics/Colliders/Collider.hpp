@@ -9,13 +9,15 @@ class btVector3;
 class btQuaternion;
 class btTransform;
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a physics shape.
  */
-class ACID_EXPORT Collider :
-	public Component
+class ACID_EXPORT
+Collider
+:
+public
+Component
 {
 public:
 	/**

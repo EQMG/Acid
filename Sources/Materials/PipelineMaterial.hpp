@@ -3,13 +3,15 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Graphics/RenderStage.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a material pipeline.
  */
-class ACID_EXPORT PipelineMaterial :
-	public Resource
+class ACID_EXPORT
+PipelineMaterial
+:
+public
+Resource
 {
 public:
 	/**

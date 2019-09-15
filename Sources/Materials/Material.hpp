@@ -5,14 +5,16 @@
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "PipelineMaterial.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Component that represents a material shader that is used to render a mesh.
  * The child of this object should initialize {@link Material#m_pipelineMaterial} in {@link Material#Start}.
  */
-class ACID_EXPORT Material :
-	public Component
+class ACID_EXPORT
+Material
+:
+public
+Component
 {
 public:
 	virtual ~Material() = default;

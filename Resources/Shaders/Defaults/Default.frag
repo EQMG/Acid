@@ -8,8 +8,7 @@
 //layout(constant_id = 4) const bool MATERIAL_MAPPING = false;
 //layout(constant_id = 5) const bool NORMAL_MAPPING = false;
 
-layout(binding = 1) uniform UniformObject
-{
+layout(binding = 1) uniform UniformObject {
 	mat4 transform;
 
 	vec4 baseDiffuse;
@@ -38,8 +37,7 @@ layout(location = 1) out vec4 outDiffuse;
 layout(location = 2) out vec4 outNormal;
 layout(location = 3) out vec4 outMaterial;
 
-void main()
-{
+void main() {
 	vec4 diffuse = object.baseDiffuse;
 	vec3 normal = normalize(inNormal);
 	vec3 material = vec3(object.metallic, object.roughness, 0.0f);
@@ -54,8 +52,7 @@ void main()
 	material.x *= textureMaterial.r;
 	material.y *= textureMaterial.g;
 
-	if (textureMaterial.b > 0.5f)
-	{
+	if (textureMaterial.b > 0.5f) {
 		glowing = 1.0f;
 	}
 #endif

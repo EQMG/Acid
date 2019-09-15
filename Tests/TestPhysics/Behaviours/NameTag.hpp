@@ -5,11 +5,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class NameTag :
-	public Component
-{
+	public Component {
 public:
 	explicit NameTag(const std::string &name = "", float heightOffset = 0.0f);
 

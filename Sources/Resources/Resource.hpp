@@ -1,14 +1,15 @@
 #pragma once
 
 #include "StdAfx.hpp"
+
 //#include "Serialized/Node.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A managed resource object. Implementations contain Create functions that can take a node object or pass parameters to the constructor.
  */
-class ACID_EXPORT Resource
+class ACID_EXPORT
+Resource
 {
 public:
 	Resource() = default;

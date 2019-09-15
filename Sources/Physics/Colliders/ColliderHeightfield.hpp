@@ -4,10 +4,12 @@
 
 class btHeightfieldTerrainShape;
 
-namespace acid
-{
-class ACID_EXPORT ColliderHeightfield :
-	public Collider
+namespace acid {
+class ACID_EXPORT
+ColliderHeightfield
+:
+public
+Collider
 {
 public:
 	explicit ColliderHeightfield(int32_t heightStickWidth = 100, int32_t heightStickLength = 100, const void *heightfieldData = nullptr,

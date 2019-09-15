@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
-{
+layout(push_constant) uniform PushScene {
 	vec3 sunPosition;
 	ivec2 displaySize;
 	float worldHeight;
@@ -16,13 +15,11 @@ layout(binding = 2) uniform sampler2D samplerMaterial;
 
 layout(location = 0) in vec2 inUV;
 
-bool insideScreen(vec2 test) 
-{
+bool insideScreen(vec2 test) {
 	return test.x >= 0.0f && test.x <= 1.0f && test.y >= 0.0f && test.y <= 1.0f;
 }
 
-void main() 
-{
+void main() {
 	vec2 sun2 = vec2(scene.sunPosition.x, scene.sunPosition.y);
 	vec2 sunCoord = (sun2 + 1.0f) / 2.0f;
 
@@ -34,8 +31,7 @@ void main()
 	vec2 uvd = uv * length(uv);
 	vec3 flare = vec3(0.0f);
 
-	if (process) 
-	{
+	if (process) {
 		vec2 uvx = mix(uv, uvd, 1.0f);
 		float f2 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.8f * sun2), 2.0f)), 0.0f) * 0.25f;
 		float f22 = max(1.0f / (1.0f + 32.0f * pow(length(uvx + 0.85f * sun2), 2.0f)), 0.0f) * 0.23f;

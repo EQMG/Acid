@@ -2,14 +2,14 @@
 
 #include "Maths/Time.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A utility class for manipulating network addresses.
  * It provides a set a implicit constructors and conversion functions
  * to easily build or transform an IP address from/to various representations.
  **/
-class ACID_EXPORT IpAddress
+class ACID_EXPORT
+IpAddress
 {
 public:
 	/**

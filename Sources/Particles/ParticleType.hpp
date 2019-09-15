@@ -11,15 +11,17 @@
 #include "Graphics/Images/Image2d.hpp"
 #include "Resources/Resource.hpp"
 
-namespace acid
-{
+namespace acid {
 class Particle;
 
 /**
  * @brief Resource that represents a particle type.
  */
-class ACID_EXPORT ParticleType :
-	public Resource
+class ACID_EXPORT
+ParticleType
+:
+public
+Resource
 {
 public:
 	class Instance

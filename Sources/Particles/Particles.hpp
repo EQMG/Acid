@@ -3,13 +3,15 @@
 #include "Engine/Engine.hpp"
 #include "Particle.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief A manager that manages particles.
  */
-class ACID_EXPORT Particles :
-	public Module
+class ACID_EXPORT
+Particles
+:
+public
+Module
 {
 public:
 	/**

@@ -5,13 +5,15 @@
 #include "Serialized/Node.hpp"
 #include "Resource.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Module used for managing resources.
  */
-class ACID_EXPORT Resources :
-	public Module
+class ACID_EXPORT
+Resources
+:
+public
+Module
 {
 public:
 	/**

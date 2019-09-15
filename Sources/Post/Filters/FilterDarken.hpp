@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterDarken :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterDarken
+:
+public
+PostFilter
 {
 public:
 	explicit FilterDarken(const Pipeline::Stage &pipelineStage, float factor = 0.5f);

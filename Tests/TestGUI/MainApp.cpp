@@ -8,8 +8,7 @@
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	using namespace test;
 
 	// Creates the engine.
@@ -25,24 +24,20 @@ int main(int argc, char **argv)
 	return exitCode;
 }
 
-namespace test
-{
+namespace test {
 MainApp::MainApp() :
 	App("Test GUI", {1, 0, 0}),
 	m_fileWatcher(std::filesystem::current_path(), 2s),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
-{
+	m_buttonExit(Key::Delete) {
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.
-	m_fileWatcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status)
-	{
-		switch (status)
-		{
+	m_fileWatcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status) {
+		switch (status) {
 		case FileWatcher::Status::Created:
 			Log::Out("Created ", path, '\n');
 			break;
@@ -55,27 +50,20 @@ MainApp::MainApp() :
 		}
 	});
 
-	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
-			Resources::Get()->GetThreadPool().Enqueue([]()
-			{
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
+			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
 	});
@@ -87,22 +75,22 @@ MainApp::MainApp() :
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test GUI");
-	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", 
-		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
+	Window::Get()->SetIcons({
+		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
+		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
+	});
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
-MainApp::~MainApp()
-{
+MainApp::~MainApp() {
 	Files::Get()->ClearSearchPath();
 
 	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);
 }
 
-void MainApp::Update()
-{
+void MainApp::Update() {
 }
 }

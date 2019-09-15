@@ -8,10 +8,12 @@
 #include "Uis/UiObject.hpp"
 #include "UiInputButton.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiInputGrabber :
-	public UiObject
+namespace acid {
+class ACID_EXPORT
+UiInputGrabber
+:
+public
+UiObject
 {
 public:
 	UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform);
@@ -39,8 +41,11 @@ protected:
 	bool m_mouseOver = false;
 };
 
-class ACID_EXPORT UiGrabberJoystick :
-	public UiInputGrabber
+class ACID_EXPORT
+UiGrabberJoystick
+:
+public
+UiInputGrabber
 {
 public:
 	UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value,
@@ -72,8 +77,11 @@ private:
 	Delegate<void(uint32_t, uint32_t)> m_onValue;
 };
 
-class ACID_EXPORT UiGrabberKeyboard :
-	public UiInputGrabber
+class ACID_EXPORT
+UiGrabberKeyboard
+:
+public
+UiInputGrabber
 {
 public:
 	UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value,
@@ -100,8 +108,11 @@ private:
 	Delegate<void(Key)> m_onValue;
 };
 
-class ACID_EXPORT UiGrabberMouse :
-	public UiInputGrabber
+class ACID_EXPORT
+UiGrabberMouse
+:
+public
+UiInputGrabber
 {
 public:
 	UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value,

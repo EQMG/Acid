@@ -2,38 +2,30 @@
 
 #include <GLFW/glfw3.h>
 
-namespace acid
-{
-void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
-{
+namespace acid {
+void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
 	Keyboard::Get()->m_onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
 }
 
-void CallbackChar(GLFWwindow *window, uint32_t codepoint)
-{
+void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
 	Keyboard::Get()->m_onChar(static_cast<char>(codepoint));
 }
 
-Keyboard::Keyboard()
-{
+Keyboard::Keyboard() {
 	glfwSetKeyCallback(Window::Get()->GetWindow(), CallbackKey);
 	glfwSetCharCallback(Window::Get()->GetWindow(), CallbackChar);
 }
 
-void Keyboard::Update()
-{
+void Keyboard::Update() {
 }
 
-InputAction Keyboard::GetKey(const Key &key) const
-{
+InputAction Keyboard::GetKey(const Key &key) const {
 	auto state = glfwGetKey(Window::Get()->GetWindow(), static_cast<int32_t>(key));
 	return static_cast<InputAction>(state);
 }
 
-std::string Keyboard::ToString(const Key &key)
-{
-	switch (key)
-	{
+std::string Keyboard::ToString(const Key &key) {
+	switch (key) {
 	case Key::Space:
 		return "Space";
 	case Key::Apostrophe:

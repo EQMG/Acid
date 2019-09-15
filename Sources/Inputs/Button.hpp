@@ -2,13 +2,15 @@
 
 #include "Devices/Window.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT Button :
-	public Observer
+class ACID_EXPORT
+Button
+:
+public
+Observer
 {
 public:
 	virtual ~Button() = default;

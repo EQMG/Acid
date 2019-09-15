@@ -5,13 +5,15 @@
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Represents a post effect pipeline.
  */
-class ACID_EXPORT PostFilter :
-	public Subrender
+class ACID_EXPORT
+PostFilter
+:
+public
+Subrender
 {
 public:
 	/**

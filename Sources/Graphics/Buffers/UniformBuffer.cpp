@@ -2,15 +2,12 @@
 
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 UniformBuffer::UniformBuffer(const VkDeviceSize &size, const void *data) :
-	Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, data)
-{
+	Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, data) {
 }
 
-void UniformBuffer::Update(const void *newData)
-{
+void UniformBuffer::Update(const void *newData) {
 	void *data;
 	MapMemory(&data);
 	std::memcpy(data, newData, static_cast<std::size_t>(m_size));
@@ -18,8 +15,7 @@ void UniformBuffer::Update(const void *newData)
 }
 
 VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count)
-{
+	uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;
@@ -29,15 +25,13 @@ VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t bind
 	return descriptorSetLayoutBinding;
 }
 
-WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const
-{
+WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
 	bufferInfo.offset = 0;
 	bufferInfo.range = m_size;
 
-	if (offsetSize)
-	{
+	if (offsetSize) {
 		bufferInfo.offset = offsetSize->GetOffset();
 		bufferInfo.range = offsetSize->GetSize();
 	}

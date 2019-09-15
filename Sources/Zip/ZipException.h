@@ -6,8 +6,7 @@ namespace acid {
 class ZipException : public std::runtime_error {
 public:
 	explicit ZipException(const std::string &err) :
-		runtime_error(err) {
-	}
+		runtime_error(err) { }
 
 	~ZipException() override = default;
 };
@@ -15,8 +14,7 @@ public:
 class ZipExceptionUndefined : public ZipException {
 public:
 	explicit ZipExceptionUndefined(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUndefined() override = default;
 };
@@ -24,8 +22,7 @@ public:
 class ZipExceptionTooManyFiles : public ZipException {
 public:
 	explicit ZipExceptionTooManyFiles(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionTooManyFiles() override = default;
 };
@@ -33,8 +30,7 @@ public:
 class ZipExceptionFileTooLarge : public ZipException {
 public:
 	explicit ZipExceptionFileTooLarge(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileTooLarge() override = default;
 };
@@ -42,8 +38,7 @@ public:
 class ZipExceptionUnsupportedMethod : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedMethod(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUnsupportedMethod() override = default;
 };
@@ -51,8 +46,7 @@ public:
 class ZipExceptionUnsupportedEncryption : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedEncryption(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUnsupportedEncryption() override = default;
 };
@@ -60,8 +54,7 @@ public:
 class ZipExceptionUnsupportedFeature : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedFeature(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUnsupportedFeature() override = default;
 };
@@ -69,8 +62,7 @@ public:
 class ZipExceptionFailedFindingCentralDir : public ZipException {
 public:
 	explicit ZipExceptionFailedFindingCentralDir(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFailedFindingCentralDir() override = default;
 };
@@ -78,8 +70,7 @@ public:
 class ZipExceptionNotAnArchive : public ZipException {
 public:
 	explicit ZipExceptionNotAnArchive(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionNotAnArchive() override = default;
 };
@@ -87,8 +78,7 @@ public:
 class ZipExceptionInvalidHeader : public ZipException {
 public:
 	explicit ZipExceptionInvalidHeader(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionInvalidHeader() override = default;
 };
@@ -96,8 +86,7 @@ public:
 class ZipExceptionMultidiskUnsupported : public ZipException {
 public:
 	explicit ZipExceptionMultidiskUnsupported(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionMultidiskUnsupported() override = default;
 };
@@ -105,8 +94,7 @@ public:
 class ZipExceptionDecompressionFailed : public ZipException {
 public:
 	explicit ZipExceptionDecompressionFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionDecompressionFailed() override = default;
 };
@@ -114,8 +102,7 @@ public:
 class ZipExceptionCompressionFailed : public ZipException {
 public:
 	explicit ZipExceptionCompressionFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionCompressionFailed() override = default;
 };
@@ -123,8 +110,7 @@ public:
 class ZipExceptionUnexpectedDecompSize : public ZipException {
 public:
 	explicit ZipExceptionUnexpectedDecompSize(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUnexpectedDecompSize() override = default;
 };
@@ -132,8 +118,7 @@ public:
 class ZipExceptionCrcCheckFailed : public ZipException {
 public:
 	explicit ZipExceptionCrcCheckFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionCrcCheckFailed() override = default;
 };
@@ -141,8 +126,7 @@ public:
 class ZipExceptionUnsupportedCDirSize : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedCDirSize(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionUnsupportedCDirSize() override = default;
 };
@@ -150,8 +134,7 @@ public:
 class ZipExceptionAllocFailed : public ZipException {
 public:
 	explicit ZipExceptionAllocFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionAllocFailed() override = default;
 };
@@ -159,8 +142,7 @@ public:
 class ZipExceptionFileOpenFailed : public ZipException {
 public:
 	explicit ZipExceptionFileOpenFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileOpenFailed() override = default;
 };
@@ -168,8 +150,7 @@ public:
 class ZipExceptionFileCreateFailed : public ZipException {
 public:
 	explicit ZipExceptionFileCreateFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileCreateFailed() override = default;
 };
@@ -177,8 +158,7 @@ public:
 class ZipExceptionFileWriteFailed : public ZipException {
 public:
 	explicit ZipExceptionFileWriteFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileWriteFailed() override = default;
 };
@@ -186,8 +166,7 @@ public:
 class ZipExceptionFileReadFailed : public ZipException {
 public:
 	explicit ZipExceptionFileReadFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileReadFailed() override = default;
 };
@@ -195,8 +174,7 @@ public:
 class ZipExceptionFileCloseFailed : public ZipException {
 public:
 	explicit ZipExceptionFileCloseFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileCloseFailed() override = default;
 };
@@ -204,8 +182,7 @@ public:
 class ZipExceptionFileSeekFailed : public ZipException {
 public:
 	explicit ZipExceptionFileSeekFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileSeekFailed() override = default;
 };
@@ -213,8 +190,7 @@ public:
 class ZipExceptionFileStatFailed : public ZipException {
 public:
 	explicit ZipExceptionFileStatFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileStatFailed() override = default;
 };
@@ -222,8 +198,7 @@ public:
 class ZipExceptionInvalidParameter : public ZipException {
 public:
 	explicit ZipExceptionInvalidParameter(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionInvalidParameter() override = default;
 };
@@ -231,8 +206,7 @@ public:
 class ZipExceptionInvalidFilename : public ZipException {
 public:
 	explicit ZipExceptionInvalidFilename(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionInvalidFilename() override = default;
 };
@@ -240,8 +214,7 @@ public:
 class ZipExceptionBufferTooSmall : public ZipException {
 public:
 	explicit ZipExceptionBufferTooSmall(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionBufferTooSmall() override = default;
 };
@@ -249,8 +222,7 @@ public:
 class ZipExceptionInternalError : public ZipException {
 public:
 	explicit ZipExceptionInternalError(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionInternalError() override = default;
 };
@@ -258,8 +230,7 @@ public:
 class ZipExceptionFileNotFound : public ZipException {
 public:
 	explicit ZipExceptionFileNotFound(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionFileNotFound() override = default;
 };
@@ -267,8 +238,7 @@ public:
 class ZipExceptionArchiveTooLarge : public ZipException {
 public:
 	explicit ZipExceptionArchiveTooLarge(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionArchiveTooLarge() override = default;
 };
@@ -276,8 +246,7 @@ public:
 class ZipExceptionValidationFailed : public ZipException {
 public:
 	explicit ZipExceptionValidationFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionValidationFailed() override = default;
 };
@@ -285,8 +254,7 @@ public:
 class ZipExceptionWriteCallbackFailed : public ZipException {
 public:
 	explicit ZipExceptionWriteCallbackFailed(const std::string &err) :
-		ZipException(err) {
-	}
+		ZipException(err) { }
 
 	~ZipExceptionWriteCallbackFailed() override = default;
 };

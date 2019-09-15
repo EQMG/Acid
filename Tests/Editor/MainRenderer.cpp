@@ -25,13 +25,11 @@
 #include <Shadows/SubrenderShadows.hpp>
 #include "Filters/FilterBlit.hpp"
 
-namespace test
-{
-MainRenderer::MainRenderer()
-{
+namespace test {
+MainRenderer::MainRenderer() {
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
 
-	std::vector<Attachment> renderpassAttachments0 = { 
+	std::vector<Attachment> renderpassAttachments0 = {
 		{0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM}
 	};
 	std::vector<SubpassType> renderpassSubpasses0 = {
@@ -92,17 +90,13 @@ MainRenderer::MainRenderer()
 	Graphics::Get()->AddSubrender<SubrenderFonts>({2, 0});
 }
 
-void MainRenderer::Update()
-{
+void MainRenderer::Update() {
 	auto renderpassCreate1 = Graphics::Get()->GetRenderStage(1);
 	//renderpassCreate1->GetViewport().SetOffset({0.1f, 0.0f});
 
-	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release)
-	{
+	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release) {
 		renderpassCreate1->GetViewport().SetScale({1.0f, 1.0f});
-	}
-	else
-	{
+	} else {
 		renderpassCreate1->GetViewport().SetScale({0.5f, 1.0f});
 	}
 

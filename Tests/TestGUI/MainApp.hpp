@@ -6,11 +6,9 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class MainApp :
-	public App
-{
+	public App {
 public:
 	MainApp();
 

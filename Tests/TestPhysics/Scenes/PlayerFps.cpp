@@ -8,8 +8,7 @@
 #include <Physics/KinematicCharacter.hpp>
 #include <Inputs/ButtonJoystick.hpp>
 
-namespace test
-{
+namespace test {
 const float WALK_SPEED = 3.1f;
 const float RUN_SPEED = 5.7f;
 const float CROUCH_SPEED = 1.2f;
@@ -24,63 +23,47 @@ PlayerFps::PlayerFps() :
 	m_inputSprint(std::make_unique<ButtonKeyboard>(Key::ShiftLeft), std::make_unique<ButtonJoystick>(0, 1)),
 	m_inputJump(std::make_unique<ButtonKeyboard>(Key::Space), std::make_unique<ButtonJoystick>(0, 2)),
 	m_inputCrouch(std::make_unique<ButtonKeyboard>(Key::ControlLeft), std::make_unique<ButtonJoystick>(0, 3)),
-	m_toggleNoclip(std::make_unique<ButtonKeyboard>(Key::N))
-{
+	m_toggleNoclip(std::make_unique<ButtonKeyboard>(Key::N)) {
 }
 
-void PlayerFps::Start()
-{
+void PlayerFps::Start() {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
 	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with ", std::quoted(other->GetParent()->GetName()), '\n';}));
 	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with ", std::quoted(other->GetParent()->GetName()), '\n';}));
 }
 
-void PlayerFps::Update()
-{
+void PlayerFps::Update() {
 	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 
-	if (!character || !character->IsShapeCreated())
-	{
+	if (!character || !character->IsShapeCreated()) {
 		return;
 	}
 
 	Vector3f direction;
 
-	if (!Scenes::Get()->IsPaused())
-	{
+	if (!Scenes::Get()->IsPaused()) {
 		direction.m_x = m_inputStrafe.GetAmount();
 		direction.m_z = m_inputForward.GetAmount();
 
-		if (m_noclipEnabled)
-		{
-			if (m_inputJump.IsDown())
-			{
+		if (m_noclipEnabled) {
+			if (m_inputJump.IsDown()) {
 				direction.m_y = 1.0f;
-			}
-			else if (m_inputCrouch.IsDown())
-			{
+			} else if (m_inputCrouch.IsDown()) {
 				direction.m_y = -1.0f;
 			}
-		}
-		else
-		{
-			if (m_inputJump.WasDown() && character->IsOnGround())
-			{
+		} else {
+			if (m_inputJump.WasDown() && character->IsOnGround()) {
 				character->Jump({0.0f, JUMP_SPEED, 0.0f});
 			}
 		}
 
-		if (m_toggleNoclip.WasDown())
-		{
+		if (m_toggleNoclip.WasDown()) {
 			m_noclipEnabled = !m_noclipEnabled;
 
-			if (m_noclipEnabled)
-			{
+			if (m_noclipEnabled) {
 				character->SetGravity({});
 				character->SetLinearVelocity({});
-			}
-			else
-			{
+			} else {
 				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
 			}
 
@@ -89,9 +72,8 @@ void PlayerFps::Update()
 	}
 
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
-	
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform)
-	{
+
+	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
 		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
 	}
 
@@ -105,13 +87,11 @@ void PlayerFps::Update()
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 
-const Node &operator>>(const Node &node, PlayerFps &player)
-{
+const Node &operator>>(const Node &node, PlayerFps &player) {
 	return node;
 }
 
-Node &operator<<(Node &node, const PlayerFps &player)
-{
+Node &operator<<(Node &node, const PlayerFps &player) {
 	return node;
 }
 }

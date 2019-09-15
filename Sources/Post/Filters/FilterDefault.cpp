@@ -1,20 +1,16 @@
 #include "FilterDefault.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterDefault::FilterDefault(const Pipeline::Stage &pipelineStage, bool lastFilter) :
-	PostFilter(pipelineStage, { "Shaders/Post/Default.vert", "Shaders/Post/Default.frag" }),
-	m_lastFilter(lastFilter)
-{
+	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Default.frag"}),
+	m_lastFilter(lastFilter) {
 }
 
-void FilterDefault::Render(const CommandBuffer &commandBuffer)
-{
+void FilterDefault::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 
@@ -25,8 +21,7 @@ void FilterDefault::Render(const CommandBuffer &commandBuffer)
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 
 	// Resets switching for next pass.
-	if (m_lastFilter)
-	{
+	if (m_lastFilter) {
 		GlobalSwitching = 0;
 	}
 }

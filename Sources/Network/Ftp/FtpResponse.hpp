@@ -2,12 +2,12 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Define a FTP response.
  **/
-class ACID_EXPORT FtpResponse
+class ACID_EXPORT
+FtpResponse
 {
 public:
 	/**

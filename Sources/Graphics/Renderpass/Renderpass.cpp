@@ -3,18 +3,16 @@
 #include "Graphics/Graphics.hpp"
 #include "Graphics/RenderStage.hpp"
 
-namespace acid
-{
+namespace acid {
 Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	// Creates the renderpasses attachment descriptions,
 	std::vector<VkAttachmentDescription> attachmentDescriptions;
 
-	for (const auto &attachment : renderStage.GetAttachments())
-	{
+	for (const auto &attachment : renderStage.GetAttachments()) {
 		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
-		
+
 		VkAttachmentDescription attachmentDescription = {};
 		attachmentDescription.samples = attachmentSamples;
 		attachmentDescription.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR; // Clear at beginning of the render pass.
@@ -23,8 +21,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 		attachmentDescription.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 		attachmentDescription.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED; // We don't care about initial layout of the attachment.
 
-		switch (attachment.GetType())
-		{
+		switch (attachment.GetType()) {
 		case Attachment::Type::Image:
 			attachmentDescription.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 			attachmentDescription.format = attachment.GetFormat();
@@ -46,25 +43,21 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	std::vector<std::unique_ptr<SubpassDescription>> subpasses;
 	std::vector<VkSubpassDependency> dependencies;
 
-	for (const auto &subpassType : renderStage.GetSubpasses())
-	{
+	for (const auto &subpassType : renderStage.GetSubpasses()) {
 		// Attachments.
 		std::vector<VkAttachmentReference> subpassColourAttachments;
 
 		std::optional<uint32_t> depthAttachment;
 
-		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings())
-		{
+		for (const auto &attachmentBinding : subpassType.GetAttachmentBindings()) {
 			auto attachment = renderStage.GetAttachment(attachmentBinding);
 
-			if (!attachment)
-			{
+			if (!attachment) {
 				Log::Error("Failed to find a renderpass attachment bound to: ", attachmentBinding, '\n');
 				continue;
 			}
 
-			if (attachment->GetType() == Attachment::Type::Depth)
-			{
+			if (attachment->GetType() == Attachment::Type::Depth) {
 				depthAttachment = attachment->GetBinding();
 				continue;
 			}
@@ -86,28 +79,22 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 		subpassDependency.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 		subpassDependency.dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-		if (subpassType.GetBinding() == renderStage.GetSubpasses().size())
-		{
+		if (subpassType.GetBinding() == renderStage.GetSubpasses().size()) {
 			subpassDependency.dstSubpass = VK_SUBPASS_EXTERNAL;
 			subpassDependency.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 			subpassDependency.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 			subpassDependency.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-		}
-		else
-		{
+		} else {
 			subpassDependency.dstSubpass = subpassType.GetBinding();
 		}
 
-		if (subpassType.GetBinding() == 0)
-		{
+		if (subpassType.GetBinding() == 0) {
 			subpassDependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 			subpassDependency.srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 			subpassDependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 			subpassDependency.srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
 			subpassDependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-		}
-		else
-		{
+		} else {
 			subpassDependency.srcSubpass = subpassType.GetBinding() - 1;
 		}
 
@@ -117,8 +104,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	std::vector<VkSubpassDescription> subpassDescriptions;
 	subpassDescriptions.reserve(subpasses.size());
 
-	for (const auto &subpass : subpasses)
-	{
+	for (const auto &subpass : subpasses) {
 		subpassDescriptions.emplace_back(subpass->GetSubpassDescription());
 	}
 
@@ -134,8 +120,7 @@ Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthForm
 	Graphics::CheckVk(vkCreateRenderPass(*logicalDevice, &renderPassCreateInfo, nullptr, &m_renderpass));
 }
 
-Renderpass::~Renderpass()
-{
+Renderpass::~Renderpass() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyRenderPass(*logicalDevice, m_renderpass, nullptr);

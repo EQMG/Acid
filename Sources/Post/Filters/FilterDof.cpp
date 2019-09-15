@@ -3,8 +3,7 @@
 #include "Graphics/Graphics.hpp"
 #include "Scenes/Scenes.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, float focusPoint, float nearField, float nearTransition,
 	float farField, float farTransition) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Dof.frag"}),
@@ -13,12 +12,10 @@ FilterDof::FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelin
 	m_nearField(nearField),
 	m_nearTransition(nearTransition),
 	m_farField(farField),
-	m_farTransition(farTransition)
-{
+	m_farTransition(farTransition) {
 }
 
-void FilterDof::Render(const CommandBuffer &commandBuffer)
-{
+void FilterDof::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	auto camera = Scenes::Get()->GetCamera();
 	m_pushScene.Push("nearPlane", camera->GetNearPlane());
@@ -35,8 +32,7 @@ void FilterDof::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("samplerBlured", m_pipelineBlur ? m_pipelineBlur->GetOutput() : nullptr);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

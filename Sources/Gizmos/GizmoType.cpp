@@ -4,16 +4,13 @@
 #include "Scenes/Scenes.hpp"
 #include "Gizmo.hpp"
 
-namespace acid
-{
+namespace acid {
 static const uint32_t MAX_INSTANCES = 512;
 //static const uint32_t INSTANCE_STEPS = 128;
 //static const float FRUSTUM_BUFFER = 1.4f;
 
-std::shared_ptr<GizmoType> GizmoType::Create(const Node &node)
-{
-	if (auto resource = Resources::Get()->Find(node))
-	{
+std::shared_ptr<GizmoType> GizmoType::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<GizmoType>(resource);
 	}
 
@@ -24,8 +21,7 @@ std::shared_ptr<GizmoType> GizmoType::Create(const Node &node)
 	return result;
 }
 
-std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, float lineThickness, const Colour &colour)
-{
+std::shared_ptr<GizmoType> GizmoType::Create(const std::shared_ptr<Model> &model, float lineThickness, const Colour &colour) {
 	GizmoType temp(model, lineThickness, colour);
 	Node node;
 	node << temp;
@@ -36,30 +32,25 @@ GizmoType::GizmoType(std::shared_ptr<Model> model, float lineThickness, const Co
 	m_model(std::move(model)),
 	m_lineThickness(lineThickness),
 	m_colour(colour),
-	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES)
-{
+	m_instanceBuffer(sizeof(Instance) * MAX_INSTANCES) {
 }
 
-void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
-{
+void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos) {
 	// Calculates a max instance count over the time of the type. TODO: Allow decreasing max using a timer and average count over the delay.
 	//uint32_t instances = INSTANCE_STEPS * static_cast<uint32_t>(std::ceil(static_cast<float>(gizmos.size()) / static_cast<float>(INSTANCE_STEPS)));
 	//m_maxInstances = std::max(m_maxInstances, instances);
 	m_maxInstances = MAX_INSTANCES;
 	m_instances = 0;
 
-	if (gizmos.empty())
-	{
+	if (gizmos.empty()) {
 		return;
 	}
 
 	Instance *instances;
 	m_instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
-	for (const auto &gizmo : gizmos)
-	{
-		if (m_instances >= m_maxInstances)
-		{
+	for (const auto &gizmo : gizmos) {
+		if (m_instances >= m_maxInstances) {
 			break;
 		}
 
@@ -77,18 +68,15 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos)
 	m_instanceBuffer.UnmapMemory();
 }
 
-bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene)
-{
-	if (m_instances == 0)
-	{
+bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene) {
+	if (m_instances == 0) {
 		return false;
 	}
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformScene", uniformScene);
 
-	if (!m_descriptorSet.Update(pipeline))
-	{
+	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
 	}
 
@@ -105,16 +93,14 @@ bool GizmoType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGrap
 	return true;
 }
 
-const Node &operator>>(const Node &node, GizmoType &gizmoType)
-{
+const Node &operator>>(const Node &node, GizmoType &gizmoType) {
 	node["model"].Get(gizmoType.m_model);
 	node["lineThickness"].Get(gizmoType.m_lineThickness);
 	node["colour"].Get(gizmoType.m_colour);
 	return node;
 }
 
-Node &operator<<(Node &node, const GizmoType &gizmoType)
-{
+Node &operator<<(Node &node, const GizmoType &gizmoType) {
 	node["model"].Set(gizmoType.m_model);
 	node["lineThickness"].Set(gizmoType.m_lineThickness);
 	node["colour"].Set(gizmoType.m_colour);

@@ -3,13 +3,15 @@
 #include "Physics/Rigidbody.hpp"
 #include "Entity.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Class that represents a  structure of spatial objects.
  */
-class ACID_EXPORT SceneStructure :
-	public NonCopyable
+class ACID_EXPORT
+SceneStructure
+:
+public
+NonCopyable
 {
 public:
 	SceneStructure();

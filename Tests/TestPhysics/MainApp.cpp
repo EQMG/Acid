@@ -18,8 +18,7 @@
 #include "World/World.hpp"
 #include "Resources/Resources.hpp"
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	using namespace test;
 
 	// Creates the engine.
@@ -35,14 +34,12 @@ int main(int argc, char **argv)
 	return exitCode;
 }
 
-namespace test
-{
+namespace test {
 MainApp::MainApp() :
 	App("Test Physics", {1, 0, 0}),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete)
-{
+	m_buttonExit(Key::Delete) {
 	// Registers file search paths.
 	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
 	{
@@ -60,42 +57,32 @@ MainApp::MainApp() :
 
 	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 
-	Timers::Get()->Once(0.333s, []()
-	{
+	Timers::Get()->Once(0.333s, []() {
 		Log::Out("Timer Hello World!\n");
 	});
-	Timers::Get()->Every(4s, []()
-	{
+	Timers::Get()->Every(4s, []() {
 		Log::Out("Timer Every Tick: ", Engine::Get()->GetFps(), " fps\n");
 	});
-	Timers::Get()->Repeat(2s, 3, []()
-	{
+	Timers::Get()->Repeat(2s, 3, []() {
 		static uint32_t i = 0;
 		Log::Out("Timer Repeat Tick #", i, '\n');
 		i++;
 	});
 
-	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
-			Resources::Get()->GetThreadPool().Enqueue([]()
-			{
+	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
+			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods)
-	{
-		if (action == InputAction::Press)
-		{
+	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
 	});
@@ -116,15 +103,16 @@ MainApp::MainApp() :
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcons({"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
-		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"});
+	Window::Get()->SetIcons({
+		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
+		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
+	});
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
-MainApp::~MainApp()
-{
+MainApp::~MainApp() {
 	m_configs->Save();
 	Files::Get()->ClearSearchPath();
 
@@ -132,7 +120,6 @@ MainApp::~MainApp()
 	Scenes::Get()->SetScene(nullptr);
 }
 
-void MainApp::Update()
-{
+void MainApp::Update() {
 }
 }

@@ -2,15 +2,15 @@
 
 #include "Vector2.hpp"
 
-namespace acid
-{
+namespace acid {
 class Matrix3;
 class Matrix4;
 
 /**
  * @brief Holds a row major 2x2 matrix.
  **/
-class ACID_EXPORT Matrix2
+class ACID_EXPORT
+Matrix2
 {
 public:
 	/**
@@ -175,13 +175,10 @@ public:
 };
 }
 
-namespace std
-{
+namespace std {
 template<>
-struct hash<acid::Matrix2>
-{
-	size_t operator()(const acid::Matrix2 &matrix) const
-	{
+struct hash<acid::Matrix2> {
+	size_t operator()(const acid::Matrix2 &matrix) const {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);

@@ -3,10 +3,12 @@
 #include "Post/PostFilter.hpp"
 #include "Post/Pipelines/PipelineBlur.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterDof :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterDof
+:
+public
+PostFilter
 {
 public:
 	explicit FilterDof(const Pipeline::Stage &pipelineStage, PipelineBlur *pipelineBlur, float focusPoint = 8.24f, float nearField = 0.3f,

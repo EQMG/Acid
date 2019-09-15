@@ -3,13 +3,15 @@
 #include "Devices/Mouse.hpp"
 #include "Button.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Button input from the mouse input device.
  */
-class ACID_EXPORT ButtonMouse :
-	public Button
+class ACID_EXPORT
+ButtonMouse
+:
+public
+Button
 {
 public:
 	/**

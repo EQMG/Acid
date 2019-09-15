@@ -1,9 +1,7 @@
 #include "Panels.hpp"
 
-namespace test
-{
-int32_t GetNextY(uint32_t inc = 1)
-{
+namespace test {
+int32_t GetNextY(uint32_t inc = 1) {
 	static int32_t i = -1;
 	i += inc;
 	return i * (UiInputButton::Size.m_y + 6);
@@ -33,25 +31,19 @@ Panels::Panels(UiObject *parent) :
 	m_textZ(&m_gui0.GetContent(), "Z", "1.0", 16, {SIZE3, UiAnchor::LeftTop, {2 * SIZE3.m_x + 6, GetNextY(0)}}),
 	m_gui1(this, {UiMargins::Left | UiMargins::Right | UiMargins::Top, {0.5f, 0.0f}, {0.0f, -100}}, Image2d::Create("Guis/White.png")),
 	m_gui2(&m_gui1, {UiMargins::None, {48, 48}, {-48, -48}}, Image2d::Create("Guis/White.png")),
-	m_text1(this, {{256, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, "|ABC abc 0123_*&.", FontType::Create("Fonts/ProximaNova"))
-{
+	m_text1(this, {{256, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, "|ABC abc 0123_*&.", FontType::Create("Fonts/ProximaNova")) {
 	m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 	m_gui2.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Yellow));
-	m_gui1.OnSelected().Add([this](bool selected)
-	{
-		if (selected)
-		{
+	m_gui1.OnSelected().Add([this](bool selected) {
+		if (selected) {
 			m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Green));
-		}
-		else
-		{
+		} else {
 			m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 		}
 	});
 	m_text1.SetEnabled(false);
 }
 
-void Panels::UpdateObject()
-{
+void Panels::UpdateObject() {
 }
 }

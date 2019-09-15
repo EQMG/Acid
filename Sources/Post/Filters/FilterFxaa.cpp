@@ -1,15 +1,12 @@
 #include "FilterFxaa.hpp"
 
-namespace acid
-{
+namespace acid {
 FilterFxaa::FilterFxaa(const Pipeline::Stage &pipelineStage, float spanMax) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Fxaa.frag"}),
-	m_spanMax(spanMax)
-{
+	m_spanMax(spanMax) {
 }
 
-void FilterFxaa::Render(const CommandBuffer &commandBuffer)
-{
+void FilterFxaa::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	m_pushScene.Push("spanMax", m_spanMax);
 
@@ -17,8 +14,7 @@ void FilterFxaa::Render(const CommandBuffer &commandBuffer)
 	m_descriptorSet.Push("PushScene", m_pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline))
-	{
+	if (!m_descriptorSet.Update(m_pipeline)) {
 		return;
 	}
 

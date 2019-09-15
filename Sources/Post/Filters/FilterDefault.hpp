@@ -2,10 +2,12 @@
 
 #include "Post/PostFilter.hpp"
 
-namespace acid
-{
-class ACID_EXPORT FilterDefault :
-	public PostFilter
+namespace acid {
+class ACID_EXPORT
+FilterDefault
+:
+public
+PostFilter
 {
 public:
 	explicit FilterDefault(const Pipeline::Stage &pipelineStage, bool lastFilter = false);

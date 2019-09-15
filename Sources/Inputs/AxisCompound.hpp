@@ -3,14 +3,18 @@
 #include "Helpers/NonCopyable.hpp"
 #include "Axis.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Combines multiple axes inputs into a single axis.
  */
-class ACID_EXPORT AxisCompound :
-	public Axis,
-	public NonCopyable
+class ACID_EXPORT
+AxisCompound
+:
+public
+Axis
+,
+public
+NonCopyable
 {
 public:
 	/**

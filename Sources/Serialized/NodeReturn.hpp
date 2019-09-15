@@ -2,15 +2,15 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 class Node;
 
 /**
  * @brief Class that is returned from a {@link Node} when getting properties. This represents a key tree from a parent, 
  * this allows reads of large trees with broken nodes to not need to generate new content.
  */
-class ACID_EXPORT NodeReturn
+class ACID_EXPORT
+NodeReturn
 {
 public:
 	NodeReturn() = default;

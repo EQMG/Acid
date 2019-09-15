@@ -6,15 +6,13 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class CelestialBody :
-	public Component
-{
+	public Component {
 public:
-	enum class Type
-	{
-		Sun = 0, Moon = 1
+	enum class Type {
+		Sun = 0,
+		Moon = 1
 	};
 
 	explicit CelestialBody(const Type &type = Type::Sun);

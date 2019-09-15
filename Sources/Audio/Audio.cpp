@@ -9,12 +9,10 @@
 #endif
 #include "Scenes/Scenes.hpp"
 
-namespace acid
-{
+namespace acid {
 Audio::Audio() :
 	m_device(alcOpenDevice(nullptr)),
-	m_context(alcCreateContext(m_device, nullptr))
-{
+	m_context(alcCreateContext(m_device, nullptr)) {
 	alcMakeContextCurrent(m_context);
 
 #if defined(ACID_VERBOSE)
@@ -35,19 +33,16 @@ Audio::Audio() :
 #endif
 }
 
-Audio::~Audio()
-{
+Audio::~Audio() {
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(m_context);
 	alcCloseDevice(m_device);
 }
 
-void Audio::Update()
-{
+void Audio::Update() {
 	auto camera = Scenes::Get()->GetCamera();
 
-	if (!camera)
-	{
+	if (!camera) {
 		return;
 	}
 
@@ -70,10 +65,8 @@ void Audio::Update()
 	//CheckAl(alGetError());
 }
 
-std::string Audio::StringifyResultAl(int32_t result)
-{
-	switch (result)
-	{
+std::string Audio::StringifyResultAl(int32_t result) {
+	switch (result) {
 	case AL_NO_ERROR:
 		return "Success";
 	case AL_INVALID_NAME:
@@ -91,10 +84,8 @@ std::string Audio::StringifyResultAl(int32_t result)
 	}
 }
 
-void Audio::CheckAl(int32_t result)
-{
-	if (result == AL_NO_ERROR)
-	{
+void Audio::CheckAl(int32_t result) {
+	if (result == AL_NO_ERROR) {
 		return;
 	}
 
@@ -104,24 +95,20 @@ void Audio::CheckAl(int32_t result)
 	throw std::runtime_error("OpenAL Error: " + failure);
 }
 
-float Audio::GetGain(const Type &type) const
-{
+float Audio::GetGain(const Type &type) const {
 	auto it = m_gains.find(type);
 
-	if (it == m_gains.end())
-	{
+	if (it == m_gains.end()) {
 		return 1.0f;
 	}
 
 	return it->second;
 }
 
-void Audio::SetGain(const Type &type, float volume)
-{
+void Audio::SetGain(const Type &type, float volume) {
 	auto it = m_gains.find(type);
 
-	if (it != m_gains.end())
-	{
+	if (it != m_gains.end()) {
 		it->second = volume;
 		m_onGain(type, volume);
 		return;

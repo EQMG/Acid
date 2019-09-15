@@ -3,9 +3,9 @@
 #include "Maths/Vector2.hpp"
 #include "Helpers/EnumClass.hpp"
 
-namespace acid
-{
-class ACID_EXPORT UiAnchor
+namespace acid {
+class ACID_EXPORT
+UiAnchor
 {
 public:
 	static const Vector2f LeftTop;
@@ -19,8 +19,7 @@ public:
 	static const Vector2f RightBottom;
 };
 
-enum class UiMargins
-{
+enum class UiMargins {
 	None = 0,
 	Left = 1,
 	Right = 2,
@@ -36,7 +35,8 @@ ENABLE_BITMASK_OPERATORS(UiMargins)
 /**
  * @brief Class that represents a 2D screen space transform.
  */
-class ACID_EXPORT UiTransform
+class ACID_EXPORT
+UiTransform
 {
 public:
 	/**

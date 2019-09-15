@@ -4,13 +4,15 @@
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a model vertex and index buffer.
  */
-class ACID_EXPORT Model :
-	public Resource
+class ACID_EXPORT
+Model
+:
+public
+Resource
 {
 public:
 	/**

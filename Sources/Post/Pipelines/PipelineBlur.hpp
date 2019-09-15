@@ -3,10 +3,12 @@
 #include "Post/Filters/FilterBlur.hpp"
 #include "Post/PostPipeline.hpp"
 
-namespace acid
-{
-class ACID_EXPORT PipelineBlur :
-	public PostPipeline
+namespace acid {
+class ACID_EXPORT
+PipelineBlur
+:
+public
+PostPipeline
 {
 public:
 	explicit PipelineBlur(const Pipeline::Stage &pipelineStage, float blur = 2.0f, const FilterBlur::Type &blurType = FilterBlur::Type::_9, bool toScreen = false,

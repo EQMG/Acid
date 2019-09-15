@@ -1,15 +1,12 @@
 #include "Panels.hpp"
 
-namespace test
-{
+namespace test {
 Panels::Panels(UiObject *parent) :
 	UiObject(parent, {UiMargins::All}),
 	m_hierarchy(this),
-	m_inspector(this)
-{
+	m_inspector(this) {
 }
 
-void Panels::UpdateObject()
-{
+void Panels::UpdateObject() {
 }
 }

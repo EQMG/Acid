@@ -2,11 +2,9 @@
 
 #include "Graphics/Graphics.hpp"
 
-namespace acid
-{
+namespace acid {
 CommandPool::CommandPool(const std::thread::id &threadId) :
-	m_threadId(threadId)
-{
+	m_threadId(threadId) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
 
@@ -17,8 +15,7 @@ CommandPool::CommandPool(const std::thread::id &threadId) :
 	Graphics::CheckVk(vkCreateCommandPool(*logicalDevice, &commandPoolCreateInfo, nullptr, &m_commandPool));
 }
 
-CommandPool::~CommandPool()
-{
+CommandPool::~CommandPool() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	vkDestroyCommandPool(*logicalDevice, m_commandPool, nullptr);

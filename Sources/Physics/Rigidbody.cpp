@@ -10,34 +10,27 @@
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 
-namespace acid
-{
+namespace acid {
 Rigidbody::Rigidbody(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(mass, friction, linearFactor, angularFactor)
-{
+	CollisionObject(mass, friction, linearFactor, angularFactor) {
 }
 
-Rigidbody::~Rigidbody()
-{
+Rigidbody::~Rigidbody() {
 	auto body = btRigidBody::upcast(m_body);
 
-	if (body && body->getMotionState())
-	{
+	if (body && body->getMotionState()) {
 		delete body->getMotionState();
 	}
 
 	auto physics = Scenes::Get()->GetPhysics();
 
-	if (physics)
-	{
+	if (physics) {
 		physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 }
 
-void Rigidbody::Start()
-{
-	if (m_rigidBody)
-	{
+void Rigidbody::Start() {
+	if (m_rigidBody) {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
@@ -47,8 +40,7 @@ void Rigidbody::Start()
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-	if (m_mass != 0.0f)
-	{
+	if (m_mass != 0.0f) {
 		m_shape->calculateLocalInertia(m_mass, localInertia);
 	}
 
@@ -75,22 +67,18 @@ void Rigidbody::Start()
 	RecalculateMass();
 }
 
-void Rigidbody::Update()
-{
-	if (m_shape.get() != m_body->getCollisionShape())
-	{
+void Rigidbody::Update() {
+	if (m_shape.get() != m_body->getCollisionShape()) {
 		m_body->setCollisionShape(m_shape.get());
 	}
 
 	auto delta = Engine::Get()->GetDelta();
 
-	for (auto it = m_forces.begin(); it != m_forces.end();)
-	{
+	for (auto it = m_forces.begin(); it != m_forces.end();) {
 		(*it)->Update(delta);
 		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
 
-		if ((*it)->IsExpired())
-		{
+		if ((*it)->IsExpired()) {
 			it = m_forces.erase(it);
 			continue;
 		}
@@ -109,85 +97,69 @@ void Rigidbody::Update()
 	m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
 }
 
-bool Rigidbody::InFrustum(const Frustum &frustum)
-{
+bool Rigidbody::InFrustum(const Frustum &frustum) {
 	btVector3 min;
 	btVector3 max;
 
-	if (m_body && m_shape)
-	{
+	if (m_body &&m_shape) {
 		m_rigidBody->getAabb(min, max);
 	}
 
 	return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
 }
 
-void Rigidbody::ClearForces()
-{
-	if (m_rigidBody)
-	{
+void Rigidbody::ClearForces() {
+	if (m_rigidBody) {
 		m_rigidBody->clearForces();
 	}
 }
 
-void Rigidbody::SetMass(float mass)
-{
+void Rigidbody::SetMass(float mass) {
 	m_mass = mass;
 	RecalculateMass();
 }
 
-void Rigidbody::SetGravity(const Vector3f &gravity)
-{
+void Rigidbody::SetGravity(const Vector3f &gravity) {
 	m_gravity = gravity;
 
-	if (m_rigidBody)
-	{
+	if (m_rigidBody) {
 		m_rigidBody->setGravity(Collider::Convert(gravity));
 	}
 }
 
-void Rigidbody::SetLinearFactor(const Vector3f &linearFactor)
-{
+void Rigidbody::SetLinearFactor(const Vector3f &linearFactor) {
 	m_linearFactor = linearFactor;
 
-	if (m_rigidBody)
-	{
+	if (m_rigidBody) {
 		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 	}
 }
 
-void Rigidbody::SetAngularFactor(const Vector3f &angularFactor)
-{
+void Rigidbody::SetAngularFactor(const Vector3f &angularFactor) {
 	m_angularFactor = angularFactor;
 
-	if (m_rigidBody)
-	{
+	if (m_rigidBody) {
 		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 	}
 }
 
-void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity)
-{
+void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity) {
 	m_linearVelocity = linearVelocity;
 
-	if (m_rigidBody)
-	{
+	if (m_rigidBody) {
 		m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
 	}
 }
 
-void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity)
-{
+void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity) {
 	m_angularVelocity = angularVelocity;
 
-	if (m_rigidBody)
-	{
+	if (m_rigidBody) {
 		m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
 	}
 }
 
-const Node &operator>>(const Node &node, Rigidbody &rigidbody)
-{
+const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
 	node["mass"].Get(rigidbody.m_mass);
 	node["friction"].Get(rigidbody.m_friction);
 	node["frictionRolling"].Get(rigidbody.m_frictionRolling);
@@ -197,8 +169,7 @@ const Node &operator>>(const Node &node, Rigidbody &rigidbody)
 	return node;
 }
 
-Node &operator<<(Node &node, const Rigidbody &rigidbody)
-{
+Node &operator<<(Node &node, const Rigidbody &rigidbody) {
 	node["mass"].Set(rigidbody.m_mass);
 	node["friction"].Set(rigidbody.m_friction);
 	node["frictionRolling"].Set(rigidbody.m_frictionRolling);
@@ -208,10 +179,8 @@ Node &operator<<(Node &node, const Rigidbody &rigidbody)
 	return node;
 }
 
-void Rigidbody::RecalculateMass()
-{
-	if (!m_rigidBody)
-	{
+void Rigidbody::RecalculateMass() {
+	if (!m_rigidBody) {
 		return;
 	}
 
@@ -221,8 +190,7 @@ void Rigidbody::RecalculateMass()
 
 	auto shape = GetEntity()->GetComponent<Collider>();
 
-	if (shape && isDynamic)
-	{
+	if (shape && isDynamic) {
 		shape->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
 	}
 

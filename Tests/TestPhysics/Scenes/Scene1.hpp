@@ -9,12 +9,10 @@
 
 using namespace acid;
 
-namespace test
-{
+namespace test {
 class Scene1 :
 	public Scene,
-	public Observer
-{
+	public Observer {
 public:
 	Scene1();
 

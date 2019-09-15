@@ -2,8 +2,7 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout(push_constant) uniform PushScene
-{
+layout(push_constant) uniform PushScene {
 	float pixelSize;
 } scene;
 
@@ -13,8 +12,7 @@ layout(binding = 1) uniform sampler2D samplerColour;
 
 layout(location = 0) in vec2 inUV;
 
-void main() 
-{
+void main() {
 	vec2 sizeColour = textureSize(samplerColour, 0);
 
 	float dx = scene.pixelSize * (1.0f / sizeColour.x);

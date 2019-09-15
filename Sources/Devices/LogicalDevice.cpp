@@ -5,26 +5,22 @@
 #include "PhysicalDevice.hpp"
 #include "Surface.hpp"
 
-namespace acid
-{
+namespace acid {
 LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface) :
 	m_instance(instance),
 	m_physicalDevice(physicalDevice),
-	m_surface(surface)
-{
+	m_surface(surface) {
 	CreateQueueIndices();
 	CreateLogicalDevice();
 }
 
-LogicalDevice::~LogicalDevice()
-{
+LogicalDevice::~LogicalDevice() {
 	Graphics::CheckVk(vkDeviceWaitIdle(m_logicalDevice));
 
 	vkDestroyDevice(m_logicalDevice, nullptr);
 }
 
-void LogicalDevice::CreateQueueIndices()
-{
+void LogicalDevice::CreateQueueIndices() {
 	uint32_t deviceQueueFamilyPropertyCount;
 	vkGetPhysicalDeviceQueueFamilyProperties(*m_physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
 	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
@@ -32,11 +28,9 @@ void LogicalDevice::CreateQueueIndices()
 
 	std::optional<uint32_t> graphicsFamily, presentFamily, computeFamily, transferFamily;
 
-	for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++)
-	{
+	for (uint32_t i = 0; i < deviceQueueFamilyPropertyCount; i++) {
 		// Check for graphics support.
-		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
-		{
+		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
 			graphicsFamily = i;
 			m_graphicsFamily = i;
 			m_supportedQueues |= VK_QUEUE_GRAPHICS_BIT;
@@ -46,62 +40,56 @@ void LogicalDevice::CreateQueueIndices()
 		VkBool32 presentSupport;
 		vkGetPhysicalDeviceSurfaceSupportKHR(*m_physicalDevice, i, *m_surface, &presentSupport);
 
-		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport)
-		{
+		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport) {
 			presentFamily = i;
 			m_presentFamily = i;
 		}
 
 		// Check for compute support.
-		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT)
-		{
+		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_COMPUTE_BIT) {
 			computeFamily = i;
 			m_computeFamily = i;
 			m_supportedQueues |= VK_QUEUE_COMPUTE_BIT;
 		}
 
 		// Check for transfer support.
-		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
-		{
+		if (deviceQueueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT) {
 			transferFamily = i;
 			m_transferFamily = i;
 			m_supportedQueues |= VK_QUEUE_TRANSFER_BIT;
 		}
 
-		if (graphicsFamily && presentFamily && computeFamily && transferFamily)
-		{
+		if (graphicsFamily && presentFamily && computeFamily && transferFamily) {
 			break;
 		}
 	}
 
-	if (!graphicsFamily)
-	{
+	if (!graphicsFamily) {
 		throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
 	}
 }
 
-void LogicalDevice::CreateLogicalDevice()
-{
+void LogicalDevice::CreateLogicalDevice() {
 	auto physicalDeviceFeatures = m_physicalDevice->GetFeatures();
 
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 	float queuePriorities[1] = {0.0f};
 
-	if (m_supportedQueues & VK_QUEUE_GRAPHICS_BIT)
-	{
+	if (m_supportedQueues &VK_QUEUE_GRAPHICS_BIT) {
 		VkDeviceQueueCreateInfo graphicsQueueCreateInfo = {};
 		graphicsQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		graphicsQueueCreateInfo.queueFamilyIndex = m_graphicsFamily;
 		graphicsQueueCreateInfo.queueCount = 1;
 		graphicsQueueCreateInfo.pQueuePriorities = queuePriorities;
 		queueCreateInfos.emplace_back(graphicsQueueCreateInfo);
-	}
-	else
-	{
+	} else {
 		m_graphicsFamily = VK_NULL_HANDLE;
 	}
 
-	if (m_supportedQueues & VK_QUEUE_COMPUTE_BIT && m_computeFamily != m_graphicsFamily)
+	if (m_supportedQueues &VK_QUEUE_COMPUTE_BIT
+	&&
+	m_computeFamily != m_graphicsFamily
+	)
 	{
 		VkDeviceQueueCreateInfo computeQueueCreateInfo = {};
 		computeQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -115,7 +103,10 @@ void LogicalDevice::CreateLogicalDevice()
 		m_computeFamily = m_graphicsFamily;
 	}
 
-	if (m_supportedQueues & VK_QUEUE_TRANSFER_BIT && m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily)
+	if (m_supportedQueues &VK_QUEUE_TRANSFER_BIT
+	&&
+	m_transferFamily != m_graphicsFamily && m_transferFamily != m_computeFamily
+	)
 	{
 		VkDeviceQueueCreateInfo transferQueueCreateInfo = {};
 		transferQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -132,112 +123,78 @@ void LogicalDevice::CreateLogicalDevice()
 	VkPhysicalDeviceFeatures enabledFeatures = {};
 
 	// Enable sample rate shading filtering if supported.
-	if (physicalDeviceFeatures.sampleRateShading)
-	{
+	if (physicalDeviceFeatures.sampleRateShading) {
 		enabledFeatures.sampleRateShading = VK_TRUE;
 	}
 
 	// Fill mode non solid is required for wireframe display.
-	if (physicalDeviceFeatures.fillModeNonSolid)
-	{
+	if (physicalDeviceFeatures.fillModeNonSolid) {
 		enabledFeatures.fillModeNonSolid = VK_TRUE;
 
 		// Wide lines must be present for line width > 1.0f.
-		if (physicalDeviceFeatures.wideLines)
-		{
+		if (physicalDeviceFeatures.wideLines) {
 			enabledFeatures.wideLines = VK_TRUE;
 		}
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support wireframe pipelines!\n");
 	}
 
-	if (physicalDeviceFeatures.samplerAnisotropy)
-	{
+	if (physicalDeviceFeatures.samplerAnisotropy) {
 		enabledFeatures.samplerAnisotropy = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support sampler anisotropy!\n");
 	}
 
-	if (physicalDeviceFeatures.textureCompressionBC)
-	{
+	if (physicalDeviceFeatures.textureCompressionBC) {
 		enabledFeatures.textureCompressionBC = VK_TRUE;
-	}
-	else if (physicalDeviceFeatures.textureCompressionASTC_LDR)
-	{
+	} else if (physicalDeviceFeatures.textureCompressionASTC_LDR) {
 		enabledFeatures.textureCompressionASTC_LDR = VK_TRUE;
-	}
-	else if (physicalDeviceFeatures.textureCompressionETC2)
-	{
+	} else if (physicalDeviceFeatures.textureCompressionETC2) {
 		enabledFeatures.textureCompressionETC2 = VK_TRUE;
 	}
 
-	if (physicalDeviceFeatures.vertexPipelineStoresAndAtomics)
-	{
+	if (physicalDeviceFeatures.vertexPipelineStoresAndAtomics) {
 		enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support vertex pipeline stores and atomics!\n");
 	}
 
-	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
-	{
+	if (physicalDeviceFeatures.fragmentStoresAndAtomics) {
 		enabledFeatures.fragmentStoresAndAtomics = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support fragment stores and atomics!\n");
 	}
 
-	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats)
-	{
+	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats) {
 		enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support shader storage extended formats!\n");
 	}
 
-	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat)
-	{
+	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat) {
 		enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support shader storage write without format!\n");
 	}
 
 	//enabledFeatures.shaderClipDistance = VK_TRUE;
 	//enabledFeatures.shaderCullDistance = VK_TRUE;
 
-	if (physicalDeviceFeatures.geometryShader)
-	{
+	if (physicalDeviceFeatures.geometryShader) {
 		enabledFeatures.geometryShader = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support geometry shaders!\n");
 	}
 
-	if (physicalDeviceFeatures.tessellationShader)
-	{
+	if (physicalDeviceFeatures.tessellationShader) {
 		enabledFeatures.tessellationShader = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support tessellation shaders!\n");
 	}
 
-	if (physicalDeviceFeatures.multiViewport)
-	{
+	if (physicalDeviceFeatures.multiViewport) {
 		enabledFeatures.multiViewport = VK_TRUE;
-	}
-	else
-	{
+	} else {
 		Log::Warning("Selected GPU does not support multi viewports!\n");
 	}
 

@@ -4,13 +4,11 @@
 
 #define UDIST_BIAS 0.001f
 
-layout (binding = 1) buffer BufferCell
-{
+layout (binding = 1) buffer BufferCell {
 	uint cells[];
 } bufferCell;
 
-layout (binding = 2) buffer BufferPoint
-{
+layout (binding = 2) buffer BufferPoint {
 	vec2 points[];
 } bufferPoint;
 
@@ -22,29 +20,25 @@ layout(location = 4) in vec4 inColour;
 
 layout(location = 0) out vec4 outColour;
 
-float calcT(vec2 a, vec2 b, vec2 p)
-{
+float calcT(vec2 a, vec2 b, vec2 p) {
 	vec2 dir = b - a;
 	float t = dot(p - a, dir) / dot(dir, dir);
 	return clamp(t, 0.0f, 1.0f);
 }
 
-float distToLine(vec2 a, vec2 b, vec2 p)
-{
+float distToLine(vec2 a, vec2 b, vec2 p) {
 	vec2 dir = b - a;
 	vec2 norm = vec2(-dir.y, dir.x);
 	return dot(normalize(norm), a - p);
 }
 
-float distToBezier2(vec2 p0, vec2 p1, vec2 p2, float t, vec2 p)
-{
+float distToBezier2(vec2 p0, vec2 p1, vec2 p2, float t, vec2 p) {
 	vec2 q0 = mix(p0, p1, t);
 	vec2 q1 = mix(p1, p2, t);
 	return distToLine(q0, q1, p);
 }
 
-void processBezier2(vec2 p, uint i, inout float minUdist, inout float v)
-{
+void processBezier2(vec2 p, uint i, inout float minUdist, inout float v) {
 	vec2 p0 = bufferPoint.points[i];
 	vec2 p1 = bufferPoint.points[i + 1];
 	vec2 p2 = bufferPoint.points[i + 2];
@@ -52,18 +46,14 @@ void processBezier2(vec2 p, uint i, inout float minUdist, inout float v)
 	float t = calcT(p0, p2, p);
 	float udist = distance(mix(p0, p2, t), p);
 
-	if (udist <= minUdist + UDIST_BIAS)
-	{
+	if (udist <= minUdist + UDIST_BIAS) {
 		float bez = distToBezier2(p0, p1, p2, t, p);
 
-		if (udist >= minUdist - UDIST_BIAS)
-		{
+		if (udist >= minUdist - UDIST_BIAS) {
 			vec2 prevp = bufferPoint.points[i - 2];
 			float prevd = distToLine(p0, p2, prevp);
 			v = mix(min(bez, v), max(bez, v), step(prevd, 0.0f));
-		}
-		else
-		{
+		} else {
 			v = bez;
 		}
 
@@ -71,16 +61,13 @@ void processBezier2(vec2 p, uint i, inout float minUdist, inout float v)
 	}
 }
 
-void processBezier2Loop(vec2 p, uint begin, uint end, inout float minUdist, inout float v)
-{
-	for (uint i = begin; i < end; i += 2)
-	{
+void processBezier2Loop(vec2 p, uint begin, uint end, inout float minUdist, inout float v) {
+	for (uint i = begin; i < end; i += 2) {
 		processBezier2(p, i, minUdist, v);
 	}
 }
 
-float cellSignedDist(uint pointOffset, uint cell, vec2 p)
-{
+float cellSignedDist(uint pointOffset, uint cell, vec2 p) {
 	float minUdist = intBitsToFloat(2139095039);
 	float v = -intBitsToFloat(2139095039);
 
@@ -96,8 +83,7 @@ float cellSignedDist(uint pointOffset, uint cell, vec2 p)
 	return v;
 }
 
-void main()
-{
+void main() {
 	uvec2 c = min(uvec2(inCellCoord), inCellInfo.zw - 1);
 	uint cellIndex = inCellInfo.y + inCellInfo.z * c.y + c.x;
 	uint cell = bufferCell.cells[cellIndex];

@@ -2,13 +2,15 @@
 
 #include "Models/Model.hpp"
 
-namespace acid
-{
+namespace acid {
 /**
  * @brief Resource that represents a rectangle model.
  */
-class ACID_EXPORT ModelRectangle :
-	public Model
+class ACID_EXPORT
+ModelRectangle
+:
+public
+Model
 {
 public:
 	/**

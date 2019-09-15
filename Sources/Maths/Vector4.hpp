@@ -2,8 +2,7 @@
 
 #include "StdAfx.hpp"
 
-namespace acid
-{
+namespace acid {
 template<typename T>
 class Vector2;
 
@@ -15,8 +14,7 @@ class Vector3;
  * @tparam T The value type.
  */
 template<typename T>
-class Vector4
-{
+class Vector4 {
 public:
 	/**
 	 * Constructor for Vector4.
@@ -70,7 +68,7 @@ public:
 	 * @param w Start w.
 	 **/
 	template<typename K, typename J = T>
-	explicit constexpr Vector4(const Vector3<K> & source, const J & w = 1);
+	explicit constexpr Vector4(const Vector3<K> &source, const J &w = 1);
 
 	/**
 	 * Constructor for Vector4.
@@ -143,7 +141,7 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	constexpr auto Lerp(const Vector4<K> & other, const J & progression) const;
+	constexpr auto Lerp(const Vector4<K> &other, const J &progression) const;
 
 	/**
 	 * Scales this vector by a scalar.
@@ -152,7 +150,7 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	constexpr auto Scale(const K & scalar) const;
+	constexpr auto Scale(const K &scalar) const;
 
 	/**
 	 * Normalizes this vector.
@@ -286,10 +284,14 @@ public:
 
 	constexpr Vector4 &operator/=(const T &other);
 
-	ACID_EXPORT static const Vector4 Zero;
-	ACID_EXPORT static const Vector4 One;
-	ACID_EXPORT static const Vector4 PositiveInfinity;
-	ACID_EXPORT static const Vector4 NegativeInfinity;
+	ACID_EXPORT
+	static const Vector4 Zero;
+	ACID_EXPORT
+	static const Vector4 One;
+	ACID_EXPORT
+	static const Vector4 PositiveInfinity;
+	ACID_EXPORT
+	static const Vector4 NegativeInfinity;
 
 	T m_x = 0, m_y = 0, m_z = 0, m_w = 1;
 };
