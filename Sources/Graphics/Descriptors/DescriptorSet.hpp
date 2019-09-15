@@ -7,12 +7,9 @@ namespace acid {
 class Descriptor;
 class WriteDescriptorSet;
 
-class ACID_EXPORT
-DescriptorSet
-{
+class ACID_EXPORT DescriptorSet {
 public:
 	explicit DescriptorSet(const Pipeline &pipeline);
-
 	~DescriptorSet();
 
 	static void Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites);

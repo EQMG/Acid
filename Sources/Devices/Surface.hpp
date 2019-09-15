@@ -7,21 +7,16 @@ namespace acid {
 class Instance;
 class PhysicalDevice;
 
-class ACID_EXPORT
-Surface
-{
+class ACID_EXPORT Surface {
 	friend class Graphics;
 public:
 	Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
-
 	~Surface();
 
 	operator const VkSurfaceKHR &() const { return m_surface; }
 
 	const VkSurfaceKHR &GetSurface() const { return m_surface; }
-
 	const VkSurfaceCapabilitiesKHR &GetCapabilities() const { return m_capabilities; }
-
 	const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
 
 private:

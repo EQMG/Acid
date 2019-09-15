@@ -16,21 +16,16 @@ class CollisionObject;
 using CollisionPair = std::pair<const btCollisionObject *, const btCollisionObject *>;
 using CollisionPairs = std::set<CollisionPair>;
 
-class ACID_EXPORT
-Raycast
-{
+class ACID_EXPORT Raycast {
 public:
 	Raycast(bool m_hasHit, const Vector3f &m_pointWorld, CollisionObject *collisionObject) :
 		m_hasHit(m_hasHit),
 		m_pointWorld(m_pointWorld),
-		m_collisionObject(collisionObject)
-	{
+		m_collisionObject(collisionObject) {
 	}
 
 	bool HasHit() const { return m_hasHit; }
-
 	const Vector3f &GetPointWorld() const { return m_pointWorld; }
-
 	CollisionObject *GetCollisionObject() const { return m_collisionObject; }
 
 private:
@@ -39,9 +34,7 @@ private:
 	CollisionObject *m_collisionObject;
 };
 
-class ACID_EXPORT
-ScenePhysics
-{
+class ACID_EXPORT ScenePhysics {
 public:
 	ScenePhysics();
 
@@ -52,11 +45,9 @@ public:
 	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 
 	const Vector3f &GetGravity() const { return m_gravity; }
-
 	void SetGravity(const Vector3f &gravity);
-
+	
 	float GetAirDensity() const { return m_airDensity; }
-
 	void SetAirDensity(float airDensity);
 
 	btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }

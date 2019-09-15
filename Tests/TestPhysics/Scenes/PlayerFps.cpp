@@ -9,11 +9,11 @@
 #include <Inputs/ButtonJoystick.hpp>
 
 namespace test {
-const float WALK_SPEED = 3.1f;
-const float RUN_SPEED = 5.7f;
-const float CROUCH_SPEED = 1.2f;
-const float JUMP_SPEED = 4.1f;
-const float NOCLIP_SPEED = 3.0f;
+const float WalkSpeed = 3.1f;
+const float RunSpeed = 5.7f;
+const float CrouchSpeed = 1.2f;
+const float JumpSpeed = 4.1f;
+const float NoclipSpeed = 3.0f;
 
 PlayerFps::PlayerFps() :
 	m_inputForward(std::make_unique<AxisButton>(std::make_unique<ButtonKeyboard>(Key::S), std::make_unique<ButtonKeyboard>(Key::W)),
@@ -53,7 +53,7 @@ void PlayerFps::Update() {
 			}
 		} else {
 			if (m_inputJump.WasDown() && character->IsOnGround()) {
-				character->Jump({0.0f, JUMP_SPEED, 0.0f});
+				character->Jump({0.0f, JumpSpeed, 0.0f});
 			}
 		}
 
@@ -82,8 +82,8 @@ void PlayerFps::Update() {
 	walkDirection.m_z = direction.m_z * std::cos(cameraRotation.m_y) - direction.m_x * std::sin(cameraRotation.m_y);
 
 	//walkDirection = walkDirection.Normalize();
-	walkDirection *= m_inputSprint.IsDown() ? RUN_SPEED : m_inputCrouch.IsDown() ? CROUCH_SPEED : WALK_SPEED;
-	walkDirection *= m_noclipEnabled ? NOCLIP_SPEED : 1.0f;
+	walkDirection *= m_inputSprint.IsDown() ? RunSpeed : m_inputCrouch.IsDown() ? CrouchSpeed : WalkSpeed;
+	walkDirection *= m_noclipEnabled ? NoclipSpeed : 1.0f;
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 

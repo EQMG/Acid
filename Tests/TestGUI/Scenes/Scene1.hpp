@@ -9,15 +9,12 @@
 using namespace acid;
 
 namespace test {
-class Scene1 :
-	public Scene {
+class Scene1 : public Scene {
 public:
 	Scene1();
 
 	void Start() override;
-
 	void Update() override;
-
 	bool IsPaused() const override;
 
 	void TogglePause();

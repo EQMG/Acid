@@ -7,13 +7,11 @@
 using namespace acid;
 
 namespace test {
-class CameraFps :
-	public Camera {
+class CameraFps : public Camera {
 public:
 	CameraFps();
 
 	void Start() override;
-
 	void Update() override;
 
 private:

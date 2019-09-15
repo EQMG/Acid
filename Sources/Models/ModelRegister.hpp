@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief Class that holds registered model types.
  */
-class ACID_EXPORT
-ModelRegister
-{
+class ACID_EXPORT ModelRegister {
 public:
 	/**
 	 * Creates a new model types register.
@@ -23,16 +21,13 @@ public:
 	 * @param name The models type name.
 	 */
 	template<typename T>
-	void AddNode(const std::string &name)
-	{
-		if (m_modelNodes.find(name) != m_modelNodes.end())
-		{
+	void AddNode(const std::string &name) {
+		if (m_modelNodes.find(name) != m_modelNodes.end()) {
 			Log::Error("Model node type ", std::quoted(name), " is already registered!\n");
 			return;
 		}
 
-		auto modelCreate = [](const Node &node) -> std::shared_ptr<Model>
-		{
+		auto modelCreate = [](const Node &node) -> std::shared_ptr<Model> {
 			return T::Create(node);
 		};
 		m_modelNodes.emplace(name, modelCreate);
@@ -44,16 +39,13 @@ public:
 	 * @param extension The file extension this can be loaded from.
 	 */
 	template<typename T>
-	void AddExtension(const std::string &extension)
-	{
-		if (m_modelNodes.find(extension) != m_modelNodes.end())
-		{
+	void AddExtension(const std::string &extension) {
+		if (m_modelNodes.find(extension) != m_modelNodes.end()) {
 			Log::Error("Model extension type ", std::quoted(extension), " is already registered!\n");
 			return;
 		}
 
-		auto modelCreate = [](const std::filesystem::path &filename) -> std::shared_ptr<Model>
-		{
+		auto modelCreate = [](const std::filesystem::path &filename) -> std::shared_ptr<Model> {
 			return T::Create(filename);
 		};
 		m_modelExtensions.emplace(extension, modelCreate);

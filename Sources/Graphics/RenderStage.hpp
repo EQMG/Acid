@@ -12,12 +12,9 @@ namespace acid {
 /**
  * @brief Class that represents an attachment in a renderpass.
  */
-class ACID_EXPORT
-Attachment
-{
+class ACID_EXPORT Attachment {
 public:
-	enum class Type
-	{
+	enum class Type {
 		Image, Depth, Swapchain
 	};
 
@@ -37,20 +34,14 @@ public:
 		m_type(type),
 		m_multisampled(multisampled),
 		m_format(format),
-		m_clearColour(clearColour)
-	{
+		m_clearColour(clearColour) {
 	}
 
 	uint32_t GetBinding() const { return m_binding; }
-
 	const std::string &GetName() const { return m_name; }
-
 	const Type &GetType() const { return m_type; }
-
 	bool IsMultisampled() const { return m_multisampled; }
-
 	const VkFormat &GetFormat() const { return m_format; }
-
 	const Colour &GetClearColour() const { return m_clearColour; }
 
 private:
@@ -62,18 +53,14 @@ private:
 	Colour m_clearColour;
 };
 
-class ACID_EXPORT
-SubpassType
-{
+class ACID_EXPORT SubpassType {
 public:
 	SubpassType(uint32_t binding, std::vector<uint32_t> attachmentBindings) :
 		m_binding(binding),
-		m_attachmentBindings(std::move(attachmentBindings))
-	{
+		m_attachmentBindings(std::move(attachmentBindings)) {
 	}
 
 	uint32_t GetBinding() const { return m_binding; }
-
 	const std::vector<uint32_t> &GetAttachmentBindings() const { return m_attachmentBindings; }
 
 private:
@@ -81,23 +68,18 @@ private:
 	std::vector<uint32_t> m_attachmentBindings;
 };
 
-class ACID_EXPORT
-RenderArea
-{
+class ACID_EXPORT RenderArea {
 public:
 	explicit RenderArea(const Vector2ui &extent = {}, const Vector2i &offset = {}) :
 		m_extent(extent),
 		m_offset(offset),
-		m_aspectRatio(1.0f)
-	{
+		m_aspectRatio(1.0f) {
 	}
 
 	const Vector2ui &GetExtent() const { return m_extent; }
-
 	void SetExtent(const Vector2ui &extent) { m_extent = extent; }
 
 	const Vector2i &GetOffset() const { return m_offset; }
-
 	void SetOffset(const Vector2i &offset) { m_offset = offset; }
 
 	/**
@@ -105,16 +87,13 @@ public:
 	 * @return The aspect ratio.
 	 */
 	float GetAspectRatio() const { return m_aspectRatio; }
-
 	void SetAspectRatio(float aspectRatio) { m_aspectRatio = aspectRatio; }
 
-	bool operator==(const RenderArea &other) const
-	{
+	bool operator==(const RenderArea &other) const {
 		return m_extent == other.m_extent && m_offset == other.m_offset;
 	}
 
-	bool operator!=(const RenderArea &other) const
-	{
+	bool operator!=(const RenderArea &other) const {
 		return !(*this == other);
 	}
 
@@ -124,33 +103,26 @@ private:
 	float m_aspectRatio;
 };
 
-class ACID_EXPORT
-Viewport
-{
+class ACID_EXPORT Viewport {
 public:
 	Viewport() :
 		m_scale(1.0f, 1.0f),
-		m_offset(0, 0)
-	{
+		m_offset(0, 0) {
 	}
 
 	explicit Viewport(const Vector2ui &size) :
 		m_scale(1.0f, 1.0f),
 		m_size(size),
-		m_offset(0, 0)
-	{
+		m_offset(0, 0) {
 	}
 
 	const Vector2f &GetScale() const { return m_scale; }
-
 	void SetScale(const Vector2f &scale) { m_scale = scale; }
 
 	const std::optional<Vector2ui> &GetSize() const { return m_size; }
-
 	void SetSize(const std::optional<Vector2ui> &size) { m_size = size; }
 
 	const Vector2i &GetOffset() const { return m_offset; }
-
 	void SetOffset(const Vector2i &offset) { m_offset = offset; }
 
 private:
@@ -159,27 +131,24 @@ private:
 	Vector2i m_offset;
 };
 
-class ACID_EXPORT
-RenderStage
-{
+class ACID_EXPORT RenderStage {
 	friend class Graphics;
 public:
 	explicit RenderStage(std::vector<Attachment> images = {}, std::vector<SubpassType> subpasses = {}, const Viewport &viewport = Viewport());
 
 	void Update();
-
 	void Rebuild(const Swapchain &swapchain);
 
 	std::optional<Attachment> GetAttachment(const std::string &name) const;
-
 	std::optional<Attachment> GetAttachment(uint32_t binding) const;
+	
+	const Descriptor *GetDescriptor(const std::string &name) const;
+	const VkFramebuffer &GetActiveFramebuffer(uint32_t activeSwapchainImage) const;
 
 	const std::vector<Attachment> &GetAttachments() const { return m_attachments; }
-
 	const std::vector<SubpassType> &GetSubpasses() const { return m_subpasses; }
 
 	Viewport &GetViewport() { return m_viewport; }
-
 	void SetViewport(const Viewport &viewport) { m_viewport = viewport; }
 
 	/**
@@ -195,23 +164,12 @@ public:
 	bool IsOutOfDate() const { return m_outOfDate; }
 
 	const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
-
 	const ImageDepth *GetDepthStencil() const { return m_depthStencil.get(); };
-
 	const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
-
-	const Descriptor *GetDescriptor(const std::string &name) const;
-
-	const VkFramebuffer &GetActiveFramebuffer(uint32_t activeSwapchainImage) const;
-
 	const std::vector<VkClearValue> &GetClearValues() const { return m_clearValues; }
-
 	uint32_t GetAttachmentCount(uint32_t subpass) const { return m_subpassAttachmentCount[subpass]; }
-
 	bool HasDepth() const { return m_depthAttachment.has_value(); }
-
 	bool HasSwapchain() const { return m_swapchainAttachment.has_value(); }
-
 	bool IsMultisampled(uint32_t subpass) const { return m_subpassMultisampled[subpass]; }
 
 private:

@@ -4,12 +4,7 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SubrenderShadows
-:
-public
-Subrender
-{
+class ACID_EXPORT SubrenderShadows : public Subrender {
 public:
 	explicit SubrenderShadows(const Pipeline::Stage &pipelineStage);
 

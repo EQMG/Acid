@@ -20,7 +20,7 @@ enum class ExampleType {
 
 // TODO: Allow bitmask macro to work in namespaces outside of acid.
 namespace acid {
-ENABLE_BITMASK_OPERATORS(ExampleType)
+ENABLE_BITMASK_OPERATORS(ExampleType);
 }
 
 namespace test {

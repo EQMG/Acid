@@ -10,15 +10,12 @@ struct Version {
 /**
  * @brief Class that represents a application.
  */
-class ACID_EXPORT
-App
-{
+class ACID_EXPORT App {
 	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :
 		m_name(std::move(name)),
-		m_version(version)
-	{
+		m_version(version) {
 	}
 
 	virtual ~App() = default;
@@ -39,7 +36,7 @@ public:
 	 * @param name The application's name.
 	 */
 	void SetName(const std::string &name) { m_name = name; }
-	
+
 	/**
 	 * Gets the application's version.
 	 * @return The application's version.

@@ -13,12 +13,7 @@ namespace acid {
 /**
  * @brief Class that represents a image UI.
  */
-class ACID_EXPORT
-Gui
-:
-public
-UiObject
-{
+class ACID_EXPORT Gui : public UiObject {
 public:
 	/**
 	 * Creates a new GUI object.
@@ -34,21 +29,17 @@ public:
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
-
 	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 
 	uint32_t GetNumberOfRows() const { return m_numberOfRows; }
-
 	void SetNumberOfRows(uint32_t numberOfRows) { m_numberOfRows = numberOfRows; }
 
 	uint32_t GetSelectedRow() const { return m_selectedRow; }
-
 	void SetSelectedRow(uint32_t selectedRow) { m_selectedRow = selectedRow; }
 
 	const Vector2f &GetAtlasOffset() const { return m_atlasOffset; }
-
+	
 	const Vector2f &GetAtlasScale() const { return m_atlasScale; }
-
 	void SetAtlasScale(const Vector2f &atlasScale) { m_atlasScale = atlasScale; }
 
 	const Vector4f &GetNinePatches() const { return m_ninePatches; }
@@ -67,7 +58,6 @@ public:
 	 * @param colourDriver The new colour offset driver.
 	 */
 	void SetColourDriver(std::unique_ptr<Driver<Colour>> &&colourDriver) { m_colourDriver = std::move(colourDriver); }
-
 	const Colour &GetColourOffset() const { return m_colourOffset; }
 
 private:

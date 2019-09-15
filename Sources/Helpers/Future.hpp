@@ -11,7 +11,10 @@ template<typename T>
 class Future {
 public:
 	Future() noexcept = default;
-	Future(std::future<T> &&future) noexcept : m_future(std::move(future)) {}
+	
+	Future(std::future<T> &&future) noexcept :
+		m_future(std::move(future)) {
+	}
 
 	bool has_value() const noexcept {
 		return m_future.valid() || m_current;

@@ -197,30 +197,6 @@ constexpr auto Vector4<T>::SmoothDamp(const Vector4<K> &target, const Vector4<J>
 }
 
 template<typename T>
-template<typename K>
-constexpr bool Vector4<T>::operator==(const Vector4<K> &other) const {
-	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
-}
-
-template<typename T>
-template<typename K>
-constexpr bool Vector4<T>::operator!=(const Vector4<K> &other) const {
-	return !(*this == other);
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_signed_v<U>, Vector4<T>> Vector4<T>::operator-() const {
-	return {-m_x, -m_y, -m_z, -m_w};
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_integral_v<U>, Vector4<T>> Vector4<T>::operator~() const {
-	return {~m_x, ~m_y, ~m_z, ~m_w};
-}
-
-template<typename T>
 constexpr const T &Vector4<T>::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
@@ -250,6 +226,30 @@ constexpr T &Vector4<T>::operator[](uint32_t index) {
 	default:
 		throw std::runtime_error("Vector4 index out of bounds!");
 	}
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector4<T>::operator==(const Vector4<K> &other) const {
+	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector4<T>::operator!=(const Vector4<K> &other) const {
+	return !(*this == other);
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_signed_v<U>, Vector4<T>> Vector4<T>::operator-() const {
+	return {-m_x, -m_y, -m_z, -m_w};
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_integral_v<U>, Vector4<T>> Vector4<T>::operator~() const {
+	return {~m_x, ~m_y, ~m_z, ~m_w};
 }
 
 template<typename T>

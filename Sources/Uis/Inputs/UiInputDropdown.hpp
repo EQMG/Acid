@@ -6,12 +6,7 @@
 #include "UiInputButton.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiInputDropdown
-:
-public
-UiObject
-{
+class ACID_EXPORT UiInputDropdown : public UiObject {
 public:
 	UiInputDropdown(UiObject *parent, const std::string &title, uint32_t value, std::vector<std::string> options,
 		const UiTransform &transform = {UiInputButton::Size});
@@ -19,15 +14,12 @@ public:
 	void UpdateObject() override;
 
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	uint32_t GetValue() const { return m_value; }
-
 	void SetValue(uint32_t value);
 
 	const std::vector<std::string> &GetOptions() const { return m_options; }
-
 	void SetOptions(const std::vector<std::string> &options);
 
 	/**

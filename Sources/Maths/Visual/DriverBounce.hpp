@@ -9,41 +9,41 @@ namespace acid {
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class DriverBounce :
-	public Driver<T> {
+class DriverBounce : public Driver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
-	 * @param start The start value. 
-	 * @param end The end value. 
-	 * @param length The length between two waves. 
+	 * @param start The start value.
+	 * @param end The end value.
+	 * @param length The length between two waves.
 	 **/
 	DriverBounce(const T &start, const T &end, const Time &length) :
 		Driver<T>(length),
 		m_start(start),
-		m_end(end) { }
+		m_end(end) {
+	}
 
 	/**
 	 * Gets the start time.
-	 * @return The start time. 
+	 * @return The start time.
 	 **/
 	const T &GetStart() const { return m_start; }
 
 	/**
 	 * Sets the start time.
-	 * @param start The new start time. 
+	 * @param start The new start time.
 	 **/
 	void SetStart(const T &start) { m_start = start; }
 
 	/**
 	 * Gets the end time.
-	 * @return The ebd time. 
+	 * @return The ebd time.
 	 **/
 	const T &GetEnd() const { return m_end; }
 
 	/**
 	 * Sets the end time.
-	 * @param end The new end time. 
+	 * @param end The new end time.
 	 **/
 	void SetEnd(const T &end) { m_end = end; }
 

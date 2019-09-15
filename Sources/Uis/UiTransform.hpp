@@ -4,9 +4,7 @@
 #include "Helpers/EnumClass.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiAnchor
-{
+class ACID_EXPORT UiAnchor {
 public:
 	static const Vector2f LeftTop;
 	static const Vector2f CentreTop;
@@ -30,14 +28,12 @@ enum class UiMargins {
 	All = Left | Right | Top | Bottom
 };
 
-ENABLE_BITMASK_OPERATORS(UiMargins)
+ENABLE_BITMASK_OPERATORS(UiMargins);
 
 /**
  * @brief Class that represents a 2D screen space transform.
  */
-class ACID_EXPORT
-UiTransform
-{
+class ACID_EXPORT UiTransform {
 public:
 	/**
 	 * Creates a new UiTransform.
@@ -69,35 +65,28 @@ public:
 	 */
 	UiTransform(const BitMask<UiMargins> &margins, const Vector2f &anchor0 = {}, const Vector2f &anchor1 = {});
 
-	const Vector2f &GetSize() const { return m_size; }
+	bool operator==(const UiTransform &other) const;
+	bool operator!=(const UiTransform &other) const;
 
+	const Vector2f &GetSize() const { return m_size; }
 	void SetSize(const Vector2i &size) { m_size = size; }
 
 	const Vector2f &GetAnchor0() const { return m_anchor0; }
-
 	void SetAnchor0(const Vector2f &anchor0) { m_anchor0 = anchor0; }
 
 	const Vector2f &GetAnchor1() const { return m_anchor1; }
-
 	void SetAnchor1(const Vector2f &anchor1) { m_anchor1 = anchor1; }
 
 	void SetAnchor(const Vector2f &anchor);
 
 	const Vector2f &GetPosition() const { return m_position; }
-
 	void SetPosition(const Vector2i &position) { m_position = position; }
 
 	const std::optional<BitMask<UiMargins>> &GetMargins() const { return m_margins; }
-
 	void SetMargins(const std::optional<BitMask<UiMargins>> &margins) { m_margins = margins; }
-	
+
 	float GetDepth() const { return m_depth; }
-
 	void SetDepth(float depth) { m_depth = depth; }
-
-	bool operator==(const UiTransform &other) const;
-
-	bool operator!=(const UiTransform &other) const;
 
 	Vector2f m_size;
 	Vector2f m_anchor0, m_anchor1;

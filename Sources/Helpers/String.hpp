@@ -6,9 +6,7 @@ namespace acid {
 /**
  * @brief Helper class for C++ strings.
  */
-class ACID_EXPORT
-String
-{
+class ACID_EXPORT String {
 public:
 	/**
 	 * Splits a string by a separator.

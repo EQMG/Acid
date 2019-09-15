@@ -199,6 +199,16 @@ Matrix2 Matrix3::GetSubmatrix(uint32_t row, uint32_t col) const {
 	return result;
 }
 
+const Vector3f &Matrix3::operator[](uint32_t index) const {
+	assert(index < 3);
+	return m_rows[index];
+}
+
+Vector3f &Matrix3::operator[](uint32_t index) {
+	assert(index < 3);
+	return m_rows[index];
+}
+
 bool Matrix3::operator==(const Matrix3 &other) const {
 	return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2];
 }
@@ -209,16 +219,6 @@ bool Matrix3::operator!=(const Matrix3 &other) const {
 
 Matrix3 Matrix3::operator-() const {
 	return Negate();
-}
-
-const Vector3f &Matrix3::operator[](uint32_t index) const {
-	assert(index < 3);
-	return m_rows[index];
-}
-
-Vector3f &Matrix3::operator[](uint32_t index) {
-	assert(index < 3);
-	return m_rows[index];
 }
 
 Matrix3 operator+(const Matrix3 &left, const Matrix3 &right) {

@@ -8,12 +8,7 @@ namespace acid {
 /**
  * @brief Component that represents a point light.
  */
-class ACID_EXPORT
-Light
-:
-public
-Component
-{
+class ACID_EXPORT Light : public Component {
 public:
 	/**
 	 * Creates a new point light.
@@ -23,19 +18,15 @@ public:
 	explicit Light(const Colour &colour = Colour::White, float radius = -1.0f);
 
 	void Start() override;
-
 	void Update() override;
 
 	const Colour &GetColour() const { return m_colour; }
-
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
 	float GetRadius() const { return m_radius; }
-
 	void SetRadius(float radius) { m_radius = radius; }
 
 	friend const Node &operator>>(const Node &node, Light &light);
-
 	friend Node &operator<<(Node &node, const Light &light);
 
 private:

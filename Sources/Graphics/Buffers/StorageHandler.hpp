@@ -11,7 +11,6 @@ StorageHandler
 {
 public:
 	explicit StorageHandler(bool multipipeline = false);
-
 	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
 	void Push(void *data, std::size_t size)

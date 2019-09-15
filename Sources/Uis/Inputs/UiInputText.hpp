@@ -7,12 +7,7 @@
 #include "UiInputButton.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiInputText
-:
-public
-UiObject
-{
+class ACID_EXPORT UiInputText : public UiObject {
 public:
 	UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength,
 		const UiTransform &transform = {UiInputButton::Size});
@@ -20,11 +15,9 @@ public:
 	void UpdateObject() override;
 
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	const std::string &GetValue() const { return m_value; }
-
 	void SetValue(const std::string &value);
 
 	/**

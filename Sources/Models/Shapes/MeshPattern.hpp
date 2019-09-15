@@ -4,19 +4,14 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
-class ACID_EXPORT
-MeshPattern
-:
-public
-Model
-{
+class ACID_EXPORT MeshPattern : public Model {
 public:
 	MeshPattern(float sideLength, float squareSize, uint32_t vertexCount, float uvScale);
 
 protected:
-	void GenerateMesh();
-
 	virtual VertexDefault GetVertex(uint32_t col, uint32_t row);
+	
+	void GenerateMesh();
 
 	float m_sideLength;
 	float m_squareSize;

@@ -5,8 +5,7 @@
 #include "Helpers/Delegate.hpp"
 
 namespace acid {
-enum class JoystickHat :
-	int32_t {
+enum class JoystickHat : int32_t {
 	Centered = 0,
 	Up = 1,
 	Right = 2,
@@ -14,17 +13,12 @@ enum class JoystickHat :
 	Left = 8
 };
 
-ENABLE_BITMASK_OPERATORS(JoystickHat)
+ENABLE_BITMASK_OPERATORS(JoystickHat);
 
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
-class ACID_EXPORT
-Joysticks
-:
-public
-Module
-{
+class ACID_EXPORT Joysticks : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -120,8 +114,7 @@ public:
 	Delegate<void(uint32_t, uint32_t, BitMask<JoystickHat>)> &OnHat() { return m_onHat; }
 
 private:
-	struct JoystickImpl
-	{
+	struct JoystickImpl {
 		std::string m_name;
 		std::vector<float> m_axes;
 		std::vector<InputAction> m_buttons;

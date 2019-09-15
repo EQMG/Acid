@@ -8,18 +8,7 @@ namespace acid {
 /**
  * @brief Resource that represents a 2D image.
  */
-class ACID_EXPORT
-Image2d
-:
-public
-NonCopyable
-,
-public
-Descriptor
-,
-public
-Resource
-{
+class ACID_EXPORT Image2d : public NonCopyable, public Descriptor, public Resource {
 public:
 	/**
 	 * Creates a new 2D image, or finds one with the same values.
@@ -72,10 +61,10 @@ public:
 
 	~Image2d();
 
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+
 	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 		uint32_t count);
-
-	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -93,41 +82,25 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
 
-	const std::filesystem::path &GetFilename() const { return m_filename; };
-
-	const VkFilter &GetFilter() const { return m_filter; }
-
-	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
-
-	bool IsAnisotropic() const { return m_anisotropic; }
-
-	bool IsMipmap() const { return m_mipmap; }
-
-	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
-
-	const VkImageLayout &GetLayout() const { return m_layout; }
-
-	const VkImageUsageFlags &GetUsage() const { return m_usage; }
-
-	uint32_t GetComponents() const { return m_components; }
-
-	const Vector2ui &GetExtent() const { return m_extent; }
-
-	uint32_t GetMipLevels() const { return m_mipLevels; }
-
-	const VkImage &GetImage() { return m_image; }
-
-	const VkDeviceMemory &GetMemory() { return m_memory; }
-
-	const VkSampler &GetSampler() const { return m_sampler; }
-
-	const VkImageView &GetView() const { return m_view; }
-
-	const VkFormat &GetFormat() const { return m_format; }
-
 	friend const Node &operator>>(const Node &node, Image2d &image);
-
 	friend Node &operator<<(Node &node, const Image2d &image);
+
+	const std::filesystem::path &GetFilename() const { return m_filename; }
+	const VkFilter &GetFilter() const { return m_filter; }
+	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
+	bool IsAnisotropic() const { return m_anisotropic; }
+	bool IsMipmap() const { return m_mipmap; }
+	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
+	const VkImageLayout &GetLayout() const { return m_layout; }
+	const VkImageUsageFlags &GetUsage() const { return m_usage; }
+	uint32_t GetComponents() const { return m_components; }
+	const Vector2ui &GetExtent() const { return m_extent; }
+	uint32_t GetMipLevels() const { return m_mipLevels; }
+	const VkImage &GetImage() { return m_image; }
+	const VkDeviceMemory &GetMemory() { return m_memory; }
+	const VkSampler &GetSampler() const { return m_sampler; }
+	const VkImageView &GetView() const { return m_view; }
+	const VkFormat &GetFormat() const { return m_format; }
 
 private:
 	void Load();

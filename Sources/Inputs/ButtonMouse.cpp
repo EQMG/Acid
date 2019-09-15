@@ -1,7 +1,7 @@
 #include "ButtonMouse.hpp"
 
 namespace acid {
-ButtonMouse::ButtonMouse(const MouseButton &button) :
+ButtonMouse::ButtonMouse(MouseButton button) :
 	m_button(button) {
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
 		if (button == m_button) {

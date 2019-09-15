@@ -13,14 +13,9 @@ enum class UiManipulate {
 	All = Resize | Move
 };
 
-ENABLE_BITMASK_OPERATORS(UiManipulate)
+ENABLE_BITMASK_OPERATORS(UiManipulate);
 
-class ACID_EXPORT
-UiPanel
-:
-public
-UiObject
-{
+class ACID_EXPORT UiPanel : public UiObject {
 public:
 	UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour = UiInputButton::BackgroundColour,
 		const BitMask<UiManipulate> &manipulate = UiManipulate::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
@@ -30,7 +25,6 @@ public:
 	UiObject &GetContent() { return m_content; }
 
 	const BitMask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
-
 	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
 
 private:

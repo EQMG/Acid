@@ -6,13 +6,11 @@
 using namespace acid;
 
 namespace test {
-class ConfigManager :
-	public Observer {
+class ConfigManager : public Observer {
 public:
 	ConfigManager();
 
 	void Load();
-
 	void Save() const;
 
 private:

@@ -8,12 +8,7 @@ namespace acid {
 /**
  * @brief Module used for managing gui textures in a container.
  */
-class ACID_EXPORT
-Uis
-:
-public
-Module
-{
+class ACID_EXPORT Uis : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -25,11 +20,9 @@ public:
 
 	void Update() override;
 
-	void CancelWasEvent(const MouseButton &button);
-
-	bool IsDown(const MouseButton &button);
-
-	bool WasDown(const MouseButton &button);
+	bool IsDown(MouseButton button);
+	bool WasDown(MouseButton button);
+	void CancelWasEvent(MouseButton button);
 
 	/**
 	 * Gets the screen canvas.
@@ -43,8 +36,7 @@ public:
 	 */
 	const std::vector<UiObject *> &GetObjects() const { return m_objects; };
 private:
-	struct SelectorMouse
-	{
+	struct SelectorMouse {
 		bool m_isDown;
 		bool m_wasDown;
 	};

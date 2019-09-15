@@ -7,15 +7,7 @@ namespace acid {
 /**
  * @brief Combines multiple axes inputs into a single axis.
  */
-class ACID_EXPORT
-AxisCompound
-:
-public
-Axis
-,
-public
-NonCopyable
-{
+class ACID_EXPORT AxisCompound : public Axis, public NonCopyable {
 public:
 	/**
 	 * Creates a new compound axis.
@@ -27,9 +19,8 @@ public:
 	 * @tparam Args The axis argument types.
 	 * @param args The axes on the being added.
 	 */
-	template <typename... Args>
-	AxisCompound(Args &&... args)
-	{
+	template<typename... Args>
+	AxisCompound(Args &&... args) {
 		m_axes.reserve(sizeof...(Args));
 		(m_axes.emplace_back(std::forward<Args>(args)), ...);
 		ConnectAxes();

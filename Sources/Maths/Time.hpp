@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief Represents a time value stored in microseconds.
  */
-class ACID_EXPORT
-Time
-{
+class ACID_EXPORT Time {
 public:
 	constexpr Time() = default;
 
@@ -20,8 +18,7 @@ public:
 	 */
 	template<typename Rep, typename Period>
 	constexpr Time(const std::chrono::duration<Rep, Period> &duration) :
-		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
-	{
+		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count()) {
 	}
 
 	/**
@@ -31,8 +28,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename Rep = float>
-	static constexpr Time Seconds(const Rep &seconds)
-	{
+	static constexpr Time Seconds(const Rep & seconds) {
 		return Time(std::chrono::duration<Rep>(seconds));
 	}
 
@@ -43,8 +39,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename Rep = int32_t>
-	static constexpr Time Milliseconds(const Rep &milliseconds)
-	{
+	static constexpr Time Milliseconds(const Rep & milliseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
 	}
 
@@ -55,8 +50,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename Rep = int64_t>
-	static constexpr Time Microseconds(const Rep &microseconds)
-	{
+	static constexpr Time Microseconds(const Rep & microseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
 	}
 
@@ -69,8 +63,7 @@ public:
 	 * @return Time in seconds.
 	 */
 	template<typename T = float>
-	auto AsSeconds() const
-	{
+	auto AsSeconds() const {
 		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000000);
 	}
 
@@ -80,8 +73,7 @@ public:
 	 * @return Time in milliseconds.
 	 */
 	template<typename T = int32_t>
-	auto AsMilliseconds() const
-	{
+	auto AsMilliseconds() const {
 		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000);
 	}
 
@@ -91,8 +83,7 @@ public:
 	 * @return Time in microseconds.
 	 */
 	template<typename T = int64_t>
-	auto AsMicroseconds() const
-	{
+	auto AsMicroseconds() const {
 		return static_cast<T>(m_microseconds.count());
 	}
 
@@ -117,51 +108,32 @@ public:
 	}*/
 
 	bool operator==(const Time &other) const;
-
 	bool operator!=(const Time &other) const;
-
 	bool operator<(const Time &other) const;
-
 	bool operator<=(const Time &other) const;
-
 	bool operator>(const Time &other) const;
-
 	bool operator>=(const Time &other) const;
 
 	Time operator-() const;
 
 	friend Time operator+(const Time &left, const Time &right);
-
 	friend Time operator-(const Time &left, const Time &right);
-
 	friend Time operator*(const Time &left, float right);
-
 	friend Time operator*(const Time &left, int64_t right);
-
 	friend Time operator*(float left, const Time &right);
-
 	friend Time operator*(int64_t left, const Time &right);
-
 	friend Time operator/(const Time &left, float right);
-
 	friend Time operator/(const Time &left, int64_t right);
-	
 	friend double operator/(const Time &left, const Time &right);
 
 	Time &operator+=(const Time &other);
-
 	Time &operator-=(const Time &other);
-
 	Time &operator*=(float other);
-
 	Time &operator*=(int64_t other);
-
 	Time &operator/=(float other);
-
 	Time &operator/=(int64_t other);
 
 	friend const Node &operator>>(const Node &node, Time &time);
-
 	friend Node &operator<<(Node &node, const Time &time);
 
 private:

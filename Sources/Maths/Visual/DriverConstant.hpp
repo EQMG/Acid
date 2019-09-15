@@ -9,26 +9,26 @@ namespace acid {
  **/
 
 template<typename T>
-class DriverConstant :
-	public Driver<T> {
+class DriverConstant : public Driver<T> {
 public:
 	/**
 	 * Creates a new constant driver.
-	 * @param constant The constant value. 
+	 * @param constant The constant value.
 	 **/
 	explicit DriverConstant(const T &constant) :
 		Driver<T>(-1s),
-		m_constant(constant) { }
+		m_constant(constant) {
+	}
 
 	/**
 	 * Gets the constant.
-	 * @return The constant. 
+	 * @return The constant.
 	 **/
 	const T &GetConstant() const { return m_constant; }
 
 	/**
 	 * Sets the constant.
-	 * @param constant The new constant. 
+	 * @param constant The new constant.
 	 **/
 	void SetConstant(const T &constant) { m_constant = constant; };
 protected:

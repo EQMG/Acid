@@ -12,30 +12,23 @@ namespace acid {
 /**
  * @brief Class that handles a descriptor set.
  */
-class ACID_EXPORT
-DescriptorsHandler
-{
+class ACID_EXPORT DescriptorsHandler {
 public:
 	DescriptorsHandler();
-
 	explicit DescriptorsHandler(const Pipeline &pipeline);
 
 	template<typename T>
-	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = std::nullopt)
-	{
-		if (!m_shader)
-		{
+	void Push(const std::string &descriptorName, const T &descriptor, const std::optional<OffsetSize> &offsetSize = std::nullopt) {
+		if (!m_shader) {
 			return;
 		}
 
 		// Finds the local value given to the descriptor name.
 		auto it = m_descriptors.find(descriptorName);
 
-		if (it != m_descriptors.end())
-		{
+		if (it != m_descriptors.end()) {
 			// If the descriptor and size have not changed then the write is not modified.
-			if (it->second.m_descriptor == ConstExpr::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize)
-			{
+			if (it->second.m_descriptor == ConstExpr::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize) {
 				return;
 			}
 
@@ -43,19 +36,16 @@ public:
 		}
 
 		// Only non-null descriptors can be mapped.
-		if (!ConstExpr::AsPtr(descriptor))
-		{
+		if (!ConstExpr::AsPtr(descriptor)) {
 			return;
 		}
 
 		// When adding the descriptor find the location in the shader.
 		auto location = m_shader->GetDescriptorLocation(descriptorName);
 
-		if (!location)
-		{
+		if (!location) {
 #if defined(ACID_VERBOSE)
-			if (m_shader->ReportedNotFound(descriptorName, true))
-			{
+			if (m_shader->ReportedNotFound(descriptorName, true)) {
 				Log::Error("Could not find descriptor in shader ", m_shader->GetName(), " of name ", std::quoted(descriptorName), '\n');
 			}
 #endif
@@ -65,11 +55,9 @@ public:
 
 		auto descriptorType = m_shader->GetDescriptorType(*location);
 
-		if (!descriptorType)
-		{
+		if (!descriptorType) {
 #if defined(ACID_VERBOSE)
-			if (m_shader->ReportedNotFound(descriptorName, true))
-			{
+			if (m_shader->ReportedNotFound(descriptorName, true)) {
 				Log::Error("Could not find descriptor in shader ", m_shader->GetName(), " of name ", std::quoted(descriptorName), " at location ", *location, '\n');
 			}
 #endif
@@ -83,17 +71,14 @@ public:
 	}
 
 	template<typename T>
-	void Push(const std::string &descriptorName, const T &descriptor, WriteDescriptorSet writeDescriptorSet)
-	{
-		if (!m_shader)
-		{
+	void Push(const std::string &descriptorName, const T &descriptor, WriteDescriptorSet writeDescriptorSet) {
+		if (!m_shader) {
 			return;
 		}
 
 		auto it = m_descriptors.find(descriptorName);
 
-		if (it != m_descriptors.end())
-		{
+		if (it != m_descriptors.end()) {
 			m_descriptors.erase(it);
 		}
 
@@ -105,9 +90,7 @@ public:
 	}
 
 	void Push(const std::string &descriptorName, UniformHandler &uniformHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
-
 	void Push(const std::string &descriptorName, StorageHandler &storageHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
-
 	void Push(const std::string &descriptorName, PushHandler &pushHandler, const std::optional<OffsetSize> &offsetSize = std::nullopt);
 
 	bool Update(const Pipeline &pipeline);
@@ -117,8 +100,7 @@ public:
 	const DescriptorSet *GetDescriptorSet() const { return m_descriptorSet.get(); }
 
 private:
-	struct DescriptorValue
-	{
+	struct DescriptorValue {
 		const Descriptor *m_descriptor;
 		WriteDescriptorSet m_writeDescriptor;
 		std::optional<OffsetSize> m_offsetSize;

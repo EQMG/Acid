@@ -5,8 +5,7 @@
 using namespace acid;
 
 namespace test {
-class MainRenderer :
-	public Renderer {
+class MainRenderer : public Renderer {
 public:
 	MainRenderer();
 

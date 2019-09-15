@@ -8,12 +8,7 @@ namespace acid {
 /**
  * @brief Class that contains and manages subrenders registered to a render manager.
  */
-class ACID_EXPORT
-SubrenderHolder
-:
-public
-NonCopyable
-{
+class ACID_EXPORT SubrenderHolder : public NonCopyable {
 	friend class Graphics;
 public:
 	/**
@@ -22,14 +17,12 @@ public:
 	 * @return The Subrender.
 	 */
 	template<typename T>
-	T *Get() const
-	{
+	T *Get() const {
 		const auto typeId = GetSubrenderTypeId<T>();
 
 		auto it = m_subrenders.find(typeId);
 
-		if (it == m_subrenders.end() || !it->second)
-		{
+		if (it == m_subrenders.end() || !it->second) {
 			throw std::runtime_error("Subrender Holder does not have requested Subrender");
 		}
 
@@ -44,8 +37,7 @@ public:
 	 * @return The added renderer.
 	 */
 	template<typename T, typename... Args>
-	void Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender)
-	{
+	void Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender) {
 		// Remove previous Subrender, if it exists.
 		//Remove<T>();
 
@@ -63,8 +55,7 @@ public:
 	 * @tparam T The Subrender type.
 	 */
 	template<typename T>
-	void Remove()
-	{
+	void Remove() {
 		const auto typeId = GetSubrenderTypeId<T>();
 
 		// Remove the stage value for this Subrender.
@@ -82,7 +73,7 @@ private:
 	using StageIndex = std::pair<Pipeline::Stage, std::size_t>;
 
 	void RemoveSubrenderStage(const TypeId &id);
-	
+
 	/**
 	 * Iterates through all Subrenders.
 	 * @param stage The Subrender stage.

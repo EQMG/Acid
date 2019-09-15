@@ -8,12 +8,9 @@
 #include "Log.hpp"
 
 namespace acid {
-class ACID_EXPORT
-Delta
-{
+class ACID_EXPORT Delta {
 public:
-	void Update()
-	{
+	void Update() {
 		m_currentFrameTime = Time::Now();
 		m_change = m_currentFrameTime - m_lastFrameTime;
 		m_lastFrameTime = m_currentFrameTime;
@@ -24,16 +21,12 @@ public:
 	Time m_change;
 };
 
-class ACID_EXPORT
-ChangePerSecond
-{
+class ACID_EXPORT ChangePerSecond {
 public:
-	void Update(const Time &time)
-	{
+	void Update(const Time &time) {
 		m_valueTemp++;
 
-		if (std::floor(time.AsSeconds()) > std::floor(m_valueTime.AsSeconds()))
-		{
+		if (std::floor(time.AsSeconds()) > std::floor(m_valueTime.AsSeconds())) {
 			m_value = m_valueTemp;
 			m_valueTemp = 0;
 		}
@@ -48,12 +41,7 @@ public:
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
-class ACID_EXPORT
-Engine
-:
-public
-NonCopyable
-{
+class ACID_EXPORT Engine : public NonCopyable {
 public:
 	/**
 	 * Gets the engines instance.
@@ -92,8 +80,7 @@ public:
 	 * @return If the Module has the System.
 	 */
 	template<typename T>
-	bool HasModule() const
-	{
+	bool HasModule() const {
 		return m_modules.Has<T>();
 	}
 
@@ -103,8 +90,7 @@ public:
 	 * @return The Module.
 	 */
 	template<typename T>
-	T *GetModule() const
-	{
+	T *GetModule() const {
 		return m_modules.Get<T>();
 	}
 
@@ -116,8 +102,7 @@ public:
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>
-	void AddModule(const Module::Stage& stage, Args &&...args)
-	{
+	void AddModule(const Module::Stage &stage, Args &&...args) {
 		m_modules.Add<T>(stage, std::make_unique<T>(std::forward<Args>(args)...));
 	}
 
@@ -126,8 +111,7 @@ public:
 	 * @tparam T The Module type.
 	 */
 	template<typename T>
-	void RemoveModule()
-	{
+	void RemoveModule() {
 		m_modules.Remove<T>();
 	}
 

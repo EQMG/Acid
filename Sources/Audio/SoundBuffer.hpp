@@ -8,12 +8,7 @@ namespace acid {
 /**
  * @brief Resource that represents a sound buffer.
  */
-class ACID_EXPORT
-SoundBuffer
-:
-public
-Resource
-{
+class ACID_EXPORT SoundBuffer : public Resource {
 public:
 	/**
 	 * Creates a new sound buffer, or finds one with the same values.
@@ -39,18 +34,14 @@ public:
 	~SoundBuffer();
 
 	const std::filesystem::path &GetFilename() const { return m_filename; };
-
 	uint32_t GetBuffer() const { return m_buffer; }
 
 	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer);
-
 	friend Node &operator<<(Node &node, const SoundBuffer &soundBuffer);
 
 private:
 	void Load();
-
 	static uint32_t LoadBufferWav(const std::filesystem::path &filename);
-
 	static uint32_t LoadBufferOgg(const std::filesystem::path &filename);
 
 	std::filesystem::path m_filename;

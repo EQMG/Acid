@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Class that can listen to file changes on a path recursively.
  */
-class FileWatcher {
+class ACID_EXPORT FileWatcher {
 public:
 	enum class Status {
 		Created,
@@ -26,11 +26,9 @@ public:
 	~FileWatcher();
 
 	const std::filesystem::path &GetPath() const { return m_path; }
-
 	void SetPath(const std::filesystem::path &path) { m_path = path; }
 
 	const Time &GetDelay() const { return m_delay; }
-
 	void SetDelay(const Time &delay) { m_delay = delay; }
 
 	/**

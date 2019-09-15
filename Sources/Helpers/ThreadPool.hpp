@@ -9,9 +9,7 @@ namespace acid {
 /**
  * @brief A fixed size pool of threads.
  */
-class ACID_EXPORT
-ThreadPool
-{
+class ACID_EXPORT ThreadPool {
 public:
 	explicit ThreadPool(uint32_t threadCount = std::thread::hardware_concurrency());
 	~ThreadPool();

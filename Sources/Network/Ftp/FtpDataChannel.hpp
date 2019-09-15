@@ -3,27 +3,22 @@
 #include "Network/Tcp/TcpSocket.hpp"
 
 namespace acid {
-class ACID_EXPORT
-Ftp;
-class ACID_EXPORT
-FtpResponse;
+class Ftp;
+class FtpResponse;
 
 /**
  * @brief Utility class for exchanging datas with the server on the data channel.
  **/
-class ACID_EXPORT
-FtpDataChannel
-{
+class ACID_EXPORT FtpDataChannel {
 public:
 	/**
 	 * @brief Enumeration of transfer modes.
 	 **/
-	enum class Mode
-	{
+	enum class Mode {
 		/// Binary mode (file is transfered as a sequence of bytes).
-		Binary, 
+		Binary,
 		/// Text mode using ASCII encoding.
-		Ascii, 
+		Ascii,
 		/// Text mode using EBCDIC encoding.
 		Ebcdic
 	};

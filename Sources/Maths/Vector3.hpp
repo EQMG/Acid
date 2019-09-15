@@ -55,7 +55,7 @@ public:
 	 * @param z Start z.
 	 **/
 	template<typename K, typename J = T>
-	explicit constexpr Vector3(const Vector2<K> &source, const J &z = 0);
+	explicit constexpr Vector3(const Vector2<K> & source, const J & z = 0);
 
 	/**
 	 * Constructor for Vector3.
@@ -145,7 +145,7 @@ public:
 	 * @return Left lerp right.
 	 **/
 	template<typename K, typename J = float>
-	constexpr auto Lerp(const Vector3<K> &other, const J &progression) const;
+	constexpr auto Lerp(const Vector3<K> & other, const J & progression) const;
 
 	/**
 	 * Scales this vector by a scalar.
@@ -154,7 +154,7 @@ public:
 	 * @return The scaled vector.
 	 **/
 	template<typename K = float>
-	constexpr auto Scale(const K &scalar) const;
+	constexpr auto Scale(const K & scalar) const;
 
 	/**
 	 * Rotates this vector by a angle around the origin.
@@ -162,13 +162,13 @@ public:
 	 * @param angle The angle to rotate by, in radians.
 	 * @return The rotated vector.
 	 **/
-	//template<typename K = float>
-	//auto Rotate(const Vector3<K> &angle) const; 
+	 //template<typename K = float>
+	 //auto Rotate(const Vector3<K> &angle) const; 
 
-	/**
-	 * Normalizes this vector.
-	 * @return The normalized vector.
-	 **/
+	 /**
+	  * Normalizes this vector.
+	  * @return The normalized vector.
+	  **/
 	auto Normalize() const;
 
 	/**
@@ -273,62 +273,34 @@ public:
 	 **/
 	auto PolarToCartesian() const;
 
-	template<typename K>
-	constexpr bool operator==(const Vector3<K> &other) const;
-
-	template<typename K>
-	constexpr bool operator!=(const Vector3<K> &other) const;
-
-	template<typename U = T>
-	constexpr std::enable_if_t<std::is_signed_v<U>, Vector3> operator-() const;
-
-	template<typename U = T>
-	constexpr std::enable_if_t<std::is_integral_v<U>, Vector3> operator~() const;
-
 	constexpr const T &operator[](uint32_t index) const;
-
 	constexpr T &operator[](uint32_t index);
 
-	template<typename K>
-	constexpr Vector3 &operator+=(const Vector3<K> &other);
+	template<typename K> constexpr bool operator==(const Vector3<K> &other) const;
+	template<typename K> constexpr bool operator!=(const Vector3<K> &other) const;
 
-	template<typename K>
-	constexpr Vector3 &operator-=(const Vector3<K> &other);
+	template<typename U = T> constexpr std::enable_if_t<std::is_signed_v<U>, Vector3> operator-() const;
+	template<typename U = T> constexpr std::enable_if_t<std::is_integral_v<U>, Vector3> operator~() const;
 
-	template<typename K>
-	constexpr Vector3 &operator*=(const Vector3<K> &other);
-
-	template<typename K>
-	constexpr Vector3 &operator/=(const Vector3<K> &other);
-
+	template<typename K> constexpr Vector3 &operator+=(const Vector3<K> &other);
+	template<typename K> constexpr Vector3 &operator-=(const Vector3<K> &other);
+	template<typename K> constexpr Vector3 &operator*=(const Vector3<K> &other);
+	template<typename K> constexpr Vector3 &operator/=(const Vector3<K> &other);
 	constexpr Vector3 &operator+=(const T &other);
-
 	constexpr Vector3 &operator-=(const T &other);
-
 	constexpr Vector3 &operator*=(const T &other);
-
 	constexpr Vector3 &operator/=(const T &other);
 
-	ACID_EXPORT
-	static const Vector3 Zero;
-	ACID_EXPORT
-	static const Vector3 One;
-	ACID_EXPORT
-	static const Vector3 Left;
-	ACID_EXPORT
-	static const Vector3 Right;
-	ACID_EXPORT
-	static const Vector3 Up;
-	ACID_EXPORT
-	static const Vector3 Down;
-	ACID_EXPORT
-	static const Vector3 Front;
-	ACID_EXPORT
-	static const Vector3 Back;
-	ACID_EXPORT
-	static const Vector3 PositiveInfinity;
-	ACID_EXPORT
-	static const Vector3 NegativeInfinity;
+	ACID_EXPORT static const Vector3 Zero;
+	ACID_EXPORT static const Vector3 One;
+	ACID_EXPORT static const Vector3 Left;
+	ACID_EXPORT static const Vector3 Right;
+	ACID_EXPORT static const Vector3 Up;
+	ACID_EXPORT static const Vector3 Down;
+	ACID_EXPORT static const Vector3 Front;
+	ACID_EXPORT static const Vector3 Back;
+	ACID_EXPORT static const Vector3 PositiveInfinity;
+	ACID_EXPORT static const Vector3 NegativeInfinity;
 
 	T m_x = 0, m_y = 0, m_z = 0;
 };

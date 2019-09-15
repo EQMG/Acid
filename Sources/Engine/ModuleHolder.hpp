@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Class that contains and manages modules registered to a engine.
  */
-class ACID_EXPORT
-ModuleHolder
-:
-public
-NonCopyable
-{
+class ACID_EXPORT ModuleHolder : public NonCopyable {
 	friend class Engine;
 public:
 	/**
@@ -20,10 +15,8 @@ public:
 	 * @return If the Module has the System.
 	 */
 	template<typename T>
-	bool Has() const
-	{
+	bool Has() const {
 		const auto it = m_modules.find(GetModuleTypeId<T>());
-
 		return it != m_modules.end() && it->second;
 	}
 
@@ -33,14 +26,11 @@ public:
 	 * @return The Module.
 	 */
 	template<typename T>
-	T *Get() const
-	{
+	T *Get() const {
 		const auto typeId = GetModuleTypeId<T>();
-
 		auto it = m_modules.find(typeId);
 
-		if (it == m_modules.end() || !it->second)
-		{
+		if (it == m_modules.end() || !it->second) {
 			throw std::runtime_error("Module Holder does not have requested Module");
 		}
 
@@ -54,8 +44,7 @@ public:
 	 * @param module The module.
 	 */
 	template<typename T, typename... Args>
-	void Add(const Module::Stage &stage, std::unique_ptr<T> &&module)
-	{
+	void Add(const Module::Stage &stage, std::unique_ptr<T> &&module) {
 		// Remove previous Module, if it exists.
 		//Remove<T>();
 
@@ -73,8 +62,7 @@ public:
 	 * @tparam T The Module type.
 	 */
 	template<typename T>
-	void Remove()
-	{
+	void Remove() {
 		const auto typeId = GetModuleTypeId<T>();
 
 		// Remove the stage value for this Module.
@@ -93,7 +81,7 @@ private:
 	 * Iterates through all Modules.
 	 * @param stage The Module stage.
 	 */
-	void UpdateStage(const Module::Stage& stage);
+	void UpdateStage(const Module::Stage &stage);
 
 	// List of all Modules.
 	std::unordered_map<TypeId, std::unique_ptr<Module>> m_modules;

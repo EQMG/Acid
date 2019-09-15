@@ -18,7 +18,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 	m_textHex(&m_section1.GetContent(), "Hex", Colour::Yellow.GetHex(), 14, {{0.0f, 0.12f}, UiAnchor::LeftTop}),
 	m_rgbColour(&m_section1.GetContent(), {{0.0f, 0.18f}, UiAnchor::LeftTop, UiInputButton::Size},
 		Image2d::Create("Guis/Button_Filled.png"), Colour::Yellow)
-//m_colourWheel(&m_section1.GetContent(), Colour::Yellow, {{0.0f, 0.24f}, UiAnchor::LeftTop})
+	//m_colourWheel(&m_section1.GetContent(), Colour::Yellow, {{0.0f, 0.24f}, UiAnchor::LeftTop})
 {
 	m_rgbColour.SetNinePatches({0.125f, 0.125f, 0.75f, 0.75f});
 	m_button1.OnClick().Add([this](MouseButton button) {

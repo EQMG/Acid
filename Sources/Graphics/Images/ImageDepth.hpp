@@ -7,31 +7,21 @@ namespace acid {
 /**
  * @brief Resource that represents a depth stencil image.
  */
-class ACID_EXPORT
-ImageDepth
-:
-public
-Descriptor
-{
+class ACID_EXPORT ImageDepth : public Descriptor {
 public:
 	explicit ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT);
 
 	~ImageDepth();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
-
 	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage);
+
 	const Vector2ui &GetExtent() const { return m_extent; }
-
 	const VkImage &GetImage() const { return m_image; }
-
 	const VkDeviceMemory &GetMemory() { return m_memory; }
-
 	const VkSampler &GetSampler() const { return m_sampler; }
-
 	const VkImageView &GetView() const { return m_view; }
-
 	const VkFormat &GetFormat() const { return m_format; }
 
 private:

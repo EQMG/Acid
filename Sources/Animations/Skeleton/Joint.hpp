@@ -18,9 +18,7 @@ namespace acid {
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
  **/
-class ACID_EXPORT
-Joint
-{
+class ACID_EXPORT Joint {
 public:
 	/**
 	 * Creates a new skeleton joint.
@@ -49,11 +47,9 @@ public:
 	void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
 	uint32_t GetIndex() const { return m_index; }
-
 	void SetIndex(uint32_t index) { m_index = index; }
 
 	const std::string &GetName() const { return m_name; }
-
 	void SetName(const std::string &name) { m_name = name; }
 
 	const std::vector<Joint> &GetChildren() const { return m_children; }
@@ -66,7 +62,6 @@ public:
 	void AddChild(const Joint &child);
 
 	const Matrix4 &GetLocalBindTransform() const { return m_localBindTransform; }
-
 	void SetLocalBindTransform(const Matrix4 &localBindTransform) { m_localBindTransform = localBindTransform; }
 
 	/**
@@ -76,11 +71,9 @@ public:
 	 * @return The inverse of the joint's bind transform (in model-space).
 	 **/
 	const Matrix4 &GetInverseBindTransform() const { return m_inverseBindTransform; }
-
 	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 
 	friend const Node &operator>>(const Node &node, Joint &joint);
-
 	friend Node &operator<<(Node &node, const Joint &joint);
 
 private:

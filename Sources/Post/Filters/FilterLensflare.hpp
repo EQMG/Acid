@@ -4,23 +4,16 @@
 #include "Post/PostFilter.hpp"
 
 namespace acid {
-class ACID_EXPORT
-FilterLensflare
-:
-public
-PostFilter
-{
+class ACID_EXPORT FilterLensflare : public PostFilter {
 public:
 	explicit FilterLensflare(const Pipeline::Stage &pipelineStage);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
 	const Vector3f &GetSunPosition() const { return m_sunPosition; }
-
 	void SetSunPosition(const Vector3f &sunPosition);
 
 	float GetSunHeight() const { return m_sunHeight; }
-
 	void SetSunHeight(float sunHeight) { m_sunHeight = sunHeight; }
 
 private:

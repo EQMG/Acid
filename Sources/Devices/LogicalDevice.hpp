@@ -8,40 +8,28 @@ class Instance;
 class PhysicalDevice;
 class Surface;
 
-class ACID_EXPORT
-LogicalDevice
+class ACID_EXPORT LogicalDevice
 {
 	friend class Graphics;
 public:
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
-
 	~LogicalDevice();
 
 	operator const VkDevice &() const { return m_logicalDevice; }
 
 	const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
-
 	const VkPhysicalDeviceFeatures &GetEnabledFeatures() const { return m_enabledFeatures; }
-
 	const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
-
 	const VkQueue &GetPresentQueue() const { return m_presentQueue; }
-
 	const VkQueue &GetComputeQueue() const { return m_computeQueue; }
-
 	const VkQueue &GetTransferQueue() const { return m_transferQueue; }
-
 	uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
-
 	uint32_t GetPresentFamily() const { return m_presentFamily; }
-
 	uint32_t GetComputeFamily() const { return m_computeFamily; }
-
 	uint32_t GetTransferFamily() const { return m_transferFamily; }
 
 private:
 	void CreateQueueIndices();
-
 	void CreateLogicalDevice();
 
 	const Instance *m_instance;

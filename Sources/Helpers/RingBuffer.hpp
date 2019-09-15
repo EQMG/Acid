@@ -8,8 +8,7 @@ namespace acid {
  * @tparam T The type to hold.
  */
 template<typename T>
-class RingBuffer :
-	public NonCopyable {
+class RingBuffer : public NonCopyable {
 public:
 	explicit RingBuffer(std::size_t capacity) :
 		m_data(capacity) {

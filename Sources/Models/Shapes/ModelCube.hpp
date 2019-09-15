@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a cube model.
  */
-class ACID_EXPORT
-ModelCube
-:
-public
-Model
-{
+class ACID_EXPORT ModelCube : public Model {
 public:
 	/**
 	 * Creates a new cube model, or finds one with the same values.
@@ -35,7 +30,6 @@ public:
 	explicit ModelCube(const Vector3f &extents = {1.0f}, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelCube &model);
-
 	friend Node &operator<<(Node &node, const ModelCube &model);
 
 private:

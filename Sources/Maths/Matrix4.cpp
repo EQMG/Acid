@@ -384,6 +384,16 @@ Matrix4 Matrix4::LookAt(const Vector3f &eye, const Vector3f &centre, const Vecto
 	return result;
 }
 
+const Vector4f &Matrix4::operator[](uint32_t index) const {
+	assert(index < 4);
+	return m_rows[index];
+}
+
+Vector4f &Matrix4::operator[](uint32_t index) {
+	assert(index < 4);
+	return m_rows[index];
+}
+
 bool Matrix4::operator==(const Matrix4 &other) const {
 	return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2] && m_rows[3] == other[3];
 }
@@ -394,16 +404,6 @@ bool Matrix4::operator!=(const Matrix4 &other) const {
 
 Matrix4 Matrix4::operator-() const {
 	return Negate();
-}
-
-const Vector4f &Matrix4::operator[](uint32_t index) const {
-	assert(index < 4);
-	return m_rows[index];
-}
-
-Vector4f &Matrix4::operator[](uint32_t index) {
-	assert(index < 4);
-	return m_rows[index];
 }
 
 Matrix4 operator+(const Matrix4 &left, const Matrix4 &right) {

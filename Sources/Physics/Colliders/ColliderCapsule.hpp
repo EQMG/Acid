@@ -5,33 +5,24 @@
 class btCapsuleShape;
 
 namespace acid {
-class ACID_EXPORT
-ColliderCapsule
-:
-public
-Collider
-{
+class ACID_EXPORT ColliderCapsule : public Collider {
 public:
-	explicit ColliderCapsule(float radius = 0.5f, float height = 1.0f, const Transform &localTransform = {});
+	explicit ColliderCapsule(float radius = 0.5f, float height = 1.0f, const Transform & localTransform = {});
 
 	~ColliderCapsule();
 
 	void Start() override;
-
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
 
 	float GetRadius() const { return m_radius; }
-
 	void SetRadius(float radius);
 
 	float GetHeight() const { return m_height; }
-
 	void SetHeight(float height);
 
 	friend const Node &operator>>(const Node &node, ColliderCapsule &collider);
-
 	friend Node &operator<<(Node &node, const ColliderCapsule &collider);
 
 private:

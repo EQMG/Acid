@@ -70,7 +70,7 @@ void UiGrabberJoystick::SetValue(uint32_t value) {
 	//m_onValue(m_value);
 }
 
-UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, const Key &value, const UiTransform &transform) :
+UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, Key value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
 	m_value(value) {
 	UpdateValue();
@@ -87,13 +87,13 @@ UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title,
 	});
 }
 
-void UiGrabberKeyboard::SetValue(const Key &value) {
+void UiGrabberKeyboard::SetValue(Key value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);
 }
 
-UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const MouseButton &value, const UiTransform &transform) :
+UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, MouseButton value, const UiTransform &transform) :
 	UiInputGrabber(parent, title, transform),
 	m_value(value) {
 	UpdateValue();
@@ -119,7 +119,7 @@ UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, const
 	});
 }
 
-void UiGrabberMouse::SetValue(const MouseButton &value) {
+void UiGrabberMouse::SetValue(MouseButton value) {
 	m_value = value;
 	UpdateValue();
 	//m_onValue(m_value);

@@ -5,29 +5,21 @@
 class btBoxShape;
 
 namespace acid {
-class ACID_EXPORT
-ColliderCube
-:
-public
-Collider
-{
+class ACID_EXPORT ColliderCube : public Collider {
 public:
 	explicit ColliderCube(const Vector3f &extents = {1.0f}, const Transform &localTransform = {});
 
 	~ColliderCube();
 
 	void Start() override;
-
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
 
 	const Vector3f &GetExtents() const { return m_extents; }
-
 	void SetExtents(const Vector3f &extents);
 
 	friend const Node &operator>>(const Node &node, ColliderCube &collider);
-
 	friend Node &operator<<(Node &node, const ColliderCube &collider);
 
 private:

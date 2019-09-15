@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a rectangle model.
  */
-class ACID_EXPORT
-ModelRectangle
-:
-public
-Model
-{
+class ACID_EXPORT ModelRectangle : public Model {
 public:
 	/**
 	 * Creates a new rectangle model, or finds one with the same values.
@@ -37,7 +32,6 @@ public:
 	explicit ModelRectangle(float min = 0.0f, float max = 1.0f, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelRectangle &model);
-
 	friend Node &operator<<(Node &node, const ModelRectangle &model);
 
 private:

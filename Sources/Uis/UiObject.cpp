@@ -144,6 +144,10 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 void UiObject::UpdateObject() {
 }
 
+void UiObject::CancelEvent(MouseButton button) const {
+	Uis::Get()->CancelWasEvent(button);
+}
+
 void UiObject::SetParent(UiObject *parent) {
 	if (m_parent) {
 		m_parent->RemoveChild(this);
@@ -171,9 +175,5 @@ bool UiObject::IsEnabled() const {
 	}
 
 	return m_enabled;
-}
-
-void UiObject::CancelEvent(const MouseButton &button) const {
-	Uis::Get()->CancelWasEvent(button);
 }
 }

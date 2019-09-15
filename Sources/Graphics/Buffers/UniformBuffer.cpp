@@ -14,17 +14,6 @@ void UniformBuffer::Update(const void *newData) {
 	UnmapMemory();
 }
 
-VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-	descriptorSetLayoutBinding.binding = binding;
-	descriptorSetLayoutBinding.descriptorType = descriptorType;
-	descriptorSetLayoutBinding.descriptorCount = 1;
-	descriptorSetLayoutBinding.stageFlags = stage;
-	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-	return descriptorSetLayoutBinding;
-}
-
 WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
@@ -45,5 +34,16 @@ WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkD
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pBufferInfo = &bufferInfo;
 	return {descriptorWrite, bufferInfo};
+}
+
+VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count) {
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	descriptorSetLayoutBinding.binding = binding;
+	descriptorSetLayoutBinding.descriptorType = descriptorType;
+	descriptorSetLayoutBinding.descriptorCount = 1;
+	descriptorSetLayoutBinding.stageFlags = stage;
+	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+	return descriptorSetLayoutBinding;
 }
 }

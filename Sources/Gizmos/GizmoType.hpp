@@ -15,18 +15,11 @@ class Gizmo;
 /**
  * @brief Resource that represents a gizmo type.
  */
-class ACID_EXPORT
-GizmoType
-:
-public
-Resource
-{
+class ACID_EXPORT GizmoType : public Resource {
 public:
-	class Instance
-	{
+	class Instance {
 	public:
-		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
-		{
+		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
 				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
@@ -58,7 +51,7 @@ public:
 	 * @param colour The default colour for gizmos.
 	 * @return The gizmo type with the requested values.
 	 */
-	static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, float lineThickness = 1.0f, const Colour &colour = Colour::White);
+	static std::shared_ptr<GizmoType> Create(const std::shared_ptr<Model> &model = nullptr, float lineThickness = 1.0f, const Colour & colour = Colour::White);
 
 	/**
 	 * Creates a new gizmo type.
@@ -66,26 +59,22 @@ public:
 	 * @param lineThickness The thickness that the model will be rendered at.
 	 * @param colour The default colour for gizmos.
 	 */
-	explicit GizmoType(std::shared_ptr<Model> model, float lineThickness = 1.0f, const Colour &colour = Colour::White);
+	explicit GizmoType(std::shared_ptr<Model> model, float lineThickness = 1.0f, const Colour & colour = Colour::White);
 
 	void Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos);
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
-
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
 	float GetLineThickness() const { return m_lineThickness; }
-
 	void SetLineThickness(float lineThickness) { m_lineThickness = lineThickness; }
 
 	const Colour &GetColour() const { return m_colour; }
-
 	void SetColour(const Colour &colour) { m_colour = colour; }
 
 	friend const Node &operator>>(const Node &node, GizmoType &gizmoType);
-
 	friend Node &operator<<(Node &node, const GizmoType &gizmoType);
 
 private:

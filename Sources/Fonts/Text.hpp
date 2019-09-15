@@ -15,19 +15,13 @@ namespace acid {
 /**
  * @brief Class that represents a text in a GUI.
  */
-class ACID_EXPORT
-Text
-:
-public
-UiObject
-{
+class ACID_EXPORT Text : public UiObject {
 	friend class FontType;
 public:
 	/**
 	 * @brief A enum that represents how the text will be justified.
 	 */
-	enum class Justify
-	{
+	enum class Justify {
 		Left, Centre, Right, Fully
 	};
 
@@ -44,7 +38,7 @@ public:
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text,
-	    std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left, 
+		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left,
 		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
 
 	void UpdateObject() override;
@@ -56,7 +50,7 @@ public:
 	 * @return The model of the text.
 	 */
 	const Model *GetModel() const { return m_model.get(); }
-	
+
 	/**
 	 * Gets the font size.
 	 * @return The font size.
@@ -202,21 +196,19 @@ private:
 	/**
 	 * During the loading of a text this represents one word in the text.
 	 */
-	class Word
-	{
+	class Word {
 	public:
 		/**
 		 * Creates a new text word.
 		 */
-		Word() = default; 
-		
+		Word() = default;
+
 		/**
 		 * Adds a character to the end of the current word and increases the screen-space width of the word.
 		 * @param character The character to be added.
 		 * @param kerning The character kerning.
 		 */
-		void AddCharacter(const FontMetafile::Character &character, float kerning)
-		{
+		void AddCharacter(const FontMetafile::Character &character, float kerning) {
 			m_characters.emplace_back(character);
 			m_width += kerning + character.m_advanceX;
 		}
@@ -228,8 +220,7 @@ private:
 	/**
 	 * Represents a line of text during the loading of a text.
 	 */
-	class Line
-	{
+	class Line {
 	public:
 		/**
 		 * Creates a new text line.
@@ -238,8 +229,7 @@ private:
 		 */
 		Line(float spaceWidth, float maxLength) :
 			m_maxLength(maxLength),
-			m_spaceSize(spaceWidth)
-		{
+			m_spaceSize(spaceWidth) {
 		}
 
 		/**
@@ -247,13 +237,11 @@ private:
 		 * @param word The word to try to add.
 		 * @return {@code true} if the word has successfully been added to the line.
 		 */
-		bool AddWord(const Word &word)
-		{
+		bool AddWord(const Word &word) {
 			auto additionalLength = word.m_width;
 			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
 
-			if (m_currentLineLength + additionalLength <= m_maxLength)
-			{
+			if (m_currentLineLength + additionalLength <= m_maxLength) {
 				m_words.emplace_back(word);
 				m_currentWordsLength += word.m_width;
 				m_currentLineLength += additionalLength;
@@ -277,15 +265,10 @@ private:
 	 * Then takes the information about the vertices of all the quads and stores it in a model.
 	 */
 	void LoadText();
-
 	std::vector<Line> CreateStructure() const;
-
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-
 	std::vector<VertexDefault> CreateQuad(const std::vector<Line> &lines);
-
 	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices);
-
 	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices);
 
 	DescriptorsHandler m_descriptorSet;

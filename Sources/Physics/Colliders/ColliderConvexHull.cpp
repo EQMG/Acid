@@ -11,7 +11,7 @@ ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, con
 		return;
 	}
 
-	Initialize(pointCloud);
+	SetPointCount(pointCloud);
 }
 
 ColliderConvexHull::~ColliderConvexHull() {
@@ -21,7 +21,7 @@ void ColliderConvexHull::Start() {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
 	if (mesh && mesh->GetModel()) {
-		Initialize(mesh->GetModel()->GetPointCloud());
+		SetPointCount(mesh->GetModel()->GetPointCloud());
 	}
 }
 
@@ -42,7 +42,7 @@ void ColliderConvexHull::Update() {
 
 	if (m_model != mesh->GetModel()) {
 		m_model = mesh->GetModel();
-		Initialize(m_model->GetPointCloud());
+		SetPointCount(m_model->GetPointCloud());
 	}
 }
 
@@ -50,7 +50,7 @@ btCollisionShape *ColliderConvexHull::GetCollisionShape() const {
 	return m_shape.get();
 }
 
-void ColliderConvexHull::Initialize(const std::vector<float> &pointCloud) {
+void ColliderConvexHull::SetPointCount(const std::vector<float> &pointCloud) {
 	if (pointCloud.empty()) {
 		return;
 	}

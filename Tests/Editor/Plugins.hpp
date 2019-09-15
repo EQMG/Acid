@@ -13,8 +13,7 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins :
-	public Module {
+class Plugins : public Module {
 public:
 	/**
 	 * Gets the engines instance.

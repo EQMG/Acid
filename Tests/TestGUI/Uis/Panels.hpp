@@ -16,8 +16,7 @@
 using namespace acid;
 
 namespace test {
-class Inventory :
-	public UiObject {
+class Inventory : public UiObject {
 public:
 	explicit Inventory(UiObject *parent) :
 		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom)) {
@@ -41,8 +40,7 @@ private:
 	//std::vector<std::unique_ptr<Text>> m_slotTitles;
 };
 
-class Panels :
-	public UiObject {
+class Panels : public UiObject {
 public:
 	explicit Panels(UiObject *parent);
 

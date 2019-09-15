@@ -9,9 +9,7 @@ namespace acid {
  * The transform is stored as a position vector and a quaternion (rotation) so that these values can  be easily interpolated,
  * a functionality that this class also provides.
  **/
-class ACID_EXPORT
-JointTransform
-{
+class ACID_EXPORT JointTransform {
 public:
 	/**
 	 * Creates a new joint transformation.
@@ -63,15 +61,12 @@ public:
 	static Vector3f Interpolate(const Vector3f &start, const Vector3f &end, float progression);
 
 	const Vector3f &GetPosition() const { return m_position; }
-
 	void SetPosition(const Vector3f &position) { m_position = position; }
 
 	const Quaternion &GetRotation() const { return m_rotation; }
-
 	void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
 
 	friend const Node &operator>>(const Node &node, JointTransform &jointTransform);
-
 	friend Node &operator<<(Node &node, const JointTransform &jointTransform);
 
 private:

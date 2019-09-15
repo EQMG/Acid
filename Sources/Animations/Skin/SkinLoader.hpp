@@ -4,23 +4,17 @@
 #include "VertexWeights.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SkinLoader
-{
+class ACID_EXPORT SkinLoader {
 public:
 	SkinLoader(const Node *libraryControllers, uint32_t maxWeights);
 
 	const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
-
 	const std::vector<VertexWeights> &GetVertexWeights() const { return m_vertexWeights; }
 
 private:
 	void LoadJointsList();
-
 	std::vector<float> LoadWeights() const;
-
 	std::vector<uint32_t> GetEffectiveJointsCounts(const Node *weightsDataNode) const;
-
 	void GetSkinWeights(const Node *weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 
 	const Node *m_skinData;

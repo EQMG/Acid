@@ -8,6 +8,16 @@ MeshSimple::MeshSimple(float sideLength, float squareSize, uint32_t vertexCount,
 	m_uvScale(uvScale) {
 }
 
+VertexDefault MeshSimple::GetVertex(uint32_t col, uint32_t row) {
+	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
+	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
+
+	Vector3f position(x, 0.0f, z);
+	Vector2f uv(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
+	Vector3f normal(Vector3f::Up);
+	return {position, uv, normal};
+}
+
 void MeshSimple::GenerateMesh() {
 	std::vector<VertexDefault> vertices;
 	vertices.reserve(m_vertexCount * m_vertexCount);
@@ -39,15 +49,5 @@ void MeshSimple::GenerateMesh() {
 	}
 
 	Initialize(vertices, indices);
-}
-
-VertexDefault MeshSimple::GetVertex(uint32_t col, uint32_t row) {
-	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
-	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
-
-	Vector3f position(x, 0.0f, z);
-	Vector2f uv(static_cast<float>(col) * m_uvScale / static_cast<float>(m_vertexCount), static_cast<float>(row) * m_uvScale / static_cast<float>(m_vertexCount));
-	Vector3f normal(Vector3f::Up);
-	return {position, uv, normal};
 }
 }

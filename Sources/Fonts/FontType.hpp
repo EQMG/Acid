@@ -16,18 +16,11 @@ class Text;
 /**
  * @brief Resource that is used when creating a font mesh.
  */
-class ACID_EXPORT
-FontType
-:
-public
-Resource
-{
+class ACID_EXPORT FontType : public Resource {
 public:
-	class Instance
-	{
+	class Instance {
 	public:
-		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0)
-		{
+		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
 			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
 				{ baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE }
 			};
@@ -70,44 +63,37 @@ public:
 	FontType(std::filesystem::path filename, std::string style, bool load = true);
 
 	void Update(const std::vector<Text *> &texts);
-
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
-
 	const FontMetafile *GetNode() const { return m_node.get(); }
 
 	friend const Node &operator>>(const Node &node, FontType &fontType);
-
 	friend Node &operator<<(Node &node, const FontType &fontType);
 
 private:
-	struct CellInfo
-	{
+	struct CellInfo {
 		uint32_t pointOffset;
 		uint32_t cellOffset;
 		Vector2ui cellCount;
 	};
 
-	struct HostGlyphInfo
-	{
+	struct HostGlyphInfo {
 		Rect bbox;
 		float horiAdvance;
 		float vertAdvance;
 	};
 
-	struct DeviceGlyphInfo
-	{
+	struct DeviceGlyphInfo {
 		Rect bbox;
 		//Rect cbox;
 		CellInfo cellInfo;
 	};
 
 	void Load();
+	void LoadFont(const std::filesystem::path &filename);
 
 	static uint32_t AlignUint32(uint32_t value, uint32_t alignment);
-
-	void LoadFont(const std::filesystem::path &filename);
 
 	std::filesystem::path m_filename;
 	std::string m_style;

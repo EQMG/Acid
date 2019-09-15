@@ -6,23 +6,16 @@
 #include "UiInputButton.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiInputBoolean
-:
-public
-UiObject
-{
+class ACID_EXPORT UiInputBoolean : public UiObject {
 public:
 	UiInputBoolean(UiObject *parent, const std::string &title, bool value, const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;
 
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	bool GetValue() const { return m_value; }
-
 	void SetValue(bool value);
 
 	/**

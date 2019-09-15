@@ -7,9 +7,7 @@
 using namespace acid;
 
 namespace test {
-class MainApp :
-	public App,
-	public Observer {
+class MainApp : public App, public Observer {
 public:
 	MainApp();
 

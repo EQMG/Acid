@@ -10,19 +10,13 @@ namespace acid {
 /**
  * @brief Component that represents a scene camera, this object should be overridden with new behaviour.
  */
-class ACID_EXPORT
-Camera
-:
-public
-Component
-{
+class ACID_EXPORT Camera : public Component {
 public:
 	Camera() :
 		m_nearPlane(0.1f),
 		m_farPlane(1000.0f),
 		m_fieldOfView(Maths::Radians(45.0f)),
-		m_viewRay(false, {0.5f, 0.5f})
-	{
+		m_viewRay(false, {0.5f, 0.5f}) {
 	}
 
 	virtual ~Camera() = default;
@@ -32,7 +26,6 @@ public:
 	 * @return The distance of the near pane of the view frustum.
 	 */
 	float GetNearPlane() const { return m_nearPlane; }
-
 	void SetNearPlane(float nearPlane) { m_nearPlane = nearPlane; }
 
 	/**
@@ -40,7 +33,6 @@ public:
 	 * @return The distance of the view frustum's far plane.
 	 */
 	float GetFarPlane() const { return m_farPlane; }
-
 	void SetFarPlane(float farPlane) { m_farPlane = farPlane; }
 
 	/**
@@ -48,13 +40,10 @@ public:
 	 * @return The field of view angle for the view frustum.
 	 */
 	float GetFieldOfView() const { return m_fieldOfView; }
-
 	void SetFieldOfView(float fieldOfView) { m_fieldOfView = fieldOfView; }
 
 	const Vector3f &GetPosition() const { return m_position; }
-
 	const Vector3f &GetRotation() const { return m_rotation; }
-
 	const Vector3f &GetVelocity() const { return m_velocity; }
 
 	/**

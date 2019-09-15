@@ -29,15 +29,15 @@ void Uis::Update() {
 	}
 }
 
-void Uis::CancelWasEvent(const MouseButton &button) {
-	m_selectors[button].m_wasDown = false;
-}
-
-bool Uis::IsDown(const MouseButton &button) {
+bool Uis::IsDown(MouseButton button) {
 	return m_selectors[button].m_isDown;
 }
 
-bool Uis::WasDown(const MouseButton &button) {
+bool Uis::WasDown(MouseButton button) {
 	return m_selectors[button].m_wasDown;
+}
+
+void Uis::CancelWasEvent(MouseButton button) {
+	m_selectors[button].m_wasDown = false;
 }
 }

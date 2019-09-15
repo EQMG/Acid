@@ -44,12 +44,7 @@ enum class CursorStandard {
 /**
  * @brief Module used for managing a virtual mouse.
  */
-class ACID_EXPORT
-Mouse
-:
-public
-Module
-{
+class ACID_EXPORT Mouse : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -58,7 +53,6 @@ public:
 	static Mouse *Get() { return Engine::Get()->GetModule<Mouse>(); }
 
 	Mouse();
-
 	~Mouse();
 
 	void Update() override;
@@ -68,7 +62,7 @@ public:
 	 * @param mouseButton The mouse button to get the state of.
 	 * @return The mouse buttons state.
 	 */
-	InputAction GetButton(const MouseButton &mouseButton) const;
+	InputAction GetButton(MouseButton mouseButton) const;
 
 	/**
 	 * Sets the cursor to a image file.
@@ -183,13 +177,9 @@ private:
 	static double SmoothScrollWheel(double value, float delta);
 
 	friend void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods);
-
 	friend void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos);
-
 	friend void CallbackCursorEnter(GLFWwindow *window, int32_t entered);
-
 	friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
-
 	friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 
 	std::optional<std::pair<std::string, CursorHotspot>> m_currentCursor;

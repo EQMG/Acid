@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT
-Button
-:
-public
-Observer
-{
+class ACID_EXPORT Button : public Observer {
 public:
 	virtual ~Button() = default;
 
@@ -25,8 +20,7 @@ public:
 	 * Gets if the key is down and was not down before. Key press recognized as one click.
 	 * @return Is the key down and was not down before?
 	 */
-	bool WasDown()
-	{
+	bool WasDown() {
 		auto stillDown = m_wasDown && IsDown();
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;

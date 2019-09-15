@@ -8,11 +8,11 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
-class MaterialStreamReader :
-	public tinyobj::MaterialReader {
+class MaterialStreamReader : public tinyobj::MaterialReader {
 public:
 	explicit MaterialStreamReader(std::filesystem::path folder) :
-		m_folder(std::move(folder)) { }
+		m_folder(std::move(folder)) {
+	}
 
 	bool operator()(const std::string &matId, std::vector<tinyobj::material_t> *materials, std::map<std::string, int> *matMap, std::string *warn, std::string *err) override {
 		(void)err;

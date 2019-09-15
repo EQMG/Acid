@@ -4,19 +4,13 @@
 #include "Guis/Gui.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiStartLogo
-:
-public
-UiObject
-{
+class ACID_EXPORT UiStartLogo : public UiObject {
 public:
 	explicit UiStartLogo(UiObject *parent);
 
 	void UpdateObject() override;
 
 	bool IsFinished() const { return m_finished; }
-
 	Delegate<void()> &OnFinished() { return m_onFinished; }
 
 private:

@@ -16,12 +16,7 @@ class Frustum;
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT
-CollisionObject
-:
-public
-Component
-{
+class ACID_EXPORT CollisionObject : public Component {
 public:
 	/**
 	 * Creates a new collision object.
@@ -30,7 +25,7 @@ public:
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = {1.0f}, const Vector3f &angularFactor = {1.0f});
+	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f & linearFactor = {1.0f}, const Vector3f & angularFactor = {1.0f});
 
 	virtual ~CollisionObject();
 
@@ -42,53 +37,41 @@ public:
 	virtual bool InFrustum(const Frustum &frustum) = 0;
 
 	Force *AddForce(std::unique_ptr<Force> &&force);
-
 	virtual void ClearForces() = 0;
 
 	bool IsShapeCreated() const { return m_shape != nullptr; }
 
 	void SetChildTransform(Collider *child, const Transform &transform);
-
 	void AddChild(Collider *child);
-
 	void RemoveChild(Collider *child);
 
 	void SetIgnoreCollisionCheck(CollisionObject *other, bool ignore);
 
 	float GetMass() const { return m_mass; }
-
 	virtual void SetMass(float mass) = 0;
 
 	const Vector3f &GetGravity() const { return m_gravity; }
-
 	virtual void SetGravity(const Vector3f &gravity) = 0;
 
 	const Vector3f &GetLinearFactor() const { return m_linearFactor; }
-
 	virtual void SetLinearFactor(const Vector3f &linearFactor) = 0;
 
 	const Vector3f &GetAngularFactor() const { return m_angularFactor; }
-
 	virtual void SetAngularFactor(const Vector3f &angularFactor) = 0;
 
 	float GetFriction() const { return m_friction; }
-
 	void SetFriction(float friction);
 
 	float GetFrictionRolling() const { return m_frictionRolling; }
-
 	void SetFrictionRolling(float frictionRolling);
 
 	float GetFrictionSpinning() const { return m_frictionSpinning; }
-
 	void SetFrictionSpinning(float frictionSpinning);
 
 	const Vector3f &GetLinearVelocity() const { return m_linearVelocity; }
-
 	virtual void SetLinearVelocity(const Vector3f &linearVelocity) = 0;
 
 	const Vector3f &GetAngularVelocity() const { return m_angularVelocity; }
-
 	virtual void SetAngularVelocity(const Vector3f &angularVelocity) = 0;
 
 	/**
@@ -104,9 +87,9 @@ public:
 	Delegate<void(CollisionObject *)> &OnSeparation() { return m_onSeparation; }
 
 protected:
-	void CreateShape(bool forceSingle = false);
-
 	virtual void RecalculateMass() = 0;
+
+	void CreateShape(bool forceSingle = false);
 
 	float m_mass;
 	Vector3f m_gravity;

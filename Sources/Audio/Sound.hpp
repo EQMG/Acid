@@ -9,12 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a playable sound.
  */
-class ACID_EXPORT
-Sound
-:
-public
-Component
-{
+class ACID_EXPORT Sound : public Component {
 public:
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,
 		bool loop = false, float gain = 1.0f, float pitch = 1.0f);
@@ -22,39 +17,29 @@ public:
 	~Sound();
 
 	void Start() override;
-
 	void Update() override;
 
 	void Play(bool loop = false);
-
 	void Pause();
-
 	void Resume();
-
 	void Stop();
 
 	bool IsPlaying() const;
 
 	void SetPosition(const Vector3f &position);
-
 	void SetDirection(const Vector3f &direction);
-
 	void SetVelocity(const Vector3f &velocity);
 
 	const Audio::Type &GetType() const { return m_type; }
-
 	void SetType(const Audio::Type &type) { m_type = type; }
 
 	float GetGain() const { return m_gain; }
-
 	void SetGain(float gain);
 
 	float GetPitch() const { return m_pitch; }
-
 	void SetPitch(float pitch);
 
 	friend const Node &operator>>(const Node &node, Sound &sound);
-
 	friend Node &operator<<(Node &node, const Sound &sound);
 
 private:

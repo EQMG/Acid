@@ -6,15 +6,12 @@ namespace acid {
 /**
  * @brief Provides functionality for getting the values from a font file.
  */
-class ACID_EXPORT
-FontMetafile
-{
+class ACID_EXPORT FontMetafile {
 public:
 	/**
 	 * @brief Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
 	 */
-	class Character
-	{
+	class Character {
 	public:
 		/**
 		 * Creates a new character.
@@ -40,8 +37,7 @@ public:
 			m_offsetY(offsetY),
 			m_sizeX(sizeX),
 			m_sizeY(sizeY),
-			m_advanceX(advanceX)
-		{
+			m_advanceX(advanceX) {
 		}
 
 		int32_t m_id;
@@ -72,11 +68,9 @@ public:
 	explicit FontMetafile(std::filesystem::path filename);
 
 	std::optional<Character> GetCharacter(int32_t ascii) const;
-
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 
 	float GetSpaceWidth() const { return m_spaceWidth; }
-
 	float GetMaxSizeY() const { return m_maxSizeY; }
 
 private:
@@ -110,8 +104,7 @@ private:
 	 * @return The value of the variable.
 	 */
 	template<typename T = int32_t>
-	T GetValueOfVariable(const std::string &variable)
-	{
+	T GetValueOfVariable(const std::string & variable) {
 		return String::From<T>(m_values.at(variable));
 	}
 

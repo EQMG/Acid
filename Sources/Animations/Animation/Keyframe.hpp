@@ -11,9 +11,7 @@ namespace acid {
  * It also contains the desired local-space transforms of all of the joints in the animated entity at this keyframe in the animation.
  * The joint transforms are stored in a map, indexed by the name of the joint that they should be applied to.
  **/
-class ACID_EXPORT
-Keyframe
-{
+class ACID_EXPORT Keyframe {
 public:
 	/**
 	 * Creates a new keyframe.
@@ -43,7 +41,6 @@ public:
 	const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
 
 	friend const Node &operator>>(const Node &node, Keyframe &keyframe);
-
 	friend Node &operator<<(Node &node, const Keyframe &keyframe);
 
 private:

@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a OBL model.
  */
-class ACID_EXPORT
-ModelObj
-:
-public
-Model
-{
+class ACID_EXPORT ModelObj : public Model {
 public:
 	/**
 	 * Creates a new OBJ model, or finds one with the same values.
@@ -35,7 +30,6 @@ public:
 	explicit ModelObj(std::filesystem::path filename, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelObj &model);
-
 	friend Node &operator<<(Node &node, const ModelObj &model);
 
 private:

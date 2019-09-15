@@ -6,9 +6,7 @@ namespace acid {
 /**
  * @brief Class that represents a command buffer.
  */
-class ACID_EXPORT
-CommandBuffer
-{
+class ACID_EXPORT CommandBuffer {
 public:
 	/**
 	 * Creates a new command buffer.
@@ -45,10 +43,9 @@ public:
 	 */
 	void Submit(const VkSemaphore &waitSemaphore = VK_NULL_HANDLE, const VkSemaphore &signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
-	bool IsRunning() const { return m_running; }
-
 	operator const VkCommandBuffer &() const { return m_commandBuffer; }
 
+	bool IsRunning() const { return m_running; }
 	const VkCommandBuffer &GetCommandBuffer() const { return m_commandBuffer; }
 
 private:

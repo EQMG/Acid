@@ -7,12 +7,7 @@ namespace acid {
 /**
  * @brief Component interface that defines a emitter volume.
  */
-class ACID_EXPORT
-Emitter
-:
-public
-Component
-{
+class ACID_EXPORT Emitter : public Component {
 public:
 	virtual ~Emitter() = default;
 
@@ -22,8 +17,7 @@ public:
 	 */
 	virtual Vector3f GeneratePosition() const = 0;
 
-	static Vector3f RandomUnitVector()
-	{
+	static Vector3f RandomUnitVector() {
 		auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 		auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 		auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);

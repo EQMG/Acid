@@ -7,9 +7,7 @@ namespace acid {
 /**
  * @brief Holds a RGBA colour.
  **/
-class ACID_EXPORT
-Colour
-{
+class ACID_EXPORT Colour {
 public:
 	/**
 	 * Constructor for Colour.
@@ -113,58 +111,36 @@ public:
 	 **/
 	std::string GetHex() const;
 
-	bool operator==(const Colour &other) const;
-
-	bool operator!=(const Colour &other) const;
-
 	float operator[](uint32_t index) const;
-
 	float &operator[](uint32_t index);
 
+	bool operator==(const Colour &other) const;
+	bool operator!=(const Colour &other) const;
+
 	friend Colour operator+(const Colour &left, const Colour &right);
-
 	friend Colour operator-(const Colour &left, const Colour &right);
-
 	friend Colour operator*(const Colour &left, const Colour &right);
-
 	friend Colour operator/(const Colour &left, const Colour &right);
-
 	friend Colour operator+(float value, const Colour &left);
-
 	friend Colour operator-(float value, const Colour &left);
-
 	friend Colour operator*(float value, const Colour &left);
-
 	friend Colour operator/(float value, const Colour &left);
-
 	friend Colour operator+(const Colour &left, float value);
-
 	friend Colour operator-(const Colour &left, float value);
-
 	friend Colour operator*(const Colour &left, float value);
-
 	friend Colour operator/(const Colour &left, float value);
 
 	Colour &operator+=(const Colour &other);
-
 	Colour &operator-=(const Colour &other);
-
 	Colour &operator*=(const Colour &other);
-
 	Colour &operator/=(const Colour &other);
-
 	Colour &operator+=(float value);
-
 	Colour &operator-=(float value);
-
 	Colour &operator*=(float value);
-
 	Colour &operator/=(float value);
 
 	friend const Node &operator>>(const Node &node, Colour &colour);
-
 	friend Node &operator<<(Node &node, const Colour &colour);
-
 	friend std::ostream &operator<<(std::ostream &stream, const Colour &colour);
 
 	static const Colour Clear;

@@ -13,7 +13,8 @@ ZipEntryMetaData::ZipEntryMetaData(const ZipEntryInfo &info) :
 	time(info.m_time) {
 }
 
-ZipEntry::ZipEntry(const ZipEntryInfo &info) : m_entryInfo(info) {
+ZipEntry::ZipEntry(const ZipEntryInfo &info) :
+	m_entryInfo(info) {
 	GetNewIndex(info.m_file_index);
 }
 

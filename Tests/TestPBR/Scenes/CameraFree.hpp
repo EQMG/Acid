@@ -10,13 +10,11 @@
 using namespace acid;
 
 namespace test {
-class CameraFree :
-	public Camera {
+class CameraFree : public Camera {
 public:
 	CameraFree();
 
 	void Start() override;
-
 	void Update() override;
 
 private:

@@ -95,7 +95,7 @@ void Audio::CheckAl(int32_t result) {
 	throw std::runtime_error("OpenAL Error: " + failure);
 }
 
-float Audio::GetGain(const Type &type) const {
+float Audio::GetGain(Type type) const {
 	auto it = m_gains.find(type);
 
 	if (it == m_gains.end()) {
@@ -105,7 +105,7 @@ float Audio::GetGain(const Type &type) const {
 	return it->second;
 }
 
-void Audio::SetGain(const Type &type, float volume) {
+void Audio::SetGain(Type type, float volume) {
 	auto it = m_gains.find(type);
 
 	if (it != m_gains.end()) {

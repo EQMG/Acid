@@ -11,21 +11,15 @@ enum class ScrollBar {
 	Both = Vertical | Horizontal
 };
 
-ENABLE_BITMASK_OPERATORS(ScrollBar)
+ENABLE_BITMASK_OPERATORS(ScrollBar);
 
-class ACID_EXPORT
-UiScrollBar
-:
-public
-UiObject
-{
+class ACID_EXPORT UiScrollBar : public UiObject {
 public:
 	UiScrollBar(UiObject *parent, const ScrollBar &type, const UiTransform &transform = {Vector2ui(Size)});
 
 	void UpdateObject() override;
 
 	float GetProgress();
-
 	void SetSize(const Vector2f &size);
 
 	static const uint32_t Size;

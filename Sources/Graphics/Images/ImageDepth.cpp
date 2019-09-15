@@ -50,16 +50,6 @@ ImageDepth::~ImageDepth() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage) {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-	descriptorSetLayoutBinding.binding = binding;
-	descriptorSetLayoutBinding.descriptorType = descriptorType;
-	descriptorSetLayoutBinding.descriptorCount = 1;
-	descriptorSetLayoutBinding.stageFlags = stage;
-	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-	return descriptorSetLayoutBinding;
-}
-
 WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -75,5 +65,15 @@ WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDesc
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
 	return {descriptorWrite, imageInfo};
+}
+
+VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage) {
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	descriptorSetLayoutBinding.binding = binding;
+	descriptorSetLayoutBinding.descriptorType = descriptorType;
+	descriptorSetLayoutBinding.descriptorCount = 1;
+	descriptorSetLayoutBinding.stageFlags = stage;
+	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+	return descriptorSetLayoutBinding;
 }
 }

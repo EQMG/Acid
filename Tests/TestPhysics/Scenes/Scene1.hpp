@@ -10,16 +10,12 @@
 using namespace acid;
 
 namespace test {
-class Scene1 :
-	public Scene,
-	public Observer {
+class Scene1 : public Scene, public Observer {
 public:
 	Scene1();
 
 	void Start() override;
-
 	void Update() override;
-
 	bool IsPaused() const override;
 
 private:

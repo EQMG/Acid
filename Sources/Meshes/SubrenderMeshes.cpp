@@ -4,7 +4,7 @@
 #include "MeshRender.hpp"
 
 namespace acid {
-SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort) :
+SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, Sort sort) :
 	Subrender(pipelineStage),
 	m_sort(sort),
 	m_uniformScene(true) {

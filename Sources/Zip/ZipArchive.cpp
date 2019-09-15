@@ -6,7 +6,8 @@
 #include "ZipException.h"
 
 namespace acid {
-ZipArchive::ZipArchive(const std::filesystem::path &filename) : m_archivePath(filename) {
+ZipArchive::ZipArchive(const std::filesystem::path &filename) :
+	m_archivePath(filename) {
 	std::ifstream f(filename.c_str());
 	if (f.good()) {
 		f.close();

@@ -7,12 +7,7 @@ namespace acid {
 /**
  * @brief Class that represents a  structure of spatial objects.
  */
-class ACID_EXPORT
-SceneStructure
-:
-public
-NonCopyable
-{
+class ACID_EXPORT SceneStructure : public NonCopyable {
 public:
 	SceneStructure();
 
@@ -96,16 +91,12 @@ public:
 	 * @return The list specified by of all components that match the type.
 	 */
 	template<typename T>
-	std::vector<T *> QueryComponents(bool allowDisabled = false)
-	{
+	std::vector<T *> QueryComponents(bool allowDisabled = false) {
 		std::vector<T *> components;
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
-		{
-			for (const auto &component : (*it)->GetComponents<T>())
-			{
-				if (component && (component->IsEnabled() || allowDisabled))
-				{
+		for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+			for (const auto &component : (*it)->GetComponents<T>()) {
+				if (component && (component->IsEnabled() || allowDisabled)) {
 					components.emplace_back(component);
 				}
 			}
@@ -121,14 +112,11 @@ public:
 	 * @return The first component of the type found.
 	 */
 	template<typename T>
-	T *GetComponent(bool allowDisabled = false)
-	{
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it)
-		{
+	T *GetComponent(bool allowDisabled = false) {
+		for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
 			auto component = (*it)->GetComponent<T>();
 
-			if (component && (component->IsEnabled() || allowDisabled))
-			{
+			if (component && (component->IsEnabled() || allowDisabled)) {
 				return component;
 			}
 		}

@@ -12,17 +12,18 @@ class SmoothFloat {
 public:
 	/**
 	 * Creates a new smooth float.
-	 * @param initialValue The initial value. 
-	 * @param agility The agility for increasing actual. 
+	 * @param initialValue The initial value.
+	 * @param agility The agility for increasing actual.
 	 **/
 	SmoothFloat(const T &initialValue, float agility) :
 		m_agility(agility),
 		m_target(initialValue),
-		m_actual(initialValue) { }
+		m_actual(initialValue) {
+	}
 
 	/**
 	 * Updates the driver with the passed time.
-	 * @param delta The time between the last update. 
+	 * @param delta The time between the last update.
 	 **/
 	void Update(const Time &delta) {
 		auto offset = m_target - m_actual;
@@ -32,25 +33,25 @@ public:
 
 	/**
 	 * Gets the smooth floats current target.
-	 * @return The target. 
+	 * @return The target.
 	 **/
 	const T &GetTarget() const { return m_target; }
 
 	/**
 	 * Sets the target for the smooth float.
-	 * @param target The new target. 
+	 * @param target The new target.
 	 **/
 	void SetTarget(const T &target) { m_target = target; }
 
 	/**
 	 * Increases the smooth floats target.
-	 * @param increase How much to increase the target by. 
+	 * @param increase How much to increase the target by.
 	 **/
 	void IncreaseTarget(const T &increase) { m_target += increase; }
 
 	/**
 	 * Gets the currently calculated value.
-	 * @return The calculated value. 
+	 * @return The calculated value.
 	 **/
 	float Get() const { return m_actual; }
 

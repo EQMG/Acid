@@ -9,12 +9,7 @@ namespace acid {
 /**
  * @brief Module used for managing resources.
  */
-class ACID_EXPORT
-Resources
-:
-public
-Module
-{
+class ACID_EXPORT Resources : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -27,9 +22,7 @@ public:
 	void Update() override;
 
 	std::shared_ptr<Resource> Find(const Node &node) const;
-
 	void Add(const Node &node, const std::shared_ptr<Resource> &resource);
-
 	void Remove(const std::shared_ptr<Resource> &resource);
 
 	/**

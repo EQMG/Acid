@@ -10,9 +10,7 @@ namespace acid {
  * It can be updated each frame to optimize the area, making it as small as possible (to allow for optimal shadow map resolution) while not being too small to avoid objects not having shadows when they should.
  * This class also provides functionality to test whether an object is inside this shadow box. Everything inside the box will be rendered to the shadow map in the shadow render pass.
  */
-class ACID_EXPORT
-ShadowBox
-{
+class ACID_EXPORT ShadowBox {
 public:
 	/**
 	 * Creates a new shadow box and calculates some initial values relating to the camera's view frustum.
@@ -51,15 +49,10 @@ public:
 	 * @return The light's "view" matrix.
 	 */
 	const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
-
 	const Vector3f &GetMinExtents() const { return m_minExtents; }
-
 	const Vector3f &GetMaxExtents() const { return m_maxExtents; }
-
 	float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
-
 	float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
-
 	float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
 
 private:
@@ -79,7 +72,7 @@ private:
 	 * @param centreFar The centre point of the frustum's far plane.
 	 * @return The vertices of the frustum in light space.
 	 */
-	std::array<Vector4f, 8> CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const;
+	std::array<Vector4f, 8> CalculateFrustumVertices(const Matrix4 & rotation, const Vector3f & forwardVector, const Vector3f & centreNear, const Vector3f & centreFar) const;
 
 	/**
 	 * Calculates one of the corner vertices of the view frustum in world space and converts it to light space.
@@ -96,9 +89,7 @@ private:
 	 * Updates the centre of the shadow box (orthographic projection area).
 	 */
 	void UpdateCenter();
-
 	void UpdateLightViewMatrix();
-
 	void UpdateViewShadowMatrix();
 
 	Vector3f m_lightDirection;

@@ -5,19 +5,13 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SubrenderMeshes
-:
-public
-Subrender
-{
+class ACID_EXPORT SubrenderMeshes : public Subrender {
 public:
-	enum class Sort
-	{
+	enum class Sort {
 		None, Front, Back
 	};
 
-	explicit SubrenderMeshes(const Pipeline::Stage &pipelineStage, const Sort &sort = Sort::None);
+	explicit SubrenderMeshes(const Pipeline::Stage &pipelineStage, Sort sort = Sort::None);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 

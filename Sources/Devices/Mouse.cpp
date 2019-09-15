@@ -128,7 +128,7 @@ void Mouse::SetClipboard(const std::string &string) const {
 	glfwSetClipboardString(Window::Get()->GetWindow(), string.c_str());
 }
 
-InputAction Mouse::GetButton(const MouseButton &mouseButton) const {
+InputAction Mouse::GetButton(MouseButton mouseButton) const {
 	auto state = glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton));
 	return static_cast<InputAction>(state);
 }

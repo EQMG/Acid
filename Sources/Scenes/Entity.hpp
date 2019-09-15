@@ -7,16 +7,8 @@ namespace acid {
 /**
  * @brief Class that represents a objects that acts as a component container.
  */
-class ACID_EXPORT
-Entity
-:
-public
-NonCopyable
-{
+class ACID_EXPORT Entity : public NonCopyable {
 public:
-	/**
-	 * Creates a new entity.
-	 */
 	Entity() = default;
 
 	/**
@@ -46,18 +38,14 @@ public:
 	 * @return The found component.
 	 */
 	template<typename T>
-	T *GetComponent(bool allowDisabled = false) const
-	{
+	T *GetComponent(bool allowDisabled = false) const {
 		T *alternative = nullptr;
 
-		for (const auto &component : m_components)
-		{
+		for (const auto &component : m_components) {
 			auto casted = dynamic_cast<T *>(component.get());
 
-			if (casted)
-			{
-				if (allowDisabled && !casted->IsEnabled())
-				{
+			if (casted) {
+				if (allowDisabled && !casted->IsEnabled()) {
 					alternative = casted;
 					continue;
 				}
@@ -76,18 +64,14 @@ public:
 	 * @return The components.
 	 */
 	template<typename T>
-	std::vector<T *> GetComponents(bool allowDisabled = false) const
-	{
+	std::vector<T *> GetComponents(bool allowDisabled = false) const {
 		std::vector<T *> components;
 
-		for (const auto &component : m_components)
-		{
+		for (const auto &component : m_components) {
 			auto casted = dynamic_cast<T *>(component.get());
 
-			if (casted)
-			{
-				if (allowDisabled && !casted->IsEnabled())
-				{
+			if (casted) {
+				if (allowDisabled && !casted->IsEnabled()) {
 					components.emplace_back(casted);
 					continue;
 				}
@@ -114,8 +98,7 @@ public:
 	 * @return The added component.
 	 */
 	template<typename T, typename... Args>
-	T *AddComponent(Args &&... args)
-	{
+	T *AddComponent(Args &&... args) {
 		auto created = new T(std::forward<Args>(args)...);
 		AddComponent(created);
 		return created;
@@ -138,14 +121,11 @@ public:
 	 * @tparam T The type of component to remove.
 	 */
 	template<typename T>
-	void RemoveComponent()
-	{
-		for (auto it = m_components.begin(); it != m_components.end(); ++it)
-		{
+	void RemoveComponent() {
+		for (auto it = m_components.begin(); it != m_components.end(); ++it) {
 			auto casted = dynamic_cast<T *>((*it).get());
 
-			if (casted)
-			{
+			if (casted) {
 				(*it)->SetEntity(nullptr);
 				m_components.erase(it);
 			}
@@ -153,11 +133,9 @@ public:
 	}
 
 	const std::string &GetName() const { return m_name; }
-
 	void SetName(const std::string &name) { m_name = name; }
-
+	
 	bool IsRemoved() const { return m_removed; }
-
 	void SetRemoved(bool removed) { m_removed = removed; }
 
 private:

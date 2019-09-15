@@ -7,8 +7,7 @@
 using namespace acid;
 
 namespace test {
-class OverlayDebug :
-	public UiObject {
+class OverlayDebug : public UiObject {
 public:
 	explicit OverlayDebug(UiObject *parent);
 

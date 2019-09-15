@@ -17,9 +17,7 @@ namespace acid {
  * The Animator calculates the desired current animation pose by interpolating between the previous and next keyframes of the animation
  * (based on the current animation time). The Animator then updates the transforms all of the joints each frame to match the current desired animation pose.
  **/
-class ACID_EXPORT
-Animator
-{
+class ACID_EXPORT Animator {
 public:
 	/**
 	 * This method should be called each frame to update the animation currently being played. This increases the animation time (and loops it back to zero if necessary),

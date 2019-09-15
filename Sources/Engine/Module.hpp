@@ -7,18 +7,12 @@ namespace acid {
 /**
  * @brief A interface used for defining engine modules.
  */
-class ACID_EXPORT
-Module
-:
-public
-NonCopyable
-{
+class ACID_EXPORT Module : public NonCopyable {
 public:
 	/**
 	 * @brief Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
 	 */
-	enum class Stage
-	{
+	enum class Stage {
 		Always, Pre, Normal, Post, Render
 	};
 
@@ -30,8 +24,7 @@ public:
 	virtual void Update() = 0;
 };
 
-template class ACID_EXPORT
-TypeInfo<Module>;
+template class ACID_EXPORT TypeInfo<Module>;
 
 /**
  * Gets the Type ID for the Module.

@@ -8,12 +8,7 @@ namespace acid {
 /**
  * @brief Module used for managing a shadow map.
  */
-class ACID_EXPORT
-Shadows
-:
-public
-Module
-{
+class ACID_EXPORT Shadows : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -26,35 +21,27 @@ public:
 	void Update() override;
 
 	const Vector3f &GetLightDirection() const { return m_lightDirection; }
-
 	void SetLightDirection(const Vector3f &lightDirection) { m_lightDirection = lightDirection; }
 
 	uint32_t GetShadowSize() const { return m_shadowSize; }
-
 	void SetShadowSize(uint32_t shadowSize) { m_shadowSize = shadowSize; }
 
 	int32_t GetShadowPcf() const { return m_shadowPcf; }
-
 	void SetShadowPcf(int32_t shadowPcf) { m_shadowPcf = shadowPcf; }
 
 	float GetShadowBias() const { return m_shadowBias; }
-
 	void SetShadowBias(float shadowBias) { m_shadowBias = shadowBias; }
 
 	float GetShadowDarkness() const { return m_shadowDarkness; }
-
 	void SetShadowDarkness(float shadowDarkness) { m_shadowDarkness = shadowDarkness; }
 
 	float GetShadowTransition() const { return m_shadowTransition; }
-
 	void SetShadowTransition(float shadowTransition) { m_shadowTransition = shadowTransition; }
 
 	float GetShadowBoxOffset() const { return m_shadowBoxOffset; }
-
 	void SetShadowBoxOffset(float shadowBoxOffset) { m_shadowBoxOffset = shadowBoxOffset; }
 
 	float GetShadowBoxDistance() const { return m_shadowBoxDistance; }
-
 	void SetShadowBoxDistance(float shadowBoxDistance) { m_shadowBoxDistance = shadowBoxDistance; }
 
 	/**

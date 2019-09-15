@@ -33,7 +33,7 @@ void Terrain::Start() {
 		return;
 	}
 
-	colliderHeightfield->Initialize(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
+	colliderHeightfield->SetHeightfield(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
 }
 
 void Terrain::Update() {

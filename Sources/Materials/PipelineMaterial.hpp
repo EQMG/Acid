@@ -7,12 +7,7 @@ namespace acid {
 /**
  * @brief Resource that represents a material pipeline.
  */
-class ACID_EXPORT
-PipelineMaterial
-:
-public
-Resource
-{
+class ACID_EXPORT PipelineMaterial : public Resource {
 public:
 	/**
 	 * Creates a new material pipeline, or finds one with the same values.
@@ -44,13 +39,10 @@ public:
 	bool BindPipeline(const CommandBuffer &commandBuffer);
 
 	const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
-
 	const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
-
 	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
 
 	friend const Node &operator>>(const Node &node, PipelineMaterial &pipeline);
-
 	friend Node &operator<<(Node &node, const PipelineMaterial &pipeline);
 
 private:

@@ -64,6 +64,17 @@ Component *ComponentRegister::Create(const std::string &name) const {
 	return ((*it).second).m_create();
 }
 
+std::optional<std::string> ComponentRegister::FindName(Component *compare) const {
+	for (const auto &[name, component] : m_components) // TODO: Clean remove.
+	{
+		if (component.m_isSame(compare)) {
+			return name;
+		}
+	}
+
+	return std::nullopt;
+}
+
 void ComponentRegister::Decode(const std::string &name, const Node &node, Component *component) {
 	auto it = m_components.find(name);
 
@@ -84,16 +95,5 @@ void ComponentRegister::Encode(const std::string &name, Node &node, const Compon
 	}
 
 	((*it).second).m_encode(node, component);
-}
-
-std::optional<std::string> ComponentRegister::FindName(Component *compare) const {
-	for (const auto &[name, component] : m_components) // TODO: Clean remove.
-	{
-		if (component.m_isSame(compare)) {
-			return name;
-		}
-	}
-
-	return std::nullopt;
 }
 }

@@ -4,15 +4,9 @@
 #include "Post/PostFilter.hpp"
 
 namespace acid {
-class ACID_EXPORT
-FilterBlur
-:
-public
-PostFilter
-{
+class ACID_EXPORT FilterBlur : public PostFilter {
 public:
-	enum class Type
-	{
+	enum class Type {
 		_5 = 5, _9 = 9, _13 = 13
 	};
 
@@ -21,7 +15,6 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 	const Vector2f &GetDirection() const { return m_direction; }
-
 	void SetDirection(const Vector2f &direction) { m_direction = direction; }
 
 private:

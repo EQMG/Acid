@@ -5,19 +5,13 @@
 #include "Uis/UiObject.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiInputButton
-:
-public
-UiObject
-{
+class ACID_EXPORT UiInputButton : public UiObject {
 public:
 	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = {Size});
 
 	void UpdateObject() override;
 
 	const std::string &GetString() const { return m_text.GetString(); }
-
 	void SetString(const std::string &string) { m_text.SetString(string); }
 
 	static const Vector2i Size;

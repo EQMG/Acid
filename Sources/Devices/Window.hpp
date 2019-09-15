@@ -17,7 +17,7 @@ enum class InputAction :
 	Repeat = 2
 };
 
-ENABLE_BITMASK_OPERATORS(InputAction)
+ENABLE_BITMASK_OPERATORS(InputAction);
 
 enum class InputMod :
 	int32_t {
@@ -28,17 +28,12 @@ enum class InputMod :
 	Super = 8
 };
 
-ENABLE_BITMASK_OPERATORS(InputMod)
+ENABLE_BITMASK_OPERATORS(InputMod);
 
 /**
  * @brief Module used for managing a window.
  */
-class ACID_EXPORT
-Window
-:
-public
-Module
-{
+class ACID_EXPORT Window : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -47,7 +42,6 @@ public:
 	static Window *Get() { return Engine::Get()->GetModule<Window>(); }
 
 	Window();
-
 	~Window();
 
 	void Update() override;
@@ -177,7 +171,7 @@ public:
 	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
 
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
-
+	
 	const Monitor *GetPrimaryMonitor() const;
 
 	/**
@@ -247,28 +241,19 @@ public:
 	Delegate<void(bool)> &OnIconify() { return m_onIconify; }
 
 	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
-
 	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
 
 	static std::pair<const char **, uint32_t> GetInstanceExtensions();
-
 	VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
 
 private:
 	friend void CallbackError(int32_t error, const char *description);
-
 	friend void CallbackMonitor(GLFWmonitor *monitor, int32_t event);
-
 	friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
-
 	friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
-
 	friend void CallbackClose(GLFWwindow *window);
-
 	friend void CallbackFocus(GLFWwindow *window, int32_t focused);
-
 	friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
-
 	friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
 
 	Vector2ui m_size;

@@ -12,17 +12,18 @@ class Driver {
 public:
 	/**
 	 * Creates a new driver with a length.
-	 * @param length The drivers length. 
+	 * @param length The drivers length.
 	 **/
 	explicit Driver(const Time &length) :
-		m_length(length) { }
+		m_length(length) {
+	}
 
 	virtual ~Driver() = default;
 
 	/**
 	 * Updates the driver with the passed time.
-	 * @param delta The time between the last update. 
-	 * @return The calculated value. 
+	 * @param delta The time between the last update.
+	 * @return The calculated value.
 	 **/
 
 	T Update(const Time &delta) {
@@ -35,13 +36,13 @@ public:
 
 	/**
 	 * Gets the length.
-	 * @return The length. 
+	 * @return The length.
 	 **/
 	const Time &GetLength() const { return m_length; }
 
 	/**
 	 * Sets the length.
-	 * @param length The new length. 
+	 * @param length The new length.
 	 **/
 	void SetLength(const Time &length) { m_length = length; }
 
@@ -49,7 +50,7 @@ protected:
 	/**
 	 * Calculates the new value.
 	 * @param factor The time into the drivers life.
-	 * @return The calculated value. 
+	 * @return The calculated value.
 	 **/
 	virtual T Calculate(float factor) = 0;
 

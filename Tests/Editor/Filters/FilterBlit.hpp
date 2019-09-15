@@ -5,8 +5,7 @@
 using namespace acid;
 
 namespace test {
-class FilterBlit :
-	public PostFilter {
+class FilterBlit : public PostFilter {
 public:
 	explicit FilterBlit(const Pipeline::Stage &pipelineStage);
 

@@ -7,13 +7,10 @@ namespace acid {
 /**
  * @brief Module used for that manages debug gizmos.
  */
-class ACID_EXPORT
-Gizmos
-:
-public
-Module
-{
+class ACID_EXPORT Gizmos : public Module {
 public:
+	using GizmosContainer = std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>;
+	
 	/**
 	 * Gets the engines instance.
 	 * @return The current module instance.
@@ -25,7 +22,6 @@ public:
 	void Update() override;
 
 	Gizmo *AddGizmo(std::unique_ptr<Gizmo> &&gizmo);
-
 	void RemoveGizmo(Gizmo *gizmo);
 
 	/**
@@ -37,9 +33,9 @@ public:
 	 * Gets a list of all gizmos.
 	 * @return All gizmos.
 	 */
-	const std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> &GetGizmos() const { return m_gizmos; }
+	const GizmosContainer &GetGizmos() const { return m_gizmos; }
 
 private:
-	std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>> m_gizmos;
+	GizmosContainer m_gizmos;
 };
 }

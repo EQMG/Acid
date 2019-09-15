@@ -5,12 +5,7 @@
 #include "Maths/Vector3.hpp"
 
 namespace acid {
-class ACID_EXPORT
-FilterSsao
-:
-public
-PostFilter
-{
+class ACID_EXPORT FilterSsao : public PostFilter {
 public:
 	explicit FilterSsao(const Pipeline::Stage &pipelineStage);
 

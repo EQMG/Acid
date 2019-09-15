@@ -7,12 +7,7 @@ namespace acid {
 /**
  * @brief Resource that represents a GLTF model.
  */
-class ACID_EXPORT
-ModelGltf
-:
-public
-Model
-{
+class ACID_EXPORT ModelGltf : public Model {
 public:
 	/**
 	 * Creates a new GLTF model, or finds one with the same values.
@@ -36,7 +31,6 @@ public:
 	explicit ModelGltf(std::filesystem::path filename, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelGltf &model);
-
 	friend Node &operator<<(Node &node, const ModelGltf &model);
 
 private:

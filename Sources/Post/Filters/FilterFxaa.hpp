@@ -3,19 +3,13 @@
 #include "Post/PostFilter.hpp"
 
 namespace acid {
-class ACID_EXPORT
-FilterFxaa
-:
-public
-PostFilter
-{
+class ACID_EXPORT FilterFxaa : public PostFilter {
 public:
 	explicit FilterFxaa(const Pipeline::Stage &pipelineStage, float spanMax = 8.0f);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
 	float GetSpanMax() const { return m_spanMax; }
-
 	void SetSpanMax(float spanMax) { m_spanMax = spanMax; }
 
 private:

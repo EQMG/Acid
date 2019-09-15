@@ -1,7 +1,7 @@
 #include "ButtonKeyboard.hpp"
 
 namespace acid {
-ButtonKeyboard::ButtonKeyboard(const Key &key) :
+ButtonKeyboard::ButtonKeyboard(Key key) :
 	m_key(key) {
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
 		if (key == m_key) {

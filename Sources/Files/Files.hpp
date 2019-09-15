@@ -11,58 +11,31 @@ enum class FileMode {
 	Append
 };
 
-class ACID_EXPORT
-BaseFStream
-{
+class ACID_EXPORT BaseFStream {
 protected:
 	PHYSFS_File *file;
 public:
 	explicit BaseFStream(PHYSFS_File *file);
-
 	virtual ~BaseFStream();
 
 	size_t length();
 };
 
-class ACID_EXPORT
-IFStream
-:
-public
-BaseFStream
-,
-public
-std::istream
-{
+class ACID_EXPORT IFStream : public BaseFStream, public std::istream {
 public:
 	explicit IFStream(const std::filesystem::path &filename);
 
 	virtual ~IFStream();
 };
 
-class ACID_EXPORT
-OFStream
-:
-public
-BaseFStream
-,
-public
-std::ostream
-{
+class ACID_EXPORT OFStream : public BaseFStream, public std::ostream {
 public:
 	explicit OFStream(const std::filesystem::path &filename, const FileMode &writeMode = FileMode::Write);
 
 	virtual ~OFStream();
 };
 
-class ACID_EXPORT
-FStream
-:
-public
-BaseFStream
-,
-public
-std::iostream
-{
+class ACID_EXPORT FStream : public BaseFStream, public std::iostream {
 public:
 	explicit FStream(const std::filesystem::path &filename, const FileMode &openMode = FileMode::Read);
 
@@ -72,12 +45,7 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT
-Files
-:
-public
-Module
-{
+class ACID_EXPORT Files : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -86,7 +54,7 @@ public:
 	static Files *Get() { return Engine::Get()->GetModule<Files>(); }
 
 	Files();
-
+	
 	~Files();
 
 	void Update() override;

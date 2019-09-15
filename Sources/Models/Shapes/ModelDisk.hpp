@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a disk model.
  */
-class ACID_EXPORT
-ModelDisk
-:
-public
-Model
-{
+class ACID_EXPORT ModelDisk : public Model {
 public:
 	/**
 	 * Creates a new disk model, or finds one with the same values.
@@ -41,7 +36,6 @@ public:
 	explicit ModelDisk(float innerRadius = 0.5f, float outerRadius = 1.0f, uint32_t slices = 20, uint32_t loops = 4, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelDisk &model);
-
 	friend Node &operator<<(Node &node, const ModelDisk &model);
 
 private:

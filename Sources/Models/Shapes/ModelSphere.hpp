@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a sphere model.
  */
-class ACID_EXPORT
-ModelSphere
-:
-public
-Model
-{
+class ACID_EXPORT ModelSphere : public Model {
 public:
 	/**
 	 * Creates a new sphere model, or finds one with the same values.
@@ -39,7 +34,6 @@ public:
 	explicit ModelSphere(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20, bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelSphere &model);
-
 	friend Node &operator<<(Node &node, const ModelSphere &model);
 
 private:

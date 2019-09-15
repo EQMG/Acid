@@ -6,12 +6,7 @@
 #include "UiInputButton.hpp"
 
 namespace acid {
-class ACID_EXPORT
-UiInputSlider
-:
-public
-UiObject
-{
+class ACID_EXPORT UiInputSlider : public UiObject {
 public:
 	UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo = 2,
 		const UiTransform & transform = {UiInputButton::Size});
@@ -19,19 +14,15 @@ public:
 	void UpdateObject() override;
 
 	float GetValueMin() const { return m_valueMin; }
-
 	void SetValueMin(float valueMin) { m_valueMin = valueMin; }
 
 	float GetValueMax() const { return m_valueMax; }
-
 	void SetValueMax(float valueMax) { m_valueMax = valueMax; }
 
 	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-
 	void SetTitle(const std::string &title) { m_textTitle.SetString(title); }
 
 	float GetValue() const { return m_value; }
-
 	void SetValue(float value);
 
 	float GetProgress() const { return m_progress; }

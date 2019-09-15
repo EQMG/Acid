@@ -6,12 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a cylinder model.
  */
-class ACID_EXPORT
-ModelCylinder
-:
-public
-Model
-{
+class ACID_EXPORT ModelCylinder : public Model {
 public:
 	/**
 	 * Creates a new cylinder model, or finds one with the same values.
@@ -45,7 +40,6 @@ public:
 		bool load = true);
 
 	friend const Node &operator>>(const Node &node, ModelCylinder &model);
-
 	friend Node &operator<<(Node &node, const ModelCylinder &model);
 
 private:

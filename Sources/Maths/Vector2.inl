@@ -213,30 +213,6 @@ auto Vector2<T>::PolarToCartesian() const {
 }
 
 template<typename T>
-template<typename K>
-constexpr bool Vector2<T>::operator==(const Vector2<K> &other) const {
-	return m_x == other.m_x && m_y == other.m_y;
-}
-
-template<typename T>
-template<typename K>
-constexpr bool Vector2<T>::operator!=(const Vector2<K> &other) const {
-	return !(*this == other);
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_signed_v<U>, Vector2<T>> Vector2<T>::operator-() const {
-	return {-m_x, -m_y};
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_integral_v<U>, Vector2<T>> Vector2<T>::operator~() const {
-	return {~m_x, ~m_y};
-}
-
-template<typename T>
 constexpr const T &Vector2<T>::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
@@ -258,6 +234,30 @@ constexpr T &Vector2<T>::operator[](uint32_t index) {
 	default:
 		throw std::runtime_error("Vector2 index out of bounds!");
 	}
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector2<T>::operator==(const Vector2<K> &other) const {
+	return m_x == other.m_x && m_y == other.m_y;
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector2<T>::operator!=(const Vector2<K> &other) const {
+	return !(*this == other);
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_signed_v<U>, Vector2<T>> Vector2<T>::operator-() const {
+	return {-m_x, -m_y};
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_integral_v<U>, Vector2<T>> Vector2<T>::operator~() const {
+	return {~m_x, ~m_y};
 }
 
 template<typename T>

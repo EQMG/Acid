@@ -8,18 +8,7 @@ namespace acid {
 /**
  * @brief Resource that represents a cubemap image.
  */
-class ACID_EXPORT
-ImageCube
-:
-public
-NonCopyable
-,
-public
-Descriptor
-,
-public
-Resource
-{
+class ACID_EXPORT ImageCube : public NonCopyable, public Descriptor, public Resource {
 public:
 	/**
 	 * Creates a new cubemap image, or finds one with the same values.
@@ -74,10 +63,10 @@ public:
 
 	~ImageCube();
 
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+
 	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
 		uint32_t count);
-
-	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
 	 * Copies the images pixels from memory.
@@ -107,45 +96,27 @@ public:
 	static std::unique_ptr<uint8_t[]> LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
 		uint32_t &components, VkFormat &format);
 
-	const std::filesystem::path &GetFilename() const { return m_filename; };
-
-	const std::string &GetFileSuffix() { return m_fileSuffix; };
-
-	const std::vector<std::string> &GetFileSides() { return m_fileSides; };
-
-	const VkFilter &GetFilter() const { return m_filter; }
-
-	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
-
-	bool IsAnisotropic() const { return m_anisotropic; }
-
-	bool IsMipmap() const { return m_mipmap; }
-
-	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
-
-	const VkImageLayout &GetLayout() const { return m_layout; }
-
-	const VkImageUsageFlags &GetUsage() const { return m_usage; }
-
-	uint32_t GetComponents() const { return m_components; }
-
-	const Vector2ui &GetExtent() const { return m_extent; }
-
-	uint32_t GetMipLevels() const { return m_mipLevels; }
-
-	const VkImage &GetImage() const { return m_image; }
-
-	const VkDeviceMemory &GetMemory() { return m_memory; }
-
-	const VkSampler &GetSampler() const { return m_sampler; }
-
-	const VkImageView &GetView() const { return m_view; }
-
-	const VkFormat &GetFormat() const { return m_format; }
-
 	friend const Node &operator>>(const Node &node, ImageCube &image);
-
 	friend Node &operator<<(Node &node, const ImageCube &image);
+
+	const std::filesystem::path &GetFilename() const { return m_filename; }
+	const std::string &GetFileSuffix() { return m_fileSuffix; }
+	const std::vector<std::string> &GetFileSides() { return m_fileSides; }
+	const VkFilter &GetFilter() const { return m_filter; }
+	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
+	bool IsAnisotropic() const { return m_anisotropic; }
+	bool IsMipmap() const { return m_mipmap; }
+	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
+	const VkImageLayout &GetLayout() const { return m_layout; }
+	const VkImageUsageFlags &GetUsage() const { return m_usage; }
+	uint32_t GetComponents() const { return m_components; }
+	const Vector2ui &GetExtent() const { return m_extent; }
+	uint32_t GetMipLevels() const { return m_mipLevels; }
+	const VkImage &GetImage() const { return m_image; }
+	const VkDeviceMemory &GetMemory() { return m_memory; }
+	const VkSampler &GetSampler() const { return m_sampler; }
+	const VkImageView &GetView() const { return m_view; }
+	const VkFormat &GetFormat() const { return m_format; }
 
 private:
 	void Load();

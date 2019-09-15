@@ -184,6 +184,16 @@ float Matrix2::GetSubmatrix(uint32_t row, uint32_t col) const {
 	return result;
 }
 
+const Vector2f &Matrix2::operator[](uint32_t index) const {
+	assert(index < 2);
+	return m_rows[index];
+}
+
+Vector2f &Matrix2::operator[](uint32_t index) {
+	assert(index < 2);
+	return m_rows[index];
+}
+
 bool Matrix2::operator==(const Matrix2 &other) const {
 	return m_rows[0] == other.m_rows[0] && m_rows[1] == other.m_rows[1];
 }
@@ -194,16 +204,6 @@ bool Matrix2::operator!=(const Matrix2 &other) const {
 
 Matrix2 Matrix2::operator-() const {
 	return Negate();
-}
-
-const Vector2f &Matrix2::operator[](uint32_t index) const {
-	assert(index < 2);
-	return m_rows[index];
-}
-
-Vector2f &Matrix2::operator[](uint32_t index) {
-	assert(index < 2);
-	return m_rows[index];
 }
 
 Matrix2 operator+(const Matrix2 &left, const Matrix2 &right) {

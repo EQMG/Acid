@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief A instance of a particle type.
  */
-class ACID_EXPORT
-Particle
-{
+class ACID_EXPORT Particle {
 	friend class ParticleType;
 public:
 	/**
@@ -32,31 +30,20 @@ public:
 	 */
 	void Update();
 
-	bool IsAlive() const { return m_transparency > 0.0f; }
-
-	const std::shared_ptr<ParticleType> &GetParticleType() const { return m_particleType; }
-
-	const Vector3f &GetPosition() const { return m_position; }
-
-	const Vector3f &GetVelocity() const { return m_velocity; }
-
-	const Vector3f &GetChange() const { return m_change; }
-
-	float GetLifeLength() const { return m_lifeLength; }
-
-	float GetRotation() const { return m_rotation; }
-
-	float GetScale() const { return m_scale; }
-
-	float GetGravityEffect() const { return m_gravityEffect; }
-
-	float GetElapsedTime() const { return m_elapsedTime; }
-
-	float GetTransparency() const { return m_transparency; }
-
-	float DistanceToCamera() const { return m_distanceToCamera; }
-
 	bool operator<(const Particle &other) const;
+
+	bool IsAlive() const { return m_transparency > 0.0f; }
+	const std::shared_ptr<ParticleType> &GetParticleType() const { return m_particleType; }
+	const Vector3f &GetPosition() const { return m_position; }
+	const Vector3f &GetVelocity() const { return m_velocity; }
+	const Vector3f &GetChange() const { return m_change; }
+	float GetLifeLength() const { return m_lifeLength; }
+	float GetRotation() const { return m_rotation; }
+	float GetScale() const { return m_scale; }
+	float GetGravityEffect() const { return m_gravityEffect; }
+	float GetElapsedTime() const { return m_elapsedTime; }
+	float GetTransparency() const { return m_transparency; }
+	float DistanceToCamera() const { return m_distanceToCamera; }
 
 private:
 	Vector2f CalculateImageOffset(int32_t index) const;

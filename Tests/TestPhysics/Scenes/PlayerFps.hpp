@@ -9,17 +9,14 @@
 using namespace acid;
 
 namespace test {
-class PlayerFps :
-	public Component {
+class PlayerFps : public Component {
 public:
 	PlayerFps();
 
 	void Start() override;
-
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, PlayerFps &player);
-
 	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:

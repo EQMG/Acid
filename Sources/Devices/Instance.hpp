@@ -4,8 +4,7 @@
 #include "StdAfx.hpp"
 
 namespace acid {
-class ACID_EXPORT
-Instance
+class ACID_EXPORT Instance
 {
 	friend class Graphics;
 public:
@@ -22,34 +21,26 @@ public:
 
 	static VkResult FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator,
 		VkDebugReportCallbackEXT *pCallback);
-
 	static void FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator);
-
 	static void FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set,
 		uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites);
-
+	
 	static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
 		const VkMemoryPropertyFlags &requiredProperties);
 
 	operator const VkInstance &() const { return m_instance; }
-
+	
 	const std::vector<const char *> &GetInstanceLayers() const { return m_instanceLayers; }
-
 	const std::vector<const char *> &GetInstanceExtensions() const { return m_instanceExtensions; }
-
 	const std::vector<const char *> &GetDeviceExtensions() const { return m_deviceExtensions; }
-
 	const VkInstance &GetInstance() const { return m_instance; }
 
 private:
 	void SetupLayers();
-
 	void SetupExtensions();
-
 	void CreateInstance();
-
 	void CreateDebugCallback();
-
+	
 	static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties);
 
 	std::vector<const char *> m_instanceLayers;

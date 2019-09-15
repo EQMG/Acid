@@ -8,9 +8,7 @@ namespace acid {
  * @brief Class that represents an animation that can be carried out by an animated entity.
  * It contains the length of the animation in seconds, and a list of {@link Keyframe}s.
  **/
-class ACID_EXPORT
-Animation
-{
+class ACID_EXPORT Animation {
 public:
 	/**
 	 * Creates a new animation.
@@ -32,7 +30,6 @@ public:
 	const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
 
 	friend const Node &operator>>(const Node &node, Animation &animation);
-
 	friend Node &operator<<(Node &node, const Animation &animation);
 
 private:

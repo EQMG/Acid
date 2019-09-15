@@ -10,30 +10,21 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SubrenderDeferred
-:
-public
-Subrender
-{
+class ACID_EXPORT SubrenderDeferred : public Subrender {
 public:
 	explicit SubrenderDeferred(const Pipeline::Stage &pipelineStage);
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Fog &GetFog() const { return m_fog; }
-
-	void SetFog(const Fog &fog) { m_fog = fog; }
-
 	static std::unique_ptr<Image2d> ComputeBRDF(uint32_t size);
-
 	static std::unique_ptr<ImageCube> ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size);
-
 	static std::unique_ptr<ImageCube> ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size);
 
+	const Fog &GetFog() const { return m_fog; }
+	void SetFog(const Fog &fog) { m_fog = fog; }
+
 private:
-	struct DeferredLight
-	{
+	struct DeferredLight {
 		Colour m_colour;
 		Vector3f m_position;
 		float m_radius = 0.0f;

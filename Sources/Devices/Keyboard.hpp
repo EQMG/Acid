@@ -134,12 +134,7 @@ enum class Key :
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT
-Keyboard
-:
-public
-Module
-{
+class ACID_EXPORT Keyboard : public Module {
 public:
 	/**
 	 * Gets the engines instance.
@@ -156,9 +151,9 @@ public:
 	 * @param key The key to get the state of.
 	 * @return The keys state.
 	 */
-	InputAction GetKey(const Key &key) const;
+	InputAction GetKey(Key key) const;
 
-	static std::string ToString(const Key &key);
+	static std::string ToString(Key key);
 
 	/**
 	 * Called when a key changes state.
@@ -174,7 +169,6 @@ public:
 
 private:
 	friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
-
 	friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 
 	Delegate<void(Key, InputAction, BitMask<InputMod>)> m_onKey;

@@ -66,17 +66,6 @@ Image2d::~Image2d() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-	descriptorSetLayoutBinding.binding = binding;
-	descriptorSetLayoutBinding.descriptorType = descriptorType;
-	descriptorSetLayoutBinding.descriptorCount = 1;
-	descriptorSetLayoutBinding.stageFlags = stage;
-	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-	return descriptorSetLayoutBinding;
-}
-
 WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -92,6 +81,17 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescrip
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
 	return {descriptorWrite, imageInfo};
+}
+
+VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count) {
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	descriptorSetLayoutBinding.binding = binding;
+	descriptorSetLayoutBinding.descriptorType = descriptorType;
+	descriptorSetLayoutBinding.descriptorCount = 1;
+	descriptorSetLayoutBinding.stageFlags = stage;
+	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+	return descriptorSetLayoutBinding;
 }
 
 std::unique_ptr<uint8_t[]> Image2d::GetPixels(Vector2ui &extent, uint32_t mipLevel) const {

@@ -136,10 +136,6 @@ void FontType::Load() {
 	LoadFont(m_filename / (m_style + ".ttf"));
 }
 
-uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {
-	return (value + alignment - 1) / alignment * alignment;
-}
-
 void FontType::LoadFont(const std::filesystem::path &filename) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
@@ -253,5 +249,9 @@ void FontType::LoadFont(const std::filesystem::path &filename) {
 	if (FT_Done_FreeType(library) != 0) {
 		throw std::runtime_error("Freetype failed to destory library");
 	}
+}
+
+uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {
+	return (value + alignment - 1) / alignment * alignment;
 }
 }

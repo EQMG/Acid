@@ -19,12 +19,12 @@ Keyboard::Keyboard() {
 void Keyboard::Update() {
 }
 
-InputAction Keyboard::GetKey(const Key &key) const {
+InputAction Keyboard::GetKey(Key key) const {
 	auto state = glfwGetKey(Window::Get()->GetWindow(), static_cast<int32_t>(key));
 	return static_cast<InputAction>(state);
 }
 
-std::string Keyboard::ToString(const Key &key) {
+std::string Keyboard::ToString(Key key) {
 	switch (key) {
 	case Key::Space:
 		return "Space";

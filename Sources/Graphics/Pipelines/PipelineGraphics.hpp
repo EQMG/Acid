@@ -12,20 +12,13 @@ class Image2d;
 /**
  * @brief Class that represents a graphics pipeline.
  */
-class ACID_EXPORT
-PipelineGraphics
-:
-public
-Pipeline
-{
+class ACID_EXPORT PipelineGraphics : public Pipeline {
 public:
-	enum class Mode
-	{
+	enum class Mode {
 		Polygon, Mrt
 	};
 
-	enum class Depth
-	{
+	enum class Depth {
 		None = 0, Read = 1, Write = 2, ReadWrite = Read | Write
 	};
 
@@ -47,7 +40,6 @@ public:
 		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
 		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
 		bool pushDescriptors = false);
-
 	~PipelineGraphics();
 
 	/**
@@ -73,54 +65,31 @@ public:
 	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = std::nullopt) const;
 
 	const Stage &GetStage() const { return m_stage; }
-
 	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
-
 	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
-
 	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
-
 	const Mode &GetMode() const { return m_mode; }
-
 	const Depth &GetDepth() const { return m_depth; }
-
 	const VkPrimitiveTopology &GetTopology() const { return m_topology; }
-
 	const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
-
 	const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
-
 	const VkFrontFace &GetFrontFace() const { return m_frontFace; }
-
 	bool IsPushDescriptors() const override { return m_pushDescriptors; }
-
 	const Shader *GetShader() const override { return m_shader.get(); }
-
 	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
-
 	const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
-
 	const VkPipeline &GetPipeline() const override { return m_pipeline; }
-
 	const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
-
 	const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
 
 private:
 	void CreateShaderProgram();
-
 	void CreateDescriptorLayout();
-
 	void CreateDescriptorPool();
-
 	void CreatePipelineLayout();
-
 	void CreateAttributes();
-
 	void CreatePipeline();
-
 	void CreatePipelinePolygon();
-
 	void CreatePipelineMrt();
 
 	Stage m_stage;
@@ -162,8 +131,7 @@ private:
 };
 
 class ACID_EXPORT
-PipelineGraphicsCreate
-{
+	PipelineGraphicsCreate {
 public:
 	PipelineGraphicsCreate(std::vector<std::filesystem::path> shaderStages = {}, std::vector<Shader::VertexInput> vertexInputs = {}, std::vector<Shader::Define> defines = {},
 		const PipelineGraphics::Mode &mode = PipelineGraphics::Mode::Polygon, const PipelineGraphics::Depth &depth = PipelineGraphics::Depth::ReadWrite,
@@ -178,8 +146,7 @@ public:
 		m_polygonMode(polygonMode),
 		m_cullMode(cullMode),
 		m_frontFace(frontFace),
-		m_pushDescriptors(pushDescriptors)
-	{
+		m_pushDescriptors(pushDescriptors) {
 	}
 
 	/**
@@ -187,14 +154,12 @@ public:
 	 * @param pipelineStage The pipelines graphics stage.
 	 * @return The created graphics pipeline.
 	 */
-	PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const
-	{
+	PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const {
 		return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, m_polygonMode, m_cullMode, m_frontFace,
 			m_pushDescriptors);
 	}
 
-	friend const Node &operator>>(const Node &node, PipelineGraphicsCreate &pipelineCreate)
-	{
+	friend const Node &operator>>(const Node &node, PipelineGraphicsCreate &pipelineCreate) {
 		node["shaderStages"].Get(pipelineCreate.m_shaderStages);
 		node["vertexInputs"].Get(pipelineCreate.m_vertexInputs);
 		node["defines"].Get(pipelineCreate.m_defines);
@@ -207,8 +172,7 @@ public:
 		return node;
 	}
 
-	friend Node &operator<<(Node &node, const PipelineGraphicsCreate &pipelineCreate)
-	{
+	friend Node &operator<<(Node &node, const PipelineGraphicsCreate &pipelineCreate) {
 		node["shaderStages"].Set(pipelineCreate.m_shaderStages);
 		node["vertexInputs"].Set(pipelineCreate.m_vertexInputs);
 		node["defines"].Set(pipelineCreate.m_defines);

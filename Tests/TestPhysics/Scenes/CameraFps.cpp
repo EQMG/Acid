@@ -8,9 +8,9 @@
 #include "PlayerFps.hpp"
 
 namespace test {
-static const Vector3f VIEW_OFFSET(0.0f, 1.8f, 0.0f);
-static const Vector2f SENSITIVITY_JOYSTICK(-0.06f);
-static const Vector2f SENSITIVITY_MOUSE(0.15f);
+static const Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
+static const Vector2f SensitivityJoystick(-0.06f);
+static const Vector2f SensitivityMouse(0.15f);
 
 CameraFps::CameraFps() :
 	m_sensitivity(1.0f),
@@ -30,15 +30,15 @@ void CameraFps::Update() {
 	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>(); scenePlayer) {
 		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>(); transformPlayer) {
 			m_velocity = (transformPlayer->GetPosition() - m_position) / delta;
-			m_position = transformPlayer->GetPosition() + VIEW_OFFSET;
+			m_position = transformPlayer->GetPosition() + ViewOffset;
 		}
 	}
 
 	if (!Scenes::Get()->IsPaused()) {
-		auto rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
+		auto rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SensitivityMouse;
 
 		if (m_joystickVertical.IsConnected()) {
-			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SensitivityJoystick;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;

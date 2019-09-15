@@ -8,11 +8,12 @@ namespace acid {
 template<typename>
 class Delegate;
 
-class ACID_EXPORT
-Observer
-{
+class ACID_EXPORT Observer {
 public:
-	Observer() : m_valid(std::make_shared<bool>(true)) {}
+	Observer() :
+		m_valid(std::make_shared<bool>(true)) {
+	}
+	
 	virtual ~Observer() = default;
 
 	std::shared_ptr<bool> m_valid;
@@ -88,7 +89,6 @@ public:
 	};
 
 	Delegate() = default;
-
 	virtual ~Delegate() = default;
 
 	template<typename ...KArgs>
@@ -150,7 +150,9 @@ class DelegateValue :
 	public NonCopyable {
 public:
 	template<typename ...Args>
-	DelegateValue(Args ...args) : m_value(std::forward<Args>(args)...) {}
+	DelegateValue(Args ...args) :
+		m_value(std::forward<Args>(args)...) {
+	}
 
 	virtual ~DelegateValue() = default;
 
@@ -160,7 +162,13 @@ public:
 		return *this;
 	}
 
-	const T &Get() const { return m_value; }
+	/**
+	 * Access the stored value.
+	 * @return The value.
+	 */
+	constexpr operator const T &() const noexcept { return m_value; }
+
+	const T &get() const { return m_value; }
 	const T &operator*() const { return m_value; }
 	const T *operator->() const { return &m_value; }
 

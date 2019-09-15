@@ -5,15 +5,9 @@
 #include "Mesh.hpp"
 
 namespace acid {
-class ACID_EXPORT
-MeshRender
-:
-public
-Component
-{
+class ACID_EXPORT MeshRender : public Component {
 public:
 	void Start() override;
-
 	void Update() override;
 
 	bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
@@ -21,7 +15,6 @@ public:
 	bool operator<(const MeshRender &other) const;
 
 	friend const Node &operator>>(const Node &node, MeshRender &meshRender);
-
 	friend Node &operator<<(Node &node, const MeshRender &meshRender);
 
 private:

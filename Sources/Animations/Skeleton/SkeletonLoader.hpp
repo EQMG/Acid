@@ -4,21 +4,16 @@
 #include "Joint.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SkeletonLoader
-{
+class ACID_EXPORT SkeletonLoader {
 public:
 	SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);
 
 	uint32_t GetJointCount() const { return m_jointCount; }
-
 	const Joint &GetHeadJoint() const { return m_headJoint; }
 
 private:
 	Joint LoadJointData(const Node *jointNode, bool isRoot);
-
 	Joint ExtractMainJointData(const Node *jointNode, bool isRoot);
-
 	std::optional<uint32_t> GetBoneIndex(const std::string &name);
 
 	const Node *m_armatureData = nullptr;

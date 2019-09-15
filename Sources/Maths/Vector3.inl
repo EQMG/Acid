@@ -220,30 +220,6 @@ auto Vector3<T>::PolarToCartesian() const {
 }
 
 template<typename T>
-template<typename K>
-constexpr bool Vector3<T>::operator==(const Vector3<K> &other) const {
-	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z;
-}
-
-template<typename T>
-template<typename K>
-constexpr bool Vector3<T>::operator!=(const Vector3<K> &other) const {
-	return !(*this == other);
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_signed_v<U>, Vector3<T>> Vector3<T>::operator-() const {
-	return {-m_x, -m_y, -m_z};
-}
-
-template<typename T>
-template<typename U>
-constexpr std::enable_if_t<std::is_integral_v<U>, Vector3<T>> Vector3<T>::operator~() const {
-	return {~m_x, ~m_y, ~m_z};
-}
-
-template<typename T>
 constexpr const T &Vector3<T>::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
@@ -269,6 +245,30 @@ constexpr T &Vector3<T>::operator[](uint32_t index) {
 	default:
 		throw std::runtime_error("Vector3 index out of bounds!");
 	}
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector3<T>::operator==(const Vector3<K> &other) const {
+	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z;
+}
+
+template<typename T>
+template<typename K>
+constexpr bool Vector3<T>::operator!=(const Vector3<K> &other) const {
+	return !(*this == other);
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_signed_v<U>, Vector3<T>> Vector3<T>::operator-() const {
+	return {-m_x, -m_y, -m_z};
+}
+
+template<typename T>
+template<typename U>
+constexpr std::enable_if_t<std::is_integral_v<U>, Vector3<T>> Vector3<T>::operator~() const {
+	return {~m_x, ~m_y, ~m_z};
 }
 
 template<typename T>

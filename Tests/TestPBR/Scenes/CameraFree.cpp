@@ -8,12 +8,12 @@
 #include <Inputs/AxisJoystick.hpp>
 
 namespace test {
-const float WALK_SPEED = 3.0f;
-const float RUN_SPEED = 7.0f;
-const Vector3f DAMP(20.0f, 20.0f, 20.0f);
+const float WalkSpeed = 3.0f;
+const float RunSpeed = 7.0f;
+const Vector3f Damp(20.0f, 20.0f, 20.0f);
 
-static const Vector2f SENSITIVITY_JOYSTICK(-0.06f);
-static const Vector2f SENSITIVITY_MOUSE(0.15f);
+static const Vector2f SensitivityJoystick(-0.06f);
+static const Vector2f SensitivityMouse(0.15f);
 
 CameraFree::CameraFree() :
 	m_sensitivity(1.0f),
@@ -45,13 +45,13 @@ void CameraFree::Update() {
 			positionDelta.m_z = m_inputForward.GetAmount();
 		}
 
-		positionDelta *= m_inputSprint.IsDown() ? -RUN_SPEED : -WALK_SPEED;
-		m_velocity = m_velocity.SmoothDamp(positionDelta, delta * DAMP);
+		positionDelta *= m_inputSprint.IsDown() ? -RunSpeed : -WalkSpeed;
+		m_velocity = m_velocity.SmoothDamp(positionDelta, delta * Damp);
 
-		Vector2f rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SENSITIVITY_MOUSE;
+		Vector2f rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SensitivityMouse;
 
 		if (m_joystickVertical.IsConnected()) {
-			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SENSITIVITY_JOYSTICK;
+			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SensitivityJoystick;
 		}
 
 		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;

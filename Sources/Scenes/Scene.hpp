@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief Class that is used to represent a scene.
  */
-class ACID_EXPORT
-Scene
-{
+class ACID_EXPORT Scene {
 	friend class Scenes;
 public:
 	/**
@@ -20,12 +18,14 @@ public:
 	explicit Scene(std::unique_ptr<Camera> &&camera) :
 		m_camera(std::move(camera)),
 		m_structure(std::make_unique<SceneStructure>()),
-		m_physics(std::make_unique<ScenePhysics>())
-	{
+		m_physics(std::make_unique<ScenePhysics>()) {
 	}
 
 	virtual ~Scene() = default;
 
+	/**
+	 * Run when switching to this scene from another.
+	 */
 	virtual void Start() = 0;
 
 	/**

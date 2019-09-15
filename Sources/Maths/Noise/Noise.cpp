@@ -980,7 +980,7 @@ float Noise::SingleSimplexFractalRigidMulti(float x, float y) const {
 	return sum;
 }
 
-float Noise::singleSimplexFractalBlend(float x, float y) const {
+float Noise::SingleSimplexFractalBlend(float x, float y) const {
 	auto sum = SingleSimplex(m_perm[0], x, y);
 	auto amp = 1.0f;
 	int32_t i = 0;

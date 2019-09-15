@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
-class ACID_EXPORT
-Subrender
-{
+class ACID_EXPORT Subrender {
 public:
 	/**
 	 * Creates a new render pipeline.
@@ -18,8 +16,7 @@ public:
 	 */
 	explicit Subrender(Pipeline::Stage stage) :
 		m_stage(std::move(stage)),
-		m_enabled(true)
-	{
+		m_enabled(true) {
 	}
 
 	virtual ~Subrender() = default;
@@ -31,9 +28,8 @@ public:
 	virtual void Render(const CommandBuffer &commandBuffer) = 0;
 
 	const Pipeline::Stage &GetStage() const { return m_stage; }
-
+	
 	bool IsEnabled() const { return m_enabled; };
-
 	void SetEnabled(bool enable) { m_enabled = enable; }
 
 private:

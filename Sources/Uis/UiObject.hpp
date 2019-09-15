@@ -14,12 +14,7 @@ namespace acid {
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI images, fonts, etc.
  */
-class ACID_EXPORT
-UiObject
-:
-public
-Observer
-{
+class ACID_EXPORT UiObject : public Observer {
 public:
 	/**
 	 * Creates a new ui object.
@@ -42,6 +37,8 @@ public:
 	 * Updates the ui object.
 	 */
 	virtual void UpdateObject();
+
+	void CancelEvent(MouseButton button) const;
 
 	UiObject *GetParent() const { return m_parent; }
 
@@ -68,41 +65,29 @@ public:
 	void ClearChildren() { m_children.clear(); }
 
 	bool IsEnabled() const;
-
 	void SetEnabled(bool enabled) { m_enabled = enabled; }
 
 	UiTransform &GetTransform() { return m_transform; }
-	
 	const UiTransform &GetTransform() const { return m_transform; }
-
 	void SetTransform(const UiTransform &transform) { m_transform = transform; }
 
 	const std::optional<CursorStandard> &GetCursorHover() const { return m_cursorHover; }
-
 	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
 
 	const std::optional<Vector4f> &GetScissor() const { return m_scissor; }
-
 	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
 
 	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
-
 	void SetAlphaDriver(std::unique_ptr<Driver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
-
 	float GetAlpha() const { return m_alpha; }
-	
+
 	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
-
 	void SetScaleDriver(std::unique_ptr<Driver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
-
 	const Vector2f &GetScale() const { return m_scale; }
 
-	const UiTransform& GetScreenTransform() const { return m_screenTransform; }
-
-	const Matrix4& GetModelView() const { return m_modelView; }
-
+	const UiTransform &GetScreenTransform() const { return m_screenTransform; }
+	const Matrix4 &GetModelView() const { return m_modelView; }
 	float GetScreenAlpha() const { return m_screenAlpha; }
-
 	const Vector2f &GetScreenScale() const { return m_screenScale; }
 
 	/**
@@ -123,8 +108,6 @@ public:
 	 */
 	Delegate<void(bool)> &OnSelected() { return m_onSelected; }
 
-	void CancelEvent(const MouseButton &button) const;
-
 private:
 	UiObject *m_parent;
 	std::vector<UiObject *> m_children;
@@ -132,7 +115,7 @@ private:
 	bool m_enabled;
 	UiTransform m_transform;
 	std::optional<CursorStandard> m_cursorHover;
-	std::optional<Vector4f> m_scissor; 
+	std::optional<Vector4f> m_scissor;
 
 	std::unique_ptr<Driver<float>> m_alphaDriver;
 	float m_alpha;

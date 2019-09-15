@@ -9,41 +9,41 @@ namespace acid {
  * @tparam T The type to be driven.
  **/
 template<typename T>
-class DriverSinwave :
-	public Driver<T> {
+class DriverSinwave : public Driver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
-	 * @param min The min value. 
-	 * @param max The max value. 
-	 * @param length The length between two waves. 
+	 * @param min The min value.
+	 * @param max The max value.
+	 * @param length The length between two waves.
 	 **/
 	DriverSinwave(const T &min, const T &max, const Time &length) :
 		Driver<T>(length),
 		m_min(min),
-		m_max(max) { }
+		m_max(max) {
+	}
 
 	/**
 	 * Gets the min value.
-	 * @return The min value. 
+	 * @return The min value.
 	 **/
 	const T &GetMin() const { return m_min; }
 
 	/**
 	 * Sets the min value.
-	 * @param min The new min value. 
+	 * @param min The new min value.
 	 **/
 	void SetMin(const T &min) { m_min = min; }
 
 	/**
 	 * Gets the max value.
-	 * @return The max value. 
+	 * @return The max value.
 	 **/
 	const T &GetMax() const { return m_max; }
 
 	/**
 	 * Sets the max value.
-	 * @param max The new max value. 
+	 * @param max The new max value.
 	 **/
 	void SetMax(const T &max) { m_max = max; }
 

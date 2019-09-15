@@ -8,9 +8,7 @@ namespace acid {
 /**
  * @brief A logging class used in Acid, will write output to the standard stream and into a file.
  */
-class ACID_EXPORT
-Log
-{
+class ACID_EXPORT Log {
 public:
 	class Style {
 	public:
@@ -43,7 +41,7 @@ public:
 		static constexpr std::string_view LightCyan = "\033[96m";
 		static constexpr std::string_view White = "\033[97m";
 	};
-	
+
 	static constexpr auto TimestampFormat = "%Y-%m-%d %H:%M:%S GMT%z";
 
 	/**
@@ -91,7 +89,7 @@ public:
 	}
 
 	static void OpenLog(const std::filesystem::path &filepath);
-	
+
 private:
 	// TODO: Only use mutex in synced writes (where output order must be the same).
 	static std::mutex WriteMutex;

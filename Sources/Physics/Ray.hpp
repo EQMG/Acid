@@ -9,9 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a 3 dimensional ray.
  */
-class ACID_EXPORT
-Ray
-{
+class ACID_EXPORT Ray {
 public:
 	/**
 	 * Creates a new ray.
@@ -44,22 +42,17 @@ public:
 	Vector3f ConvertToScreenSpace(const Vector3f &position) const;
 
 	bool IsUseMouse() const { return m_useMouse; }
-
 	void SetUseMouse(bool useMouse) { m_useMouse = useMouse; }
 
 	const Vector2f &GetScreenStart() const { return m_screenStart; }
-
 	void SetScreenStart(const Vector2f &screenStart) { m_screenStart = screenStart; }
 
 	const Vector3f &GetOrigin() const { return m_origin; }
-
 	const Vector3f &GetCurrentRay() const { return m_currentRay; }
 
 private:
 	void UpdateNormalizedDeviceCoordinates(float mouseX, float mouseY);
-
 	void UpdateEyeCoords();
-
 	void UpdateWorldCoords();
 
 	bool m_useMouse;

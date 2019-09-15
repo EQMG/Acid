@@ -7,9 +7,7 @@ namespace acid {
 /**
  * @brief Represents a force that is attached to a {@link Rigidbody}.
  */
-class ACID_EXPORT
-Force
-{
+class ACID_EXPORT Force {
 public:
 	/**
 	 * Creates a new force that never times-out.
@@ -31,15 +29,12 @@ public:
 	bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
 
 	const Vector3f &GetForce() const { return m_force; }
-
 	void SetForce(const Vector3f &force) { m_force = force; }
 
 	const Time &GetTimeLeft() const { return m_timeLeft; }
-
 	void SetTimeLeft(const Time &timeLeft) { m_timeLeft = timeLeft; }
 
 	const Vector3f &GetPosition() const { return m_position; }
-
 	void SetPosition(const Vector3f &position) { m_position = position; }
 
 private:

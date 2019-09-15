@@ -105,14 +105,6 @@ std::string Colour::GetHex() const {
 	return stream.str();
 }
 
-bool Colour::operator==(const Colour &other) const {
-	return m_r == other.m_r && m_g == other.m_g && m_b == other.m_b && m_a == other.m_a;
-}
-
-bool Colour::operator!=(const Colour &other) const {
-	return !(*this == other);
-}
-
 float Colour::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
@@ -141,6 +133,14 @@ float &Colour::operator[](uint32_t index) {
 	default:
 		throw std::runtime_error("Colour index out of bounds!");
 	}
+}
+
+bool Colour::operator==(const Colour &other) const {
+	return m_r == other.m_r && m_g == other.m_g && m_b == other.m_b && m_a == other.m_a;
+}
+
+bool Colour::operator!=(const Colour &other) const {
+	return !(*this == other);
 }
 
 Colour operator+(const Colour &left, const Colour &right) {

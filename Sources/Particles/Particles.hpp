@@ -7,13 +7,10 @@ namespace acid {
 /**
  * @brief A manager that manages particles.
  */
-class ACID_EXPORT
-Particles
-:
-public
-Module
-{
+class ACID_EXPORT Particles : public Module {
 public:
+	using ParticlesContainer = std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>;
+
 	/**
 	 * Gets the engines instance.
 	 * @return The current module instance.
@@ -25,7 +22,6 @@ public:
 	void Update() override;
 
 	void AddParticle(Particle &&particle);
-
 	//void RemoveParticle(const Particle &particle);
 
 	/**
@@ -37,9 +33,9 @@ public:
 	 * Gets a list of all particles.
 	 * @return All particles.
 	 */
-	const std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> &GetParticles() const { return m_particles; }
+	const ParticlesContainer &GetParticles() const { return m_particles; }
 
 private:
-	std::map<std::shared_ptr<ParticleType>, std::vector<Particle>> m_particles;
+	ParticlesContainer m_particles;
 };
 }

@@ -5,12 +5,7 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid {
-class ACID_EXPORT
-SubrenderGizmos
-:
-public
-Subrender
-{
+class ACID_EXPORT SubrenderGizmos : public Subrender {
 public:
 	explicit SubrenderGizmos(const Pipeline::Stage &pipelineStage);
 

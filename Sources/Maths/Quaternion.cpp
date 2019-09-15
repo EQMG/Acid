@@ -227,14 +227,6 @@ Vector3f Quaternion::ToEuler() const {
 	return result;
 }
 
-bool Quaternion::operator==(const Quaternion &other) const {
-	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
-}
-
-Quaternion Quaternion::operator-() const {
-	return {-m_x, -m_y, -m_z, -m_w};
-}
-
 float Quaternion::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
@@ -263,6 +255,18 @@ float &Quaternion::operator[](uint32_t index) {
 	default:
 		throw std::runtime_error("Quaternion index out of bounds!");
 	}
+}
+
+bool Quaternion::operator==(const Quaternion &other) const {
+	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
+}
+
+bool Quaternion::operator!=(const Quaternion &other) const {
+	return !(*this == other);
+}
+
+Quaternion Quaternion::operator-() const {
+	return {-m_x, -m_y, -m_z, -m_w};
 }
 
 Quaternion operator+(const Quaternion &left, const Quaternion &right) {

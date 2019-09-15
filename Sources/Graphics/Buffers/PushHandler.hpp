@@ -6,39 +6,31 @@ namespace acid {
 /**
  * @brief Class that handles a pipeline push constant.
  */
-class ACID_EXPORT
-PushHandler
-{
+class ACID_EXPORT PushHandler {
 public:
 	explicit PushHandler(bool multipipeline = false);
-
 	explicit PushHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
 
 	template<typename T>
-	void Push(const T &object, std::size_t offset, std::size_t size)
-	{
+	void Push(const T &object, std::size_t offset, std::size_t size) {
 		std::memcpy(m_data.get() + offset, &object, size);
 	}
 
 	template<typename T>
-	void Push(const std::string &uniformName, const T &object, std::size_t size = 0)
-	{
-		if (!m_uniformBlock)
-		{
+	void Push(const std::string &uniformName, const T &object, std::size_t size = 0) {
+		if (!m_uniformBlock) {
 			return;
 		}
 
 		auto uniform = m_uniformBlock->GetUniform(uniformName);
 
-		if (!uniform)
-		{
+		if (!uniform) {
 			return;
 		}
 
 		auto realSize = size;
 
-		if (realSize == 0)
-		{
+		if (realSize == 0) {
 			realSize = std::min(sizeof(object), static_cast<std::size_t>(uniform->GetSize()));
 		}
 

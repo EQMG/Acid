@@ -68,17 +68,6 @@ ImageCube::~ImageCube() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-	descriptorSetLayoutBinding.binding = binding;
-	descriptorSetLayoutBinding.descriptorType = descriptorType;
-	descriptorSetLayoutBinding.descriptorCount = 1;
-	descriptorSetLayoutBinding.stageFlags = stage;
-	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-	return descriptorSetLayoutBinding;
-}
-
 WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
@@ -94,6 +83,17 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescr
 	descriptorWrite.descriptorType = descriptorType;
 	//descriptorWrite.pImageInfo = &imageInfo;
 	return {descriptorWrite, imageInfo};
+}
+
+VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
+	uint32_t count) {
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	descriptorSetLayoutBinding.binding = binding;
+	descriptorSetLayoutBinding.descriptorType = descriptorType;
+	descriptorSetLayoutBinding.descriptorCount = 1;
+	descriptorSetLayoutBinding.stageFlags = stage;
+	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+	return descriptorSetLayoutBinding;
 }
 
 std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const {
