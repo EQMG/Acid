@@ -5,7 +5,7 @@
 #include <Maths/Vector2.hpp>
 #include <Serialized/Node.hpp>
 #include <Serialized/Json/Json.hpp>
-#include <Zip/ZipArchive.h>
+#include <Zip/ZipArchive.hpp>
 //#include <Serialized/Xml/Xml.hpp>
 //#include <Serialized/Yaml/Yaml.hpp>
 
@@ -129,7 +129,7 @@ public:
 
 int main(int argc, char **argv) {
 	{
-		auto source = R"({"message":"hello world","value":3})";
+		std::string source = R"({"message":"hello world","value":3})";
 		Json json;
 		json.Load(source);
 

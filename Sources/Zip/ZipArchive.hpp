@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-#include "ZipEntry.h"
+#include "ZipEntry.hpp"
 
 namespace acid {
 /**

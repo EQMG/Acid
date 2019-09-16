@@ -1,4 +1,4 @@
-#include "ZipEntry.h"
+#include "ZipEntry.hpp"
 
 namespace acid {
 ZipEntryMetaData::ZipEntryMetaData(const ZipEntryInfo &info) :

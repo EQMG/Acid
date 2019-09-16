@@ -37,8 +37,7 @@ private:
 	bool m_enabled;
 };
 
-template class ACID_EXPORT
-TypeInfo<Subrender>;
+template class ACID_EXPORT TypeInfo<Subrender>;
 
 /**
  * Gets the Type ID for the Subrender.

@@ -1,31 +1,20 @@
 #include "Node.hpp"
 
 namespace acid {
-Node::Node(std::string value, const Type &type) :
+static const Node NullNode = Node("null", Node::Type::Null);
+
+Node::Node(std::string value, Type type) :
 	m_value(std::move(value)),
 	m_type(type) {
 }
 
-Node::Node(std::string value, std::vector<Property> &&properties) :
-	m_value(std::move(value)),
-	m_properties(std::move(properties)) {
-	for (auto &[propertyName, property] : m_properties) {
-		property.m_parent = this;
-	}
+Node::Node(std::string value, std::vector<Node> &&properties) :
+	m_properties(std::move(properties)),
+	m_value(std::move(value)) {
 }
 
-void Node::Load(std::istream &stream) {
-}
-
-void Node::Write(std::ostream &stream, const Format &format) const {
-}
-
-void Node::Remove() {
-	if (!m_parent) {
-		throw std::runtime_error("Cannot remove from parent properties if parent is null");
-	}
-
-	m_parent->RemoveProperty(*this);
+void Node::Clear() {
+	m_properties.clear();
 }
 
 bool Node::IsValid() const {
@@ -38,36 +27,9 @@ bool Node::IsValid() const {
 	}
 }
 
-std::string Node::GetName() const {
-	if (!m_parent) {
-		throw std::runtime_error("Cannot get name if parent is null");
-	}
-
-	for (const auto &[propertyName, property] : m_parent->m_properties) {
-		if (property == *this) {
-			return propertyName;
-		}
-	}
-
-	return "";
-}
-
-void Node::SetName(const std::string &name) {
-	if (!m_parent) {
-		throw std::runtime_error("Cannot set name if parent is null");
-	}
-
-	for (auto it = m_parent->m_properties.begin(); it < m_parent->m_properties.end(); ++it) {
-		if (it->second == *this) {
-			it->first = name;
-			return;
-		}
-	}
-}
-
 bool Node::HasProperty(const std::string &name) const {
-	for (const auto &[propertyName, property] : m_properties) {
-		if (propertyName == name) {
+	for (const auto &property : m_properties) {
+		if (property.m_name == name) {
 			return true;
 		}
 	}
@@ -76,9 +38,9 @@ bool Node::HasProperty(const std::string &name) const {
 }
 
 NodeReturn Node::GetProperty(const std::string &name) const {
-	for (const auto &[propertyName, properyValue] : m_properties) {
-		if (propertyName == name) {
-			return {this, name, &properyValue};
+	for (const auto &property : m_properties) {
+		if (property.m_name == name) {
+			return {this, name, &property};
 		}
 	}
 
@@ -87,41 +49,45 @@ NodeReturn Node::GetProperty(const std::string &name) const {
 
 NodeReturn Node::GetProperty(uint32_t index) const {
 	if (index < m_properties.size()) {
-		return {this, index, &m_properties[index].second};
+		return {this, index, &m_properties[index]};
 	}
 
 	return {this, index, nullptr};
 }
 
 Node &Node::AddProperty() {
-	Node node;
-	node.m_parent = this;
-	return m_properties.emplace_back("", std::move(node)).second;
+	return m_properties.emplace_back();
 }
 
 Node &Node::AddProperty(const std::string &name, Node &&node) {
-	node.m_parent = this;
-	return m_properties.emplace_back(name, std::move(node)).second;
+	node.m_name = name;
+	return m_properties.emplace_back(std::move(node));
 }
 
 Node &Node::AddProperty(uint32_t index, Node &&node) {
-	node.m_parent = this;
-	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), {"", Node("null", Type::Null)});
-	return m_properties[index].second = node;
+	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
+	return m_properties[index] = std::move(node);
 }
 
 void Node::RemoveProperty(const std::string &name) {
 	//node.m_parent = nullptr;
 	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [name](const auto &n) {
-		return n.first == name;
+		return n.GetName() == name;
 	}), m_properties.end());
 }
 
 void Node::RemoveProperty(const Node &node) {
 	//node.m_parent = nullptr;
 	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [node](const auto &n) {
-		return n.second == node;
+		return n == node;
 	}), m_properties.end());
+}
+
+void Node::AddSize(std::size_t &size) const {
+	size += sizeof(*this);
+	for (const auto &property : m_properties) {
+		property.AddSize(size);
+	}
 }
 
 NodeReturn Node::operator[](const std::string &key) const {
@@ -144,6 +110,21 @@ bool Node::operator!=(const Node &other) const {
 }
 
 bool Node::operator<(const Node &other) const {
-	return m_value < other.m_value || m_properties < other.m_properties;
+	if (m_name < other.m_name) return true;
+	if (other.m_name < m_name) return false;
+
+	if (m_value < other.m_value) return true;
+	if (other.m_value < m_value) return false;
+
+	if (m_properties < other.m_properties) return true;
+	if (other.m_properties < m_properties) return false;
+	
+	return false;
+}
+
+void Node::LoadStructure(const std::string &string) {
+}
+
+void Node::WriteStructure(std::ostream &stream, Format format) const {
 }
 }

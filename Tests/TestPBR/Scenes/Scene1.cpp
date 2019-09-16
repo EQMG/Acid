@@ -16,6 +16,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Shadows/ShadowRender.hpp>
+#include <Skyboxes/MaterialSkybox.hpp>
 #include <Uis/Uis.hpp>
 #include "CameraFree.hpp"
 

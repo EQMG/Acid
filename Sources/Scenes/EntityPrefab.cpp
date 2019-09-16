@@ -64,13 +64,13 @@ void EntityPrefab::Write() const {
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {
-	for (const auto &[propertyName, property] : entityPrefab.GetParent()->GetProperties()) {
-		if (propertyName.empty()) {
+	for (const auto &property : entityPrefab.GetParent()->GetProperties()) {
+		if (property.GetName().empty()) {
 			continue;
 		}
 
-		if (auto component = Scenes::Get()->GetComponentRegister().Create(propertyName)) {
-			Scenes::Get()->GetComponentRegister().Decode(propertyName, property, component);
+		if (auto component = Scenes::Get()->GetComponentRegister().Create(property.GetName())) {
+			Scenes::Get()->GetComponentRegister().Decode(property.GetName(), property, component);
 			entity.AddComponent(component);
 		}
 	}

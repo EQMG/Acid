@@ -16,7 +16,7 @@ NodeReturn::NodeReturn(NodeReturn *parent, std::variant<std::string, int32_t> ke
 }
 
 bool NodeReturn::has_value() const noexcept {
-	return m_value;
+	return m_value != nullptr;
 }
 
 Node *NodeReturn::get() {
@@ -43,6 +43,22 @@ Node *NodeReturn::get() {
 	return m_value;
 }
 
+NodeReturn NodeReturn::operator[](const std::string &key) {
+	if (!has_value()) {
+		return {this, key};
+	}
+
+	return get()->operator[](key);
+}
+
+NodeReturn NodeReturn::operator[](uint32_t index) {
+	if (!has_value()) {
+		return {this, index};
+	}
+
+	return get()->operator[](index);
+}
+
 std::string NodeReturn::GetName() const {
 	if (!has_value()) {
 		return *std::get_if<std::string>(&m_keys.back());
@@ -58,21 +74,5 @@ void NodeReturn::SetName(const std::string &name) {
 	}
 
 	m_value->SetName(name);
-}
-
-NodeReturn NodeReturn::operator[](const std::string &key) {
-	if (!has_value()) {
-		return {this, key};
-	}
-
-	return get()->operator[](key);
-}
-
-NodeReturn NodeReturn::operator[](uint32_t index) {
-	if (!has_value()) {
-		return {this, index};
-	}
-
-	return get()->operator[](index);
 }
 }

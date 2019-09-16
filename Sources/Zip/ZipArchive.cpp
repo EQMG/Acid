@@ -1,9 +1,9 @@
-#include "ZipArchive.h"
+#include "ZipArchive.hpp"
 
 #include <random>
 
 #include "Helpers/String.hpp"
-#include "ZipException.h"
+#include "ZipException.hpp"
 
 namespace acid {
 ZipArchive::ZipArchive(const std::filesystem::path &filename) :

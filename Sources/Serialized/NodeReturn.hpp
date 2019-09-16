@@ -35,14 +35,14 @@ public:
 	template<typename T>
 	void Set(const T &value);
 
-	std::string GetName() const;
-	void SetName(const std::string &name);
-
 	NodeReturn operator[](const std::string &key);
 	NodeReturn operator[](uint32_t index);
 
 	template<typename T>
 	Node &operator=(const T &rhs);
+
+	std::string GetName() const;
+	void SetName(const std::string &name);
 
 private:
 	Node *m_parent = nullptr;

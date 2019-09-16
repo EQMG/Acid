@@ -2,15 +2,15 @@
 
 #include "Serialized/Node.hpp"
 
+namespace acid {
 using namespace std::chrono_literals;
 
-namespace acid {
 /**
  * @brief Represents a time value stored in microseconds.
  */
 class ACID_EXPORT Time {
 public:
-	constexpr Time() = default;
+	Time() = default;
 
 	/*
 	 * Creates a new time. This function is internal. To construct time values, use {@link Time::Seconds}, {@link Time::Milliseconds} or {@link Time::Microseconds} instead.

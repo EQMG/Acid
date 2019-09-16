@@ -20,16 +20,7 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 	PipelineMaterial temp(pipelineStage, pipelineCreate);
 	Node node;
 	node << temp;
-
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
-	}
-
-	auto result = std::make_shared<PipelineMaterial>(pipelineStage, pipelineCreate);
-	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
-	node >> *result;
-	//result->Load();
-	return result;
+	return Create(node);
 }
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :

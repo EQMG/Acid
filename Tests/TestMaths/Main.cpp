@@ -113,9 +113,9 @@ int main(int argc, char **argv) {
 		Quaternion quaternion(original);
 		Vector3f restored = quaternion.ToEuler();
 
-		Log::Out("Original: {", original, "}\n");
-		Log::Out("Quaternion: {", quaternion, "}\n");
-		Log::Out("Restored: {", restored, "}\n");
+		Log::Out("Original: (", original, ")\n");
+		Log::Out("Quaternion: (", quaternion, ")\n");
+		Log::Out("Restored: (", restored, ")\n");
 		Log::Out('\n');
 	}
 	{
@@ -124,63 +124,61 @@ int main(int argc, char **argv) {
 		Vector2f b(-1.74f, 15.4f);
 		Vector2ui c(5, 2);
 
-		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
-		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
-		Log::Out("{", a, "} + {", b, "} = {", (a + b), "}\n");
-		Log::Out("{", a, "} - {", b, "} = {", (a - b), "}\n");
-		Log::Out("{", a, "} * {", b, "} = {", (a * b), "}\n");
-		Log::Out("{", a, "} / {", b, "} = {", (a / b), "}\n");
-		Log::Out("{", a, "} angle {", b, "} = ", a.Angle(b), "\n");
-		Log::Out("{", a, "} dot {", b, "} = ", a.Dot(b), "\n");
-		Log::Out("{", a, "} lerp {", b, "} % ", 0.5f, " = {", a.Lerp(b, 0.5f), "}\n");
-		Log::Out("{", a, "} scale ", 10.0f, " = {", a.Scale(10.0f), "}\n");
-		Log::Out("{", a, "} rotate ", 1.5708f, " = {", a.Rotate(1.5708f), "}\n");
-		Log::Out("-{", a, "} = {", (-a), "}\n");
-		Log::Out("normalize {", a, "} = {", a.Normalize(), "}\n");
-		Log::Out("length {", a, "} = {", a.Length(), "}\n");
-		Log::Out("{", a, "} distance {", b, "} = {", a.Distance(b), "}\n");
+		Log::Out("(", a, ") + ", 20.0f, " = (", a + 20.0f, ")\n");
+		Log::Out(-1.11f, " * (", a, ") = (", -1.11f * a, ")\n");
+		Log::Out("(", a, ") + (", b, ") = (", a + b, ")\n");
+		Log::Out("(", a, ") - (", b, ") = (", a - b, ")\n");
+		Log::Out("(", a, ") * (", b, ") = (", a * b, ")\n");
+		Log::Out("(", a, ") / (", b, ") = (", a / b, ")\n");
+		Log::Out("(", a, ") angle (", b, ") = ", a.Angle(b), "\n");
+		Log::Out("(", a, ") dot (", b, ") = ", a.Dot(b), "\n");
+		Log::Out("(", a, ") lerp (", b, ") % ", 0.5f, " = (", a.Lerp(b, 0.5f), ")\n");
+		Log::Out("(", a, ") scale ", 10.0f, " = (", a.Scale(10.0f), ")\n");
+		Log::Out("(", a, ") rotate ", 1.5708f, " = (", a.Rotate(1.5708f), ")\n");
+		Log::Out("-(", a, ") = (", -a, ")\n");
+		Log::Out("normalize (", a, ") = (", a.Normalize(), ")\n");
+		Log::Out("length (", a, ") = (", a.Length(), ")\n");
+		Log::Out("(", a, ") distance (", b, ") = (", a.Distance(b), ")\n");
 		Log::Out('\n');
 
-		Log::Out("{", c, "} & ", 9, " = {", (c & 9), "}\n");
-		Log::Out("{", c, "} | ", 9, " = {", (c | 9), "}\n");
-		//Log::Out("{", c, "} ^ ", 9, " = {", (c ^ 9), "}\n");
-		Log::Out("~{", c, "} = {", (~c), "}\n");
-		Log::Out("{", c, "} >> ", 1, " = {", (c >> 1), "}\n");
-		Log::Out("{", c, "}, ", 1, " = {", (c, 1), "}\n");
+		Log::Out("(", c, ") & ", 9, " = (", c & 9, ")\n");
+		Log::Out("(", c, ") | ", 9, " = (", c | 9, ")\n");
+		//Log::Out("(", c, ") ^ ", 9, " = (", c ^ 9, ")\n");
+		Log::Out("~(", c, ") = (", ~c, ")\n");
+		Log::Out("(", c, ") >> ", 1, " = (", c >> 1, ")\n");
+		Log::Out("(", c, ") << ", 1, " = (", c << 1, ")\n");
 		Log::Out('\n');
 	}
 	{
-		constexpr auto compileTime = Vector3f(10.0f, -9.0f, 8.0f) + Vector3d(-7.0, -6.0, 5.0);
-
 		Log::Out("Vector3:\n");
 		Vector3f a(12.9f, -2.0f, 6.7f);
 		Vector3f b(-9.7f, 15.9f, -13.8f);
 		Vector3ui c(5, 2, 1);
 
-		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
-		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
-		Log::Out("{", a, "} + {", b, "} = {", (a + b), "}\n");
-		Log::Out("{", a, "} - {", b, "} = {", (a - b), "}\n");
-		Log::Out("{", a, "} * {", b, "} = {", (a * b), "}\n");
-		Log::Out("{", a, "} / {", b, "} = {", (a / b), "}\n");
-		Log::Out("{", a, "} angle {", b, "} = ", a.Angle(b), "\n");
-		Log::Out("{", a, "} cross {", b, "} = ", a.Cross(b), "\n");
-		Log::Out("{", a, "} dot {", b, "} = ", a.Dot(b), "\n");
-		Log::Out("{", a, "} lerp {", b, "} % ", 0.5f, " = {", a.Lerp(b, 0.5f), "}\n");
-		Log::Out("{", a, "} scale ", 10.0f, " = {", a.Scale(10.0f), "}\n");
-		Log::Out("-{", a, "} = {", (-a), "}\n");
-		Log::Out("normalize {", a, "} = {", a.Normalize(), "}\n");
-		Log::Out("length {", a, "} = {", a.Length(), "}\n");
-		Log::Out("{", a, "} distance {", b, "} = {", a.Distance(b), "}\n");
-		//Log::Out("{", a, "} rotate {", Vector3f(1.22f, 0.0f, 0.0f), "} = {", a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)), "}\n");
+		Log::Out("(", a, ") + ", 20.0f, " = (", a + 20.0f, ")\n");
+		Log::Out(-1.11f, " * (", a, ") = (", -1.11f * a, ")\n");
+		Log::Out("(", a, ") + (", b, ") = (", a + b, ")\n");
+		Log::Out("(", a, ") - (", b, ") = (", a - b, ")\n");
+		Log::Out("(", a, ") * (", b, ") = (", a * b, ")\n");
+		Log::Out("(", a, ") / (", b, ") = (", a / b, ")\n");
+		Log::Out("(", a, ") angle (", b, ") = ", a.Angle(b), "\n");
+		Log::Out("(", a, ") cross (", b, ") = ", a.Cross(b), "\n");
+		Log::Out("(", a, ") dot (", b, ") = ", a.Dot(b), "\n");
+		Log::Out("(", a, ") lerp (", b, ") % ", 0.5f, " = (", a.Lerp(b, 0.5f), ")\n");
+		Log::Out("(", a, ") scale ", 10.0f, " = (", a.Scale(10.0f), ")\n");
+		Log::Out("-(", a, ") = (", -a, ")\n");
+		Log::Out("normalize (", a, ") = (", a.Normalize(), ")\n");
+		Log::Out("length (", a, ") = (", a.Length(), ")\n");
+		Log::Out("(", a, ") distance (", b, ") = (", a.Distance(b), ")\n");
+		//Log::Out("(", a, ") rotate (", Vector3f(1.22f, 0.0f, 0.0f), ") = (", a.Rotate(Vector3f(1.22f, 0.0f, 0.0f)), ")\n");
 		Log::Out('\n');
 
-		Log::Out("{", c, "} & ", 9, " = {", (c & 9), "}\n");
-		Log::Out("{", c, "} | ", 9, " = {", (c | 9), "}\n");
-		//Log::Out("{", c, "} ^ ", 9, " = {", (c ^ 9), "}\n");
-		Log::Out("~{", c, "} = {", (~c), "}\n");
-		Log::Out("{", c, "} >> ", 1, " = {", (c >> 1), "}\n");
-		Log::Out("{", c, "}, ", 1, " = {", (c, 1), "}\n");
+		Log::Out("(", c, ") & ", 9, " = (", c & 9, ")\n");
+		Log::Out("(", c, ") | ", 9, " = (", c | 9, ")\n");
+		//Log::Out("(", c, ") ^ ", 9, " = (", c ^ 9, ")\n");
+		Log::Out("~(", c, ") = (", ~c, ")\n");
+		Log::Out("(", c, ") >> ", 1, " = (", c >> 1, ")\n");
+		Log::Out("(", c, ") << ", 1, " = (", c << 1, ")\n");
 		Log::Out('\n');
 	}
 	{
@@ -189,28 +187,28 @@ int main(int argc, char **argv) {
 		Vector4f b(-9.7f, 15.9f, -13.8f, -2.246f);
 		Vector4ui c(5, 2, 1, 3);
 
-		Log::Out("{", a, "} + ", 20.0f, " = {", (a + 20.0f), "}\n");
-		Log::Out(-1.11f, " * {", a, "} = {", (-1.11f * a), "}\n");
-		Log::Out("{", a, "} + {", b, "} = {", (a + b), "}\n");
-		Log::Out("{", a, "} - {", b, "} = {", (a - b), "}\n");
-		Log::Out("{", a, "} * {", b, "} = {", (a * b), "}\n");
-		Log::Out("{", a, "} / {", b, "} = {", (a / b), "}\n");
-		Log::Out("{", a, "} angle {", b, "} = ", a.Angle(b), "\n");
-		Log::Out("{", a, "} dot {", b, "} = ", a.Dot(b), "\n");
-		Log::Out("{", a, "} lerp {", b, "} % ", 0.5f, " = {", a.Lerp(b, 0.5f), "}\n");
-		Log::Out("{", a, "} scale ", 10.0f, " = {", a.Scale(10.0f), "}\n");
-		Log::Out("-{", a, "} = {", (-a), "}\n");
-		Log::Out("normalize {", a, "} = {", a.Normalize(), "}\n");
-		Log::Out("length {", a, "} = {", a.Length(), "}\n");
-		Log::Out("{", a, "} distance {", b, "} = {", a.Distance(b), "}\n");
+		Log::Out("(", a, ") + ", 20.0f, " = (", a + 20.0f, ")\n");
+		Log::Out(-1.11f, " * (", a, ") = (", -1.11f * a, ")\n");
+		Log::Out("(", a, ") + (", b, ") = (", a + b, ")\n");
+		Log::Out("(", a, ") - (", b, ") = (", a - b, ")\n");
+		Log::Out("(", a, ") * (", b, ") = (", a * b, ")\n");
+		Log::Out("(", a, ") / (", b, ") = (", a / b, ")\n");
+		Log::Out("(", a, ") angle (", b, ") = ", a.Angle(b), "\n");
+		Log::Out("(", a, ") dot (", b, ") = ", a.Dot(b), "\n");
+		Log::Out("(", a, ") lerp (", b, ") % ", 0.5f, " = (", a.Lerp(b, 0.5f), ")\n");
+		Log::Out("(", a, ") scale ", 10.0f, " = (", a.Scale(10.0f), ")\n");
+		Log::Out("-(", a, ") = (", -a, ")\n");
+		Log::Out("normalize (", a, ") = (", a.Normalize(), ")\n");
+		Log::Out("length (", a, ") = (", a.Length(), ")\n");
+		Log::Out("(", a, ") distance (", b, ") = (", a.Distance(b), ")\n");
 		Log::Out('\n');
 
-		Log::Out("{", c, "} & ", 9, " = {", (c & 9), "}\n");
-		Log::Out("{", c, "} | ", 9, " = {", (c | 9), "}\n");
-		//Log::Out("{", c, "} ^ ", 9, " = {", (c ^ 9), "}\n");
-		Log::Out("~{", c, "} = {", (~c), "}\n");
-		Log::Out("{", c, "} >> ", 1, " = {", (c >> 1), "}\n");
-		Log::Out("{", c, "}, ", 1, " = {", (c, 1), "}\n");
+		Log::Out("(", c, ") & ", 9, " = (", c & 9, ")\n");
+		Log::Out("(", c, ") | ", 9, " = (", c | 9, ")\n");
+		//Log::Out("(", c, ") ^ ", 9, " = (", c ^ 9, ")\n");
+		Log::Out("~(", c, ") = (", ~c, ")\n");
+		Log::Out("(", c, ") >> ", 1, " = (", c >> 1, ")\n");
+		Log::Out("(", c, ") << ", 1, " = (", c << 1, ")\n");
 		Log::Out('\n');
 	}
 

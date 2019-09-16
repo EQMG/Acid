@@ -233,9 +233,9 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		Zip/miniz.h
-		Zip/ZipArchive.h
-		Zip/ZipEntry.h
-		Zip/ZipException.h
+		Zip/ZipArchive.hpp
+		Zip/ZipEntry.hpp
+		Zip/ZipException.hpp
 		)
 set(_temp_acid_sources
 		StdAfx.cpp

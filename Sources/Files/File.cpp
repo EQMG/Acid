@@ -53,6 +53,6 @@ void File::Write() const {
 }
 
 void File::Clear() {
-	m_node->ClearProperties();
+	m_node->Clear();
 }
 }

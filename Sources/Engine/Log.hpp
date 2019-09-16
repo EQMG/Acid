@@ -69,13 +69,23 @@ public:
 	}
 
 	/**
-	 * Outputs a error message into the console.
+	 * Outputs a debug message into the console.
 	 * @tparam Args The value types to write.
 	 * @param args The values to write.
 	 */
 	template<typename ... Args>
-	static void Error(Args ... args) {
-		Out(Style::Default, Colour::Red, args...);
+	static void Debug(Args ... args) {
+		Out(Style::Default, Colour::LightBlue, args...);
+	}
+
+	/**
+	 * Outputs a info message into the console.
+	 * @tparam Args The value types to write.
+	 * @param args The values to write.
+	 */
+	template<typename ... Args>
+	static void Info(Args ... args) {
+		Out(Style::Default, Colour::Green, args...);
 	}
 
 	/**
@@ -86,6 +96,30 @@ public:
 	template<typename ... Args>
 	static void Warning(Args ... args) {
 		Out(Style::Default, Colour::Yellow, args...);
+	}
+
+	/**
+	 * Outputs a error message into the console.
+	 * @tparam Args The value types to write.
+	 * @param args The values to write.
+	 */
+	template<typename ... Args>
+	static void Error(Args ... args) {
+		Out(Style::Default, Colour::Red, args...);
+	}
+
+	/**
+	 * Outputs a assert message into the console.
+	 * @tparam Args The value types to write.
+	 * @param expr The expression to assertion check.
+	 * @param args The values to write.
+	 */
+	template<typename ... Args>
+	static void Assert(bool expr, Args ... args) {
+		if (expr) {
+			Out(Style::Default, Colour::Magenta, args...);
+			assert(false);
+		}
 	}
 
 	static void OpenLog(const std::filesystem::path &filepath);
