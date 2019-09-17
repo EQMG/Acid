@@ -42,7 +42,7 @@ void ConfigManager::Save() const {
 	audioData["generalVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::General));
 	audioData["effectVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Effect));
 	audioData["musicVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Music));
-	m_audio.Write();
+	m_audio.Write(Node::Format::Beautified);
 
 	auto &graphicsData = m_graphics.GetNode();
 	//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
@@ -53,6 +53,6 @@ void ConfigManager::Save() const {
 	graphicsData["floating"].Set<bool>(Window::Get()->IsFloating());
 	graphicsData["fullscreen"].Set<bool>(Window::Get()->IsFullscreen());
 	graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
-	m_graphics.Write();*/
+	m_graphics.Write(Node::Format::Beautified);*/
 }
 }

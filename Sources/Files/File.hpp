@@ -11,7 +11,7 @@ public:
 	explicit File(std::filesystem::path filename, std::unique_ptr<Node> &&node);
 
 	void Load();
-	void Write() const;
+	void Write(Node::Format format = Node::Format::Minified) const;
 	void Clear();
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }

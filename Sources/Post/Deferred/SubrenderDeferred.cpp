@@ -22,7 +22,7 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
 	Node node;
 	node << *m_pipeline.GetShader();
-	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write();
+	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write(Node::Format::Beautified);
 }
 
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
@@ -187,7 +187,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	// Creates the pipeline.
 	CommandBuffer commandBuffer(true, VK_QUEUE_COMPUTE_BIT);
 	PipelineCompute compute("Shaders/Prefiltered.comp");
-
+	
 	DescriptorsHandler descriptorSet(compute);
 	PushHandler pushHandler(*compute.GetShader()->GetUniformBlock("PushObject"));
 
@@ -229,7 +229,8 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 		vkDestroyImageView(*logicalDevice, levelView, nullptr);
 	}
 
-#if defined(ACID_VERBOSE)
+	// TODO: This debug write causes a crash at runtime, why?
+/*#if defined(ACID_VERBOSE)
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {
@@ -239,7 +240,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 			Image::WritePixels(path, pixels.get(), extent);
 		}, prefilteredCubemap.get(), i);
 	}
-#endif
+#endif*/
 
 	return prefilteredCubemap;
 }

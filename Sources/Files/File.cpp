@@ -28,21 +28,21 @@ void File::Load() {
 #endif
 }
 
-void File::Write() const {
+void File::Write(Node::Format format) const {
 #if defined(ACID_VERBOSE)
 	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(m_filename)) {
 		OFStream os(m_filename);
-		m_node->WriteStream(os);
+		m_node->WriteStream(os, format);
 	} else { // if (std::filesystem::exists(m_filename))
 		if (auto parentPath = m_filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
 
 		std::ofstream os(m_filename);
-		m_node->WriteStream(os);
+		m_node->WriteStream(os, format);
 		os.close();
 	}
 

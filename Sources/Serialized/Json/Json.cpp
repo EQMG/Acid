@@ -98,7 +98,7 @@ void Json::Convert(Node &current, const std::vector<Token> &v, int32_t i, int32_
 		while (v[k].GetChar() != '}') {
 			auto key = v[k].GetString();
 			k += 2; // k + 1 should be ':'
-			Convert(current.AddProperty(key), v, k, k);
+			Convert(current.AddProperty(key, {}), v, k, k);
 
 			if (v[k].GetChar() == ',') {
 				k++;
