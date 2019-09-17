@@ -16,10 +16,10 @@ void File::Load() {
 
 	if (Files::ExistsInPath(m_filename)) {
 		IFStream inStream(m_filename);
-		m_node->Load(inStream);
+		m_node->LoadStream(inStream);
 	} else if (std::filesystem::exists(m_filename)) {
 		std::ifstream inStream(m_filename);
-		m_node->Load(inStream);
+		m_node->LoadStream(inStream);
 		inStream.close();
 	}
 
@@ -35,15 +35,14 @@ void File::Write() const {
 
 	if (Files::ExistsInPath(m_filename)) {
 		OFStream os(m_filename);
-		m_node->Write(os);
-	} else // if (std::filesystem::exists(m_filename))
-	{
+		m_node->WriteStream(os);
+	} else { // if (std::filesystem::exists(m_filename))
 		if (auto parentPath = m_filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
 
 		std::ofstream os(m_filename);
-		m_node->Write(os);
+		m_node->WriteStream(os);
 		os.close();
 	}
 

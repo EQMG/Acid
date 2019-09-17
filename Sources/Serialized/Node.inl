@@ -11,35 +11,6 @@
 #include "Resources/Resource.hpp"
 
 namespace acid {
-template<typename _Elem>
-void Node::Load(std::basic_istream<_Elem> &stream) {
-	// We must read into a UTF8 char.
-	stream.imbue(std::locale(std::locale(), new std::codecvt_utf8<char>));
-	
-	// Reading into a string before iterating is much faster.
-	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-	
-	LoadStructure(s);
-}
-
-template<typename _Elem>
-void Node::Load(const std::basic_string<_Elem> &string) {
-	std::basic_stringstream<_Elem> stream(string);
-	Load<_Elem>(stream);
-}
-
-template<typename _Elem>
-void Node::Write(std::basic_ostream<_Elem> &stream, Format format) const {
-	WriteStructure(stream, format);
-}
-
-template<typename _Elem>
-std::basic_string<_Elem> Node::Write(Format format) const {
-	std::basic_stringstream<_Elem> stream;
-	Write(stream, format);
-	return stream.str();
-}
-
 template<typename T>
 T Node::Get() const {
 	T value;

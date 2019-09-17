@@ -62,10 +62,12 @@ auto sphere = ModelSphere::Create(20, 20, 1.0f);
 Sound jump("Sounds/Jump.ogg", {10.0f * Vector3f::Right}, Audio::Type::Effect, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
-auto playerObject = GetStructure()->CreateEntity({}, "Objects/Player/Player.json");
+auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json");
+playerObject->AddComponent<Transform>();
 
 // Creates a entity.
-auto sphere = GetStructure()->CreateEntity({Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f)});
+auto sphere = GetStructure()->CreateEntity();
+sphere->AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
 sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
 sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
 sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.

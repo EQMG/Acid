@@ -13,42 +13,36 @@ Json::Json(Node &&node) :
 	SetType(Type::Object);
 }
 
-void Json::LoadStructure(const std::string &string) {
-	std::vector<std::pair<Type, std::string>> tokens;
+void Json::LoadString(std::string_view string) {
+	std::vector<Token> tokens;
 
-	std::string current;
+	auto tokenStart = string.data();
 	bool inString = false;
-	bool lastEscape = false;
 
 	// Read stream until end of file.
-	for (auto c : string) {
+	for (auto index = string.data(); index < string.data() + string.length(); ++index) {
 		// On start of string switch in/out of stream space and ignore this char.
-		if (!lastEscape) {
-			if ((c == '"' || c == '\''))
-				inString ^= 1;
-			if (c == '\\')
-				lastEscape = true;
-		}
-		lastEscape = false;
+		// If the previous char was a backslash this char should already be in a string.
+		if ((*index == '"' || *index == '\'') && *(index - 1) != '\\')
+			inString ^= 1;
 
 		// When not reading a string tokens can be found.
 		if (!inString) {
 			// Tokens used to read json nodes.
-			if (std::string_view(":{},[]").find(c) != std::string::npos) {
-				AddToken(tokens, current);
-				tokens.emplace_back(Type::Unknown, std::string{c});
+			if (std::string_view(":{},[]").find(*index) != std::string::npos) {
+				AddToken(tokenStart, index, tokens);
+				tokens.emplace_back(index, index + 1, Type::Unknown);
+				tokenStart = index + 1;
 				continue;
 			}
 
 			// On whitespace save current as a string.
-			if (String::IsWhitespace(c)) {
-				AddToken(tokens, current);
+			if (String::IsWhitespace(*index)) {
+				AddToken(tokenStart, index, tokens);
+				tokenStart = index + 1;
 				continue;
 			}
 		}
-
-		// Add this char to the current builder stream.
-		current += c;
 	}
 
 	// Converts the list of tokens into nodes.
@@ -56,7 +50,7 @@ void Json::LoadStructure(const std::string &string) {
 	Convert(*this, tokens, 0, k);
 }
 
-void Json::WriteStructure(std::ostream &stream, Format format) const {
+void Json::WriteStream(std::ostream &stream, Format format) const {
 	if (format == Format::Minified) {
 		stream << '{';
 	} else {
@@ -67,123 +61,59 @@ void Json::WriteStructure(std::ostream &stream, Format format) const {
 	stream << '}';
 }
 
-void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentation, Format format) {
-	// Creates a string for the indentation level.
-	std::string indents(2 * indentation, ' ');
-
-	// Only output the value if no properties exist.
-	if (source.GetProperties().empty()) {
-		auto value = String::FixReturnTokens(source.GetValue());
-
-		if (source.GetType() == Type::String) {
-			stream << '\"' << value << '\"';
-		} else {
-			stream << value;
-		}
-	}
-
-	// Output each property.
-	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it) {
-		std::string openString;
-		std::string closeString;
-
-		// Gets array or object type braces.
-		if (!it->GetProperties().empty()) {
-			openString = "{";
-			closeString = "}";
-
-			// Sets the braces to an array style if all properties have no names.
-			for (const auto &property2 : it->GetProperties()) {
-				if (property2.GetName().empty()) {
-					openString = "[";
-					closeString = "]";
-					break;
-				}
-			}
-
-			if (format != Format::Minified) {
-				openString += '\n';
-				closeString.insert(0, indents);
-			}
-		} else if (it->GetType() == Type::Object) {
-			openString = "{";
-			closeString = "}";
-		} else if (it->GetType() == Type::Array) {
-			openString = "[";
-			closeString = "]";
-		}
-
-		// Separate properties by comma.
-		if (it != source.GetProperties().end() - 1) {
-			closeString += ',';
-		}
-
-		if (format != Format::Minified) {
-			stream << indents;
-		}
-
-		// Output name for property if it exists.
-		if (!it->GetName().empty()) {
-			stream << "\"" << it->GetName() << "\":";
-
-			if (format != Format::Minified) {
-				stream << ' ';
-			}
-		}
-
-		// Appends the current stream with the property data.
-		stream << openString;
-		AppendData(*it, stream, indentation + 1, format);
-		stream << closeString;
-
-		if (format != Format::Minified) {
-			stream << '\n';
-		}
-	}
+std::string_view GetString(const char *start, const char *end) {
+	return std::string_view(start, end - start);
 }
 
-void Json::AddToken(std::vector<std::pair<Type, std::string>> &tokens, std::string &current) {
-	if (!current.empty()) {
+std::string FixReturnTokens(const std::string &str) {
+	// TODO: Optimize.
+	return String::ReplaceAll(String::ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
+}
+
+std::string UnfixReturnTokens(const std::string &str) {
+	// TODO: Optimize.
+	return String::ReplaceAll(String::ReplaceAll(str, "\\n", "\n"), "\\r", "\r");
+}
+
+void Json::AddToken(const char *start, const char *end, std::vector<Token> &tokens) {
+	if (start != end) {
+		auto view = GetString(start, end);
 		// Finds the node value type of the string and adds it to the tokens vector.
-		if (String::IsNumber(current)) {
-			tokens.emplace_back(Type::Number, current);
-		} else if (current == "null") {
-			tokens.emplace_back(Type::Null, current);
-		} else if (current == "true" || current == "false") {
-			tokens.emplace_back(Type::Boolean, current);
-		} else {
-			// if (current.front() == current.back() == '\"')
-			tokens.emplace_back(Type::String, current.substr(1, current.size() - 2));
+		if (view == "null") {
+			tokens.emplace_back(start, end, Type::Null);
+		} else if (view == "true" || view == "false") {
+			tokens.emplace_back(start, end, Type::Boolean);
+		} else if (String::IsNumber(view)) {
+			tokens.emplace_back(start, end, Type::Number);
+		} else { // if (view.front() == view.back() == '\"')
+			tokens.emplace_back(start + 1, end - 1, Type::String);
 		}
 	}
-
-	// Clears the current summation stream.
-	current.clear();
 }
 
-void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>> &v, int32_t i, int32_t &r) {
-	if (v[i].second == "{") {
-		auto k{i + 1};
+void Json::Convert(Node &current, const std::vector<Token> &v, int32_t i, int32_t &r) {
+	if (v[i].GetChar() == '{') {
+		auto k = i + 1;
 
-		while (v[k].second != "}") {
-			auto key{v[k].second};
+		while (v[k].GetChar() != '}') {
+			auto key = v[k].GetString();
 			k += 2; // k + 1 should be ':'
-			Convert(current.AddProperty(key, {}), v, k, k);
+			Convert(current.AddProperty(key), v, k, k);
 
-			if (v[k].second == ",") {
+			if (v[k].GetChar() == ',') {
 				k++;
 			}
 		}
 
 		current.SetType(Type::Object);
 		r = k + 1;
-	} else if (v[i].second == "[") {
-		auto k{i + 1};
+	} else if (v[i].GetChar() == '[') {
+		auto k = i + 1;
 
-		while (v[k].second != "]") {
+		while (v[k].GetChar() != ']') {
 			Convert(current.AddProperty(), v, k, k);
 
-			if (v[k].second == ",") {
+			if (v[k].GetChar() == ',') {
 				k++;
 			}
 		}
@@ -191,9 +121,73 @@ void Json::Convert(Node &current, const std::vector<std::pair<Type, std::string>
 		current.SetType(Type::Array);
 		r = k + 1;
 	} else {
-		current.SetValue(String::UnfixReturnTokens(v[i].second));
-		current.SetType(v[i].first);
+		current.SetValue(UnfixReturnTokens(v[i].GetString()));
+		current.SetType(v[i].type);
 		r = i + 1;
+	}
+}
+
+void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentation, Format format) {
+	// Creates a string for the indentation level.
+	std::string indents(2 * indentation, ' ');
+
+	// Only output the value if no properties exist.
+	if (source.GetProperties().empty()) {
+		if (source.GetType() == Type::String)
+			stream << '\"' << FixReturnTokens(source.GetValue()) << '\"';
+		else
+			stream << source.GetValue();
+	}
+
+	// Output each property.
+	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it) {
+		if (format != Format::Minified)
+			stream << indents;
+
+		// Output name for property if it exists.
+		if (!it->GetName().empty()) {
+			stream << '\"' << it->GetName() << "\":";
+			if (format != Format::Minified)
+				stream << ' ';
+		}
+
+		bool isArray = false;
+		if (!it->GetProperties().empty()) {
+			// If all properties have no names, then this must be an array.
+			for (const auto &property2 : it->GetProperties()) {
+				if (property2.GetName().empty()) {
+					isArray = true;
+					break;
+				}
+			}
+
+			stream << (isArray ? '[' : '{');
+			if (format != Format::Minified)
+				stream << '\n';
+		} else if (it->GetType() == Type::Object) {
+			stream << '{';
+		} else if (it->GetType() == Type::Array) {
+			stream << '[';
+		}
+
+		AppendData(*it, stream, indentation + 1, format);
+
+		if (!it->GetProperties().empty()) {
+			if (format != Format::Minified)
+				stream << indents;
+			stream << (isArray ? ']' : '}');
+		} else if (it->GetType() == Type::Object) {
+			stream << '}';
+		} else if (it->GetType() == Type::Array) {
+			stream << ']';
+		}
+		
+		// Separate properties by comma.
+		if (it != source.GetProperties().end() - 1)
+			stream << ',';
+
+		if (format != Format::Minified)
+			stream << '\n';
 	}
 }
 }

@@ -92,20 +92,6 @@ public:
 	static std::string ReplaceFirst(std::string str, std::string_view token, std::string_view to);
 
 	/**
-	 * Fixes all tokens return line tokens from a string so it is file write-able.
-	 * @param str The string.
-	 * @return The string with return lines fixed.
-	 */
-	static std::string FixReturnTokens(const std::string &str);
-
-	/**
-	 * unFixes all tokens return line tokens from a string so it is file write-able.
-	 * @param str The string.
-	 * @return The string with return lines unfixed.
-	 */
-	static std::string UnfixReturnTokens(const std::string &str);
-
-	/**
 	 * Lower cases a string.
 	 * @param str The string.
 	 * @return The lowercased string.

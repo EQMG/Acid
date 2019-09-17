@@ -4,11 +4,11 @@
 
 namespace acid {
 /**
- * @brief Class that is used to represent a tree of values, used in serialization.
+ * @brief Class that is used to represent a tree of UFT-8 values, used in serialization.
  */
 class ACID_EXPORT Node {
 public:
-	enum class Type {
+	enum class Type : uint8_t {
 		Object,
 		Array,
 		String,
@@ -18,7 +18,7 @@ public:
 		Unknown
 	};
 
-	enum class Format {
+	enum class Format : uint8_t {
 		Beautified,
 		Minified
 	};
@@ -31,15 +31,26 @@ public:
 
 	virtual ~Node() = default;
 
-	template<typename _Elem>
-	void Load(std::basic_istream<_Elem> &stream);
-	template<typename _Elem>
-	void Load(const std::basic_string<_Elem> &string);
-	template<typename _Elem>
-	void Write(std::basic_ostream<_Elem> &stream, Format format = Format::Beautified) const;
-	template<typename _Elem = char>
-	std::basic_string<_Elem> Write(Format format = Format::Beautified) const;
+	virtual void LoadString(std::string_view string);
+	virtual void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
 
+	template<typename _Elem = char>
+	void LoadStream(std::basic_istream<_Elem> &stream) {
+		// We must read as UTF8 chars.
+		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+
+		// Reading into a string before iterating is much faster.
+		std::string s(std::istreambuf_iterator<_Elem>(stream), {});
+		LoadString( s);
+	}
+
+	template<typename _Elem = char>
+	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const {
+		std::basic_stringstream<_Elem> stream;
+		WriteStream(stream, format);
+		return stream.str();
+	}
+	
 	template<typename T>
 	T Get() const;
 	template<typename T>
@@ -71,13 +82,10 @@ public:
 	NodeReturn GetProperty(const std::string &name) const;
 	NodeReturn GetProperty(uint32_t index) const;
 	Node &AddProperty();
-	Node &AddProperty(const std::string &name, Node &&node);
-	Node &AddProperty(uint32_t index, Node &&node);
+	Node &AddProperty(const std::string &name, Node &&node = {});
+	Node &AddProperty(uint32_t index, Node &&node = {});
 	void RemoveProperty(const std::string &name);
 	void RemoveProperty(const Node &node);
-
-	// TODO: Remove before flight
-	void AddSize(std::size_t &size) const;
 
 	NodeReturn operator[](const std::string &key) const;
 	NodeReturn operator[](uint32_t index) const;
@@ -104,9 +112,6 @@ public:
 	void SetType(Type type) { m_type = type; }
 
 protected:
-	virtual void LoadStructure(const std::string &string);
-	virtual void WriteStructure(std::ostream &stream, Format format) const;
-	
 	std::vector<Node> m_properties;
 	std::string m_name;
 	std::string m_value;

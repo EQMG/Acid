@@ -13,6 +13,12 @@ Node::Node(std::string value, std::vector<Node> &&properties) :
 	m_value(std::move(value)) {
 }
 
+void Node::LoadString(std::string_view string) {
+}
+
+void Node::WriteStream(std::ostream &stream, Format format) const {
+}
+
 void Node::Clear() {
 	m_properties.clear();
 }
@@ -83,13 +89,6 @@ void Node::RemoveProperty(const Node &node) {
 	}), m_properties.end());
 }
 
-void Node::AddSize(std::size_t &size) const {
-	size += sizeof(*this);
-	for (const auto &property : m_properties) {
-		property.AddSize(size);
-	}
-}
-
 NodeReturn Node::operator[](const std::string &key) const {
 	return GetProperty(key);
 }
@@ -120,11 +119,5 @@ bool Node::operator<(const Node &other) const {
 	if (other.m_properties < m_properties) return false;
 	
 	return false;
-}
-
-void Node::LoadStructure(const std::string &string) {
-}
-
-void Node::WriteStructure(std::ostream &stream, Format format) const {
 }
 }
