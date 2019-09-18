@@ -15,7 +15,7 @@ T NodeReturn::Get() {
 template<typename T>
 T NodeReturn::Get(const T &fallback) {
 	if (!has_value()) {
-		return {};
+		return fallback;
 	}
 
 	return m_value->Get<T>(fallback);

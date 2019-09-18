@@ -2,15 +2,30 @@
 
 #include "Node.hpp"
 
-#include <map>
-#include <filesystem>
-#include <algorithm>
+#include <codecvt>
 
 #include "Helpers/ConstExpr.hpp"
 #include "Helpers/String.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid {
+template<typename _Elem>
+void Node::LoadStream(std::basic_istream<_Elem> & stream) {
+	// We must read as UTF8 chars.
+	stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+
+	// Reading into a string before iterating is much faster.
+	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
+	LoadString(s);
+}
+
+template<typename _Elem>
+std::basic_string<_Elem> Node::WriteString(Format format) const {
+	std::basic_stringstream<_Elem> stream;
+	WriteStream(stream, format);
+	return stream.str();
+}
+
 template<typename T>
 T Node::Get() const {
 	T value;

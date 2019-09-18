@@ -14,127 +14,107 @@ Json::Json(Node &&node) :
 }
 
 void Json::LoadString(std::string_view string) {
+	// Tokenizes the string view into small views that are used to build a Node tree.
 	std::vector<Token> tokens;
 
-	auto tokenStart = string.data();
+	std::size_t tokenStart = 0;
 	bool inString = false;
 
-	// Read stream until end of file.
-	for (auto index = string.data(); index < string.data() + string.length(); ++index) {
-		// On start of string switch in/out of stream space and ignore this char.
-		// If the previous char was a backslash this char should already be in a string.
-		if ((*index == '"' || *index == '\'') && *(index - 1) != '\\')
+	// Iterates over all the characters in the string view.
+	for (std::size_t index = 0; index < string.length(); ++index) {
+		auto c = string[index];
+		// Looks for quotes to start or end a string, if the previous character was a
+		// backslash the quote will and not break the string.
+		if ((c == '"' || c == '\'') && string[index - 1] != '\\')
 			inString ^= 1;
 
 		// When not reading a string tokens can be found.
+		// While in a string whitespace and tokens are added to the strings view.
 		if (!inString) {
-			// Tokens used to read json nodes.
-			if (std::string_view(":{},[]").find(*index) != std::string::npos) {
-				AddToken(tokenStart, index, tokens);
-				tokens.emplace_back(index, index + 1, Type::Unknown);
+			if (String::IsWhitespace(c)) {
+				// On whitespace start save current token.
+				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
 				tokenStart = index + 1;
-				continue;
-			}
-
-			// On whitespace save current as a string.
-			if (String::IsWhitespace(*index)) {
-				AddToken(tokenStart, index, tokens);
+			} else if (std::string_view(":{},[]").find(c) != std::string::npos) {
+				// Tokens used to read json nodes.
+				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
+				tokens.emplace_back(std::string_view(string.data() + index, 1), Type::Unknown);
 				tokenStart = index + 1;
-				continue;
 			}
 		}
 	}
 
-	// Converts the list of tokens into nodes.
+	// Converts the tokens into nodes.
 	int32_t k = 0;
 	Convert(*this, tokens, 0, k);
 }
 
 void Json::WriteStream(std::ostream &stream, Format format) const {
-	if (format == Format::Minified) {
-		stream << '{';
-	} else {
-		stream << "{\n";
-	}
-
-	AppendData(*this, stream, 1, format);
+	stream << '{';
+	if (format != Format::Minified)
+		stream << '\n';
+	AppendData(*this, stream, format, 1);
 	stream << '}';
 }
 
-std::string_view GetString(const char *start, const char *end) {
-	return std::string_view(start, end - start);
-}
-
-std::string FixReturnTokens(const std::string &str) {
-	// TODO: Optimize.
-	return String::ReplaceAll(String::ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
-}
-
-std::string UnfixReturnTokens(const std::string &str) {
-	// TODO: Optimize.
-	return String::ReplaceAll(String::ReplaceAll(str, "\\n", "\n"), "\\r", "\r");
-}
-
-void Json::AddToken(const char *start, const char *end, std::vector<Token> &tokens) {
-	if (start != end) {
-		auto view = GetString(start, end);
+void Json::AddToken(std::string_view view, std::vector<Token> &tokens) {
+	if (view.length() != 0) {
 		// Finds the node value type of the string and adds it to the tokens vector.
 		if (view == "null") {
-			tokens.emplace_back(start, end, Type::Null);
+			tokens.emplace_back(view, Type::Null);
 		} else if (view == "true" || view == "false") {
-			tokens.emplace_back(start, end, Type::Boolean);
+			tokens.emplace_back(view, Type::Boolean);
 		} else if (String::IsNumber(view)) {
-			tokens.emplace_back(start, end, Type::Number);
+			tokens.emplace_back(view, Type::Number);
 		} else { // if (view.front() == view.back() == '\"')
-			tokens.emplace_back(start + 1, end - 1, Type::String);
+			tokens.emplace_back(view.substr(1, view.length() - 2), Type::String);
 		}
 	}
 }
 
-void Json::Convert(Node &current, const std::vector<Token> &v, int32_t i, int32_t &r) {
-	if (v[i].GetChar() == '{') {
+void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t i, int32_t &r) {
+	if (tokens[i].view == "{") {
 		auto k = i + 1;
 
-		while (v[k].GetChar() != '}') {
-			auto key = v[k].GetString();
+		while (tokens[k].view != "}") {
+			std::string key(tokens[k].view);
 			k += 2; // k + 1 should be ':'
-			Convert(current.AddProperty(key, {}), v, k, k);
-
-			if (v[k].GetChar() == ',') {
+			Convert(current.AddProperty(key), tokens, k, k);
+			if (tokens[k].view == ",")
 				k++;
-			}
 		}
 
 		current.SetType(Type::Object);
 		r = k + 1;
-	} else if (v[i].GetChar() == '[') {
+	} else if (tokens[i].view == "[") {
 		auto k = i + 1;
 
-		while (v[k].GetChar() != ']') {
-			Convert(current.AddProperty(), v, k, k);
-
-			if (v[k].GetChar() == ',') {
+		while (tokens[k].view != "]") {
+			Convert(current.AddProperty(), tokens, k, k);
+			if (tokens[k].view == ",")
 				k++;
-			}
 		}
 
 		current.SetType(Type::Array);
 		r = k + 1;
 	} else {
-		current.SetValue(UnfixReturnTokens(v[i].GetString()));
-		current.SetType(v[i].type);
+		std::string str(tokens[i].view);
+		if (tokens[i].type == Type::String)
+			str = String::UnfixReturnTokens(str);
+		current.SetValue(str);
+		current.SetType(tokens[i].type);
 		r = i + 1;
 	}
 }
 
-void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentation, Format format) {
+void Json::AppendData(const Node &source, std::ostream &stream, Format format, int32_t indent) {
 	// Creates a string for the indentation level.
-	std::string indents(2 * indentation, ' ');
+	std::string indents(2 * indent, ' ');
 
 	// Only output the value if no properties exist.
 	if (source.GetProperties().empty()) {
 		if (source.GetType() == Type::String)
-			stream << '\"' << FixReturnTokens(source.GetValue()) << '\"';
+			stream << '\"' << String::FixReturnTokens(source.GetValue()) << '\"';
 		else
 			stream << source.GetValue();
 	}
@@ -143,7 +123,6 @@ void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentat
 	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it) {
 		if (format != Format::Minified)
 			stream << indents;
-
 		// Output name for property if it exists.
 		if (!it->GetName().empty()) {
 			stream << '\"' << it->GetName() << "\":";
@@ -170,7 +149,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentat
 			stream << '[';
 		}
 
-		AppendData(*it, stream, indentation + 1, format);
+		AppendData(*it, stream, format, indent + 1);
 
 		if (!it->GetProperties().empty()) {
 			if (format != Format::Minified)
@@ -185,7 +164,6 @@ void Json::AppendData(const Node &source, std::ostream &stream, int32_t indentat
 		// Separate properties by comma.
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';
-
 		if (format != Format::Minified)
 			stream << '\n';
 	}

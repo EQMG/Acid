@@ -93,6 +93,16 @@ std::string String::ReplaceFirst(std::string str, std::string_view token, std::s
 	return str;
 }
 
+std::string String::FixReturnTokens(const std::string &str) {
+	// TODO: Optimize.
+	return ReplaceAll(ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
+}
+
+std::string String::UnfixReturnTokens(const std::string &str) {
+	// TODO: Optimize.
+	return ReplaceAll(ReplaceAll(str, "\\n", "\n"), "\\r", "\r");
+}
+
 std::string String::Lowercase(std::string str) {
 	std::transform(str.begin(), str.end(), str.begin(), tolower);
 	return str;

@@ -52,11 +52,11 @@ bool PostFilter::RemoveAttachment(const std::string &name) {
 
 void PostFilter::PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1,
 	const std::string &rendererAttachment2) {
-	// TODO: Clean up this state machine mess...
+	// TODO: Clean up this state machine mess, this logic may also be incorrect.
 	auto it1 = m_attachments.find(descriptorName1);
-	auto it2 = m_attachments.find(descriptorName1);
+	auto it2 = m_attachments.find(descriptorName2);
 
-	if (it1 != m_attachments.end() || it2 != m_attachments.end()) {
+	if (it1 != m_attachments.end() && it2 != m_attachments.end()) {
 		m_descriptorSet.Push(descriptorName1, GetAttachment(descriptorName1, rendererAttachment1));
 		m_descriptorSet.Push(descriptorName2, GetAttachment(descriptorName2, rendererAttachment1));
 		return;

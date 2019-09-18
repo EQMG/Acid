@@ -35,21 +35,9 @@ public:
 	virtual void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
 
 	template<typename _Elem = char>
-	void LoadStream(std::basic_istream<_Elem> &stream) {
-		// We must read as UTF8 chars.
-		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
-
-		// Reading into a string before iterating is much faster.
-		std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-		LoadString( s);
-	}
-
+	void LoadStream(std::basic_istream<_Elem> & stream);
 	template<typename _Elem = char>
-	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const {
-		std::basic_stringstream<_Elem> stream;
-		WriteStream(stream, format);
-		return stream.str();
-	}
+	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const;
 	
 	template<typename T>
 	T Get() const;
@@ -84,6 +72,8 @@ public:
 	Node &AddProperty();
 	Node &AddProperty(const std::string &name, Node &&node);
 	Node &AddProperty(uint32_t index, Node &&node);
+	Node &AddProperty(const std::string &name);
+	Node &AddProperty(uint32_t index);
 	void RemoveProperty(const std::string &name);
 	void RemoveProperty(const Node &node);
 
@@ -112,6 +102,17 @@ public:
 	void SetType(Type type) { m_type = type; }
 
 protected:
+	class Token {
+	public:
+		Token(std::string_view view, Type type) :
+			view(view),
+			type(type) {
+		}
+
+		std::string_view view;
+		Type type;
+	};
+
 	std::vector<Node> m_properties;
 	std::string m_name;
 	std::string m_value;

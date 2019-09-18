@@ -75,6 +75,17 @@ Node &Node::AddProperty(uint32_t index, Node &&node) {
 	return m_properties[index] = std::move(node);
 }
 
+Node &Node::AddProperty(const std::string &name) {
+	Node node;
+	node.m_name = name;
+	return m_properties.emplace_back(std::move(node));
+}
+
+Node &Node::AddProperty(uint32_t index) {
+	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
+	return m_properties[index];
+}
+
 void Node::RemoveProperty(const std::string &name) {
 	//node.m_parent = nullptr;
 	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [name](const auto &n) {
