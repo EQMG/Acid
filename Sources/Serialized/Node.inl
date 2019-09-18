@@ -12,7 +12,9 @@ namespace acid {
 template<typename _Elem>
 void Node::LoadStream(std::basic_istream<_Elem> & stream) {
 	// We must read as UTF8 chars.
-	stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+	if constexpr (!std::is_same_v<_Elem, char>) {
+		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+	}
 
 	// Reading into a string before iterating is much faster.
 	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
