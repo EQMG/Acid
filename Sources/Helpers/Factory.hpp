@@ -4,11 +4,13 @@
 #include <functional>
 #include <string>
 
+#include "Engine/Log.hpp"
+
 namespace acid {
 template<typename Base, class... Args>
 class Factory {
 public:
-	using FuncType = std::function<std::unique_ptr<Base>(Args ...)>;
+	using FuncType = std::function<std::unique_ptr<Base>(Args...)>;
 	using RegistryMap = std::unordered_map<std::string, FuncType>;
 
 	static std::unique_ptr<Base> Create(const std::string &name, Args &&... args) {
@@ -24,18 +26,11 @@ public:
 	template<typename T>
 	struct Registrar : Base {
 		static void Register(const std::string &name) {
-			Factory::Registry()[name] = [](Args ... args) -> std::unique_ptr<Base> {
+			Factory::Registry()[name] = [](Args... args) -> std::unique_ptr<Base> {
 				return std::make_unique<T>(std::forward<Args>(args)...);
 			};
-			registered = name;
+			Log::Out("Registering class ", std::quoted(name), '\n');
 		}
-
-		static void Deregister() {
-			Factory::Registry().erase(registered);
-			registered.clear();
-		}
-
-		static std::string registered;
 	};
 };
 }

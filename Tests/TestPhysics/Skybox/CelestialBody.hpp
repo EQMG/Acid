@@ -2,7 +2,7 @@
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
-#include <Serialized/Node.hpp>
+#include <Files/Node.hpp>
 
 using namespace acid;
 

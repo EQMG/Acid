@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Scenes/Entity.hpp"
-#include "Serialized/Json/Json.hpp"
+#include "Files/Json/Json.hpp"
 #include "Serialized/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"

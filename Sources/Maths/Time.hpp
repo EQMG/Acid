@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 
 namespace acid {
 using namespace std::chrono_literals;

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Maths/Vector2.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Pipeline.hpp"
 #include "Graphics/RenderStage.hpp"
 

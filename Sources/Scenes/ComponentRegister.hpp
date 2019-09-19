@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Log.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Component.hpp"
 
 namespace acid {

@@ -16,6 +16,8 @@ set(_temp_acid_headers
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
+		Bitmaps/Png/BitmapPng.hpp
+		Bitmaps/Bitmap.hpp
 		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
@@ -35,9 +37,16 @@ set(_temp_acid_headers
 		Engine/Log.hpp
 		Engine/Module.hpp
 		Engine/ModuleHolder.hpp
+		Files/Zip/miniz.h
+		Files/Zip/ZipArchive.hpp
+		Files/Zip/ZipEntry.hpp
+		Files/Zip/ZipException.hpp
+		Files/Json/Json.hpp
+		Files/Node.hpp
+		Files/NodeReturn.hpp
 		Files/File.hpp
 		Files/Files.hpp
-		Files/FileWatcher.hpp
+		Files/FileObserver.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
 		Fonts/Geometry.hpp
@@ -209,9 +218,6 @@ set(_temp_acid_headers
 		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
 		Scenes/SceneStructure.hpp
-		Serialized/Json/Json.hpp
-		Serialized/Node.hpp
-		Serialized/NodeReturn.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -232,10 +238,6 @@ set(_temp_acid_headers
 		Uis/UiScrollBar.hpp
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
-		Zip/miniz.h
-		Zip/ZipArchive.hpp
-		Zip/ZipEntry.hpp
-		Zip/ZipException.hpp
 		)
 set(_temp_acid_sources
 		StdAfx.cpp
@@ -253,6 +255,7 @@ set(_temp_acid_sources
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
+		Bitmaps/Png/BitmapPng.cpp
 		Devices/Instance.cpp
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp
@@ -269,9 +272,15 @@ set(_temp_acid_sources
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Engine/ModuleHolder.cpp
+		Files/Json/Json.cpp
+		Files/Node.cpp
+		Files/NodeReturn.cpp
+		Files/Zip/miniz.c
+		Files/Zip/ZipArchive.cpp
+		Files/Zip/ZipEntry.cpp
 		Files/File.cpp
 		Files/Files.cpp
-		Files/FileWatcher.cpp
+		Files/FileObserver.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
 		Fonts/Geometry.cpp
@@ -413,9 +422,6 @@ set(_temp_acid_sources
 		Scenes/ScenePhysics.cpp
 		Scenes/Scenes.cpp
 		Scenes/SceneStructure.cpp
-		Serialized/Json/Json.cpp
-		Serialized/Node.cpp
-		Serialized/NodeReturn.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp
@@ -436,9 +442,6 @@ set(_temp_acid_sources
 		Uis/UiScrollBar.cpp
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
-		Zip/miniz.c
-		Zip/ZipArchive.cpp
-		Zip/ZipEntry.cpp
 		)
 
 # Adds the precompiled header

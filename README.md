@@ -17,7 +17,7 @@ This project is being worked on part-time by a single developer, this is under h
  * On the fly GLSL to SPIR-V compilation and reflection
  * Deferred physically based rendering (PBR)
  * Networking (HTTP, FTP, UDP, TCP)
- * Object serialization (JSON, YAML, XML)
+ * Object serialization (JSON, XML)
  * Resource management using serialization
  * Event delegate callbacks with scoped functions
  * Bullet physics
@@ -25,12 +25,12 @@ This project is being worked on part-time by a single developer, this is under h
  * Particle effect systems
  * File multi-path searching, and packaging
  * GUI and SDF font rendering
- * Audio systems (OGG, WAV)
+ * Audio systems (AIFF, OGG, WAV, MP3)
  * Shadow mapping
  * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ, GLTF2)
  * Animations loading (COLLADA)
- * Image file loading (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)
+ * Image file loading (JPG, PNG, TIFF, BMP, PSD, SVG)
 
 ## Dependencies
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface

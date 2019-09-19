@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 namespace test {
 MainApp::MainApp() :
 	App("Test GUI", {1, 0, 0}),
-	m_fileWatcher(std::filesystem::current_path(), 2s),
+	m_fileObserver(std::filesystem::current_path(), 2s),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete) {
@@ -36,15 +36,15 @@ MainApp::MainApp() :
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.
-	m_fileWatcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status) {
+	m_fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
 		switch (status) {
-		case FileWatcher::Status::Created:
+		case FileObserver::Status::Created:
 			Log::Out("Created ", path, '\n');
 			break;
-		case FileWatcher::Status::Modified:
+		case FileObserver::Status::Modified:
 			Log::Out("Modified ", path, '\n');
 			break;
-		case FileWatcher::Status::Erased:
+		case FileObserver::Status::Erased:
 			Log::Out("Erased ", path, '\n');
 			break;
 		}

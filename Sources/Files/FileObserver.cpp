@@ -1,24 +1,24 @@
-#include "FileWatcher.hpp"
+#include "FileObserver.hpp"
 
 namespace acid {
-FileWatcher::FileWatcher(std::filesystem::path path, const Time &delay) :
+FileObserver::FileObserver(std::filesystem::path path, const Time &delay) :
 	m_path(std::move(path)),
 	m_delay(delay),
 	m_running(true),
-	m_thread(&FileWatcher::QueueLoop, this) {
+	m_thread(&FileObserver::QueueLoop, this) {
 	for (auto &file : std::filesystem::recursive_directory_iterator(m_path)) {
 		m_paths[file.path().string()] = std::filesystem::last_write_time(file);
 	}
 }
 
-FileWatcher::~FileWatcher() {
+FileObserver::~FileObserver() {
 	if (m_thread.joinable()) {
 		m_running = false;
 		m_thread.join();
 	}
 }
 
-void FileWatcher::QueueLoop() {
+void FileObserver::QueueLoop() {
 	while (m_running) {
 		// Wait for "delay" milliseconds
 		std::this_thread::sleep_for(std::chrono::microseconds(m_delay));
@@ -53,7 +53,7 @@ void FileWatcher::QueueLoop() {
 	}
 }
 
-bool FileWatcher::Contains(const std::string &key) const {
+bool FileObserver::Contains(const std::string &key) const {
 	// TODO C++20: Remove method
 	auto el = m_paths.find(key);
 	return el != m_paths.end();

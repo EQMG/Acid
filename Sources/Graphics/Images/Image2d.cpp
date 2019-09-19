@@ -3,7 +3,7 @@
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Image.hpp"
 
 namespace acid {

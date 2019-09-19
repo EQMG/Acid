@@ -3,9 +3,10 @@
 #include <Helpers/EnumClass.hpp>
 #include <Maths/Matrix4.hpp>
 #include <Maths/Vector2.hpp>
-#include <Serialized/Node.hpp>
-#include <Serialized/Json/Json.hpp>
-#include <Zip/ZipArchive.hpp>
+#include <Files/Node.hpp>
+#include <Files/Json/Json.hpp>
+#include <Files/Zip/ZipArchive.hpp>
+#include "Bitmaps/Png/BitmapPng.hpp"
 //#include <Serialized/Xml/Xml.hpp>
 //#include <Serialized/Yaml/Yaml.hpp>
 
@@ -128,6 +129,11 @@ public:
 }
 
 int main(int argc, char **argv) {
+	//BitmapPng::Register();
+	//auto bitmap = Bitmap::Create(".png");
+	//bitmap->Load(R"(W:\\Acid\\Acid\\Resources\Undefined.png)");
+	//bitmap->Write("Undefined_Rest.png");
+	
 	{
 		std::string source = R"({"message":"hello world","value":3})";
 		Json json;

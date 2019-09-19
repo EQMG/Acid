@@ -14,11 +14,7 @@ Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &p
 	m_stageCycles(stageCycles),
 	m_rotation(rotation),
 	m_scale(scale),
-	m_gravityEffect(gravityEffect),
-	m_elapsedTime(0.0f),
-	m_transparency(1.0f),
-	m_imageBlendFactor(0.0f),
-	m_distanceToCamera(0.0f) {
+	m_gravityEffect(gravityEffect) {
 }
 
 void Particle::Update() {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 
 // https://dalzhim.github.io/2017/08/11/Improving-the-enum-class-bitmask
 // https://stackoverflow.com/a/8498694/6251899

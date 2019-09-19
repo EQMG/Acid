@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Joint.hpp"
 
 namespace acid {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Matrix4.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Animation.hpp"
 
 namespace acid {

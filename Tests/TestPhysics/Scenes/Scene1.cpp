@@ -27,7 +27,7 @@
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Graphics/Graphics.hpp>
-#include <Serialized/Json/Json.hpp>
+#include <Files/Json/Json.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>

@@ -7,7 +7,7 @@
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Resources/Resource.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 
 namespace acid {
 class Gizmo;

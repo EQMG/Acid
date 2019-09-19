@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid {

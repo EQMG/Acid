@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/App.hpp>
-#include <Files/FileWatcher.hpp>
+#include <Files/FileObserver.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
 
 using namespace acid;
@@ -16,7 +16,7 @@ public:
 	void Update() override;
 
 private:
-	FileWatcher m_fileWatcher;
+	FileObserver m_fileObserver;
 
 	ButtonKeyboard m_buttonFullscreen;
 	ButtonKeyboard m_buttonScreenshot;

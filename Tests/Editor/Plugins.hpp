@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Engine.hpp>
-#include <Files/FileWatcher.hpp>
+#include <Files/FileObserver.hpp>
 #include "Uis/Panels.hpp"
 #include "Inputs/ButtonKeyboard.hpp"
 
@@ -29,7 +29,7 @@ public:
 
 private:
 	std::filesystem::path m_loadedPath;
-	FileWatcher m_watcher;
+	FileObserver m_fileObserver;
 	std::unique_ptr<cr_plugin> m_plugin;
 	bool m_update;
 

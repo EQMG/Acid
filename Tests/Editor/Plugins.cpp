@@ -11,7 +11,7 @@
 namespace test {
 Plugins::Plugins() :
 	m_loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
-	m_watcher(std::filesystem::current_path(), 0.5s),
+	m_fileObserver(m_loadedPath, 0.5s),
 	m_plugin(std::make_unique<cr_plugin>()),
 	m_update(true),
 	m_panels(&Uis::Get()->GetCanvas()),
@@ -21,10 +21,8 @@ Plugins::Plugins() :
 	cr_plugin_load(*m_plugin, pathStr.c_str());
 
 	// Watches the plugin path.
-	m_watcher.OnChange().Add([this](std::filesystem::path path, FileWatcher::Status status) {
-		if (path == m_loadedPath) {
-			m_update = true;
-		}
+	m_fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
+		m_update = true;
 	});
 
 	m_buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {

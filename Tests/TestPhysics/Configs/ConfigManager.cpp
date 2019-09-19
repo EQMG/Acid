@@ -4,7 +4,7 @@
 #include <Graphics/Graphics.hpp>
 #include <Audio/Audio.hpp>
 #include <Timers/Timers.hpp>
-#include <Serialized/Json/Json.hpp>
+#include <Files/Json/Json.hpp>
 
 namespace test {
 ConfigManager::ConfigManager() :

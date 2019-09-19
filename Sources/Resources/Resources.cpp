@@ -28,8 +28,7 @@ std::shared_ptr<Resource> Resources::Find(const Node &node) const {
 	return nullptr;
 	/*auto it = m_resources.find(node);
 
-	if (it == m_resources.end())
-	{
+	if (it == m_resources.end()) {
 		return nullptr;
 	}
 

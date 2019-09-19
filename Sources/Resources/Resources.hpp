@@ -2,7 +2,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Helpers/ThreadPool.hpp"
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 #include "Resource.hpp"
 
 namespace acid {

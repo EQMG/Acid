@@ -63,9 +63,9 @@ private:
 	float m_scale;
 	float m_gravityEffect;
 
-	float m_elapsedTime;
-	float m_transparency;
-	float m_imageBlendFactor;
-	float m_distanceToCamera;
+	float m_elapsedTime = 0.0f;
+	float m_transparency = 1.0f;
+	float m_imageBlendFactor = 0.0f;
+	float m_distanceToCamera = 0.0f;
 };
 }

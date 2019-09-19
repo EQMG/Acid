@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "Serialized/Node.hpp"
+#include "Files/Node.hpp"
 
 namespace glslang {
 class TProgram;
