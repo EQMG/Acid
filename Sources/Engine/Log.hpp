@@ -42,7 +42,7 @@ public:
 		static constexpr std::string_view White = "\033[97m";
 	};
 
-	static constexpr auto TimestampFormat = "%Y-%m-%d %H:%M:%S GMT%z";
+	static constexpr auto TimestampFormat = "%H:%M:%S ";
 
 	/**
 	 * Outputs a message into the console.
@@ -51,7 +51,6 @@ public:
 	 */
 	template<typename ... Args>
 	static void Out(Args ... args) {
-		std::unique_lock<std::mutex> lock(WriteMutex);
 		Write(args...); // GetTime(), 
 	}
 
@@ -64,7 +63,6 @@ public:
 	 */
 	template<typename ... Args>
 	static void Out(const std::string_view &style, const std::string_view &colour, Args ... args) {
-		std::unique_lock<std::mutex> lock(WriteMutex);
 		Write(style, colour, args..., Style::Default); // GetTime(), 
 	}
 
@@ -123,11 +121,11 @@ public:
 	}
 
 	static void OpenLog(const std::filesystem::path &filepath);
+	static void CloseLog();
 
 private:
 	// TODO: Only use mutex in synced writes (where output order must be the same).
 	static std::mutex WriteMutex;
-	static std::ostream &OutStream;
 	static std::ofstream FileStream;
 
 	/**
@@ -137,18 +135,16 @@ private:
 	 */
 	template<typename ... Args>
 	static void Write(Args ... args) {
-		((OutStream << std::forward<Args>(args)), ...);
-		((FileStream << std::forward<Args>(args)), ...);
-		FileStream.flush(); // TODO: Flushing every write is not optimal.
+		std::unique_lock<std::mutex> lock(WriteMutex);
+		((std::cout << std::forward<Args>(args)), ...);
+		if (FileStream.is_open()) {
+			((FileStream << std::forward<Args>(args)), ...);
+		}
 	}
 
 	/**
 	 * A internal method that gets the current time in the log format.
 	 */
-	static auto GetTime() {
-		auto time = std::time(nullptr);
-		auto tm = *std::localtime(&time);
-		return std::put_time(&tm, TimestampFormat);
-	}
+	static std::string GetTime();
 };
 }

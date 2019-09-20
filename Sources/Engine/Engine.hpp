@@ -56,6 +56,8 @@ public:
 	 */
 	explicit Engine(std::string argv0, bool emptyRegister = false);
 
+	~Engine();
+
 	/**
 	 * The update function for the updater.
 	 * @return {@code EXIT_SUCCESS} or {@code EXIT_FAILURE}

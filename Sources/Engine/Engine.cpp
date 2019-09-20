@@ -56,6 +56,10 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	}
 }
 
+Engine::~Engine() {
+	Log::CloseLog();
+}
+
 int32_t Engine::Run() {
 	while (m_running) {
 		if (m_app) {

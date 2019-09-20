@@ -5,6 +5,8 @@
 #include "Files/Files.hpp"
 
 namespace acid {
+bool BitmapPng::registered = Register(".png");
+
 void BitmapPng::Load(const std::filesystem::path &filename) {
 	auto fileLoaded = Files::Read(filename);
 

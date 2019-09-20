@@ -6,7 +6,7 @@
 #include <Files/Node.hpp>
 #include <Files/Json/Json.hpp>
 #include <Files/Zip/ZipArchive.hpp>
-#include "Bitmaps/Png/BitmapPng.hpp"
+#include "Bitmaps/Bitmap.hpp"
 //#include <Serialized/Xml/Xml.hpp>
 //#include <Serialized/Yaml/Yaml.hpp>
 
@@ -129,10 +129,9 @@ public:
 }
 
 int main(int argc, char **argv) {
-	//BitmapPng::Register();
-	//auto bitmap = Bitmap::Create(".png");
-	//bitmap->Load(R"(W:\\Acid\\Acid\\Resources\Undefined.png)");
-	//bitmap->Write("Undefined_Rest.png");
+	//std::unique_ptr<Bitmap> bitmap = Bitmap::Create(".png");
+	//bitmap->Load("Undefined.png");
+	//bitmap->Write("Undefined_.png");
 	
 	{
 		std::string source = R"({"message":"hello world","value":3})";

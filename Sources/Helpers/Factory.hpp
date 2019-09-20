@@ -1,10 +1,6 @@
 #pragma once
 
-#include <unordered_map>
-#include <functional>
-#include <string>
-
-#include "Engine/Log.hpp"
+#include "StdAfx.hpp"
 
 namespace acid {
 template<typename Base, class... Args>
@@ -24,12 +20,13 @@ public:
 	}
 
 	template<typename T>
-	struct Registrar : Base {
-		static void Register(const std::string &name) {
-			Factory::Registry()[name] = [](Args... args) -> std::unique_ptr<Base> {
-				return std::make_unique<T>(std::forward<Args>(args)...);
+	class Registrar : public Base {
+	protected:
+		static bool Register(const std::string &name, std::function<std::unique_ptr<T>(Args...)> f = &std::make_unique<T>) {
+			Factory::Registry()[name] = [f](Args... args) -> std::unique_ptr<Base> {
+				return f(std::forward<Args>(args)...);
 			};
-			Log::Out("Registering class ", std::quoted(name), '\n');
+			return true;
 		}
 	};
 };
