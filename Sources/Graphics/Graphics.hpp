@@ -16,15 +16,10 @@ namespace acid {
 /**
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
-class ACID_EXPORT Graphics : public Module {
+class ACID_EXPORT Graphics : public Module::Registrar<Graphics> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Graphics *Get() { return Engine::Get()->GetModule<Graphics>(); }
-
 	Graphics();
+	
 	~Graphics();
 
 	void Update() override;

@@ -44,15 +44,10 @@ enum class CursorStandard {
 /**
  * @brief Module used for managing a virtual mouse.
  */
-class ACID_EXPORT Mouse : public Module {
+class ACID_EXPORT Mouse : public Module::Registrar<Mouse> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Mouse *Get() { return Engine::Get()->GetModule<Mouse>(); }
-
 	Mouse();
+	
 	~Mouse();
 
 	void Update() override;

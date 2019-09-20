@@ -1,7 +1,6 @@
 #pragma once
 
 #include "StdAfx.hpp"
-
 //#include "Files/Node.hpp"
 
 namespace acid {

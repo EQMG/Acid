@@ -10,14 +10,8 @@ namespace acid {
 /**
  * @brief Module used for managing game scenes.
  */
-class ACID_EXPORT Scenes : public Module {
+class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Scenes *Get() { return Engine::Get()->GetModule<Scenes>(); }
-
 	Scenes();
 
 	void Update() override;

@@ -8,14 +8,8 @@ namespace acid {
 /**
  * @brief Module used for managing gui textures in a container.
  */
-class ACID_EXPORT Uis : public Module {
+class ACID_EXPORT Uis : public Module::Registrar<Uis> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Uis *Get() { return Engine::Get()->GetModule<Uis>(); }
-
 	Uis();
 
 	void Update() override;

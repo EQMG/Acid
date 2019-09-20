@@ -9,14 +9,8 @@ namespace acid {
 /**
  * @brief Module used for managing resources.
  */
-class ACID_EXPORT Resources : public Module {
+class ACID_EXPORT Resources : public Module::Registrar<Resources> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Resources *Get() { return Engine::Get()->GetModule<Resources>(); }
-
 	Resources();
 
 	void Update() override;

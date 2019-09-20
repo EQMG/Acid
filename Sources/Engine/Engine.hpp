@@ -3,7 +3,7 @@
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"
-#include "ModuleHolder.hpp"
+#include "Module.hpp"
 #include "App.hpp"
 #include "Log.hpp"
 
@@ -77,47 +77,6 @@ public:
 	const Version &GetVersion() const { return m_version; }
 
 	/**
-	 * Checks whether a Module exists or not.
-	 * @tparam T The Module type.
-	 * @return If the Module has the System.
-	 */
-	template<typename T>
-	bool HasModule() const {
-		return m_modules.Has<T>();
-	}
-
-	/**
-	 * Gets a module instance by type from the register.
-	 * @tparam T The Module type.
-	 * @return The Module.
-	 */
-	template<typename T>
-	T *GetModule() const {
-		return m_modules.Get<T>();
-	}
-
-	/**
-	 * Adds a Module.
-	 * @tparam T The Module type.
-	 * @param stage The Module stage.
-	 * @tparam Args The constructor arg types.
-	 * @param args The constructor arguments.
-	 */
-	template<typename T, typename... Args>
-	void AddModule(const Module::Stage &stage, Args &&...args) {
-		m_modules.Add<T>(stage, std::make_unique<T>(std::forward<Args>(args)...));
-	}
-
-	/**
-	 * Removes a Module.
-	 * @tparam T The Module type.
-	 */
-	template<typename T>
-	void RemoveModule() {
-		m_modules.Remove<T>();
-	}
-
-	/**
 	 * Gets the current application.
 	 * @return The renderer manager.
 	 */
@@ -177,12 +136,13 @@ public:
 	void RequestClose() { m_running = false; }
 
 private:
+	void UpdateStage(ModuleStage stage);
+	
 	ACID_STATE static Engine *Instance;
 
 	std::string m_argv0;
 	Version m_version;
 
-	ModuleHolder m_modules;
 	std::unique_ptr<App> m_app;
 
 	float m_fpsLimit;

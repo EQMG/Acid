@@ -8,17 +8,8 @@
 using namespace acid;
 
 namespace test {
-/**
- * Module used for managing the world.
- */
-class World : public Module {
+class World : public Module::Registrar<World> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static World *Get() { return Engine::Get()->GetModule<World>(); }
-
 	World();
 
 	void Update() override;

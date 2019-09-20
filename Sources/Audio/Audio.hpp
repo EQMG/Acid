@@ -10,7 +10,7 @@ namespace acid {
 /**
  * @brief Module used for loading, managing and playing a variety of different sound types.
  */
-class ACID_EXPORT Audio : public Module {
+class ACID_EXPORT Audio : public Module::Registrar<Audio> {
 public:
 	enum class Type {
 		Master,
@@ -18,12 +18,6 @@ public:
 		Effect,
 		Music
 	};
-
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Audio *Get() { return Engine::Get()->GetModule<Audio>(); }
 
 	Audio();
 

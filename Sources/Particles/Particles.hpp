@@ -7,15 +7,9 @@ namespace acid {
 /**
  * @brief A manager that manages particles.
  */
-class ACID_EXPORT Particles : public Module {
+class ACID_EXPORT Particles : public Module::Registrar<Particles> {
 public:
 	using ParticlesContainer = std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>;
-
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Particles *Get() { return Engine::Get()->GetModule<Particles>(); }
 
 	Particles();
 

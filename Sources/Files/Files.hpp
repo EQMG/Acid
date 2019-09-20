@@ -45,14 +45,8 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT Files : public Module {
+class ACID_EXPORT Files : public Module::Registrar<Files> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Files *Get() { return Engine::Get()->GetModule<Files>(); }
-
 	Files();
 
 	~Files();

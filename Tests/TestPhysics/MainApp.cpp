@@ -88,9 +88,8 @@ MainApp::MainApp() :
 	});
 
 	// Registers modules.
-	//World::Register();
-	Engine::Get()->AddModule<World>(Module::Stage::Always);
-	//Engine::Get()->RemoveModule<Shadows>();
+	World::Register(ModuleStage::Always);
+	//Shadows::Deregister();
 
 	// Registers components.
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();

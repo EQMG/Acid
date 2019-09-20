@@ -8,14 +8,8 @@ namespace acid {
 /**
  * @brief Module used for managing a shadow map.
  */
-class ACID_EXPORT Shadows : public Module {
+class ACID_EXPORT Shadows : public Module::Registrar<Shadows> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Shadows *Get() { return Engine::Get()->GetModule<Shadows>(); }
-
 	Shadows();
 
 	void Update() override;

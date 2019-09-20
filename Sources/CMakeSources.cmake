@@ -36,7 +36,6 @@ set(_temp_acid_headers
 		Engine/Engine.hpp
 		Engine/Log.hpp
 		Engine/Module.hpp
-		Engine/ModuleHolder.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
 		Files/Zip/ZipEntry.hpp
@@ -271,7 +270,6 @@ set(_temp_acid_sources
 		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
-		Engine/ModuleHolder.cpp
 		Files/Json/Json.cpp
 		Files/Node.cpp
 		Files/NodeReturn.cpp

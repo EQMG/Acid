@@ -33,14 +33,8 @@ private:
 /**
  * @brief Module used for timed events.
  */
-class ACID_EXPORT Timers : public Module {
+class ACID_EXPORT Timers : public Module::Registrar<Timers> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Timers *Get() { return Engine::Get()->GetModule<Timers>(); }
-
 	Timers();
 
 	~Timers();

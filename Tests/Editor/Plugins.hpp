@@ -2,8 +2,8 @@
 
 #include <Engine/Engine.hpp>
 #include <Files/FileObserver.hpp>
+#include <Inputs/ButtonKeyboard.hpp>
 #include "Uis/Panels.hpp"
-#include "Inputs/ButtonKeyboard.hpp"
 
 using namespace acid;
 
@@ -13,14 +13,8 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins : public Module {
+class Plugins : public Module::Registrar<Plugins> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Plugins *Get() { return Engine::Get()->GetModule<Plugins>(); }
-
 	Plugins();
 
 	~Plugins();

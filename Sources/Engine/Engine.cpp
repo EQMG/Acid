@@ -37,22 +37,22 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 
 	// TODO: Maybe move each module into a Singleton???
 	if (!emptyRegister) {
-		AddModule<Files>(Module::Stage::Post);
-		AddModule<Timers>(Module::Stage::Post);
-		AddModule<Resources>(Module::Stage::Post);
+		Files::Register(ModuleStage::Post);
+		Timers::Register(ModuleStage::Post);
+		Resources::Register(ModuleStage::Post);
 
-		AddModule<Window>(Module::Stage::Pre);
-		AddModule<Audio>(Module::Stage::Pre);
-		AddModule<Joysticks>(Module::Stage::Pre);
-		AddModule<Keyboard>(Module::Stage::Pre);
-		AddModule<Mouse>(Module::Stage::Pre);
-		AddModule<Graphics>(Module::Stage::Render);
+		Window::Register(ModuleStage::Pre);
+		Audio::Register(ModuleStage::Pre);
+		Joysticks::Register(ModuleStage::Pre);
+		Keyboard::Register(ModuleStage::Pre);
+		Mouse::Register(ModuleStage::Pre);
+		Graphics::Register(ModuleStage::Render);
 
-		AddModule<Scenes>(Module::Stage::Normal);
-		AddModule<Gizmos>(Module::Stage::Normal);
-		AddModule<Particles>(Module::Stage::Normal);
-		AddModule<Shadows>(Module::Stage::Normal);
-		AddModule<Uis>(Module::Stage::Normal);
+		Scenes::Register(ModuleStage::Normal);
+		Gizmos::Register(ModuleStage::Normal);
+		Particles::Register(ModuleStage::Normal);
+		Shadows::Register(ModuleStage::Normal);
+		Uis::Register(ModuleStage::Normal);
 	}
 }
 
@@ -69,20 +69,20 @@ int32_t Engine::Run() {
 		m_elapsedRender.SetInterval(Time::Seconds(1.0f / m_fpsLimit));
 
 		// Always-Update.
-		m_modules.UpdateStage(Module::Stage::Always);
+		UpdateStage(ModuleStage::Always);
 
 		if (m_elapsedUpdate.GetElapsed() != 0) {
 			// Resets the timer.
 			m_ups.Update(Time::Now());
 
 			// Pre-Update.
-			m_modules.UpdateStage(Module::Stage::Pre);
+			UpdateStage(ModuleStage::Pre);
 
 			// Update.
-			m_modules.UpdateStage(Module::Stage::Normal);
+			UpdateStage(ModuleStage::Normal);
 
 			// Post-Update.
-			m_modules.UpdateStage(Module::Stage::Post);
+			UpdateStage(ModuleStage::Post);
 
 			// Updates the engines delta.
 			m_deltaUpdate.Update();
@@ -99,7 +99,7 @@ int32_t Engine::Run() {
 			m_fps.Update(Time::Now());
 
 			// Render
-			m_modules.UpdateStage(Module::Stage::Render);
+			UpdateStage(ModuleStage::Render);
 
 			// Updates the render delta, and render time extension.
 			m_deltaRender.Update();
@@ -107,5 +107,12 @@ int32_t Engine::Run() {
 	}
 
 	return EXIT_SUCCESS;
+}
+
+void Engine::UpdateStage(ModuleStage stage) {
+	for (auto &[stageIndex, module] : Module::Registry()) {
+		if (stageIndex.first == stage)
+			module->Update();
+	}
 }
 }

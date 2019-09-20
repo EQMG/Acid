@@ -18,14 +18,8 @@ ENABLE_BITMASK_OPERATORS(JoystickHat);
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
-class ACID_EXPORT Joysticks : public Module {
+class ACID_EXPORT Joysticks : public Module::Registrar<Joysticks> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Joysticks *Get() { return Engine::Get()->GetModule<Joysticks>(); }
-
 	Joysticks();
 
 	void Update() override;

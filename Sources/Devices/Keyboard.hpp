@@ -134,14 +134,8 @@ enum class Key :
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT Keyboard : public Module {
+class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard> {
 public:
-	/**
-	 * Gets the engines instance.
-	 * @return The current module instance.
-	 */
-	static Keyboard *Get() { return Engine::Get()->GetModule<Keyboard>(); }
-
 	Keyboard();
 
 	void Update() override;
