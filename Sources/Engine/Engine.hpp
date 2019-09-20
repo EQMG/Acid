@@ -138,7 +138,7 @@ public:
 private:
 	void UpdateStage(ModuleStage stage);
 	
-	ACID_STATE static Engine *Instance;
+	static Engine *Instance;
 
 	std::string m_argv0;
 	Version m_version;

@@ -5,9 +5,10 @@
 
 namespace acid {
 /**
- * @brief Represents when a module will call <seealso cref="Module#Update()"/> in the update loop.
+ * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
  */
-enum class ModuleStage {
+enum class ModuleStage : uint8_t {
+	Never,
 	Always,
 	Pre,
 	Normal,
@@ -26,14 +27,21 @@ public:
 		return impl;
 	}
 
+	static std::size_t GetNextId() {
+		static std::size_t id = 0;
+		return ++id;
+	}
+
 	template<typename T>
-	class Registrar : public Base, public NonCopyable {
+	class Registrar : public Base {
 	public:
 		/**
 		 * Gets the engines instance.
 		 * @return The current module instance.
 		 */
-		static T *Get() { return ModuleInstance.get(); }
+		static T *Get() {
+			return ModuleInstance.get();
+		}
 
 		/**
 		 * Creates a new module singleton instance and registers into the module registry map.
@@ -42,8 +50,7 @@ public:
 		 */
 		static bool Register(ModuleStage moduleStage) {
 			ModuleInstance = std::make_unique<T>();
-			auto &registry = ModuleFactory::Registry();
-			registry.insert({StageIndex(moduleStage, registry.size()), Get()});
+			Registry().insert({StageIndex(moduleStage, GetNextId()), Get()});
 			return true;
 		}
 
@@ -52,10 +59,9 @@ public:
 		 * @return A dummy value in static initialization.
 		 */
 		static bool Deregister() {
-			auto &registry = ModuleFactory::Registry();
-			for (auto it = registry.begin(); it != registry.end();) {
+			for (auto it = Registry().begin(); it != Registry().end();) {
 				if (it->second == ModuleInstance.get()) {
-					it = registry.erase(it);
+					it = Registry().erase(it);
 				} else {
 					++it;
 				}
@@ -73,7 +79,7 @@ public:
 /**
  * @brief A interface used for defining engine modules.
  */
-class ACID_EXPORT Module : public ModuleFactory<Module> {
+class ACID_EXPORT Module : public ModuleFactory<Module>, public NonCopyable {
 public:
 	virtual ~Module() = default;
 

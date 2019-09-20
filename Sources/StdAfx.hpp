@@ -49,14 +49,6 @@
 
 #if defined(ACID_BUILD_MSVC)
 #  define ACID_DEPRECATED __declspec(deprecated)
-#  pragma section(".state", read, write)
-#  define ACID_STATE __declspec(allocate(".state"))
 #else
 #  define ACID_DEPRECATED __attribute__ ((__deprecated__))
-#  if defined(ACID_BUILD_MACOS)
-#    define ACID_STATE __attribute__((used, section("__DATA,__state")))
-#  else
-#    pragma section(".state", read, write)
-#    define ACID_STATE __attribute__((section(".state")))
-#  endif
 #endif

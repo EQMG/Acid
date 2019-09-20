@@ -35,7 +35,6 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	Log::Out("Git: ", ACID_COMPILED_COMMIT_HASH, " on ", ACID_COMPILED_BRANCH, '\n');
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 
-	// TODO: Maybe move each module into a Singleton???
 	if (!emptyRegister) {
 		Files::Register(ModuleStage::Post);
 		Timers::Register(ModuleStage::Post);
@@ -57,6 +56,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 }
 
 Engine::~Engine() {
+	//Module::Registry().clear();
 	Log::CloseLog();
 }
 
