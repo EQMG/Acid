@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid_03.png" alt="Acid" height="130px">
 
-[![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
+[![Financial Contributors on Open Collective](https://opencollective.com/Acid/all/badge.svg?label=financial+contributors)](https://opencollective.com/Acid) [![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
 [![CodeDocs](https://codedocs.xyz/EQMG/Acid.svg)](https://codedocs.xyz/EQMG/Acid/)
 [![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
@@ -156,3 +156,33 @@ Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the [GUIDELINES.md](.github/GUIDELINES.md).
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/EQMG/Acid/graphs/contributors"><img src="https://opencollective.com/Acid/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/Acid/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/Acid"><img src="https://opencollective.com/Acid/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/Acid/contribute)]
+
+<a href="https://opencollective.com/Acid/organization/0/website"><img src="https://opencollective.com/Acid/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/1/website"><img src="https://opencollective.com/Acid/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/2/website"><img src="https://opencollective.com/Acid/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/3/website"><img src="https://opencollective.com/Acid/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/4/website"><img src="https://opencollective.com/Acid/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/5/website"><img src="https://opencollective.com/Acid/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/6/website"><img src="https://opencollective.com/Acid/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/7/website"><img src="https://opencollective.com/Acid/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/8/website"><img src="https://opencollective.com/Acid/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/Acid/organization/9/website"><img src="https://opencollective.com/Acid/organization/9/avatar.svg"></a>
