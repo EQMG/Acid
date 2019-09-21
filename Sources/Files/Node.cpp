@@ -100,6 +100,40 @@ void Node::RemoveProperty(const Node &node) {
 	}), m_properties.end());
 }
 
+std::vector<NodeReturn> Node::GetProperties(const std::string &name) const {
+	std::vector<NodeReturn> properties;
+
+	for (const auto &property : m_properties) {
+		if (property.m_name == name)
+			properties.emplace_back(this, name, &property);
+	}
+
+	return properties;
+}
+
+NodeReturn Node::GetPropertyWithBackup(const std::string &name, const std::string &backupName) const {
+	if (auto p1 = GetProperty(name))
+		return p1;
+	if (auto p2 = GetProperty(backupName))
+		return p2;
+	return {this, name, nullptr};
+}
+
+NodeReturn Node::GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const {
+	for (const auto &property : m_properties) {
+		auto properties1 = property.GetProperties(propertyName);
+		if (properties1.empty())
+			return {this, propertyName, nullptr};
+
+		for (auto &property1 : properties1) {
+			if (property1 && property1->GetValue() == propertyValue)
+				return {this, propertyName, &property};
+		}
+	}
+
+	return {this, propertyName, nullptr};
+}
+
 NodeReturn Node::operator[](const std::string &key) const {
 	return GetProperty(key);
 }

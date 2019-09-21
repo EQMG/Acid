@@ -4,7 +4,7 @@
 #include "Files/File.hpp"
 #include "Scenes/Entity.hpp"
 #include "Files/Json/Json.hpp"
-#include "Serialized/Xml/Xml.hpp"
+//#include "Files/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 
@@ -18,40 +18,46 @@ void MeshAnimated::Start() {
 		return;
 	}
 
-	File file(m_filename, std::make_unique<Xml>("COLLADA"));
+	//File file(m_filename, std::make_unique<Xml>("COLLADA"));
+	//file.Load();
+	//auto &fileNode = *file.GetNode();
+	File file(m_filename, std::make_unique<Json>());
 	file.Load();
+	auto fileNode = (*file.GetNode())["COLLADA"];
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
 	static const auto Correction = Matrix4().Rotate(Maths::Radians(-90.0f), Vector3f::Right);
 
-	SkinLoader skinLoader(file.GetNode()->FindChild("library_controllers"), MaxWeights);
-	SkeletonLoader skeletonLoader(file.GetNode()->FindChild("library_visual_scenes"), skinLoader.GetJointOrder(), Correction);
-	GeometryLoader geometryLoader(file.GetNode()->FindChild("library_geometries"), skinLoader.GetVertexWeights(), Correction);
+	SkinLoader skinLoader(fileNode["library_controllers"], MaxWeights);
+	SkeletonLoader skeletonLoader(fileNode["library_visual_scenes"], skinLoader.GetJointOrder(), Correction);
+	GeometryLoader geometryLoader(fileNode["library_geometries"], skinLoader.GetVertexWeights(), Correction);
 
 	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
 	m_headJoint = skeletonLoader.GetHeadJoint();
 
-	AnimationLoader animationLoader(file.GetNode()->FindChild("library_animations"), file.GetNode()->FindChild("library_visual_scenes"), Correction);
+	AnimationLoader animationLoader(fileNode["library_animations"], fileNode["library_visual_scenes"], Correction);
 
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator.DoAnimation(m_animation.get());
 
-	/*{
+#if defined(ACID_DEBUG)
+	{
 		File fileModel("Animation/Model.json", std::make_unique<Json>());
-		fileModel.GetNode()->SetChild("vertices", m_model->GetVertices<VertexAnimated>());
-		fileModel.GetNode()->SetChild("indices", m_model->GetIndices());
-		fileModel.Write();
+		(*fileModel.GetNode())["vertices"].Set(m_model->GetVertices<VertexAnimated>());
+		(*fileModel.GetNode())["indices"].Set(m_model->GetIndices());
+		fileModel.Write(Node::Format::Beautified);
 	}
 	{
 		File fileJoints("Animation/Joints.json", std::make_unique<Json>());
 		*fileJoints.GetNode() << m_headJoint;
-		fileJoints.Write();
+		fileJoints.Write(Node::Format::Beautified);
 	}
 	{
 		File fileAnimation0("Animation/Animation0.json", std::make_unique<Json>());
 		*fileAnimation0.GetNode() << *m_animation;
-		fileAnimation0.Write();
-	}*/
+		fileAnimation0.Write(Node::Format::Beautified);
+	}
+#endif
 }
 
 void MeshAnimated::Update() {

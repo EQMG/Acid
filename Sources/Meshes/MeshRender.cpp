@@ -1,6 +1,6 @@
 #include "MeshRender.hpp"
 
-//#include "Animations/MeshAnimated.hpp"
+#include "Animations/MeshAnimated.hpp"
 #include "Materials/Material.hpp"
 #include "Physics/Rigidbody.hpp"
 #include "Maths/Transform.hpp"
@@ -33,14 +33,14 @@ bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &u
 	// Gets required components.
 	auto material = GetEntity()->GetComponent<Material>();
 	auto mesh = GetEntity()->GetComponent<Mesh>();
-	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
+	auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
-	if (!material || !mesh) // && !meshAnimated
+	if (!material || (!mesh && !meshAnimated))
 	{
 		return false;
 	}
 
-	auto meshModel = mesh->GetModel(); // meshAnimated ? meshAnimated->GetModel() : 
+	auto meshModel = meshAnimated ? meshAnimated->GetModel() : mesh->GetModel(); 
 	auto materialPipeline = material->GetPipelineMaterial();
 
 	if (!meshModel || !materialPipeline || materialPipeline->GetStage() != pipelineStage) {

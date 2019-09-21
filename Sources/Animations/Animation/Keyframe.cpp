@@ -11,14 +11,14 @@ void Keyframe::AddJointTransform(const std::string &jointNameId, const Matrix4 &
 }
 
 const Node &operator>>(const Node &node, Keyframe &keyframe) {
-	node.GetChild("timeStamp", keyframe.m_timeStamp);
-	node.GetChild("pose", keyframe.m_pose);
+	node["timeStamp"].Get(keyframe.m_timeStamp);
+	node["pose"].Get(keyframe.m_pose);
 	return node;
 }
 
 Node &operator<<(Node &node, const Keyframe &keyframe) {
-	node.SetChild("timeStamp", keyframe.m_timeStamp);
-	node.SetChild("pose", keyframe.m_pose);
+	node["timeStamp"].Set(keyframe.m_timeStamp);
+	node["pose"].Set(keyframe.m_pose);
 	return node;
 }
 }

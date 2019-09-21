@@ -26,14 +26,14 @@ Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end,
 }
 
 const Node &operator>>(const Node &node, JointTransform &jointTransform) {
-	node.GetChild("position", jointTransform.m_position);
-	node.GetChild("rotation", jointTransform.m_rotation);
+	node["position"].Get(jointTransform.m_position);
+	node["rotation"].Get(jointTransform.m_rotation);
 	return node;
 }
 
 Node &operator<<(Node &node, const JointTransform &jointTransform) {
-	node.SetChild("position", jointTransform.m_position);
-	node.SetChild("rotation", jointTransform.m_rotation);
+	node["position"].Set(jointTransform.m_position);
+	node["rotation"].Set(jointTransform.m_rotation);
 	return node;
 }
 }

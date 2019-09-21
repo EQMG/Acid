@@ -21,20 +21,20 @@ void Joint::AddChild(const Joint &child) {
 }
 
 const Node &operator>>(const Node &node, Joint &joint) {
-	node.GetChild("index", joint.m_index);
-	node.GetChild("name", joint.m_name);
-	node.GetChild("children", joint.m_children);
-	node.GetChild("localBindTransform", joint.m_localBindTransform);
-	//node.GetChild("inverseBindTransform", joint.m_inverseBindTransform);
+	node["index"].Get(joint.m_index);
+	node["name"].Get(joint.m_name);
+	node["children"].Get(joint.m_children);
+	node["localBindTransform"].Get(joint.m_localBindTransform);
+	//node["inverseBindTransform"].Get(joint.m_inverseBindTransform);
 	return node;
 }
 
 Node &operator<<(Node &node, const Joint &joint) {
-	node.SetChild("index", joint.m_index);
-	node.SetChild("name", joint.m_name);
-	node.SetChild("children", joint.m_children);
-	node.SetChild("localBindTransform", joint.m_localBindTransform);
-	//node.SetChild("inverseBindTransform", joint.m_inverseBindTransform);
+	node["index"].Set(joint.m_index);
+	node["name"].Set(joint.m_name);
+	node["children"].Set(joint.m_children);
+	node["localBindTransform"].Set(joint.m_localBindTransform);
+	//node["inverseBindTransform"].Set(joint.m_inverseBindTransform);
 	// TODO: When loading 'CalculateInverseBindTransform' must be called on the head joint. 
 	return node;
 }

@@ -3,29 +3,36 @@
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid {
-SkeletonLoader::SkeletonLoader(const Node *libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
+SkeletonLoader::SkeletonLoader(NodeReturn libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
 	m_boneOrder(std::move(boneOrder)),
 	m_correction(correction) {
-	m_armatureData = libraryControllers->FindChild("visual_scene")->FindChildWithAttribute("node", "id", "Armature");
-	auto headNode = m_armatureData->FindChild("node");
+	m_armatureData = libraryControllers["visual_scene"]["node"]->GetPropertyWithValue("-id", "Armature");
+	auto headNode = m_armatureData["node"];
 	m_headJoint = LoadJointData(headNode, true);
 	m_headJoint.CalculateInverseBindTransform({});
 }
 
-Joint SkeletonLoader::LoadJointData(const Node *jointNode, bool isRoot) {
+Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 	auto joint = ExtractMainJointData(jointNode, isRoot);
-
-	for (const auto &childNode : jointNode->FindChildren("node")) {
-		joint.AddChild(LoadJointData(childNode, false));
+	
+	auto childJointNode = jointNode["node"];
+	if (!childJointNode)
+		return joint;
+	
+	if (childJointNode->GetType() == Node::Type::Array) {
+		for (auto &childNode : childJointNode->GetProperties())
+			joint.AddChild(LoadJointData(childNode, false));
+	} else {
+		joint.AddChild(LoadJointData(childJointNode, false));
 	}
-
+	
 	return joint;
 }
 
-Joint SkeletonLoader::ExtractMainJointData(const Node *jointNode, bool isRoot) {
-	auto nameId = *jointNode->FindAttribute("id");
+Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
+	auto nameId = jointNode["-id"]->GetValue();
 	auto index = GetBoneIndex(nameId);
-	auto matrixData = String::Split(jointNode->FindChild("matrix")->GetValue(), ' ');
+	auto matrixData = String::Split(jointNode["matrix"]["#text"]->GetValue(), ' ');
 
 	assert(matrixData.size() == 16);
 

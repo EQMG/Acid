@@ -1,6 +1,6 @@
 #include "ComponentRegister.hpp"
 
-//#include "Animations/MeshAnimated.hpp"
+#include "Animations/MeshAnimated.hpp"
 #include "Emitters/EmitterCircle.hpp"
 #include "Emitters/EmitterLine.hpp"
 #include "Emitters/EmitterPoint.hpp"
@@ -42,7 +42,7 @@ ComponentRegister::ComponentRegister() {
 	Add<MaterialSkybox>("materialSkybox");
 	Add<Transform>("transform");
 	Add<Mesh>("mesh");
-	//Add<MeshAnimated>("meshAnimated");
+	Add<MeshAnimated>("meshAnimated");
 	Add<MeshRender>("meshRender");
 	Add<ParticleSystem>("particleSystem");
 	Add<Rigidbody>("rigidbody");

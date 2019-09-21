@@ -2,23 +2,24 @@
 set(_temp_acid_headers
 		StdAfx.hpp
 		Acid.hpp
-#		Animations/Animation/Animation.hpp
-#		Animations/Animation/AnimationLoader.hpp
-#		Animations/Animation/Keyframe.hpp
-#		Animations/Animation/JointTransform.hpp
-#		Animations/Animator.hpp
-#		Animations/Geometry/GeometryLoader.hpp
-#		Animations/Geometry/VertexAnimated.hpp
-#		Animations/MeshAnimated.hpp
-#		Animations/Skeleton/Joint.hpp
-#		Animations/Skeleton/SkeletonLoader.hpp
-#		Animations/Skin/SkinLoader.hpp
-#		Animations/Skin/VertexWeights.hpp
+
+		Animations/Animation/Animation.hpp
+		Animations/Animation/AnimationLoader.hpp
+		Animations/Animation/JointTransform.hpp
+		Animations/Animation/Keyframe.hpp
+		Animations/Animator.hpp
+		Animations/Geometry/GeometryLoader.hpp
+		Animations/Geometry/VertexAnimated.hpp
+		Animations/MeshAnimated.hpp
+		Animations/Skeleton/Joint.hpp
+		Animations/Skeleton/SkeletonLoader.hpp
+		Animations/Skin/SkinLoader.hpp
+		Animations/Skin/VertexWeights.hpp
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
-		Bitmaps/Png/BitmapPng.hpp
 		Bitmaps/Bitmap.hpp
+		Bitmaps/Png/BitmapPng.hpp
 		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
@@ -37,16 +38,16 @@ set(_temp_acid_headers
 		Engine/Engine.hpp
 		Engine/Log.hpp
 		Engine/Module.hpp
+		Files/File.hpp
+		Files/FileObserver.hpp
+		Files/Files.hpp
+		Files/Json/Json.hpp
+		Files/Node.hpp
+		Files/NodeReturn.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
 		Files/Zip/ZipEntry.hpp
 		Files/Zip/ZipException.hpp
-		Files/Json/Json.hpp
-		Files/Node.hpp
-		Files/NodeReturn.hpp
-		Files/File.hpp
-		Files/Files.hpp
-		Files/FileObserver.hpp
 		Fonts/FontMetafile.hpp
 		Fonts/FontType.hpp
 		Fonts/Geometry.hpp
@@ -58,6 +59,34 @@ set(_temp_acid_headers
 		Gizmos/Gizmos.hpp
 		Gizmos/GizmoType.hpp
 		Gizmos/SubrenderGizmos.hpp
+		Graphics/Buffers/Buffer.hpp
+		Graphics/Buffers/InstanceBuffer.hpp
+		Graphics/Buffers/PushHandler.hpp
+		Graphics/Buffers/StorageBuffer.hpp
+		Graphics/Buffers/StorageHandler.hpp
+		Graphics/Buffers/UniformBuffer.hpp
+		Graphics/Buffers/UniformHandler.hpp
+		Graphics/Commands/CommandBuffer.hpp
+		Graphics/Commands/CommandPool.hpp
+		Graphics/Descriptors/Descriptor.hpp
+		Graphics/Descriptors/DescriptorSet.hpp
+		Graphics/Descriptors/DescriptorsHandler.hpp
+		Graphics/Graphics.hpp
+		Graphics/Images/Image.hpp
+		Graphics/Images/Image2d.hpp
+		Graphics/Images/ImageCube.hpp
+		Graphics/Images/ImageDepth.hpp
+		Graphics/Pipelines/Pipeline.hpp
+		Graphics/Pipelines/PipelineCompute.hpp
+		Graphics/Pipelines/PipelineGraphics.hpp
+		Graphics/Pipelines/Shader.hpp
+		Graphics/Renderer.hpp
+		Graphics/Renderpass/Framebuffers.hpp
+		Graphics/Renderpass/Renderpass.hpp
+		Graphics/Renderpass/Swapchain.hpp
+		Graphics/RenderStage.hpp
+		Graphics/Subrender.hpp
+		Graphics/SubrenderHolder.hpp
 		Guis/Gui.hpp
 		Guis/SubrenderGuis.hpp
 		Helpers/ConstExpr.hpp
@@ -180,34 +209,6 @@ set(_temp_acid_headers
 		Post/Pipelines/PipelineBlur.hpp
 		Post/PostFilter.hpp
 		Post/PostPipeline.hpp
-		Graphics/Buffers/Buffer.hpp
-		Graphics/Buffers/InstanceBuffer.hpp
-		Graphics/Buffers/PushHandler.hpp
-		Graphics/Buffers/StorageBuffer.hpp
-		Graphics/Buffers/StorageHandler.hpp
-		Graphics/Buffers/UniformBuffer.hpp
-		Graphics/Buffers/UniformHandler.hpp
-		Graphics/Commands/CommandBuffer.hpp
-		Graphics/Commands/CommandPool.hpp
-		Graphics/Descriptors/Descriptor.hpp
-		Graphics/Descriptors/DescriptorSet.hpp
-		Graphics/Descriptors/DescriptorsHandler.hpp
-		Graphics/Images/Image.hpp
-		Graphics/Images/Image2d.hpp
-		Graphics/Images/ImageCube.hpp
-		Graphics/Images/ImageDepth.hpp
-		Graphics/Pipelines/Pipeline.hpp
-		Graphics/Pipelines/PipelineCompute.hpp
-		Graphics/Pipelines/PipelineGraphics.hpp
-		Graphics/Pipelines/Shader.hpp
-		Graphics/Graphics.hpp
-		Graphics/Renderer.hpp
-		Graphics/Renderpass/Framebuffers.hpp
-		Graphics/Renderpass/Renderpass.hpp
-		Graphics/Renderpass/Swapchain.hpp
-		Graphics/RenderStage.hpp
-		Graphics/Subrender.hpp
-		Graphics/SubrenderHolder.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
@@ -232,27 +233,28 @@ set(_temp_acid_headers
 		Uis/Inputs/UiInputRadio.hpp
 		Uis/Inputs/UiInputSlider.hpp
 		Uis/Inputs/UiInputText.hpp
-		Uis/UiTransform.hpp
-		Uis/UiPanel.hpp
 		Uis/UiObject.hpp
+		Uis/UiPanel.hpp
 		Uis/Uis.hpp
 		Uis/UiScrollBar.hpp
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
+		Uis/UiTransform.hpp
 		)
 set(_temp_acid_sources
 		StdAfx.cpp
-#		Animations/Animation/Animation.cpp
-#		Animations/Animation/AnimationLoader.cpp
-#		Animations/Animation/Keyframe.cpp
-#		Animations/Animation/JointTransform.cpp
-#		Animations/Animator.cpp
-#		Animations/Geometry/GeometryLoader.cpp
-#		Animations/MeshAnimated.cpp
-#		Animations/Skeleton/Joint.cpp
-#		Animations/Skeleton/SkeletonLoader.cpp
-#		Animations/Skin/SkinLoader.cpp
-#		Animations/Skin/VertexWeights.cpp
+
+		Animations/Animation/Animation.cpp
+		Animations/Animation/AnimationLoader.cpp
+		Animations/Animation/JointTransform.cpp
+		Animations/Animation/Keyframe.cpp
+		Animations/Animator.cpp
+		Animations/Geometry/GeometryLoader.cpp
+		Animations/MeshAnimated.cpp
+		Animations/Skeleton/Joint.cpp
+		Animations/Skeleton/SkeletonLoader.cpp
+		Animations/Skin/SkinLoader.cpp
+		Animations/Skin/VertexWeights.cpp
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
@@ -272,15 +274,15 @@ set(_temp_acid_sources
 		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
+		Files/File.cpp
+		Files/FileObserver.cpp
+		Files/Files.cpp
 		Files/Json/Json.cpp
 		Files/Node.cpp
 		Files/NodeReturn.cpp
 		Files/Zip/miniz.c
 		Files/Zip/ZipArchive.cpp
 		Files/Zip/ZipEntry.cpp
-		Files/File.cpp
-		Files/Files.cpp
-		Files/FileObserver.cpp
 		Fonts/FontMetafile.cpp
 		Fonts/FontType.cpp
 		Fonts/Geometry.cpp
@@ -292,6 +294,30 @@ set(_temp_acid_sources
 		Gizmos/Gizmos.cpp
 		Gizmos/GizmoType.cpp
 		Gizmos/SubrenderGizmos.cpp
+		Graphics/Buffers/Buffer.cpp
+		Graphics/Buffers/InstanceBuffer.cpp
+		Graphics/Buffers/PushHandler.cpp
+		Graphics/Buffers/StorageBuffer.cpp
+		Graphics/Buffers/StorageHandler.cpp
+		Graphics/Buffers/UniformBuffer.cpp
+		Graphics/Buffers/UniformHandler.cpp
+		Graphics/Commands/CommandBuffer.cpp
+		Graphics/Commands/CommandPool.cpp
+		Graphics/Descriptors/DescriptorSet.cpp
+		Graphics/Descriptors/DescriptorsHandler.cpp
+		Graphics/Graphics.cpp
+		Graphics/Images/Image.cpp
+		Graphics/Images/Image2d.cpp
+		Graphics/Images/ImageCube.cpp
+		Graphics/Images/ImageDepth.cpp
+		Graphics/Pipelines/PipelineCompute.cpp
+		Graphics/Pipelines/PipelineGraphics.cpp
+		Graphics/Pipelines/Shader.cpp
+		Graphics/Renderpass/Framebuffers.cpp
+		Graphics/Renderpass/Renderpass.cpp
+		Graphics/Renderpass/Swapchain.cpp
+		Graphics/RenderStage.cpp
+		Graphics/SubrenderHolder.cpp
 		Guis/Gui.cpp
 		Guis/SubrenderGuis.cpp
 		Helpers/String.cpp
@@ -392,30 +418,6 @@ set(_temp_acid_sources
 		Post/Filters/FilterWobble.cpp
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
-		Graphics/Buffers/Buffer.cpp
-		Graphics/Buffers/InstanceBuffer.cpp
-		Graphics/Buffers/PushHandler.cpp
-		Graphics/Buffers/StorageBuffer.cpp
-		Graphics/Buffers/StorageHandler.cpp
-		Graphics/Buffers/UniformBuffer.cpp
-		Graphics/Buffers/UniformHandler.cpp
-		Graphics/Commands/CommandBuffer.cpp
-		Graphics/Commands/CommandPool.cpp
-		Graphics/Descriptors/DescriptorSet.cpp
-		Graphics/Descriptors/DescriptorsHandler.cpp
-		Graphics/Images/Image.cpp
-		Graphics/Images/Image2d.cpp
-		Graphics/Images/ImageCube.cpp
-		Graphics/Images/ImageDepth.cpp
-		Graphics/Pipelines/PipelineCompute.cpp
-		Graphics/Pipelines/PipelineGraphics.cpp
-		Graphics/Pipelines/Shader.cpp
-		Graphics/Graphics.cpp
-		Graphics/Renderpass/Framebuffers.cpp
-		Graphics/Renderpass/Renderpass.cpp
-		Graphics/Renderpass/Swapchain.cpp
-		Graphics/RenderStage.cpp
-		Graphics/SubrenderHolder.cpp
 		Resources/Resources.cpp
 		Scenes/ComponentRegister.cpp
 		Scenes/Entity.cpp
@@ -436,13 +438,13 @@ set(_temp_acid_sources
 		Uis/Inputs/UiInputRadio.cpp
 		Uis/Inputs/UiInputSlider.cpp
 		Uis/Inputs/UiInputText.cpp
-		Uis/UiTransform.cpp
-		Uis/UiPanel.cpp
 		Uis/UiObject.cpp
+		Uis/UiPanel.cpp
 		Uis/Uis.cpp
 		Uis/UiScrollBar.cpp
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
+		Uis/UiTransform.cpp
 		)
 
 # Adds the precompiled header

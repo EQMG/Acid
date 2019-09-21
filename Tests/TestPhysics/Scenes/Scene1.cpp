@@ -1,7 +1,7 @@
 #include "Scene1.hpp"
 
 #include <Audio/Sound.hpp>
-//#include <Animations/MeshAnimated.hpp>
+#include <Animations/MeshAnimated.hpp>
 #include <Emitters/EmitterCircle.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
@@ -143,9 +143,9 @@ void Scene1::Start() {
 	//auto animated = GetStructure()->CreateEntity("Objects/Animated/Animated.json");
 	//animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
 
-	/*auto animated = GetStructure()->CreateEntity();
+	auto animated = GetStructure()->CreateEntity();
 	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
-	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae");
+	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae.json"); // Objects/Animated/Model.dae
 	animated->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f);
 	//animated->AddComponent<Rigidbody>(0.0f);
 	//animated->AddComponent<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f)));
@@ -156,7 +156,7 @@ void Scene1::Start() {
 	EntityPrefab prefabAnimated("Prefabs/Animated.json");
 	prefabAnimated << *animated;
 	prefabAnimated.Write();
-#endif*/
+#endif
 
 	auto sun = GetStructure()->CreateEntity();
 	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));

@@ -3,16 +3,16 @@
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid {
-GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
-	m_meshData(libraryGeometries->FindChild("geometry")->FindChild("mesh")),
+GeometryLoader::GeometryLoader(NodeReturn libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
+	m_meshData(libraryGeometries["geometry"]["mesh"]),
 	m_vertexWeights(std::move(vertexWeights)),
 	m_correction(correction) {
 	auto positions = GetPositions();
 	auto uvs = GetUvs();
 	auto normals = GetNormals();
 
-	auto indexCount = static_cast<int32_t>(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildren("input").size());
-	auto indexRawData = String::Split(m_meshData->FindChildWithBackup("polylist", "triangles")->FindChild("p")->GetValue(), ' ');
+	auto indexCount = static_cast<int32_t>(m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetProperties().size());
+	auto indexRawData = String::Split(m_meshData->GetPropertyWithBackup("polylist", "triangles")["p"]->GetValue(), ' ');
 
 	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
 
@@ -37,10 +37,10 @@ GeometryLoader::GeometryLoader(const Node *libraryGeometries, std::vector<Vertex
 }
 
 std::vector<Vector3f> GeometryLoader::GetPositions() const {
-	auto positionsSource = m_meshData->FindChild("vertices")->FindChild("input")->FindAttribute("source")->substr(1);
-	auto positionsData = m_meshData->FindChildWithAttribute("source", "id", positionsSource)->FindChild("float_array");
-	auto positionsCount = String::From<uint32_t>(*positionsData->FindAttribute("count"));
-	auto positionsRawData = String::Split(positionsData->GetValue(), ' ');
+	auto positionsSource = m_meshData["vertices"]["input"]["-source"]->GetValue().substr(1);
+	auto positionsData = m_meshData["source"]->GetPropertyWithValue("-id", positionsSource)["float_array"];
+	auto positionsCount = positionsData["-count"]->Get<uint32_t>();
+	auto positionsRawData = String::Split(positionsData["#text"]->GetValue(), ' ');
 
 	std::vector<Vector3f> positions;
 
@@ -54,10 +54,10 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const {
 }
 
 std::vector<Vector2f> GeometryLoader::GetUvs() const {
-	auto uvsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "TEXCOORD")->FindAttribute("source")->substr(1);
-	auto uvsData = m_meshData->FindChildWithAttribute("source", "id", uvsSource)->FindChild("float_array");
-	auto uvsCount = String::From<uint32_t>(*uvsData->FindAttribute("count"));
-	auto uvsRawData = String::Split(uvsData->GetValue(), ' ');
+	auto uvsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "TEXCOORD")["-source"]->GetValue().substr(1);
+	auto uvsData = m_meshData["source"]->GetPropertyWithValue("-id", uvsSource)["float_array"];
+	auto uvsCount = uvsData["-count"]->Get<uint32_t>();
+	auto uvsRawData = String::Split(uvsData["#text"]->GetValue(), ' ');
 
 	std::vector<Vector2f> uvs;
 
@@ -70,10 +70,10 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const {
 }
 
 std::vector<Vector3f> GeometryLoader::GetNormals() const {
-	auto normalsSource = m_meshData->FindChildWithBackup("polylist", "triangles")->FindChildWithAttribute("input", "semantic", "NORMAL")->FindAttribute("source")->substr(1);
-	auto normalsData = m_meshData->FindChildWithAttribute("source", "id", normalsSource)->FindChild("float_array");
-	auto normalsCount = String::From<uint32_t>(*normalsData->FindAttribute("count"));
-	auto normalsRawData = String::Split(normalsData->GetValue(), ' ');
+	auto normalsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "NORMAL")["-source"]->GetValue().substr(1);
+	auto normalsData = m_meshData["source"]->GetPropertyWithValue("-id", normalsSource)["float_array"];
+	auto normalsCount = normalsData["-count"]->Get<uint32_t>();
+	auto normalsRawData = String::Split(normalsData["#text"]->GetValue(), ' ');
 
 	std::vector<Vector3f> normals;
 

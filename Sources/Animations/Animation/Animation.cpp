@@ -7,14 +7,14 @@ Animation::Animation(const Time &length, std::vector<Keyframe> keyframes) :
 }
 
 const Node &operator>>(const Node &node, Animation &animation) {
-	node.GetChild("length", animation.m_length);
-	node.GetChild("keyframes", animation.m_keyframes);
+	node["length"].Get(animation.m_length);
+	node["keyframes"].Get(animation.m_keyframes);
 	return node;
 }
 
 Node &operator<<(Node &node, const Animation &animation) {
-	node.SetChild("length", animation.m_length);
-	node.SetChild("keyframes", animation.m_keyframes);
+	node["length"].Set(animation.m_length);
+	node["keyframes"].Set(animation.m_keyframes);
 	return node;
 }
 }

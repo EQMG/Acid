@@ -77,6 +77,10 @@ public:
 	void RemoveProperty(const std::string &name);
 	void RemoveProperty(const Node &node);
 
+	std::vector<NodeReturn> GetProperties(const std::string &name) const;
+	NodeReturn GetPropertyWithBackup(const std::string &name, const std::string &backupName) const;
+	NodeReturn GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const;
+
 	NodeReturn operator[](const std::string &key) const;
 	NodeReturn operator[](uint32_t index) const;
 

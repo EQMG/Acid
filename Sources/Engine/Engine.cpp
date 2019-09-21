@@ -26,7 +26,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	m_version{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
 	m_fpsLimit(-1.0f),
 	m_running(true),
-	m_elapsedUpdate(14.705ms),
+	m_elapsedUpdate(15.77ms),
 	m_elapsedRender(-1s) {
 	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
@@ -96,9 +96,9 @@ int32_t Engine::Run() {
 		}
 
 		// Prioritize updates over rendering.
-		if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f)) {
-			continue;
-		}
+		//if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f)) {
+		//	continue;
+		//}
 
 		// Renders when needed.
 		if (m_elapsedRender.GetElapsed() != 0) {

@@ -10,6 +10,7 @@ class Node;
  * this allows reads of large trees with broken nodes to not need to generate new content.
  */
 class ACID_EXPORT NodeReturn {
+	friend class Node;
 public:
 	NodeReturn() = default;
 	NodeReturn(Node const *parent, std::variant<std::string, int32_t> key, Node const *value);

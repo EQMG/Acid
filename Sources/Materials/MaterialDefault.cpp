@@ -1,6 +1,6 @@
 #include "MaterialDefault.hpp"
 
-//#include "Animations/MeshAnimated.hpp"
+#include "Animations/MeshAnimated.hpp"
 #include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
@@ -21,16 +21,16 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 
 void MaterialDefault::Start() {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
-	//auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
+	auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 
-	if (!mesh) // && !meshAnimated
+	if (!mesh && !meshAnimated)
 	{
 		Log::Error("Cannot have a material attached to a object without a mesh!\n");
 		return;
 	}
 
-	m_animated = false; //  meshAnimated;
-	auto vertexInput = Mesh::GetVertexInput(); // { m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput() ;
+	m_animated = meshAnimated;
+	auto vertexInput = m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput();
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
 		{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt
@@ -53,11 +53,10 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
 }
 
 void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet) {
-	/*if (m_animated)
-	{
+	if (m_animated) {
 		auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
 		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
-	}*/
+	}
 
 	descriptorSet.Push("samplerDiffuse", m_imageDiffuse);
 	descriptorSet.Push("samplerMaterial", m_imageMaterial);
@@ -69,9 +68,9 @@ std::vector<Shader::Define> MaterialDefault::GetDefines() const {
 		{"DIFFUSE_MAPPING", String::To<int32_t>(m_imageDiffuse != nullptr)},
 		{"MATERIAL_MAPPING", String::To<int32_t>(m_imageMaterial != nullptr)},
 		{"NORMAL_MAPPING", String::To<int32_t>(m_imageNormal != nullptr)},
-		{"ANIMATED", String::To<int32_t>(m_animated)}
-		//{"MAX_JOINTS", String::To(MeshAnimated::MaxJoints)},
-		//{"MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights)}
+		{"ANIMATED", String::To<int32_t>(m_animated)},
+		{"MAX_JOINTS", String::To(MeshAnimated::MaxJoints)},
+		{"MAX_WEIGHTS", String::To(MeshAnimated::MaxWeights)}
 	};
 }
 
