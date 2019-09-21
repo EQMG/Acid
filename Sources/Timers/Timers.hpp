@@ -12,8 +12,7 @@ public:
 	Timer(const Time &interval, const std::optional<uint32_t> &repeat) :
 		m_interval(interval),
 		m_next(Time::Now() + m_interval),
-		m_repeat(repeat),
-		m_destroyed(false) {
+		m_repeat(repeat) {
 	}
 
 	const Time &GetInterval() const { return m_interval; }
@@ -26,7 +25,7 @@ private:
 	Time m_interval;
 	Time m_next;
 	std::optional<uint32_t> m_repeat;
-	bool m_destroyed;
+	bool m_destroyed = false;
 	Delegate<void()> m_onTick;
 };
 
@@ -72,7 +71,7 @@ public:
 	}
 
 private:
-	void Run();
+	void ThreadRun();
 
 	std::vector<std::unique_ptr<Timer>> m_timers;
 

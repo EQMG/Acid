@@ -1,7 +1,8 @@
 #include <Engine/Engine.hpp>
 #include <Graphics/Graphics.hpp>
+
+#include "EditorRenderer.hpp"
 #include "Plugins.hpp"
-#include "MainRenderer.hpp"
 
 using namespace acid;
 using namespace test;
@@ -21,8 +22,8 @@ int main(int argc, char **argv) {
 	Window::Get()->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
 		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
-	});
-	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
+		});
+	Graphics::Get()->SetRenderer(std::make_unique<EditorRenderer>());
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();

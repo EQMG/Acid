@@ -19,7 +19,7 @@ public:
 	virtual ~Renderer() = default;
 
 	/**
-	 * Run when starting the renderer manager, use this method to create {@link Subrender}'s.
+	 * Run when switching to this scene from another, use this method to create {@link Subrender}'s.
 	 */
 	virtual void Start() = 0;
 

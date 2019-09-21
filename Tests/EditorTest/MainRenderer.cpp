@@ -8,6 +8,7 @@
 #include <Models/Shapes/ModelSphere.hpp>
 #include <Particles/SubrenderParticles.hpp>
 #include <Post/Deferred/SubrenderDeferred.hpp>
+#include <Post/Filters/FilterBlit.hpp>
 #include <Post/Filters/FilterCrt.hpp>
 #include <Post/Filters/FilterDefault.hpp>
 #include <Post/Filters/FilterDof.hpp>
@@ -36,7 +37,11 @@ MainRenderer::MainRenderer() {
 
 	std::vector<Attachment> renderpassAttachments1 = {
 		{0, "depth", Attachment::Type::Depth, false},
+#if defined(ACID_RELOAD)
+		{1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM},
+#else
 		{1, "swapchain", Attachment::Type::Swapchain},
+#endif
 		{2, "position", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT},
 		{3, "diffuse", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM},
 		{4, "normal", Attachment::Type::Image, false, VK_FORMAT_R16G16B16A16_SFLOAT},
@@ -49,6 +54,16 @@ MainRenderer::MainRenderer() {
 		{2, {0, 1}}
 	};
 	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
+
+#if defined(ACID_RELOAD)
+	std::vector<Attachment> renderpassAttachments2 = {
+		{0, "swapchainReal", Attachment::Type::Swapchain}
+	};
+	std::vector<SubpassType> renderpassSubpasses2 = {
+		{0, {0}}
+	};
+	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments2, renderpassSubpasses2));
+#endif
 }
 
 void MainRenderer::Start() {
@@ -75,6 +90,10 @@ void MainRenderer::Start() {
 	//AddSubrender<RenderGizmos>(Pipeline::Stage(1, 2));
 	AddSubrender<SubrenderGuis>(Pipeline::Stage(1, 2));
 	AddSubrender<SubrenderFonts>(Pipeline::Stage(1, 2));
+
+#if defined(ACID_RELOAD)
+	AddSubrender<FilterBlit>({2, 0});
+#endif
 }
 
 void MainRenderer::Update() {
@@ -82,5 +101,18 @@ void MainRenderer::Update() {
 	//renderpassCreate1->GetViewport().SetScale(0.75f);
 
 	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
+	
+#if defined(ACID_RELOAD)
+	auto renderpassCreate1 = GetRenderStage(1);
+	//renderpassCreate1->GetViewport().SetOffset({0.1f, 0.0f});
+
+	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release) {
+		renderpassCreate1->GetViewport().SetScale({1.0f, 1.0f});
+	} else {
+		renderpassCreate1->GetViewport().SetScale({0.5f, 1.0f});
+	}
+
+	//Renderer::Get()->GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(Key::I));
+#endif
 }
 }

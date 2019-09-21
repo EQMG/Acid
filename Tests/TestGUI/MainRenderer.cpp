@@ -25,7 +25,5 @@ void MainRenderer::Start() {
 }
 
 void MainRenderer::Update() {
-	//auto renderpassCreate0 = Renderer::Get()->GetRenderStage(0);
-	//renderpassCreate0->GetViewport().SetScale(0.8f);
 }
 }

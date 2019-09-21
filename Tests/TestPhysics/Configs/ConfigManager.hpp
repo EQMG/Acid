@@ -6,7 +6,7 @@
 using namespace acid;
 
 namespace test {
-class ConfigManager : public Observer {
+class ConfigManager : public virtual Observer {
 public:
 	ConfigManager();
 

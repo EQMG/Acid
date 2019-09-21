@@ -77,6 +77,9 @@ MainApp::~MainApp() {
 	Scenes::Get()->SetScene(nullptr);
 }
 
+void MainApp::Start() {
+}
+
 void MainApp::Update() {
 }
 }

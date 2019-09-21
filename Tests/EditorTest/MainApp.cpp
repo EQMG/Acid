@@ -11,7 +11,6 @@
 #include "Resources/Resources.hpp"
 
 #if defined(ACID_RELOAD)
-
 #include <Engine/cr.h>
 
 CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation) {
@@ -88,7 +87,7 @@ MainApp::MainApp() :
 	//Window::Get()->SetIcons({ "Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
 	//	"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png" });
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
-	//Renderer::Get()->SetManager(std::make_unique<MainRenderer>());
+	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
 }
 
@@ -100,9 +99,12 @@ MainApp::~MainApp() {
 	auto &componentRegister = Scenes::Get()->GetComponentRegister();
 	componentRegister.Remove("playerFps");
 
-	//Renderer::Get()->SetManager(nullptr);
+	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);
 	Uis::Get()->GetCanvas().ClearChildren();
+}
+
+void MainApp::Start() {
 }
 
 void MainApp::Update() {

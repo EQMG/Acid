@@ -7,12 +7,13 @@
 using namespace acid;
 
 namespace test {
-class MainApp : public App, public Observer {
+class MainApp : public App, public virtual Observer {
 public:
 	MainApp();
 
 	~MainApp();
 
+	void Start() override;
 	void Update() override;
 
 private:

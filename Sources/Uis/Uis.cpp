@@ -6,7 +6,6 @@ Uis::Uis() :
 	for (auto button : EnumIterator<MouseButton>()) {
 		m_selectors.emplace(button, SelectorMouse());
 	}
-
 }
 
 void Uis::Update() {

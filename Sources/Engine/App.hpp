@@ -21,6 +21,11 @@ public:
 	virtual ~App() = default;
 
 	/**
+	 * Run when switching to this app from another.
+	 */
+	virtual void Start() = 0;
+
+	/**
 	 * Run before the module update pass.
 	 */
 	virtual void Update() = 0;
@@ -50,6 +55,7 @@ public:
 	void SetVersion(const Version &version) { m_version = version; }
 
 private:
+	bool m_started = false;
 	std::string m_name;
 	Version m_version;
 };

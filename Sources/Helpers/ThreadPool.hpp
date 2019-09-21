@@ -12,6 +12,7 @@ namespace acid {
 class ACID_EXPORT ThreadPool {
 public:
 	explicit ThreadPool(uint32_t threadCount = std::thread::hardware_concurrency());
+	
 	~ThreadPool();
 
 	template<typename F, typename... Args>

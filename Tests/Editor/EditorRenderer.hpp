@@ -5,9 +5,9 @@
 using namespace acid;
 
 namespace test {
-class MainRenderer : public Renderer {
+class EditorRenderer : public Renderer {
 public:
-	MainRenderer();
+	EditorRenderer();
 
 	void Start() override;
 	void Update() override;

@@ -106,7 +106,7 @@ MainApp::MainApp() :
 	Window::Get()->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
 		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
-	});
+		});
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
@@ -118,6 +118,9 @@ MainApp::~MainApp() {
 
 	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);
+}
+
+void MainApp::Start() {
 }
 
 void MainApp::Update() {

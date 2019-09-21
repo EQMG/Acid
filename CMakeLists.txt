@@ -4,6 +4,8 @@ project(Acid VERSION 0.13.4 LANGUAGES C CXX)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
+# BUILD_UNIT_TESTS conflicts with bullet unit tests.
+option(ACID_BUILD_UNIT_TESTS "Build unit tests" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 
@@ -279,4 +281,6 @@ if(BUILD_TESTS)
 	add_subdirectory(Tests/TestPhysics)
 	add_subdirectory(Tests/TestSerial)
 endif()
-
+if(ACID_BUILD_UNIT_TESTS)
+	add_subdirectory(Units)
+endif()

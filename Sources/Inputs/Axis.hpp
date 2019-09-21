@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_EXPORT Axis : public Observer {
+class ACID_EXPORT Axis : public virtual Observer {
 public:
 	virtual ~Axis() = default;
 

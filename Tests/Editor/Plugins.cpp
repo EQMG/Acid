@@ -28,6 +28,7 @@ Plugins::Plugins() :
 	m_buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			//std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type(Time::Now()));
+			m_update = true;
 		}
 	});
 }

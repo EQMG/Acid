@@ -158,6 +158,7 @@ set(_temp_acid_headers
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
 		Post/Deferred/SubrenderDeferred.hpp
+		Post/Filters/FilterBlit.hpp
 		Post/Filters/FilterBlur.hpp
 		Post/Filters/FilterCrt.hpp
 		Post/Filters/FilterDarken.hpp
@@ -370,6 +371,7 @@ set(_temp_acid_sources
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
 		Post/Deferred/SubrenderDeferred.cpp
+		Post/Filters/FilterBlit.cpp
 		Post/Filters/FilterBlur.cpp
 		Post/Filters/FilterCrt.cpp
 		Post/Filters/FilterDarken.cpp

@@ -8,7 +8,7 @@ class Entity;
 /**
  * @brief Class that represents a functional component attached to entity.
  */
-class ACID_EXPORT Component : public Observer {
+class ACID_EXPORT Component : public virtual Observer {
 	friend class Entity;
 public:
 	virtual ~Component() = default;

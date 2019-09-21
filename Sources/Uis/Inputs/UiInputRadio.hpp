@@ -48,7 +48,7 @@ private:
 	Delegate<void(bool)> m_onValue;
 };
 
-class ACID_EXPORT UiRadioManager : public Observer {
+class ACID_EXPORT UiRadioManager : public virtual Observer {
 public:
 	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, bool multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
 		m_type(type),

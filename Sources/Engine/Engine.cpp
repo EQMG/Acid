@@ -58,13 +58,18 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 }
 
 Engine::~Engine() {
-	//Module::Registry().clear();
+	Module::Registry().clear();
 	Log::CloseLog();
 }
 
 int32_t Engine::Run() {
 	while (m_running) {
 		if (m_app) {
+			if (!m_app->m_started) {
+				m_app->Start();
+				m_app->m_started = true;
+			}
+			
 			m_app->Update();
 		}
 

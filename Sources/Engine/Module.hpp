@@ -20,7 +20,7 @@ template<typename Base>
 class ModuleFactory {
 public:
 	using StageIndex = std::pair<ModuleStage, std::size_t>;
-	using RegistryMap = std::multimap<StageIndex, Base *>;
+	using RegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;
 
 	static RegistryMap &Registry() {
 		static RegistryMap impl;
@@ -39,9 +39,7 @@ public:
 		 * Gets the engines instance.
 		 * @return The current module instance.
 		 */
-		static T *Get() {
-			return ModuleInstance.get();
-		}
+		static T *Get() { return ModuleInstance; }
 
 		/**
 		 * Creates a new module singleton instance and registers into the module registry map.
@@ -49,8 +47,8 @@ public:
 		 * @return A dummy value in static initialization.
 		 */
 		static bool Register(ModuleStage moduleStage) {
-			ModuleInstance = std::make_unique<T>();
-			Registry().insert({StageIndex(moduleStage, GetNextId()), Get()});
+			auto it = Registry().insert({StageIndex(moduleStage, GetNextId()), std::make_unique<T>()});
+			ModuleInstance = dynamic_cast<T *>(it->second.get());
 			return true;
 		}
 
@@ -60,7 +58,7 @@ public:
 		 */
 		static bool Deregister() {
 			for (auto it = Registry().begin(); it != Registry().end();) {
-				if (it->second == ModuleInstance.get()) {
+				if (it->second.get() == ModuleInstance) {
 					it = Registry().erase(it);
 				} else {
 					++it;
@@ -72,7 +70,7 @@ public:
 		
 	private:
 		// Named ModuleInstance instead of Instance to avoid name collisions.
-		inline static std::unique_ptr<T> ModuleInstance = nullptr;
+		inline static T *ModuleInstance = nullptr;
 	};
 };
 

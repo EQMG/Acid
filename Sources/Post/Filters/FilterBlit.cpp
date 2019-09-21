@@ -1,6 +1,6 @@
 #include "FilterBlit.hpp"
 
-namespace test {
+namespace acid {
 FilterBlit::FilterBlit(const Pipeline::Stage &pipelineStage) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Blit.frag"}) {
 }
