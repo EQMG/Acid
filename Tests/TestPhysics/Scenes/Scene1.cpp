@@ -152,9 +152,11 @@ void Scene1::Start() {
 	animated->AddComponent<MeshRender>();
 	animated->AddComponent<ShadowRender>();
 
+#if defined(ACID_DEBUG)
 	EntityPrefab prefabAnimated("Prefabs/Animated.json");
 	prefabAnimated << *animated;
-	prefabAnimated.Write();*/
+	prefabAnimated.Write();
+#endif*/
 
 	auto sun = GetStructure()->CreateEntity();
 	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));
@@ -188,9 +190,11 @@ void Scene1::Start() {
 	terrain->AddComponent<MeshRender>();
 	terrain->AddComponent<ShadowRender>();*/
 
+#if defined(ACID_DEBUG)
 	EntityPrefab prefabTerrain("Prefabs/Terrain.json");
 	prefabTerrain << *terrain;
 	prefabTerrain.Write();
+#endif
 
 	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
@@ -232,9 +236,11 @@ void Scene1::Start() {
 	teapot1->AddComponent<MeshRender>();
 	teapot1->AddComponent<ShadowRender>();
 
+#if defined(ACID_DEBUG)
 	EntityPrefab prefabTeapot1("Prefabs/Teapot1.json");
 	prefabTeapot1 << *teapot1;
 	prefabTeapot1.Write();
+#endif
 
 	auto teapotCone = GetStructure()->CreateEntity();
 	teapotCone->AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1);
@@ -300,9 +306,11 @@ void Scene1::Start() {
 	smokeSystem->AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 
+#if defined(ACID_DEBUG)
 	EntityPrefab prefabSmokeSystem("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem << *smokeSystem;
 	prefabSmokeSystem.Write();
+#endif
 }
 
 void Scene1::Update() {

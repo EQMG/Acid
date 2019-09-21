@@ -23,7 +23,8 @@ public:
 		auto it = m_subrenders.find(typeId);
 
 		if (it == m_subrenders.end() || !it->second) {
-			throw std::runtime_error("Subrender Holder does not have requested Subrender");
+			//throw std::runtime_error("Subrender Holder does not have requested Subrender");
+			return nullptr;
 		}
 
 		return static_cast<T *>(it->second.get());

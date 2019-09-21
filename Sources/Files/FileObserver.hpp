@@ -1,6 +1,7 @@
 #pragma once
 
 #include <thread>
+
 #include "Maths/Time.hpp"
 #include "Helpers/Delegate.hpp"
 
@@ -24,6 +25,8 @@ public:
 	explicit FileObserver(std::filesystem::path path, const Time &delay = 5s);
 
 	~FileObserver();
+
+	void DoWithFilesInPath(const std::function<void(std::filesystem::path)> &f) const;
 
 	const std::filesystem::path &GetPath() const { return m_path; }
 	void SetPath(const std::filesystem::path &path) { m_path = path; }

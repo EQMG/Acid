@@ -61,7 +61,7 @@ MainApp::MainApp() :
 		Log::Out("Timer Hello World!\n");
 	});
 	Timers::Get()->Every(4s, []() {
-		Log::Out("Timer Every Tick: ", Engine::Get()->GetFps(), " fps\n");
+		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
 	});
 	Timers::Get()->Repeat(2s, 3, []() {
 		static uint32_t i = 0;

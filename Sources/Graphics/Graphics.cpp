@@ -37,6 +37,12 @@ void Graphics::Update() {
 		return;
 	}
 
+	if (!m_renderer->m_started) {
+		ResetRenderStages();
+		m_renderer->Start();
+		m_renderer->m_started = true;
+	}
+
 	m_renderer->Update();
 
 	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
@@ -53,7 +59,7 @@ void Graphics::Update() {
 
 	Pipeline::Stage stage;
 
-	for (auto &renderStage : m_renderStages) {
+	for (auto &renderStage : m_renderer->m_renderStages) {
 		renderStage->Update();
 
 		if (!StartRenderpass(*renderStage)) {
@@ -64,7 +70,7 @@ void Graphics::Update() {
 			stage.second = subpass.GetBinding();
 
 			// Renders subpass subrender pipelines.
-			m_subrenderHolder.RenderStage(stage, *m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
+			m_renderer->m_subrenderHolder.RenderStage(stage, *m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
 			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding()) {
 				vkCmdNextSubpass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()], VK_SUBPASS_CONTENTS_INLINE);
@@ -198,17 +204,41 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 }
 
 RenderStage *Graphics::GetRenderStage(uint32_t index) const {
-	if (m_renderStages.empty() || m_renderStages.size() < index) {
+	if (!m_renderer)
+		return nullptr;
+	return m_renderer->GetRenderStage(index);
+}
+
+const Descriptor *Graphics::GetAttachment(const std::string &name) const {
+	auto it = m_attachments.find(name);
+
+	if (it == m_attachments.end()) {
 		return nullptr;
 	}
 
-	return m_renderStages.at(index).get();
+	return it->second;
 }
 
-void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderStages) {
+const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId) {
+	auto it = m_commandPools.find(threadId);
+
+	if (it != m_commandPools.end()) {
+		return it->second;
+	}
+
+	// TODO: Cleanup and fix crashes
+	return m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
+}
+
+void Graphics::CreatePipelineCache() {
+	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
+	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
+	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+}
+
+void Graphics::ResetRenderStages() {
 	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 
-	m_renderStages = std::move(renderStages);
 	m_swapchain = std::make_unique<Swapchain>(displayExtent);
 
 	if (m_flightFences.size() != m_swapchain->GetImageCount()) {
@@ -241,38 +271,11 @@ void Graphics::SetRenderStages(std::vector<std::unique_ptr<RenderStage>> renderS
 		}
 	}
 
-	for (const auto &renderStage : m_renderStages) {
+	for (const auto &renderStage : m_renderer->m_renderStages) {
 		renderStage->Rebuild(*m_swapchain);
 	}
 
 	RecreateAttachmentsMap();
-}
-
-const Descriptor *Graphics::GetAttachment(const std::string &name) const {
-	auto it = m_attachments.find(name);
-
-	if (it == m_attachments.end()) {
-		return nullptr;
-	}
-
-	return it->second;
-}
-
-const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId) {
-	auto it = m_commandPools.find(threadId);
-
-	if (it != m_commandPools.end()) {
-		return it->second;
-	}
-
-	// TODO: Cleanup and fix crashes
-	return m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
-}
-
-void Graphics::CreatePipelineCache() {
-	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
-	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
 }
 
 void Graphics::RecreatePass(RenderStage &renderStage) {
@@ -296,7 +299,7 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 void Graphics::RecreateAttachmentsMap() {
 	m_attachments.clear();
 
-	for (const auto &renderStage : m_renderStages) {
+	for (const auto &renderStage : m_renderer->m_renderStages) {
 		m_attachments.insert(renderStage->m_descriptors.begin(), renderStage->m_descriptors.end());
 	}
 }

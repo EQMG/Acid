@@ -11,15 +11,13 @@
 
 namespace test {
 MainRenderer::MainRenderer() {
-	std::vector<std::unique_ptr<RenderStage>> renderStages;
-
 	std::vector<Attachment> renderpassAttachments0 = {
 		{0, "shadows", Attachment::Type::Image, false, VK_FORMAT_R8_UNORM}
 	};
 	std::vector<SubpassType> renderpassSubpasses0 = {
 		{0, {0}}
 	};
-	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport({4096, 4096})));
+	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0, Viewport({4096, 4096})));
 
 	std::vector<Attachment> renderpassAttachments1{
 		{0, "depth", Attachment::Type::Depth, false},
@@ -35,20 +33,20 @@ MainRenderer::MainRenderer() {
 		{1, {0, 6}},
 		{2, {0, 1}}
 	};
-	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
-	Graphics::Get()->SetRenderStages(std::move(renderStages));
+	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
+}
 
-	Graphics::Get()->ClearSubrenders();
-	//Graphics::Get()->AddSubrender<RenderShadows>({0, 0});
+void MainRenderer::Start() {
+	//AddSubrender<RenderShadows>({0, 0});
 
-	Graphics::Get()->AddSubrender<SubrenderMeshes>({1, 0});
+	AddSubrender<SubrenderMeshes>({1, 0});
 
-	Graphics::Get()->AddSubrender<SubrenderDeferred>({1, 1});
-	Graphics::Get()->AddSubrender<SubrenderParticles>({1, 1});
+	AddSubrender<SubrenderDeferred>({1, 1});
+	AddSubrender<SubrenderParticles>({1, 1});
 
-	Graphics::Get()->AddSubrender<FilterDefault>({1, 2}, true);
-	Graphics::Get()->AddSubrender<SubrenderGuis>({1, 2});
-	Graphics::Get()->AddSubrender<SubrenderFonts>({1, 2});
+	AddSubrender<FilterDefault>({1, 2}, true);
+	AddSubrender<SubrenderGuis>({1, 2});
+	AddSubrender<SubrenderFonts>({1, 2});
 }
 
 void MainRenderer::Update() {

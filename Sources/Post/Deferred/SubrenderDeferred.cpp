@@ -20,9 +20,11 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
+#if defined(ACID_DEBUG)
 	Node node;
 	node << *m_pipeline.GetShader();
 	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write(Node::Format::Beautified);
+#endif
 }
 
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {

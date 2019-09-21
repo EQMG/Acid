@@ -31,9 +31,11 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
+#if defined(ACID_DEBUG)
 	Log::Out("Version: ", ACID_VERSION, '\n');
 	Log::Out("Git: ", ACID_COMPILED_COMMIT_HASH, " on ", ACID_COMPILED_BRANCH, '\n');
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
+#endif
 
 	if (!emptyRegister) {
 		Files::Register(ModuleStage::Post);

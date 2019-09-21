@@ -8,8 +8,6 @@
 
 namespace test {
 MainRenderer::MainRenderer() {
-	std::vector<std::unique_ptr<RenderStage>> renderStages;
-
 	std::vector<Attachment> renderpassAttachments0 = {
 		{0, "depth", Attachment::Type::Depth},
 		{1, "swapchain", Attachment::Type::Swapchain, false, VK_FORMAT_R8G8B8A8_UNORM, Colour::White}
@@ -17,13 +15,13 @@ MainRenderer::MainRenderer() {
 	std::vector<SubpassType> renderpassSubpasses0 = {
 		{0, {0, 1}}
 	};
-	renderStages.emplace_back(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
-	Graphics::Get()->SetRenderStages(std::move(renderStages));
+	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments0, renderpassSubpasses0));
+}
 
-	Graphics::Get()->ClearSubrenders();
-	Graphics::Get()->AddSubrender<SubrenderGuis>({0, 0});
-	Graphics::Get()->AddSubrender<SubrenderFonts>({0, 0});
-	Graphics::Get()->AddSubrender<SubrenderFonts2>({0, 0});
+void MainRenderer::Start() {
+	AddSubrender<SubrenderGuis>({0, 0});
+	AddSubrender<SubrenderFonts>({0, 0});
+	AddSubrender<SubrenderFonts2>({0, 0});
 }
 
 void MainRenderer::Update() {

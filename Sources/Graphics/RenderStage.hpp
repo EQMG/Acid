@@ -165,9 +165,9 @@ public:
 	 */
 	bool IsOutOfDate() const { return m_outOfDate; }
 
-	const Renderpass *GetRenderpass() const { return m_renderpass.get(); };
-	const ImageDepth *GetDepthStencil() const { return m_depthStencil.get(); };
-	const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); };
+	const Renderpass *GetRenderpass() const { return m_renderpass.get(); }
+	const ImageDepth *GetDepthStencil() const { return m_depthStencil.get(); }
+	const Framebuffers *GetFramebuffers() const { return m_framebuffers.get(); }
 	const std::vector<VkClearValue> &GetClearValues() const { return m_clearValues; }
 	uint32_t GetAttachmentCount(uint32_t subpass) const { return m_subpassAttachmentCount[subpass]; }
 	bool HasDepth() const { return m_depthAttachment.has_value(); }
