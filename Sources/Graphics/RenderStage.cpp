@@ -61,7 +61,7 @@ void RenderStage::Update() {
 }
 
 void RenderStage::Rebuild(const Swapchain &swapchain) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -93,7 +93,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 		}
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Render Stage created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

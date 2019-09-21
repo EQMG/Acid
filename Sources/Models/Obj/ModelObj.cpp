@@ -82,7 +82,7 @@ void ModelObj::Load() {
 		return;
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -119,7 +119,7 @@ void ModelObj::Load() {
 		}
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Model OBJ ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 

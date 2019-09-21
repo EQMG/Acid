@@ -158,7 +158,7 @@ void Graphics::UpdateSurfaceCapabilities() {
 }
 
 void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -192,7 +192,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	// Creates the screenshot image file and writes to it.
 	Image::WritePixels(filename, pixels.get(), extent);
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Screenshot ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
@@ -283,7 +283,7 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent)) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 		Log::Out("Resizing swapchain from (", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, ") to (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
 		m_swapchain = std::make_unique<Swapchain>(displayExtent);

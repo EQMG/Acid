@@ -13,9 +13,9 @@ else()
 endif()
 target_compile_definitions(Acid
 		PUBLIC
-		# If the CONFIG is Debug or RelWithDebInfo, define ACID_VERBOSE
+		# If the CONFIG is Debug or RelWithDebInfo, define ACID_DEBUG
 		# Works on both single and mutli configuration
-		ACID_VERBOSE # $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_VERBOSE>
+		$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:ACID_DEBUG>
 		# 32-bit
 		$<$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>:ACID_BUILD_32BIT>
 		# 64-bit

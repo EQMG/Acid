@@ -65,7 +65,7 @@ void SoundBuffer::Load() {
 }
 
 uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -132,14 +132,14 @@ uint32_t SoundBuffer::LoadBufferWav(const std::filesystem::path &filename) {
 
 	Audio::CheckAl(alGetError());
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Sound WAV ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 	return buffer;
 }
 
 uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -166,7 +166,7 @@ uint32_t SoundBuffer::LoadBufferOgg(const std::filesystem::path &filename) {
 	delete[] data;
 	Audio::CheckAl(alGetError());
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Sound OGG ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 	return buffer;

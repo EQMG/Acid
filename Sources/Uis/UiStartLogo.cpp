@@ -4,7 +4,7 @@
 #include "Timers/Timers.hpp"
 
 namespace acid {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 const Time START_DELAY = 1s;
 #else
 const Time START_DELAY = 3s;

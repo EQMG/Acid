@@ -10,7 +10,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 	m_pushDescriptors(pushDescriptors),
 	m_shader(std::make_unique<Shader>()),
 	m_pipelineBindPoint(VK_PIPELINE_BIND_POINT_COMPUTE) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -20,7 +20,7 @@ PipelineCompute::PipelineCompute(std::filesystem::path shaderStage, std::vector<
 	CreatePipelineLayout();
 	CreatePipelineCompute();
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Pipeline Compute ", m_shaderStage, " created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

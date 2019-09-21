@@ -78,12 +78,12 @@ void Instance::SetupLayers() {
 	std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 	vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	LogVulkanLayers(instanceLayerProperties);
 #endif
 
 	// Sets up the layers.
-#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
 	for (const auto &layerName : ValidationLayers) {
 		bool layerFound = false;
 
@@ -120,7 +120,7 @@ void Instance::SetupExtensions() {
 		m_instanceExtensions.emplace_back(instanceExtension);
 	}
 
-#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
 	m_instanceExtensions.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 	m_instanceExtensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 #endif
@@ -150,7 +150,7 @@ void Instance::CreateInstance() {
 }
 
 void Instance::CreateDebugCallback() {
-#if defined(ACID_VERBOSE) && !defined(ACID_BUILD_MACOS)
+#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
 	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
 	debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 	debugReportCallbackCreateInfo.pNext = nullptr;

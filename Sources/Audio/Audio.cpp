@@ -15,7 +15,7 @@ Audio::Audio() :
 	m_context(alcCreateContext(m_device, nullptr)) {
 	alcMakeContextCurrent(m_context);
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
 	auto device = devices;
 	auto next = devices + 1;

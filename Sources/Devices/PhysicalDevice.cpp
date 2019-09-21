@@ -27,7 +27,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_memoryProperties);
 	m_msaaSamples = GetMaxUsableSampleCount();
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Selected Physical Device: ", m_properties.deviceID, " ", std::quoted(m_properties.deviceName), '\n');
 #endif
 }
@@ -82,7 +82,7 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 	vkGetPhysicalDeviceProperties(device, &physicalDeviceProperties);
 	vkGetPhysicalDeviceFeatures(device, &physicalDeviceFeatures);
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	LogVulkanDevice(physicalDeviceProperties, extensionProperties);
 #endif
 

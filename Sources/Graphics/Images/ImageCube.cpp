@@ -205,11 +205,11 @@ Node &operator<<(Node &node, const ImageCube &image) {
 
 void ImageCube::Load() {
 	if (!m_filename.empty() && !m_loadPixels) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 		auto debugStart = Time::Now();
 #endif
 		m_loadPixels = LoadPixels(m_filename, m_fileSuffix, m_fileSides, m_extent, m_components, m_format);
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 		Log::Out("Image Cube ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 	}

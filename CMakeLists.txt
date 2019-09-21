@@ -32,7 +32,7 @@ endif()
 execute_process(
 		COMMAND git rev-parse --abbrev-ref HEAD
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		OUTPUT_VARIABLE GIT_BRANCH
+		OUTPUT_VARIABLE ACID_GIT_BRANCH
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 		ERROR_QUIET
 		)
@@ -40,7 +40,7 @@ execute_process(
 execute_process(
 		COMMAND git log -1 --format=%h
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		OUTPUT_VARIABLE GIT_COMMIT_HASH
+		OUTPUT_VARIABLE ACID_GIT_COMMIT_HASH
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 		ERROR_QUIET
 		)
@@ -87,6 +87,13 @@ if(NOT PHYSFS_FOUND)
 		FetchContent_Populate(physfs)
 		add_subdirectory(${physfs_SOURCE_DIR} ${physfs_BINARY_DIR})
 	endif()
+	set_target_properties(physfs PROPERTIES FOLDER physfs)
+	set_target_properties(physfs-static PROPERTIES FOLDER physfs)
+
+	# TODO: PhysFS disables rpath on GNU, when disabled Acid will not run on Unix.
+	if(CMAKE_COMPILER_IS_GNUCC)
+		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
+	endif()
 
 	set(PHYSFS_INCLUDE_DIR "${physfs_SOURCE_DIR}/src")
 	# Set here so we can use it in Sources/CMakeLists.txt
@@ -94,10 +101,6 @@ if(NOT PHYSFS_FOUND)
 		set(PHYSFS_LIBRARY "physfs-static")
 	else()
 		set(PHYSFS_LIBRARY "physfs")
-	endif()
-	# TODO: PhysFS disables rpath on GNU, when disabled Acid will not run on Unix.
-	if(CMAKE_COMPILER_IS_GNUCC)
-		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
 	endif()
 endif()
 
@@ -116,6 +119,7 @@ if(NOT Freetype_FOUND)
 		FetchContent_Populate(freetype)
 		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
 	endif()
+	set_target_properties(freetype PROPERTIES FOLDER freetype)
 
 	# Used in target_link_libraries()
 	set(FREETYPE_LIBRARIES "freetype")
@@ -237,6 +241,12 @@ if(NOT BULLET_FOUND)
 		# Reset back to value before MSVC fix
 		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	endif()
+	set_target_properties(Bullet3Common PROPERTIES FOLDER Bullet)
+	set_target_properties(BulletCollision PROPERTIES FOLDER Bullet)
+	set_target_properties(BulletDynamics PROPERTIES FOLDER Bullet)
+	set_target_properties(BulletInverseDynamics PROPERTIES FOLDER Bullet)
+	set_target_properties(BulletSoftBody PROPERTIES FOLDER Bullet)
+	set_target_properties(LinearMath PROPERTIES FOLDER Bullet)
 
 	set(BULLET_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/src")
 	# Used in target_link_libraries()

@@ -1,5 +1,6 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
+		StdAfx.hpp
 		Acid.hpp
 #		Animations/Animation/Animation.hpp
 #		Animations/Animation/AnimationLoader.hpp
@@ -451,7 +452,7 @@ add_precompiled_header(Acid
 		FORCEINCLUDE
 		)
 		
-# Directory that Acid source resources can be found.
+# Directory that Acid resources can be found.
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
 
@@ -462,7 +463,7 @@ configure_file(Config.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp)
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command
 # Otherwise it wouldn't know where to look for them
 foreach(_acid_header IN LISTS _temp_acid_headers)
-	target_sources(Acid PUBLIC
+	target_sources(Acid PRIVATE
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}>
 			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header}>
 			)

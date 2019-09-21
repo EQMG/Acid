@@ -10,7 +10,7 @@ File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
 }
 
 void File::Load() {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -23,13 +23,13 @@ void File::Load() {
 		inStream.close();
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("File ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
 void File::Write(Node::Format format) const {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -46,7 +46,7 @@ void File::Write(Node::Format format) const {
 		os.close();
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("File ", m_filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

@@ -123,7 +123,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 	compute.CmdRender(commandBuffer, brdfImage->GetExtent());
 	commandBuffer.SubmitIdle();
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
 		auto path = "Deferred/Brdf.png";
@@ -161,7 +161,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	compute.CmdRender(commandBuffer, irradianceCubemap->GetExtent());
 	commandBuffer.SubmitIdle();
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		auto path = "Deferred/Irradiance.png";
@@ -230,7 +230,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	}
 
 	// TODO: This debug write causes a crash at runtime, why?
-/*#if defined(ACID_VERBOSE)
+/*#if defined(ACID_DEBUG)
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {

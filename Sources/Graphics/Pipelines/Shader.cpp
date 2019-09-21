@@ -330,7 +330,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 
 	// Enable SPIR-V and Vulkan rules when parsing GLSL.
 	auto messages = static_cast<EShMessages>(EShMsgSpvRules | EShMsgVulkanRules | EShMsgDefault);
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	messages = static_cast<EShMessages>(messages | EShMsgDebugInfo);
 #endif
 
@@ -392,7 +392,7 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 	}
 
 	glslang::SpvOptions spvOptions;
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	spvOptions.generateDebugInfo = true;
 	spvOptions.disableOptimizer = true;
 	spvOptions.optimizeSize = false;

@@ -156,11 +156,11 @@ Node &operator<<(Node &node, const Image2d &image) {
 
 void Image2d::Load() {
 	if (!m_filename.empty() && !m_loadPixels) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 		auto debugStart = Time::Now();
 #endif
 		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 		Log::Out("Image 2D ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 	}

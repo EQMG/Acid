@@ -52,7 +52,7 @@ void ModelGltf::Load() {
 		return;
 	}
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
 
@@ -119,7 +119,7 @@ void ModelGltf::Load() {
 
 	auto extensions = gltfModel.extensionsUsed;*/
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	Log::Out("Model GLTF ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 

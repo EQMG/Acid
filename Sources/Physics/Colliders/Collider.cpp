@@ -8,7 +8,7 @@
 namespace acid {
 Collider::Collider(const Transform &localTransform, const std::shared_ptr<GizmoType> &gizmoType) :
 	m_localTransform(localTransform) {
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	if (gizmoType) {
 		m_gizmo = Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType, localTransform));
 	}

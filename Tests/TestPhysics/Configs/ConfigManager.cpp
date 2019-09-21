@@ -11,7 +11,7 @@ ConfigManager::ConfigManager() :
 	m_audio("Configs/Audio.json", std::make_unique<Json>()),
 	m_graphics("Configs/Graphics.json", std::make_unique<Json>()) {
 	Load();
-#ifdef ACID_VERBOSE
+#ifdef ACID_DEBUG
 	Save();
 #endif
 	Timers::Get()->Every(160s, [this]() {

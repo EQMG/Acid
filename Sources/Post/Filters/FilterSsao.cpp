@@ -70,7 +70,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size) {
 	auto noiseImage = std::make_shared<Image2d>(Vector2ui(size), std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32_SFLOAT,
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
 
-#if defined(ACID_VERBOSE)
+#if defined(ACID_DEBUG)
 	// Saves the noise Image.
 	/*auto filename = "SSAO_Noise.png";
 	Vector2ui extent;
