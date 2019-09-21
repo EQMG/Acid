@@ -9,6 +9,10 @@ FetchContent_GetProperties(googletest)
 if(NOT googletest_POPULATED)
 	FetchContent_Populate(googletest)
 	add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+	set_target_properties(gmock PROPERTIES FOLDER googletest)
+	set_target_properties(gmock_main PROPERTIES FOLDER googletest)
+	set_target_properties(gtest PROPERTIES FOLDER googletest)
+	set_target_properties(gtest_main PROPERTIES FOLDER googletest)
 endif()
 
 enable_testing()
@@ -31,6 +35,10 @@ add_executable(UnitTests ${TESTUNITS_SOURCES})
 target_compile_features(UnitTests PUBLIC cxx_std_17)
 target_include_directories(UnitTests PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(UnitTests PRIVATE Acid::Acid gtest_main)
+
+set_target_properties(UnitTests PROPERTIES
+		FOLDER "Acid"
+		)
 
 add_test(NAME unit
 		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/vat_test

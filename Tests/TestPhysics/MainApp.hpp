@@ -17,7 +17,7 @@ public:
 	void Update() override;
 
 private:
-	std::unique_ptr<ConfigManager> m_configs;
+	ConfigManager m_configs;
 
 	ButtonKeyboard m_buttonFullscreen;
 	ButtonKeyboard m_buttonScreenshot;

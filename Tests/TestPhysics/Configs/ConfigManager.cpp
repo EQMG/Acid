@@ -10,10 +10,6 @@ namespace test {
 ConfigManager::ConfigManager() :
 	m_audio("Configs/Audio.json", std::make_unique<Json>()),
 	m_graphics("Configs/Graphics.json", std::make_unique<Json>()) {
-	Load();
-#ifdef ACID_DEBUG
-	Save();
-#endif
 	Timers::Get()->Every(160s, [this]() {
 		Save();
 	}, this);
@@ -37,6 +33,10 @@ void ConfigManager::Load() {
 	Window::Get()->SetFloating(graphicsData["floating"].Get<bool>(false));
 	Window::Get()->SetFullscreen(graphicsData["fullscreen"].Get<bool>(false));
 	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].Get<float>(-1.0f));
+	
+#ifdef ACID_DEBUG
+	Save();
+#endif
 }
 
 void ConfigManager::Save() const {

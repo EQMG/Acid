@@ -41,33 +41,14 @@ MainApp::MainApp() :
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete) {
 	// Registers file search paths.
-	/*for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false))
-	{
+#if defined(ACID_PACKED_RESOURCES)
+	for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false)) {
 		if (String::Contains(file, "data-"))
-		{
 			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
-		}
-	}*/
-
-	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
+	}
+#else
 	Files::Get()->AddSearchPath("Resources/Engine");
-
-	// Loads configs from a config manager.
-	m_configs = std::make_unique<ConfigManager>();
-
-	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
-
-	Timers::Get()->Once(0.333s, []() {
-		Log::Out("Timer Hello World!\n");
-	});
-	Timers::Get()->Every(4s, []() {
-		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
-	});
-	Timers::Get()->Repeat(2s, 3, []() {
-		static uint32_t i = 0;
-		Log::Out("Timer Repeat Tick #", i, '\n');
-		i++;
-	});
+#endif
 
 	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
@@ -100,6 +81,33 @@ MainApp::MainApp() :
 	componentRegister.Add<SkyboxCycle>("skyboxCycle");
 	componentRegister.Add<MaterialTerrain>("materialTerrain");
 	componentRegister.Add<Terrain>("terrain");
+}
+
+MainApp::~MainApp() {
+	m_configs.Save();
+	// TODO: Only clear our search paths (leave Engine resources alone!)
+	Files::Get()->ClearSearchPath();
+
+	Graphics::Get()->SetRenderer(nullptr);
+	Scenes::Get()->SetScene(nullptr);
+}
+
+void MainApp::Start() {
+	m_configs.Load();
+	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
+	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
+
+	Timers::Get()->Once(0.333s, []() {
+		Log::Out("Timer Hello World!\n");
+	});
+	Timers::Get()->Every(3s, []() {
+		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
+	});
+	Timers::Get()->Repeat(2s, 3, []() {
+		static uint32_t i = 0;
+		Log::Out("Timer Repeat Tick #", i, '\n');
+		i++;
+	});
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");
@@ -110,17 +118,6 @@ MainApp::MainApp() :
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
-}
-
-MainApp::~MainApp() {
-	m_configs->Save();
-	Files::Get()->ClearSearchPath();
-
-	Graphics::Get()->SetRenderer(nullptr);
-	Scenes::Get()->SetScene(nullptr);
-}
-
-void MainApp::Start() {
 }
 
 void MainApp::Update() {
