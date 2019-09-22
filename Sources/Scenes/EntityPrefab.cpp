@@ -43,7 +43,7 @@ void EntityPrefab::Load() {
 	auto fileExt = m_filename.extension();
 
 	if (fileExt == ".json") {
-		m_file = std::make_unique<File>(m_filename, std::make_unique<Json>());
+		m_file = std::make_unique<File>(std::make_unique<Json>());
 	}
 	/*else if (fileExt == ".yaml")
 	{
@@ -55,12 +55,12 @@ void EntityPrefab::Load() {
 	}*/
 
 	if (m_file) {
-		m_file->Load();
+		m_file->Load(m_filename);
 	}
 }
 
 void EntityPrefab::Write() const {
-	m_file->Write();
+	m_file->Write(m_filename);
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {

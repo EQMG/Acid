@@ -23,7 +23,7 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 #if defined(ACID_DEBUG)
 	Node node;
 	node << *m_pipeline.GetShader();
-	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write(Node::Format::Beautified);
+	File(std::make_unique<Json>(node)).Write("Deferred/Shader.json", Node::Format::Beautified);
 #endif
 }
 

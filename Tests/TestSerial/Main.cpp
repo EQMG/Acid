@@ -5,10 +5,9 @@
 #include <Maths/Vector2.hpp>
 #include <Files/Node.hpp>
 #include <Files/Json/Json.hpp>
+#include <Files/Xml/Xml.hpp>
+//#include <Files/Yaml/Yaml.hpp>
 #include <Files/Zip/ZipArchive.hpp>
-#include "Bitmaps/Bitmap.hpp"
-//#include <Serialized/Xml/Xml.hpp>
-//#include <Serialized/Yaml/Yaml.hpp>
 
 using namespace acid;
 
@@ -50,11 +49,13 @@ public:
 
 	class Objects {
 	public:
+		std::string url = R"(<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>)";
 		std::string key = "value";
 		std::vector<float> values = {190.0f, 11.0f, -0.001f};
 		std::vector<Vector3f> vectors = {Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
 
 		friend const Node &operator>>(const Node &node, Objects &objects) {
+			node["url"].Get(objects.url);
 			node["key"].Get(objects.key);
 			node["values"].Get(objects.values);
 			node["vectors"].Get(objects.vectors);
@@ -62,6 +63,7 @@ public:
 		}
 
 		friend Node &operator<<(Node &node, const Objects &objects) {
+			node["url"].Set(objects.url);
 			node["key"].Set(objects.key);
 			node["values"].Set(objects.values);
 			node["vectors"].Set(objects.vectors);
@@ -126,13 +128,91 @@ public:
 		return node;
 	}
 };
+
+class User {
+public:
+	std::string username;
+	std::string fullname;
+	std::string description;
+	bool employed = false;
+	std::string birthday;
+
+	friend const Node &operator>>(const Node &node, User &user) {
+		node["username"].Get(user.username);
+		node["fullname"].Get(user.fullname);
+		node["description"].Get(user.description);
+		node["employed"].Get(user.employed);
+		node["birthday"].Get(user.birthday);
+		return node;
+	}
+
+	friend Node &operator<<(Node &node, const User &user) {
+		node["username"].Set(user.username);
+		node["fullname"].Set(user.fullname);
+		node["description"].Set(user.description);
+		node["employed"].Set(user.employed);
+		node["birthday"].Set(user.birthday);
+		return node;
+	}
+};
 }
 
 int main(int argc, char **argv) {
-	//std::unique_ptr<Bitmap> bitmap = Bitmap::Create(".png");
-	//bitmap->Load("Undefined.png");
-	//bitmap->Write("Undefined_.png");
-	
+	test::Example1 example1;
+	Node node;
+	node = example1;
+
+	// Appends different types into a array.
+	node["array1"]->Append("Hello", nullptr, 10, 4.8924f);
+
+	// Creates a array, then appends values to the back of the array.
+	node["array2"] = std::vector{1.0f, 10.0f, -5.55f, 9.3456f};
+	node["array2"]->Append(64, 32.1f, -2.0);
+	//node["array2"].SetName("array2_renamed");
+	//auto array2Name{node["array2"].GetName()};
+	//auto array2{node["array2"].Get<std::vector<float>>()};
+
+	auto timeNow = node["timeNow"].Get<int64_t>(123456); // 123456
+	node.RemoveProperty("timeNow");
+
+	auto data00 = node["xml"]["data"][0][0].Get<std::string>(); // "clunky"
+	auto data10 = node["xml"]["data"][1][0].Get<std::string>(); // "uses more words than necessary"
+
+	auto mapN2 = node["map"]["-2"].Get<std::string>(); // TODO: Can names be numbers without searching with keys?
+	auto map400 = node["map"]["400"].Get<std::string>(); // TODO: Can names be numbers without searching with keys?
+
+	if (auto mapN2_ = node["map"]["-2"]) {
+		auto value = mapN2_.Get<std::string>();
+	}
+
+	node["users"][0] = test::User{"user1", "User One", "Description 1...", false, "10/07/2000"};
+	node["users"][1] = test::User{"user2", "User Two", "Description 2...", true, "11/05/1999"};
+	node["users"][3] = test::User{"user3", "User Three", "Description 3...", false, "2/03/1996"};
+	node["users"][6] = test::User{"user4", "User Four", "Description 4...", true, "30/04/2002"};
+	auto users = node["users"].Get<std::vector<std::optional<test::User>>>();
+
+	{
+		// Test Json writer.
+		File fileJson1(std::make_unique<Json>(node));
+		fileJson1.Write("Serial/Test1.json", Node::Format::Beautified);
+
+		// Test Json reader.
+		File fileJson2(std::make_unique<Json>());
+		fileJson2.Load("Serial/Test1.json");
+		// Ensure Test1.json and Test2.json values are the same.
+		fileJson2.Write("Serial/Test2.json", Node::Format::Beautified);
+	}
+	{
+		// Test Xml writer.
+		File fileXml1(std::make_unique<Xml>("node", node));
+		fileXml1.Write("Serial/Test1.xml", Node::Format::Beautified);
+
+		/*// Test Xml reader.
+		File fileXml2(std::make_unique<Xml>("node"));
+		fileXml2.Load("Serial/Test1.xml");
+		// Ensure Test1.xml and Test2.xml values are the same.
+		fileXml2.Write("Serial/Test2.xml", Node::Format::Beautified);*/
+	}
 	{
 		std::string source = R"({"message":"hello world","value":3})";
 		Json json;
@@ -144,34 +224,16 @@ int main(int argc, char **argv) {
 		json["values"] = std::vector{10, 11, -1, 2};
 
 		Log::Out(json.WriteString(Node::Format::Minified), '\n');
-		//Log::Out(Xml("source", &json).Write(Node::Format::Minified), '\n');
 	}
-
-	test::Example1 example1;
-	Node node;
-	node = example1;
-
-	File("Serial/Example1.json", std::make_unique<Json>(node)).Write();
-	//File("Serial/Example1.xml", std::make_unique<Xml>("Example", node)).Write();
-	//File("Serial/Example1.yaml", std::make_unique<Yaml>(node)).Write();
-
-	File jsonLoader("Serial/Example1.json", std::make_unique<Json>());
-	jsonLoader.Load();
-	//jsonLoader.GetNode()["objects"]["key"]->SetValue("modified");
-	jsonLoader.SetFilename("Serial/Example2.json");
-	jsonLoader.Write();
-
-	test::Example1 example2;
-	*jsonLoader.GetNode() >> example2;
-
+	
 	/*ZipArchive zip0("Serial.zip");
 	zip0.AddEntry("hello.txt", "Hello World!");
 	zip0.Write();
 	zip0.Close();*/
-	ZipArchive zip("Serial.zip");
+	/*ZipArchive zip("Serial.zip");
 	for (const auto &entry : zip.GetEntryNames())
 		Log::Out(entry, '\n');
-	zip.ExtractAll("Extracted");
+	zip.ExtractAll("Extracted");*/
 	//zip.ExtractDir("Serial", "Extracted");
 
 	// Pauses the console.

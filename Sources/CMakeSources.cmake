@@ -42,6 +42,7 @@ set(_temp_acid_headers
 		Files/FileObserver.hpp
 		Files/Files.hpp
 		Files/Json/Json.hpp
+		Files/Xml/Xml.hpp
 		Files/Node.hpp
 		Files/NodeReturn.hpp
 		Files/Zip/miniz.h
@@ -278,6 +279,7 @@ set(_temp_acid_sources
 		Files/FileObserver.cpp
 		Files/Files.cpp
 		Files/Json/Json.cpp
+		Files/Xml/Xml.cpp
 		Files/Node.cpp
 		Files/NodeReturn.cpp
 		Files/Zip/miniz.c
