@@ -15,7 +15,7 @@ public:
 		Check
 	};
 
-	UiInputRadio(UiObject *parent, const std::string &string, const Type &type = Type::Filled, bool value = false,
+	UiInputRadio(UiObject *parent, const std::string &string, Type type = Type::Filled, bool value = false,
 		const UiTransform &transform = {UiInputButton::Size});
 
 	void UpdateObject() override;

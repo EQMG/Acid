@@ -127,7 +127,7 @@ protected:
 	 * This constructor can only be accessed by derived classes.
 	 * @param type Type of the socket (TCP or UDP).
 	 **/
-	Socket(const Type &type);
+	Socket(Type type);
 
 	/**
 	 * Return the internal handle of the socket.
@@ -162,6 +162,6 @@ private:
 	/// Socket descriptor.
 	SocketHandle m_socket;
 	/// Current blocking mode of the socket.
-	bool m_isBlocking;
+	bool m_isBlocking = true;
 };
 }

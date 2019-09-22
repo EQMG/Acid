@@ -8,6 +8,9 @@ namespace acid {
 bool BitmapPng::registered = Register(".png");
 
 void BitmapPng::Load(const std::filesystem::path &filename) {
+#if defined(ACID_DEBUG)
+	auto debugStart = Time::Now();
+#endif
 	auto fileLoaded = Files::Read(filename);
 
 	if (!fileLoaded) {
@@ -15,7 +18,10 @@ void BitmapPng::Load(const std::filesystem::path &filename) {
 		return;
 	}
 
-	auto error = lodepng::decode(m_data, m_size.m_x, m_size.m_y, *fileLoaded);
+	auto error = lodepng::decode(m_data, m_size.m_x, m_size.m_y, std::vector<uint8_t>(fileLoaded->begin(), fileLoaded->end()));
+#if defined(ACID_DEBUG)
+	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+#endif
 }
 
 void BitmapPng::Write(const std::filesystem::path &filename) const {

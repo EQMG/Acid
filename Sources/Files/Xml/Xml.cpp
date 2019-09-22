@@ -37,32 +37,65 @@ void Xml::AppendData(const Node &source, std::ostream &stream, Format format, in
 	// Creates a string for the indentation level.
 	std::string indents(2 * indent, ' ');
 
-	// Only output the value if no properties exist.
-	if (source.GetProperties().empty())
-		stream << source.GetValue();
+	auto tagName = String::ReplaceAll(source.GetName(), " ", "_");
 
-	// Output each property.
-	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it) {
-		if (format != Format::Minified)
-			stream << indents;
-		// Output name for property.
-		stream << '<' << it->GetName() << ">";
+	std::stringstream nameAttributes;
+	nameAttributes << tagName;
 
-		if (!it->GetProperties().empty()) {
-			if (format != Format::Minified)
-				stream << '\n';
-		}
+	for (const auto &property : source.GetProperties()) {
+		if (property.GetName().rfind('_', 0) == 0)
+			nameAttributes << " " << property.GetName().substr(1) << "=\"" << property.GetValue() << "\"";
+	}
 
-		AppendData(*it, stream, format, indent + 1);
+	auto nameAndAttribs = String::Trim(nameAttributes.str());
 
-		if (!it->GetProperties().empty()) {
-			if (format != Format::Minified)
-				stream << indents;
-		}
+	if (format != Format::Minified)
+		stream << indents;
 
-		stream << "</" << it->GetName() << ">";
-		if (format != Format::Minified)
+	if (source.GetName()[0] == '?') {
+		stream << "<" << nameAndAttribs << "?>";
+
+		if (format != Format::Minified) {
 			stream << '\n';
+		}
+
+		for (const auto &property : source.GetProperties()) {
+			if (property.GetName().rfind('_', 0) != 0)
+				AppendData(property, stream, format, indent);
+		}
+
+		return;
+	}
+
+	if (source.GetProperties().empty() && source.GetValue().empty()) {
+		stream << "<" << nameAndAttribs << "/>";
+
+		if (format != Format::Minified) {
+			stream << '\n';
+		}
+
+		return;
+	}
+
+	stream << "<" << nameAndAttribs << ">" << source.GetValue();
+
+	if (!source.GetProperties().empty()) {
+		if (format != Format::Minified) {
+			stream << '\n';
+		}
+
+		for (const auto &property : source.GetProperties()) {
+			if (property.GetName().rfind('_', 0) != 0)
+				AppendData(property, stream, format, indent + 1);
+		}
+
+		stream << indents;
+	}
+
+	stream << "</" << tagName << '>';
+
+	if (format != Format::Minified) {
+		stream << '\n';
 	}
 }
 }

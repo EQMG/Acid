@@ -8,7 +8,7 @@ FtpDataChannel::FtpDataChannel(Ftp &owner) :
 	m_ftp(owner) {
 }
 
-FtpResponse FtpDataChannel::Open(const Mode &mode) {
+FtpResponse FtpDataChannel::Open(Mode mode) {
 	// Open a data connection in active mode (we connect to the server).
 	auto response = m_ftp.SendCommand("PASV");
 

@@ -3,7 +3,7 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, const Type &type) :
+FilterBlur::FilterBlur(const Pipeline::Stage &pipelineStage, const Vector2f &direction, Type type) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Blur.frag"}, GetDefines(type)),
 	m_type(type),
 	m_direction(direction) {

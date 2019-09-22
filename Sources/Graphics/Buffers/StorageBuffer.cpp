@@ -3,7 +3,7 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-StorageBuffer::StorageBuffer(const VkDeviceSize &size, const void *data) :
+StorageBuffer::StorageBuffer(VkDeviceSize size, const void *data) :
 	Buffer(size, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, data) {
 }
 
@@ -14,7 +14,7 @@ void StorageBuffer::Update(const void *newData) {
 	UnmapMemory();
 }
 
-WriteDescriptorSet StorageBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
+WriteDescriptorSet StorageBuffer::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
 	bufferInfo.offset = 0;
@@ -36,8 +36,7 @@ WriteDescriptorSet StorageBuffer::GetWriteDescriptor(uint32_t binding, const VkD
 	return {descriptorWrite, bufferInfo};
 }
 
-VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
+VkDescriptorSetLayoutBinding StorageBuffer::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;

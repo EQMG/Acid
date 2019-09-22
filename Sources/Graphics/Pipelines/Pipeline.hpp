@@ -16,6 +16,7 @@ public:
 	using Stage = std::pair<uint32_t, uint32_t>;
 
 	Pipeline() = default;
+	
 	virtual ~Pipeline() = default;
 
 	void BindPipeline(const CommandBuffer &commandBuffer) const {

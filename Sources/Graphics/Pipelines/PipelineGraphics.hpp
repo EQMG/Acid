@@ -33,7 +33,7 @@ public:
 	 * @param vertexInputs The vertex inputs that will be used as a shaders input.
 	 * @param defines A list of defines added to the top of each shader.
 	 * @param mode The mode this pipeline will run in.
-	 * @param depthMode The depth read/write that will be used.
+	 * @param depth The depth read/write that will be used.
 	 * @param topology The topology of the input assembly.
 	 * @param polygonMode The polygon draw mode.
 	 * @param cullMode The vertex cull mode.
@@ -41,9 +41,8 @@ public:
 	 * @param pushDescriptors If no actual descriptor sets are allocated but instead pushed.
 	 */
 	PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines = {},
-		const Mode &mode = Mode::Polygon, const Depth &depthMode = Depth::ReadWrite, const VkPrimitiveTopology &topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
-		const VkPolygonMode &polygonMode = VK_POLYGON_MODE_FILL, const VkCullModeFlags &cullMode = VK_CULL_MODE_BACK_BIT, const VkFrontFace &frontFace = VK_FRONT_FACE_CLOCKWISE,
-		bool pushDescriptors = false);
+		Mode mode = Mode::Polygon, Depth depth = Depth::ReadWrite, VkPrimitiveTopology topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL, 
+		VkCullModeFlags cullMode = VK_CULL_MODE_BACK_BIT, VkFrontFace frontFace = VK_FRONT_FACE_CLOCKWISE, bool pushDescriptors = false);
 	~PipelineGraphics();
 
 	/**
@@ -72,12 +71,12 @@ public:
 	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
 	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
 	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
-	const Mode &GetMode() const { return m_mode; }
-	const Depth &GetDepth() const { return m_depth; }
-	const VkPrimitiveTopology &GetTopology() const { return m_topology; }
-	const VkPolygonMode &GetPolygonMode() const { return m_polygonMode; }
-	const VkCullModeFlags &GetCullMode() const { return m_cullMode; }
-	const VkFrontFace &GetFrontFace() const { return m_frontFace; }
+	Mode GetMode() const { return m_mode; }
+	Depth GetDepth() const { return m_depth; }
+	VkPrimitiveTopology GetTopology() const { return m_topology; }
+	VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
+	VkCullModeFlags GetCullMode() const { return m_cullMode; }
+	VkFrontFace GetFrontFace() const { return m_frontFace; }
 	bool IsPushDescriptors() const override { return m_pushDescriptors; }
 	const Shader *GetShader() const override { return m_shader.get(); }
 	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }

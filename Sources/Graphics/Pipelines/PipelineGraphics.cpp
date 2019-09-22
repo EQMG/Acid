@@ -7,8 +7,7 @@ namespace acid {
 const std::vector<VkDynamicState> DYNAMIC_STATES = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR, VK_DYNAMIC_STATE_LINE_WIDTH};
 
 PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::path> shaderStages, std::vector<Shader::VertexInput> vertexInputs, std::vector<Shader::Define> defines,
-	const Mode &mode, const Depth &depth, const VkPrimitiveTopology &topology, const VkPolygonMode &polygonMode, const VkCullModeFlags &cullMode, const VkFrontFace &frontFace,
-	bool pushDescriptors) :
+	Mode mode, Depth depth, VkPrimitiveTopology topology, VkPolygonMode polygonMode, VkCullModeFlags cullMode, VkFrontFace frontFace, bool pushDescriptors) :
 	m_stage(std::move(stage)),
 	m_shaderStages(std::move(shaderStages)),
 	m_vertexInputs(std::move(vertexInputs)),

@@ -3,7 +3,7 @@
 #include "Helpers/String.hpp"
 
 namespace acid {
-HttpRequest::HttpRequest(const std::string &uri, const Method &method, const std::string &body) :
+HttpRequest::HttpRequest(const std::string &uri, Method method, const std::string &body) :
 	m_method(method),
 	m_majorVersion(1),
 	m_minorVersion(0) {

@@ -25,7 +25,6 @@ public:
 	class VertexInput {
 	public:
 		VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
-			m_binding(0),
 			m_bindingDescriptions(std::move(bindingDescriptions)),
 			m_attributeDescriptions(std::move(attributeDescriptions)) {
 		}
@@ -50,7 +49,7 @@ public:
 		}
 
 	private:
-		uint32_t m_binding;
+		uint32_t m_binding = 0;
 		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
 		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
 	};
@@ -78,8 +77,8 @@ public:
 		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
 
 		bool operator==(const Uniform &other) const {
-			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && m_readOnly == other.m_readOnly
-				&& m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
+			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && m_readOnly == other.m_readOnly && 
+				m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
 		}
 
 		bool operator!=(const Uniform &other) const {
@@ -121,14 +120,9 @@ public:
 	class UniformBlock {
 		friend class Shader;
 	public:
-		enum class Type {
-			None,
-			Uniform,
-			Storage,
-			Push
-		};
+		enum class Type { None, Uniform, Storage, Push };
 
-		explicit UniformBlock(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags &stageFlags = 0, const Type &type = Type::Uniform) :
+		explicit UniformBlock(int32_t binding = -1, int32_t size = -1, VkShaderStageFlags stageFlags = 0, Type type = Type::Uniform) :
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
@@ -137,8 +131,8 @@ public:
 
 		int32_t GetBinding() const { return m_binding; }
 		int32_t GetSize() const { return m_size; }
-		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
-		const Type &GetType() const { return m_type; }
+		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
+		Type GetType() const { return m_type; }
 		const std::map<std::string, Uniform> &GetUniforms() const { return m_uniforms; }
 
 		std::optional<Uniform> GetUniform(const std::string &name) const {
@@ -234,7 +228,7 @@ public:
 	class Constant {
 		friend class Shader;
 	public:
-		explicit Constant(int32_t binding = -1, int32_t size = -1, const VkShaderStageFlags &stageFlags = 0, int32_t glType = -1) :
+		explicit Constant(int32_t binding = -1, int32_t size = -1, VkShaderStageFlags stageFlags = 0, int32_t glType = -1) :
 			m_binding(binding),
 			m_size(size),
 			m_stageFlags(stageFlags),
@@ -243,7 +237,7 @@ public:
 
 		int32_t GetBinding() const { return m_binding; }
 		int32_t GetSize() const { return m_size; }
-		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
+		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
 		int32_t GetGlType() const { return m_glType; }
 
 		bool operator==(const Constant &other) const {
@@ -290,7 +284,7 @@ public:
 
 	std::optional<VkDescriptorType> GetDescriptorType(uint32_t location) const;
 	static VkShaderStageFlagBits GetShaderStage(const std::filesystem::path &filename);
-	VkShaderModule CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, const VkShaderStageFlags &moduleFlag);
+	VkShaderModule CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, VkShaderStageFlags moduleFlag);
 	void CreateReflection();
 
 	const std::filesystem::path &GetName() const { return m_stages.back(); }
@@ -308,7 +302,7 @@ public:
 	friend Node &operator<<(Node &node, const Shader &shader);
 
 private:
-	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type);
+	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, VkDescriptorType type);
 	void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);
 	void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);
 	void LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);

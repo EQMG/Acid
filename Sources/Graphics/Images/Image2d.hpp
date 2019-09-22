@@ -26,8 +26,8 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @return The 2D image with the requested values.
 	 */
-	static std::shared_ptr<Image2d> Create(const std::filesystem::path &filename, const VkFilter &filter = VK_FILTER_LINEAR,
-		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, bool anisotropic = true, bool mipmap = true);
+	static std::shared_ptr<Image2d> Create(const std::filesystem::path &filename, VkFilter filter = VK_FILTER_LINEAR,
+		VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT, bool anisotropic = true, bool mipmap = true);
 
 	/**
 	 * Creates a new 2D image.
@@ -38,7 +38,7 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @param load If this resource will be loaded immediately, otherwise {@link Image2d#Load} can be called later.
 	 */
-	explicit Image2d(std::filesystem::path filename, const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
+	explicit Image2d(std::filesystem::path filename, VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_REPEAT,
 		bool anisotropic = true, bool mipmap = true, bool load = true);
 
 	/**
@@ -54,17 +54,15 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
-		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
+	Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
+		VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
 	~Image2d();
 
-	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
-
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-		uint32_t count);
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 
 	/**
 	 * Copies the images pixels from memory.
@@ -86,13 +84,13 @@ public:
 	friend Node &operator<<(Node &node, const Image2d &image);
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
-	const VkFilter &GetFilter() const { return m_filter; }
-	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
+	VkFilter GetFilter() const { return m_filter; }
+	VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
 	bool IsAnisotropic() const { return m_anisotropic; }
 	bool IsMipmap() const { return m_mipmap; }
-	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
-	const VkImageLayout &GetLayout() const { return m_layout; }
-	const VkImageUsageFlags &GetUsage() const { return m_usage; }
+	VkSampleCountFlagBits GetSamples() const { return m_samples; }
+	VkImageLayout GetLayout() const { return m_layout; }
+	VkImageUsageFlags GetUsage() const { return m_usage; }
 	uint32_t GetComponents() const { return m_components; }
 	const Vector2ui &GetExtent() const { return m_extent; }
 	uint32_t GetMipLevels() const { return m_mipLevels; }

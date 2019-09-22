@@ -4,7 +4,7 @@
 #include "Uis/Uis.hpp"
 
 namespace acid {
-UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, const Type &type, bool value, const UiTransform &transform) :
+UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type type, bool value, const UiTransform &transform) :
 	UiObject(parent, transform),
 	m_background(this, {{19, 19}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
 	m_fill(&m_background, {{19, 19}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour),

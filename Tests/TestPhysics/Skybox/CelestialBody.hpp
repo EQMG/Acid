@@ -10,11 +10,11 @@ namespace test {
 class CelestialBody : public Component {
 public:
 	enum class Type {
-		Sun = 0,
-		Moon = 1
+		Sun,
+		Moon
 	};
 
-	explicit CelestialBody(const Type &type = Type::Sun);
+	explicit CelestialBody(Type type = Type::Sun);
 
 	void Start() override;
 	void Update() override;

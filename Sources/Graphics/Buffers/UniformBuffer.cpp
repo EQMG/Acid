@@ -3,7 +3,7 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-UniformBuffer::UniformBuffer(const VkDeviceSize &size, const void *data) :
+UniformBuffer::UniformBuffer(VkDeviceSize size, const void *data) :
 	Buffer(size, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, data) {
 }
 
@@ -14,7 +14,7 @@ void UniformBuffer::Update(const void *newData) {
 	UnmapMemory();
 }
 
-WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
+WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorBufferInfo bufferInfo = {};
 	bufferInfo.buffer = m_buffer;
 	bufferInfo.offset = 0;
@@ -36,8 +36,7 @@ WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, const VkD
 	return {descriptorWrite, bufferInfo};
 }
 
-VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
+VkDescriptorSetLayoutBinding UniformBuffer::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;

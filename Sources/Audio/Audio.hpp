@@ -12,12 +12,7 @@ namespace acid {
  */
 class ACID_EXPORT Audio : public Module::Registrar<Audio> {
 public:
-	enum class Type {
-		Master,
-		General,
-		Effect,
-		Music
-	};
+	enum class Type { Master, General, Effect, Music };
 
 	Audio();
 

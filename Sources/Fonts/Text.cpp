@@ -4,7 +4,7 @@
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid {
-Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, const Justify &justify,
+Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, Justify justify,
 	const Colour &textColour, float kerning, float leading) :
 	UiObject(parent, rectangle),
 	m_lastSize(rectangle.GetSize()),

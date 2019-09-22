@@ -14,7 +14,7 @@ static const Colour SUN_COLOUR_DAY("#ffffff");
 static const Colour MOON_COLOUR_NIGHT("#666699");
 static const Colour MOON_COLOUR_DAY("#000000");
 
-CelestialBody::CelestialBody(const Type &type) :
+CelestialBody::CelestialBody(Type type) :
 	m_type(type) {
 }
 

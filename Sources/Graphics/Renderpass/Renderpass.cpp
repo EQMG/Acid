@@ -4,7 +4,7 @@
 #include "Graphics/RenderStage.hpp"
 
 namespace acid {
-Renderpass::Renderpass(const RenderStage &renderStage, const VkFormat &depthFormat, const VkFormat &surfaceFormat, const VkSampleCountFlagBits &samples) {
+Renderpass::Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	// Creates the renderpasses attachment descriptions,

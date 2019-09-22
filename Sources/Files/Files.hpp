@@ -5,11 +5,7 @@
 struct PHYSFS_File;
 
 namespace acid {
-enum class FileMode {
-	Read,
-	Write,
-	Append
-};
+enum class FileMode { Read, Write, Append };
 
 class ACID_EXPORT BaseFStream {
 protected:
@@ -30,14 +26,14 @@ public:
 
 class ACID_EXPORT OFStream : public BaseFStream, public std::ostream {
 public:
-	explicit OFStream(const std::filesystem::path &filename, const FileMode &writeMode = FileMode::Write);
+	explicit OFStream(const std::filesystem::path &filename, FileMode writeMode = FileMode::Write);
 
 	virtual ~OFStream();
 };
 
 class ACID_EXPORT FStream : public BaseFStream, public std::iostream {
 public:
-	explicit FStream(const std::filesystem::path &filename, const FileMode &openMode = FileMode::Read);
+	explicit FStream(const std::filesystem::path &filename, FileMode openMode = FileMode::Read);
 
 	virtual ~FStream();
 };

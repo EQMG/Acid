@@ -27,8 +27,8 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @return The cubemap image with the requested values.
 	 */
-	static std::shared_ptr<ImageCube> Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter = VK_FILTER_LINEAR,
-		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, bool anisotropic = true, bool mipmap = true);
+	static std::shared_ptr<ImageCube> Create(const std::filesystem::path &filename, const std::string &fileSuffix, VkFilter filter = VK_FILTER_LINEAR,
+		VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, bool anisotropic = true, bool mipmap = true);
 
 	/**
 	 * Creates a new cubemap image.
@@ -40,8 +40,8 @@ public:
 	 * @param mipmap If mapmaps will be generated.
 	 * @param load If this resource will be loaded immediately, otherwise {@link ImageCube#Load} can be called later.
 	 */
-	explicit ImageCube(std::filesystem::path filename, std::string fileSuffix = ".png", const VkFilter &filter = VK_FILTER_LINEAR,
-		const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, bool anisotropic = true, bool mipmap = true, bool load = true);
+	explicit ImageCube(std::filesystem::path filename, std::string fileSuffix = ".png", VkFilter filter = VK_FILTER_LINEAR,
+		VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, bool anisotropic = true, bool mipmap = true, bool load = true);
 
 	/**
 	 * Creates a new cubemap image.
@@ -56,17 +56,15 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
-		const VkImageLayout &layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, const VkImageUsageFlags &usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
-		const VkFilter &filter = VK_FILTER_LINEAR, const VkSamplerAddressMode &addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-		const VkSampleCountFlagBits &samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
+	ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
+		VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
 	~ImageCube();
 
-	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
-
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-		uint32_t count);
+	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 
 	/**
 	 * Copies the images pixels from memory.
@@ -100,15 +98,15 @@ public:
 	friend Node &operator<<(Node &node, const ImageCube &image);
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
-	const std::string &GetFileSuffix() { return m_fileSuffix; }
-	const std::vector<std::string> &GetFileSides() { return m_fileSides; }
-	const VkFilter &GetFilter() const { return m_filter; }
-	const VkSamplerAddressMode &GetAddressMode() const { return m_addressMode; }
+	const std::string &GetFileSuffix() const { return m_fileSuffix; }
+	const std::vector<std::string> &GetFileSides() const { return m_fileSides; }
+	VkFilter GetFilter() const { return m_filter; }
+	VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
 	bool IsAnisotropic() const { return m_anisotropic; }
 	bool IsMipmap() const { return m_mipmap; }
-	const VkSampleCountFlagBits &GetSamples() const { return m_samples; }
-	const VkImageLayout &GetLayout() const { return m_layout; }
-	const VkImageUsageFlags &GetUsage() const { return m_usage; }
+	VkSampleCountFlagBits GetSamples() const { return m_samples; }
+	VkImageLayout GetLayout() const { return m_layout; }
+	VkImageUsageFlags GetUsage() const { return m_usage; }
 	uint32_t GetComponents() const { return m_components; }
 	const Vector2ui &GetExtent() const { return m_extent; }
 	uint32_t GetMipLevels() const { return m_mipLevels; }

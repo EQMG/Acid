@@ -138,20 +138,20 @@ public:
 	std::string birthday;
 
 	friend const Node &operator>>(const Node &node, User &user) {
-		node["username"].Get(user.username);
-		node["fullname"].Get(user.fullname);
-		node["description"].Get(user.description);
-		node["employed"].Get(user.employed);
-		node["birthday"].Get(user.birthday);
+		node["_username"].Get(user.username);
+		node["_fullname"].Get(user.fullname);
+		node["_description"].Get(user.description);
+		node["_employed"].Get(user.employed);
+		node["_birthday"].Get(user.birthday);
 		return node;
 	}
 
 	friend Node &operator<<(Node &node, const User &user) {
-		node["username"].Set(user.username);
-		node["fullname"].Set(user.fullname);
-		node["description"].Set(user.description);
-		node["employed"].Set(user.employed);
-		node["birthday"].Set(user.birthday);
+		node["_username"].Set(user.username);
+		node["_fullname"].Set(user.fullname);
+		node["_description"].Set(user.description);
+		node["_employed"].Set(user.employed);
+		node["_birthday"].Set(user.birthday);
 		return node;
 	}
 };
@@ -204,11 +204,11 @@ int main(int argc, char **argv) {
 	}
 	{
 		// Test Xml writer.
-		File fileXml1(std::make_unique<Xml>("node", node));
+		File fileXml1(std::make_unique<Xml>("root", node));
 		fileXml1.Write("Serial/Test1.xml", Node::Format::Beautified);
 
 		/*// Test Xml reader.
-		File fileXml2(std::make_unique<Xml>("node"));
+		File fileXml2(std::make_unique<Xml>("root"));
 		fileXml2.Load("Serial/Test1.xml");
 		// Ensure Test1.xml and Test2.xml values are the same.
 		fileXml2.Write("Serial/Test2.xml", Node::Format::Beautified);*/

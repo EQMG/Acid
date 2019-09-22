@@ -11,11 +11,7 @@ namespace acid {
  */
 class ACID_EXPORT FileObserver {
 public:
-	enum class Status {
-		Created,
-		Modified,
-		Erased
-	};
+	enum class Status { Created, Modified, Erased };
 
 	/**
 	 * Creates a new file watcher.

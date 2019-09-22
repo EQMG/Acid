@@ -14,11 +14,7 @@ namespace acid {
  */
 class ACID_EXPORT Attachment {
 public:
-	enum class Type {
-		Image,
-		Depth,
-		Swapchain
-	};
+	enum class Type { Image, Depth, Swapchain };
 
 	/**
 	 * Creates a new attachment that represents a object in the render pipeline.
@@ -29,7 +25,7 @@ public:
 	 * @param format The format that will be created (only applies to type ATTACHMENT_IMAGE).
 	 * @param clearColour The colour to clear to before rendering to it.
 	 */
-	Attachment(uint32_t binding, std::string name, const Type &type, bool multisampled = false, const VkFormat &format = VK_FORMAT_R8G8B8A8_UNORM,
+	Attachment(uint32_t binding, std::string name, Type type, bool multisampled = false, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
 		const Colour &clearColour = Colour::Black) :
 		m_binding(binding),
 		m_name(std::move(name)),
@@ -41,9 +37,9 @@ public:
 
 	uint32_t GetBinding() const { return m_binding; }
 	const std::string &GetName() const { return m_name; }
-	const Type &GetType() const { return m_type; }
+	Type GetType() const { return m_type; }
 	bool IsMultisampled() const { return m_multisampled; }
-	const VkFormat &GetFormat() const { return m_format; }
+	VkFormat GetFormat() const { return m_format; }
 	const Colour &GetClearColour() const { return m_clearColour; }
 
 private:
@@ -74,8 +70,15 @@ class ACID_EXPORT RenderArea {
 public:
 	explicit RenderArea(const Vector2ui &extent = {}, const Vector2i &offset = {}) :
 		m_extent(extent),
-		m_offset(offset),
-		m_aspectRatio(1.0f) {
+		m_offset(offset) {
+	}
+
+	bool operator==(const RenderArea &other) const {
+		return m_extent == other.m_extent && m_offset == other.m_offset;
+	}
+
+	bool operator!=(const RenderArea &other) const {
+		return !(*this == other);
 	}
 
 	const Vector2ui &GetExtent() const { return m_extent; }
@@ -91,31 +94,18 @@ public:
 	float GetAspectRatio() const { return m_aspectRatio; }
 	void SetAspectRatio(float aspectRatio) { m_aspectRatio = aspectRatio; }
 
-	bool operator==(const RenderArea &other) const {
-		return m_extent == other.m_extent && m_offset == other.m_offset;
-	}
-
-	bool operator!=(const RenderArea &other) const {
-		return !(*this == other);
-	}
-
 private:
 	Vector2ui m_extent;
 	Vector2i m_offset;
-	float m_aspectRatio;
+	float m_aspectRatio = 1.0f;
 };
 
 class ACID_EXPORT Viewport {
 public:
-	Viewport() :
-		m_scale(1.0f, 1.0f),
-		m_offset(0, 0) {
-	}
+	Viewport() = default;
 
 	explicit Viewport(const Vector2ui &size) :
-		m_scale(1.0f, 1.0f),
-		m_size(size),
-		m_offset(0, 0) {
+		m_size(size) {
 	}
 
 	const Vector2f &GetScale() const { return m_scale; }
@@ -128,7 +118,7 @@ public:
 	void SetOffset(const Vector2i &offset) { m_offset = offset; }
 
 private:
-	Vector2f m_scale;
+	Vector2f m_scale = {1.0f, 1.0f};
 	std::optional<Vector2ui> m_size;
 	Vector2i m_offset;
 };

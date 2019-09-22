@@ -65,8 +65,8 @@ protected:
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>
-	void AddSubrender(const Pipeline::Stage &pipelineStage, Args &&...args) {
-		m_subrenderHolder.Add<T>(pipelineStage, std::make_unique<T>(pipelineStage, std::forward<Args>(args)...));
+	T *AddSubrender(const Pipeline::Stage &pipelineStage, Args &&...args) {
+		return m_subrenderHolder.Add<T>(pipelineStage, std::make_unique<T>(pipelineStage, std::forward<Args>(args)...));
 	}
 
 	/**

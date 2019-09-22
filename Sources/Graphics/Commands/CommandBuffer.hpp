@@ -14,8 +14,7 @@ public:
 	 * @param queueType The queue to run this command buffer on.
 	 * @param bufferLevel The buffer level.
 	 */
-	explicit CommandBuffer(bool begin = true, const VkQueueFlagBits &queueType = VK_QUEUE_GRAPHICS_BIT,
-		const VkCommandBufferLevel &bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+	explicit CommandBuffer(bool begin = true, VkQueueFlagBits queueType = VK_QUEUE_GRAPHICS_BIT, VkCommandBufferLevel bufferLevel = VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
 	~CommandBuffer();
 
@@ -23,7 +22,7 @@ public:
 	 * Begins the recording state for this command buffer.
 	 * @param usage How this command buffer will be used.
 	 */
-	void Begin(const VkCommandBufferUsageFlags &usage = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
+	void Begin(VkCommandBufferUsageFlags usage = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT);
 
 	/**
 	 * Ends the recording state for this command buffer.

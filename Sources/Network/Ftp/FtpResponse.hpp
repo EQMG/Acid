@@ -121,7 +121,7 @@ public:
 	 * @param code Response status code.
 	 * @param message Response message.
 	 **/
-	FtpResponse(const Status &code = Status::InvalidResponse, std::string message = "");
+	FtpResponse(Status code = Status::InvalidResponse, std::string message = "");
 
 	/**
 	 * Check if the status code means a success.
@@ -134,7 +134,7 @@ public:
 	 * Get the status code of the response.
 	 * @return Status code.
 	 **/
-	const Status &GetStatus() const { return m_status; }
+	Status GetStatus() const { return m_status; }
 
 	/**
 	 * Get the full message contained in the response.

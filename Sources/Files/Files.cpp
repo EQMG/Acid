@@ -157,7 +157,7 @@ IFStream::~IFStream() {
 	delete rdbuf();
 }
 
-OFStream::OFStream(const std::filesystem::path &filename, const FileMode &writeMode) :
+OFStream::OFStream(const std::filesystem::path &filename, FileMode writeMode) :
 	BaseFStream(OpenWithMode(filename, writeMode)),
 	std::ostream(new FBuffer(file)) {
 }
@@ -166,7 +166,7 @@ OFStream::~OFStream() {
 	delete rdbuf();
 }
 
-FStream::FStream(const std::filesystem::path &filename, const FileMode &openMode) :
+FStream::FStream(const std::filesystem::path &filename, FileMode openMode) :
 	BaseFStream(OpenWithMode(filename, openMode)),
 	std::iostream(new FBuffer(file)) {
 }

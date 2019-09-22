@@ -1,8 +1,8 @@
 #include "Window.hpp"
 
 #include <GLFW/glfw3.h>
+#include "Bitmaps/Bitmap.hpp"
 #include "Graphics/Graphics.hpp"
-#include "Graphics/Images/Image.hpp"
 
 namespace acid {
 void CallbackError(int32_t error, const char *description) {
@@ -187,26 +187,24 @@ void Window::SetTitle(const std::string &title) {
 	m_onTitle(m_title);
 }
 
-void Window::SetIcons(const std::vector<std::string> &filenames) {
+void Window::SetIcons(const std::vector<std::filesystem::path> &filenames) {
 	std::vector<GLFWimage> icons;
-	std::vector<std::unique_ptr<uint8_t[]>> pixels;
+	std::vector<std::unique_ptr<Bitmap>> bitmaps;
 
 	for (const auto &filename : filenames) {
-		Vector2ui extent;
-		uint32_t components;
-		VkFormat format;
-		auto data = Image::LoadPixels(filename, extent, components, format);
+		auto bitmap = Bitmap::Create(filename.extension().string());
+		bitmap->Load(filename);
 
-		if (!data) {
+		if (bitmap->GetData().empty()) {
 			continue;
 		}
 
 		GLFWimage icon = {};
-		icon.width = extent.m_x;
-		icon.height = extent.m_y;
-		icon.pixels = data.get();
+		icon.width = bitmap->GetSize().m_x;
+		icon.height = bitmap->GetSize().m_y;
+		icon.pixels = bitmap->GetData().data();
 		icons.emplace_back(icon);
-		pixels.emplace_back(std::move(data));
+		bitmaps.emplace_back(std::move(bitmap));
 	}
 
 	glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());

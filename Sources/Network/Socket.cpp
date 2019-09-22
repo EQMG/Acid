@@ -13,10 +13,9 @@
 #include "Engine/Log.hpp"
 
 namespace acid {
-Socket::Socket(const Type &type) :
+Socket::Socket(Type type) :
 	m_type(type),
-	m_socket(InvalidSocketHandle()),
-	m_isBlocking(true) {
+	m_socket(InvalidSocketHandle()) {
 }
 
 Socket::~Socket() {

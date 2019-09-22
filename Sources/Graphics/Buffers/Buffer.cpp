@@ -3,7 +3,7 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-Buffer::Buffer(const VkDeviceSize &size, const VkBufferUsageFlags &usage, const VkMemoryPropertyFlags &properties, const void *data) :
+Buffer::Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, const void *data) :
 	m_size(size) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
@@ -88,8 +88,8 @@ uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags
 	throw std::runtime_error("Failed to find a valid memory type for buffer");
 }
 
-void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, const VkAccessFlags &srcAccessMask, const VkAccessFlags &dstAccessMask,
-	const VkPipelineStageFlags &srcStageMask, const VkPipelineStageFlags &dstStageMask, const VkDeviceSize &offset, const VkDeviceSize &size) {
+void Buffer::InsertBufferMemoryBarrier(const CommandBuffer &commandBuffer, const VkBuffer &buffer, VkAccessFlags srcAccessMask, VkAccessFlags dstAccessMask,
+	VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkDeviceSize offset, VkDeviceSize size) {
 	VkBufferMemoryBarrier bufferMemoryBarrier = {};
 	bufferMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 	bufferMemoryBarrier.srcAccessMask = srcAccessMask;

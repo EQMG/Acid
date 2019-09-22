@@ -39,7 +39,7 @@ public:
 	 * @param method Method to use for the request.
 	 * @param body Content of the request's body.
 	 **/
-	explicit HttpRequest(const std::string &uri = "/", const Method &method = Method::Get, const std::string &body = "");
+	explicit HttpRequest(const std::string &uri = "/", Method method = Method::Get, const std::string &body = "");
 
 	/**
 	 * Set the value of a field.
@@ -57,7 +57,7 @@ public:
 	 * The method is HTTP_REQUEST_METHOD_GET by default.
 	 * @param method Method to use for the request.
 	 **/
-	void SetMethod(const Method &method) { m_method = method; }
+	void SetMethod(Method method) { m_method = method; }
 
 	/**
 	 * Set the requested URI.

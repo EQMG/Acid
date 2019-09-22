@@ -1,7 +1,7 @@
 #include "FtpResponse.hpp"
 
 namespace acid {
-FtpResponse::FtpResponse(const Status &code, std::string message) :
+FtpResponse::FtpResponse(Status code, std::string message) :
 	m_status(code),
 	m_message(std::move(message)) {
 }

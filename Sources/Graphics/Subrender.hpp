@@ -15,8 +15,7 @@ public:
 	 * @param stage The stage this renderer will be used in.
 	 */
 	explicit Subrender(Pipeline::Stage stage) :
-		m_stage(std::move(stage)),
-		m_enabled(true) {
+		m_stage(std::move(stage)) {
 	}
 
 	virtual ~Subrender() = default;
@@ -33,8 +32,8 @@ public:
 	void SetEnabled(bool enable) { m_enabled = enable; }
 
 private:
+	bool m_enabled = true;
 	Pipeline::Stage m_stage;
-	bool m_enabled;
 };
 
 template class ACID_EXPORT TypeInfo<Subrender>;

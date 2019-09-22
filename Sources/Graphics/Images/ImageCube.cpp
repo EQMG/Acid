@@ -18,7 +18,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const Node &node) {
 	return result;
 }
 
-std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode,
+std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filename, const std::string &fileSuffix, VkFilter filter, VkSamplerAddressMode addressMode,
 	bool anisotropic, bool mipmap) {
 	ImageCube temp(filename, fileSuffix, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
@@ -26,8 +26,7 @@ std::shared_ptr<ImageCube> ImageCube::Create(const std::filesystem::path &filena
 	return Create(node);
 }
 
-ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap,
-	bool load) :
+ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, VkFilter filter, VkSamplerAddressMode addressMode, bool anisotropic, bool mipmap, bool load) :
 	m_filename(std::move(filename)),
 	m_fileSuffix(std::move(fileSuffix)),
 	m_filter(filter),
@@ -43,8 +42,8 @@ ImageCube::ImageCube(std::filesystem::path filename, std::string fileSuffix, con
 	}
 }
 
-ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &layout, const VkImageUsageFlags &usage,
-	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
+ImageCube::ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage,
+	VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, bool anisotropic, bool mipmap) :
 	m_filter(filter),
 	m_addressMode(addressMode),
 	m_anisotropic(anisotropic),
@@ -68,7 +67,7 @@ ImageCube::~ImageCube() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
+WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
@@ -85,8 +84,7 @@ WriteDescriptorSet ImageCube::GetWriteDescriptor(uint32_t binding, const VkDescr
 	return {descriptorWrite, imageInfo};
 }
 
-VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
+VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage,	uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;

@@ -69,7 +69,7 @@ void MainRenderer::Start() {
 	//AddSubrender<FilterLensflare>({1, 2});
 	//AddSubrender<FilterTiltshift>({1, 2});
 	//AddSubrender<FilterPixel>({1, 2}, 8.0f);
-	AddSubrender<FilterVignette>({1, 2});
+	//AddSubrender<FilterVignette>({1, 2});
 	//AddSubrender<FilterGrain>({1, 2});
 	AddSubrender<FilterDefault>({1, 2}, true);
 	//AddSubrender<RendererGizmos>({1, 2});
@@ -91,6 +91,6 @@ void MainRenderer::Update() {
 		renderpassCreate1->GetViewport().SetOffset({100, 100});
 	}*/
 
-	//GetRenderer<FilterVignette>(true)->SetEnabled(Keyboard::Get()->GetKey(Key::I));
+	//GetSubrender<FilterVignette>()->SetEnabled(Keyboard::Get()->GetKey(Key::I) != InputAction::Release);
 }
 }

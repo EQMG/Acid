@@ -58,7 +58,7 @@ void Mouse::Update() {
 	m_lastScroll = m_scroll;
 }
 
-void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot) {
+void Mouse::SetCursor(const std::string &filename, CursorHotspot hotspot) {
 	if (m_currentCursor && m_currentCursor->first == filename && m_currentCursor->second == hotspot) {
 		return;
 	}
@@ -102,7 +102,7 @@ void Mouse::SetCursor(const std::string &filename, const CursorHotspot &hotspot)
 	m_currentStandard = std::nullopt;
 }
 
-void Mouse::SetCursor(const CursorStandard &standard) {
+void Mouse::SetCursor(CursorStandard standard) {
 	if (m_currentStandard == standard) {
 		return;
 	}

@@ -19,14 +19,14 @@ std::shared_ptr<Image2d> Image2d::Create(const Node &node) {
 	return result;
 }
 
-std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap) {
+std::shared_ptr<Image2d> Image2d::Create(const std::filesystem::path &filename, VkFilter filter, VkSamplerAddressMode addressMode, bool anisotropic, bool mipmap) {
 	Image2d temp(filename, filter, addressMode, anisotropic, mipmap, false);
 	Node node;
 	node << temp;
 	return Create(node);
 }
 
-Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const VkSamplerAddressMode &addressMode, bool anisotropic, bool mipmap, bool load) :
+Image2d::Image2d(std::filesystem::path filename, VkFilter filter, VkSamplerAddressMode addressMode, bool anisotropic, bool mipmap, bool load) :
 	m_filename(std::move(filename)),
 	m_filter(filter),
 	m_addressMode(addressMode),
@@ -41,8 +41,8 @@ Image2d::Image2d(std::filesystem::path filename, const VkFilter &filter, const V
 	}
 }
 
-Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, const VkFormat &format, const VkImageLayout &imageLayout, const VkImageUsageFlags &usage,
-	const VkFilter &filter, const VkSamplerAddressMode &addressMode, const VkSampleCountFlagBits &samples, bool anisotropic, bool mipmap) :
+Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, VkFormat format, VkImageLayout imageLayout, VkImageUsageFlags usage,
+	VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, bool anisotropic, bool mipmap) :
 	m_filter(filter),
 	m_addressMode(addressMode),
 	m_anisotropic(anisotropic),
@@ -66,7 +66,7 @@ Image2d::~Image2d() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
+WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
@@ -83,8 +83,7 @@ WriteDescriptorSet Image2d::GetWriteDescriptor(uint32_t binding, const VkDescrip
 	return {descriptorWrite, imageInfo};
 }
 
-VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage,
-	uint32_t count) {
+VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;

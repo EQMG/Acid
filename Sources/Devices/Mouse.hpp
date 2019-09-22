@@ -64,13 +64,13 @@ public:
 	 * @param filename The new custom mouse file.
 	 * @param hotspot The hotspot to display the cursor image at.
 	 */
-	void SetCursor(const std::string &filename, const CursorHotspot &hotspot);
+	void SetCursor(const std::string &filename, CursorHotspot hotspot);
 
 	/**
 	 * Sets the cursor to a system style.
 	 * @param standard The standard shape.
 	 */
-	void SetCursor(const CursorStandard &standard);
+	void SetCursor(CursorStandard standard);
 
 	/**
 	 * Gets the contents of the clipboard as a string.

@@ -9,7 +9,7 @@ static const std::vector<VkFormat> TRY_FORMATS = {
 	VK_FORMAT_D16_UNORM
 };
 
-ImageDepth::ImageDepth(const Vector2ui &extent, const VkSampleCountFlagBits &samples) :
+ImageDepth::ImageDepth(const Vector2ui &extent, VkSampleCountFlagBits samples) :
 	m_extent(extent),
 	m_format(VK_FORMAT_UNDEFINED) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
@@ -50,7 +50,7 @@ ImageDepth::~ImageDepth() {
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
 }
 
-WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDescriptorType &descriptorType, const std::optional<OffsetSize> &offsetSize) const {
+WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
 	imageInfo.sampler = m_sampler;
 	imageInfo.imageView = m_view;
@@ -67,7 +67,7 @@ WriteDescriptorSet ImageDepth::GetWriteDescriptor(uint32_t binding, const VkDesc
 	return {descriptorWrite, imageInfo};
 }
 
-VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, const VkDescriptorType &descriptorType, const VkShaderStageFlags &stage) {
+VkDescriptorSetLayoutBinding ImageDepth::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage) {
 	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
 	descriptorSetLayoutBinding.binding = binding;
 	descriptorSetLayoutBinding.descriptorType = descriptorType;

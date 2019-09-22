@@ -3,7 +3,7 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-CommandBuffer::CommandBuffer(bool begin, const VkQueueFlagBits &queueType, const VkCommandBufferLevel &bufferLevel) :
+CommandBuffer::CommandBuffer(bool begin, VkQueueFlagBits queueType, VkCommandBufferLevel bufferLevel) :
 	m_queueType(queueType) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
@@ -27,7 +27,7 @@ CommandBuffer::~CommandBuffer() {
 	vkFreeCommandBuffers(*logicalDevice, m_commandPool->GetCommandPool(), 1, &m_commandBuffer);
 }
 
-void CommandBuffer::Begin(const VkCommandBufferUsageFlags &usage) {
+void CommandBuffer::Begin(VkCommandBufferUsageFlags usage) {
 	if (m_running) {
 		return;
 	}

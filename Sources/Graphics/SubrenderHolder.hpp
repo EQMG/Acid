@@ -38,7 +38,7 @@ public:
 	 * @return The added renderer.
 	 */
 	template<typename T, typename... Args>
-	void Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender) {
+	T *Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender) {
 		// Remove previous Subrender, if it exists.
 		//Remove<T>();
 
@@ -49,6 +49,7 @@ public:
 
 		// Then, add the Subrender
 		m_subrenders[typeId] = std::move(subrender);
+		return static_cast<T *>(m_subrenders[typeId].get());
 	}
 
 	/**

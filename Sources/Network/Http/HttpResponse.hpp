@@ -93,7 +93,7 @@ public:
 	 * it defines whether it is a success, a failure or anything else (see the Status enumeration).
 	 * @return Status code of the response.
 	 **/
-	const Status &GetStatus() const { return m_status; }
+	Status GetStatus() const { return m_status; }
 
 	/**
 	 * Get the major HTTP version number of the response.

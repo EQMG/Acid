@@ -10,8 +10,7 @@
 struct GLFWwindow;
 
 namespace acid {
-enum class InputAction :
-	int32_t {
+enum class InputAction : int32_t {
 	Release = 0,
 	Press = 1,
 	Repeat = 2
@@ -19,8 +18,7 @@ enum class InputAction :
 
 ENABLE_BITMASK_OPERATORS(InputAction);
 
-enum class InputMod :
-	int32_t {
+enum class InputMod : int32_t {
 	None = 0,
 	Shift = 1,
 	Control = 2,
@@ -88,7 +86,7 @@ public:
 	 * Sets window icon images.
 	 * @param filenames The new icon files.
 	 */
-	void SetIcons(const std::vector<std::string> &filenames);
+	void SetIcons(const std::vector<std::filesystem::path> &filenames);
 
 	/**
 	 * Gets weather the window is borderless or not.

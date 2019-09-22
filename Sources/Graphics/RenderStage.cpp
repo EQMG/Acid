@@ -77,7 +77,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 	}
 
 	if (!m_renderpass) {
-		m_renderpass = std::make_unique<Renderpass>(*this, m_depthStencil->GetFormat(), surface->GetFormat().format, msaaSamples);
+		m_renderpass = std::make_unique<Renderpass>(*this, m_depthStencil ? m_depthStencil->GetFormat() : VK_FORMAT_UNDEFINED, surface->GetFormat().format, msaaSamples);
 	}
 
 	m_framebuffers = std::make_unique<Framebuffers>(m_renderArea.GetExtent(), *this, *m_renderpass, swapchain, *m_depthStencil, msaaSamples);

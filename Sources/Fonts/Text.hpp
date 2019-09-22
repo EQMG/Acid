@@ -41,7 +41,7 @@ public:
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text,
-		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), const Justify &justify = Justify::Left,
+		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), Justify justify = Justify::Left,
 		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
 
 	void UpdateObject() override;
@@ -88,7 +88,7 @@ public:
 	 * Gets how the text should justify.
 	 * @return How the text should justify.
 	 */
-	const Justify &GetJustify() const { return m_justify; }
+	Justify GetJustify() const { return m_justify; }
 
 	/**
 	 * Gets the kerning (type character spacing multiplier) of this text.

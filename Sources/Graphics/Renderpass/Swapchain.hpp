@@ -27,17 +27,17 @@ public:
 
 	bool IsSameExtent(const VkExtent2D &extent2D) { return m_extent.width == extent2D.width && m_extent.height == extent2D.height; }
 
+	operator const VkSwapchainKHR &() const { return m_swapchain; }
+
 	const VkExtent2D &GetExtent() const { return m_extent; }
 	uint32_t GetImageCount() const { return m_imageCount; }
-	const VkSurfaceTransformFlagsKHR &GetPreTransform() const { return m_preTransform; }
-	const VkCompositeAlphaFlagBitsKHR &GetCompositeAlpha() const { return m_compositeAlpha; }
+	VkSurfaceTransformFlagsKHR GetPreTransform() const { return m_preTransform; }
+	VkCompositeAlphaFlagBitsKHR GetCompositeAlpha() const { return m_compositeAlpha; }
 	const std::vector<VkImage> &GetImages() const { return m_images; }
 	const VkImage &GetActiveImage() const { return m_images[m_activeImageIndex]; }
 	const std::vector<VkImageView> &GetImageViews() const { return m_imageViews; }
 	const VkSwapchainKHR &GetSwapchain() const { return m_swapchain; }
 	uint32_t GetActiveImageIndex() const { return m_activeImageIndex; }
-
-	operator const VkSwapchainKHR &() const { return m_swapchain; }
 
 private:
 	VkExtent2D m_extent;

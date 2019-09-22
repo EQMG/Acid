@@ -316,8 +316,7 @@ TBuiltInResource GetResources() {
 	return resources;
 }
 
-VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble,
-	const VkShaderStageFlags &moduleFlag) {
+VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, VkShaderStageFlags moduleFlag) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	m_stages.emplace_back(moduleName);
@@ -539,7 +538,7 @@ Node &operator<<(Node &node, const Shader &shader) {
 	return node;
 }
 
-void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, const VkDescriptorType &type) {
+void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, VkDescriptorType type) {
 	if (type == VK_DESCRIPTOR_TYPE_MAX_ENUM) {
 		return;
 	}

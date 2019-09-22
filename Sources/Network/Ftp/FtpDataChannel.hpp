@@ -25,7 +25,7 @@ public:
 
 	explicit FtpDataChannel(Ftp &owner);
 
-	FtpResponse Open(const Mode &mode);
+	FtpResponse Open(Mode mode);
 
 	void Send(std::istream &stream);
 
