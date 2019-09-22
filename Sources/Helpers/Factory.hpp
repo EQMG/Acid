@@ -6,25 +6,27 @@ namespace acid {
 template<typename Base, class... Args>
 class Factory {
 public:
-	using FuncType = std::function<std::unique_ptr<Base>(Args...)>;
-	using RegistryMap = std::unordered_map<std::string, FuncType>;
+	using TCreateReturn = std::unique_ptr<Base>;
 
-	static std::unique_ptr<Base> Create(const std::string &name, Args &&... args) {
+	using TCreateMethod = std::function<TCreateReturn(Args...)>;
+	using TRegistryMap = std::unordered_map<std::string, TCreateMethod>;
+
+	static TCreateReturn Create(const std::string &name, Args &&... args) {
 		auto it = Registry().find(name);
 		return it == Registry().end() ? nullptr : it->second(std::forward<Args>(args)...);
 	}
 
-	static RegistryMap &Registry() {
-		static RegistryMap impl;
+	static TRegistryMap &Registry() {
+		static TRegistryMap impl;
 		return impl;
 	}
 
 	template<typename T>
 	class Registrar : public Base {
 	protected:
-		static bool Register(const std::string &name, std::function<std::unique_ptr<T>(Args...)> f = &std::make_unique<T>) {
-			Factory::Registry()[name] = [f](Args... args) -> std::unique_ptr<Base> {
-				return f(std::forward<Args>(args)...);
+		static bool Register(const std::string &name) {
+			Factory::Registry()[name] = [](Args... args) -> TCreateReturn {
+				return std::make_unique<T>(std::forward<Args>(args)...);
 			};
 			return true;
 		}

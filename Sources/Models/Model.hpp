@@ -8,18 +8,20 @@ namespace acid {
 template<typename Base>
 class ModelFactory {
 public:
-	using FuncTypeNode = std::function<std::shared_ptr<Base>(const Node &)>;
-	using RegistryMapNode = std::unordered_map<std::string, FuncTypeNode>;
+	using TCreateReturn = std::shared_ptr<Base>;
+	
+	using TCreateMethodNode = std::function<TCreateReturn(const Node &)>;
+	using TRegistryMapNode = std::unordered_map<std::string, TCreateMethodNode>;
 
-	using FuncTypeFilename = std::function<std::shared_ptr<Base>(const std::filesystem::path &)>;
-	using RegistryMapFilename = std::unordered_map<std::string, FuncTypeFilename>;
+	using TCreateMethodFilename = std::function<TCreateReturn(const std::filesystem::path &)>;
+	using TRegistryMapFilename = std::unordered_map<std::string, TCreateMethodFilename>;
 
 	/**
 	 * Creates a new model, or finds one with the same values.
 	 * @param node The node to decode values from.
 	 * @return The model with the requested values.
 	 */
-	static std::shared_ptr<Base> Create(const Node &node) {
+	static TCreateReturn Create(const Node &node) {
 		auto typeName = node["type"].Get<std::string>();
 		auto it = RegistryNode().find(typeName);
 		return it == RegistryNode().end() ? nullptr : it->second(node);
@@ -28,29 +30,35 @@ public:
 	/**
 	 * Creates a new model, or finds one with the same values.
 	 * @param filename The file to load the model from.
-	 * @return The model with the requested values.
+	 * @return The model loaded from the filename.
 	 */
-	static std::shared_ptr<Base> Create(const std::filesystem::path &filename) {
+	static TCreateReturn Create(const std::filesystem::path &filename) {
 		auto fileExt = filename.extension().string();
 		auto it = RegistryFilename().find(fileExt);
 		return it == RegistryFilename().end() ? nullptr : it->second(filename);
 	}
 
-	static RegistryMapNode &RegistryNode() {
-		static RegistryMapNode impl;
+	static TRegistryMapNode &RegistryNode() {
+		static TRegistryMapNode impl;
 		return impl;
 	}
 
-	static RegistryMapFilename &RegistryFilename() {
-		static RegistryMapFilename impl;
+	static TRegistryMapFilename &RegistryFilename() {
+		static TRegistryMapFilename impl;
 		return impl;
 	}
 
+	/**
+	 * A class used to help register subclasses of Model to the factory.
+	 * Your subclass should have a static Create function taking a Node, or path.
+	 * @tparam T The type that will extend Model.
+	 */
 	template<typename T>
 	class Registrar : public Base {
 	protected:
+		template<int Dummy = 0>
 		static bool Register(const std::string &typeName) {
-			ModelFactory::RegistryNode()[typeName] = [](const Node &node) -> std::shared_ptr<Base> {
+			ModelFactory::RegistryNode()[typeName] = [](const Node &node) -> TCreateReturn {
 				return T::Create(node);
 			};
 			return true;
@@ -59,7 +67,7 @@ public:
 		template<int Dummy = 0>
 		static bool Register(const std::string &typeName, const std::string &extension) {
 			Register(typeName);
-			ModelFactory::RegistryFilename()[extension] = [](const std::filesystem::path &filename) -> std::shared_ptr<Base> {
+			ModelFactory::RegistryFilename()[extension] = [](const std::filesystem::path &filename) -> TCreateReturn {
 				return T::Create(filename);
 			};
 			return true;

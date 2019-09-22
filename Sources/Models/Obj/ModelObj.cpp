@@ -1,8 +1,8 @@
 #include "ModelObj.hpp"
 
 #define TINYOBJLOADER_IMPLEMENTATION
-
 #include "tiny_obj_loader.h"
+
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"

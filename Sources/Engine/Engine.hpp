@@ -136,7 +136,7 @@ public:
 	void RequestClose() { m_running = false; }
 
 private:
-	void UpdateStage(ModuleStage stage);
+	void UpdateStage(Module::Stage stage);
 	
 	static Engine *Instance;
 

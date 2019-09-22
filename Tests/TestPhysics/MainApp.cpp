@@ -69,7 +69,7 @@ MainApp::MainApp() :
 	});
 
 	// Registers modules.
-	World::Register(ModuleStage::Always);
+	World::Register(Module::Stage::Always);
 	//Shadows::Deregister();
 
 	// Registers components.

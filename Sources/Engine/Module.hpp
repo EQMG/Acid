@@ -4,26 +4,19 @@
 #include "Helpers/TypeInfo.hpp"
 
 namespace acid {
-/**
- * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
- */
-enum class ModuleStage : uint8_t {
-	Never,
-	Always,
-	Pre,
-	Normal,
-	Post,
-	Render
-};
-
 template<typename Base>
 class ModuleFactory {
 public:
-	using StageIndex = std::pair<ModuleStage, std::size_t>;
-	using RegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;
+	/**
+	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
+	 */
+	enum class Stage : uint8_t { Never, Always, Pre, Normal, Post, Render };
+	
+	using StageIndex = std::pair<Stage, std::size_t>;
+	using TRegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;
 
-	static RegistryMap &Registry() {
-		static RegistryMap impl;
+	static TRegistryMap &Registry() {
+		static TRegistryMap impl;
 		return impl;
 	}
 
@@ -43,11 +36,11 @@ public:
 
 		/**
 		 * Creates a new module singleton instance and registers into the module registry map.
-		 * @param moduleStage The stage where <seealso cref="Module#Update()"/> will be called from the engine.
+		 * @param stage The stage where <seealso cref="Module#Update()"/> will be called from the engine.
 		 * @return A dummy value in static initialization.
 		 */
-		static bool Register(ModuleStage moduleStage) {
-			auto it = Registry().insert({StageIndex(moduleStage, GetNextId()), std::make_unique<T>()});
+		static bool Register(Stage stage) {
+			auto it = Registry().insert({StageIndex(stage, GetNextId()), std::make_unique<T>()});
 			ModuleInstance = dynamic_cast<T *>(it->second.get());
 			return true;
 		}
