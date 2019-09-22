@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a cube model.
  */
-class ACID_EXPORT ModelCube : public Model {
+class ACID_EXPORT ModelCube : public Model::Registrar<ModelCube> {
 public:
 	/**
 	 * Creates a new cube model, or finds one with the same values.
@@ -34,6 +34,8 @@ public:
 
 private:
 	void Load();
+	
+	static bool registered;
 
 	Vector3f m_extents;
 };

@@ -143,7 +143,6 @@ set(_temp_acid_headers
 		Meshes/SubrenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
 		Models/Model.hpp
-		Models/ModelRegister.hpp
 		Models/Obj/ModelObj.hpp
 		Models/Shapes/MeshPattern.hpp
 		Models/Shapes/MeshSimple.hpp
@@ -355,7 +354,6 @@ set(_temp_acid_sources
 		Meshes/SubrenderMeshes.cpp
 		Models/Gltf/ModelGltf.cpp
 		Models/Model.cpp
-		Models/ModelRegister.cpp
 		Models/Obj/ModelObj.cpp
 		Models/Shapes/MeshPattern.cpp
 		Models/Shapes/MeshSimple.cpp

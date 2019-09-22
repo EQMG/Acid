@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a sphere model.
  */
-class ACID_EXPORT ModelSphere : public Model {
+class ACID_EXPORT ModelSphere : public Model::Registrar<ModelSphere> {
 public:
 	/**
 	 * Creates a new sphere model, or finds one with the same values.
@@ -38,6 +38,8 @@ public:
 
 private:
 	void Load();
+
+	static bool registered;
 
 	float m_radius;
 	uint32_t m_latitudeBands;

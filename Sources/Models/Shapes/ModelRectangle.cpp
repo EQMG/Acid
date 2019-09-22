@@ -4,6 +4,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelRectangle::registered = Register("rectangle");
+
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelRectangle>(resource);

@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a rectangle model.
  */
-class ACID_EXPORT ModelRectangle : public Model {
+class ACID_EXPORT ModelRectangle : public Model::Registrar<ModelRectangle> {
 public:
 	/**
 	 * Creates a new rectangle model, or finds one with the same values.
@@ -36,6 +36,8 @@ public:
 
 private:
 	void Load();
+
+	static bool registered;
 
 	float m_min;
 	float m_max;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Models/ModelRegister.hpp"
 #include "Scene.hpp"
 #include "ComponentRegister.hpp"
 #include "SceneStructure.hpp"
@@ -35,12 +34,6 @@ public:
 	ComponentRegister &GetComponentRegister() { return m_componentRegister; }
 
 	/**
-	 * Gets the model register used by the engine. The register can be used to register/deregister model types.
-	 * @return The model register.
-	 */
-	ModelRegister &GetModelRegister() { return m_modelRegister; }
-
-	/**
 	 * Gets the current camera object.
 	 * @return The current camera.
 	 */
@@ -68,6 +61,5 @@ private:
 	std::unique_ptr<Scene> m_scene;
 
 	ComponentRegister m_componentRegister;
-	ModelRegister m_modelRegister;
 };
 }

@@ -5,29 +5,77 @@
 #include "Resources/Resource.hpp"
 
 namespace acid {
-/**
- * @brief Resource that represents a model vertex and index buffer.
- */
-class ACID_EXPORT Model : public Resource {
+template<typename Base>
+class ModelFactory {
 public:
+	using FuncTypeNode = std::function<std::shared_ptr<Base>(const Node &)>;
+	using RegistryMapNode = std::unordered_map<std::string, FuncTypeNode>;
+
+	using FuncTypeFilename = std::function<std::shared_ptr<Base>(const std::filesystem::path &)>;
+	using RegistryMapFilename = std::unordered_map<std::string, FuncTypeFilename>;
+
 	/**
 	 * Creates a new model, or finds one with the same values.
 	 * @param node The node to decode values from.
 	 * @return The model with the requested values.
 	 */
-	static std::shared_ptr<Model> Create(const Node &node);
+	static std::shared_ptr<Base> Create(const Node &node) {
+		auto typeName = node["type"].Get<std::string>();
+		auto it = RegistryNode().find(typeName);
+		return it == RegistryNode().end() ? nullptr : it->second(node);
+	}
 
 	/**
 	 * Creates a new model, or finds one with the same values.
 	 * @param filename The file to load the model from.
 	 * @return The model with the requested values.
 	 */
-	static std::shared_ptr<Model> Create(const std::filesystem::path &filename);
+	static std::shared_ptr<Base> Create(const std::filesystem::path &filename) {
+		auto fileExt = filename.extension().string();
+		auto it = RegistryFilename().find(fileExt);
+		return it == RegistryFilename().end() ? nullptr : it->second(filename);
+	}
 
+	static RegistryMapNode &RegistryNode() {
+		static RegistryMapNode impl;
+		return impl;
+	}
+
+	static RegistryMapFilename &RegistryFilename() {
+		static RegistryMapFilename impl;
+		return impl;
+	}
+
+	template<typename T>
+	class Registrar : public Base {
+	protected:
+		static bool Register(const std::string &typeName) {
+			ModelFactory::RegistryNode()[typeName] = [](const Node &node) -> std::shared_ptr<Base> {
+				return T::Create(node);
+			};
+			return true;
+		}
+
+		template<int Dummy = 0>
+		static bool Register(const std::string &typeName, const std::string &extension) {
+			Register(typeName);
+			ModelFactory::RegistryFilename()[extension] = [](const std::filesystem::path &filename) -> std::shared_ptr<Base> {
+				return T::Create(filename);
+			};
+			return true;
+		}
+	};
+};
+
+/**
+ * @brief Resource that represents a model vertex and index buffer.
+ */
+class ACID_EXPORT Model : public ModelFactory<Model>, public Resource {
+public:
 	/**
 	 * Creates a new empty model.
 	 */
-	Model();
+	Model() = default;
 
 	/**
 	 * Creates a new model.

@@ -5,6 +5,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelCylinder::registered = Register("cylinder");
+
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelCylinder>(resource);

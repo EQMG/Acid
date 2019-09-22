@@ -5,6 +5,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelSphere::registered = Register("sphere");
+
 std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelSphere>(resource);

@@ -12,7 +12,7 @@ GeometryLoader::GeometryLoader(NodeReturn libraryGeometries, std::vector<VertexW
 	auto normals = GetNormals();
 
 	auto indexCount = static_cast<int32_t>(m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetProperties().size());
-	auto indexRawData = String::Split(m_meshData->GetPropertyWithBackup("polylist", "triangles")["p"]->GetValue(), ' ');
+	auto indexRawData = String::Split(m_meshData->GetPropertyWithBackup("polylist", "triangles")["p"]->Get<std::string>(), ' ');
 
 	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
 
@@ -37,10 +37,10 @@ GeometryLoader::GeometryLoader(NodeReturn libraryGeometries, std::vector<VertexW
 }
 
 std::vector<Vector3f> GeometryLoader::GetPositions() const {
-	auto positionsSource = m_meshData["vertices"]["input"]["-source"]->GetValue().substr(1);
+	auto positionsSource = m_meshData["vertices"]["input"]["-source"]->Get<std::string>().substr(1);
 	auto positionsData = m_meshData["source"]->GetPropertyWithValue("-id", positionsSource)["float_array"];
 	auto positionsCount = positionsData["-count"]->Get<uint32_t>();
-	auto positionsRawData = String::Split(positionsData["#text"]->GetValue(), ' ');
+	auto positionsRawData = String::Split(positionsData["#text"]->Get<std::string>(), ' ');
 
 	std::vector<Vector3f> positions;
 
@@ -54,10 +54,10 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const {
 }
 
 std::vector<Vector2f> GeometryLoader::GetUvs() const {
-	auto uvsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "TEXCOORD")["-source"]->GetValue().substr(1);
+	auto uvsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "TEXCOORD")["-source"]->Get<std::string>().substr(1);
 	auto uvsData = m_meshData["source"]->GetPropertyWithValue("-id", uvsSource)["float_array"];
 	auto uvsCount = uvsData["-count"]->Get<uint32_t>();
-	auto uvsRawData = String::Split(uvsData["#text"]->GetValue(), ' ');
+	auto uvsRawData = String::Split(uvsData["#text"]->Get<std::string>(), ' ');
 
 	std::vector<Vector2f> uvs;
 
@@ -70,10 +70,10 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const {
 }
 
 std::vector<Vector3f> GeometryLoader::GetNormals() const {
-	auto normalsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "NORMAL")["-source"]->GetValue().substr(1);
+	auto normalsSource = m_meshData->GetPropertyWithBackup("polylist", "triangles")["input"]->GetPropertyWithValue("-semantic", "NORMAL")["-source"]->Get<std::string>().substr(1);
 	auto normalsData = m_meshData["source"]->GetPropertyWithValue("-id", normalsSource)["float_array"];
 	auto normalsCount = normalsData["-count"]->Get<uint32_t>();
-	auto normalsRawData = String::Split(normalsData["#text"]->GetValue(), ' ');
+	auto normalsRawData = String::Split(normalsData["#text"]->Get<std::string>(), ' ');
 
 	std::vector<Vector3f> normals;
 

@@ -5,6 +5,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelDisk::registered = Register("disk");
+
 std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelDisk>(resource);

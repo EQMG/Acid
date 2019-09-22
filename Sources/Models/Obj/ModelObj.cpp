@@ -8,6 +8,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelObj::registered = Register("obj", ".obj");
+
 class MaterialStreamReader : public tinyobj::MaterialReader {
 public:
 	explicit MaterialStreamReader(std::filesystem::path folder) :

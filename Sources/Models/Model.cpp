@@ -4,17 +4,6 @@
 #include "Resources/Resources.hpp"
 
 namespace acid {
-std::shared_ptr<Model> Model::Create(const Node &node) {
-	return Scenes::Get()->GetModelRegister().Create(node);
-}
-
-std::shared_ptr<Model> Model::Create(const std::filesystem::path &filename) {
-	return Scenes::Get()->GetModelRegister().Create(filename);
-}
-
-Model::Model() {
-}
-
 bool Model::CmdRender(const CommandBuffer &commandBuffer, uint32_t instances) const {
 	if (m_vertexBuffer && m_indexBuffer) {
 		VkBuffer vertexBuffers[1] = {m_vertexBuffer->GetBuffer()};

@@ -3,13 +3,15 @@
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_STB_IMAGE_WRITE
 #define TINYGLTF_IMPLEMENTATION
-
 #include "tiny_gltf.h"
+
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelGltf::registered = Register("gltf", ".gltf");
+
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelGltf>(resource);

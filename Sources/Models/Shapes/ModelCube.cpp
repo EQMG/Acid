@@ -4,6 +4,8 @@
 #include "Models/VertexDefault.hpp"
 
 namespace acid {
+bool ModelCube::registered = Register("cube");
+
 std::shared_ptr<ModelCube> ModelCube::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find(node)) {
 		return std::dynamic_pointer_cast<ModelCube>(resource);

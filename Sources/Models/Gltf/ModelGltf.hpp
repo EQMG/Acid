@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief Resource that represents a GLTF model.
  */
-class ACID_EXPORT ModelGltf : public Model {
+class ACID_EXPORT ModelGltf : public Model::Registrar<ModelGltf> {
 public:
 	/**
 	 * Creates a new GLTF model, or finds one with the same values.
@@ -35,6 +35,8 @@ public:
 
 private:
 	void Load();
+	
+	static bool registered;
 
 	//struct Node;
 	//struct Skin;

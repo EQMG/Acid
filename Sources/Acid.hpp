@@ -139,7 +139,6 @@
 #include "Meshes/SubrenderMeshes.hpp"
 #include "Models/Gltf/ModelGltf.hpp"
 #include "Models/Model.hpp"
-#include "Models/ModelRegister.hpp"
 #include "Models/Obj/ModelObj.hpp"
 #include "Models/Shapes/MeshPattern.hpp"
 #include "Models/Shapes/MeshSimple.hpp"

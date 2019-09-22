@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents a disk model.
  */
-class ACID_EXPORT ModelDisk : public Model {
+class ACID_EXPORT ModelDisk : public Model::Registrar<ModelDisk> {
 public:
 	/**
 	 * Creates a new disk model, or finds one with the same values.
@@ -40,6 +40,8 @@ public:
 
 private:
 	void Load();
+
+	static bool registered;
 
 	float m_innerRadius;
 	float m_outerRadius;
