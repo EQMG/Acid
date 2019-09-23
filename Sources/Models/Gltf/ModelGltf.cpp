@@ -44,7 +44,7 @@ const Node &operator>>(const Node &node, ModelGltf &model) {
 }
 
 Node &operator<<(Node &node, const ModelGltf &model) {
-	node["type"].Set("ModelGltf");
+	node["type"].Set("gltf");
 	node["filename"].Set(model.m_filename);
 	return node;
 }
@@ -62,7 +62,7 @@ void ModelGltf::Load() {
 	auto fileLoaded = Files::Read(m_filename);
 
 	if (!fileLoaded) {
-		Log::Error("GLTF file could not be loaded: ", m_filename, '\n');
+		Log::Error("Model could not be loaded: ", m_filename, '\n');
 		return;
 	}
 
@@ -122,7 +122,7 @@ void ModelGltf::Load() {
 	auto extensions = gltfModel.extensionsUsed;*/
 
 #if defined(ACID_DEBUG)
-	Log::Out("Model GLTF ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Model ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
 	Initialize(vertices, indices);

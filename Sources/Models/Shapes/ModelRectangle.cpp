@@ -40,7 +40,7 @@ const Node &operator>>(const Node &node, ModelRectangle &model) {
 }
 
 Node &operator<<(Node &node, const ModelRectangle &model) {
-	node["type"].Set("ModelRectangle");
+	node["type"].Set("rectangle");
 	node["min"].Set(model.m_min);
 	node["max"].Set(model.m_max);
 	return node;

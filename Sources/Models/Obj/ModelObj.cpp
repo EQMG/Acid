@@ -74,7 +74,7 @@ const Node &operator>>(const Node &node, ModelObj &model) {
 }
 
 Node &operator<<(Node &node, const ModelObj &model) {
-	node["type"].Set("ModelObj");
+	node["type"].Set("obj");
 	node["filename"].Set(model.m_filename);
 	return node;
 }
@@ -122,7 +122,7 @@ void ModelObj::Load() {
 	}
 
 #if defined(ACID_DEBUG)
-	Log::Out("Model OBJ ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Model ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
 	Initialize(vertices, indices);

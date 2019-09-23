@@ -41,18 +41,33 @@ Image2d::Image2d(std::filesystem::path filename, VkFilter filter, VkSamplerAddre
 	}
 }
 
-Image2d::Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels, VkFormat format, VkImageLayout imageLayout, VkImageUsageFlags usage,
-	VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, bool anisotropic, bool mipmap) :
+Image2d::Image2d(const Vector2ui &extent, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage, VkFilter filter, VkSamplerAddressMode addressMode,
+	VkSampleCountFlagBits samples, bool anisotropic, bool mipmap) :
 	m_filter(filter),
 	m_addressMode(addressMode),
 	m_anisotropic(anisotropic),
 	m_mipmap(mipmap),
 	m_samples(samples),
-	m_layout(imageLayout),
+	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
 	m_components(4),
 	m_extent(extent),
-	m_loadPixels(std::move(pixels)),
+	m_format(format) {
+	Image2d::Load();
+}
+
+Image2d::Image2d(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage, VkFilter filter, VkSamplerAddressMode addressMode,
+	VkSampleCountFlagBits samples, bool anisotropic, bool mipmap) :
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_anisotropic(anisotropic),
+	m_mipmap(mipmap),
+	m_samples(samples),
+	m_layout(layout),
+	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_components(bitmap->GetBytesPerPixel()),
+	m_extent(bitmap->GetSize()),
+	m_loadBitmap(std::move(bitmap)),
 	m_format(format) {
 	Image2d::Load();
 }
@@ -154,17 +169,15 @@ Node &operator<<(Node &node, const Image2d &image) {
 }
 
 void Image2d::Load() {
-	if (!m_filename.empty() && !m_loadPixels) {
-#if defined(ACID_DEBUG)
-		auto debugStart = Time::Now();
-#endif
-		m_loadPixels = Image::LoadPixels(m_filename, m_extent, m_components, m_format);
-#if defined(ACID_DEBUG)
-		Log::Out("Image 2D ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
-#endif
+	if (!m_filename.empty() && !m_loadBitmap) {
+		m_loadBitmap = Bitmap::Create(m_filename.extension().string());
+		m_loadBitmap->Load(m_filename);
+		m_components = m_loadBitmap->GetBytesPerPixel();
+		m_extent = m_loadBitmap->GetSize();
 	}
-
+		
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
+		m_loadBitmap = nullptr;
 		return;
 	}
 
@@ -175,19 +188,19 @@ void Image2d::Load() {
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
-	if (m_loadPixels || m_mipmap) {
+	if (m_loadBitmap || m_mipmap) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
-	if (m_loadPixels) {
+	if (m_loadBitmap) {
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
 		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		void *data;
 		bufferStaging.MapMemory(&data);
-		std::memcpy(data, m_loadPixels.get(), bufferStaging.GetSize());
+		std::memcpy(data, m_loadBitmap->GetData().data(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 1, 0);
@@ -196,7 +209,7 @@ void Image2d::Load() {
 	if (m_mipmap) {
 		//m_image.CreateMipmaps();
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 1);
-	} else if (m_loadPixels) {
+	} else if (m_loadBitmap) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	} else {
@@ -204,6 +217,6 @@ void Image2d::Load() {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
-	m_loadPixels = nullptr;
+	m_loadBitmap = nullptr;
 }
 }

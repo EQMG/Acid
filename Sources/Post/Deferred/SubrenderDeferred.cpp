@@ -106,7 +106,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 }
 
 std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
-	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), nullptr, VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer(true, VK_QUEUE_COMPUTE_BIT);

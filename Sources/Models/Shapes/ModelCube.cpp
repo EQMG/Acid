@@ -38,7 +38,7 @@ const Node &operator>>(const Node &node, ModelCube &model) {
 }
 
 Node &operator<<(Node &node, const ModelCube &model) {
-	node["type"].Set("ModelCube");
+	node["type"].Set("cube");
 	node["extents"].Set(model.m_extents);
 	return node;
 }

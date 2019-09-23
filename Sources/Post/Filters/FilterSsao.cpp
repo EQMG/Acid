@@ -59,7 +59,7 @@ std::vector<Shader::Define> FilterSsao::GetDefines() const {
 }
 
 std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size) {
-	std::vector<Vector3f> ssaoNoise(size * size);
+	/*std::vector<Vector3f> ssaoNoise(size * size);
 
 	for (uint32_t i = 0; i < size * size; i++) {
 		Vector3f noise(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), 0.0f); // Vector3(float(i) / float(size * size), 0.0f, 0.0f);
@@ -67,8 +67,8 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size) {
 		ssaoNoise[i] = noise;
 	}
 
-	auto noiseImage = std::make_shared<Image2d>(Vector2ui(size), std::unique_ptr<uint8_t[]>(reinterpret_cast<uint8_t *>(ssaoNoise.data())), VK_FORMAT_R32G32B32_SFLOAT,
-		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);
+	auto noiseImage = std::make_shared<Image2d>(std::make_unique<Bitmap>(ssaoNoise, Vector2ui(size)), VK_FORMAT_R32G32B32_SFLOAT,
+		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);*/
 
 #if defined(ACID_DEBUG)
 	// Saves the noise Image.
@@ -78,6 +78,7 @@ std::shared_ptr<Image2d> FilterSsao::ComputeNoise(uint32_t size) {
 	Image::WritePixels(filename, pixels.get(), extent);*/
 #endif
 
-	return noiseImage;
+	//return noiseImage;
+	return nullptr;
 }
 }

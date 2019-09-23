@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Bitmaps/Bitmap.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
@@ -44,7 +45,6 @@ public:
 	/**
 	 * Creates a new 2D image.
 	 * @param extent The images extent in pixels.
-	 * @param pixels The initial pixels to use in the Image. {@link Image2d#GetPixels} to get a copy of the pixels, and {@link Image2d#SetPixels} to set the pixels.
 	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param layout The layout that the image subresources accessible from.
 	 * @param usage The intended usage of the image.
@@ -54,7 +54,24 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	Image2d(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
+	Image2d(const Vector2ui &extent, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
+		VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
+
+	/**
+	 * Creates a new 2D image.
+	 * @param bitmap The bitmap to load from.
+	 * @param format The format and type of the texel blocks that will be contained in the image.
+	 * @param layout The layout that the image subresources accessible from.
+	 * @param usage The intended usage of the image.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
+	 * @param samples The number of samples per texel.
+	 * @param anisotropic If anisotropic filtering is enabled.
+	 * @param mipmap If mapmaps will be generated.
+	 */
+	Image2d(std::unique_ptr<Bitmap> &&bitmap, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
 		VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
@@ -115,7 +132,7 @@ private:
 
 	uint32_t m_components = 0;
 	Vector2ui m_extent;
-	std::unique_ptr<uint8_t[]> m_loadPixels;
+	std::unique_ptr<Bitmap> m_loadBitmap;
 	uint32_t m_mipLevels = 0;
 
 	VkImage m_image = VK_NULL_HANDLE;

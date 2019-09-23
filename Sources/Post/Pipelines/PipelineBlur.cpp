@@ -21,7 +21,7 @@ void PipelineBlur::Render(const CommandBuffer &commandBuffer) {
 
 		if (size != m_lastSize) {
 			auto newSize = m_outputScale * size;
-			m_output = std::make_unique<Image2d>(newSize, nullptr, VK_FORMAT_R8G8B8A8_UNORM);
+			m_output = std::make_unique<Image2d>(newSize, VK_FORMAT_R8G8B8A8_UNORM);
 
 			m_filterBlurVertical.SetAttachment("writeColour", m_output.get());
 			m_filterBlurHorizontal.SetAttachment("writeColour", m_output.get());

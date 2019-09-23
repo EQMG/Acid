@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Bitmaps/Bitmap.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"

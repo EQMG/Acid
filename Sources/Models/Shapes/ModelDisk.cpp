@@ -45,7 +45,7 @@ const Node &operator>>(const Node &node, ModelDisk &model) {
 }
 
 Node &operator<<(Node &node, const ModelDisk &model) {
-	node["type"].Set("ModelDisk");
+	node["type"].Set("disk");
 	node["innerRadius"].Set(model.m_innerRadius);
 	node["outerRadius"].Set(model.m_outerRadius);
 	node["slices"].Set(model.m_slices);
