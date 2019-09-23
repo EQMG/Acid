@@ -27,7 +27,7 @@ void ParticleSystem::Update() {
 
 	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed) {
+	if (auto elapsed = m_elapsedEmit.GetElapsed()) {
 		auto emitters = GetEntity()->GetComponents<Emitter>();
 
 		if (!emitters.empty()) {
@@ -94,7 +94,7 @@ void ParticleSystem::SetDirection(const Vector3f &direction, float deviation) {
 Particle ParticleSystem::EmitParticle(const Emitter &emitter) {
 	auto spawnPos = emitter.GeneratePosition();
 
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
+	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		spawnPos += transform->GetPosition();
 	}
 

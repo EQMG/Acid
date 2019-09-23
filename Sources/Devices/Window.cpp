@@ -192,17 +192,16 @@ void Window::SetIcons(const std::vector<std::filesystem::path> &filenames) {
 	std::vector<std::unique_ptr<Bitmap>> bitmaps;
 
 	for (const auto &filename : filenames) {
-		auto bitmap = Bitmap::Create(filename.extension().string());
-		bitmap->Load(filename);
+		auto bitmap = Bitmap::Load(filename);
 
-		if (bitmap->GetData().empty()) {
+		if (!bitmap) {
 			continue;
 		}
 
 		GLFWimage icon = {};
-		icon.width = bitmap->GetSize().m_x;
-		icon.height = bitmap->GetSize().m_y;
-		icon.pixels = bitmap->GetData().data();
+		icon.width = bitmap->m_size.m_x;
+		icon.height = bitmap->m_size.m_y;
+		icon.pixels = bitmap->m_data.data();
 		icons.emplace_back(icon);
 		bitmaps.emplace_back(std::move(bitmap));
 	}

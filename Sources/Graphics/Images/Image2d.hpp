@@ -82,12 +82,11 @@ public:
 	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 
 	/**
-	 * Copies the images pixels from memory.
-	 * @param extent The sampled images extent.
+	 * Copies the images pixels from memory to a bitmap.
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, uint32_t mipLevel = 0) const;
+	Bitmap GetBitmap(uint32_t mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.

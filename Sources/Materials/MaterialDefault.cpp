@@ -43,7 +43,7 @@ void MaterialDefault::Update() {
 }
 
 void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
+	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 	}
 

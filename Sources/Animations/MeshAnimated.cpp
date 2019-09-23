@@ -42,7 +42,7 @@ void MeshAnimated::Start() {
 	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	m_animator.DoAnimation(m_animation.get());
 
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	{
 		File fileModel(std::make_unique<Json>());
 		(*fileModel.GetNode())["vertices"].Set(m_model->GetVertices<VertexAnimated>());
@@ -59,7 +59,7 @@ void MeshAnimated::Start() {
 		*fileAnimation0.GetNode() << *m_animation;
 		fileAnimation0.Write("Animation/Animation0.json", Node::Format::Beautified);
 	}
-#endif
+#endif*/
 }
 
 void MeshAnimated::Update() {

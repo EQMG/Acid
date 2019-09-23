@@ -20,7 +20,7 @@ void MaterialTerrain::Update() {
 }
 
 void MaterialTerrain::PushUniforms(UniformHandler &uniformObject) {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform) {
+	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		uniformObject.Push("transform", transform->GetWorldMatrix());
 	}
 }

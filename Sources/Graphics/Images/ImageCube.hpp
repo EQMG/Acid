@@ -84,21 +84,19 @@ public:
 	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 
 	/**
-	 * Copies the images pixels from memory.
-	 * @param extent The sampled images extent.
+	 * Copies the images pixels from memory to a bitmap.
 	 * @param mipLevel The mipmap level index to sample.
 	 * @param arrayLayer The array layer to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const;
+	Bitmap GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const;
 
 	/**
-	 * Copies the images pixels from memory.
-	 * @param extent The sampled images extent (height will be scaled by the amount of layers).
+	 * Copies the images pixels from memory to a bitmap. The bitmap height will be scaled by the amount of layers.
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(Vector2ui &extent, uint32_t mipLevel = 0) const;
+	Bitmap GetBitmap(uint32_t mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
@@ -147,7 +145,7 @@ private:
 
 	uint32_t m_components = 0;
 	Vector2ui m_extent;
-	std::unique_ptr<uint8_t[]> m_loadPixels;
+	std::unique_ptr<Bitmap> m_loadBitmap;
 	uint32_t m_mipLevels = 0;
 
 	VkImage m_image = VK_NULL_HANDLE;

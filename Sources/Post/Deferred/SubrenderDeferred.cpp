@@ -57,7 +57,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 		DeferredLight deferredLight = {};
 		deferredLight.m_colour = light->GetColour();
 
-		if (auto transform = light->GetEntity()->GetComponent<Transform>(); transform) {
+		if (auto transform = light->GetEntity()->GetComponent<Transform>()) {
 			deferredLight.m_position = transform->GetPosition();
 		}
 
@@ -128,10 +128,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 #if defined(ACID_DEBUG)
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
-		auto path = "Deferred/Brdf.png";
-		Vector2ui extent;
-		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(path, pixels.get(), extent);
+		image->GetBitmap().Write("Deferred/Brdf.png");
 	}, brdfImage.get());
 #endif
 
@@ -143,7 +140,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 		return nullptr;
 	}
 
-	auto irradianceCubemap = std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+	auto irradianceCubemap = std::make_unique<ImageCube>(Vector2ui(size), VK_FORMAT_R32G32B32A32_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -166,10 +163,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 #if defined(ACID_DEBUG)
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
-		auto path = "Deferred/Irradiance.png";
-		Vector2ui extent;
-		auto pixels = image->GetPixels(extent);
-		Image::WritePixels(path, pixels.get(), extent);
+		image->GetBitmap().Write("Deferred/Irradiance.png");
 	}, irradianceCubemap.get());
 #endif
 
@@ -183,7 +177,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto prefilteredCubemap(std::make_unique<ImageCube>(Vector2ui(size), nullptr, VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
+	auto prefilteredCubemap(std::make_unique<ImageCube>(Vector2ui(size), VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
 		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true));
 
 	// Creates the pipeline.
@@ -236,10 +230,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {
-			auto path = "Deferred/Prefiltered_" + String::To(i) + ".png";
-			Vector2ui extent;
-			auto pixels = image->GetPixels(extent, i);
-			Image::WritePixels(path, pixels.get(), extent);
+			image->GetBitmap(i).Write("Deferred/Prefiltered_" + String::To(i) + ".png");
 		}, prefilteredCubemap.get(), i);
 	}
 #endif*/

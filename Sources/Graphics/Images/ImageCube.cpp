@@ -66,8 +66,8 @@ ImageCube::ImageCube(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageL
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_components(bitmap->GetBytesPerPixel()),
-	m_extent(bitmap->GetSize()),
+	m_components(bitmap->m_bytesPerPixel),
+	m_extent(bitmap->m_size),
 	m_loadBitmap(std::move(bitmap)),
 	m_format(format) {
 	ImageCube::Load();
@@ -109,14 +109,15 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding,
 	return descriptorSetLayoutBinding;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel, uint32_t arrayLayer) const {
+Bitmap ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	extent = m_extent >> mipLevel;
+	Bitmap bitmap;
+	bitmap.m_size = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {extent.m_x, extent.m_y, 1}, m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { bitmap.m_size.m_x, bitmap.m_size.m_y, 1}, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -126,38 +127,34 @@ std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipL
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto result = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	bitmap.m_data.resize(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(result.get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap.m_data.data(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
 	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
-	return result;
+	return bitmap;
 }
 
-std::unique_ptr<uint8_t[]> ImageCube::GetPixels(Vector2ui &extent, uint32_t mipLevel) const {
-	std::unique_ptr<uint8_t[]> pixels;
-	uint8_t *offset = nullptr;
+Bitmap ImageCube::GetBitmap(uint32_t mipLevel) const {
+	Bitmap bitmap;
 
 	for (uint32_t i = 0; i < 6; i++) {
-		auto resultSide = GetPixels(extent, mipLevel, i);
-		int32_t sizeSide = extent.m_x * extent.m_y * m_components;
-
-		if (!pixels) {
-			pixels = std::make_unique<uint8_t[]>(sizeSide * 6);
-			offset = pixels.get();
+		auto resultSide = GetBitmap(mipLevel, i);
+		if (i == 0) {
+			bitmap.m_size = resultSide.m_size;
+			bitmap.m_bytesPerPixel = resultSide.m_bytesPerPixel;
+			bitmap.m_data.reserve(bitmap.m_size.m_x * bitmap.m_size.m_y * resultSide.m_bytesPerPixel * 6);
 		}
-
-		std::memcpy(offset, resultSide.get(), sizeSide);
-		offset += sizeSide;
+		bitmap.m_data.insert(bitmap.m_data.end(), resultSide.m_data.begin(), resultSide.m_data.end());
 	}
 
-	extent.m_y *= 6;
-	return pixels;
+	bitmap.m_size.m_y *= 6;
+	return bitmap;
 }
 
 void ImageCube::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer) {
@@ -197,12 +194,11 @@ Node &operator<<(Node &node, const ImageCube &image) {
 void ImageCube::Load() {
 	if (!m_filename.empty() && !m_loadBitmap) {
 		m_loadBitmap = std::make_unique<Bitmap>(m_extent, m_components);
-		m_loadBitmap->GetData().reserve(m_extent.x * m_extent.y * m_components * 6);
+		m_loadBitmap->m_data.reserve(m_extent.m_x * m_extent.m_y * m_components * 6);
 		for (const auto &side : m_fileSides) {
 			auto filenameSide = m_filename / (side + m_fileSuffix);
-			auto resultSide = Bitmap::Create(filenameSide.extension().string());
-			resultSide->Load(filenameSide);
-			m_loadBitmap->GetData().insert(resultSide->GetData());
+			auto resultSide = Bitmap::Load(filenameSide);
+			m_loadBitmap->m_data.insert(m_loadBitmap->m_data.end(), resultSide->m_data.begin(), resultSide->m_data.end());
 		}
 	}
 

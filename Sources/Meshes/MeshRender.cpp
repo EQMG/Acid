@@ -26,7 +26,7 @@ void MeshRender::Update() {
 
 bool MeshRender::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
 	// Checks if the mesh is in view.
-	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>(); rigidbody) {
+	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum())) {
 			return false;
 		}

@@ -188,7 +188,7 @@ std::vector<Text::Line> Text::CreateStructure() const {
 				continue;
 			}
 
-			if (auto character = m_fontType->GetNode()->GetCharacter(ascii); character) {
+			if (auto character = m_fontType->GetNode()->GetCharacter(ascii)) {
 				currentWord.AddCharacter(*character, m_kerning);
 			}
 		}

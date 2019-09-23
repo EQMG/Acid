@@ -1,11 +1,49 @@
 #pragma once
 
 #include "StdAfx.hpp"
-#include "Helpers/Factory.hpp"
 #include "Maths/Vector2.hpp"
 
 namespace acid {
-class ACID_EXPORT Bitmap : public Factory<Bitmap> {
+template<typename Base>
+class BitmapFactory {
+public:
+	using TCreateReturn = std::unique_ptr<Base>;
+
+	using TCreateMethod = std::function<TCreateReturn()>;
+	using TRegistryMap = std::unordered_map<std::string, TCreateMethod>;
+
+	static TCreateReturn Create(const std::string &name) {
+		auto it = Registry().find(name);
+		return it == Registry().end() ? nullptr : it->second();
+	}
+
+	static TCreateReturn Create(const std::filesystem::path &filename) {
+		return Create(filename.extension().string());
+	}
+
+	static TCreateReturn Load(const std::filesystem::path &filename) {
+		auto it = Registry().find(filename.extension().string());
+		return it == Registry().end() ? nullptr : it->second();
+	}
+
+	static TRegistryMap &Registry() {
+		static TRegistryMap impl;
+		return impl;
+	}
+
+	template<typename T>
+	class Registrar : public Base {
+	protected:
+		static bool Register(const std::string &name) {
+			BitmapFactory::Registry()[name] = []() -> TCreateReturn {
+				return std::make_unique<T>();
+			};
+			return true;
+		}
+	};
+};
+
+class ACID_EXPORT Bitmap : public BitmapFactory<Bitmap> {
 public:
 	Bitmap() = default;
 	Bitmap(const Vector2ui &size, uint32_t bytesPerPixel = 4) :
@@ -23,12 +61,8 @@ public:
 	virtual void Load(const std::filesystem::path &filename) {}
 	virtual void Write(const std::filesystem::path &filename) const {}
 
-	const std::vector<uint8_t> &GetData() const { return m_data; }
-	std::vector<uint8_t> &GetData() { return m_data; }
-	const Vector2ui &GetSize() const { return m_size; }
-	uint32_t GetBytesPerPixel() const { return m_bytesPerPixel; }
-
-protected:
+	constexpr explicit operator bool() const noexcept { return !m_data.empty(); }
+	
 	std::vector<uint8_t> m_data;
 	Vector2ui m_size;
 	uint32_t m_bytesPerPixel = 0;

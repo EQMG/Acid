@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include "Bitmaps/Bitmap.hpp"
 #include "Maths/Vector2.hpp"
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
@@ -32,13 +33,12 @@ public:
 	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
-	 * Copies the images pixels from memory.
-	 * @param extent The sampled images extent.
+	 * Copies the images pixels from memory to a bitmap.
 	 * @param mipLevel The mipmap level index to sample.
 	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.
 	 */
-	std::unique_ptr<uint8_t[]> GetPixels(VkExtent3D &extent, uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
+	Bitmap GetBitmap(uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
@@ -63,7 +63,6 @@ public:
 	const VkSampler &GetSampler() const { return m_sampler; }
 	const VkImageView &GetView() const { return m_view; }
 
-	static void WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, int32_t components = 4);
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
 	/**

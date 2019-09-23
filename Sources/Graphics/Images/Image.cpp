@@ -55,12 +55,12 @@ WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, VkDescriptorType 
 	return {descriptorWrite, imageInfo};
 }
 
-std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, uint32_t mipLevel, uint32_t arrayLayer) const {
+Bitmap Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	extent.width = int32_t(m_extent.width >> mipLevel);
-	extent.height = int32_t(m_extent.height >> mipLevel);
-	extent.depth = 1;
+	Bitmap bitmap;
+	bitmap.m_size.m_x = int32_t(m_extent.width >> mipLevel);
+	bitmap.m_size.m_y = int32_t(m_extent.height >> mipLevel);
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
@@ -74,17 +74,17 @@ std::unique_ptr<uint8_t[]> Image::GetPixels(VkExtent3D &extent, uint32_t mipLeve
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	auto pixels = std::make_unique<uint8_t[]>(dstSubresourceLayout.size);
+	bitmap.m_data.resize(dstSubresourceLayout.size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(pixels.get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap.m_data.data(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
 	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
-	return pixels;
+	return bitmap;
 }
 
 void Image::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer) {
@@ -97,17 +97,6 @@ void Image::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseA
 	bufferStaging.UnmapMemory();
 
 	CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_extent, layerCount, baseArrayLayer);
-}
-
-void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, int32_t components) {
-	if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
-		std::filesystem::create_directories(parentPath);
-	}
-
-	std::ofstream os(filename, std::ios::binary | std::ios::out);
-	int32_t len;
-	std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(pixels, extent.m_x * components, extent.m_x, extent.m_y, components, &len));
-	os.write(reinterpret_cast<char *>(png.get()), len);
 }
 
 uint32_t Image::GetMipLevels(const VkExtent3D &extent) {

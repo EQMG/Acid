@@ -7,6 +7,7 @@
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
 #include "Scenes/Scene1.hpp"
+#include "Graphics/Pipelines/PipelineCompute.hpp"
 
 int main(int argc, char **argv) {
 	using namespace test;
@@ -76,6 +77,35 @@ MainApp::~MainApp() {
 	Scenes::Get()->SetScene(nullptr);
 }
 
+std::unique_ptr<Image2d> ComputeBRDF(uint32_t size) {
+	auto brdfImage = std::make_unique<Image2d>(Vector2ui(size), VK_FORMAT_R16G16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL);
+
+	// Creates the pipeline.
+	CommandBuffer commandBuffer(true, VK_QUEUE_COMPUTE_BIT);
+	PipelineCompute compute("Shaders/Brdf.comp");
+
+	// Bind the pipeline.
+	compute.BindPipeline(commandBuffer);
+
+	// Updates descriptors.
+	DescriptorsHandler descriptorSet(compute);
+	descriptorSet.Push("outColour", brdfImage.get());
+	descriptorSet.Update(compute);
+
+	// Runs the compute pipeline.
+	descriptorSet.BindDescriptor(commandBuffer, compute);
+	compute.CmdRender(commandBuffer, brdfImage->GetExtent());
+	commandBuffer.SubmitIdle();
+
+#if defined(ACID_DEBUG)
+	// Saves the BRDF Image.
+	auto bmp = brdfImage->GetBitmap();
+	bmp.Write("Deferred/Brdf.png");
+#endif
+
+	return brdfImage;
+}
+
 void MainApp::Start() {
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test GUI");
@@ -86,6 +116,7 @@ void MainApp::Start() {
 	//Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
 	Graphics::Get()->SetRenderer(std::make_unique<MainRenderer>());
 	Scenes::Get()->SetScene(std::make_unique<Scene1>());
+	ComputeBRDF(512);
 }
 
 void MainApp::Update() {
