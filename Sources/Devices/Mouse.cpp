@@ -1,8 +1,8 @@
 #include "Mouse.hpp"
 
 #include <GLFW/glfw3.h>
+#include "Bitmaps/Bitmap.hpp"
 #include "Maths/Maths.hpp"
-#include "Graphics/Images/Image.hpp"
 
 namespace acid {
 void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) {
@@ -58,24 +58,21 @@ void Mouse::Update() {
 	m_lastScroll = m_scroll;
 }
 
-void Mouse::SetCursor(const std::string &filename, CursorHotspot hotspot) {
+void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotspot) {
 	if (m_currentCursor && m_currentCursor->first == filename && m_currentCursor->second == hotspot) {
 		return;
 	}
 
-	Vector2ui extent;
-	uint32_t components;
-	VkFormat format;
-	auto data = Image::LoadPixels(filename, extent, components, format);
+	auto bitmap = Bitmap::Create(filename.extension().string());
 
-	if (!data) {
+	if (!bitmap) {
 		return;
 	}
 
 	GLFWimage image[1];
-	image[0].width = extent.m_x;
-	image[0].height = extent.m_y;
-	image[0].pixels = data.get();
+	image[0].width = bitmap->GetSize().m_x;
+	image[0].height = bitmap->GetSize().m_y;
+	image[0].pixels = bitmap->GetData().data();
 
 	glfwDestroyCursor(m_cursor);
 

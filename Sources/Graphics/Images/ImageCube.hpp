@@ -47,7 +47,6 @@ public:
 	/**
 	 * Creates a new cubemap image.
 	 * @param extent The images extent in pixels.
-	 * @param pixels The initial pixels to use in the Image. {@link ImageCube#GetPixels} to get a copy of the pixels, and {@link ImageCube#SetPixels} to set the pixels.
 	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param layout The layout that the image subresources accessible from.
 	 * @param usage The intended usage of the image.
@@ -57,8 +56,25 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	ImageCube(const Vector2ui &extent, std::unique_ptr<uint8_t[]> pixels = nullptr, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM,
-		VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+	ImageCube(const Vector2ui &extent, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM, VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, 
+		VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
+		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
+
+	/**
+	 * Creates a new cubemap image.
+	 * @param bitmap The bitmap to load from.
+	 * @param format The format and type of the texel blocks that will be contained in the image.
+	 * @param layout The layout that the image subresources accessible from.
+	 * @param usage The intended usage of the image.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
+	 * @param samples The number of samples per texel.
+	 * @param anisotropic If anisotropic filtering is enabled.
+	 * @param mipmap If mapmaps will be generated.
+	 */
+	ImageCube(std::unique_ptr<Bitmap> &&bitmap, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM, VkImageLayout layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, 
+		VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
@@ -91,9 +107,6 @@ public:
 	 * @param baseArrayLayer The first layer to copy into.
 	 */
 	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
-
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::filesystem::path &filename, const std::string &fileSuffix, const std::vector<std::string> &fileSides, Vector2ui &extent,
-		uint32_t &components, VkFormat &format);
 
 	friend const Node &operator>>(const Node &node, ImageCube &image);
 	friend Node &operator<<(Node &node, const ImageCube &image);

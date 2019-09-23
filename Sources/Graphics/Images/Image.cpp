@@ -3,10 +3,6 @@
 #include "Graphics/Graphics.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Files/Files.hpp"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
 
 namespace acid {
 static const float ANISOTROPY = 16.0f;
@@ -101,28 +97,6 @@ void Image::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseA
 	bufferStaging.UnmapMemory();
 
 	CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_extent, layerCount, baseArrayLayer);
-}
-
-std::unique_ptr<uint8_t[]> Image::LoadPixels(const std::filesystem::path &filename, Vector2ui &extent, uint32_t &components, VkFormat &format) {
-	auto fileLoaded = Files::Read(filename);
-
-	if (!fileLoaded) {
-		Log::Error("Image could not be loaded: ", filename, '\n');
-		return nullptr;
-	}
-
-	std::unique_ptr<uint8_t[]> pixels(stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()),
-		reinterpret_cast<int32_t *>(&extent.m_x), reinterpret_cast<int32_t *>(&extent.m_y), reinterpret_cast<int32_t *>(&components), STBI_rgb_alpha));
-
-	// STBI_rgb_alpha converts the loaded image to a 32 bit image, if another loader is used components and format may differ.
-	components = 4;
-	format = VK_FORMAT_R8G8B8A8_UNORM;
-
-	if (!pixels) {
-		Log::Error("Unable to load Image: ", filename, '\n');
-	}
-
-	return pixels;
 }
 
 void Image::WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, int32_t components) {

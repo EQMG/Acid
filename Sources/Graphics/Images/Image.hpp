@@ -63,7 +63,6 @@ public:
 	const VkSampler &GetSampler() const { return m_sampler; }
 	const VkImageView &GetView() const { return m_view; }
 
-	static std::unique_ptr<uint8_t[]> LoadPixels(const std::filesystem::path &filename, Vector2ui &extent, uint32_t &components, VkFormat &format);
 	static void WritePixels(const std::filesystem::path &filename, const uint8_t *pixels, const Vector2ui &extent, int32_t components = 4);
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 

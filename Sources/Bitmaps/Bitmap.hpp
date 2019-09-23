@@ -8,6 +8,10 @@ namespace acid {
 class ACID_EXPORT Bitmap : public Factory<Bitmap> {
 public:
 	Bitmap() = default;
+	Bitmap(const Vector2ui &size, uint32_t bytesPerPixel = 4) :
+		m_size(size),
+		m_bytesPerPixel(bytesPerPixel) {
+	}
 	Bitmap(std::vector<uint8_t> data, const Vector2ui &size, uint32_t bytesPerPixel = 4) :
 		m_data(std::move(data)),
 		m_size(size),

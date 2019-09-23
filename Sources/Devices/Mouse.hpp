@@ -64,7 +64,7 @@ public:
 	 * @param filename The new custom mouse file.
 	 * @param hotspot The hotspot to display the cursor image at.
 	 */
-	void SetCursor(const std::string &filename, CursorHotspot hotspot);
+	void SetCursor(const std::filesystem::path &filename, CursorHotspot hotspot);
 
 	/**
 	 * Sets the cursor to a system style.
@@ -177,7 +177,7 @@ private:
 	friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
 	friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 
-	std::optional<std::pair<std::string, CursorHotspot>> m_currentCursor;
+	std::optional<std::pair<std::filesystem::path, CursorHotspot>> m_currentCursor;
 	std::optional<CursorStandard> m_currentStandard;
 	GLFWcursor *m_cursor = nullptr;
 
