@@ -2,9 +2,10 @@
 
 #include <BulletCollision/CollisionShapes/btConeShape.h>
 #include "Scenes/Entity.hpp"
+#include "Physics/CollisionObject.hpp"
 
 namespace acid {
-ColliderCone::Registrar<ColliderCone> ColliderCone::registered("colliderCone");
+bool ColliderCone::registered = Register("colliderCone");
 
 ColliderCone::ColliderCone(float radius, float height, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cone.obj"), 3.0f, Colour::Green)),
@@ -21,11 +22,17 @@ void ColliderCone::Start() {
 }
 
 void ColliderCone::Update() {
-	Collider::Update();
+	//Collider::Update();
 }
 
 btCollisionShape *ColliderCone::GetCollisionShape() const {
 	return m_shape.get();
+}
+
+void ColliderCone::SetLocalTransform(const Transform &localTransform) {
+	m_localTransform = localTransform;
+	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
+		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCone::SetRadius(float radius) {

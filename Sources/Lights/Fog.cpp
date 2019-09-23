@@ -1,7 +1,7 @@
 #include "Fog.hpp"
 
 namespace acid {
-Fog::Registrar<Fog> Fog::registered("fog");
+bool Fog::registered = Register("fog");
 
 Fog::Fog(const Colour &colour, float density, float gradient, float lowerLimit, float upperLimit) :
 	m_colour(colour),

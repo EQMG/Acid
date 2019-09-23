@@ -5,7 +5,7 @@
 class btConeShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCone : public Collider {
+class ACID_EXPORT ColliderCone : public Component::Registrar<ColliderCone>, public Collider {
 public:
 	explicit ColliderCone(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 
@@ -15,6 +15,7 @@ public:
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
+	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);
@@ -26,7 +27,7 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCone &collider);
 
 private:
-	static Registrar<ColliderCone> registered;
+	static bool registered;
 
 	std::unique_ptr<btConeShape> m_shape;
 	float m_radius;

@@ -3,7 +3,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-EmitterCircle::Registrar<EmitterCircle> EmitterCircle::registered("emitterCircle");
+bool EmitterCircle::registered = Register("emitterCircle");
 
 EmitterCircle::EmitterCircle(float radius, const Vector3f &heading) :
 	m_radius(radius),

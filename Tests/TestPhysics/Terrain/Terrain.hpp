@@ -9,7 +9,7 @@
 using namespace acid;
 
 namespace test {
-class Terrain : public Component {
+class Terrain : public Component::Registrar<Terrain> {
 public:
 	explicit Terrain(float sideLength = 200.0f, float squareSize = 2.0f);
 
@@ -20,7 +20,7 @@ public:
 	friend Node &operator<<(Node &node, const Terrain &terrain);
 
 private:
-	static Registrar<Terrain> registered;
+	static bool registered;
 
 	static uint32_t CalculateVertexCount(float sideLength, float squareSize);
 	static float CalculateTextureScale(float sideLength);

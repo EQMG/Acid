@@ -19,13 +19,13 @@ Collider::~Collider() {
 	Gizmos::Get()->RemoveGizmo(m_gizmo);
 }
 
-void Collider::Update() {
+/*void Collider::Update() {
 	if (auto transform = GetEntity()->GetComponent<Transform>(); transform && m_gizmo) {
 		m_gizmo->SetTransform(*transform * m_localTransform);
 	}
-}
+}*/
 
-void Collider::SetLocalTransform(const Transform &localTransform) {
+/*void Collider::SetLocalTransform(const Transform &localTransform) {
 	m_localTransform = localTransform;
 
 	auto collisionObject = GetEntity()->GetComponent<CollisionObject>();
@@ -33,7 +33,7 @@ void Collider::SetLocalTransform(const Transform &localTransform) {
 	if (collisionObject) {
 		collisionObject->SetChildTransform(this, m_localTransform);
 	}
-}
+}*/
 
 btVector3 Collider::Convert(const Vector3f &vector) {
 	return {vector.m_x, vector.m_y, vector.m_z};

@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Component that represents a 3d fog.
  */
-class ACID_EXPORT Fog : public Component {
+class ACID_EXPORT Fog : public Component::Registrar<Fog> {
 public:
 	/**
 	 * Creates a new hazy fog.
@@ -42,7 +42,7 @@ public:
 	friend Node &operator<<(Node &node, const Fog &fog);
 
 private:
-	static Registrar<Fog> registered;
+	static bool registered;
 
 	Colour m_colour;
 	float m_density;

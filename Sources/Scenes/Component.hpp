@@ -80,8 +80,8 @@ public:
 
 	template<typename T>
 	class Registrar : public Base {
-	public:
-		Registrar(const std::string &name) {
+	protected:
+		static bool Register(const std::string &name) {
 			ComponentFactory::Registry()[name] = []() -> TCreateReturn {
 				return std::make_unique<T>();
 			};
@@ -91,19 +91,13 @@ public:
 			ComponentFactory::RegistryEncodeDecode()[name] = std::make_pair<TEncodeMethod, TDecodeMethod>(
 				[](Node &node, const Base *component) {
 					node << *dynamic_cast<const T *>(component);
-				}, 
+				},
 				[](const Node &node, Base *component) {
 					node >> *dynamic_cast<T *>(component);
 				}
 			);
+			return true;
 		}
-		
-		/*void Decode(Node &node, const T &component) override {
-			node << component;
-		}
-		void Encode(const Node &node, T &component) override {
-			node >> component;
-		}*/
 	};
 };
 

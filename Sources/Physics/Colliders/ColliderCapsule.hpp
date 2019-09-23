@@ -5,7 +5,7 @@
 class btCapsuleShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCapsule : public Collider {
+class ACID_EXPORT ColliderCapsule : public Component::Registrar<ColliderCapsule>, public Collider {
 public:
 	explicit ColliderCapsule(float radius = 0.5f, float height = 1.0f, const Transform &localTransform = {});
 
@@ -15,6 +15,7 @@ public:
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
+	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);
@@ -26,7 +27,7 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCapsule &collider);
 
 private:
-	static Registrar<ColliderCapsule> registered;
+	static bool registered;
 
 	std::unique_ptr<btCapsuleShape> m_shape;
 	float m_radius;

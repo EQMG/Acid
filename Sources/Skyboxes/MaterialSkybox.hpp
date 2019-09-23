@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a skybox material shader.
  */
-class ACID_EXPORT MaterialSkybox : public Material {
+class ACID_EXPORT MaterialSkybox : public Component::Registrar<MaterialSkybox>, public Material {
 public:
 	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);
 
@@ -38,7 +38,7 @@ public:
 	friend Node &operator<<(Node &node, const MaterialSkybox &material);
 
 private:
-	static Registrar<MaterialSkybox> registered;
+	static bool registered;
 
 	std::shared_ptr<ImageCube> m_image;
 	Colour m_baseColour;

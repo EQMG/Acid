@@ -11,7 +11,7 @@
 #include "Colliders/Collider.hpp"
 
 namespace acid {
-Rigidbody::Registrar<Rigidbody> Rigidbody::registered("rigidbody");
+bool Rigidbody::registered = Register("rigidbody");
 
 Rigidbody::Rigidbody(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	CollisionObject(mass, friction, linearFactor, angularFactor) {
@@ -36,7 +36,8 @@ void Rigidbody::Start() {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
-	CreateShape();
+	auto colliders = GetEntity()->GetComponents<Collider>();
+	CreateShape(colliders);
 	assert((!m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
@@ -62,7 +63,7 @@ void Rigidbody::Start() {
 	m_rigidBody->setGravity(Collider::Convert(m_gravity));
 	m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
 	m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
-	m_rigidBody->setUserPointer(this);
+	m_rigidBody->setUserPointer(dynamic_cast<CollisionObject *>(this));
 	m_body = m_rigidBody.get();
 	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
 	m_rigidBody->activate(true);

@@ -2,9 +2,10 @@
 
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include "Scenes/Entity.hpp"
+#include "Physics/CollisionObject.hpp"
 
 namespace acid {
-ColliderCube::Registrar<ColliderCube> ColliderCube::registered("colliderCube");
+bool ColliderCube::registered = Register("colliderCube");
 
 ColliderCube::ColliderCube(const Vector3f &extents, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cube.obj"), 3.0f, Colour::Red)),
@@ -20,11 +21,17 @@ void ColliderCube::Start() {
 }
 
 void ColliderCube::Update() {
-	Collider::Update();
+	//Collider::Update();
 }
 
 btCollisionShape *ColliderCube::GetCollisionShape() const {
 	return m_shape.get();
+}
+
+void ColliderCube::SetLocalTransform(const Transform &localTransform) {
+	m_localTransform = localTransform;
+	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
+		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCube::SetExtents(const Vector3f &extents) {

@@ -13,7 +13,7 @@ namespace acid {
 /**
  * @brief Class that represents a physics shape.
  */
-class ACID_EXPORT Collider : public Component {
+class ACID_EXPORT Collider {
 public:
 	/**
 	 * Creates a new collider.
@@ -24,7 +24,7 @@ public:
 
 	virtual ~Collider();
 
-	void Update() override;
+	//void Update() override;
 
 	/**
 	 * Gets the collision shape defined in this collider.
@@ -33,7 +33,7 @@ public:
 	virtual btCollisionShape *GetCollisionShape() const = 0;
 
 	const Transform &GetLocalTransform() const { return m_localTransform; }
-	void SetLocalTransform(const Transform &localTransform);
+	virtual void SetLocalTransform(const Transform &localTransform) = 0;
 
 	static btVector3 Convert(const Vector3f &vector);
 	static Vector3f Convert(const btVector3 &vector);

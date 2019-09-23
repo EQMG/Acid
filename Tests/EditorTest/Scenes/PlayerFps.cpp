@@ -9,7 +9,7 @@
 #include <Inputs/ButtonJoystick.hpp>
 
 namespace test {
-PlayerFps::Registrar<PlayerFps> PlayerFps::registered("playerFps");
+bool PlayerFps::registered = Register("playerFps");
 
 const float WALK_SPEED = 3.1f;
 const float RUN_SPEED = 5.7f;

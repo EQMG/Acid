@@ -3,7 +3,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-EmitterPoint::Registrar<EmitterPoint> EmitterPoint::registered("emitterPoint");
+bool EmitterPoint::registered = Register("emitterPoint");
 
 EmitterPoint::EmitterPoint() {
 }

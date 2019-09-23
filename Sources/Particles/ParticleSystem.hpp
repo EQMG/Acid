@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem : public Component {
+class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem> {
 public:
 	/**
 	 * Creates a new particle system.
@@ -66,7 +66,7 @@ private:
 	float GenerateRotation() const;
 	Vector3f GenerateRandomUnitVector() const;
 
-	static Registrar<ParticleSystem> registered;
+	static bool registered;
 
 	std::vector<std::shared_ptr<ParticleType>> m_types;
 

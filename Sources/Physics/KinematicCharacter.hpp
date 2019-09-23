@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief Represents a kinematic character controller.
  */
-class ACID_EXPORT KinematicCharacter : public CollisionObject {
+class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject{
 public:
 	/**
 	 * Creates a new kinematic character controller.
@@ -63,7 +63,7 @@ protected:
 	void RecalculateMass() override;
 
 private:
-	static Registrar<KinematicCharacter> registered;
+	static bool registered;
 
 	Vector3f m_up;
 	float m_stepHeight;

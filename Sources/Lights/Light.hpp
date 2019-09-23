@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Component that represents a point light.
  */
-class ACID_EXPORT Light : public Component {
+class ACID_EXPORT Light : public Component::Registrar<Light> {
 public:
 	/**
 	 * Creates a new point light.
@@ -30,7 +30,7 @@ public:
 	friend Node &operator<<(Node &node, const Light &light);
 
 private:
-	static Registrar<Light> registered;
+	static bool registered;
 
 	Colour m_colour;
 	Vector3f m_position;

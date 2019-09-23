@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a playable sound.
  */
-class ACID_EXPORT Sound : public Component {
+class ACID_EXPORT Sound : public Component::Registrar<Sound> {
 public:
 	Sound() = default;
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,
@@ -44,7 +44,7 @@ public:
 	friend Node &operator<<(Node &node, const Sound &sound);
 
 private:
-	static Registrar<Sound> registered;
+	static bool registered;
 	
 	std::shared_ptr<SoundBuffer> m_buffer;
 	uint32_t m_source = 0;

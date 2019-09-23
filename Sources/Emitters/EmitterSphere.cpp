@@ -5,7 +5,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-EmitterSphere::Registrar<EmitterSphere> EmitterSphere::registered("emitterSphere");
+bool EmitterSphere::registered = Register("emitterSphere");
 
 EmitterSphere::EmitterSphere(float radius) :
 	m_radius(radius) {

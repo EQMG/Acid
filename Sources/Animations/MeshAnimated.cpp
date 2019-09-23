@@ -9,7 +9,7 @@
 #include "Skin/SkinLoader.hpp"
 
 namespace acid {
-MeshAnimated::Registrar<MeshAnimated> MeshAnimated::registered("meshAnimated");
+bool MeshAnimated::registered = Register("meshAnimated");
 
 MeshAnimated::MeshAnimated(std::filesystem::path filename) :
 	m_filename(std::move(filename)) {

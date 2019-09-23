@@ -7,12 +7,9 @@
 using namespace acid;
 
 namespace test {
-class CelestialBody : public Component {
+class CelestialBody : public Component::Registrar<CelestialBody> {
 public:
-	enum class Type {
-		Sun,
-		Moon
-	};
+	enum class Type { Sun, Moon };
 
 	explicit CelestialBody(Type type = Type::Sun);
 
@@ -26,7 +23,7 @@ public:
 	void SetType(const Type &type) { m_type = type; }
 
 private:
-	static Registrar<CelestialBody> registered;
+	static bool registered;
 
 	Type m_type;
 };

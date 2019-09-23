@@ -45,7 +45,7 @@ public:
 			auto casted = dynamic_cast<T *>(component.get());
 
 			if (casted) {
-				if (allowDisabled && !casted->IsEnabled()) {
+				if (allowDisabled && !component->IsEnabled()) {
 					alternative = casted;
 					continue;
 				}
@@ -71,7 +71,7 @@ public:
 			auto casted = dynamic_cast<T *>(component.get());
 
 			if (casted) {
-				if (allowDisabled && !casted->IsEnabled()) {
+				if (allowDisabled && !component->IsEnabled()) {
 					components.emplace_back(casted);
 					continue;
 				}

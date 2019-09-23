@@ -81,9 +81,7 @@ void CollisionObject::SetFrictionSpinning(float frictionSpinning) {
 	m_body->setSpinningFriction(m_frictionSpinning);
 }
 
-void CollisionObject::CreateShape(bool forceSingle) {
-	auto colliders = GetEntity()->GetComponents<Collider>();
-
+void CollisionObject::CreateShape(const std::vector<Collider *> &colliders, bool forceSingle) {
 	if (forceSingle) // && colliders.size() == 1
 	{
 		m_shape.reset(colliders[0]->GetCollisionShape());

@@ -6,7 +6,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-MaterialDefault::Registrar<MaterialDefault> MaterialDefault::registered("materialDefault");
+bool MaterialDefault::registered = Register("materialDefault");
 
 MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, float metallic, float roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, bool castsShadows, bool ignoreLighting, bool ignoreFog) :

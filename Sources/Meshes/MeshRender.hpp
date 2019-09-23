@@ -5,7 +5,7 @@
 #include "Mesh.hpp"
 
 namespace acid {
-class ACID_EXPORT MeshRender : public Component {
+class ACID_EXPORT MeshRender : public Component::Registrar<MeshRender> {
 public:
 	void Start() override;
 	void Update() override;
@@ -18,7 +18,7 @@ public:
 	friend Node &operator<<(Node &node, const MeshRender &meshRender);
 
 private:
-	static Registrar<MeshRender> registered;
+	static bool registered;
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;

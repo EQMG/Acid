@@ -3,7 +3,7 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterSphere : public Emitter {
+class ACID_EXPORT EmitterSphere : public Component::Registrar<EmitterSphere>, public Emitter {
 public:
 	explicit EmitterSphere(float radius = 1.0f);
 
@@ -18,7 +18,7 @@ public:
 	friend Node &operator<<(Node &node, const EmitterSphere &emitter);
 
 private:
-	static Registrar<EmitterSphere> registered;
+	static bool registered;
 
 	float m_radius;
 };

@@ -9,7 +9,7 @@
 using namespace acid;
 
 namespace test {
-class PlayerFps : public Component {
+class PlayerFps : public Component::Registrar<PlayerFps> {
 public:
 	PlayerFps();
 
@@ -20,7 +20,7 @@ public:
 	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:
-	static Registrar<PlayerFps> registered;
+	static bool registered;
 
 	bool m_noclipEnabled = false;
 

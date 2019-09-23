@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT Rigidbody : public CollisionObject {
+class ACID_EXPORT Rigidbody : public Component::Registrar<Rigidbody>, public CollisionObject {
 public:
 	/**
 	 * Creates a new rigidbody.
@@ -44,7 +44,7 @@ protected:
 	void RecalculateMass() override;
 
 private:
-	static Registrar<Rigidbody> registered;
+	static bool registered;
 
 	std::unique_ptr<btRigidBody> m_rigidBody;
 };

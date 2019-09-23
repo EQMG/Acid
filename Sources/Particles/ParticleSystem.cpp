@@ -6,7 +6,7 @@
 #include "Particles.hpp"
 
 namespace acid {
-ParticleSystem::Registrar<ParticleSystem> ParticleSystem::registered("particleSystem");
+bool ParticleSystem::registered = Register("particleSystem");
 
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, float pps, float averageSpeed, float gravityEffect) :
 	m_types(std::move(types)),

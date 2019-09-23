@@ -6,7 +6,7 @@
 #include <Maths/Visual/DriverConstant.hpp>
 
 namespace test {
-NameTag::Registrar<NameTag> NameTag::registered("heightDespawn");
+bool NameTag::registered = Register("heightDespawn");
 
 static const float TEXT_SIZE = 8.0f;
 static const float VIEW_DISTANCE = 16.0f;

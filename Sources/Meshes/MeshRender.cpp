@@ -8,7 +8,7 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-MeshRender::Registrar<MeshRender> MeshRender::registered("meshRender");
+bool MeshRender::registered = Register("meshRender");
 
 void MeshRender::Start() {
 }

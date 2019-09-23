@@ -5,7 +5,7 @@
 class btSphereShape;
 
 namespace acid {
-class ACID_EXPORT ColliderSphere : public Collider {
+class ACID_EXPORT ColliderSphere : public Component::Registrar<ColliderSphere>, public Collider {
 public:
 	explicit ColliderSphere(float radius = 0.5f, const Transform &localTransform = {});
 
@@ -15,6 +15,7 @@ public:
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
+	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);
@@ -23,7 +24,7 @@ public:
 	friend Node &operator<<(Node &node, const ColliderSphere &collider);
 
 private:
-	static Registrar<ColliderSphere> registered;
+	static bool registered;
 
 	std::unique_ptr<btSphereShape> m_shape;
 	float m_radius;

@@ -4,7 +4,7 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-MaterialSkybox::Registrar<MaterialSkybox> MaterialSkybox::registered("materialSkybox");
+bool MaterialSkybox::registered = Register("materialSkybox");
 
 MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &baseColour) :
 	m_image(std::move(image)),

@@ -2,9 +2,10 @@
 
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include "Scenes/Entity.hpp"
+#include "Physics/CollisionObject.hpp"
 
 namespace acid {
-ColliderHeightfield::Registrar<ColliderHeightfield> ColliderHeightfield::registered("colliderHeightfield");
+bool ColliderHeightfield::registered = Register("colliderHeightfield");
 
 ColliderHeightfield::ColliderHeightfield(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight,
 	float maxHeight, bool flipQuadEdges, const Transform &localTransform) :
@@ -23,6 +24,12 @@ void ColliderHeightfield::Update() {
 
 btCollisionShape *ColliderHeightfield::GetCollisionShape() const {
 	return m_shape.get();
+}
+
+void ColliderHeightfield::SetLocalTransform(const Transform &localTransform) {
+	m_localTransform = localTransform;
+	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
+		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderHeightfield::SetHeightfield(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight, float maxHeight,

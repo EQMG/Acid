@@ -5,7 +5,7 @@
 class btBoxShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCube : public Collider {
+class ACID_EXPORT ColliderCube : public Component::Registrar<ColliderCube>, public Collider {
 public:
 	explicit ColliderCube(const Vector3f &extents = Vector3f(1.0f), const Transform &localTransform = {});
 
@@ -15,6 +15,7 @@ public:
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
+	void SetLocalTransform(const Transform &localTransform) override;
 
 	const Vector3f &GetExtents() const { return m_extents; }
 	void SetExtents(const Vector3f &extents);
@@ -23,7 +24,7 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCube &collider);
 
 private:
-	static Registrar<ColliderCube> registered;
+	static bool registered;
 
 	std::unique_ptr<btBoxShape> m_shape;
 	Vector3f m_extents;

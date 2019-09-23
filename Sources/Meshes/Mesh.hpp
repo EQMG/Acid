@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Component that represents a model/mesh.
  */
-class ACID_EXPORT Mesh : public Component {
+class ACID_EXPORT Mesh : public Component::Registrar<Mesh> {
 public:
 	/**
 	 * Creates a new mesh component with a model.
@@ -28,7 +28,7 @@ public:
 	friend Node &operator<<(Node &node, const Mesh &mesh);
 
 private:
-	static Registrar<Mesh> registered;
+	static bool registered;
 
 	std::shared_ptr<Model> m_model;
 };

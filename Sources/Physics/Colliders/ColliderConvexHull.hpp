@@ -6,7 +6,7 @@
 class btConvexHullShape;
 
 namespace acid {
-class ACID_EXPORT ColliderConvexHull : public Collider {
+class ACID_EXPORT ColliderConvexHull : public Component::Registrar<ColliderConvexHull>, public Collider {
 public:
 	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = {});
 
@@ -16,6 +16,7 @@ public:
 	void Update() override;
 
 	btCollisionShape *GetCollisionShape() const override;
+	void SetLocalTransform(const Transform &localTransform) override;
 
 	uint32_t GetPointCount() const { return m_pointCount; }
 	void SetPointCount(const std::vector<float> &pointCloud);
@@ -24,7 +25,7 @@ public:
 	friend Node &operator<<(Node &node, const ColliderConvexHull &collider);
 
 private:
-	static Registrar<ColliderConvexHull> registered;
+	static bool registered;
 
 	std::unique_ptr<btConvexHullShape> m_shape;
 	std::shared_ptr<Model> m_model;

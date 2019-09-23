@@ -6,7 +6,7 @@
 using namespace acid;
 
 namespace test {
-class NameTag : public Component {
+class NameTag : public Component::Registrar<NameTag> {
 public:
 	explicit NameTag(const std::string &name = "", float heightOffset = 0.0f);
 
@@ -17,7 +17,7 @@ public:
 	friend Node &operator<<(Node &node, const NameTag &nameTag);
 
 private:
-	static Registrar<NameTag> registered;
+	static bool registered;
 
 	std::string m_name;
 	float m_heightOffset;

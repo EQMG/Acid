@@ -3,7 +3,7 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterCircle : public Emitter {
+class ACID_EXPORT EmitterCircle : public Component::Registrar<EmitterCircle>, public Emitter {
 public:
 	explicit EmitterCircle(float radius = 1.0f, const Vector3f &heading = Vector3f::Up);
 
@@ -21,7 +21,7 @@ public:
 	friend Node &operator<<(Node &node, const EmitterCircle &emitter);
 
 private:
-	static Registrar<EmitterCircle> registered;
+	static bool registered;
 
 	float m_radius;
 	Vector3f m_heading;

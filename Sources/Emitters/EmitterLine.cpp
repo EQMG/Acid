@@ -4,7 +4,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-EmitterLine::Registrar<EmitterLine> EmitterLine::registered("emitterLine");
+bool EmitterLine::registered = Register("emitterLine");
 
 EmitterLine::EmitterLine(float length, const Vector3f &axis) :
 	m_length(length),

@@ -7,7 +7,7 @@
 #include "Maths/Transform.hpp"
 
 namespace test {
-CelestialBody::Registrar<CelestialBody> CelestialBody::registered("celestialBody");
+bool CelestialBody::registered = Register("celestialBody");
 
 static const Colour SUN_COLOUR_SUNRISE("#ee9a90");
 static const Colour SUN_COLOUR_NIGHT("#0D0D1A");

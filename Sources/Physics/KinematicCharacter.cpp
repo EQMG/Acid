@@ -8,7 +8,7 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-KinematicCharacter::Registrar<KinematicCharacter> KinematicCharacter::registered("kinematicCharacter");
+bool KinematicCharacter::registered = Register("kinematicCharacter");
 
 KinematicCharacter::KinematicCharacter(float mass, float friction) :
 	CollisionObject(mass, friction),
@@ -39,7 +39,8 @@ void KinematicCharacter::Start() {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
 	}
 
-	CreateShape(true);
+	auto colliders = GetEntity()->GetComponents<Collider>();
+	CreateShape(colliders, true);
 	assert((m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
@@ -59,7 +60,7 @@ void KinematicCharacter::Start() {
 	m_ghostObject->setFriction(m_friction);
 	m_ghostObject->setRollingFriction(m_frictionRolling);
 	m_ghostObject->setSpinningFriction(m_frictionSpinning);
-	m_ghostObject->setUserPointer(this);
+	m_ghostObject->setUserPointer(dynamic_cast<CollisionObject *>(this));
 	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 	m_body = m_ghostObject.get();
 

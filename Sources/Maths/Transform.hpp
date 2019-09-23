@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Holds position, rotation, and scale components.
  */
-class ACID_EXPORT Transform : public Component {
+class ACID_EXPORT Transform : public Component::Registrar<Transform> {
 public:
 	/**
 	 * Creates a new transform.
@@ -65,7 +65,7 @@ private:
 	void AddChild(Transform *child);
 	void RemoveChild(Transform *child);
 
-	static Registrar<Transform> registered;
+	static bool registered;
 
 	Vector3f m_position;
 	Vector3f m_rotation;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Scenes/Component.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Physics/Frustum.hpp"
@@ -10,7 +9,7 @@ namespace acid {
 /**
  * @brief Component that represents a scene camera, this object should be overridden with new behaviour.
  */
-class ACID_EXPORT Camera : public Component {
+class ACID_EXPORT Camera {
 public:
 	Camera() :
 		m_nearPlane(0.1f),
@@ -20,6 +19,9 @@ public:
 	}
 
 	virtual ~Camera() = default;
+
+	virtual void Start() {}
+	virtual void Update() {}
 
 	/**
 	 * Gets the distance of the near pane of the view frustum.
@@ -71,8 +73,6 @@ public:
 	const Ray &GetViewRay() const { return m_viewRay; }
 
 protected:
-	//static Registrar<Camera> registered;
-
 	float m_nearPlane;
 	float m_farPlane;
 	float m_fieldOfView;

@@ -83,8 +83,10 @@ Scene1::Scene1() :
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile(std::make_unique<Json>());
 
+				auto entitiesNode = (*sceneFile.GetNode())["entities"];
+
 				for (auto &entity : GetStructure()->QueryAll()) {
-					auto &entityNode = sceneFile.GetNode()->AddProperty();
+					auto &entityNode = entitiesNode->AddProperty();
 
 					if (!entity->GetName().empty()) {
 						entityNode["name"] = entity->GetName();
@@ -92,13 +94,13 @@ Scene1::Scene1() :
 
 					for (auto &component : entity->GetComponents()) {
 						if (auto componentName = Component::FindName(component.get()); !componentName.empty()) {
-							auto child = entityNode.AddProperty(componentName, {});
+							auto child = entityNode[componentName];
 							Component::Encode(componentName, child, component.get());
 						}
 					}
 				}
 
-				sceneFile.Write("Scene1.json");
+				sceneFile.Write("Scene1.json", Node::Format::Beautified);
 			});
 		}
 	});

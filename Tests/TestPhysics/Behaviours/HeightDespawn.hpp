@@ -6,7 +6,7 @@
 using namespace acid;
 
 namespace test {
-class HeightDespawn : public Component {
+class HeightDespawn : public Component::Registrar<HeightDespawn> {
 public:
 	explicit HeightDespawn(float removeHeight = -100.0f);
 
@@ -17,7 +17,7 @@ public:
 	friend Node &operator<<(Node &node, const HeightDespawn &heightDespawn);
 
 private:
-	static Registrar<HeightDespawn> registered;
+	static bool registered;
 
 	float m_removeHeight;
 };

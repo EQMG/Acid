@@ -6,7 +6,7 @@
 using namespace acid;
 
 namespace test {
-class Rotate : public Component {
+class Rotate : public Component::Registrar<Rotate> {
 public:
 	explicit Rotate(const Vector3f &direction = Vector3f(), const int &test = 0);
 
@@ -17,7 +17,7 @@ public:
 	friend Node &operator<<(Node &node, const Rotate &rotate);
 
 private:
-	static Registrar<Rotate> registered;
+	static bool registered;
 
 	Vector3f m_direction;
 	int m_test;

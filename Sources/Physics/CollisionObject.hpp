@@ -16,7 +16,7 @@ class Frustum;
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT CollisionObject : public Component {
+class ACID_EXPORT CollisionObject {
 public:
 	/**
 	 * Creates a new collision object.
@@ -90,7 +90,7 @@ public:
 protected:
 	virtual void RecalculateMass() = 0;
 
-	void CreateShape(bool forceSingle = false);
+	void CreateShape(const std::vector<Collider *> &colliders, bool forceSingle = false);
 
 	float m_mass;
 	Vector3f m_gravity;

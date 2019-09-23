@@ -3,7 +3,7 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterPoint : public Emitter {
+class ACID_EXPORT EmitterPoint : public Component::Registrar<EmitterPoint>, public Emitter {
 public:
 	EmitterPoint();
 
@@ -18,7 +18,7 @@ public:
 	friend Node &operator<<(Node &node, const EmitterPoint &emitter);
 
 private:
-	static Registrar<EmitterPoint> registered;
+	static bool registered;
 
 	Vector3f m_point;
 };
