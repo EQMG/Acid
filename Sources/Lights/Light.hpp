@@ -30,6 +30,8 @@ public:
 	friend Node &operator<<(Node &node, const Light &light);
 
 private:
+	static Registrar<Light> registered;
+
 	Colour m_colour;
 	Vector3f m_position;
 	float m_radius;

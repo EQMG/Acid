@@ -17,6 +17,8 @@ public:
 	friend Node &operator<<(Node &node, const NameTag &nameTag);
 
 private:
+	static Registrar<NameTag> registered;
+
 	std::string m_name;
 	float m_heightOffset;
 

@@ -38,6 +38,8 @@ public:
 	friend Node &operator<<(Node &node, const MaterialSkybox &material);
 
 private:
+	static Registrar<MaterialSkybox> registered;
+
 	std::shared_ptr<ImageCube> m_image;
 	Colour m_baseColour;
 	float m_blend;

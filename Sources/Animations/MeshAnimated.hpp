@@ -34,6 +34,8 @@ public:
 	static constexpr uint32_t MaxWeights = 3;
 
 private:
+	static Registrar<MeshAnimated> registered;
+
 	Animator m_animator;
 
 	std::filesystem::path m_filename;

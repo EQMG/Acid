@@ -23,6 +23,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderSphere &collider);
 
 private:
+	static Registrar<ColliderSphere> registered;
+
 	std::unique_ptr<btSphereShape> m_shape;
 	float m_radius;
 };

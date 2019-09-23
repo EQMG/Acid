@@ -26,6 +26,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCapsule &collider);
 
 private:
+	static Registrar<ColliderCapsule> registered;
+
 	std::unique_ptr<btCapsuleShape> m_shape;
 	float m_radius;
 	float m_height;

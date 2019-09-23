@@ -5,6 +5,8 @@
 #include "Meshes/Mesh.hpp"
 
 namespace acid {
+ColliderConvexHull::Registrar<ColliderConvexHull> ColliderConvexHull::registered("colliderConvexHull");
+
 ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, const Transform &localTransform) :
 	Collider(localTransform) {
 	if (pointCloud.empty()) {

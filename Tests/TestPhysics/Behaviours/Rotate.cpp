@@ -7,6 +7,8 @@
 #include <Maths/Maths.hpp>
 
 namespace test {
+Rotate::Registrar<Rotate> Rotate::registered("rotate");
+
 Rotate::Rotate(const Vector3f &direction, const int &test) :
 	m_direction(direction),
 	m_test(test) {

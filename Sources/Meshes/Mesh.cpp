@@ -1,6 +1,8 @@
 #include "Mesh.hpp"
 
 namespace acid {
+Mesh::Registrar<Mesh> Mesh::registered("mesh");
+
 Mesh::Mesh(const std::shared_ptr<Model> &model) :
 	m_model(model) {
 }

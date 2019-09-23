@@ -63,6 +63,8 @@ protected:
 	void RecalculateMass() override;
 
 private:
+	static Registrar<KinematicCharacter> registered;
+
 	Vector3f m_up;
 	float m_stepHeight;
 	float m_fallSpeed;

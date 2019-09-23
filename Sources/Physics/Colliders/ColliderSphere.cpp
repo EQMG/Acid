@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderSphere::Registrar<ColliderSphere> ColliderSphere::registered("colliderSphere");
+
 ColliderSphere::ColliderSphere(float radius, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Sphere.obj"), 3.0f, Colour::Blue)),
 	m_shape(std::make_unique<btSphereShape>(radius)),

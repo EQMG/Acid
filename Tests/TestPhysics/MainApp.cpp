@@ -6,15 +6,8 @@
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Timers/Timers.hpp>
-#include "Behaviours/HeightDespawn.hpp"
-#include "Behaviours/NameTag.hpp"
 #include "MainRenderer.hpp"
-#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
-#include "Skybox/CelestialBody.hpp"
-#include "Skybox/SkyboxCycle.hpp"
-#include "Terrain/MaterialTerrain.hpp"
-#include "Terrain/Terrain.hpp"
 #include "World/World.hpp"
 #include "Resources/Resources.hpp"
 
@@ -71,16 +64,6 @@ MainApp::MainApp() :
 	// Registers modules.
 	World::Register(Module::Stage::Always);
 	//Shadows::Deregister();
-
-	// Registers components.
-	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Add<HeightDespawn>("heightDespawn");
-	componentRegister.Add<NameTag>("nameTag");
-	componentRegister.Add<PlayerFps>("playerFps");
-	componentRegister.Add<CelestialBody>("celestialBody");
-	componentRegister.Add<SkyboxCycle>("skyboxCycle");
-	componentRegister.Add<MaterialTerrain>("materialTerrain");
-	componentRegister.Add<Terrain>("terrain");
 }
 
 MainApp::~MainApp() {

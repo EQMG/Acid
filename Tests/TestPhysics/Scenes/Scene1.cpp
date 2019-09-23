@@ -26,6 +26,7 @@
 #include <Physics/Colliders/ColliderSphere.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Files/Json/Json.hpp>
+#include <Files/File.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
@@ -90,11 +91,9 @@ Scene1::Scene1() :
 					}
 
 					for (auto &component : entity->GetComponents()) {
-						auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
-
-						if (componentName) {
-							auto child = entityNode.AddProperty(*componentName, {});
-							Scenes::Get()->GetComponentRegister().Encode(*componentName, child, component.get());
+						if (auto componentName = Component::FindName(component.get()); !componentName.empty()) {
+							auto child = entityNode.AddProperty(componentName, {});
+							Component::Encode(componentName, child, component.get());
 						}
 					}
 				}

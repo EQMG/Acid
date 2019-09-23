@@ -26,6 +26,8 @@ public:
 	void SetType(const Type &type) { m_type = type; }
 
 private:
+	static Registrar<CelestialBody> registered;
+
 	Type m_type;
 };
 }

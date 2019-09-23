@@ -21,6 +21,8 @@ public:
 	friend Node &operator<<(Node &node, const EmitterLine &emitter);
 
 private:
+	static Registrar<EmitterLine> registered;
+
 	float m_length;
 	Vector3f m_axis;
 };

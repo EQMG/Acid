@@ -6,6 +6,8 @@
 #include "World/World.hpp"
 
 namespace test {
+SkyboxCycle::Registrar<SkyboxCycle> SkyboxCycle::registered("skyboxCycle");
+
 static const Colour SKYBOX_COLOUR_DAY("#003C8A");
 
 SkyboxCycle::SkyboxCycle(bool enableFog, bool enableRotation) :

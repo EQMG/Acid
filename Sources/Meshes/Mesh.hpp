@@ -28,6 +28,8 @@ public:
 	friend Node &operator<<(Node &node, const Mesh &mesh);
 
 private:
+	static Registrar<Mesh> registered;
+
 	std::shared_ptr<Model> m_model;
 };
 }

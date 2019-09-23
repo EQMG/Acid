@@ -17,6 +17,8 @@ public:
 	friend Node &operator<<(Node &node, const HeightDespawn &heightDespawn);
 
 private:
+	static Registrar<HeightDespawn> registered;
+
 	float m_removeHeight;
 };
 }

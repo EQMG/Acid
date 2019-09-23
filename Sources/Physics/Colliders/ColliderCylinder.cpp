@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderCylinder::Registrar<ColliderCylinder> ColliderCylinder::registered("colliderCylinder");
+
 ColliderCylinder::ColliderCylinder(float radius, float height, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cylinder.obj"), 3.0f, Colour::Yellow)),
 	m_shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),

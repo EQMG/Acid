@@ -44,6 +44,8 @@ protected:
 	void RecalculateMass() override;
 
 private:
+	static Registrar<Rigidbody> registered;
+
 	std::unique_ptr<btRigidBody> m_rigidBody;
 };
 }

@@ -52,6 +52,8 @@ public:
 	friend Node &operator<<(Node &node, const MaterialDefault &material);
 
 private:
+	static Registrar<MaterialDefault> registered;
+
 	std::vector<Shader::Define> GetDefines() const;
 
 	bool m_animated = false;

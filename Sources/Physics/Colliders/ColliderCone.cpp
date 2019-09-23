@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderCone::Registrar<ColliderCone> ColliderCone::registered("colliderCone");
+
 ColliderCone::ColliderCone(float radius, float height, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cone.obj"), 3.0f, Colour::Green)),
 	m_shape(std::make_unique<btConeShape>(radius, height)),

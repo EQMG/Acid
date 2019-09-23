@@ -26,6 +26,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCone &collider);
 
 private:
+	static Registrar<ColliderCone> registered;
+
 	std::unique_ptr<btConeShape> m_shape;
 	float m_radius;
 	float m_height;

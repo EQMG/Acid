@@ -18,6 +18,8 @@ public:
 	friend Node &operator<<(Node &node, const MeshRender &meshRender);
 
 private:
+	static Registrar<MeshRender> registered;
+
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
 };

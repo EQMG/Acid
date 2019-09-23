@@ -6,7 +6,6 @@
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
 #include "MainRenderer.hpp"
-#include "Scenes/PlayerFps.hpp"
 #include "Scenes/Scene1.hpp"
 #include "Resources/Resources.hpp"
 
@@ -74,23 +73,11 @@ MainApp::MainApp() :
 			Engine::Get()->RequestClose();
 		}
 	});
-
-	// Registers modules.
-	//Engine::Get()->RemoveModule<Shadows>();
-
-	// Registers components.
-	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Add<PlayerFps>("playerFps");
-
 }
 
 MainApp::~MainApp() {
 	Log::Out("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
-
-	// Deregisters components.
-	auto &componentRegister = Scenes::Get()->GetComponentRegister();
-	componentRegister.Remove("playerFps");
 
 	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);

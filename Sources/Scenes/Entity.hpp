@@ -88,7 +88,7 @@ public:
 	 * @param component The component to add.
 	 * @return The added component.
 	 */
-	Component *AddComponent(Component *component);
+	Component *AddComponent(std::unique_ptr<Component> &&component);
 
 	/**
 	 * Creates a component by type to be added this entity.
@@ -99,9 +99,7 @@ public:
 	 */
 	template<typename T, typename... Args>
 	T *AddComponent(Args &&... args) {
-		auto created = new T(std::forward<Args>(args)...);
-		AddComponent(created);
-		return created;
+		return dynamic_cast<T *>(AddComponent(std::make_unique<T>(std::forward<Args>(args)...)));
 	}
 
 	/**

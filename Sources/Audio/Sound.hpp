@@ -11,6 +11,7 @@ namespace acid {
  */
 class ACID_EXPORT Sound : public Component {
 public:
+	Sound() = default;
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,
 		bool loop = false, float gain = 1.0f, float pitch = 1.0f);
 
@@ -43,6 +44,8 @@ public:
 	friend Node &operator<<(Node &node, const Sound &sound);
 
 private:
+	static Registrar<Sound> registered;
+	
 	std::shared_ptr<SoundBuffer> m_buffer;
 	uint32_t m_source = 0;
 
@@ -50,8 +53,8 @@ private:
 	Vector3f m_direction;
 	Vector3f m_velocity;
 
-	Audio::Type m_type;
-	float m_gain;
-	float m_pitch;
+	Audio::Type m_type = Audio::Type::General;
+	float m_gain = 1.0f;
+	float m_pitch = 1.0f;
 };
 }

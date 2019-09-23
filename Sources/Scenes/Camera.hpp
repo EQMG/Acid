@@ -71,6 +71,8 @@ public:
 	const Ray &GetViewRay() const { return m_viewRay; }
 
 protected:
+	//static Registrar<Camera> registered;
+
 	float m_nearPlane;
 	float m_farPlane;
 	float m_fieldOfView;

@@ -21,6 +21,8 @@ public:
 	friend Node &operator<<(Node &node, const EmitterCircle &emitter);
 
 private:
+	static Registrar<EmitterCircle> registered;
+
 	float m_radius;
 	Vector3f m_heading;
 };

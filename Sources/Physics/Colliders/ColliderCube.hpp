@@ -23,6 +23,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderCube &collider);
 
 private:
+	static Registrar<ColliderCube> registered;
+
 	std::unique_ptr<btBoxShape> m_shape;
 	Vector3f m_extents;
 };

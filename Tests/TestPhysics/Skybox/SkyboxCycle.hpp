@@ -18,6 +18,8 @@ public:
 	friend Node &operator<<(Node &node, const SkyboxCycle &skyboxCycle);
 
 private:
+	static Registrar<SkyboxCycle> registered;
+
 	bool m_enableFog;
 	bool m_enableRotation;
 };

@@ -33,14 +33,13 @@ void Entity::Update() {
 	}
 }
 
-Component *Entity::AddComponent(Component *component) {
+Component *Entity::AddComponent(std::unique_ptr<Component> &&component) {
 	if (!component) {
 		return nullptr;
 	}
 
 	component->SetEntity(this);
-	m_components.emplace_back(component);
-	return component;
+	return m_components.emplace_back(std::move(component)).get();
 }
 
 void Entity::RemoveComponent(Component *component) {
@@ -51,8 +50,7 @@ void Entity::RemoveComponent(Component *component) {
 
 void Entity::RemoveComponent(const std::string &name) {
 	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c) {
-		auto componentName = Scenes::Get()->GetComponentRegister().FindName(c.get());
-		return componentName && name == *componentName;
+		return name == Component::FindName(c.get());
 	}), m_components.end());
 }
 }

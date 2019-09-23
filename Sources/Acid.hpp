@@ -209,7 +209,6 @@
 #include "Resources/Resources.hpp"
 #include "Scenes/Camera.hpp"
 #include "Scenes/Component.hpp"
-#include "Scenes/ComponentRegister.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/EntityPrefab.hpp"
 #include "Scenes/Scene.hpp"

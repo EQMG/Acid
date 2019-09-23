@@ -65,6 +65,8 @@ private:
 	void AddChild(Transform *child);
 	void RemoveChild(Transform *child);
 
+	static Registrar<Transform> registered;
+
 	Vector3f m_position;
 	Vector3f m_rotation;
 	Vector3f m_scale;

@@ -22,6 +22,8 @@ public:
 	friend Node &operator<<(Node &node, const ShadowRender &shadowRender);
 
 private:
+	static Registrar<ShadowRender> registered;
+
 	DescriptorsHandler m_descriptorSet;
 	PushHandler m_pushObject;
 };

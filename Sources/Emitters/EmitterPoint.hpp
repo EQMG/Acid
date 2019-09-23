@@ -18,6 +18,8 @@ public:
 	friend Node &operator<<(Node &node, const EmitterPoint &emitter);
 
 private:
+	static Registrar<EmitterPoint> registered;
+
 	Vector3f m_point;
 };
 }

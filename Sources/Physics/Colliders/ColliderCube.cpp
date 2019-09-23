@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderCube::Registrar<ColliderCube> ColliderCube::registered("colliderCube");
+
 ColliderCube::ColliderCube(const Vector3f &extents, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cube.obj"), 3.0f, Colour::Red)),
 	m_shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),

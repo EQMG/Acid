@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderHeightfield::Registrar<ColliderHeightfield> ColliderHeightfield::registered("colliderHeightfield");
+
 ColliderHeightfield::ColliderHeightfield(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight,
 	float maxHeight, bool flipQuadEdges, const Transform &localTransform) :
 	Collider(localTransform) {

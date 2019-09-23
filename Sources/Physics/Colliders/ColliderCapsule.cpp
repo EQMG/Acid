@@ -4,6 +4,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+ColliderCapsule::Registrar<ColliderCapsule> ColliderCapsule::registered("colliderCapsule");
+
 ColliderCapsule::ColliderCapsule(float radius, float height, const Transform &localTransform) :
 	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)),
 	m_shape(std::make_unique<btCapsuleShape>(radius, height)),

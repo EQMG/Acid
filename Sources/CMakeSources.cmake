@@ -213,7 +213,6 @@ set(_temp_acid_headers
 		Resources/Resources.hpp
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
-		Scenes/ComponentRegister.hpp
 		Scenes/Entity.hpp
 		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
@@ -419,7 +418,6 @@ set(_temp_acid_sources
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
-		Scenes/ComponentRegister.cpp
 		Scenes/Entity.cpp
 		Scenes/EntityPrefab.cpp
 		Scenes/ScenePhysics.cpp

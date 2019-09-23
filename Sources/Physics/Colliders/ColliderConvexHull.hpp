@@ -24,6 +24,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderConvexHull &collider);
 
 private:
+	static Registrar<ColliderConvexHull> registered;
+
 	std::unique_ptr<btConvexHullShape> m_shape;
 	std::shared_ptr<Model> m_model;
 	uint32_t m_pointCount = 0;

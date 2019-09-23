@@ -24,6 +24,8 @@ public:
 	friend Node &operator<<(Node &node, const ColliderHeightfield &collider);
 
 private:
+	static Registrar<ColliderHeightfield> registered;
+
 	std::unique_ptr<btHeightfieldTerrainShape> m_shape;
 };
 }

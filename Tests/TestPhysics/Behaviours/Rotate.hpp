@@ -17,6 +17,8 @@ public:
 	friend Node &operator<<(Node &node, const Rotate &rotate);
 
 private:
+	static Registrar<Rotate> registered;
+
 	Vector3f m_direction;
 	int m_test;
 	Vector3f m_rotation;

@@ -8,6 +8,8 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+KinematicCharacter::Registrar<KinematicCharacter> KinematicCharacter::registered("kinematicCharacter");
+
 KinematicCharacter::KinematicCharacter(float mass, float friction) :
 	CollisionObject(mass, friction),
 	m_up(Vector3f::Up),

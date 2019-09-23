@@ -66,6 +66,8 @@ private:
 	float GenerateRotation() const;
 	Vector3f GenerateRandomUnitVector() const;
 
+	static Registrar<ParticleSystem> registered;
+
 	std::vector<std::shared_ptr<ParticleType>> m_types;
 
 	float m_pps;

@@ -69,9 +69,9 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 			continue;
 		}
 
-		if (auto component = Scenes::Get()->GetComponentRegister().Create(property.GetName())) {
-			Scenes::Get()->GetComponentRegister().Decode(property.GetName(), property, component);
-			entity.AddComponent(component);
+		if (auto component = Component::Create(property.GetName())) {
+			Component::Decode(property.GetName(), property, component.get());
+			entity.AddComponent(std::move(component));
 		}
 	}
 
@@ -82,14 +82,14 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 	entityPrefab.m_file->Clear();
 
 	for (const auto &component : entity.GetComponents()) {
-		auto componentName = Scenes::Get()->GetComponentRegister().FindName(component.get());
+		auto componentName = Component::FindName(component.get());
 
-		if (!componentName) {
+		if (componentName.empty()) {
 			continue;
 		}
 
-		auto &property = entityPrefab.m_file->GetNode()->AddProperty(*componentName, {});
-		Scenes::Get()->GetComponentRegister().Encode(*componentName, property, component.get());
+		auto property = (*entityPrefab.m_file->GetNode())[componentName];
+		Component::Encode(componentName, property, component.get());
 	}
 
 	return entityPrefab;

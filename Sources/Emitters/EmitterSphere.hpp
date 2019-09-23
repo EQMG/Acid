@@ -18,6 +18,8 @@ public:
 	friend Node &operator<<(Node &node, const EmitterSphere &emitter);
 
 private:
+	static Registrar<EmitterSphere> registered;
+
 	float m_radius;
 };
 }

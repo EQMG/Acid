@@ -20,6 +20,8 @@ public:
 	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:
+	static Registrar<PlayerFps> registered;
+
 	bool m_noclipEnabled = false;
 
 	AxisCompound m_inputForward;

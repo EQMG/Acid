@@ -11,6 +11,8 @@
 #include "Colliders/Collider.hpp"
 
 namespace acid {
+Rigidbody::Registrar<Rigidbody> Rigidbody::registered("rigidbody");
+
 Rigidbody::Rigidbody(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	CollisionObject(mass, friction, linearFactor, angularFactor) {
 }

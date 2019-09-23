@@ -20,6 +20,8 @@ public:
 	friend Node &operator<<(Node &node, const Terrain &terrain);
 
 private:
+	static Registrar<Terrain> registered;
+
 	static uint32_t CalculateVertexCount(float sideLength, float squareSize);
 	static float CalculateTextureScale(float sideLength);
 	std::vector<float> GenerateHeightmap(uint32_t vertexCount);

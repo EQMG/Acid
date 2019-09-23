@@ -9,6 +9,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+Sound::Registrar<Sound> Sound::registered("sound");
+
 Sound::Sound(const std::string &filename, const Audio::Type &type, bool begin, bool loop, float gain, float pitch) :
 	m_buffer(SoundBuffer::Create(filename)),
 	m_type(type),

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Files/File.hpp"
+#include "Files/Node.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid {

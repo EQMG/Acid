@@ -42,6 +42,8 @@ public:
 	friend Node &operator<<(Node &node, const Fog &fog);
 
 private:
+	static Registrar<Fog> registered;
+
 	Colour m_colour;
 	float m_density;
 	float m_gradient;

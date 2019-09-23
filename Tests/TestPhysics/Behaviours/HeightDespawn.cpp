@@ -4,6 +4,8 @@
 #include <Scenes/Entity.hpp>
 
 namespace test {
+HeightDespawn::Registrar<HeightDespawn> HeightDespawn::registered("heightDespawn");
+
 HeightDespawn::HeightDespawn(float removeHeight) :
 	m_removeHeight(removeHeight) {
 }
