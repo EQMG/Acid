@@ -196,9 +196,8 @@ void ImageCube::Load() {
 		m_loadBitmap = std::make_unique<Bitmap>(m_extent, m_components);
 		m_loadBitmap->m_data.reserve(m_extent.m_x * m_extent.m_y * m_components * 6);
 		for (const auto &side : m_fileSides) {
-			auto filenameSide = m_filename / (side + m_fileSuffix);
-			auto resultSide = Bitmap::Load(filenameSide);
-			m_loadBitmap->m_data.insert(m_loadBitmap->m_data.end(), resultSide->m_data.begin(), resultSide->m_data.end());
+			Bitmap bitmapSide(m_filename / (side + m_fileSuffix));
+			m_loadBitmap->m_data.insert(m_loadBitmap->m_data.end(), bitmapSide.m_data.begin(), bitmapSide.m_data.end());
 		}
 	}
 

@@ -63,16 +63,14 @@ void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotsp
 		return;
 	}
 
-	auto bitmap = Bitmap::Load(filename);
+	Bitmap bitmap(filename);
 
-	if (!bitmap) {
-		return;
-	}
+	if (!bitmap) return;
 
 	GLFWimage image[1];
-	image[0].width = bitmap->m_size.m_x;
-	image[0].height = bitmap->m_size.m_y;
-	image[0].pixels = bitmap->m_data.data();
+	image[0].width = bitmap.m_size.m_x;
+	image[0].height = bitmap.m_size.m_y;
+	image[0].pixels = bitmap.m_data.data();
 
 	glfwDestroyCursor(m_cursor);
 

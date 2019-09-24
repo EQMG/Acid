@@ -160,12 +160,12 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 	compute.CmdRender(commandBuffer, irradianceCubemap->GetExtent());
 	commandBuffer.SubmitIdle();
 
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		image->GetBitmap().Write("Deferred/Irradiance.png");
 	}, irradianceCubemap.get());
-#endif
+#endif*/
 
 	return irradianceCubemap;
 }

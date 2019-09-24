@@ -257,6 +257,7 @@ set(_temp_acid_sources
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
+		Bitmaps/Bitmap.cpp
 		Bitmaps/Png/BitmapPng.cpp
 		Devices/Instance.cpp
 		Devices/Joysticks.cpp

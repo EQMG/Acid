@@ -184,23 +184,19 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
-	std::vector<uint8_t> pixels(dstSubresourceLayout.size);
+	Bitmap bitmap(std::vector<uint8_t>(dstSubresourceLayout.size), extent);
 
 	void *data;
 	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(pixels.data(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap.m_data.data(), data, static_cast<size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*m_logicalDevice, dstImageMemory);
 
 	// Frees temp image and memory.
 	vkFreeMemory(*m_logicalDevice, dstImageMemory, nullptr);
 	vkDestroyImage(*m_logicalDevice, dstImage, nullptr);
 
-	// Creates the screenshot image file and writes to it.
-	auto bitmap = Bitmap::Create(filename);
-	bitmap->m_data = pixels;
-	bitmap->m_size = extent;
-	bitmap->m_bytesPerPixel = 4;
-	bitmap->Write(filename);
+	// Writes the screenshot bitmap to the file.
+	bitmap.Write(filename);
 
 #if defined(ACID_DEBUG)
 	Log::Out("Screenshot ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

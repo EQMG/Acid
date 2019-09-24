@@ -171,7 +171,7 @@ Node &operator<<(Node &node, const Image2d &image) {
 
 void Image2d::Load() {
 	if (!m_filename.empty() && !m_loadBitmap) {
-		m_loadBitmap = Bitmap::Load(m_filename);
+		m_loadBitmap = std::make_unique<Bitmap>(m_filename);
 		m_components = m_loadBitmap->m_bytesPerPixel;
 		m_extent = m_loadBitmap->m_size;
 	}
