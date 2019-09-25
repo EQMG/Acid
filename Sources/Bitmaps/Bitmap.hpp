@@ -40,6 +40,8 @@ public:
 
 	explicit operator bool() const noexcept { return !m_data; }
 
+	uint32_t GetLength() const;
+
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 	void SetFilename(const std::filesystem::path &filename) { m_filename = filename; }
 

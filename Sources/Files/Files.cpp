@@ -196,7 +196,7 @@ void Files::AddSearchPath(const std::string &path) {
 	}
 
 	if (PHYSFS_mount(path.c_str(), nullptr, true) == 0) {
-		Log::Error("Failed to mount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
+		Log::Warning("Failed to mount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		return;
 	}
 
@@ -211,7 +211,7 @@ void Files::RemoveSearchPath(const std::string &path) {
 	}
 
 	if (PHYSFS_unmount(path.c_str()) == 0) {
-		Log::Error("Failed to unmount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
+		Log::Warning("Failed to unmount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		return;
 	}
 
@@ -221,7 +221,7 @@ void Files::RemoveSearchPath(const std::string &path) {
 void Files::ClearSearchPath() {
 	for (const auto &searchPath : m_searchPaths) {
 		if (PHYSFS_unmount(searchPath.c_str()) == 0) {
-			Log::Error("Failed to unmount path ", searchPath, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
+			Log::Warning("Failed to unmount path ", searchPath, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		}
 	}
 

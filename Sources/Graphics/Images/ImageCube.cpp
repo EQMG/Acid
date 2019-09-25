@@ -142,8 +142,8 @@ std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLa
 std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel) const {
 	auto size = m_extent >> mipLevel;
 	auto sizeSide = size.m_x * size.m_y * m_components;
-	auto bitmap = std::make_unique<Bitmap>(Vector2ui{size.m_x, size.m_y * 6}, m_components);
-	auto offset = m_loadBitmap->GetData().get();
+	auto bitmap = std::make_unique<Bitmap>(Vector2ui(size.m_x, size.m_y * 6), m_components);
+	auto offset = bitmap->GetData().get();
 
 	for (uint32_t i = 0; i < 6; i++) {
 		auto bitmapSide = GetBitmap(mipLevel, i);
@@ -190,15 +190,24 @@ Node &operator<<(Node &node, const ImageCube &image) {
 
 void ImageCube::Load() {
 	if (!m_filename.empty() && !m_loadBitmap) {
-		auto sizeSide = m_extent.m_x * m_extent.m_y * m_components;
-		m_loadBitmap = std::make_unique<Bitmap>(Vector2ui{m_extent.m_x, m_extent.m_y * 6}, m_components);
-		auto offset = m_loadBitmap->GetData().get();
+		uint8_t *offset = nullptr;
 
 		for (const auto &side : m_fileSides) {
 			Bitmap bitmapSide(m_filename / (side + m_fileSuffix));
-			std::memcpy(offset, bitmapSide.GetData().get(), sizeSide);
-			offset += sizeSide;
+			auto lengthSide = bitmapSide.GetLength();
+
+			if (!m_loadBitmap) {
+				m_loadBitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(lengthSide * 6), bitmapSide.GetSize(), 
+					bitmapSide.GetBytesPerPixel());
+				offset = m_loadBitmap->GetData().get();
+			}
+
+			std::memcpy(offset, bitmapSide.GetData().get(), lengthSide);
+			offset += lengthSide;
 		}
+		
+		m_extent = m_loadBitmap->GetSize();
+		m_components = m_loadBitmap->GetBytesPerPixel();
 	}
 
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
@@ -217,17 +226,18 @@ void ImageCube::Load() {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
 
-	if (m_loadBitmap) {
-		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+	// TODO: This part is important I guess...
+	/*if (m_loadBitmap) {
+		Buffer bufferStaging(m_loadBitmap->GetLength() * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-		void *data;
-		bufferStaging.MapMemory(&data);
+		uint8_t *data;
+		bufferStaging.MapMemory(reinterpret_cast<void**>(&data));
 		std::memcpy(data, m_loadBitmap.get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 6, 0);
-	}
+	}*/
 
 	if (m_mipmap) {
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 6);

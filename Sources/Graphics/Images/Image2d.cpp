@@ -194,11 +194,11 @@ void Image2d::Load() {
 
 	if (m_loadBitmap) {
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		Buffer bufferStaging(m_extent.m_x * m_extent.m_y * m_components, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging(m_loadBitmap->GetLength(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-		void *data;
-		bufferStaging.MapMemory(&data);
+		uint8_t *data;
+		bufferStaging.MapMemory(reinterpret_cast<void **>(&data));
 		std::memcpy(data, m_loadBitmap->GetData().get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 

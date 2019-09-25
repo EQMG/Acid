@@ -50,6 +50,10 @@ void Bitmap::Write(const std::filesystem::path &filename) const {
 #endif
 }
 
+uint32_t Bitmap::GetLength() const {
+	return m_size.m_x * m_size.m_y * m_bytesPerPixel;
+}
+
 uint32_t Bitmap::CalculateLength(const Vector2ui &size, uint32_t bytesPerPixel) {
 	return size.m_x * size.m_y * bytesPerPixel;
 }

@@ -65,12 +65,12 @@ Buffer::~Buffer() {
 
 void Buffer::MapMemory(void **data) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	Graphics::CheckVk(vkMapMemory(*logicalDevice, GetBufferMemory(), 0, m_size, 0, data));
+	Graphics::CheckVk(vkMapMemory(*logicalDevice, m_bufferMemory, 0, m_size, 0, data));
 }
 
 void Buffer::UnmapMemory() const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	vkUnmapMemory(*logicalDevice, GetBufferMemory());
+	vkUnmapMemory(*logicalDevice, m_bufferMemory);
 }
 
 uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties) {

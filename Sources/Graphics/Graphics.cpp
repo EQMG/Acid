@@ -168,11 +168,11 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	auto debugStart = Time::Now();
 #endif
 
-	auto extent = Window::Get()->GetSize();
+	auto size = Window::Get()->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {extent.m_x, extent.m_y, 1},
+	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {size.m_x, size.m_y, 1},
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
@@ -184,7 +184,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
-	Bitmap bitmap(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), extent);
+	Bitmap bitmap(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), size);
 
 	void *data;
 	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
@@ -199,7 +199,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	bitmap.Write(filename);
 
 #if defined(ACID_DEBUG)
-	Log::Out("Screenshot ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Screenshot ", filename, " created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
