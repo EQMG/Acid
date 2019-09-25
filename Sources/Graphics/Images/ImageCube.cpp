@@ -140,8 +140,9 @@ std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLa
 }
 
 std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel) const {
-	auto sizeSide = m_extent.m_x * m_extent.m_y * m_components;
-	auto bitmap = std::make_unique<Bitmap>(Vector2ui{m_extent.m_x, m_extent.m_y * 6}, m_components);
+	auto size = m_extent >> mipLevel;
+	auto sizeSide = size.m_x * size.m_y * m_components;
+	auto bitmap = std::make_unique<Bitmap>(Vector2ui{size.m_x, size.m_y * 6}, m_components);
 	auto offset = m_loadBitmap->GetData().get();
 
 	for (uint32_t i = 0; i < 6; i++) {
@@ -201,6 +202,7 @@ void ImageCube::Load() {
 	}
 
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
+		m_loadBitmap = nullptr;
 		return;
 	}
 
