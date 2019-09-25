@@ -66,8 +66,8 @@ ImageCube::ImageCube(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageL
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_components(bitmap->m_bytesPerPixel),
-	m_extent(bitmap->m_size),
+	m_components(bitmap->GetBytesPerPixel()),
+	m_extent(bitmap->GetSize()),
 	m_loadBitmap(std::move(bitmap)),
 	m_format(format) {
 	ImageCube::Load();
@@ -109,15 +109,14 @@ VkDescriptorSetLayoutBinding ImageCube::GetDescriptorSetLayout(uint32_t binding,
 	return descriptorSetLayoutBinding;
 }
 
-Bitmap ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
+std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	Bitmap bitmap;
-	bitmap.m_size = m_extent >> mipLevel;
+	auto size = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { bitmap.m_size.m_x, bitmap.m_size.m_y, 1}, m_layout, mipLevel, arrayLayer);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y, 1}, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -127,11 +126,11 @@ Bitmap ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	bitmap.m_data.resize(dstSubresourceLayout.size);
+	auto bitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(bitmap.m_data.data(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap->GetData().get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
@@ -140,20 +139,17 @@ Bitmap ImageCube::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	return bitmap;
 }
 
-Bitmap ImageCube::GetBitmap(uint32_t mipLevel) const {
-	Bitmap bitmap;
+std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel) const {
+	auto sizeSide = m_extent.m_x * m_extent.m_y * m_components;
+	auto bitmap = std::make_unique<Bitmap>(Vector2ui{m_extent.m_x, m_extent.m_y * 6}, m_components);
+	auto offset = m_loadBitmap->GetData().get();
 
 	for (uint32_t i = 0; i < 6; i++) {
-		auto resultSide = GetBitmap(mipLevel, i);
-		if (i == 0) {
-			bitmap.m_size = resultSide.m_size;
-			bitmap.m_bytesPerPixel = resultSide.m_bytesPerPixel;
-			bitmap.m_data.reserve(bitmap.m_size.m_x * bitmap.m_size.m_y * resultSide.m_bytesPerPixel * 6);
-		}
-		bitmap.m_data.insert(bitmap.m_data.end(), resultSide.m_data.begin(), resultSide.m_data.end());
+		auto bitmapSide = GetBitmap(mipLevel, i);
+		std::memcpy(offset, bitmapSide->GetData().get(), sizeSide);
+		offset += sizeSide;
 	}
 
-	bitmap.m_size.m_y *= 6;
 	return bitmap;
 }
 
@@ -193,11 +189,14 @@ Node &operator<<(Node &node, const ImageCube &image) {
 
 void ImageCube::Load() {
 	if (!m_filename.empty() && !m_loadBitmap) {
-		m_loadBitmap = std::make_unique<Bitmap>(m_extent, m_components);
-		m_loadBitmap->m_data.reserve(m_extent.m_x * m_extent.m_y * m_components * 6);
+		auto sizeSide = m_extent.m_x * m_extent.m_y * m_components;
+		m_loadBitmap = std::make_unique<Bitmap>(Vector2ui{m_extent.m_x, m_extent.m_y * 6}, m_components);
+		auto offset = m_loadBitmap->GetData().get();
+
 		for (const auto &side : m_fileSides) {
 			Bitmap bitmapSide(m_filename / (side + m_fileSuffix));
-			m_loadBitmap->m_data.insert(m_loadBitmap->m_data.end(), bitmapSide.m_data.begin(), bitmapSide.m_data.end());
+			std::memcpy(offset, bitmapSide.GetData().get(), sizeSide);
+			offset += sizeSide;
 		}
 	}
 

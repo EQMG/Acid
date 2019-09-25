@@ -31,17 +31,33 @@ public:
 	Bitmap() = default;
 	explicit Bitmap(std::filesystem::path filename);
 	explicit Bitmap(const Vector2ui &size, uint32_t bytesPerPixel = 4);
-	Bitmap(std::vector<uint8_t> data, const Vector2ui &size, uint32_t bytesPerPixel = 4);
+	Bitmap(std::unique_ptr<uint8_t[]> &&data, const Vector2ui &size, uint32_t bytesPerPixel = 4);
 
 	~Bitmap() = default;
 
 	void Load(const std::filesystem::path &filename);
 	void Write(const std::filesystem::path &filename) const;
 
-	explicit operator bool() const noexcept { return !m_data.empty(); }
+	explicit operator bool() const noexcept { return !m_data; }
 
+	const std::filesystem::path &GetFilename() const { return m_filename; }
+	void SetFilename(const std::filesystem::path &filename) { m_filename = filename; }
+
+	const std::unique_ptr<uint8_t[]> &GetData() const { return m_data; }
+	std::unique_ptr<uint8_t[]> &GetData() { return m_data; }
+	void SetData(std::unique_ptr<uint8_t[]> &&data) { m_data = std::move(data); }
+
+	const Vector2ui &GetSize() const { return m_size; }
+	void SetSize(const Vector2ui &size) { m_size = size; }
+
+	uint32_t GetBytesPerPixel() const { return m_bytesPerPixel; }
+	void SetBytesPerPixel(uint32_t bytesPerPixel) { m_bytesPerPixel = bytesPerPixel; }
+
+private:
+	static uint32_t CalculateLength(const Vector2ui &size, uint32_t bytesPerPixel);
+	
 	std::filesystem::path m_filename;
-	std::vector<uint8_t> m_data;
+	std::unique_ptr<uint8_t[]> m_data;
 	Vector2ui m_size;
 	uint32_t m_bytesPerPixel = 0;
 };

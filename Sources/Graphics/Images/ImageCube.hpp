@@ -89,14 +89,14 @@ public:
 	 * @param arrayLayer The array layer to sample.
 	 * @return A copy of the images pixels.
 	 */
-	Bitmap GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const;
+	std::unique_ptr<Bitmap> GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const;
 
 	/**
 	 * Copies the images pixels from memory to a bitmap. The bitmap height will be scaled by the amount of layers.
 	 * @param mipLevel The mipmap level index to sample.
 	 * @return A copy of the images pixels.
 	 */
-	Bitmap GetBitmap(uint32_t mipLevel = 0) const;
+	std::unique_ptr<Bitmap> GetBitmap(uint32_t mipLevel = 0) const;
 
 	/**
 	 * Sets the pixels of this image.

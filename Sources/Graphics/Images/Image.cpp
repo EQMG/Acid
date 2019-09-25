@@ -55,16 +55,14 @@ WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, VkDescriptorType 
 	return {descriptorWrite, imageInfo};
 }
 
-Bitmap Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
+std::unique_ptr<Bitmap> Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	Bitmap bitmap;
-	bitmap.m_size.m_x = int32_t(m_extent.width >> mipLevel);
-	bitmap.m_size.m_y = int32_t(m_extent.height >> mipLevel);
-
+	Vector2ui size(int32_t(m_extent.width >> mipLevel), int32_t(m_extent.height >> mipLevel));
+	
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	CopyImage(m_image, dstImage, dstImageMemory, m_format, m_extent, m_layout, mipLevel, arrayLayer);
+	CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y}, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -74,11 +72,11 @@ Bitmap Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	bitmap.m_data.resize(dstSubresourceLayout.size);
+	auto bitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(bitmap.m_data.data(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap->GetData().get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);

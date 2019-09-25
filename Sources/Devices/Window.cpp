@@ -188,18 +188,18 @@ void Window::SetTitle(const std::string &title) {
 }
 
 void Window::SetIcons(const std::vector<std::filesystem::path> &filenames) {
-	std::vector<Bitmap> bitmaps;
+	std::vector<std::unique_ptr<Bitmap>> bitmaps;
 	std::vector<GLFWimage> icons;
 
 	for (const auto &filename : filenames) {
-		Bitmap bitmap(filename);
+		auto bitmap = std::make_unique<Bitmap>(filename);
 
-		if (!bitmap) continue;
+		if (!bitmap.get()) continue;
 
 		GLFWimage icon = {};
-		icon.width = bitmap.m_size.m_x;
-		icon.height = bitmap.m_size.m_y;
-		icon.pixels = bitmap.m_data.data();
+		icon.width = bitmap->GetSize().m_x;
+		icon.height = bitmap->GetSize().m_y;
+		icon.pixels = bitmap->GetData().get();
 		icons.emplace_back(icon);
 		bitmaps.emplace_back(std::move(bitmap));
 	}

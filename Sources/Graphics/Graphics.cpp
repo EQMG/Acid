@@ -184,11 +184,11 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
-	Bitmap bitmap(std::vector<uint8_t>(dstSubresourceLayout.size), extent);
+	Bitmap bitmap(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), extent);
 
 	void *data;
 	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(bitmap.m_data.data(), data, static_cast<size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap.GetData().get(), data, static_cast<size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*m_logicalDevice, dstImageMemory);
 
 	// Frees temp image and memory.

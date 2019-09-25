@@ -65,8 +65,8 @@ Image2d::Image2d(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageLayou
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
-	m_components(bitmap->m_bytesPerPixel),
-	m_extent(bitmap->m_size),
+	m_components(bitmap->GetBytesPerPixel()),
+	m_extent(bitmap->GetSize()),
 	m_loadBitmap(std::move(bitmap)),
 	m_format(format) {
 	Image2d::Load();
@@ -108,15 +108,14 @@ VkDescriptorSetLayoutBinding Image2d::GetDescriptorSetLayout(uint32_t binding, V
 	return descriptorSetLayoutBinding;
 }
 
-Bitmap Image2d::GetBitmap(uint32_t mipLevel) const {
+std::unique_ptr<Bitmap> Image2d::GetBitmap(uint32_t mipLevel) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	Bitmap bitmap;
-	bitmap.m_size = m_extent >> mipLevel;
+	auto size = m_extent >> mipLevel;
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, { bitmap.m_size.m_x, bitmap.m_size.m_y, 1}, m_layout, mipLevel, 0);
+	Image::CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y, 1}, m_layout, mipLevel, 0);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -126,11 +125,11 @@ Bitmap Image2d::GetBitmap(uint32_t mipLevel) const {
 	VkSubresourceLayout dstSubresourceLayout;
 	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &dstImageSubresource, &dstSubresourceLayout);
 
-	bitmap.m_data.resize(dstSubresourceLayout.size);
+	auto bitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), size);
 
 	void *data;
 	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
-	std::memcpy(bitmap.m_data.data(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
+	std::memcpy(bitmap->GetData().get(), data, static_cast<std::size_t>(dstSubresourceLayout.size));
 	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
@@ -172,8 +171,8 @@ Node &operator<<(Node &node, const Image2d &image) {
 void Image2d::Load() {
 	if (!m_filename.empty() && !m_loadBitmap) {
 		m_loadBitmap = std::make_unique<Bitmap>(m_filename);
-		m_components = m_loadBitmap->m_bytesPerPixel;
-		m_extent = m_loadBitmap->m_size;
+		m_extent = m_loadBitmap->GetSize();
+		m_components = m_loadBitmap->GetBytesPerPixel();
 	}
 		
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
@@ -200,7 +199,7 @@ void Image2d::Load() {
 
 		void *data;
 		bufferStaging.MapMemory(&data);
-		std::memcpy(data, m_loadBitmap->m_data.data(), bufferStaging.GetSize());
+		std::memcpy(data, m_loadBitmap->GetData().get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 1, 0);

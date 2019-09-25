@@ -128,7 +128,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 #if defined(ACID_DEBUG)
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
-		image->GetBitmap().Write("Deferred/Brdf.png");
+		image->GetBitmap()->Write("Deferred/Brdf.png");
 	}, brdfImage.get());
 #endif
 
@@ -163,7 +163,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 /*#if defined(ACID_DEBUG)
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
-		image->GetBitmap().Write("Deferred/Irradiance.png");
+		image->GetBitmap()->Write("Deferred/Irradiance.png");
 	}, irradianceCubemap.get());
 #endif*/
 
@@ -230,7 +230,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
 		// Saves the prefiltered Image.
 		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {
-			image->GetBitmap(i).Write("Deferred/Prefiltered_" + String::To(i) + ".png");
+			image->GetBitmap(i)->Write("Deferred/Prefiltered_" + String::To(i) + ".png");
 		}, prefilteredCubemap.get(), i);
 	}
 #endif*/

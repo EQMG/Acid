@@ -38,7 +38,7 @@ public:
 	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.
 	 */
-	Bitmap GetBitmap(uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
+	std::unique_ptr<Bitmap> GetBitmap(uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
 
 	/**
 	 * Sets the pixels of this image.
