@@ -2,8 +2,8 @@ include(FetchContent)
 
 FetchContent_Declare(
 		googletest
-		GIT_REPOSITORY https://github.com/google/googletest.git
-		GIT_TAG release-1.8.1
+		URL https://github.com/google/googletest/archive/release-1.8.1.tar.gz
+		URL_MD5 2e6fbeb6a91310a16efe181886c59596
 		)
 FetchContent_GetProperties(googletest)
 if(NOT googletest_POPULATED)
@@ -25,12 +25,10 @@ file(GLOB_RECURSE TESTUNITS_SOURCE_FILES
 		"*.c"
 		"*.cpp"
 		)
-set(TESTUNITS_SOURCES
-		${TESTUNITS_HEADER_FILES}
-		${TESTUNITS_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTUNITS_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTUNITS_SOURCE_FILES})
 
-add_executable(UnitTests ${TESTUNITS_SOURCES})
+add_executable(UnitTests ${TESTUNITS_HEADER_FILES} ${TESTUNITS_SOURCE_FILES})
 
 target_compile_features(UnitTests PUBLIC cxx_std_17)
 target_include_directories(UnitTests PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
@@ -43,3 +41,4 @@ set_target_properties(UnitTests PROPERTIES
 add_test(NAME unit
 		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/vat_test
 		)
+		

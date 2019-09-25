@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTGUI_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTGUI_SOURCES
-		${TESTGUI_HEADER_FILES}
-		${TESTGUI_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTGUI_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTGUI_SOURCE_FILES})
 
-add_executable(TestGUI ${TESTGUI_SOURCES})
+add_executable(TestGUI ${TESTGUI_HEADER_FILES} ${TESTGUI_SOURCE_FILES})
 
 target_compile_features(TestGUI PUBLIC cxx_std_17)
 target_include_directories(TestGUI PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

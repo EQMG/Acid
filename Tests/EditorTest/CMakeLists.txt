@@ -7,12 +7,10 @@ file(GLOB_RECURSE EDITORTEST_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(EDITORTEST_SOURCES
-		${EDITORTEST_HEADER_FILES}
-		${EDITORTEST_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${EDITORTEST_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${EDITORTEST_SOURCE_FILES})
 
-add_library(EditorTest ${EDITORTEST_SOURCES})
+add_library(EditorTest ${EDITORTEST_HEADER_FILES} ${EDITORTEST_SOURCE_FILES})
 
 target_compile_features(EditorTest PUBLIC cxx_std_17)
 target_compile_definitions(EditorTest

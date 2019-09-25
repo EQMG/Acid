@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTFONT_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTFONT_SOURCES
-		${TESTFONT_HEADER_FILES}
-		${TESTFONT_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTFONT_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTFONT_SOURCE_FILES})
 
-add_executable(TestFont ${TESTFONT_SOURCES})
+add_executable(TestFont ${TESTFONT_HEADER_FILES} ${TESTFONT_SOURCE_FILES})
 
 target_compile_features(TestFont PUBLIC cxx_std_17)
 target_include_directories(TestFont PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

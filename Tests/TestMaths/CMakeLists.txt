@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTMATHS_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTMATHS_SOURCES
-		${TESTMATHS_HEADER_FILES}
-		${TESTMATHS_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTMATHS_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTMATHS_SOURCE_FILES})
 
-add_executable(TestMaths ${TESTMATHS_SOURCES})
+add_executable(TestMaths ${TESTMATHS_HEADER_FILES} ${TESTMATHS_SOURCE_FILES})
 
 target_compile_features(TestMaths PUBLIC cxx_std_17)
 target_include_directories(TestMaths PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTNETWORK_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTNETWORK_SOURCES
-		${TESTNETWORK_HEADER_FILES}
-		${TESTNETWORK_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTNETWORK_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTNETWORK_SOURCE_FILES})
 
-add_executable(TestNetwork ${TESTNETWORK_SOURCES})
+add_executable(TestNetwork ${TESTNETWORK_HEADER_FILES} ${TESTNETWORK_SOURCE_FILES})
 
 target_compile_features(TestNetwork PUBLIC cxx_std_17)
 target_include_directories(TestNetwork PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

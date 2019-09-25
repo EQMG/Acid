@@ -445,6 +445,9 @@ set(_temp_acid_sources
 		Uis/UiStartLogo.cpp
 		Uis/UiTransform.cpp
 		)
+		
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${_temp_acid_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${_temp_acid_sources})
 
 # Adds the precompiled header
 include(PrecompiledHeader)

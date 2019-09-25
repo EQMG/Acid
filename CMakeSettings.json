@@ -4,12 +4,10 @@
       "name": "x64-RelWithDebInfo",
       "generator": "Ninja",
       "configurationType": "RelWithDebInfo",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\Build\\${name}",
       "installRoot": "${projectDir}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "-v",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeCommandArgs": "/MP /p:BuildInParallel",
       "variables": []
     },
     {
@@ -20,20 +18,16 @@
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
       "cmakeCommandArgs": "/MP /p:BuildInParallel",
-      "buildCommandArgs": "-v",
-      "ctestCommandArgs": "",
       "variables": []
     },
     {
       "name": "x64-Release",
       "generator": "Ninja",
       "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "-v",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "cmakeCommandArgs": "/MP /p:BuildInParallel",
       "variables": []
     }
   ]

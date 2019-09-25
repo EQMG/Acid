@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTSERIAL_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTSERIAL_SOURCES
-		${TESTSERIAL_HEADER_FILES}
-		${TESTSERIAL_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTSERIAL_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTSERIAL_SOURCE_FILES})
 
-add_executable(TestSerial ${TESTSERIAL_SOURCES})
+add_executable(TestSerial ${TESTSERIAL_HEADER_FILES} ${TESTSERIAL_SOURCE_FILES})
 
 target_compile_features(TestSerial PUBLIC cxx_std_17)
 target_include_directories(TestSerial PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

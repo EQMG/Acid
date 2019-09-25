@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTPBR_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTPBR_SOURCES
-		${TESTPBR_HEADER_FILES}
-		${TESTPBR_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTPBR_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTPBR_SOURCE_FILES})
 
-add_executable(TestPBR ${TESTPBR_SOURCES})
+add_executable(TestPBR ${TESTPBR_HEADER_FILES} ${TESTPBR_SOURCE_FILES})
 
 target_compile_features(TestPBR PUBLIC cxx_std_17)
 target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)

@@ -7,12 +7,10 @@ file(GLOB_RECURSE TESTPHYSICS_SOURCE_FILES
 		"*.cpp"
 		"*.rc"
 		)
-set(TESTPHYSICS_SOURCES
-		${TESTPHYSICS_HEADER_FILES}
-		${TESTPHYSICS_SOURCE_FILES}
-		)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTPHYSICS_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTPHYSICS_SOURCE_FILES})
 
-add_executable(TestPhysics ${TESTPHYSICS_SOURCES})
+add_executable(TestPhysics ${TESTPHYSICS_HEADER_FILES} ${TESTPHYSICS_SOURCE_FILES})
 
 target_compile_features(TestPhysics PUBLIC cxx_std_17)
 target_include_directories(TestPhysics PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
