@@ -1,12 +1,13 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "Bitmaps/Bitmap.hpp"
 #include "Maths/Vector2.hpp"
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
 
 namespace acid {
+class Bitmap;
+
 /**
  * @brief A representation of a Vulkan image, sampler, and view.
  */
@@ -97,9 +98,9 @@ public:
 
 private:
 	VkExtent3D m_extent;
-	VkFormat m_format;
 	VkSampleCountFlagBits m_samples;
 	VkImageUsageFlags m_usage;
+	VkFormat m_format;
 	uint32_t m_mipLevels;
 	uint32_t m_arrayLayers;
 

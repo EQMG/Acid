@@ -19,6 +19,8 @@ Scene1::Scene1() :
 		}
 	});
 
+	//Uis::Get()->GetCanvas().SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.3f), Vector2f(5.0f), 16s));
+
 	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
 	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
 	m_uiPanels.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));

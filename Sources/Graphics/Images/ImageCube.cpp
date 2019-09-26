@@ -1,5 +1,6 @@
 #include "ImageCube.hpp"
 
+#include "Bitmaps/Bitmap.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
@@ -51,9 +52,9 @@ ImageCube::ImageCube(const Vector2ui &extent, VkFormat format, VkImageLayout lay
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(format),
 	m_components(4),
-	m_extent(extent),
-	m_format(format) {
+	m_extent(extent) {
 	ImageCube::Load();
 }
 
@@ -66,11 +67,10 @@ ImageCube::ImageCube(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageL
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(format),
 	m_components(bitmap->GetBytesPerPixel()),
-	m_extent(bitmap->GetSize()),
-	m_loadBitmap(std::move(bitmap)),
-	m_format(format) {
-	ImageCube::Load();
+	m_extent(bitmap->GetSize()) {
+	ImageCube::Load(std::move(bitmap));
 }
 
 ImageCube::~ImageCube() {
@@ -188,30 +188,29 @@ Node &operator<<(Node &node, const ImageCube &image) {
 	return node;
 }
 
-void ImageCube::Load() {
-	if (!m_filename.empty() && !m_loadBitmap) {
+void ImageCube::Load(std::unique_ptr<Bitmap> loadBitmap) {
+	if (!m_filename.empty() && !loadBitmap) {
 		uint8_t *offset = nullptr;
 
 		for (const auto &side : m_fileSides) {
 			Bitmap bitmapSide(m_filename / (side + m_fileSuffix));
 			auto lengthSide = bitmapSide.GetLength();
 
-			if (!m_loadBitmap) {
-				m_loadBitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(lengthSide * 6), bitmapSide.GetSize(), 
+			if (!loadBitmap) {
+				loadBitmap = std::make_unique<Bitmap>(std::make_unique<uint8_t[]>(lengthSide * 6), bitmapSide.GetSize(),
 					bitmapSide.GetBytesPerPixel());
-				offset = m_loadBitmap->GetData().get();
+				offset = loadBitmap->GetData().get();
 			}
 
 			std::memcpy(offset, bitmapSide.GetData().get(), lengthSide);
 			offset += lengthSide;
 		}
 		
-		m_extent = m_loadBitmap->GetSize();
-		m_components = m_loadBitmap->GetBytesPerPixel();
+		m_extent = loadBitmap->GetSize();
+		m_components = loadBitmap->GetBytesPerPixel();
 	}
 
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
-		m_loadBitmap = nullptr;
 		return;
 	}
 
@@ -222,31 +221,28 @@ void ImageCube::Load() {
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_CUBE, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 
-	if (m_loadBitmap || m_mipmap) {
+	if (loadBitmap || m_mipmap) {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
 
-	// TODO: This part is important I guess...
-	/*if (m_loadBitmap) {
-		Buffer bufferStaging(m_loadBitmap->GetLength() * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+	if (loadBitmap) {
+		Buffer bufferStaging(loadBitmap->GetLength() * 6, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		uint8_t *data;
 		bufferStaging.MapMemory(reinterpret_cast<void**>(&data));
-		std::memcpy(data, m_loadBitmap.get(), bufferStaging.GetSize());
+		std::memcpy(data, loadBitmap->GetData().get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 6, 0);
-	}*/
+	}
 
 	if (m_mipmap) {
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 6);
-	} else if (m_loadBitmap) {
+	} else if (loadBitmap) {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	} else {
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 6, 0);
 	}
-
-	m_loadBitmap = nullptr;
 }
 }

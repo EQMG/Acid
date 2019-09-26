@@ -19,16 +19,16 @@ namespace test {
 class Inventory : public UiObject {
 public:
 	explicit Inventory(UiObject *parent) :
-		UiObject(parent, UiTransform(Vector2i(480, 48), UiAnchor::CentreBottom)) {
+		UiObject(parent, {{480, 48}, UiAnchor::CentreBottom}) {
 		SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.9f), Vector2f(1.2f), 6s));
 		for (uint32_t i = 0; i < 10; i++) {
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);
 
-			auto slot = std::make_unique<Gui>(this, UiTransform(Vector2i(48, 48), UiAnchor::LeftTop, Vector2i(48 * i, 0)), Image2d::Create("Guis/White.png"));
+			auto slot = std::make_unique<Gui>(this, UiTransform({48, 48}, UiAnchor::LeftTop, {48 * i, 0}), Image2d::Create("Guis/White.png"));
 			slot->SetColourDriver(std::make_unique<DriverConstant<Colour>>(colour)); // TODO: If colour for GUI is like this do the same for text.
 			m_slots.emplace_back(std::move(slot));
 
-			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform(Vector2i(24, 16), UiAnchor::CentreBottom), 12,
+			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform({24, 16}, UiAnchor::CentreBottom), 12,
 				std::to_string(i), FontType::Create("Fonts/ProximaNova", "Bold"), Text::Justify::Centre, colour * 0.33f);
 			m_slotTitles.emplace_back(std::move(slotTitle));*/
 		}

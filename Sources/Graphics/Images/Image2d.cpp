@@ -1,5 +1,6 @@
 #include "Image2d.hpp"
 
+#include "Bitmaps/Bitmap.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
@@ -50,9 +51,9 @@ Image2d::Image2d(const Vector2ui &extent, VkFormat format, VkImageLayout layout,
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(format),
 	m_components(4),
-	m_extent(extent),
-	m_format(format) {
+	m_extent(extent) {
 	Image2d::Load();
 }
 
@@ -65,11 +66,10 @@ Image2d::Image2d(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageLayou
 	m_samples(samples),
 	m_layout(layout),
 	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_format(format),
 	m_components(bitmap->GetBytesPerPixel()),
-	m_extent(bitmap->GetSize()),
-	m_loadBitmap(std::move(bitmap)),
-	m_format(format) {
-	Image2d::Load();
+	m_extent(bitmap->GetSize()) {
+	Image2d::Load(std::move(bitmap));
 }
 
 Image2d::~Image2d() {
@@ -168,15 +168,14 @@ Node &operator<<(Node &node, const Image2d &image) {
 	return node;
 }
 
-void Image2d::Load() {
-	if (!m_filename.empty() && !m_loadBitmap) {
-		m_loadBitmap = std::make_unique<Bitmap>(m_filename);
-		m_extent = m_loadBitmap->GetSize();
-		m_components = m_loadBitmap->GetBytesPerPixel();
+void Image2d::Load(std::unique_ptr<Bitmap> loadBitmap) {
+	if (!m_filename.empty() && !loadBitmap) {
+		loadBitmap = std::make_unique<Bitmap>(m_filename);
+		m_extent = loadBitmap->GetSize();
+		m_components = loadBitmap->GetBytesPerPixel();
 	}
 		
 	if (m_extent.m_x == 0 || m_extent.m_y == 0) {
-		m_loadBitmap = nullptr;
 		return;
 	}
 
@@ -187,19 +186,19 @@ void Image2d::Load() {
 	Image::CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
 	Image::CreateImageView(m_image, m_view, VK_IMAGE_VIEW_TYPE_2D, m_format, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 
-	if (m_loadBitmap || m_mipmap) {
+	if (loadBitmap || m_mipmap) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
 
-	if (m_loadBitmap) {
+	if (loadBitmap) {
 		//m_image.SetPixels(m_loadPixels.get(), 1, 0);
-		Buffer bufferStaging(m_loadBitmap->GetLength(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+		Buffer bufferStaging(loadBitmap->GetLength(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		uint8_t *data;
 		bufferStaging.MapMemory(reinterpret_cast<void **>(&data));
-		std::memcpy(data, m_loadBitmap->GetData().get(), bufferStaging.GetSize());
+		std::memcpy(data, loadBitmap->GetData().get(), bufferStaging.GetSize());
 		bufferStaging.UnmapMemory();
 
 		Image::CopyBufferToImage(bufferStaging.GetBuffer(), m_image, {m_extent.m_x, m_extent.m_y, 1}, 1, 0);
@@ -208,14 +207,12 @@ void Image2d::Load() {
 	if (m_mipmap) {
 		//m_image.CreateMipmaps();
 		Image::CreateMipmaps(m_image, {m_extent.m_x, m_extent.m_y, 1}, m_format, m_layout, m_mipLevels, 0, 1);
-	} else if (m_loadBitmap) {
+	} else if (loadBitmap) {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	} else {
 		//m_image.TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED, m_layout);
 		Image::TransitionImageLayout(m_image, m_format, VK_IMAGE_LAYOUT_UNDEFINED, m_layout, VK_IMAGE_ASPECT_COLOR_BIT, m_mipLevels, 0, 1, 0);
 	}
-
-	m_loadBitmap = nullptr;
 }
 }

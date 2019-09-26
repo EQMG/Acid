@@ -14,10 +14,10 @@ void HeightDespawn::Start() {
 }
 
 void HeightDespawn::Update() {
-	auto transform = GetEntity()->GetComponent<Transform>();
-
-	if (transform && transform->GetPosition().m_y < m_removeHeight) {
-		GetEntity()->SetRemoved(true);
+	if (auto transform = GetEntity()->GetComponent<Transform>(); 
+		transform && transform->GetPosition().m_y < m_removeHeight) {
+		// TODO: Fix collider delete crash and crash from children not seeing this parent.
+		//GetEntity()->SetRemoved(true);
 	}
 }
 

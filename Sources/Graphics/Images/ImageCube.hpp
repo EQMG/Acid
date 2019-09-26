@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Bitmaps/Bitmap.hpp"
 #include "Helpers/NonCopyable.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
 
 namespace acid {
+class Bitmap;
+
 /**
  * @brief Resource that represents a cubemap image.
  */
@@ -129,7 +130,7 @@ public:
 	const VkFormat &GetFormat() const { return m_format; }
 
 private:
-	void Load();
+	void Load(std::unique_ptr<Bitmap> loadBitmap = nullptr);
 
 	std::filesystem::path m_filename;
 	std::string m_fileSuffix;
@@ -142,16 +143,15 @@ private:
 	VkSampleCountFlagBits m_samples;
 	VkImageLayout m_layout;
 	VkImageUsageFlags m_usage;
+	VkFormat m_format;
 
 	uint32_t m_components = 0;
 	Vector2ui m_extent;
-	std::unique_ptr<Bitmap> m_loadBitmap;
 	uint32_t m_mipLevels = 0;
 
 	VkImage m_image = VK_NULL_HANDLE;
 	VkDeviceMemory m_memory = VK_NULL_HANDLE;
 	VkSampler m_sampler = VK_NULL_HANDLE;
 	VkImageView m_view = VK_NULL_HANDLE;
-	VkFormat m_format;
 };
 }

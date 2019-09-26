@@ -24,12 +24,13 @@ public:
 	VkFormat GetFormat() const { return m_format; }
 
 private:
+	VkFormat m_format;
+	
 	Vector2ui m_extent;
 
 	VkImage m_image = VK_NULL_HANDLE;
 	VkDeviceMemory m_memory = VK_NULL_HANDLE;
 	VkSampler m_sampler = VK_NULL_HANDLE;
 	VkImageView m_view = VK_NULL_HANDLE;
-	VkFormat m_format;
 };
 }
