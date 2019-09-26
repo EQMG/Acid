@@ -18,6 +18,9 @@ set(_temp_acid_headers
 		Audio/Audio.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
+		Audio/Aiff/SoundBufferAiff.hpp
+		Audio/Ogg/SoundBufferOgg.hpp
+		Audio/Wave/SoundBufferWave.hpp
 		Bitmaps/Bitmap.hpp
 		Bitmaps/Png/BitmapPng.hpp
 		Devices/Instance.hpp
@@ -257,6 +260,9 @@ set(_temp_acid_sources
 		Audio/Audio.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
+		Audio/Aiff/SoundBufferAiff.cpp
+		Audio/Ogg/SoundBufferOgg.cpp
+		Audio/Wave/SoundBufferWave.cpp
 		Bitmaps/Bitmap.cpp
 		Bitmaps/Png/BitmapPng.cpp
 		Devices/Instance.cpp
