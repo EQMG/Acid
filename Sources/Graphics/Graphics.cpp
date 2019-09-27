@@ -49,7 +49,7 @@ void Graphics::Update() {
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
 		VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
-		m_swapchain = std::make_unique<Swapchain>(displayExtent);
+		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 		return;
 	}
 
@@ -239,7 +239,7 @@ void Graphics::CreatePipelineCache() {
 void Graphics::ResetRenderStages() {
 	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 
-	m_swapchain = std::make_unique<Swapchain>(displayExtent);
+	m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 
 	if (m_flightFences.size() != m_swapchain->GetImageCount()) {
 		for (std::size_t i = 0; i < m_flightFences.size(); i++) {
@@ -289,7 +289,7 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 #if defined(ACID_DEBUG)
 		Log::Out("Resizing swapchain from (", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, ") to (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
-		m_swapchain = std::make_unique<Swapchain>(displayExtent);
+		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 	}
 
 	renderStage.Rebuild(*m_swapchain);

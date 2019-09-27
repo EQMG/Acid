@@ -8,43 +8,41 @@
 #endif
 
 namespace acid {
-const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_LUNARG_standard_validation"}; // "VK_LAYER_RENDERDOC_Capture"
+const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"}; // "VK_LAYER_RENDERDOC_Capture"
 const std::vector<const char *> Instance::InstanceExtensions = {VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME};
 const std::vector<const char *> Instance::DeviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME}; // VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME,
 // VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME, VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 
-VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,
-	const char *pLayerPrefix, const char *pMessage, void *pUserData) {
-	Log::Error(pMessage, '\n');
-	return static_cast<VkBool32>(false);
+VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
+	const char *type =
+		(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+		? "ERROR"
+		: (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+		? "WARNING"
+		: "INFO";
+
+	Log::Error(type, ": ", pCallbackData->pMessage, "\n");
+	return VK_FALSE;
 }
 
-VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator,
-	VkDebugReportCallbackEXT *pCallback) {
-	auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
-
-	if (func) {
-		return func(instance, pCreateInfo, pAllocator, pCallback);
-	}
-
+VkResult Instance::FvkCreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger) {
+	auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+	if (func)
+		return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
 	return VK_ERROR_EXTENSION_NOT_PRESENT;
 }
 
-void Instance::FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator) {
-	auto func = reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
-
-	if (func) {
-		func(instance, callback, pAllocator);
-	}
+void Instance::FvkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT messenger, const VkAllocationCallbacks *pAllocator) {
+	auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+	if (func)
+		return func(instance, messenger, pAllocator);
 }
 
 void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set,
 	uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites) {
 	auto func = reinterpret_cast<PFN_vkCmdPushDescriptorSetKHR>(vkGetDeviceProcAddr(device, "vkCmdPushDescriptorSetKHR"));
-
-	if (func) {
+	if (func)
 		func(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
-	}
 }
 
 uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
@@ -68,7 +66,7 @@ Instance::Instance() {
 }
 
 Instance::~Instance() {
-	FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
+	FvkDestroyDebugUtilsMessengerEXT(m_instance, m_debugMessenger, nullptr);
 	vkDestroyInstance(m_instance, nullptr);
 }
 
@@ -146,18 +144,29 @@ void Instance::CreateInstance() {
 	instanceCreateInfo.ppEnabledLayerNames = m_instanceLayers.data();
 	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensions.size());
 	instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensions.data();
+	instanceCreateInfo.pNext = nullptr;
+
+#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
+	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
+	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
+	instanceCreateInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *)&debugUtilsMessengerCreateInfo;
+#endif
+
 	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 }
 
 void Instance::CreateDebugCallback() {
 #if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
-	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
-	debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
-	debugReportCallbackCreateInfo.pNext = nullptr;
-	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
-	debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
-	debugReportCallbackCreateInfo.pUserData = nullptr;
-	Graphics::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
+	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
+
+	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugMessenger));
 #endif
 }
 
