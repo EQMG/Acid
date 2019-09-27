@@ -25,7 +25,7 @@ void Gui::UpdateObject() {
 	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
-	m_uniformObject.Push("aspectRatio", (GetScreenTransform().GetSize().m_x / GetScreenTransform().GetSize().m_y));
+	m_uniformObject.Push("aspectRatio", GetScreenTransform().GetSize().m_x / GetScreenTransform().GetSize().m_y);
 
 	m_uniformObject.Push("colourOffset", m_colourOffset);
 	m_uniformObject.Push("atlasOffset", m_atlasOffset);

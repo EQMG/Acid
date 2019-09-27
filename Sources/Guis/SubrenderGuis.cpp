@@ -18,9 +18,7 @@ void SubrenderGuis::Render(const CommandBuffer &commandBuffer) {
 			continue;
 		}
 
-		auto object = dynamic_cast<Gui *>(screenObject);
-
-		if (object) {
+		if (auto object = dynamic_cast<Gui *>(screenObject)) {
 			object->CmdRender(commandBuffer, m_pipeline);
 		}
 	}

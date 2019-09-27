@@ -27,7 +27,7 @@ private:
 	std::unique_ptr<cr_plugin> m_plugin;
 	bool m_update;
 
-	Panels m_panels;
+	//Panels m_panels;
 
 	ButtonKeyboard m_buttonReload;
 };

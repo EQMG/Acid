@@ -16,6 +16,8 @@ target_compile_features(Editor PUBLIC cxx_std_17)
 target_include_directories(Editor PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(Editor PRIVATE Acid::Acid)
 
+add_dependencies(Editor EditorTest)
+
 set_target_properties(Editor PROPERTIES
 		FOLDER "Acid"
 		)

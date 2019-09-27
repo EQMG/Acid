@@ -18,9 +18,7 @@ void SubrenderFonts::Render(const CommandBuffer &commandBuffer) {
 			continue;
 		}
 
-		auto object = dynamic_cast<Text *>(screenObject);
-
-		if (object) {
+		if (auto object = dynamic_cast<Text *>(screenObject)) {
 			object->CmdRender(commandBuffer, m_pipeline);
 		}
 	}

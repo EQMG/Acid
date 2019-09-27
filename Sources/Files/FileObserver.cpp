@@ -6,8 +6,8 @@ FileObserver::FileObserver(std::filesystem::path path, const Time &delay) :
 	m_delay(delay),
 	m_running(true),
 	m_thread(&FileObserver::QueueLoop, this) {
-	DoWithFilesInPath([&](const std::filesystem::path &path) {
-		m_paths[path.string()] = std::filesystem::last_write_time(path);
+	DoWithFilesInPath([&](const std::filesystem::path &file) {
+		m_paths[file.string()] = std::filesystem::last_write_time(file);
 	});
 }
 
@@ -19,7 +19,7 @@ FileObserver::~FileObserver() {
 }
 
 void FileObserver::DoWithFilesInPath(const std::function<void(std::filesystem::path)> &f) const {
-	if (std::filesystem::is_regular_file(m_path)) {
+	if (!std::filesystem::is_directory(m_path)) {
 		f(m_path);
 		return;
 	}
@@ -45,18 +45,18 @@ void FileObserver::QueueLoop() {
 		}
 		
 		// Check if a file was created or modified
-		DoWithFilesInPath([&](const std::filesystem::path &path) {
-			auto lastWriteTime = std::filesystem::last_write_time(path);
+		DoWithFilesInPath([&](const std::filesystem::path &file) {
+			auto lastWriteTime = std::filesystem::last_write_time(file);
 
 			// File creation
-			if (!Contains(path.string())) {
+			if (!Contains(file.string())) {
 				// File modification
-				m_paths[path.string()] = lastWriteTime;
-				m_onChange(path.string(), Status::Created);
+				m_paths[file.string()] = lastWriteTime;
+				m_onChange(file.string(), Status::Created);
 			} else {
-				if (m_paths[path.string()] != lastWriteTime) {
-					m_paths[path.string()] = lastWriteTime;
-					m_onChange(path.string(), Status::Modified);
+				if (m_paths[file.string()] != lastWriteTime) {
+					m_paths[file.string()] = lastWriteTime;
+					m_onChange(file.string(), Status::Modified);
 				}
 			}
 		});

@@ -15,11 +15,11 @@
 CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation) {
 	switch (operation) {
 	case CR_LOAD:
-		Log::Out("[Guest] Operation load: ", ctx->version, '\n');
+		Log::Debug("[Guest] Operation load: ", ctx->version, '\n');
 		Engine::Get()->SetApp(std::make_unique<test::MainApp>());
 		return 0;
 	case CR_UNLOAD:
-		Log::Out("[Guest] Operation unload: ", ctx->version, '\n');
+		Log::Debug("[Guest] Operation unload: ", ctx->version, '\n');
 		Engine::Get()->SetApp(nullptr);
 		return 0;
 	default:
@@ -50,7 +50,7 @@ MainApp::MainApp() :
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete) {
-	Log::Out("[Game] Constructor\n");
+	Log::Debug("[Game] Constructor\n");
 
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
@@ -76,7 +76,7 @@ MainApp::MainApp() :
 }
 
 MainApp::~MainApp() {
-	Log::Out("[Game] Destructor\n");
+	Log::Debug("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
 
 	Graphics::Get()->SetRenderer(nullptr);
