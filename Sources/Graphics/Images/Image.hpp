@@ -67,6 +67,15 @@ public:
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
 	/**
+	 * Find a format in the candidates list that fits the tiling and features required.
+	 * @param candidates Formats that are tested for features, in order of preference.
+	 * @param tiling Tiling mode to test features in.
+	 * @param features The features to test for.
+	 * @return The format found, or VK_FORMAT_UNDEFINED.
+	 */
+	static VkFormat FindSupportedFormat(const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+
+	/**
 	 * Gets if a format has a depth component.
 	 * @param format The format to check.
 	 * @return If the format has a depth component.

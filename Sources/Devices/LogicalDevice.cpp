@@ -6,6 +6,8 @@
 #include "Surface.hpp"
 
 namespace acid {
+const std::vector<const char *> LogicalDevice::DeviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME}; // VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
+
 LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface) :
 	m_instance(instance),
 	m_physicalDevice(physicalDevice),
@@ -190,10 +192,12 @@ void LogicalDevice::CreateLogicalDevice() {
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
 	deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-	deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instance->GetInstanceLayers().size());
-	deviceCreateInfo.ppEnabledLayerNames = m_instance->GetInstanceLayers().data();
-	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instance->GetDeviceExtensions().size());
-	deviceCreateInfo.ppEnabledExtensionNames = m_instance->GetDeviceExtensions().data();
+	if (m_instance->GetEnableValidationLayers()) {
+		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(Instance::ValidationLayers.size());
+		deviceCreateInfo.ppEnabledLayerNames = Instance::ValidationLayers.data();
+	}
+	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(DeviceExtensions.size());
+	deviceCreateInfo.ppEnabledExtensionNames = DeviceExtensions.data();
 	deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
 	Graphics::CheckVk(vkCreateDevice(*m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 

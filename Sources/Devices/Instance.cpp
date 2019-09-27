@@ -3,37 +3,29 @@
 #include "Graphics/Graphics.hpp"
 #include "Window.hpp"
 
-#if !defined(VK_EXT_DEBUG_UTILS_EXTENSION_NAME)
-#define VK_EXT_DEBUG_UTILS_EXTENSION_NAME "VK_EXT_debug_utils"
-#endif
-
 namespace acid {
 const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"}; // "VK_LAYER_RENDERDOC_Capture"
-const std::vector<const char *> Instance::InstanceExtensions = {VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME};
-const std::vector<const char *> Instance::DeviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME}; // VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME,
-// VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_EXTENSION_NAME, VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 
 VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
-	const char *type =
-		(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
-		? "ERROR"
-		: (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
-		? "WARNING"
-		: "INFO";
+	if (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+		Log::Warning(pCallbackData->pMessage, '\n');
+	else if (messageSeverity &  VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
+		Log::Info(pCallbackData->pMessage, '\n');
+	else // VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+		Log::Error(pCallbackData->pMessage, '\n');
 
-	Log::Error(type, ": ", pCallbackData->pMessage, "\n");
 	return VK_FALSE;
 }
 
 VkResult Instance::FvkCreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger) {
-	auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+	auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"));
 	if (func)
 		return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
 	return VK_ERROR_EXTENSION_NOT_PRESENT;
 }
 
 void Instance::FvkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT messenger, const VkAllocationCallbacks *pAllocator) {
-	auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+	auto func = reinterpret_cast<PFN_vkDestroyDebugUtilsMessengerEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT"));
 	if (func)
 		return func(instance, messenger, pAllocator);
 }
@@ -59,10 +51,12 @@ uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *d
 }
 
 Instance::Instance() {
-	SetupLayers();
-	SetupExtensions();
+#if defined(ACID_DEBUG)
+	m_enableValidationLayers = true;
+#endif
+	
 	CreateInstance();
-	CreateDebugCallback();
+	CreateDebugMessenger();
 }
 
 Instance::~Instance() {
@@ -70,7 +64,7 @@ Instance::~Instance() {
 	vkDestroyInstance(m_instance, nullptr);
 }
 
-void Instance::SetupLayers() {
+bool Instance::CheckValidationLayerSupport() const {
 	uint32_t instanceLayerPropertyCount;
 	vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, nullptr);
 	std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
@@ -80,8 +74,6 @@ void Instance::SetupLayers() {
 	LogVulkanLayers(instanceLayerProperties);
 #endif
 
-	// Sets up the layers.
-#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
 	for (const auto &layerName : ValidationLayers) {
 		bool layerFound = false;
 
@@ -94,34 +86,23 @@ void Instance::SetupLayers() {
 
 		if (!layerFound) {
 			Log::Error("Vulkan validation layer not found: ", std::quoted(layerName), '\n');
-			continue;
+			return false;
 		}
-
-		m_instanceLayers.emplace_back(layerName);
 	}
-#endif
-
-	for (const auto &layerName : DeviceExtensions) {
-		m_deviceExtensions.emplace_back(layerName);
-	}
+	
+	return true;
 }
 
-void Instance::SetupExtensions() {
+std::vector<const char *> Instance::GetExtensions() const {
 	// Sets up the extensions.
-	auto [extensions, extensionsCount] = Window::Get()->GetInstanceExtensions();
+	auto [glfwExtensions, glfwExtensionsCount] = Window::Get()->GetInstanceExtensions();
 
-	for (uint32_t i = 0; i < extensionsCount; i++) {
-		m_instanceExtensions.emplace_back(extensions[i]);
-	}
+	std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionsCount);
 
-	for (const auto &instanceExtension : InstanceExtensions) {
-		m_instanceExtensions.emplace_back(instanceExtension);
-	}
-
-#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
-	m_instanceExtensions.emplace_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-	m_instanceExtensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-#endif
+	if (m_enableValidationLayers)
+		extensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+	//extensions.emplace_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
+	return extensions;
 }
 
 void Instance::CreateInstance() {
@@ -137,29 +118,36 @@ void Instance::CreateInstance() {
 	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.m_major, engineVersion.m_minor, engineVersion.m_patch);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
+	if (m_enableValidationLayers && !CheckValidationLayerSupport()) {
+		Log::Error("Validation layers requested, but not available!\n");
+		m_enableValidationLayers = false;
+	}
+
+	auto extensions = GetExtensions();
+	
 	VkInstanceCreateInfo instanceCreateInfo = {};
 	instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instanceCreateInfo.pApplicationInfo = &applicationInfo;
-	instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(m_instanceLayers.size());
-	instanceCreateInfo.ppEnabledLayerNames = m_instanceLayers.data();
-	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(m_instanceExtensions.size());
-	instanceCreateInfo.ppEnabledExtensionNames = m_instanceExtensions.data();
-	instanceCreateInfo.pNext = nullptr;
+	instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers.size());
+	instanceCreateInfo.ppEnabledLayerNames = ValidationLayers.data();
+	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+	instanceCreateInfo.ppEnabledExtensionNames = extensions.data();
 
-#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
-	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
-	instanceCreateInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *)&debugUtilsMessengerCreateInfo;
-#endif
+	if (m_enableValidationLayers) {
+		debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+		debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+		debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
+		instanceCreateInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&debugUtilsMessengerCreateInfo);
+	}
 
 	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
 }
 
-void Instance::CreateDebugCallback() {
-#if defined(ACID_DEBUG) && !defined(ACID_BUILD_MACOS)
+void Instance::CreateDebugMessenger() {
+	if (!m_enableValidationLayers) return;
+	
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
 	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
@@ -167,7 +155,6 @@ void Instance::CreateDebugCallback() {
 	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
 
 	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugMessenger));
-#endif
 }
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties) {

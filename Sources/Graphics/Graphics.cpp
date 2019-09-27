@@ -47,13 +47,14 @@ void Graphics::Update() {
 
 	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
-	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
+	/*if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
 		VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 		return;
-	}
+	}*/
 
-	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR) {
+	if (acquireResult != VK_SUCCESS) { // && acquireResult != VK_SUBOPTIMAL_KHR
+		Log::Error("Failed to acquire swap chain image!\n");
 		return;
 	}
 
@@ -359,14 +360,12 @@ void Graphics::EndRenderpass(RenderStage &renderStage) {
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
 
-	if (auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
-		!(presentResult == VK_SUCCESS || presentResult == VK_SUBOPTIMAL_KHR)) {
-		if (presentResult == VK_ERROR_OUT_OF_DATE_KHR) {
-			RecreatePass(renderStage);
-			return;
-		}
-
-		CheckVk(presentResult);
+	auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
+	if (presentResult == VK_ERROR_OUT_OF_DATE_KHR || presentResult == VK_SUBOPTIMAL_KHR) {
+		VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
+	} else if (presentResult != VK_SUCCESS) {
+		Log::Error("Failed to present swap chain image!\n");
 	}
 
 	m_currentFrame = (m_currentFrame + 1) % m_swapchain->GetImageCount();

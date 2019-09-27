@@ -11,7 +11,10 @@ class Surface;
 class ACID_EXPORT LogicalDevice {
 	friend class Graphics;
 public:
+	static const std::vector<const char *> DeviceExtensions;
+	
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
+	
 	~LogicalDevice();
 
 	operator const VkDevice &() const { return m_logicalDevice; }

@@ -24,7 +24,7 @@ public:
 	VkFormat GetFormat() const { return m_format; }
 
 private:
-	VkFormat m_format;
+	VkFormat m_format = VK_FORMAT_UNDEFINED;
 	
 	Vector2ui m_extent;
 

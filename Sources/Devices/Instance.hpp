@@ -11,8 +11,6 @@ public:
 		const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData);
 
 	static const std::vector<const char *> ValidationLayers;
-	static const std::vector<const char *> InstanceExtensions;
-	static const std::vector<const char *> DeviceExtensions;
 
 	Instance();
 
@@ -30,24 +28,20 @@ public:
 
 	operator const VkInstance &() const { return m_instance; }
 
-	const std::vector<const char *> &GetInstanceLayers() const { return m_instanceLayers; }
-	const std::vector<const char *> &GetInstanceExtensions() const { return m_instanceExtensions; }
-	const std::vector<const char *> &GetDeviceExtensions() const { return m_deviceExtensions; }
+	bool GetEnableValidationLayers() const { return m_enableValidationLayers; }
 	const VkInstance &GetInstance() const { return m_instance; }
 
 private:
-	void SetupLayers();
-	void SetupExtensions();
+	bool CheckValidationLayerSupport() const;
+	std::vector<const char *> GetExtensions() const;
 	void CreateInstance();
-	void CreateDebugCallback();
+	void CreateDebugMessenger();
 
 	static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties);
 
-	std::vector<const char *> m_instanceLayers;
-	std::vector<const char *> m_instanceExtensions;
-	std::vector<const char *> m_deviceExtensions;
+	bool m_enableValidationLayers = false;
 
-	VkDebugUtilsMessengerEXT m_debugMessenger = VK_NULL_HANDLE;
 	VkInstance m_instance = VK_NULL_HANDLE;
+	VkDebugUtilsMessengerEXT m_debugMessenger = VK_NULL_HANDLE;
 };
 }

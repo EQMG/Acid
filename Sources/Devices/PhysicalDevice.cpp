@@ -59,7 +59,7 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionPropertyCount, extensionProperties.data());
 
 	// Iterates through all extensions requested.
-	for (const char *currentExtension : Instance::DeviceExtensions) {
+	for (const char *currentExtension : LogicalDevice::DeviceExtensions) {
 		bool extensionFound = false;
 
 		// Checks if the extension is in the available extensions.

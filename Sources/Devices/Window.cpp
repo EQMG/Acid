@@ -305,7 +305,7 @@ void Window::CheckGlfw(int32_t result) {
 	throw std::runtime_error("GLFW error: " + failure);
 }
 
-std::pair<const char **, uint32_t> Window::GetInstanceExtensions() {
+std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const {
 	uint32_t glfwExtensionCount;
 	auto glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 	return std::make_pair(glfwExtensions, glfwExtensionCount);

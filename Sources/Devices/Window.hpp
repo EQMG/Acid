@@ -236,7 +236,7 @@ public:
 	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
 	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
 
-	static std::pair<const char **, uint32_t> GetInstanceExtensions();
+	std::pair<const char **, uint32_t> GetInstanceExtensions() const;
 	VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
 
 private:
