@@ -232,13 +232,13 @@ void Window::SetFullscreen(bool fullscreen, Monitor *monitor) {
 
 	if (m_fullscreen) {
 #if defined(ACID_DEBUG)
-		printf("Window is going fullscreen\n");
+		Log::Out("Window is going fullscreen\n");
 #endif
 		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
 		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	} else {
 #if defined(ACID_DEBUG)
-		printf("Window is going windowed\n");
+		Log::Out("Window is going windowed\n");
 #endif
 		m_position = ((Vector2i(videoMode.m_width, videoMode.m_height) - m_size) / 2) + selected->GetPosition();
 		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);

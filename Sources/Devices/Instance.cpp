@@ -4,15 +4,24 @@
 #include "Window.hpp"
 
 namespace acid {
+#if USE_DEBUG_MESSENGER
 const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"}; // "VK_LAYER_RENDERDOC_Capture"
+#else
+#ifndef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
+#define VK_EXT_DEBUG_UTILS_EXTENSION_NAME "VK_EXT_debug_utils"
+#endif
 
+const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_LUNARG_standard_validation"};
+#endif
+
+#if USE_DEBUG_MESSENGER
 VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
 	if (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
-		Log::Warning(pCallbackData->pMessage, '\n'); // "Validation layer: ", 
+		Log::Warning(pCallbackData->pMessage, '\n');
 	else if (messageSeverity &  VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
-		Log::Info(pCallbackData->pMessage, '\n'); // "Validation layer: ", 
+		Log::Info(pCallbackData->pMessage, '\n');
 	else // VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
-		Log::Error(pCallbackData->pMessage, '\n'); // "Validation layer: ", 
+		Log::Error(pCallbackData->pMessage, '\n');
 
 	return VK_FALSE;
 }
@@ -29,6 +38,33 @@ void Instance::FvkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtil
 	if (func)
 		return func(instance, messenger, pAllocator);
 }
+#else
+VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData) {
+	if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
+		Log::Warning(pMessage, '\n');
+	else if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT)
+		Log::Info(pMessage, '\n');
+	else //  VK_DEBUG_REPORT_ERROR_BIT_EXT
+		Log::Error(pMessage, '\n');
+
+	return VK_FALSE;
+}
+
+	
+VkResult Instance::FvkCreateDebugReportCallbackEXT(VkInstance instance, const VkDebugReportCallbackCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator,
+	VkDebugReportCallbackEXT *pCallback) {
+	auto func = reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
+	if (func)
+		return func(instance, pCreateInfo, pAllocator, pCallback);
+	return VK_ERROR_EXTENSION_NOT_PRESENT;
+}
+
+void Instance::FvkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks *pAllocator) {
+	auto func = reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
+	if (func)
+		func(instance, callback, pAllocator);
+}
+#endif
 
 void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set,
 	uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites) {
@@ -60,7 +96,11 @@ Instance::Instance() {
 }
 
 Instance::~Instance() {
+#if USE_DEBUG_MESSENGER
 	FvkDestroyDebugUtilsMessengerEXT(m_instance, m_debugMessenger, nullptr);
+#else
+	FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
+#endif
 	vkDestroyInstance(m_instance, nullptr);
 }
 
@@ -131,16 +171,20 @@ void Instance::CreateInstance() {
 	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
 	instanceCreateInfo.ppEnabledExtensionNames = extensions.data();
 
+#if USE_DEBUG_MESSENGER
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
+#endif
 	if (m_enableValidationLayers) {
+#if USE_DEBUG_MESSENGER
 		debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
 		debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 		debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
+		instanceCreateInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&debugUtilsMessengerCreateInfo);
+#endif
 
 		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers.size());
 		instanceCreateInfo.ppEnabledLayerNames = ValidationLayers.data();
-		instanceCreateInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&debugUtilsMessengerCreateInfo);
 	}
 
 	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
@@ -148,14 +192,24 @@ void Instance::CreateInstance() {
 
 void Instance::CreateDebugMessenger() {
 	if (!m_enableValidationLayers) return;
-	
+
+#if USE_DEBUG_MESSENGER
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
 	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
 	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
-
 	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugMessenger));
+#else
+	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
+	debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+	debugReportCallbackCreateInfo.pNext = nullptr;
+	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
+	debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
+	debugReportCallbackCreateInfo.pUserData = nullptr;
+	Graphics::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
+
+#endif
 }
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties) {

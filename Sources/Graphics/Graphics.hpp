@@ -58,6 +58,8 @@ public:
 private:
 	void CreatePipelineCache();
 	void ResetRenderStages();
+	void RecreateSwapchain();
+	void RecreateCommandBuffers();
 	void RecreatePass(RenderStage &renderStage);
 	void RecreateAttachmentsMap();
 	bool StartRenderpass(RenderStage &renderStage);

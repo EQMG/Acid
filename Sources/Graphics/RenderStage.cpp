@@ -48,11 +48,10 @@ void RenderStage::Update() {
 
 	m_renderArea.SetOffset(m_viewport.GetOffset());
 
-	if (m_viewport.GetSize()) {
+	if (m_viewport.GetSize())
 		m_renderArea.SetExtent(m_viewport.GetScale() * *m_viewport.GetSize());
-	} else {
+	else
 		m_renderArea.SetExtent(m_viewport.GetScale() * Window::Get()->GetSize());
-	}
 
 	m_renderArea.SetAspectRatio(static_cast<float>(m_renderArea.GetExtent().m_x) / static_cast<float>(m_renderArea.GetExtent().m_y));
 	m_renderArea.SetExtent(m_renderArea.GetExtent() + m_renderArea.GetOffset());
