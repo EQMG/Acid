@@ -1,7 +1,6 @@
 #include "MainRenderer.hpp"
 
 #include <Fonts/SubrenderFonts.hpp>
-#include <Fonts/SubrenderFonts2.hpp>
 #include <Guis/SubrenderGuis.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -21,7 +20,6 @@ MainRenderer::MainRenderer() {
 void MainRenderer::Start() {
 	AddSubrender<SubrenderGuis>({0, 0});
 	AddSubrender<SubrenderFonts>({0, 0});
-	AddSubrender<SubrenderFonts2>({0, 0});
 }
 
 void MainRenderer::Update() {

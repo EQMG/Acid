@@ -30,6 +30,8 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 }
 
 void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos) {
+	if (Window::Get()->m_fullscreen) 
+		return;
 	Window::Get()->m_position = {xpos, ypos};
 	Window::Get()->m_onPosition(Window::Get()->m_position);
 }
@@ -39,9 +41,13 @@ void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height) {
 		return;
 	}
 
-	Window::Get()->m_size = {width, height};
-	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
-	Window::Get()->m_onSize(Window::Get()->m_size);
+	if (Window::Get()->m_fullscreen) {
+		Window::Get()->m_fullscreenSize = {width, height};
+		Window::Get()->m_onSize(Window::Get()->m_fullscreenSize);
+	} else {
+		Window::Get()->m_size = {width, height};
+		Window::Get()->m_onSize(Window::Get()->m_size);
+	}
 }
 
 void CallbackWindowClose(GLFWwindow *window) {
@@ -61,14 +67,15 @@ void CallbackWindowIconify(GLFWwindow *window, int32_t iconified) {
 }
 
 void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height) {
-	Window::Get()->m_size = {width, height};
-	Window::Get()->m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	if (Window::Get()->m_fullscreen)
+		Window::Get()->m_fullscreenSize = {width, height};
+	else
+		Window::Get()->m_size = {width, height};
 	Graphics::Get()->SetFramebufferResized();
 }
 
 Window::Window() :
 	m_size(1080, 720),
-	m_aspectRatio(1.5f),
 	m_title("Acid Window"),
 	m_resizable(true),
 	m_focused(true) {
@@ -164,7 +171,6 @@ void Window::Update() {
 void Window::SetSize(const Vector2i &size) {
 	m_size.m_x = size.m_x == -1 ? m_size.m_x : size.m_x;
 	m_size.m_y = size.m_y == -1 ? m_size.m_y : size.m_y;
-	m_aspectRatio = static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y);
 	glfwSetWindowSize(m_window, m_size.m_x, m_size.m_y);
 }
 
@@ -222,22 +228,22 @@ void Window::SetFullscreen(bool fullscreen, Monitor *monitor) {
 	auto selected = monitor ? monitor : GetCurrentMonitor();
 	auto videoMode = selected->GetVideoMode();
 
-	if (fullscreen) {
+	m_fullscreen = fullscreen;
+
+	if (m_fullscreen) {
 #if defined(ACID_DEBUG)
 		printf("Window is going fullscreen\n");
 #endif
-		m_size = {videoMode.m_width, videoMode.m_height};
-		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
+		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
+		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
 	} else {
 #if defined(ACID_DEBUG)
 		printf("Window is going windowed\n");
 #endif
-		m_size = {1080, 720};
 		m_position = ((Vector2i(videoMode.m_width, videoMode.m_height) - m_size) / 2) + selected->GetPosition();
 		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
 	}
 
-	m_fullscreen = fullscreen;
 	m_onFullscreen(m_fullscreen);
 }
 
@@ -284,7 +290,7 @@ const Monitor *Window::GetCurrentMonitor() const {
 	std::multimap<int32_t, const Monitor *> rankedMonitor;
 
 	for (const auto &monitor : m_monitors) {
-		rankedMonitor.emplace(OverlappingArea(monitor->GetPosition(), monitor->GetPosition() + monitor->GetSize(), m_position, m_position + m_size), monitor.get());
+		rankedMonitor.emplace(OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(), m_position, m_position + m_size), monitor.get());
 	}
 
 	if (rankedMonitor.begin()->first > 0) {

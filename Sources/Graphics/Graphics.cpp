@@ -361,6 +361,7 @@ void Graphics::EndRenderpass(RenderStage &renderStage) {
 	//	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
 	//	m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 	} else if (presentResult != VK_SUCCESS) {
+		CheckVk(presentResult);
 		Log::Error("Failed to present swap chain image!\n");
 	}
 

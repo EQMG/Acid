@@ -41,15 +41,16 @@ public:
 
 	/**
 	 * Gets the size of the window in pixels.
+	 * @param checkFullscreen If in fullscreen and true size will be the screens size.
 	 * @return The size of the window.
 	 */
-	const Vector2ui &GetSize() const { return m_size; }
+	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
 
 	/**
 	 * Gets the aspect ratio between the windows width and height.
 	 * @return The aspect ratio.
 	 */
-	float GetAspectRatio() const { return m_aspectRatio; }
+	float GetAspectRatio() const { return static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y); }
 
 	/**
 	 * Sets the window size.
@@ -250,7 +251,7 @@ private:
 	friend void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height);
 
 	Vector2ui m_size;
-	float m_aspectRatio = 1.0f;
+	Vector2ui m_fullscreenSize;
 
 	Vector2ui m_position;
 

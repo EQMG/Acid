@@ -55,8 +55,8 @@ void Model::SetIndices(const std::vector<uint32_t> &indices) {
 	m_indexCount = static_cast<uint32_t>(indices.size());
 
 	if (!indices.empty()) {
-		Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
+		Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+			indices.data());
 		m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
