@@ -25,8 +25,6 @@ public:
 	static std::string StringifyResultVk(const VkResult &result);
 	static void CheckVk(const VkResult &result);
 
-	void UpdateSurfaceCapabilities();
-
 	/**
 	 * Takes a screenshot of the current image of the display and saves it into a image file.
 	 * @param filename The file to save the screenshot as.
@@ -52,6 +50,7 @@ public:
 	const Descriptor *GetAttachment(const std::string &name) const;
 	const Swapchain *GetSwapchain() const { return m_swapchain.get(); }
 	const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
+	void SetFramebufferResized() { m_framebufferResized = true; }
 	const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
 	const Surface *GetSurface() const { return m_surface.get(); }
 	const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
@@ -76,6 +75,7 @@ private:
 	std::vector<VkSemaphore> m_renderCompletes;
 	std::vector<VkFence> m_flightFences;
 	std::size_t m_currentFrame = 0;
+	bool m_framebufferResized = false;
 
 	std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers;
 

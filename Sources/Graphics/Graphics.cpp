@@ -47,13 +47,13 @@ void Graphics::Update() {
 
 	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame]);
 
-	/*if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
+	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
 		VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
 		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 		return;
-	}*/
+	}
 
-	if (acquireResult != VK_SUCCESS) { // && acquireResult != VK_SUBOPTIMAL_KHR
+	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR) {
 		Log::Error("Failed to acquire swap chain image!\n");
 		return;
 	}
@@ -158,10 +158,6 @@ void Graphics::CheckVk(const VkResult &result) {
 	auto failure = StringifyResultVk(result);
 
 	throw std::runtime_error("Vulkan error: " + failure);
-}
-
-void Graphics::UpdateSurfaceCapabilities() {
-	CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*m_physicalDevice, *m_surface, &m_surface->m_capabilities));
 }
 
 void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
@@ -286,7 +282,7 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-	if (renderStage.HasSwapchain() && !m_swapchain->IsSameExtent(displayExtent)) {
+	if (renderStage.HasSwapchain() && (m_framebufferResized || !m_swapchain->IsSameExtent(displayExtent))) {
 #if defined(ACID_DEBUG)
 		Log::Out("Resizing swapchain from (", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, ") to (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
@@ -353,17 +349,17 @@ void Graphics::EndRenderpass(RenderStage &renderStage) {
 
 	vkCmdEndRenderPass(*m_commandBuffers[m_swapchain->GetActiveImageIndex()]);
 
-	if (!renderStage.HasSwapchain()) {
+	if (!renderStage.HasSwapchain())
 		return;
-	}
 
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->End();
 	m_commandBuffers[m_swapchain->GetActiveImageIndex()]->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
 
 	auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
 	if (presentResult == VK_ERROR_OUT_OF_DATE_KHR || presentResult == VK_SUBOPTIMAL_KHR) {
-		VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
-		m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
+		m_framebufferResized = true;
+	//	VkExtent2D displayExtent = { Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y };
+	//	m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
 	} else if (presentResult != VK_SUCCESS) {
 		Log::Error("Failed to present swap chain image!\n");
 	}

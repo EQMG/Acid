@@ -128,8 +128,6 @@ void Instance::CreateInstance() {
 	VkInstanceCreateInfo instanceCreateInfo = {};
 	instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instanceCreateInfo.pApplicationInfo = &applicationInfo;
-	instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers.size());
-	instanceCreateInfo.ppEnabledLayerNames = ValidationLayers.data();
 	instanceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
 	instanceCreateInfo.ppEnabledExtensionNames = extensions.data();
 
@@ -139,6 +137,9 @@ void Instance::CreateInstance() {
 		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
 		debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 		debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
+
+		instanceCreateInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers.size());
+		instanceCreateInfo.ppEnabledLayerNames = ValidationLayers.data();
 		instanceCreateInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&debugUtilsMessengerCreateInfo);
 	}
 

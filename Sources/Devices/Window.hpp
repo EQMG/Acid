@@ -41,10 +41,9 @@ public:
 
 	/**
 	 * Gets the size of the window in pixels.
-	 * @param checkFullscreen If in fullscreen and true size will be the screens size.
 	 * @return The size of the window.
 	 */
-	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
+	const Vector2ui &GetSize() const { return m_size; }
 
 	/**
 	 * Gets the aspect ratio between the windows width and height.
@@ -166,6 +165,7 @@ public:
 	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
 
 	const Monitor *GetPrimaryMonitor() const;
+	const Monitor *GetCurrentMonitor() const;
 
 	/**
 	 * Called when the window is resized.
@@ -242,15 +242,14 @@ public:
 private:
 	friend void CallbackError(int32_t error, const char *description);
 	friend void CallbackMonitor(GLFWmonitor *monitor, int32_t event);
-	friend void CallbackPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
-	friend void CallbackSize(GLFWwindow *window, int32_t width, int32_t height);
-	friend void CallbackClose(GLFWwindow *window);
-	friend void CallbackFocus(GLFWwindow *window, int32_t focused);
-	friend void CallbackIconify(GLFWwindow *window, int32_t iconified);
-	friend void CallbackFrame(GLFWwindow *window, int32_t width, int32_t height);
+	friend void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
+	friend void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height);
+	friend void CallbackWindowClose(GLFWwindow *window);
+	friend void CallbackWindowFocus(GLFWwindow *window, int32_t focused);
+	friend void CallbackWindowIconify(GLFWwindow *window, int32_t iconified);
+	friend void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height);
 
 	Vector2ui m_size;
-	Vector2ui m_fullscreenSize;
 	float m_aspectRatio = 1.0f;
 
 	Vector2ui m_position;
