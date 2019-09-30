@@ -25,7 +25,7 @@ public:
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
-	StorageHandler &GetStorgeAnimation() { return m_storageAnimation; }
+	StorageHandler &GetStorageAnimation() { return m_storageAnimation; }
 
 	friend const Node &operator>>(const Node &node, MeshAnimated &meshAnimated);
 	friend Node &operator<<(Node &node, const MeshAnimated &meshAnimated);

@@ -50,7 +50,7 @@ public:
 	 * Gets the aspect ratio between the windows width and height.
 	 * @return The aspect ratio.
 	 */
-	float GetAspectRatio() const { return static_cast<float>(m_size.m_x) / static_cast<float>(m_size.m_y); }
+	float GetAspectRatio() const { return static_cast<float>(GetSize().m_x) / static_cast<float>(GetSize().m_y); }
 
 	/**
 	 * Sets the window size.
