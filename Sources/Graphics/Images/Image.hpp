@@ -34,7 +34,7 @@ public:
 	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
-	 * Copies the images pixels from memory to a bitmap.
+	 * Copies the images pixels from memory to a bitmap. If this method is called from multiple threads at the same time Vulkan will crash!
 	 * @param mipLevel The mipmap level index to sample.
 	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.

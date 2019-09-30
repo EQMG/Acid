@@ -22,14 +22,15 @@ public:
 private:
 	ButtonKeyboard m_buttonReset;
 
+	float m_zoom;
+
+	UiObject m_content;
+	Text m_title;
+	Text m_body;
+
 	UiPanel m_settings;
 	UiInputSlider m_masterVolume;
 	UiInputBoolean m_antialiasing;
-
-	float m_zoom;
-
-	Text m_title;
-	Text m_body;
 
 	Text m_textFrameTime;
 	Text m_textFps;
