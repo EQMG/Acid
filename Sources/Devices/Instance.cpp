@@ -207,8 +207,13 @@ void Instance::CreateDebugMessenger() {
 	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 	debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 	debugReportCallbackCreateInfo.pUserData = nullptr;
-	Graphics::CheckVk(FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback));
-
+	auto debugReportResult = FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback);
+	if (debugReportResult == VK_ERROR_EXTENSION_NOT_PRESENT) {
+		m_enableValidationLayers = false;
+		Log::Error("Extension vkCreateDebugReportCallbackEXT not present!\n");
+	} else {
+		Graphics::CheckVk(debugReportResult);
+	}
 #endif
 }
 
