@@ -123,9 +123,12 @@ Swapchain::~Swapchain() {
 	vkDestroyFence(*logicalDevice, m_fenceImage, nullptr);
 }
 
-VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore) {
+VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore, VkFence fence) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
+	if (fence != VK_NULL_HANDLE)
+		Graphics::CheckVk(vkWaitForFences(*logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+	
 	auto acquireResult = vkAcquireNextImageKHR(*logicalDevice, m_swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&m_activeImageIndex);
 
@@ -133,9 +136,9 @@ VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore
 		throw std::runtime_error("Failed to acquire swapchain image");
 	}
 
-	//Renderer::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+	//Graphics::CheckVk(vkWaitForFences(*logicalDevice, 1, &m_fenceImage, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 
-	//Renderer::CheckVk(vkResetFences(*logicalDevice, 1, &m_fenceImage));
+	//Graphics::CheckVk(vkResetFences(*logicalDevice, 1, &m_fenceImage));
 	return acquireResult;
 }
 

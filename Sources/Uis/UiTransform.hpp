@@ -80,7 +80,7 @@ public:
 	void SetAnchor(const Vector2f &anchor);
 
 	const Vector2f &GetPosition() const { return m_position; }
-	void SetPosition(const Vector2i &position) { m_position = position; }
+	void SetPosition(const Vector2f &position) { m_position = position; }
 
 	const std::optional<BitMask<UiMargins>> &GetMargins() const { return m_margins; }
 	void SetMargins(const std::optional<BitMask<UiMargins>> &margins) { m_margins = margins; }

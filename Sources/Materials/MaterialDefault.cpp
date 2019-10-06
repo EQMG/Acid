@@ -57,7 +57,7 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
 void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet) {
 	if (m_animated) {
 		auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
-		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorgeAnimation());
+		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorageAnimation());
 	}
 
 	descriptorSet.Push("samplerDiffuse", m_imageDiffuse);

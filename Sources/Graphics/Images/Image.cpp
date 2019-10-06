@@ -102,6 +102,22 @@ uint32_t Image::GetMipLevels(const VkExtent3D &extent) {
 	return static_cast<uint32_t>(std::floor(std::log2(std::max(extent.width, std::max(extent.height, extent.depth)))) + 1);
 }
 
+VkFormat Image::FindSupportedFormat(const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
+	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
+	
+	for (const auto &format : candidates) {
+		VkFormatProperties props;
+		vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &props);
+
+		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
+			return format;
+		if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
+			return format;
+	}
+
+	return VK_FORMAT_UNDEFINED;
+}
+
 bool Image::HasDepth(VkFormat format) {
 	static const std::vector<VkFormat> DEPTH_FORMATS = {
 		VK_FORMAT_D16_UNORM, VK_FORMAT_X8_D24_UNORM_PACK32, VK_FORMAT_D32_SFLOAT, VK_FORMAT_D16_UNORM_S8_UINT,

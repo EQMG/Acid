@@ -151,6 +151,8 @@ void Text::LoadText() {
 		return;
 	}
 
+	m_lastSize = GetScreenTransform().GetSize();
+	
 	// Creates mesh data.
 	auto lines = CreateStructure();
 	auto vertices = CreateQuad(lines);

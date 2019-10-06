@@ -34,7 +34,7 @@ public:
 	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
 
 	/**
-	 * Copies the images pixels from memory to a bitmap.
+	 * Copies the images pixels from memory to a bitmap. If this method is called from multiple threads at the same time Vulkan will crash!
 	 * @param mipLevel The mipmap level index to sample.
 	 * @param arrayLayer The array level to sample.
 	 * @return A copy of the images pixels.
@@ -65,6 +65,15 @@ public:
 	const VkImageView &GetView() const { return m_view; }
 
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
+
+	/**
+	 * Find a format in the candidates list that fits the tiling and features required.
+	 * @param candidates Formats that are tested for features, in order of preference.
+	 * @param tiling Tiling mode to test features in.
+	 * @param features The features to test for.
+	 * @return The format found, or VK_FORMAT_UNDEFINED.
+	 */
+	static VkFormat FindSupportedFormat(const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 
 	/**
 	 * Gets if a format has a depth component.

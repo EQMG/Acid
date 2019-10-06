@@ -227,12 +227,12 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 
 	// TODO: This debug write causes a crash at runtime, why?
 #if defined(ACID_DEBUG)
-	for (uint32_t i = 0; i < prefilteredCubemap->GetMipLevels(); i++) {
-		// Saves the prefiltered Image.
-		Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image, uint32_t i) {
+	// Saves the prefiltered Image.
+	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
+		for (uint32_t i = 0; i < image->GetMipLevels(); i++) {
 			image->GetBitmap(i)->Write("Deferred/Prefiltered_" + String::To(i) + ".png");
-		}, prefilteredCubemap.get(), i);
-	}
+		}
+	}, prefilteredCubemap.get());
 #endif
 
 	return prefilteredCubemap;

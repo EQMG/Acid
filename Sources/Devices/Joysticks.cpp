@@ -5,13 +5,13 @@
 namespace acid {
 void CallbackJoystick(int32_t id, int32_t event) {
 	if (event == GLFW_CONNECTED) {
-		printf("Joystick connected: '%s' to %i\n", glfwGetJoystickName(id), id);
+		Log::Out("Joystick connected: '", glfwGetJoystickName(id), "' to ", id, '\n');
 		Joysticks::JoystickImpl joystick = {};
 		joystick.m_name = glfwGetJoystickName(id);
 		Joysticks::Get()->m_connected.emplace(id, joystick);
 		Joysticks::Get()->m_onConnect(id, true);
 	} else if (event == GLFW_DISCONNECTED) {
-		printf("Joystick disconnected from %i\n", id);
+		Log::Out("Joystick disconnected from ", id, '\n');
 		Joysticks::Get()->m_connected.erase(id);
 		Joysticks::Get()->m_onConnect(id, false);
 	}

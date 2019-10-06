@@ -8,14 +8,16 @@ namespace acid {
 class ACID_EXPORT Swapchain {
 public:
 	explicit Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain = {});
+	
 	~Swapchain();
 
 	/**
 	 * Acquires the next image in the swapchain into the internal acquired image. The function will always wait until the next image has been acquired by setting timeout to UINT64_MAX.
 	 * @param presentCompleteSemaphore A optional semaphore that is signaled when the image is ready for use.
+	 * @param fence A optional fence that is signaled once the previous command buffer has completed.
 	 * @return Result of the image acquisition.
 	 */
-	VkResult AcquireNextImage(const VkSemaphore &presentCompleteSemaphore = VK_NULL_HANDLE);
+	VkResult AcquireNextImage(const VkSemaphore &presentCompleteSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
 	/**
 	 * Queue an image for presentation using the internal acquired image for queue presentation.

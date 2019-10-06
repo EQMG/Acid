@@ -6,9 +6,9 @@
 namespace acid {
 UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type type, bool value, const UiTransform &transform) :
 	UiObject(parent, transform),
-	m_background(this, {{19, 19}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
-	m_fill(&m_background, {{19, 19}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour),
-	m_text(this, {{131, 19}, UiAnchor::LeftCentre, {24, 0}}, UiInputButton::FontSize, string,
+	m_background(this, {{24, 24}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
+	m_fill(&m_background, {{24, 24}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour),
+	m_text(this, {{140, 24}, UiAnchor::LeftCentre, {29, 0}}, UiInputButton::FontSize, string,
 		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
 	m_type(type) {

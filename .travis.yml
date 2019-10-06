@@ -58,9 +58,9 @@ matrix:
     - BUILD_SHARED=ON
     before_install:
     - sudo apt-get update -qq
-  # XCode 10.2
+  # XCode 11
 #  - os: osx
-#    osx_image: xcode10.2
+#    osx_image: xcode11
 #    sudo: required
 #    addons: 
 #      homebrew:

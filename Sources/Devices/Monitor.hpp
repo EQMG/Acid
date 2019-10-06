@@ -43,6 +43,7 @@ public:
  * @brief Class used to represent a monitor.
  */
 class ACID_EXPORT Monitor {
+	friend class Window;
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);
 

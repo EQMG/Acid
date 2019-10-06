@@ -4,9 +4,9 @@
 #include "Uis/Uis.hpp"
 
 namespace acid {
-const Vector2i UiInputButton::Size(150, 22);
+const Vector2i UiInputButton::Size(175, 28);
 const Vector2i UiInputButton::Padding(5, 5);
-const float UiInputButton::FontSize(11.0f);
+const float UiInputButton::FontSize(13.0f);
 const Time UiInputButton::SlideTime(0.07s);
 
 const Colour UiInputButton::ValueColour("#FEFCFE");

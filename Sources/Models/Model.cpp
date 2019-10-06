@@ -54,20 +54,21 @@ void Model::SetIndices(const std::vector<uint32_t> &indices) {
 	m_indexBuffer = nullptr;
 	m_indexCount = static_cast<uint32_t>(indices.size());
 
-	if (!indices.empty()) {
-		Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, indices.data());
-		m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
-			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+	if (indices.empty())
+		return;
+	
+	Buffer indexStaging(sizeof(uint32_t) * indices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+		indices.data());
+	m_indexBuffer = std::make_unique<Buffer>(indexStaging.GetSize(), VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		CommandBuffer commandBuffer;
+	CommandBuffer commandBuffer;
 
-		VkBufferCopy copyRegion = {};
-		copyRegion.size = indexStaging.GetSize();
-		vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
+	VkBufferCopy copyRegion = {};
+	copyRegion.size = indexStaging.GetSize();
+	vkCmdCopyBuffer(commandBuffer, indexStaging.GetBuffer(), m_indexBuffer->GetBuffer(), 1, &copyRegion);
 
-		commandBuffer.SubmitIdle();
-	}
+	commandBuffer.SubmitIdle();
 }
 
 std::vector<float> Model::GetPointCloud() const {
@@ -77,14 +78,13 @@ std::vector<float> Model::GetPointCloud() const {
 
 	// This assumes a Vector3f attribute is the first vertex attribute.
 	auto indices = GetIndices();
-	auto vertices = GetVertices<Vector3f>(
-		);
+	auto vertices = GetVertices<Vector3f>();
 
 	std::vector<float> pointCloud;
 	pointCloud.reserve(indices.size());
 
 	for (const auto &index : indices) {
-		auto vertex = vertices[index];
+		const auto &vertex = vertices[index];
 		pointCloud.emplace_back(vertex.m_x);
 		pointCloud.emplace_back(vertex.m_y);
 		pointCloud.emplace_back(vertex.m_z);

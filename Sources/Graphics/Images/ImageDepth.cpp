@@ -10,20 +10,10 @@ static const std::vector<VkFormat> TRY_FORMATS = {
 };
 
 ImageDepth::ImageDepth(const Vector2ui &extent, VkSampleCountFlagBits samples) :
-	m_format(VK_FORMAT_UNDEFINED),
 	m_extent(extent) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
-	for (const auto &format : TRY_FORMATS) {
-		VkFormatProperties formatProperties = {};
-		vkGetPhysicalDeviceFormatProperties(*physicalDevice, format, &formatProperties);
-
-		if (formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT) {
-			m_format = format;
-			break;
-		}
-	}
-
+	m_format = Image::FindSupportedFormat(TRY_FORMATS, VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 	if (m_format == VK_FORMAT_UNDEFINED) {
 		throw std::runtime_error("No depth stencil format could be selected");
 	}
