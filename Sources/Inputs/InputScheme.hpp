@@ -6,6 +6,9 @@
 #include "Button.hpp"
 
 namespace acid {
+/**
+ * This class is used to abstract and wrap input methods inside a serializable factory.
+ */
 class ACID_EXPORT InputScheme {
 public:
 	struct Argument {
@@ -13,26 +16,25 @@ public:
 		std::string type;
 		std::string description;
 
-		friend const Node &operator>>(const Node &node, Argument &argument) {
-			node["name"].Get(argument.name);
-			node["type"].Get(argument.type);
-			node["description"].Get(argument.description);
-			return node;
-		}
-		friend Node &operator<<(Node &node, const Argument &argument) {
-			node["name"].Set(argument.name);
-			node["type"].Set(argument.type);
-			node["description"].Set(argument.description);
-			return node;
-		}
+		friend const Node &operator>>(const Node &node, Argument &argument);
+		friend Node &operator<<(Node &node, const Argument &argument);
 	};
 	using ArgumentDescription = std::vector<Argument>;
 	
 	explicit InputScheme(const std::filesystem::path &filename);
 
 	Axis *GetAxis(const std::string &name) const;
+	Axis *AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis);
+	void RemoveAxis(const std::string &name);
+	
 	Button *GetButton(const std::string &name) const;
+	Button *AddButton(const std::string &name, std::unique_ptr<Button> &&button);
+	void RemoveButton(const std::string &name);
+
 	std::optional<JoystickPort> GetJoystickPort(const std::string &name) const;
+	std::string GetJoystickPortName(JoystickPort port) const;
+	void AddJoystickPort(const std::string &name, JoystickPort port);
+	void RemoveJoystickPort(const std::string &name);
 
 	static ArgumentDescription GetArgumentDescription(const std::string &name);
 	
@@ -46,7 +48,7 @@ private:
 	std::unique_ptr<Button> ParseButton(const Node &node) const;
 
 	void WriteAxis(const Axis *axis, Node &node) const;
-	void WriteButton(const Button *axis, Node &node) const;
+	void WriteButton(const Button *button, Node &node) const;
 
 	File m_file;
 

@@ -34,6 +34,8 @@ public:
 
 	float GetAmount() const override;
 
+	const std::vector<std::unique_ptr<Axis>> &GetAxes() const { return m_axes; }
+
 private:
 	void ConnectAxes();
 

@@ -49,6 +49,11 @@ public:
 
 	bool IsDown() const override;
 
+	const std::vector<std::unique_ptr<Button>> &GetButtons() const { return m_buttons; }
+
+	bool IsUseAnd() const { return m_useAnd; }
+	void SetUseAnd(bool useAnd) { m_useAnd = useAnd; }
+
 private:
 	void ConnectButtons();
 

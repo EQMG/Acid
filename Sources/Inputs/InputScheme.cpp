@@ -10,6 +10,7 @@
 #include "ButtonJoystick.hpp"
 #include "ButtonKeyboard.hpp"
 #include "ButtonMouse.hpp"
+#include "HatJoystick.hpp"
 
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
@@ -33,11 +34,31 @@ Axis *InputScheme::GetAxis(const std::string &name) const {
 	return it->second.get();
 }
 
+Axis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis) {
+	return m_axes.emplace(name, std::move(axis)).first->second.get();
+}
+
+void InputScheme::RemoveAxis(const std::string &name) {
+	auto it = m_axes.find(name);
+	if (it != m_axes.end())
+		m_axes.erase(it);
+}
+
 Button *InputScheme::GetButton(const std::string &name) const {
 	auto it = m_buttons.find(name);
 	if (it == m_buttons.end())
 		return nullptr;
 	return it->second.get();
+}
+
+Button *InputScheme::AddButton(const std::string &name, std::unique_ptr<Button> &&button) {
+	return m_buttons.emplace(name, std::move(button)).first->second.get();
+}
+
+void InputScheme::RemoveButton(const std::string &name) {
+	auto it = m_buttons.find(name);
+	if (it != m_buttons.end())
+		m_buttons.erase(it);
 }
 
 std::optional<JoystickPort> InputScheme::GetJoystickPort(const std::string &name) const {
@@ -47,11 +68,42 @@ std::optional<JoystickPort> InputScheme::GetJoystickPort(const std::string &name
 	return it->second;
 }
 
+std::string InputScheme::GetJoystickPortName(JoystickPort port) const {
+	for (const auto &joystick : m_joysticks)
+		if (joystick.second == port)
+			return joystick.first;
+	return String::To(port);
+}
+
+void InputScheme::AddJoystickPort(const std::string &name, JoystickPort port) {
+	m_joysticks.emplace(name, port);
+}
+
+void InputScheme::RemoveJoystickPort(const std::string &name) {
+	auto it = m_joysticks.find(name);
+	if (it != m_joysticks.end())
+		m_joysticks.erase(it);
+}
+
 InputScheme::ArgumentDescription InputScheme::GetArgumentDescription(const std::string &name) {
 	auto it = ArgumentDescriptionMap.find(name);
 	if (it == ArgumentDescriptionMap.end())
 		return {};
 	return it->second;
+}
+
+const Node &operator>>(const Node &node, InputScheme::Argument &argument) {
+	node["name"].Get(argument.name);
+	node["type"].Get(argument.type);
+	node["description"].Get(argument.description);
+	return node;
+}
+
+Node &operator<<(Node &node, const InputScheme::Argument &argument) {
+	node["name"].Set(argument.name);
+	node["type"].Set(argument.type);
+	node["description"].Set(argument.description);
+	return node;
 }
 
 const Node &operator>>(const Node &node, InputScheme &inputScheme) {
@@ -70,13 +122,13 @@ const Node &operator>>(const Node &node, InputScheme &inputScheme) {
 Node &operator<<(Node &node, const InputScheme &inputScheme) {
 	node["joysticks"].Set(inputScheme.m_joysticks);
 	for (const auto &[axisName, axis] : inputScheme.m_axes) {
-		auto axisNode = node["axes"]->AddProperty();
-		axisNode["name"].Set(axisName);
+		auto &axisNode = node["axes"]->AddProperty();
+		axisNode["name"] = axisName;
 		inputScheme.WriteAxis(axis.get(), axisNode);
 	}
 	for (const auto &[buttonName, button] : inputScheme.m_buttons) {
-		auto buttonNode = node["buttons"]->AddProperty();
-		buttonNode["name"].Set(buttonName);
+		auto &buttonNode = node["buttons"]->AddProperty();
+		buttonNode["name"] = buttonName;
 		inputScheme.WriteButton(button.get(), buttonNode);
 	}
 	return node;
@@ -85,6 +137,7 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 std::unique_ptr<Axis> InputScheme::ParseAxis(const Node &node) const {
 	auto type = node["type"].Get<std::string>();
 	std::unique_ptr<Axis> result;
+	
 	if (type == "axisButton") {
 		result = std::make_unique<AxisButton>(ParseButton(node["negative"]), ParseButton(node["positive"]));
 	} else if (type == "axisCompound") {
@@ -98,6 +151,9 @@ std::unique_ptr<Axis> InputScheme::ParseAxis(const Node &node) const {
 		result = std::make_unique<AxisJoystick>(port, node["axis"].Get<JoystickAxis>());
 	} else if (type == "axisMouse") {
 		result = std::make_unique<AxisMouse>(node["axis"].Get<uint8_t>());
+	} else if (type == "hatJoystick") {
+		auto port = *GetJoystickPort(node["port"].Get<std::string>());
+		result = std::make_unique<HatJoystick>(port, node["hat"].Get<JoystickHat>(), node["hatFlags"].Get<uint8_t>());
 	}
 
 	if (result)
@@ -124,6 +180,9 @@ std::unique_ptr<Button> InputScheme::ParseButton(const Node &node) const {
 		result = std::make_unique<ButtonKeyboard>(node["key"].Get<Key>());
 	} else if (type == "buttonMouse") {
 		result = std::make_unique<ButtonMouse>(node["key"].Get<MouseButton>());
+	} else if (type == "hatJoystick") {
+		auto port = *GetJoystickPort(node["port"].Get<std::string>());
+		result = std::make_unique<HatJoystick>(port, node["hat"].Get<JoystickHat>(), node["hatFlags"].Get<uint8_t>());
 	}
 
 	if (result)
@@ -132,9 +191,61 @@ std::unique_ptr<Button> InputScheme::ParseButton(const Node &node) const {
 }
 
 void InputScheme::WriteAxis(const Axis *axis, Node &node) const {
+	if (axis == nullptr) return;
+	if (auto axisButton = dynamic_cast<const AxisButton *>(axis)) {
+		node["type"] = "axisButton";
+		WriteButton(axisButton->GetPositive(), node["positive"]);
+		WriteButton(axisButton->GetNegative(), node["negative"]);
+	} else if (auto axisCompound = dynamic_cast<const AxisCompound *>(axis)) {
+		node["type"] = "axisCompound";
+		for (const auto &childAxis : axisCompound->GetAxes())
+			WriteAxis(childAxis.get(), node["axes"]->AddProperty());
+	} else if (auto axisJoystick = dynamic_cast<const AxisJoystick *>(axis)) {
+		node["type"] = "axisJoystick";
+		node["port"] = GetJoystickPortName(axisJoystick->GetPort());
+		node["axis"] = axisJoystick->GetAxis();
+	} else if (auto axisMouse = dynamic_cast<const AxisMouse *>(axis)) {
+		node["type"] = "axisMouse";
+		node["axis"] = axisMouse->GetAxis();
+	} else if (auto hatJoystick = dynamic_cast<const HatJoystick *>(axis)) {
+		node["type"] = "hatJoystick";
+		node["port"] = GetJoystickPortName(hatJoystick->GetPort());
+		node["hat"] = hatJoystick->GetHat();
+		node["hatFlags"] = hatJoystick->GetHatFlags();
+	}
+	
+	node["scale"] = axis->GetScale();
 }
 
-void InputScheme::WriteButton(const Button *axis, Node &node) const {
+void InputScheme::WriteButton(const Button *button, Node &node) const {
+	if (button == nullptr) return;
+	if (auto buttonAxis = dynamic_cast<const ButtonAxis *>(button)) {
+		node["type"] = "buttonAxis";
+		WriteAxis(buttonAxis->GetAxis(), node["axis"]);
+		node["min"] = buttonAxis->GetMin();
+		node["max"] = buttonAxis->GetMax();
+	} else if (auto buttonCompound = dynamic_cast<const ButtonCompound *>(button)) {
+		node["type"] = "buttonCompound";
+		for (const auto &childButton : buttonCompound->GetButtons())
+			WriteButton(childButton.get(), node["buttons"]->AddProperty());
+	} else if (auto buttonJoystick = dynamic_cast<const ButtonJoystick *>(button)) {
+		node["type"] = "buttonJoystick";
+		node["port"] = GetJoystickPortName(buttonJoystick->GetPort());
+		node["button"] = buttonJoystick->GetButton();
+	} else if (auto buttonKeyboard = dynamic_cast<const ButtonKeyboard *>(button)) {
+		node["type"] = "buttonKeyboard";
+		node["key"] = buttonKeyboard->GetKey();
+	} else if (auto buttonMouse = dynamic_cast<const ButtonMouse *>(button)) {
+		node["type"] = "buttonMouse";
+		node["button"] = buttonMouse->GetButton();
+	} else if (auto hatJoystick = dynamic_cast<const HatJoystick *>(button)) {
+		node["type"] = "hatJoystick";
+		node["port"] = GetJoystickPortName(hatJoystick->GetPort());
+		node["hat"] = hatJoystick->GetHat();
+		node["hatFlags"] = hatJoystick->GetHatFlags();
+	}
+
+	node["inverted"] = button->IsInverted();
 }
 
 const std::map<std::string, InputScheme::ArgumentDescription> InputScheme::ArgumentDescriptionMap = {

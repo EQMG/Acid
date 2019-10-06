@@ -41,11 +41,11 @@
           "type": "axisButton",
           "negative": {
             "type": "buttonKeyboard",
-            "key": "s"
+            "key": 83
           },
           "positive": {
             "type": "buttonKeyboard",
-            "key": "w"
+            "key": 87
           }
         },
         {
@@ -63,11 +63,11 @@
           "type": "axisButton",
           "negative": {
             "type": "buttonKeyboard",
-            "key": "d"
+            "key": 68
           },
           "positive": {
             "type": "buttonKeyboard",
-            "key": "a"
+            "key": 83
           }
         },
         {
@@ -85,7 +85,7 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "key": "shiftLeft"
+          "key": 340
         },
         {
           "type": "buttonJoystick",
@@ -100,7 +100,7 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "key": "space"
+          "key": 32
         },
         {
           "type": "buttonJoystick",
@@ -115,7 +115,7 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "key": "controlLeft"
+          "key": 341
         },
         {
           "type": "buttonJoystick",
@@ -127,7 +127,7 @@
     {
       "name": "toggleNoclip",
       "type": "buttonKeyboard",
-      "key": "n"
+      "key": 78
     }
   ]
 }

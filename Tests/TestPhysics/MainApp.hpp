@@ -2,6 +2,7 @@
 
 #include <Engine/App.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/InputScheme.hpp>
 #include "Configs/ConfigManager.hpp"
 
 using namespace acid;
@@ -17,7 +18,8 @@ public:
 	void Update() override;
 
 private:
-	ConfigManager m_configs;
+	ConfigManager m_configManager;
+	InputScheme m_inputScheme;
 
 	ButtonKeyboard m_buttonFullscreen;
 	ButtonKeyboard m_buttonScreenshot;

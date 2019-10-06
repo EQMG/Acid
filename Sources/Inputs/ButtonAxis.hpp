@@ -19,6 +19,13 @@ public:
 
 	bool IsDown() const override;
 
+	const Axis *GetAxis() const { return m_axis.get(); }
+
+	float GetMin() const { return m_min; }
+	void SetMin(float min) { m_min = min; }
+	float GetMax() const { return m_max; }
+	void SetMax(float max) { m_max = max; }
+
 private:
 	std::unique_ptr<Axis> m_axis;
 	float m_min, m_max;

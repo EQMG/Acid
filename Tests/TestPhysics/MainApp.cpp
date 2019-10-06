@@ -2,7 +2,6 @@
 
 #include <Files/Files.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/InputScheme.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -31,6 +30,7 @@ int main(int argc, char **argv) {
 namespace test {
 MainApp::MainApp() :
 	App("Test Physics", {1, 0, 0}),
+	m_inputScheme("InputScheme1.json"),
 	m_buttonFullscreen(Key::F11),
 	m_buttonScreenshot(Key::F9),
 	m_buttonExit(Key::Delete) {
@@ -62,15 +62,13 @@ MainApp::MainApp() :
 		}
 	});
 
-	InputScheme inputScheme("InputScheme1.json");
-
 	// Registers modules.
 	World::Register(Module::Stage::Always);
 	//Shadows::Deregister();
 }
 
 MainApp::~MainApp() {
-	m_configs.Save();
+	m_configManager.Save();
 	// TODO: Only clear our search paths (leave Engine resources alone!)
 	Files::Get()->ClearSearchPath();
 
@@ -79,7 +77,7 @@ MainApp::~MainApp() {
 }
 
 void MainApp::Start() {
-	m_configs.Load();
+	m_configManager.Load();
 	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 

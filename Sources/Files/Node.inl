@@ -177,7 +177,7 @@ Node &operator<<(Node &node, const std::shared_ptr<T> &object) {
 	return node;
 }
 
-/*inline const Node &operator>>(const Node &node, char *&string) {
+inline const Node &operator>>(const Node &node, char *&string) {
 	std::strcpy(string, node.GetValue().c_str());
 	return node;
 }
@@ -186,7 +186,7 @@ inline Node &operator<<(Node &node, const char *string) {
 	node.SetValue(string);
 	node.SetType(Node::Type::String);
 	return node;
-}*/
+}
 
 inline const Node &operator>>(const Node &node, std::string &string) {
 	string = node.GetValue();

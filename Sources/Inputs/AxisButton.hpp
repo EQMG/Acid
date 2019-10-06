@@ -18,6 +18,9 @@ public:
 
 	float GetAmount() const override;
 
+	const Button *GetNegative() const { return m_negative.get(); }
+	const Button *GetPositive() const { return m_positive.get(); }
+
 private:
 	std::unique_ptr<Button> m_negative;
 	std::unique_ptr<Button> m_positive;
