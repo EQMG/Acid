@@ -1,11 +1,26 @@
 #include "File.hpp"
+#include <utility>
 
 #include "Engine/Engine.hpp"
+#include "Json/Json.hpp"
 #include "Files.hpp"
 
 namespace acid {
 File::File(std::unique_ptr<Node> &&node) :
 	m_node(std::move(node)) {
+}
+
+File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
+	m_filename(std::move(filename)),
+	m_node(std::move(node)) {
+}
+
+File::File(const std::filesystem::path &filename) :
+	m_filename(filename) {
+	// TODO: Node factory.
+	if (filename.extension() == ".json") {
+		m_node = std::make_unique<Json>();
+	}
 }
 
 void File::Load(const std::filesystem::path &filename) {
@@ -48,6 +63,14 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 #if defined(ACID_DEBUG)
 	Log::Out("File ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
+}
+
+void File::Load() {
+	Load(m_filename);
+}
+
+void File::Write(Node::Format format) const {
+	Write(m_filename, format);
 }
 
 void File::Clear() {

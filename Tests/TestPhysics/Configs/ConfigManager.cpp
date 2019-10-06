@@ -4,26 +4,25 @@
 #include <Graphics/Graphics.hpp>
 #include <Audio/Audio.hpp>
 #include <Timers/Timers.hpp>
-#include <Files/Json/Json.hpp>
 
 namespace test {
 ConfigManager::ConfigManager() :
-	m_audio(std::make_unique<Json>()),
-	m_graphics(std::make_unique<Json>()) {
+	m_audio("Configs/Audio.json"),
+	m_graphics("Configs/Graphics.json") {
 	Timers::Get()->Every(160s, [this]() {
 		Save();
 	}, this);
 }
 
 void ConfigManager::Load() {
-	m_audio.Load("Configs/Audio.json");
+	m_audio.Load();
 	auto &audioData = *m_audio.GetNode();
 	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::General, audioData["generalVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::Effect, audioData["effectVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::Music, audioData["musicVolume"].Get<float>(1.0f));
 
-	m_graphics.Load("Configs/Graphics.json");
+	m_graphics.Load();
 	auto &graphicsData = *m_graphics.GetNode();
 	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].Get<bool>(true));
 	Window::Get()->SetSize(graphicsData["size"].Get<Vector2f>(Vector2i(1080, 720)));
@@ -45,7 +44,7 @@ void ConfigManager::Save() const {
 	audioData["generalVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::General));
 	audioData["effectVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Effect));
 	audioData["musicVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Music));
-	m_audio.Write("Configs/Audio.json", Node::Format::Beautified);
+	m_audio.Write(Node::Format::Beautified);
 
 	auto &graphicsData = *m_graphics.GetNode();
 	//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
@@ -56,6 +55,6 @@ void ConfigManager::Save() const {
 	graphicsData["floating"].Set<bool>(Window::Get()->IsFloating());
 	graphicsData["fullscreen"].Set<bool>(Window::Get()->IsFullscreen());
 	graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
-	m_graphics.Write("Configs/Graphics.json", Node::Format::Beautified);
+	m_graphics.Write(Node::Format::Beautified);
 }
 }

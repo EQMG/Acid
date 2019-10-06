@@ -3,8 +3,6 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Scenes/Entity.hpp"
-#include "Files/Json/Json.hpp"
-//#include "Files/Xml/Xml.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
 
@@ -23,8 +21,8 @@ void MeshAnimated::Start() {
 	//File file(m_filename, std::make_unique<Xml>("COLLADA"));
 	//file.Load();
 	//auto &fileNode = *file.GetNode();
-	File file(std::make_unique<Json>());
-	file.Load(m_filename);
+	File file(m_filename);
+	file.Load();
 	auto fileNode = (*file.GetNode())["COLLADA"];
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
@@ -44,20 +42,20 @@ void MeshAnimated::Start() {
 
 /*#if defined(ACID_DEBUG)
 	{
-		File fileModel(std::make_unique<Json>());
+		File fileModel("Animation/Model.json");
 		(*fileModel.GetNode())["vertices"].Set(m_model->GetVertices<VertexAnimated>());
 		(*fileModel.GetNode())["indices"].Set(m_model->GetIndices());
-		fileModel.Write("Animation/Model.json", Node::Format::Beautified);
+		fileModel.Write(Node::Format::Beautified);
 	}
 	{
-		File fileJoints(std::make_unique<Json>());
+		File fileJoints("Animation/Joints.json");
 		*fileJoints.GetNode() << m_headJoint;
-		fileJoints.Write("Animation/Joints.json", Node::Format::Beautified);
+		fileJoints.Write(Node::Format::Beautified);
 	}
 	{
-		File fileAnimation0(std::make_unique<Json>());
+		File fileAnimation0("Animation/Animation0.json");
 		*fileAnimation0.GetNode() << *m_animation;
-		fileAnimation0.Write("Animation/Animation0.json", Node::Format::Beautified);
+		fileAnimation0.Write(Node::Format::Beautified);
 	}
 #endif*/
 }

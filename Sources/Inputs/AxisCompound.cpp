@@ -2,8 +2,7 @@
 
 namespace acid {
 /*AxisCompound::AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes) :
-	m_axes(std::move(axes))
-{
+	m_axes(std::move(axes)) {
 	ConnectAxes();
 }*/
 

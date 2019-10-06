@@ -40,23 +40,8 @@ void EntityPrefab::Load() {
 		return;
 	}
 
-	auto fileExt = m_filename.extension();
-
-	if (fileExt == ".json") {
-		m_file = std::make_unique<File>(std::make_unique<Json>());
-	}
-	/*else if (fileExt == ".yaml")
-	{
-		m_file = std::make_unique<File>(m_filename, std::make_unique<Yaml>());
-	}
-	else if (fileExt == ".xml")
-	{
-		m_file = std::make_unique<File>(m_filename, std::make_unique<Xml>("EntityDefinition"));
-	}*/
-
-	if (m_file) {
-		m_file->Load(m_filename);
-	}
+	m_file = std::make_unique<File>(m_filename);
+	m_file->Load();
 }
 
 void EntityPrefab::Write() const {

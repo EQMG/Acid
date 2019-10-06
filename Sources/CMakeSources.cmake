@@ -105,6 +105,7 @@ set(_temp_acid_headers
 		Inputs/AxisButton.hpp
 		Inputs/AxisCompound.hpp
 		Inputs/AxisJoystick.hpp
+		Inputs/AxisMouse.hpp
 		Inputs/Button.hpp
 		Inputs/ButtonAxis.hpp
 		Inputs/ButtonCompound.hpp
@@ -328,6 +329,7 @@ set(_temp_acid_sources
 		Inputs/AxisButton.cpp
 		Inputs/AxisCompound.cpp
 		Inputs/AxisJoystick.cpp
+		Inputs/AxisMouse.cpp
 		Inputs/ButtonAxis.cpp
 		Inputs/ButtonCompound.cpp
 		Inputs/ButtonJoystick.cpp

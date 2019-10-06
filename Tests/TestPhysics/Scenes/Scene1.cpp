@@ -81,7 +81,7 @@ Scene1::Scene1() :
 	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
-				File sceneFile(std::make_unique<Json>());
+				File sceneFile("Scene1.json");
 
 				auto entitiesNode = (*sceneFile.GetNode())["entities"];
 
@@ -100,7 +100,7 @@ Scene1::Scene1() :
 					}
 				}
 
-				sceneFile.Write("Scene1.json", Node::Format::Beautified);
+				sceneFile.Write(Node::Format::Beautified);
 			});
 		}
 	});

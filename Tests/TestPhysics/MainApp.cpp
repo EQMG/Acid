@@ -2,6 +2,7 @@
 
 #include <Files/Files.hpp>
 #include <Inputs/ButtonKeyboard.hpp>
+#include <Inputs/InputScheme.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -60,6 +61,8 @@ MainApp::MainApp() :
 			Engine::Get()->RequestClose();
 		}
 	});
+
+	InputScheme inputScheme("InputScheme1.json");
 
 	// Registers modules.
 	World::Register(Module::Stage::Always);
