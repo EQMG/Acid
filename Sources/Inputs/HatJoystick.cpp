@@ -25,29 +25,32 @@ HatJoystick::HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<Joyst
 
 float HatJoystick::GetAmount() const {
 	auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
+	float value = 0.0f;
 
 	if (hat & JoystickHatValue::Up) {
 		if (hat & JoystickHatValue::Right)
-			return 0.125f;
-		if (hat & JoystickHatValue::Left)
-			return 0.875f;
-		return 1.0f;
+			value = 0.125f;
+		else if (hat & JoystickHatValue::Left)
+			value = 0.875f;
+		else
+			value = 1.0f;
 	}
-	if (hat & JoystickHatValue::Down) {
+	else if (hat & JoystickHatValue::Down) {
 		if (hat & JoystickHatValue::Right)
-			return 0.375f;
-		if (hat & JoystickHatValue::Left)
-			return 0.625f;
-		return 0.5f;
+			value = 0.375f;
+		else if (hat & JoystickHatValue::Left)
+			value = 0.625f;
+		else
+			value = 0.5f;
 	}
-	if (hat & JoystickHatValue::Right)
-		return 0.25f;
-	if (hat & JoystickHatValue::Left)
-		return 0.75f;
-	return 0.0f;
+	else if (hat & JoystickHatValue::Right)
+		value = 0.25f;
+	else if (hat & JoystickHatValue::Left)
+		value = 0.75f;
+	return m_scale * value;
 }
 
 bool HatJoystick::IsDown() const {
-	return Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlags;
+	return (Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlags) ^ m_inverted;
 }
 }

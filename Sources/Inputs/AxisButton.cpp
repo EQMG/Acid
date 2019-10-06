@@ -23,6 +23,6 @@ float AxisButton::GetAmount() const {
 		amount -= 1.0f;
 	}
 
-	return amount;
+	return m_scale * amount;
 }
 }

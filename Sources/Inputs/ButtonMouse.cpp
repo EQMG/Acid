@@ -11,6 +11,6 @@ ButtonMouse::ButtonMouse(MouseButton button) :
 }
 
 bool ButtonMouse::IsDown() const {
-	return Mouse::Get()->GetButton(m_button) != InputAction::Release;
+	return (Mouse::Get()->GetButton(m_button) != InputAction::Release) ^ m_inverted;
 }
 }

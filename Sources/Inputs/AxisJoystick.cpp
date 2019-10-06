@@ -1,10 +1,9 @@
 #include "AxisJoystick.hpp"
 
 namespace acid {
-AxisJoystick::AxisJoystick(JoystickPort port, JoystickAxis axis, bool inverted) :
+AxisJoystick::AxisJoystick(JoystickPort port, JoystickAxis axis) :
 	m_port(port),
-	m_axis(axis),
-	m_inverted(inverted) {
+	m_axis(axis) {
 	Joysticks::Get()->OnAxis().Add([this](JoystickPort port, JoystickAxis axis, float value) {
 		if (port == m_port && axis == m_axis) {
 			m_onAxis(value);
@@ -13,7 +12,7 @@ AxisJoystick::AxisJoystick(JoystickPort port, JoystickAxis axis, bool inverted) 
 }
 
 float AxisJoystick::GetAmount() const {
-	return Joysticks::Get()->GetAxis(m_port, m_axis) * (m_inverted ? -1.0f : 1.0f);
+	return m_scale * Joysticks::Get()->GetAxis(m_port, m_axis);
 }
 
 bool AxisJoystick::IsConnected() const {

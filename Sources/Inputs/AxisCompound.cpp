@@ -14,7 +14,7 @@ float AxisCompound::GetAmount() const {
 		result += axis->GetAmount();
 	}
 
-	return std::clamp(result, -1.0f, 1.0f);
+	return m_scale * std::clamp(result, -1.0f, 1.0f);
 }
 
 void AxisCompound::ConnectAxes() {

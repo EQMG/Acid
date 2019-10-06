@@ -12,6 +12,6 @@ ButtonJoystick::ButtonJoystick(JoystickPort port, JoystickButton button) :
 }
 
 bool ButtonJoystick::IsDown() const {
-	return Joysticks::Get()->GetButton(m_port, m_button) != InputAction::Release;
+	return (Joysticks::Get()->GetButton(m_port, m_button) != InputAction::Release) ^ m_inverted;
 }
 }

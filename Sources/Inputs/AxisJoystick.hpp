@@ -13,9 +13,8 @@ public:
 	 * Creates a new axis joystick.
 	 * @param port The joystick port.
 	 * @param axis The axis on the joystick being checked.
-	 * @param inverted If the axis direction should be inverted.
 	 */
-	AxisJoystick(JoystickPort port, JoystickAxis axis, bool inverted = false);
+	AxisJoystick(JoystickPort port, JoystickAxis axis);
 
 	float GetAmount() const override;
 
@@ -27,12 +26,8 @@ public:
 	JoystickAxis GetAxis() const { return m_axis; }
 	void SetAxis(JoystickAxis axis) { m_axis = axis; }
 
-	bool IsInverted() const { return m_inverted; }
-	void SetInverted(bool inverted) { m_inverted = inverted; }
-
 private:
 	JoystickPort m_port;
 	JoystickAxis m_axis;
-	bool m_inverted;
 };
 }

@@ -11,15 +11,15 @@ namespace acid {
 bool ButtonCompound::IsDown() const {
 	for (const auto &button : m_buttons) {
 		if (m_useAnd && !button->IsDown()) {
-			return false;
+			return false ^ m_inverted;
 		}
 
 		if (!m_useAnd && button->IsDown()) {
-			return true;
+			return true ^ m_inverted;
 		}
 	}
 
-	return m_useAnd;
+	return m_useAnd ^ m_inverted;
 }
 
 void ButtonCompound::ConnectButtons() {

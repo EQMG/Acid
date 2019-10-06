@@ -22,7 +22,11 @@ public:
 	 */
 	Delegate<void(float)> &OnAxis() { return m_onAxis; }
 
+	float GetScale() const { return m_scale; }
+	void SetScale(float scale) { m_scale = scale; }
+
 protected:
 	Delegate<void(float)> m_onAxis;
+	float m_scale = 1.0f;
 };
 }

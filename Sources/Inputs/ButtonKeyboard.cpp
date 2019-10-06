@@ -11,6 +11,6 @@ ButtonKeyboard::ButtonKeyboard(Key key) :
 }
 
 bool ButtonKeyboard::IsDown() const {
-	return Keyboard::Get()->GetKey(m_key) != InputAction::Release;
+	return (Keyboard::Get()->GetKey(m_key) != InputAction::Release) ^ m_inverted;
 }
 }
