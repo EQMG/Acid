@@ -134,6 +134,7 @@ private:
 
 	std::filesystem::path m_filename;
 	std::string m_fileSuffix;
+	/// X, -X, +Y, -Y, +Z, -Z
 	std::vector<std::string> m_fileSides = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
 	VkFilter m_filter;

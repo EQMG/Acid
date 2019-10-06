@@ -7,8 +7,7 @@
 struct GLFWcursor;
 
 namespace acid {
-enum class MouseButton :
-	int32_t {
+enum class MouseButton : uint8_t {
 	_1 = 0,
 	_2 = 1,
 	_3 = 2,
@@ -24,7 +23,7 @@ enum class MouseButton :
 	Last = _8
 };
 
-enum class CursorHotspot {
+enum class CursorHotspot : uint8_t {
 	UpperLeft,
 	UpperRight,
 	BottomLeft,
@@ -32,7 +31,7 @@ enum class CursorHotspot {
 	Centered
 };
 
-enum class CursorStandard {
+enum class CursorStandard : uint32_t {
 	Arrow = 0x00036001,
 	IBeam = 0x00036002,
 	Crosshair = 0x00036003,

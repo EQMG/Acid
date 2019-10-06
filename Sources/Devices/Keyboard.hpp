@@ -4,8 +4,7 @@
 #include "Engine/Engine.hpp"
 
 namespace acid {
-enum class Key :
-	int32_t {
+enum class Key : int16_t {
 	Unknown = -1,
 	Space = 32,
 	Apostrophe = 39,

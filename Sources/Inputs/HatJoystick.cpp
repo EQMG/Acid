@@ -1,11 +1,11 @@
 #include "HatJoystick.hpp"
 
 namespace acid {
-HatJoystick::HatJoystick(uint32_t port, uint32_t hat, const BitMask<JoystickHat> &hatFlags) :
+HatJoystick::HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags) :
 	m_port(port),
 	m_hat(hat),
 	m_hatFlags(hatFlags) {
-	Joysticks::Get()->OnHat().Add([this](uint32_t hat, uint32_t port, BitMask<JoystickHat> value) {
+	Joysticks::Get()->OnHat().Add([this](JoystickPort port, JoystickHat hat, BitMask<JoystickHatValue> value) {
 		if (port == m_port && hat == m_hat) {
 			m_onAxis(GetAmount());
 			auto isDown = IsDown();
@@ -26,33 +26,24 @@ HatJoystick::HatJoystick(uint32_t port, uint32_t hat, const BitMask<JoystickHat>
 float HatJoystick::GetAmount() const {
 	auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
 
-	if (hat & JoystickHat::Up) {
-		if (hat & JoystickHat::Right) {
+	if (hat & JoystickHatValue::Up) {
+		if (hat & JoystickHatValue::Right)
 			return 0.125f;
-		}
-		if (hat & JoystickHat::Left) {
+		if (hat & JoystickHatValue::Left)
 			return 0.875f;
-		}
-
 		return 1.0f;
 	}
-	if (hat & JoystickHat::Down) {
-		if (hat & JoystickHat::Right) {
+	if (hat & JoystickHatValue::Down) {
+		if (hat & JoystickHatValue::Right)
 			return 0.375f;
-		}
-		if (hat & JoystickHat::Left) {
+		if (hat & JoystickHatValue::Left)
 			return 0.625f;
-		}
-
 		return 0.5f;
 	}
-	if (hat & JoystickHat::Right) {
+	if (hat & JoystickHatValue::Right)
 		return 0.25f;
-	}
-	if (hat & JoystickHat::Left) {
+	if (hat & JoystickHatValue::Left)
 		return 0.75f;
-	}
-
 	return 0.0f;
 }
 

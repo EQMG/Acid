@@ -115,6 +115,7 @@ set(_temp_acid_headers
 		Inputs/ButtonMouse.hpp
 		Inputs/HatJoystick.hpp
 		Inputs/InputDelay.hpp
+		Inputs/InputScheme.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
 		Materials/Material.hpp
@@ -338,6 +339,7 @@ set(_temp_acid_sources
 		Inputs/ButtonMouse.cpp
 		Inputs/HatJoystick.cpp
 		Inputs/InputDelay.cpp
+		Inputs/InputScheme.cpp
 		Lights/Fog.cpp
 		Lights/Light.cpp
 		Materials/MaterialDefault.cpp

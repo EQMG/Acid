@@ -34,7 +34,7 @@ void Joysticks::Update() {
 	for (auto &[port, joystick] : m_connected) {
 		int32_t axeCount = 0;
 		auto axes = glfwGetJoystickAxes(port, &axeCount);
-		joystick.m_axes.resize(static_cast<uint32_t>(axeCount));
+		joystick.m_axes.resize(static_cast<std::size_t>(axeCount));
 
 		for (uint32_t i = 0; i < static_cast<uint32_t>(axeCount); i++) {
 			if (joystick.m_axes[i] != axes[i]) {
@@ -45,7 +45,7 @@ void Joysticks::Update() {
 
 		int32_t buttonCount = 0;
 		auto buttons = glfwGetJoystickButtons(port, &buttonCount);
-		joystick.m_buttons.resize(static_cast<uint32_t>(buttonCount));
+		joystick.m_buttons.resize(static_cast<std::size_t>(buttonCount));
 
 		for (uint32_t i = 0; i < static_cast<uint32_t>(buttonCount); i++) {
 			if (buttons[i] != GLFW_RELEASE && joystick.m_buttons[i] != InputAction::Release) {
@@ -58,42 +58,42 @@ void Joysticks::Update() {
 
 		int32_t hatCount = 0;
 		auto hats = glfwGetJoystickHats(port, &hatCount);
-		joystick.m_hats.resize(static_cast<uint32_t>(hatCount));
+		joystick.m_hats.resize(static_cast<std::size_t>(hatCount));
 
 		for (uint32_t i = 0; i < static_cast<uint32_t>(hatCount); i++) {
-			if (joystick.m_hats[i] != MakeBitMask<JoystickHat>(hats[i])) {
-				joystick.m_hats[i] = MakeBitMask<JoystickHat>(hats[i]);
+			if (joystick.m_hats[i] != MakeBitMask<JoystickHatValue>(hats[i])) {
+				joystick.m_hats[i] = MakeBitMask<JoystickHatValue>(hats[i]);
 				m_onHat(port, i, joystick.m_hats[i]);
 			}
 		}
 	}
 }
 
-bool Joysticks::IsConnected(uint32_t port) const {
+bool Joysticks::IsConnected(JoystickPort port) const {
 	return GetJoystick(port).has_value();
 }
 
-std::string Joysticks::GetName(uint32_t port) const {
+std::string Joysticks::GetName(JoystickPort port) const {
 	auto joystick = GetJoystick(port);
 	return joystick ? joystick->m_name : "";
 }
 
-uint32_t Joysticks::GetAxisCount(uint32_t port) const {
+std::size_t Joysticks::GetAxisCount(JoystickPort port) const {
 	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<uint32_t>(joystick->m_axes.size()) : 0;
+	return joystick ? static_cast<std::size_t>(joystick->m_axes.size()) : 0;
 }
 
-uint32_t Joysticks::GetButtonCount(uint32_t port) const {
+std::size_t Joysticks::GetButtonCount(JoystickPort port) const {
 	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<uint32_t>(joystick->m_buttons.size()) : 0;
+	return joystick ? static_cast<std::size_t>(joystick->m_buttons.size()) : 0;
 }
 
-uint32_t Joysticks::GetHatCount(uint32_t port) const {
+std::size_t Joysticks::GetHatCount(JoystickPort port) const {
 	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<uint32_t>(joystick->m_hats.size()) : 0;
+	return joystick ? static_cast<std::size_t>(joystick->m_hats.size()) : 0;
 }
 
-float Joysticks::GetAxis(uint32_t port, uint32_t axis) const {
+float Joysticks::GetAxis(JoystickPort port, JoystickAxis axis) const {
 	auto joystick = GetJoystick(port);
 
 	if (!joystick || axis > joystick->m_axes.size()) {
@@ -103,7 +103,7 @@ float Joysticks::GetAxis(uint32_t port, uint32_t axis) const {
 	return joystick->m_axes[axis];
 }
 
-InputAction Joysticks::GetButton(uint32_t port, uint32_t button) const {
+InputAction Joysticks::GetButton(JoystickPort port, JoystickButton button) const {
 	auto joystick = GetJoystick(port);
 
 	if (!joystick || button > joystick->m_buttons.size()) {
@@ -113,17 +113,17 @@ InputAction Joysticks::GetButton(uint32_t port, uint32_t button) const {
 	return joystick->m_buttons[button];
 }
 
-BitMask<JoystickHat> Joysticks::GetHat(uint32_t port, uint32_t hat) const {
+BitMask<JoystickHatValue> Joysticks::GetHat(JoystickPort port, JoystickHat hat) const {
 	auto joystick = GetJoystick(port);
 
 	if (!joystick || hat > joystick->m_hats.size()) {
-		return JoystickHat::Centered;
+		return JoystickHatValue::Centered;
 	}
 
 	return joystick->m_hats[hat];
 }
 
-std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(uint32_t port) const {
+std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(JoystickPort port) const {
 	auto it = m_connected.find(port);
 
 	if (it == m_connected.end()) {

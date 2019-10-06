@@ -1,13 +1,11 @@
 #include "AxisJoystick.hpp"
 
-#include "Devices/Joysticks.hpp"
-
 namespace acid {
-AxisJoystick::AxisJoystick(uint32_t port, uint32_t axis, bool inverted) :
+AxisJoystick::AxisJoystick(JoystickPort port, JoystickAxis axis, bool inverted) :
 	m_port(port),
 	m_axis(axis),
 	m_inverted(inverted) {
-	Joysticks::Get()->OnAxis().Add([this](uint32_t axis, uint32_t port, float value) {
+	Joysticks::Get()->OnAxis().Add([this](JoystickPort port, JoystickAxis axis, float value) {
 		if (port == m_port && axis == m_axis) {
 			m_onAxis(value);
 		}

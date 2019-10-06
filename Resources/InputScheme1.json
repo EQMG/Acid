@@ -1,0 +1,133 @@
+{
+  "axes": [
+    {
+      "name": "mouseX",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisMouse",
+          "value": 0
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "name": "mouseY",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisMouse",
+          "value": 1
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "name": "forward",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisButton",
+          "negative": {
+            "type": "buttonKeyboard",
+            "value": "s"
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "value": "w"
+          }
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "strafe",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisButton",
+          "negative": {
+            "type": "buttonKeyboard",
+            "value": "d"
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "value": "a"
+          }
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "name": "sprint",
+      "type": "buttonCompound",
+      "buttons": [
+        {
+          "type": "buttonKeyboard",
+          "value": "shiftLeft"
+        },
+        {
+          "type": "buttonJoystick",
+          "port": "primary",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "jump",
+      "type": "buttonCompound",
+      "buttons": [
+        {
+          "type": "buttonKeyboard",
+          "value": "space"
+        },
+        {
+          "type": "buttonJoystick",
+          "port": "primary",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "name": "crouch",
+      "type": "buttonCompound",
+      "buttons": [
+        {
+          "type": "buttonKeyboard",
+          "value": "controlLeft"
+        },
+        {
+          "type": "buttonJoystick",
+          "port": "primary",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "name": "toggleNoclip",
+      "type": "buttonKeyboard",
+      "value": "n"
+    }
+  ],
+  "joysticks": {
+    "primary": 0
+  }
+}

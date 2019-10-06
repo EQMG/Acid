@@ -5,7 +5,7 @@
 #include "Helpers/Delegate.hpp"
 
 namespace acid {
-enum class JoystickHat : int32_t {
+enum class JoystickHatValue : uint8_t {
 	Centered = 0,
 	Up = 1,
 	Right = 2,
@@ -13,7 +13,12 @@ enum class JoystickHat : int32_t {
 	Left = 8
 };
 
-ENABLE_BITMASK_OPERATORS(JoystickHat);
+ENABLE_BITMASK_OPERATORS(JoystickHatValue);
+
+using JoystickPort = uint8_t;
+using JoystickAxis = uint8_t;
+using JoystickButton = uint8_t;
+using JoystickHat = uint8_t;
 
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
@@ -29,35 +34,35 @@ public:
 	 * @param port The joystick to check connection with.
 	 * @return If the joystick is connected.
 	 */
-	bool IsConnected(uint32_t port) const;
+	bool IsConnected(JoystickPort port) const;
 
 	/**
 	 * Gets the name of the joystick.
 	 * @param port The joystick to get the name of.
 	 * @return The joysticks name.
 	 */
-	std::string GetName(uint32_t port) const;
+	std::string GetName(JoystickPort port) const;
 
 	/**
 	 * Gets the number of axes the joystick contains.
 	 * @param port The joystick to the the axis count from.
 	 * @return The number of axes the joystick contains.
 	 */
-	uint32_t GetAxisCount(uint32_t port) const;
+	std::size_t GetAxisCount(JoystickPort port) const;
 
 	/**
 	 * Gets the number of buttons the joystick contains.
 	 * @param port The joystick to the the button count from.
 	 * @return The number of buttons the joystick contains.
 	 */
-	uint32_t GetButtonCount(uint32_t port) const;
+	std::size_t GetButtonCount(JoystickPort port) const;
 
 	/**
 	 * Gets the number of hats the joystick contains.
 	 * @param port The joystick to the the hats count from.
 	 * @return The number of hats the joystick contains.
 	 */
-	uint32_t GetHatCount(uint32_t port) const;
+	std::size_t GetHatCount(JoystickPort port) const;
 
 	/**
 	 * Gets the value of a joysticks axis.
@@ -65,7 +70,7 @@ public:
 	 * @param axis The axis id to get the value from.
 	 * @return The value of the joystick's axis.
 	 */
-	float GetAxis(uint32_t port, uint32_t axis) const;
+	float GetAxis(JoystickPort port, uint8_t axis) const;
 
 	/**
 	 * Gets the whether a button on a joystick is pressed.
@@ -73,7 +78,7 @@ public:
 	 * @param button The button id to get the value from.
 	 * @return Whether a button on a joystick is pressed.
 	 */
-	InputAction GetButton(uint32_t port, uint32_t button) const;
+	InputAction GetButton(JoystickPort port, uint8_t button) const;
 
 	/**
 	 * Gets the value of a joysticks hat.
@@ -81,48 +86,48 @@ public:
 	 * @param hat The hat id to get the value from.
 	 * @return The value of the joystick's hat.
 	 */
-	BitMask<JoystickHat> GetHat(uint32_t port, uint32_t hat) const;
+	BitMask<JoystickHatValue> GetHat(JoystickPort port, uint8_t hat) const;
 
 	/**
 	 * Called when a joystick has been connected or disconnected.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, bool)> &OnConnect() { return m_onConnect; }
+	Delegate<void(JoystickPort, bool)> &OnConnect() { return m_onConnect; }
 
 	/**
 	 * Called when a joystick buttons changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t, InputAction)> &OnButton() { return m_onButton; }
+	Delegate<void(JoystickPort, uint8_t, InputAction)> &OnButton() { return m_onButton; }
 
 	/**
 	 * Called when a joystick axis moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t, float)> &OnAxis() { return m_onAxis; }
+	Delegate<void(JoystickPort, uint8_t, float)> &OnAxis() { return m_onAxis; }
 
 	/**
 	 * Called when a joystick had changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t, BitMask<JoystickHat>)> &OnHat() { return m_onHat; }
+	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return m_onHat; }
 
 private:
 	struct JoystickImpl {
 		std::string m_name;
 		std::vector<float> m_axes;
 		std::vector<InputAction> m_buttons;
-		std::vector<BitMask<JoystickHat>> m_hats;
+		std::vector<BitMask<JoystickHatValue>> m_hats;
 	};
 
-	std::optional<JoystickImpl> GetJoystick(uint32_t port) const;
+	std::optional<JoystickImpl> GetJoystick(JoystickPort port) const;
 
 	friend void CallbackJoystick(int32_t id, int32_t event);
 
-	std::map<uint32_t, JoystickImpl> m_connected;
-	Delegate<void(uint32_t, bool)> m_onConnect;
-	Delegate<void(uint32_t, uint32_t, InputAction)> m_onButton;
-	Delegate<void(uint32_t, uint32_t, float)> m_onAxis;
-	Delegate<void(uint32_t, uint32_t, BitMask<JoystickHat>)> m_onHat;
+	std::map<JoystickPort, JoystickImpl> m_connected;
+	Delegate<void(JoystickPort, bool)> m_onConnect;
+	Delegate<void(JoystickPort, uint8_t, InputAction)> m_onButton;
+	Delegate<void(JoystickPort, uint8_t, float)> m_onAxis;
+	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> m_onHat;
 };
 }

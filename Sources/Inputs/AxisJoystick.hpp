@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Axis.hpp"
+#include "Devices/Joysticks.hpp"
 
 namespace acid {
 /**
@@ -14,24 +15,24 @@ public:
 	 * @param axis The axis on the joystick being checked.
 	 * @param inverted If the axis direction should be inverted.
 	 */
-	AxisJoystick(uint32_t port, uint32_t axis, bool inverted = false);
+	AxisJoystick(JoystickPort port, JoystickAxis axis, bool inverted = false);
 
 	float GetAmount() const override;
 
 	bool IsConnected() const;
 
-	uint32_t GetPort() const { return m_port; }
-	void SetPort(uint32_t port) { m_port = port; }
+	JoystickPort GetPort() const { return m_port; }
+	void SetPort(JoystickPort port) { m_port = port; }
 
-	uint32_t GetAxis() const { return m_axis; }
-	void SetAxis(uint32_t axis) { m_axis = axis; }
+	JoystickAxis GetAxis() const { return m_axis; }
+	void SetAxis(JoystickAxis axis) { m_axis = axis; }
 
 	bool IsInverted() const { return m_inverted; }
 	void SetInverted(bool inverted) { m_inverted = inverted; }
 
 private:
-	uint32_t m_port;
-	uint32_t m_axis;
+	JoystickPort m_port;
+	JoystickAxis m_axis;
 	bool m_inverted;
 };
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Button.hpp"
+#include "Devices/Joysticks.hpp"
 
 namespace acid {
 /**
@@ -13,18 +14,18 @@ public:
 	 * @param port The joystick port.
 	 * @param button The button on the joystick being checked.
 	 */
-	ButtonJoystick(uint32_t port, uint32_t button);
+	ButtonJoystick(JoystickPort port, JoystickButton button);
 
 	bool IsDown() const override;
 
-	uint32_t GetPort() const { return m_port; }
-	void SetPort(uint32_t port) { m_port = port; }
+	JoystickPort GetPort() const { return m_port; }
+	void SetPort(JoystickPort port) { m_port = port; }
 
-	uint32_t GetButton() const { return m_button; }
-	void SetButton(uint32_t button) { m_button = button; }
+	JoystickButton GetButton() const { return m_button; }
+	void SetButton(JoystickButton button) { m_button = button; }
 
 private:
-	uint32_t m_port;
-	uint32_t m_button;
+	JoystickPort m_port;
+	JoystickButton m_button;
 };
 }
