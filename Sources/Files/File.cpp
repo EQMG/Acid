@@ -47,10 +47,10 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 	auto debugStart = Time::Now();
 #endif
 
-	if (Files::ExistsInPath(filename)) {
+	/*if (Files::ExistsInPath(filename)) {
 		OFStream os(filename);
 		m_node->WriteStream(os, format);
-	} else { // if (std::filesystem::exists(filename))
+	} else {*/ // if (std::filesystem::exists(filename))
 		if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
@@ -58,7 +58,7 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 		std::ofstream os(filename);
 		m_node->WriteStream(os, format);
 		os.close();
-	}
+	//}
 
 #if defined(ACID_DEBUG)
 	Log::Out("File ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

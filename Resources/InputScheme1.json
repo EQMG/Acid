@@ -1,4 +1,7 @@
 {
+  "joysticks": {
+    "primary": 0
+  },
   "axes": [
     {
       "name": "mouseX",
@@ -6,12 +9,12 @@
       "axes": [
         {
           "type": "axisMouse",
-          "value": 0
+          "axis": 0
         },
         {
           "type": "axisJoystick",
           "port": "primary",
-          "value": 2
+          "axis": 2
         }
       ]
     },
@@ -21,12 +24,12 @@
       "axes": [
         {
           "type": "axisMouse",
-          "value": 1
+          "axis": 1
         },
         {
           "type": "axisJoystick",
           "port": "primary",
-          "value": 3
+          "axis": 3
         }
       ]
     },
@@ -38,17 +41,17 @@
           "type": "axisButton",
           "negative": {
             "type": "buttonKeyboard",
-            "value": "s"
+            "key": "s"
           },
           "positive": {
             "type": "buttonKeyboard",
-            "value": "w"
+            "key": "w"
           }
         },
         {
           "type": "axisJoystick",
           "port": "primary",
-          "value": 1
+          "axis": 1
         }
       ]
     },
@@ -60,17 +63,17 @@
           "type": "axisButton",
           "negative": {
             "type": "buttonKeyboard",
-            "value": "d"
+            "key": "d"
           },
           "positive": {
             "type": "buttonKeyboard",
-            "value": "a"
+            "key": "a"
           }
         },
         {
           "type": "axisJoystick",
           "port": "primary",
-          "value": 0
+          "axis": 0
         }
       ]
     }
@@ -82,12 +85,12 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "value": "shiftLeft"
+          "key": "shiftLeft"
         },
         {
           "type": "buttonJoystick",
           "port": "primary",
-          "value": 1
+          "axis": 1
         }
       ]
     },
@@ -97,12 +100,12 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "value": "space"
+          "key": "space"
         },
         {
           "type": "buttonJoystick",
           "port": "primary",
-          "value": 2
+          "axis": 2
         }
       ]
     },
@@ -112,22 +115,19 @@
       "buttons": [
         {
           "type": "buttonKeyboard",
-          "value": "controlLeft"
+          "key": "controlLeft"
         },
         {
           "type": "buttonJoystick",
           "port": "primary",
-          "value": 3
+          "axis": 3
         }
       ]
     },
     {
       "name": "toggleNoclip",
       "type": "buttonKeyboard",
-      "value": "n"
+      "key": "n"
     }
-  ],
-  "joysticks": {
-    "primary": 0
-  }
+  ]
 }

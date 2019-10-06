@@ -16,6 +16,12 @@ public:
 
 	/**
 	 * Creates a new compound axis.
+	 * @param axes The axes that will be combined into a compound axis.
+	 */
+	AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes);
+	
+	/**
+	 * Creates a new compound axis.
 	 * @tparam Args The axis argument types.
 	 * @param args The axes on the being added.
 	 */

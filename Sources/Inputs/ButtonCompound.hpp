@@ -16,6 +16,13 @@ public:
 
 	/**
 	 * Creates a new compound button.
+	 * @param buttons The buttons that will be combined into a compound button.
+	 * @param useAnd If {@link ButtonCompound#IsDown} will check if all buttons are down instead of just one.
+	 */
+	ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd = false);
+
+	/**
+	 * Creates a new compound button.
 	 * @tparam Args The button argument types.
 	 * @param args The buttons on the being added.
 	 * @param useAnd If {@link ButtonCompound#IsDown} will check if all buttons are down instead of just one.

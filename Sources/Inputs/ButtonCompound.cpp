@@ -1,11 +1,11 @@
 #include "ButtonCompound.hpp"
 
 namespace acid {
-/*ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd) :
+ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd) :
 	m_buttons(std::move(buttons)),
 	m_useAnd(useAnd) {
 	ConnectButtons();
-}*/
+}
 
 bool ButtonCompound::IsDown() const {
 	for (const auto &button : m_buttons) {

@@ -25,7 +25,6 @@ public:
 			node["description"].Set(argument.description);
 			return node;
 		}
-
 	};
 	using ArgumentDescription = std::vector<Argument>;
 	
@@ -42,7 +41,13 @@ public:
 
 private:
 	static const std::map<std::string, ArgumentDescription> ArgumentDescriptionMap;
-	
+
+	std::unique_ptr<Axis> ParseAxis(const Node &node) const;
+	std::unique_ptr<Button> ParseButton(const Node &node) const;
+
+	void WriteAxis(const Axis *axis, Node &node) const;
+	void WriteButton(const Button *axis, Node &node) const;
+
 	File m_file;
 
 	std::map<std::string, std::unique_ptr<Axis>> m_axes;
