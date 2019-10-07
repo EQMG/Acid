@@ -8,10 +8,8 @@ AxisCompound::AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes) :
 
 float AxisCompound::GetAmount() const {
 	float result = 0.0f;
-
-	for (const auto &axis : m_axes) {
+	for (const auto &axis : m_axes)
 		result += axis->GetAmount();
-	}
 
 	return m_scale * std::clamp(result, -1.0f, 1.0f);
 }

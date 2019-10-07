@@ -48,6 +48,7 @@ MainApp::MainApp() :
 		}
 	});
 
+	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultGUI.json"));
 
 	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {

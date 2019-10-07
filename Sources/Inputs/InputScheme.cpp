@@ -1,6 +1,5 @@
 #include "InputScheme.hpp"
 
-#include "Files/Json/Json.hpp"
 #include "AxisButton.hpp"
 #include "AxisCompound.hpp"
 #include "AxisJoystick.hpp"
@@ -15,6 +14,7 @@
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
 	m_file(filename) {
+	// Load this scheme from the file right away.
 	m_file.Load();
 	*m_file.GetNode() >> *this;
 
@@ -69,9 +69,10 @@ std::optional<JoystickPort> InputScheme::GetJoystickPort(const std::string &name
 }
 
 std::string InputScheme::GetJoystickPortName(JoystickPort port) const {
-	for (const auto &joystick : m_joysticks)
+	for (const auto &joystick : m_joysticks) {
 		if (joystick.second == port)
 			return joystick.first;
+	}
 	return String::To(port);
 }
 
@@ -109,13 +110,10 @@ Node &operator<<(Node &node, const InputScheme::Argument &argument) {
 const Node &operator>>(const Node &node, InputScheme &inputScheme) {
 	node["joysticks"].Get(inputScheme.m_joysticks);
 	// Need to use our factories to fill axes and buttons maps.
-	for (const auto &axis : node["axes"]->GetProperties()) {
+	for (const auto &axis : node["axes"]->GetProperties())
 		inputScheme.m_axes.emplace(axis["name"].Get<std::string>(), inputScheme.ParseAxis(axis));
-	}
-	for (const auto &button : node["buttons"]->GetProperties()) {
+	for (const auto &button : node["buttons"]->GetProperties())
 		inputScheme.m_buttons.emplace(button["name"].Get<std::string>(), inputScheme.ParseButton(button));
-
-	}
 	return node;
 }
 
@@ -137,14 +135,13 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 std::unique_ptr<Axis> InputScheme::ParseAxis(const Node &node) const {
 	auto type = node["type"].Get<std::string>();
 	std::unique_ptr<Axis> result;
-	
+
 	if (type == "axisButton") {
 		result = std::make_unique<AxisButton>(ParseButton(node["negative"]), ParseButton(node["positive"]));
 	} else if (type == "axisCompound") {
 		std::vector<std::unique_ptr<Axis>> axes;
-		for (const auto &axis : node["axes"]->GetProperties()) {
+		for (const auto &axis : node["axes"]->GetProperties())
 			axes.emplace_back(ParseAxis(axis));
-		}
 		result = std::make_unique<AxisCompound>(std::move(axes));
 	} else if (type == "axisJoystick") {
 		auto port = *GetJoystickPort(node["port"].Get<std::string>());
@@ -171,9 +168,8 @@ std::unique_ptr<Button> InputScheme::ParseButton(const Node &node) const {
 		result = std::make_unique<ButtonAxis>(ParseAxis(node["axis"]), node["min"].Get<float>(), node["max"].Get<float>());
 	} else if (type == "buttonCompound") {
 		std::vector<std::unique_ptr<Button>> buttons;
-		for (const auto &button : node["buttons"]->GetProperties()) {
+		for (const auto &button : node["buttons"]->GetProperties())
 			buttons.emplace_back(ParseButton(button));
-		}
 		result = std::make_unique<ButtonCompound>(std::move(buttons), node["useAnd"].Get<bool>(false));
 	} else if (type == "buttonJoystick") {
 		auto port = *GetJoystickPort(node["port"].Get<std::string>());
@@ -196,6 +192,7 @@ std::unique_ptr<Button> InputScheme::ParseButton(const Node &node) const {
 
 void InputScheme::WriteAxis(const Axis *axis, Node &node) const {
 	if (axis == nullptr) return;
+
 	if (auto axisButton = dynamic_cast<const AxisButton *>(axis)) {
 		node["type"] = "axisButton";
 		WriteButton(axisButton->GetPositive(), node["positive"]);
@@ -216,13 +213,16 @@ void InputScheme::WriteAxis(const Axis *axis, Node &node) const {
 		node["port"] = GetJoystickPortName(hatJoystick->GetPort());
 		node["hat"] = hatJoystick->GetHat();
 		node["hatFlags"] = hatJoystick->GetHatFlags();
+	} else {
+		throw std::runtime_error("Unknown axis type");
 	}
-	
+
 	node["scale"] = axis->GetScale();
 }
 
 void InputScheme::WriteButton(const Button *button, Node &node) const {
 	if (button == nullptr) return;
+
 	if (auto buttonAxis = dynamic_cast<const ButtonAxis *>(button)) {
 		node["type"] = "buttonAxis";
 		WriteAxis(buttonAxis->GetAxis(), node["axis"]);
@@ -247,6 +247,8 @@ void InputScheme::WriteButton(const Button *button, Node &node) const {
 		node["port"] = GetJoystickPortName(hatJoystick->GetPort());
 		node["hat"] = hatJoystick->GetHat();
 		node["hatFlags"] = hatJoystick->GetHatFlags();
+	} else {
+		throw std::runtime_error("Unknown button type");
 	}
 
 	node["inverted"] = button->IsInverted();

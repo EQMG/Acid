@@ -33,8 +33,7 @@ public:
 	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
 
 	bool IsInverted() const { return m_inverted; }
-
-	void SetInverted(const bool inverted) { m_inverted = inverted; }
+	void SetInverted(bool inverted) { m_inverted = inverted; }
 
 protected:
 	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;

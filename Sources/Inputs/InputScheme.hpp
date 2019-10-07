@@ -7,7 +7,7 @@
 
 namespace acid {
 /**
- * This class is used to abstract and wrap input methods inside a serializable factory.
+ * Class is used to abstract and wrap input methods inside a serializable factory.
  */
 class ACID_EXPORT InputScheme {
 public:
@@ -23,6 +23,8 @@ public:
 	
 	explicit InputScheme(const std::filesystem::path &filename);
 
+	const File &GetFile() const { return m_file; }
+	
 	Axis *GetAxis(const std::string &name) const;
 	Axis *AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis);
 	void RemoveAxis(const std::string &name);

@@ -19,12 +19,17 @@ InputScheme *Input::AddScheme(const std::string &name, std::unique_ptr<InputSche
 	if (m_currentScheme == nullptr)
 		m_currentScheme = inputScheme;
 	return inputScheme;
-}
+} 
 
 void Input::RemoveScheme(const std::string &name) {
 	auto it = m_schemes.find(name);
+	if (m_currentScheme == it->second.get())
+		m_currentScheme = nullptr;
 	if (it != m_schemes.end())
 		m_schemes.erase(it);
+	// If we have no current scheme grab some random one from the map.
+	if (!m_currentScheme && !m_schemes.empty())
+		m_currentScheme = m_schemes.begin()->second.get();
 }
 
 void Input::SetCurrentScheme(const std::string &name) {

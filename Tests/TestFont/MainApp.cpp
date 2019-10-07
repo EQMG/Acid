@@ -32,6 +32,7 @@ MainApp::MainApp() :
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
+	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultFont.json"));
 
 	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {

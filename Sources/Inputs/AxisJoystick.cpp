@@ -5,9 +5,8 @@ AxisJoystick::AxisJoystick(JoystickPort port, JoystickAxis axis) :
 	m_port(port),
 	m_axis(axis) {
 	Joysticks::Get()->OnAxis().Add([this](JoystickPort port, JoystickAxis axis, float value) {
-		if (port == m_port && axis == m_axis) {
+		if (port == m_port && axis == m_axis)
 			m_onAxis(GetAmount());
-		}
 	}, this);
 }
 

@@ -26,7 +26,6 @@ HatJoystick::HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<Joyst
 float HatJoystick::GetAmount() const {
 	auto hat = Joysticks::Get()->GetHat(m_port, m_hat);
 	float value = 0.0f;
-
 	if (hat & JoystickHatValue::Up) {
 		if (hat & JoystickHatValue::Right)
 			value = 0.125f;

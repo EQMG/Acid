@@ -4,6 +4,9 @@
 #include "InputScheme.hpp"
 
 namespace acid {
+/**
+ * @brief Module used for managing abstract inputs organized in schemes.
+ */
 class ACID_EXPORT Input : public Module::Registrar<Input> {
 public:
 	Input();

@@ -54,6 +54,7 @@ MainApp::MainApp() :
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
+	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"));
 
 	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
@@ -78,6 +79,8 @@ MainApp::MainApp() :
 MainApp::~MainApp() {
 	Log::Debug("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
+
+	Input::Get()->RemoveScheme("Default");
 
 	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);

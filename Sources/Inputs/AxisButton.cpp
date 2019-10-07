@@ -14,14 +14,10 @@ AxisButton::AxisButton(std::unique_ptr<Button> &&negative, std::unique_ptr<Butto
 
 float AxisButton::GetAmount() const {
 	float amount = 0.0f;
-
-	if (m_positive->IsDown()) {
+	if (m_positive->IsDown())
 		amount += 1.0f;
-	}
-
-	if (m_negative->IsDown()) {
+	if (m_negative->IsDown())
 		amount -= 1.0f;
-	}
 
 	return m_scale * amount;
 }

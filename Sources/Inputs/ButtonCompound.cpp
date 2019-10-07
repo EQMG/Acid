@@ -9,13 +9,11 @@ ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, b
 
 bool ButtonCompound::IsDown() const {
 	for (const auto &button : m_buttons) {
-		if (m_useAnd && !button->IsDown()) {
+		if (m_useAnd && !button->IsDown())
 			return false ^ m_inverted;
-		}
 
-		if (!m_useAnd && button->IsDown()) {
+		if (!m_useAnd && button->IsDown())
 			return true ^ m_inverted;
-		}
 	}
 
 	return m_useAnd ^ m_inverted;
@@ -32,8 +30,8 @@ void ButtonCompound::ConnectButtons() {
 			} else if (m_lastDown && !isDown) {
 				m_lastDown = false;
 				m_onButton(InputAction::Release, 0);
-			} else if (m_lastDown && isDown) // TODO: This will be sent for every button, only count one per cycle.
-			{
+			} else if (m_lastDown && isDown) {
+				// TODO: This will be sent for every button, only count one per cycle.
 				m_onButton(InputAction::Repeat, 0);
 			}
 		}, this);
