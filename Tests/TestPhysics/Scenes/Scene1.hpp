@@ -1,8 +1,5 @@
 #pragma once
 
-#include <Inputs/ButtonMouse.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/ButtonCompound.hpp>
 #include <Scenes/Scene.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
@@ -19,10 +16,6 @@ public:
 	bool IsPaused() const override;
 
 private:
-	ButtonCompound m_buttonSpawnSphere;
-	ButtonCompound m_buttonCaptureMouse;
-	ButtonKeyboard m_buttonSave;
-
 	UiStartLogo m_uiStartLogo;
 	OverlayDebug m_overlayDebug;
 };

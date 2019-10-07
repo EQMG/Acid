@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Scenes/Camera.hpp>
-#include <Inputs/AxisJoystick.hpp>
-#include <Inputs/ButtonMouse.hpp>
 
 using namespace acid;
 
@@ -13,10 +11,5 @@ public:
 
 	void Start() override;
 	void Update() override;
-
-private:
-	float m_sensitivity;
-	AxisJoystick m_joystickVertical;
-	AxisJoystick m_joystickHorizontal;
 };
 }

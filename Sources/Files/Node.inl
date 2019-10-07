@@ -84,8 +84,7 @@ Node &Node::operator=(const T &rhs) {
 	return *this;
 }
 
-/*const Node &operator>>(const Node &node, std::nullptr_t &object)
-{
+/*const Node &operator>>(const Node &node, std::nullptr_t &object) {
 	object = nullptr;
 	return node;
 }*/
@@ -101,7 +100,7 @@ inline const Node &operator>>(const Node &node, bool &object) {
 	return node;
 }
 
-inline Node &operator<<(Node &node, const bool &object) {
+inline Node &operator<<(Node &node, bool object) {
 	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Boolean);
 	return node;
@@ -114,15 +113,14 @@ std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> ope
 }
 
 template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, const T &object) {
+std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, T object) {
 	node.SetValue(String::To(object));
 	node.SetType(Node::Type::Number);
 	return node;
 }
 
 /*template<typename T>
-std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> operator>>(const Node &node, T &object)
-{
+std::enable_if_t<std::is_class_v<T> || std::is_pointer_v<T>, const Node &> operator>>(const Node &node, T &object) {
 	node >> ConstExpr::AsRef(object);
 	return node;
 }*/

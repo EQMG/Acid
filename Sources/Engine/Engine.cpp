@@ -9,6 +9,7 @@
 #include "Devices/Window.hpp"
 #include "Files/Files.hpp"
 #include "Gizmos/Gizmos.hpp"
+#include "Inputs/Input.hpp"
 #include "Particles/Particles.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Resources/Resources.hpp"
@@ -49,6 +50,7 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 		Mouse::Register(Module::Stage::Pre);
 		Graphics::Register(Module::Stage::Render);
 
+		Input::Register(Module::Stage::Normal);
 		Scenes::Register(Module::Stage::Normal);
 		Gizmos::Register(Module::Stage::Normal);
 		Particles::Register(Module::Stage::Normal);

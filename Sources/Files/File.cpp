@@ -3,6 +3,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Json/Json.hpp"
+#include "Xml/Xml.hpp"
 #include "Files.hpp"
 
 namespace acid {
@@ -20,6 +21,8 @@ File::File(const std::filesystem::path &filename) :
 	// TODO: Node factory.
 	if (filename.extension() == ".json") {
 		m_node = std::make_unique<Json>();
+	} else if (filename.extension() == ".xml") {
+		m_node = std::make_unique<Xml>("root");
 	}
 }
 

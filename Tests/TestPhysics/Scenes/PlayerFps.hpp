@@ -2,8 +2,6 @@
 
 #include <Scenes/Entity.hpp>
 #include <Scenes/Component.hpp>
-#include <Inputs/AxisCompound.hpp>
-#include <Inputs/ButtonCompound.hpp>
 #include <Physics/CollisionObject.hpp>
 
 using namespace acid;
@@ -23,12 +21,5 @@ private:
 	static bool registered;
 
 	bool m_noclipEnabled = false;
-
-	AxisCompound m_inputForward;
-	AxisCompound m_inputStrafe;
-	ButtonCompound m_inputSprint;
-	ButtonCompound m_inputJump;
-	ButtonCompound m_inputCrouch;
-	ButtonCompound m_toggleNoclip;
 };
 }

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Engine/App.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/InputScheme.hpp>
 #include "Configs/ConfigManager.hpp"
 
 using namespace acid;
@@ -19,10 +17,5 @@ public:
 
 private:
 	ConfigManager m_configManager;
-	InputScheme m_inputScheme;
-
-	ButtonKeyboard m_buttonFullscreen;
-	ButtonKeyboard m_buttonScreenshot;
-	ButtonKeyboard m_buttonExit;
 };
 }

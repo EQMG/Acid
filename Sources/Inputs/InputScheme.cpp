@@ -18,13 +18,13 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	m_file.Load();
 	*m_file.GetNode() >> *this;
 
-	File argsFile("ArgumentDescriptionMap.json");
+	/*File argsFile("ArgumentDescriptionMap.json");
 	*argsFile.GetNode() << ArgumentDescriptionMap;
 	argsFile.Write(Node::Format::Beautified);
 
 	File testOutFile(filename);
 	*testOutFile.GetNode() << *this;
-	testOutFile.Write(Node::Format::Beautified);
+	testOutFile.Write(Node::Format::Beautified);*/
 }
 
 Axis *InputScheme::GetAxis(const std::string &name) const {
@@ -158,6 +158,8 @@ std::unique_ptr<Axis> InputScheme::ParseAxis(const Node &node) const {
 
 	if (result)
 		result->SetScale(node["scale"].Get<float>(1.0f));
+	else
+		Log::Error("Unknown input scheme axis type: ", type, '\n');
 	return result;
 }
 
@@ -187,6 +189,8 @@ std::unique_ptr<Button> InputScheme::ParseButton(const Node &node) const {
 
 	if (result)
 		result->SetInverted(node["inverted"].Get<bool>(false));
+	else
+		Log::Error("Unknown input scheme button type: ", type, '\n');
 	return result;
 }
 

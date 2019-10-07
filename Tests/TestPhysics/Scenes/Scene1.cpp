@@ -6,6 +6,7 @@
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Devices/Mouse.hpp>
+#include <Inputs/Input.hpp>
 #include <Lights/Light.hpp>
 #include <Resources/Resources.hpp>
 #include <Materials/MaterialDefault.hpp>
@@ -44,12 +45,9 @@ static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFps>()),
-	m_buttonSpawnSphere(std::make_unique<ButtonMouse>(MouseButton::Left)),
-	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
-	m_buttonSave(Key::K),
 	m_uiStartLogo(&Uis::Get()->GetCanvas()),
 	m_overlayDebug(&Uis::Get()->GetCanvas()) {
-	m_buttonSpawnSphere.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("spawnSphere")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -72,13 +70,13 @@ Scene1::Scene1() :
 		}
 	});
 
-	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 
-	m_buttonSave.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("save")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile("Scene1.json");

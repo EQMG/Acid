@@ -169,10 +169,10 @@ public:
 				return std::nullopt;
 			return temp;
 		} else {
-			T temp;
+			long double temp;
 			std::istringstream iss(str);
 			iss >> temp;
-			return temp;
+			return static_cast<T>(temp);
 		}
 	}
 };
