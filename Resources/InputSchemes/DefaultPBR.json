@@ -1,0 +1,179 @@
+{
+  "joysticks": {
+    "primary": 0
+  },
+  "axes": [
+    {
+      "name": "mouseX",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisMouse",
+          "axis": 0,
+          "scale": 0.15
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "axis": 2,
+          "scale": -0.06
+        }
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "mouseY",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisMouse",
+          "axis": 1,
+          "scale": 0.15
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "axis": 3,
+          "scale": -0.06
+        }
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "forward",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisButton",
+          "positive": {
+            "type": "buttonKeyboard",
+            "key": 83,
+            "inverted": false
+          },
+          "negative": {
+            "type": "buttonKeyboard",
+            "key": 87,
+            "inverted": false
+          },
+          "scale": 1.0
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "axis": 1,
+          "scale": 1.0
+        }
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "strafe",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisButton",
+          "negative": {
+            "type": "buttonKeyboard",
+            "key": 65,
+            "inverted": false
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "key": 68,
+            "inverted": false
+          },
+          "scale": 1.0
+        },
+        {
+          "type": "axisJoystick",
+          "port": "primary",
+          "axis": 0,
+          "scale": 1.0
+        }
+      ],
+      "scale": 1.0
+    },
+    {
+      "name": "vertical",
+      "type": "axisCompound",
+      "axes": [
+        {
+          "type": "axisButton",
+          "negative": {
+            "type": "buttonKeyboard",
+            "key": 32,
+            "inverted": false
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "key": 341,
+            "inverted": false
+          },
+          "scale": 1.0
+        }
+      ],
+      "scale": 1.0
+    }
+  ],
+  "buttons": [
+    {
+      "name": "fullscreen",
+      "type": "buttonKeyboard",
+      "key": 300,
+      "inverted": false
+    },
+    {
+      "name": "screenshot",
+      "type": "buttonKeyboard",
+      "key": 298,
+      "inverted": false
+    },
+    {
+      "name": "exit",
+      "type": "buttonKeyboard",
+      "key": 261,
+      "inverted": false
+    },
+    {
+      "name": "sprint",
+      "type": "buttonCompound",
+      "buttons": [
+        {
+          "type": "buttonKeyboard",
+          "key": 340,
+          "inverted": false
+        },
+        {
+          "type": "buttonJoystick",
+          "port": "primary",
+          "button": 0,
+          "inverted": false
+        }
+      ],
+      "inverted": false
+    },
+    {
+      "name": "captureMouse",
+      "type": "buttonCompound",
+      "buttons": [
+        {
+          "type": "buttonKeyboard",
+          "key": 256,
+          "inverted": false
+        },
+        {
+          "type": "buttonKeyboard",
+          "key": 77,
+          "inverted": false
+        }
+      ],
+      "inverted": false
+    },
+    {
+      "name": "noclip",
+      "type": "buttonKeyboard",
+      "key": 78,
+      "inverted": false
+    }
+  ]
+}

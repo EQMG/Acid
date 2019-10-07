@@ -45,14 +45,14 @@
       "axes": [
         {
           "type": "axisButton",
-          "positive": {
-            "type": "buttonKeyboard",
-            "key": 87,
-            "inverted": false
-          },
           "negative": {
             "type": "buttonKeyboard",
             "key": 83,
+            "inverted": false
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "key": 87,
             "inverted": false
           },
           "scale": 1.0
@@ -72,14 +72,14 @@
       "axes": [
         {
           "type": "axisButton",
-          "positive": {
-            "type": "buttonKeyboard",
-            "key": 65,
-            "inverted": false
-          },
           "negative": {
             "type": "buttonKeyboard",
             "key": 68,
+            "inverted": false
+          },
+          "positive": {
+            "type": "buttonKeyboard",
+            "key": 65,
             "inverted": false
           },
           "scale": 1.0

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/App.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
 
 using namespace acid;
 
@@ -14,10 +13,5 @@ public:
 
 	void Start() override;
 	void Update() override;
-
-private:
-	ButtonKeyboard m_buttonFullscreen;
-	ButtonKeyboard m_buttonScreenshot;
-	ButtonKeyboard m_buttonExit;
 };
 }

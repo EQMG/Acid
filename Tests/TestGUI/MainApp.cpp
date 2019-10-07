@@ -1,7 +1,8 @@
 #include "MainApp.hpp"
 
-#include <Files/Files.hpp>
 #include <Devices/Mouse.hpp>
+#include <Inputs/Input.hpp>
+#include <Files/Files.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Resources/Resources.hpp>
 #include <Scenes/Scenes.hpp>
@@ -27,10 +28,7 @@ int main(int argc, char **argv) {
 namespace test {
 MainApp::MainApp() :
 	App("Test GUI", {1, 0, 0}),
-	m_fileObserver(std::filesystem::current_path(), 2s),
-	m_buttonFullscreen(Key::F11),
-	m_buttonScreenshot(Key::F9),
-	m_buttonExit(Key::Delete) {
+	m_fileObserver(std::filesystem::current_path(), 2s) {
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
@@ -50,19 +48,21 @@ MainApp::MainApp() :
 		}
 	});
 
-	m_buttonFullscreen.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultGUI.json"));
+
+	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	m_buttonScreenshot.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("screenshot")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	m_buttonExit.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("exit")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}

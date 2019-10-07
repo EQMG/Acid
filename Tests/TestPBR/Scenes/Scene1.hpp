@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Scenes/Scene.hpp>
-#include <Inputs/ButtonCompound.hpp>
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
@@ -16,8 +15,6 @@ public:
 	bool IsPaused() const override;
 
 private:
-	ButtonCompound m_buttonCaptureMouse;
-
 	OverlayDebug m_overlayDebug;
 };
 }

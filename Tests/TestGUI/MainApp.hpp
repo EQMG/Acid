@@ -2,7 +2,6 @@
 
 #include <Engine/App.hpp>
 #include <Files/FileObserver.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
 
 using namespace acid;
 
@@ -18,9 +17,5 @@ public:
 
 private:
 	FileObserver m_fileObserver;
-
-	ButtonKeyboard m_buttonFullscreen;
-	ButtonKeyboard m_buttonScreenshot;
-	ButtonKeyboard m_buttonExit;
 };
 }

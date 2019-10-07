@@ -1,7 +1,6 @@
 #include "Scene1.hpp"
 
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/ButtonJoystick.hpp>
+#include <Inputs/Input.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
@@ -23,9 +22,8 @@
 namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFree>()),
-	m_buttonCaptureMouse(std::make_unique<ButtonKeyboard>(Key::Escape), std::make_unique<ButtonKeyboard>(Key::M)),
 	m_overlayDebug(&Uis::Get()->GetCanvas()) {
-	m_buttonCaptureMouse.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}

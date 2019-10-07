@@ -1,11 +1,8 @@
 ﻿#pragma once
 
-#include <Inputs/ButtonKeyboard.hpp>
-#include <Inputs/HatJoystick.hpp>
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
-#include <Inputs/ButtonCompound.hpp>
 #include <Uis/Inputs/UiInputBoolean.hpp>
 #include <Uis/Inputs/UiInputSlider.hpp>
 #include <Uis/UiPanel.hpp>
@@ -20,8 +17,6 @@ public:
 	void UpdateObject() override;
 
 private:
-	ButtonKeyboard m_buttonReset;
-
 	float m_zoom;
 
 	UiObject m_content;

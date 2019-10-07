@@ -1,7 +1,8 @@
 #include "CameraFps.hpp"
 
-#include <Scenes/Scenes.hpp>
 #include <Devices/Mouse.hpp>
+#include <Inputs/Input.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Physics/CollisionObject.hpp>
@@ -9,13 +10,8 @@
 
 namespace test {
 static const Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
-static const Vector2f SensitivityJoystick(-0.06f);
-static const Vector2f SensitivityMouse(0.15f);
 
-CameraFps::CameraFps() :
-	m_sensitivity(1.0f),
-	m_joystickVertical(0, 3),
-	m_joystickHorizontal(0, 2) {
+CameraFps::CameraFps() {
 	m_nearPlane = 0.1f;
 	m_farPlane = 4098.0f;
 	m_fieldOfView = Maths::Radians(70.0f);
@@ -35,14 +31,11 @@ void CameraFps::Update() {
 	}
 
 	if (!Scenes::Get()->IsPaused()) {
-		auto rotationDelta = Mouse::Get()->GetPositionDelta() * Mouse::Get()->IsCursorHidden() * SensitivityMouse;
+		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Input::Get()->GetAxis("mouseX")->GetAmount(),
+			Input::Get()->GetAxis("mouseY")->GetAmount());
 
-		if (m_joystickVertical.IsConnected()) {
-			rotationDelta += Vector2f(m_joystickHorizontal.GetAmount(), m_joystickVertical.GetAmount()) * SensitivityJoystick;
-		}
-
-		m_rotation.m_y += rotationDelta.m_x * m_sensitivity;
-		m_rotation.m_x += rotationDelta.m_y * m_sensitivity;
+		m_rotation.m_y += rotationDelta.m_x;
+		m_rotation.m_x += rotationDelta.m_y;
 		m_rotation.m_x = std::clamp(m_rotation.m_x, Maths::Radians(90.0f), Maths::Radians(270.0f));
 	}
 

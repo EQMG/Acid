@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Scenes/Scene.hpp>
-#include <Inputs/ButtonKeyboard.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/Panels.hpp"
 #include "Uis/OverlayDebug.hpp"
@@ -20,8 +19,6 @@ public:
 	void TogglePause();
 
 private:
-	ButtonKeyboard m_buttonPause;
-
 	UiStartLogo m_uiStartLogo;
 	Panels m_uiPanels;
 	OverlayDebug m_overlayDebug;

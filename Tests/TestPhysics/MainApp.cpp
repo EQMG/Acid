@@ -40,7 +40,7 @@ MainApp::MainApp() :
 	Files::Get()->AddSearchPath("Resources/Engine");
 #endif
 
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/SchemePhysics.json"));
+	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"));
 	
 	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {

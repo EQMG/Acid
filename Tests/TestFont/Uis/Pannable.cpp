@@ -1,6 +1,7 @@
 #include "Pannable.hpp"
 
 #include <Audio/Audio.hpp>
+#include <Inputs/Input.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Uis/Inputs/UiInputButton.hpp>
 #include <Graphics/Graphics.hpp>
@@ -9,7 +10,6 @@
 namespace test {
 Pannable::Pannable(UiObject *parent) :
 	UiObject(parent, {UiMargins::All}),
-	m_buttonReset(Key::Enter),
 	m_zoom(1.0f),
 	m_content(this, {{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}}),
 	m_title(&m_content, {{300, 80}, UiAnchor::CentreTop}, 72, "Acid Font",
@@ -24,7 +24,7 @@ Pannable::Pannable(UiObject *parent) :
 		Text::Justify::Left),
 	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "FPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left),
 	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova"), Text::Justify::Left) {
-	m_buttonReset.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("reset")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			m_zoom = 1.0f;
 			m_content.GetTransform().SetPosition({0.5f, 0.5f});
