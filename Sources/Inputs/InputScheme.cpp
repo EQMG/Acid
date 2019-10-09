@@ -1,15 +1,15 @@
 #include "InputScheme.hpp"
 
-#include "AxisButton.hpp"
-#include "AxisCompound.hpp"
-#include "AxisJoystick.hpp"
-#include "AxisMouse.hpp"
-#include "ButtonAxis.hpp"
-#include "ButtonCompound.hpp"
-#include "ButtonJoystick.hpp"
-#include "ButtonKeyboard.hpp"
-#include "ButtonMouse.hpp"
-#include "HatJoystick.hpp"
+#include "Axes/AxisButton.hpp"
+#include "Axes/AxisCompound.hpp"
+#include "Axes/AxisJoystick.hpp"
+#include "Axes/AxisMouse.hpp"
+#include "Axes/HatJoystick.hpp"
+#include "Buttons/ButtonAxis.hpp"
+#include "Buttons/ButtonCompound.hpp"
+#include "Buttons/ButtonJoystick.hpp"
+#include "Buttons/ButtonKeyboard.hpp"
+#include "Buttons/ButtonMouse.hpp"
 
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :

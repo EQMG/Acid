@@ -101,18 +101,18 @@ set(_temp_acid_headers
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeInfo.hpp
-		Inputs/Axis.hpp
-		Inputs/AxisButton.hpp
-		Inputs/AxisCompound.hpp
-		Inputs/AxisJoystick.hpp
-		Inputs/AxisMouse.hpp
-		Inputs/Button.hpp
-		Inputs/ButtonAxis.hpp
-		Inputs/ButtonCompound.hpp
-		Inputs/ButtonJoystick.hpp
-		Inputs/ButtonKeyboard.hpp
-		Inputs/ButtonMouse.hpp
-		Inputs/HatJoystick.hpp
+		Inputs/Axes/Axis.hpp
+		Inputs/Axes/AxisButton.hpp
+		Inputs/Axes/AxisCompound.hpp
+		Inputs/Axes/AxisJoystick.hpp
+		Inputs/Axes/AxisMouse.hpp
+		Inputs/Axes/HatJoystick.hpp
+		Inputs/Buttons/Button.hpp
+		Inputs/Buttons/ButtonAxis.hpp
+		Inputs/Buttons/ButtonCompound.hpp
+		Inputs/Buttons/ButtonJoystick.hpp
+		Inputs/Buttons/ButtonKeyboard.hpp
+		Inputs/Buttons/ButtonMouse.hpp
 		Inputs/Input.hpp
 		Inputs/InputDelay.hpp
 		Inputs/InputScheme.hpp
@@ -327,16 +327,16 @@ set(_temp_acid_sources
 		Guis/SubrenderGuis.cpp
 		Helpers/String.cpp
 		Helpers/ThreadPool.cpp
-		Inputs/AxisButton.cpp
-		Inputs/AxisCompound.cpp
-		Inputs/AxisJoystick.cpp
-		Inputs/AxisMouse.cpp
-		Inputs/ButtonAxis.cpp
-		Inputs/ButtonCompound.cpp
-		Inputs/ButtonJoystick.cpp
-		Inputs/ButtonKeyboard.cpp
-		Inputs/ButtonMouse.cpp
-		Inputs/HatJoystick.cpp
+		Inputs/Axes/AxisButton.cpp
+		Inputs/Axes/AxisCompound.cpp
+		Inputs/Axes/AxisJoystick.cpp
+		Inputs/Axes/AxisMouse.cpp
+		Inputs/Axes/HatJoystick.cpp
+		Inputs/Buttons/ButtonAxis.cpp
+		Inputs/Buttons/ButtonCompound.cpp
+		Inputs/Buttons/ButtonJoystick.cpp
+		Inputs/Buttons/ButtonKeyboard.cpp
+		Inputs/Buttons/ButtonMouse.cpp
 		Inputs/Input.cpp
 		Inputs/InputDelay.cpp
 		Inputs/InputScheme.cpp

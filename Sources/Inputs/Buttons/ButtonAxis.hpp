@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Axis.hpp"
+#include "Inputs/Axes/Axis.hpp"
 #include "Button.hpp"
 
 namespace acid {

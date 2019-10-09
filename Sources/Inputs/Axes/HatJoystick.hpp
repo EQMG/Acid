@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Devices/Joysticks.hpp"
+#include "Inputs/Buttons/Button.hpp"
 #include "Axis.hpp"
-#include "Button.hpp"
 
 namespace acid {
 /**

@@ -1,10 +1,9 @@
 #include "PlayerFps.hpp"
 
-#include <Uis/Uis.hpp>
-#include <Scenes/Scenes.hpp>
 #include <Inputs/Input.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Physics/KinematicCharacter.hpp>
-#include <Inputs/ButtonJoystick.hpp>
+#include <Uis/Uis.hpp>
 
 namespace test {
 bool PlayerFps::registered = Register("playerFps");

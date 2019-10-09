@@ -2,8 +2,8 @@
 
 #include "Devices/Joysticks.hpp"
 #include "Files/File.hpp"
-#include "Axis.hpp"
-#include "Button.hpp"
+#include "Axes/Axis.hpp"
+#include "Buttons/Button.hpp"
 
 namespace acid {
 /**
