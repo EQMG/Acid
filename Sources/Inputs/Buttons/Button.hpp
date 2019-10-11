@@ -14,7 +14,7 @@ public:
 	 * Returns whether this button is currently pressed.
 	 * @return True if the button is pressed, false otherwise.
 	 */
-	virtual bool IsDown() const = 0;
+	virtual bool IsDown() const { return false; }
 
 	/**
 	 * Gets if the key is down and was not down before. Key press recognized as one click.

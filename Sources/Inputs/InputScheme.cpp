@@ -27,40 +27,6 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	testOutFile.Write(Node::Format::Beautified);*/
 }
 
-Axis *InputScheme::GetAxis(const std::string &name) const {
-	auto it = m_axes.find(name);
-	if (it == m_axes.end())
-		return nullptr;
-	return it->second.get();
-}
-
-Axis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis) {
-	return m_axes.emplace(name, std::move(axis)).first->second.get();
-}
-
-void InputScheme::RemoveAxis(const std::string &name) {
-	auto it = m_axes.find(name);
-	if (it != m_axes.end())
-		m_axes.erase(it);
-}
-
-Button *InputScheme::GetButton(const std::string &name) const {
-	auto it = m_buttons.find(name);
-	if (it == m_buttons.end())
-		return nullptr;
-	return it->second.get();
-}
-
-Button *InputScheme::AddButton(const std::string &name, std::unique_ptr<Button> &&button) {
-	return m_buttons.emplace(name, std::move(button)).first->second.get();
-}
-
-void InputScheme::RemoveButton(const std::string &name) {
-	auto it = m_buttons.find(name);
-	if (it != m_buttons.end())
-		m_buttons.erase(it);
-}
-
 std::optional<JoystickPort> InputScheme::GetJoystickPort(const std::string &name) const {
 	auto it = m_joysticks.find(name);
 	if (it == m_joysticks.end())
@@ -84,6 +50,44 @@ void InputScheme::RemoveJoystickPort(const std::string &name) {
 	auto it = m_joysticks.find(name);
 	if (it != m_joysticks.end())
 		m_joysticks.erase(it);
+}
+
+Axis *InputScheme::GetAxis(const std::string &name) {
+	auto it = m_axes.find(name);
+	if (it == m_axes.end()) {
+		Log::Error("Axis was not found in current input scheme: ", std::quoted(name), '\n');
+		it = m_axes.emplace(name, std::make_unique<Axis>()).first;
+	}
+	return it->second.get();
+}
+
+Axis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis) {
+	return m_axes.emplace(name, std::move(axis)).first->second.get();
+}
+
+void InputScheme::RemoveAxis(const std::string &name) {
+	auto it = m_axes.find(name);
+	if (it != m_axes.end())
+		m_axes.erase(it);
+}
+
+Button *InputScheme::GetButton(const std::string &name) {
+	auto it = m_buttons.find(name);
+	if (it == m_buttons.end()) {
+		Log::Error("Button was not found in current input scheme: ", std::quoted(name), '\n');
+		it = m_buttons.emplace(name, std::make_unique<Button>()).first;
+	}
+	return it->second.get();
+}
+
+Button *InputScheme::AddButton(const std::string &name, std::unique_ptr<Button> &&button) {
+	return m_buttons.emplace(name, std::move(button)).first->second.get();
+}
+
+void InputScheme::RemoveButton(const std::string &name) {
+	auto it = m_buttons.find(name);
+	if (it != m_buttons.end())
+		m_buttons.erase(it);
 }
 
 InputScheme::ArgumentDescription InputScheme::GetArgumentDescription(const std::string &name) {
@@ -130,6 +134,14 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 		inputScheme.WriteButton(button.get(), buttonNode);
 	}
 	return node;
+}
+
+void InputScheme::MoveDelegateOwnership(InputScheme *other) {
+	if (!other) return;
+	for (auto &[axisName, axis] : other->m_axes)
+		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis());
+	for (auto &[buttonName, button] : other->m_buttons)
+		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton());
 }
 
 std::unique_ptr<Axis> InputScheme::ParseAxis(const Node &node) const {

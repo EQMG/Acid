@@ -27,7 +27,7 @@ Scene1::Scene1() :
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	});
+	}, this);
 }
 
 void Scene1::Start() {

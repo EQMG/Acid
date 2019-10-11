@@ -112,6 +112,10 @@ public:
 		}), m_functions.end());
 	}
 
+	void MoveFunctions(Delegate &from) {
+		m_functions = std::move(from.m_functions);
+	}
+
 	void Clear() {
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_functions.clear();

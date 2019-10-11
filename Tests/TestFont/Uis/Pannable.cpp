@@ -31,7 +31,7 @@ Pannable::Pannable(UiObject *parent) :
 		}
 
 		Log::Out("Button Reset: ", static_cast<uint32_t>(action), '\n'); // TODO: Enum stream operators.
-	});
+	}, this);
 
 	//m_settings.GetTransform().SetDepth(-4.0f);
 	m_masterVolume.OnValue().Add([this](float value) {

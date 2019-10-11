@@ -8,6 +8,7 @@ namespace acid {
  */
 class ACID_EXPORT File {
 public:
+	File() = default;
 	explicit File(std::unique_ptr<Node> &&node);
 	File(std::filesystem::path filename, std::unique_ptr<Node> &&node);
 	explicit File(const std::filesystem::path &filename);

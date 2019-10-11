@@ -1,6 +1,7 @@
 #pragma once
 
 #include "StdAfx.hpp"
+#include "Helpers/Delegate.hpp"
 
 namespace acid {
 struct Version {
@@ -10,7 +11,7 @@ struct Version {
 /**
  * @brief Class that represents a application.
  */
-class ACID_EXPORT App {
+class ACID_EXPORT App : public virtual Observer {
 	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :
