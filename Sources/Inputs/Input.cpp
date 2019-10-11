@@ -1,8 +1,9 @@
 #include "Input.hpp"
 
 namespace acid {
-Input::Input() {
-	m_currentScheme = m_schemes.emplace("Null", std::make_unique<InputScheme>()).first->second.get();
+Input::Input() :
+	m_nullScheme(std::make_unique<InputScheme>()),
+	m_currentScheme(m_nullScheme.get()) {
 }
 
 void Input::Update() {
@@ -15,6 +16,10 @@ InputScheme *Input::GetScheme(const std::string &name) const {
 		return nullptr;
 	}
 	return it->second.get();
+}
+
+InputScheme *Input::GetScheme() const {
+	return m_currentScheme;
 }
 
 InputScheme *Input::AddScheme(const std::string &name, std::unique_ptr<InputScheme> &&scheme, bool setCurrent) {
@@ -36,8 +41,7 @@ void Input::RemoveScheme(const std::string &name) {
 }
 
 void Input::SetScheme(InputScheme *scheme) {
-	if (!scheme)
-		scheme = GetScheme("Null");
+	if (!scheme) scheme = m_nullScheme.get();
 	// We want to preserve delegate function pointers from the current scheme to the new one.
 	scheme->MoveDelegateOwnership(m_currentScheme);
 	m_currentScheme = scheme;
