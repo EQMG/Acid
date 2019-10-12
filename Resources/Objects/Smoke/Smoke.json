@@ -58,6 +58,12 @@
         "scale": 0.600000
       }
     ],
+    "emitters": [
+      {
+        "type": "sphere",
+        "radius": 3.000000
+      }
+    ],
     "pps": 8.000000,
     "averageSpeed": 0.800000,
     "gravityEffect": 0.100000,
@@ -72,8 +78,5 @@
     "lifeDeviation": 0.500000,
     "stageDeviation": 0.000000,
     "scaleDeviation": 0.100000
-  },
-  "emitterSphere": {
-    "radius": 3.000000
   }
 }

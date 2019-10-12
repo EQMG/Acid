@@ -5,17 +5,13 @@
 class btConeShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCone : public Component::Registrar<ColliderCone>, public Collider {
+class ACID_EXPORT ColliderCone : public Collider::Registrar<ColliderCone> {
 public:
 	explicit ColliderCone(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCone();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);

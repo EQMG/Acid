@@ -1,38 +1,25 @@
 #include "ColliderCone.hpp"
 
 #include <BulletCollision/CollisionShapes/btConeShape.h>
-#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderCone::registered = Register("colliderCone");
+bool ColliderCone::registered = Register("cone");
 
 ColliderCone::ColliderCone(float radius, float height, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cone.obj"), 3.0f, Colour::Green)),
+	//Collider(localTransform),
 	m_shape(std::make_unique<btConeShape>(radius, height)),
 	m_radius(radius),
 	m_height(height) {
+	m_localTransform = localTransform;
 	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
 }
 
 ColliderCone::~ColliderCone() {
 }
 
-void ColliderCone::Start() {
-}
-
-void ColliderCone::Update() {
-	//Collider::Update();
-}
-
 btCollisionShape *ColliderCone::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderCone::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCone::SetRadius(float radius) {

@@ -3,17 +3,11 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool EmitterCircle::registered = Register("emitterCircle");
+bool EmitterCircle::registered = Register("circle");
 
 EmitterCircle::EmitterCircle(float radius, const Vector3f &heading) :
 	m_radius(radius),
 	m_heading(heading.Normalize()) {
-}
-
-void EmitterCircle::Start() {
-}
-
-void EmitterCircle::Update() {
 }
 
 Vector3f EmitterCircle::GeneratePosition() const {
@@ -47,6 +41,7 @@ const Node &operator>>(const Node &node, EmitterCircle &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterCircle &emitter) {
+	node["type"].Set("circle");
 	node["radius"].Set(emitter.m_radius);
 	node["heading"].Set(emitter.m_heading);
 	return node;

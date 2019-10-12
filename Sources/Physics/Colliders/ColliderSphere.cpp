@@ -1,37 +1,24 @@
 #include "ColliderSphere.hpp"
 
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
-#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderSphere::registered = Register("colliderSphere");
+bool ColliderSphere::registered = Register("sphere");
 
 ColliderSphere::ColliderSphere(float radius, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Sphere.obj"), 3.0f, Colour::Blue)),
+	//Collider(localTransform),
 	m_shape(std::make_unique<btSphereShape>(radius)),
 	m_radius(radius) {
+	m_localTransform = localTransform;
 	m_localTransform.SetLocalScale({m_radius, m_radius, m_radius});
 }
 
 ColliderSphere::~ColliderSphere() {
 }
 
-void ColliderSphere::Start() {
-}
-
-void ColliderSphere::Update() {
-	//Collider::Update();
-}
-
 btCollisionShape *ColliderSphere::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderSphere::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderSphere::SetRadius(float radius) {

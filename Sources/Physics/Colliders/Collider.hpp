@@ -1,8 +1,7 @@
 #pragma once
 
+#include "Helpers/Factory.hpp"
 #include "Maths/Transform.hpp"
-#include "Gizmos/Gizmos.hpp"
-#include "Scenes/Component.hpp"
 
 class btCollisionShape;
 class btVector3;
@@ -13,18 +12,15 @@ namespace acid {
 /**
  * @brief Class that represents a physics shape.
  */
-class ACID_EXPORT Collider {
+class ACID_EXPORT Collider : public Factory<Collider> {
 public:
 	/**
 	 * Creates a new collider.
 	 * @param localTransform The parent offset of the body.
-	 * @param gizmoType The gizmo type to use for this collider type.
 	 */
-	explicit Collider(const Transform &localTransform = Transform(), const std::shared_ptr<GizmoType> &gizmoType = nullptr);
+	explicit Collider(const Transform &localTransform = {});
 
-	virtual ~Collider();
-
-	//void Update() override;
+	virtual ~Collider() = default;
 
 	/**
 	 * Gets the collision shape defined in this collider.
@@ -33,7 +29,9 @@ public:
 	virtual btCollisionShape *GetCollisionShape() const = 0;
 
 	const Transform &GetLocalTransform() const { return m_localTransform; }
-	virtual void SetLocalTransform(const Transform &localTransform) = 0;
+	void SetLocalTransform(const Transform &localTransform);
+
+	Delegate<void(Collider *, const Transform &)> &OnTransformChange() { return m_onTransformChange; }
 
 	static btVector3 Convert(const Vector3f &vector);
 	static Vector3f Convert(const btVector3 &vector);
@@ -44,6 +42,6 @@ public:
 
 protected:
 	Transform m_localTransform;
-	Gizmo *m_gizmo = nullptr;
+	Delegate<void(Collider*, const Transform &)> m_onTransformChange;
 };
 }

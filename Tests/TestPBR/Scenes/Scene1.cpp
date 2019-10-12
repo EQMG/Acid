@@ -6,7 +6,6 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
-#include <Meshes/MeshRender.hpp>
 #include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
@@ -14,7 +13,6 @@
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
-#include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
 #include <Uis/Uis.hpp>
 #include "CameraFree.hpp"
@@ -45,28 +43,22 @@ void Scene1::Start() {
 		for (uint32_t j = 0; j < 6; j++) {
 			auto sphere = GetStructure()->CreateEntity();
 			sphere->AddComponent<Transform>(Vector3f(i, j, -6.0f), Vector3f(), Vector3f(0.5f));
-			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30));
-			sphere->AddComponent<MaterialDefault>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
+			sphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 30, 30), 
+				std::make_unique<MaterialDefault>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
 				nullptr, // Image2d::Create("Objects/Testing/Material.png")
-				Image2d::Create("Objects/Testing/Normal.png"));
-			sphere->AddComponent<MeshRender>();
-			sphere->AddComponent<ShadowRender>();
+				Image2d::Create("Objects/Testing/Normal.png")));
 
 			auto teapot = GetStructure()->CreateEntity();
 			teapot->AddComponent<Transform>(Vector3f(i * 1.6f, j, 6.0f), Vector3f(), Vector3f(0.14f));
-			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"));
-			teapot->AddComponent<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f);
-			teapot->AddComponent<MeshRender>();
-			teapot->AddComponent<ShadowRender>();
+			teapot->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Tea.obj"), 
+				std::make_unique<MaterialDefault>(Colour::White, nullptr, j / 5.0f, i / 5.0f));
 		}
 	}
 
-	/*auto dragon = GetStructure()->CreateEntity();
-	dragon->AddComponent<Transform>(Vector3f(6.0f, 0.0f, 0.0f), Vector3f(0.0f, Maths::Radians(-90.0f), 0.0f), Vector3f(0.4f));
-	dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"));
-	dragon->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f);
-	dragon->AddComponent<MeshRender>();
-	dragon->AddComponent<ShadowRender>();*/
+	//auto dragon = GetStructure()->CreateEntity();
+	//dragon->AddComponent<Transform>(Vector3f(6.0f, 0.0f, 0.0f), Vector3f(0.0f, Maths::Radians(-90.0f), 0.0f), Vector3f(0.4f));
+	//dragon->AddComponent<Mesh>(ModelObj::Create("Objects/Testing/Model_Dragon.obj"),
+	//	std::make_unique<MaterialDefault>(Colour::White, nullptr, 0.7f, 0.1f));
 }
 
 void Scene1::Update() {

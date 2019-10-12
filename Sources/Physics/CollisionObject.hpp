@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Helpers/Delegate.hpp"
-#include "Scenes/Entity.hpp"
-#include "Scenes/Component.hpp"
 #include "Colliders/Collider.hpp"
 #include "Force.hpp"
 
@@ -16,16 +14,17 @@ class Frustum;
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT CollisionObject {
+class ACID_EXPORT CollisionObject : public NonCopyable, public virtual Observer {
 public:
 	/**
 	 * Creates a new collision object.
+	 * @param colliders The list of collider shapes that make up this collision object.
 	 * @param mass The mass of the object.
 	 * @param friction The amount of surface friction.
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit CollisionObject(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = Vector3f(1.0f), 
+	explicit CollisionObject(std::vector<std::unique_ptr<Collider>> &&colliders = {}, float mass = 1.0f, float friction = 0.2f, const Vector3f & linearFactor = Vector3f(1.0f),
 		const Vector3f &angularFactor = Vector3f(1.0f));
 
 	virtual ~CollisionObject();
@@ -37,6 +36,9 @@ public:
 	 */
 	virtual bool InFrustum(const Frustum &frustum) = 0;
 
+	Collider *AddCollider(std::unique_ptr<Collider> &&collider);
+	void RemoveCollider(Collider *collider);
+
 	Force *AddForce(std::unique_ptr<Force> &&force);
 	virtual void ClearForces() = 0;
 
@@ -47,6 +49,8 @@ public:
 	void RemoveChild(Collider *child);
 
 	void SetIgnoreCollisionCheck(CollisionObject *other, bool ignore);
+
+	const std::vector<std::unique_ptr<Collider>> &GetColliders() const { return m_colliders; }
 
 	float GetMass() const { return m_mass; }
 	virtual void SetMass(float mass) = 0;
@@ -90,7 +94,9 @@ public:
 protected:
 	virtual void RecalculateMass() = 0;
 
-	void CreateShape(const std::vector<Collider *> &colliders, bool forceSingle = false);
+	void CreateShape(bool forceSingle = false);
+
+	std::vector<std::unique_ptr<Collider>> m_colliders;
 
 	float m_mass;
 	Vector3f m_gravity;

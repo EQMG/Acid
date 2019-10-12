@@ -13,8 +13,9 @@
 namespace acid {
 bool Rigidbody::registered = Register("rigidbody");
 
-Rigidbody::Rigidbody(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
-	CollisionObject(mass, friction, linearFactor, angularFactor) {
+Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
+	CollisionObject({}, mass, friction, linearFactor, angularFactor) {
+	AddCollider(std::move(collider));
 }
 
 Rigidbody::~Rigidbody() {
@@ -36,8 +37,7 @@ void Rigidbody::Start() {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
-	auto colliders = GetEntity()->GetComponents<Collider>();
-	CreateShape(colliders);
+	CreateShape();
 	assert((!m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
@@ -163,6 +163,9 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity) {
 }
 
 const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
+	for (const auto &collider : node["colliders"]->GetProperties()) {
+		rigidbody.m_colliders.emplace_back(Collider::Create(collider["type"].Get<std::string>()));
+	}
 	node["mass"].Get(rigidbody.m_mass);
 	node["friction"].Get(rigidbody.m_friction);
 	node["frictionRolling"].Get(rigidbody.m_frictionRolling);
@@ -173,6 +176,7 @@ const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
 }
 
 Node &operator<<(Node &node, const Rigidbody &rigidbody) {
+	//node["colliders"].Set(rigidbody.m_colliders);
 	node["mass"].Set(rigidbody.m_mass);
 	node["friction"].Set(rigidbody.m_friction);
 	node["frictionRolling"].Set(rigidbody.m_frictionRolling);
@@ -191,10 +195,8 @@ void Rigidbody::RecalculateMass() {
 
 	btVector3 localInertia;
 
-	auto shape = GetEntity()->GetComponent<Collider>();
-
-	if (shape && isDynamic) {
-		shape->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
+	if (!m_colliders.empty() && isDynamic) {
+		m_colliders[0]->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
 	}
 
 	m_rigidBody->setMassProps(m_mass, localInertia);

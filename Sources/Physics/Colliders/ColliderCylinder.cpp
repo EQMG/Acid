@@ -1,38 +1,25 @@
 #include "ColliderCylinder.hpp"
 
 #include <BulletCollision/CollisionShapes/btCylinderShape.h>
-#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderCylinder::registered = Register("colliderCylinder");
+bool ColliderCylinder::registered = Register("cylinder");
 
 ColliderCylinder::ColliderCylinder(float radius, float height, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cylinder.obj"), 3.0f, Colour::Yellow)),
+	//Collider(localTransform),
 	m_shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),
 	m_radius(radius),
 	m_height(height) {
+	m_localTransform = localTransform;
 	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
 }
 
 ColliderCylinder::~ColliderCylinder() {
 }
 
-void ColliderCylinder::Start() {
-}
-
-void ColliderCylinder::Update() {
-	//Collider::Update();
-}
-
 btCollisionShape *ColliderCylinder::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderCylinder::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCylinder::SetRadius(float radius) {

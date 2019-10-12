@@ -1,7 +1,8 @@
 #include "SubrenderMeshes.hpp"
 
+#include "Animations/MeshAnimated.hpp"
 #include "Scenes/Scenes.hpp"
-#include "MeshRender.hpp"
+#include "Mesh.hpp"
 
 namespace acid {
 SubrenderMeshes::SubrenderMeshes(const Pipeline::Stage &pipelineStage, Sort sort) :
@@ -16,18 +17,20 @@ void SubrenderMeshes::Render(const CommandBuffer &commandBuffer) {
 	m_uniformScene.Push("view", camera->GetViewMatrix());
 	m_uniformScene.Push("cameraPos", camera->GetPosition());
 
-	auto sceneMeshRenders = Scenes::Get()->GetStructure()->QueryComponents<MeshRender>();
+	auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
+	if (m_sort == Sort::Front)
+		std::sort(meshes.begin(), meshes.end(), std::greater<>());
+	else if (m_sort == Sort::Back)
+		std::sort(meshes.begin(), meshes.end(), std::less<>());
 
-	if (m_sort != Sort::None) {
-		std::sort(sceneMeshRenders.begin(), sceneMeshRenders.end());
-
-		if (m_sort == Sort::Front) {
-			std::reverse(sceneMeshRenders.begin(), sceneMeshRenders.end());
-		}
+	for (const auto &mesh : meshes) {
+		mesh->CmdRender(commandBuffer, m_uniformScene, GetStage());
 	}
 
-	for (const auto &meshRender : sceneMeshRenders) {
-		meshRender->CmdRender(commandBuffer, m_uniformScene, GetStage());
+	// TODO: Split animated meshes into it's own subrender.
+	auto animatedMeshes = Scenes::Get()->GetStructure()->QueryComponents<MeshAnimated>();
+	for (const auto &animatedMesh : animatedMeshes) {
+		animatedMesh->CmdRender(commandBuffer, m_uniformScene, GetStage());
 	}
 }
 }

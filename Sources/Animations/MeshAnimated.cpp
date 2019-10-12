@@ -2,21 +2,28 @@
 
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
+#include "Maths/Matrix4.hpp"
 #include "Scenes/Entity.hpp"
+#include "Animation/AnimationLoader.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
+#include "Geometry/GeometryLoader.hpp"
+#include "Maths/Transform.hpp"
 
 namespace acid {
 bool MeshAnimated::registered = Register("meshAnimated");
 
-MeshAnimated::MeshAnimated(std::filesystem::path filename) :
+MeshAnimated::MeshAnimated(std::filesystem::path filename, std::unique_ptr<Material> &&material) :
+	m_material(std::move(material)),
 	m_filename(std::move(filename)) {
 }
 
 void MeshAnimated::Start() {
-	if (m_filename.empty()) {
+	if (m_material)
+		m_material->Start(GetVertexInput());
+
+	if (m_filename.empty())
 		return;
-	}
 
 	//File file(m_filename, std::make_unique<Xml>("COLLADA"));
 	//file.Load();
@@ -61,18 +68,66 @@ void MeshAnimated::Start() {
 }
 
 void MeshAnimated::Update() {
+	if (m_material) {
+		auto transform = GetEntity()->GetComponent<Transform>();
+		m_material->PushUniforms(m_uniformObject, transform ? *transform : Transform());
+	}
+	
 	std::vector<Matrix4> jointMatrices(MaxJoints);
 	m_animator.Update(m_headJoint, jointMatrices);
 	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 }
 
+bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
+	if (!m_model || !m_material)
+		return false;
+
+	// Checks if the mesh is in view.
+	/*if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
+		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
+			return false;
+	}*/
+
+	// Check if we are in the correct pipeline stage.
+	auto materialPipeline = m_material->GetPipelineMaterial();
+	if (!materialPipeline || materialPipeline->GetStage() != pipelineStage)
+		return false;
+
+	// Binds the material pipeline.
+	if (!materialPipeline->BindPipeline(commandBuffer))
+		return false;
+
+	const auto &pipeline = *materialPipeline->GetPipeline();
+
+	// Updates descriptors.
+	m_descriptorSet.Push("UniformScene", uniformScene);
+	m_descriptorSet.Push("UniformObject", m_uniformObject);
+	m_descriptorSet.Push("BufferAnimation", m_storageAnimation);
+
+	m_material->PushDescriptors(m_descriptorSet);
+
+	if (!m_descriptorSet.Update(pipeline))
+		return false;
+
+	// Draws the object.
+	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	return m_model->CmdRender(commandBuffer);
+}
+
+void MeshAnimated::SetMaterial(std::unique_ptr<Material> &&material) {
+	m_material = std::move(material);
+	m_material->Start(GetVertexInput());
+}
+
 const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {
 	node["filename"].Get(meshAnimated.m_filename);
+	meshAnimated.m_material = Material::Create(node["material"]["type"].Get<std::string>());
 	return node;
 }
 
 Node &operator<<(Node &node, const MeshAnimated &meshAnimated) {
 	node["filename"].Set(meshAnimated.m_filename);
+	//node["material"].Set(meshAnimated.m_material);
 	return node;
 }
 }

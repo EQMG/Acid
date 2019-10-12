@@ -5,26 +5,25 @@
       "latitudeBands": 10,
       "longitudeBands": 10,
       "radius": 1.0
-    }
-  },
-  "materialSkybox": {
-    "image": {
-      "filename": "Objects/SkyboxChapel",
-      "fileSuffix": ".png",
-      "fileSides": [
-        "Right", "Left", "Top", "Bottom", "Back", "Front"
-      ],
-      "filter": 1,
-      "addressMode": 2,
-      "anisotropic": true,
-      "mipmap": true
     },
-    "baseColour": "#FFFFFF"
+    "material": {
+      "type": "skybox",
+      "image": {
+        "filename": "Objects/SkyboxChapel",
+        "fileSuffix": ".png",
+        "fileSides": [
+          "Right", "Left", "Top", "Bottom", "Back", "Front"
+        ],
+        "filter": 1,
+        "addressMode": 2,
+        "anisotropic": true,
+        "mipmap": true
+      },
+      "baseColour": "#FFFFFF"
+    }
   },
   "skyboxCycle": {
     "enableFog": false,
     "enableRotation": false
-  },
-  "meshRender": {
   }
 }

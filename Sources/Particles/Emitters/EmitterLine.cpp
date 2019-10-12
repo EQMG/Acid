@@ -4,17 +4,11 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool EmitterLine::registered = Register("emitterLine");
+bool EmitterLine::registered = Register("line");
 
 EmitterLine::EmitterLine(float length, const Vector3f &axis) :
 	m_length(length),
 	m_axis(axis.Normalize()) {
-}
-
-void EmitterLine::Start() {
-}
-
-void EmitterLine::Update() {
 }
 
 Vector3f EmitterLine::GeneratePosition() const {
@@ -28,6 +22,7 @@ const Node &operator>>(const Node &node, EmitterLine &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterLine &emitter) {
+	node["type"].Set("line");
 	node["length"].Set(emitter.m_length);
 	node["axis"].Set(emitter.m_axis);
 	return node;

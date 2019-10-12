@@ -1,37 +1,24 @@
 #include "ColliderCube.hpp"
 
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
-#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderCube::registered = Register("colliderCube");
+bool ColliderCube::registered = Register("cube");
 
 ColliderCube::ColliderCube(const Vector3f &extents, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Cube.obj"), 3.0f, Colour::Red)),
+	//Collider(localTransform),
 	m_shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),
 	m_extents(extents) {
+	m_localTransform = localTransform;
 	m_localTransform.SetLocalScale(m_extents);
 }
 
 ColliderCube::~ColliderCube() {
 }
 
-void ColliderCube::Start() {
-}
-
-void ColliderCube::Update() {
-	//Collider::Update();
-}
-
 btCollisionShape *ColliderCube::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderCube::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCube::SetExtents(const Vector3f &extents) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include "Engine/Log.hpp"
 
 namespace acid {
 template<typename Base, class... Args>
@@ -13,7 +13,11 @@ public:
 
 	static TCreateReturn Create(const std::string &name, Args &&... args) {
 		auto it = Registry().find(name);
-		return it == Registry().end() ? nullptr : it->second(std::forward<Args>(args)...);
+		if (it == Registry().end()) {
+			Log::Error("Failed to create ", std::quoted(name), " from factory\n");
+			return nullptr;
+		}
+		return it->second(std::forward<Args>(args)...);
 	}
 
 	static TRegistryMap &Registry() {

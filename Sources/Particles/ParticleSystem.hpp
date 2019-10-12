@@ -11,22 +11,26 @@ namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem> {
+class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, public NonCopyable {
 public:
 	/**
 	 * Creates a new particle system.
 	 * @param types The types of particles to spawn.
+	 * @param emitters The emitter shapes that are used to define particle spawn volumes.
 	 * @param pps Particles per second.
 	 * @param averageSpeed Particle average speed.
 	 * @param gravityEffect How much gravity will effect the particles.
 	 */
-	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, float pps = 5.0f, float averageSpeed = 0.2f, float gravityEffect = 1.0f);
+	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, std::vector<std::unique_ptr<Emitter>> &&emitters = {}, 
+		float pps = 5.0f, float averageSpeed = 0.2f, float gravityEffect = 1.0f);
 
 	void Start() override;
 	void Update() override;
 
 	void AddParticleType(const std::shared_ptr<ParticleType> &type);
 	bool RemoveParticleType(const std::shared_ptr<ParticleType> &type);
+
+	void AddEmitter(std::unique_ptr<Emitter> &&emitter);
 
 	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const;
 
@@ -61,7 +65,7 @@ public:
 	friend Node &operator<<(Node &node, const ParticleSystem &particleSystem);
 
 private:
-	Particle EmitParticle(const Emitter &emitter);
+	Particle EmitParticle(const Emitter *emitter);
 	static float GenerateValue(float average, float errorPercent);
 	float GenerateRotation() const;
 	Vector3f GenerateRandomUnitVector() const;
@@ -69,6 +73,7 @@ private:
 	static bool registered;
 
 	std::vector<std::shared_ptr<ParticleType>> m_types;
+	std::vector<std::unique_ptr<Emitter>> m_emitters;
 
 	float m_pps;
 	float m_averageSpeed;

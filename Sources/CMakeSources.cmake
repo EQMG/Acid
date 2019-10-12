@@ -32,11 +32,6 @@ set(_temp_acid_headers
 		Devices/PhysicalDevice.hpp
 		Devices/Surface.hpp
 		Devices/Window.hpp
-		Emitters/Emitter.hpp
-		Emitters/EmitterCircle.hpp
-		Emitters/EmitterLine.hpp
-		Emitters/EmitterPoint.hpp
-		Emitters/EmitterSphere.hpp
 		Engine/App.hpp
 		Engine/Engine.hpp
 		Engine/Log.hpp
@@ -143,7 +138,6 @@ set(_temp_acid_headers
 		Maths/Visual/DriverSinwave.hpp
 		Maths/Visual/DriverSlide.hpp
 		Meshes/Mesh.hpp
-		Meshes/MeshRender.hpp
 		Meshes/SubrenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
 		Models/Model.hpp
@@ -171,6 +165,11 @@ set(_temp_acid_headers
 		Network/Tcp/TcpListener.hpp
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
+		Particles/Emitters/Emitter.hpp
+		Particles/Emitters/EmitterCircle.hpp
+		Particles/Emitters/EmitterLine.hpp
+		Particles/Emitters/EmitterPoint.hpp
+		Particles/Emitters/EmitterSphere.hpp
 		Particles/Particle.hpp
 		Particles/Particles.hpp
 		Particles/ParticleSystem.hpp
@@ -275,10 +274,6 @@ set(_temp_acid_sources
 		Devices/PhysicalDevice.cpp
 		Devices/Surface.cpp
 		Devices/Window.cpp
-		Emitters/EmitterCircle.cpp
-		Emitters/EmitterLine.cpp
-		Emitters/EmitterPoint.cpp
-		Emitters/EmitterSphere.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Files/File.cpp
@@ -358,7 +353,6 @@ set(_temp_acid_sources
 		Maths/Vector3.cpp
 		Maths/Vector4.cpp
 		Meshes/Mesh.cpp
-		Meshes/MeshRender.cpp
 		Meshes/SubrenderMeshes.cpp
 		Models/Gltf/ModelGltf.cpp
 		Models/Model.cpp
@@ -385,6 +379,10 @@ set(_temp_acid_sources
 		Network/Tcp/TcpListener.cpp
 		Network/Tcp/TcpSocket.cpp
 		Network/Udp/UdpSocket.cpp
+		Particles/Emitters/EmitterCircle.cpp
+		Particles/Emitters/EmitterLine.cpp
+		Particles/Emitters/EmitterPoint.cpp
+		Particles/Emitters/EmitterSphere.cpp
 		Particles/Particle.cpp
 		Particles/Particles.cpp
 		Particles/ParticleSystem.cpp

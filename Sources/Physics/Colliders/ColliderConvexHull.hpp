@@ -6,17 +6,13 @@
 class btConvexHullShape;
 
 namespace acid {
-class ACID_EXPORT ColliderConvexHull : public Component::Registrar<ColliderConvexHull>, public Collider {
+class ACID_EXPORT ColliderConvexHull : public Collider::Registrar<ColliderConvexHull> {
 public:
 	explicit ColliderConvexHull(const std::vector<float> &pointCloud = {}, const Transform &localTransform = {});
 
 	~ColliderConvexHull();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	uint32_t GetPointCount() const { return m_pointCount; }
 	void SetPointCount(const std::vector<float> &pointCloud);

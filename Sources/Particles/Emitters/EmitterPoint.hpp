@@ -3,12 +3,10 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterPoint : public Component::Registrar<EmitterPoint>, public Emitter {
+class ACID_EXPORT EmitterPoint : public Emitter::Registrar<EmitterPoint> {
 public:
 	EmitterPoint();
 
-	void Start() override;
-	void Update() override;
 	Vector3f GeneratePosition() const override;
 
 	const Vector3f &GetPoint() const { return m_point; }

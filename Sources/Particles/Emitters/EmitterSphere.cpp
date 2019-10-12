@@ -2,19 +2,12 @@
 
 #include "Maths/Maths.hpp"
 #include "Maths/Vector2.hpp"
-#include "Scenes/Entity.hpp"
 
 namespace acid {
-bool EmitterSphere::registered = Register("emitterSphere");
+bool EmitterSphere::registered = Register("sphere");
 
 EmitterSphere::EmitterSphere(float radius) :
 	m_radius(radius) {
-}
-
-void EmitterSphere::Start() {
-}
-
-void EmitterSphere::Update() {
 }
 
 Vector3f EmitterSphere::GeneratePosition() const {
@@ -37,6 +30,7 @@ const Node &operator>>(const Node &node, EmitterSphere &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterSphere &emitter) {
+	node["type"].Set("sphere");
 	node["radius"].Set(emitter.m_radius);
 	return node;
 }

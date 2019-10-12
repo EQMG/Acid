@@ -8,8 +8,10 @@
 namespace acid {
 bool ParticleSystem::registered = Register("particleSystem");
 
-ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, float pps, float averageSpeed, float gravityEffect) :
+ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, std::vector<std::unique_ptr<Emitter>> &&emitters,
+	float pps, float averageSpeed, float gravityEffect) :
 	m_types(std::move(types)),
+	m_emitters(std::move(emitters)),
 	m_pps(pps),
 	m_averageSpeed(averageSpeed),
 	m_gravityEffect(gravityEffect),
@@ -27,13 +29,10 @@ void ParticleSystem::Update() {
 
 	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (auto elapsed = m_elapsedEmit.GetElapsed()) {
-		auto emitters = GetEntity()->GetComponents<Emitter>();
-
-		if (!emitters.empty()) {
-			for (uint32_t i = 0; i < elapsed; i++) {
-				Particles::Get()->AddParticle(EmitParticle(*emitters[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())))]));
-			}
+	if (auto elapsed = m_elapsedEmit.GetElapsed() && !m_emitters.empty()) {
+		for (uint32_t i = 0; i < elapsed; i++) {
+			Particles::Get()->AddParticle(EmitParticle(m_emitters[static_cast<uint32_t>(Maths::Random(0.0f, 
+				static_cast<float>(m_emitters.size())))].get()));
 		}
 	}
 }
@@ -55,6 +54,10 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	}
 
 	return false;
+}
+
+void ParticleSystem::AddEmitter(std::unique_ptr<Emitter> &&emitter) {
+	m_emitters.emplace_back(std::move(emitter));
 }
 
 Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const {
@@ -91,8 +94,8 @@ void ParticleSystem::SetDirection(const Vector3f &direction, float deviation) {
 	m_directionDeviation = deviation * Maths::Pi<float>;
 }
 
-Particle ParticleSystem::EmitParticle(const Emitter &emitter) {
-	auto spawnPos = emitter.GeneratePosition();
+Particle ParticleSystem::EmitParticle(const Emitter *emitter) {
+	auto spawnPos = emitter->GeneratePosition();
 
 	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		spawnPos += transform->GetPosition();
@@ -140,6 +143,9 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const {
 
 const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 	node["types"].Get(particleSystem.m_types);
+	for (const auto &emitter : node["emitters"]->GetProperties()) {
+		particleSystem.m_emitters.emplace_back(Emitter::Create(emitter["type"].Get<std::string>()));
+	}
 	node["pps"].Get(particleSystem.m_pps);
 	node["averageSpeed"].Get(particleSystem.m_averageSpeed);
 	node["gravityEffect"].Get(particleSystem.m_gravityEffect);
@@ -155,6 +161,7 @@ const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 
 Node &operator<<(Node &node, const ParticleSystem &particleSystem) {
 	node["types"].Set(particleSystem.m_types);
+	//node["emitters"].Set(particleSystem.m_emitters);
 	node["pps"].Set(particleSystem.m_pps);
 	node["averageSpeed"].Set(particleSystem.m_averageSpeed);
 	node["gravityEffect"].Set(particleSystem.m_gravityEffect);

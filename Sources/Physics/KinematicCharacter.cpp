@@ -5,19 +5,21 @@
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <BulletDynamics/Character/btKinematicCharacterController.h>
 #include "Maths/Transform.hpp"
+#include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
 bool KinematicCharacter::registered = Register("kinematicCharacter");
 
-KinematicCharacter::KinematicCharacter(float mass, float friction) :
-	CollisionObject(mass, friction),
+KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, float mass, float friction) :
+	CollisionObject({}, mass, friction),
 	m_up(Vector3f::Up),
 	m_stepHeight(0.0f),
 	m_fallSpeed(55.0f),
 	m_jumpSpeed(10.0f),
 	m_maxHeight(1.5f),
 	m_interpolate(true) {
+	AddCollider(std::move(collider));
 }
 
 KinematicCharacter::~KinematicCharacter() {
@@ -39,8 +41,7 @@ void KinematicCharacter::Start() {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
 	}
 
-	auto colliders = GetEntity()->GetComponents<Collider>();
-	CreateShape(colliders, true);
+	CreateShape(true);
 	assert((m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
 	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
@@ -176,6 +177,9 @@ void KinematicCharacter::SetWalkDirection(const Vector3f &direction) {
 }
 
 const Node &operator>>(const Node &node, KinematicCharacter &character) {
+	for (const auto &collider : node["colliders"]->GetProperties()) {
+		character.m_colliders.emplace_back(Collider::Create(collider["type"].Get<std::string>()));
+	}
 	node["mass"].Get(character.m_mass);
 	node["friction"].Get(character.m_friction);
 	node["frictionRolling"].Get(character.m_frictionRolling);
@@ -190,6 +194,7 @@ const Node &operator>>(const Node &node, KinematicCharacter &character) {
 }
 
 Node &operator<<(Node &node, const KinematicCharacter &character) {
+	//node["colliders"].Set(character.m_colliders);
 	node["mass"].Set(character.m_mass);
 	node["friction"].Set(character.m_friction);
 	node["frictionRolling"].Set(character.m_frictionRolling);

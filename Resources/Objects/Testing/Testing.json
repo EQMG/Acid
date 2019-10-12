@@ -3,38 +3,45 @@
     "model": {
       "type": "obj",
       "filename": "Objects/Testing/Model.obj"
+    },
+    "material": {
+      "type": "default",
+      "baseDiffuse": "#C7BEBE",
+      "imageDiffuse": {
+        "filename": "Objects/Testing/Diffuse.png",
+        "filter": 1,
+        "addressMode": 2,
+        "anisotropic": true,
+        "mipmap": true
+      },
+      "metallic": 0.0,
+      "roughness": 0.0,
+      "imageMaterial": {
+        "filename": "Objects/Testing/Material.png",
+        "filter": 1,
+        "addressMode": 2,
+        "anisotropic": true,
+        "mipmap": true
+      },
+      "imageNormal": {
+        "filename": "Objects/Testing/Normal.png",
+        "filter": 1,
+        "addressMode": 2,
+        "anisotropic": true,
+        "mipmap": true
+      },
+      "castsShadows": true,
+      "ignoreLighting": false,
+      "ignoreFog": false
     }
   },
-  "materialDefault": {
-    "baseDiffuse": "#C7BEBE",
-    "imageDiffuse": {
-      "filename": "Objects/Testing/Diffuse.png",
-      "filter": 1,
-      "addressMode": 2,
-      "anisotropic": true,
-      "mipmap": true
-    },
-    "metallic": 0.0,
-    "roughness": 0.0,
-    "imageMaterial": {
-      "filename": "Objects/Testing/Material.png",
-      "filter": 1,
-      "addressMode": 2,
-      "anisotropic": true,
-      "mipmap": true
-    },
-    "imageNormal": {
-      "filename": "Objects/Testing/Normal.png",
-      "filter": 1,
-      "addressMode": 2,
-      "anisotropic": true,
-      "mipmap": true
-    },
-    "castsShadows": true,
-    "ignoreLighting": false,
-    "ignoreFog": false
-  },
   "rigidbody": {
+    "colliders": [
+      {
+        "type": "sphere",
+        "radius": 1.0
+      }
+    ],
     "mass": 2.0,
     "friction": 0.2,
     "localTransform": {
@@ -61,9 +68,6 @@
       "z": 1.0
     }
   },
-  "colliderSphere": {
-    "radius": 1.0
-  },
   "light": {
     "colour": "#3319CC",
     "radius": 1.33, 
@@ -72,7 +76,5 @@
       "y": 3.0, 
       "z": 0.0
     }
-  },
-  "meshRender": {
   }
 }

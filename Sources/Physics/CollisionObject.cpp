@@ -2,21 +2,41 @@
 
 #include <BulletCollision/CollisionShapes/btCompoundShape.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include "Scenes/Entity.hpp"
-#include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 
 namespace acid {
-CollisionObject::CollisionObject(float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
+CollisionObject::CollisionObject(std::vector<std::unique_ptr<Collider>> &&colliders, float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
+	m_colliders(std::move(colliders)),
 	m_mass(mass),
 	m_friction(friction),
 	m_frictionRolling(0.1f),
 	m_frictionSpinning(0.2f),
 	m_linearFactor(linearFactor),
 	m_angularFactor(angularFactor) {
+	for (auto &collider : m_colliders) {
+		collider->OnTransformChange().Add([this](Collider *collider, const Transform &localTransform) {
+			SetChildTransform(collider, localTransform);
+		}, this);
+	}
 }
 
 CollisionObject::~CollisionObject() {
+}
+
+Collider *CollisionObject::AddCollider(std::unique_ptr<Collider> &&collider) {
+	if (!collider) return nullptr;
+	auto ret = m_colliders.emplace_back(std::move(collider)).get();
+	ret->OnTransformChange().Add([this](Collider *collider, const Transform &localTransform) {
+		SetChildTransform(collider, localTransform);
+	}, this);
+	return ret;
+}
+
+void CollisionObject::RemoveCollider(Collider *collider) {
+	if (!collider) return;
+	m_colliders.erase(std::remove_if(m_colliders.begin(), m_colliders.end(), [collider](std::unique_ptr<Collider> &c) {
+		return c.get() == collider;
+	}), m_colliders.end());
 }
 
 Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force) {
@@ -41,25 +61,17 @@ void CollisionObject::SetChildTransform(Collider *child, const Transform &transf
 }
 
 void CollisionObject::AddChild(Collider *child) {
-	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
-
-	if (!compoundShape) {
-		return;
+	if (auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get())) {
+		compoundShape->addChildShape(Collider::Convert(child->GetLocalTransform()), child->GetCollisionShape());
+		RecalculateMass();
 	}
-
-	compoundShape->addChildShape(Collider::Convert(child->GetLocalTransform()), child->GetCollisionShape());
-	RecalculateMass();
 }
 
 void CollisionObject::RemoveChild(Collider *child) {
-	auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get());
-
-	if (!compoundShape) {
-		return;
+	if (auto compoundShape = dynamic_cast<btCompoundShape *>(m_shape.get())) {
+		compoundShape->removeChildShape(child->GetCollisionShape());
+		RecalculateMass();
 	}
-
-	compoundShape->removeChildShape(child->GetCollisionShape());
-	RecalculateMass();
 }
 
 void CollisionObject::SetIgnoreCollisionCheck(CollisionObject *other, bool ignore) {
@@ -81,13 +93,12 @@ void CollisionObject::SetFrictionSpinning(float frictionSpinning) {
 	m_body->setSpinningFriction(m_frictionSpinning);
 }
 
-void CollisionObject::CreateShape(const std::vector<Collider *> &colliders, bool forceSingle) {
-	if (forceSingle) // && colliders.size() == 1
-	{
-		m_shape.reset(colliders[0]->GetCollisionShape());
+void CollisionObject::CreateShape(bool forceSingle) {
+	if (forceSingle) { // && colliders.size() == 1
+		m_shape.reset(m_colliders[0]->GetCollisionShape());
 		return;
 	}
-	if (colliders.empty()) {
+	if (m_colliders.empty()) {
 		m_shape = nullptr;
 		return;
 	}
@@ -102,7 +113,7 @@ void CollisionObject::CreateShape(const std::vector<Collider *> &colliders, bool
 		compoundShape->removeChildShapeByIndex(i);
 	}
 
-	for (const auto &collider : colliders) {
+	for (const auto &collider : m_colliders) {
 		compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
 	}
 

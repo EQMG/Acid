@@ -1,39 +1,18 @@
 #include "Collider.hpp"
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include "Scenes/Entity.hpp"
 #include "Maths/Transform.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-Collider::Collider(const Transform &localTransform, const std::shared_ptr<GizmoType> &gizmoType) :
+Collider::Collider(const Transform &localTransform) :
 	m_localTransform(localTransform) {
-#if defined(ACID_DEBUG)
-	if (gizmoType) {
-		m_gizmo = Gizmos::Get()->AddGizmo(std::make_unique<Gizmo>(gizmoType, localTransform));
-	}
-#endif
 }
 
-Collider::~Collider() {
-	Gizmos::Get()->RemoveGizmo(m_gizmo);
-}
-
-/*void Collider::Update() {
-	if (auto transform = GetEntity()->GetComponent<Transform>(); transform && m_gizmo) {
-		m_gizmo->SetTransform(*transform * m_localTransform);
-	}
-}*/
-
-/*void Collider::SetLocalTransform(const Transform &localTransform) {
+void Collider::SetLocalTransform(const Transform &localTransform) {
 	m_localTransform = localTransform;
-
-	auto collisionObject = GetEntity()->GetComponent<CollisionObject>();
-
-	if (collisionObject) {
-		collisionObject->SetChildTransform(this, m_localTransform);
-	}
-}*/
+	m_onTransformChange(this, m_localTransform);
+}
 
 btVector3 Collider::Convert(const Vector3f &vector) {
 	return {vector.m_x, vector.m_y, vector.m_z};

@@ -3,12 +3,10 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterLine : public Component::Registrar<EmitterLine>, public Emitter {
+class ACID_EXPORT EmitterLine : public Emitter::Registrar<EmitterLine> {
 public:
 	explicit EmitterLine(float length = 1.0f, const Vector3f &axis = Vector3f::Right);
 
-	void Start() override;
-	void Update() override;
 	Vector3f GeneratePosition() const override;
 
 	float GetLength() const { return m_length; }

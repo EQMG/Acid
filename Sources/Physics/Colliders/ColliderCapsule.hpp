@@ -5,17 +5,13 @@
 class btCapsuleShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCapsule : public Component::Registrar<ColliderCapsule>, public Collider {
+class ACID_EXPORT ColliderCapsule : public Collider::Registrar<ColliderCapsule> {
 public:
 	explicit ColliderCapsule(float radius = 0.5f, float height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCapsule();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);

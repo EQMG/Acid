@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Maths/Vector3.hpp"
+#include "Scenes/Component.hpp"
 #include "Colliders/Collider.hpp"
 #include "CollisionObject.hpp"
 
@@ -11,14 +12,15 @@ namespace acid {
 /**
  * @brief Represents a kinematic character controller.
  */
-class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject{
+class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject {
 public:
 	/**
 	 * Creates a new kinematic character controller.
+	 * @param collider The collider shape to represent this rigidbody.
 	 * @param mass The mass of the object.
 	 * @param friction The amount of surface friction.
 	 */
-	explicit KinematicCharacter(float mass = 1.0f, float friction = 0.2f);
+	explicit KinematicCharacter(std::unique_ptr<Collider> &&collider = nullptr, float mass = 1.0f, float friction = 0.2f);
 
 	~KinematicCharacter();
 

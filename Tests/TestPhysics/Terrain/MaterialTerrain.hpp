@@ -6,14 +6,13 @@
 using namespace acid;
 
 namespace test {
-class MaterialTerrain : public Component::Registrar<MaterialTerrain>, public Material {
+class MaterialTerrain : public Material::Registrar<MaterialTerrain> {
 public:
 	explicit MaterialTerrain(std::shared_ptr<Image2d> imageR = nullptr, std::shared_ptr<Image2d> imageG = nullptr);
 
-	void Start() override;
-	void Update() override;
+	void Start(const Shader::VertexInput &vertexInput) override;
 
-	void PushUniforms(UniformHandler &uniformObject) override;
+	void PushUniforms(UniformHandler &uniformObject, const Transform &transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 	friend const Node &operator>>(const Node &node, MaterialTerrain &material);

@@ -1,40 +1,43 @@
 {
-   "kinematicCharacter": {
-      "friction": 0.0,
-      "frictionRolling": 0.0,
-      "frictionSpinning": 0.0,
-      "up": {
-         "x": 0.0,
-         "y": 1.0,
-         "z": 0.0
-      },
-      "stepHeight": 0.03,
-      "fallSpeed": 55.0,
-      "jumpSpeed": 10.0,
-      "maxHeight": 1.5,
-      "interpolate": true
-   },
-   "colliderCapsule": {
-      "radius": "0.2",
-      "height": "1.8",
-      "localTransform": {
-         "position": {
+  "kinematicCharacter": {
+    "colliders": [
+      {
+        "type": "capsule",
+        "radius": "0.2",
+        "height": "1.8",
+        "localTransform": {
+          "position": {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
-         },
-         "rotation": {
+          },
+          "rotation": {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
-         },
-         "scale": {
+          },
+          "scale": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0
-         }
+          }
+        }
       }
-   },
-   "playerFps": {
-   }
+    ],
+    "friction": 0.0,
+    "frictionRolling": 0.0,
+    "frictionSpinning": 0.0,
+    "up": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "stepHeight": 0.03,
+    "fallSpeed": 55.0,
+    "jumpSpeed": 10.0,
+    "maxHeight": 1.5,
+    "interpolate": true
+  },
+  "playerFps": {
+  }
 }

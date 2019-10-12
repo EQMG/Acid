@@ -9,14 +9,13 @@ namespace acid {
 /**
  * @brief Class that represents a skybox material shader.
  */
-class ACID_EXPORT MaterialSkybox : public Component::Registrar<MaterialSkybox>, public Material {
+class ACID_EXPORT MaterialSkybox : public Material::Registrar<MaterialSkybox> {
 public:
 	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);
 
-	void Start() override;
-	void Update() override;
+	void Start(const Shader::VertexInput &vertexInput) override;
 
-	void PushUniforms(UniformHandler &uniformObject) override;
+	void PushUniforms(UniformHandler &uniformObject, const Transform &transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 	const std::shared_ptr<ImageCube> &GetImage() const { return m_image; }

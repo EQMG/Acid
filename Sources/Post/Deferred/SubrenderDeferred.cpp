@@ -30,14 +30,15 @@ SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 	auto camera = Scenes::Get()->GetCamera();
 
-	auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
+	// TODO probably use a cubemap image directly instead of scene components.
+	/*auto materialSkybox = Scenes::Get()->GetStructure()->GetComponent<MaterialSkybox>();
 	auto skybox = materialSkybox ? materialSkybox->GetImage() : nullptr;
 
 	if (m_skybox != skybox) {
 		m_skybox = skybox;
 		m_irradiance = Resources::Get()->GetThreadPool().Enqueue(ComputeIrradiance, m_skybox, 64);
 		m_prefiltered = Resources::Get()->GetThreadPool().Enqueue(ComputePrefiltered, m_skybox, 512);
-	}
+	}*/
 
 	// Updates uniforms.
 	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);

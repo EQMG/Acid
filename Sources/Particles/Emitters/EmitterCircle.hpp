@@ -3,12 +3,10 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT EmitterCircle : public Component::Registrar<EmitterCircle>, public Emitter {
+class ACID_EXPORT EmitterCircle : public Emitter::Registrar<EmitterCircle> {
 public:
 	explicit EmitterCircle(float radius = 1.0f, const Vector3f &heading = Vector3f::Up);
 
-	void Start() override;
-	void Update() override;
 	Vector3f GeneratePosition() const override;
 
 	float GetRadius() const { return m_radius; }

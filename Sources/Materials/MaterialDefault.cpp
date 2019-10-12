@@ -2,11 +2,9 @@
 
 #include "Animations/MeshAnimated.hpp"
 #include "Maths/Transform.hpp"
-#include "Meshes/Mesh.hpp"
-#include "Scenes/Entity.hpp"
 
 namespace acid {
-bool MaterialDefault::registered = Register("materialDefault");
+bool MaterialDefault::registered = Register("default");
 
 MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, float metallic, float roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, bool castsShadows, bool ignoreLighting, bool ignoreFog) :
@@ -21,32 +19,15 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 	m_ignoreFog(ignoreFog) {
 }
 
-void MaterialDefault::Start() {
-	auto mesh = GetEntity()->GetComponent<Mesh>(true);
-	auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
-
-	if (!mesh && !meshAnimated)
-	{
-		Log::Error("Cannot have a material attached to a object without a mesh!\n");
-		return;
-	}
-
-	m_animated = meshAnimated;
-	auto vertexInput = m_animated ? MeshAnimated::GetVertexInput() : Mesh::GetVertexInput();
+void MaterialDefault::Start(const Shader::VertexInput &vertexInput) {
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
 		{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt
 	});
 }
 
-void MaterialDefault::Update() {
-}
-
-void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
-	if (auto transform = GetEntity()->GetComponent<Transform>()) {
-		uniformObject.Push("transform", transform->GetWorldMatrix());
-	}
-
+void MaterialDefault::PushUniforms(UniformHandler &uniformObject, const Transform &transform) {
+	uniformObject.Push("transform", transform.GetWorldMatrix());
 	uniformObject.Push("baseDiffuse", m_baseDiffuse);
 	uniformObject.Push("metallic", m_metallic);
 	uniformObject.Push("roughness", m_roughness);
@@ -55,11 +36,6 @@ void MaterialDefault::PushUniforms(UniformHandler &uniformObject) {
 }
 
 void MaterialDefault::PushDescriptors(DescriptorsHandler &descriptorSet) {
-	if (m_animated) {
-		auto meshAnimated = GetEntity()->GetComponent<MeshAnimated>();
-		descriptorSet.Push("BufferAnimation", meshAnimated->GetStorageAnimation());
-	}
-
 	descriptorSet.Push("samplerDiffuse", m_imageDiffuse);
 	descriptorSet.Push("samplerMaterial", m_imageMaterial);
 	descriptorSet.Push("samplerNormal", m_imageNormal);
@@ -90,6 +66,7 @@ const Node &operator>>(const Node &node, MaterialDefault &material) {
 }
 
 Node &operator<<(Node &node, const MaterialDefault &material) {
+	node["type"].Set("material");
 	node["baseDiffuse"].Set(material.m_baseDiffuse);
 	node["imageDiffuse"].Set(material.m_imageDiffuse);
 	node["metallic"].Set(material.m_metallic);

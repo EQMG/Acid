@@ -1,15 +1,15 @@
 #include "ColliderConvexHull.hpp"
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
-#include "Scenes/Entity.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderConvexHull::registered = Register("colliderConvexHull");
+bool ColliderConvexHull::registered = Register("convexHull");
 
-ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, const Transform &localTransform) :
-	Collider(localTransform) {
+ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, const Transform &localTransform) /*:
+	Collider(localTransform)*/ {
+	m_localTransform = localTransform;
 	if (pointCloud.empty()) {
 		return;
 	}
@@ -20,7 +20,7 @@ ColliderConvexHull::ColliderConvexHull(const std::vector<float> &pointCloud, con
 ColliderConvexHull::~ColliderConvexHull() {
 }
 
-void ColliderConvexHull::Start() {
+/*void ColliderConvexHull::Start() {
 	auto mesh = GetEntity()->GetComponent<Mesh>(true);
 
 	if (mesh && mesh->GetModel()) {
@@ -45,16 +45,10 @@ void ColliderConvexHull::Update() {
 		m_model = mesh->GetModel();
 		SetPointCount(m_model->GetPointCloud());
 	}
-}
+}*/
 
 btCollisionShape *ColliderConvexHull::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderConvexHull::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderConvexHull::SetPointCount(const std::vector<float> &pointCloud) {

@@ -5,17 +5,13 @@
 class btCylinderShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCylinder : public Component::Registrar<ColliderCylinder>, public Collider {
+class ACID_EXPORT ColliderCylinder : public Collider::Registrar<ColliderCylinder> {
 public:
 	explicit ColliderCylinder(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 
 	~ColliderCylinder();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);

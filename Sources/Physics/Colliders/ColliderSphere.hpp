@@ -5,17 +5,13 @@
 class btSphereShape;
 
 namespace acid {
-class ACID_EXPORT ColliderSphere : public Component::Registrar<ColliderSphere>, public Collider {
+class ACID_EXPORT ColliderSphere : public Collider::Registrar<ColliderSphere> {
 public:
 	explicit ColliderSphere(float radius = 0.5f, const Transform &localTransform = {});
 
 	~ColliderSphere();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	float GetRadius() const { return m_radius; }
 	void SetRadius(float radius);

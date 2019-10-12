@@ -1,10 +1,9 @@
 #include "MaterialSkybox.hpp"
 
-#include "Models/VertexDefault.hpp"
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-bool MaterialSkybox::registered = Register("materialSkybox");
+bool MaterialSkybox::registered = Register("skybox");
 
 MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &baseColour) :
 	m_image(std::move(image)),
@@ -13,22 +12,16 @@ MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &b
 	m_fogLimits(-10000.0f) {
 }
 
-void MaterialSkybox::Start() {
+void MaterialSkybox::Start(const Shader::VertexInput &vertexInput) {
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
-		{"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {VertexDefault::GetVertexInput()}, {},
+		{"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {vertexInput}, {},
 		PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT
 		});
 }
 
-void MaterialSkybox::Update() {
-}
-
-void MaterialSkybox::PushUniforms(UniformHandler &uniformObject) {
-	if (auto transform = GetEntity()->GetComponent<Transform>()) {
-		uniformObject.Push("transform", transform->GetWorldMatrix());
-		uniformObject.Push("fogLimits", transform->GetScale().m_y * m_fogLimits);
-	}
-
+void MaterialSkybox::PushUniforms(UniformHandler &uniformObject, const Transform &transform) {
+	uniformObject.Push("transform", transform.GetWorldMatrix());
+	uniformObject.Push("fogLimits", transform.GetScale().m_y * m_fogLimits);
 	uniformObject.Push("baseColour", m_baseColour);
 	uniformObject.Push("fogColour", m_fogColour);
 	uniformObject.Push("blendFactor", m_blend);
@@ -45,6 +38,7 @@ const Node &operator>>(const Node &node, MaterialSkybox &material) {
 }
 
 Node &operator<<(Node &node, const MaterialSkybox &material) {
+	node["type"].Set("skybox");
 	node["image"].Set(material.m_image);
 	node["baseColour"].Set(material.m_baseColour);
 	return node;

@@ -9,16 +9,15 @@ namespace acid {
 /**
  * @brief Class that represents the default material shader.
  */
-class ACID_EXPORT MaterialDefault : public Component::Registrar<MaterialDefault>, public Material {
+class ACID_EXPORT MaterialDefault : public Material::Registrar<MaterialDefault> {
 public:
 	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,
 		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,
 		bool ignoreLighting = false, bool ignoreFog = false);
 
-	void Start() override;
-	void Update() override;
+	void Start(const Shader::VertexInput &vertexInput) override;
 
-	void PushUniforms(UniformHandler &uniformObject) override;
+	void PushUniforms(UniformHandler &uniformObject, const Transform &transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 	const Colour &GetBaseDiffuse() const { return m_baseDiffuse; }
@@ -52,9 +51,9 @@ public:
 	friend Node &operator<<(Node &node, const MaterialDefault &material);
 
 private:
-	static bool registered;
-
 	std::vector<Shader::Define> GetDefines() const;
+
+	static bool registered;
 
 	bool m_animated = false;
 	Colour m_baseDiffuse;

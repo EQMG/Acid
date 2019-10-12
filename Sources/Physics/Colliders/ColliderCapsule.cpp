@@ -1,38 +1,25 @@
 #include "ColliderCapsule.hpp"
 
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
-#include "Scenes/Entity.hpp"
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-bool ColliderCapsule::registered = Register("colliderCapsule");
+bool ColliderCapsule::registered = Register("capsule");
 
 ColliderCapsule::ColliderCapsule(float radius, float height, const Transform &localTransform) :
-	Collider(localTransform, GizmoType::Create(Model::Create("Gizmos/Capsule.obj"), 3.0f, Colour::Fuchsia)),
+	//Collider(localTransform),
 	m_shape(std::make_unique<btCapsuleShape>(radius, height)),
 	m_radius(radius),
 	m_height(height) {
+	m_localTransform = localTransform;
 	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
 }
 
 ColliderCapsule::~ColliderCapsule() {
 }
 
-void ColliderCapsule::Start() {
-}
-
-void ColliderCapsule::Update() {
-	//Collider::Update();
-}
-
 btCollisionShape *ColliderCapsule::GetCollisionShape() const {
 	return m_shape.get();
-}
-
-void ColliderCapsule::SetLocalTransform(const Transform &localTransform) {
-	m_localTransform = localTransform;
-	if (auto collisionObject = GetEntity()->GetComponent<CollisionObject>())
-		collisionObject->SetChildTransform(this, m_localTransform);
 }
 
 void ColliderCapsule::SetRadius(float radius) {

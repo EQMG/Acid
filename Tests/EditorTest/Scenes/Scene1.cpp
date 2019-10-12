@@ -1,6 +1,5 @@
 #include "Scene1.hpp"
 
-#include <Emitters/EmitterCircle.hpp>
 #include <Inputs/Input.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
@@ -10,7 +9,6 @@
 #include <Maths/Visual/DriverConstant.hpp>
 #include <Maths/Visual/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
-#include <Meshes/MeshRender.hpp>
 #include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
@@ -27,7 +25,6 @@
 #include <Resources/Resources.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Shadows/ShadowRender.hpp>
 #include <Uis/Uis.hpp>
 #include <Files/Json/Json.hpp>
 #include "CameraFps.hpp"
@@ -47,14 +44,10 @@ Scene1::Scene1() :
 
 			auto sphere = GetStructure()->CreateEntity();
 			sphere->AddComponent<Transform>(cameraPosition, Vector3f());
-			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32));
-			auto rigidbody = sphere->AddComponent<Rigidbody>(0.5f);
+			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32), 
+				std::make_unique<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f));
+			auto rigidbody = sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 0.5f);
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
-			sphere->AddComponent<ColliderSphere>();
-			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
-			sphere->AddComponent<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f);
-			sphere->AddComponent<MeshRender>();
-			sphere->AddComponent<ShadowRender>();
 
 			auto sphereLight = GetStructure()->CreateEntity();
 			sphereLight->AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
@@ -94,12 +87,9 @@ void Scene1::Start() {
 
 	auto plane = GetStructure()->CreateEntity();
 	plane->AddComponent<Transform>(Vector3f(0.0f, -0.5f, 0.0f), Vector3f(), Vector3f(50.0f, 1.0f, 50.0f));
-	plane->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)));
-	plane->AddComponent<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST));
-	plane->AddComponent<Rigidbody>(0.0f, 0.5f);
-	plane->AddComponent<ColliderCube>(Vector3f(1.0f, 1.0f, 1.0f));
-	plane->AddComponent<MeshRender>();
-	plane->AddComponent<ShadowRender>();
+	plane->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)), 
+		std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST)));
+	plane->AddComponent<Rigidbody>(std::make_unique<ColliderCube>(Vector3f(1.0f, 1.0f, 1.0f)), 0.0f, 0.5f);
 
 	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
 
@@ -107,33 +97,24 @@ void Scene1::Start() {
 		for (int32_t j = 0; j < 5; j++) {
 			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f));
-			cube->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)));
-			cube->AddComponent<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f);
-			cube->AddComponent<Rigidbody>(0.5f, 0.3f);
-			cube->AddComponent<ColliderCube>();
-			cube->AddComponent<MeshRender>();
-			cube->AddComponent<ShadowRender>();
+			cube->AddComponent<Mesh>(ModelCube::Create(Vector3f(1.0f, 1.0f, 1.0f)), 
+				std::make_unique<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f));
+			cube->AddComponent<Rigidbody>(std::make_unique<ColliderCube>(), 0.5f, 0.3f);
 		}
 	}
 
 	auto cone = GetStructure()->CreateEntity();
 	cone->AddComponent<Transform>(Vector3f(-3.0f, 2.0f, 10.0f));
-	cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 28, 2));
-	cone->AddComponent<MaterialDefault>(Colour::Blue, nullptr, 0.0f, 1.0f);
-	cone->AddComponent<Rigidbody>(1.5f);
-	cone->AddComponent<ColliderCone>(1.0f, 2.0f);
-	cone->AddComponent<ColliderSphere>(1.0f, Transform({0.0f, 2.0f, 0.0f}));
-	cone->AddComponent<MeshRender>();
-	cone->AddComponent<ShadowRender>();
+	cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 28, 2), 
+		std::make_unique<MaterialDefault>(Colour::Blue, nullptr, 0.0f, 1.0f));
+	cone->AddComponent<Rigidbody>(std::make_unique<ColliderCone>(1.0f, 2.0f), 
+		/*std::make_unique<ColliderSphere>(1.0f, Transform({0.0f, 2.0f, 0.0f})),*/ 1.5f);
 
 	auto cylinder = GetStructure()->CreateEntity();
 	cylinder->AddComponent<Transform>(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, Maths::Radians(90.0f)));
-	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 32, 2));
-	cylinder->AddComponent<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f);
-	cylinder->AddComponent<Rigidbody>(2.5f);
-	cylinder->AddComponent<ColliderCylinder>(1.1f, 2.2f);
-	cylinder->AddComponent<MeshRender>();
-	cylinder->AddComponent<ShadowRender>();
+	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 32, 2), 
+		std::make_unique<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f));
+	cylinder->AddComponent<Rigidbody>(std::make_unique<ColliderCylinder>(1.1f, 2.2f), 2.5f);
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json");
 	smokeSystem->AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));

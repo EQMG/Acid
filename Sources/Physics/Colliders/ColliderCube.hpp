@@ -5,17 +5,13 @@
 class btBoxShape;
 
 namespace acid {
-class ACID_EXPORT ColliderCube : public Component::Registrar<ColliderCube>, public Collider {
+class ACID_EXPORT ColliderCube : public Collider::Registrar<ColliderCube> {
 public:
 	explicit ColliderCube(const Vector3f &extents = Vector3f(1.0f), const Transform &localTransform = {});
 
 	~ColliderCube();
 
-	void Start() override;
-	void Update() override;
-
 	btCollisionShape *GetCollisionShape() const override;
-	void SetLocalTransform(const Transform &localTransform) override;
 
 	const Vector3f &GetExtents() const { return m_extents; }
 	void SetExtents(const Vector3f &extents);

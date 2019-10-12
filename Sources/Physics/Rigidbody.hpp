@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Maths/Vector3.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Component.hpp"
 #include "CollisionObject.hpp"
 
 struct btDefaultMotionState;
@@ -15,13 +15,14 @@ class ACID_EXPORT Rigidbody : public Component::Registrar<Rigidbody>, public Col
 public:
 	/**
 	 * Creates a new rigidbody.
+	 * @param collider The collider shape to represent this rigidbody.
 	 * @param mass The mass of the object.
 	 * @param friction The amount of surface friction.
 	 * @param linearFactor How effected each axis will be to linear movement.
 	 * @param angularFactor How effected each axis will be to angular movement.
 	 */
-	explicit Rigidbody(float mass = 1.0f, float friction = 0.2f, const Vector3f &linearFactor = Vector3f(1.0f), 
-		const Vector3f &angularFactor = Vector3f(1.0f));
+	explicit Rigidbody(std::unique_ptr<Collider> &&collider = nullptr, float mass = 1.0f, float friction = 0.2f,
+		const Vector3f &linearFactor = Vector3f(1.0f), const Vector3f &angularFactor = Vector3f(1.0f));
 
 	~Rigidbody();
 
