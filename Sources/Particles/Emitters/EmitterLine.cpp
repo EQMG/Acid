@@ -22,7 +22,6 @@ const Node &operator>>(const Node &node, EmitterLine &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterLine &emitter) {
-	node["type"].Set("line");
 	node["length"].Set(emitter.m_length);
 	node["axis"].Set(emitter.m_axis);
 	return node;

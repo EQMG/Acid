@@ -38,7 +38,6 @@ const Node &operator>>(const Node &node, MaterialSkybox &material) {
 }
 
 Node &operator<<(Node &node, const MaterialSkybox &material) {
-	node["type"].Set("skybox");
 	node["image"].Set(material.m_image);
 	node["baseColour"].Set(material.m_baseColour);
 	return node;

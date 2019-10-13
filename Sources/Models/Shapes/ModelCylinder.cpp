@@ -47,7 +47,6 @@ const Node &operator>>(const Node &node, ModelCylinder &model) {
 }
 
 Node &operator<<(Node &node, const ModelCylinder &model) {
-	node["type"].Set("cylinder");
 	node["radiusBase"].Set(model.m_radiusBase);
 	node["radiusTop"].Set(model.m_radiusTop);
 	node["height"].Set(model.m_height);

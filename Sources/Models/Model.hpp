@@ -60,6 +60,7 @@ public:
 	protected:
 		template<int Dummy = 0>
 		static bool Register(const std::string &typeName) {
+			Registrar::name = typeName;
 			ModelFactory::RegistryNode()[typeName] = [](const Node &node) -> TCreateReturn {
 				return T::Create(node);
 			};
@@ -80,8 +81,11 @@ public:
 		}
 
 		Node &Write(Node &node) const override {
+			node["type"].Set(name);
 			return node << *dynamic_cast<const T *>(this);
 		}
+
+		inline static std::string name;
 	};
 
 	friend const Node &operator>>(const Node &node, Base &base) {

@@ -23,6 +23,18 @@ public:
 		return it->second(std::forward<Args>(args)...);
 	}
 
+	static TCreateReturn Create(const Node &node) {
+		auto name = node["type"].Get<std::string>();
+		auto it = Registry().find(name);
+		if (it == Registry().end()) {
+			Log::Error("Failed to create ", std::quoted(name), " from factory\n");
+			return nullptr;
+		}
+		auto ret = it->second();
+		node.Get(ret);
+		return ret;
+	}
+
 	static TRegistryMap &Registry() {
 		static TRegistryMap impl;
 		return impl;
@@ -32,19 +44,25 @@ public:
 	class Registrar : public Base {
 	protected:
 		static bool Register(const std::string &name) {
+			Registrar::name = name;
 			StreamFactory::Registry()[name] = [](Args... args) -> TCreateReturn {
 				return std::make_unique<T>(std::forward<Args>(args)...);
 			};
 			return true;
 		}
-		
+
+		std::string GetTypeName() const override { return name; }
+
 		const Node &Load(const Node &node) override {
 			return node >> *dynamic_cast<T *>(this);
 		}
 		
 		Node &Write(Node &node) const override {
+			node["type"].Set(name);
 			return node << *dynamic_cast<const T *>(this);
 		}
+
+		inline static std::string name;
 	};
 
 	friend inline const Node &operator>>(const Node &node, std::unique_ptr<Base> &object) {
@@ -61,6 +79,8 @@ public:
 		node << *object;
 		return node;
 	}*/
+
+	virtual std::string GetTypeName() const { return ""; }
 
 	friend const Node &operator>>(const Node &node, Base &base) {
 		return base.Load(node);

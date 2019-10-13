@@ -88,7 +88,7 @@ Scene1::Scene1() :
 					}
 
 					for (auto &component : entity->GetComponents()) {
-						if (auto componentName = Component::FindName(component.get()); !componentName.empty()) {
+						if (auto componentName = component->GetTypeName(); !componentName.empty()) {
 							entityNode[componentName].Set(component);
 						}
 					}

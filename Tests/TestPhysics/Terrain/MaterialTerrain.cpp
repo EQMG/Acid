@@ -30,7 +30,6 @@ const Node &operator>>(const Node &node, MaterialTerrain &material) {
 }
 
 Node &operator<<(Node &node, const MaterialTerrain &material) {
-	node["type"].Set("terrain");
 	node["imageR"].Set(material.m_imageR);
 	node["imageG"].Set(material.m_imageG);
 	return node;

@@ -67,7 +67,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 	entityPrefab.m_file->Clear();
 
 	for (const auto &component : entity.GetComponents()) {
-		auto componentName = Component::FindName(component.get());
+		auto componentName = component->GetTypeName();
 
 		if (componentName.empty()) {
 			continue;

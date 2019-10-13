@@ -30,7 +30,6 @@ const Node &operator>>(const Node &node, EmitterSphere &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterSphere &emitter) {
-	node["type"].Set("sphere");
 	node["radius"].Set(emitter.m_radius);
 	return node;
 }

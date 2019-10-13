@@ -50,7 +50,7 @@ void Entity::RemoveComponent(Component *component) {
 
 void Entity::RemoveComponent(const std::string &name) {
 	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c) {
-		return name == Component::FindName(c.get());
+		return name == c->GetTypeName();
 	}), m_components.end());
 }
 }

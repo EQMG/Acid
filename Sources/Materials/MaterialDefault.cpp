@@ -66,7 +66,6 @@ const Node &operator>>(const Node &node, MaterialDefault &material) {
 }
 
 Node &operator<<(Node &node, const MaterialDefault &material) {
-	node["type"].Set("material");
 	node["baseDiffuse"].Set(material.m_baseDiffuse);
 	node["imageDiffuse"].Set(material.m_imageDiffuse);
 	node["metallic"].Set(material.m_metallic);

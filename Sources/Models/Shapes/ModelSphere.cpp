@@ -43,7 +43,6 @@ const Node &operator>>(const Node &node, ModelSphere &model) {
 }
 
 Node &operator<<(Node &node, const ModelSphere &model) {
-	node["type"].Set("sphere");
 	node["latitudeBands"].Set(model.m_latitudeBands);
 	node["longitudeBands"].Set(model.m_longitudeBands);
 	node["radius"].Set(model.m_radius);

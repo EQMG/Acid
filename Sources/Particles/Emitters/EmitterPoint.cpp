@@ -18,7 +18,6 @@ const Node &operator>>(const Node &node, EmitterPoint &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterPoint &emitter) {
-	node["type"].Set("point");
 	node["point"].Set(emitter.m_point);
 	return node;
 }

@@ -44,7 +44,6 @@ const Node &operator>>(const Node &node, ModelGltf &model) {
 }
 
 Node &operator<<(Node &node, const ModelGltf &model) {
-	node["type"].Set("gltf");
 	node["filename"].Set(model.m_filename);
 	return node;
 }

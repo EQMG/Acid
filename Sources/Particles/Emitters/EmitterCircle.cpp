@@ -41,7 +41,6 @@ const Node &operator>>(const Node &node, EmitterCircle &emitter) {
 }
 
 Node &operator<<(Node &node, const EmitterCircle &emitter) {
-	node["type"].Set("circle");
 	node["radius"].Set(emitter.m_radius);
 	node["heading"].Set(emitter.m_heading);
 	return node;
