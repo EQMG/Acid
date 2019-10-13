@@ -7,8 +7,9 @@ ButtonJoystick::ButtonJoystick(JoystickPort port, JoystickButton button) :
 	m_port(port),
 	m_button(button) {
 	Joysticks::Get()->OnButton().Add([this](JoystickPort port, JoystickButton button, InputAction action) {
-		if (port == m_port && button == m_button)
+		if (port == m_port && button == m_button) {
 			m_onButton(action, 0);
+		}
 	}, this);
 }
 

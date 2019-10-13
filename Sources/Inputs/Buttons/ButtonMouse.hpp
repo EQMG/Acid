@@ -11,14 +11,9 @@ class ACID_EXPORT ButtonMouse : public Button::Registrar<ButtonMouse> {
 public:
 	/**
 	 * Creates a new button mouse.
-	 */
-	explicit ButtonMouse() = default;
-
-	/**
-	 * Creates a new button mouse.
 	 * @param button The button on the mouse being checked.
 	 */
-	explicit ButtonMouse(MouseButton button);
+	explicit ButtonMouse(MouseButton button = MouseButton::First);
 
 	bool IsDown() const override;
 
@@ -33,6 +28,6 @@ public:
 private:
 	static bool registered;
 
-	MouseButton m_button = MouseButton::First;
+	MouseButton m_button;
 };
 }

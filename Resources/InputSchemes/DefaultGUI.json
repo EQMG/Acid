@@ -1,30 +1,26 @@
 {
   "joysticks": {},
   "axes": [],
-  "buttons": [
-    {
-      "name": "fullscreen",
+  "buttons": {
+    "fullscreen": {
       "type": "buttonKeyboard",
       "key": 300,
       "inverted": false
     },
-    {
-      "name": "screenshot",
+    "screenshot": {
       "type": "buttonKeyboard",
       "key": 298,
       "inverted": false
     },
-    {
-      "name": "exit",
+    "exit": {
       "type": "buttonKeyboard",
       "key": 261,
       "inverted": false
     },
-    {
-      "name": "pause",
+    "pause": {
       "type": "buttonKeyboard",
       "key": 256,
       "inverted": false
     }
-  ]
+  }
 }

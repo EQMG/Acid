@@ -11,14 +11,9 @@ class ACID_EXPORT AxisCompound : public Axis::Registrar<AxisCompound>, public vi
 public:
 	/**
 	 * Creates a new compound axis.
-	 */
-	AxisCompound() = default;
-
-	/**
-	 * Creates a new compound axis.
 	 * @param axes The axes that will be combined into a compound axis.
 	 */
-	AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes);
+	explicit AxisCompound(std::vector<std::unique_ptr<Axis>> &&axes = {});
 	
 	/**
 	 * Creates a new compound axis.
@@ -37,11 +32,14 @@ public:
 	ArgumentDescription GetArgumentDescription() const override;
 
 	const std::vector<std::unique_ptr<Axis>> &GetAxes() const { return m_axes; }
+	Axis *AddAxis(std::unique_ptr<Axis> &&axis);
+	void RemoveAxis(Axis *axis);
 
 	friend const Node &operator>>(const Node &node, AxisCompound &axisCompound);
 	friend Node &operator<<(Node &node, const AxisCompound &axisCompound);
 
 private:
+	void ConnectAxis(std::unique_ptr<Axis> &axis);
 	void ConnectAxes();
 
 	static bool registered;

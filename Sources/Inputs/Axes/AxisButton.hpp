@@ -26,7 +26,9 @@ public:
 	ArgumentDescription GetArgumentDescription() const override;
 
 	const Button *GetNegative() const { return m_negative.get(); }
+	void SetNegative(std::unique_ptr<Button> &&negative);
 	const Button *GetPositive() const { return m_positive.get(); }
+	void SetPositive(std::unique_ptr<Button> &&positive);
 
 	friend const Node &operator>>(const Node &node, AxisButton &axisButton);
 	friend Node &operator<<(Node &node, const AxisButton &axisButton);

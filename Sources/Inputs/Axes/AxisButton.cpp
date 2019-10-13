@@ -32,6 +32,20 @@ Axis::ArgumentDescription AxisButton::GetArgumentDescription() const {
 	};
 }
 
+void AxisButton::SetNegative(std::unique_ptr<Button> &&negative) {
+	m_negative = std::move(negative);
+	m_negative->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		m_onAxis(GetAmount());
+	}, this);
+}
+
+void AxisButton::SetPositive(std::unique_ptr<Button> &&positive) {
+	m_positive = std::move(positive);
+	m_positive->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		m_onAxis(GetAmount());
+	}, this);
+}
+
 const Node &operator>>(const Node &node, AxisButton &axisButton) {
 	node["scale"].Get(axisButton.m_scale);
 	node["negative"].Get(axisButton.m_negative);

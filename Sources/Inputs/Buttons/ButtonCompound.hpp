@@ -11,15 +11,10 @@ class ACID_EXPORT ButtonCompound : public Button::Registrar<ButtonCompound>, pub
 public:
 	/**
 	 * Creates a new compound button.
-	 */
-	ButtonCompound() = default;
-
-	/**
-	 * Creates a new compound button.
 	 * @param buttons The buttons that will be combined into a compound button.
 	 * @param useAnd If {@link ButtonCompound#IsDown} will check if all buttons are down instead of just one.
 	 */
-	ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd = false);
+	explicit ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons = {}, bool useAnd = false);
 
 	/**
 	 * Creates a new compound button.
@@ -52,6 +47,8 @@ public:
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
 	const std::vector<std::unique_ptr<Button>> &GetButtons() const { return m_buttons; }
+	Button *AddButton(std::unique_ptr<Button> &&button);
+	void RemoveButton(Button *button);
 
 	bool IsUseAnd() const { return m_useAnd; }
 	void SetUseAnd(bool useAnd) { m_useAnd = useAnd; }
@@ -60,6 +57,7 @@ public:
 	friend Node &operator<<(Node &node, const ButtonCompound &buttonCompound);
 
 private:
+	void ConnectButton(std::unique_ptr<Button> &button);
 	void ConnectButtons();
 
 	static bool registered;

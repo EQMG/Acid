@@ -49,7 +49,7 @@ void Entity::RemoveComponent(Component *component) {
 }
 
 void Entity::RemoveComponent(const std::string &name) {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [&](std::unique_ptr<Component> &c) {
+	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](std::unique_ptr<Component> &c) {
 		return name == c->GetTypeName();
 	}), m_components.end());
 }

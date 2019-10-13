@@ -1,10 +1,6 @@
 {
-  "joysticks": {
-    "primary": 0
-  },
-  "axes": [
-    {
-      "name": "mouseX",
+  "axes": {
+    "mouseX": {
       "type": "axisCompound",
       "axes": [
         {
@@ -14,15 +10,14 @@
         },
         {
           "type": "axisJoystick",
-          "port": "primary",
+          "port": 0,
           "axis": 2,
           "scale": -0.06
         }
       ],
       "scale": 1.0
     },
-    {
-      "name": "mouseY",
+    "mouseY": {
       "type": "axisCompound",
       "axes": [
         {
@@ -32,15 +27,14 @@
         },
         {
           "type": "axisJoystick",
-          "port": "primary",
+          "port": 0,
           "axis": 3,
           "scale": -0.06
         }
       ],
       "scale": 1.0
     },
-    {
-      "name": "forward",
+    "forward": {
       "type": "axisCompound",
       "axes": [
         {
@@ -59,15 +53,14 @@
         },
         {
           "type": "axisJoystick",
-          "port": "primary",
+          "port": 0,
           "axis": 1,
           "scale": 1.0
         }
       ],
       "scale": 1.0
     },
-    {
-      "name": "strafe",
+    "strafe": {
       "type": "axisCompound",
       "axes": [
         {
@@ -86,15 +79,14 @@
         },
         {
           "type": "axisJoystick",
-          "port": "primary",
+          "port": 0,
           "axis": 0,
           "scale": 1.0
         }
       ],
       "scale": 1.0
     },
-    {
-      "name": "vertical",
+    "vertical": {
       "type": "axisCompound",
       "axes": [
         {
@@ -114,28 +106,24 @@
       ],
       "scale": 1.0
     }
-  ],
-  "buttons": [
-    {
-      "name": "fullscreen",
+  },
+  "buttons": {
+    "fullscreen": {
       "type": "buttonKeyboard",
       "key": 300,
       "inverted": false
     },
-    {
-      "name": "screenshot",
+    "screenshot": {
       "type": "buttonKeyboard",
       "key": 298,
       "inverted": false
     },
-    {
-      "name": "exit",
+    "exit": {
       "type": "buttonKeyboard",
       "key": 261,
       "inverted": false
     },
-    {
-      "name": "sprint",
+    "sprint": {
       "type": "buttonCompound",
       "buttons": [
         {
@@ -145,15 +133,14 @@
         },
         {
           "type": "buttonJoystick",
-          "port": "primary",
+          "port": 0,
           "button": 0,
           "inverted": false
         }
       ],
       "inverted": false
     },
-    {
-      "name": "captureMouse",
+    "captureMouse": {
       "type": "buttonCompound",
       "buttons": [
         {
@@ -169,11 +156,10 @@
       ],
       "inverted": false
     },
-    {
-      "name": "noclip",
+    "noclip": {
       "type": "buttonKeyboard",
       "key": 78,
       "inverted": false
     }
-  ]
+  }
 }

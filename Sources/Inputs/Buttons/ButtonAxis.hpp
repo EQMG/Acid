@@ -11,22 +11,18 @@ class ACID_EXPORT ButtonAxis : public Button::Registrar<ButtonAxis> {
 public:
 	/**
 	 * Creates a new button axis.
-	 */
-	ButtonAxis() = default;
-
-	/**
-	 * Creates a new button axis.
 	 * @param axis The axis to sample.
 	 * @param min Lower axis value bound.
 	 * @param max Upper axis value bound.
 	 */
-	ButtonAxis(std::unique_ptr<Axis> &&axis, float min = 0.1f, float max = 1.0f);
+	explicit ButtonAxis(std::unique_ptr<Axis> &&axis = nullptr, float min = 0.1f, float max = 1.0f);
 
 	bool IsDown() const override;
 
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
 	const Axis *GetAxis() const { return m_axis.get(); }
+	void SetAxis(std::unique_ptr<Axis> &&axis);
 
 	float GetMin() const { return m_min; }
 	void SetMin(float min) { m_min = min; }

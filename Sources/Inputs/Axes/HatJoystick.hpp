@@ -12,16 +12,11 @@ class ACID_EXPORT HatJoystick : public Axis::Registrar<HatJoystick>, public Butt
 public:
 	/**
 	 * Creates a new joystick button.
-	 */
-	HatJoystick() = default;
-
-	/**
-	 * Creates a new joystick button.
 	 * @param port The joystick port.
 	 * @param hat The hat that will be checked.
 	 * @param hatFlags If this bit is found the hat will trigger {@link HatJoystick#IsDown}.
 	 */
-	HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
+	explicit HatJoystick(JoystickPort port = 0, JoystickHat hat = 0, const BitMask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
 
 	ArgumentDescription GetArgumentDescription() const override;
 
@@ -43,8 +38,8 @@ public:
 private:
 	static bool registered;
 
-	JoystickPort m_port = 0;
-	JoystickHat m_hat = 0;
+	JoystickPort m_port;
+	JoystickHat m_hat;
 	BitMask<JoystickHatValue> m_hatFlags;
 	bool m_lastDown = false;
 };

@@ -16,9 +16,9 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	*argsFile.GetNode() << argumentDescriptionMap;
 	argsFile.Write(Node::Format::Beautified);*/
 
-	/*File testOutFile(filename);
+	File testOutFile(filename);
 	*testOutFile.GetNode() << *this;
-	testOutFile.Write(Node::Format::Beautified);*/
+	testOutFile.Write(Node::Format::Beautified);
 }
 
 Axis *InputScheme::GetAxis(const std::string &name) {
@@ -73,9 +73,10 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 
 void InputScheme::MoveDelegateOwnership(InputScheme *other) {
 	if (!other) return;
+	// Move all delegate functions except those owned internally by the axis or button.
 	for (auto &[axisName, axis] : other->m_axes)
-		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis());
+		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->m_valid});
 	for (auto &[buttonName, button] : other->m_buttons)
-		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton());
+		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->m_valid});
 }
 }

@@ -11,15 +11,10 @@ class ACID_EXPORT ButtonJoystick : public Button::Registrar<ButtonJoystick> {
 public:
 	/**
 	 * Creates a new joystick button.
-	 */
-	ButtonJoystick() = default;
-
-	/**
-	 * Creates a new joystick button.
 	 * @param port The joystick port.
 	 * @param button The button on the joystick being checked.
 	 */
-	ButtonJoystick(JoystickPort port, JoystickButton button);
+	explicit ButtonJoystick(JoystickPort port = 0, JoystickButton button = 0);
 
 	bool IsDown() const override;
 
@@ -37,7 +32,7 @@ public:
 private:
 	static bool registered;
 
-	JoystickPort m_port = 0;
-	JoystickButton m_button = 0;
+	JoystickPort m_port;
+	JoystickButton m_button;
 };
 }

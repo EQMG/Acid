@@ -6,7 +6,7 @@ FileObserver::FileObserver(std::filesystem::path path, const Time &delay) :
 	m_delay(delay),
 	m_running(true),
 	m_thread(&FileObserver::QueueLoop, this) {
-	DoWithFilesInPath([&](const std::filesystem::path &file) {
+	DoWithFilesInPath([this](const std::filesystem::path &file) {
 		m_paths[file.string()] = std::filesystem::last_write_time(file);
 	});
 }

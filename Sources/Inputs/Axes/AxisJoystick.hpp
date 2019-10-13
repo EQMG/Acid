@@ -11,15 +11,10 @@ class ACID_EXPORT AxisJoystick : public Axis::Registrar<AxisJoystick> {
 public:
 	/**
 	 * Creates a new axis joystick.
-	 */
-	AxisJoystick() = default;
-
-	/**
-	 * Creates a new axis joystick.
 	 * @param port The joystick port.
 	 * @param axis The axis on the joystick being checked.
 	 */
-	AxisJoystick(JoystickPort port, JoystickAxis axis);
+	explicit AxisJoystick(JoystickPort port = 0, JoystickAxis axis = 0);
 
 	float GetAmount() const override;
 
@@ -39,7 +34,7 @@ public:
 private:
 	static bool registered;
 
-	JoystickPort m_port = 0;
-	JoystickAxis m_axis = 0;
+	JoystickPort m_port;
+	JoystickAxis m_axis;
 };
 }

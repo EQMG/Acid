@@ -31,7 +31,7 @@ void Gizmos::RemoveGizmo(Gizmo *gizmo) {
 	auto it = m_gizmos.find(gizmo->GetGizmoType());
 
 	if (it != m_gizmos.end()) {
-		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [&](std::unique_ptr<Gizmo> &g) {
+		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [gizmo](std::unique_ptr<Gizmo> &g) {
 			return g.get() == gizmo;
 		}), it->second.end());
 	}

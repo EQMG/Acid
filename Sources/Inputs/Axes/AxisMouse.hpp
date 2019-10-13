@@ -10,14 +10,9 @@ class ACID_EXPORT AxisMouse : public Axis::Registrar<AxisMouse> {
 public:
 	/**
 	 * Creates a new axis mouse.
-	 */
-	AxisMouse() = default;
-
-	/**
-	 * Creates a new axis mouse.
 	 * @param axis The axis on the mouse delta is being checked.
 	 */
-	explicit AxisMouse(uint8_t axis);
+	explicit AxisMouse(uint8_t axis = 0);
 
 	float GetAmount() const override;
 
@@ -32,6 +27,6 @@ public:
 private:
 	static bool registered;
 
-	uint8_t m_axis = 0;
+	uint8_t m_axis;
 };
 }

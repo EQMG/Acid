@@ -23,17 +23,34 @@ Axis::ArgumentDescription AxisCompound::GetArgumentDescription() const {
 	};
 }
 
+Axis *AxisCompound::AddAxis(std::unique_ptr<Axis> &&axis) {
+	auto &result = m_axes.emplace_back(std::move(axis));
+	ConnectAxis(result);
+	return result.get();
+}
+
+void AxisCompound::RemoveAxis(Axis *axis) {
+	//axis->OnAxis().RemoveObservers(this);
+	m_axes.erase(std::remove_if(m_axes.begin(), m_axes.end(), [axis](std::unique_ptr<Axis> &a) {
+		return a.get() == axis;
+	}), m_axes.end());
+}
+
+void AxisCompound::ConnectAxis(std::unique_ptr<Axis> &axis) {
+	axis->OnAxis().Add([this](float value) {
+		m_onAxis(GetAmount());
+	}, this);
+}
+
 void AxisCompound::ConnectAxes() {
-	for (auto &axis : m_axes) {
-		axis->OnAxis().Add([this](float value) {
-			m_onAxis(GetAmount());
-		}, this);
-	}
+	for (auto &axis : m_axes)
+		ConnectAxis(axis);
 }
 
 const Node &operator>>(const Node &node, AxisCompound &axisCompound) {
 	node["scale"].Get(axisCompound.m_scale);
 	node["axes"].Get(axisCompound.m_axes);
+	axisCompound.ConnectAxes();
 	return node;
 }
 
