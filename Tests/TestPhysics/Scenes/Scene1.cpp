@@ -261,8 +261,8 @@ void Scene1::Start() {
 	cone->AddComponent<Transform>(Vector3f(-3.0f, 2.0f, 10.0f));
 	cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 28, 2), 
 		std::make_unique<MaterialDefault>(Colour::Blue, nullptr, 0.0f, 1.0f));
-	//cone->AddComponent<Rigidbody>({std::make_unique<ColliderCone>(1.0f, 2.0f),
-	//	std::make_unique<ColliderSphere>(1.0f, Transform({0.0f, 2.0f, 0.0f}))}, 1.5f);
+	cone->AddComponent<Rigidbody>(std::make_unique<ColliderCone>(1.0f, 2.0f),
+		/*std::make_unique<ColliderSphere>(1.0f, Transform({0.0f, 2.0f, 0.0f})),*/ 1.5f);
 	cone->AddComponent<ShadowRender>();
 
 	auto cylinder = GetStructure()->CreateEntity();

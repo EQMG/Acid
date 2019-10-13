@@ -19,15 +19,18 @@ MaterialDefault::MaterialDefault(const Colour &baseDiffuse, std::shared_ptr<Imag
 	m_ignoreFog(ignoreFog) {
 }
 
-void MaterialDefault::Start(const Shader::VertexInput &vertexInput) {
+void MaterialDefault::Start(const Shader::VertexInput &vertexInput, bool animated) {
+	m_animated = animated; // TODO: Remove
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
 		{"Shaders/Defaults/Default.vert", "Shaders/Defaults/Default.frag"},
 		{vertexInput}, GetDefines(), PipelineGraphics::Mode::Mrt
 	});
 }
 
-void MaterialDefault::PushUniforms(UniformHandler &uniformObject, const Transform &transform) {
-	uniformObject.Push("transform", transform.GetWorldMatrix());
+void MaterialDefault::PushUniforms(UniformHandler &uniformObject, const Transform *transform) {
+	if (transform)
+		uniformObject.Push("transform", transform->GetWorldMatrix());
+	
 	uniformObject.Push("baseDiffuse", m_baseDiffuse);
 	uniformObject.Push("metallic", m_metallic);
 	uniformObject.Push("roughness", m_roughness);

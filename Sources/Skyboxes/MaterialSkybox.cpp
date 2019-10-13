@@ -12,16 +12,19 @@ MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &b
 	m_fogLimits(-10000.0f) {
 }
 
-void MaterialSkybox::Start(const Shader::VertexInput &vertexInput) {
+void MaterialSkybox::Start(const Shader::VertexInput &vertexInput, bool animated) {
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
 		{"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {vertexInput}, {},
 		PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT
 		});
 }
 
-void MaterialSkybox::PushUniforms(UniformHandler &uniformObject, const Transform &transform) {
-	uniformObject.Push("transform", transform.GetWorldMatrix());
-	uniformObject.Push("fogLimits", transform.GetScale().m_y * m_fogLimits);
+void MaterialSkybox::PushUniforms(UniformHandler &uniformObject, const Transform *transform) {
+	if (transform) {
+		uniformObject.Push("transform", transform->GetWorldMatrix());
+		uniformObject.Push("fogLimits", transform->GetScale().m_y * m_fogLimits);
+	}
+	
 	uniformObject.Push("baseColour", m_baseColour);
 	uniformObject.Push("fogColour", m_fogColour);
 	uniformObject.Push("blendFactor", m_blend);

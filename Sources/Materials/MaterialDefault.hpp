@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Models/Model.hpp"
 #include "Graphics/Images/Image2d.hpp"
 #include "Material.hpp"
 
@@ -15,9 +14,9 @@ public:
 		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,
 		bool ignoreLighting = false, bool ignoreFog = false);
 
-	void Start(const Shader::VertexInput &vertexInput) override;
+	void Start(const Shader::VertexInput &vertexInput, bool animated) override;
 
-	void PushUniforms(UniformHandler &uniformObject, const Transform &transform) override;
+	void PushUniforms(UniformHandler &uniformObject, const Transform *transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
 	const Colour &GetBaseDiffuse() const { return m_baseDiffuse; }

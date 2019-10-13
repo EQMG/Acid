@@ -16,14 +16,14 @@ public:
 	virtual ~Material() = default;
 
 	// TODO: Remove method
-	virtual void Start(const Shader::VertexInput &vertexInput) = 0;
+	virtual void Start(const Shader::VertexInput &vertexInput, bool animated) = 0;
 
 	/**
 	 * Used to update the main uniform handler used in a material.
 	 * A material can defined it's own uniforms and push them via {@link Material#PushDescriptors}.
 	 * @param uniformObject The uniform handler to update.
 	 */
-	virtual void PushUniforms(UniformHandler &uniformObject, const Transform&) = 0;
+	virtual void PushUniforms(UniformHandler &uniformObject, const Transform *) = 0;
 
 	/**
 	 * Used to update a descriptor set containing descriptors used in this materials shader.

@@ -14,13 +14,13 @@ Mesh::Mesh(std::shared_ptr<Model> model, std::unique_ptr<Material> &&material) :
 
 void Mesh::Start() {
 	if (m_material)
-		m_material->Start(GetVertexInput());
+		m_material->Start(GetVertexInput(), false);
 }
 
 void Mesh::Update() {
 	if (m_material) {
 		auto transform = GetEntity()->GetComponent<Transform>();
-		m_material->PushUniforms(m_uniformObject, transform ? *transform : Transform());
+		m_material->PushUniforms(m_uniformObject, transform);
 	}
 }
 
@@ -61,7 +61,7 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 
 void Mesh::SetMaterial(std::unique_ptr<Material> &&material) {
 	m_material = std::move(material);
-	m_material->Start(GetVertexInput());
+	m_material->Start(GetVertexInput(), false);
 }
 
 bool Mesh::operator<(const Mesh &other) const {

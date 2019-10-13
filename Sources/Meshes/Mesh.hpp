@@ -25,10 +25,10 @@ public:
 
 	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return VertexDefault::GetVertexInput(binding); }
 
-	const std::shared_ptr<Model> &GetModel() const { return m_model; }
+	const Model *GetModel() const { return m_model.get(); }
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 
-	const std::unique_ptr<Material> &GetMaterial() const { return m_material; }
+	const Material *GetMaterial() const { return m_material.get(); }
 	void SetMaterial(std::unique_ptr<Material> &&material);
 
 	bool operator<(const Mesh &other) const;
