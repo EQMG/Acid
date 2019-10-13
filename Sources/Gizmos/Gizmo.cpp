@@ -12,6 +12,6 @@ bool Gizmo::operator==(const Gizmo &other) const {
 }
 
 bool Gizmo::operator!=(const Gizmo &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 }

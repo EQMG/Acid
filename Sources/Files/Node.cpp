@@ -150,7 +150,7 @@ bool Node::operator==(const Node &other) const {
 }
 
 bool Node::operator!=(const Node &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 bool Node::operator<(const Node &other) const {

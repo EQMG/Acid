@@ -214,7 +214,7 @@ bool Matrix3::operator==(const Matrix3 &other) const {
 }
 
 bool Matrix3::operator!=(const Matrix3 &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Matrix3 Matrix3::operator-() const {

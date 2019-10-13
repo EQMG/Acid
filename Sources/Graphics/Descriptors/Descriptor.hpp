@@ -19,7 +19,7 @@ public:
 	}
 
 	bool operator!=(const OffsetSize &other) const {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 private:

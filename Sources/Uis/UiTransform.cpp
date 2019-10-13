@@ -36,7 +36,7 @@ bool UiTransform::operator==(const UiTransform &other) const {
 }
 
 bool UiTransform::operator!=(const UiTransform &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 void UiTransform::SetAnchor(const Vector2f &anchor) {

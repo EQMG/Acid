@@ -256,7 +256,7 @@ constexpr bool Vector3<T>::operator==(const Vector3<K> &other) const {
 template<typename T>
 template<typename K>
 constexpr bool Vector3<T>::operator!=(const Vector3<K> &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 template<typename T>

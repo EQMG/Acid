@@ -36,7 +36,7 @@ public:
 	}
 
 	bool operator!=(const VertexAnimated &other) const {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 	friend const Node &operator>>(const Node &node, VertexAnimated &vertexAnimated) {

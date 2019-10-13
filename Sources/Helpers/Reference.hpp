@@ -54,7 +54,7 @@ public:
 	}
 
 	bool operator!=(const Reference &other) const noexcept {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 private:

@@ -140,7 +140,7 @@ bool Colour::operator==(const Colour &other) const {
 }
 
 bool Colour::operator!=(const Colour &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Colour operator+(const Colour &left, const Colour &right) {

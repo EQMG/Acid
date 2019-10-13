@@ -82,7 +82,7 @@ public:
 		}
 
 		bool operator!=(const Uniform &other) const {
-			return !(*this == other);
+			return !operator==(other);
 		}
 
 		friend const Node &operator>>(const Node &node, Uniform &uniform) {
@@ -150,7 +150,7 @@ public:
 		}
 
 		bool operator!=(const UniformBlock &other) const {
-			return !(*this == other);
+			return !operator==(other);
 		}
 
 		friend const Node &operator>>(const Node &node, UniformBlock &uniformBlock) {
@@ -199,7 +199,7 @@ public:
 		}
 
 		bool operator!=(const Attribute &other) const {
-			return !(*this == other);
+			return !operator==(other);
 		}
 
 		friend const Node &operator>>(const Node &node, Attribute &attribute) {
@@ -245,7 +245,7 @@ public:
 		}
 
 		bool operator!=(const Constant &other) const {
-			return !(*this == other);
+			return !operator==(other);
 		}
 
 		friend const Node &operator>>(const Node &node, Constant &constant) {

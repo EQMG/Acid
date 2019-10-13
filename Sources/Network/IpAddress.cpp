@@ -107,7 +107,7 @@ bool IpAddress::operator==(const IpAddress &other) const {
 }
 
 bool IpAddress::operator!=(const IpAddress &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 bool IpAddress::operator<(const IpAddress &other) const {

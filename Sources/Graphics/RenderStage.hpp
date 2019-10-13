@@ -78,7 +78,7 @@ public:
 	}
 
 	bool operator!=(const RenderArea &other) const {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 	const Vector2ui &GetExtent() const { return m_extent; }

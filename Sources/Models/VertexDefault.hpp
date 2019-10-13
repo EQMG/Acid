@@ -32,7 +32,7 @@ public:
 	}
 
 	bool operator!=(const VertexDefault &other) const {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 	Vector3f m_position;

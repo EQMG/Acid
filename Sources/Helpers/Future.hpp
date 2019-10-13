@@ -39,7 +39,7 @@ public:
 	}
 
 	bool operator!=(const Future &other) const noexcept {
-		return !(*this == other);
+		return !operator==(other);
 	}
 
 private:

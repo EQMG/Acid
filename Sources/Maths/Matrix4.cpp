@@ -399,7 +399,7 @@ bool Matrix4::operator==(const Matrix4 &other) const {
 }
 
 bool Matrix4::operator!=(const Matrix4 &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Matrix4 Matrix4::operator-() const {

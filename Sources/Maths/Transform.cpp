@@ -77,7 +77,7 @@ bool Transform::operator==(const Transform &other) const {
 }
 
 bool Transform::operator!=(const Transform &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Transform operator*(const Transform &left, const Transform &right) {

@@ -245,7 +245,7 @@ constexpr bool Vector2<T>::operator==(const Vector2<K> &other) const {
 template<typename T>
 template<typename K>
 constexpr bool Vector2<T>::operator!=(const Vector2<K> &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 template<typename T>

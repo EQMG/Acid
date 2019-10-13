@@ -199,7 +199,7 @@ bool Matrix2::operator==(const Matrix2 &other) const {
 }
 
 bool Matrix2::operator!=(const Matrix2 &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Matrix2 Matrix2::operator-() const {

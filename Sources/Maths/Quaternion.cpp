@@ -262,7 +262,7 @@ bool Quaternion::operator==(const Quaternion &other) const {
 }
 
 bool Quaternion::operator!=(const Quaternion &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 
 Quaternion Quaternion::operator-() const {
