@@ -11,6 +11,8 @@ public:
 	using TCreateMethod = std::function<TCreateReturn(Args...)>;
 	using TRegistryMap = std::unordered_map<std::string, TCreateMethod>;
 
+	virtual ~Factory() = default;
+
 	static TCreateReturn Create(const std::string &name, Args &&... args) {
 		auto it = Registry().find(name);
 		if (it == Registry().end()) {

@@ -12,6 +12,8 @@ public:
 	using TWriteMethod = std::function<void(const Base *, const std::filesystem::path &)>;
 	using TRegistryMap = std::unordered_map<std::string, std::pair<TLoadMethod, TWriteMethod>>;
 
+	virtual ~SoundBufferFactory() = default;
+
 	static TRegistryMap &Registry() {
 		static TRegistryMap impl;
 		return impl;

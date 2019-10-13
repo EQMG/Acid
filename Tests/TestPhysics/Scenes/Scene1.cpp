@@ -89,8 +89,7 @@ Scene1::Scene1() :
 
 					for (auto &component : entity->GetComponents()) {
 						if (auto componentName = Component::FindName(component.get()); !componentName.empty()) {
-							auto child = entityNode[componentName];
-							Component::Encode(componentName, child, component.get());
+							entityNode[componentName].Set(component);
 						}
 					}
 				}
@@ -147,7 +146,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabAnimated("Prefabs/Animated.json");
 	prefabAnimated << *animated;
-	prefabAnimated.Write();
+	prefabAnimated.Write(Node::Format::Beautified);
 #endif
 
 	auto sun = GetStructure()->CreateEntity();
@@ -179,7 +178,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabTerrain("Prefabs/Terrain.json");
 	prefabTerrain << *terrain;
-	prefabTerrain.Write();
+	prefabTerrain.Write(Node::Format::Beautified);
 #endif
 
 	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
@@ -220,7 +219,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabTeapot1("Prefabs/Teapot1.json");
 	prefabTeapot1 << *teapot1;
-	prefabTeapot1.Write();
+	prefabTeapot1.Write(Node::Format::Beautified);
 #endif
 
 	auto teapotCone = GetStructure()->CreateEntity();
@@ -280,7 +279,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabSmokeSystem("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem << *smokeSystem;
-	prefabSmokeSystem.Write();
+	prefabSmokeSystem.Write(Node::Format::Beautified);
 #endif
 }
 

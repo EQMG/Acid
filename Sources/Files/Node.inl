@@ -248,7 +248,7 @@ Node &operator<<(Node &node, const std::optional<T> &optional) {
 
 template<typename T>
 const Node &operator>>(const Node &node, std::vector<T> &vector) {
-	vector = {};
+	vector.clear();
 	vector.reserve(node.GetProperties().size());
 
 	for (const auto &property : node.GetProperties()) {
@@ -272,7 +272,7 @@ Node &operator<<(Node &node, const std::vector<T> &vector) {
 
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::map<T, K> &map) {
-	map = {};
+	map.clear();
 
 	for (const auto &property : node.GetProperties()) {
 		std::pair<T, K> pair;

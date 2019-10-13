@@ -34,7 +34,7 @@ public:
 	explicit EntityPrefab(std::filesystem::path filename, bool load = true);
 
 	void Load();
-	void Write() const;
+	void Write(Node::Format format = Node::Format::Minified) const;
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 	Node *GetParent() const { return m_file->GetNode(); }

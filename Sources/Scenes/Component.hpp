@@ -18,9 +18,7 @@ public:
 	using TCompareMethod = std::function<bool(const Base *)>;
 	using TCompareVector = std::vector<std::pair<TCompareMethod, std::string>>;
 
-	using TEncodeMethod = std::function<void(Node &, const Base *)>;
-	using TDecodeMethod = std::function<void(const Node &, Base *)>;
-	using TEncodeDecodeMap = std::unordered_map<std::string, std::pair<TEncodeMethod, TDecodeMethod>>;
+	virtual ~ComponentFactory() = default;
 
 	/**
 	 * Creates a new component.
@@ -43,26 +41,6 @@ public:
 		return "";
 	}
 
-	static void Encode(const std::string &name, Node &node, const Base *component) {
-		auto it = RegistryEncodeDecode().find(name);
-		if (it == RegistryEncodeDecode().end()) {
-			Log::Error("Could not find registered component: ", std::quoted(name), '\n');
-			return;
-		}
-		
-		it->second.first(node, component);
-	}
-
-	static void Decode(const std::string &name, const Node &node, Base *component) {
-		auto it = RegistryEncodeDecode().find(name);
-		if (it == RegistryEncodeDecode().end()) {
-			Log::Error("Could not find registered component: ", std::quoted(name), '\n');
-			return;
-		}
-		
-		it->second.second(node, component);
-	}
-
 	static TRegistryMap &Registry() {
 		static TRegistryMap impl;
 		return impl;
@@ -70,11 +48,6 @@ public:
 
 	static TCompareVector &RegistryCompare() {
 		static TCompareVector impl;
-		return impl;
-	}
-
-	static TEncodeDecodeMap &RegistryEncodeDecode() {
-		static TEncodeDecodeMap impl;
 		return impl;
 	}
 
@@ -88,17 +61,28 @@ public:
 			ComponentFactory::RegistryCompare().emplace_back([](const Base *component) {
 				return dynamic_cast<const T *>(component);
 			}, name);
-			ComponentFactory::RegistryEncodeDecode()[name] = std::make_pair<TEncodeMethod, TDecodeMethod>(
-				[](Node &node, const Base *component) {
-					node << *dynamic_cast<const T *>(component);
-				},
-				[](const Node &node, Base *component) {
-					node >> *dynamic_cast<T *>(component);
-				}
-			);
 			return true;
 		}
+
+		const Node &Load(const Node &node) override {
+			return node >> *dynamic_cast<T *>(this);
+		}
+
+		Node &Write(Node &node) const override {
+			return node << *dynamic_cast<const T *>(this);
+		}
 	};
+
+	friend const Node &operator>>(const Node &node, Base &base) {
+		return base.Load(node);
+	}
+
+	friend Node &operator<<(Node &node, const Base &base) {
+		return base.Write(node);
+	}
+protected:
+	virtual const Node &Load(const Node &node) { return node; }
+	virtual Node &Write(Node &node) const { return node; }
 };
 
 /**

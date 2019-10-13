@@ -44,8 +44,8 @@ void EntityPrefab::Load() {
 	m_file->Load();
 }
 
-void EntityPrefab::Write() const {
-	m_file->Write(m_filename);
+void EntityPrefab::Write(Node::Format format) const {
+	m_file->Write(m_filename, format);
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {
@@ -55,7 +55,7 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 		}
 
 		if (auto component = Component::Create(property.GetName())) {
-			Component::Decode(property.GetName(), property, component.get());
+			property >> *component;
 			entity.AddComponent(std::move(component));
 		}
 	}
@@ -74,7 +74,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 		}
 
 		auto property = (*entityPrefab.m_file->GetNode())[componentName];
-		Component::Encode(componentName, property, component.get());
+		property << *component;
 	}
 
 	return entityPrefab;

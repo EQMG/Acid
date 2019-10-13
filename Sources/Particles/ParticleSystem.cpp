@@ -143,9 +143,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const {
 
 const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 	node["types"].Get(particleSystem.m_types);
-	for (const auto &emitter : node["emitters"]->GetProperties()) {
-		particleSystem.m_emitters.emplace_back(Emitter::Create(emitter["type"].Get<std::string>()));
-	}
+	node["emitters"].Get(particleSystem.m_emitters);
 	node["pps"].Get(particleSystem.m_pps);
 	node["averageSpeed"].Get(particleSystem.m_averageSpeed);
 	node["gravityEffect"].Get(particleSystem.m_gravityEffect);
@@ -161,7 +159,7 @@ const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 
 Node &operator<<(Node &node, const ParticleSystem &particleSystem) {
 	node["types"].Set(particleSystem.m_types);
-	//node["emitters"].Set(particleSystem.m_emitters);
+	node["emitters"].Set(particleSystem.m_emitters);
 	node["pps"].Set(particleSystem.m_pps);
 	node["averageSpeed"].Set(particleSystem.m_averageSpeed);
 	node["gravityEffect"].Set(particleSystem.m_gravityEffect);

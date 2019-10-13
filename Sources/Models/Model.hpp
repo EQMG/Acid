@@ -16,6 +16,8 @@ public:
 	using TCreateMethodFilename = std::function<TCreateReturn(const std::filesystem::path &)>;
 	using TRegistryMapFilename = std::unordered_map<std::string, TCreateMethodFilename>;
 
+	virtual ~ModelFactory() = default;
+
 	/**
 	 * Creates a new model, or finds one with the same values.
 	 * @param node The node to decode values from.
@@ -72,7 +74,26 @@ public:
 			};
 			return true;
 		}
+
+		const Node &Load(const Node &node) override {
+			return node >> *dynamic_cast<T *>(this);
+		}
+
+		Node &Write(Node &node) const override {
+			return node << *dynamic_cast<const T *>(this);
+		}
 	};
+
+	friend const Node &operator>>(const Node &node, Base &base) {
+		return base.Load(node);
+	}
+
+	friend Node &operator<<(Node &node, const Base &base) {
+		return base.Write(node);
+	}
+protected:
+	virtual const Node &Load(const Node &node) { return node; }
+	virtual Node &Write(Node &node) const { return node; }
 };
 
 /**
@@ -108,9 +129,6 @@ public:
 	void SetIndices(const std::vector<uint32_t> &indices);
 
 	std::vector<float> GetPointCloud() const;
-
-	friend const Node &operator>>(const Node &node, Model &model);
-	friend Node &operator<<(Node &node, const Model &model);
 
 	const Vector3f &GetMinExtents() const { return m_minExtents; }
 	const Vector3f &GetMaxExtents() const { return m_maxExtents; }

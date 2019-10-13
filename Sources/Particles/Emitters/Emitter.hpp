@@ -1,13 +1,13 @@
 #pragma once
 
+#include "Helpers/StreamFactory.hpp"
 #include "Maths/Vector3.hpp"
-#include "Helpers/Factory.hpp"
 
 namespace acid {
 /**
  * @brief Component interface that defines a emitter volume.
  */
-class ACID_EXPORT Emitter : public Factory<Emitter> {
+class ACID_EXPORT Emitter : public StreamFactory<Emitter> {
 public:
 	virtual ~Emitter() = default;
 

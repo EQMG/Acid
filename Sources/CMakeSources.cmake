@@ -93,6 +93,7 @@ set(_temp_acid_headers
 		Helpers/NonCopyable.hpp
 		Helpers/Reference.hpp
 		Helpers/RingBuffer.hpp
+		Helpers/StreamFactory.hpp
 		Helpers/String.hpp
 		Helpers/ThreadPool.hpp
 		Helpers/TypeInfo.hpp

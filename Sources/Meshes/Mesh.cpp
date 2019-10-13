@@ -82,13 +82,13 @@ bool Mesh::operator>(const Mesh &other) const {
 
 const Node &operator>>(const Node &node, Mesh &mesh) {
 	node["model"].Get(mesh.m_model);
-	mesh.m_material = Material::Create(node["material"]["type"].Get<std::string>());
+	node["material"].Get(mesh.m_material);
 	return node;
 }
 
 Node &operator<<(Node &node, const Mesh &mesh) {
 	node["model"].Set(mesh.m_model);
-	//node["material"].Set(mesh.m_material);
+	node["material"].Set(mesh.m_material);
 	return node;
 }
 }

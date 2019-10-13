@@ -121,13 +121,13 @@ void MeshAnimated::SetMaterial(std::unique_ptr<Material> &&material) {
 
 const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {
 	node["filename"].Get(meshAnimated.m_filename);
-	meshAnimated.m_material = Material::Create(node["material"]["type"].Get<std::string>());
+	node["material"].Get(meshAnimated.m_material);
 	return node;
 }
 
 Node &operator<<(Node &node, const MeshAnimated &meshAnimated) {
 	node["filename"].Set(meshAnimated.m_filename);
-	//node["material"].Set(meshAnimated.m_material);
+	node["material"].Set(meshAnimated.m_material);
 	return node;
 }
 }

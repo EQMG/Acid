@@ -43,6 +43,8 @@ private:
 	std::shared_ptr<Model> m_model;
 	std::unique_ptr<Material> m_material;
 
+	//bool m_render, m_castShadow;
+
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
 };

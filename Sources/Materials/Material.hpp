@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/Factory.hpp"
+#include "Helpers/StreamFactory.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Maths/Transform.hpp"
@@ -11,7 +11,7 @@ namespace acid {
  * @brief Component that represents a material shader that is used to render a mesh.
  * The child of this object should initialize {@link Material#m_pipelineMaterial} in {@link Material#Start}.
  */
-class ACID_EXPORT Material : public Factory<Material> {
+class ACID_EXPORT Material : public StreamFactory<Material> {
 public:
 	virtual ~Material() = default;
 

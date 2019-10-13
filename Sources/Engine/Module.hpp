@@ -15,6 +15,8 @@ public:
 	using StageIndex = std::pair<Stage, std::size_t>;
 	using TRegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;
 
+	virtual ~ModuleFactory() = default;
+
 	static TRegistryMap &Registry() {
 		static TRegistryMap impl;
 		return impl;

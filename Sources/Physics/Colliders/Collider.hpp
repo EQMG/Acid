@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/Factory.hpp"
+#include "Helpers/StreamFactory.hpp"
 #include "Maths/Transform.hpp"
 
 class btCollisionShape;
@@ -12,7 +12,7 @@ namespace acid {
 /**
  * @brief Class that represents a physics shape.
  */
-class ACID_EXPORT Collider : public Factory<Collider> {
+class ACID_EXPORT Collider : public StreamFactory<Collider> {
 public:
 	/**
 	 * Creates a new collider.

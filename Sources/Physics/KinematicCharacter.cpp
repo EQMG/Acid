@@ -177,9 +177,7 @@ void KinematicCharacter::SetWalkDirection(const Vector3f &direction) {
 }
 
 const Node &operator>>(const Node &node, KinematicCharacter &character) {
-	for (const auto &collider : node["colliders"]->GetProperties()) {
-		character.m_colliders.emplace_back(Collider::Create(collider["type"].Get<std::string>()));
-	}
+	node["colliders"].Get(character.m_colliders);
 	node["mass"].Get(character.m_mass);
 	node["friction"].Get(character.m_friction);
 	node["frictionRolling"].Get(character.m_frictionRolling);
@@ -194,7 +192,7 @@ const Node &operator>>(const Node &node, KinematicCharacter &character) {
 }
 
 Node &operator<<(Node &node, const KinematicCharacter &character) {
-	//node["colliders"].Set(character.m_colliders);
+	node["colliders"].Set(character.m_colliders);
 	node["mass"].Set(character.m_mass);
 	node["friction"].Set(character.m_friction);
 	node["frictionRolling"].Set(character.m_frictionRolling);

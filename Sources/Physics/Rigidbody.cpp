@@ -163,9 +163,7 @@ void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity) {
 }
 
 const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
-	for (const auto &collider : node["colliders"]->GetProperties()) {
-		rigidbody.m_colliders.emplace_back(Collider::Create(collider["type"].Get<std::string>()));
-	}
+	node["colliders"].Get(rigidbody.m_colliders);
 	node["mass"].Get(rigidbody.m_mass);
 	node["friction"].Get(rigidbody.m_friction);
 	node["frictionRolling"].Get(rigidbody.m_frictionRolling);
@@ -176,7 +174,7 @@ const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
 }
 
 Node &operator<<(Node &node, const Rigidbody &rigidbody) {
-	//node["colliders"].Set(rigidbody.m_colliders);
+	node["colliders"].Set(rigidbody.m_colliders);
 	node["mass"].Set(rigidbody.m_mass);
 	node["friction"].Set(rigidbody.m_friction);
 	node["frictionRolling"].Set(rigidbody.m_frictionRolling);

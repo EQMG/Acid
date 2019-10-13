@@ -92,14 +92,4 @@ std::vector<float> Model::GetPointCloud() const {
 
 	return pointCloud;
 }
-
-const Node &operator>>(const Node &node, Model &model) {
-	// TODO: Virtual?
-	return node;
-}
-
-Node &operator<<(Node &node, const Model &model) {
-	// TODO: Virtual?
-	return node;
-}
 }
