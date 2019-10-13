@@ -32,25 +32,26 @@ MainApp::MainApp() :
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultFont.json"));
+	// Loads a input scheme for this app.
+	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultFont.json"), true);
 
 	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
-	});
+	}, this);
 	Input::Get()->GetButton("screenshot")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
-	});
+	}, this);
 	Input::Get()->GetButton("exit")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
-	});
+	}, this);
 }
 
 MainApp::~MainApp() {

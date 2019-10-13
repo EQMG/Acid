@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Inputs/Buttons/Button.hpp"
 #include "Axis.hpp"
-#include "Button.hpp"
 
 namespace acid {
 /**

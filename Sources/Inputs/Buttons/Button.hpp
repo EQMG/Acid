@@ -14,7 +14,7 @@ public:
 	 * Returns whether this button is currently pressed.
 	 * @return True if the button is pressed, false otherwise.
 	 */
-	virtual bool IsDown() const = 0;
+	virtual bool IsDown() const { return false; }
 
 	/**
 	 * Gets if the key is down and was not down before. Key press recognized as one click.
@@ -33,8 +33,7 @@ public:
 	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
 
 	bool IsInverted() const { return m_inverted; }
-
-	void SetInverted(const bool inverted) { m_inverted = inverted; }
+	void SetInverted(bool inverted) { m_inverted = inverted; }
 
 protected:
 	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;

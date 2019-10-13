@@ -17,7 +17,7 @@ Scene1::Scene1() :
 		if (action == InputAction::Press) {
 			TogglePause();
 		}
-	});
+	}, this);
 
 	//Uis::Get()->GetCanvas().SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.3f), Vector2f(5.0f), 16s));
 

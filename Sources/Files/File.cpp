@@ -11,11 +11,6 @@ File::File(std::unique_ptr<Node> &&node) :
 	m_node(std::move(node)) {
 }
 
-File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
-	m_filename(std::move(filename)),
-	m_node(std::move(node)) {
-}
-
 File::File(const std::filesystem::path &filename) :
 	m_filename(filename) {
 	// TODO: Node factory.
@@ -24,6 +19,11 @@ File::File(const std::filesystem::path &filename) :
 	} else if (filename.extension() == ".xml") {
 		m_node = std::make_unique<Xml>("root");
 	}
+}
+
+File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
+	m_node(std::move(node)),
+	m_filename(std::move(filename)) {
 }
 
 void File::Load(const std::filesystem::path &filename) {
@@ -43,6 +43,10 @@ void File::Load(const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	Log::Out("File ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
+}
+
+void File::Load() {
+	Load(m_filename);
 }
 
 void File::Write(const std::filesystem::path &filename, Node::Format format) const {
@@ -66,10 +70,6 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 #if defined(ACID_DEBUG)
 	Log::Out("File ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
-}
-
-void File::Load() {
-	Load(m_filename);
 }
 
 void File::Write(Node::Format format) const {

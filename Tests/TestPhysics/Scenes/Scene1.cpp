@@ -65,13 +65,13 @@ Scene1::Scene1() :
 			sphereLight->AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
-	});
+	}, this);
 
 	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	});
+	}, this);
 
 	Input::Get()->GetButton("save")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
@@ -97,7 +97,7 @@ Scene1::Scene1() :
 				sceneFile.Write(Node::Format::Beautified);
 			});
 		}
-	});
+	}, this);
 
 	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
 	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));

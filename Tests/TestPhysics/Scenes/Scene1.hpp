@@ -7,7 +7,7 @@
 using namespace acid;
 
 namespace test {
-class Scene1 : public Scene, public virtual Observer {
+class Scene1 : public Scene {
 public:
 	Scene1();
 
