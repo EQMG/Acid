@@ -23,10 +23,17 @@ public:
 
 	float GetAmount() const override;
 
+	ArgumentDescription GetArgumentDescription() const override;
+
 	const Button *GetNegative() const { return m_negative.get(); }
 	const Button *GetPositive() const { return m_positive.get(); }
 
+	friend const Node &operator>>(const Node &node, AxisButton &axisButton);
+	friend Node &operator<<(Node &node, const AxisButton &axisButton);
+
 private:
+	static bool registered;
+
 	std::unique_ptr<Button> m_negative;
 	std::unique_ptr<Button> m_positive;
 };

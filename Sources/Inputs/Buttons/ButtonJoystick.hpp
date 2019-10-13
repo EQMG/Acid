@@ -23,14 +23,21 @@ public:
 
 	bool IsDown() const override;
 
+	Axis::ArgumentDescription GetArgumentDescription() const override;
+
 	JoystickPort GetPort() const { return m_port; }
 	void SetPort(JoystickPort port) { m_port = port; }
 
 	JoystickButton GetButton() const { return m_button; }
 	void SetButton(JoystickButton button) { m_button = button; }
 
+	friend const Node &operator>>(const Node &node, ButtonJoystick &buttonJoystick);
+	friend Node &operator<<(Node &node, const ButtonJoystick &buttonJoystick);
+
 private:
-	JoystickPort m_port;
-	JoystickButton m_button;
+	static bool registered;
+
+	JoystickPort m_port = 0;
+	JoystickButton m_button = 0;
 };
 }

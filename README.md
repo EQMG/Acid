@@ -54,22 +54,20 @@ auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
 // Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
 auto sphere = ModelSphere::Create(20, 20, 1.0f);
 
-// Plays a 3D sound (sound buffer resource internally managed), at (10, 0, 0), at half volume.
-Sound jump("Sounds/Jump.ogg", {10.0f * Vector3f::Right}, Audio::Type::Effect, false, true, 0.5f);
+// Plays a 3D sound (sound buffer resource internally managed), at half volume.
+Sound jump("Sounds/Jump.ogg", Audio::Type::Effect, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
 auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json");
 playerObject->AddComponent<Transform>();
 
-// Creates a entity.
+// Creates a entity in code.
 auto sphere = GetStructure()->CreateEntity();
 sphere->AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
-sphere->AddComponent<Mesh>(ShapeSphere::Create(20, 20, 1.0f)); // This will used the sphere buffers created earlier.
-sphere->AddComponent<ShapeSphere>(); // Multiple shape components can be added to a single rigidbody.
-sphere->AddComponent<Rigidbody>(2.0f); // Will be created weighing 2 units, this will find all shapes attached.
-sphere->AddComponent<MaterialDefault>(Colour::White, Texture::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
-    Texture::Create("Objects/Testing/Material.png"), Texture::Create("Objects/Testing/Normal.png"));
-sphere->AddComponent<MeshRender>(); // A mesh renderer will render the material attached.
+sphere->AddComponent<Mesh>(ModelSphere::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
+	std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
+		Image2d::Create("Objects/Testing/Material.png"), Image2d::Create("Objects/Testing/Normal.png")));
+sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 2.0f); // Will be created weighing 2 units.
 
 // Vector maths.
 Vector2f a(3.0f, -7.2f);

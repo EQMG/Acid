@@ -23,6 +23,8 @@ public:
 
 	float GetAmount() const override;
 
+	ArgumentDescription GetArgumentDescription() const override;
+
 	bool IsConnected() const;
 
 	JoystickPort GetPort() const { return m_port; }
@@ -31,8 +33,13 @@ public:
 	JoystickAxis GetAxis() const { return m_axis; }
 	void SetAxis(JoystickAxis axis) { m_axis = axis; }
 
+	friend const Node &operator>>(const Node &node, AxisJoystick &axisJoystick);
+	friend Node &operator<<(Node &node, const AxisJoystick &axisJoystick);
+
 private:
-	JoystickPort m_port;
-	JoystickAxis m_axis;
+	static bool registered;
+
+	JoystickPort m_port = 0;
+	JoystickAxis m_axis = 0;
 };
 }

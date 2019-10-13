@@ -34,10 +34,17 @@ public:
 
 	float GetAmount() const override;
 
+	ArgumentDescription GetArgumentDescription() const override;
+
 	const std::vector<std::unique_ptr<Axis>> &GetAxes() const { return m_axes; }
+
+	friend const Node &operator>>(const Node &node, AxisCompound &axisCompound);
+	friend Node &operator<<(Node &node, const AxisCompound &axisCompound);
 
 private:
 	void ConnectAxes();
+
+	static bool registered;
 
 	std::vector<std::unique_ptr<Axis>> m_axes;
 };

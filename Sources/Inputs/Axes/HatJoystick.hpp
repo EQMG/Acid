@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Button from a joystick.
  */
-class ACID_EXPORT HatJoystick : public Axis::Registrar<HatJoystick>, public Button {
+class ACID_EXPORT HatJoystick : public Axis::Registrar<HatJoystick>, public Button::Registrar<HatJoystick> {
 public:
 	/**
 	 * Creates a new joystick button.
@@ -23,6 +23,8 @@ public:
 	 */
 	HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
 
+	ArgumentDescription GetArgumentDescription() const override;
+
 	float GetAmount() const override;
 	bool IsDown() const override;
 
@@ -35,9 +37,14 @@ public:
 	const BitMask<JoystickHatValue> &GetHatFlags() const { return m_hatFlags; }
 	void SetHatFlags(JoystickHatValue hatFlags) { m_hatFlags = hatFlags; }
 
+	friend const Node &operator>>(const Node &node, HatJoystick &hatJoystick);
+	friend Node &operator<<(Node &node, const HatJoystick &hatJoystick);
+
 private:
-	JoystickPort m_port;
-	JoystickHat m_hat;
+	static bool registered;
+
+	JoystickPort m_port = 0;
+	JoystickHat m_hat = 0;
 	BitMask<JoystickHatValue> m_hatFlags;
 	bool m_lastDown = false;
 };

@@ -22,10 +22,17 @@ public:
 
 	bool IsDown() const override;
 
+	Axis::ArgumentDescription GetArgumentDescription() const override;
+
 	Key GetKey() const { return m_key; }
 	void SetKey(Key key) { m_key = key; }
 
+	friend const Node &operator>>(const Node &node, ButtonKeyboard &buttonKeyboard);
+	friend Node &operator<<(Node &node, const ButtonKeyboard &buttonKeyboard);
+
 private:
-	Key m_key;
+	static bool registered;
+
+	Key m_key = Key::Unknown;
 };
 }

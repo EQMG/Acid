@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Helpers/Factory.hpp"
+#include "Helpers/StreamFactory.hpp"
 #include "Devices/Window.hpp"
+#include "Inputs/Axes/Axis.hpp"
 
 namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT Button : public Factory<Button>, public virtual Observer {
+class ACID_EXPORT Button : public StreamFactory<Button>, public virtual Observer {
 public:
 	virtual ~Button() = default;
 
@@ -26,6 +27,8 @@ public:
 		m_wasDown = IsDown();
 		return m_wasDown == !stillDown;
 	}
+
+	virtual Axis::ArgumentDescription GetArgumentDescription() const { return {}; }
 
 	/**
 	 * Called when the button changes state.

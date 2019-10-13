@@ -49,13 +49,20 @@ public:
 
 	bool IsDown() const override;
 
+	Axis::ArgumentDescription GetArgumentDescription() const override;
+
 	const std::vector<std::unique_ptr<Button>> &GetButtons() const { return m_buttons; }
 
 	bool IsUseAnd() const { return m_useAnd; }
 	void SetUseAnd(bool useAnd) { m_useAnd = useAnd; }
 
+	friend const Node &operator>>(const Node &node, ButtonCompound &buttonCompound);
+	friend Node &operator<<(Node &node, const ButtonCompound &buttonCompound);
+
 private:
 	void ConnectButtons();
+
+	static bool registered;
 
 	std::vector<std::unique_ptr<Button>> m_buttons;
 	bool m_useAnd = false;

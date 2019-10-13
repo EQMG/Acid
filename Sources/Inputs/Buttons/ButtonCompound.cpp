@@ -1,6 +1,8 @@
 #include "ButtonCompound.hpp"
 
 namespace acid {
+bool ButtonCompound::registered = Register("buttonCompound");
+
 ButtonCompound::ButtonCompound(std::vector<std::unique_ptr<Button>> &&buttons, bool useAnd) :
 	m_buttons(std::move(buttons)),
 	m_useAnd(useAnd) {
@@ -17,6 +19,14 @@ bool ButtonCompound::IsDown() const {
 	}
 
 	return m_useAnd ^ m_inverted;
+}
+
+Axis::ArgumentDescription ButtonCompound::GetArgumentDescription() const {
+	return {
+		{"inverted", "bool", "If the down reading will be inverted"},
+		{"buttons", "button[]", "The buttons that will be combined into a compound button"},
+		{"useAnd", "bool", "If must be down for a down reading, or just one"}
+	};
 }
 
 void ButtonCompound::ConnectButtons() {
@@ -36,5 +46,19 @@ void ButtonCompound::ConnectButtons() {
 			}
 		}, this);
 	}
+}
+
+const Node &operator>>(const Node &node, ButtonCompound &buttonCompound) {
+	node["inverted"].Get(buttonCompound.m_inverted);
+	node["buttons"].Get(buttonCompound.m_buttons);
+	node["useAnd"].Get(buttonCompound.m_useAnd);
+	return node;
+}
+
+Node &operator<<(Node &node, const ButtonCompound &buttonCompound) {
+	node["inverted"].Set(buttonCompound.m_inverted);
+	node["buttons"].Set(buttonCompound.m_buttons);
+	node["useAnd"].Set(buttonCompound.m_useAnd);
+	return node;
 }
 }

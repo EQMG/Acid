@@ -21,10 +21,17 @@ public:
 
 	float GetAmount() const override;
 
+	ArgumentDescription GetArgumentDescription() const override;
+
 	uint8_t GetAxis() const { return m_axis; }
 	void SetAxis(uint8_t axis) { m_axis = axis; }
 
+	friend const Node &operator>>(const Node &node, AxisMouse &axisMouse);
+	friend Node &operator<<(Node &node, const AxisMouse &axisMouse);
+
 private:
-	uint8_t m_axis;
+	static bool registered;
+
+	uint8_t m_axis = 0;
 };
 }

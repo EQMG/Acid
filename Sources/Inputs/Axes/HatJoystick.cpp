@@ -1,6 +1,9 @@
 #include "HatJoystick.hpp"
 
 namespace acid {
+bool HatJoystick::registered = Axis::Registrar<HatJoystick>::Register("hatJoystick") && 
+	Button::Registrar<HatJoystick>::Register("hatJoystick");
+
 HatJoystick::HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags) :
 	m_port(port),
 	m_hat(hat),
@@ -21,6 +24,16 @@ HatJoystick::HatJoystick(JoystickPort port, JoystickHat hat, const BitMask<Joyst
 			}
 		}
 	}, static_cast<Button *>(this));
+}
+
+Axis::ArgumentDescription HatJoystick::GetArgumentDescription() const {
+	return {
+		{"scale", "float", "Output amount scalar"},
+		{"inverted", "bool", "If the down reading will be inverted"},
+		{"axis", "axis", "The axis to sample"},
+		{"min", "float", "Lower axis value bound"},
+		{"max", "float", "Upper axis value bound"}
+	};
 }
 
 float HatJoystick::GetAmount() const {
@@ -51,5 +64,23 @@ float HatJoystick::GetAmount() const {
 
 bool HatJoystick::IsDown() const {
 	return (Joysticks::Get()->GetHat(m_port, m_hat) & m_hatFlags) ^ m_inverted;
+}
+
+const Node &operator>>(const Node &node, HatJoystick &hatJoystick) {
+	node["scale"].Get(hatJoystick.m_scale);
+	node["inverted"].Get(hatJoystick.m_inverted);
+	node["port"].Get(hatJoystick.m_port);
+	node["hat"].Get(hatJoystick.m_hat);
+	node["hatFlags"].Get(hatJoystick.m_hatFlags);
+	return node;
+}
+
+Node &operator<<(Node &node, const HatJoystick &hatJoystick) {
+	node["scale"].Set(hatJoystick.m_scale);
+	node["inverted"].Set(hatJoystick.m_inverted);
+	node["port"].Set(hatJoystick.m_port);
+	node["hat"].Set(hatJoystick.m_hat);
+	node["hatFlags"].Set(hatJoystick.m_hatFlags);
+	return node;
 }
 }

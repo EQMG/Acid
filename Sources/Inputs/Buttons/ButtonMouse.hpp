@@ -22,10 +22,17 @@ public:
 
 	bool IsDown() const override;
 
+	Axis::ArgumentDescription GetArgumentDescription() const override;
+
 	MouseButton GetButton() const { return m_button; }
 	void SetButton(MouseButton button) { m_button = button; }
 
+	friend const Node &operator>>(const Node &node, ButtonMouse &buttonMouse);
+	friend Node &operator<<(Node &node, const ButtonMouse &buttonMouse);
+
 private:
-	MouseButton m_button;
+	static bool registered;
+
+	MouseButton m_button = MouseButton::First;
 };
 }

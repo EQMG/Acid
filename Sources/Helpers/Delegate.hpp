@@ -149,9 +149,7 @@ private:
 };
 
 template<typename T>
-class DelegateValue :
-	public Delegate<void(T)>,
-	public virtual NonCopyable {
+class DelegateValue : public Delegate<void(T)>, public virtual NonCopyable {
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) :
@@ -170,7 +168,7 @@ public:
 	 * Access the stored value.
 	 * @return The value.
 	 */
-	constexpr operator const T &() const noexcept { return m_value; }
+	operator const T &() const noexcept { return m_value; }
 
 	const T &get() const { return m_value; }
 	const T &operator*() const { return m_value; }

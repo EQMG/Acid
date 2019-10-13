@@ -1,14 +1,34 @@
 #pragma once
 
 #include "Helpers/Delegate.hpp"
-#include "Helpers/Factory.hpp"
+#include "Helpers/StreamFactory.hpp"
 
 namespace acid {
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_EXPORT Axis : public Factory<Axis>, public virtual Observer {
+class ACID_EXPORT Axis : public StreamFactory<Axis>, public virtual Observer {
 public:
+	struct Argument {
+		std::string name;
+		std::string type;
+		std::string description;
+
+		friend const Node &operator>>(const Node &node, Argument &argument) {
+			node["name"].Get(argument.name);
+			node["type"].Get(argument.type);
+			node["description"].Get(argument.description);
+			return node;
+		}
+		friend Node &operator<<(Node &node, const Argument &argument) {
+			node["name"].Set(argument.name);
+			node["type"].Set(argument.type);
+			node["description"].Set(argument.description);
+			return node;
+		}
+	};
+	using ArgumentDescription = std::vector<Argument>;
+
 	virtual ~Axis() = default;
 
 	/**
@@ -16,6 +36,8 @@ public:
 	 * @return The current value of the axis in the range (-1, 1).
 	 */
 	virtual float GetAmount() const { return 0.0f; }
+
+	virtual ArgumentDescription GetArgumentDescription() const { return {}; }
 
 	/**
 	 * Called when the axis changes value.
