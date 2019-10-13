@@ -2,7 +2,6 @@
 
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
 #include "Maths/Transform.hpp"
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 Collider::Collider(const Transform &localTransform) :

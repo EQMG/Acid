@@ -10,7 +10,7 @@ MaterialTerrain::MaterialTerrain(std::shared_ptr<Image2d> imageR, std::shared_pt
 	m_imageG(std::move(imageG)) {
 }
 
-void MaterialTerrain::Start(const Shader::VertexInput &vertexInput, bool animated) {
+void MaterialTerrain::CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) {
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {{"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {vertexInput}});
 }
 

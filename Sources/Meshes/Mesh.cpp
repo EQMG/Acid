@@ -14,7 +14,7 @@ Mesh::Mesh(std::shared_ptr<Model> model, std::unique_ptr<Material> &&material) :
 
 void Mesh::Start() {
 	if (m_material)
-		m_material->Start(GetVertexInput(), false);
+		m_material->CreatePipeline(GetVertexInput(), false);
 }
 
 void Mesh::Update() {
@@ -61,7 +61,7 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 
 void Mesh::SetMaterial(std::unique_ptr<Material> &&material) {
 	m_material = std::move(material);
-	m_material->Start(GetVertexInput(), false);
+	m_material->CreatePipeline(GetVertexInput(), false);
 }
 
 bool Mesh::operator<(const Mesh &other) const {

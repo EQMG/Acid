@@ -1,7 +1,6 @@
 #include "ColliderCone.hpp"
 
 #include <BulletCollision/CollisionShapes/btConeShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderCone::registered = Register("cone");

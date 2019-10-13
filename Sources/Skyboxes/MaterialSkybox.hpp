@@ -13,8 +13,7 @@ class ACID_EXPORT MaterialSkybox : public Material::Registrar<MaterialSkybox> {
 public:
 	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);
 
-	void Start(const Shader::VertexInput &vertexInput, bool animated) override;
-
+	void CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) override;
 	void PushUniforms(UniformHandler &uniformObject, const Transform *transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 

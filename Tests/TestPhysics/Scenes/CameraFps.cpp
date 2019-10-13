@@ -5,7 +5,6 @@
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
-#include <Physics/CollisionObject.hpp>
 #include "PlayerFps.hpp"
 
 namespace test {

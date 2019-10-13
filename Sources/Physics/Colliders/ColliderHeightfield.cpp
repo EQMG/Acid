@@ -1,7 +1,6 @@
 #include "ColliderHeightfield.hpp"
 
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderHeightfield::registered = Register("heightfield");

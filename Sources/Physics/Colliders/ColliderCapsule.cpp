@@ -1,7 +1,6 @@
 #include "ColliderCapsule.hpp"
 
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderCapsule::registered = Register("capsule");

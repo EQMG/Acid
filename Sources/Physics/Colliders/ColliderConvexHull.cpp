@@ -2,7 +2,6 @@
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include "Meshes/Mesh.hpp"
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderConvexHull::registered = Register("convexHull");

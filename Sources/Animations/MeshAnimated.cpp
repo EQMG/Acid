@@ -20,7 +20,7 @@ MeshAnimated::MeshAnimated(std::filesystem::path filename, std::unique_ptr<Mater
 
 void MeshAnimated::Start() {
 	if (m_material)
-		m_material->Start(GetVertexInput(), true);
+		m_material->CreatePipeline(GetVertexInput(), true);
 
 	if (m_filename.empty())
 		return;
@@ -116,7 +116,7 @@ bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler 
 
 void MeshAnimated::SetMaterial(std::unique_ptr<Material> &&material) {
 	m_material = std::move(material);
-	m_material->Start(GetVertexInput(), true);
+	m_material->CreatePipeline(GetVertexInput(), true);
 }
 
 const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {

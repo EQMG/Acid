@@ -1,7 +1,6 @@
 #include "ColliderCylinder.hpp"
 
 #include <BulletCollision/CollisionShapes/btCylinderShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderCylinder::registered = Register("cylinder");

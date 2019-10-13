@@ -1,7 +1,6 @@
 #include "ColliderCube.hpp"
 
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderCube::registered = Register("cube");

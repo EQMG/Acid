@@ -3,9 +3,9 @@
 #include <Devices/Mouse.hpp>
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/Entity.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
-#include <Physics/CollisionObject.hpp>
 #include "PlayerFps.hpp"
 
 namespace test {

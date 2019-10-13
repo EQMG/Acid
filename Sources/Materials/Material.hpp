@@ -8,19 +8,19 @@
 
 namespace acid {
 /**
- * @brief Component that represents a material shader that is used to render a mesh.
- * The child of this object should initialize {@link Material#m_pipelineMaterial} in {@link Material#Start}.
+ * @brief Component that represents a material shader that is used to render a model.
+ * The implementation of this object must initialize {@link Material#m_pipelineMaterial} in {@link Material#CreatePipeline()}.
  */
 class ACID_EXPORT Material : public StreamFactory<Material> {
 public:
 	virtual ~Material() = default;
 
 	// TODO: Remove method
-	virtual void Start(const Shader::VertexInput &vertexInput, bool animated) = 0;
+	virtual void CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) = 0;
 
 	/**
 	 * Used to update the main uniform handler used in a material.
-	 * A material can defined it's own uniforms and push them via {@link Material#PushDescriptors}.
+	 * A material can defined it's own uniforms and push them via {@link Material#PushDescriptors()}.
 	 * @param uniformObject The uniform handler to update.
 	 */
 	virtual void PushUniforms(UniformHandler &uniformObject, const Transform *) = 0;

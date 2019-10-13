@@ -12,7 +12,7 @@ MaterialSkybox::MaterialSkybox(std::shared_ptr<ImageCube> image, const Colour &b
 	m_fogLimits(-10000.0f) {
 }
 
-void MaterialSkybox::Start(const Shader::VertexInput &vertexInput, bool animated) {
+void MaterialSkybox::CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) {
 	m_pipelineMaterial = PipelineMaterial::Create({1, 0}, {
 		{"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {vertexInput}, {},
 		PipelineGraphics::Mode::Mrt, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT

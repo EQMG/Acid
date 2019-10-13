@@ -14,8 +14,7 @@ public:
 		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,
 		bool ignoreLighting = false, bool ignoreFog = false);
 
-	void Start(const Shader::VertexInput &vertexInput, bool animated) override;
-
+	void CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) override;
 	void PushUniforms(UniformHandler &uniformObject, const Transform *transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 

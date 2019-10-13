@@ -1,8 +1,6 @@
 #pragma once
 
-#include <Scenes/Entity.hpp>
 #include <Scenes/Component.hpp>
-#include <Physics/CollisionObject.hpp>
 
 using namespace acid;
 

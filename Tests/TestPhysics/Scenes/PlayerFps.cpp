@@ -2,6 +2,7 @@
 
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/Entity.hpp>
 #include <Physics/KinematicCharacter.hpp>
 #include <Uis/Uis.hpp>
 

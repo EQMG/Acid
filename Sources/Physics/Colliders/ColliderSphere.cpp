@@ -1,7 +1,6 @@
 #include "ColliderSphere.hpp"
 
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
-#include "Physics/CollisionObject.hpp"
 
 namespace acid {
 bool ColliderSphere::registered = Register("sphere");
