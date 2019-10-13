@@ -7,8 +7,13 @@ namespace acid {
 /**
  * @brief Axis input from a joystick input device.
  */
-class ACID_EXPORT AxisJoystick : public Axis {
+class ACID_EXPORT AxisJoystick : public Axis::Registrar<AxisJoystick> {
 public:
+	/**
+	 * Creates a new axis joystick.
+	 */
+	AxisJoystick() = default;
+
 	/**
 	 * Creates a new axis joystick.
 	 * @param port The joystick port.

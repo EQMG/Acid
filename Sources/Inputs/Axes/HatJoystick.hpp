@@ -8,8 +8,13 @@ namespace acid {
 /**
  * @brief Button from a joystick.
  */
-class ACID_EXPORT HatJoystick : public Axis, public Button {
+class ACID_EXPORT HatJoystick : public Axis::Registrar<HatJoystick>, public Button {
 public:
+	/**
+	 * Creates a new joystick button.
+	 */
+	HatJoystick() = default;
+
 	/**
 	 * Creates a new joystick button.
 	 * @param port The joystick port.

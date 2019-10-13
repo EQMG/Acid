@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Helpers/Factory.hpp"
 #include "Devices/Window.hpp"
 
 namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT Button : public virtual Observer {
+class ACID_EXPORT Button : public Factory<Button>, public virtual Observer {
 public:
 	virtual ~Button() = default;
 

@@ -10,7 +10,7 @@ class Bitmap;
 /**
  * @brief Resource that represents a cubemap image.
  */
-class ACID_EXPORT ImageCube : public NonCopyable, public Descriptor, public Resource {
+class ACID_EXPORT ImageCube : public Descriptor, public Resource, public virtual NonCopyable {
 public:
 	/**
 	 * Creates a new cubemap image, or finds one with the same values.

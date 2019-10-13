@@ -7,8 +7,13 @@ namespace acid {
 /**
  * @brief Axis composed of two buttons.
  */
-class ACID_EXPORT AxisButton : public Axis {
+class ACID_EXPORT AxisButton : public Axis::Registrar<AxisButton> {
 public:
+	/**
+	 * Creates a new axis button.
+	 */
+	AxisButton() = default;
+
 	/**
 	 * Creates a new axis button.
 	 * @param negative When this button is down, the axis is negative.

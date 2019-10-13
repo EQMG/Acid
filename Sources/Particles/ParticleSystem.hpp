@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, public NonCopyable {
+class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, public virtual NonCopyable {
 public:
 	/**
 	 * Creates a new particle system.

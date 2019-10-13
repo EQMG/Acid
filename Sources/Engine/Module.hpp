@@ -72,7 +72,7 @@ public:
 /**
  * @brief A interface used for defining engine modules.
  */
-class ACID_EXPORT Module : public ModuleFactory<Module>, public NonCopyable {
+class ACID_EXPORT Module : public ModuleFactory<Module>, public virtual NonCopyable {
 public:
 	virtual ~Module() = default;
 

@@ -7,8 +7,13 @@ namespace acid {
 /**
  * @brief Button composed of a axis.
  */
-class ACID_EXPORT ButtonAxis : public Button {
+class ACID_EXPORT ButtonAxis : public Button::Registrar<ButtonAxis> {
 public:
+	/**
+	 * Creates a new button axis.
+	 */
+	ButtonAxis() = default;
+
 	/**
 	 * Creates a new button axis.
 	 * @param axis The axis to sample.

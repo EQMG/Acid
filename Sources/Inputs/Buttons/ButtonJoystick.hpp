@@ -7,8 +7,13 @@ namespace acid {
 /**
  * @brief Button input from a joystick input device.
  */
-class ACID_EXPORT ButtonJoystick : public Button {
+class ACID_EXPORT ButtonJoystick : public Button::Registrar<ButtonJoystick> {
 public:
+	/**
+	 * Creates a new joystick button.
+	 */
+	ButtonJoystick() = default;
+
 	/**
 	 * Creates a new joystick button.
 	 * @param port The joystick port.

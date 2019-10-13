@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief Combines multiple axes inputs into a single axis.
  */
-class ACID_EXPORT AxisCompound : public Axis, public NonCopyable {
+class ACID_EXPORT AxisCompound : public Axis::Registrar<AxisCompound>, public virtual NonCopyable {
 public:
 	/**
 	 * Creates a new compound axis.

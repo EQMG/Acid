@@ -7,8 +7,13 @@ namespace acid {
 /**
  * @brief Button input from the mouse input device.
  */
-class ACID_EXPORT ButtonMouse : public Button {
+class ACID_EXPORT ButtonMouse : public Button::Registrar<ButtonMouse> {
 public:
+	/**
+	 * Creates a new button mouse.
+	 */
+	explicit ButtonMouse() = default;
+
 	/**
 	 * Creates a new button mouse.
 	 * @param button The button on the mouse being checked.

@@ -9,7 +9,7 @@ class RenderStage;
 
 class ACID_EXPORT Renderpass {
 public:
-	class SubpassDescription : public NonCopyable {
+	class SubpassDescription : public virtual NonCopyable {
 	public:
 		SubpassDescription(VkPipelineBindPoint bindPoint, std::vector<VkAttachmentReference> colorAttachments, const std::optional<uint32_t> &depthAttachment) :
 			m_colorAttachments(std::move(colorAttachments)) {

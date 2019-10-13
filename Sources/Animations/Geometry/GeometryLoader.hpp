@@ -7,7 +7,7 @@
 #include "VertexAnimated.hpp"
 
 namespace acid {
-class ACID_EXPORT GeometryLoader : public NonCopyable {
+class ACID_EXPORT GeometryLoader : public virtual NonCopyable {
 public:
 	GeometryLoader(NodeReturn libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);
 

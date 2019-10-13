@@ -43,7 +43,7 @@ namespace acid {
  *
  * Note that the actual files in the .zip archive can be retrieved via the ZipEntry interface, not the ZipArchive interface.
  */
-class ZipArchive : public NonCopyable {
+class ZipArchive : public virtual NonCopyable {
 public:
 	/**
 	 * @brief Constructor. Constructs a null-archive, which can be used for creating a new .zip file

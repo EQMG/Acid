@@ -24,7 +24,7 @@ struct ZipEntryMetaData {
 	const time_t time;
 };
 
-class ZipEntry : public NonCopyable {
+class ZipEntry : public virtual NonCopyable {
 	friend class ZipArchive;
 public:
 	/**

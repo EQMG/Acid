@@ -151,7 +151,7 @@ private:
 template<typename T>
 class DelegateValue :
 	public Delegate<void(T)>,
-	public NonCopyable {
+	public virtual NonCopyable {
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) :

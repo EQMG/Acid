@@ -6,13 +6,18 @@ namespace acid {
 /**
  * @brief Axis input from a mouse.
  */
-class ACID_EXPORT AxisMouse : public Axis {
+class ACID_EXPORT AxisMouse : public Axis::Registrar<AxisMouse> {
 public:
+	/**
+	 * Creates a new axis mouse.
+	 */
+	AxisMouse() = default;
+
 	/**
 	 * Creates a new axis mouse.
 	 * @param axis The axis on the mouse delta is being checked.
 	 */
-	AxisMouse(uint8_t axis);
+	explicit AxisMouse(uint8_t axis);
 
 	float GetAmount() const override;
 

@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Resource that represents a 2D image.
  */
-class ACID_EXPORT Image2d : public NonCopyable, public Descriptor, public Resource {
+class ACID_EXPORT Image2d : public Descriptor, public Resource, public virtual NonCopyable {
 public:
 	/**
 	 * Creates a new 2D image, or finds one with the same values.
