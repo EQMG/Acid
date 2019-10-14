@@ -8,6 +8,15 @@ Entity::Entity(Id id, Scene *scene) :
 	m_scene(scene) {
 }
 
+std::vector<Component *> Entity::GetComponents() const {
+	return m_scene->m_components.GetComponents(m_id);
+}
+
+void Entity::AddComponent(std::unique_ptr<Component> &&component) {
+	m_scene->m_components.AddComponent(m_id, component->GetTypeId(), std::move(component));
+	m_scene->RefreshEntity(m_id);
+}
+
 void Entity::RemoveAllComponents() {
 	m_scene->m_components.RemoveAllComponents(m_id);
 	m_scene->RefreshEntity(m_id);
@@ -42,6 +51,6 @@ bool Entity::operator==(const Entity &other) const {
 }
 
 bool Entity::operator!=(const Entity &other) const {
-	return !(*this == other);
+	return !operator==(other);
 }
 }

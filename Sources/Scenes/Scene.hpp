@@ -6,7 +6,7 @@
 #include "Holders/EntityPool.hpp"
 #include "Holders/SystemHolder.hpp"
 #include "Camera.hpp"
-#include "Entity.hpp"
+#include "Entity.inl"
 #include "System.hpp"
 
 namespace acid {
@@ -44,6 +44,10 @@ public:
 	 * @return The current camera.
 	 */
 	Camera *GetCamera() const { return m_camera.get(); }
+
+	// TODO: Remove
+	template<typename T>
+	std::vector<T *> GetComponents() const;
 
 	/**
 	 * Checks whether a System exists or not.

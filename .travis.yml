@@ -16,7 +16,8 @@ matrix:
         - g++-9
         - xorg-dev
         - libglu1-mesa-dev
-        - libvulkan-dev
+        - vulkan
+        - vulkan-validationlayers
         - libopenal-dev
     language: cpp
     compiler: gcc
@@ -47,7 +48,8 @@ matrix:
         - clang-8
         - xorg-dev
         - libglu1-mesa-dev
-        - libvulkan-dev
+        - vulkan
+        - vulkan-validationlayers
         - libopenal-dev
     language: cpp
     compiler: clang

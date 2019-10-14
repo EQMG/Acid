@@ -41,6 +41,7 @@
 #include "Terrain/MaterialTerrain.hpp"
 #include "Terrain/Terrain.hpp"
 #include "CameraFps.hpp"
+#include "Scenes/ShimSystem.hpp"
 
 namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
@@ -128,6 +129,7 @@ Scene1::Scene1() :
 }
 
 void Scene1::Start() {
+	AddSystem<ShimSystem>();
 	auto physicsSystem = AddSystem<PhysicsSystem>();
 	physicsSystem->SetGravity({0.0f, -9.81f, 0.0f});
 	physicsSystem->SetAirDensity(1.0f);

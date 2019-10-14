@@ -15,6 +15,7 @@ public:
 	Entity *GetEntity() const { return m_entity; }
 
 	Entity *m_entity = nullptr;
+	bool m_started = false;
 };
 
 /**

@@ -21,11 +21,8 @@ public:
 	 */
 	operator Id() const noexcept { return m_id; }
 
-	/**
-	 * Gets the Entity ID.
-	 * @return The Entity ID.
-	 */
-	Id GetId() const noexcept { return m_id; }
+	// TODO: Remove
+	std::vector<Component *> GetComponents() const;
 
 	/**
 	 * Checks whether the Entity has the Component or not.
@@ -55,12 +52,9 @@ public:
 
 	/**
 	 * Adds the Component to the Entity.
-	 * @tparam T The Component type.
 	 * @param component The component to add to the Entity.
-	 * @return The Component.
 	 */
-	template<typename T>
-	T *AddComponent(std::unique_ptr<T> &&component);
+	void AddComponent(std::unique_ptr<Component> &&component);
 
 	/**
 	 * Removes the Component from the Entity.
@@ -73,6 +67,12 @@ public:
 	 * Removes all components from the Entity.
 	 */
 	void RemoveAllComponents();
+
+	/**
+	 * Gets the Entity ID.
+	 * @return The Entity ID.
+	 */
+	Id GetId() const noexcept { return m_id; }
 
 	/**
 	 * Gets the Entity name.

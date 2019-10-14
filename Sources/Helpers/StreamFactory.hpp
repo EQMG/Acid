@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Log.hpp"
+#include "TypeInfo.hpp"
 #include "Files/Node.hpp"
 
 namespace acid {
@@ -42,6 +43,10 @@ public:
 
 	template<typename T>
 	class Registrar : public Base {
+	public:
+		TypeId GetTypeId() const override { return TypeInfo<Base>::GetTypeId<T>(); }
+		std::string GetTypeName() const override { return name; }
+
 	protected:
 		static bool Register(const std::string &name) {
 			Registrar::name = name;
@@ -50,8 +55,6 @@ public:
 			};
 			return true;
 		}
-
-		std::string GetTypeName() const override { return name; }
 
 		const Node &Load(const Node &node) override {
 			return node >> *dynamic_cast<T *>(this);
@@ -81,6 +84,7 @@ public:
 		return node;
 	}*/
 
+	virtual TypeId GetTypeId() const { return -1; }
 	virtual std::string GetTypeName() const { return ""; }
 
 	friend const Node &operator>>(const Node &node, Base &base) {

@@ -17,7 +17,7 @@ void SubrenderMeshes::Render(const CommandBuffer &commandBuffer) {
 	m_uniformScene.Push("view", camera->GetViewMatrix());
 	m_uniformScene.Push("cameraPos", camera->GetPosition());
 
-	/*auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
+	auto meshes = Scenes::Get()->GetScene()->GetComponents<Mesh>();
 	if (m_sort == Sort::Front)
 		std::sort(meshes.begin(), meshes.end(), std::greater<>());
 	else if (m_sort == Sort::Back)
@@ -28,9 +28,9 @@ void SubrenderMeshes::Render(const CommandBuffer &commandBuffer) {
 	}
 
 	// TODO: Split animated meshes into it's own subrender.
-	auto animatedMeshes = Scenes::Get()->GetStructure()->QueryComponents<MeshAnimated>();
+	auto animatedMeshes = Scenes::Get()->GetScene()->GetComponents<MeshAnimated>();
 	for (const auto &animatedMesh : animatedMeshes) {
 		animatedMesh->CmdRender(commandBuffer, m_uniformScene, GetStage());
-	}*/
+	}
 }
 }

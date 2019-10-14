@@ -24,20 +24,14 @@ public:
 	 * @tparam T The Component type.
 	 */
 	template<typename T>
-	void Require() {
-		m_required.set(GetComponentTypeId<T>());
-		m_excluded.reset(GetComponentTypeId<T>());
-	}
+	void Require();
 
 	/**
 	 * Makes a Component excluded.
 	 * @tparam T The Component type.
 	 */
 	template<typename T>
-	void Exclude() {
-		m_required.reset(GetComponentTypeId<T>());
-		m_excluded.set(GetComponentTypeId<T>());
-	}
+	void Exclude();
 
 	/**
 	 * Exclude all Components that are not required.
@@ -54,13 +48,12 @@ public:
 	 * @tparam T The Component type.
 	 */
 	template<typename T>
-	void Ignore() {
-		m_required.reset(GetComponentTypeId<T>());
-		m_excluded.reset(GetComponentTypeId<T>());
-	}
+	void Ignore();
 
 private:
 	Mask m_required;
 	Mask m_excluded;
 };
 }
+
+#include "ComponentFilter.inl"

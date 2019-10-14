@@ -4,6 +4,16 @@
 
 namespace acid {
 template<typename T>
+std::vector<T *> Scene::GetComponents() const {
+	std::vector<T *> result;
+	for (auto entity : m_entities) {
+		if (auto component = entity.m_entity.GetComponent<T>())
+			result.emplace_back(component);
+	}
+	return result;
+}
+
+template<typename T>
 bool Scene::HasSystem() const {
 	return m_systems.HasSystem<T>();
 }

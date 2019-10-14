@@ -69,7 +69,9 @@ void MeshAnimated::Start() {
 
 void MeshAnimated::Update() {
 	if (m_material) {
-		auto transform = GetEntity()->GetComponent<Transform>();
+		auto entity = GetEntity();
+		auto typeId = TypeInfo<Component>::GetTypeId<Transform>();
+		auto transform = entity->GetComponent<Transform>();
 		m_material->PushUniforms(m_uniformObject, transform);
 	}
 	

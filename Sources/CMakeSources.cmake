@@ -225,6 +225,7 @@ set(_temp_acid_headers
 		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
 		Scenes/Scenes.hpp
+		Scenes/ShimSystem.hpp
 		Scenes/System.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
@@ -438,6 +439,7 @@ set(_temp_acid_sources
 		Scenes/EntityPrefab.cpp
 		Scenes/Scene.cpp
 		Scenes/Scenes.cpp
+		Scenes/ShimSystem.cpp
 		Scenes/System.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp

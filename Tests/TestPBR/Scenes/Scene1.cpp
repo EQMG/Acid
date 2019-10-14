@@ -12,6 +12,7 @@
 #include <Scenes/Entity.inl>
 #include <Uis/Uis.hpp>
 #include "CameraFree.hpp"
+#include "Scenes/ShimSystem.hpp"
 
 namespace test {
 Scene1::Scene1() :
@@ -25,6 +26,7 @@ Scene1::Scene1() :
 }
 
 void Scene1::Start() {
+	AddSystem<ShimSystem>();
 	auto physicsSystem = AddSystem<PhysicsSystem>();
 	physicsSystem->SetGravity({0.0f, -9.81f, 0.0f});
 	physicsSystem->SetAirDensity(1.0f);

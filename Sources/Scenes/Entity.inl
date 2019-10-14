@@ -22,13 +22,6 @@ T *Entity::AddComponent(Args &&...args) {
 }
 
 template<typename T>
-T *Entity::AddComponent(std::unique_ptr<T> &&component) {
-	m_scene->m_components.AddComponent<T>(m_id, std::move(component));
-	m_scene->RefreshEntity(m_id);
-	return GetComponent<T>();
-}
-
-template<typename T>
 void Entity::RemoveComponent() {
 	m_scene->m_components.RemoveComponent<T>(m_id);
 	m_scene->RefreshEntity(m_id);
