@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Scene.inl"
+#include "Scene.hpp"
 
 namespace acid {
 /**

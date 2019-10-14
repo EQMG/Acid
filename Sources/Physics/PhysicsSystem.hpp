@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Scenes/System.inl"
 #include "Maths/Vector3.hpp"
+#include "Scenes/System.hpp"
 #include "CollisionObject.hpp"
 
 class btCollisionObject;

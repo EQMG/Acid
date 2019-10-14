@@ -3,6 +3,7 @@
 #include <Post/Filters/FilterLensflare.hpp>
 #include <Lights/Light.hpp>
 #include <Graphics/Graphics.hpp>
+#include <Scenes/Entity.inl>
 #include "World/World.hpp"
 #include "Maths/Transform.hpp"
 

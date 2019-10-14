@@ -43,7 +43,6 @@ public:
 
 	Transform *GetParent() const { return m_parent; }
 	void SetParent(Transform *parent);
-	void SetParent(Entity parent);
 
 	const std::vector<Transform *> &GetChildren() const { return m_children; }
 

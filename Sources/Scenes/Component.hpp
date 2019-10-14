@@ -1,6 +1,5 @@
 #pragma once
 
-#include <type_traits>
 #include "Helpers/TypeInfo.hpp"
 #include "Helpers/StreamFactory.hpp"
 
@@ -9,7 +8,7 @@ namespace acid {
 constexpr std::size_t MAX_COMPONENTS = 64;
 
 class Entity;
-class Component : public StreamFactory<Component> {
+class ACID_EXPORT Component : public StreamFactory<Component> {
 public:
 	virtual void Start() {}
 	virtual void Update() {}

@@ -65,7 +65,7 @@ Scene1::Scene1() :
 			sphere.AddComponent<HeightDespawn>(-75.0f);
 
 			auto sphereLight = CreateEntity();
-			sphereLight.AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
+			sphereLight.AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere.GetComponent<Transform>());
 			sphereLight.AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
 	}, this);
@@ -111,7 +111,7 @@ Scene1::Scene1() :
 		Mouse::Get()->SetCursorHidden(true);
 	});
 
-	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths) {
+	Mouse::Get()->OnDrop().Add([](const std::vector<std::string> &paths) {
 		for (const auto &path : paths) {
 			Log::Out("File dropped on window: ", path, '\n');
 		}
@@ -228,17 +228,17 @@ void Scene1::Start() {
 #endif
 
 	auto teapotCone = CreateEntity();
-	teapotCone.AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1);
+	teapotCone.AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1.GetComponent<Transform>());
 	teapotCone.AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 24, 2), 
 		std::make_unique<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotCone.AddComponent<ShadowRender>();
 
 	auto teapotConeLight = CreateEntity("TeapotConeLight");
-	teapotConeLight.AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f))->SetParent(teapotCone);
+	teapotConeLight.AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f))->SetParent(teapotCone.GetComponent<Transform>());
 	teapotConeLight.AddComponent<Light>(Colour::Red, 6.0f);
 
 	auto teapotConeSphere = CreateEntity();
-	teapotConeSphere.AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), Vector3f(0.5f))->SetParent(teapotCone);
+	teapotConeSphere.AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), Vector3f(0.5f))->SetParent(teapotCone.GetComponent<Transform>());
 	teapotConeSphere.AddComponent<Mesh>(ModelSphere::Create(1.0f, 32, 32), 
 		std::make_unique<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotConeSphere.AddComponent<ShadowRender>();

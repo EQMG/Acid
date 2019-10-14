@@ -1,12 +1,13 @@
-#include "Scene.inl"
-
-#include <iostream>
-#include <exception>
-#include "Entity.inl"
 #include "Scene.hpp"
+
+#include "Entity.inl"
 #include "EntityPrefab.hpp"
 
 namespace acid {
+Scene::Scene(std::unique_ptr<Camera> &&camera) :
+	m_camera(std::move(camera)) {
+}
+
 Scene::~Scene() {
 	Clear();
 }
@@ -21,7 +22,7 @@ Entity Scene::CreateEntity() {
 	// Resize containers if necessary.
 	Extend(id + 1);
 
-	m_entities[id].m_entity = Entity(id, *this);
+	m_entities[id].m_entity = Entity(id, this);
 	m_entities[id].m_enabled = true;
 	m_entities[id].m_valid = true;
 
@@ -45,6 +46,8 @@ Entity Scene::CreateEntity(const std::string &name) {
 
 Entity Scene::CreatePrefabEntity(const std::string &filename) {
 	auto entity = CreateEntity();
+	auto prefab = EntityPrefab::Create(filename);
+	*prefab >> entity;
 	return entity;
 }
 

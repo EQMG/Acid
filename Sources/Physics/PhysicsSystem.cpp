@@ -9,6 +9,7 @@
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include "Scenes/Entity.inl"
 #include "Rigidbody.hpp"
 
 namespace acid {

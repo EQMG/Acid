@@ -1,9 +1,9 @@
 #include "NameTag.hpp"
 
-#include <Scenes/Entity.hpp>
+#include <Scenes/Entity.inl>
 #include <Scenes/Scenes.hpp>
-#include <Uis/Uis.hpp>
 #include <Maths/Visual/DriverConstant.hpp>
+#include <Uis/Uis.hpp>
 
 namespace test {
 bool NameTag::registered = Register("heightDespawn");

@@ -1,17 +1,15 @@
 #pragma once
 
-#include "Camera.hpp"
-#include "Files/FileObserver.hpp"
+#include "Helpers/Delegate.hpp"
+#include "Helpers/TypeInfo.hpp"
 #include "Holders/ComponentHolder.hpp"
 #include "Holders/EntityPool.hpp"
 #include "Holders/SystemHolder.hpp"
+#include "Camera.hpp"
 #include "Entity.hpp"
 #include "System.hpp"
 
 namespace acid {
-/**
- * @brief Class that is used to represent a scene.
- */
 class ACID_EXPORT Scene : public virtual Observer {
 	friend class Scenes;
 	friend class Entity;
@@ -21,9 +19,7 @@ public:
 	 * Creates a new scene.
 	 * @param camera The scenes camera.
 	 */
-	explicit Scene(std::unique_ptr<Camera> &&camera) :
-		m_camera(std::move(camera)) {
-	}
+	explicit Scene(std::unique_ptr<Camera> &&camera);
 
 	virtual ~Scene();
 
@@ -48,12 +44,6 @@ public:
 	 * @return The current camera.
 	 */
 	Camera *GetCamera() const { return m_camera.get(); }
-
-	/**
-	 * Sets the current camera to a new camera.
-	 * @param camera The new camera.
-	 */
-	void SetCamera(Camera *camera) { m_camera.reset(camera); }
 
 	/**
 	 * Checks whether a System exists or not.
@@ -280,8 +270,11 @@ private:
 	 * @return The attachment status.
 	 */
 	EntityAttachStatus TryEntityAttach(System &system, TypeId systemId, Entity::Id id);
-	
+
+	// If this scene object has been started yet.
 	bool m_started = false;
+
+	// The camera of this scene.
 	std::unique_ptr<Camera> m_camera;
 
 	// List of all Entities.
@@ -306,3 +299,5 @@ private:
 	EntityPool m_pool;
 };
 }
+
+#include "Scene.inl"

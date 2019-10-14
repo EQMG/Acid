@@ -1,15 +1,12 @@
 #pragma once
 
-#include <unordered_map>
-#include <vector>
 #include "Helpers/NonCopyable.hpp"
-#include "Helpers/Reference.hpp"
 #include "Helpers/TypeInfo.hpp"
 #include "Holders/ComponentFilter.hpp"
 #include "Entity.hpp"
 
 namespace acid {
-class System : public NonCopyable {
+class ACID_EXPORT System : public NonCopyable {
 	friend class Scene;
 	friend class SystemHolder;
 public:
@@ -40,13 +37,7 @@ public:
 	 * Gets the Scene that the System belongs to.
 	 * @return The Scene.
 	 */
-	Scene &GetScene();
-
-	/**
-	 * Gets the Scene that the System belongs to.
-	 * @return The Scene.
-	 */
-	const Scene &GetScene() const;
+	const Scene *GetScene() const { return m_scene; }
 
 protected:
 	/**
@@ -116,7 +107,7 @@ private:
 	std::unordered_map<Entity::Id, EntityStatus> m_status;
 
 	// The Scene that this System belongs to.
-	std::optional<Reference<Scene>> m_scene;
+	Scene *m_scene = nullptr;
 
 	// The mask that the Entities must matched to be attached to this System.
 	ComponentFilter m_filter;
@@ -126,3 +117,5 @@ private:
 template<typename T>
 TypeId GetSystemTypeId() noexcept;
 }
+
+#include "System.inl"

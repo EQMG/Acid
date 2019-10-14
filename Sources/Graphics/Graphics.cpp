@@ -256,7 +256,7 @@ void Graphics::RecreateSwapchain() {
 	if (m_swapchain)
 		Log::Out("Recreating swapchain old (", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
-	m_swapchain = std::make_unique<Swapchain>(displayExtent, *m_swapchain);
+	m_swapchain = std::make_unique<Swapchain>(displayExtent, m_swapchain.get());
 	RecreateCommandBuffers();
 }
 

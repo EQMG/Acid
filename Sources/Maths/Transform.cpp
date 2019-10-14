@@ -68,10 +68,6 @@ void Transform::SetParent(Transform *parent) {
 	}
 }
 
-void Transform::SetParent(Entity parent) {
-	SetParent(parent.GetComponent<Transform>());
-}
-
 bool Transform::operator==(const Transform &other) const {
 	return m_position == other.m_position && m_rotation == other.m_rotation && m_scale == other.m_scale;
 }

@@ -4,7 +4,7 @@
 #include "Scenes/Component.hpp"
 
 namespace acid {
-class ComponentFilter {
+class ACID_EXPORT ComponentFilter {
 public:
 	using Mask = std::bitset<MAX_COMPONENTS>;
 

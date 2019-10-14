@@ -1,7 +1,7 @@
 #include "HeightDespawn.hpp"
 
 #include <Maths/Transform.hpp>
-#include <Scenes/Entity.hpp>
+#include <Scenes/Entity.inl>
 
 namespace test {
 bool HeightDespawn::registered = Register("heightDespawn");

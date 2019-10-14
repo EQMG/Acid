@@ -4,7 +4,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-class EntityPool : public NonCopyable {
+class ACID_EXPORT EntityPool : public NonCopyable {
 public:
 	EntityPool() = default;
 

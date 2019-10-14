@@ -66,7 +66,8 @@ public:
 	};
 
 	friend inline const Node &operator>>(const Node &node, std::unique_ptr<Base> &object) {
-		object = Create(node["type"].Get<std::string>());
+		if (!object)
+			object = Create(node["type"].Get<std::string>());
 		node >> *object;
 		return node;
 	}

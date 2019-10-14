@@ -6,7 +6,7 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-class ComponentHolder : public NonCopyable {
+class ACID_EXPORT ComponentHolder : public NonCopyable {
 public:
 	ComponentHolder() = default;
 

@@ -1,8 +1,8 @@
 #include "Rotate.hpp"
 
 //#include <bullet/LinearMath/btTransform.h>
-#include <Scenes/Entity.hpp>
 #include <Engine/Engine.hpp>
+#include <Scenes/Entity.inl>
 #include <Physics/Colliders/Collider.hpp>
 #include <Maths/Maths.hpp>
 

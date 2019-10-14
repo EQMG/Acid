@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "Scene.hpp"
 
 namespace acid {
@@ -22,7 +21,7 @@ T *Scene::AddSystem(std::size_t priority, Args &&...args) {
 	m_newSystems.emplace_back(system);
 
 	// Sets the System Scene.
-	system->m_scene = *this;
+	system->m_scene = this;
 	return system;
 }
 

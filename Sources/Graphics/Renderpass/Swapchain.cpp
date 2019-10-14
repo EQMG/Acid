@@ -8,7 +8,7 @@ static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = {
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
 };
 
-Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
+Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
 	m_extent(extent),
 	m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 	m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
@@ -84,8 +84,8 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 	}
 
-	if (oldSwapchain && &oldSwapchain.value()) {
-		swapchainCreateInfo.oldSwapchain = oldSwapchain.value()->m_swapchain;
+	if (oldSwapchain) {
+		swapchainCreateInfo.oldSwapchain = oldSwapchain->m_swapchain;
 	}
 
 	if (graphicsFamily != presentFamily) {

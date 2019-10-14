@@ -5,7 +5,7 @@
 #include "Scenes/System.hpp"
 
 namespace acid {
-class SystemHolder : public NonCopyable {
+class ACID_EXPORT SystemHolder : public NonCopyable {
 public:
 	SystemHolder() = default;
 

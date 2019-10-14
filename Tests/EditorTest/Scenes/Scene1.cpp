@@ -53,7 +53,7 @@ Scene1::Scene1() :
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
 
 			auto sphereLight = CreateEntity();
-			sphereLight.AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
+			sphereLight.AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere.GetComponent<Transform>());
 			sphereLight.AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
 	}, this);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Scenes/Scene.inl>
+#include <Scenes/Scene.hpp>
 #include "Uis/OverlayDebug.hpp"
 
 using namespace acid;
