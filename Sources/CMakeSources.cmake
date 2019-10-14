@@ -188,6 +188,7 @@ set(_temp_acid_headers
 		Physics/Force.hpp
 		Physics/Frustum.hpp
 		Physics/KinematicCharacter.hpp
+		Physics/PhysicsSystem.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
 		Post/Deferred/SubrenderDeferred.hpp
@@ -215,14 +216,17 @@ set(_temp_acid_headers
 		Post/PostPipeline.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
+		Scenes/Holders/ComponentFilter.hpp
+		Scenes/Holders/ComponentHolder.hpp
+		Scenes/Holders/EntityPool.hpp
+		Scenes/Holders/SystemHolder.hpp
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
 		Scenes/Entity.hpp
 		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
-		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
-		Scenes/SceneStructure.hpp
+		Scenes/System.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -401,6 +405,7 @@ set(_temp_acid_sources
 		Physics/Force.cpp
 		Physics/Frustum.cpp
 		Physics/KinematicCharacter.cpp
+		Physics/PhysicsSystem.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
 		Post/Deferred/SubrenderDeferred.cpp
@@ -426,11 +431,15 @@ set(_temp_acid_sources
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
+		Scenes/Holders/ComponentFilter.cpp
+		Scenes/Holders/ComponentHolder.cpp
+		Scenes/Holders/EntityPool.cpp
+		Scenes/Holders/SystemHolder.cpp
 		Scenes/Entity.cpp
 		Scenes/EntityPrefab.cpp
-		Scenes/ScenePhysics.cpp
+		Scenes/Scene.cpp
 		Scenes/Scenes.cpp
-		Scenes/SceneStructure.cpp
+		Scenes/System.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp

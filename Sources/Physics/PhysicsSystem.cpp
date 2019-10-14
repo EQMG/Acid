@@ -1,4 +1,4 @@
-#include "ScenePhysics.hpp"
+#include "PhysicsSystem.hpp"
 
 #include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
@@ -9,12 +9,10 @@
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
-#include "Engine/Engine.hpp"
-#include "Physics/Colliders/Collider.hpp"
-#include "Physics/CollisionObject.hpp"
+#include "Rigidbody.hpp"
 
 namespace acid {
-ScenePhysics::ScenePhysics() :
+PhysicsSystem::PhysicsSystem() :
 	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
 	m_broadphase(std::make_unique<btDbvtBroadphase>()),
 	m_dispatcher(std::make_unique<btCollisionDispatcher>(m_collisionConfiguration.get())),
@@ -34,9 +32,11 @@ ScenePhysics::ScenePhysics() :
 	softDynamicsWorld->getWorldInfo().m_gravity.setValue(0.0f, -9.81f, 0.0f);
 	softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
+	
+	GetFilter().Require<Rigidbody>();
 }
 
-ScenePhysics::~ScenePhysics() {
+PhysicsSystem::~PhysicsSystem() {
 	for (int32_t i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--) {
 		auto obj = m_dynamicsWorld->getCollisionObjectArray()[i];
 		auto body = btRigidBody::upcast(obj);
@@ -50,12 +50,17 @@ ScenePhysics::~ScenePhysics() {
 	}
 }
 
-void ScenePhysics::Update() {
-	m_dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
+void PhysicsSystem::Update(float delta) {
+	m_dynamicsWorld->stepSimulation(delta);
 	CheckForCollisionEvents();
+	
+	ForEach([](Entity entity) {
+		if (auto rigidbody = entity.GetComponent<Rigidbody>()) {
+		}
+	});
 }
 
-Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const {
+Raycast PhysicsSystem::Raytest(const Vector3f &start, const Vector3f &end) const {
 	auto startBt = Collider::Convert(start);
 	auto endBt = Collider::Convert(end);
 	btCollisionWorld::ClosestRayResultCallback result(startBt, endBt);
@@ -65,19 +70,19 @@ Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const 
 		result.m_collisionObject ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 }
 
-void ScenePhysics::SetGravity(const Vector3f &gravity) {
+void PhysicsSystem::SetGravity(const Vector3f &gravity) {
 	m_gravity = gravity;
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 }
 
-void ScenePhysics::SetAirDensity(float airDensity) {
+void PhysicsSystem::SetAirDensity(float airDensity) {
 	m_airDensity = airDensity;
 	auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(m_dynamicsWorld.get());
 	softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 }
 
-void ScenePhysics::CheckForCollisionEvents() {
+void PhysicsSystem::CheckForCollisionEvents() {
 	// Keep a list of the collision pairs found during the current update.
 	CollisionPairs pairsThisUpdate;
 

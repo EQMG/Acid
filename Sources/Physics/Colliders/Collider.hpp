@@ -2,6 +2,8 @@
 
 #include "Helpers/StreamFactory.hpp"
 #include "Maths/Transform.hpp"
+#include "Maths/Quaternion.hpp"
+#include "Helpers/Delegate.hpp"
 
 class btCollisionShape;
 class btVector3;

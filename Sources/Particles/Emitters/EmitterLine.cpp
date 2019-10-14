@@ -1,7 +1,7 @@
 #include "EmitterLine.hpp"
 
 #include "Maths/Maths.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 
 namespace acid {
 bool EmitterLine::registered = Register("line");

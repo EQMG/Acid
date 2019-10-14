@@ -1,6 +1,6 @@
 #include "Light.hpp"
 
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 
 namespace acid {
 bool Light::registered = Register("light");

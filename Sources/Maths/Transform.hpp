@@ -2,7 +2,6 @@
 
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Quaternion.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid {
@@ -44,7 +43,7 @@ public:
 
 	Transform *GetParent() const { return m_parent; }
 	void SetParent(Transform *parent);
-	void SetParent(Entity *parent);
+	void SetParent(Entity parent);
 
 	const std::vector<Transform *> &GetChildren() const { return m_children; }
 

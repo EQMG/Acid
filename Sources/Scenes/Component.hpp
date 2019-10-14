@@ -1,55 +1,32 @@
 #pragma once
 
-#include "Engine/Log.hpp"
-#include "Helpers/Delegate.hpp"
+#include <type_traits>
+#include "Helpers/TypeInfo.hpp"
 #include "Helpers/StreamFactory.hpp"
 
 namespace acid {
+// The maximum number of Components an Entity can holds.
+constexpr std::size_t MAX_COMPONENTS = 64;
+
 class Entity;
-
-/**
- * @brief Class that represents a functional component attached to entity.
- */
-class ACID_EXPORT Component : public StreamFactory<Component>, public virtual Observer {
-	friend class Entity;
+class Component : public StreamFactory<Component> {
 public:
-	virtual ~Component() = default;
-
-	/**
-	 * Run when starting the component if {@link Component#m_started} is false.
-	 */
-	virtual void Start() {
-	}
-
-	/**
-	 * Run when updating the entity this is attached to.
-	 */
-	virtual void Update() {
-	}
-
-	bool IsEnabled() const { return m_enabled; };
-	void SetEnabled(bool enable) { m_enabled = enable; }
-
-	bool IsRemoved() const { return m_removed; }
-	void SetRemoved(bool removed) { m_removed = removed; }
-
-	/**
-	 * Gets the entity this component is attached to.
-	 * @return The entity this component is attached to.
-	 */
+	virtual void Start() {}
+	virtual void Update() {}
 	Entity *GetEntity() const { return m_entity; }
 
-	/**
-	 * Sets the entity that this component is attached to.
-	 * @param entity The new entity this is attached to.
-	 */
-	void SetEntity(Entity *entity) { m_entity = entity; }
-
-private:
-	bool m_started = false;
-	bool m_enabled = true;
-	bool m_removed = false;
 	Entity *m_entity = nullptr;
 };
 
+/**
+ * Gets the Type ID for the Component.
+ * @tparam T The Component type.
+ * @return The Type ID.
+ */
+template<typename T>
+TypeId GetComponentTypeId() noexcept {
+	static_assert(std::is_base_of<Component, T>::value, "T must be a Component.");
+
+	return TypeInfo<Component>::GetTypeId<T>();
+}
 }

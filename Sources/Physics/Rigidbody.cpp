@@ -6,7 +6,7 @@
 #include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <LinearMath/btDefaultMotionState.h>
 #include "Maths/Transform.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
 
@@ -19,7 +19,7 @@ Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float fri
 }
 
 Rigidbody::~Rigidbody() {
-	auto body = btRigidBody::upcast(m_body);
+	/*auto body = btRigidBody::upcast(m_body);
 
 	if (body && body->getMotionState()) {
 		delete body->getMotionState();
@@ -29,11 +29,11 @@ Rigidbody::~Rigidbody() {
 
 	if (physics) {
 		physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
-	}
+	}*/
 }
 
 void Rigidbody::Start() {
-	if (m_rigidBody) {
+	/*if (m_rigidBody) {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
@@ -67,7 +67,7 @@ void Rigidbody::Start() {
 	m_body = m_rigidBody.get();
 	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
 	m_rigidBody->activate(true);
-	RecalculateMass();
+	RecalculateMass();*/
 }
 
 void Rigidbody::Update() {

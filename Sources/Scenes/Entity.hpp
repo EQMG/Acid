@@ -1,144 +1,131 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
+#include <optional>
+#include "Helpers/Reference.hpp"
 #include "Component.hpp"
 
 namespace acid {
-/**
- * @brief Class that represents a objects that acts as a component container.
- */
-class ACID_EXPORT Entity : public virtual NonCopyable {
+class Scene;
+
+class Entity {
 public:
+	// Entity ID type.
+	using Id = std::size_t;
+
 	Entity() = default;
+	Entity(Id id, Scene &scene);
+
+	~Entity() = default;
 
 	/**
-	 * Creates a new entity from a entity prefab file.
-	 * @param filename The file to load components from.
+	 * Casts the Entity into its ID.
+	 * @return The Entity ID.
 	 */
-	Entity(const std::filesystem::path &filename);
-
-	void Update();
+	operator Id() const noexcept { return m_id; }
 
 	/**
-	 * Gets all components attached to this entity.
-	 * @return The list of components.
+	 * Gets the Entity ID.
+	 * @return The Entity ID.
 	 */
-	const std::vector<std::unique_ptr<Component>> &GetComponents() const { return m_components; }
+	Id GetId() const noexcept { return m_id; }
 
 	/**
-	 * Gets the count of components attached to this entity.
-	 * @return The count of components.
-	 */
-	uint32_t GetComponentCount() const { return static_cast<uint32_t>(m_components.size()); }
-
-	/**
-	 * Gets a component by type.
-	 * @tparam T The component type to find.
-	 * @param allowDisabled If disabled components will be returned.
-	 * @return The found component.
+	 * Checks whether the Entity has the Component or not.
+	 * @tparam T The Component type.
+	 * @return If the Entity has the Component.
 	 */
 	template<typename T>
-	T *GetComponent(bool allowDisabled = false) const {
-		T *alternative = nullptr;
-
-		for (const auto &component : m_components) {
-			auto casted = dynamic_cast<T *>(component.get());
-
-			if (casted) {
-				if (allowDisabled && !component->IsEnabled()) {
-					alternative = casted;
-					continue;
-				}
-
-				return casted;
-			}
-		}
-
-		return alternative;
-	}
+	bool HasComponent() const;
 
 	/**
-	 * Gets components by type.
-	 * @tparam T The component type to find.
-	 * @param allowDisabled If disabled components will be returned.
-	 * @return The components.
+	 * Gets the Component from the Entity.
+	 * @tparam T The Component type.
+	 * @return The Component.
 	 */
 	template<typename T>
-	std::vector<T *> GetComponents(bool allowDisabled = false) const {
-		std::vector<T *> components;
-
-		for (const auto &component : m_components) {
-			auto casted = dynamic_cast<T *>(component.get());
-
-			if (casted) {
-				if (allowDisabled && !component->IsEnabled()) {
-					components.emplace_back(casted);
-					continue;
-				}
-
-				components.emplace_back(casted);
-			}
-		}
-
-		return components;
-	}
+	T *GetComponent() const;
 
 	/**
-	 * Adds a component to this entity.
-	 * @param component The component to add.
-	 * @return The added component.
-	 */
-	Component *AddComponent(std::unique_ptr<Component> &&component);
-
-	/**
-	 * Creates a component by type to be added this entity.
-	 * @tparam T The type of component to add.
-	 * @tparam Args The argument types/
-	 * @param args The type constructor arguments.
-	 * @return The added component.
+	 * Adds the Component to the Entity.
+	 * @tparam T The Component type.
+	 * @tparam Args The constructor arg types.
+	 * @param args The constructor arguments.
+	 * @return The Component.
 	 */
 	template<typename T, typename... Args>
-	T *AddComponent(Args &&... args) {
-		return dynamic_cast<T *>(AddComponent(std::make_unique<T>(std::forward<Args>(args)...)));
-	}
+	T *AddComponent(Args &&...args);
 
 	/**
-	 * Removes a component from this entity.
-	 * @param component The component to remove.
-	 */
-	void RemoveComponent(Component *component);
-
-	/**
-	 * Removes a component from this entity.
-	 * @param name The name of the component to remove.
-	 */
-	void RemoveComponent(const std::string &name);
-
-	/**
-	 * Removes a component by type from this entity.
-	 * @tparam T The type of component to remove.
+	 * Adds the Component to the Entity.
+	 * @tparam T The Component type.
+	 * @param component The component to add to the Entity.
+	 * @return The Component.
 	 */
 	template<typename T>
-	void RemoveComponent() {
-		for (auto it = m_components.begin(); it != m_components.end(); ++it) {
-			auto casted = dynamic_cast<T *>((*it).get());
+	T *AddComponent(std::unique_ptr<T> &&component);
 
-			if (casted) {
-				(*it)->SetEntity(nullptr);
-				m_components.erase(it);
-			}
-		}
-	}
+	/**
+	 * Removes the Component from the Entity.
+	 * @tparam T The Component type.
+	 */
+	template<typename T>
+	void RemoveComponent();
 
-	const std::string &GetName() const { return m_name; }
-	void SetName(const std::string &name) { m_name = name; }
+	/**
+	 * Removes all components from the Entity.
+	 */
+	void RemoveAllComponents();
 
-	bool IsRemoved() const { return m_removed; }
-	void SetRemoved(bool removed) { m_removed = removed; }
+	/**
+	 * Gets the Entity name.
+	 * @return The Entity name.
+	 */
+	std::string GetName() const;
+
+	/**
+	 * Gets whether the Entity is enabled or not.
+	 * @return If the Entity is enabled.
+	 */
+	bool IsEnabled() const;
+
+	/**
+	 * Enables the Entity.
+	 */
+	void Enable();
+
+	/**Disables the Entity.
+	 *
+	 */
+	void Disable();
+
+	/**
+	 * Gets whether the Entity is valid or not.
+	 * @return If the Entity is valid.
+	 */
+	bool IsValid() const;
+
+	/**
+	 * Removes the Entity.
+	 */
+	void Remove();
+
+	bool operator==(const Entity &other) const;
+	bool operator!=(const Entity &other) const;
 
 private:
-	std::string m_name;
-	std::vector<std::unique_ptr<Component>> m_components;
-	bool m_removed = false;
+	// Entity ID.
+	Id m_id = 0;
+
+	// The Scene that this Entity belongs to.
+	std::optional<Reference<Scene>> m_scene;
+};
+}
+
+namespace std {
+template<>
+struct hash<acid::Entity> {
+	size_t operator()(const acid::Entity &entity) const noexcept {
+		return hash<acid::Entity::Id>()(entity.GetId());
+	}
 };
 }

@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Maths/Transform.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Particles.hpp"
 
 namespace acid {

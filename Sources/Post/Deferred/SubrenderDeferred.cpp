@@ -32,7 +32,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 	auto camera = Scenes::Get()->GetCamera();
 
 	// TODO probably use a cubemap image directly instead of scene components.
-	std::shared_ptr<ImageCube> skybox = nullptr;
+	/*std::shared_ptr<ImageCube> skybox = nullptr;
 	auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
 	for (const auto &mesh : meshes) {
 		if (auto materialSkybox = dynamic_cast<const MaterialSkybox *>(mesh->GetMaterial())) {
@@ -45,13 +45,13 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 		m_skybox = skybox;
 		m_irradiance = Resources::Get()->GetThreadPool().Enqueue(ComputeIrradiance, m_skybox, 64);
 		m_prefiltered = Resources::Get()->GetThreadPool().Enqueue(ComputePrefiltered, m_skybox, 512);
-	}
+	}*/
 
 	// Updates uniforms.
 	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
 	uint32_t lightCount = 0;
 
-	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
+	/*auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
 
 	for (const auto &light : sceneLights) {
 		//auto position = *light->GetPosition();
@@ -76,7 +76,7 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 		if (lightCount >= MAX_LIGHTS) {
 			break;
 		}
-	}
+	}*/
 
 	// Updates uniforms.
 	m_uniformScene.Push("view", camera->GetViewMatrix());

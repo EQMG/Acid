@@ -1,6 +1,7 @@
 #include "Terrain.hpp"
 
 #include <Meshes/Mesh.hpp>
+#include <Scenes/Entity.inl>
 #include <Physics/Colliders/ColliderHeightfield.hpp>
 #include <Physics/Rigidbody.hpp>
 
@@ -16,7 +17,7 @@ Terrain::Terrain(float sideLength, float squareSize) :
 }
 
 void Terrain::Start() {
-	auto mesh = GetEntity()->GetComponent<Mesh>(true);
+	auto mesh = GetEntity()->GetComponent<Mesh>();
 
 	if (!mesh) {
 		Log::Error("Terrain must be attached to a object with a mesh!\n");
@@ -28,7 +29,9 @@ void Terrain::Start() {
 	m_heightmap = GenerateHeightmap(vertexCount);
 	mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
 
-	auto colliderHeightfield = GetEntity()->GetComponent<ColliderHeightfield>(true);
+	auto rigidbody = GetEntity()->GetComponent<Rigidbody>();
+	
+	auto colliderHeightfield = dynamic_cast<ColliderHeightfield *>(rigidbody->GetColliders().at(0).get());
 
 	if (!colliderHeightfield) {
 		Log::Error("Terrain does not contain a heightfield collider!\n");

@@ -1,8 +1,9 @@
 #include "Mesh.hpp"
 
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Maths/Transform.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Physics/Rigidbody.hpp"
 
 namespace acid {
 bool Mesh::registered = Register("mesh");

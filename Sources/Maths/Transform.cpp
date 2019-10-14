@@ -1,6 +1,6 @@
 #include "Transform.hpp"
 
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 
 namespace acid {
 bool Transform::registered = Register("transform");
@@ -68,8 +68,8 @@ void Transform::SetParent(Transform *parent) {
 	}
 }
 
-void Transform::SetParent(Entity *parent) {
-	SetParent(parent->GetComponent<Transform>());
+void Transform::SetParent(Entity parent) {
+	SetParent(parent.GetComponent<Transform>());
 }
 
 bool Transform::operator==(const Transform &other) const {

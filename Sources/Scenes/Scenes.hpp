@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Scene.hpp"
-#include "SceneStructure.hpp"
+#include "Scene.inl"
 
 namespace acid {
 /**
@@ -31,18 +30,6 @@ public:
 	 * @return The current camera.
 	 */
 	Camera *GetCamera() const { return m_scene ? m_scene->GetCamera() : nullptr; }
-
-	/**
-	 * Gets the scene physics system.
-	 * @return The scenes physics system.
-	 */
-	ScenePhysics *GetPhysics() const { return m_scene ? m_scene->GetPhysics() : nullptr; }
-
-	/**
-	 * Gets the scene object structure.
-	 * @return The scene object structure.
-	 */
-	SceneStructure *GetStructure() const { return m_scene ? m_scene->GetStructure() : nullptr; }
 
 	/**
 	 * Gets if the scene is paused.

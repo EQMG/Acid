@@ -2,6 +2,7 @@
 
 #include <Uis/Uis.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/Entity.inl>
 #include <Inputs/Input.hpp>
 #include <Physics/KinematicCharacter.hpp>
 
@@ -52,7 +53,8 @@ void PlayerFps::Update() {
 				character->SetGravity({});
 				character->SetLinearVelocity({});
 			} else {
-				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
+				// TODO
+				//character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
 			}
 
 			Log::Out("Player Noclip: ", std::boolalpha, m_noclipEnabled, '\n');

@@ -5,7 +5,7 @@
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <BulletDynamics/Character/btKinematicCharacterController.h>
 #include "Maths/Transform.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
@@ -23,17 +23,17 @@ KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, flo
 }
 
 KinematicCharacter::~KinematicCharacter() {
-	auto physics = Scenes::Get()->GetPhysics();
+	/*auto physics = Scenes::Get()->GetPhysics();
 
 	if (physics) {
 		// TODO: Are these being deleted?
 		physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 		physics->GetDynamicsWorld()->removeAction(m_controller.get());
-	}
+	}*/
 }
 
 void KinematicCharacter::Start() {
-	if (m_ghostObject) {
+	/*if (m_ghostObject) {
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 	}
 
@@ -73,7 +73,7 @@ void KinematicCharacter::Start() {
 	m_controller->setJumpSpeed(m_jumpSpeed);
 	m_controller->setMaxJumpHeight(m_maxHeight);
 	m_controller->setUpInterpolate(m_interpolate);
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());
+	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());*/
 }
 
 void KinematicCharacter::Update() {

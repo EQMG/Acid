@@ -1,11 +1,8 @@
 #include "EntityPrefab.hpp"
 
 #include "Files/File.hpp"
-#include "Files/Json/Json.hpp"
-//#include "Serialized/Xml/Xml.hpp"
-//#include "Serialized/Yaml/Yaml.hpp"
 #include "Resources/Resources.hpp"
-#include "Entity.hpp"
+#include "Entity.inl"
 #include "Scenes.hpp"
 
 namespace acid {
@@ -55,7 +52,7 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 		}
 
 		if (auto component = Component::Create(property.GetName())) {
-			property >> *component;
+			property >> component;
 			entity.AddComponent(std::move(component));
 		}
 	}
@@ -66,7 +63,8 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 	entityPrefab.m_file->Clear();
 
-	for (const auto &component : entity.GetComponents()) {
+	// TODO: Implement.
+	/*for (const auto &component : entity.GetComponents()) {
 		auto componentName = component->GetTypeName();
 
 		if (componentName.empty()) {
@@ -75,7 +73,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 
 		auto property = (*entityPrefab.m_file->GetNode())[componentName];
 		property << *component;
-	}
+	}*/
 
 	return entityPrefab;
 }

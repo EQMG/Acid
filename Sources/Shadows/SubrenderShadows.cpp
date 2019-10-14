@@ -17,10 +17,10 @@ void SubrenderShadows::Render(const CommandBuffer &commandBuffer) {
 
 	m_pipeline.BindPipeline(commandBuffer);
 
-	auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
+	/*auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
 	for (const auto &shadowRender : sceneShadowRenders) {
 		shadowRender->CmdRender(commandBuffer, m_pipeline);
-	}
+	}*/
 }
 }

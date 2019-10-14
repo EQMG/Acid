@@ -1,56 +1,47 @@
-#include "Entity.hpp"
+#include "Entity.inl"
 
-#include "Scenes.hpp"
-#include "EntityPrefab.hpp"
+#include "Scene.hpp"
 
 namespace acid {
-Entity::Entity(const std::filesystem::path &filename) {
-	auto entityPrefab = EntityPrefab::Create(filename);
-	*entityPrefab >> *this;
+Entity::Entity(Id id, Scene &scene) :
+	m_id(id),
+	m_scene(scene) {
 }
 
-void Entity::Update() {
-	for (auto it = m_components.begin(); it != m_components.end();) {
-		if ((*it)->IsRemoved()) {
-			it = m_components.erase(it);
-			continue;
-		}
-
-		if ((*it)->GetEntity() != this) {
-			(*it)->SetEntity(this);
-		}
-
-		if ((*it)->IsEnabled()) {
-			if (!(*it)->m_started) {
-				(*it)->Start();
-				(*it)->m_started = true;
-			}
-
-			(*it)->Update();
-		}
-
-		++it;
-	}
+void Entity::RemoveAllComponents() {
+	m_scene.value()->m_components.RemoveAllComponents(m_id);
+	m_scene.value()->RefreshEntity(m_id);
 }
 
-Component *Entity::AddComponent(std::unique_ptr<Component> &&component) {
-	if (!component) {
-		return nullptr;
-	}
-
-	component->SetEntity(this);
-	return m_components.emplace_back(std::move(component)).get();
+std::string Entity::GetName() const {
+	return m_scene.value()->GetEntityName(m_id);
 }
 
-void Entity::RemoveComponent(Component *component) {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [component](std::unique_ptr<Component> &c) {
-		return c.get() == component;
-	}), m_components.end());
+bool Entity::IsEnabled() const {
+	return m_scene.value()->IsEntityEnabled(m_id);
 }
 
-void Entity::RemoveComponent(const std::string &name) {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](std::unique_ptr<Component> &c) {
-		return name == c->GetTypeName();
-	}), m_components.end());
+void Entity::Enable() {
+	m_scene.value()->EnableEntity(m_id);
+}
+
+void Entity::Disable() {
+	m_scene.value()->DisableEntity(m_id);
+}
+
+bool Entity::IsValid() const {
+	return m_scene.has_value() && m_scene.value()->IsEntityValid(m_id);
+}
+
+void Entity::Remove() {
+	m_scene.value()->RemoveEntity(m_id);
+}
+
+bool Entity::operator==(const Entity &other) const {
+	return m_id == other.m_id && m_scene == other.m_scene;
+}
+
+bool Entity::operator!=(const Entity &other) const {
+	return !(*this == other);
 }
 }

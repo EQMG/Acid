@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Audio/Sound.hpp>
-#include <Scenes/Scene.hpp>
+#include <Scenes/Scene.inl>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
 

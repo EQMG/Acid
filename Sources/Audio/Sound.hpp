@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a playable sound.
  */
-class ACID_EXPORT Sound : public Component::Registrar<Sound> {
+class ACID_EXPORT Sound : public Component::Registrar<Sound>, public virtual Observer {
 public:
 	Sound() = default;
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,

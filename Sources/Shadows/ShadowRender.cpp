@@ -2,7 +2,7 @@
 
 #include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Shadows.hpp"
 
 namespace acid {

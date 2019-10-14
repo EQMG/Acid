@@ -1,6 +1,8 @@
 #include "SkyboxCycle.hpp"
 
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Scenes/Entity.inl>
+#include <Meshes/Mesh.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Transform.hpp>
 #include "World/World.hpp"
@@ -19,7 +21,13 @@ void SkyboxCycle::Start() {
 }
 
 void SkyboxCycle::Update() {
-	auto materialSkybox = GetEntity()->GetComponent<MaterialSkybox>();
+	auto mesh = GetEntity()->GetComponent<Mesh>();
+
+	if (!mesh) {
+		return;
+	}
+
+	auto materialSkybox = dynamic_cast<MaterialSkybox *>(mesh->GetMaterial());
 
 	if (!materialSkybox) {
 		return;

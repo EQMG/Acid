@@ -14,12 +14,7 @@ void Scenes::Update() {
 		m_scene->m_started = true;
 	}
 
-	m_scene->Update();
-	m_scene->GetPhysics()->Update();
-
-	if (m_scene->GetStructure()) {
-		m_scene->GetStructure()->Update();
-	}
+	m_scene->Update(Engine::Get()->GetDelta().AsSeconds());
 
 	if (m_scene->GetCamera()) {
 		m_scene->GetCamera()->Update();

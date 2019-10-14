@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Scenes/System.inl"
 #include "Maths/Vector3.hpp"
+#include "CollisionObject.hpp"
 
 class btCollisionObject;
 class btCollisionConfiguration;
@@ -10,17 +12,14 @@ class btConstraintSolver;
 class btDiscreteDynamicsWorld;
 
 namespace acid {
-class Entity;
-class CollisionObject;
-
 using CollisionPair = std::pair<const btCollisionObject *, const btCollisionObject *>;
 using CollisionPairs = std::set<CollisionPair>;
 
 class ACID_EXPORT Raycast {
 public:
-	Raycast(bool m_hasHit, const Vector3f &m_pointWorld, CollisionObject *collisionObject) :
-		m_hasHit(m_hasHit),
-		m_pointWorld(m_pointWorld),
+	Raycast(bool hasHit, const Vector3f &pointWorld, CollisionObject *collisionObject) :
+		m_hasHit(hasHit),
+		m_pointWorld(pointWorld),
 		m_collisionObject(collisionObject) {
 	}
 
@@ -34,14 +33,14 @@ private:
 	CollisionObject *m_collisionObject;
 };
 
-class ACID_EXPORT ScenePhysics {
+class ACID_EXPORT PhysicsSystem : public System {
 public:
-	ScenePhysics();
+	PhysicsSystem();
 
-	~ScenePhysics();
+	~PhysicsSystem();
 
-	void Update();
-
+	void Update(float delta) override;
+	
 	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 
 	const Vector3f &GetGravity() const { return m_gravity; }

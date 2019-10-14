@@ -3,7 +3,7 @@
 #include "Maths/Maths.hpp"
 #include "Files/File.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Scenes/Entity.hpp"
+#include "Scenes/Entity.inl"
 #include "Animation/AnimationLoader.hpp"
 #include "Skeleton/SkeletonLoader.hpp"
 #include "Skin/SkinLoader.hpp"
