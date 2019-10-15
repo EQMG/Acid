@@ -40,9 +40,6 @@ Sound::~Sound() {
 	Audio::CheckAl(alGetError());
 }
 
-void Sound::Start() {
-}
-
 void Sound::Update() {
 	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		SetPosition(transform->GetPosition());

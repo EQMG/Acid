@@ -9,12 +9,6 @@ namespace acid {
 ShadowRender::ShadowRender() {
 }
 
-void ShadowRender::Start() {
-}
-
-void ShadowRender::Update() {
-}
-
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
 	auto transform = GetEntity()->GetComponent<Transform>();
 

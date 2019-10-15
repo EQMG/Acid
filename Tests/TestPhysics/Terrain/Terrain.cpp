@@ -42,9 +42,8 @@ void Terrain::Start() {
 }
 
 void Terrain::Update() {
-	if (m_heightmap.empty()) {
+	if (m_heightmap.empty())
 		Start();
-	}
 }
 
 const Node &operator>>(const Node &node, Terrain &terrain) {

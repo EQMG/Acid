@@ -1,5 +1,5 @@
 {
-  "particleSystem": {
+  "particleEmitter": {
     "types": [
       {
         "image": {

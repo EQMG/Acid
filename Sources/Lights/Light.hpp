@@ -17,9 +17,6 @@ public:
 	 */
 	explicit Light(const Colour &colour = Colour::White, float radius = -1.0f);
 
-	void Start() override;
-	void Update() override;
-
 	const Colour &GetColour() const { return m_colour; }
 	void SetColour(const Colour &colour) { m_colour = colour; }
 

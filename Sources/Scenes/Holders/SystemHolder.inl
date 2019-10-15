@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/Log.hpp"
 #include "SystemHolder.hpp"
 
 namespace acid {
@@ -60,7 +61,7 @@ void SystemHolder::ForEach(Func &&func) {
 			try {
 				func(*system, typeId.second);
 			} catch (const std::exception &e) {
-				std::cerr << e.what() << '\n';
+				Log::Error(e.what(), '\n');
 			}
 		}
 	}

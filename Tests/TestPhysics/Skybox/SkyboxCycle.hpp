@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Scenes/Component.hpp>
-#include <Scenes/Entity.hpp>
 #include <Files/Node.hpp>
 
 using namespace acid;
@@ -11,7 +10,6 @@ class SkyboxCycle : public Component::Registrar<SkyboxCycle> {
 public:
 	explicit SkyboxCycle(bool enableFog = true, bool enableRotation = false);
 
-	void Start() override;
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, SkyboxCycle &skyboxCycle);

@@ -21,7 +21,10 @@ public:
 	 */
 	operator Id() const noexcept { return m_id; }
 
-	// TODO: Remove
+	/**
+	 * Gets all Components from the Entity.
+	 * @return The Components.
+	 */
 	std::vector<Component *> GetComponents() const;
 
 	/**
@@ -91,8 +94,8 @@ public:
 	 */
 	void Enable();
 
-	/**Disables the Entity.
-	 *
+	/**
+	 * Disables the Entity.
 	 */
 	void Disable();
 

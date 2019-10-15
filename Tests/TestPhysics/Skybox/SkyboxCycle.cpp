@@ -17,9 +17,6 @@ SkyboxCycle::SkyboxCycle(bool enableFog, bool enableRotation) :
 	m_enableRotation(enableRotation) {
 }
 
-void SkyboxCycle::Start() {
-}
-
 void SkyboxCycle::Update() {
 	auto mesh = GetEntity()->GetComponent<Mesh>();
 

@@ -14,9 +14,6 @@ Rotate::Rotate(const Vector3f &direction, const int &test) :
 	m_test(test) {
 }
 
-void Rotate::Start() {
-}
-
 void Rotate::Update() {
 	m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
 	auto transform = GetEntity()->GetComponent<Transform>();

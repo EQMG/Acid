@@ -20,9 +20,6 @@ public:
 	 */
 	explicit Fog(const Colour &colour = Colour::White, float density = 0.0f, float gradient = -1.0f, float lowerLimit = 0.0f, float upperLimit = 0.0f);
 
-	void Start() override;
-	void Update() override;
-
 	const Colour &GetColour() const { return m_colour; }
 	void SetColour(const Colour &colour) { m_colour = colour; }
 

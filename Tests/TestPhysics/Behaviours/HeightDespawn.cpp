@@ -10,9 +10,6 @@ HeightDespawn::HeightDespawn(float removeHeight) :
 	m_removeHeight(removeHeight) {
 }
 
-void HeightDespawn::Start() {
-}
-
 void HeightDespawn::Update() {
 	if (auto transform = GetEntity()->GetComponent<Transform>(); 
 		transform && transform->GetPosition().m_y < m_removeHeight) {

@@ -15,11 +15,11 @@ set(_temp_acid_headers
 		Animations/Skeleton/SkeletonLoader.hpp
 		Animations/Skin/SkinLoader.hpp
 		Animations/Skin/VertexWeights.hpp
+		Audio/Aiff/SoundBufferAiff.hpp
 		Audio/Audio.hpp
+		Audio/Ogg/SoundBufferOgg.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
-		Audio/Aiff/SoundBufferAiff.hpp
-		Audio/Ogg/SoundBufferOgg.hpp
 		Audio/Wave/SoundBufferWave.hpp
 		Bitmaps/Bitmap.hpp
 		Bitmaps/Png/BitmapPng.hpp
@@ -40,9 +40,9 @@ set(_temp_acid_headers
 		Files/FileObserver.hpp
 		Files/Files.hpp
 		Files/Json/Json.hpp
-		Files/Xml/Xml.hpp
 		Files/Node.hpp
 		Files/NodeReturn.hpp
+		Files/Xml/Xml.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
 		Files/Zip/ZipEntry.hpp
@@ -171,8 +171,8 @@ set(_temp_acid_headers
 		Particles/Emitters/EmitterPoint.hpp
 		Particles/Emitters/EmitterSphere.hpp
 		Particles/Particle.hpp
+		Particles/ParticleEmitter.hpp
 		Particles/Particles.hpp
-		Particles/ParticleSystem.hpp
 		Particles/ParticleType.hpp
 		Particles/SubrenderParticles.hpp
 		Physics/Colliders/Collider.hpp
@@ -215,14 +215,14 @@ set(_temp_acid_headers
 		Post/PostPipeline.hpp
 		Resources/Resource.hpp
 		Resources/Resources.hpp
-		Scenes/Holders/ComponentFilter.hpp
-		Scenes/Holders/ComponentHolder.hpp
-		Scenes/Holders/EntityPool.hpp
-		Scenes/Holders/SystemHolder.hpp
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
 		Scenes/Entity.hpp
 		Scenes/EntityPrefab.hpp
+		Scenes/Holders/ComponentFilter.hpp
+		Scenes/Holders/ComponentHolder.hpp
+		Scenes/Holders/EntityPool.hpp
+		Scenes/Holders/SystemHolder.hpp
 		Scenes/Scene.hpp
 		Scenes/Scenes.hpp
 		Scenes/ShimSystem.hpp
@@ -262,11 +262,11 @@ set(_temp_acid_sources
 		Animations/Skeleton/SkeletonLoader.cpp
 		Animations/Skin/SkinLoader.cpp
 		Animations/Skin/VertexWeights.cpp
+		Audio/Aiff/SoundBufferAiff.cpp
 		Audio/Audio.cpp
+		Audio/Ogg/SoundBufferOgg.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
-		Audio/Aiff/SoundBufferAiff.cpp
-		Audio/Ogg/SoundBufferOgg.cpp
 		Audio/Wave/SoundBufferWave.cpp
 		Bitmaps/Bitmap.cpp
 		Bitmaps/Png/BitmapPng.cpp
@@ -285,9 +285,9 @@ set(_temp_acid_sources
 		Files/FileObserver.cpp
 		Files/Files.cpp
 		Files/Json/Json.cpp
-		Files/Xml/Xml.cpp
 		Files/Node.cpp
 		Files/NodeReturn.cpp
+		Files/Xml/Xml.cpp
 		Files/Zip/miniz.c
 		Files/Zip/ZipArchive.cpp
 		Files/Zip/ZipEntry.cpp
@@ -389,8 +389,8 @@ set(_temp_acid_sources
 		Particles/Emitters/EmitterPoint.cpp
 		Particles/Emitters/EmitterSphere.cpp
 		Particles/Particle.cpp
+		Particles/ParticleEmitter.cpp
 		Particles/Particles.cpp
-		Particles/ParticleSystem.cpp
 		Particles/ParticleType.cpp
 		Particles/SubrenderParticles.cpp
 		Physics/Colliders/Collider.cpp
@@ -431,12 +431,12 @@ set(_temp_acid_sources
 		Post/Pipelines/PipelineBlur.cpp
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
+		Scenes/Entity.cpp
+		Scenes/EntityPrefab.cpp
 		Scenes/Holders/ComponentFilter.cpp
 		Scenes/Holders/ComponentHolder.cpp
 		Scenes/Holders/EntityPool.cpp
 		Scenes/Holders/SystemHolder.cpp
-		Scenes/Entity.cpp
-		Scenes/EntityPrefab.cpp
 		Scenes/Scene.cpp
 		Scenes/Scenes.cpp
 		Scenes/ShimSystem.cpp

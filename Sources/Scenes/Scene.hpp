@@ -6,7 +6,7 @@
 #include "Holders/EntityPool.hpp"
 #include "Holders/SystemHolder.hpp"
 #include "Camera.hpp"
-#include "Entity.inl"
+#include "Entity.hpp"
 #include "System.hpp"
 
 namespace acid {
@@ -45,7 +45,11 @@ public:
 	 */
 	Camera *GetCamera() const { return m_camera.get(); }
 
-	// TODO: Remove
+	/**
+	 * Gets all Components from a Scene.
+	 * @tparam T The Component type.
+	 * @return The Components.
+	 */
 	template<typename T>
 	std::vector<T *> GetComponents() const;
 

@@ -10,7 +10,6 @@ class NameTag : public Component::Registrar<NameTag> {
 public:
 	explicit NameTag(const std::string &name = "", float heightOffset = 0.0f);
 
-	void Start() override;
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, NameTag &nameTag);

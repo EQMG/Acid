@@ -11,12 +11,6 @@ Fog::Fog(const Colour &colour, float density, float gradient, float lowerLimit, 
 	m_upperLimit(upperLimit) {
 }
 
-void Fog::Start() {
-}
-
-void Fog::Update() {
-}
-
 const Node &operator>>(const Node &node, Fog &fog) {
 	node["colour"].Get(fog.m_colour);
 	node["density"].Get(fog.m_density);

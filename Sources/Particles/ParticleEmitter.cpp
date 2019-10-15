@@ -1,4 +1,4 @@
-#include "ParticleSystem.hpp"
+#include "ParticleEmitter.hpp"
 
 #include "Maths/Maths.hpp"
 #include "Maths/Transform.hpp"
@@ -6,9 +6,9 @@
 #include "Particles.hpp"
 
 namespace acid {
-bool ParticleSystem::registered = Register("particleSystem");
+bool ParticleEmitter::registered = Register("particleEmitter");
 
-ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, std::vector<std::unique_ptr<Emitter>> &&emitters,
+ParticleEmitter::ParticleEmitter(std::vector<std::shared_ptr<ParticleType>> types, std::vector<std::unique_ptr<Emitter>> &&emitters,
 	float pps, float averageSpeed, float gravityEffect) :
 	m_types(std::move(types)),
 	m_emitters(std::move(emitters)),
@@ -19,10 +19,7 @@ ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types,
 	m_elapsedEmit(Time::Seconds(1.0f / m_pps)) {
 }
 
-void ParticleSystem::Start() {
-}
-
-void ParticleSystem::Update() {
+void ParticleEmitter::Update() {
 	if (m_types.empty()) {
 		return;
 	}
@@ -37,7 +34,7 @@ void ParticleSystem::Update() {
 	}
 }
 
-void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type) {
+void ParticleEmitter::AddParticleType(const std::shared_ptr<ParticleType> &type) {
 	if (std::find(m_types.begin(), m_types.end(), type) != m_types.end()) {
 		return;
 	}
@@ -45,7 +42,7 @@ void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type) 
 	m_types.emplace_back(type);
 }
 
-bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &type) {
+bool ParticleEmitter::RemoveParticleType(const std::shared_ptr<ParticleType> &type) {
 	for (auto it = m_types.begin(); it != m_types.end(); ++it) {
 		if (*it == type) {
 			m_types.erase(it);
@@ -56,11 +53,11 @@ bool ParticleSystem::RemoveParticleType(const std::shared_ptr<ParticleType> &typ
 	return false;
 }
 
-void ParticleSystem::AddEmitter(std::unique_ptr<Emitter> &&emitter) {
+void ParticleEmitter::AddEmitter(std::unique_ptr<Emitter> &&emitter) {
 	m_emitters.emplace_back(std::move(emitter));
 }
 
-Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const {
+Vector3f ParticleEmitter::RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const {
 	auto cosAngle = std::cos(angle);
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 	auto z = (cosAngle + Maths::Random(0.0f, 1.0f)) * (1.0f - cosAngle);
@@ -85,16 +82,16 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 	return {direction};
 }
 
-void ParticleSystem::SetPps(float pps) {
+void ParticleEmitter::SetPps(float pps) {
 	m_pps = pps;
 }
 
-void ParticleSystem::SetDirection(const Vector3f &direction, float deviation) {
+void ParticleEmitter::SetDirection(const Vector3f &direction, float deviation) {
 	m_direction = direction;
 	m_directionDeviation = deviation * Maths::Pi<float>;
 }
 
-Particle ParticleSystem::EmitParticle(const Emitter *emitter) {
+Particle ParticleEmitter::EmitParticle(const Emitter *emitter) {
 	auto spawnPos = emitter->GeneratePosition();
 
 	if (auto transform = GetEntity()->GetComponent<Transform>()) {
@@ -119,12 +116,12 @@ Particle ParticleSystem::EmitParticle(const Emitter *emitter) {
 	return {emitType, spawnPos, velocity, lifeLength, stageCycles, GenerateRotation(), scale, m_gravityEffect};
 }
 
-float ParticleSystem::GenerateValue(float average, float errorPercent) {
+float ParticleEmitter::GenerateValue(float average, float errorPercent) {
 	auto error = Maths::Random(-1.0f, 1.0f) * errorPercent;
 	return average + (average * error);
 }
 
-float ParticleSystem::GenerateRotation() const {
+float ParticleEmitter::GenerateRotation() const {
 	if (m_randomRotation) {
 		return Maths::Random(0.0f, Maths::Pi<float>);
 	}
@@ -132,7 +129,7 @@ float ParticleSystem::GenerateRotation() const {
 	return 0.0f;
 }
 
-Vector3f ParticleSystem::GenerateRandomUnitVector() const {
+Vector3f ParticleEmitter::GenerateRandomUnitVector() const {
 	auto theta = Maths::Random(0.0f, 1.0f) * 2.0f * Maths::Pi<float>;
 	auto z = Maths::Random(0.0f, 1.0f) * 2.0f - 1.0f;
 	auto rootOneMinusZSquared = std::sqrt(1.0f - z * z);
@@ -141,7 +138,7 @@ Vector3f ParticleSystem::GenerateRandomUnitVector() const {
 	return {x, y, z};
 }
 
-const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
+const Node &operator>>(const Node &node, ParticleEmitter &particleSystem) {
 	node["types"].Get(particleSystem.m_types);
 	node["emitters"].Get(particleSystem.m_emitters);
 	node["pps"].Get(particleSystem.m_pps);
@@ -157,7 +154,7 @@ const Node &operator>>(const Node &node, ParticleSystem &particleSystem) {
 	return node;
 }
 
-Node &operator<<(Node &node, const ParticleSystem &particleSystem) {
+Node &operator<<(Node &node, const ParticleEmitter &particleSystem) {
 	node["types"].Set(particleSystem.m_types);
 	node["emitters"].Set(particleSystem.m_emitters);
 	node["pps"].Set(particleSystem.m_pps);

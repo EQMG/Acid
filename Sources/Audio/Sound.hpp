@@ -17,7 +17,6 @@ public:
 
 	~Sound();
 
-	void Start() override;
 	void Update() override;
 
 	void Play(bool loop = false);

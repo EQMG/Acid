@@ -10,12 +10,6 @@ Light::Light(const Colour &colour, float radius) :
 	m_radius(radius) {
 }
 
-void Light::Start() {
-}
-
-void Light::Update() {
-}
-
 const Node &operator>>(const Node &node, Light &light) {
 	node["colour"].Get(light.m_colour);
 	node["radius"].Get(light.m_radius);

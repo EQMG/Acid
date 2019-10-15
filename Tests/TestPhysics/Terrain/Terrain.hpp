@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Scenes/Component.hpp>
-#include <Scenes/Entity.hpp>
-#include <Models/Model.hpp>
 #include <Maths/Noise/Noise.hpp>
 #include "MeshTerrain.hpp"
 

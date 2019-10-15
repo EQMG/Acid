@@ -5,15 +5,25 @@
 namespace acid {
 
 template<typename T>
+std::vector<T *> ComponentHolder::GetComponents() const {
+	std::vector<T *> result;
+	const auto typeId = GetComponentTypeId<T>();
+	for (const auto &components : m_components) {
+		if (const auto &component = components[typeId])
+			result.emplace_back(static_cast<T *>(component.get()));
+	}
+	return result;
+}
+
+template<typename T>
 bool ComponentHolder::HasComponent(Entity::Id id) const {
 	// Is the Entity ID and the Component type ID known.
 	if (id < m_components.size()) {
 		auto typeId = GetComponentTypeId<T>();
 
 		// Is the Component type ID known
-		if (typeId < m_components[id].size()) {
+		if (typeId < m_components[id].size())
 			return m_components[id][typeId] != nullptr;
-		}
 	}
 
 	return false;
@@ -26,9 +36,10 @@ T *ComponentHolder::GetComponent(Entity::Id id) const {
 		return nullptr;
 	}
 
-	auto &component = m_components[id][GetComponentTypeId<T>()];
+	const auto typeId = GetComponentTypeId<T>();
+	auto &component = m_components[id][typeId];
 
-	if (!component.get()) {
+	if (!component) {
 		//throw std::runtime_error("Entity does not have requested Component");
 		return nullptr;
 	}
@@ -39,8 +50,10 @@ T *ComponentHolder::GetComponent(Entity::Id id) const {
 template<typename T>
 void ComponentHolder::AddComponent(Entity::Id id, std::unique_ptr<T> &&component) {
 	const auto typeId = GetComponentTypeId<T>();
-	if (const auto componentTypeId = component->GetTypeId(); typeId != componentTypeId) {
-		Log::Error("NO");
+
+	// If we ever have a disagreement from {@link TypeInfo} throw an exception.
+	if (typeId != component->GetTypeId()) {
+		throw std::runtime_error("Static Component Type ID does not match the member function");
 	}
 
 	AddComponent(id, typeId, std::move(component));
@@ -48,9 +61,8 @@ void ComponentHolder::AddComponent(Entity::Id id, std::unique_ptr<T> &&component
 
 template<typename T>
 void ComponentHolder::RemoveComponent(Entity::Id id) {
-	if (!HasComponent<T>(id)) {
+	if (!HasComponent<T>(id))
 		return;
-	}
 
 	auto &component = m_components[id][GetComponentTypeId<T>()];
 	component.reset();

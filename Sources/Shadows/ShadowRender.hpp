@@ -13,9 +13,6 @@ class ACID_EXPORT ShadowRender : public Component::Registrar<ShadowRender> {
 public:
 	ShadowRender();
 
-	void Start() override;
-	void Update() override;
-
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
 
 	friend const Node &operator>>(const Node &node, ShadowRender &shadowRender);

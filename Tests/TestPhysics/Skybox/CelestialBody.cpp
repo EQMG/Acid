@@ -21,9 +21,6 @@ CelestialBody::CelestialBody(Type type) :
 	m_type(type) {
 }
 
-void CelestialBody::Start() {
-}
-
 void CelestialBody::Update() {
 	auto transform = GetEntity()->GetComponent<Transform>();
 

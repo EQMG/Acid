@@ -20,9 +20,6 @@ NameTag::NameTag(const std::string &name, float heightOffset) :
 	//m_text.SetTextColour("#ffffff");
 	//m_text.SetBorderColour("#262626");
 	//m_text.SetBorderDriver(std::make_unique<DriverConstant<float>>(0.1f));
-}
-
-void NameTag::Start() {
 	//m_text.SetString(m_name);
 }
 

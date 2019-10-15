@@ -18,9 +18,6 @@ const float NOCLIP_SPEED = 3.0f;
 PlayerFps::PlayerFps() {
 }
 
-void PlayerFps::Start() {
-}
-
 void PlayerFps::Update() {
 	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 

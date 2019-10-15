@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <Scenes/Component.hpp>
-#include <Scenes/Entity.hpp>
 #include <Files/Node.hpp>
 
 using namespace acid;
@@ -13,7 +12,6 @@ public:
 
 	explicit CelestialBody(Type type = Type::Sun);
 
-	void Start() override;
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, CelestialBody &celestialBody);

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Scenes/Entity.hpp>
 #include <Scenes/Component.hpp>
 #include <Physics/CollisionObject.hpp>
 
@@ -11,7 +10,6 @@ class PlayerFps : public Component::Registrar<PlayerFps> {
 public:
 	PlayerFps();
 
-	void Start() override;
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, PlayerFps &player);

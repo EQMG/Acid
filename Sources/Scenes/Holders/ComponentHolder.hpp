@@ -12,6 +12,19 @@ public:
 
 	~ComponentHolder() = default;
 
+	/**
+	 * Gets all Components from the Component Holder.
+	 * @tparam T The Component type.
+	 * @return The Components.
+	 */
+	template<typename T>
+	std::vector<T *> GetComponents() const;
+
+	/**
+	 * Gets all Components from the Entity.
+	 * @param id The Entity ID.
+	 * @return The Components.
+	 */
 	std::vector<Component *> GetComponents(Entity::Id id) const;
 
 	/**

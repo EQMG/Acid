@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, public virtual NonCopyable {
+class ACID_EXPORT ParticleEmitter : public Component::Registrar<ParticleEmitter>, public virtual NonCopyable {
 public:
 	/**
 	 * Creates a new particle system.
@@ -21,10 +21,9 @@ public:
 	 * @param averageSpeed Particle average speed.
 	 * @param gravityEffect How much gravity will effect the particles.
 	 */
-	explicit ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types = {}, std::vector<std::unique_ptr<Emitter>> &&emitters = {}, 
+	explicit ParticleEmitter(std::vector<std::shared_ptr<ParticleType>> types = {}, std::vector<std::unique_ptr<Emitter>> &&emitters = {}, 
 		float pps = 5.0f, float averageSpeed = 0.2f, float gravityEffect = 1.0f);
 
-	void Start() override;
 	void Update() override;
 
 	void AddParticleType(const std::shared_ptr<ParticleType> &type);
@@ -61,8 +60,8 @@ public:
 	float GetScaleDeviation() const { return m_scaleDeviation; }
 	void SetScaleDeviation(float scaleDeviation) { m_scaleDeviation = scaleDeviation; }
 
-	friend const Node &operator>>(const Node &node, ParticleSystem &particleSystem);
-	friend Node &operator<<(Node &node, const ParticleSystem &particleSystem);
+	friend const Node &operator>>(const Node &node, ParticleEmitter &particleSystem);
+	friend Node &operator<<(Node &node, const ParticleEmitter &particleSystem);
 
 private:
 	Particle EmitParticle(const Emitter *emitter);

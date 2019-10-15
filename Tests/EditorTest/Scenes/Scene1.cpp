@@ -13,7 +13,7 @@
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
 #include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/ParticleSystem.hpp>
+#include <Particles/ParticleEmitter.hpp>
 #include <Physics/Colliders/ColliderCapsule.hpp>
 #include <Physics/Colliders/ColliderCone.hpp>
 #include <Physics/Colliders/ColliderConvexHull.hpp>

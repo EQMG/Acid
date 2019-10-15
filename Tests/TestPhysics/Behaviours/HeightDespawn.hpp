@@ -10,7 +10,6 @@ class HeightDespawn : public Component::Registrar<HeightDespawn> {
 public:
 	explicit HeightDespawn(float removeHeight = -100.0f);
 
-	void Start() override;
 	void Update() override;
 
 	friend const Node &operator>>(const Node &node, HeightDespawn &heightDespawn);
