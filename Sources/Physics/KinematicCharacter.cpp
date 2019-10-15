@@ -7,6 +7,7 @@
 #include "Maths/Transform.hpp"
 #include "Scenes/Entity.inl"
 #include "Scenes/Scenes.hpp"
+#include "PhysicsSystem.hpp"
 
 namespace acid {
 bool KinematicCharacter::registered = Register("kinematicCharacter");
@@ -23,27 +24,27 @@ KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, flo
 }
 
 KinematicCharacter::~KinematicCharacter() {
-	/*auto physics = Scenes::Get()->GetPhysics();
-
-	if (physics) {
+	if (auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>()) {
 		// TODO: Are these being deleted?
-		physics->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
-		physics->GetDynamicsWorld()->removeAction(m_controller.get());
-	}*/
+		physicsSystem->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
+		physicsSystem->GetDynamicsWorld()->removeAction(m_controller.get());
+	}
 }
 
 void KinematicCharacter::Start() {
-	/*if (m_ghostObject) {
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
+	auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>();
+	
+	if (m_ghostObject) {
+		physicsSystem->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
 	}
 
 	if (m_controller) {
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(m_controller.get());
+		physicsSystem->GetDynamicsWorld()->removeAction(m_controller.get());
 	}
 
 	CreateShape(true);
 	assert((m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
-	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	m_gravity = physicsSystem->GetGravity();
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
@@ -55,14 +56,14 @@ void KinematicCharacter::Start() {
 
 	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
 	m_ghostObject->setWorldTransform(worldTransform);
-	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	physicsSystem->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	m_ghostObject->setCollisionShape(m_shape.get());
 	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	m_ghostObject->setFriction(m_friction);
 	m_ghostObject->setRollingFriction(m_frictionRolling);
 	m_ghostObject->setSpinningFriction(m_frictionSpinning);
 	m_ghostObject->setUserPointer(dynamic_cast<CollisionObject *>(this));
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
+	physicsSystem->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 	m_body = m_ghostObject.get();
 
 	m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f);
@@ -73,10 +74,11 @@ void KinematicCharacter::Start() {
 	m_controller->setJumpSpeed(m_jumpSpeed);
 	m_controller->setMaxJumpHeight(m_maxHeight);
 	m_controller->setUpInterpolate(m_interpolate);
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(m_controller.get());*/
+	physicsSystem->GetDynamicsWorld()->addAction(m_controller.get());
 }
 
 void KinematicCharacter::Update() {
+	if (!m_body) return;
 	if (m_shape.get() != m_body->getCollisionShape()) {
 		m_body->setCollisionShape(m_shape.get());
 	}

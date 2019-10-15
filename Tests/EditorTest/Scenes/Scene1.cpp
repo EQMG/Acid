@@ -31,6 +31,7 @@
 #include <Uis/Uis.hpp>
 #include <Files/Json/Json.hpp>
 #include "CameraFps.hpp"
+#include "Scenes/ShimSystem.hpp"
 
 namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
@@ -74,14 +75,15 @@ Scene1::Scene1() :
 }
 
 void Scene1::Start() {
+	AddSystem<ShimSystem>();
 	auto physicsSystem = AddSystem<PhysicsSystem>();
 	physicsSystem->SetGravity({0.0f, -9.81f, 0.0f});
 	physicsSystem->SetAirDensity(1.0f);
 
-	auto player = CreateEntity("Objects/Player/Player.json");
+	auto player = CreatePrefabEntity("Objects/Player/Player.json");
 	player.AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f));
 
-	auto skybox = CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
+	auto skybox = CreatePrefabEntity("Objects/SkyboxClouds/SkyboxClouds.json");
 	skybox.AddComponent<Transform>(Vector3f(), Vector3f(), Vector3f(2048.0f));
 
 	auto sun = CreateEntity();
@@ -120,7 +122,7 @@ void Scene1::Start() {
 		std::make_unique<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f));
 	cylinder.AddComponent<Rigidbody>(std::make_unique<ColliderCylinder>(1.1f, 2.2f), 2.5f);
 
-	auto smokeSystem = CreateEntity("Objects/Smoke/Smoke.json");
+	auto smokeSystem = CreatePrefabEntity("Objects/Smoke/Smoke.json");
 	smokeSystem.AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));
 	//smokeSystem.AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
 }

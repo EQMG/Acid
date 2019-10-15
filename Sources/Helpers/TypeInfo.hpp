@@ -1,6 +1,10 @@
 #pragma once
 
+#include <typeindex>
+#include <typeinfo>
+
 #include "StdAfx.hpp"
+#include "Engine/Log.hpp"
 
 namespace acid {
 using TypeId = std::size_t;
@@ -17,7 +21,13 @@ public:
 	 */
 	template<typename K>
 	static TypeId GetTypeId() noexcept {
-		static const auto id = NextTypeId();
+		auto typeIndex = std::type_index(typeid(K));
+		if (auto it = m_typeMap.find(typeIndex); it != m_typeMap.end())
+			return it->second;
+		const auto id = NextTypeId();
+		m_typeMap[typeIndex] = id;
+		Log::Debug(typeid(TypeInfo<T>).name(), "(", typeid(TypeInfo<T>).hash_code(), ") <- ",
+			typeid(K).name(), "(", typeIndex.hash_code(), ") = ", id, '\n');
 		return id;
 	}
 
@@ -34,8 +44,12 @@ private:
 
 	// Next type ID for T.
 	static TypeId m_nextTypeId;
+	static std::unordered_map<std::type_index, TypeId> m_typeMap;
 };
 
 template<typename K>
 TypeId TypeInfo<K>::m_nextTypeId = 0;
+
+template<typename K>
+std::unordered_map<std::type_index, TypeId> TypeInfo<K>::m_typeMap = {};
 }

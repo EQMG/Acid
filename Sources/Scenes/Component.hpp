@@ -18,6 +18,8 @@ public:
 	bool m_started = false;
 };
 
+template class ACID_EXPORT TypeInfo<Component>;
+
 /**
  * Gets the Type ID for the Component.
  * @tparam T The Component type.

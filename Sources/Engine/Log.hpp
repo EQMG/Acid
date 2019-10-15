@@ -3,6 +3,7 @@
 #include <mutex>
 
 #include "StdAfx.hpp"
+#include "Maths/Time.hpp"
 
 namespace acid {
 /**
@@ -73,7 +74,9 @@ public:
 	 */
 	template<typename ... Args>
 	static void Debug(Args ... args) {
+#ifdef ACID_DEBUG
 		Out(Style::Default, Colour::LightBlue, args...);
+#endif
 	}
 
 	/**
@@ -125,7 +128,6 @@ public:
 
 private:
 	// TODO: Only use mutex in synced writes (where output order must be the same).
-	static std::mutex WriteMutex;
 	static std::ofstream FileStream;
 
 	/**
@@ -135,16 +137,22 @@ private:
 	 */
 	template<typename ... Args>
 	static void Write(Args ... args) {
-		std::unique_lock<std::mutex> lock(WriteMutex);
+		static std::mutex writeMutex;
+		std::unique_lock<std::mutex> lock(writeMutex);
+		
 		((std::cout << std::forward<Args>(args)), ...);
 		if (FileStream.is_open()) {
 			((FileStream << std::forward<Args>(args)), ...);
 		}
 	}
+};
 
-	/**
-	 * A internal method that gets the current time in the log format.
-	 */
-	static std::string GetTime();
+template<typename T>
+class Loggable {
+public:
+	template<typename ... Args>
+	static void Out(Args ... args) {
+		Log::Out("[", Time::GetDateTime(Log::TimestampFormat), typeid(T).name(), "]: ", args...);
+	}
 };
 }

@@ -12,6 +12,8 @@ void System::ForEach(Func &&func) {
 	}
 }
 
+template class ACID_EXPORT TypeInfo<System>;
+
 template<typename T>
 TypeId GetSystemTypeId() noexcept {
 	static_assert(std::is_base_of<System, T>::value, "T must be a System.");

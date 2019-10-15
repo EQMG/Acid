@@ -38,21 +38,12 @@ T *ComponentHolder::GetComponent(Entity::Id id) const {
 
 template<typename T>
 void ComponentHolder::AddComponent(Entity::Id id, std::unique_ptr<T> &&component) {
-	if (id >= m_components.size()) {
-		throw std::runtime_error("Entity ID is out of range");
-	}
-
 	const auto typeId = GetComponentTypeId<T>();
 	if (const auto componentTypeId = component->GetTypeId(); typeId != componentTypeId) {
 		Log::Error("NO");
 	}
 
-	if (typeId >= m_components[id].size()) {
-		throw std::runtime_error("Component type ID is out of range");
-	}
-
-	m_components[id][typeId] = std::move(component);
-	m_componentsMasks[id].set(typeId);
+	AddComponent(id, typeId, std::move(component));
 }
 
 template<typename T>

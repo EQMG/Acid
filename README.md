@@ -58,16 +58,16 @@ auto sphere = ModelSphere::Create(20, 20, 1.0f);
 Sound jump("Sounds/Jump.ogg", Audio::Type::Effect, false, true, 0.5f);
 
 // Loads a entity from a prefab file.
-auto playerObject = GetStructure()->CreateEntity("Objects/Player/Player.json");
-playerObject->AddComponent<Transform>();
+auto playerObject = CreatePrefabEntity("Objects/Player/Player.json");
+playerObject.AddComponent<Transform>();
 
 // Creates a entity in code.
-auto sphere = GetStructure()->CreateEntity();
-sphere->AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
-sphere->AddComponent<Mesh>(ModelSphere::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
+auto sphere = CreateEntity();
+sphere.AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
+sphere.AddComponent<Mesh>(ModelSphere::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
 	std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
 		Image2d::Create("Objects/Testing/Material.png"), Image2d::Create("Objects/Testing/Normal.png")));
-sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 2.0f); // Will be created weighing 2 units.
+sphere.AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 2.0f); // Will be created weighing 2 units.
 
 // Vector maths.
 Vector2f a(3.0f, -7.2f);

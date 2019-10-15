@@ -9,6 +9,7 @@
 #include "Scenes/Entity.inl"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
+#include "PhysicsSystem.hpp"
 
 namespace acid {
 bool Rigidbody::registered = Register("rigidbody");
@@ -19,27 +20,27 @@ Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float fri
 }
 
 Rigidbody::~Rigidbody() {
-	/*auto body = btRigidBody::upcast(m_body);
+	auto body = btRigidBody::upcast(m_body);
 
 	if (body && body->getMotionState()) {
 		delete body->getMotionState();
 	}
 
-	auto physics = Scenes::Get()->GetPhysics();
-
-	if (physics) {
-		physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
-	}*/
+	if (auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>()) {
+		physicsSystem->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
+	}
 }
 
 void Rigidbody::Start() {
-	/*if (m_rigidBody) {
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
+	auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>();
+
+	if (m_rigidBody) {
+		physicsSystem->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
 	}
 
 	CreateShape();
 	assert((!m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
-	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	m_gravity = physicsSystem->GetGravity();
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
@@ -65,12 +66,13 @@ void Rigidbody::Start() {
 	m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
 	m_rigidBody->setUserPointer(dynamic_cast<CollisionObject *>(this));
 	m_body = m_rigidBody.get();
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
+	physicsSystem->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
 	m_rigidBody->activate(true);
-	RecalculateMass();*/
+	RecalculateMass();
 }
 
 void Rigidbody::Update() {
+	if (!m_body) return;
 	if (m_shape.get() != m_body->getCollisionShape()) {
 		m_body->setCollisionShape(m_shape.get());
 	}
