@@ -2,6 +2,7 @@
 
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/Entity.inl>
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>

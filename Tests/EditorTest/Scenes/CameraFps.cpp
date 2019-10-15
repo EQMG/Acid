@@ -3,6 +3,7 @@
 #include <Devices/Mouse.hpp>
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
+#include <Scenes/Entity.inl>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Physics/CollisionObject.hpp>

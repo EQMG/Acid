@@ -14,39 +14,107 @@
 #include "KinematicCharacter.hpp"
 
 namespace acid {
-/*enum class Logical {
-	None, And, Or, Not
-};
-
-// TODO: probably requires some type of polymorphism.
 class Filter {
 public:
 	Filter() = default;
-	Filter(Logical logical, TypeId leftId, TypeId rightId) :
-		m_logical(logical),
-		m_leftId(leftId),
-		m_rightId(rightId) {
+	~Filter() = default;
+
+	virtual std::unique_ptr<Filter> Clone() const = 0;
+	virtual bool Compute(const ComponentFilter::Mask &mask) const = 0;
+};
+
+class LogicalAnd : public Filter {
+public:
+	LogicalAnd(const std::unique_ptr<Filter> &left, const std::unique_ptr<Filter> &right) :
+		m_left(left->Clone()),
+		m_right(right->Clone()) {
 	}
-	
-	Filter operator!() const {
-		return {Logical::Not, m_leftId, static_cast<TypeId>(-1)};
-	}
-	Filter operator&&(const Filter &other) const {
-		return {Logical::And, m_leftId, other.m_leftId};
-	}
-	Filter operator||(const Filter &other) const {
-		return {Logical::Or, m_leftId, other.m_leftId};
+	LogicalAnd(const Filter &left, const Filter &right) :
+		m_left(left.Clone()),
+		m_right(right.Clone()) {
 	}
 
-	Logical m_logical = Logical::None;
-	TypeId m_leftId = -1;
-	TypeId m_rightId = -1;
+	std::unique_ptr<Filter> Clone() const override {
+		return std::make_unique<LogicalAnd>(m_left, m_right);
+	}
+	
+	bool Compute(const ComponentFilter::Mask &mask) const override {
+		return m_left->Compute(mask) && m_right->Compute(mask);
+	}
+
+	std::unique_ptr<Filter> m_left;
+	std::unique_ptr<Filter> m_right;
+};
+
+class LogicalOr : public Filter {
+public:
+	LogicalOr(const std::unique_ptr<Filter> &left, const std::unique_ptr<Filter> &right) :
+		m_left(left->Clone()),
+		m_right(right->Clone()) {
+	}
+	LogicalOr(const Filter &left, const Filter &right) :
+		m_left(left.Clone()),
+		m_right(right.Clone()) {
+	}
+
+	std::unique_ptr<Filter> Clone() const override {
+		return std::make_unique<LogicalOr>(m_left, m_right);
+	}
+
+	bool Compute(const ComponentFilter::Mask &mask) const override {
+		return m_left->Compute(mask) || m_right->Compute(mask);
+	}
+
+	std::unique_ptr<Filter> m_left;
+	std::unique_ptr<Filter> m_right;
+};
+
+class LogicalNot : public Filter {
+public:
+	LogicalNot(const std::unique_ptr<Filter> &right) :
+		m_right(right->Clone()) {
+	}
+	LogicalNot(const Filter &right) :
+		m_right(right.Clone()) {
+	}
+
+	bool Compute(const ComponentFilter::Mask &mask) const override {
+		return !m_right->Compute(mask);
+	}
+
+	std::unique_ptr<Filter> Clone() const override {
+		return std::make_unique<LogicalNot>(m_right);
+	}
+
+	std::unique_ptr<Filter> m_right;
 };
 
 template<typename T>
-Filter FilterT() {
-	return Filter(Logical::None, GetComponentTypeId<T>(), static_cast<TypeId>(-1));
-}*/
+class Require : public Filter {
+public:
+	Require() = default;
+
+	std::unique_ptr<Filter> Clone() const override {
+		return std::make_unique<Require<T>>();
+	}
+
+	bool Compute(const ComponentFilter::Mask &mask) const override {
+		// TODO: This logic is wrong!
+		return mask[GetComponentTypeId<T>()];
+	}
+};
+
+LogicalNot operator!(const Filter &rhs) {
+	return LogicalNot(rhs);
+}
+
+LogicalAnd operator&&(const Filter &lhs, const Filter &rhs) {
+	return LogicalAnd(lhs, rhs);
+}
+
+LogicalOr operator||(const Filter &lhs, const Filter &rhs) {
+	return LogicalOr(lhs, rhs);
+}
 
 PhysicsSystem::PhysicsSystem() :
 	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
@@ -70,9 +138,16 @@ PhysicsSystem::PhysicsSystem() :
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 
 	// TODO: Maybe just use a lambda?
-	//Filter filter = FilterT<Transform>() && (FilterT<Rigidbody>() || FilterT<KinematicCharacter>());
+	//auto filter = LogicalAnd(LogicalNot(Require<Transform>()), LogicalOr(Require<Rigidbody>(), Require<KinematicCharacter>()));
+	auto filter = !Require<Transform>() && (Require<Rigidbody>() || Require<KinematicCharacter>());
+	ComponentFilter::Mask mask;
+	//mask.set(GetComponentTypeId<Transform>());
+	mask.set(GetComponentTypeId<Rigidbody>());
+	//mask.set(GetComponentTypeId<KinematicCharacter>());
+	bool match = filter.Compute(mask);
+	Log::Debug("Matches: ", match, '\n');
 
-	//SetFilter(FilterT<Transform>() && (FilterT<Rigidbody>() || FilterT<KinematicCharacter>()));
+	//SetFilter(filter);
 	GetFilter().Require<Rigidbody>();
 }
 
