@@ -43,7 +43,7 @@ public:
 		static constexpr std::string_view White = "\033[97m";
 	};
 
-	static constexpr auto TimestampFormat = "%H:%M:%S ";
+	static constexpr auto TimestampFormat = "%H:%M:%S";
 
 	/**
 	 * Outputs a message into the console.
@@ -128,6 +128,7 @@ public:
 
 private:
 	// TODO: Only use mutex in synced writes (where output order must be the same).
+	static std::mutex WriteMutex;
 	static std::ofstream FileStream;
 
 	/**
@@ -137,8 +138,7 @@ private:
 	 */
 	template<typename ... Args>
 	static void Write(Args ... args) {
-		static std::mutex writeMutex;
-		std::unique_lock<std::mutex> lock(writeMutex);
+		std::unique_lock<std::mutex> lock(WriteMutex);
 		
 		((std::cout << std::forward<Args>(args)), ...);
 		if (FileStream.is_open()) {
@@ -149,10 +149,20 @@ private:
 
 template<typename T>
 class Loggable {
-public:
+protected:
+#define MESSAGE_PREFIX Time::GetDateTime(Log::TimestampFormat), " - [", typeid(T).name(), "] "
+//#define MESSAGE_PREFIX_THIS "(0x", std::hex, std::uppercase, reinterpret_cast<long>(this), ") ", std::dec
+
 	template<typename ... Args>
-	static void Out(Args ... args) {
-		Log::Out("[", Time::GetDateTime(Log::TimestampFormat), typeid(T).name(), "]: ", args...);
-	}
+	static void WriteOut(Args ... args) { Log::Out(MESSAGE_PREFIX, args...); }
+
+	template<typename ... Args>
+	static void WriteInfo(Args ... args) { Log::Info("INFO: ", MESSAGE_PREFIX, args...); }
+
+	template<typename ... Args>
+	static void WriteWarning(Args ... args) { Log::Warning("WARN: ", MESSAGE_PREFIX, args...); }
+
+	template<typename ... Args>
+	static void WriteError(Args ... args) { Log::Error("ERROR: ", MESSAGE_PREFIX, args...); }
 };
 }

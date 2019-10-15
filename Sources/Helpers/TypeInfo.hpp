@@ -1,10 +1,7 @@
 #pragma once
 
 #include <typeindex>
-#include <typeinfo>
-
 #include "StdAfx.hpp"
-#include "Engine/Log.hpp"
 
 namespace acid {
 using TypeId = std::size_t;
@@ -26,8 +23,6 @@ public:
 			return it->second;
 		const auto id = NextTypeId();
 		m_typeMap[typeIndex] = id;
-		Log::Debug(typeid(TypeInfo<T>).name(), "(", typeid(TypeInfo<T>).hash_code(), ") <- ",
-			typeid(K).name(), "(", typeIndex.hash_code(), ") = ", id, '\n');
 		return id;
 	}
 

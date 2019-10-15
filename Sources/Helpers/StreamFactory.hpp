@@ -44,7 +44,7 @@ public:
 	template<typename T>
 	class Registrar : public Base {
 	public:
-		TypeId GetTypeId() const override { return TypeInfo<Base>::GetTypeId<T>(); }
+		TypeId GetTypeId() const override { return TypeInfo<Base>::template GetTypeId<T>(); }
 		std::string GetTypeName() const override { return name; }
 
 	protected:
@@ -74,15 +74,6 @@ public:
 		node >> *object;
 		return node;
 	}
-
-	/*friend inline Node &operator<<(Node &node, const std::unique_ptr<Base> &object) {
-		if (object == nullptr) {
-			return node << nullptr;
-		}
-
-		node << *object;
-		return node;
-	}*/
 
 	virtual TypeId GetTypeId() const { return -1; }
 	virtual std::string GetTypeName() const { return ""; }

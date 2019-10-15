@@ -30,10 +30,10 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 		return false;
 
 	// Checks if the mesh is in view.
-	/*if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
+	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
 		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
 			return false;
-	}*/
+	}
 
 	// Check if we are in the correct pipeline stage.
 	auto materialPipeline = m_material->GetPipelineMaterial();

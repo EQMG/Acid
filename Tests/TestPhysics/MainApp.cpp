@@ -82,15 +82,15 @@ void MainApp::Start() {
 
 	Timers::Get()->Once(0.333s, []() {
 		Log::Out("Timer Hello World!\n");
-	});
+	}, this);
 	Timers::Get()->Every(3s, []() {
 		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
-	});
+	}, this);
 	Timers::Get()->Repeat(2s, 3, []() {
 		static uint32_t i = 0;
 		Log::Out("Timer Repeat Tick #", i, '\n');
 		i++;
-	});
+	}, this);
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");
