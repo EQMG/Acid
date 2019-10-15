@@ -11,8 +11,43 @@
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include "Scenes/Entity.inl"
 #include "Rigidbody.hpp"
+#include "KinematicCharacter.hpp"
 
 namespace acid {
+/*enum class Logical {
+	None, And, Or, Not
+};
+
+// TODO: probably requires some type of polymorphism.
+class Filter {
+public:
+	Filter() = default;
+	Filter(Logical logical, TypeId leftId, TypeId rightId) :
+		m_logical(logical),
+		m_leftId(leftId),
+		m_rightId(rightId) {
+	}
+	
+	Filter operator!() const {
+		return {Logical::Not, m_leftId, static_cast<TypeId>(-1)};
+	}
+	Filter operator&&(const Filter &other) const {
+		return {Logical::And, m_leftId, other.m_leftId};
+	}
+	Filter operator||(const Filter &other) const {
+		return {Logical::Or, m_leftId, other.m_leftId};
+	}
+
+	Logical m_logical = Logical::None;
+	TypeId m_leftId = -1;
+	TypeId m_rightId = -1;
+};
+
+template<typename T>
+Filter FilterT() {
+	return Filter(Logical::None, GetComponentTypeId<T>(), static_cast<TypeId>(-1));
+}*/
+
 PhysicsSystem::PhysicsSystem() :
 	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
 	m_broadphase(std::make_unique<btDbvtBroadphase>()),
@@ -33,7 +68,11 @@ PhysicsSystem::PhysicsSystem() :
 	softDynamicsWorld->getWorldInfo().m_gravity.setValue(0.0f, -9.81f, 0.0f);
 	softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
-	
+
+	// TODO: Maybe just use a lambda?
+	//Filter filter = FilterT<Transform>() && (FilterT<Rigidbody>() || FilterT<KinematicCharacter>());
+
+	//SetFilter(FilterT<Transform>() && (FilterT<Rigidbody>() || FilterT<KinematicCharacter>()));
 	GetFilter().Require<Rigidbody>();
 }
 
@@ -55,9 +94,7 @@ void PhysicsSystem::Update(float delta) {
 	m_dynamicsWorld->stepSimulation(delta);
 	CheckForCollisionEvents();
 	
-	ForEach([](Entity entity) {
-		if (auto rigidbody = entity.GetComponent<Rigidbody>()) {
-		}
+	ForJoinedEach<Rigidbody>([](Entity entity, Rigidbody *rigidbody) {
 	});
 }
 

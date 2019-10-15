@@ -22,6 +22,9 @@ public:
 	template<typename Func>
 	void ForEach(Func &&func);
 
+	template<typename... Ts, typename Func>
+	void ForJoinedEach(Func &&func);
+
 	/**
 	 * Detaches all entities.
 	 */

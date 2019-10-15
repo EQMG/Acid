@@ -12,6 +12,15 @@ void System::ForEach(Func &&func) {
 	}
 }
 
+template<typename ...Ts, typename Func>
+void System::ForJoinedEach(Func &&func) {
+	for (const auto &entity : m_enabledEntities) {
+		if (entity.IsValid()) {
+			func(entity, ((entity.GetComponent<Ts>()), ...));
+		}
+	}
+}
+
 template class ACID_EXPORT TypeInfo<System>;
 
 template<typename T>
