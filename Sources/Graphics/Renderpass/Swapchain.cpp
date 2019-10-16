@@ -8,7 +8,7 @@ static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = {
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
 };
 
-Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swapchain>> &oldSwapchain) :
+Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
 	m_extent(extent),
 	m_presentMode(VK_PRESENT_MODE_FIFO_KHR),
 	m_preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
@@ -76,17 +76,13 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	swapchainCreateInfo.clipped = VK_TRUE;
 	swapchainCreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-	if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT) {
+	if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT)
 		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
-	}
-
-	if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_DST_BIT) {
+	if (surfaceCapabilities.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_DST_BIT)
 		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-	}
 
-	if (oldSwapchain && &oldSwapchain.value()) {
-		swapchainCreateInfo.oldSwapchain = oldSwapchain.value()->m_swapchain;
-	}
+	if (oldSwapchain)
+		swapchainCreateInfo.oldSwapchain = oldSwapchain->m_swapchain;
 
 	if (graphicsFamily != presentFamily) {
 		std::array<uint32_t, 2> queueFamily = {graphicsFamily, presentFamily};
@@ -103,7 +99,8 @@ Swapchain::Swapchain(const VkExtent2D &extent, const std::optional<Reference<Swa
 	Graphics::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, m_swapchain, &m_imageCount, m_images.data()));
 
 	for (uint32_t i = 0; i < m_imageCount; i++) {
-		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 1, 0, 1, 0);
+		Image::CreateImageView(m_images.at(i), m_imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 
+			1, 0, 1, 0);
 	}
 
 	VkFenceCreateInfo fenceCreateInfo = {};

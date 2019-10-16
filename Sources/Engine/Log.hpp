@@ -1,8 +1,6 @@
 #pragma once
 
-#include <mutex>
-
-#include "StdAfx.hpp"
+#include "Maths/Time.hpp"
 
 namespace acid {
 /**
@@ -42,7 +40,7 @@ public:
 		static constexpr std::string_view White = "\033[97m";
 	};
 
-	static constexpr auto TimestampFormat = "%H:%M:%S ";
+	static constexpr auto TimestampFormat = "%H:%M:%S";
 
 	/**
 	 * Outputs a message into the console.
@@ -51,7 +49,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Out(Args ... args) {
-		Write(args...); // GetTime(), 
+		Write(args...); 
 	}
 
 	/**
@@ -63,7 +61,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Out(const std::string_view &style, const std::string_view &colour, Args ... args) {
-		Write(style, colour, args..., Style::Default); // GetTime(), 
+		Write(style, colour, args..., Style::Default);
 	}
 
 	/**
@@ -73,7 +71,9 @@ public:
 	 */
 	template<typename ... Args>
 	static void Debug(Args ... args) {
+#ifdef ACID_DEBUG
 		Out(Style::Default, Colour::LightBlue, args...);
+#endif
 	}
 
 	/**
@@ -136,15 +136,30 @@ private:
 	template<typename ... Args>
 	static void Write(Args ... args) {
 		std::unique_lock<std::mutex> lock(WriteMutex);
+		
 		((std::cout << std::forward<Args>(args)), ...);
 		if (FileStream.is_open()) {
 			((FileStream << std::forward<Args>(args)), ...);
 		}
 	}
+};
 
-	/**
-	 * A internal method that gets the current time in the log format.
-	 */
-	static std::string GetTime();
+template<typename T>
+class Loggable {
+protected:
+#define MESSAGE_PREFIX Time::GetDateTime(Log::TimestampFormat), " - [", typeid(T).name(), "] "
+#define MESSAGE_PREFIX_THIS "(0x", std::hex, std::uppercase, reinterpret_cast<long>(this), ") ", std::dec
+
+	template<typename ... Args>
+	void WriteOut(Args ... args) const { Log::Out(MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+
+	template<typename ... Args>
+	void WriteInfo(Args ... args) const { Log::Info("INFO: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+
+	template<typename ... Args>
+	void WriteWarning(Args ... args) const { Log::Warning("WARN: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+
+	template<typename ... Args>
+	void WriteError(Args ... args) const { Log::Error("ERROR: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
 };
 }

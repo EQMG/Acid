@@ -88,7 +88,6 @@
 #include "Helpers/Factory.hpp"
 #include "Helpers/Future.hpp"
 #include "Helpers/NonCopyable.hpp"
-#include "Helpers/Reference.hpp"
 #include "Helpers/RingBuffer.hpp"
 #include "Helpers/StreamFactory.hpp"
 #include "Helpers/String.hpp"

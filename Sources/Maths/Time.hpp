@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Files/Node.hpp"
+#include "StdAfx.hpp"
 
 namespace acid {
 using namespace std::chrono_literals;
+
+class Node;
 
 /**
  * @brief Represents a time value stored in microseconds.

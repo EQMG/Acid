@@ -91,7 +91,6 @@ set(_temp_acid_headers
 		Helpers/Factory.hpp
 		Helpers/Future.hpp
 		Helpers/NonCopyable.hpp
-		Helpers/Reference.hpp
 		Helpers/RingBuffer.hpp
 		Helpers/StreamFactory.hpp
 		Helpers/String.hpp

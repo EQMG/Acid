@@ -2,7 +2,6 @@
 
 #include "Matrix4.hpp"
 #include "Vector3.hpp"
-#include "Quaternion.hpp"
 #include "Scenes/Component.hpp"
 
 namespace acid {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Files/Files.hpp"
+#include "Helpers/String.hpp"
 
 namespace acid {
 /**

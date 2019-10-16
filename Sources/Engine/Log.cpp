@@ -1,7 +1,5 @@
 #include "Log.hpp"
 
-#include "Maths/Time.hpp"
-
 namespace acid {
 std::mutex Log::WriteMutex;
 std::ofstream Log::FileStream;
@@ -16,9 +14,5 @@ void Log::OpenLog(const std::filesystem::path &filepath) {
 
 void Log::CloseLog() {
 	FileStream.close();
-}
-
-std::string Log::GetTime() {
-	return Time::GetDateTime(TimestampFormat);
 }
 }

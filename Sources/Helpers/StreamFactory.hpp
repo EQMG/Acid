@@ -2,6 +2,7 @@
 
 #include "Engine/Log.hpp"
 #include "Files/Node.hpp"
+#include "TypeInfo.hpp"
 
 namespace acid {
 template<typename Base, class... Args>
@@ -42,6 +43,10 @@ public:
 
 	template<typename T>
 	class Registrar : public Base {
+	public:
+		TypeId GetTypeId() const override { return TypeInfo<Base>::template GetTypeId<T>(); }
+		std::string GetTypeName() const override { return name; }
+
 	protected:
 		static bool Register(const std::string &name) {
 			Registrar::name = name;
@@ -50,8 +55,6 @@ public:
 			};
 			return true;
 		}
-
-		std::string GetTypeName() const override { return name; }
 
 		const Node &Load(const Node &node) override {
 			return node >> *dynamic_cast<T *>(this);
@@ -66,20 +69,13 @@ public:
 	};
 
 	friend inline const Node &operator>>(const Node &node, std::unique_ptr<Base> &object) {
-		object = Create(node["type"].Get<std::string>());
+		if (node["type"].has_value())
+			object = Create(node["type"].Get<std::string>());
 		node >> *object;
 		return node;
 	}
 
-	/*friend inline Node &operator<<(Node &node, const std::unique_ptr<Base> &object) {
-		if (object == nullptr) {
-			return node << nullptr;
-		}
-
-		node << *object;
-		return node;
-	}*/
-
+	virtual TypeId GetTypeId() const { return -1; }
 	virtual std::string GetTypeName() const { return ""; }
 
 	friend const Node &operator>>(const Node &node, Base &base) {
