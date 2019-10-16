@@ -14,7 +14,8 @@ void Scenes::Update() {
 		m_scene->m_started = true;
 	}
 
-	m_scene->Update(Engine::Get()->GetDelta().AsSeconds());
+	m_scene->Update();
+	m_scene->Update(Engine::Get()->GetDelta());
 
 	if (m_scene->GetCamera()) {
 		m_scene->GetCamera()->Update();

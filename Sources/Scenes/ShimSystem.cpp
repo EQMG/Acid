@@ -4,7 +4,7 @@ namespace acid {
 ShimSystem::ShimSystem() {
 }
 
-void ShimSystem::Update(float delta) {
+void ShimSystem::Update(const Time &delta) {
 	ForEach([](Entity entity) {
 		for (auto &component : entity.GetComponents()) {
 			// I know this will memory leak, this is a shim so I don't need to be 100% correct.

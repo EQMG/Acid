@@ -15,6 +15,7 @@ class Frustum;
  * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT CollisionObject : public virtual Observer, public virtual NonCopyable {
+	friend class PhysicsSystem;
 public:
 	/**
 	 * Creates a new collision object.

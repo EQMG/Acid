@@ -13,6 +13,7 @@ namespace acid {
  * @brief Represents a kinematic character controller.
  */
 class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject {
+	friend class PhysicsSystem;
 public:
 	/**
 	 * Creates a new kinematic character controller.
@@ -23,9 +24,6 @@ public:
 	explicit KinematicCharacter(std::unique_ptr<Collider> &&collider = nullptr, float mass = 1.0f, float friction = 0.2f);
 
 	~KinematicCharacter();
-
-	void Start() override;
-	void Update() override;
 
 	bool InFrustum(const Frustum &frustum) override;
 	void ClearForces() override;
@@ -62,8 +60,9 @@ public:
 	friend Node &operator<<(Node &node, const KinematicCharacter &character);
 
 protected:
+	void CreateCollisionObject(Transform *transform);
 	void RecalculateMass() override;
-
+	
 private:
 	static bool registered;
 

@@ -4,11 +4,15 @@
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btCollisionShape.h>
-#include <BulletDynamics/Dynamics/btRigidBody.h>
+#include <BulletDynamics/Character/btKinematicCharacterController.h>
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <LinearMath/btDefaultMotionState.h>
 #include "Scenes/Entity.inl"
 #include "Rigidbody.hpp"
 #include "KinematicCharacter.hpp"
@@ -22,6 +26,7 @@ PhysicsSystem::PhysicsSystem() :
 	m_dynamicsWorld(std::make_unique<btSoftRigidDynamicsWorld>(m_dispatcher.get(), m_broadphase.get(), m_solver.get(), m_collisionConfiguration.get())),
 	m_gravity(0.0f, -9.81f, 0.0f),
 	m_airDensity(1.2f) {
+	m_broadphase->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	m_dynamicsWorld->setGravity(Collider::Convert(m_gravity));
 	m_dynamicsWorld->getDispatchInfo().m_enableSPU = true;
 	m_dynamicsWorld->getSolverInfo().m_minimumSolverBatchSize = 128;
@@ -52,11 +57,96 @@ PhysicsSystem::~PhysicsSystem() {
 	}
 }
 
-void PhysicsSystem::Update(float delta) {
-	m_dynamicsWorld->stepSimulation(delta);
+void PhysicsSystem::OnEntityAttach(Entity entity) {
+	auto transform = entity.GetComponent<Transform>();
+
+	CollisionObject *collisionObject;
+	
+	if (auto rigidbody = entity.GetComponent<Rigidbody>()) {
+		collisionObject = static_cast<CollisionObject *>(rigidbody);
+		
+		rigidbody->m_gravity = m_gravity;
+		rigidbody->CreateShape();
+		assert((!rigidbody->m_shape || rigidbody->m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
+		rigidbody->CreateCollisionObject(transform);
+		m_dynamicsWorld->addRigidBody(rigidbody->m_rigidBody.get());
+		rigidbody->RecalculateMass();
+	}
+
+	if (auto character = entity.GetComponent<KinematicCharacter>()) {
+		collisionObject = static_cast<CollisionObject *>(character);
+		
+		character->m_gravity = m_gravity;
+		character->CreateShape(true);
+		assert((rigidbody->m_shape || rigidbody->m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
+		character->CreateCollisionObject(transform);
+		m_dynamicsWorld->addCollisionObject(character->m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
+		m_dynamicsWorld->addAction(character->m_controller.get());
+		character->RecalculateMass();
+	}
+}
+
+void PhysicsSystem::OnEntityDetach(Entity entity) {
+	if (auto rigidbody = entity.GetComponent<Rigidbody>()) {
+		auto body = btRigidBody::upcast(rigidbody->m_body);
+
+		if (body && body->getMotionState()) {
+			delete body->getMotionState();
+		}
+
+		m_dynamicsWorld->removeRigidBody(rigidbody->m_rigidBody.get());
+	}
+	
+	if (auto character = entity.GetComponent<KinematicCharacter>()) {
+		m_dynamicsWorld->removeCollisionObject(character->m_ghostObject.get());
+		m_dynamicsWorld->removeAction(character->m_controller.get());
+	}
+}
+
+void PhysicsSystem::Update(const Time &delta) {
+	m_dynamicsWorld->stepSimulation(delta.AsSeconds());
 	CheckForCollisionEvents();
 	
-	ForJoinedEach<Rigidbody/*, KinematicCharacter*/>([](Entity entity, Rigidbody *rigidbody/*, KinematicCharacter *character*/) {
+	ForEach<Transform, Rigidbody, KinematicCharacter>([delta](Entity entity, Transform *transform, Rigidbody *rigidbody, KinematicCharacter *character) {
+		CollisionObject *collisionObject = nullptr;
+
+		if (rigidbody) {
+			collisionObject = static_cast<CollisionObject *>(rigidbody);
+			
+			for (auto it = collisionObject->m_forces.begin(); it != collisionObject->m_forces.end();) {
+				(*it)->Update(delta);
+				rigidbody->m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
+
+				if ((*it)->IsExpired()) {
+					it = collisionObject->m_forces.erase(it);
+				} else {
+					++it;
+				}
+			}
+			
+			btTransform motionTransform;
+			rigidbody->m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
+			*transform = Collider::Convert(motionTransform, transform->GetScale());
+
+			rigidbody->m_shape->setLocalScaling(Collider::Convert(transform->GetScale()));
+			//rigidbody->m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(*transform));
+			rigidbody->m_linearVelocity = Collider::Convert(rigidbody->m_rigidBody->getLinearVelocity());
+			rigidbody->m_angularVelocity = Collider::Convert(rigidbody->m_rigidBody->getAngularVelocity());
+		}
+
+		if (character) {
+			collisionObject = static_cast<CollisionObject *>(character);
+			
+			auto worldTransform = character->m_ghostObject->getWorldTransform();
+			*transform = Collider::Convert(worldTransform, transform->GetScale());
+
+			character->m_linearVelocity = Collider::Convert(character->m_controller->getLinearVelocity());
+			character->m_angularVelocity = Collider::Convert(character->m_controller->getAngularVelocity());
+		}
+
+		if (collisionObject && collisionObject->m_shape.get() != collisionObject->m_body->getCollisionShape()) {
+			collisionObject->m_body->setCollisionShape(collisionObject->m_shape.get());
+		}
 	});
 }
 

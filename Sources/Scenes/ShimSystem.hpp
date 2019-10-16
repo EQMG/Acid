@@ -9,6 +9,6 @@ class ACID_EXPORT ShimSystem : public System {
 public:
 	ShimSystem();
 	
-	void Update(float delta) override;
+	void Update(const Time &delta) override;
 };
 }

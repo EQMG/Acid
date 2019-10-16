@@ -180,7 +180,7 @@ public:
 	 * Updates the Scene.
 	 * @param delta The time delta between the last update.
 	 */
-	void Update(float delta);
+	void Update(const Time &delta);
 
 	/**
 	 * Clears the Scene by removing all Systems and Entities.

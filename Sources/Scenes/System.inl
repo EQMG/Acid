@@ -12,11 +12,11 @@ void System::ForEach(Func &&func) {
 	}
 }
 
-template<typename ...Ts, typename Func>
-void System::ForJoinedEach(Func &&func) {
+template<typename ...Types>
+void System::ForEach(typename std::common_type<std::function<void(Entity, std::add_pointer_t<Types>...)>>::type func) {
 	for (const auto &entity : m_enabledEntities) {
 		if (entity.IsValid()) {
-			func(entity, ((entity.GetComponent<Ts>()), ...));
+			func(entity, entity.template GetComponent<Types>()...);
 		}
 	}
 }

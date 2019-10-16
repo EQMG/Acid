@@ -94,7 +94,7 @@ void System::OnEntityEnable(Entity entity) {
 void System::OnEntityDisable(Entity entity) {
 }
 
-void System::Update(float delta) {
+void System::Update(const Time &delta) {
 }
 
 System::EntityStatus System::GetEntityStatus(Entity::Id id) const {

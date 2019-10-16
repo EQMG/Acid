@@ -19,13 +19,24 @@ MeshAnimated::MeshAnimated(std::filesystem::path filename, std::unique_ptr<Mater
 }
 
 void MeshAnimated::Start() {
+	Load();
 	if (m_material)
 		m_material->Start(GetVertexInput(), true);
+}
 
-	if (m_filename.empty())
-		return;
+void MeshAnimated::Update() {
+	if (m_material) {
+		auto transform = GetEntity()->GetComponent<Transform>();
+		m_material->PushUniforms(m_uniformObject, transform);
+	}
+	
+	std::vector<Matrix4> jointMatrices(MaxJoints);
+	m_animator.Update(m_headJoint, jointMatrices);
+	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
+}
 
-	//File file(m_filename, std::make_unique<Xml>("COLLADA"));
+void MeshAnimated::Load() {
+	//File file(filename, std::make_unique<Xml>("COLLADA"));
 	//file.Load();
 	//auto &fileNode = *file.GetNode();
 	File file(m_filename);
@@ -65,17 +76,6 @@ void MeshAnimated::Start() {
 		fileAnimation0.Write(Node::Format::Beautified);
 	}
 #endif*/
-}
-
-void MeshAnimated::Update() {
-	if (m_material) {
-		auto transform = GetEntity()->GetComponent<Transform>();
-		m_material->PushUniforms(m_uniformObject, transform);
-	}
-	
-	std::vector<Matrix4> jointMatrices(MaxJoints);
-	m_animator.Update(m_headJoint, jointMatrices);
-	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 }
 
 bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
@@ -122,6 +122,7 @@ void MeshAnimated::SetMaterial(std::unique_ptr<Material> &&material) {
 const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {
 	node["filename"].Get(meshAnimated.m_filename);
 	node["material"].Get(meshAnimated.m_material);
+	meshAnimated.Load();
 	return node;
 }
 

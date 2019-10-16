@@ -130,7 +130,7 @@ void Scene::RemoveAllEntities() {
 	}
 }
 
-void Scene::Update(float delta) {
+void Scene::Update(const Time &delta) {
 	// Start new Systems
 	for (auto &system : m_newSystems) {
 		system->OnStart();

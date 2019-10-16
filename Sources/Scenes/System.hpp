@@ -22,8 +22,8 @@ public:
 	template<typename Func>
 	void ForEach(Func &&func);
 
-	template<typename... Ts, typename Func>
-	void ForJoinedEach(Func &&func);
+	template<typename ...Types>
+	void ForEach(typename std::common_type<std::function<void(Entity, std::add_pointer_t<Types>...)>>::type func);
 
 	/**
 	 * Detaches all entities.
@@ -55,7 +55,7 @@ protected:
 	virtual void OnEntityDetach(Entity entity);
 	virtual void OnEntityEnable(Entity entity);
 	virtual void OnEntityDisable(Entity entity);
-	virtual void Update(float delta);
+	virtual void Update(const Time &delta);
 
 private:
 	enum class EntityStatus {

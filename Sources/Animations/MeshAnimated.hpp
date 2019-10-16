@@ -23,6 +23,8 @@ public:
 	void Start() override;
 	void Update() override;
 
+	void Load();
+
 	bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
 
 	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return VertexAnimated::GetVertexInput(binding); }

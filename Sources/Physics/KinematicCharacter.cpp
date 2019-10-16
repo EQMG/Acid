@@ -24,71 +24,6 @@ KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, flo
 }
 
 KinematicCharacter::~KinematicCharacter() {
-	if (auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>()) {
-		// TODO: Are these being deleted?
-		physicsSystem->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
-		physicsSystem->GetDynamicsWorld()->removeAction(m_controller.get());
-	}
-}
-
-void KinematicCharacter::Start() {
-	auto physicsSystem = Scenes::Get()->GetScene()->GetSystem<PhysicsSystem>();
-	
-	if (m_ghostObject) {
-		physicsSystem->GetDynamicsWorld()->removeCollisionObject(m_ghostObject.get());
-	}
-
-	if (m_controller) {
-		physicsSystem->GetDynamicsWorld()->removeAction(m_controller.get());
-	}
-
-	CreateShape(true);
-	assert((m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
-	m_gravity = physicsSystem->GetGravity();
-	btVector3 localInertia;
-
-	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-	if (m_mass != 0.0f) {
-		m_shape->calculateLocalInertia(m_mass, localInertia);
-	}
-
-	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
-
-	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
-	m_ghostObject->setWorldTransform(worldTransform);
-	physicsSystem->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-	m_ghostObject->setCollisionShape(m_shape.get());
-	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
-	m_ghostObject->setFriction(m_friction);
-	m_ghostObject->setRollingFriction(m_frictionRolling);
-	m_ghostObject->setSpinningFriction(m_frictionSpinning);
-	m_ghostObject->setUserPointer(dynamic_cast<CollisionObject *>(this));
-	physicsSystem->GetDynamicsWorld()->addCollisionObject(m_ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
-	m_body = m_ghostObject.get();
-
-	m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f);
-	m_controller->setGravity(Collider::Convert(m_gravity));
-	m_controller->setUp(Collider::Convert(m_up));
-	m_controller->setStepHeight(m_stepHeight);
-	m_controller->setFallSpeed(m_fallSpeed);
-	m_controller->setJumpSpeed(m_jumpSpeed);
-	m_controller->setMaxJumpHeight(m_maxHeight);
-	m_controller->setUpInterpolate(m_interpolate);
-	physicsSystem->GetDynamicsWorld()->addAction(m_controller.get());
-}
-
-void KinematicCharacter::Update() {
-	if (!m_body) return;
-	if (m_shape.get() != m_body->getCollisionShape()) {
-		m_body->setCollisionShape(m_shape.get());
-	}
-
-	auto &transform = *GetEntity()->GetComponent<Transform>();
-	auto worldTransform = m_ghostObject->getWorldTransform();
-	transform = Collider::Convert(worldTransform, transform.GetScale());
-
-	m_linearVelocity = Collider::Convert(m_controller->getLinearVelocity());
-	m_angularVelocity = Collider::Convert(m_controller->getAngularVelocity());
 }
 
 bool KinematicCharacter::InFrustum(const Frustum &frustum) {
@@ -206,6 +141,36 @@ Node &operator<<(Node &node, const KinematicCharacter &character) {
 	node["maxHeight"].Set(character.m_maxHeight);
 	node["interpolate"].Set(character.m_interpolate);
 	return node;
+}
+
+void KinematicCharacter::CreateCollisionObject(Transform *transform) {
+	btVector3 localInertia;
+
+	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
+	if (m_mass != 0.0f) {
+		m_shape->calculateLocalInertia(m_mass, localInertia);
+	}
+
+	auto worldTransform = Collider::Convert(*transform);
+
+	m_ghostObject = std::make_unique<btPairCachingGhostObject>();
+	m_ghostObject->setWorldTransform(worldTransform);
+	m_ghostObject->setCollisionShape(m_shape.get());
+	m_ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
+	m_ghostObject->setFriction(m_friction);
+	m_ghostObject->setRollingFriction(m_frictionRolling);
+	m_ghostObject->setSpinningFriction(m_frictionSpinning);
+	m_ghostObject->setUserPointer(dynamic_cast<CollisionObject *>(this));
+	m_body = m_ghostObject.get();
+
+	m_controller = std::make_unique<btKinematicCharacterController>(m_ghostObject.get(), static_cast<btConvexShape *>(m_shape.get()), 0.03f);
+	m_controller->setGravity(Collider::Convert(m_gravity));
+	m_controller->setUp(Collider::Convert(m_up));
+	m_controller->setStepHeight(m_stepHeight);
+	m_controller->setFallSpeed(m_fallSpeed);
+	m_controller->setJumpSpeed(m_jumpSpeed);
+	m_controller->setMaxJumpHeight(m_maxHeight);
+	m_controller->setUpInterpolate(m_interpolate);
 }
 
 void KinematicCharacter::RecalculateMass() {

@@ -12,6 +12,7 @@ namespace acid {
  * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT Rigidbody : public Component::Registrar<Rigidbody>, public CollisionObject {
+	friend class PhysicsSystem;
 public:
 	/**
 	 * Creates a new rigidbody.
@@ -26,9 +27,6 @@ public:
 
 	~Rigidbody();
 
-	void Start() override;
-	void Update() override;
-
 	bool InFrustum(const Frustum &frustum) override;
 	void ClearForces() override;
 	void SetMass(float mass) override;
@@ -42,6 +40,7 @@ public:
 	friend Node &operator<<(Node &node, const Rigidbody &rigidbody);
 
 protected:
+	void CreateCollisionObject(Transform *transform);
 	void RecalculateMass() override;
 
 private:

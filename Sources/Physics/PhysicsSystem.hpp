@@ -39,7 +39,9 @@ public:
 
 	~PhysicsSystem();
 
-	void Update(float delta) override;
+	void OnEntityAttach(Entity entity) ;
+	void OnEntityDetach(Entity entity) override;
+	void Update(const Time &delta) override;
 	
 	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 
