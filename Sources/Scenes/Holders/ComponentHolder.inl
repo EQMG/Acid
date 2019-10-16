@@ -31,20 +31,19 @@ bool ComponentHolder::HasComponent(Entity::Id id) const {
 
 template<typename T>
 T *ComponentHolder::GetComponent(Entity::Id id) const {
-	if (!HasComponent<T>(id)) {
-		//throw std::runtime_error("Entity does not have requested Component");
-		return nullptr;
-	}
-
 	const auto typeId = GetComponentTypeId<T>();
-	auto &component = m_components[id][typeId];
 
-	if (!component) {
+	if (typeId >= m_components[id].size()) {
 		//throw std::runtime_error("Entity does not have requested Component");
 		return nullptr;
 	}
-
-	return static_cast<T *>(component.get());
+	
+	if (auto &component = m_components[id][typeId]) {
+		return dynamic_cast<T *>(component.get());
+	}
+	
+	//throw std::runtime_error("Entity does not have requested Component");
+	return nullptr;
 }
 
 template<typename T>

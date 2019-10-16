@@ -14,108 +14,6 @@
 #include "KinematicCharacter.hpp"
 
 namespace acid {
-class Filter {
-public:
-	Filter() = default;
-	~Filter() = default;
-
-	virtual std::unique_ptr<Filter> Clone() const = 0;
-	virtual bool Compute(const ComponentFilter::Mask &mask) const = 0;
-};
-
-class LogicalAnd : public Filter {
-public:
-	LogicalAnd(const std::unique_ptr<Filter> &left, const std::unique_ptr<Filter> &right) :
-		m_left(left->Clone()),
-		m_right(right->Clone()) {
-	}
-	LogicalAnd(const Filter &left, const Filter &right) :
-		m_left(left.Clone()),
-		m_right(right.Clone()) {
-	}
-
-	std::unique_ptr<Filter> Clone() const override {
-		return std::make_unique<LogicalAnd>(m_left, m_right);
-	}
-	
-	bool Compute(const ComponentFilter::Mask &mask) const override {
-		return m_left->Compute(mask) && m_right->Compute(mask);
-	}
-
-	std::unique_ptr<Filter> m_left;
-	std::unique_ptr<Filter> m_right;
-};
-
-class LogicalOr : public Filter {
-public:
-	LogicalOr(const std::unique_ptr<Filter> &left, const std::unique_ptr<Filter> &right) :
-		m_left(left->Clone()),
-		m_right(right->Clone()) {
-	}
-	LogicalOr(const Filter &left, const Filter &right) :
-		m_left(left.Clone()),
-		m_right(right.Clone()) {
-	}
-
-	std::unique_ptr<Filter> Clone() const override {
-		return std::make_unique<LogicalOr>(m_left, m_right);
-	}
-
-	bool Compute(const ComponentFilter::Mask &mask) const override {
-		return m_left->Compute(mask) || m_right->Compute(mask);
-	}
-
-	std::unique_ptr<Filter> m_left;
-	std::unique_ptr<Filter> m_right;
-};
-
-class LogicalNot : public Filter {
-public:
-	LogicalNot(const std::unique_ptr<Filter> &right) :
-		m_right(right->Clone()) {
-	}
-	LogicalNot(const Filter &right) :
-		m_right(right.Clone()) {
-	}
-
-	bool Compute(const ComponentFilter::Mask &mask) const override {
-		return !m_right->Compute(mask);
-	}
-
-	std::unique_ptr<Filter> Clone() const override {
-		return std::make_unique<LogicalNot>(m_right);
-	}
-
-	std::unique_ptr<Filter> m_right;
-};
-
-template<typename T>
-class Require : public Filter {
-public:
-	Require() = default;
-
-	std::unique_ptr<Filter> Clone() const override {
-		return std::make_unique<Require<T>>();
-	}
-
-	bool Compute(const ComponentFilter::Mask &mask) const override {
-		// TODO: This logic is wrong!
-		return mask[GetComponentTypeId<T>()];
-	}
-};
-
-LogicalNot operator!(const Filter &rhs) {
-	return LogicalNot(rhs);
-}
-
-LogicalAnd operator&&(const Filter &lhs, const Filter &rhs) {
-	return LogicalAnd(lhs, rhs);
-}
-
-LogicalOr operator||(const Filter &lhs, const Filter &rhs) {
-	return LogicalOr(lhs, rhs);
-}
-
 PhysicsSystem::PhysicsSystem() :
 	m_collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
 	m_broadphase(std::make_unique<btDbvtBroadphase>()),
@@ -137,18 +35,7 @@ PhysicsSystem::PhysicsSystem() :
 	softDynamicsWorld->getWorldInfo().air_density = m_airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 
-	// TODO: Maybe just use a lambda?
-	//auto filter = LogicalAnd(LogicalNot(Require<Transform>()), LogicalOr(Require<Rigidbody>(), Require<KinematicCharacter>()));
-	auto filter = !Require<Transform>() && (Require<Rigidbody>() || Require<KinematicCharacter>());
-	ComponentFilter::Mask mask;
-	//mask.set(GetComponentTypeId<Transform>());
-	mask.set(GetComponentTypeId<Rigidbody>());
-	//mask.set(GetComponentTypeId<KinematicCharacter>());
-	bool match = filter.Compute(mask);
-	Log::Debug("Matches: ", match, '\n');
-
-	//SetFilter(filter);
-	GetFilter().Require<Rigidbody>();
+	GetFilter().Set(FilterMatch<Transform>() && (FilterMatch<Rigidbody>() || FilterMatch<KinematicCharacter>()));
 }
 
 PhysicsSystem::~PhysicsSystem() {
@@ -169,7 +56,7 @@ void PhysicsSystem::Update(float delta) {
 	m_dynamicsWorld->stepSimulation(delta);
 	CheckForCollisionEvents();
 	
-	ForJoinedEach<Rigidbody>([](Entity entity, Rigidbody *rigidbody) {
+	ForJoinedEach<Rigidbody/*, KinematicCharacter*/>([](Entity entity, Rigidbody *rigidbody/*, KinematicCharacter *character*/) {
 	});
 }
 

@@ -4,11 +4,12 @@
 #include "Scenes/Component.hpp"
 
 namespace acid {
+class Filter;
 class ACID_EXPORT ComponentFilter {
 public:
 	using Mask = std::bitset<MAX_COMPONENTS>;
 
-	ComponentFilter() = default;
+	ComponentFilter();
 
 	~ComponentFilter() = default;
 
@@ -20,39 +21,74 @@ public:
 	bool Check(const Mask &mask) const;
 
 	/**
-	 * Makes a Component required.
-	 * @tparam T The Component type.
+	 * Sets the Component Filter logic, using {@link Filter#Compute()}.
+	 * @param filter The Filter object to check Component Masks on.
 	 */
-	template<typename T>
-	void Require();
-
-	/**
-	 * Makes a Component excluded.
-	 * @tparam T The Component type.
-	 */
-	template<typename T>
-	void Exclude();
-
-	/**
-	 * Exclude all Components that are not required.
-	 */
-	void ExcludeNotRequired() noexcept;
-
-	/**
-	 * Exclude all Components.
-	 */
-	void ExcludeAll() noexcept;
-
-	/**
-	 * Removes a Component from both required and excluded lists.
-	 * @tparam T The Component type.
-	 */
-	template<typename T>
-	void Ignore();
+	void Set(const Filter &filter);
 
 private:
-	Mask m_required;
-	Mask m_excluded;
+	std::unique_ptr<Filter> m_filter;
+};
+
+class ACID_EXPORT Filter {
+public:
+	Filter() = default;
+	virtual ~Filter() = default;
+
+	virtual std::unique_ptr<Filter> Clone() const = 0;
+	virtual bool Compute(const ComponentFilter::Mask &mask) const = 0;
+};
+
+class ACID_EXPORT FilterNone : public Filter {
+public:
+	FilterNone() = default;
+
+	std::unique_ptr<Filter> Clone() const override;
+	bool Compute(const ComponentFilter::Mask &mask) const override;
+};
+
+class ACID_EXPORT LogicalAnd : public Filter {
+public:
+	LogicalAnd(const Filter &left, const Filter &right);
+
+	std::unique_ptr<Filter> Clone() const override;
+	bool Compute(const ComponentFilter::Mask &mask) const override;
+
+private:
+	std::unique_ptr<Filter> m_left;
+	std::unique_ptr<Filter> m_right;
+};
+
+class ACID_EXPORT LogicalOr : public Filter {
+public:
+	LogicalOr(const Filter &left, const Filter &right);
+
+	std::unique_ptr<Filter> Clone() const override;
+	bool Compute(const ComponentFilter::Mask &mask) const override;
+
+private:
+	std::unique_ptr<Filter> m_left;
+	std::unique_ptr<Filter> m_right;
+};
+
+class ACID_EXPORT LogicalNot : public Filter {
+public:
+	explicit LogicalNot(const Filter &right);
+
+	bool Compute(const ComponentFilter::Mask &mask) const override;
+	std::unique_ptr<Filter> Clone() const override;
+	
+private:
+	std::unique_ptr<Filter> m_right;
+};
+
+template<typename T>
+class FilterMatch : public Filter {
+public:
+	FilterMatch() = default;
+
+	std::unique_ptr<Filter> Clone() const override;
+	bool Compute(const ComponentFilter::Mask &mask) const override;
 };
 }
 

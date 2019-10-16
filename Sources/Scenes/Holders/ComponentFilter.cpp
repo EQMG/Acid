@@ -1,29 +1,61 @@
 #include "ComponentFilter.hpp"
 
 namespace acid {
+ComponentFilter::ComponentFilter() :
+	m_filter(std::make_unique<FilterNone>()) {
+}
+
 bool ComponentFilter::Check(const Mask &mask) const {
-	const auto excludeMask = m_excluded & mask;
+	return m_filter->Compute(mask);
+}
 
-	// Checks if there is an excluded component.
-	if (excludeMask.any())
-		return false;
+void ComponentFilter::Set(const Filter &filter) {
+	m_filter = filter.Clone();
+}
 
-	for (std::size_t i = 0; i < m_required.size(); ++i) {
-		if (m_required[i] && !mask[i]) {
-			// A required component is missing.
-			return false;
-		}
-	}
+std::unique_ptr<Filter> FilterNone::Clone() const {
+	return std::make_unique<FilterNone>();
+}
 
+bool FilterNone::Compute(const ComponentFilter::Mask &mask) const {
 	return true;
 }
 
-void ComponentFilter::ExcludeNotRequired() noexcept {
-	m_excluded = ~m_required;
+LogicalAnd::LogicalAnd(const Filter &left, const Filter &right):
+	m_left(left.Clone()),
+	m_right(right.Clone()) {
 }
 
-void ComponentFilter::ExcludeAll() noexcept {
-	m_required.reset();
-	m_excluded.set();
+std::unique_ptr<Filter> LogicalAnd::Clone() const {
+	return std::make_unique<LogicalAnd>(*m_left, *m_right);
+}
+
+bool LogicalAnd::Compute(const ComponentFilter::Mask &mask) const {
+	return m_left->Compute(mask) && m_right->Compute(mask);
+}
+
+LogicalOr::LogicalOr(const Filter &left, const Filter &right):
+	m_left(left.Clone()),
+	m_right(right.Clone()) {
+}
+
+std::unique_ptr<Filter> LogicalOr::Clone() const {
+	return std::make_unique<LogicalOr>(*m_left, *m_right);
+}
+
+bool LogicalOr::Compute(const ComponentFilter::Mask &mask) const {
+	return m_left->Compute(mask) || m_right->Compute(mask);
+}
+
+LogicalNot::LogicalNot(const Filter &right):
+	m_right(right.Clone()) {
+}
+
+bool LogicalNot::Compute(const ComponentFilter::Mask &mask) const {
+	return !m_right->Compute(mask);
+}
+
+std::unique_ptr<Filter> LogicalNot::Clone() const {
+	return std::make_unique<LogicalNot>(*m_right);
 }
 }
