@@ -1,4 +1,4 @@
-version: 0.13.5{build}
+version: '0.13.5{build}'
 
 clone_depth: 5
 
@@ -49,10 +49,10 @@ build_script:
   - cd ../../
 
 after_build:
-  - mkdir Artifacts\%CFG%_%ARCHITECTURE%_%version%
+  - mkdir Artifacts\%CFG%_%ARCHITECTURE%
   - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
   - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Artifacts\%CFG%_%ARCHITECTURE%_%version%\
-    name: "Acid Examples %version% (%CFG% %ARCHITECTURE%)"
+  - path: Artifacts\%CFG%_%ARCHITECTURE%\
+    name: "Examples $(appveyor_build_version) (%CFG% %ARCHITECTURE%)"

@@ -32,9 +32,9 @@ MainApp::MainApp() :
 	App("Test Physics", {1, 0, 0}) {
 	// Registers file search paths.
 #if defined(ACID_PACKED_RESOURCES)
-	for (auto &file : FileSystem::FilesInPath(std::filesystem::current_path(), false)) {
-		if (String::Contains(file, "data-"))
-			Files::Get()->AddSearchPath(String::ReplaceFirst(file, FileSystem::GetWorkingDirectory() + FileSystem::Separator, ""));
+	for (auto &file : std::filesystem::directory_iterator(std::filesystem::current_path())) {
+		if (String::StartsWith(file.path().string(), "data-"))
+			Files::Get()->AddSearchPath(file.path().string());
 	}
 #else
 	Files::Get()->AddSearchPath("Resources/Engine");

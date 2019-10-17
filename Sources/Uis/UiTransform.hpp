@@ -17,7 +17,7 @@ public:
 	static const Vector2f RightBottom;
 };
 
-enum class UiMargins {
+enum class UiMargins : uint8_t {
 	None = 0,
 	Left = 1,
 	Right = 2,

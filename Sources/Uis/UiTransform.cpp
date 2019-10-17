@@ -32,7 +32,8 @@ UiTransform::UiTransform(const BitMask<UiMargins> &margins, const Vector2f &anch
 }
 
 bool UiTransform::operator==(const UiTransform &other) const {
-	return m_size == other.m_size && m_anchor0 == other.m_anchor0 && m_anchor1 == other.m_anchor1 && m_position == other.m_position && m_depth == other.m_depth;
+	return m_size == other.m_size && m_anchor0 == other.m_anchor0 && m_anchor1 == other.m_anchor1 && m_position == other.m_position && 
+		m_margins == other.m_margins && m_depth == other.m_depth;
 }
 
 bool UiTransform::operator!=(const UiTransform &other) const {
