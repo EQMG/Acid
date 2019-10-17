@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex3d.hpp"
 
 namespace acid {
 bool ModelDisk::registered = Register("disk");
@@ -57,7 +57,7 @@ void ModelDisk::Load() {
 		return;
 	}
 
-	std::vector<VertexDefault> vertices;
+	std::vector<Vertex3d> vertices;
 	std::vector<uint32_t> indices;
 	vertices.reserve(m_slices * (m_loops + 1));
 	indices.reserve(m_slices * m_loops * 6);
@@ -75,7 +75,7 @@ void ModelDisk::Load() {
 			Vector3f position(radius * xDir, 0.0f, radius * yDir);
 			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivLoops);
 			Vector3f normal(0.0f, 1.0f, 0.0f);
-			vertices.emplace_back(VertexDefault(position, uvs, normal));
+			vertices.emplace_back(Vertex3d(position, uvs, normal));
 		}
 	}
 

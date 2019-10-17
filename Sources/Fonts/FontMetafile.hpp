@@ -72,7 +72,8 @@ public:
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 
 	float GetSpaceWidth() const { return m_spaceWidth; }
-	float GetMaxSizeY() const { return m_maxSizeY; }
+	float GetMaxHeight() const { return m_maxHeight; }
+	float GetMaxAdvance() const { return m_maxAdvance; }
 
 private:
 	/**
@@ -127,6 +128,6 @@ private:
 	std::vector<int32_t> m_padding;
 	int32_t m_paddingWidth = 0;
 	int32_t m_paddingHeight = 0;
-	float m_maxSizeY = 0.0f;
+	float m_maxHeight = 0.0f, m_maxAdvance = 0.0f;
 };
 }

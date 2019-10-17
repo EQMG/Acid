@@ -147,7 +147,7 @@ private:
 template<typename T>
 class Loggable {
 protected:
-#define MESSAGE_PREFIX Time::GetDateTime(Log::TimestampFormat), " - [", typeid(T).name(), "] "
+#define MESSAGE_PREFIX Time::GetDateTime(Log::TimestampFormat), " [", typeid(T).name(), "]"
 #define MESSAGE_PREFIX_THIS "(0x", std::hex, std::uppercase, reinterpret_cast<long>(this), ") ", std::dec
 
 	template<typename ... Args>

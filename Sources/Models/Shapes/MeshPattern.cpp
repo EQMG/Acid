@@ -8,7 +8,7 @@ MeshPattern::MeshPattern(float sideLength, float squareSize, uint32_t vertexCoun
 	m_uvScale(uvScale) {
 }
 
-VertexDefault MeshPattern::GetVertex(uint32_t col, uint32_t row) {
+Vertex3d MeshPattern::GetVertex(uint32_t col, uint32_t row) {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
@@ -19,7 +19,7 @@ VertexDefault MeshPattern::GetVertex(uint32_t col, uint32_t row) {
 }
 
 void MeshPattern::GenerateMesh() {
-	std::vector<VertexDefault> vertices;
+	std::vector<Vertex3d> vertices;
 	vertices.reserve(m_vertexCount * m_vertexCount);
 	std::vector<uint32_t> indices;
 	indices.reserve(6 * (m_vertexCount - 1) * (m_vertexCount - 1));

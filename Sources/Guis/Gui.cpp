@@ -1,13 +1,24 @@
 #include "Gui.hpp"
 
 #include "Graphics/Graphics.hpp"
-#include "Models/Shapes/ModelRectangle.hpp"
 #include "Maths/Visual/DriverConstant.hpp"
+#include "Models/Vertex2d.hpp"
 
 namespace acid {
+static const std::vector<Vertex2d> VERTICES = {
+	{{0.0f, 0.0f}, {0.0f, 0.0f}},
+	{{1.0f, 0.0f}, {1.0f, 0.0f}},
+	{{1.0f, 1.0f}, {1.0f, 1.0f}},
+	{{0.0f, 1.0f}, {0.0f, 1.0f}}
+};
+static const std::vector<uint32_t> INDICES = {
+	0, 1, 2,
+	2, 3, 0
+};
+
 Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset) :
 	UiObject(parent, rectangle),
-	m_model(ModelRectangle::Create(0.0f, 1.0f)),
+	m_model(std::make_unique<Model>(VERTICES, INDICES)),
 	m_image(std::move(image)),
 	m_atlasScale(1.0f),
 	m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)) {

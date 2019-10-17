@@ -4,7 +4,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/Driver.hpp"
 #include "Models/Model.hpp"
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex2d.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
@@ -270,9 +270,9 @@ private:
 	void LoadText();
 	std::vector<Line> CreateStructure() const;
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-	std::vector<VertexDefault> CreateQuad(const std::vector<Line> &lines);
-	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices);
-	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices);
+	std::vector<Vertex2d> CreateQuad(const std::vector<Line> &lines) const;
+	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<Vertex2d> &vertices);
+	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices);
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;

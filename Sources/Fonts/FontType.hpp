@@ -37,7 +37,7 @@ public:
 	FontType(std::filesystem::path filename, std::string style, bool load = true);
 
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
-	const FontMetafile *GetNode() const { return m_node.get(); }
+	const FontMetafile *GetMetafile() const { return m_metafile.get(); }
 
 	friend const Node &operator>>(const Node &node, FontType &fontType);
 	friend Node &operator<<(Node &node, const FontType &fontType);
@@ -49,6 +49,6 @@ private:
 	std::string m_style;
 
 	std::shared_ptr<Image2d> m_image;
-	std::unique_ptr<FontMetafile> m_node;
+	std::unique_ptr<FontMetafile> m_metafile;
 };
 }

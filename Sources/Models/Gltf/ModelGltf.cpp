@@ -7,7 +7,7 @@
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex3d.hpp"
 
 namespace acid {
 bool ModelGltf::registered = Register("gltf", ".gltf");
@@ -79,9 +79,9 @@ void ModelGltf::Load() {
 		}
 	}
 
-	std::vector<VertexDefault> vertices;
+	std::vector<Vertex3d> vertices;
 	std::vector<uint32_t> indices;
-	std::unordered_map<VertexDefault, size_t> uniqueVertices;
+	std::unordered_map<Vertex3d, size_t> uniqueVertices;
 
 	//LoadTextureSamplers(gltfModel);
 	//LoadTextures(gltfModel);

@@ -28,7 +28,6 @@ void Text::UpdateObject() {
 	}
 
 	if (GetScreenTransform().GetSize() != m_lastSize) {
-		m_lastSize = GetScreenTransform().GetSize();
 		LoadText();
 	}
 
@@ -78,9 +77,8 @@ void Text::SetFontSize(float fontSize) {
 }
 
 void Text::SetString(const std::string &string) {
-	if (m_string != string) {
+	if (m_string != string)
 		m_newString = string;
-	}
 }
 
 void Text::SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver) {
@@ -102,29 +100,22 @@ void Text::RemoveBorder() {
 
 float Text::GetTotalBorderSize() const {
 	if (m_solidBorder) {
-		if (m_borderSize == 0.0f) {
+		if (m_borderSize == 0.0f)
 			return 0.0f;
-		}
 
 		return CalculateEdgeStart() + m_borderSize;
 	}
 
-	if (m_glowBorder) {
+	if (m_glowBorder)
 		return CalculateEdgeStart();
-	}
-
 	return 0.0f;
 }
 
 float Text::GetGlowSize() const {
-	if (m_solidBorder) {
+	if (m_solidBorder)
 		return CalculateAntialiasSize();
-	}
-
-	if (m_glowBorder) {
+	if (m_glowBorder)
 		return m_glowSize;
-	}
-
 	return 0.0f;
 }
 
@@ -146,6 +137,10 @@ bool Text::IsLoaded() const {
 }
 
 void Text::LoadText() {
+#if defined(ACID_DEBUG)
+	auto debugStart = Time::Now();
+#endif
+
 	if (m_string.empty()) {
 		m_model = nullptr;
 		return;
@@ -155,17 +150,22 @@ void Text::LoadText() {
 	
 	// Creates mesh data.
 	auto lines = CreateStructure();
+	m_numberLines = static_cast<uint32_t>(lines.size());
 	auto vertices = CreateQuad(lines);
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
+
+#if defined(ACID_DEBUG)
+	Log::Out("Text mesh with ", m_string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+#endif
 }
 
 std::vector<Text::Line> Text::CreateStructure() const {
-	auto maxLength = m_lastSize.m_x;
+	auto maxLength = m_lastSize.m_x;// / m_fontSize * m_fontType->GetMetafile()->GetMaxAdvance();
 
 	std::vector<Line> lines;
-	Line currentLine(m_fontType->GetNode()->GetSpaceWidth(), maxLength);
+	Line currentLine(m_fontType->GetMetafile()->GetSpaceWidth(), maxLength);
 	Word currentWord;
 
 	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
@@ -182,7 +182,7 @@ std::vector<Text::Line> Text::CreateStructure() const {
 			if (ascii == FontMetafile::SpaceAscii) {
 				if (!currentLine.AddWord(currentWord)) {
 					lines.emplace_back(currentLine);
-					currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
+					currentLine = {m_fontType->GetMetafile()->GetSpaceWidth(), maxLength};
 					currentLine.AddWord(currentWord);
 				}
 
@@ -190,7 +190,7 @@ std::vector<Text::Line> Text::CreateStructure() const {
 				continue;
 			}
 
-			if (auto character = m_fontType->GetNode()->GetCharacter(ascii)) {
+			if (auto character = m_fontType->GetMetafile()->GetCharacter(ascii)) {
 				currentWord.AddCharacter(*character, m_kerning);
 			}
 		}
@@ -198,7 +198,7 @@ std::vector<Text::Line> Text::CreateStructure() const {
 		if (i != textLines.size() - 1) {
 			auto wordAdded = currentLine.AddWord(currentWord);
 			lines.emplace_back(currentLine);
-			currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
+			currentLine = {m_fontType->GetMetafile()->GetSpaceWidth(), maxLength};
 
 			if (!wordAdded) {
 				currentLine.AddWord(currentWord);
@@ -217,16 +217,15 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 
 	if (!added) {
 		lines.emplace_back(currentLine);
-		currentLine = {m_fontType->GetNode()->GetSpaceWidth(), maxLength};
+		currentLine = {m_fontType->GetMetafile()->GetSpaceWidth(), maxLength};
 		currentLine.AddWord(currentWord);
 	}
 
 	lines.emplace_back(currentLine);
 }
 
-std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines) {
-	std::vector<VertexDefault> vertices;
-	m_numberLines = static_cast<uint32_t>(lines.size());
+std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
+	std::vector<Vertex2d> vertices;
 
 	float cursorX = 0.0f;
 	float cursorY = 0.0f;
@@ -257,7 +256,7 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines) {
 			if (m_justify == Justify::Fully && lineOrder > 1) {
 				cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
 			} else {
-				cursorX += m_fontType->GetNode()->GetSpaceWidth();
+				cursorX += m_fontType->GetMetafile()->GetSpaceWidth();
 			}
 		}
 
@@ -268,7 +267,7 @@ std::vector<VertexDefault> Text::CreateQuad(const std::vector<Line> &lines) {
 	return vertices;
 }
 
-void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<VertexDefault> &vertices) {
+void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<Vertex2d> &vertices) {
 	auto vertexX = cursorX + character.m_offsetX;
 	auto vertexY = cursorY + character.m_offsetY;
 	auto vertexMaxX = vertexX + character.m_sizeX;
@@ -287,7 +286,7 @@ void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontMetaf
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 }
 
-void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexDefault> &vertices) {
-	vertices.emplace_back(VertexDefault({vx, vy, 0.0f}, {tx, ty}, {}));
+void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices) {
+	vertices.emplace_back(Vertex2d({vx, vy}, {tx, ty}));
 }
 }

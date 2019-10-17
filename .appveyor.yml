@@ -1,4 +1,4 @@
-version: 0.13.2{build}
+version: 0.13.5{build}
 
 clone_depth: 5
 
@@ -49,12 +49,10 @@ build_script:
   - cd ../../
 
 after_build:
-  - mkdir Artifacts\%CFG%_%ARCHITECTURE%
-  - xcopy Build\%BUILD_OUT%\lib Artifacts\%CFG%_%ARCHITECTURE%\lib\ /s/h/e/k/f/c
-  - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\bin\ /s/h/e/k/f/c
-  - xcopy Build\%BUILD_OUT%\install\include\Acid Artifacts\%CFG%_%ARCHITECTURE%\include\Acid\ /s/h/e/k/f/c
-  - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\bin\Resources\Engine\ /s/h/e/k/f/c
+  - mkdir Artifacts\%CFG%_%ARCHITECTURE%_%version%
+  - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
+  - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:
-  - path: Artifacts\%CFG%_%ARCHITECTURE%\
-    name: "Acid (%CFG% %ARCHITECTURE%)"
+  - path: Artifacts\%CFG%_%ARCHITECTURE%_%version%\
+    name: "Acid Examples %version% (%CFG% %ARCHITECTURE%)"

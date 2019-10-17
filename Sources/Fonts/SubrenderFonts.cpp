@@ -1,13 +1,13 @@
 #include "SubrenderFonts.hpp"
 
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex2d.hpp"
 #include "Uis/Uis.hpp"
 #include "Text.hpp"
 
 namespace acid {
 SubrenderFonts::SubrenderFonts(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexDefault::GetVertexInput()}) {
+	m_pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {Vertex2d::GetVertexInput()}) {
 }
 
 void SubrenderFonts::Render(const CommandBuffer &commandBuffer) {

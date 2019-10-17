@@ -2,7 +2,7 @@
 
 #include "Maths/Maths.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex3d.hpp"
 
 namespace acid {
 bool ModelCylinder::registered = Register("cylinder");
@@ -60,7 +60,7 @@ void ModelCylinder::Load() {
 		return;
 	}
 
-	std::vector<VertexDefault> vertices;
+	std::vector<Vertex3d> vertices;
 	std::vector<uint32_t> indices;
 	vertices.reserve((m_slices + 1) * (m_stacks + 1));
 	indices.reserve(m_slices * m_stacks * 6);
@@ -78,7 +78,7 @@ void ModelCylinder::Load() {
 			Vector3f position(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
 			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivStacks);
 			Vector3f normal(xDir, 0.0f, zDir);
-			vertices.emplace_back(VertexDefault(position, uvs, normal));
+			vertices.emplace_back(Vertex3d(position, uvs, normal));
 		}
 	}
 

@@ -32,6 +32,7 @@ Panels::Panels(UiObject *parent) :
 	m_textZ(&m_gui0.GetContent(), "Z", "1.0", 16, {SIZE3, UiAnchor::LeftTop, {2 * (SIZE3.m_x + SIZE3_GAP), GetNextY(0)}}),
 	m_gui1(this, {UiMargins::Left | UiMargins::Right | UiMargins::Top, {0.5f, 0.0f}, {0.0f, -100}}, Image2d::Create("Guis/White.png")),
 	m_gui2(&m_gui1, {UiMargins::None, {48, 48}, {-48, -48}}, Image2d::Create("Guis/White.png")),
+	m_text3(&m_gui2, {UiMargins::None, {48, 48}, {-48, -48}}, 16, "", FontType::Create("Fonts/ProximaNova")),
 	m_text1(this, {{256, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, "|ABC abc 0123_*&.", FontType::Create("Fonts/ProximaNova")) {
 	m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 	m_gui2.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Yellow));
@@ -42,6 +43,9 @@ Panels::Panels(UiObject *parent) :
 			m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 		}
 	});
+	m_text3.SetString("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent hendrerit pharetra dui, vitae blandit purus vehicula blandit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris faucibus nunc vitae fringilla dignissim. Maecenas placerat vulputate cursus. Pellentesque leo sapien, efficitur vehicula tempus pharetra, consequat eu erat. Vestibulum at urna nec mi semper faucibus. Nunc malesuada mi turpis, eu bibendum turpis euismod at. Pellentesque vel nisl bibendum, condimentum urna quis, placerat risus. Sed laoreet blandit felis sit amet lacinia.\n\n"
+		"Aenean et tincidunt libero. Integer eu eros tempor, iaculis odio a, imperdiet arcu. Fusce vitae fringilla tellus. Donec blandit nulla mauris. Donec feugiat efficitur ligula eget facilisis. Aenean a nibh efficitur, sodales nisl vitae, ullamcorper lacus. Donec ornare nunc non erat efficitur, sed imperdiet nunc rutrum. Aliquam erat volutpat. Integer feugiat risus non enim facilisis, et luctus erat aliquet.\n\n"
+		"Nulla euismod eros massa, sit amet malesuada elit rutrum vel. Sed ullamcorper quam non nulla lobortis, at volutpat nisi lacinia. Nullam ornare a nunc quis facilisis. Sed finibus finibus libero, ut interdum augue. Maecenas id nisl eu arcu eleifend dictum. Sed malesuada ornare nunc vitae pretium. Nulla ut ultricies ipsum. Curabitur vitae odio enim.");
 	m_text1.SetEnabled(false);
 }
 

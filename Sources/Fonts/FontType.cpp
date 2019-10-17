@@ -49,6 +49,6 @@ void FontType::Load() {
 	}
 
 	m_image = Image2d::Create(m_filename / (m_style + ".png"));
-	m_node = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
+	m_metafile = std::make_unique<FontMetafile>(m_filename / (m_style + ".fnt"));
 }
 }

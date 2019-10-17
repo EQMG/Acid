@@ -64,7 +64,7 @@ private:
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
 
-	std::shared_ptr<Model> m_model;
+	std::unique_ptr<Model> m_model;
 	std::shared_ptr<Image2d> m_image;
 	uint32_t m_numberOfRows = 1;
 	uint32_t m_selectedRow = 0;

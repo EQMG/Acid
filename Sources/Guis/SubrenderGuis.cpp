@@ -1,13 +1,13 @@
 #include "SubrenderGuis.hpp"
 
-#include "Models/VertexDefault.hpp"
+#include "Models/Vertex2d.hpp"
 #include "Uis/Uis.hpp"
 #include "Gui.hpp"
 
 namespace acid {
 SubrenderGuis::SubrenderGuis(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {VertexDefault::GetVertexInput()}) {
+	m_pipeline(pipelineStage, {"Shaders/Guis/Gui.vert", "Shaders/Guis/Gui.frag"}, {Vertex2d::GetVertexInput()}) {
 }
 
 void SubrenderGuis::Render(const CommandBuffer &commandBuffer) {

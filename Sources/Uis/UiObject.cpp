@@ -85,8 +85,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 			m_screenTransform.m_size = rightBottom - leftTop;
 			m_screenTransform.m_position = leftTop + m_parent->m_screenTransform.m_position;
 		} else {
-			/*if (*m_transform.m_margins != UiMargins::None)
-			{
+			/*if (*m_transform.m_margins != UiMargins::None) {
 				throw std::runtime_error("UiTransform with a percent margin must have a parent");
 			}*/
 
@@ -102,7 +101,8 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 		m_screenTransform.m_position -= m_screenTransform.m_size * m_transform.GetAnchor1();
 	}
 
-	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), Vector3f(), Vector3f(m_screenTransform.m_size));
+	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(m_screenTransform.m_position, 0.01f * m_screenTransform.m_depth), 
+		Vector3f(), Vector3f(m_screenTransform.m_size));
 	m_modelView = viewMatrix * modelMatrix;
 
 	bool selected = false;

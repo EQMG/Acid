@@ -85,9 +85,8 @@ void FontMetafile::LoadCharacterData() {
 	auto yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize;
 	auto xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
 
-	if (quadHeight > m_maxSizeY) {
-		m_maxSizeY = quadHeight;
-	}
+	m_maxHeight = std::max(quadHeight, m_maxHeight);
+	m_maxAdvance = std::max(xAdvance, m_maxAdvance);
 
 	Character character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
 	m_characters.emplace(character.m_id, character);

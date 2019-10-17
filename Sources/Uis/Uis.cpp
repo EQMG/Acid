@@ -18,7 +18,8 @@ void Uis::Update() {
 	auto lastCursorSelect = m_cursorSelect;
 	m_cursorSelect = nullptr;
 
-	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().m_x, 0.0f, Window::Get()->GetSize().m_y, -1.0f, 1.0f);
+	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().m_x, 
+		0.0f, Window::Get()->GetSize().m_y, -1.0f, 1.0f);
 	m_objects.clear();
 	m_canvas.GetTransform().SetSize(Window::Get()->GetSize());
 	m_canvas.Update(viewMatrix, m_objects, m_cursorSelect);

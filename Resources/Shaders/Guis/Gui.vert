@@ -15,7 +15,7 @@ layout(binding = 0) uniform UniformObject {
 	vec4 ninePatches;
 } object;
 
-layout(location = 0) in vec3 inPosition;
+layout(location = 0) in vec2 inPosition;
 layout(location = 1) in vec2 inUV;
 
 layout(location = 0) out vec2 outUV;
@@ -25,7 +25,7 @@ out gl_PerVertex {
 };
 
 void main() {
-	gl_Position = object.modelView * vec4(inPosition, 1.0f);
+	gl_Position = object.modelView * vec4(inPosition, 0.0f, 1.0f);
 
 	outUV = object.atlasScale * ((inUV.xy / object.atlasRows) + object.atlasOffset);
 }

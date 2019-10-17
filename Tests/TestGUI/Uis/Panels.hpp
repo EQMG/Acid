@@ -72,6 +72,7 @@ private:
 
 	Gui m_gui1;
 	Gui m_gui2;
+	Text m_text3;
 	Text m_text1;
 };
 }
