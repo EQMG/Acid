@@ -35,7 +35,23 @@ public:
 	 * @param kerning The kerning (type character spacing multiplier) of this text.
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
-	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text,
+	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::wstring text,
+		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova-Regular.ttf"), Justify justify = Justify::Left,
+		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
+
+	/**
+	 * Creates a new text object.
+	 * @param parent The parent screen object.
+	 * @param rectangle The rectangle that will represent the bounds of the ui object.
+	 * @param fontSize The font size to be used in this text.
+	 * @param text The string text the object will be created with.
+	 * @param fontType The font type to be used in this text.
+	 * @param justify How the text will justify.
+	 * @param textColour The colour of this text.
+	 * @param kerning The kerning (type character spacing multiplier) of this text.
+	 * @param leading The leading (vertical line spacing multiplier) of this text.
+	 */
+	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string_view text,
 		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova-Regular.ttf"), Justify justify = Justify::Left,
 		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
 
@@ -63,13 +79,19 @@ public:
 	 * Gets the string of text represented.
 	 * @return The string of text.
 	 */
-	const std::string &GetString() const { return m_string; }
+	const std::wstring &GetString() const { return m_string; }
 
 	/**
-	 * Changed the current string in this text.
-	 * @param string The new text,
+	 * Sets the current string in this text.
+	 * @param string The new text.
 	 */
-	void SetString(const std::string &string) { m_string = string; }
+	void SetString(const std::wstring &string) { m_string = string; }
+
+	/**
+	 * Sets the current string in this text.
+	 * @param string The new text.
+	 */
+	void SetString(std::string_view string) { m_string = String::ConvertUtf16(string); }
 
 	/**
 	 * Gets how the text should justify.
@@ -181,7 +203,7 @@ private:
 
 	float m_fontSize;
 	Justify m_justify;
-	std::string m_string;
+	std::wstring m_string;
 
 	std::shared_ptr<FontType> m_fontType;
 	float m_kerning;

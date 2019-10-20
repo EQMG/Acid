@@ -9,6 +9,20 @@ namespace acid {
 class ACID_EXPORT String {
 public:
 	/**
+	 * Converts a CTF16 (wide) string to a UTF8 string.
+	 * @param string The view of the string to convert.
+	 * @return The converted string.
+	 */
+	static std::string ConvertUtf8(const std::wstring_view &string);
+
+	/**
+	 * Converts a CTF8 string to a UTF16 (wide) string.
+	 * @param string The view of the string to convert.
+	 * @return The converted string.
+	 */
+	static std::wstring ConvertUtf16(const std::string_view &string);
+	
+	/**
 	 * Splits a string by a separator.
 	 * @param str The string.
 	 * @param sep The separator.

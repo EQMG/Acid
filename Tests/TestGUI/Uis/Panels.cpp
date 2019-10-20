@@ -1,4 +1,4 @@
-#include "Panels.hpp"
+﻿#include "Panels.hpp"
 
 namespace test {
 int32_t GetNextY(uint32_t inc = 1) {
@@ -33,7 +33,7 @@ Panels::Panels(UiObject *parent) :
 	m_gui1(this, {UiMargins::Left | UiMargins::Right | UiMargins::Top, {0.5f, 0.0f}, {0.0f, -100}}, Image2d::Create("Guis/White.png")),
 	m_gui2(&m_gui1, {UiMargins::None, {48, 48}, {-48, -48}}, Image2d::Create("Guis/White.png")),
 	m_text3(&m_gui2, {UiMargins::None, {24, 24}, {-24, -24}}, 12, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")),
-	m_text1(this, {{256, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, "|ABC abc 0123_*&.", FontType::Create("Fonts/ProximaNova-Regular.ttf")) {
+	m_text1(this, {{2000, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, L"P(t) = (1 - t)² * p₀ + 2t * (1 - t) * p₁ + t² * p₂", FontType::Create("Fonts/ProximaNova-Regular.ttf")) {
 	m_gui1.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Blue));
 	m_gui2.SetColourDriver(std::make_unique<DriverConstant<Colour>>(Colour::Yellow));
 	m_gui1.OnSelected().Add([this](bool selected) {

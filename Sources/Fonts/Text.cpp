@@ -3,18 +3,24 @@
 #include "Maths/Visual/DriverConstant.hpp"
 
 namespace acid {
-Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, Justify justify,
+Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::wstring text, std::shared_ptr<FontType> fontType, Justify justify, 
 	const Colour &textColour, float kerning, float leading) :
 	UiObject(parent, rectangle),
 	m_fontSize(fontSize),
-	m_string(std::move(text)),
 	m_justify(justify),
+	m_string(std::move(text)),
 	m_fontType(std::move(fontType)),
 	m_kerning(kerning),
 	m_leading(leading),
 	m_textColour(textColour),
 	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
 	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)) {
+}
+
+Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string_view text, std::shared_ptr<FontType> fontType, Justify justify,
+	const Colour &textColour, float kerning, float leading) :
+	Text(parent, rectangle, fontSize, String::ConvertUtf16(text), std::move(fontType), justify,
+		textColour, kerning, leading) {
 }
 
 void Text::UpdateObject() {

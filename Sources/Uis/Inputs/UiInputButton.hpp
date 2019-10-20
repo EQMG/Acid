@@ -11,8 +11,8 @@ public:
 
 	void UpdateObject() override;
 
-	const std::string &GetString() const { return m_text.GetString(); }
-	void SetString(const std::string &string) { m_text.SetString(string); }
+	std::string GetString() const { return String::ConvertUtf8(m_text.GetString()); }
+	void SetString(std::string_view string) { m_text.SetString(string); }
 
 	static const Vector2i Size;
 	static const Vector2i Padding;

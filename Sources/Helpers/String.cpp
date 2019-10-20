@@ -1,9 +1,20 @@
 #include "String.hpp"
 
+#include <codecvt>
 #include <sstream>
 #include <algorithm>
 
 namespace acid {
+std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> UTF8_TO_UTF16_CONVERTER;
+
+std::string String::ConvertUtf8(const std::wstring_view &string) {
+	return UTF8_TO_UTF16_CONVERTER.to_bytes(string.data(), string.data() + string.length());
+}
+
+std::wstring String::ConvertUtf16(const std::string_view &string) {
+	return UTF8_TO_UTF16_CONVERTER.from_bytes(string.data(), string.data() + string.length());
+}
+
 std::vector<std::string> String::Split(const std::string &str, char sep) {
 	std::vector<std::string> tokens;
 	std::string token;
