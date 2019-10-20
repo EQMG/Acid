@@ -9,7 +9,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type typ
 	m_background(this, {{24, 24}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
 	m_fill(&m_background, {{24, 24}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour),
 	m_text(this, {{140, 24}, UiAnchor::LeftCentre, {29, 0}}, UiInputButton::FontSize, string,
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour),
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value),
 	m_type(type) {
 	SetCursorHover(CursorStandard::Hand);

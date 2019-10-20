@@ -15,7 +15,7 @@ UiStartLogo::UiStartLogo(UiObject *parent) :
 	m_guiBackground(this, {UiMargins::All}, Image2d::Create("Guis/Black.png")),
 	m_guiLogoAcid(this, {{300, 300}, UiAnchor::Centre, {0, -100}}, Image2d::Create("Logos/Acid_01.png")),
 	m_textCopyright(this, {{460, 64}, UiAnchor::Centre, {0, 128}}, 12.0f, "Copyright (C) 2019, Equilibrium Games - All Rights Reserved.",
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Centre, Colour::White) {
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Centre, Colour::White) {
 	Timers::Get()->Once(START_DELAY, [this]() {
 		SetAlphaDriver(std::make_unique<DriverSlide<float>>(1.0f, 0.0f, 1.4s));
 	}, this);

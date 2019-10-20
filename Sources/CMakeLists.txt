@@ -73,6 +73,12 @@ target_link_libraries(Acid
 		# More IMPORTED
 		glfw
 		OpenAL::OpenAL
+		# Not IMPORTED targets, requires manual includes handling
+		# When built locally from submodules, these are merely the names..
+		# of the library targets that exist in-scope, else they're set..
+		# from find_package() calls
+		$<$<BOOL:${Freetype_FOUND}>:Freetype::Freetype>
+		$<$<NOT:$<BOOL:${Freetype_FOUND}>>:${FREETYPE_LIBRARIES}>
 		${PHYSFS_LIBRARY}
 		${BULLET_LIBRARIES}
 		${SPIRV_LIBRARIES}

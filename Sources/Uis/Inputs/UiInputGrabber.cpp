@@ -8,9 +8,9 @@ UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Right, UiInputButton::TitleColour),
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Right, UiInputButton::TitleColour),
 	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::ValueColour) {
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
 
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));

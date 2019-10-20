@@ -10,7 +10,7 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, uin
 	//	UiInputButton::PrimaryColour},
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
-		FontType::Create("Fonts/ProximaNova"), Text::Justify::Left, UiInputButton::TitleColour),
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::TitleColour),
 	m_value(value),
 	m_options(std::move(options)) {
 	SetCursorHover(CursorStandard::Hand);

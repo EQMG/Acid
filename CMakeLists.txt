@@ -112,6 +112,28 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
+find_package(Freetype QUIET)
+if(NOT Freetype_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+	FetchContent_Declare(freetype
+			URL https://download.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
+			URL_MD5 c50a3c9e5e62bdc938a6e1598a782947
+			)
+	FetchContent_GetProperties(freetype)
+	if(NOT freetype_POPULATED)
+		foreach(_freetype_option "CMAKE_DISABLE_FIND_PACKAGE_PNG" "CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz"
+				"CMAKE_DISABLE_FIND_PACKAGE_BZip2" "CMAKE_DISABLE_FIND_PACKAGE_ZLIB" "CMAKE_DISABLE_FIND_PACKAGE_BROTLI")
+			set(${_freetype_option} TRUE CACHE INTERNAL "")
+		endforeach()
+		FetchContent_Populate(freetype)
+		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
+	endif()
+	set_target_properties(freetype PROPERTIES FOLDER freetype)
+
+	# Used in target_link_libraries()
+	set(FREETYPE_LIBRARIES "freetype")
+endif()
+
 find_package(glfw3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)

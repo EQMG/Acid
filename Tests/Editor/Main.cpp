@@ -1,4 +1,5 @@
 #include <Engine/Engine.hpp>
+#include <Files/Files.hpp>
 #include <Graphics/Graphics.hpp>
 
 #include "EditorRenderer.hpp"

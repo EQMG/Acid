@@ -305,6 +305,10 @@ With all these information you'll be able to decide which is better to your use 
 
 [Sepehr Taghdisian](https://github.com/septag)
 
+[Robert Gabriel Jakabosky](https://github.com/neopallium)
+
+[@pixelherodev](https://github.com/pixelherodev)
+
 ### Contributing
 
 We welcome *ALL* contributions, there is no minor things to contribute with, even one letter typo fixes are welcome.
@@ -581,7 +585,7 @@ static std::string cr_version_path(const std::string &basepath,
     std::string folder, fname, ext;
     cr_split_path(basepath, folder, fname, ext);
     std::string ver = std::to_string(version);
-#if _MSC_VER
+#if defined(_MSC_VER)
     // When patching PDB file path in library file we will drop path and leave only file name.
     // Length of path is extra space for version number. Trim file name only if version number
     // length exceeds pdb folder path length. This is not relevant on other platforms.
@@ -658,7 +662,7 @@ static void cr_set_temporary_path(cr_plugin &ctx, const std::string &path) {
 #include <windows.h>
 #include <dbghelp.h>
 // clang-format on
-#ifdef _MSC_VER
+#if defined(_MSC_VER)
 #pragma comment(lib, "dbghelp.lib")
 #endif
 using so_handle = HMODULE;

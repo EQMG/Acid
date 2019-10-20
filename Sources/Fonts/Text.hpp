@@ -3,11 +3,6 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Visual/Driver.hpp"
-#include "Models/Model.hpp"
-#include "Models/Vertex2d.hpp"
-#include "Graphics/Descriptors/DescriptorsHandler.hpp"
-#include "Graphics/Buffers/UniformHandler.hpp"
-#include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
 #include "FontType.hpp"
 
@@ -41,18 +36,10 @@ public:
 	 * @param leading The leading (vertical line spacing multiplier) of this text.
 	 */
 	Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text,
-		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova"), Justify justify = Justify::Left,
+		std::shared_ptr<FontType> fontType = FontType::Create("Fonts/ProximaNova-Regular.ttf"), Justify justify = Justify::Left,
 		const Colour &textColour = Colour::Black, float kerning = 0.0f, float leading = 0.0f);
 
 	void UpdateObject() override;
-
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
-
-	/**
-	 * Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
-	 * @return The model of the text.
-	 */
-	const Model *GetModel() const { return m_model.get(); }
 
 	/**
 	 * Gets the font size.
@@ -64,7 +51,7 @@ public:
 	 * Sets the font size.
 	 * @param fontSize The new font size,
 	 */
-	void SetFontSize(float fontSize);
+	void SetFontSize(float fontSize) { m_fontSize = fontSize; }
 
 	/**
 	 * Gets the number of lines in this text.
@@ -82,7 +69,7 @@ public:
 	 * Changed the current string in this text.
 	 * @param string The new text,
 	 */
-	void SetString(const std::string &string);
+	void SetString(const std::string &string) { m_string = string; }
 
 	/**
 	 * Gets how the text should justify.
@@ -189,102 +176,12 @@ public:
 	 */
 	float CalculateAntialiasSize() const;
 
-	/**
-	 * Gets if the text has been loaded to a model.
-	 * @return If the text has been loaded to a model.
-	 */
-	bool IsLoaded() const;
-
 private:
-	/**
-	 * During the loading of a text this represents one word in the text.
-	 */
-	class Word {
-	public:
-		/**
-		 * Creates a new text word.
-		 */
-		Word() = default;
-
-		/**
-		 * Adds a character to the end of the current word and increases the screen-space width of the word.
-		 * @param character The character to be added.
-		 * @param kerning The character kerning.
-		 */
-		void AddCharacter(const FontMetafile::Character &character, float kerning) {
-			m_characters.emplace_back(character);
-			m_width += kerning + character.m_advanceX;
-		}
-
-		std::vector<FontMetafile::Character> m_characters;
-		float m_width = 0.0f;
-	};
-
-	/**
-	 * Represents a line of text during the loading of a text.
-	 */
-	class Line {
-	public:
-		/**
-		 * Creates a new text line.
-		 * @param spaceWidth The screen-space width of a space character.
-		 * @param maxLength The screen-space maximum length of a line.
-		 */
-		Line(float spaceWidth, float maxLength) :
-			m_maxLength(maxLength),
-			m_spaceSize(spaceWidth) {
-		}
-
-		/**
-		 * Attempt to add a word to the line. If the line can fit the word in without reaching the maximum line length then the word is added and the line length increased.
-		 * @param word The word to try to add.
-		 * @return {@code true} if the word has successfully been added to the line.
-		 */
-		bool AddWord(const Word &word) {
-			auto additionalLength = word.m_width;
-			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
-
-			if (m_currentLineLength + additionalLength <= m_maxLength) {
-				m_words.emplace_back(word);
-				m_currentWordsLength += word.m_width;
-				m_currentLineLength += additionalLength;
-				return true;
-			}
-
-			return false;
-		}
-
-		float m_maxLength;
-		float m_spaceSize;
-
-		std::vector<Word> m_words;
-		float m_currentWordsLength = 0.0f;
-		float m_currentLineLength = 0.0f;
-	};
-
-	/**
-	 * Takes in an unloaded text and calculate all of the vertices for the quads on which this text will be rendered.
-	 * The vertex positions and texture coords and calculated based on the information from the font file.
-	 * Then takes the information about the vertices of all the quads and stores it in a model.
-	 */
-	void LoadText();
-	std::vector<Line> CreateStructure() const;
-	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-	std::vector<Vertex2d> CreateQuad(const std::vector<Line> &lines) const;
-	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontMetafile::Character &character, std::vector<Vertex2d> &vertices);
-	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices);
-
-	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformObject;
-
-	std::unique_ptr<Model> m_model;
 	uint32_t m_numberLines = 0;
-	Vector2f m_lastSize;
 
 	float m_fontSize;
-	std::string m_string;
-	std::optional<std::string> m_newString;
 	Justify m_justify;
+	std::string m_string;
 
 	std::shared_ptr<FontType> m_fontType;
 	float m_kerning;

@@ -7,9 +7,9 @@ namespace test {
 OverlayDebug::OverlayDebug(UiObject *parent) :
 	UiObject(parent, {{100, 36}, UiAnchor::LeftBottom}),
 	m_slices(parent, {{300, 300}, UiAnchor::Centre}, Image2d::Create("Guis/9Patch.png")),
-	m_textFrameTime(this, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "", FontType::Create("Fonts/ProximaNova")),
-	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "", FontType::Create("Fonts/ProximaNova")),
-	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "", FontType::Create("Fonts/ProximaNova")) {
+	m_textFrameTime(this, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")),
+	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")),
+	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")) {
 	m_slices.SetNinePatches({0.3333f, 0.3333f, 0.6666f, 0.6666f});
 	//m_slices.GetTransform().SetDepth(-1.0f);
 	m_slices.SetEnabled(false);

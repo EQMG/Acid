@@ -859,10 +859,8 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
       read++;
       end_not_reached = (curr != s_end);
     }
-  }
 
-  // We must make sure we actually got something.
-  if (!leading_decimal_dots) {
+    // We must make sure we actually got something.
     if (read == 0) goto fail;
   }
 
@@ -2893,6 +2891,8 @@ bool ObjReader::ParseFromFile(const std::string &filename,
     if (filename.find_last_of("/\\") != std::string::npos) {
       mtl_search_path = filename.substr(0, filename.find_last_of("/\\"));
     }
+  } else {
+    mtl_search_path = config.mtl_search_path;
   }
 
   valid_ = LoadObj(&attrib_, &shapes_, &materials_, &warning_, &error_,
