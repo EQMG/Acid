@@ -5,7 +5,7 @@
 
 namespace acid {
 struct Version {
-	uint32_t m_major, m_minor, m_patch;
+	uint8_t m_major, m_minor, m_patch;
 };
 
 /**

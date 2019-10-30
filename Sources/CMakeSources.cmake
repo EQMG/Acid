@@ -41,7 +41,7 @@ set(_temp_acid_headers
 		Files/Files.hpp
 		Files/Json/Json.hpp
 		Files/Node.hpp
-		Files/NodeReturn.hpp
+		Files/NodeView.hpp
 		Files/Xml/Xml.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
@@ -283,7 +283,7 @@ set(_temp_acid_sources
 		Files/Files.cpp
 		Files/Json/Json.cpp
 		Files/Node.cpp
-		Files/NodeReturn.cpp
+		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
 		Files/Zip/miniz.c
 		Files/Zip/ZipArchive.cpp

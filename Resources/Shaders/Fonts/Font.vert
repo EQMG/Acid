@@ -20,6 +20,8 @@ layout(location = 0) in vec4 inRect;
 layout(location = 1) in uint inGlyphIndex;
 layout(location = 2) in float inSharpness;
 layout(location = 3) in vec4 inColour;
+// TODO: mat4 modelView, float depth
+// TODO: vec4 borderColour, vec2 borderSizes
 
 layout(location = 0) out vec2 outGlyphPos;
 layout(location = 1) out uvec4 outCellInfo;

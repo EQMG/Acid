@@ -7,7 +7,7 @@
 namespace acid {
 class ACID_EXPORT AnimationLoader {
 public:
-	AnimationLoader(NodeReturn &&libraryAnimations, NodeReturn &&libraryVisualScenes, const Matrix4 &correction);
+	AnimationLoader(NodeView &&libraryAnimations, NodeView &&libraryVisualScenes, const Matrix4 &correction);
 
 	const Time &GetLengthSeconds() const { return m_lengthSeconds; }
 	const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
@@ -24,8 +24,8 @@ private:
 
 	void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root);
 
-	mutable NodeReturn m_libraryAnimations;
-	mutable NodeReturn m_libraryVisualScenes;
+	mutable NodeView m_libraryAnimations;
+	mutable NodeView m_libraryVisualScenes;
 	Matrix4 m_correction;
 
 	Time m_lengthSeconds;

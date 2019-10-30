@@ -128,6 +128,10 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 void FontType::Load() {
 	if (m_filename.empty()) return;
 
+#if defined(ACID_DEBUG)
+	auto debugStart = Time::Now();
+#endif
+
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
 
 	auto fileLoaded = Files::Read(m_filename);
@@ -234,6 +238,10 @@ void FontType::Load() {
 
 	if (FT_Done_FreeType(library) != 0)
 		throw std::runtime_error("Freetype failed to destory library");
+
+#if defined(ACID_DEBUG)
+	Log::Out("Font Type ", m_filename, " with ", i, " glyphs loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+#endif
 }
 
 uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {

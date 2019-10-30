@@ -13,7 +13,7 @@ Node::Node(std::string value, std::vector<Node> &&properties) :
 	m_value(std::move(value)) {
 }
 
-void Node::LoadString(std::string_view string) {
+void Node::ParseString(std::string_view string) {
 }
 
 void Node::WriteStream(std::ostream &stream, Format format) const {
@@ -33,30 +33,27 @@ bool Node::IsValid() const {
 	}
 }
 
-bool Node::HasProperty(const std::string &name) const {
+bool Node::HasProperty(std::string_view name) const {
 	for (const auto &property : m_properties) {
-		if (property.m_name == name) {
+		if (property.m_name == name)
 			return true;
-		}
 	}
 
 	return false;
 }
 
-NodeReturn Node::GetProperty(const std::string &name) const {
+NodeView Node::GetProperty(std::string_view name) const {
 	for (const auto &property : m_properties) {
-		if (property.m_name == name) {
-			return {this, name, &property};
-		}
+		if (property.m_name == name)
+			return {this, std::string(name), &property};
 	}
 
-	return {this, name, nullptr};
+	return {this, std::string(name), nullptr};
 }
 
-NodeReturn Node::GetProperty(uint32_t index) const {
-	if (index < m_properties.size()) {
+NodeView Node::GetProperty(uint32_t index) const {
+	if (index < m_properties.size())
 		return {this, index, &m_properties[index]};
-	}
 
 	return {this, index, nullptr};
 }
@@ -65,7 +62,7 @@ Node &Node::AddProperty() {
 	return m_properties.emplace_back();
 }
 
-Node &Node::AddProperty(const std::string &name, Node &&node) {
+Node &Node::AddProperty(std::string_view name, Node &&node) {
 	node.m_name = name;
 	return m_properties.emplace_back(std::move(node));
 }
@@ -75,7 +72,7 @@ Node &Node::AddProperty(uint32_t index, Node &&node) {
 	return m_properties[index] = std::move(node);
 }
 
-Node &Node::AddProperty(const std::string &name) {
+Node &Node::AddProperty(std::string_view name) {
 	Node node;
 	node.m_name = name;
 	return m_properties.emplace_back(std::move(node));
@@ -86,7 +83,7 @@ Node &Node::AddProperty(uint32_t index) {
 	return m_properties[index];
 }
 
-void Node::RemoveProperty(const std::string &name) {
+void Node::RemoveProperty(std::string_view name) {
 	//node.m_parent = nullptr;
 	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [name](const auto &n) {
 		return n.GetName() == name;
@@ -100,45 +97,45 @@ void Node::RemoveProperty(const Node &node) {
 	}), m_properties.end());
 }
 
-std::vector<NodeReturn> Node::GetProperties(const std::string &name) const {
-	std::vector<NodeReturn> properties;
+std::vector<NodeView> Node::GetProperties(std::string_view name) const {
+	std::vector<NodeView> properties;
 
 	for (const auto &property : m_properties) {
 		if (property.m_name == name)
-			properties.emplace_back(this, name, &property);
+			properties.emplace_back(NodeView(this, std::string(name), &property));
 	}
 
 	return properties;
 }
 
-NodeReturn Node::GetPropertyWithBackup(const std::string &name, const std::string &backupName) const {
+NodeView Node::GetPropertyWithBackup(std::string_view name, std::string_view backupName) const {
 	if (auto p1 = GetProperty(name))
 		return p1;
 	if (auto p2 = GetProperty(backupName))
 		return p2;
-	return {this, name, nullptr};
+	return {this, std::string(name), nullptr};
 }
 
-NodeReturn Node::GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const {
+NodeView Node::GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const {
 	for (const auto &property : m_properties) {
 		auto properties1 = property.GetProperties(propertyName);
 		if (properties1.empty())
-			return {this, propertyName, nullptr};
+			return {this, std::string(propertyName), nullptr};
 
 		for (auto &property1 : properties1) {
 			if (property1 && property1->GetValue() == propertyValue)
-				return {this, propertyName, &property};
+				return {this, std::string(propertyName), &property};
 		}
 	}
 
-	return {this, propertyName, nullptr};
+	return {this, std::string(propertyName), nullptr};
 }
 
-NodeReturn Node::operator[](const std::string &key) const {
+NodeView Node::operator[](std::string_view key) const {
 	return GetProperty(key);
 }
 
-NodeReturn Node::operator[](uint32_t index) const {
+NodeView Node::operator[](uint32_t index) const {
 	return GetProperty(index);
 }
 

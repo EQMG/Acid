@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NodeReturn.hpp"
+#include "NodeView.hpp"
 
 namespace acid {
 /**
@@ -13,8 +13,10 @@ public:
 		Array,
 		String,
 		Boolean,
-		Number,
+		Integer,
+		Decimal,
 		Null,
+		Token,
 		Unknown
 	};
 
@@ -31,11 +33,11 @@ public:
 
 	virtual ~Node() = default;
 
-	virtual void LoadString(std::string_view string);
+	virtual void ParseString(std::string_view string);
 	virtual void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
 
 	template<typename _Elem = char>
-	void LoadStream(std::basic_istream<_Elem> & stream);
+	void ParseStream(std::basic_istream<_Elem> & stream);
 	template<typename _Elem = char>
 	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const;
 	
@@ -44,9 +46,9 @@ public:
 	template<typename T>
 	T Get(const T &fallback) const;
 	template<typename T>
-	void Get(T &dest) const;
+	bool Get(T &dest) const;
 	template<typename T, typename K>
-	void Get(T &dest, const K &fallback) const;
+	bool Get(T &dest, const K &fallback) const;
 	template<typename T>
 	void Set(const T &value);
 
@@ -66,23 +68,23 @@ public:
 	template<typename ...Args>
 	Node &Append(const Args &...args);
 
-	bool HasProperty(const std::string &name) const;
-	NodeReturn GetProperty(const std::string &name) const;
-	NodeReturn GetProperty(uint32_t index) const;
+	bool HasProperty(std::string_view name) const;
+	NodeView GetProperty(std::string_view name) const;
+	NodeView GetProperty(uint32_t index) const;
 	Node &AddProperty();
-	Node &AddProperty(const std::string &name, Node &&node);
+	Node &AddProperty(std::string_view name, Node &&node);
 	Node &AddProperty(uint32_t index, Node &&node);
-	Node &AddProperty(const std::string &name);
+	Node &AddProperty(std::string_view name);
 	Node &AddProperty(uint32_t index);
-	void RemoveProperty(const std::string &name);
+	void RemoveProperty(std::string_view name);
 	void RemoveProperty(const Node &node);
 
-	std::vector<NodeReturn> GetProperties(const std::string &name) const;
-	NodeReturn GetPropertyWithBackup(const std::string &name, const std::string &backupName) const;
-	NodeReturn GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const;
+	std::vector<NodeView> GetProperties(std::string_view name) const;
+	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
+	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
 
-	NodeReturn operator[](const std::string &key) const;
-	NodeReturn operator[](uint32_t index) const;
+	NodeView operator[](std::string_view key) const;
+	NodeView operator[](uint32_t index) const;
 
 	Node &operator=(const Node &node) = default;
 	Node &operator=(Node &&node) = default;
@@ -97,10 +99,10 @@ public:
 	std::vector<Node> &GetProperties() { return m_properties; }
 
 	const std::string &GetName() const { return m_name; }
-	void SetName(const std::string &name) { m_name = name; }
+	void SetName(std::string name) { m_name = std::move(name); }
 
 	const std::string &GetValue() const { return m_value; }
-	void SetValue(const std::string &value) { m_value = value; }
+	void SetValue(std::string value) { m_value = std::move(value); }
 
 	const Type &GetType() const { return m_type; }
 	void SetType(Type type) { m_type = type; }
@@ -108,21 +110,34 @@ public:
 protected:
 	class Token {
 	public:
-		Token(std::string_view view, Type type) :
-			view(view),
-			type(type) {
+		Token(Type type, std::string_view view) :
+			type(type),
+			view(view) {
 		}
 
-		std::string_view view;
+		/**
+		 * Compares if two tokens have the same type and string contents.
+		 * @param other The other token to compare.
+		 * @return If the tokens are equal.
+		 */
+		bool operator==(const Token &other) const {
+			return type == other.type && view == other.view.data();
+		}
+
+		bool operator!=(const Token &other) const {
+			return !operator==(other);
+		}
+
 		Type type;
+		std::string_view view;
 	};
 
 	std::vector<Node> m_properties;
-	std::string m_name;
+	std::string m_name; // key
 	std::string m_value;
 	Type m_type = Type::Object;
 };
 }
 
 #include "Node.inl"
-#include "NodeReturn.inl"
+#include "NodeView.inl"

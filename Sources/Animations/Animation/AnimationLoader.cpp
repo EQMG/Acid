@@ -3,7 +3,7 @@
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid {
-AnimationLoader::AnimationLoader(NodeReturn &&libraryAnimations, NodeReturn &&libraryVisualScenes, const Matrix4 &correction) :
+AnimationLoader::AnimationLoader(NodeView &&libraryAnimations, NodeView &&libraryVisualScenes, const Matrix4 &correction) :
 	m_libraryAnimations(std::move(libraryAnimations)),
 	m_libraryVisualScenes(std::move(libraryVisualScenes)),
 	m_correction(correction) {
@@ -14,9 +14,8 @@ AnimationLoader::AnimationLoader(NodeReturn &&libraryAnimations, NodeReturn &&li
 	m_lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
-	for (auto &jointNode : animationNodes->GetProperties()) {
+	for (auto &jointNode : animationNodes->GetProperties())
 		LoadJointTransforms(jointNode, rootNode);
-	}
 }
 
 std::string AnimationLoader::FindRootJointName() const {
@@ -31,11 +30,8 @@ std::vector<Time> AnimationLoader::GetKeyTimes() const {
 
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
-
-	for (const auto &rawTime : rawTimes) {
+	for (const auto &rawTime : rawTimes)
 		times.emplace_back(Time::Seconds(String::From<float>(rawTime)));
-	}
-
 	return times;
 }
 
@@ -79,10 +75,8 @@ void AnimationLoader::ProcessTransforms(const std::string &jointName, const std:
 		}
 
 		transform = transform.Transpose();
-
-		if (root) {
+		if (root)
 			transform = m_correction * transform;
-		}
 
 		m_keyframes[i].AddJointTransform(jointName, transform);
 	}

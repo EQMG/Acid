@@ -9,7 +9,7 @@ public:
 	Xml(const std::string &rootName, const Node &node);
 	Xml(const std::string &rootName, Node &&node);
 
-	void LoadString(std::string_view string) override;
+	void ParseString(std::string_view string) override;
 	void WriteStream(std::ostream &stream, Format format = Format::Minified) const override;
 
 private:

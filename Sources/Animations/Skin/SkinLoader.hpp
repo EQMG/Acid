@@ -6,7 +6,7 @@
 namespace acid {
 class ACID_EXPORT SkinLoader {
 public:
-	SkinLoader(NodeReturn libraryControllers, uint32_t maxWeights);
+	SkinLoader(NodeView libraryControllers, uint32_t maxWeights);
 
 	const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
 	const std::vector<VertexWeights> &GetVertexWeights() const { return m_vertexWeights; }
@@ -17,7 +17,7 @@ private:
 	std::vector<uint32_t> GetEffectiveJointsCounts(const Node &weightsDataNode) const;
 	void GetSkinWeights(const Node &weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 
-	mutable NodeReturn m_skinData;
+	mutable NodeView m_skinData;
 	uint32_t m_maxWeights;
 
 	std::vector<std::string> m_jointOrder;

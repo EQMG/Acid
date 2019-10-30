@@ -3,10 +3,10 @@
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid {
-SkeletonLoader::SkeletonLoader(NodeReturn libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
+SkeletonLoader::SkeletonLoader(NodeView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
+	m_armatureData(libraryControllers["visual_scene"]["node"]->GetPropertyWithValue("-id", "Armature")),
 	m_boneOrder(std::move(boneOrder)),
 	m_correction(correction) {
-	m_armatureData = libraryControllers["visual_scene"]["node"]->GetPropertyWithValue("-id", "Armature");
 	auto headNode = m_armatureData["node"];
 	m_headJoint = LoadJointData(headNode, true);
 	m_headJoint.CalculateInverseBindTransform({});

@@ -10,7 +10,7 @@
 
 namespace acid {
 template<typename _Elem>
-void Node::LoadStream(std::basic_istream<_Elem> & stream) {
+void Node::ParseStream(std::basic_istream<_Elem> & stream) {
 	// We must read as UTF8 chars.
 	if constexpr (!std::is_same_v<_Elem, char>) {
 		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
@@ -18,7 +18,7 @@ void Node::LoadStream(std::basic_istream<_Elem> & stream) {
 
 	// Reading into a string before iterating is much faster.
 	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-	LoadString(s);
+	ParseString(s);
 }
 
 template<typename _Elem>
@@ -37,28 +37,30 @@ T Node::Get() const {
 
 template<typename T>
 T Node::Get(const T &fallback) const {
-	if (!IsValid()) {
+	if (!IsValid())
 		return fallback;
-	}
-
+	
 	return Get<T>();
 }
 
 template<typename T>
-void Node::Get(T &dest) const {
-	if (IsValid()) {
-		*this >> dest;
-	}
+bool Node::Get(T &dest) const {
+	if (!IsValid())
+		return false;
+	
+	*this >> dest;
+	return true;
 }
 
 template<typename T, typename K>
-void Node::Get(T &dest, const K &fallback) const {
-	if (IsValid()) {
-		*this >> dest;
-		return;
+bool Node::Get(T &dest, const K &fallback) const {
+	if (!IsValid()) {
+		dest = fallback;
+		return false;
 	}
 
-	dest = fallback;
+	*this >> dest;
+	return true;
 }
 
 template<typename T>
@@ -115,7 +117,7 @@ std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> ope
 template<typename T>
 std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, T object) {
 	node.SetValue(String::To(object));
-	node.SetType(Node::Type::Number);
+	node.SetType(std::is_floating_point_v<T> ? Node::Type::Decimal : Node::Type::Integer);
 	return node;
 }
 

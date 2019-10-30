@@ -17,7 +17,7 @@ Xml::Xml(const std::string &rootName, Node &&node) :
 	SetName(rootName);
 }
 
-void Xml::LoadString(std::string_view string) {
+void Xml::ParseString(std::string_view string) {
 }
 
 void Xml::WriteStream(std::ostream &stream, Format format) const {
