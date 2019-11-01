@@ -33,22 +33,25 @@ bool String::StartsWith(std::string_view str, std::string_view token) {
 	return str.compare(0, token.length(), token) == 0;
 }
 
-bool String::Contains(std::string_view str, std::string_view token) {
+bool String::Contains(std::string_view str, std::string_view token) noexcept {
 	return str.find(token) != std::string::npos;
 }
 
-bool String::IsWhitespace(char c) {
+bool String::IsWhitespace(char c) noexcept {
 	//return std::string_view(" \n\r\t").find(c) != std::string::npos;
 	return c == ' ' || c == '\r' || c == '\n' || c == '\t';
 }
 
-bool String::IsNumber(std::string_view str) {
-	return !str.empty() && std::find_if(str.begin(), str.end(), [](const auto c) {
-		return std::string_view("0123456789.-").find(c) == std::string::npos;
-	}) == str.end();
+bool String::IsNumber(std::string_view str) noexcept {
+	return std::all_of(str.cbegin(), str.cend(), [](auto c) {
+		// Writing this out by hand is a lot faster than string_view::find!
+		//return std::string_view("0123456789.-").find(c) != std::string::npos;
+		return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || 
+			c == '6' || c == '7' || c == '8' || c == '9' || c == '.' || c == '-';
+	});
 }
 
-int32_t String::FindCharPos(std::string_view str, char c) {
+int32_t String::FindCharPos(std::string_view str, char c) noexcept {
 	auto res = str.find(c);
 	return res == std::string::npos ? -1 : static_cast<int32_t>(res);
 }
@@ -94,6 +97,20 @@ std::string String::ReplaceAll(std::string str, std::string_view token, std::str
 	return str;
 }
 
+std::string String::ReplaceAll(std::string str, const std::vector<std::pair<std::string_view, std::string_view>> &replaces) noexcept {
+	// TODO: Optimize
+	for (const auto &[token, to] : replaces) {
+		auto pos = str.find(token);
+
+		while (pos != std::string::npos) {
+			str.replace(pos, token.size(), to);
+			pos = str.find(token, pos + token.size());
+		}
+	}
+
+	return str;
+}
+
 std::string String::ReplaceFirst(std::string str, std::string_view token, std::string_view to) {
 	const auto startPos = str.find(token);
 
@@ -104,14 +121,14 @@ std::string String::ReplaceFirst(std::string str, std::string_view token, std::s
 	return str;
 }
 
-std::string String::FixReturnTokens(const std::string &str) {
+std::string String::FixReturnTokens(const std::string &str) noexcept {
 	// TODO: Optimize.
-	return ReplaceAll(ReplaceAll(str, "\n", "\\n"), "\r", "\\r");
+	return ReplaceAll(str, {{"\n", "\\n"}, {"\r", "\\r"}});
 }
 
-std::string String::UnfixReturnTokens(const std::string &str) {
+std::string String::UnfixReturnTokens(const std::string &str) noexcept {
 	// TODO: Optimize.
-	return ReplaceAll(ReplaceAll(str, "\\n", "\n"), "\\r", "\r");
+	return ReplaceAll(str, {{"\\n", "\n"}, {"\\r", "\r"}});
 }
 
 std::string String::Lowercase(std::string str) {

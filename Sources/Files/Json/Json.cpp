@@ -15,7 +15,7 @@ Json::Json(Node &&node) :
 
 void Json::ParseString(std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
-	std::vector<Token> tokens;
+	Tokens tokens;
 
 	std::size_t tokenStart = 0;
 	enum class QuoteState : uint8_t {
@@ -63,11 +63,11 @@ void Json::WriteStream(std::ostream &stream, Format format) const {
 	stream << '}';
 }
 
-void Json::AddToken(std::string_view view, std::vector<Token> &tokens) {
+void Json::AddToken(std::string_view view, Tokens &tokens) {
 	if (view.length() != 0) {
 		// Finds the node value type of the string and adds it to the tokens vector.
 		if (view == "null") {
-			tokens.emplace_back(Type::Null, view);
+			tokens.emplace_back(Type::Null, std::string_view());
 		} else if (view == "true" || view == "false") {
 			tokens.emplace_back(Type::Boolean, view);
 		} else if (String::IsNumber(view)) {
@@ -87,7 +87,7 @@ void Json::AddToken(std::string_view view, std::vector<Token> &tokens) {
 	}
 }
 
-void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t i, int32_t &r) {
+void Json::Convert(Node &current, const Tokens &tokens, int32_t i, int32_t &r) {
 	if (tokens[i] == Token(Type::Token, "{")) {
 		auto k = i + 1;
 

@@ -110,6 +110,7 @@ public:
 protected:
 	class Token {
 	public:
+		Token() = default;
 		Token(Type type, std::string_view view) :
 			type(type),
 			view(view) {
@@ -131,6 +132,7 @@ protected:
 		Type type;
 		std::string_view view;
 	};
+	using Tokens = std::vector<Token>;
 
 	std::vector<Node> m_properties;
 	std::string m_name; // key

@@ -90,27 +90,27 @@ class ACID_EXPORT ConstExpr {
 public:
 	// TODO C++20: std::to_address
 	template<typename T>
-	static T *AsPtr(T &obj) { return &obj; }
+	static T *AsPtr(T &obj) noexcept { return &obj; }
 
 	template<typename T>
-	static T *AsPtr(T *obj) { return obj; }
+	static T *AsPtr(T *obj) noexcept { return obj; }
 
 	template<typename T>
-	static T *AsPtr(const std::shared_ptr<T> &obj) { return obj.get(); }
+	static T *AsPtr(const std::shared_ptr<T> &obj) noexcept { return obj.get(); }
 
 	template<typename T>
-	static T *AsPtr(const std::unique_ptr<T> &obj) { return obj.get(); }
+	static T *AsPtr(const std::unique_ptr<T> &obj) noexcept { return obj.get(); }
 
 	template<typename T>
-	static const T &AsRef(T &obj) { return obj; }
+	static const T &AsRef(T &obj) noexcept { return obj; }
 
 	template<typename T>
-	static const T &AsRef(T *obj) { return *obj; }
+	static const T &AsRef(T *obj) noexcept { return *obj; }
 
 	template<typename T>
-	static const T &AsRef(const std::shared_ptr<T> &obj) { return *obj.get(); }
+	static const T &AsRef(const std::shared_ptr<T> &obj) noexcept { return *obj.get(); }
 
 	template<typename T>
-	static const T &AsRef(const std::unique_ptr<T> &obj) { return *obj.get(); }
+	static const T &AsRef(const std::unique_ptr<T> &obj) noexcept { return *obj.get(); }
 };
 }
