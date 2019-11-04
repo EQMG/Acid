@@ -16,7 +16,7 @@ Node::Node(std::string value, std::vector<Node> &&properties) :
 void Node::ParseString(std::string_view string) {
 }
 
-void Node::WriteStream(std::ostream &stream, Format format) const {
+void Node::WriteStream(std::ostream &stream, Node::Format format) const {
 }
 
 void Node::Clear() {

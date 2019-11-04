@@ -12,6 +12,18 @@ class Node;
 class ACID_EXPORT NodeView {
 	friend class Node;
 private:
+	enum class Type : uint8_t {
+		Object,
+		Array,
+		String,
+		Boolean,
+		Integer,
+		Decimal,
+		Null,
+		Token,
+		Unknown
+	};
+
 	NodeView() = default;
 	NodeView(Node const *parent, std::variant<std::string, int32_t> key, Node const *value);
 	NodeView(NodeView *parent, std::variant<std::string, int32_t> key);
@@ -44,6 +56,8 @@ public:
 
 	std::string GetName() const;
 	void SetName(const std::string &name);
+
+	const Type &GetType() const;
 
 private:
 	Node *m_parent = nullptr;

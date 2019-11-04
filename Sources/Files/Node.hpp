@@ -8,22 +8,11 @@ namespace acid {
  */
 class ACID_EXPORT Node {
 public:
-	enum class Type : uint8_t {
-		Object,
-		Array,
-		String,
-		Boolean,
-		Integer,
-		Decimal,
-		Null,
-		Token,
-		Unknown
-	};
-
 	enum class Format : uint8_t {
 		Beautified,
 		Minified
 	};
+	using Type = NodeView::Type;
 
 	Node() = default;
 	Node(const Node &node) = default;
@@ -34,12 +23,12 @@ public:
 	virtual ~Node() = default;
 
 	virtual void ParseString(std::string_view string);
-	virtual void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
+	virtual void WriteStream(std::ostream &stream, Node::Format format = Node::Format::Minified) const;
 
 	template<typename _Elem = char>
 	void ParseStream(std::basic_istream<_Elem> & stream);
 	template<typename _Elem = char>
-	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const;
+	std::basic_string<_Elem> WriteString(Node::Format format = Node::Format::Minified) const;
 	
 	template<typename T>
 	T Get() const;

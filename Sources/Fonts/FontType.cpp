@@ -5,7 +5,9 @@
 
 #include "Resources/Resources.hpp"
 #include "Graphics/Graphics.hpp"
+#include "Files/Json/Json.hpp"
 #include "Files/Files.hpp"
+#include "Files/File.hpp"
 #include "Devices/Window.hpp"
 #include "Text.hpp"
 
@@ -242,6 +244,32 @@ void FontType::Load() {
 #if defined(ACID_DEBUG)
 	Log::Out("Font Type ", m_filename, " with ", i, " glyphs loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
+
+	File file(std::make_unique<Json>());
+	for (int i = 0; i < m_glyphInfos.size(); i++) {
+		const auto &glyphInfo = m_glyphInfos[i];
+		for (auto [c, j] : m_charmap) {
+			if (j != i) continue;
+
+			auto &node = (*file.GetNode())["glyphInfos"]->AddProperty(std::string(1, c));
+
+			node["id"] = i;
+			node["bbox"]["min"] = glyphInfo.bbox.m_min;
+			node["bbox"]["max"] = glyphInfo.bbox.m_max;
+			node["horiAdvance"] = glyphInfo.horiAdvance;
+			node["vertAdvance"] = glyphInfo.vertAdvance;
+
+			auto o = &outlines[i];
+			node["outline"]["points"] = o->m_points;
+			for (const auto &contours : o->m_contours) {
+				auto &cont = node["outline"]["contours"]->AddProperty();
+				cont["begin"] = contours.m_begin;
+				cont["end"] = contours.m_end;
+			}
+			node["outline"]["cells"] = o->m_cells;
+		}
+	}
+	file.Write("FontsInfo/" + m_filename.stem().string() + ".json", Node::Format::Beautified);
 }
 
 uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {

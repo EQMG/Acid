@@ -72,4 +72,11 @@ void NodeView::SetName(const std::string &name) {
 
 	m_value->SetName(name);
 }
+
+const NodeView::Type &NodeView::GetType() const {
+	if (!has_value())
+		return Type::Unknown;
+
+	return m_value->GetType();
+}
 }

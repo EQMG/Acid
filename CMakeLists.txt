@@ -72,7 +72,7 @@ set(_ACID_ALL_SYSTEM_LIBS true)
 include(FetchContent)
 
 # PhysFS is arranged before GLFW to prevent "uninstall" being defined twice
-find_package(PhysFS QUIET)
+find_package(PhysFS 3.0.1 QUIET)
 if(NOT PHYSFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
@@ -112,7 +112,7 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-find_package(Freetype QUIET)
+find_package(Freetype 2.9.1 QUIET)
 if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
@@ -134,7 +134,7 @@ if(NOT Freetype_FOUND)
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-find_package(glfw3 QUIET)
+find_package(glfw3 3.3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
@@ -186,6 +186,7 @@ find_path(SPIRV_INCLUDE_DIR
 		HINTS "${SPIRV_ROOT}"
 		)
 
+# TODO: Does glslang provide version info?
 if(NOT SPIRV_LIBRARY
 		OR NOT GLSLANG_LIBRARY
 		OR NOT OSDEPENDENT_LIBRARY
@@ -194,15 +195,15 @@ if(NOT SPIRV_LIBRARY
 		OR NOT SPIRV_INCLUDE_DIR)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/7.12.3352.tar.gz
-			URL_MD5 b31bc89ffa86dbb5ab638c9c2a412302
+			URL https://github.com/KhronosGroup/glslang/archive/7.13.3496.tar.gz
+			URL_MD5 9bfbff6115e490654e149fd0558dba0c
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
 		foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" "ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS")
 			set(${_glslang_option} OFF CACHE INTERNAL "")
 		endforeach()
-		foreach(_glslang_option "ENABLE_OPT")
+		foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_OPT")
 			set(${_glslang_option} ON CACHE INTERNAL "")
 		endforeach()
 		FetchContent_Populate(glslang)
@@ -228,7 +229,8 @@ else()
 			)
 endif()
 
-find_package(Bullet QUIET)
+# TODO: Acid requires 2.89 on macOS, the last release was Dec 2018.
+find_package(Bullet 2.88 QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3

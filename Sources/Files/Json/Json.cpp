@@ -121,7 +121,7 @@ void Json::Convert(Node &current, const Tokens &tokens, int32_t i, int32_t &r) {
 	} else {
 		std::string str(tokens[i].view);
 		if (tokens[i].type == Type::String)
-			str = String::UnfixReturnTokens(str);
+			str = String::UnfixEscapedChars(str);
 		current.SetValue(str);
 		current.SetType(tokens[i].type);
 		r = i + 1;
@@ -135,7 +135,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 	// Only output the value if no properties exist.
 	if (source.GetProperties().empty()) {
 		if (source.GetType() == Type::String)
-			stream << '\"' << String::FixReturnTokens(source.GetValue()) << '\"';
+			stream << '\"' << String::FixEscapedChars(source.GetValue()) << '\"';
 		else if (source.GetType() == Type::Null)
 			stream << "null";
 		else
@@ -183,7 +183,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 		} else if (it->GetType() == Type::Array) {
 			stream << ']';
 		}
-
+		
 		// Separate properties by comma.
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';

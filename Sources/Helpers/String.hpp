@@ -16,11 +16,25 @@ public:
 	static std::string ConvertUtf8(const std::wstring_view &string);
 
 	/**
+	 * Converts a CTF16 (wide) char to a UTF8 char.
+	 * @param c The char to convert.
+	 * @return The converted char.
+	 */
+	static char ConvertUtf8(wchar_t c);
+
+	/**
 	 * Converts a CTF8 string to a UTF16 (wide) string.
 	 * @param string The view of the string to convert.
 	 * @return The converted string.
 	 */
 	static std::wstring ConvertUtf16(const std::string_view &string);
+
+	/**
+	 * Converts a CTF8 char to a UTF16 (wide) char.
+	 * @param c The char to convert.
+	 * @return The converted char.
+	 */
+	static wchar_t ConvertUtf16(char c);
 
 	/**
 	 * Splits a string by a separator.
@@ -46,6 +60,11 @@ public:
 	 */
 	static bool Contains(std::string_view str, std::string_view token) noexcept;
 
+	/**
+	 * Gets if a character is a whitespace.
+	 * @param str The string.
+	 * @return If a string is a whitespace.
+	 */
 	static bool IsWhitespace(char c) noexcept;
 
 	/**
@@ -97,14 +116,6 @@ public:
 	static std::string ReplaceAll(std::string str, std::string_view token, std::string_view to);
 
 	/**
-	 * Replaces all tokens from a string.
-	 * @param str The string.
-	 * @param replaces A list of tokens to replace and strings to replace tokens with.
-	 * @return The string with the tokens replaced.
-	 */
-	static std::string ReplaceAll(std::string str, const std::vector<std::pair<std::string_view, std::string_view>> &replaces) noexcept;
-
-	/**
 	 * Replaces the first token from a string.
 	 * @param str The string.
 	 * @param token The token.
@@ -114,18 +125,18 @@ public:
 	static std::string ReplaceFirst(std::string str, std::string_view token, std::string_view to);
 
 	/**
-	 * Fixes all tokens return line tokens from a string so it is file write-able.
+	 * Fixes all tokens return line tokens from a string.
 	 * @param str The string.
 	 * @return The string with return lines fixed.
 	 */
-	static std::string FixReturnTokens(const std::string &str) noexcept;
+	static std::string FixEscapedChars(std::string str);
 
 	/**
-	 * unFixes all tokens return line tokens from a string so it is file write-able.
+	 * Unfixes all tokens return line tokens from a string.
 	 * @param str The string.
 	 * @return The string with return lines unfixed.
 	 */
-	static std::string UnfixReturnTokens(const std::string &str) noexcept;
+	static std::string UnfixEscapedChars(std::string str);
 
 	/**
 	 * Lower cases a string.
@@ -162,6 +173,8 @@ public:
 			if (!val.has_value())
 				return "null";
 			return To(*val);
+		} else if constexpr (std::is_same_v<char, T>) {
+			return std::string(1, val);
 		} else {
 			return std::to_string(val);
 		}

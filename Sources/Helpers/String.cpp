@@ -11,8 +11,16 @@ std::string String::ConvertUtf8(const std::wstring_view &string) {
 	return UTF8_TO_UTF16_CONVERTER.to_bytes(string.data(), string.data() + string.length());
 }
 
+char String::ConvertUtf8(wchar_t c) {
+	return UTF8_TO_UTF16_CONVERTER.to_bytes(c)[0];
+}
+
 std::wstring String::ConvertUtf16(const std::string_view &string) {
 	return UTF8_TO_UTF16_CONVERTER.from_bytes(string.data(), string.data() + string.length());
+}
+
+wchar_t String::ConvertUtf16(char c) {
+	return UTF8_TO_UTF16_CONVERTER.from_bytes(c)[0];
 }
 
 std::vector<std::string> String::Split(const std::string &str, char sep) {
@@ -38,15 +46,13 @@ bool String::Contains(std::string_view str, std::string_view token) noexcept {
 }
 
 bool String::IsWhitespace(char c) noexcept {
-	//return std::string_view(" \n\r\t").find(c) != std::string::npos;
-	return c == ' ' || c == '\r' || c == '\n' || c == '\t';
+	return c == ' ' || c == '\n' || c == '\r' || c == '\t';
 }
 
 bool String::IsNumber(std::string_view str) noexcept {
-	return std::all_of(str.cbegin(), str.cend(), [](auto c) {
-		// Writing this out by hand is a lot faster than string_view::find!
-		//return std::string_view("0123456789.-").find(c) != std::string::npos;
-		return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || 
+	// This is the fastest way to tell if a string holds a decimal number.
+	return std::all_of(str.cbegin(), str.cend(), [](const auto c) {
+		return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' ||
 			c == '6' || c == '7' || c == '8' || c == '9' || c == '.' || c == '-';
 	});
 }
@@ -97,20 +103,6 @@ std::string String::ReplaceAll(std::string str, std::string_view token, std::str
 	return str;
 }
 
-std::string String::ReplaceAll(std::string str, const std::vector<std::pair<std::string_view, std::string_view>> &replaces) noexcept {
-	// TODO: Optimize
-	for (const auto &[token, to] : replaces) {
-		auto pos = str.find(token);
-
-		while (pos != std::string::npos) {
-			str.replace(pos, token.size(), to);
-			pos = str.find(token, pos + token.size());
-		}
-	}
-
-	return str;
-}
-
 std::string String::ReplaceFirst(std::string str, std::string_view token, std::string_view to) {
 	const auto startPos = str.find(token);
 
@@ -121,14 +113,35 @@ std::string String::ReplaceFirst(std::string str, std::string_view token, std::s
 	return str;
 }
 
-std::string String::FixReturnTokens(const std::string &str) noexcept {
-	// TODO: Optimize.
-	return ReplaceAll(str, {{"\n", "\\n"}, {"\r", "\\r"}});
+std::string String::FixEscapedChars(std::string str) {
+	static const std::vector<std::pair<char, std::string_view>> replaces = { {'\n', "\\n"}, {'\r', "\\r"} };
+
+	for (const auto &[from, to] : replaces) {
+		auto pos = str.find(from);
+		while (pos != std::string::npos) {
+			str.replace(pos, 1, to);
+			pos = str.find(from, pos + 2);
+		}
+	}
+	
+	return str;
 }
 
-std::string String::UnfixReturnTokens(const std::string &str) noexcept {
-	// TODO: Optimize.
-	return ReplaceAll(str, {{"\\n", "\n"}, {"\\r", "\r"}});
+std::string String::UnfixEscapedChars(std::string str) {
+	static const std::vector<std::pair<std::string_view, char>> replaces = { {"\\r", '\r'}, {"\\n", '\n'} };
+
+	for (const auto &[from, to] : replaces) {
+		auto pos = str.find(from);
+		while (pos != std::string::npos) {
+			if (pos != 0 && str[pos - 1] == '\\')
+				str.erase(str.begin() + --pos);
+			else
+				str.replace(pos, from.size(), 1, to);
+			pos = str.find(from, pos + 1 + from.size());
+		}
+	}
+
+	return str;
 }
 
 std::string String::Lowercase(std::string str) {
