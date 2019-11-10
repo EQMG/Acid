@@ -114,7 +114,7 @@ std::string String::ReplaceFirst(std::string str, std::string_view token, std::s
 }
 
 std::string String::FixEscapedChars(std::string str) {
-	static const std::vector<std::pair<char, std::string_view>> replaces = { {'\n', "\\n"}, {'\r', "\\r"} };
+	static const std::vector<std::pair<char, std::string_view>> replaces = { {'\n', "\\n"}, {'\r', "\\r"}, {'\t', "\\t"} };
 
 	for (const auto &[from, to] : replaces) {
 		auto pos = str.find(from);
@@ -128,7 +128,7 @@ std::string String::FixEscapedChars(std::string str) {
 }
 
 std::string String::UnfixEscapedChars(std::string str) {
-	static const std::vector<std::pair<std::string_view, char>> replaces = { {"\\r", '\r'}, {"\\n", '\n'} };
+	static const std::vector<std::pair<std::string_view, char>> replaces = { {"\\r", '\r'}, {"\\n", '\n'}, {"\\t", '\t'} };
 
 	for (const auto &[from, to] : replaces) {
 		auto pos = str.find(from);

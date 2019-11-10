@@ -16,7 +16,7 @@ Node::Node(std::string value, std::vector<Node> &&properties) :
 void Node::ParseString(std::string_view string) {
 }
 
-void Node::WriteStream(std::ostream &stream, Node::Format format) const {
+void Node::WriteStream(std::ostream &stream, Format format) const {
 }
 
 void Node::Clear() {
@@ -25,9 +25,14 @@ void Node::Clear() {
 
 bool Node::IsValid() const {
 	switch (m_type) {
+	case Type::Token:
+	case Type::Unknown:
+		return false;
 	case Type::Object:
 	case Type::Array:
 		return !m_properties.empty();
+	case Type::Null:
+		return true;
 	default:
 		return !m_value.empty();
 	}

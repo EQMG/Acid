@@ -4,6 +4,18 @@
 
 namespace acid {
 template<typename T>
+T NodeView::GetName() const {
+	if (!has_value())
+		return {};
+	return m_value->GetName<T>();
+}
+
+template<typename T>
+void NodeView::SetName(const T &value) {
+	return get()->SetName<T>(value);
+}
+
+template<typename T>
 T NodeView::Get() {
 	if (!has_value())
 		return {};

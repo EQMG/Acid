@@ -29,7 +29,12 @@ public:
 	void ParseStream(std::basic_istream<_Elem> & stream);
 	template<typename _Elem = char>
 	std::basic_string<_Elem> WriteString(Node::Format format = Node::Format::Minified) const;
-	
+
+	template<typename T>
+	T GetName() const;
+	template<typename T>
+	void SetName(const T &value);
+
 	template<typename T>
 	T Get() const;
 	template<typename T>
@@ -123,7 +128,7 @@ protected:
 	};
 	using Tokens = std::vector<Token>;
 
-	std::vector<Node> m_properties;
+	std::vector<Node> m_properties; // members
 	std::string m_name; // key
 	std::string m_value;
 	Type m_type = Type::Object;

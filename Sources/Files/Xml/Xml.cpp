@@ -39,12 +39,14 @@ void Xml::AppendData(const Node &source, std::ostream &stream, Format format, in
 
 	auto tagName = String::ReplaceAll(source.GetName(), " ", "_");
 
+	int attributeCount = 0;
 	std::stringstream nameAttributes;
 	nameAttributes << tagName;
 
 	for (const auto &property : source.GetProperties()) {
-		if (property.GetName().rfind('_', 0) == 0)
-			nameAttributes << " " << property.GetName().substr(1) << "=\"" << property.GetValue() << "\"";
+		if (property.GetName().rfind('_', 0) != 0) continue;
+		nameAttributes << " " << property.GetName().substr(1) << "=\"" << property.GetValue() << "\"";
+		attributeCount++;
 	}
 
 	auto nameAndAttribs = String::Trim(nameAttributes.str());
@@ -54,10 +56,8 @@ void Xml::AppendData(const Node &source, std::ostream &stream, Format format, in
 
 	if (source.GetName()[0] == '?') {
 		stream << "<" << nameAndAttribs << "?>";
-
-		if (format != Format::Minified) {
+		if (format != Format::Minified)
 			stream << '\n';
-		}
 
 		for (const auto &property : source.GetProperties()) {
 			if (property.GetName().rfind('_', 0) != 0)
@@ -67,22 +67,24 @@ void Xml::AppendData(const Node &source, std::ostream &stream, Format format, in
 		return;
 	}
 
-	if (source.GetProperties().empty() && source.GetValue().empty()) {
+	if (source.GetProperties().size() - attributeCount == 0 && source.GetValue().empty()) {
 		stream << "<" << nameAndAttribs << "/>";
-
-		if (format != Format::Minified) {
+		if (format != Format::Minified)
 			stream << '\n';
-		}
 
 		return;
 	}
 
-	stream << "<" << nameAndAttribs << ">" << source.GetValue();
+	stream << "<" << nameAndAttribs << ">";
+	if (!source.GetValue().empty()) {
+		if (format != Format::Minified)
+			stream << '\n' << indents << "  ";
+		stream << source.GetValue();
+	}
 
 	if (!source.GetProperties().empty()) {
-		if (format != Format::Minified) {
+		if (format != Format::Minified)
 			stream << '\n';
-		}
 
 		for (const auto &property : source.GetProperties()) {
 			if (property.GetName().rfind('_', 0) != 0)

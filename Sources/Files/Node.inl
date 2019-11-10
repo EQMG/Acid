@@ -29,6 +29,17 @@ std::basic_string<_Elem> Node::WriteString(Node::Format format) const {
 }
 
 template<typename T>
+T Node::GetName() const {
+	// Only supports basic string to type conversions.
+	return String::From<T>(m_name);
+}
+
+template<typename T>
+void Node::SetName(const T &value) {
+	m_name = String::To<T>(value);
+}
+
+template<typename T>
 T Node::Get() const {
 	T value;
 	*this >> value;
@@ -214,7 +225,7 @@ inline Node &operator<<(Node &node, const std::filesystem::path &object) {
 
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::pair<T, K> &pair) {
-	pair.first = String::From<T>(node.GetName());
+	pair.first = node.GetName<T>();
 	node >> pair.second;
 	return node;
 }

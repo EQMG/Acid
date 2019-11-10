@@ -12,6 +12,10 @@ class Node;
 class ACID_EXPORT NodeView {
 	friend class Node;
 private:
+	NodeView() = default;
+	NodeView(Node const *parent, std::variant<std::string, int32_t> key, Node const *value);
+	NodeView(NodeView *parent, std::variant<std::string, int32_t> key);
+public:
 	enum class Type : uint8_t {
 		Object,
 		Array,
@@ -24,10 +28,6 @@ private:
 		Unknown
 	};
 
-	NodeView() = default;
-	NodeView(Node const *parent, std::variant<std::string, int32_t> key, Node const *value);
-	NodeView(NodeView *parent, std::variant<std::string, int32_t> key);
-public:
 	bool has_value() const noexcept;
 	Node *get();
 
@@ -36,6 +36,11 @@ public:
 
 	Node &operator*() { return *get(); }
 	Node *operator->() { return get(); }
+
+	template<typename T>
+	T GetName() const;
+	template<typename T>
+	void SetName(const T &value);
 
 	template<typename T>
 	T Get();

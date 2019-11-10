@@ -172,7 +172,14 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 			stream << '[';
 		}
 
-		AppendData(*it, stream, format, indent + 1);
+		// Shorten primitive array output length.
+		if (isArray && format != Format::Minified && !it->GetProperties().empty() && it[0].GetType() != Type::Object) {
+			stream << indents << "  ";
+			AppendData(*it, stream, format, 0);
+			stream << '\n';
+		} else {
+			AppendData(*it, stream, format, indent + 1);
+		}
 
 		if (!it->GetProperties().empty()) {
 			if (format != Format::Minified)
@@ -187,8 +194,9 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 		// Separate properties by comma.
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';
-		if (format != Format::Minified)
-			stream << '\n';
+		// No new line if the indent level is zero (if primitive array type).
+		if (format != Format::Minified && indent != 0)
+			stream << (indent != 0 ? '\n' : ' ');
 	}
 }
 }
