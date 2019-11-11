@@ -148,7 +148,7 @@ If using Visual Studio it must be 2015 or later. Use the Visual Studio installer
 
 This has been tested on the latest visual studio 2019, using 64 bit (32 bit not tested)
 
-Download vcpkg, which can be cloned from here: [Here](https://github.com/microsoft/vcpkg)
+Download vcpkg, which can be cloned from [here](https://github.com/microsoft/vcpkg).
 Place the vcpkg directory in a safe place for the external libraries, as it will structure out all the components needed for acid within vcpkg.
 
 Run powershell, change your directory to the root of the vcpkg folder, and run the following in powershell:
