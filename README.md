@@ -163,13 +163,13 @@ Run the following to install some components:
 
 ```
 # x64
-.\vcpkg install bullet3:x64-windows glslang:x64-windows openal-soft:x64-windows physfs:x64-windows
+.\vcpkg install bullet3:x64-windows glslang:x64-windows openal-soft:x64-windows physfs:x64-windows glfw3:x64-windows
 
 # x86 (Not tested for use)
-.\vcpkg install bullet3:x86-windows glslang:x86-windows openal-soft:x86-windows physfs:x86-windows
+.\vcpkg install bullet3:x86-windows glslang:x86-windows openal-soft:x86-windows physfs:x86-windows glfw3:x86-windows
 ```
 
-For vulkan and glfw, see this [guide](https://vulkan-tutorial.com/Development_environment). You only need vulkan and glfw. Place glfw somewhere safe (recommendation is to follow the guide).
+For vulkan, download [here](https://vulkan.lunarg.com).
 
 Clone the acid repository if you haven't already, and start visual studio.
 When prompt for opening a project, select the open folder or open CMake option.
@@ -181,7 +181,7 @@ If the project fails to compile (as this is almost guaranteed on first setup), d
 
 ```
 BULLET_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/bullet
-glfw3_DIR	.../glfw-3.3.bin.WIN64
+glfw3_DIR	.../vcpkg/installed/x64-windows/
 GLSLANG_LIBRARY	.../vcpkg/installed/x64-windows/lib/glslang.lib
 HLSL_LIBRARY	.../vcpkg/installed/x64-windows/
 PHYSFS_LIBRARY	.../vcpkg/installed/x64-windows/lib/physfs.lib
@@ -213,6 +213,9 @@ expand the "Acid Project" folder, and finally expand "Acid". You should see indi
 Right click on an executable of interest, and select "Build" to compile it.
 
 At the top center of visual studio, there is a startup item with a dropdown, which will select which executable you wish to run. Hit the dropdown menu, and select your executable. Hit the play button, and it should begin running.
+
+If you are provided an error on the CMake, along the lines of: # TODO: Figure out how to fix this problem
+
 
 ### Linux
 
