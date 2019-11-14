@@ -33,7 +33,7 @@ This project is being worked on part-time by a single developer, this is under h
  * Image file loading (JPG, PNG, TIFF, BMP, PSD, SVG)
 
 ## Dependencies
- * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
+ * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface - Version 1.0.X for best results
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
