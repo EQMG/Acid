@@ -40,6 +40,103 @@ This project is being worked on part-time by a single developer, this is under h
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [PhysFS](https://icculus.org/physfs) - Archive file access
 
+## Compiling
+All platforms depend on [CMake](https://cmake.org/download), 3.11 or higher, to generate IDE/make files.
+
+Cmake options (default ON):
+* `BUILD_TESTS`
+* `ACID_INSTALL_EXAMPLES`
+* `ACID_INSTALL_RESOURCES`  
+
+If you installed Acid using only system libs, then `find_package(Acid)` will work from Cmake. Versioning is also supported.  
+When using `find_package(Acid)` the imported target `Acid::Acid` will be created.  
+The `ACID_RESOURCES_DIR` variable will also be available, which will point to the on-disk location of `Acid/Resources` (if installed).
+
+[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/), [OpenAL](https://www.openal.org/downloads/), and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
+
+Make sure you have environment variables `VULKAN_SDK` and `OPENALDIR` set to the paths you have Vulkan and OpenAL installed into.
+
+Ensure you are using a compiler with full C++17 support, on Windows it is recommended that you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
+
+### Visual Studio
+
+If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both "Desktop development with C++" and "Windows SDK" if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.
+
+This has been tested on the latest visual studio 2019, using 64 bit (32 bit not tested)
+
+Download vcpkg, which can be cloned from [here](https://github.com/microsoft/vcpkg).
+Place the vcpkg directory in a safe place for the external libraries, as it will structure out all the components needed for acid within vcpkg.
+
+Run powershell, change your directory to the root of the vcpkg folder, and run the following in powershell:
+
+```
+./vcpkg integrate install
+```
+
+This will install external libraries from the package manager and provide immediate use of components in any projects you start in visual studio.
+
+Run the following to install some components:
+
+```
+# x64
+.\vcpkg install bullet3:x64-windows openal-soft:x64-windows physfs:x64-windows glfw3:x64-windows
+
+# x86 (Not tested for use)
+.\vcpkg install bullet3:x86-windows openal-soft:x86-windows physfs:x86-windows glfw3:x86-windows
+```
+
+For vulkan, download [here](https://vulkan.lunarg.com).
+
+Clone the acid repository if you haven't already, and start visual studio.
+When prompt for opening a project, select the open folder or open CMake option.
+Select acid at its root folder.
+
+Visual Studio should detect the cmake within the project, and begin compiling your solution.
+
+If the project fails to compile (as this is almost guaranteed on first setup), double click the `CMakeSettings.json` folder in the Solution Explorer, which should prompt you with the CMake Settings. Scroll to "CMake variables and cache", and check the following:
+
+You don't need to install glslang - acid will install that by itself.
+
+```
+BULLET_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/bullet
+glfw3_DIR	.../vcpkg/installed/x64-windows/
+PHYSFS_LIBRARY	.../vcpkg/installed/x64-windows/lib/physfs.lib
+PHYSFS_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include
+```
+
+You should also toggle "Show Advanced Variables" to check on the vulkan directory and library:
+
+```
+Vulkan_INCLUDE_DIR	.../VulkanSDK/x.x.x.x/Include
+Vulkan_LIBRARY	.../VulkanSDK/x.x.x.x/Lib/vulkan-1.lib
+```
+
+And finally, check OpenAL:
+
+```
+OPENAL_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/AL
+OPENAL_LIBRARY	.../vcpkg/installed/x64-windows/lib/OpenAL32.lib
+```
+
+Click on "Save and generate CMake cache to load variables" to try creating the project again.
+
+To run the demos, in the solution explorer, hit the switch views icon at the top, and select "CMake Targets View"
+
+expand the "Acid Project" folder, and finally expand "Acid". You should see indicators for executable test projects.
+Right click on an executable of interest, and select "Build" to compile it.
+
+At the top center of visual studio, there is a startup item with a dropdown, which will select which executable you wish to run. Hit the dropdown menu, and select your executable. Hit the play button, and it should begin running.
+
+If you are provided an error on the CMake, along the lines of: # TODO: Figure out how to fix this problem
+
+
+### Linux
+
+On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installed. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html) so a Vulkan SDK is found.
+
+Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
+
+
 # Code Snippets
 ```cpp
 // Imports a 2D texture using nearest filtering.
@@ -123,105 +220,6 @@ Timers::Get()->Repeat(7s, 3, []() {
 <img src="/Documents/Screenshot4.png" alt="Acid" width="600px">
 
 <img src="/Documents/Screenshot5.png" alt="Acid" width="600px">
-
-## Compiling
-All platforms depend on [CMake](https://cmake.org/download), 3.11 or higher, to generate IDE/make files.
-
-Cmake options (default ON):
-* `BUILD_TESTS`
-* `ACID_INSTALL_EXAMPLES`
-* `ACID_INSTALL_RESOURCES`  
-
-If you installed Acid using only system libs, then `find_package(Acid)` will work from Cmake. Versioning is also supported.  
-When using `find_package(Acid)` the imported target `Acid::Acid` will be created.  
-The `ACID_RESOURCES_DIR` variable will also be available, which will point to the on-disk location of `Acid/Resources` (if installed).
-
-[Vulkan SDK](https://www.lunarg.com/vulkan-sdk/), [OpenAL](https://www.openal.org/downloads/), and [OpenAL SDK](https://openal-soft.org/#download) are required to develop and run Acid.
-
-Make sure you have environment variables `VULKAN_SDK` and `OPENALDIR` set to the paths you have Vulkan and OpenAL installed into.
-
-Ensure you are using a compiler with full C++17 support, on Windows it is recommended that you use MSVC or [MinGW w64](https://sourceforge.net/projects/mingw-w64/?source=navbar).
-
-### Visual Studio
-
-If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both "Desktop development with C++" and "Windows SDK" if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.
-
-This has been tested on the latest visual studio 2019, using 64 bit (32 bit not tested)
-
-Download vcpkg, which can be cloned from [here](https://github.com/microsoft/vcpkg).
-Place the vcpkg directory in a safe place for the external libraries, as it will structure out all the components needed for acid within vcpkg.
-
-Run powershell, change your directory to the root of the vcpkg folder, and run the following in powershell:
-
-```
-./vcpkg integrate install
-```
-
-This will install external libraries from the package manager and provide immediate use of components in any projects you start in visual studio.
-
-Run the following to install some components:
-
-```
-# x64
-.\vcpkg install bullet3:x64-windows glslang:x64-windows openal-soft:x64-windows physfs:x64-windows glfw3:x64-windows
-
-# x86 (Not tested for use)
-.\vcpkg install bullet3:x86-windows glslang:x86-windows openal-soft:x86-windows physfs:x86-windows glfw3:x86-windows
-```
-
-For vulkan, download [here](https://vulkan.lunarg.com).
-
-Clone the acid repository if you haven't already, and start visual studio.
-When prompt for opening a project, select the open folder or open CMake option.
-Select acid at its root folder.
-
-Visual Studio should detect the cmake within the project, and begin compiling your solution.
-
-If the project fails to compile (as this is almost guaranteed on first setup), double click the `CMakeSettings.json` folder in the Solution Explorer, which should prompt you with the CMake Settings. Scroll to "CMake variables and cache", and check the following:
-
-```
-BULLET_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/bullet
-glfw3_DIR	.../vcpkg/installed/x64-windows/
-GLSLANG_LIBRARY	.../vcpkg/installed/x64-windows/lib/glslang.lib
-HLSL_LIBRARY	.../vcpkg/installed/x64-windows/
-PHYSFS_LIBRARY	.../vcpkg/installed/x64-windows/lib/physfs.lib
-PHYSFS_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include
-SPIRV_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/SPIRV
-SPIRV_LIBRARY	.../vcpkg/installed/x64-windows/lib/SPIRV.lib
-SPIRV_ROOT	../vcpkg/installed/x64-windows/include/SPIRV
-```
-
-You should also toggle "Show Advanced Variables" to check on the vulkan directory and library:
-
-```
-Vulkan_INCLUDE_DIR	.../VulkanSDK/x.x.x.x/Include
-Vulkan_LIBRARY	.../VulkanSDK/x.x.x.x/Lib/vulkan-1.lib
-```
-
-And finally, check OpenAL:
-
-```
-OPENAL_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/AL
-OPENAL_LIBRARY	.../vcpkg/installed/x64-windows/lib/OpenAL32.lib
-```
-
-Click on "Save and generate CMake cache to load variables" to try creating the project again.
-
-To run the demos, in the solution explorer, hit the switch views icon at the top, and select "CMake Targets View"
-
-expand the "Acid Project" folder, and finally expand "Acid". You should see indicators for executable test projects.
-Right click on an executable of interest, and select "Build" to compile it.
-
-At the top center of visual studio, there is a startup item with a dropdown, which will select which executable you wish to run. Hit the dropdown menu, and select your executable. Hit the play button, and it should begin running.
-
-If you are provided an error on the CMake, along the lines of: # TODO: Figure out how to fix this problem
-
-
-### Linux
-
-On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installed. Read about how to setup [Vulkan on Linux](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html) so a Vulkan SDK is found.
-
-Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the [GUIDELINES.md](.github/GUIDELINES.md).
