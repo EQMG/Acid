@@ -40,7 +40,7 @@ T Node::GetName() const {
 
 template<typename T>
 void Node::SetName(const T &value) {
-	m_name = To<T>(value);
+	m_name = String::To<T>(value);
 }
 
 template<typename T>
@@ -116,6 +116,12 @@ inline Node &operator<<(Node &node, const Node &object) {
 	return node;
 }*/
 
+inline Node &operator<<(Node &node, const std::nullptr_t &object) {
+	node.SetValue("");
+	node.SetType(Node::Type::Null);
+	return node;
+}
+
 template<typename T>
 std::enable_if_t<std::is_pointer_v<T>, Node &> operator<<(Node &node, const T object) {
 	if (object == nullptr) {
@@ -163,12 +169,6 @@ Node &operator<<(Node &node, const std::shared_ptr<T> &object) {
 	}
 
 	node << *object;
-	return node;
-}
-
-inline Node &operator<<(Node &node, const std::nullptr_t &object) {
-	node.SetValue("");
-	node.SetType(Node::Type::Null);
 	return node;
 }
 
