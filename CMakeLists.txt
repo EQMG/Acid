@@ -112,7 +112,7 @@ if(NOT PHYSFS_FOUND)
 	endif()
 endif()
 
-find_package(Freetype 2.9.1 QUIET)
+#find_package(Freetype 2.9.1 QUIET)
 if(NOT Freetype_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype
