@@ -33,7 +33,7 @@ This project is being worked on part-time by a single developer, this is under h
  * Image file loading (JPG, PNG, TIFF, BMP, PSD, SVG)
 
 ## Dependencies
- * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface - Version 1.0.X for best results
+ * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface - Version 1.0.X
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
@@ -95,7 +95,7 @@ Visual Studio should detect the cmake within the project, and begin compiling yo
 
 If the project fails to compile (as this is almost guaranteed on first setup), double click the `CMakeSettings.json` folder in the Solution Explorer, which should prompt you with the CMake Settings. Scroll to "CMake variables and cache", and check the following:
 
-You don't need to install glslang - acid will install that by itself.
+**NOTE:** You don't need to install glslang - acid will install it.
 
 ```
 BULLET_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/bullet
@@ -107,28 +107,34 @@ PHYSFS_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include
 You should also toggle "Show Advanced Variables" to check on the vulkan directory and library:
 
 ```
-Vulkan_INCLUDE_DIR	.../VulkanSDK/x.x.x.x/Include
-Vulkan_LIBRARY	.../VulkanSDK/x.x.x.x/Lib/vulkan-1.lib
+Vulkan_INCLUDE_DIR	.../VulkanSDK/1.0.x.x/Include
+Vulkan_LIBRARY	.../VulkanSDK/1.0.x.x/Lib/vulkan-1.lib
 ```
 
-And finally, check OpenAL:
+And check OpenAL:
 
 ```
 OPENAL_INCLUDE_DIR	.../vcpkg/installed/x64-windows/include/AL
 OPENAL_LIBRARY	.../vcpkg/installed/x64-windows/lib/OpenAL32.lib
 ```
 
-Click on "Save and generate CMake cache to load variables" to try creating the project again.
+Click on "Save and generate CMake cache to load variables" to create the project.
 
-To run the demos, in the solution explorer, hit the switch views icon at the top, and select "CMake Targets View"
+In the solution explorer, hit the switch views icon at the top, and select "CMake Targets View"
 
-expand the "Acid Project" folder, and finally expand "Acid". You should see indicators for executable test projects.
+Expand the Acid Project, and at the top should be Acid as a shared library. Right click this, Build, and then Install.
+The output window should show where your build was done.
+
+To run the project demos, you will need to do two things:
+
+Navigate to `Sources/Post/Deferred/SubrenderDeferred.cpp`
+
+On all lines that have Enqueue's (should be 3 locations: lines 136, 171, and 237) you will need to comment out these resource calls.
+
+Then in the solution explorer, hit the switch views icon at the top, and select "CMake Targets View". Expand the "Acid Project" folder, and finally expand "Acid". You should see indicators for executable test projects.
 Right click on an executable of interest, and select "Build" to compile it.
 
-At the top center of visual studio, there is a startup item with a dropdown, which will select which executable you wish to run. Hit the dropdown menu, and select your executable. Hit the play button, and it should begin running.
-
-If you are provided an error on the CMake, along the lines of: # TODO: Figure out how to fix this problem
-
+At the top center of visual studio, there is a Startup Item with a dropdown, which will select which executable you wish to run. Click the dropdown icon, and select your executable. Hit the play button, and it should begin running.
 
 ### Linux
 
