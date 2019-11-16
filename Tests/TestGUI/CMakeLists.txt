@@ -1,14 +1,13 @@
 file(GLOB_RECURSE TESTGUI_HEADER_FILES
-		"*.h"
-		"*.hpp"
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		"*.h" "*.hpp" "*.inl"
 		)
 file(GLOB_RECURSE TESTGUI_SOURCE_FILES
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.c"
 		"*.cpp"
 		"*.rc"
 		)
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTGUI_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTGUI_SOURCE_FILES})
 
 add_executable(TestGUI ${TESTGUI_HEADER_FILES} ${TESTGUI_SOURCE_FILES})
 
@@ -40,3 +39,7 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
+
+include(AcidGroupSources)
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTGUI_HEADER_FILES}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTGUI_SOURCE_FILES}")

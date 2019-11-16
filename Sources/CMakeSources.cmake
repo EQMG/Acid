@@ -455,9 +455,6 @@ set(_temp_acid_sources
 		Uis/UiTransform.cpp
 		)
 		
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${_temp_acid_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${_temp_acid_sources})
-
 # Adds the precompiled header
 include(PrecompiledHeader)
 add_precompiled_header(Acid
@@ -490,3 +487,13 @@ foreach(_acid_source IN LISTS _temp_acid_sources)
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_acid_source}>
 			)
 endforeach()
+
+# Changes how sources appear in IDE virtual file structures.
+include(AcidGroupSources)
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_headers}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_sources}")
+
+# Include this file in our project view.
+target_sources(Acid PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/CMakeSources.cmake>
+		)

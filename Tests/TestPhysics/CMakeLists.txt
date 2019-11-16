@@ -1,14 +1,11 @@
 file(GLOB_RECURSE TESTPHYSICS_HEADER_FILES
-		"*.h"
-		"*.hpp"
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		"*.h" "*.hpp" "*.inl"
 		)
 file(GLOB_RECURSE TESTPHYSICS_SOURCE_FILES
-		"*.c"
-		"*.cpp"
-		"*.rc"
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		"*.c" "*.cpp" "*.rc"
 		)
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTPHYSICS_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTPHYSICS_SOURCE_FILES})
 
 add_executable(TestPhysics ${TESTPHYSICS_HEADER_FILES} ${TESTPHYSICS_SOURCE_FILES})
 
@@ -42,3 +39,7 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
+
+include(AcidGroupSources)
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPHYSICS_HEADER_FILES}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPHYSICS_SOURCE_FILES}")

@@ -18,15 +18,13 @@ endif()
 enable_testing()
 
 file(GLOB_RECURSE TESTUNITS_HEADER_FILES
-		"*.h"
-		"*.hpp"
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		"*.h" "*.hpp" "*.inl"
 		)
 file(GLOB_RECURSE TESTUNITS_SOURCE_FILES
-		"*.c"
-		"*.cpp"
+		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		"*.c" "*.cpp" "*.rc"
 		)
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${TESTUNITS_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${TESTUNITS_SOURCE_FILES})
 
 add_executable(UnitTests ${TESTUNITS_HEADER_FILES} ${TESTUNITS_SOURCE_FILES})
 
@@ -42,3 +40,6 @@ add_test(NAME unit
 		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/vat_test
 		)
 		
+include(AcidGroupSources)
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTUNITS_HEADER_FILES}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTUNITS_SOURCE_FILES}")

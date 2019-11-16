@@ -13,7 +13,11 @@ template<typename _Elem>
 void Node::ParseStream(std::basic_istream<_Elem> & stream) {
 	// We must read as UTF8 chars.
 	if constexpr (!std::is_same_v<_Elem, char>) {
+#if defined(ACID_BUILD_CLANG) || defined(ACID_BUILD_GNU)
+		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
+#else
 		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+#endif
 	}
 
 	// Reading into a string before iterating is much faster.

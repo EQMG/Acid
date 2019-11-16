@@ -229,13 +229,12 @@ else()
 			)
 endif()
 
-# TODO: Acid requires 2.89 on macOS, the last release was Dec 2018.
-find_package(Bullet 2.88 QUIET)
+find_package(Bullet 2.89 QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3
-			URL https://github.com/bulletphysics/bullet3/archive/2.88.tar.gz
-			URL_MD5 d389e7235f00c66abf257bb7b21477ac
+			URL https://github.com/bulletphysics/bullet3/archive/28039903b14c2aec28beff5b3609c9308b17e76a.tar.gz
+			URL_MD5 22af127b8be365539fba731af6c1e700
 			)
 	FetchContent_GetProperties(bullet3)
 	if(NOT bullet3_POPULATED)
