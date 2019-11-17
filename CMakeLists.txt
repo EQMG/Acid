@@ -29,6 +29,10 @@ set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "Set RelWithDebInfo library pos
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
+if(APPLE)
+	set(CMAKE_FIND_FRAMEWORK LAST)
+	set(CMAKE_FIND_APPBUNDLE LAST)
+endif()
 
 # Uses git to find the current git branch and commit.
 execute_process(
@@ -56,12 +60,22 @@ find_package(Threads REQUIRED)
 find_package(Vulkan REQUIRED)
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
-find_package(OpenAL REQUIRED)
-if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
-	add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
-	set_target_properties(OpenAL::OpenAL PROPERTIES
-			IMPORTED_LOCATION "${OPENAL_LIBRARY}"
-			INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
+if(APPLE)
+	find_package(OpenALSoft REQUIRED)
+	if(OPENALSOFT_FOUND AND NOT TARGET OpenAL::OpenAL)
+		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
+		set_target_properties(OpenAL::OpenAL PROPERTIES
+				IMPORTED_LOCATION "${OPENALSOFT_LIBRARY}"
+				INTERFACE_INCLUDE_DIRECTORIES "${OPENALSOFT_INCLUDE_DIR}")
+	endif()
+else()
+	find_package(OpenAL REQUIRED)
+	if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
+		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
+		set_target_properties(OpenAL::OpenAL PROPERTIES
+				IMPORTED_LOCATION "${OPENAL_LIBRARY}"
+				INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}")
+	endif()
 endif()
 
 # Used to track if we're using ONLY system libs
@@ -207,6 +221,9 @@ if(NOT glslang_FOUND)
 
 	# Used in target_link_libraries()
 	set(GLSLANG_LIBRARIES "SPIRV")
+else()
+	set(GLSLANG_INCLUDE_DIRS "${GLSLANG_INCLUDE_DIR}" "${SPIRV_INCLUDE_DIR}")
+	set(GLSLANG_LIBRARIES "glslang::glslang" "glslang::SPIRV")
 endif()
 
 # Acid sources directory

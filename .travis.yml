@@ -70,6 +70,7 @@ matrix:
 #        - apenngrace/vulkan/vulkan-sdk
 #        packages:
 #        - pkg-config
+#        - openal-soft
 #        - ninja
 #        - cmake
 #        - gcc

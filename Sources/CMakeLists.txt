@@ -64,7 +64,7 @@ target_link_libraries(Acid
 		Threads::Threads
 		Vulkan::Vulkan
 		# Filesystem
-		$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:stdc++fs>
+		$<$<CXX_COMPILER_ID:GNU>:stdc++fs>
 		# Unix
 		${CMAKE_DL_LIBS}
 		# Windows
