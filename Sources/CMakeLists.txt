@@ -53,9 +53,10 @@ target_include_directories(Acid
 		PRIVATE
 		# Since building locally from the submodules won't always create these vars.
 		# We have to do a simple check if they exist or they will cause errors
-		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
-		$<$<BOOL:${SPIRV_INCLUDE_DIR}>:${SPIRV_INCLUDE_DIR}>
+		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
+		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
+		$<$<BOOL:${GLSLANG_INCLUDE_DIRS}>:${GLSLANG_INCLUDE_DIRS}>
 		)
 target_link_libraries(Acid
 		PUBLIC
@@ -71,17 +72,12 @@ target_link_libraries(Acid
 		$<$<PLATFORM_ID:Windows>:dbghelp>
 		PRIVATE
 		# More IMPORTED
-		glfw
 		OpenAL::OpenAL
-		# Not IMPORTED targets, requires manual includes handling
-		# When built locally from submodules, these are merely the names..
-		# of the library targets that exist in-scope, else they're set..
-		# from find_package() calls
-		$<$<BOOL:${Freetype_FOUND}>:Freetype::Freetype>
-		$<$<NOT:$<BOOL:${Freetype_FOUND}>>:${FREETYPE_LIBRARIES}>
+		glfw
 		${PHYSFS_LIBRARY}
+		${FREETYPE_LIBRARIES}
 		${BULLET_LIBRARIES}
-		${SPIRV_LIBRARIES}
+		${GLSLANG_LIBRARIES}
 		)
 
 set_target_properties(Acid PROPERTIES
