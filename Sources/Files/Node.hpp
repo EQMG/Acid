@@ -23,12 +23,12 @@ public:
 	virtual ~Node() = default;
 
 	virtual void ParseString(std::string_view string);
-	virtual void WriteStream(std::ostream &stream, Node::Format format = Node::Format::Minified) const;
+	virtual void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
 
 	template<typename _Elem = char>
-	void ParseStream(std::basic_istream<_Elem> & stream);
+	void ParseStream(std::basic_istream<_Elem> &stream);
 	template<typename _Elem = char>
-	std::basic_string<_Elem> WriteString(Node::Format format = Node::Format::Minified) const;
+	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const;
 
 	template<typename T>
 	T GetName() const;

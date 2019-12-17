@@ -26,6 +26,7 @@ THE SOFTWARE.
 // version 2.0.0 : Add new object oriented API. 1.x API is still provided.
 //                 * Support line primitive.
 //                 * Support points primitive.
+//                 * Support multiple search path for .mtl(v1 API).
 // version 1.4.0 : Modifed ParseTextureNameAndOption API
 // version 1.3.1 : Make ParseTextureNameAndOption API public
 // version 1.3.0 : Separate warning and error message(breaking API of LoadObj)
@@ -166,7 +167,7 @@ typedef struct {
                            // value. Usually `sRGB` or `linear` (default empty).
 } texture_option_t;
 
-typedef struct {
+typedef struct _material_t {
   std::string name;
 
   real_t ambient[3];
@@ -436,6 +437,7 @@ class MaterialReader {
 ///
 class MaterialFileReader : public MaterialReader {
  public:
+  // Path could contain separator(';' in Windows, ':' in Posix)
   explicit MaterialFileReader(const std::string &mtl_basedir)
       : m_mtlBaseDir(mtl_basedir) {}
   virtual ~MaterialFileReader() {}
@@ -1634,6 +1636,21 @@ static void SplitString(const std::string &s, char delim,
   }
 }
 
+static std::string JoinPath(const std::string &dir,
+                            const std::string &filename) {
+  if (dir.empty()) {
+    return filename;
+  } else {
+    // check '/'
+    char lastChar = *dir.rbegin();
+    if (lastChar != '/') {
+      return dir + std::string("/") + filename;
+    } else {
+      return dir + filename;
+    }
+  }
+}
+
 void LoadMtl(std::map<std::string, int> *material_map,
              std::vector<material_t> *materials, std::istream *inStream,
              std::string *warning, std::string *err) {
@@ -2015,27 +2032,59 @@ bool MaterialFileReader::operator()(const std::string &matId,
                                     std::vector<material_t> *materials,
                                     std::map<std::string, int> *matMap,
                                     std::string *warn, std::string *err) {
-  std::string filepath;
-
   if (!m_mtlBaseDir.empty()) {
-    filepath = std::string(m_mtlBaseDir) + matId;
-  } else {
-    filepath = matId;
-  }
+#ifdef _WIN32
+    char sep = ';';
+#else
+    char sep = ':';
+#endif
 
-  std::ifstream matIStream(filepath.c_str());
-  if (!matIStream) {
+    // https://stackoverflow.com/questions/5167625/splitting-a-c-stdstring-using-tokens-e-g
+    std::vector<std::string> paths;
+    std::istringstream f(m_mtlBaseDir);
+
+    std::string s;
+    while (getline(f, s, sep)) {
+      paths.push_back(s);
+    }
+
+    for (size_t i = 0; i < paths.size(); i++) {
+      std::string filepath = JoinPath(paths[i], matId);
+
+      std::ifstream matIStream(filepath.c_str());
+      if (matIStream) {
+        LoadMtl(matMap, materials, &matIStream, warn, err);
+
+        return true;
+      }
+    }
+
     std::stringstream ss;
-    ss << "Material file [ " << filepath << " ] not found." << std::endl;
+    ss << "Material file [ " << matId
+       << " ] not found in a path : " << m_mtlBaseDir << std::endl;
     if (warn) {
       (*warn) += ss.str();
     }
     return false;
+
+  } else {
+    std::string filepath = matId;
+    std::ifstream matIStream(filepath.c_str());
+    if (matIStream) {
+      LoadMtl(matMap, materials, &matIStream, warn, err);
+
+      return true;
+    }
+
+    std::stringstream ss;
+    ss << "Material file [ " << filepath
+       << " ] not found in a path : " << m_mtlBaseDir << std::endl;
+    if (warn) {
+      (*warn) += ss.str();
+    }
+
+    return false;
   }
-
-  LoadMtl(matMap, materials, &matIStream, warn, err);
-
-  return true;
 }
 
 bool MaterialStreamReader::operator()(const std::string &matId,
@@ -2304,17 +2353,18 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
     }
 
     // use mtl
-    if ((0 == strncmp(token, "usemtl", 6)) && IS_SPACE((token[6]))) {
-      token += 7;
-      std::stringstream ss;
-      ss << token;
-      std::string namebuf = ss.str();
+    if ((0 == strncmp(token, "usemtl", 6))) {
+      token += 6;      
+      std::string namebuf = parseString(&token);
 
       int newMaterialId = -1;
       if (material_map.find(namebuf) != material_map.end()) {
         newMaterialId = material_map[namebuf];
       } else {
         // { error!! material not found }
+        if (warn) {
+          (*warn) += "material [ '" + namebuf + "' ] not found in .mtl\n";
+        }
       }
 
       if (newMaterialId != material) {
@@ -2438,7 +2488,10 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       // flush previous face group.
       bool ret = exportGroupsToShape(&shape, prim_group, tags, material, name,
                                      triangulate, v);
-      if (ret) {
+      (void)ret;  // return value not used.
+
+      if (shape.mesh.indices.size() > 0 || shape.lines.indices.size() > 0 ||
+          shape.points.indices.size() > 0) {
         shapes->push_back(shape);
       }
 
@@ -2522,10 +2575,9 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
         continue;
       }
 
-      if (strlen(token) >= 3) {
-        if (token[0] == 'o' && token[1] == 'f' && token[2] == 'f') {
-          current_smoothing_id = 0;
-        }
+      if (strlen(token) >= 3 && token[0] == 'o' && token[1] == 'f' &&
+          token[2] == 'f') {
+        current_smoothing_id = 0;
       } else {
         // assume number
         int smGroupId = parseInt(&token);
@@ -2717,7 +2769,10 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
       if (material_map.find(namebuf) != material_map.end()) {
         newMaterialId = material_map[namebuf];
       } else {
-        // { error!! material not found }
+        // { warn!! material not found }
+        if (warn && (!callback.usemtl_cb)) {
+          (*warn) += "material [ " + namebuf + " ] not found in .mtl\n";
+        }
       }
 
       if (newMaterialId != material_id) {

@@ -456,14 +456,20 @@ set(_temp_acid_sources
 		)
 		
 # Adds the precompiled header
-include(PrecompiledHeader)
-add_precompiled_header(Acid
-		StdAfx.hpp
-		SOURCE_CXX
-		StdAfx.cpp
-		FORCEINCLUDE
-		)
-		
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
+	target_precompile_headers(Acid PUBLIC 
+			"$<$<COMPILE_LANGUAGE:CXX>:StdAfx.hpp>"
+			)
+else()
+	include(PrecompiledHeader)
+	add_precompiled_header(Acid
+			StdAfx.hpp
+			SOURCE_CXX
+			StdAfx.cpp
+			FORCEINCLUDE
+			)
+endif()
+
 # Directory that Acid resources can be found.
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")

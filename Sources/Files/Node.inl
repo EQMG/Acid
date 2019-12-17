@@ -122,8 +122,8 @@ inline Node &operator<<(Node &node, const std::nullptr_t &object) {
 	return node;
 }
 
-template<typename T>
-std::enable_if_t<std::is_pointer_v<T>, Node &> operator<<(Node &node, const T object) {
+template<typename T, std::enable_if_t<std::is_pointer_v<T>, int> = 0>
+Node &operator<<(Node &node, const T object) {
 	if (object == nullptr) {
 		return node << nullptr;
 	}
@@ -183,14 +183,14 @@ inline Node &operator<<(Node &node, bool object) {
 	return node;
 }
 
-template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, const Node &> operator>>(const Node &node, T &object) {
+template<typename T, std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, int> = 0>
+const Node &operator>>(const Node &node, T &object) {
 	object = String::From<T>(node.GetValue());
 	return node;
 }
 
-template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, Node &> operator<<(Node &node, T object) {
+template<typename T, std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, int> = 0>
+Node &operator<<(Node &node, T object) {
 	node.SetValue(String::To(object));
 	node.SetType(std::is_floating_point_v<T> ? Node::Type::Decimal : Node::Type::Integer);
 	return node;

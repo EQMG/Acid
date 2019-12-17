@@ -1,6 +1,6 @@
 # 3.11.0 required for cxx_std_17 and FetchContent
 cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
-project(Acid VERSION 0.13.5 LANGUAGES C CXX)
+project(Acid VERSION 0.13.5 LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
@@ -25,6 +25,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")
 set(CMAKE_RELEASE_POSTFIX "" CACHE STRING "Set Release library postfix")
 set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "Set RelWithDebInfo library postfix")
+set(CMAKE_MINSIZEREL_POSTFIX "" CACHE STRING "Set MinsizeRel library postfix")
 # Removes any dll prefix name on windows, unix will keep a prefix set as "lib"
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")

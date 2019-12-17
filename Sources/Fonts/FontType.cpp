@@ -67,7 +67,7 @@ void FontType::Update(const std::vector<Text *> &texts) {
 
 		Vector2f localOffset;
 
-		for (const auto &c : text->GetString()) {
+		for (auto c : text->GetString()) {
 			if (m_instances >= MAX_VISIBLE_GLYPHS) {
 				break;
 			}
@@ -245,6 +245,7 @@ void FontType::Load() {
 	Log::Out("Font Type ", m_filename, " with ", i, " glyphs loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
+/*#if defined(ACID_DEBUG)
 	File file(std::make_unique<Json>());
 	for (int i = 0; i < m_glyphInfos.size(); i++) {
 		const auto &glyphInfo = m_glyphInfos[i];
@@ -270,6 +271,7 @@ void FontType::Load() {
 		}
 	}
 	file.Write("FontsInfo/" + m_filename.stem().string() + ".json", Node::Format::Beautified);
+#endif*/
 }
 
 uint32_t FontType::AlignUint32(uint32_t value, uint32_t alignment) {
