@@ -8,6 +8,7 @@ option(BUILD_TESTS "Build test applications" ON)
 option(ACID_BUILD_UNIT_TESTS "Build unit tests" ON)
 option(ACID_INSTALL_EXAMPLES "Installs the examples" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
+option(ACID_LINK_RESOURCES "Passes local Resources directory into debug Confg" ON)
 
 # Sets the install directories defined by GNU
 include(GNUInstallDirs)
@@ -144,7 +145,10 @@ if(NOT TARGET glfw)
 	endif()
 endif()
 
-find_package(Freetype 2.9.1 QUIET)
+# TODO: Fix on Unix systems.
+if(WIN32)
+	find_package(Freetype 2.9.1 QUIET)
+endif()
 if(NOT FREETYPE_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(freetype

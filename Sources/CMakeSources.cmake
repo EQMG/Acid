@@ -470,9 +470,11 @@ else()
 			)
 endif()
 
-# Directory that Acid resources can be found.
-get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
-set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
+if(ACID_LINK_RESOURCES)
+	# Directory that Acid resources can be found.
+	get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
+	set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
+endif()
 
 # Adds a CMake generated config file
 configure_file(Config.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp)
