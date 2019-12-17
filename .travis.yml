@@ -18,6 +18,7 @@ matrix:
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
+        - libfreetype6-dev
     language: cpp
     compiler: gcc
     env:
@@ -49,6 +50,7 @@ matrix:
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
+        - libfreetype6-dev
     language: cpp
     compiler: clang
     env:
@@ -58,33 +60,33 @@ matrix:
     - BUILD_SHARED=ON
     before_install:
     - sudo apt-get update -qq
-  # XCode 11
-#  - os: osx
-#    osx_image: xcode11
-#    sudo: required
-#    addons: 
-#      homebrew:
-#        taps:
-#        - caskroom/cask
-#        casks:
-#        - apenngrace/vulkan/vulkan-sdk
-#        packages:
-#        - pkg-config
-#        - openal-soft
-#        - ninja
-#        - cmake
-#        - gcc
-#        - llvm
-#      update: true
-#    language: cpp
-#    compiler: clang
-#    env:
-#    - COMPILER=clang++
-#    - GSL_CXX_STANDARD=17
-#    - BUILD_TYPE=Release
-#    - BUILD_SHARED=OFF
-#    before_install:
-#    - export PATH="/usr/local/opt/llvm/bin:$PATH"
+  # XCode 11.2
+  - os: osx
+    osx_image: xcode11.2
+    sudo: required
+    addons: 
+      homebrew:
+        taps:
+        - homebrew/cask
+        casks:
+        - apenngrace/vulkan/vulkan-sdk
+        packages:
+        - pkg-config
+        - openal-soft
+        - ninja
+        - cmake
+        - gcc
+        - llvm
+      update: true
+    language: cpp
+    compiler: clang
+    env:
+    - COMPILER=clang++
+    - GSL_CXX_STANDARD=17
+    - BUILD_TYPE=Release
+    - BUILD_SHARED=OFF
+    before_install:
+    - export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 script:
 - git submodule update --init --recursive

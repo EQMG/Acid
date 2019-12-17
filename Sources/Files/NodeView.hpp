@@ -62,7 +62,7 @@ public:
 	std::string GetName() const;
 	void SetName(const std::string &name);
 
-	const Type &GetType() const;
+	Type GetType() const;
 
 private:
 	Node *m_parent = nullptr;

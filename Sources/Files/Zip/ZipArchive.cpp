@@ -219,7 +219,7 @@ ZipEntry *ZipArchive::GetEntry(const std::string &name) {
 	});
 
 	// Extract the data from the archive to the ZipEntry object.
-	(*result)->m_entryData.resize((*result)->GetUncompressedSize());
+	(*result)->m_entryData.resize(static_cast<std::size_t>((*result)->GetUncompressedSize()));
 	mz_zip_reader_extract_file_to_mem(&m_archive, name.c_str(), (*result)->m_entryData.data(), (*result)->m_entryData.size(), 0);
 
 	// Check that the operation was successful
