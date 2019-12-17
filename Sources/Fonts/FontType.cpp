@@ -144,12 +144,10 @@ void FontType::Load() {
 	}
 
 	FT_Library library;
-
 	if (FT_Init_FreeType(&library) != 0)
 		throw std::runtime_error("Freetype failed to initialize");
 
 	FT_Face face;
-
 	if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0)
 		throw std::runtime_error("Freetype failed to create face from memory");
 
@@ -167,7 +165,6 @@ void FontType::Load() {
 	FT_UInt glyphIndex;
 	auto charcode = FT_Get_First_Char(face, &glyphIndex);
 	uint32_t i = 0;
-
 	while (glyphIndex != 0) {
 		if (FT_Load_Glyph(face, glyphIndex, FT_LOAD_NO_HINTING) != 0)
 			throw std::runtime_error("Freetype failed to load a glyph");
@@ -176,7 +173,7 @@ void FontType::Load() {
 		auto hgi = &m_glyphInfos[i];
 		auto o = &outlines[i];
 
-		OutlineConvert(&face->glyph->outline, o);
+		o->OutlineConvert(&face->glyph->outline);
 
 		hgi->bbox = o->m_bbox;
 		hgi->horiAdvance = face->glyph->metrics.horiAdvance / 64.0f;
@@ -211,7 +208,6 @@ void FontType::Load() {
 
 	uint32_t pointOffset = 0;
 	uint32_t cellOffset = 0;
-
 	for (uint32_t j = 0; j < m_glyphInfos.size(); j++) {
 		auto o = &outlines[j];
 		auto dgi = &deviceGlyphInfos[j];
@@ -224,7 +220,7 @@ void FontType::Load() {
 		std::memcpy(cells + cellOffset, o->m_cells.data(), sizeof(uint32_t) * o->m_cells.size());
 		std::memcpy(points + pointOffset, o->m_points.data(), sizeof(Vector2f) * o->m_points.size());
 
-		//OutlineU16Points(o, &dgi->cbox, reinterpret_cast<Vector2us *>(reinterpret_cast<char *>(points) + pointOffset));
+		//dgi->cbox = o->GetU16Points(reinterpret_cast<Vector2us *>(reinterpret_cast<char *>(points) + pointOffset));
 
 		pointOffset += static_cast<uint32_t>(o->m_points.size());
 		cellOffset += static_cast<uint32_t>(o->m_cells.size());
