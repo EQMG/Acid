@@ -37,7 +37,7 @@ void VertexWeights::FillEmptyWeights(uint32_t max) {
 float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray) {
 	float total = 0.0f;
 
-	for (auto &[i, topWeights] : Enumerate(topWeightsArray)) {
+	for (auto &&[i, topWeights] : Enumerate(topWeightsArray)) {
 		topWeights = m_weights.at(i);
 		total += topWeights;
 	}

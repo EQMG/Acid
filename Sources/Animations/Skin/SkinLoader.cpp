@@ -29,7 +29,7 @@ std::vector<float> SkinLoader::LoadWeights() const {
 	auto rawDatas = String::Split(weightsNode->Get<std::string>(), ' ');
 	std::vector<float> weights(rawDatas.size());
 
-	for (auto &[i, weight] : Enumerate(weights)) {
+	for (auto &&[i, weight] : Enumerate(weights)) {
 		weight = String::From<float>(rawDatas[i]);
 	}
 
@@ -40,7 +40,7 @@ std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Node &weightsDa
 	auto rawData = String::Split(weightsDataNode["vcount"]->Get<std::string>(), ' ');
 	std::vector<uint32_t> counts(rawData.size());
 
-	for (auto &[i, count] : Enumerate(counts)) {
+	for (auto &&[i, count] : Enumerate(counts)) {
 		count = String::From<uint32_t>(rawData[i]);
 	}
 

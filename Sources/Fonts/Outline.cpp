@@ -51,7 +51,7 @@ void Outline::Decompose(FT_Outline *outline) {
 void Outline::FixCorners() {
 	auto fixDist = 0.001f;
 
-	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
+	for (auto &&[contourIndex, contour] : Enumerate(m_contours)) {
 		for (auto i = contour.m_begin; i < contour.m_end; i += 2) {
 			auto prev = i - 1;
 			if (contour.m_begin == i)
@@ -93,7 +93,7 @@ void Outline::Subdivide() {
 	Outline u = {};
 	u.m_bbox = m_bbox;
 
-	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
+	for (auto &&[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
@@ -128,7 +128,7 @@ void Outline::FixThinLines() {
 	Outline u = {};
 	u.m_bbox = m_bbox;
 
-	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
+	for (auto &&[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
@@ -368,7 +368,7 @@ Rect Outline::GetCbox() const {
 Rect Outline::GetU16Points(Vector2us *pout) const {
 	auto cbox = GetCbox();
 
-	for (auto &[i, point] : Enumerate(m_points)) {
+	for (auto &&[i, point] : Enumerate(m_points)) {
 		pout[i].m_x = GenU16Value(point.m_x, cbox.m_min.m_x, cbox.m_max.m_x);
 		pout[i].m_y = GenU16Value(point.m_y, cbox.m_min.m_y, cbox.m_max.m_y);
 	}
@@ -636,7 +636,7 @@ bool Outline::TryToFitInCellCount() {
 	u.m_cellCount.m_x = m_cellCount.m_x;
 	u.m_cellCount.m_y = m_cellCount.m_y;
 
-	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
+	for (auto &&[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
