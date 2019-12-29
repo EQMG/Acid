@@ -1,6 +1,7 @@
 #include "Animator.hpp"
 
 #include "Engine/Engine.hpp"
+#include "Helpers/Enumerate.hpp"
 
 namespace acid {
 void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices) {
@@ -28,21 +29,19 @@ std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const {
 }
 
 std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const {
-	auto allFrames = m_currentAnimation->GetKeyframes();
-	auto previousFrame = allFrames[0];
-	auto nextFrame = allFrames[0];
+	const auto &allFrames = m_currentAnimation->GetKeyframes();
+	const Keyframe *previousFrame = nullptr;
+	const Keyframe *nextFrame = nullptr;
 
-	for (uint32_t i = 1; i < allFrames.size(); i++) {
-		nextFrame = allFrames[i];
-
-		if (nextFrame.GetTimeStamp() > m_animationTime) {
+	for (const auto &[i, frame] : Enumerate(allFrames)) {
+		nextFrame = &frame;
+		if (frame.GetTimeStamp() > m_animationTime)
 			break;
-		}
 
-		previousFrame = allFrames[i];
+		previousFrame = &frame;
 	}
 
-	return {previousFrame, nextFrame};
+	return {*previousFrame, *nextFrame};
 }
 
 float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const {

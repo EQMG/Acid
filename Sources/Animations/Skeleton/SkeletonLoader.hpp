@@ -14,7 +14,7 @@ public:
 private:
 	Joint LoadJointData(const Node &jointNode, bool isRoot);
 	Joint ExtractMainJointData(const Node &jointNode, bool isRoot);
-	std::optional<uint32_t> GetBoneIndex(const std::string &name);
+	std::optional<uint32_t> GetBoneIndex(const std::string &name) const;
 
 	NodeView m_armatureData;
 	std::vector<std::string> m_boneOrder;

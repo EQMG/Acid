@@ -1,6 +1,7 @@
 #include "SkeletonLoader.hpp"
 
 #include "Animations/MeshAnimated.hpp"
+#include "Helpers/Enumerate.hpp"
 
 namespace acid {
 SkeletonLoader::SkeletonLoader(NodeView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
@@ -54,9 +55,9 @@ Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
 	return {*index, nameId, transform};
 }
 
-std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name) {
-	for (uint32_t i = 0; i < m_boneOrder.size(); i++) {
-		if (m_boneOrder[i] == name) {
+std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name) const {
+	for (const auto &[i, bone] : Enumerate(m_boneOrder)) {
+		if (bone == name) {
 			return i;
 		}
 	}

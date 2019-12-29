@@ -8,6 +8,7 @@
 #include "Files/Json/Json.hpp"
 #include "Files/Files.hpp"
 #include "Files/File.hpp"
+#include "Helpers/Enumerate.hpp"
 #include "Devices/Window.hpp"
 #include "Text.hpp"
 
@@ -243,8 +244,7 @@ void FontType::Load() {
 
 /*#if defined(ACID_DEBUG)
 	File file(std::make_unique<Json>());
-	for (int i = 0; i < m_glyphInfos.size(); i++) {
-		const auto &glyphInfo = m_glyphInfos[i];
+	for (const auto &[i, glyphInfo] : Enumerate(m_glyphInfos)) {
 		for (auto [c, j] : m_charmap) {
 			if (j != i) continue;
 

@@ -1,5 +1,7 @@
 #include "SkinLoader.hpp"
 
+#include "Helpers/Enumerate.hpp"
+
 namespace acid {
 SkinLoader::SkinLoader(NodeView libraryControllers, uint32_t maxWeights) :
 	m_skinData(libraryControllers["controller"]["skin"]),
@@ -27,8 +29,8 @@ std::vector<float> SkinLoader::LoadWeights() const {
 	auto rawDatas = String::Split(weightsNode->Get<std::string>(), ' ');
 	std::vector<float> weights(rawDatas.size());
 
-	for (uint32_t i = 0; i < weights.size(); i++) {
-		weights[i] = String::From<float>(rawDatas[i]);
+	for (auto &[i, weight] : Enumerate(weights)) {
+		weight = String::From<float>(rawDatas[i]);
 	}
 
 	return weights;
@@ -38,8 +40,8 @@ std::vector<uint32_t> SkinLoader::GetEffectiveJointsCounts(const Node &weightsDa
 	auto rawData = String::Split(weightsDataNode["vcount"]->Get<std::string>(), ' ');
 	std::vector<uint32_t> counts(rawData.size());
 
-	for (uint32_t i = 0; i < rawData.size(); i++) {
-		counts[i] = String::From<uint32_t>(rawData[i]);
+	for (auto &[i, count] : Enumerate(counts)) {
+		count = String::From<uint32_t>(rawData[i]);
 	}
 
 	return counts;

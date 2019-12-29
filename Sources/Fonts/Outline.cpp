@@ -3,7 +3,9 @@
 #include <ft2build.h>
 #include FT_BBOX_H
 #include FT_OUTLINE_H
+
 #include "Maths/Maths.hpp"
+#include "Helpers/Enumerate.hpp"
 
 namespace acid {
 static const uint32_t FD_OUTLINE_MAX_POINTS = 255 * 2;
@@ -49,16 +51,11 @@ void Outline::Decompose(FT_Outline *outline) {
 void Outline::FixCorners() {
 	auto fixDist = 0.001f;
 
-	for (uint32_t contourIndex = 0; contourIndex < m_contours.size(); contourIndex++) {
-		auto contourBegin = m_contours[contourIndex].m_begin;
-		auto contourEnd = m_contours[contourIndex].m_end;
-
-		for (auto i = contourBegin; i < contourEnd; i += 2) {
+	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
+		for (auto i = contour.m_begin; i < contour.m_end; i += 2) {
 			auto prev = i - 1;
-
-			if (contourBegin == i) {
-				prev = contourEnd - 1;
-			}
+			if (contour.m_begin == i)
+				prev = contour.m_end - 1;
 
 			auto &r = m_points[prev];
 			auto &p0 = m_points[i];
@@ -96,10 +93,7 @@ void Outline::Subdivide() {
 	Outline u = {};
 	u.m_bbox = m_bbox;
 
-	for (uint32_t contourIndex = 0; contourIndex < m_contours.size(); contourIndex++) {
-		auto contourBegin = m_contours[contourIndex].m_begin;
-		auto contour_end = m_contours[contourIndex].m_end;
-
+	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
@@ -108,7 +102,7 @@ void Outline::Subdivide() {
 		};
 		u.m_contours.emplace_back(urange);
 
-		for (uint32_t i = contourBegin; i < contour_end; i += 2) {
+		for (uint32_t i = contour.m_begin; i < contour.m_end; i += 2) {
 			auto &p0 = m_points[i];
 			//auto &p1 = points[i + 1];
 			//auto &p2 = points[i + 2];
@@ -123,7 +117,7 @@ void Outline::Subdivide() {
 		}
 
 		u.m_contours[contourIndex].m_end = static_cast<uint32_t>(u.m_points.size());
-		u.m_points.emplace_back(m_points[contour_end]);
+		u.m_points.emplace_back(m_points[contour.m_end]);
 	}
 
 	*this = u;
@@ -134,10 +128,7 @@ void Outline::FixThinLines() {
 	Outline u = {};
 	u.m_bbox = m_bbox;
 
-	for (uint32_t contourIndex = 0; contourIndex < m_contours.size(); contourIndex++) {
-		auto contourBegin = m_contours[contourIndex].m_begin;
-		auto contourEnd = m_contours[contourIndex].m_end;
-
+	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
@@ -146,7 +137,7 @@ void Outline::FixThinLines() {
 		};
 		u.m_contours.emplace_back(urange);
 
-		for (auto i = contourBegin; i < contourEnd; i += 2) {
+		for (auto i = contour.m_begin; i < contour.m_end; i += 2) {
 			auto &p0 = m_points[i];
 			auto &p1 = m_points[i + 1];
 			auto &p2 = m_points[i + 2];
@@ -193,12 +184,12 @@ void Outline::FixThinLines() {
 
 			bool subdivide = false;
 
-			for (auto j = contourBegin; j < contourEnd; j += 2) {
-				if (i == contourBegin && j == contourEnd - 2) {
+			for (auto j = contour.m_begin; j < contour.m_end; j += 2) {
+				if (i == contour.m_begin && j == contour.m_end - 2) {
 					continue;
 				}
 
-				if (i == contourEnd - 2 && j == contourBegin) {
+				if (i == contour.m_end - 2 && j == contour.m_begin) {
 					continue;
 				}
 
@@ -230,7 +221,7 @@ void Outline::FixThinLines() {
 		}
 
 		u.m_contours[contourIndex].m_end = static_cast<uint32_t>(u.m_points.size());
-		u.m_points.emplace_back(m_points[contourEnd]);
+		u.m_points.emplace_back(m_points[contour.m_end]);
 	}
 
 	*this = u;
@@ -377,12 +368,9 @@ Rect Outline::GetCbox() const {
 Rect Outline::GetU16Points(Vector2us *pout) const {
 	auto cbox = GetCbox();
 
-	for (uint32_t i = 0; i < m_points.size(); i++) {
-		auto x = m_points[i].m_x;
-		auto y = m_points[i].m_y;
-
-		pout[i].m_x = GenU16Value(x, cbox.m_min.m_x, cbox.m_max.m_x);
-		pout[i].m_y = GenU16Value(y, cbox.m_min.m_y, cbox.m_max.m_y);
+	for (auto &[i, point] : Enumerate(m_points)) {
+		pout[i].m_x = GenU16Value(point.m_x, cbox.m_min.m_x, cbox.m_max.m_x);
+		pout[i].m_y = GenU16Value(point.m_y, cbox.m_min.m_y, cbox.m_max.m_y);
 	}
 
 	return cbox;
@@ -648,19 +636,16 @@ bool Outline::TryToFitInCellCount() {
 	u.m_cellCount.m_x = m_cellCount.m_x;
 	u.m_cellCount.m_y = m_cellCount.m_y;
 
-	for (uint32_t contourIndex = 0; contourIndex < m_contours.size(); contourIndex++) {
-		auto contourBegin = m_contours[contourIndex].m_begin;
-		auto contourEnd = m_contours[contourIndex].m_end;
-
+	for (auto &[contourIndex, contour] : Enumerate(m_contours)) {
 		u.AddOddPoint();
 
 		ContourRange urange = {
 			static_cast<uint32_t>(u.m_points.size()),
-			static_cast<uint32_t>(u.m_points.size()) + contourEnd - contourBegin
+			static_cast<uint32_t>(u.m_points.size()) + contour.m_end - contour.m_begin
 		};
 		u.m_contours.emplace_back(urange);
 
-		for (uint32_t i = contourBegin; i < contourEnd; i += 2) {
+		for (uint32_t i = contour.m_begin; i < contour.m_end; i += 2) {
 			auto &p0 = m_points[i];
 			auto &p1 = m_points[i + 1];
 			//auto &p2 = points[i + 2];
@@ -675,9 +660,9 @@ bool Outline::TryToFitInCellCount() {
 		uint32_t maxStartLen = 0;
 		result &= WipCell::ForEachWipcellFinishContour(this, &u, contourIndex, cells.data(), maxStartLen);
 
-		auto continuationEnd = contourBegin + maxStartLen * 2;
+		auto continuationEnd = contour.m_begin + maxStartLen * 2;
 
-		for (uint32_t i = contourBegin; i < continuationEnd; i += 2) {
+		for (uint32_t i = contour.m_begin; i < continuationEnd; i += 2) {
 			u.m_points.emplace_back(m_points[i]);
 			u.m_points.emplace_back(m_points[i + 1]);
 		}

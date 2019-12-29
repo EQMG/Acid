@@ -1,6 +1,7 @@
 #include "AnimationLoader.hpp"
 
 #include "Animations/MeshAnimated.hpp"
+#include "Helpers/Enumerate.hpp"
 
 namespace acid {
 AnimationLoader::AnimationLoader(NodeView &&libraryAnimations, NodeView &&libraryVisualScenes, const Matrix4 &correction) :
@@ -65,7 +66,7 @@ std::string AnimationLoader::GetJointName(const Node &jointData) {
 }
 
 void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root) {
-	for (uint32_t i = 0; i < m_keyframes.size(); i++) {
+	for (auto &[i, keyframe] : Enumerate(m_keyframes)) {
 		Matrix4 transform;
 
 		for (uint32_t row = 0; row < 4; row++) {
@@ -78,7 +79,7 @@ void AnimationLoader::ProcessTransforms(const std::string &jointName, const std:
 		if (root)
 			transform = m_correction * transform;
 
-		m_keyframes[i].AddJointTransform(jointName, transform);
+		keyframe.AddJointTransform(jointName, transform);
 	}
 }
 }

@@ -174,8 +174,8 @@ find_package(Bullet 2.89 QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3
-			URL https://github.com/bulletphysics/bullet3/archive/28039903b14c2aec28beff5b3609c9308b17e76a.tar.gz
-			URL_MD5 22af127b8be365539fba731af6c1e700
+			URL https://github.com/bulletphysics/bullet3/archive/2.89.tar.gz
+			URL_MD5 d239b4800ec30513879834be6fcdc376
 			)
 	FetchContent_GetProperties(bullet3)
 	if(NOT bullet3_POPULATED)

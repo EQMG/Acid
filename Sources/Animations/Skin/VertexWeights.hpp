@@ -5,7 +5,7 @@
 namespace acid {
 class ACID_EXPORT VertexWeights {
 public:
-	void AddJointEffect(uint32_t jointId, float weight);
+	void AddJointEffect(uint32_t jointId, float jointWeight);
 	void LimitJointNumber(uint32_t max);
 	void FillEmptyWeights(uint32_t max);
 	float SaveTopWeights(std::vector<float> &topWeightsArray);

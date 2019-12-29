@@ -1,17 +1,19 @@
 #include "VertexWeights.hpp"
 
+#include "Helpers/Enumerate.hpp"
+
 namespace acid {
-void VertexWeights::AddJointEffect(uint32_t jointId, float weight) {
-	for (uint32_t i = 0; i < m_weights.size(); i++) {
-		if (weight > m_weights.at(i)) {
+void VertexWeights::AddJointEffect(uint32_t jointId, float jointWeight) {
+	for (auto &&[i, weight] : Enumerate(m_weights)) {
+		if (jointWeight > weight) {
 			m_jointIds[i] = jointId;
-			m_weights[i] = weight;
+			weight = jointWeight;
 			return;
 		}
 	}
 
 	m_jointIds.emplace_back(jointId);
-	m_weights.emplace_back(weight);
+	m_weights.emplace_back(jointWeight);
 }
 
 void VertexWeights::LimitJointNumber(uint32_t max) {
@@ -35,9 +37,9 @@ void VertexWeights::FillEmptyWeights(uint32_t max) {
 float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray) {
 	float total = 0.0f;
 
-	for (uint32_t i = 0; i < topWeightsArray.size(); i++) {
-		topWeightsArray[i] = m_weights.at(i);
-		total += topWeightsArray.at(i);
+	for (auto &[i, topWeights] : Enumerate(topWeightsArray)) {
+		topWeights = m_weights.at(i);
+		total += topWeights;
 	}
 
 	return total;

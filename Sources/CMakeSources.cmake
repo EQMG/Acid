@@ -89,6 +89,7 @@ set(_temp_acid_headers
 		Helpers/ConstExpr.hpp
 		Helpers/Delegate.hpp
 		Helpers/EnumClass.hpp
+		Helpers/Enumerate.hpp
 		Helpers/Factory.hpp
 		Helpers/Future.hpp
 		Helpers/NonCopyable.hpp
