@@ -60,7 +60,7 @@ after_build:
   - mkdir Artifacts\%CFG%_%ARCHITECTURE%
   - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
   - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
-  - del /S *.manifest "Artifacts\%CFG%_%ARCHITECTURE%"
+  - del /S /q *.manifest "Artifacts\%CFG%_%ARCHITECTURE%"
 
 artifacts:
   - path: Artifacts\%CFG%_%ARCHITECTURE%\

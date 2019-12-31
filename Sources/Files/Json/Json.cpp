@@ -55,12 +55,10 @@ void Json::ParseString(std::string_view string) {
 	Convert(*this, tokens, 0, k);
 }
 
-void Json::WriteStream(std::ostream &stream, Format format) const {
-	stream << (this->GetType() == Type::Array ? '[' : '{');
-	if (format != Format::Minified)
-		stream << '\n';
+void Json::WriteStream(std::ostream &stream, const Format &format) const {
+	stream << (GetType() == Type::Array ? '[' : '{') << format.newLine;
 	AppendData(*this, stream, format, 1);
-	stream << (this->GetType() == Type::Array ? ']' : '}');
+	stream << (GetType() == Type::Array ? ']' : '}');
 }
 
 void Json::AddToken(std::string_view view, Tokens &tokens) {
@@ -128,9 +126,8 @@ void Json::Convert(Node &current, const Tokens &tokens, int32_t i, int32_t &r) {
 	}
 }
 
-void Json::AppendData(const Node &source, std::ostream &stream, Format format, int32_t indent) {
-	// Creates a string for the indentation level.
-	std::string indents(2 * indent, ' ');
+void Json::AppendData(const Node &source, std::ostream &stream, const Format &format, int32_t indent) {
+	auto indents = format.GetIndents(indent);
 
 	// Only output the value if no properties exist.
 	if (source.GetProperties().empty()) {
@@ -144,13 +141,10 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 
 	// Output each property.
 	for (auto it = source.GetProperties().begin(); it < source.GetProperties().end(); ++it) {
-		if (format != Format::Minified)
-			stream << indents;
+		stream << indents;
 		// Output name for property if it exists.
 		if (!it->GetName().empty()) {
-			stream << '\"' << it->GetName() << "\":";
-			if (format != Format::Minified)
-				stream << ' ';
+			stream << '\"' << it->GetName() << "\":" << format.space;
 		}
 
 		bool isArray = false;
@@ -163,28 +157,30 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 				}
 			}
 
-			stream << (isArray ? '[' : '{');
-			if (format != Format::Minified)
-				stream << '\n';
+			stream << (isArray ? '[' : '{') << format.newLine;
 		} else if (it->GetType() == Type::Object) {
 			stream << '{';
 		} else if (it->GetType() == Type::Array) {
 			stream << '[';
 		}
 
+		// If a node type is a primitive type.
+		static constexpr auto IsPrimitive = [](Type type) {
+			return type != Type::Object && type != Type::Array && type != Type::Unknown;
+		};
+
 		// Shorten primitive array output length.
-		if (isArray && format != Format::Minified && !it->GetProperties().empty() && it->GetProperties()[0].GetType() != Type::Object) {
-			stream << indents << "  ";
-			AppendData(*it, stream, format, indent);
+		if (isArray && format.inlineArrays && !it->GetProperties().empty() && IsPrimitive(it->GetProperties()[0].GetType())) {
+			stream << format.GetIndents(indent + 1);
+			// New lines are printed a a space, no spaces are ever emitted by primitives.
+			AppendData(*it, stream, Format(0, ' ', '\0', false), indent);
 			stream << '\n';
 		} else {
 			AppendData(*it, stream, format, indent + 1);
 		}
 
 		if (!it->GetProperties().empty()) {
-			if (format != Format::Minified)
-				stream << indents;
-			stream << (isArray ? ']' : '}');
+			stream << indents << (isArray ? ']' : '}');
 		} else if (it->GetType() == Type::Object) {
 			stream << '}';
 		} else if (it->GetType() == Type::Array) {
@@ -195,8 +191,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';
 		// No new line if the indent level is zero (if primitive array type).
-		if (format != Format::Minified)
-			stream << (indent != 0 ? '\n' : ' ');
+		stream << (indent != 0 ? format.newLine : format.space);
 	}
 }
 }

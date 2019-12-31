@@ -1,6 +1,9 @@
 #include "Node.hpp"
 
 namespace acid {
+const Node::Format Node::Format::Beautified = Format(2, '\n', ' ', true);
+const Node::Format Node::Format::Minified = Format(0, '\0', '\0', false);
+
 static const Node NullNode = Node("null", Node::Type::Null);
 
 Node::Node(std::string value, Type type) :
@@ -16,7 +19,7 @@ Node::Node(std::string value, std::vector<Node> &&properties) :
 void Node::ParseString(std::string_view string) {
 }
 
-void Node::WriteStream(std::ostream &stream, Format format) const {
+void Node::WriteStream(std::ostream &stream, const Format &format) const {
 }
 
 void Node::Clear() {
