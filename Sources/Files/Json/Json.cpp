@@ -56,11 +56,11 @@ void Json::ParseString(std::string_view string) {
 }
 
 void Json::WriteStream(std::ostream &stream, Format format) const {
-	stream << '{';
+	stream << (this->GetType() == Type::Array ? '[' : '{');
 	if (format != Format::Minified)
 		stream << '\n';
 	AppendData(*this, stream, format, 1);
-	stream << '}';
+	stream << (this->GetType() == Type::Array ? ']' : '}');
 }
 
 void Json::AddToken(std::string_view view, Tokens &tokens) {
@@ -190,12 +190,12 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 		} else if (it->GetType() == Type::Array) {
 			stream << ']';
 		}
-		
+
 		// Separate properties by comma.
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';
 		// No new line if the indent level is zero (if primitive array type).
-		if (format != Format::Minified && indent != 0)
+		if (format != Format::Minified)
 			stream << (indent != 0 ? '\n' : ' ');
 	}
 }

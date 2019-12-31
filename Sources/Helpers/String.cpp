@@ -50,8 +50,7 @@ bool String::IsWhitespace(char c) noexcept {
 }
 
 bool String::IsNumber(std::string_view str) noexcept {
-	// This is the fastest way to tell if a string holds a decimal number.
-	return std::all_of(str.cbegin(), str.cend(), [](const auto c) {
+	return std::all_of(str.cbegin(), str.cend(), [](auto c) {
 		return (c >= '0' && c <= '9') || c == '.' || c == '-';
 	});
 }
@@ -113,7 +112,7 @@ std::string String::ReplaceFirst(std::string str, std::string_view token, std::s
 }
 
 std::string String::FixEscapedChars(std::string str) {
-	static const std::vector<std::pair<char, std::string_view>> replaces = { {'\n', "\\n"}, {'\r', "\\r"}, {'\t', "\\t"} };
+	static const std::vector<std::pair<char, std::string_view>> replaces = {{'\\', "\\\\"}, {'\n', "\\n"}, {'\r', "\\r"}, {'\t', "\\t"}, {'\"', "\\\""}};
 
 	for (const auto &[from, to] : replaces) {
 		auto pos = str.find(from);
@@ -122,12 +121,12 @@ std::string String::FixEscapedChars(std::string str) {
 			pos = str.find(from, pos + 2);
 		}
 	}
-	
+
 	return str;
 }
 
 std::string String::UnfixEscapedChars(std::string str) {
-	static const std::vector<std::pair<std::string_view, char>> replaces = { {"\\r", '\r'}, {"\\n", '\n'}, {"\\t", '\t'} };
+	static const std::vector<std::pair<std::string_view, char>> replaces = {{"\\n", '\n'}, {"\\r", '\r'}, {"\\t", '\t'}, {"\\\"", '\"'}, {"\\\\", '\\'}};
 
 	for (const auto &[from, to] : replaces) {
 		auto pos = str.find(from);
