@@ -29,10 +29,10 @@ void ParticleSystem::Update() {
 
 	m_elapsedEmit.SetInterval(Time::Seconds(1.0f / m_pps));
 
-	if (auto elapsed = m_elapsedEmit.GetElapsed() && !m_emitters.empty()) {
+	if (auto elapsed = m_elapsedEmit.GetElapsed(); elapsed && !m_emitters.empty()) {
 		for (uint32_t i = 0; i < elapsed; i++) {
-			Particles::Get()->AddParticle(EmitParticle(m_emitters[static_cast<uint32_t>(Maths::Random(0.0f, 
-				static_cast<float>(m_emitters.size())))].get()));
+			auto emitterIndex = static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(m_emitters.size())));
+			Particles::Get()->AddParticle(EmitParticle(m_emitters[emitterIndex].get()));
 		}
 	}
 }

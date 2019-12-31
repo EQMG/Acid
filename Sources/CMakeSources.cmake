@@ -471,10 +471,17 @@ else()
 			)
 endif()
 
+get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
 	# Directory that Acid resources can be found.
-	get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 	set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
+endif()
+if(ACID_INSTALL_RESOURCES)
+	# Install resources for end-user usage because many source files use these
+	install(DIRECTORY "${CURRENT_PARENT_DIR}/Resources"
+			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
+			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
+			)
 endif()
 
 # Adds a CMake generated config file

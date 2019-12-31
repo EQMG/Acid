@@ -38,6 +38,7 @@ This project is being worked on part-time by a single developer, this is under h
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
+ * [FreeType](https://www.freetype.org/) - Fonts
  * [PhysFS](https://icculus.org/physfs) - Archive file access
 
 # Code Snippets

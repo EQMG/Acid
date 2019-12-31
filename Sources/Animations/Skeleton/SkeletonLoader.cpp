@@ -58,7 +58,7 @@ Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name) const {
 	for (const auto &[i, bone] : Enumerate(m_boneOrder)) {
 		if (bone == name) {
-			return i;
+			return static_cast<uint32_t>(i);
 		}
 	}
 

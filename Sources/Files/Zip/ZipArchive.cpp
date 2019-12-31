@@ -385,11 +385,11 @@ void ZipArchive::ThrowException(mz_zip_error error, const std::string &errorStri
 std::string ZipArchive::GenerateRandomName(int length) {
 	static std::string_view letters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-	auto range_from = 0;
-	auto range_to = letters.size() - 1;
+	int32_t rangeFrom = 0;
+	int32_t rangeTo = letters.size() - 1;
 	std::random_device rand_dev;
 	std::mt19937 generator(rand_dev());
-	std::uniform_int_distribution<int> distr(range_from, range_to);
+	std::uniform_int_distribution<int32_t> distr(rangeFrom, rangeTo);
 
 	std::string result;
 	for (int i = 0; i < length; ++i) {
