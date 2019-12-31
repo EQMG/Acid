@@ -58,7 +58,7 @@ public:
 		friend class Shader;
 	public:
 		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, bool readOnly = false,
-			bool writeOnly = false, const VkShaderStageFlags &stageFlags = 0) :
+			bool writeOnly = false, VkShaderStageFlags stageFlags = 0) :
 			m_binding(binding),
 			m_offset(offset),
 			m_size(size),
@@ -74,7 +74,7 @@ public:
 		int32_t GetGlType() const { return m_glType; }
 		bool IsReadOnly() const { return m_readOnly; }
 		bool IsWriteOnly() const { return m_writeOnly; }
-		const VkShaderStageFlags &GetStageFlags() const { return m_stageFlags; }
+		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
 
 		bool operator==(const Uniform &other) const {
 			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && m_readOnly == other.m_readOnly && 
@@ -303,9 +303,9 @@ public:
 
 private:
 	static void IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, VkDescriptorType type);
-	void LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);
-	void LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);
-	void LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i);
+	void LoadUniformBlock(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i);
+	void LoadUniform(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i);
+	void LoadAttribute(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i);
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
 	std::vector<std::filesystem::path> m_stages;

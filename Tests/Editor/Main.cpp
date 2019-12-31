@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Registers modules.
-	Plugins::Register(Module::Stage::Always);
+	Plugins::Register();
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Acid Editor");

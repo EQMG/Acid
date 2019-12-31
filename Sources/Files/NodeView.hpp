@@ -12,9 +12,11 @@ class Node;
 class ACID_EXPORT NodeView {
 	friend class Node;
 private:
+	using Key = std::variant<std::string, int32_t>;
+
 	NodeView() = default;
-	NodeView(Node const *parent, std::variant<std::string, int32_t> key, Node const *value);
-	NodeView(NodeView *parent, std::variant<std::string, int32_t> key);
+	NodeView(const Node *parent, Key key, const Node *value);
+	NodeView(const NodeView *parent, Key key);
 public:
 	enum class Type : uint8_t {
 		Object,
@@ -53,11 +55,18 @@ public:
 	template<typename T>
 	void Set(const T &value);
 
-	NodeView operator[](std::string_view key);
-	NodeView operator[](uint32_t index);
+	std::vector<NodeView> GetProperties(std::string_view name) const;
+	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
+	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
+
+	NodeView operator[](std::string_view key) const;
+	NodeView operator[](uint32_t index) const;
 
 	template<typename T>
 	Node &operator=(const T &rhs);
+
+	std::vector<Node> GetProperties() const;
+	std::vector<Node> &GetProperties();
 
 	std::string GetName() const;
 	void SetName(const std::string &name);
@@ -66,7 +75,7 @@ public:
 
 private:
 	Node *m_parent = nullptr;
-	std::vector<std::variant<std::string, int32_t>> m_keys;
+	std::vector<Key> m_keys;
 	Node *m_value = nullptr;
 };
 }

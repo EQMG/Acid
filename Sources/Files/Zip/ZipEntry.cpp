@@ -76,11 +76,11 @@ ZipEntryInfo ZipEntry::CreateInfo(const std::string &name) {
 	info.m_is_supported = true;
 
 #if _MSC_VER // On MSVC, use the safe version of strcpy
-	strcpy_s(info.m_filename, sizeof info.m_filename, name.c_str());
-	strcpy_s(info.m_comment, sizeof info.m_comment, "");
+	strcpy_s(info.m_filename, sizeof(info.m_filename), name.c_str());
+	strcpy_s(info.m_comment, sizeof(info.m_comment), "");
 #else // Otherwise, use the unsafe version as fallback :(
-	strncpy(info.m_filename, name.c_str(), sizeof info.m_filename);
-	strncpy(info.m_comment, "", sizeof info.m_comment);
+	strncpy(info.m_filename, name.c_str(), sizeof(info.m_filename));
+	strncpy(info.m_comment, "", sizeof(info.m_comment));
 #endif
 	return info;
 }

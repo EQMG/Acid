@@ -74,7 +74,7 @@ void Instance::FvkCmdPushDescriptorSetKHR(VkDevice device, VkCommandBuffer comma
 }
 
 uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
-	const VkMemoryPropertyFlags &requiredProperties) {
+	VkMemoryPropertyFlags requiredProperties) {
 	for (uint32_t i = 0; i < deviceMemoryProperties->memoryTypeCount; ++i) {
 		if (memoryRequirements->memoryTypeBits & (1 << i)) {
 			if ((deviceMemoryProperties->memoryTypes[i].propertyFlags & requiredProperties) == requiredProperties) {

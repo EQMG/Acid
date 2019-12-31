@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Module used for managing resources.
  */
-class ACID_EXPORT Resources : public Module::Registrar<Resources> {
+class ACID_EXPORT Resources : public Module::Registrar<Resources, Module::Stage::Post> {
 public:
 	Resources();
 

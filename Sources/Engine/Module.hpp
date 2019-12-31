@@ -27,7 +27,7 @@ public:
 		return ++id;
 	}
 
-	template<typename T>
+	template<typename T, Stage S>
 	class Registrar : public Base {
 	public:
 		/**
@@ -38,11 +38,10 @@ public:
 
 		/**
 		 * Creates a new module singleton instance and registers into the module registry map.
-		 * @param stage The stage where <seealso cref="Module#Update()"/> will be called from the engine.
 		 * @return A dummy value in static initialization.
 		 */
-		static bool Register(Stage stage) {
-			auto it = Registry().insert({StageIndex(stage, GetNextId()), std::make_unique<T>()});
+		static bool Register() {
+			auto it = Registry().insert({StageIndex(S, GetNextId()), std::make_unique<T>()});
 			ModuleInstance = dynamic_cast<T *>(it->second.get());
 			return true;
 		}

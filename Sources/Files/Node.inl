@@ -207,6 +207,14 @@ inline Node &operator<<(Node &node, const char *string) {
 	return node;
 }
 
+//inline const Node &operator>>(const Node &node, std::string_view &string)
+
+inline Node &operator<<(Node &node, std::string_view string) {
+	node.SetValue(string.data());
+	node.SetType(Node::Type::String);
+	return node;
+}
+
 inline const Node &operator>>(const Node &node, std::string &string) {
 	string = node.GetValue();
 	return node;

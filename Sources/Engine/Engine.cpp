@@ -1,7 +1,5 @@
 #include "Engine.hpp"
 
-#include "Maths/Maths.hpp"
-
 #include "Audio/Audio.hpp"
 #include "Devices/Joysticks.hpp"
 #include "Devices/Keyboard.hpp"
@@ -17,6 +15,7 @@
 #include "Shadows/Shadows.hpp"
 #include "Timers/Timers.hpp"
 #include "Uis/Uis.hpp"
+
 #include "Config.hpp"
 
 namespace acid {
@@ -38,24 +37,23 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 #endif
 
+	// Modules are not self registering so we can ensure regular initialization order.
 	if (!emptyRegister) {
-		Files::Register(Module::Stage::Post);
-		Timers::Register(Module::Stage::Post);
-		Resources::Register(Module::Stage::Post);
-
-		Window::Register(Module::Stage::Pre);
-		Audio::Register(Module::Stage::Pre);
-		Joysticks::Register(Module::Stage::Pre);
-		Keyboard::Register(Module::Stage::Pre);
-		Mouse::Register(Module::Stage::Pre);
-		Graphics::Register(Module::Stage::Render);
-
-		Input::Register(Module::Stage::Normal);
-		Scenes::Register(Module::Stage::Normal);
-		Gizmos::Register(Module::Stage::Normal);
-		Particles::Register(Module::Stage::Normal);
-		Shadows::Register(Module::Stage::Normal);
-		Uis::Register(Module::Stage::Normal);
+		Files::Register();
+		Timers::Register();
+		Resources::Register();
+		Window::Register();
+		Audio::Register();
+		Joysticks::Register();
+		Keyboard::Register();
+		Mouse::Register();
+		Graphics::Register();
+		Input::Register();
+		Scenes::Register();
+		Gizmos::Register();
+		Particles::Register();
+		Shadows::Register();
+		Uis::Register();
 	}
 }
 

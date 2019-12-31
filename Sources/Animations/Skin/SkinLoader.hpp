@@ -17,7 +17,7 @@ private:
 	std::vector<uint32_t> GetEffectiveJointsCounts(const Node &weightsDataNode) const;
 	void GetSkinWeights(const Node &weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 
-	mutable NodeView m_skinData;
+	NodeView m_skinData;
 	uint32_t m_maxWeights;
 
 	std::vector<std::string> m_jointOrder;

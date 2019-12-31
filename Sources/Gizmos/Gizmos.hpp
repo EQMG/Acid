@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief Module used for that manages debug gizmos.
  */
-class ACID_EXPORT Gizmos : public Module::Registrar<Gizmos> {
+class ACID_EXPORT Gizmos : public Module::Registrar<Gizmos, Module::Stage::Normal> {
 public:
 	using GizmosContainer = std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>;
 

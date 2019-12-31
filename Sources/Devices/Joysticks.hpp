@@ -23,7 +23,7 @@ using JoystickHat = uint8_t;
 /**
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
-class ACID_EXPORT Joysticks : public Module::Registrar<Joysticks> {
+class ACID_EXPORT Joysticks : public Module::Registrar<Joysticks, Module::Stage::Pre> {
 public:
 	Joysticks();
 

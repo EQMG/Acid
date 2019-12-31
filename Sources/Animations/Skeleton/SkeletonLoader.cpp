@@ -5,7 +5,7 @@
 
 namespace acid {
 SkeletonLoader::SkeletonLoader(NodeView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
-	m_armatureData(libraryControllers["visual_scene"]["node"]->GetPropertyWithValue("-id", "Armature")),
+	m_armatureData(libraryControllers["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature")),
 	m_boneOrder(std::move(boneOrder)),
 	m_correction(correction) {
 	auto headNode = m_armatureData["node"];
@@ -20,8 +20,8 @@ Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 	if (!childJointNode)
 		return joint;
 	
-	if (childJointNode->GetType() == Node::Type::Array) {
-		for (auto &childNode : childJointNode->GetProperties())
+	if (childJointNode.GetType() == Node::Type::Array) {
+		for (auto &childNode : childJointNode.GetProperties())
 			joint.AddChild(LoadJointData(childNode, false));
 	} else {
 		joint.AddChild(LoadJointData(childJointNode, false));
@@ -31,9 +31,9 @@ Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 }
 
 Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
-	auto nameId = jointNode["-id"]->Get<std::string>();
+	auto nameId = jointNode["-id"].Get<std::string>();
 	auto index = GetBoneIndex(nameId);
-	auto matrixData = String::Split(jointNode["matrix"]["#text"]->Get<std::string>(), ' ');
+	auto matrixData = String::Split(jointNode["matrix"]["#text"].Get<std::string>(), ' ');
 
 	assert(matrixData.size() == 16);
 

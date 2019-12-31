@@ -32,7 +32,7 @@ private:
 /**
  * @brief Module used for timed events.
  */
-class ACID_EXPORT Timers : public Module::Registrar<Timers> {
+class ACID_EXPORT Timers : public Module::Registrar<Timers, Module::Stage::Post> {
 public:
 	Timers();
 
@@ -75,7 +75,7 @@ private:
 
 	std::vector<std::unique_ptr<Timer>> m_timers;
 
-	bool m_stop = false;
+	std::atomic_bool m_stop = false;
 	std::thread m_worker;
 
 	std::mutex m_mutex;

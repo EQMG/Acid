@@ -133,7 +133,7 @@ enum class Key : int16_t {
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard> {
+class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard, Module::Stage::Pre> {
 public:
 	Keyboard();
 

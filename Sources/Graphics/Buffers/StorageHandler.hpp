@@ -28,7 +28,8 @@ public:
 			m_bound = true;
 		}
 
-		if (std::memcmp(static_cast<char *>(m_data), data, size) != 0) {
+		// If the buffer is already changed we can skip a memory comparison and just copy.
+		if (m_handlerStatus == Buffer::Status::Changed || std::memcmp(static_cast<char *>(m_data), data, size) != 0) {
 			std::memcpy(static_cast<char *>(m_data), data, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}
@@ -45,7 +46,8 @@ public:
 			m_bound = true;
 		}
 
-		if (std::memcmp(static_cast<char *>(m_data) + offset, &object, size) != 0) {
+		// If the buffer is already changed we can skip a memory comparison and just copy.
+		if (m_handlerStatus == Buffer::Status::Changed || std::memcmp(static_cast<char *>(m_data) + offset, &object, size) != 0) {
 			std::memcpy(static_cast<char *>(m_data) + offset, &object, size);
 			m_handlerStatus = Buffer::Status::Changed;
 		}

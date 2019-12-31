@@ -96,7 +96,7 @@ void Graphics::Update() {
 	}
 }
 
-std::string Graphics::StringifyResultVk(const VkResult &result) {
+std::string Graphics::StringifyResultVk(VkResult result) {
 	switch (result) {
 	case VK_SUCCESS:
 		return "Success";
@@ -151,7 +151,7 @@ std::string Graphics::StringifyResultVk(const VkResult &result) {
 	}
 }
 
-void Graphics::CheckVk(const VkResult &result) {
+void Graphics::CheckVk(VkResult result) {
 	if (result >= 0) {
 		return;
 	}

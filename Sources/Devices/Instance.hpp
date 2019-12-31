@@ -38,7 +38,7 @@ public:
 		uint32_t descriptorWriteCount, const VkWriteDescriptorSet *pDescriptorWrites);
 
 	static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
-		const VkMemoryPropertyFlags &requiredProperties);
+		VkMemoryPropertyFlags requiredProperties);
 
 	operator const VkInstance &() const { return m_instance; }
 

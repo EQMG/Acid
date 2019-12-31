@@ -14,7 +14,7 @@ namespace acid {
 /**
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
-class ACID_EXPORT Graphics : public Module::Registrar<Graphics> {
+class ACID_EXPORT Graphics : public Module::Registrar<Graphics, Module::Stage::Render> {
 public:
 	Graphics();
 	
@@ -22,8 +22,8 @@ public:
 
 	void Update() override;
 
-	static std::string StringifyResultVk(const VkResult &result);
-	static void CheckVk(const VkResult &result);
+	static std::string StringifyResultVk(VkResult result);
+	static void CheckVk(VkResult result);
 
 	/**
 	 * Takes a screenshot of the current image of the display and saves it into a image file.

@@ -5,6 +5,8 @@
 #include "Maths/Maths.hpp"
 
 namespace acid {
+static_assert(GLFW_MOUSE_BUTTON_LAST == static_cast<int16_t>(MouseButton::Last), "GLFW mouse button count does not match our mouse button enum count.");
+
 void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) {
 	Mouse::Get()->m_onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
 }

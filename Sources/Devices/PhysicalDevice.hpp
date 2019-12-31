@@ -17,7 +17,7 @@ public:
 	const VkPhysicalDeviceProperties &GetProperties() const { return m_properties; }
 	const VkPhysicalDeviceFeatures &GetFeatures() const { return m_features; }
 	const VkPhysicalDeviceMemoryProperties &GetMemoryProperties() const { return m_memoryProperties; }
-	const VkSampleCountFlagBits &GetMsaaSamples() const { return m_msaaSamples; }
+	VkSampleCountFlagBits GetMsaaSamples() const { return m_msaaSamples; }
 
 private:
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);

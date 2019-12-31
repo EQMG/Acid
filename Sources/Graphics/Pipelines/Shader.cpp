@@ -176,31 +176,25 @@ std::optional<VkDescriptorType> Shader::GetDescriptorType(uint32_t location) con
 }
 
 VkShaderStageFlagBits Shader::GetShaderStage(const std::filesystem::path &filename) {
-	auto fileExt = filename.extension();
+	auto fileExt = filename.extension().string();
+	std::transform(fileExt.begin(), fileExt.end(), fileExt.begin(), ::tolower);
 
-	if (fileExt == ".comp") {
+	if (fileExt == ".comp")
 		return VK_SHADER_STAGE_COMPUTE_BIT;
-	}
-	if (fileExt == ".vert") {
+	if (fileExt == ".vert")
 		return VK_SHADER_STAGE_VERTEX_BIT;
-	}
-	if (fileExt == ".tesc") {
+	if (fileExt == ".tesc")
 		return VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-	}
-	if (fileExt == ".tese") {
+	if (fileExt == ".tese")
 		return VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT;
-	}
-	if (fileExt == ".geom") {
+	if (fileExt == ".geom")
 		return VK_SHADER_STAGE_GEOMETRY_BIT;
-	}
-	if (fileExt == ".frag") {
+	if (fileExt == ".frag")
 		return VK_SHADER_STAGE_FRAGMENT_BIT;
-	}
-
 	return VK_SHADER_STAGE_ALL;
 }
 
-EShLanguage GetEshLanguage(const VkShaderStageFlags &stageFlag) {
+EShLanguage GetEshLanguage(VkShaderStageFlags stageFlag) {
 	switch (stageFlag) {
 	case VK_SHADER_STAGE_COMPUTE_BIT:
 		return EShLangCompute;
@@ -552,7 +546,7 @@ void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descr
 	}
 }
 
-void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i) {
+void Shader::LoadUniformBlock(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i) {
 	auto reflection = program.getUniformBlock(i);
 
 	for (auto &[uniformBlockName, uniformBlock] : m_uniformBlocks) {
@@ -579,7 +573,7 @@ void Shader::LoadUniformBlock(const glslang::TProgram &program, const VkShaderSt
 	m_uniformBlocks.emplace(reflection.name, UniformBlock(reflection.getBinding(), reflection.size, stageFlag, type));
 }
 
-void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i) {
+void Shader::LoadUniform(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i) {
 	auto reflection = program.getUniform(i);
 
 	if (reflection.getBinding() == -1) {
@@ -608,7 +602,7 @@ void Shader::LoadUniform(const glslang::TProgram &program, const VkShaderStageFl
 	m_uniforms.emplace(reflection.name, Uniform(reflection.getBinding(), reflection.offset, -1, reflection.glDefineType, qualifier.readonly, qualifier.writeonly, stageFlag));
 }
 
-void Shader::LoadAttribute(const glslang::TProgram &program, const VkShaderStageFlags &stageFlag, int32_t i) {
+void Shader::LoadAttribute(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i) {
 	auto reflection = program.getPipeInput(i);
 
 	if (reflection.name.empty()) {

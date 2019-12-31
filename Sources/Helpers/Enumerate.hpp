@@ -1,42 +1,27 @@
 #pragma once
 
-#include <iterator>
+#include "StdAfx.hpp"
 
 namespace acid {
-template<typename Iterable>
-class EnumerateObject {
-private:
-	Iterable m_iter;
-	std::size_t m_size = 0;
-	decltype(std::begin(m_iter)) m_begin;
-	const decltype(std::end(m_iter)) m_end;
-
-public:
-	EnumerateObject(Iterable iter) :
-		m_iter(iter),
-		m_begin(std::begin(iter)),
-		m_end(std::end(iter)) {
-	}
-
-	const EnumerateObject &begin() const { return *this; }
-	const EnumerateObject &end() const { return *this; }
-
-	bool operator!=(const EnumerateObject &) const {
-		return m_begin != m_end;
-	}
-
-	void operator++() {
-		++m_begin;
-		++m_size;
-	}
-
-	auto operator*() const -> std::pair<std::size_t, decltype(*m_begin)> {
-		return {m_size, *m_begin};
-	}
-};
-
-template<typename Iterable>
-auto Enumerate(Iterable &&iter) -> EnumerateObject<Iterable> {
-	return {std::forward<Iterable>(iter)};
+/**
+ * http://reedbeta.com/blog/python-like-enumerate-in-cpp17/
+ */
+template<typename T,
+	typename TIter = decltype(std::begin(std::declval<T>())),
+	typename = decltype(std::end(std::declval<T>()))>
+	constexpr auto Enumerate(T &&iterable) {
+	struct iterator {
+		size_t i;
+		TIter iter;
+		bool operator!=(const iterator &other) const { return iter != other.iter; }
+		void operator++() { ++i; ++iter; }
+		auto operator*() const { return std::tie(i, *iter); }
+	};
+	struct iterable_wrapper {
+		T iterable;
+		auto begin() { return iterator{0, std::begin(iterable)}; }
+		auto end() { return iterator{0, std::end(iterable)}; }
+	};
+	return iterable_wrapper{std::forward<T>(iterable)};
 }
 }

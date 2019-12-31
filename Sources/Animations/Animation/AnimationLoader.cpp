@@ -15,19 +15,19 @@ AnimationLoader::AnimationLoader(NodeView &&libraryAnimations, NodeView &&librar
 	m_lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
-	for (auto &jointNode : animationNodes->GetProperties())
+	for (auto &jointNode : animationNodes.GetProperties())
 		LoadJointTransforms(jointNode, rootNode);
 }
 
 std::string AnimationLoader::FindRootJointName() const {
-	auto skeleton = m_libraryVisualScenes["visual_scene"]["node"]->GetPropertyWithValue("-id", "Armature");
-	return skeleton["node"]["-id"]->Get<std::string>();
+	auto skeleton = m_libraryVisualScenes["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature");
+	return skeleton["node"]["-id"].Get<std::string>();
 }
 
 std::vector<Time> AnimationLoader::GetKeyTimes() const {
 	// Times should be the same for each pose so we grab the first joint times.
 	auto timeData = m_libraryAnimations["animation"][0]["source"][0]["float_array"];
-	auto rawTimes = String::Split(timeData["#text"]->Get<std::string>(), ' ');
+	auto rawTimes = String::Split(timeData["#text"].Get<std::string>(), ' ');
 
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
@@ -46,21 +46,21 @@ void AnimationLoader::LoadJointTransforms(const Node &jointData, const std::stri
 	auto jointNameId = GetJointName(jointData);
 	auto dataId = GetDataId(jointData);
 
-	auto transformData = jointData["source"]->GetPropertyWithValue("-id", dataId);
+	auto transformData = jointData["source"].GetPropertyWithValue("-id", dataId);
 
-	auto data = transformData["float_array"]["#text"]->Get<std::string>();
+	auto data = transformData["float_array"]["#text"].Get<std::string>();
 	auto splitData = String::Split(data, ' ');
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }
 
 std::string AnimationLoader::GetDataId(const Node &jointData) {
-	auto node = jointData["sampler"]["input"]->GetPropertyWithValue("-semantic", "OUTPUT");
-	return node["-source"]->Get<std::string>().substr(1);
+	auto node = jointData["sampler"]["input"].GetPropertyWithValue("-semantic", "OUTPUT");
+	return node["-source"].Get<std::string>().substr(1);
 }
 
 std::string AnimationLoader::GetJointName(const Node &jointData) {
 	auto channelNode = jointData["channel"];
-	auto data = channelNode["-target"]->Get<std::string>();
+	auto data = channelNode["-target"].Get<std::string>();
 	auto splitData = String::Split(data, '/');
 	return splitData[0];
 }

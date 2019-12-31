@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Module used for managing game scenes.
  */
-class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
+class ACID_EXPORT Scenes : public Module::Registrar<Scenes, Module::Stage::Normal> {
 public:
 	Scenes();
 

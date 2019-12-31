@@ -8,7 +8,7 @@ namespace acid {
  */
 class ACID_EXPORT Log {
 public:
-	class Style {
+	class Styles {
 	public:
 		static constexpr std::string_view Default = "\033[0m";
 		static constexpr std::string_view Bold = "\033[1m";
@@ -19,7 +19,7 @@ public:
 		static constexpr std::string_view Hidden = "\033[8m";
 	};
 
-	class Colour {
+	class Colours {
 	public:
 		static constexpr std::string_view Default = "\033[39m";
 		static constexpr std::string_view Black = "\033[30m";
@@ -61,7 +61,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Out(const std::string_view &style, const std::string_view &colour, Args ... args) {
-		Write(style, colour, args..., Style::Default);
+		Write(style, colour, args..., Styles::Default);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public:
 	template<typename ... Args>
 	static void Debug(Args ... args) {
 #ifdef ACID_DEBUG
-		Out(Style::Default, Colour::LightBlue, args...);
+		Out(Styles::Default, Colours::LightBlue, args...);
 #endif
 	}
 
@@ -83,7 +83,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Info(Args ... args) {
-		Out(Style::Default, Colour::Green, args...);
+		Out(Styles::Default, Colours::Green, args...);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Warning(Args ... args) {
-		Out(Style::Default, Colour::Yellow, args...);
+		Out(Styles::Default, Colours::Yellow, args...);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public:
 	 */
 	template<typename ... Args>
 	static void Error(Args ... args) {
-		Out(Style::Default, Colour::Red, args...);
+		Out(Styles::Default, Colours::Red, args...);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public:
 	template<typename ... Args>
 	static void Assert(bool expr, Args ... args) {
 		if (expr) {
-			Out(Style::Default, Colour::Magenta, args...);
+			Out(Styles::Default, Colours::Magenta, args...);
 			assert(false);
 		}
 	}
@@ -144,22 +144,52 @@ private:
 	}
 };
 
-template<typename T>
+template<typename T = std::nullptr_t>
 class Loggable {
+public:
+	explicit Loggable(std::string &&className) :
+		className(std::move(className)) {
+	}
+	template<std::enable_if_t<!std::is_same_v<T, std::nullptr_t>, int> = 0>
+	Loggable() :
+		Loggable(typeid(T).name()) {
+	}
+
+	virtual ~Loggable() = default;
+
 protected:
-#define MESSAGE_PREFIX Time::GetDateTime(Log::TimestampFormat), " [", typeid(T).name(), "]"
-#define MESSAGE_PREFIX_THIS "(0x", std::hex, std::uppercase, reinterpret_cast<long>(this), ") ", std::dec
+	template<typename ... Args>
+	void WriteOut(Args ... args) const {
+		auto logPrefix = GetLogPrefix();
+		Log::Out(logPrefix.rdbuf(), args...);
+	}
 
 	template<typename ... Args>
-	void WriteOut(Args ... args) const { Log::Out(MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+	void WriteInfo(Args ... args) const {
+		auto logPrefix = GetLogPrefix();
+		Log::Info("INFO: ", logPrefix.rdbuf(), args...);
+	}
 
 	template<typename ... Args>
-	void WriteInfo(Args ... args) const { Log::Info("INFO: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+	void WriteWarning(Args ... args) const {
+		auto logPrefix = GetLogPrefix();
+		Log::Warning("WARN: ", logPrefix.rdbuf(), args...);
+	}
 
 	template<typename ... Args>
-	void WriteWarning(Args ... args) const { Log::Warning("WARN: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+	void WriteError(Args ... args) const {
+		auto logPrefix = GetLogPrefix();
+		Log::Error("ERROR: ", logPrefix.rdbuf(), args...);
+	}
 
-	template<typename ... Args>
-	void WriteError(Args ... args) const { Log::Error("ERROR: ", MESSAGE_PREFIX, MESSAGE_PREFIX_THIS, args...); }
+private:
+	std::stringstream GetLogPrefix() const {
+		std::stringstream logPrefix;
+		logPrefix << Time::GetDateTime(Log::TimestampFormat) << " [" << className << "]" <<
+			"(0x" << std::hex << std::uppercase << reinterpret_cast<long>(this) << ") " << std::dec;
+		return logPrefix;
+	}
+
+	std::string className;
 };
 }

@@ -274,10 +274,8 @@ std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, b
 	std::vector<std::string> files;
 
 	for (auto i = rc; *i; i++) {
-		/*if (IsDirectory(*i))
-		{
-			if (recursive)
-			{
+		/*if (IsDirectory(*i)) {
+			if (recursive) {
 				auto filesInFound = FilesInPath(*i, recursive);
 				files.insert(result.end(), filesInFound.begin(), filesInFound.end());
 			}

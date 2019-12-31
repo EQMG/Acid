@@ -62,7 +62,7 @@ MainApp::MainApp() :
 	}, this);
 
 	// Registers modules.
-	World::Register(Module::Stage::Always);
+	World::Register();
 	//Shadows::Deregister();
 }
 
@@ -88,8 +88,7 @@ void MainApp::Start() {
 	});
 	Timers::Get()->Repeat(2s, 3, []() {
 		static uint32_t i = 0;
-		Log::Out("Timer Repeat Tick #", i, '\n');
-		i++;
+		Log::Out("Timer Repeat Tick #", ++i, '\n');
 	});
 
 	// Sets values to modules.

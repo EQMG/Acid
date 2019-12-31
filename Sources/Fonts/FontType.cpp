@@ -122,8 +122,9 @@ bool FontType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraph
 	// Draws the object.
 	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
 
+	VkBuffer buffers[1] = {m_instanceBuffer->GetBuffer()};
 	VkDeviceSize offsets[1] = {0};
-	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &m_instanceBuffer->GetBuffer(), offsets);
+	vkCmdBindVertexBuffers(commandBuffer, 0, 1, buffers, offsets);
 	vkCmdDraw(commandBuffer, 4, m_instances, 0, 0);
 	return true;
 }

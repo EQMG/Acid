@@ -124,12 +124,8 @@ BitMask<JoystickHatValue> Joysticks::GetHat(JoystickPort port, JoystickHat hat) 
 }
 
 std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(JoystickPort port) const {
-	auto it = m_connected.find(port);
-
-	if (it == m_connected.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = m_connected.find(port); it != m_connected.end())
+		return it->second;
+	return std::nullopt;
 }
 }

@@ -57,7 +57,9 @@ public:
 	}
 
 	template<typename Rep, typename Period>
-	operator std::chrono::duration<Rep, Period>() const { return std::chrono::duration_cast<std::chrono::duration<Rep, Period>>(m_microseconds); }
+	operator std::chrono::duration<Rep, Period>() const {
+		return std::chrono::duration_cast<std::chrono::duration<Rep, Period>>(m_microseconds);
+	}
 
 	/**
 	 * Gets the time value as a number of seconds.
@@ -103,8 +105,7 @@ public:
 	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S");
 
 	/*template<typename Period = std::ratio<1, 1>>
-	float Mod(const Time &other)
-	{
+	float Mod(const Time &other) {
 		return std::modf(std::chrono::duration_cast<std::chrono::duration<double, Period>>(m_microseconds),
 			std::chrono::duration_cast<std::chrono::duration<double, Period>>(other.m_microseconds));
 	}*/

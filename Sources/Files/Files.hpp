@@ -41,7 +41,7 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT Files : public Module::Registrar<Files> {
+class ACID_EXPORT Files : public Module::Registrar<Files, Module::Stage::Post> {
 public:
 	Files();
 

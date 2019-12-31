@@ -1118,9 +1118,9 @@ float Noise::SingleCubic(uint8_t offset, float x, float y) const {
 	auto ys = y - static_cast<float>(y1);
 
 	return CubicLerp(CubicLerp(ValueCoord2dFast(offset, x0, y0), ValueCoord2dFast(offset, x1, y0), ValueCoord2dFast(offset, x2, y0), ValueCoord2dFast(offset, x3, y0), xs),
-			CubicLerp(ValueCoord2dFast(offset, x0, y1), ValueCoord2dFast(offset, x1, y1), ValueCoord2dFast(offset, x2, y1), ValueCoord2dFast(offset, x3, y1), xs),
-			CubicLerp(ValueCoord2dFast(offset, x0, y2), ValueCoord2dFast(offset, x1, y2), ValueCoord2dFast(offset, x2, y2), ValueCoord2dFast(offset, x3, y2), xs),
-			CubicLerp(ValueCoord2dFast(offset, x0, y3), ValueCoord2dFast(offset, x1, y3), ValueCoord2dFast(offset, x2, y3), ValueCoord2dFast(offset, x3, y3), xs), ys)
+		CubicLerp(ValueCoord2dFast(offset, x0, y1), ValueCoord2dFast(offset, x1, y1), ValueCoord2dFast(offset, x2, y1), ValueCoord2dFast(offset, x3, y1), xs),
+		CubicLerp(ValueCoord2dFast(offset, x0, y2), ValueCoord2dFast(offset, x1, y2), ValueCoord2dFast(offset, x2, y2), ValueCoord2dFast(offset, x3, y2), xs),
+		CubicLerp(ValueCoord2dFast(offset, x0, y3), ValueCoord2dFast(offset, x1, y3), ValueCoord2dFast(offset, x2, y3), ValueCoord2dFast(offset, x3, y3), xs), ys)
 		* CUBIC_2D_BOUNDING;
 }
 
@@ -1606,8 +1606,7 @@ float Noise::SingleSimplex(uint8_t offset, float x, float y, float z) const {
 			i2 = 1;
 			j2 = 0;
 			k2 = 1;
-		} else // x0 < z0
-		{
+		} else { // x0 < z0
 			i1 = 0;
 			j1 = 0;
 			k1 = 1;
@@ -1615,8 +1614,7 @@ float Noise::SingleSimplex(uint8_t offset, float x, float y, float z) const {
 			j2 = 0;
 			k2 = 1;
 		}
-	} else // x0 < y0
-	{
+	} else { // x0 < y0
 		if (y0 < z0) {
 			i1 = 0;
 			j1 = 0;
@@ -1631,8 +1629,7 @@ float Noise::SingleSimplex(uint8_t offset, float x, float y, float z) const {
 			i2 = 0;
 			j2 = 1;
 			k2 = 1;
-		} else // x0 >= z0
-		{
+		} else { // x0 >= z0
 			i1 = 0;
 			j1 = 1;
 			k1 = 0;
@@ -1764,27 +1761,27 @@ float Noise::SingleCubic(uint8_t offset, float x, float y, float z) const {
 	auto zs = z - static_cast<float>(z1);
 
 	return CubicLerp(CubicLerp(
-			CubicLerp(ValueCoord3dFast(offset, x0, y0, z0), ValueCoord3dFast(offset, x1, y0, z0), ValueCoord3dFast(offset, x2, y0, z0), ValueCoord3dFast(offset, x3, y0, z0), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y1, z0), ValueCoord3dFast(offset, x1, y1, z0), ValueCoord3dFast(offset, x2, y1, z0), ValueCoord3dFast(offset, x3, y1, z0), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y2, z0), ValueCoord3dFast(offset, x1, y2, z0), ValueCoord3dFast(offset, x2, y2, z0), ValueCoord3dFast(offset, x3, y2, z0), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y3, z0), ValueCoord3dFast(offset, x1, y3, z0), ValueCoord3dFast(offset, x2, y3, z0), ValueCoord3dFast(offset, x3, y3, z0), xs),
-			ys),
+		CubicLerp(ValueCoord3dFast(offset, x0, y0, z0), ValueCoord3dFast(offset, x1, y0, z0), ValueCoord3dFast(offset, x2, y0, z0), ValueCoord3dFast(offset, x3, y0, z0), xs),
+		CubicLerp(ValueCoord3dFast(offset, x0, y1, z0), ValueCoord3dFast(offset, x1, y1, z0), ValueCoord3dFast(offset, x2, y1, z0), ValueCoord3dFast(offset, x3, y1, z0), xs),
+		CubicLerp(ValueCoord3dFast(offset, x0, y2, z0), ValueCoord3dFast(offset, x1, y2, z0), ValueCoord3dFast(offset, x2, y2, z0), ValueCoord3dFast(offset, x3, y2, z0), xs),
+		CubicLerp(ValueCoord3dFast(offset, x0, y3, z0), ValueCoord3dFast(offset, x1, y3, z0), ValueCoord3dFast(offset, x2, y3, z0), ValueCoord3dFast(offset, x3, y3, z0), xs),
+		ys),
 		CubicLerp(
 			CubicLerp(ValueCoord3dFast(offset, x0, y0, z1), ValueCoord3dFast(offset, x1, y0, z1), ValueCoord3dFast(offset, x2, y0, z1), ValueCoord3dFast(offset, x3, y0, z1), xs),
 			CubicLerp(ValueCoord3dFast(offset, x0, y1, z1), ValueCoord3dFast(offset, x1, y1, z1), ValueCoord3dFast(offset, x2, y1, z1), ValueCoord3dFast(offset, x3, y1, z1), xs),
 			CubicLerp(ValueCoord3dFast(offset, x0, y2, z1), ValueCoord3dFast(offset, x1, y2, z1), ValueCoord3dFast(offset, x2, y2, z1), ValueCoord3dFast(offset, x3, y2, z1), xs),
 			CubicLerp(ValueCoord3dFast(offset, x0, y3, z1), ValueCoord3dFast(offset, x1, y3, z1), ValueCoord3dFast(offset, x2, y3, z1), ValueCoord3dFast(offset, x3, y3, z1), xs),
 			ys), CubicLerp(
-			CubicLerp(ValueCoord3dFast(offset, x0, y0, z2), ValueCoord3dFast(offset, x1, y0, z2), ValueCoord3dFast(offset, x2, y0, z2), ValueCoord3dFast(offset, x3, y0, z2), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y1, z2), ValueCoord3dFast(offset, x1, y1, z2), ValueCoord3dFast(offset, x2, y1, z2), ValueCoord3dFast(offset, x3, y1, z2), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y2, z2), ValueCoord3dFast(offset, x1, y2, z2), ValueCoord3dFast(offset, x2, y2, z2), ValueCoord3dFast(offset, x3, y2, z2), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y3, z2), ValueCoord3dFast(offset, x1, y3, z2), ValueCoord3dFast(offset, x2, y3, z2), ValueCoord3dFast(offset, x3, y3, z2), xs),
-			ys), CubicLerp(
-			CubicLerp(ValueCoord3dFast(offset, x0, y0, z3), ValueCoord3dFast(offset, x1, y0, z3), ValueCoord3dFast(offset, x2, y0, z3), ValueCoord3dFast(offset, x3, y0, z3), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y1, z3), ValueCoord3dFast(offset, x1, y1, z3), ValueCoord3dFast(offset, x2, y1, z3), ValueCoord3dFast(offset, x3, y1, z3), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y2, z3), ValueCoord3dFast(offset, x1, y2, z3), ValueCoord3dFast(offset, x2, y2, z3), ValueCoord3dFast(offset, x3, y2, z3), xs),
-			CubicLerp(ValueCoord3dFast(offset, x0, y3, z3), ValueCoord3dFast(offset, x1, y3, z3), ValueCoord3dFast(offset, x2, y3, z3), ValueCoord3dFast(offset, x3, y3, z3), xs),
-			ys), zs) * CUBIC_3D_BOUNDING;
+				CubicLerp(ValueCoord3dFast(offset, x0, y0, z2), ValueCoord3dFast(offset, x1, y0, z2), ValueCoord3dFast(offset, x2, y0, z2), ValueCoord3dFast(offset, x3, y0, z2), xs),
+				CubicLerp(ValueCoord3dFast(offset, x0, y1, z2), ValueCoord3dFast(offset, x1, y1, z2), ValueCoord3dFast(offset, x2, y1, z2), ValueCoord3dFast(offset, x3, y1, z2), xs),
+				CubicLerp(ValueCoord3dFast(offset, x0, y2, z2), ValueCoord3dFast(offset, x1, y2, z2), ValueCoord3dFast(offset, x2, y2, z2), ValueCoord3dFast(offset, x3, y2, z2), xs),
+				CubicLerp(ValueCoord3dFast(offset, x0, y3, z2), ValueCoord3dFast(offset, x1, y3, z2), ValueCoord3dFast(offset, x2, y3, z2), ValueCoord3dFast(offset, x3, y3, z2), xs),
+				ys), CubicLerp(
+					CubicLerp(ValueCoord3dFast(offset, x0, y0, z3), ValueCoord3dFast(offset, x1, y0, z3), ValueCoord3dFast(offset, x2, y0, z3), ValueCoord3dFast(offset, x3, y0, z3), xs),
+					CubicLerp(ValueCoord3dFast(offset, x0, y1, z3), ValueCoord3dFast(offset, x1, y1, z3), ValueCoord3dFast(offset, x2, y1, z3), ValueCoord3dFast(offset, x3, y1, z3), xs),
+					CubicLerp(ValueCoord3dFast(offset, x0, y2, z3), ValueCoord3dFast(offset, x1, y2, z3), ValueCoord3dFast(offset, x2, y2, z3), ValueCoord3dFast(offset, x3, y2, z3), xs),
+					CubicLerp(ValueCoord3dFast(offset, x0, y3, z3), ValueCoord3dFast(offset, x1, y3, z3), ValueCoord3dFast(offset, x2, y3, z3), ValueCoord3dFast(offset, x3, y3, z3), xs),
+					ys), zs) * CUBIC_3D_BOUNDING;
 }
 
 float Noise::SingleCellular(float x, float y, float z) const {

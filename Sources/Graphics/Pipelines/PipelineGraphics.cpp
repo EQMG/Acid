@@ -248,17 +248,14 @@ void PipelineGraphics::CreatePipeline() {
 		for (const auto &attribute : vertexInput.GetAttributeDescriptions()) {
 			/*bool shaderContains = false;
 
-			for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes())
-			{
-				if (attribute.location + lastAttribute == shaderAttribute->GetLocation())
-				{
+			for (const auto &[shaderAttributeName, shaderAttribute] : m_shader->GetAttributes()) {
+				if (attribute.location + lastAttribute == shaderAttribute->GetLocation()) {
 					shaderContains = true;
 					break;
 				}
 			}
 
-			if (!shaderContains)
-			{
+			if (!shaderContains) {
 				continue;
 			}*/
 

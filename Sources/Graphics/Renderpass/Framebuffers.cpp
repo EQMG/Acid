@@ -7,7 +7,7 @@
 
 namespace acid {
 Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
-	const VkSampleCountFlagBits &samples) {
+	VkSampleCountFlagBits samples) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	for (const auto &attachment : renderStage.GetAttachments()) {

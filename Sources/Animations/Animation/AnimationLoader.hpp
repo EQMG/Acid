@@ -24,8 +24,8 @@ private:
 
 	void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root);
 
-	mutable NodeView m_libraryAnimations;
-	mutable NodeView m_libraryVisualScenes;
+	NodeView m_libraryAnimations;
+	NodeView m_libraryVisualScenes;
 	Matrix4 m_correction;
 
 	Time m_lengthSeconds;

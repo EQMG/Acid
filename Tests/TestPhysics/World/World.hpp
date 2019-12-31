@@ -8,7 +8,7 @@
 using namespace acid;
 
 namespace test {
-class World : public Module::Registrar<World> {
+class World : public Module::Registrar<World, Module::Stage::Always> {
 public:
 	World();
 
