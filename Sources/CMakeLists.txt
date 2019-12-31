@@ -164,9 +164,9 @@ if(NOT PhysFS_FOUND)
 		set(PHYSFS_BUILD_STATIC NOT${BUILD_SHARED_LIBS} CACHE INTERNAL "")
 		set(PHYSFS_BUILD_SHARED ${BUILD_SHARED_LIBS} CACHE INTERNAL "")
 		set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "")
-		set(PHYSFS_TARGETNAME_DOCS "physfs-docs" CACHE INTERNAL STRING "Name of 'docs' build target")
-		set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING "Name of 'dist' build target")
-		set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING "Name of 'uninstall' build target")
+		set(PHYSFS_TARGETNAME_DOCS "physfs-docs" CACHE INTERNAL STRING)
+		set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
+		set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
 		FetchContent_Populate(physfs)
 		add_subdirectory(${physfs_SOURCE_DIR} ${physfs_BINARY_DIR})
 	endif()
@@ -195,7 +195,7 @@ if(NOT PhysFS_FOUND)
 	endif()
 endif()
 
-target_compile_features(Acid PUBLIC cxx_std_17)
+target_compile_features(Acid PUBLIC c_std_11 cxx_std_17)
 if(BUILD_SHARED_LIBS)
 	target_compile_definitions(Acid PRIVATE ACID_EXPORTS)
 else()
@@ -224,6 +224,9 @@ target_compile_definitions(Acid
 		$<$<CXX_COMPILER_ID:GNU>:ACID_BUILD_GNU __USE_MINGW_ANSI_STDIO=0>
 		)
 target_compile_options(Acid
+		PUBLIC
+		# Disables symbol warnings.
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309>
 		PRIVATE
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
 		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
@@ -270,7 +273,7 @@ target_link_libraries(Acid
 		)
 
 set_target_properties(Acid PROPERTIES
-#		INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
 		FOLDER "Acid"
 		)
 

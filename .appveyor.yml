@@ -15,12 +15,12 @@ environment:
       GEN: "Visual Studio 15 2017 Win64"
       CFG: Release
       BUILD_OUT: "x64-Release"
-  #  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-  #    platform: x86
-  #    ARCHITECTURE: x86
-  #    GEN: "Visual Studio 15 2017"
-  #    CFG: Release
-  #    BUILD_OUT: "x86-Release"
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#      platform: x86
+#      ARCHITECTURE: x86
+#      GEN: "Visual Studio 15 2017"
+#      CFG: Release
+#      BUILD_OUT: "x86-Release"
   VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.126.0/windows/vulkan-sdk.exe?Human=true;u=
   VULKAN_SDK: "C:\\VulkanSDK\\1.1.126.0"
   OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.20.0-bin.zip
@@ -46,7 +46,7 @@ install:
   # Sets the path
   - set PATH=C:\ninja;C:\Python36;%PATH%
   # VCPKG prebuilt & cached dependencies
-  - vcpkg install bullet3:%platform%-windows physfs:%platform%-windows glfw3:%platform%-windows freetype:%platform%-windows gtest:%platform%-windows # glslang:%platform%-windows openal-soft:%platform%-windows
+  - vcpkg install glfw3:%platform%-windows freetype:%platform%-windows bullet3:%platform%-windows physfs:%platform%-windows gtest:%platform%-windows # openal-soft:%platform%-windows glslang:%platform%-windows
 
 build_script:
   - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
