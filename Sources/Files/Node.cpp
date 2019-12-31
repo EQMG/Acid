@@ -47,6 +47,13 @@ bool Node::HasProperty(std::string_view name) const {
 	return false;
 }
 
+NodeView Node::GetProperty(uint32_t index) const {
+	if (index < m_properties.size())
+		return {this, index, &m_properties[index]};
+
+	return {this, index, nullptr};
+}
+
 NodeView Node::GetProperty(std::string_view name) const {
 	for (const auto &property : m_properties) {
 		if (property.m_name == name)
@@ -54,13 +61,6 @@ NodeView Node::GetProperty(std::string_view name) const {
 	}
 
 	return {this, std::string(name), nullptr};
-}
-
-NodeView Node::GetProperty(uint32_t index) const {
-	if (index < m_properties.size())
-		return {this, index, &m_properties[index]};
-
-	return {this, index, nullptr};
 }
 
 Node &Node::AddProperty() {
@@ -136,12 +136,12 @@ NodeView Node::GetPropertyWithValue(std::string_view propertyName, std::string_v
 	return {this, std::string(propertyName), nullptr};
 }
 
-NodeView Node::operator[](std::string_view key) const {
-	return GetProperty(key);
-}
-
 NodeView Node::operator[](uint32_t index) const {
 	return GetProperty(index);
+}
+
+NodeView Node::operator[](std::string_view key) const {
+	return GetProperty(key);
 }
 
 bool Node::operator==(const Node &other) const {

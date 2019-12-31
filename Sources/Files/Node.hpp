@@ -63,8 +63,8 @@ public:
 	Node &Append(const Args &...args);
 
 	bool HasProperty(std::string_view name) const;
-	NodeView GetProperty(std::string_view name) const;
 	NodeView GetProperty(uint32_t index) const;
+	NodeView GetProperty(std::string_view name) const;
 	Node &AddProperty();
 	Node &AddProperty(std::string_view name, Node &&node);
 	Node &AddProperty(uint32_t index, Node &&node);
@@ -77,8 +77,8 @@ public:
 	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
 	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
 
-	NodeView operator[](std::string_view key) const;
 	NodeView operator[](uint32_t index) const;
+	NodeView operator[](std::string_view key) const;
 
 	Node &operator=(const Node &node) = default;
 	Node &operator=(Node &&node) = default;

@@ -12,7 +12,7 @@ class Node;
 class ACID_EXPORT NodeView {
 	friend class Node;
 private:
-	using Key = std::variant<std::string, int32_t>;
+	using Key = std::variant<int32_t, std::string>;
 
 	NodeView() = default;
 	NodeView(const Node *parent, Key key, const Node *value);
@@ -59,8 +59,8 @@ public:
 	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
 	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
 
-	NodeView operator[](std::string_view key) const;
 	NodeView operator[](uint32_t index) const;
+	NodeView operator[](std::string_view key) const;
 
 	template<typename T>
 	Node &operator=(const T &rhs);

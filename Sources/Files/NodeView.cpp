@@ -23,12 +23,12 @@ Node *NodeView::get() {
 	if (!has_value()) {
 		// This will build the tree of nodes from the return keys tree.
 		for (const auto &key : m_keys) {
-			if (std::holds_alternative<std::string>(key)) {
-				const auto &name = std::get<std::string>(key);
-				m_value = &m_parent->AddProperty(name, {});
-			} else if (std::holds_alternative<int32_t>(key)) {
+			if (std::holds_alternative<int32_t>(key)) {
 				const auto &index = std::get<std::int32_t>(key);
 				m_value = &m_parent->AddProperty(index, {});
+			} else if (std::holds_alternative<std::string>(key)) {
+				const auto &name = std::get<std::string>(key);
+				m_value = &m_parent->AddProperty(name, {});
 			} else {
 				throw std::runtime_error("Key for node return is neither a int or a string");
 			}
@@ -61,16 +61,16 @@ NodeView NodeView::GetPropertyWithValue(std::string_view propertyName, std::stri
 	return m_value->GetPropertyWithValue(propertyName, propertyValue);
 }
 
-NodeView NodeView::operator[](std::string_view key) const {
-	if (!has_value())
-		return {this, std::string(key)};
-	return m_value->operator[](key);
-}
-
 NodeView NodeView::operator[](uint32_t index) const {
 	if (!has_value())
 		return {this, index};
 	return m_value->operator[](index);
+}
+
+NodeView NodeView::operator[](std::string_view key) const {
+	if (!has_value())
+		return {this, std::string(key)};
+	return m_value->operator[](key);
 }
 
 std::vector<Node> NodeView::GetProperties() const {

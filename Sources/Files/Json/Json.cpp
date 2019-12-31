@@ -173,9 +173,9 @@ void Json::AppendData(const Node &source, std::ostream &stream, Format format, i
 		}
 
 		// Shorten primitive array output length.
-		if (isArray && format != Format::Minified && !it->GetProperties().empty() && it[0].GetType() != Type::Object) {
+		if (isArray && format != Format::Minified && !it->GetProperties().empty() && it->GetProperties()[0].GetType() != Type::Object) {
 			stream << indents << "  ";
-			AppendData(*it, stream, format, 0);
+			AppendData(*it, stream, format, indent);
 			stream << '\n';
 		} else {
 			AppendData(*it, stream, format, indent + 1);
