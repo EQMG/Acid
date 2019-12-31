@@ -41,7 +41,11 @@ set(_temp_acid_headers
 		Files/Files.hpp
 		Files/Json/Json.hpp
 		Files/Node.hpp
+		Files/Node.inl
 		Files/NodeView.hpp
+		Files/NodeView.inl
+		Files/NodeConstView.hpp
+		Files/NodeConstView.inl
 		Files/Xml/Xml.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
@@ -130,8 +134,11 @@ set(_temp_acid_headers
 		Maths/Time.hpp
 		Maths/Transform.hpp
 		Maths/Vector2.hpp
+		Maths/Vector2.inl
 		Maths/Vector3.hpp
+		Maths/Vector3.inl
 		Maths/Vector4.hpp
+		Maths/Vector4.inl
 		Maths/Visual/Driver.hpp
 		Maths/Visual/DriverBounce.hpp
 		Maths/Visual/DriverConstant.hpp
@@ -143,6 +150,7 @@ set(_temp_acid_headers
 		Meshes/SubrenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
 		Models/Model.hpp
+		Models/Model.inl
 		Models/Obj/ModelObj.hpp
 		Models/Shapes/MeshPattern.hpp
 		Models/Shapes/MeshSimple.hpp
@@ -284,6 +292,7 @@ set(_temp_acid_sources
 		Files/Files.cpp
 		Files/Json/Json.cpp
 		Files/Node.cpp
+		Files/NodeConstView.cpp
 		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
 		Files/Zip/miniz.c

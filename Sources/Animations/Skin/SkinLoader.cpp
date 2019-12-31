@@ -3,7 +3,7 @@
 #include "Helpers/Enumerate.hpp"
 
 namespace acid {
-SkinLoader::SkinLoader(NodeView libraryControllers, uint32_t maxWeights) :
+SkinLoader::SkinLoader(NodeConstView &&libraryControllers, uint32_t maxWeights) :
 	m_skinData(libraryControllers["controller"]["skin"]),
 	m_maxWeights(maxWeights) {
 	LoadJointsList();

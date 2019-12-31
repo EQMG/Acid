@@ -3,7 +3,7 @@
 #include "Animations/MeshAnimated.hpp"
 
 namespace acid {
-GeometryLoader::GeometryLoader(NodeView &&libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
+GeometryLoader::GeometryLoader(NodeConstView &&libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :
 	m_meshData(libraryGeometries["geometry"]["mesh"]),
 	m_vertexWeights(std::move(vertexWeights)),
 	m_correction(correction) {

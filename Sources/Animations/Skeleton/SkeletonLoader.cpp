@@ -4,7 +4,7 @@
 #include "Helpers/Enumerate.hpp"
 
 namespace acid {
-SkeletonLoader::SkeletonLoader(NodeView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
+SkeletonLoader::SkeletonLoader(NodeConstView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
 	m_armatureData(libraryControllers["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature")),
 	m_boneOrder(std::move(boneOrder)),
 	m_correction(correction) {

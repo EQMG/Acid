@@ -6,7 +6,7 @@
 namespace acid {
 class ACID_EXPORT SkeletonLoader {
 public:
-	SkeletonLoader(NodeView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);
+	SkeletonLoader(NodeConstView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction);
 
 	uint32_t GetJointCount() const { return m_jointCount; }
 	const Joint &GetHeadJoint() const { return m_headJoint; }
@@ -16,7 +16,7 @@ private:
 	Joint ExtractMainJointData(const Node &jointNode, bool isRoot);
 	std::optional<uint32_t> GetBoneIndex(const std::string &name) const;
 
-	NodeView m_armatureData;
+	NodeConstView m_armatureData;
 	std::vector<std::string> m_boneOrder;
 	Matrix4 m_correction;
 

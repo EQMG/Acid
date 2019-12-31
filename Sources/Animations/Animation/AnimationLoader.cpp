@@ -4,7 +4,7 @@
 #include "Helpers/Enumerate.hpp"
 
 namespace acid {
-AnimationLoader::AnimationLoader(NodeView &&libraryAnimations, NodeView &&libraryVisualScenes, const Matrix4 &correction) :
+AnimationLoader::AnimationLoader(NodeConstView &&libraryAnimations, NodeConstView &&libraryVisualScenes, const Matrix4 &correction) :
 	m_libraryAnimations(std::move(libraryAnimations)),
 	m_libraryVisualScenes(std::move(libraryVisualScenes)),
 	m_correction(correction) {

@@ -63,23 +63,30 @@ public:
 	Node &Append(const Args &...args);
 
 	bool HasProperty(std::string_view name) const;
-	NodeView GetProperty(uint32_t index) const;
-	NodeView GetProperty(std::string_view name) const;
+	NodeConstView GetProperty(std::string_view name) const;
+	NodeConstView GetProperty(uint32_t index) const;
+	NodeView GetProperty(std::string_view name);
+	NodeView GetProperty(uint32_t index);
 	Node &AddProperty();
 	Node &AddProperty(std::string_view name, Node &&node);
-	Node &AddProperty(uint32_t index, Node &&node);
 	Node &AddProperty(std::string_view name);
+	Node &AddProperty(uint32_t index, Node &&node);
 	Node &AddProperty(uint32_t index);
 	void RemoveProperty(std::string_view name);
 	void RemoveProperty(const Node &node);
 
-	std::vector<NodeView> GetProperties(std::string_view name) const;
-	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
-	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
+	std::vector<NodeConstView> GetProperties(std::string_view name) const;
+	NodeConstView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
+	NodeConstView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
+	std::vector<NodeView> GetProperties(std::string_view name);
+	NodeView GetPropertyWithBackup(std::string_view name, std::string_view backupName);
+	NodeView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue);
 
-	NodeView operator[](uint32_t index) const;
-	NodeView operator[](std::string_view key) const;
-
+	NodeConstView operator[](std::string_view key) const;
+	NodeConstView operator[](uint32_t index) const;
+	NodeView operator[](std::string_view key);
+	NodeView operator[](uint32_t index);
+	
 	Node &operator=(const Node &node) = default;
 	Node &operator=(Node &&node) = default;
 	template<typename T>
@@ -136,4 +143,5 @@ protected:
 }
 
 #include "Node.inl"
+#include "NodeConstView.inl"
 #include "NodeView.inl"
