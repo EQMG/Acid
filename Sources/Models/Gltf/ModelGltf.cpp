@@ -13,9 +13,8 @@ namespace acid {
 bool ModelGltf::registered = Register("gltf", ".gltf");
 
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelGltf>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelGltf>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelGltf>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

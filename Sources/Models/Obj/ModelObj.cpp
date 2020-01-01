@@ -43,9 +43,8 @@ private:
 };
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelObj>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelObj>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelObj>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

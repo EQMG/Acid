@@ -96,8 +96,7 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
 
-	friend const Node &operator>>(const Node &node, Image2d &image);
-	friend Node &operator<<(Node &node, const Image2d &image);
+	std::type_index GetTypeIndex() const override { return typeid(Image2d); }
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 	VkFilter GetFilter() const { return m_filter; }
@@ -115,6 +114,9 @@ public:
 	const VkSampler &GetSampler() const { return m_sampler; }
 	const VkImageView &GetView() const { return m_view; }
 	const VkFormat &GetFormat() const { return m_format; }
+
+	friend const Node &operator>>(const Node &node, Image2d &image);
+	friend Node &operator<<(Node &node, const Image2d &image);
 
 private:
 	void Load(std::unique_ptr<Bitmap> loadBitmap = nullptr);

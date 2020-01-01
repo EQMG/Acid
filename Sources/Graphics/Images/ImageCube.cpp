@@ -8,9 +8,8 @@
 
 namespace acid {
 std::shared_ptr<ImageCube> ImageCube::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ImageCube>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ImageCube>(node))
+		return resource;
 
 	auto result = std::make_shared<ImageCube>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

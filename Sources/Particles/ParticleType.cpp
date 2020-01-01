@@ -12,9 +12,8 @@ static const uint32_t MAX_INSTANCES = 1024;
 static const float FRUSTUM_BUFFER = 1.4f;
 
 std::shared_ptr<ParticleType> ParticleType::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ParticleType>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ParticleType>(node))
+		return resource;
 
 	auto result = std::make_shared<ParticleType>(nullptr);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

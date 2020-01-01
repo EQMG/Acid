@@ -107,8 +107,7 @@ public:
 	 */
 	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
 
-	friend const Node &operator>>(const Node &node, ImageCube &image);
-	friend Node &operator<<(Node &node, const ImageCube &image);
+	std::type_index GetTypeIndex() const override { return typeid(ImageCube); }
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 	const std::string &GetFileSuffix() const { return m_fileSuffix; }
@@ -130,6 +129,9 @@ public:
 	const VkFormat &GetFormat() const { return m_format; }
 
 private:
+	friend const Node &operator>>(const Node &node, ImageCube &image);
+	friend Node &operator<<(Node &node, const ImageCube &image);
+
 	void Load(std::unique_ptr<Bitmap> loadBitmap = nullptr);
 
 	std::filesystem::path m_filename;

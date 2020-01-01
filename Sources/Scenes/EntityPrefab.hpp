@@ -36,6 +36,8 @@ public:
 	void Load();
 	void Write(Node::Format format = Node::Format::Minified) const;
 
+	std::type_index GetTypeIndex() const override { return typeid(EntityPrefab); }
+
 	const std::filesystem::path &GetFilename() const { return m_filename; }
 	Node *GetParent() const { return m_file->GetNode(); }
 

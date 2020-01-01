@@ -60,6 +60,8 @@ public:
 
 	void Update(const std::vector<Text *> &texts);
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
+	
+	std::type_index GetTypeIndex() const override { return typeid(FontType); }
 
 	friend const Node &operator>>(const Node &node, FontType &fontType);
 	friend Node &operator<<(Node &node, const FontType &fontType);

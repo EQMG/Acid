@@ -202,10 +202,12 @@ NodeConstView Node::operator[](uint32_t index) const {
 	return GetProperty(index);
 }
 
+// TODO: Duplicate
 NodeView Node::operator[](std::string_view key) {
 	return GetProperty(key);
 }
 
+// TODO: Duplicate
 NodeView Node::operator[](uint32_t index) {
 	return GetProperty(index);
 }

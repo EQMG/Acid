@@ -1,5 +1,7 @@
 #pragma once
 
+#include <typeindex>
+
 #include "StdAfx.hpp"
 //#include "Files/Node.hpp"
 
@@ -13,6 +15,8 @@ public:
 
 	virtual ~Resource() = default;
 
+	virtual std::type_index GetTypeIndex() const = 0;
+	
 	/*template<typename T>
 	friend std::enable_if_t<std::is_base_of_v<Resource, T>, const Node &> operator>>(const Node &node, std::shared_ptr<T> &object) {
 		object = T::Create(node);

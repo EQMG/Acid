@@ -34,7 +34,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 
 VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices) {
 	// Maps to hold devices and sort by rank.
-	std::multimap<int32_t, VkPhysicalDevice> rankedDevices;
+	std::multimap<uint32_t, VkPhysicalDevice> rankedDevices;
 
 	// Iterates through all devices and rate their suitability.
 	for (const auto &device : devices) {
@@ -49,8 +49,8 @@ VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysic
 	return nullptr;
 }
 
-int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
-	int32_t score = 0;
+uint32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
+	uint32_t score = 0;
 
 	// Checks if the requested extensions are supported.
 	uint32_t extensionPropertyCount;
@@ -93,7 +93,6 @@ int32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 
 	// Gives a higher score to devices with a higher maximum texture size.
 	score += physicalDeviceProperties.limits.maxImageDimension2D;
-
 	return score;
 }
 

@@ -8,9 +8,8 @@ namespace acid {
 bool ModelDisk::registered = Register("disk");
 
 std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelDisk>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelDisk>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelDisk>(0.0f, 0.0f);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

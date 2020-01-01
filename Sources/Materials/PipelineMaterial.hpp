@@ -38,6 +38,8 @@ public:
 	 */
 	bool BindPipeline(const CommandBuffer &commandBuffer);
 
+	std::type_index GetTypeIndex() const override { return typeid(PipelineMaterial); }
+
 	const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
 	const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
 	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }

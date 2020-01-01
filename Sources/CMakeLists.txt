@@ -44,8 +44,8 @@ find_package(glfw3 3.3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
-			URL https://github.com/glfw/glfw/archive/3.3.tar.gz
-			URL_MD5 5be03812f5d109817e6558c3fab7bbe1
+			URL https://github.com/glfw/glfw/archive/3.3.1.tar.gz
+			URL_MD5 ffa7c0d8547f56b0897276c59efdd641
 			)
 	FetchContent_GetProperties(glfw3)
 	if(NOT glfw3_POPULATED)

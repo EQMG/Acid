@@ -7,9 +7,8 @@ namespace acid {
 bool ModelRectangle::registered = Register("rectangle");
 
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelRectangle>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelRectangle>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelRectangle>(0.0f, 0.0f);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

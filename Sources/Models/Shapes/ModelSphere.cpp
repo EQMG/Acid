@@ -8,9 +8,8 @@ namespace acid {
 bool ModelSphere::registered = Register("sphere");
 
 std::shared_ptr<ModelSphere> ModelSphere::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelSphere>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelSphere>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelSphere>(0.0f);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

@@ -9,9 +9,8 @@
 
 namespace acid {
 std::shared_ptr<Image2d> Image2d::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<Image2d>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<Image2d>(node))
+		return resource;
 
 	auto result = std::make_shared<Image2d>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

@@ -57,6 +57,8 @@ public:
 
 	~SoundBuffer();
 
+	std::type_index GetTypeIndex() const override { return typeid(SoundBuffer); }
+	
 	const std::filesystem::path &GetFilename() const { return m_filename; };
 	uint32_t GetBuffer() const { return m_buffer; }
 	void SetBuffer(uint32_t buffer);

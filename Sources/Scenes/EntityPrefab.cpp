@@ -10,9 +10,8 @@
 
 namespace acid {
 std::shared_ptr<EntityPrefab> EntityPrefab::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<EntityPrefab>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<EntityPrefab>(node))
+		return resource;
 
 	auto result = std::make_shared<EntityPrefab>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

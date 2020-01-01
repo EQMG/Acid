@@ -124,6 +124,8 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, uint32_t instances = 1) const;
 
+	std::type_index GetTypeIndex() const override { return typeid(Model); }
+
 	template<typename T>
 	std::vector<T> GetVertices(std::size_t offset = 0) const;
 	template<typename T>

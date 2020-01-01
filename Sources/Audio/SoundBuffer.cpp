@@ -10,9 +10,8 @@
 
 namespace acid {
 std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<SoundBuffer>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<SoundBuffer>(node))
+		return resource;
 
 	auto result = std::make_shared<SoundBuffer>("");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

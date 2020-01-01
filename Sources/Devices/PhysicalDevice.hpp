@@ -21,7 +21,7 @@ public:
 
 private:
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
-	static int32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
+	static uint32_t ScorePhysicalDevice(const VkPhysicalDevice &device);
 	VkSampleCountFlagBits GetMaxUsableSampleCount() const;
 
 	static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties);

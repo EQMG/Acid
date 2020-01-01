@@ -31,10 +31,10 @@ public:
 	class Format {
 	public:
 		constexpr Format(int8_t spacesPerIndent, char newLine, char space, bool inlineArrays) :
-			spacesPerIndent(spacesPerIndent),
-			newLine(newLine),
-			space(space),
-			inlineArrays(inlineArrays) {
+			m_spacesPerIndent(spacesPerIndent),
+			m_newLine(newLine),
+			m_space(space),
+			m_inlineArrays(inlineArrays) {
 		}
 
 		/**
@@ -43,7 +43,7 @@ public:
 		 * @return The indentation string.
 		 */
 		std::string GetIndents(int8_t indent) const {
-			return std::string(spacesPerIndent * indent, ' ');
+			return std::string(m_spacesPerIndent * indent, ' ');
 		}
 
 		/// Writes a node with full padding.
@@ -51,9 +51,9 @@ public:
 		/// Writes a node with no padding.
 		ACID_EXPORT static const Format Minified;
 
-		int8_t spacesPerIndent;
-		NullableChar newLine, space;
-		bool inlineArrays;
+		int8_t m_spacesPerIndent;
+		NullableChar m_newLine, m_space;
+		bool m_inlineArrays;
 	};
 
 	using Type = NodeConstView::Type;

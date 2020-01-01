@@ -79,6 +79,8 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
+	std::type_index GetTypeIndex() const override { return typeid(ParticleType); }
+
 	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
 	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
 

@@ -65,6 +65,8 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene);
 
+	std::type_index GetTypeIndex() const override { return typeid(GizmoType); }
+
 	const std::shared_ptr<Model> &GetModel() const { return m_model; }
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
 

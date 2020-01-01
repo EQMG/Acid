@@ -8,9 +8,8 @@ namespace acid {
 bool ModelCylinder::registered = Register("cylinder");
 
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<ModelCylinder>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<ModelCylinder>(node))
+		return resource;
 
 	auto result = std::make_shared<ModelCylinder>(0.0f, 0.0f);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

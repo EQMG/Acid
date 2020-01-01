@@ -18,7 +18,7 @@ void Json::ParseString(std::string_view string) {
 	Tokens tokens;
 
 	std::size_t tokenStart = 0;
-	enum class QuoteState : uint8_t {
+	enum class QuoteState : char {
 		None = '\0', Single = '\'', Double = '"'
 	} quoteState = QuoteState::None;
 
@@ -38,7 +38,7 @@ void Json::ParseString(std::string_view string) {
 				// On whitespace start save current token.
 				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
 				tokenStart = index + 1;
-			} else if (std::string_view(":{},[]").find(c) != std::string::npos) {
+			} else if (c == ':' || c == '{' || c == '}' || c == ',' || c == '[' || c == ']') {
 				// Tokens used to read json nodes.
 				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
 				tokens.emplace_back(Type::Token, std::string_view(string.data() + index, 1));
@@ -56,7 +56,7 @@ void Json::ParseString(std::string_view string) {
 }
 
 void Json::WriteStream(std::ostream &stream, const Format &format) const {
-	stream << (GetType() == Type::Array ? '[' : '{') << format.newLine;
+	stream << (GetType() == Type::Array ? '[' : '{') << format.m_newLine;
 	AppendData(*this, stream, format, 1);
 	stream << (GetType() == Type::Array ? ']' : '}');
 }
@@ -144,7 +144,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const Format &fo
 		stream << indents;
 		// Output name for property if it exists.
 		if (!it->GetName().empty()) {
-			stream << '\"' << it->GetName() << "\":" << format.space;
+			stream << '\"' << it->GetName() << "\":" << format.m_space;
 		}
 
 		bool isArray = false;
@@ -157,7 +157,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const Format &fo
 				}
 			}
 
-			stream << (isArray ? '[' : '{') << format.newLine;
+			stream << (isArray ? '[' : '{') << format.m_newLine;
 		} else if (it->GetType() == Type::Object) {
 			stream << '{';
 		} else if (it->GetType() == Type::Array) {
@@ -170,7 +170,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const Format &fo
 		};
 
 		// Shorten primitive array output length.
-		if (isArray && format.inlineArrays && !it->GetProperties().empty() && IsPrimitive(it->GetProperties()[0].GetType())) {
+		if (isArray && format.m_inlineArrays && !it->GetProperties().empty() && IsPrimitive(it->GetProperties()[0].GetType())) {
 			stream << format.GetIndents(indent + 1);
 			// New lines are printed a a space, no spaces are ever emitted by primitives.
 			AppendData(*it, stream, Format(0, ' ', '\0', false), indent);
@@ -191,7 +191,7 @@ void Json::AppendData(const Node &source, std::ostream &stream, const Format &fo
 		if (it != source.GetProperties().end() - 1)
 			stream << ',';
 		// No new line if the indent level is zero (if primitive array type).
-		stream << (indent != 0 ? format.newLine : format.space);
+		stream << (indent != 0 ? format.m_newLine : format.m_space);
 	}
 }
 }

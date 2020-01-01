@@ -5,9 +5,8 @@
 
 namespace acid {
 std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<PipelineMaterial>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<PipelineMaterial>(node))
+		return resource;
 
 	auto result = std::make_shared<PipelineMaterial>();
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

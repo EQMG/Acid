@@ -16,9 +16,8 @@ namespace acid {
 static const uint32_t MAX_VISIBLE_GLYPHS = 4096;
 
 std::shared_ptr<FontType> FontType::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<FontType>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<FontType>(node))
+		return resource;
 
 	auto result = std::make_shared<FontType>("", "");
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

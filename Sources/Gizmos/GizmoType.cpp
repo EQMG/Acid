@@ -10,9 +10,8 @@ static const uint32_t MAX_INSTANCES = 512;
 //static const float FRUSTUM_BUFFER = 1.4f;
 
 std::shared_ptr<GizmoType> GizmoType::Create(const Node &node) {
-	if (auto resource = Resources::Get()->Find(node)) {
-		return std::dynamic_pointer_cast<GizmoType>(resource);
-	}
+	if (auto resource = Resources::Get()->Find<GizmoType>(node))
+		return resource;
 
 	auto result = std::make_shared<GizmoType>(nullptr);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));

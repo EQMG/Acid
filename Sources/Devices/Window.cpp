@@ -23,7 +23,7 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 			}
 		}
 
-		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [monitor](std::unique_ptr<Monitor> &m) {
+		monitors.erase(std::remove_if(monitors.begin(), monitors.end(), [monitor](const auto &m) {
 			return monitor == m->GetMonitor();
 		}));
 	}
@@ -290,7 +290,8 @@ const Monitor *Window::GetCurrentMonitor() const {
 	std::multimap<int32_t, const Monitor *> rankedMonitor;
 
 	for (const auto &monitor : m_monitors) {
-		rankedMonitor.emplace(OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(), m_position, m_position + m_size), monitor.get());
+		rankedMonitor.emplace(OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(), 
+			m_position, m_position + m_size), monitor.get());
 	}
 
 	if (rankedMonitor.begin()->first > 0) {
