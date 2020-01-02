@@ -21,8 +21,10 @@ public:
 	template<typename T>
 	class Registrar /*: public Base*/ {
 	protected:
-		static bool Register(const std::string &name) {
-			BitmapFactory::Registry()[name] = std::make_pair(&T::Load, &T::Write);
+		template<typename ...Args>
+		static bool Register(Args &&... names) {
+			for (std::string &&name : {names...})
+				BitmapFactory::Registry()[name] = std::make_pair(&T::Load, &T::Write);
 			return true;
 		}
 	};

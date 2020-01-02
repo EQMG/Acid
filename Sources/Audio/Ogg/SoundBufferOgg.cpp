@@ -9,6 +9,7 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
+#define STB_VORBIS_NO_STDIO
 #include "stb_vorbis.c"
 
 namespace acid {
@@ -33,6 +34,7 @@ void SoundBufferOgg::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 
 	if (size == -1) {
 		Log::Error("Error reading OGG ", filename, ", could not find size\n");
+		return;
 	}
 
 	uint32_t buffer;

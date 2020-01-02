@@ -15,9 +15,11 @@ set(_temp_acid_headers
 		Animations/Skeleton/SkeletonLoader.hpp
 		Animations/Skin/SkinLoader.hpp
 		Animations/Skin/VertexWeights.hpp
-		Audio/Aiff/SoundBufferAiff.hpp
 		Audio/Audio.hpp
+		Audio/Flac/SoundBufferFlac.hpp
+		Audio/Mp3/SoundBufferMp3.hpp
 		Audio/Ogg/SoundBufferOgg.hpp
+		Audio/Opus/SoundBufferOpus.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
 		Audio/Wave/SoundBufferWave.hpp
@@ -42,10 +44,10 @@ set(_temp_acid_headers
 		Files/Json/Json.hpp
 		Files/Node.hpp
 		Files/Node.inl
-		Files/NodeView.hpp
-		Files/NodeView.inl
 		Files/NodeConstView.hpp
 		Files/NodeConstView.inl
+		Files/NodeView.hpp
+		Files/NodeView.inl
 		Files/Xml/Xml.hpp
 		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
@@ -268,9 +270,11 @@ set(_temp_acid_sources
 		Animations/Skeleton/SkeletonLoader.cpp
 		Animations/Skin/SkinLoader.cpp
 		Animations/Skin/VertexWeights.cpp
-		Audio/Aiff/SoundBufferAiff.cpp
 		Audio/Audio.cpp
+		Audio/Flac/SoundBufferFlac.cpp
+		Audio/Mp3/SoundBufferMp3.cpp
 		Audio/Ogg/SoundBufferOgg.cpp
+		Audio/Opus/SoundBufferOpus.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
 		Audio/Wave/SoundBufferWave.cpp

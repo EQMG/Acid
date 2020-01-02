@@ -22,8 +22,10 @@ public:
 	template<typename T>
 	class Registrar /*: public Base*/ {
 	protected:
-		static bool Register(const std::string &name) {
-			SoundBufferFactory::Registry()[name] = std::make_pair(&T::Load, &T::Write);
+		template<typename ...Args>
+		static bool Register(Args &&... names) {
+			for (std::string &&name : {names...})
+				SoundBufferFactory::Registry()[name] = std::make_pair(&T::Load, &T::Write);
 			return true;
 		}
 	};
@@ -58,7 +60,7 @@ public:
 	~SoundBuffer();
 
 	std::type_index GetTypeIndex() const override { return typeid(SoundBuffer); }
-	
+
 	const std::filesystem::path &GetFilename() const { return m_filename; };
 	uint32_t GetBuffer() const { return m_buffer; }
 	void SetBuffer(uint32_t buffer);

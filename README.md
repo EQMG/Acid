@@ -25,7 +25,7 @@ This project is being worked on part-time by a single developer, this is under h
  * Particle effect systems
  * File multi-path searching, and packaging
  * GUI and SDF font rendering
- * Audio systems (AIFF, OGG, WAV, MP3)
+ * Audio systems (FLAC, MP3, OGG, OPUS, WAVE)
  * Shadow mapping
  * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)
  * Model file loading (OBJ, GLTF2)

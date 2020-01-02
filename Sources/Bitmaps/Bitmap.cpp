@@ -39,13 +39,17 @@ void Bitmap::Load(const std::filesystem::path &filename) {
 		return;
 	}
 
-	m_data = std::unique_ptr<uint8_t[]>(stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()),
-		reinterpret_cast<int32_t *>(&m_size.m_x), reinterpret_cast<int32_t *>(&m_size.m_y), reinterpret_cast<int32_t *>(&m_bytesPerPixel), STBI_rgb_alpha));
-	m_bytesPerPixel = 4;
+	// TODO: Check if ext is registered, otherwise stb fallback for now.
+	if (auto it = Registry().find(filename.extension().string()); it != Registry().end()) {
+		it->second.first(this, filename);
+	} else {
+		m_data = std::unique_ptr<uint8_t[]>(stbi_load_from_memory(reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()),
+			reinterpret_cast<int32_t *>(&m_size.m_x), reinterpret_cast<int32_t *>(&m_size.m_y), reinterpret_cast<int32_t *>(&m_bytesPerPixel), STBI_rgb_alpha));
+		m_bytesPerPixel = 4;
+	}
 
-	
 	//Registry()[filename.extension().string()].first(this, filename);
-
+	
 #if defined(ACID_DEBUG)
 	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
@@ -60,10 +64,16 @@ void Bitmap::Write(const std::filesystem::path &filename) const {
 		std::filesystem::create_directories(parentPath);
 	}
 
-	std::ofstream os(filename, std::ios::binary | std::ios::out);
-	int32_t len;
-	std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(m_data.get(), m_size.m_x * m_bytesPerPixel, m_size.m_x, m_size.m_y, m_bytesPerPixel, &len));
-	os.write(reinterpret_cast<char *>(png.get()), len);
+	// TODO: Check if ext is registered, otherwise stb fallback for now.
+	if (auto it = Registry().find(filename.extension().string()); it != Registry().end()) {
+		it->second.second(this, filename);
+	} else {
+		std::ofstream os(filename, std::ios::binary | std::ios::out);
+		int32_t len;
+		std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(m_data.get(), m_size.m_x * m_bytesPerPixel, m_size.m_x, m_size.m_y, m_bytesPerPixel, &len));
+		os.write(reinterpret_cast<char *>(png.get()), len);
+
+	}
 	
 	//Registry()[filename.extension().string()].second(this, filename);
 

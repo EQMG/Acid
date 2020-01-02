@@ -1,4 +1,4 @@
-#include "SoundBufferAiff.hpp"
+#include "SoundBufferOpus.hpp"
 
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
@@ -9,10 +9,15 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
-namespace acid {
-bool SoundBufferAiff::registered = Register(".aiff");
+#define DR_OPUS_IMPLEMENTATION
+#define DR_OPUS_NO_STDIO
+#define DR_OPUS_NO_SIMD
+#include "dr_opus.h"
 
-void SoundBufferAiff::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+namespace acid {
+bool SoundBufferOpus::registered = Register(".opus");
+
+void SoundBufferOpus::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
@@ -25,13 +30,13 @@ void SoundBufferAiff::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 	}
 
 	//soundBuffer->SetBuffer(buffer);
-
+	
 #if defined(ACID_DEBUG)
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void SoundBufferAiff::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void SoundBufferOpus::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif

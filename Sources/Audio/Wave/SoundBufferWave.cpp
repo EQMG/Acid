@@ -9,8 +9,12 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
+#define DR_WAV_IMPLEMENTATION
+#define DR_WAV_NO_STDIO
+#include "dr_wav.h"
+
 namespace acid {
-bool SoundBufferWave::registered = Register(".wav");
+bool SoundBufferWave::registered = Register(".wav", ".wave");
 
 void SoundBufferWave::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
