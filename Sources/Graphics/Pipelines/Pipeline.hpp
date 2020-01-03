@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Shader.hpp"
 

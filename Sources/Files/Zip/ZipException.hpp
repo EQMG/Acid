@@ -1,9 +1,11 @@
 #pragma once
 
-#include <stdexcept>
+#include <exception>
+
+#include "Export.hpp"
 
 namespace acid {
-class ZipException : public std::runtime_error {
+class ACID_EXPORT ZipException : public std::runtime_error {
 public:
 	explicit ZipException(const std::string &err) :
 		runtime_error(err) {
@@ -12,7 +14,7 @@ public:
 	~ZipException() override = default;
 };
 
-class ZipExceptionUndefined : public ZipException {
+class ACID_EXPORT ZipExceptionUndefined : public ZipException {
 public:
 	explicit ZipExceptionUndefined(const std::string &err) :
 		ZipException(err) {
@@ -21,7 +23,7 @@ public:
 	~ZipExceptionUndefined() override = default;
 };
 
-class ZipExceptionTooManyFiles : public ZipException {
+class ACID_EXPORT ZipExceptionTooManyFiles : public ZipException {
 public:
 	explicit ZipExceptionTooManyFiles(const std::string &err) :
 		ZipException(err) {
@@ -30,7 +32,7 @@ public:
 	~ZipExceptionTooManyFiles() override = default;
 };
 
-class ZipExceptionFileTooLarge : public ZipException {
+class ACID_EXPORT ZipExceptionFileTooLarge : public ZipException {
 public:
 	explicit ZipExceptionFileTooLarge(const std::string &err) :
 		ZipException(err) {
@@ -39,7 +41,7 @@ public:
 	~ZipExceptionFileTooLarge() override = default;
 };
 
-class ZipExceptionUnsupportedMethod : public ZipException {
+class ACID_EXPORT ZipExceptionUnsupportedMethod : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedMethod(const std::string &err) :
 		ZipException(err) {
@@ -48,7 +50,7 @@ public:
 	~ZipExceptionUnsupportedMethod() override = default;
 };
 
-class ZipExceptionUnsupportedEncryption : public ZipException {
+class ACID_EXPORT ZipExceptionUnsupportedEncryption : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedEncryption(const std::string &err) :
 		ZipException(err) {
@@ -57,7 +59,7 @@ public:
 	~ZipExceptionUnsupportedEncryption() override = default;
 };
 
-class ZipExceptionUnsupportedFeature : public ZipException {
+class ACID_EXPORT ZipExceptionUnsupportedFeature : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedFeature(const std::string &err) :
 		ZipException(err) {
@@ -66,7 +68,7 @@ public:
 	~ZipExceptionUnsupportedFeature() override = default;
 };
 
-class ZipExceptionFailedFindingCentralDir : public ZipException {
+class ACID_EXPORT ZipExceptionFailedFindingCentralDir : public ZipException {
 public:
 	explicit ZipExceptionFailedFindingCentralDir(const std::string &err) :
 		ZipException(err) {
@@ -75,7 +77,7 @@ public:
 	~ZipExceptionFailedFindingCentralDir() override = default;
 };
 
-class ZipExceptionNotAnArchive : public ZipException {
+class ACID_EXPORT ZipExceptionNotAnArchive : public ZipException {
 public:
 	explicit ZipExceptionNotAnArchive(const std::string &err) :
 		ZipException(err) {
@@ -84,7 +86,7 @@ public:
 	~ZipExceptionNotAnArchive() override = default;
 };
 
-class ZipExceptionInvalidHeader : public ZipException {
+class ACID_EXPORT ZipExceptionInvalidHeader : public ZipException {
 public:
 	explicit ZipExceptionInvalidHeader(const std::string &err) :
 		ZipException(err) {
@@ -93,7 +95,7 @@ public:
 	~ZipExceptionInvalidHeader() override = default;
 };
 
-class ZipExceptionMultidiskUnsupported : public ZipException {
+class ACID_EXPORT ZipExceptionMultidiskUnsupported : public ZipException {
 public:
 	explicit ZipExceptionMultidiskUnsupported(const std::string &err) :
 		ZipException(err) {
@@ -102,7 +104,7 @@ public:
 	~ZipExceptionMultidiskUnsupported() override = default;
 };
 
-class ZipExceptionDecompressionFailed : public ZipException {
+class ACID_EXPORT ZipExceptionDecompressionFailed : public ZipException {
 public:
 	explicit ZipExceptionDecompressionFailed(const std::string &err) :
 		ZipException(err) {
@@ -111,7 +113,7 @@ public:
 	~ZipExceptionDecompressionFailed() override = default;
 };
 
-class ZipExceptionCompressionFailed : public ZipException {
+class ACID_EXPORT ZipExceptionCompressionFailed : public ZipException {
 public:
 	explicit ZipExceptionCompressionFailed(const std::string &err) :
 		ZipException(err) {
@@ -120,7 +122,7 @@ public:
 	~ZipExceptionCompressionFailed() override = default;
 };
 
-class ZipExceptionUnexpectedDecompSize : public ZipException {
+class ACID_EXPORT ZipExceptionUnexpectedDecompSize : public ZipException {
 public:
 	explicit ZipExceptionUnexpectedDecompSize(const std::string &err) :
 		ZipException(err) {
@@ -129,7 +131,7 @@ public:
 	~ZipExceptionUnexpectedDecompSize() override = default;
 };
 
-class ZipExceptionCrcCheckFailed : public ZipException {
+class ACID_EXPORT ZipExceptionCrcCheckFailed : public ZipException {
 public:
 	explicit ZipExceptionCrcCheckFailed(const std::string &err) :
 		ZipException(err) {
@@ -138,7 +140,7 @@ public:
 	~ZipExceptionCrcCheckFailed() override = default;
 };
 
-class ZipExceptionUnsupportedCDirSize : public ZipException {
+class ACID_EXPORT ZipExceptionUnsupportedCDirSize : public ZipException {
 public:
 	explicit ZipExceptionUnsupportedCDirSize(const std::string &err) :
 		ZipException(err) {
@@ -147,7 +149,7 @@ public:
 	~ZipExceptionUnsupportedCDirSize() override = default;
 };
 
-class ZipExceptionAllocFailed : public ZipException {
+class ACID_EXPORT ZipExceptionAllocFailed : public ZipException {
 public:
 	explicit ZipExceptionAllocFailed(const std::string &err) :
 		ZipException(err) {
@@ -156,7 +158,7 @@ public:
 	~ZipExceptionAllocFailed() override = default;
 };
 
-class ZipExceptionFileOpenFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileOpenFailed : public ZipException {
 public:
 	explicit ZipExceptionFileOpenFailed(const std::string &err) :
 		ZipException(err) {
@@ -165,7 +167,7 @@ public:
 	~ZipExceptionFileOpenFailed() override = default;
 };
 
-class ZipExceptionFileCreateFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileCreateFailed : public ZipException {
 public:
 	explicit ZipExceptionFileCreateFailed(const std::string &err) :
 		ZipException(err) {
@@ -174,7 +176,7 @@ public:
 	~ZipExceptionFileCreateFailed() override = default;
 };
 
-class ZipExceptionFileWriteFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileWriteFailed : public ZipException {
 public:
 	explicit ZipExceptionFileWriteFailed(const std::string &err) :
 		ZipException(err) {
@@ -183,7 +185,7 @@ public:
 	~ZipExceptionFileWriteFailed() override = default;
 };
 
-class ZipExceptionFileReadFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileReadFailed : public ZipException {
 public:
 	explicit ZipExceptionFileReadFailed(const std::string &err) :
 		ZipException(err) {
@@ -192,7 +194,7 @@ public:
 	~ZipExceptionFileReadFailed() override = default;
 };
 
-class ZipExceptionFileCloseFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileCloseFailed : public ZipException {
 public:
 	explicit ZipExceptionFileCloseFailed(const std::string &err) :
 		ZipException(err) {
@@ -201,7 +203,7 @@ public:
 	~ZipExceptionFileCloseFailed() override = default;
 };
 
-class ZipExceptionFileSeekFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileSeekFailed : public ZipException {
 public:
 	explicit ZipExceptionFileSeekFailed(const std::string &err) :
 		ZipException(err) {
@@ -210,7 +212,7 @@ public:
 	~ZipExceptionFileSeekFailed() override = default;
 };
 
-class ZipExceptionFileStatFailed : public ZipException {
+class ACID_EXPORT ZipExceptionFileStatFailed : public ZipException {
 public:
 	explicit ZipExceptionFileStatFailed(const std::string &err) :
 		ZipException(err) {
@@ -219,7 +221,7 @@ public:
 	~ZipExceptionFileStatFailed() override = default;
 };
 
-class ZipExceptionInvalidParameter : public ZipException {
+class ACID_EXPORT ZipExceptionInvalidParameter : public ZipException {
 public:
 	explicit ZipExceptionInvalidParameter(const std::string &err) :
 		ZipException(err) {
@@ -228,7 +230,7 @@ public:
 	~ZipExceptionInvalidParameter() override = default;
 };
 
-class ZipExceptionInvalidFilename : public ZipException {
+class ACID_EXPORT ZipExceptionInvalidFilename : public ZipException {
 public:
 	explicit ZipExceptionInvalidFilename(const std::string &err) :
 		ZipException(err) {
@@ -237,7 +239,7 @@ public:
 	~ZipExceptionInvalidFilename() override = default;
 };
 
-class ZipExceptionBufferTooSmall : public ZipException {
+class ACID_EXPORT ZipExceptionBufferTooSmall : public ZipException {
 public:
 	explicit ZipExceptionBufferTooSmall(const std::string &err) :
 		ZipException(err) {
@@ -246,7 +248,7 @@ public:
 	~ZipExceptionBufferTooSmall() override = default;
 };
 
-class ZipExceptionInternalError : public ZipException {
+class ACID_EXPORT ZipExceptionInternalError : public ZipException {
 public:
 	explicit ZipExceptionInternalError(const std::string &err) :
 		ZipException(err) {
@@ -255,7 +257,7 @@ public:
 	~ZipExceptionInternalError() override = default;
 };
 
-class ZipExceptionFileNotFound : public ZipException {
+class ACID_EXPORT ZipExceptionFileNotFound : public ZipException {
 public:
 	explicit ZipExceptionFileNotFound(const std::string &err) :
 		ZipException(err) {
@@ -264,7 +266,7 @@ public:
 	~ZipExceptionFileNotFound() override = default;
 };
 
-class ZipExceptionArchiveTooLarge : public ZipException {
+class ACID_EXPORT ZipExceptionArchiveTooLarge : public ZipException {
 public:
 	explicit ZipExceptionArchiveTooLarge(const std::string &err) :
 		ZipException(err) {
@@ -273,7 +275,7 @@ public:
 	~ZipExceptionArchiveTooLarge() override = default;
 };
 
-class ZipExceptionValidationFailed : public ZipException {
+class ACID_EXPORT ZipExceptionValidationFailed : public ZipException {
 public:
 	explicit ZipExceptionValidationFailed(const std::string &err) :
 		ZipException(err) {
@@ -282,7 +284,7 @@ public:
 	~ZipExceptionValidationFailed() override = default;
 };
 
-class ZipExceptionWriteCallbackFailed : public ZipException {
+class ACID_EXPORT ZipExceptionWriteCallbackFailed : public ZipException {
 public:
 	explicit ZipExceptionWriteCallbackFailed(const std::string &err) :
 		ZipException(err) {

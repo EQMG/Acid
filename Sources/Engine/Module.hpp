@@ -1,7 +1,9 @@
 #pragma once
 
+#include <map>
+#include <memory>
+
 #include "Helpers/NonCopyable.hpp"
-#include "Helpers/TypeInfo.hpp"
 
 namespace acid {
 template<typename Base>

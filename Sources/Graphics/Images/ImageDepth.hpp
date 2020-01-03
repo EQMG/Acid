@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Maths/Vector2.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
-#include "Image.hpp"
 
 namespace acid {
 /**

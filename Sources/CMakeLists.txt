@@ -196,11 +196,6 @@ if(NOT PhysFS_FOUND)
 endif()
 
 target_compile_features(Acid PUBLIC c_std_11 cxx_std_17)
-if(BUILD_SHARED_LIBS)
-	target_compile_definitions(Acid PRIVATE ACID_EXPORTS)
-else()
-	target_compile_definitions(Acid PUBLIC ACID_STATIC_DEFINE)
-endif()
 target_compile_definitions(Acid
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_DEBUG
@@ -278,12 +273,12 @@ set_target_properties(Acid PROPERTIES
 		)
 
 # Installs all headers, preserving their file structure
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-		FILES_MATCHING
-		PATTERN "*.h"
-		PATTERN "*.hpp"
-		)
+foreach(_acid_header IN LISTS _temp_acid_headers)
+    get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header_dir}"
+			)
+endforeach()
 # If strictly using system libs, we can generate an export & install it
 if(_ACID_ALL_SYSTEM_LIBS)
 	install(TARGETS Acid

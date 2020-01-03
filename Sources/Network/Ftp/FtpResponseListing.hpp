@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "FtpResponse.hpp"
 
 namespace acid {

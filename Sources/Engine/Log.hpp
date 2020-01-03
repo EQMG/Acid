@@ -1,5 +1,13 @@
 #pragma once
 
+#include <cassert>
+#include <sstream>
+#include <mutex>
+#include <filesystem>
+#include <string_view>
+#include <iostream>
+#include <fstream>
+
 #include "Maths/Time.hpp"
 
 namespace acid {

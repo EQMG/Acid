@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
-#include "Maths/Vector2.hpp"
+#include <vector>
+
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
 

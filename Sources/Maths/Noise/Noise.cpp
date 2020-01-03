@@ -1,6 +1,8 @@
 #include "Noise.hpp"
 
+#include <cmath>
 #include <random>
+#include <cassert>
 
 namespace acid {
 // Hashing
@@ -1195,7 +1197,6 @@ float Noise::SingleCellular(float x, float y) const {
 	switch (m_cellularReturn) {
 	case CellularReturn::CellValue:
 		return ValueCoord2d(m_seed, xc, yc);
-
 	case CellularReturn::NoiseLookup:
 		assert(m_cellularNoiseLookup);
 		lutPos = Index2d256(0, xc, yc);

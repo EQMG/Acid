@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
 #include "Helpers/EnumClass.hpp"

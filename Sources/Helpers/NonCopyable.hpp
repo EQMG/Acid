@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include "Export.hpp"
 
 namespace acid {
 /**

@@ -9,10 +9,10 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
-#define DR_OPUS_IMPLEMENTATION
-#define DR_OPUS_NO_STDIO
-#define DR_OPUS_NO_SIMD
-#include "dr_opus.h"
+//#define DR_OPUS_IMPLEMENTATION
+//#define DR_OPUS_NO_STDIO
+//#define DR_OPUS_NO_SIMD
+//#include "dr_opus.h"
 
 namespace acid {
 bool SoundBufferOpus::registered = Register(".opus");

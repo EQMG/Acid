@@ -1,5 +1,8 @@
 #include "Ftp.hpp"
 
+#include <sstream>
+#include <fstream>
+
 #include "Network/IpAddress.hpp"
 
 namespace acid {

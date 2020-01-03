@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "Engine/Log.hpp"
 #include "Files/Node.hpp"
 #include "TypeInfo.hpp"

@@ -1,7 +1,11 @@
 #pragma once
 
+#include <cstdint>
+#include <optional>
+#include <memory>
 #include <vulkan/vulkan.h>
-#include "StdAfx.hpp"
+
+#include "Export.hpp"
 
 namespace acid {
 class ACID_EXPORT OffsetSize {

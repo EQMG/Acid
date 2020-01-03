@@ -1,7 +1,9 @@
 #pragma once
 
+#include <vector>
 #include <vulkan/vulkan.h>
-#include "StdAfx.hpp"
+
+#include "Export.hpp"
 
 namespace acid {
 // Debug messenger is a newer Vulkan feature, but extremely useful if available.

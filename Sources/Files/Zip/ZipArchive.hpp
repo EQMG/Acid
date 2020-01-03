@@ -26,6 +26,9 @@
  * SOFTWARE.
  */
 
+#include <memory>
+#include <filesystem>
+
 #include "ZipEntry.hpp"
 
 namespace acid {

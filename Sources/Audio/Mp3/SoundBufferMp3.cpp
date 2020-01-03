@@ -29,7 +29,23 @@ void SoundBufferMp3::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 		return;
 	}
 
-	//soundBuffer->SetBuffer(buffer);
+	drmp3_config config;
+	drmp3_uint64 totalPCMFrameCount;
+	auto sampleData = drmp3_open_memory_and_read_pcm_frames_s16(fileLoaded->data(), fileLoaded->size(), &config, &totalPCMFrameCount, nullptr);
+	if (!sampleData) {
+		Log::Error("Error reading OGG ", filename, ", could not load samples\n");
+		return;
+	}
+
+	uint32_t buffer;
+	alGenBuffers(1, &buffer);
+	alBufferData(buffer, (config.outputChannels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sampleData, totalPCMFrameCount, config.outputSampleRate);
+
+	Audio::CheckAl(alGetError());
+
+	soundBuffer->SetBuffer(buffer);
+
+	drmp3_free(sampleData, nullptr);
 
 #if defined(ACID_DEBUG)
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

@@ -28,7 +28,7 @@ public:
 
 		if (it != m_descriptors.end()) {
 			// If the descriptor and size have not changed then the write is not modified.
-			if (it->second.m_descriptor == ConstExpr::AsPtr(descriptor) && it->second.m_offsetSize == offsetSize) {
+			if (it->second.m_descriptor == to_address(descriptor) && it->second.m_offsetSize == offsetSize) {
 				return;
 			}
 
@@ -36,7 +36,7 @@ public:
 		}
 
 		// Only non-null descriptors can be mapped.
-		if (!ConstExpr::AsPtr(descriptor)) {
+		if (!to_address(descriptor)) {
 			return;
 		}
 
@@ -65,8 +65,8 @@ public:
 		}
 
 		// Adds the new descriptor value.
-		auto writeDescriptor = ConstExpr::AsPtr(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
-		m_descriptors.emplace(descriptorName, DescriptorValue{ConstExpr::AsPtr(descriptor), std::move(writeDescriptor), offsetSize, *location});
+		auto writeDescriptor = to_address(descriptor)->GetWriteDescriptor(*location, *descriptorType, offsetSize);
+		m_descriptors.emplace(descriptorName, DescriptorValue{to_address(descriptor), std::move(writeDescriptor), offsetSize, *location});
 		m_changed = true;
 	}
 
@@ -85,7 +85,7 @@ public:
 		auto location = m_shader->GetDescriptorLocation(descriptorName);
 		//auto descriptorType = m_shader->GetDescriptorType(*location);
 
-		m_descriptors.emplace(descriptorName, DescriptorValue{ConstExpr::AsPtr(descriptor), std::move(writeDescriptorSet), std::nullopt, *location});
+		m_descriptors.emplace(descriptorName, DescriptorValue{to_address(descriptor), std::move(writeDescriptorSet), std::nullopt, *location});
 		m_changed = true;
 	}
 

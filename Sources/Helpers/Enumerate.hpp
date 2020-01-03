@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <iterator>
 
 namespace acid {
 /**

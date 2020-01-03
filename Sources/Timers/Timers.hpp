@@ -1,6 +1,7 @@
 #pragma once
 
-#include <mutex>
+#include <atomic>
+
 #include "Engine/Engine.hpp"
 #include "Helpers/Delegate.hpp"
 #include "Maths/Time.hpp"

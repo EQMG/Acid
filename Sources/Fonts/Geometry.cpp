@@ -1,5 +1,7 @@
 #include "Geometry.hpp"
 
+#include <cassert>
+
 #include "Maths/Maths.hpp"
 
 namespace acid {

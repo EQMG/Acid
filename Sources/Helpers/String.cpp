@@ -1,7 +1,6 @@
 #include "String.hpp"
 
 #include <codecvt>
-#include <sstream>
 #include <algorithm>
 
 namespace acid {

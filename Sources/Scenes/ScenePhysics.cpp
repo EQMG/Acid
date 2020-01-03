@@ -1,5 +1,7 @@
 #include "ScenePhysics.hpp"
 
+#include <iterator>
+
 #include <BulletCollision/BroadphaseCollision/btBroadphaseInterface.h>
 #include <BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>

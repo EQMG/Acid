@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Maths/Time.hpp"
 #include "Network/Socket.hpp"
 

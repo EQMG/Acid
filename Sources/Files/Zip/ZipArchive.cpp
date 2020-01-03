@@ -1,5 +1,6 @@
 #include "ZipArchive.hpp"
 
+#include <fstream>
 #include <random>
 
 #include "Helpers/String.hpp"

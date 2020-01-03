@@ -1,6 +1,5 @@
 #pragma once
 
-#include "StdAfx.hpp"
 #include "Helpers/Delegate.hpp"
 
 namespace acid {

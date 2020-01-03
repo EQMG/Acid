@@ -1,6 +1,5 @@
 #pragma once
 
-#include "StdAfx.hpp"
 #include "RenderStage.hpp"
 #include "SubrenderHolder.hpp"
 

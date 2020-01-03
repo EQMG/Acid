@@ -1,5 +1,12 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <optional>
+#include <sstream>
+
+#include "Export.hpp"
+
 #include "ConstExpr.hpp"
 
 namespace acid {
@@ -62,8 +69,8 @@ public:
 
 	/**
 	 * Gets if a character is a whitespace.
-	 * @param str The string.
-	 * @return If a string is a whitespace.
+	 * @param c The character.
+	 * @return If a character is a whitespace.
 	 */
 	static bool IsWhitespace(char c) noexcept;
 

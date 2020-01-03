@@ -24,7 +24,10 @@
 
 #pragma once
 
-#include "StdAfx.hpp"
+#include <cstdint>
+#include <memory>
+
+#include "Export.hpp"
 
 namespace acid {
 /**

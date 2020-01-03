@@ -9,10 +9,10 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
-#define DR_FLAC_IMPLEMENTATION
-#define DR_FLAC_NO_STDIO
-#define DR_FLAC_NO_SIMD
-#include "dr_flac.h"
+//#define DR_FLAC_IMPLEMENTATION
+//#define DR_FLAC_NO_STDIO
+//#define DR_FLAC_NO_SIMD
+//#include "dr_flac.h"
 
 namespace acid {
 bool SoundBufferFlac::registered = Register(".flac");

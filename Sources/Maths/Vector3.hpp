@@ -1,6 +1,9 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <cstdint>
+#include <type_traits>
+
+#include "Export.hpp"
 
 namespace acid {
 template<typename T>

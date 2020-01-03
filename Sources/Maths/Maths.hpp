@@ -1,6 +1,10 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <algorithm>
+#include <cstdint>
+#include <cmath>
+
+#include "Export.hpp"
 
 namespace acid {
 /**

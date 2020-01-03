@@ -1,6 +1,5 @@
 #include "ImageDepth.hpp"
 
-#include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"
 
 namespace acid {

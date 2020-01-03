@@ -1,6 +1,9 @@
 #pragma once
 
+#include <optional>
+#include <vector>
 #include <vulkan/vulkan.h>
+
 #include "Helpers/NonCopyable.hpp"
 
 namespace acid {

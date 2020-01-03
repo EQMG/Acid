@@ -1,6 +1,8 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <cstdint>
+
+#include "Export.hpp"
 
 struct sockaddr_in;
 

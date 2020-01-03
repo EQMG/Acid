@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Network/Socket.hpp"
 #include "Network/IpAddress.hpp"
 

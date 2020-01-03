@@ -1,7 +1,9 @@
 #pragma once
 
+#include <thread>
 #include <vulkan/vulkan.h>
-#include "StdAfx.hpp"
+
+#include "Export.hpp"
 
 namespace acid {
 /**

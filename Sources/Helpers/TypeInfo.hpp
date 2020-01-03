@@ -1,8 +1,7 @@
 #pragma once
 
 #include <typeindex>
-
-#include "StdAfx.hpp"
+#include <unordered_map>
 
 namespace acid {
 using TypeId = std::size_t;

@@ -1,9 +1,13 @@
 #pragma once
 
-#include <queue>
+#include <thread>
+#include <vector>
+#include <functional>
 #include <mutex>
-#include <condition_variable>
-#include "StdAfx.hpp"
+#include <queue>
+#include <future>
+
+#include "Export.hpp"
 
 namespace acid {
 /**

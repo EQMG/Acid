@@ -1,6 +1,8 @@
 #pragma once
 
+#include <array>
 #include <vulkan/vulkan.h>
+
 #include "Files/Node.hpp"
 
 namespace glslang {

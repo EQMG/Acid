@@ -1,6 +1,10 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <optional>
+#include <utility>
+#include <vector>
+#include <map>
+#include <memory>
 
 namespace acid {
 template<typename T>
@@ -83,34 +87,28 @@ inline constexpr bool is_weak_ptr_v = is_weak_ptr<T>::value;
 template<typename T>
 inline constexpr bool is_ptr_access_v = std::is_pointer_v<T> || is_unique_ptr_v<T> || is_shared_ptr_v<T> || is_weak_ptr_v<T>;
 
-/**
- * @brief Helper header that contains constant expressions.
- */
-class ACID_EXPORT ConstExpr {
-public:
-	// TODO C++20: std::to_address
-	template<typename T>
-	static T *AsPtr(T &obj) noexcept { return &obj; }
+// TODO C++20: std::to_address
+template<typename T>
+static T *to_address(T *obj) noexcept { return obj; }
 
-	template<typename T>
-	static T *AsPtr(T *obj) noexcept { return obj; }
+template<typename T>
+static T *to_address(T &obj) noexcept { return &obj; }
 
-	template<typename T>
-	static T *AsPtr(const std::shared_ptr<T> &obj) noexcept { return obj.get(); }
+template<typename T>
+static T *to_address(const std::shared_ptr<T> &obj) noexcept { return obj.get(); }
 
-	template<typename T>
-	static T *AsPtr(const std::unique_ptr<T> &obj) noexcept { return obj.get(); }
+template<typename T>
+static T *to_address(const std::unique_ptr<T> &obj) noexcept { return obj.get(); }
 
-	template<typename T>
-	static const T &AsRef(T &obj) noexcept { return obj; }
+template<typename T>
+static const T &to_reference(T &obj) noexcept { return obj; }
 
-	template<typename T>
-	static const T &AsRef(T *obj) noexcept { return *obj; }
+template<typename T>
+static const T &to_reference(T *obj) noexcept { return *obj; }
 
-	template<typename T>
-	static const T &AsRef(const std::shared_ptr<T> &obj) noexcept { return *obj.get(); }
+template<typename T>
+static const T &to_reference(const std::shared_ptr<T> &obj) noexcept { return *obj.get(); }
 
-	template<typename T>
-	static const T &AsRef(const std::unique_ptr<T> &obj) noexcept { return *obj.get(); }
-};
+template<typename T>
+static const T &to_reference(const std::unique_ptr<T> &obj) noexcept { return *obj.get(); }
 }

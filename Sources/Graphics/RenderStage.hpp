@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
 #include "Images/ImageDepth.hpp"

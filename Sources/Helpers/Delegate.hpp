@@ -1,6 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <functional>
+#include <memory>
 #include <mutex>
+
 #include "ConstExpr.hpp"
 #include "NonCopyable.hpp"
 
@@ -98,7 +102,7 @@ public:
 
 		if constexpr (sizeof...(args) != 0) {
 			for (const auto &arg : {args...}) {
-				observers.emplace_back(ConstExpr::AsPtr(arg)->m_valid);
+				observers.emplace_back(to_address(arg)->m_valid);
 			}
 		}
 
@@ -118,7 +122,7 @@ public:
 
 		if constexpr (sizeof...(args) != 0) {
 			for (const auto &arg : {args...}) {
-				removes.emplace_back(ConstExpr::AsPtr(arg)->m_valid);
+				removes.emplace_back(to_address(arg)->m_valid);
 			}
 		}
 		

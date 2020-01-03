@@ -1,5 +1,6 @@
 #include "Outline.hpp"
 
+#include <cassert>
 #include <ft2build.h>
 #include FT_BBOX_H
 #include FT_OUTLINE_H

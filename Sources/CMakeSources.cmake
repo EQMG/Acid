@@ -1,7 +1,7 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
-		StdAfx.hpp
-		Acid.hpp
+		Config.hpp
+		Export.hpp
 
 		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
@@ -257,8 +257,6 @@ set(_temp_acid_headers
 		Uis/UiTransform.hpp
 		)
 set(_temp_acid_sources
-		StdAfx.cpp
-
 		Animations/Animation/Animation.cpp
 		Animations/Animation/AnimationLoader.cpp
 		Animations/Animation/JointTransform.cpp
@@ -469,21 +467,6 @@ set(_temp_acid_sources
 		Uis/UiTransform.cpp
 		)
 		
-# Adds the precompiled header
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
-	target_precompile_headers(Acid PUBLIC 
-			"$<$<COMPILE_LANGUAGE:CXX>:StdAfx.hpp>"
-			)
-else()
-	include(PrecompiledHeader)
-	add_precompiled_header(Acid
-			StdAfx.hpp
-			SOURCE_CXX
-			StdAfx.cpp
-			FORCEINCLUDE
-			)
-endif()
-
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
 	# Directory that Acid resources can be found.
@@ -497,8 +480,12 @@ if(ACID_INSTALL_RESOURCES)
 			)
 endif()
 
+# Generates a header containing export macros
+include(GenerateExportHeader)
+generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/Export.hpp")
+
 # Adds a CMake generated config file
-configure_file(Config.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp" @ONLY)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

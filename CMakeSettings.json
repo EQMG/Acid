@@ -7,7 +7,9 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\Build\\${name}",
       "installRoot": "${projectDir}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "/MP /p:BuildInParallel",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
       "variables": []
     },
     {
@@ -17,7 +19,9 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "/MP /p:BuildInParallel",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
       "variables": []
     },
     {
@@ -27,7 +31,9 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "/MP /p:BuildInParallel",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
       "variables": []
     }
   ]

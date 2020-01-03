@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "Maths/Matrix4.hpp"
 
 namespace acid {

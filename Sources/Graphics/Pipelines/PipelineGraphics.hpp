@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <array>
+
 #include "Maths/Vector2.hpp"
 #include "Files/Node.hpp"
 #include "Pipeline.hpp"

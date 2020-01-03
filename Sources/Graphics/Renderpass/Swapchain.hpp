@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
-#include "StdAfx.hpp"
+#include <vector>
+
+#include "Export.hpp"
 
 namespace acid {
 class ACID_EXPORT Swapchain {

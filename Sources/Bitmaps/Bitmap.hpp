@@ -1,6 +1,8 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <unordered_map>
+#include <functional>
+
 #include "Maths/Vector2.hpp"
 
 namespace acid {

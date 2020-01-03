@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <vulkan/vulkan.h>
 #include "Graphics/Descriptors/DescriptorSet.hpp"
 
 namespace acid {

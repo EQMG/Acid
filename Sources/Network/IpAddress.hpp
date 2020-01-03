@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include <ostream>
+#include <istream>
+
 #include "Maths/Time.hpp"
 
 namespace acid {

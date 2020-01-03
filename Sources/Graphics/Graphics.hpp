@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include "Engine/Engine.hpp"
 #include "Commands/CommandBuffer.hpp"
 #include "Commands/CommandPool.hpp"

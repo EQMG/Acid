@@ -64,11 +64,7 @@ Quaternion::Quaternion(const Matrix4 &source) {
 	}
 }
 
-Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ) :
-	m_x(0.0f),
-	m_y(0.0f),
-	m_z(0.0f),
-	m_w(1.0f) {
+Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ) {
 	Matrix4 rotation;
 
 	rotation[0][0] = axisX.m_x;

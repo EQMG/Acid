@@ -1,6 +1,9 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <chrono>
+#include <string>
+
+#include "Export.hpp"
 
 namespace acid {
 using namespace std::chrono_literals;

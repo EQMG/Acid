@@ -1,5 +1,7 @@
 #include "Node.hpp"
 
+#include <algorithm>
+
 namespace acid {
 const Node::Format Node::Format::Beautified = Format(2, '\n', ' ', true);
 const Node::Format Node::Format::Minified = Format(0, '\0', '\0', false);

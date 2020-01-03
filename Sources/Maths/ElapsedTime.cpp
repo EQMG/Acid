@@ -1,5 +1,7 @@
 #include "ElapsedTime.hpp"
 
+#include <cmath>
+
 namespace acid {
 ElapsedTime::ElapsedTime(const Time &interval) :
 	m_startTime(Time::Now()),

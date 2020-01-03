@@ -1,6 +1,10 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <variant>
+#include <string>
+#include <vector>
+
+#include "Export.hpp"
 
 namespace acid {
 class Node;
@@ -32,13 +36,13 @@ public:
 	};
 
 	bool has_value() const noexcept { return m_value != nullptr; }
-	const Node *get() { return m_value; }
+	const Node *get() const { return m_value; }
 
 	explicit operator bool() const noexcept { return has_value(); }
-	operator const Node &() { return *get(); }
+	operator const Node &() const { return *m_value; }
 
-	const Node &operator*() { return *get(); }
-	const Node *operator->() { return get(); }
+	const Node &operator*() const { return *m_value; }
+	const Node *operator->() const { return m_value; }
 
 	template<typename T>
 	T GetName() const;

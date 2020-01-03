@@ -1,5 +1,8 @@
 #pragma once
 
+#include <set>
+#include <memory>
+
 #include "Maths/Vector3.hpp"
 
 class btCollisionObject;

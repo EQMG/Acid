@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 #include "NodeView.hpp"
 
 namespace acid {

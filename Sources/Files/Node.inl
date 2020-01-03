@@ -3,6 +3,11 @@
 #include "Node.hpp"
 
 #include <codecvt>
+#include <filesystem>
+#include <memory>
+#include <optional>
+#include <vector>
+#include <map>
 
 #include "Helpers/ConstExpr.hpp"
 #include "Helpers/String.hpp"

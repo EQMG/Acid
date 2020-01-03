@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <vulkan/vulkan.h>
 #include "Graphics/Descriptors/Descriptor.hpp"
 #include "Buffer.hpp"
 

@@ -1,5 +1,7 @@
 #include "Colour.hpp"
 
+#include <cassert>
+
 namespace acid {
 const Colour Colour::Clear("#000000", 0.0f);
 const Colour Colour::Black("#000000");

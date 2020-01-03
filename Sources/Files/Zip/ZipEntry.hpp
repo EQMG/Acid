@@ -1,7 +1,8 @@
 #pragma once
 
-#include <string>
+#include <cstddef>
 #include <vector>
+#include <string>
 
 #include "Helpers/NonCopyable.hpp"
 #include "miniz.h"

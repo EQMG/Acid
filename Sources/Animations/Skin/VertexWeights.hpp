@@ -1,6 +1,9 @@
 #pragma once
 
-#include "StdAfx.hpp"
+#include <cstdint>
+#include <vector>
+
+#include "Export.hpp"
 
 namespace acid {
 class ACID_EXPORT VertexWeights {

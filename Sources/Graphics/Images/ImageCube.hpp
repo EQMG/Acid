@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helpers/NonCopyable.hpp"
+#include "Maths/Vector2.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
 
