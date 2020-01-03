@@ -1,5 +1,7 @@
 #include "Instance.hpp"
 
+#include <iomanip>
+
 #include "Graphics/Graphics.hpp"
 #include "Window.hpp"
 

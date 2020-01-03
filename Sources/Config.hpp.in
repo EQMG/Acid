@@ -1,16 +1,18 @@
 #pragma once
 
+#include <string_view>
+
 namespace acid {
-constexpr auto ACID_VERSION = "@Acid_VERSION@";
-constexpr auto ACID_VERSION_MAJOR = @Acid_VERSION_MAJOR@;
-constexpr auto ACID_VERSION_MINOR = @Acid_VERSION_MINOR@;
-constexpr auto ACID_VERSION_PATCH = @Acid_VERSION_PATCH@;
+constexpr std::string_view ACID_VERSION = "@Acid_VERSION@";
+constexpr uint8_t ACID_VERSION_MAJOR = @Acid_VERSION_MAJOR@;
+constexpr uint8_t ACID_VERSION_MINOR = @Acid_VERSION_MINOR@;
+constexpr uint8_t ACID_VERSION_PATCH = @Acid_VERSION_PATCH@;
 
-constexpr auto ACID_COMPILED_COMPILER = "@CMAKE_CXX_COMPILER@";
-constexpr auto ACID_COMPILED_SYSTEM = "@CMAKE_SYSTEM@";
-constexpr auto ACID_COMPILED_GENERATOR = "@CMAKE_GENERATOR@";
-constexpr auto ACID_COMPILED_COMMIT_HASH = "@ACID_GIT_COMMIT_HASH@";
-constexpr auto ACID_COMPILED_BRANCH = "@ACID_GIT_BRANCH@";
+constexpr std::string_view ACID_COMPILED_COMPILER = "@CMAKE_CXX_COMPILER@";
+constexpr std::string_view ACID_COMPILED_SYSTEM = "@CMAKE_SYSTEM@";
+constexpr std::string_view ACID_COMPILED_GENERATOR = "@CMAKE_GENERATOR@";
+constexpr std::string_view ACID_COMPILED_COMMIT_HASH = "@ACID_GIT_COMMIT_HASH@";
+constexpr std::string_view ACID_COMPILED_BRANCH = "@ACID_GIT_BRANCH@";
 
-constexpr auto ACID_RESOURCES_DEV = "@ACID_RESOURCES_DIR@";
+constexpr std::string_view ACID_RESOURCES_DEV = "@ACID_RESOURCES_DIR@";
 }

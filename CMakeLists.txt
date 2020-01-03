@@ -18,10 +18,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
 # Add property to allow making project folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+set(CMAKE_UNITY_BUILD OFF CACHE BOOL "Setting it to true enables batch compilation of multiple sources within each target")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE BOOL "Enable/Disable output of compile commands during generation")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON CACHE BOOL "Whether to create a position-independent target")
+set(CMAKE_CXX_VISIBILITY_PRESET hidden CACHE STRING "")
+set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF CACHE BOOL "")
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE BOOL "Export all symbols")
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")

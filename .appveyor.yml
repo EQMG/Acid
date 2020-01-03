@@ -51,13 +51,13 @@ install:
 build_script:
   - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
   - mkdir Build\%BUILD_OUT% && cd Build\%BUILD_OUT%
-  - cmake ../../ -G"%GEN%" -DCMAKE_BUILD_TYPE=%CFG% -Denable-pkgconfig=0 -DCMAKE_TOOLCHAIN_FILE=C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DACID_LINK_RESOURCES=OFF
-  - cmake --build . --config %CFG% --target install --clean-first
+  - cmake ../../ -G"%GEN%" -Denable-pkgconfig=0 -DCMAKE_TOOLCHAIN_FILE=C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DACID_LINK_RESOURCES=OFF
+  - cmake --build . --config %CFG% # --target install --clean-first
   - cd ../../
 
 after_build:
   - mkdir Artifacts\%CFG%_%ARCHITECTURE%
-  - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
+  - xcopy Build\%BUILD_OUT%\bin\%CFG% Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
   - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
 
 artifacts:

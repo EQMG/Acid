@@ -179,7 +179,7 @@ Files::Files() {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	// TODO: Only when not installed. 
 	if (std::filesystem::exists(ACID_RESOURCES_DEV)) {
-		AddSearchPath(ACID_RESOURCES_DEV);
+		AddSearchPath(std::string(ACID_RESOURCES_DEV));
 	}
 }
 

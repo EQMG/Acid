@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <thread>
 
 #include "Maths/Time.hpp"
 #include "Helpers/Delegate.hpp"
