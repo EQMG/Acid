@@ -1,6 +1,8 @@
 #include "Graphics.hpp"
 
+#include <cstring>
 #include <SPIRV/GlslangToSpv.h>
+
 #include "Devices/Window.hpp"
 #include "Subrender.hpp"
 

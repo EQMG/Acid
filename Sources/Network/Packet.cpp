@@ -1,11 +1,13 @@
 #include "Packet.hpp"
 
+#include <cstring>
+#include <cwchar>
 #if defined(ACID_BUILD_WINDOWS)
 #include <WinSock2.h>
 #else
 #include <netinet/in.h>
 #endif
-#include <cwchar>
+
 #include "Socket.hpp"
 
 namespace acid {

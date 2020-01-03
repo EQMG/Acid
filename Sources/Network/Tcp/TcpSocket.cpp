@@ -1,5 +1,6 @@
 #include "TcpSocket.hpp"
 
+#include <cstring>
 #if defined(ACID_BUILD_WINDOWS)
 #include <WinSock2.h>
 #else

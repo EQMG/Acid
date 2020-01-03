@@ -1,4 +1,4 @@
-version: '0.13.5{build}'
+version: '0.13.7{build}'
 
 clone_depth: 5
 
@@ -9,16 +9,16 @@ build:
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       platform: x64
       ARCHITECTURE: x64
-      GEN: "Visual Studio 15 2017 Win64"
+      GEN: "Visual Studio 16 2019"
       CFG: Release
       BUILD_OUT: "x64-Release"
-#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
 #      platform: x86
 #      ARCHITECTURE: x86
-#      GEN: "Visual Studio 15 2017"
+#      GEN: "Visual Studio 16 2019"
 #      CFG: Release
 #      BUILD_OUT: "x86-Release"
   VULKAN_SDK_URL: https://sdk.lunarg.com/sdk/download/1.1.126.0/windows/vulkan-sdk.exe?Human=true;u=
@@ -26,7 +26,7 @@ environment:
   OPENAL_SDK_URL: https://openal-soft.org/openal-binaries/openal-soft-1.20.0-bin.zip
   OPENALDIR: "C:\\openal-soft"
   NINJA_URL: https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip
-  MSVC_HOME: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community"
+  MSVC_HOME: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community"
   
 cache:
   - C:\Tools\vcpkg\installed
@@ -51,16 +51,14 @@ install:
 build_script:
   - call "%MSVC_HOME%\VC\Auxiliary\Build\vcvarsall.bat" %ARCHITECTURE%
   - mkdir Build\%BUILD_OUT% && cd Build\%BUILD_OUT%
-  - cmake ../../ -GNinja -DCMAKE_BUILD_TYPE=%CFG% -Denable-pkgconfig=0 -DCMAKE_TOOLCHAIN_FILE=C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DACID_LINK_RESOURCES=OFF
-  - ninja
-  - ninja install
+  - cmake ../../ -G"%GEN%" -DCMAKE_BUILD_TYPE=%CFG% -Denable-pkgconfig=0 -DCMAKE_TOOLCHAIN_FILE=C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DACID_LINK_RESOURCES=OFF
+  - cmake --build . --config %CFG% --target install --clean-first
   - cd ../../
 
 after_build:
   - mkdir Artifacts\%CFG%_%ARCHITECTURE%
   - xcopy Build\%BUILD_OUT%\bin Artifacts\%CFG%_%ARCHITECTURE%\ /s/h/e/k/f/c
   - xcopy Resources Artifacts\%CFG%_%ARCHITECTURE%\Resources\Engine\ /s/h/e/k/f/c
-  - del /S /q *.manifest "Artifacts\%CFG%_%ARCHITECTURE%"
 
 artifacts:
   - path: Artifacts\%CFG%_%ARCHITECTURE%\

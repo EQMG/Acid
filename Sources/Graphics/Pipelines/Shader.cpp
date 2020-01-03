@@ -1,7 +1,9 @@
 #include "Shader.hpp"
 
+#include <cstring>
 #include <SPIRV/GlslangToSpv.h>
 #include <glslang/Public/ShaderLang.h>
+
 #include "Graphics/Graphics.hpp"
 #include "Files/Files.hpp"
 #include "Helpers/String.hpp"

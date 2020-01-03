@@ -2,7 +2,9 @@
 
 #include "Node.hpp"
 
+#include <algorithm>
 #include <codecvt>
+#include <cstring>
 #include <filesystem>
 #include <memory>
 #include <optional>

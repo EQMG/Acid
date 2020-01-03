@@ -1,5 +1,7 @@
 #include "StorageBuffer.hpp"
 
+#include <cstring>
+
 #include "Graphics/Graphics.hpp"
 
 namespace acid {

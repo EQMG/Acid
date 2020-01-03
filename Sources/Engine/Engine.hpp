@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "Helpers/NonCopyable.hpp"
 #include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"

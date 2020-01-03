@@ -1,5 +1,7 @@
 #include "ImageCube.hpp"
 
+#include <cstring>
+
 #include "Bitmaps/Bitmap.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Graphics/Graphics.hpp"

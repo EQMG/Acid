@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "StorageBuffer.hpp"
 
 namespace acid {

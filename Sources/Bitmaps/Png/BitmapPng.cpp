@@ -1,5 +1,7 @@
 #include "BitmapPng.hpp"
 
+#include <cstring>
+
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 

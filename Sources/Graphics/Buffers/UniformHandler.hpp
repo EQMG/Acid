@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "UniformBuffer.hpp"
 
 namespace acid {

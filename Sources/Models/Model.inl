@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "Model.hpp"
 
 namespace acid {

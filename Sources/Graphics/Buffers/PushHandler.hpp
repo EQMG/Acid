@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 #include "Graphics/Pipelines/Pipeline.hpp"
 
 namespace acid {
