@@ -232,6 +232,7 @@ target_include_directories(Acid
 		PUBLIC
 		# Helps the includes find what they need at build-time
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
@@ -273,6 +274,12 @@ set_target_properties(Acid PROPERTIES
 		)
 
 # Installs all headers, preserving their file structure
+foreach(_acid_header IN LISTS _temp_acid_generated_headers)
+    get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${_acid_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header_dir}"
+			)
+endforeach()
 foreach(_acid_header IN LISTS _temp_acid_headers)
     get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}

@@ -1,5 +1,6 @@
 #include "Audio.hpp"
 
+#include <iomanip>
 #if defined(ACID_BUILD_MACOS)
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
@@ -7,6 +8,7 @@
 #include <al.h>
 #include <alc.h>
 #endif
+
 #include "Scenes/Scenes.hpp"
 
 namespace acid {

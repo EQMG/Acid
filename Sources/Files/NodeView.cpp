@@ -15,16 +15,13 @@ Node *NodeView::get() {
 	if (!has_value()) {
 		// This will build the tree of nodes from the return keys tree.
 		for (const auto &key : m_keys) {
-			if (std::holds_alternative<int32_t>(key)) {
-				const auto &index = std::get<std::int32_t>(key);
-				m_value = &const_cast<Node *>(m_parent)->AddProperty(index, {});
-			} else if (std::holds_alternative<std::string>(key)) {
-				const auto &name = std::get<std::string>(key);
-				m_value = &const_cast<Node *>(m_parent)->AddProperty(name, {});
-			} else {
+			if (const auto name = std::get_if<std::string>(&key))
+				m_value = &const_cast<Node *>(m_parent)->AddProperty(*name, {});
+			else if (const auto index = std::get_if<std::uint32_t>(&key))
+				m_value = &const_cast<Node *>(m_parent)->AddProperty(*index, {});
+			else
 				throw std::runtime_error("Key for node return is neither a int or a string");
-			}
-
+			
 			// Because the last key will set parent to the value parent usage should be avoided.
 			m_parent = m_value;
 		}

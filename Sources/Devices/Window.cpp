@@ -1,6 +1,8 @@
 #include "Window.hpp"
 
+#include <algorithm>
 #include <GLFW/glfw3.h>
+
 #include "Bitmaps/Bitmap.hpp"
 #include "Graphics/Graphics.hpp"
 

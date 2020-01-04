@@ -1,5 +1,7 @@
 #include "Input.hpp"
 
+#include <iomanip>
+
 namespace acid {
 Input::Input() :
 	m_nullScheme(std::make_unique<InputScheme>()),

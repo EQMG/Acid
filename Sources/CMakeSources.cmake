@@ -1,8 +1,9 @@
 # All of these will be set as PUBLIC sources to Acid
-set(_temp_acid_headers
+set(_temp_acid_generated_headers
 		Config.hpp
 		Export.hpp
-
+		)
+set(_temp_acid_headers
 		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
 		Animations/Animation/JointTransform.hpp
@@ -482,14 +483,20 @@ endif()
 
 # Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/Export.hpp")
+generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Export.hpp")
 
 # Adds a CMake generated config file
-configure_file(Config.hpp.in "${CMAKE_CURRENT_SOURCE_DIR}/Config.hpp" @ONLY)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" @ONLY)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command
 # Otherwise it wouldn't know where to look for them
+foreach(_acid_header IN LISTS _temp_acid_generated_headers)
+	target_sources(Acid PRIVATE
+			$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/${_acid_header}>
+			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header}>
+			)
+endforeach()
 foreach(_acid_header IN LISTS _temp_acid_headers)
 	target_sources(Acid PRIVATE
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}>
@@ -500,12 +507,13 @@ endforeach()
 # An INSTALL_INTERFACE isn't needed, as cpp files aren't installed
 foreach(_acid_source IN LISTS _temp_acid_sources)
 	target_sources(Acid PRIVATE
-			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_acid_source}>
+			$<BUILD_INTERFACE:${_acid_source}>
 			)
 endforeach()
 
 # Changes how sources appear in IDE virtual file structures.
 include(AcidGroupSources)
+acid_group_sources("${CMAKE_CURRENT_BINARY_DIR}" "/" "" "${_temp_acid_generated_headers}")
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_headers}")
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_sources}")
 

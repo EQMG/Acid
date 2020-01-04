@@ -1,5 +1,6 @@
 #include "ZipArchive.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <random>
 

@@ -1,5 +1,7 @@
 #include "InputScheme.hpp"
 
+#include <iomanip>
+
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
 	m_file(filename) {

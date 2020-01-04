@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <cmath>
+#include <functional>
 
 #include "Export.hpp"
 

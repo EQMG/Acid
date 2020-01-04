@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <variant>
 #include <string>
 #include <vector>
@@ -16,7 +17,7 @@ class Node;
 class ACID_EXPORT NodeConstView {
 	friend class Node;
 protected:
-	using Key = std::variant<std::string, int32_t>;
+	using Key = std::variant<std::string, uint32_t>;
 
 	NodeConstView() = default;
 	NodeConstView(const Node *parent, Key key, const Node *value);

@@ -1,6 +1,7 @@
 #include "Shader.hpp"
 
 #include <cstring>
+#include <iomanip>
 #include <SPIRV/GlslangToSpv.h>
 #include <glslang/Public/ShaderLang.h>
 
