@@ -15,9 +15,9 @@ public:
 
 	void UpdateObject() override;
 
-	std::string GetTitle() const { return String::ConvertUtf8(m_textTitle.GetString()); }
-	void SetTitle(std::string_view string) { m_textTitle.SetString(string); }
-	
+	const std::string &GetTitle() const { return m_textTitle.GetString(); }
+	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
+
 protected:
 	virtual std::string GetTextString() const = 0;
 

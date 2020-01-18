@@ -37,18 +37,18 @@ class Packet;
  * If the socket is bound to a port, it is automatically unbound from it when the socket is destroyed.
  * However, you can unbind the socket explicitly with the Unbind function if necessary,
  * to stop receiving messages or make the port available for other sockets.
- **/
+ */
 class ACID_EXPORT UdpSocket : public Socket {
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	UdpSocket();
 
 	/**
 	 * Get the port to which the socket is bound locally. If the socket is not bound to a port, this function returns 0.
 	 * @return Port to which the socket is bound.
-	 **/
+	 */
 	uint16_t GetLocalPort() const;
 
 	/**
@@ -61,7 +61,7 @@ public:
 	 * @param port Port to bind the socket to.
 	 * @param address Address of the interface to bind to.
 	 * @return Status code.
-	 **/
+	 */
 	Status Bind(uint16_t port, const IpAddress &address = IpAddress::Any);
 
 	/**
@@ -69,7 +69,7 @@ public:
 	 * The port that the socket was previously bound to is immediately made available to the operating system after this function is called.
 	 * This means that a subsequent call to bind() will be able to re-bind the port if no other process has done so in the mean time.
 	 * If the socket is not bound to a port, this function has no effect.
-	 **/
+	 */
 	void Unbind();
 
 	/**
@@ -80,7 +80,7 @@ public:
 	 * @param remoteAddress Address of the receiver.
 	 * @param remotePort Port of the receiver to send the data to.
 	 * @return Status code.
-	 **/
+	 */
 	Status Send(const void *data, std::size_t size, const IpAddress &remoteAddress, uint16_t remotePort);
 
 	/**
@@ -94,7 +94,7 @@ public:
 	 * @param remoteAddress Address of the peer that sent the data.
 	 * @param remotePort Port of the peer that sent the data.
 	 * @return Status code.
-	 **/
+	 */
 	Status Receive(void *data, std::size_t size, std::size_t &received, IpAddress &remoteAddress, uint16_t &remotePort);
 
 	/**
@@ -104,7 +104,7 @@ public:
 	 * @param remoteAddress Address of the receiver.
 	 * @param remotePort Port of the receiver to send the data to.
 	 * @return Status code.
-	 **/
+	 */
 	Status Send(Packet &packet, const IpAddress &remoteAddress, uint16_t remotePort);
 
 	/**
@@ -114,7 +114,7 @@ public:
 	 * @param remoteAddress Address of the peer that sent the data.
 	 * @param remotePort Port of the peer that sent the data.
 	 * @return Status code.
-	 **/
+	 */
 	Status Receive(Packet &packet, IpAddress &remoteAddress, uint16_t &remotePort);
 
 private:

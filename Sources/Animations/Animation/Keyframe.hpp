@@ -10,19 +10,19 @@ namespace acid {
  *
  * It also contains the desired local-space transforms of all of the joints in the animated entity at this keyframe in the animation.
  * The joint transforms are stored in a map, indexed by the name of the joint that they should be applied to.
- **/
+ */
 class ACID_EXPORT Keyframe {
 public:
 	/**
 	 * Creates a new keyframe.
-	 **/
+	 */
 	Keyframe() = default;
 
 	/**
 	 * Creates a new keyframe at a timestamp.
 	 * @param timeStamp The time that this keyframe occurs during the animation.
 	 * @param pose The local-space transforms for all the joints at this keyframe, indexed by the name of the joint that they should be applied to.
-	 **/
+	 */
 	Keyframe(const Time &timeStamp, std::map<std::string, JointTransform> pose);
 
 	void AddJointTransform(const std::string &jointNameId, const Matrix4 &jointLocalTransform);
@@ -30,14 +30,14 @@ public:
 	/**
 	 * Gets the time in seconds of the keyframe in the animation.
 	 * @return The time in seconds.
-	 **/
+	 */
 	const Time &GetTimeStamp() const { return m_timeStamp; }
 
 	/**
 	 * Gets the desired local-space transforms of all the joints at this keyframe, of the animation,
 	 * indexed by the name of the joint that they correspond to.
 	 * @return The desired local-space transforms.
-	 **/
+	 */
 	const std::map<std::string, JointTransform> &GetPose() const { return m_pose; }
 
 	friend const Node &operator>>(const Node &node, Keyframe &keyframe);

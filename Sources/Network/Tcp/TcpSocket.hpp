@@ -31,7 +31,7 @@ class Packet;
  *
  * The socket is automatically disconnected when it is destroyed, but if you want to
  * explicitly close the connection while the socket instance is still alive, you can call disconnect.
- **/
+ */
 class ACID_EXPORT PendingPacket {
 public:
 	PendingPacket() = default;
@@ -46,33 +46,33 @@ public:
 
 /**
  * @brief Specialized socket using the TCP protocol
- **/
+ */
 class ACID_EXPORT TcpSocket : public Socket {
 	friend class TcpListener;
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	TcpSocket();
 
 	/**
 	 * Get the port to which the socket is bound locally. If the socket is not connected, this function returns 0.
 	 * @return Port to which the socket is bound.
-	 **/
+	 */
 	uint16_t GetLocalPort() const;
 
 	/**
 	 * Get the address of the connected peer.
 	 * It the socket is not connected, this function returns IpAddress::NONE.
 	 * @return Address of the remote peer.
-	 **/
+	 */
 	IpAddress GetRemoteAddress() const;
 
 	/**
 	 * Get the port of the connected peer to which the socket is connected.
 	 * If the socket is not connected, this function returns 0.
 	 * @return Remote port to which the socket is connected.
-	 **/
+	 */
 	uint16_t GetRemotePort() const;
 
 	/**
@@ -84,13 +84,13 @@ public:
 	 * @param remotePort Port of the remote peer.
 	 * @param timeout Optional maximum time to wait.
 	 * @return Status code.
-	 **/
+	 */
 	Status Connect(const IpAddress &remoteAddress, uint16_t remotePort, const Time &timeout = 0s);
 
 	/**
 	 * Disconnect the socket from its remote peer.
 	 * This function gracefully closes the connection. If the socket is not connected, this function has no effect.
-	 **/
+	 */
 	void Disconnect();
 
 	/**
@@ -101,7 +101,7 @@ public:
 	 * @param data Pointer to the sequence of bytes to send.
 	 * @param size Number of bytes to send.
 	 * @return Status code.
-	 **/
+	 */
 	Status Send(const void *data, std::size_t size);
 
 	/**
@@ -110,7 +110,7 @@ public:
 	 * @param size Number of bytes to send.
 	 * @param sent The number of bytes sent will be written here.
 	 * @return Status code.
-	 **/
+	 */
 	Status Send(const void *data, std::size_t size, std::size_t &sent);
 
 	/**
@@ -121,7 +121,7 @@ public:
 	 * @param size Maximum number of bytes that can be received.
 	 * @param received This variable is filled with the actual number of bytes received.
 	 * @return Status code.
-	 **/
+	 */
 	Status Receive(void *data, std::size_t size, std::size_t &received);
 
 	/**
@@ -131,7 +131,7 @@ public:
 	 * This function will fail if the socket is not connected.
 	 * @param packet Packet to send.
 	 * @return Status code.
-	 **/
+	 */
 	Status Send(Packet &packet);
 
 	/**
@@ -140,7 +140,7 @@ public:
 	 * This function will fail if the socket is not connected.
 	 * @param packet Packet to fill with the received data.
 	 * @return Status code.
-	 **/
+	 */
 	Status Receive(Packet &packet);
 
 private:

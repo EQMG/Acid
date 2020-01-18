@@ -85,32 +85,6 @@ else()
 	set(GLSLANG_LIBRARIES "glslang::glslang" "glslang::SPIRV")
 endif()
 
-if(WIN32)
-	# TODO: Fix on Unix systems.
-	find_package(Freetype 2.9.1 QUIET)
-endif()
-if(NOT FREETYPE_FOUND)
-	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(freetype
-			URL https://download.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
-			URL_MD5 c50a3c9e5e62bdc938a6e1598a782947
-			)
-	FetchContent_GetProperties(freetype)
-	if(NOT freetype_POPULATED)
-		foreach(_freetype_option "CMAKE_DISABLE_FIND_PACKAGE_PNG" "CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz"
-				"CMAKE_DISABLE_FIND_PACKAGE_BZip2" "CMAKE_DISABLE_FIND_PACKAGE_ZLIB" "CMAKE_DISABLE_FIND_PACKAGE_BROTLI"
-				)
-			set(${_freetype_option} TRUE CACHE INTERNAL "")
-		endforeach()
-		FetchContent_Populate(freetype)
-		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
-	endif()
-	set_target_properties(freetype PROPERTIES FOLDER freetype)
-
-	# Used in target_link_libraries()
-	set(FREETYPE_LIBRARIES "freetype")
-endif()
-
 if(WIN32 AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
 	set(CMAKE_DISABLE_FIND_PACKAGE_Bullet TRUE CACHE INTERNAL "")
 endif()
@@ -230,8 +204,9 @@ target_compile_options(Acid
 		)
 target_include_directories(Acid
 		PUBLIC
-		# Helps the includes find what they need at build-time
+		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Generated headers
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
@@ -240,7 +215,6 @@ target_include_directories(Acid
 		# Since building locally from the submodules won't always create these vars.
 		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${GLSLANG_INCLUDE_DIRS}>:${GLSLANG_INCLUDE_DIRS}>
-		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
 		)
@@ -263,7 +237,6 @@ target_link_libraries(Acid
 		OpenAL::OpenAL
 		glfw
 		${GLSLANG_LIBRARIES}
-		${FREETYPE_LIBRARIES}
 		${BULLET_LIBRARIES}
 		${PHYSFS_LIBRARY}
 		)
@@ -274,12 +247,10 @@ set_target_properties(Acid PROPERTIES
 		)
 
 # Installs all headers, preserving their file structure
-foreach(_acid_header IN LISTS _temp_acid_generated_headers)
-    get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${_acid_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header_dir}"
-			)
-endforeach()
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" 
+		"${CMAKE_CURRENT_BINARY_DIR}/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+		)
 foreach(_acid_header IN LISTS _temp_acid_headers)
     get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}

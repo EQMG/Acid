@@ -24,7 +24,7 @@ This project is being worked on part-time by a single developer, this is under h
  * Entity component system
  * Particle effect systems
  * File multi-path searching, and packaging
- * GUI and SDF font rendering
+ * UI constraints system, and SDF font rendering
  * Audio systems (FLAC, MP3, OGG, OPUS, WAVE)
  * Shadow mapping
  * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)
@@ -37,7 +37,6 @@ This project is being worked on part-time by a single developer, this is under h
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
- * [FreeType](https://www.freetype.org/) - Font loading
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [PhysFS](https://icculus.org/physfs) - Archive file access
  * [STB](https://github.com/nothings/stb) - Texture and OGG loading

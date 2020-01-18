@@ -6,12 +6,12 @@
 namespace acid {
 /**
  * @brief Holds a RGBA colour.
- **/
+ */
 class ACID_EXPORT Colour {
 public:
 	/**
 	 * Constructor for Colour.
-	 **/
+	 */
 	Colour() = default;
 
 	/**
@@ -20,49 +20,49 @@ public:
 	 * @param g The new G value.
 	 * @param b The new B value.
 	 * @param a The new A value.
-	 **/
+	 */
 	Colour(float r, float g, float b, float a = 1.0f);
 
 	/**
 	 * Constructor for Colour.
 	 * @param hex The new values from HEX.
 	 * @param a The new A value.
-	 **/
+	 */
 	Colour(std::string hex, float a = 1.0f);
 
 	/**
 	 * Adds this colour to another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
-	 **/
+	 */
 	Colour Add(const Colour &other) const;
 
 	/**
 	 * Subtracts this colour to another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
-	 **/
+	 */
 	Colour Subtract(const Colour &other) const;
 
 	/**
 	 * Multiplies this colour with another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
-	 **/
+	 */
 	Colour Multiply(const Colour &other) const;
 
 	/**
 	 * Divides this colour by another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
-	 **/
+	 */
 	Colour Divide(const Colour &other) const;
 
 	/**
 	 * Scales this colour by a scalar.
 	 * @param scalar The scalar value.
 	 * @return The scaled colour.
-	 **/
+	 */
 	Colour Scale(float scalar) const;
 
 	/**
@@ -70,25 +70,25 @@ public:
 	 * @param other The other quaternion.
 	 * @param progression The progression.
 	 * @return Left lerp right.
-	 **/
+	 */
 	Colour Lerp(const Colour &other, float progression) const;
 
 	/**
 	 * Normalizes this colour.
 	 * @return The normalized colour.
-	 **/
+	 */
 	Colour Normalize() const;
 
 	/**
 	 * Gets the length squared of this colour.
 	 * @return The length squared.
-	 **/
+	 */
 	float LengthSquared() const;
 
 	/**
 	 * Gets the length of this colour.
 	 * @return The length.
-	 **/
+	 */
 	float Length() const;
 
 	/**
@@ -96,19 +96,19 @@ public:
 	 * @param target The target colour.
 	 * @param rate The rate to go from current to the target.
 	 * @return The changed colour.
-	 **/
+	 */
 	Colour SmoothDamp(const Colour &target, const Colour &rate) const;
 
 	/**
 	 * Gets a colour representing the unit value of this colour.
 	 * @return The unit colour.
-	 **/
+	 */
 	Colour GetUnit() const;
 
 	/**
 	 * Gets the hex code from this colour.
 	 * @return The hex code.
-	 **/
+	 */
 	std::string GetHex() const;
 
 	float operator[](uint32_t index) const;

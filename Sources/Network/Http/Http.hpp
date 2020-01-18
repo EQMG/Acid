@@ -31,12 +31,12 @@ namespace acid {
  * acid::Http provides a simple function, SendRequest, to send a acid::HttpRequest and
  * return the corresponding acid::HttpResponse
  * from the server.
- **/
+ */
 class ACID_EXPORT Http {
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	Http();
 
 	/**
@@ -47,7 +47,7 @@ public:
 	 * You should leave it like this unless you really need a port other than the standard one, or use an unknown protocol.
 	 * @param host Web server to connect to.
 	 * @param port Port to use for connection.
-	 **/
+	 */
 	Http(const std::string &host, uint16_t port = 0);
 
 	/**
@@ -58,7 +58,7 @@ public:
 	 * standard one, or use an unknown protocol.
 	 * @param host Web server to connect to.
 	 * @param port Port to use for connection.
-	 **/
+	 */
 	void SetHost(const std::string &host, uint16_t port = 0);
 
 	/**
@@ -71,7 +71,7 @@ public:
 	 * @param request Request to send.
 	 * @param timeout Maximum time to wait.
 	 * @return Server's response.
-	 **/
+	 */
 	HttpResponse SendRequest(const HttpRequest &request, const Time &timeout = 0s);
 
 private:

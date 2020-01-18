@@ -88,149 +88,149 @@ public:
 	 * @param gain The octave gain.
 	 * @param fractal The fractal noise type.
 	 * @param fractalBounding The fractal bounding.
-	 **/
+	 */
 	explicit Noise(uint64_t seed = 1337, float frequency = 0.01f, Interp interp = Interp::Quintic, Type type = Type::Simplex, int32_t octaves = 3,
 		float lacunarity = 2.0f, float gain = 0.5f, Fractal fractal = Fractal::FBM, float fractalBounding = 0.0f);
 
 	/**
 	 * Gets the seed used for all noise types.
 	 * @return The seed.
-	 **/
+	 */
 	uint64_t GetSeed() const { return m_seed; }
 
 	/**
 	 * Sets seed used for all noise types.
 	 * @param seed The new seed (Default: 1337).
-	 **/
+	 */
 	void SetSeed(uint64_t seed);
 
 	/**
 	 * Gets the frequency used for all noise types.
 	 * @return The frequency.
-	 **/
+	 */
 	float GetFrequency() const { return m_frequency; }
 
 	/**
 	 * Sets the frequency used for all noise types.
 	 * @param frequency The new frequency (Default: 0.01).
-	 **/
+	 */
 	void SetFrequency(float frequency) { m_frequency = frequency; }
 
 	/**
 	 * Gets the interpolation method used for supported noise types.
 	 * @return The interpolation method.
-	 **/
+	 */
 	Interp GetInterp() const { return m_interp; }
 
 	/**
 	 * Sets the interpolation method used to smooth between noise values.
 	 * @param interp The new interpolation method (Default: Quintic).
-	 **/
+	 */
 	void SetInterp(Interp interp) { m_interp = interp; }
 
 	/**
 	 * Gets the type of noise.
 	 * @return The type of noise (Default: Simplex).
-	 **/
+	 */
 	Type GetType() const { return m_type; }
 
 	/**
 	 * Sets the type of noise.
 	 * @param type The new noise type.
-	 **/
+	 */
 	void SetType(Type type) { m_type = type; }
 
 	/**
 	 * Gets the octave count for all fractal noise types.
 	 * @return The octave count (Default: 3).
-	 **/
+	 */
 	int32_t GetFractalOctaves() const { return m_octaves; }
 
 	/**
 	 * Sets the octave count for all fractal noise types.
 	 * @param octaves The new octaves count (Default: 2.0).
-	 **/
+	 */
 	void SetFractalOctaves(int32_t octaves);
 
 	/**
 	 * Gets the octave lacunarity for all fractal noise types.
 	 * @return The octave lacunarity.
-	 **/
+	 */
 	float GetFractalLacunarity() const { return m_lacunarity; }
 
 	/**
 	 * Sets the octave octave lacunarity for all fractal noise types.
 	 * @param lacunarity The new octave lacunarity (Default: 0.5).
-	 **/
+	 */
 	void SetFractalLacunarity(float lacunarity) { m_lacunarity = lacunarity; }
 
 	/**
 	 * Gets the octave gain for all fractal noise types.
 	 * @return The octave gain.
-	 **/
+	 */
 	float GetFractalGain() const { return m_gain; }
 
 	/**
 	 * Sets the octave gain for all fractal noise types.
 	 * @param gain The new octave gain.
-	 **/
+	 */
 	void SetFractalGain(float gain);
 
 	/**
 	 * Gets the method for combining octaves in all fractal noise types.
 	 * @return The method for combining octaves.
-	 **/
+	 */
 	Fractal GetFractal() const { return m_fractal; }
 
 	/**
 	 * Sets the method for combining octaves in all fractal noise types.
 	 * @param fractal The new method for combining octaves (Default: FBM).
-	 **/
+	 */
 	void SetFractal(Fractal fractal) { m_fractal = fractal; }
 
 	/**
 	 * Gets the distance function used in cellular noise calculations.
 	 * @return The cellular distance function.
-	 **/
+	 */
 	CellularDistance GetCellularDistance() const { return m_cellularDistance; }
 
 	/**
 	 * Sets the distance function used in cellular noise calculations.
 	 * @param cellularDistance'> The new cellular distance function (Default: Euclidean).
-	 **/
+	 */
 	void SetCellularDistance(CellularDistance cellularDistance) { m_cellularDistance = cellularDistance; }
 
 	/**
 	 * Gets the return type from cellular noise calculations.
 	 * @return The cellular return type.
-	 **/
+	 */
 	CellularReturn GetCellularReturn() const { return m_cellularReturn; }
 
 	/**
 	 * Sets the return type from cellular noise calculations.
 	 * Note: NoiseLookup requires another FastNoise object be set with SetCellularNoiseLookup() to function.
 	 * @param cellularReturn> The new cellular return type (Default: CellValue).
-	 **/
+	 */
 	void SetCellularReturn(CellularReturn cellularReturn) { m_cellularReturn = cellularReturn; }
 
 	/**
 	 * Gets the noise used to calculate a cell value if the cellular return type is NoiseLookup.
 	 * @return The cellular noise lookup.
-	 **/
+	 */
 	Noise *GetCellularNoiseLookup() const { return m_cellularNoiseLookup.get(); }
 
 	/**
 	 * Sets the noise used to calculate a cell value if cellular return type is NoiseLookup.
 	 * The lookup value is acquired through GetNoise() so ensure you SetType() on the noise lookup, value, Perlin or simplex is recommended.
 	 * @param noise The new cellular noise lookup.
-	 **/
+	 */
 	void SetCellularNoiseLookup(std::unique_ptr<Noise> &&noise) { m_cellularNoiseLookup = std::move(noise); }
 
 	/**
 	 * Gets the 2 distance indices used for distance2 return types.
 	 * @param cellularDistanceIndex0 The cellular distance at index 0.
 	 * @param cellularDistanceIndex1 The cellular distance at index 1.
-	 **/
+	 */
 	void GetCellularDistance2Indices(int32_t &cellularDistanceIndex0, int32_t &cellularDistanceIndex1) const;
 
 	/**
@@ -238,32 +238,32 @@ public:
 	 * Both indices must be >= 0, index1 must be < 4.
 	 * @param cellularDistanceIndex0 The new cellular distance at index 0 (Default: 0).
 	 * @param cellularDistanceIndex1 The new cellular distance at index 1 (Default: 1).
-	 **/
+	 */
 	void SetCellularDistance2Indices(int32_t cellularDistanceIndex0, int32_t cellularDistanceIndex1);
 
 	/**
 	 * Gets the maximum distance a cellular point can move from its grid position.
 	 * @return The cellular maximum distance.
-	 **/
+	 */
 	float GetCellularJitter() const { return m_cellularJitter; }
 
 	/**
 	 * Sets the maximum distance a cellular point can move from its grid position.
 	 * Setting this high will make artifacts more common.
 	 * @param cellularJitter The new cellular maximum distance (Default: 0.45).
-	 **/
+	 */
 	void SetCellularJitter(float cellularJitter) { m_cellularJitter = cellularJitter; }
 
 	/**
 	 * Gets the maximum warp distance from original location when using GradientPerturb(Fractal}(...).
 	 * @return The cellular maximum warp distance.
-	 **/
+	 */
 	float GetGradientPerturbAmp() const { return m_gradientPerturbAmp; }
 
 	/**
 	 * Sets the maximum warp distance from original location when using GradientPerturb(Fractal}(...).
 	 * @param gradientPerturbAmp The new cellular maximum warp distance (Default: 1.0).
-	 **/
+	 */
 	void SetGradientPerturbAmp(float gradientPerturbAmp) { m_gradientPerturbAmp = gradientPerturbAmp; }
 
 	//2D

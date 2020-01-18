@@ -39,13 +39,13 @@ using SocketAddrLength = unsigned int;
  * in combination with threads or selectors. The non-blocking mode is rather used in real-time
  * applications that run an endless loop that can poll the socket often enough,
  * and cannot afford blocking this loop.
- **/
+ */
 class ACID_EXPORT Socket {
 	friend class SocketSelector;
 public:
 	/**
 	 * @brief Status codes that may be returned by socket functions.
-	 **/
+	 */
 	enum class Status {
 		/// The socket has sent / received the data.
 		Done,
@@ -61,7 +61,7 @@ public:
 
 	/**
 	 * Destructor that closes the socket.
-	 **/
+	 */
 	virtual ~Socket();
 
 	/**
@@ -69,38 +69,38 @@ public:
 	 * @param address Target address.
 	 * @param port Target port.
 	 * @return sockaddr_in ready to be used by socket functions.
-	 **/
+	 */
 	static sockaddr_in CreateAddress(uint32_t address, uint16_t port);
 
 	/**
 	 * Return the value of the invalid socket.
 	 * @return Special value of the invalid socket.
-	 **/
+	 */
 	static SocketHandle InvalidSocketHandle();
 
 	/**
 	 * Close and destroy a socket.
 	 * @param sock Handle of the socket to close.
-	 **/
+	 */
 	static void CloseSocketHandle(SocketHandle sock);
 
 	/**
 	 * Set a socket as blocking or non-blocking.
 	 * @param sock Handle of the socket.
 	 * @param block New blocking state of the socket.
-	 **/
+	 */
 	static void SetHandleBlocking(SocketHandle sock, bool block);
 
 	/**
 	 * Get the last socket error status.
 	 * @return Status corresponding to the last socket error.
-	 **/
+	 */
 	static Status GetErrorStatus();
 
 	/**
 	 * Tell whether the socket is in blocking or non-blocking mode.
 	 * @return True if the socket is blocking, false otherwise.
-	 **/
+	 */
 	bool IsBlocking() const { return m_isBlocking; }
 
 	/**
@@ -110,13 +110,13 @@ public:
 	 * In non-blocking mode, calls will always return immediately, using the return code to signal
 	 * whether there was data available or not. By default, all sockets are blocking.
 	 * @param blocking True to set the socket as blocking, false for non-blocking.
-	 **/
+	 */
 	void SetBlocking(bool blocking);
 
 protected:
 	/**
 	 * Types of protocols that the socket can use.
-	 **/
+	 */
 	enum class Type {
 		/// TCP protocol.
 		Tcp,
@@ -128,7 +128,7 @@ protected:
 	 * Default constructor.
 	 * This constructor can only be accessed by derived classes.
 	 * @param type Type of the socket (TCP or UDP).
-	 **/
+	 */
 	Socket(Type type);
 
 	/**
@@ -136,26 +136,26 @@ protected:
 	 * The returned handle may be invalid if the socket was not created yet (or already destroyed).
 	 * This function can only be accessed by derived classes.
 	 * @return The internal (OS-specific) handle of the socket.
-	 **/
+	 */
 	const SocketHandle &GetHandle() const { return m_socket; }
 
 	/**
 	 * Create the internal representation of the socket.
 	 * This function can only be accessed by derived classes.
-	 **/
+	 */
 	void Create();
 
 	/**
 	 * Create the internal representation of the socket from a socket handle.
 	 * This function can only be accessed by derived classes.
 	 * @param handle OS-specific handle of the socket to wrap.
-	 **/
+	 */
 	void Create(SocketHandle handle);
 
 	/**
 	 * Close the socket gracefully.
 	 * This function can only be accessed by derived classes.
-	 **/
+	 */
 	void Close();
 
 private:

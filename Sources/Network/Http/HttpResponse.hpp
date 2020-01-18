@@ -8,13 +8,13 @@
 namespace acid {
 /**
  * @brief Defines a HTTP response.
- **/
+ */
 class ACID_EXPORT HttpResponse {
 	friend class Http;
 public:
 	/**
 	 * Enumerate all the valid status codes for a response.
-	 **/
+	 */
 	enum class Status {
 		/// Most common code returned when operation was successful.
 		Ok = 200,
@@ -78,7 +78,7 @@ public:
 
 	/**
 	 * Default constructor, constructs an empty response.
-	 **/
+	 */
 	HttpResponse();
 
 	/**
@@ -87,7 +87,7 @@ public:
 	 * This function uses case-insensitive comparisons.
 	 * @param field Name of the field to get.
 	 * @return Value of the field, or empty string if not found.
-	 **/
+	 */
 	std::string GetField(const std::string &field) const;
 
 	/**
@@ -95,19 +95,19 @@ public:
 	 * The status code should be the first thing to be checked after receiving a response,
 	 * it defines whether it is a success, a failure or anything else (see the Status enumeration).
 	 * @return Status code of the response.
-	 **/
+	 */
 	Status GetStatus() const { return m_status; }
 
 	/**
 	 * Get the major HTTP version number of the response.
 	 * @return Major HTTP version number.
-	 **/
+	 */
 	uint32_t GetMajorHttpVersion() const { return m_majorVersion; }
 
 	/**
 	 * Get the minor HTTP version number of the response.
 	 * @return Minor HTTP version number.
-	 **/
+	 */
 	uint32_t GetMinorHttpVersion() const { return m_minorVersion; }
 
 	/**
@@ -120,7 +120,7 @@ public:
 	 * <li>An error message (in case of an error).</li>
 	 * </ul>
 	 * @return The response body.
-	 **/
+	 */
 	const std::string &GetBody() const { return m_body; }
 
 private:
@@ -130,14 +130,14 @@ private:
 	 * Construct the header from a response string.
 	 * This function is used by Http to build the response of a request.
 	 * @param data Content of the response to parse.
-	 **/
+	 */
 	void Parse(const std::string &data);
 
 	/**
 	 * Read values passed in the answer header.
 	 * This function is used by Http to extract values passed in the response.
 	 * @param in String stream containing the header values.
-	 **/
+	 */
 	void ParseFields(std::istream &in);
 
 	/// Fields of the header.

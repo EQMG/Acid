@@ -6,14 +6,14 @@ namespace acid {
 /**
  * @brief Represents a driver that changes over time.
  * @tparam T The type to be driven.
- **/
+ */
 template<typename T>
 class Driver {
 public:
 	/**
 	 * Creates a new driver with a length.
 	 * @param length The drivers length.
-	 **/
+	 */
 	explicit Driver(const Time &length) :
 		m_length(length) {
 	}
@@ -24,7 +24,7 @@ public:
 	 * Updates the driver with the passed time.
 	 * @param delta The time between the last update.
 	 * @return The calculated value.
-	 **/
+	 */
 
 	T Update(const Time &delta) {
 		m_actualTime += delta;
@@ -37,13 +37,13 @@ public:
 	/**
 	 * Gets the length.
 	 * @return The length.
-	 **/
+	 */
 	const Time &GetLength() const { return m_length; }
 
 	/**
 	 * Sets the length.
 	 * @param length The new length.
-	 **/
+	 */
 	void SetLength(const Time &length) { m_length = length; }
 
 protected:
@@ -51,7 +51,7 @@ protected:
 	 * Calculates the new value.
 	 * @param factor The time into the drivers life.
 	 * @return The calculated value.
-	 **/
+	 */
 	virtual T Calculate(float factor) = 0;
 
 	Time m_length;

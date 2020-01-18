@@ -28,18 +28,18 @@ class Socket;
  * \li populate the selector with all the sockets that you want to observe
  * \li make it wait until there is data available on any of the sockets
  * \li test each socket to find out which ones are ready
- **/
+ */
 class ACID_EXPORT SocketSelector {
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	SocketSelector();
 
 	/**
 	 * Copy constructor.
 	 * @param copy Instance to copy.
-	 **/
+	 */
 	SocketSelector(const SocketSelector &copy);
 
 	/**
@@ -49,21 +49,21 @@ public:
 	 * that the socket is not destroyed while it is stored in the selector.
 	 * This function does nothing if the socket is not valid.
 	 * @param socket Reference to the socket to add.
-	 **/
+	 */
 	void Add(Socket &socket);
 
 	/**
 	 * Remove a socket from the selector.
 	 * This function doesn't destroy the socket, it simply removes the reference that the selector has to it.
 	 * @param socket Reference to the socket to remove.
-	 **/
+	 */
 	void Remove(Socket &socket);
 
 	/**
 	 * Remove all the sockets stored in the selector.
 	 * This function doesn't destroy any instance, it simply removes all the references that
 	 * the selector has to external sockets.
-	 **/
+	 */
 	void Clear();
 
 	/**
@@ -73,7 +73,7 @@ public:
 	 * If you use a timeout and no socket is ready before the timeout is over, the function returns false.
 	 * @param timeout Maximum time to wait, (use 0s for infinity).
 	 * @return True if there are sockets ready, false otherwise.
-	 **/
+	 */
 	bool Wait(Time timeout = 0s);
 
 	/**
@@ -84,14 +84,14 @@ public:
 	 * Note that if this function returns true for a TcpListener, this means that it is ready to accept a new connection.
 	 * @param socket Socket to test.
 	 * @return True if the socket is ready to read, false otherwise.
-	 **/
+	 */
 	bool IsReady(const Socket &socket) const;
 
 	/**
 	 * Overload of assignment operator.
 	 * @param right Instance to assign.
 	 * @return Reference to self.
-	 **/
+	 */
 	SocketSelector &operator=(const SocketSelector &right);
 
 private:

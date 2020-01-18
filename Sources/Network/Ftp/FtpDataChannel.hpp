@@ -8,12 +8,12 @@ class FtpResponse;
 
 /**
  * @brief Utility class for exchanging datas with the server on the data channel.
- **/
+ */
 class ACID_EXPORT FtpDataChannel {
 public:
 	/**
 	 * @brief Enumeration of transfer modes.
-	 **/
+	 */
 	enum class Mode {
 		/// Binary mode (file is transfered as a sequence of bytes).
 		Binary,

@@ -29,7 +29,7 @@ public:
 			m_slots.emplace_back(std::move(slot));
 
 			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform({24, 16}, UiAnchor::CentreBottom), 12,
-				std::to_string(i), FontType::Create("Fonts/ProximaNova-Regular.ttf", "Bold"), Text::Justify::Centre, colour * 0.33f);
+				std::to_string(i), FontType::Create("Fonts/ProximaNova-Regular.fnt", "Bold"), Text::Justify::Centre, colour * 0.33f);
 			m_slotTitles.emplace_back(std::move(slotTitle));*/
 		}
 	}

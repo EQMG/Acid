@@ -10,7 +10,7 @@
 namespace acid {
 /**
  * @brief Class that represents an animated armature with a skin mesh.
- **/
+ */
 class ACID_EXPORT MeshAnimated : public Component::Registrar<MeshAnimated> {
 public:
 	/**

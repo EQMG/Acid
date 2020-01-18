@@ -9,9 +9,9 @@ UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Right, UiInputButton::TitleColour),
+		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Right, UiInputButton::TitleColour),
 	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, value,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour),
+		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(std::move(value)),
 	m_maxLength(maxLength) {
 	SetCursorHover(CursorStandard::Hand);

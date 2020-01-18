@@ -21,13 +21,13 @@ class Vector3 {
 public:
 	/**
 	 * Constructor for Vector3.
-	 **/
+	 */
 	constexpr Vector3() = default;
 
 	/**
 	 * Constructor for Vector3.
 	 * @param a The value to set all components to.
-	 **/
+	 */
 	constexpr explicit Vector3(const T &a);
 
 	/**
@@ -35,7 +35,7 @@ public:
 	 * @param x Start x.
 	 * @param y Start y.
 	 * @param z Start z.
-	 **/
+	 */
 	constexpr Vector3(const T &x, const T &y, const T &z);
 
 	/**
@@ -46,7 +46,7 @@ public:
 	 * @param x Start x.
 	 * @param y Start y.
 	 * @param z Start z.
-	 **/
+	 */
 	template<typename K, typename J, typename H>
 	constexpr Vector3(const K &x, const J &y, const H &z);
 
@@ -56,7 +56,7 @@ public:
 	 * @tparam J The z type.
 	 * @param source Creates this vector out of a existing vector.
 	 * @param z Start z.
-	 **/
+	 */
 	template<typename K, typename J = T>
 	explicit constexpr Vector3(const Vector2<K> &source, const J &z = 0);
 
@@ -64,7 +64,7 @@ public:
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr Vector3(const Vector3<K> &source);
 
@@ -72,7 +72,7 @@ public:
 	 * Constructor for Vector3.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr Vector3(const Vector4<K> &source);
 
@@ -81,7 +81,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Add(const Vector3<K> &other) const;
 
@@ -90,7 +90,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Subtract(const Vector3<K> &other) const;
 
@@ -99,7 +99,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Multiply(const Vector3<K> &other) const;
 
@@ -108,7 +108,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Divide(const Vector3<K> &other) const;
 
@@ -117,7 +117,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The angle, in radians.
-	 **/
+	 */
 	template<typename K>
 	auto Angle(const Vector3<K> &other) const;
 
@@ -126,7 +126,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The dot product.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Dot(const Vector3<K> &other) const;
 
@@ -135,7 +135,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The cross product.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Cross(const Vector3<K> &other) const;
 
@@ -146,7 +146,7 @@ public:
 	 * @param other The other vector.
 	 * @param progression The progression.
 	 * @return Left lerp right.
-	 **/
+	 */
 	template<typename K, typename J = float>
 	constexpr auto Lerp(const Vector3<K> &other, const J &progression) const;
 
@@ -155,7 +155,7 @@ public:
 	 * @tparam K The scalar type.
 	 * @param scalar The scalar value.
 	 * @return The scaled vector.
-	 **/
+	 */
 	template<typename K = float>
 	constexpr auto Scale(const K &scalar) const;
 
@@ -164,44 +164,44 @@ public:
 	 * @tparam K The rotations type.
 	 * @param angle The angle to rotate by, in radians.
 	 * @return The rotated vector.
-	 **/
+	 */
 	//template<typename K = float>
 	//auto Rotate(const Vector3<K> &angle) const; 
 
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
-	 **/
+	 */
 	auto Normalize() const;
 
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared.
-	 **/
+	 */
 	constexpr auto LengthSquared() const;
 
 	/**
 	 * Gets the length of this vector.
 	 * @return The length.
-	 **/
+	 */
 	auto Length() const;
 
 	/**
 	 * Gets the absolute value of every component in this vector.
 	 * @return The absolute value of this vector.
-	 **/
+	 */
 	auto Abs() const;
 
 	/**
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.
-	 **/
+	 */
 	constexpr auto Min() const;
 
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components.
-	 **/
+	 */
 	constexpr auto Max() const;
 
 	/**
@@ -215,7 +215,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector to get values from.
 	 * @return The lowest vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Min(const Vector3<K> &other);
 
@@ -224,7 +224,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector to get values from.
 	 * @return The maximum vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Max(const Vector3<K> &other);
 
@@ -233,7 +233,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The squared distance.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto DistanceSquared(const Vector3<K> &other) const;
 
@@ -242,7 +242,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The distance.
-	 **/
+	 */
 	template<typename K>
 	auto Distance(const Vector3<K> &other) const;
 
@@ -251,7 +251,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The vector distance.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto DistanceVector(const Vector3<K> &other) const;
 
@@ -260,20 +260,20 @@ public:
 	 * @param target The target vector.
 	 * @param rate The rate to go from current to the target.
 	 * @return The changed vector.
-	 **/
+	 */
 	template<typename K, typename J>
 	constexpr auto SmoothDamp(const Vector3<K> &target, const Vector3<J> &rate) const;
 
 	/**
 	 * Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).
 	 * @return The polar coordinates (radius, theta).
-	 **/
+	 */
 	auto CartesianToPolar() const;
 
 	/**
 	 * Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).
 	 * @return The cartesian coordinates (x, y).
-	 **/
+	 */
 	auto PolarToCartesian() const;
 
 	constexpr const T &operator[](uint32_t index) const;

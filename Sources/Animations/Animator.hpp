@@ -16,7 +16,7 @@ namespace acid {
  * The Animator will keep looping the current animation until a new animation is chosen.
  * The Animator calculates the desired current animation pose by interpolating between the previous and next keyframes of the animation
  * (based on the current animation time). The Animator then updates the transforms all of the joints each frame to match the current desired animation pose.
- **/
+ */
 class ACID_EXPORT Animator {
 public:
 	/**
@@ -24,12 +24,12 @@ public:
 	 * finds the pose that the entity should be in at that time of the animation, and then applied that pose to all the entity's joints.
 	 * @param rootJoint The root joint of the joint hierarchy which makes up the "skeleton" of the entity.
 	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
-	 **/
+	 */
 	void Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices);
 
 	/**
 	 * Increases the current animation time which allows the animation to progress. If the current animation has reached the end then the timer is reset, causing the animation to loop.
-	 **/
+	 */
 	void IncreaseAnimationTime();
 
 	/**
@@ -49,7 +49,7 @@ public:
 	 *
 	 * @return The current pose as a map of the desired local-space transforms for all the joints.
 	 * The transforms are indexed by the name ID of the joint that they should be applied to. </returns>
-	 **/
+	 */
 	std::map<std::string, Matrix4> CalculateCurrentAnimationPose() const;
 
 	/**
@@ -57,7 +57,7 @@ public:
 	 * If there is no  previous frame (perhaps current animation time is 0.5 and the first keyframe is at time 1.5)
 	 * then the next keyframe is used as both the previous and next keyframe. The reverse happens if there is no next keyframe.
 	 * @return The previous and next keyframes, in an array which therefore will always have a length of 2.
-	 **/
+	 */
 	std::pair<Keyframe, Keyframe> GetPreviousAndNextFrames() const;
 
 	/**
@@ -66,7 +66,7 @@ public:
 	 * @param nextFrame The next keyframe in the animation.
 	 * </param>
 	 * @return A number between 0 and 1 indicating how far between the two keyframes the current animation time is.
-	 **/
+	 */
 	float CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const;
 
 	/**
@@ -78,7 +78,7 @@ public:
 	 * </param>
 	 * @return The local-space transforms for all the joints for the desired current pose.
 	 * They are returned in a map, indexed by the name of the joint to which they should be applied. </returns>
-	 **/
+	 */
 	std::map<std::string, Matrix4> InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, float progression) const;
 
 	/**
@@ -104,7 +104,7 @@ public:
 	 * @param joint The current joint which the pose should be applied to.
 	 * @param parentTransform The desired model-space transform of the parent joint for the pose.
 	 * @param jointMatrices The transforms that get loaded up to the shader and is used to deform the vertices of the "skin".
-	 **/
+	 */
 	static void CalculateJointPose(const std::map<std::string, Matrix4> &currentPose, const Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices);
 
 	const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
@@ -112,7 +112,7 @@ public:
 	/**
 	 * Indicates that the entity should carry out the given animation. Resets the animation time so that the new animation starts from the beginning.
 	 * @param animation The new animation to carry out.
-	 **/
+	 */
 	void DoAnimation(Animation *animation);
 
 private:

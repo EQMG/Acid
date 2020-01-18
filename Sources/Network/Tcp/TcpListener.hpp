@@ -20,19 +20,19 @@ class TcpSocket;
  *
  * A listener is automatically closed on destruction, like all other types of socket.
  * However if you want to stop listening before the socket is destroyed, you can call its Close() function.
- **/
+ */
 class ACID_EXPORT TcpListener : public Socket {
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	TcpListener();
 
 	/**
 	 * Get the port to which the socket is bound locally.
 	 * If the socket is not listening to a port, this function returns 0.
 	 * @return Port to which the socket is bound.
-	 **/
+	 */
 	uint16_t GetLocalPort() const;
 
 	/**
@@ -43,13 +43,13 @@ public:
 	 * @param port Port to listen on for incoming connection attempts.
 	 * @param address Address of the interface to listen on.
 	 * @return Status code.
-	 **/
+	 */
 	Status Listen(uint16_t port, const IpAddress &address = IpAddress::Any);
 
 	/**
 	 * Stop listening and close the socket. This function gracefully stops the listener.
 	 * If the socket is not listening, this function has no effect.
-	 **/
+	 */
 	void Close();
 
 	/**
@@ -57,7 +57,7 @@ public:
 	 * If the socket is in blocking mode, this function will not return until a connection is actually received.
 	 * @param socket Socket that will hold the new connection.
 	 * @return Status code.
-	 **/
+	 */
 	Status Accept(TcpSocket &socket);
 };
 }

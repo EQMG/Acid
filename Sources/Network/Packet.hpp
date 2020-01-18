@@ -23,7 +23,7 @@ namespace acid {
  * to avoid possible differences between the sender and the receiver.
  * Indeed, the native C++ types may have different sizes on two platforms and your data may be
  * corrupted if that happens.
- **/
+ */
 class ACID_EXPORT Packet {
 	friend class TcpSocket;
 	friend class UdpSocket;
@@ -34,7 +34,7 @@ public:
 
 	/**
 	 * Creates an empty packet.
-	 **/
+	 */
 	Packet();
 
 	virtual ~Packet() = default;
@@ -43,12 +43,12 @@ public:
 	 * Append data to the end of the packet.
 	 * @param data Pointer to the sequence of bytes to append.
 	 * @param sizeInBytes Number of bytes to append.
-	 **/
+	 */
 	void Append(const void *data, std::size_t sizeInBytes);
 
 	/**
 	 * Clear the packet, after calling Clear, the packet is empty.
-	 **/
+	 */
 	void Clear();
 
 	/**
@@ -57,21 +57,21 @@ public:
 	 * therefore it should never be stored.
 	 * The return pointer is null if the packet is empty.
 	 * @return Pointer to the data.
-	 **/
+	 */
 	const void *GetData() const;
 
 	/**
 	 * Get the size of the data contained in the packet.
 	 * This function returns the number of bytes pointed to by what getData returns.
 	 * @return Data size, in bytes.
-	 **/
+	 */
 	std::size_t GetDataSize() const;
 
 	/**
 	 * Tell if the reading position has reached the end of the packet.
 	 * This function is useful to know if there is some data left to be read, without actually reading it.
 	 * @return True if all data was read, false otherwise.
-	 **/
+	 */
 	bool EndOfStream() const;
 
 	/**
@@ -99,7 +99,7 @@ public:
 	 *
 	 * Don't focus on the return type, it's equivalent to bool but it disallows unwanted implicit conversions to integer or pointer types.
 	 * @return True if last data extraction from packet was successful.
-	 **/
+	 */
 	operator BoolType() const;
 
 	// Overload of operator >> to read data from the data stream
@@ -144,7 +144,7 @@ protected:
 	 * The function must return a pointer to the modified data, as well as the number of bytes pointed.
 	 * The default implementation provides the packet's data without transforming it.
 	 * @return Pointer to the array of bytes to send and the size of data to send.
-	 **/
+	 */
 	virtual std::pair<const void *, std::size_t> OnSend();
 
 	/**
@@ -155,7 +155,7 @@ protected:
 	 * The default implementation fills the packet directly without transforming the data.
 	 * @param data Pointer to the received bytes.
 	 * @param size Number of bytes.
-	 **/
+	 */
 	virtual void OnReceive(const void *data, std::size_t size);
 
 	/**
@@ -163,7 +163,7 @@ protected:
 	 * This function updates accordingly the state of the packet.
 	 * @param size Size to check.
 	 * @return True if \a size bytes can be read from the packet.
-	 **/
+	 */
 	bool CheckSize(std::size_t size);
 
 	/// Data stored in the packet.

@@ -31,17 +31,17 @@ namespace acid {
  * All commands, especially upload and download, may take some time to complete.
  * This is important to know if you don't want to block your application while
  * the server is completing the task.
- **/
+ */
 class ACID_EXPORT Ftp {
 public:
 	/**
 	 * Default constructor.
-	 **/
+	 */
 	Ftp();
 
 	/**
 	 * Automatically closes the connection with the server if it is still opened.
-	 **/
+	 */
 	~Ftp();
 
 	/**
@@ -56,13 +56,13 @@ public:
 	 * @param port Port used for the connection.
 	 * @param timeout Maximum time to wait.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Connect(const IpAddress &server, uint16_t port = 21, const Time &timeout = 0s);
 
 	/**
 	 * Close the connection with the server.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Disconnect();
 
 	/**
@@ -70,7 +70,7 @@ public:
 	 * Logging in is mandatory after connecting to the server.
 	 * Users that are not logged in cannot perform any operation.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Login();
 
 	/**
@@ -80,21 +80,21 @@ public:
 	 * @param name User name.
 	 * @param password Password.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Login(const std::string &name, const std::string &password);
 
 	/**
 	 * Send a null command to keep the connection alive.
 	 * This command is useful because the server may close the connection automatically if no command is sent.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse KeepAlive();
 
 	/**
 	 * Get the current working directory.
 	 * The working directory is the root path for subsequent operations involving directories and/or filenames.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponseDirectory GetWorkingDirectory();
 
 	/**
@@ -103,7 +103,7 @@ public:
 	 * The \a directory parameter is relative to the current working directory.
 	 * @param directory Directory to list.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponseListing GetDirectoryListing(const std::string &directory = "");
 
 	/**
@@ -111,13 +111,13 @@ public:
 	 * The new directory must be relative to the current one.
 	 * @param directory New working directory.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse ChangeDirectory(const std::string &directory);
 
 	/**
 	 * Go to the parent directory of the current one.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse ParentDirectory();
 
 	/**
@@ -125,7 +125,7 @@ public:
 	 * The new directory is created as a child of the current working directory.
 	 * @param name Name of the directory to create.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse CreateRemoteDirectory(const std::string &name);
 
 	/**
@@ -134,7 +134,7 @@ public:
 	 * Use this function with caution, the directory will be removed permanently!
 	 * @param name Name of the directory to remove.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse DeleteRemoteDirectory(const std::string &name);
 
 	/**
@@ -143,7 +143,7 @@ public:
 	 * @param file File to rename.
 	 * @param newName New name of the file.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse RenameRemoteFile(const std::string &file, const std::string &newName);
 
 	/**
@@ -152,7 +152,7 @@ public:
 	 * Use this function with caution, the file will be removed permanently!
 	 * @param name File to remove.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse DeleteRemoteFile(const std::string &name);
 
 	/**
@@ -165,7 +165,7 @@ public:
 	 * @param localPath The directory in which to put the file on the local computer.
 	 * @param mode Transfer mode.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Download(const std::string &remoteFile, const std::string &localPath, const FtpDataChannel::Mode &mode = FtpDataChannel::Mode::Binary);
 
 	/**
@@ -178,7 +178,7 @@ public:
 	 * @param mode Transfer mode.
 	 * @param append Pass true to append to or false to overwrite the remote file if it already exists.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse Upload(const std::string &localFile, const std::string &remotePath, const FtpDataChannel::Mode &mode = FtpDataChannel::Mode::Binary, bool append = false);
 
 	/**
@@ -190,7 +190,7 @@ public:
 	 * @param command Command to send.
 	 * @param parameter Command parameter.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse SendCommand(const std::string &command, const std::string &parameter = "");
 
 private:
@@ -198,7 +198,7 @@ private:
 	 * Receive a response from the server.
 	 * This function must be called after each call to SendCommand that expects a response.
 	 * @return Server response to the request.
-	 **/
+	 */
 	FtpResponse GetResponse();
 
 	/// Socket holding the control connection with the server.

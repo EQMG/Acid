@@ -21,7 +21,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 	UiObject(parent, transform),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"), ButtonColour),
 	m_text(this, {UiMargins::None, Padding, -Padding}, FontSize, string,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, ValueColour) {
+		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
 		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));

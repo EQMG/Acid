@@ -7,12 +7,12 @@
 namespace acid {
 /**
  * @brief Define a FTP response.
- **/
+ */
 class ACID_EXPORT FtpResponse {
 public:
 	/**
 	 * @brief Status codes possibly returned by a FTP response.
-	 **/
+	 */
 	enum class Status {
 		// 1xx: the requested action is being initiated, expect another reply before proceeding with a new command.
 
@@ -122,26 +122,26 @@ public:
 	 * Default constructor, this constructor is used by the FTP client to build the response.
 	 * @param code Response status code.
 	 * @param message Response message.
-	 **/
+	 */
 	FtpResponse(Status code = Status::InvalidResponse, std::string message = "");
 
 	/**
 	 * Check if the status code means a success.
 	 * This function is defined for convenience, it is equivalent to testing if the status code is < 400.
 	 * @return True if the status is a success, false if it is a failure.
-	 **/
+	 */
 	bool IsOk() const;
 
 	/**
 	 * Get the status code of the response.
 	 * @return Status code.
-	 **/
+	 */
 	Status GetStatus() const { return m_status; }
 
 	/**
 	 * Get the full message contained in the response.
 	 * @return The response message.
-	 **/
+	 */
 	const std::string &GetFullMessage() const { return m_message; }
 
 private:

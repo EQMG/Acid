@@ -21,13 +21,13 @@ class Vector4 {
 public:
 	/**
 	 * Constructor for Vector4.
-	 **/
+	 */
 	constexpr Vector4() = default;
 
 	/**
 	 * Constructor for Vector4.
 	 * @param a The value to set all components to.
-	 **/
+	 */
 	constexpr explicit Vector4(const T &a);
 
 	/**
@@ -36,7 +36,7 @@ public:
 	 * @param y Start y.
 	 * @param z Start z.
 	 * @param w Start w.
-	 **/
+	 */
 	constexpr Vector4(const T &x, const T &y, const T &z, const T &w = 1);
 
 	/**
@@ -49,7 +49,7 @@ public:
 	 * @param y Start y.
 	 * @param z Start z.
 	 * @param w Start w.
-	 **/
+	 */
 	template<typename K, typename J, typename H, typename F>
 	constexpr Vector4(const K &x, const J &y, const H &z, const F &w);
 
@@ -59,7 +59,7 @@ public:
 	 * @tparam J The right type.
 	 * @param left Creates this vector out of a existing vector, xy.
 	 * @param right Creates this vector out of a existing vector, zw.
-	 **/
+	 */
 	template<typename K, typename J>
 	constexpr Vector4(const Vector2<K> &left, const Vector2<J> &right = Vector2<K>::Up);
 
@@ -69,7 +69,7 @@ public:
 	 * @tparam J The w type.
 	 * @param source Creates this vector out of a existing vector.
 	 * @param w Start w.
-	 **/
+	 */
 	template<typename K, typename J = T>
 	explicit constexpr Vector4(const Vector3<K> &source, const J &w = 1);
 
@@ -77,7 +77,7 @@ public:
 	 * Constructor for Vector4.
 	 * @tparam K The sources type.
 	 * @param source Creates this vector out of a existing vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr Vector4(const Vector4<K> &source);
 
@@ -86,7 +86,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Add(const Vector4<K> &other) const;
 
@@ -95,7 +95,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Subtract(const Vector4<K> &other) const;
 
@@ -104,7 +104,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Multiply(const Vector4<K> &other) const;
 
@@ -113,7 +113,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The resultant vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Divide(const Vector4<K> &other) const;
 
@@ -122,7 +122,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The angle, in radians.
-	 **/
+	 */
 	template<typename K>
 	auto Angle(const Vector4<K> &other) const;
 
@@ -131,7 +131,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The dot product.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Dot(const Vector4<K> &other) const;
 
@@ -142,7 +142,7 @@ public:
 	 * @param other The other quaternion.
 	 * @param progression The progression.
 	 * @return Left lerp right.
-	 **/
+	 */
 	template<typename K, typename J = float>
 	constexpr auto Lerp(const Vector4<K> &other, const J &progression) const;
 
@@ -151,44 +151,44 @@ public:
 	 * @tparam K The scalar type.
 	 * @param scalar The scalar value.
 	 * @return The scaled vector.
-	 **/
+	 */
 	template<typename K = float>
 	constexpr auto Scale(const K &scalar) const;
 
 	/**
 	 * Normalizes this vector.
 	 * @return The normalized vector.
-	 **/
+	 */
 	auto Normalize() const;
 
 	/**
 	 * Gets the length squared of this vector.
 	 * @return The length squared.
-	 **/
+	 */
 	constexpr auto LengthSquared() const;
 
 	/**
 	 * Gets the length of this vector.
 	 * @return The length.
-	 **/
+	 */
 	auto Length() const;
 
 	/**
 	 * Gets the absolute value of every component in this vector.
 	 * @return The absolute value of this vector.
-	 **/
+	 */
 	auto Abs() const;
 
 	/**
 	 * Gets the minimal value in this vector.
 	 * @return The minimal components.
-	 **/
+	 */
 	constexpr auto Min() const;
 
 	/**
 	 * Gets the maximal value in this vector.
 	 * @return The maximal components.
-	 **/
+	 */
 	constexpr auto Max() const;
 
 	/**
@@ -202,7 +202,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector to get values from.
 	 * @return The lowest vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Min(const Vector4<K> &other);
 
@@ -211,7 +211,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector to get values from.
 	 * @return The maximum vector.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto Max(const Vector4<K> &other);
 
@@ -220,7 +220,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The squared distance.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto DistanceSquared(const Vector4<K> &other) const;
 
@@ -229,7 +229,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The distance.
-	 **/
+	 */
 	template<typename K>
 	auto Distance(const Vector4<K> &other) const;
 
@@ -238,7 +238,7 @@ public:
 	 * @tparam K The others type.
 	 * @param other The other vector.
 	 * @return The vector distance.
-	 **/
+	 */
 	template<typename K>
 	constexpr auto DistanceVector(const Vector4<K> &other) const;
 
@@ -247,7 +247,7 @@ public:
 	 * @param target The target vector.
 	 * @param rate The rate to go from current to the target.
 	 * @return The changed vector.
-	 **/
+	 */
 	template<typename K, typename J>
 	constexpr auto SmoothDamp(const Vector4<K> &target, const Vector4<J> &rate) const;
 

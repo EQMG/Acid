@@ -94,13 +94,13 @@ public:
 
 	/**
 	 * Clears all properties from this node.
-	 **/
+	 */
 	void Clear();
 
 	/**
 	 * Gets if the node has a value, or has properties that have values.
 	 * @return If the node is internally valid.
-	 **/
+	 */
 	bool IsValid() const;
 
 	template<typename T>

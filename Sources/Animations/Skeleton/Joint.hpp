@@ -17,12 +17,12 @@ namespace acid {
  *
  * The "localBindTransform" is the original (bind) transform of the joint relative to its parent (in bone-space).
  * The "inverseBindTransform" is that bind transform in model-space, but inversed.
- **/
+ */
 class ACID_EXPORT Joint {
 public:
 	/**
 	 * Creates a new skeleton joint.
-	 **/
+	 */
 	Joint() = default;
 
 	/**
@@ -30,7 +30,7 @@ public:
 	 * @param index The joint's index (ID).
 	 * @param name The name of the joint. This is how the joint is named in the collada file, and so is used to identify which joint a joint transform in an animation keyframe refers to.
 	 * @param bindLocalTransform The bone-space transform of the joint in the bind position.
-	 **/
+	 */
 	Joint(uint32_t index, std::string name, const Matrix4 &bindLocalTransform);
 
 	/**
@@ -43,7 +43,7 @@ public:
 	 * for use when calculating the final animation transform each frame. It then recursively calls the method for all of the children joints,
 	 * so that they too calculate and store their inverse bind-pose transform.
 	 * @param parentBindTransform The model-space bind transform of the parent joint.
-	 **/
+	 */
 	void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
 	uint32_t GetIndex() const { return m_index; }
@@ -58,7 +58,7 @@ public:
 	 * Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
 	 * which is why they are stored in a list (e.g. a "hand" joint may have multiple "finger" children joints).
 	 * @param child The new child joint of this joint.
-	 **/
+	 */
 	void AddChild(const Joint &child);
 
 	const Matrix4 &GetLocalBindTransform() const { return m_localBindTransform; }
@@ -69,7 +69,7 @@ public:
 	 * The bind transform is the original model-space transform of the joint (when no animation is applied).
 	 * This returns the inverse of that, which is used to calculate the animated transform matrix which gets used to transform vertices in the shader.
 	 * @return The inverse of the joint's bind transform (in model-space).
-	 **/
+	 */
 	const Matrix4 &GetInverseBindTransform() const { return m_inverseBindTransform; }
 	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
 

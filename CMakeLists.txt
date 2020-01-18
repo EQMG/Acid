@@ -18,8 +18,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
 # Add property to allow making project folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(CMAKE_DISABLE_SOURCE_CHANGES ON CACHE BOOL "")
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON CACHE BOOL "")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON CACHE BOOL "Whether to create a position-independent target")
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE BOOL "Export all symbols")
+if(BUILD_SHARED_LIBS)
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE BOOL "Export all symbols")
+endif()
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
 set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")
 set(CMAKE_RELEASE_POSTFIX "" CACHE STRING "Set Release library postfix")

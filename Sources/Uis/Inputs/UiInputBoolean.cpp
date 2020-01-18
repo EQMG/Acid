@@ -10,9 +10,9 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, bool 
 		UiInputButton::PrimaryColour),
 	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
 	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize,
-		title, FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Right, UiInputButton::TitleColour),
+		title, FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Right, UiInputButton::TitleColour),
 	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour),
+		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, UiInputButton::ValueColour),
 	m_value(value) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {

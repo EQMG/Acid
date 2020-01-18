@@ -3,9 +3,6 @@
 #include "Resources/Resource.hpp"
 #include "Graphics/Images/Image2d.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Outline.hpp"
-#include "Graphics/Descriptors/DescriptorsHandler.hpp"
-#include "Graphics/Buffers/InstanceBuffer.hpp"
 
 namespace acid {
 class Text;
@@ -14,29 +11,60 @@ class Text;
  * @brief Resource that is used when creating a font mesh.
  */
 class ACID_EXPORT FontType : public Resource {
-	friend class Text;
 public:
-	class Instance {
+	/**
+	 * @brief Simple data structure class holding information about a certain glyph in the font texture atlas. All sizes are for a font-size of 1.
+	 */
+	class Character {
 	public:
-		static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
-			std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
-				{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
-			};
-			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_rect)},
-				{1, baseBinding, VK_FORMAT_R32_UINT, offsetof(Instance, m_glyphIndex)},
-				{2, baseBinding, VK_FORMAT_R32_SFLOAT, offsetof(Instance, m_sharpness)},
-				{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
-			};
-			return {bindingDescriptions, attributeDescriptions};
+		/**
+		 * Creates a new character.
+		 * @param id The ASCII value of the character.
+		 * @param textureCoordX The x texture coordinate for the top left corner of the character in the texture atlas.
+		 * @param textureCoordY The y texture coordinate for the top left corner of the character in the texture atlas.
+		 * @param textureSizeX The width of the character in the texture atlas.
+		 * @param textureSizeY The height of the character in the texture atlas.
+		 * @param offsetX The x distance from the cursor to the left edge of the character's quad.
+		 * @param offsetY The y distance from the cursor to the top edge of the character's quad.
+		 * @param sizeX The width of the character's quad in screen space.
+		 * @param sizeY The height of the character's quad in screen space.
+		 * @param advanceX How far in pixels the cursor should advance after adding this character.
+		 */
+		Character(int32_t id, float textureCoordX, float textureCoordY, float textureSizeX, float textureSizeY, float offsetX,
+			float offsetY, float sizeX, float sizeY, float advanceX) :
+			m_id(id),
+			m_textureCoordX(textureCoordX),
+			m_textureCoordY(textureCoordY),
+			m_maxTextureCoordX(textureSizeX + textureCoordX),
+			m_maxTextureCoordY(textureSizeY + textureCoordY),
+			m_offsetX(offsetX),
+			m_offsetY(offsetY),
+			m_sizeX(sizeX),
+			m_sizeY(sizeY),
+			m_advanceX(advanceX) {
 		}
 
-		Rect m_rect;
-		uint32_t m_glyphIndex;
-		float m_sharpness;
-		Colour m_colour;
+		int32_t m_id;
+		float m_textureCoordX;
+		float m_textureCoordY;
+		float m_maxTextureCoordX;
+		float m_maxTextureCoordY;
+		float m_offsetX;
+		float m_offsetY;
+		float m_sizeX;
+		float m_sizeY;
+		float m_advanceX;
 	};
-	
+
+	static constexpr uint32_t PadTop = 0;
+	static constexpr uint32_t PadLeft = 1;
+	static constexpr uint32_t PadBottom = 2;
+	static constexpr uint32_t PadRight = 3;
+	static constexpr int32_t DesiredPassing = 8;
+
+	static constexpr float LineHeight = 0.03f;
+	static constexpr int32_t SpaceAscii = 32;
+
 	/**
 	 * Creates a new font type, or finds one with the same values.
 	 * @param node The node to decode values from.
@@ -58,54 +86,78 @@ public:
 	 */
 	FontType(std::filesystem::path filename, bool load = true);
 
-	void Update(const std::vector<Text *> &texts);
-	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
+	std::optional<Character> GetCharacter(int32_t ascii) const;
 	
 	std::type_index GetTypeIndex() const override { return typeid(FontType); }
+
+	const std::filesystem::path &GetFilename() const { return m_filename; }
+
+	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
+
+	float GetSpaceWidth() const { return m_spaceWidth; }
+	float GetMaxHeight() const { return m_maxHeight; }
+	float GetMaxAdvance() const { return m_maxAdvance; }
 
 	friend const Node &operator>>(const Node &node, FontType &fontType);
 	friend Node &operator<<(Node &node, const FontType &fontType);
 
 private:
-	struct CellInfo {
-		uint32_t pointOffset;
-		uint32_t cellOffset;
-		Vector2ui cellCount;
-	};
-
-	struct HostGlyphInfo {
-		Rect bbox;
-		float horiAdvance;
-		float vertAdvance;
-	};
-
-	struct DeviceGlyphInfo {
-		Rect bbox;
-		//Rect cbox;
-		CellInfo cellInfo;
-	};
-
 	void Load();
+	
+	/**
+	 * Read in the next line and store the variable values.
+	 * @param line The line to process.
+	 */
+	void ProcessNextLine(const std::string &line);
 
-	static uint32_t AlignUint32(uint32_t value, uint32_t alignment);
+	/**
+	 * Loads the data about how much padding is used around each character in the texture atlas.
+	 */
+	void LoadPaddingData();
+
+	/**
+	 * Loads information about the line height for this font in pixels,
+	 * and uses this as a way to find the conversion rate between pixels in the texture atlas and screen-space.
+	 */
+	void LoadLineSizes();
+
+	/**
+	 * Loads in data about each character from the texture atlas and converts it all from 'pixels' to 'screen-space' before storing.
+	 * And stores the data in the {@link Character} class. The effects of padding are also removed from the data.
+	 */
+	void LoadCharacterData();
+
+	/**
+	 * Gets the {@code int} value of the variable with a certain name on the current line.
+	 * @tparam T The value type.
+	 * @param variable The name of the variable.
+	 * @return The value of the variable.
+	 */
+	template<typename T = int32_t>
+	T GetValueOfVariable(const std::string &variable) {
+		return String::From<T>(m_values.at(variable));
+	}
+
+	/**
+	 * Gets the array of ints associated with a variable on the current line.
+	 * @param variable The name of the variable.
+	 * @return The {@code int} array of values associated with the variable.
+	 */
+	std::vector<int32_t> GetValuesOfVariable(const std::string &variable);
+
+	std::map<int32_t, Character> m_characters;
+	std::map<std::string, std::string> m_values;
 
 	std::filesystem::path m_filename;
-
-	std::map<wchar_t, uint32_t> m_charmap;
-	std::vector<HostGlyphInfo> m_glyphInfos;
-
-	uint32_t m_glyphDataSize = 0;
-	uint32_t m_glyphInfoSize = 0;
-	uint32_t m_glyphCellsSize = 0;
-	uint32_t m_glyphPointsSize = 0;
-	uint32_t m_glyphInfoOffset = 0;
-	uint32_t m_glyphCellsOffset = 0;
-	uint32_t m_glyphPointsOffset = 0;
-
-	DescriptorsHandler m_descriptorSet;
-	std::unique_ptr<StorageBuffer> m_storageGlyphs;
-	std::unique_ptr<InstanceBuffer> m_instanceBuffer;
-
-	uint32_t m_instances = 0;
+	std::shared_ptr<Image2d> m_image;
+	
+	float m_verticalPerPixelSize = 0.0f;
+	float m_horizontalPerPixelSize = 0.0f;
+	int32_t m_imageWidth = 0;
+	float m_spaceWidth = 0.0f;
+	std::vector<int32_t> m_padding;
+	int32_t m_paddingWidth = 0;
+	int32_t m_paddingHeight = 0;
+	float m_maxHeight = 0.0f, m_maxAdvance = 0.0f;
 };
 }

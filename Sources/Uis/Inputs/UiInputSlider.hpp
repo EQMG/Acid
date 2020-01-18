@@ -19,8 +19,8 @@ public:
 	float GetValueMax() const { return m_valueMax; }
 	void SetValueMax(float valueMax) { m_valueMax = valueMax; }
 
-	std::string GetTitle() const { return String::ConvertUtf8(m_textTitle.GetString()); }
-	void SetTitle(std::string_view string) { m_textTitle.SetString(string); }
+	const std::string &GetTitle() const { return m_textTitle.GetString(); }
+	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
 
 	float GetValue() const { return m_value; }
 	void SetValue(float value);
