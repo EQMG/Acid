@@ -22,9 +22,7 @@ public:
 	 * @param duration The duration.
 	 */
 	template<typename Rep, typename Period>
-	constexpr Time(const std::chrono::duration<Rep, Period> &duration) :
-		m_microseconds(std::chrono::duration_cast<std::chrono::microseconds>(duration).count()) {
-	}
+	constexpr Time(const std::chrono::duration<Rep, Period> &duration);
 
 	/**
 	 * Creates a time value from a number of seconds.
@@ -33,9 +31,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename Rep = float>
-	static constexpr Time Seconds(const Rep &seconds) {
-		return Time(std::chrono::duration<Rep>(seconds));
-	}
+	static constexpr Time Seconds(const Rep &seconds);
 
 	/**
 	 * Creates a time value from a number of milliseconds
@@ -44,9 +40,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename Rep = int32_t>
-	static constexpr Time Milliseconds(const Rep &milliseconds) {
-		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
-	}
+	static constexpr Time Milliseconds(const Rep &milliseconds);
 
 	/**
 	 * Creates a time value from a number of microseconds.
@@ -55,14 +49,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename Rep = int64_t>
-	static constexpr Time Microseconds(const Rep &microseconds) {
-		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
-	}
-
-	template<typename Rep, typename Period>
-	operator std::chrono::duration<Rep, Period>() const {
-		return std::chrono::duration_cast<std::chrono::duration<Rep, Period>>(m_microseconds);
-	}
+	static constexpr Time Microseconds(const Rep &microseconds);
 
 	/**
 	 * Gets the time value as a number of seconds.
@@ -70,9 +57,7 @@ public:
 	 * @return Time in seconds.
 	 */
 	template<typename T = float>
-	auto AsSeconds() const {
-		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000000);
-	}
+	constexpr auto AsSeconds() const;
 
 	/**
 	 * Gets the time value as a number of milliseconds.
@@ -80,9 +65,7 @@ public:
 	 * @return Time in milliseconds.
 	 */
 	template<typename T = int32_t>
-	auto AsMilliseconds() const {
-		return static_cast<T>(m_microseconds.count()) / static_cast<T>(1000);
-	}
+	constexpr auto AsMilliseconds() const;
 
 	/**
 	 * Gets the time value as a number of microseconds.
@@ -90,9 +73,7 @@ public:
 	 * @return Time in microseconds.
 	 */
 	template<typename T = int64_t>
-	auto AsMicroseconds() const {
-		return static_cast<T>(m_microseconds.count());
-	}
+	constexpr auto AsMicroseconds() const;
 
 	/**
 	 * Gets the current time of this application.
@@ -107,44 +88,44 @@ public:
 	 */
 	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S");
 
-	/*template<typename Period = std::ratio<1, 1>>
-	float Mod(const Time &other) {
-		return std::modf(std::chrono::duration_cast<std::chrono::duration<double, Period>>(m_microseconds),
-			std::chrono::duration_cast<std::chrono::duration<double, Period>>(other.m_microseconds));
-	}*/
+	//template<typename Period = std::ratio<1, 1>>
+	//float Mod(const Time &other);
 
-	bool operator==(const Time &other) const;
-	bool operator!=(const Time &other) const;
-	bool operator<(const Time &other) const;
-	bool operator<=(const Time &other) const;
-	bool operator>(const Time &other) const;
-	bool operator>=(const Time &other) const;
+	template<typename Rep, typename Period>
+	constexpr operator std::chrono::duration<Rep, Period>() const;
 
-	Time operator-() const;
+	constexpr bool operator==(const Time &other) const;
+	constexpr bool operator!=(const Time &other) const;
+	constexpr bool operator<(const Time &other) const;
+	constexpr bool operator<=(const Time &other) const;
+	constexpr bool operator>(const Time &other) const;
+	constexpr bool operator>=(const Time &other) const;
 
-	friend Time operator+(const Time &left, const Time &right);
-	friend Time operator-(const Time &left, const Time &right);
-	friend Time operator*(const Time &left, float right);
-	friend Time operator*(const Time &left, int64_t right);
-	friend Time operator*(float left, const Time &right);
-	friend Time operator*(int64_t left, const Time &right);
-	friend Time operator/(const Time &left, float right);
-	friend Time operator/(const Time &left, int64_t right);
-	friend double operator/(const Time &left, const Time &right);
+	constexpr Time operator-() const;
 
-	Time &operator+=(const Time &other);
-	Time &operator-=(const Time &other);
-	Time &operator*=(float other);
-	Time &operator*=(int64_t other);
-	Time &operator/=(float other);
-	Time &operator/=(int64_t other);
+	friend constexpr Time operator+(const Time &left, const Time &right);
+	friend constexpr Time operator-(const Time &left, const Time &right);
+	friend constexpr Time operator*(const Time &left, float right);
+	friend constexpr Time operator*(const Time &left, int64_t right);
+	friend constexpr Time operator*(float left, const Time &right);
+	friend constexpr Time operator*(int64_t left, const Time &right);
+	friend constexpr Time operator/(const Time &left, float right);
+	friend constexpr Time operator/(const Time &left, int64_t right);
+	friend constexpr double operator/(const Time &left, const Time &right);
+
+	constexpr Time &operator+=(const Time &other);
+	constexpr Time &operator-=(const Time &other);
+	constexpr Time &operator*=(float other);
+	constexpr Time &operator*=(int64_t other);
+	constexpr Time &operator/=(float other);
+	constexpr Time &operator/=(int64_t other);
 
 	friend const Node &operator>>(const Node &node, Time &time);
 	friend Node &operator<<(Node &node, const Time &time);
 
 private:
-	static const std::chrono::time_point<std::chrono::high_resolution_clock> Start;
-
-	std::chrono::microseconds m_microseconds = 0ms;
+	std::chrono::microseconds m_value{};
 };
 }
+
+#include "Time.inl"

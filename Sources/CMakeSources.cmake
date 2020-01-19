@@ -129,6 +129,7 @@ set(_temp_acid_headers
 		Maths/Noise/Noise.hpp
 		Maths/Quaternion.hpp
 		Maths/Time.hpp
+		Maths/Time.inl
 		Maths/Transform.hpp
 		Maths/Vector2.hpp
 		Maths/Vector2.inl
@@ -355,7 +356,6 @@ set(_temp_acid_sources
 		Maths/Matrix4.cpp
 		Maths/Noise/Noise.cpp
 		Maths/Quaternion.cpp
-		Maths/Time.cpp
 		Maths/Transform.cpp
 		Maths/Vector2.cpp
 		Maths/Vector3.cpp
