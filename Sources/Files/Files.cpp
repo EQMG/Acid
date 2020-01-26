@@ -8,9 +8,7 @@ namespace acid {
 using std::streambuf;
 using std::ios_base;
 
-class FBuffer :
-	public virtual NonCopyable,
-	public streambuf {
+class FBuffer : public streambuf, NonCopyable {
 public:
 	explicit FBuffer(PHYSFS_File *file, std::size_t bufferSize = 2048) :
 		m_bufferSize(bufferSize),

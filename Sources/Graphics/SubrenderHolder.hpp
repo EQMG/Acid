@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Class that contains and manages subrenders registered to a render manager.
  */
-class ACID_EXPORT SubrenderHolder : public virtual NonCopyable {
+class ACID_EXPORT SubrenderHolder : NonCopyable {
 	friend class Graphics;
 public:
 	/**

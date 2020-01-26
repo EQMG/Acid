@@ -21,15 +21,9 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::
 }
 
 void Text::UpdateObject() {
-	if (m_newString.has_value()) {
-		m_string = *m_newString;
-		m_newString = std::nullopt;
+	m_dirty |= GetScreenTransform().GetSize() != m_lastSize;
+	if (m_dirty)
 		LoadText();
-	}
-
-	if (GetScreenTransform().GetSize() != m_lastSize) {
-		LoadText();
-	}
 
 	m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
 	m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
@@ -72,13 +66,28 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 }
 
 void Text::SetFontSize(float fontSize) {
+	m_dirty |= m_fontSize != fontSize;
 	m_fontSize = fontSize;
-	m_lastSize = {};
 }
 
 void Text::SetString(const std::string &string) {
-	if (m_string != string)
-		m_newString = string;
+	m_dirty |= m_string != string;
+	m_string = string;
+}
+
+void Text::SetJustify(Justify justify) {
+	m_dirty |= m_justify != justify;
+	m_justify = justify;
+}
+
+void Text::SetKerning(float kerning) {
+	m_dirty |= m_kerning != kerning;
+	m_kerning = kerning;
+}
+
+void Text::SetLeading(float leading) {
+	m_dirty |= m_leading != leading;
+	m_leading = leading;
 }
 
 void Text::SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver) {
@@ -155,6 +164,7 @@ void Text::LoadText() {
 
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
+	m_dirty = false;
 
 #if defined(ACID_DEBUG)
 	Log::Out("Text mesh with ", m_string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

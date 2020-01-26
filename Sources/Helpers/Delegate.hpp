@@ -202,7 +202,7 @@ private:
 };
 
 template<typename T>
-class DelegateValue : public Delegate<void(T)>, public virtual NonCopyable {
+class DelegateValue : public Delegate<void(T)>, NonCopyable {
 public:
 	template<typename ...Args>
 	DelegateValue(Args ...args) :

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdexcept>
+#include <vector>
+
 #include "NonCopyable.hpp"
 
 namespace acid {
@@ -8,7 +11,7 @@ namespace acid {
  * @tparam T The type to hold.
  */
 template<typename T>
-class RingBuffer : public virtual NonCopyable {
+class RingBuffer : NonCopyable {
 public:
 	explicit RingBuffer(std::size_t capacity) :
 		m_data(capacity) {

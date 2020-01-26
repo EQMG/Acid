@@ -43,7 +43,7 @@ public:
 /**
  * @brief Main class for Acid, manages modules and updates. After creating your Engine object call {@link Engine#Run} to start.
  */
-class ACID_EXPORT Engine : public virtual NonCopyable {
+class ACID_EXPORT Engine : NonCopyable {
 public:
 	/**
 	 * Gets the engines instance.

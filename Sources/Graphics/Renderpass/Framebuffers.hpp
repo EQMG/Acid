@@ -8,7 +8,7 @@ class ImageDepth;
 class Renderpass;
 class RenderStage;
 
-class ACID_EXPORT Framebuffers : public virtual NonCopyable {
+class ACID_EXPORT Framebuffers : NonCopyable {
 public:
 	Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);

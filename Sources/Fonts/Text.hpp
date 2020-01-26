@@ -91,6 +91,12 @@ public:
 	Justify GetJustify() const { return m_justify; }
 
 	/**
+	 * Sets how the text should justify.
+	 * @param justify How the text will justify.
+	 */
+	void SetJustify(Justify justify);
+
+	/**
 	 * Gets the kerning (type character spacing multiplier) of this text.
 	 * @return The type kerning.
 	 */
@@ -100,7 +106,7 @@ public:
 	 * Sets the kerning (type character spacing multiplier) of this text.
 	 * @param kerning The new kerning.
 	 */
-	void SetKerning(float kerning) { m_kerning = kerning; }
+	void SetKerning(float kerning);
 
 	/**
 	 * Gets the leading (vertical line spacing multiplier) of this text.
@@ -112,7 +118,7 @@ public:
 	 * Sets the leading (vertical line spacing multiplier) of this text.
 	 * @param leading The new leading.
 	 */
-	void SetLeading(float leading) { m_leading = leading; }
+	void SetLeading(float leading);
 
 	/**
 	 * Gets the font used by this text.
@@ -283,8 +289,8 @@ private:
 
 	float m_fontSize;
 	std::string m_string;
-	std::optional<std::string> m_newString;
 	Justify m_justify;
+	bool m_dirty = true;
 
 	std::shared_ptr<FontType> m_fontType;
 	float m_kerning;

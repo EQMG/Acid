@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief Combines multiple button inputs into a single button.
  */
-class ACID_EXPORT ButtonCompound : public Button::Registrar<ButtonCompound>, public virtual NonCopyable {
+class ACID_EXPORT ButtonCompound : public Button::Registrar<ButtonCompound>, NonCopyable {
 public:
 	/**
 	 * Creates a new compound button.
