@@ -9,7 +9,7 @@ namespace acid {
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverBounce : public UiDriver<T> {
+class BounceDriver : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
@@ -17,7 +17,7 @@ public:
 	 * @param end The end value.
 	 * @param length The length between two waves.
 	 */
-	DriverBounce(const T &start, const T &end, const Time &length) :
+	BounceDriver(const T &start, const T &end, const Time &length) :
 		UiDriver<T>(length),
 		m_start(start),
 		m_end(end) {
@@ -51,7 +51,7 @@ protected:
 	T Calculate(float factor) override {
 		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
 
-		if (UiDriver<T>::m_actualTime > UiDriver<T>::GetLength() / 2.0f) {
+		if (UiDriver<T>::m_actualTime > UiDriver<T>::m_length / 2.0f) {
 			value = 0.0f;
 		}
 

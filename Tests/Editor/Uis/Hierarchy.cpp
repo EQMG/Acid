@@ -1,6 +1,6 @@
 #include "Hierarchy.hpp"
 
-#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
 
 namespace test {
 int32_t GetNextY() {
@@ -32,7 +32,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 	//m_sliderB.GetTransform().SetScale({0.071f, 0.042f});
 	auto onSlide = [this](float value) {
 		auto colour = Colour(m_sliderR.GetValue(), m_sliderG.GetValue(), m_sliderB.GetValue()) / 255.0f;
-		dynamic_cast<DriverConstant<Colour> *>(m_rgbColour.GetColourDriver())->SetConstant(colour);
+		dynamic_cast<ConstantDriver<Colour> *>(m_rgbColour.GetColourDriver())->SetConstant(colour);
 		//m_colourWheel.SetValue(colour);
 		m_textHex.SetValue(colour.GetHex());
 	};
@@ -44,7 +44,7 @@ Hierarchy::Hierarchy(UiObject *parent) :
 		m_sliderR.SetValue(255.0f * value.m_r);
 		m_sliderG.SetValue(255.0f * value.m_g);
 		m_sliderB.SetValue(255.0f * value.m_b);
-		dynamic_cast<DriverConstant<Colour> *>(m_rgbColour.GetColourDriver())->SetConstant(value);
+		dynamic_cast<ConstantDriver<Colour> *>(m_rgbColour.GetColourDriver())->SetConstant(value);
 	};*/
 }
 

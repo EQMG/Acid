@@ -10,8 +10,8 @@
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiObject.hpp>
 #include <Uis/UiPanel.hpp>
-#include <Uis/Drivers/DriverConstant.hpp>
-#include <Uis/Drivers/DriverSinwave.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
+#include <Uis/Drivers/SinewaveDriver.hpp>
 
 using namespace acid;
 
@@ -20,12 +20,12 @@ class Inventory : public UiObject {
 public:
 	explicit Inventory(UiObject *parent) :
 		UiObject(parent, {{480, 48}, UiAnchor::CentreBottom}) {
-		SetScaleDriver<DriverSinwave>(Vector2f(0.9f), Vector2f(1.2f), 6s);
+		SetScaleDriver<SinewaveDriver>(Vector2f(0.9f), Vector2f(1.2f), 6s);
 		for (uint32_t i = 0; i < 10; i++) {
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);
 
 			auto slot = std::make_unique<Gui>(this, UiTransform({48, 48}, UiAnchor::LeftTop, {48 * i, 0}), Image2d::Create("Guis/White.png"));
-			slot->SetColourDriver<DriverConstant>(colour); // TODO: If colour for GUI is like this do the same for text.
+			slot->SetColourDriver<ConstantDriver>(colour); // TODO: If colour for GUI is like this do the same for text.
 			m_slots.emplace_back(std::move(slot));
 
 			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform({24, 16}, UiAnchor::CentreBottom), 12,

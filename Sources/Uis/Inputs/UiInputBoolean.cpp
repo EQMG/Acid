@@ -1,6 +1,6 @@
 #include "UiInputBoolean.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
@@ -16,7 +16,7 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, bool 
 	m_value(value) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
+		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
 			UiInputButton::SlideTime);
 	});
 	OnClick().Add([this](MouseButton button) {

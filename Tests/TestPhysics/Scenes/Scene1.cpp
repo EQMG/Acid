@@ -9,8 +9,8 @@
 #include <Lights/Light.hpp>
 #include <Resources/Resources.hpp>
 #include <Materials/MaterialDefault.hpp>
-#include <Uis/Drivers/DriverConstant.hpp>
-#include <Uis/Drivers/DriverSlide.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
+#include <Uis/Drivers/SlideDriver.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
@@ -99,11 +99,11 @@ Scene1::Scene1() :
 		}
 	}, this);
 
-	m_uiStartLogo.SetAlphaDriver<DriverConstant>(1.0f);
-	m_overlayDebug.SetAlphaDriver<DriverConstant>(0.0f);
+	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
+	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 
 	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
+		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		Mouse::Get()->SetCursorHidden(true);
 	});
 

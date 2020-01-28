@@ -2,7 +2,7 @@
 
 #include <Audio/Audio.hpp>
 #include <Inputs/Input.hpp>
-#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Inputs/UiInputButton.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Uis/Uis.hpp>
@@ -81,7 +81,7 @@ void Pannable::UpdateObject() {
 	auto offset = m_content.GetTransform().GetPosition();
 
 	m_zoom += Mouse::Get()->GetScrollDelta().m_y;
-	dynamic_cast<DriverConstant<Vector2f> *>(m_content.GetScaleDriver())->SetConstant(Vector2f(m_zoom));
+	dynamic_cast<ConstantDriver<Vector2f> *>(m_content.GetScaleDriver())->SetConstant(Vector2f(m_zoom));
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release) {
 		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();

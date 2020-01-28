@@ -1,6 +1,6 @@
 #include "UiInputDropdown.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
@@ -15,7 +15,7 @@ UiInputDropdown::UiInputDropdown(UiObject *parent, const std::string &title, uin
 	m_options(std::move(options)) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(),
+		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(),
 			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 	});
 

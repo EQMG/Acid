@@ -1,8 +1,8 @@
 #include "Scene1.hpp"
 
 #include <Inputs/Input.hpp>
-#include <Uis/Drivers/DriverConstant.hpp>
-#include <Uis/Drivers/DriverSlide.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
+#include <Uis/Drivers/SlideDriver.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test {
@@ -19,15 +19,15 @@ Scene1::Scene1() :
 		}
 	}, this);
 
-	//Uis::Get()->GetCanvas().SetScaleDriver<DriverSinwave>(Vector2f(0.3f), Vector2f(5.0f), 16s);
+	//Uis::Get()->GetCanvas().SetScaleDriver<SinewaveDriver>(Vector2f(0.3f), Vector2f(5.0f), 16s);
 
-	m_uiStartLogo.SetAlphaDriver<DriverConstant>(1.0f);
-	m_overlayDebug.SetAlphaDriver<DriverConstant>(0.0f);
-	m_uiPanels.SetAlphaDriver<DriverConstant>(0.0f);
+	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
+	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
+	m_uiPanels.SetAlphaDriver<ConstantDriver>(0.0f);
 
 	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
-		//m_uiPanels.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
+		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
+		//m_uiPanels.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		TogglePause();
 	});
 }
@@ -47,6 +47,6 @@ void Scene1::TogglePause() {
 		return;
 	}
 
-	m_uiPanels.SetAlphaDriver<DriverSlide>(m_uiPanels.GetAlphaDriver()->Get(), IsPaused() ? 0.0f : 1.0f, UI_SLIDE_TIME);
+	m_uiPanels.SetAlphaDriver<SlideDriver>(m_uiPanels.GetAlphaDriver()->Get(), IsPaused() ? 0.0f : 1.0f, UI_SLIDE_TIME);
 }
 }

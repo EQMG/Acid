@@ -1,6 +1,6 @@
 #include "UiInputRadio.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
@@ -14,7 +14,7 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type typ
 	m_type(type) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(),
+		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(),
 			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 	});
 	OnClick().Add([this](MouseButton button) {
@@ -62,6 +62,6 @@ void UiInputRadio::UpdateValue() {
 		break;
 	}
 
-	m_fill.SetAlphaDriver<DriverSlide>(m_fill.GetAlphaDriver()->Get(), m_value, UiInputButton::SlideTime);
+	m_fill.SetAlphaDriver<SlideDriver>(m_fill.GetAlphaDriver()->Get(), m_value, UiInputButton::SlideTime);
 }
 }

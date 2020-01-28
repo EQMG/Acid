@@ -1,6 +1,6 @@
 #include "Text.hpp"
 
-#include "Uis/Drivers/DriverConstant.hpp"
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid {
@@ -15,8 +15,8 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::
 	m_kerning(kerning),
 	m_leading(leading),
 	m_textColour(textColour),
-	m_glowDriver(std::make_unique<DriverConstant<float>>(0.0f)),
-	m_borderDriver(std::make_unique<DriverConstant<float>>(0.0f)) {
+	m_glowDriver(std::make_unique<ConstantDriver<float>>(0.0f)),
+	m_borderDriver(std::make_unique<ConstantDriver<float>>(0.0f)) {
 	LoadText();
 }
 

@@ -230,12 +230,12 @@ set(_temp_acid_headers
 		Skyboxes/MaterialSkybox.hpp
 		Timers/Timers.hpp
 		Uis/Drivers/UiDriver.hpp
-		Uis/Drivers/DriverBounce.hpp
-		Uis/Drivers/DriverConstant.hpp
-		Uis/Drivers/DriverFade.hpp
-		Uis/Drivers/DriverLinear.hpp
-		Uis/Drivers/DriverSinwave.hpp
-		Uis/Drivers/DriverSlide.hpp
+		Uis/Drivers/BounceDriver.hpp
+		Uis/Drivers/ConstantDriver.hpp
+		Uis/Drivers/FadeDriver.hpp
+		Uis/Drivers/LinearDriver.hpp
+		Uis/Drivers/SinewaveDriver.hpp
+		Uis/Drivers/SlideDriver.hpp
 		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
 		Uis/Inputs/UiInputDropdown.hpp

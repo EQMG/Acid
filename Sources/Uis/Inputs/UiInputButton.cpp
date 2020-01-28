@@ -1,6 +1,6 @@
 #include "UiInputButton.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
@@ -24,7 +24,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
+		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
 	});
 
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});

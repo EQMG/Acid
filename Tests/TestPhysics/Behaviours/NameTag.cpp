@@ -3,7 +3,7 @@
 #include <Scenes/Entity.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Uis/Uis.hpp>
-#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
 
 namespace test {
 bool NameTag::registered = Register("heightDespawn");
@@ -19,7 +19,7 @@ NameTag::NameTag(const std::string &name, float heightOffset) :
 {
 	//m_text.SetTextColour(0xFFFFFF);
 	//m_text.SetBorderColour(0x262626);
-	//m_text.SetBorderDriver<DriverConstant>(0.1f);
+	//m_text.SetBorderDriver<ConstantDriver>(0.1f);
 }
 
 void NameTag::Start() {
@@ -42,7 +42,7 @@ void NameTag::Update() {
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
 	auto toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);
-	//dynamic_cast<DriverConstant<float> *>(m_text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
+	//dynamic_cast<ConstantDriver<float> *>(m_text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
 
 	// Will always face the screen, like a particle.
 	//m_text.SetLockRotation(true);

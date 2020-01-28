@@ -34,10 +34,10 @@ Panels::Panels(UiObject *parent) :
 	m_gui2(&m_gui1, {UiMargins::None, {48, 48}, {-48, -48}}, Image2d::Create("Guis/White.png")),
 	m_text3(&m_gui2, {UiMargins::None, {24, 24}, {-24, -24}}, 12, "", FontType::Create("Fonts/ProximaNova-Light.fnt")),
 	m_text1(this, {{2000, 256}, UiAnchor::LeftBottom, {50, -75}}, 72, "P(t) = (1 - t)² * p₀ + 2t * (1 - t) * p₁ + t² * p₂", FontType::Create("Fonts/ProximaNova-Bold.fnt")) {
-	m_gui1.SetColourDriver<DriverConstant>(Colour::Blue);
-	m_gui2.SetColourDriver<DriverConstant>(Colour::Yellow);
+	m_gui1.SetColourDriver<ConstantDriver>(Colour::Blue);
+	m_gui2.SetColourDriver<ConstantDriver>(Colour::Yellow);
 	m_gui1.OnSelected().Add([this](bool selected) {
-		m_gui1.SetColourDriver<DriverConstant>(selected ? Colour::Green : Colour::Blue);
+		m_gui1.SetColourDriver<ConstantDriver>(selected ? Colour::Green : Colour::Blue);
 	});
 	m_text3.SetString("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent hendrerit pharetra dui, vitae blandit purus vehicula blandit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris faucibus nunc vitae fringilla dignissim. Maecenas placerat vulputate cursus. Pellentesque leo sapien, efficitur vehicula tempus pharetra, consequat eu erat. Vestibulum at urna nec mi semper faucibus. Nunc malesuada mi turpis, eu bibendum turpis euismod at. Pellentesque vel nisl bibendum, condimentum urna quis, placerat risus. Sed laoreet blandit felis sit amet lacinia.\n\n"
 		"Aenean et tincidunt libero. Integer eu eros tempor, iaculis odio a, imperdiet arcu. Fusce vitae fringilla tellus. Donec blandit nulla mauris. Donec feugiat efficitur ligula eget facilisis. Aenean a nibh efficitur, sodales nisl vitae, ullamcorper lacus. Donec ornare nunc non erat efficitur, sed imperdiet nunc rutrum. Aliquam erat volutpat. Integer feugiat risus non enim facilisis, et luctus erat aliquet.\n\n"

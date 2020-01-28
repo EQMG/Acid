@@ -9,13 +9,13 @@ namespace acid {
  */
 
 template<typename T>
-class DriverConstant : public UiDriver<T> {
+class ConstantDriver : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new constant driver.
 	 * @param constant The constant value.
 	 */
-	explicit DriverConstant(const T &constant) :
+	explicit ConstantDriver(const T &constant) :
 		UiDriver<T>(-1s),
 		m_constant(constant) {
 	}

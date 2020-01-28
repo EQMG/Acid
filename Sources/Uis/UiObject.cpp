@@ -1,7 +1,7 @@
 #include "UiObject.hpp"
 
 #include "Graphics/Graphics.hpp"
-#include "Uis/Drivers/DriverConstant.hpp"
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Uis.hpp"
 
 namespace acid {
@@ -9,8 +9,8 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 	m_parent(parent),
 	m_enabled(true),
 	m_transform(transform),
-	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
-	m_scaleDriver(std::make_unique<DriverConstant<Vector2f>>(Vector3f(1.0f))),
+	m_alphaDriver(std::make_unique<ConstantDriver<float>>(1.0f)),
+	m_scaleDriver(std::make_unique<ConstantDriver<Vector2f>>(Vector3f(1.0f))),
 	m_screenAlpha(1.0f),
 	m_screenScale(1.0f) {
 	if (m_parent) {

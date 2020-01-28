@@ -1,6 +1,6 @@
 #include "UiStartLogo.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Timers/Timers.hpp"
 
 namespace acid {
@@ -17,7 +17,7 @@ UiStartLogo::UiStartLogo(UiObject *parent) :
 	m_textCopyright(this, {{460, 64}, UiAnchor::Centre, {0, 128}}, 12.0f, "Copyright (C) 2019, Equilibrium Games - All Rights Reserved.",
 		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Centre, Colour::White) {
 	Timers::Get()->Once(START_DELAY, [this]() {
-		SetAlphaDriver<DriverSlide>(1.0f, 0.0f, 1.4s);
+		SetAlphaDriver<SlideDriver>(1.0f, 0.0f, 1.4s);
 	}, this);
 }
 

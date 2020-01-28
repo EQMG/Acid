@@ -9,7 +9,7 @@ namespace acid {
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverSinwave : public UiDriver<T> {
+class SinewaveDriver : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
@@ -17,7 +17,7 @@ public:
 	 * @param max The max value.
 	 * @param length The length between two waves.
 	 */
-	DriverSinwave(const T &min, const T &max, const Time &length) :
+	SinewaveDriver(const T &min, const T &max, const Time &length) :
 		UiDriver<T>(length),
 		m_min(min),
 		m_max(max) {

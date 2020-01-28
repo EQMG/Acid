@@ -8,8 +8,7 @@ namespace acid {
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverFade :
-	public UiDriver<T> {
+class FadeDriver : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new fade driver.
@@ -18,7 +17,7 @@ public:
 	 * @param peak The peak value.
 	 * @param length The time taken to get to the end.
 	 */
-	DriverFade(const T &start, const T &end, const T &peak, const Time &length) :
+	FadeDriver(const T &start, const T &end, const T &peak, const Time &length) :
 		UiDriver<T>(length),
 		m_start(start),
 		m_end(end),

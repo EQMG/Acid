@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Engine.hpp>
-#include <Uis/Drivers/DriverLinear.hpp>
+#include <Uis/Drivers/LinearDriver.hpp>
 #include <Maths/Vector3.hpp>
 #include <Lights/Fog.hpp>
 
@@ -24,7 +24,7 @@ public:
 	Vector3f GetLightDirection() const { return m_lightDirection; }
 
 private:
-	DriverLinear<float> m_driverDay;
+	LinearDriver<float> m_driverDay;
 
 	Fog m_fog;
 

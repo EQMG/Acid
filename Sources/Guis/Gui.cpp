@@ -1,7 +1,7 @@
 #include "Gui.hpp"
 
 #include "Graphics/Graphics.hpp"
-#include "Uis/Drivers/DriverConstant.hpp"
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Models/Vertex2.hpp"
 
 namespace acid {
@@ -21,7 +21,7 @@ Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d
 	m_model(std::make_unique<Model>(VERTICES, INDICES)),
 	m_image(std::move(image)),
 	m_atlasScale(1.0f),
-	m_colourDriver(std::make_unique<DriverConstant<Colour>>(colourOffset)) {
+	m_colourDriver(std::make_unique<ConstantDriver<Colour>>(colourOffset)) {
 }
 
 void Gui::UpdateObject() {

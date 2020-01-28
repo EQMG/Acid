@@ -1,7 +1,7 @@
 #include "UiInputText.hpp"
 
 #include "Devices/Keyboard.hpp"
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
@@ -71,10 +71,10 @@ void UiInputText::UpdateObject() {
 
 	if (!m_updating) {
 		if (m_background.IsSelected() && !m_mouseOver) {
-			m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		} else if (!m_background.IsSelected() && m_mouseOver) {
-			m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 	}

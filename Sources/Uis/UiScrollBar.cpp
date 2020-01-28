@@ -1,6 +1,6 @@
 #include "UiScrollBar.hpp"
 
-#include "Uis/Drivers/DriverSlide.hpp"
+#include "Uis/Drivers/SlideDriver.hpp"
 #include "Inputs/UiInputButton.hpp"
 #include "Uis.hpp"
 
@@ -37,10 +37,10 @@ void UiScrollBar::UpdateObject() {
 
 	if (!m_updating) {
 		if (m_scroll.IsSelected() && !m_mouseOver) {
-			m_scroll.SetColourDriver<DriverSlide>(m_scroll.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			m_scroll.SetColourDriver<SlideDriver>(m_scroll.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		} else if (!m_scroll.IsSelected() && m_mouseOver) {
-			m_scroll.SetColourDriver<DriverSlide>(m_scroll.GetColourDriver()->Get(), UiInputButton::ButtonColour, UiInputButton::SlideTime);
+			m_scroll.SetColourDriver<SlideDriver>(m_scroll.GetColourDriver()->Get(), UiInputButton::ButtonColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 	}
