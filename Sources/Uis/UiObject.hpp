@@ -78,12 +78,18 @@ public:
 	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
 
 	UiDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
-	void SetAlphaDriver(std::unique_ptr<UiDriver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
-	float GetAlpha() const { return m_alpha; }
+	template<template<typename> typename T, typename... Args,
+		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
+		void SetAlphaDriver(Args &&... args) {
+		m_alphaDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
+	}
 
 	UiDriver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
-	void SetScaleDriver(std::unique_ptr<UiDriver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
-	const Vector2f &GetScale() const { return m_scale; }
+	template<template<typename> typename T, typename... Args,
+		typename = std::enable_if_t<std::is_convertible_v<T<Vector2f> *, UiDriver<Vector2f> *>>>
+		void SetScaleDriver(Args &&... args) {
+		m_scaleDriver = std::make_unique<T<Vector2f>>(std::forward<Args>(args)...);
+	}
 
 	const UiTransform &GetScreenTransform() const { return m_screenTransform; }
 	const Matrix4 &GetModelView() const { return m_modelView; }
@@ -118,10 +124,7 @@ private:
 	std::optional<Vector4f> m_scissor;
 
 	std::unique_ptr<UiDriver<float>> m_alphaDriver;
-	float m_alpha;
-
 	std::unique_ptr<UiDriver<Vector2f>> m_scaleDriver;
-	Vector2f m_scale;
 
 	UiTransform m_screenTransform;
 	Matrix4 m_modelView;

@@ -23,16 +23,17 @@ public:
 	/**
 	 * Updates the driver with the passed time.
 	 * @param delta The time between the last update.
-	 * @return The calculated value.
+	 * @return If the driver has not completed.
 	 */
-
-	T Update(const Time &delta) {
+	bool Update(const Time &delta) {
 		m_actualTime += delta;
 		m_currentTime += delta;
 		if (m_repeat)
 			m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));
-		auto time = static_cast<float>(m_currentTime / m_length);
-		return Calculate(time);
+		auto factor = static_cast<float>(m_currentTime / m_length);
+		factor = std::clamp(factor, 0.0f, 1.0f);
+		current = Calculate(factor);
+		return factor != 1.0f && !m_repeat;
 	}
 
 	/**
@@ -47,6 +48,12 @@ public:
 	 */
 	void SetLength(const Time &length) { m_length = length; }
 
+	/**
+	 * Gets the current driver value.
+	 * @return The current value.
+	 */
+	T Get() const { return current; }
+
 protected:
 	/**
 	 * Calculates the new value.
@@ -59,5 +66,7 @@ protected:
 	bool m_repeat = true;
 	Time m_actualTime;
 	Time m_currentTime;
+	/// The most recent value calculation.
+	T current{};
 };
 }

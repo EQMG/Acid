@@ -116,7 +116,6 @@
 #include "Materials/PipelineMaterial.hpp"
 #include "Maths/Colour.hpp"
 #include "Maths/ElapsedTime.hpp"
-#include "Maths/Interpolation/SmoothFloat.hpp"
 #include "Maths/Maths.hpp"
 #include "Maths/Matrix2.hpp"
 #include "Maths/Matrix3.hpp"

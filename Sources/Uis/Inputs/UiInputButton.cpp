@@ -9,13 +9,13 @@ const Vector2i UiInputButton::Padding(5, 5);
 const float UiInputButton::FontSize(13.0f);
 const Time UiInputButton::SlideTime(0.07s);
 
-const Colour UiInputButton::ValueColour("#FEFCFE");
-const Colour UiInputButton::TitleColour("#9C9A9C");
+const Colour UiInputButton::ValueColour(0xFEFCFE);
+const Colour UiInputButton::TitleColour(0x9C9A9C);
 
-const Colour UiInputButton::BackgroundColour("#282729");
-const Colour UiInputButton::PrimaryColour("#121113");
-const Colour UiInputButton::SelectedColour("#FEA62A");
-const Colour UiInputButton::ButtonColour("#3C3B3C");
+const Colour UiInputButton::BackgroundColour(0x282729);
+const Colour UiInputButton::PrimaryColour(0x121113);
+const Colour UiInputButton::SelectedColour(0xFEA62A);
+const Colour UiInputButton::ButtonColour(0x3C3B3C);
 
 UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform) :
 	UiObject(parent, transform),
@@ -24,7 +24,7 @@ UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const 
 		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, ValueColour) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? SelectedColour : ButtonColour, SlideTime));
+		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
 	});
 
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});

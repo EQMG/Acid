@@ -121,7 +121,6 @@ set(_temp_acid_headers
 		Materials/PipelineMaterial.hpp
 		Maths/Colour.hpp
 		Maths/ElapsedTime.hpp
-		Maths/Interpolation/SmoothFloat.hpp
 		Maths/Maths.hpp
 		Maths/Matrix2.hpp
 		Maths/Matrix3.hpp

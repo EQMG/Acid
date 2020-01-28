@@ -17,9 +17,9 @@ NameTag::NameTag(const std::string &name, float heightOffset) :
 //m_text(&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova-Regular.fnt"),
 //	Text::Justify::Left}
 {
-	//m_text.SetTextColour("#ffffff");
-	//m_text.SetBorderColour("#262626");
-	//m_text.SetBorderDriver(std::make_unique<DriverConstant<float>>(0.1f));
+	//m_text.SetTextColour(0xFFFFFF);
+	//m_text.SetBorderColour(0x262626);
+	//m_text.SetBorderDriver<DriverConstant>(0.1f);
 }
 
 void NameTag::Start() {

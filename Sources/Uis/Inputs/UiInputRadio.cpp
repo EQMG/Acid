@@ -14,8 +14,8 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type typ
 	m_type(type) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
-			UiInputButton::SlideTime));
+		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(),
+			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 	});
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
@@ -62,6 +62,6 @@ void UiInputRadio::UpdateValue() {
 		break;
 	}
 
-	m_fill.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_fill.GetAlpha(), m_value, UiInputButton::SlideTime));
+	m_fill.SetAlphaDriver<DriverSlide>(m_fill.GetAlphaDriver()->Get(), m_value, UiInputButton::SlideTime);
 }
 }

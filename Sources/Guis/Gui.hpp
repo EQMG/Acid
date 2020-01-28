@@ -52,13 +52,11 @@ public:
 	void SetNinePatches(const Vector4f &ninePatches) { m_ninePatches = ninePatches; }
 
 	UiDriver<Colour> *GetColourDriver() const { return m_colourDriver.get(); }
-
-	/**
-	 * Sets the colour offset driver.
-	 * @param colourDriver The new colour offset driver.
-	 */
-	void SetColourDriver(std::unique_ptr<UiDriver<Colour>> &&colourDriver) { m_colourDriver = std::move(colourDriver); }
-	const Colour &GetColourOffset() const { return m_colourOffset; }
+	template<template<typename> typename T, typename... Args,
+		typename = std::enable_if_t<std::is_convertible_v<T<Colour> *, UiDriver<Colour> *>>>
+		void SetColourDriver(Args &&... args) {
+		m_colourDriver = std::make_unique<T<Colour>>(std::forward<Args>(args)...);
+	}
 
 private:
 	DescriptorsHandler m_descriptorSet;
@@ -73,6 +71,5 @@ private:
 	Vector4f m_ninePatches; // TODO: Use UiTransform
 
 	std::unique_ptr<UiDriver<Colour>> m_colourDriver;
-	Colour m_colourOffset;
 };
 }

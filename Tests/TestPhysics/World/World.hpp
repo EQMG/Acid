@@ -25,7 +25,6 @@ public:
 
 private:
 	DriverLinear<float> m_driverDay;
-	float m_factorDay;
 
 	Fog m_fog;
 

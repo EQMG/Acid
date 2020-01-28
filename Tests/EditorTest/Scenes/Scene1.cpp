@@ -61,11 +61,11 @@ Scene1::Scene1() :
 		}
 	}, this);
 
-	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
-	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
+	m_uiStartLogo.SetAlphaDriver<DriverConstant>(1.0f);
+	m_overlayDebug.SetAlphaDriver<DriverConstant>(0.0f);
 
 	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
+		m_overlayDebug.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
 		Mouse::Get()->SetCursorHidden(true);
 	});
 }

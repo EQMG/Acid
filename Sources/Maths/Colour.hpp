@@ -9,6 +9,13 @@ namespace acid {
  */
 class ACID_EXPORT Colour {
 public:
+	// In order of how bits are mapped [24, 16, 8, 0xFF].
+	enum class Type {
+		RGBA,
+		ARGB,
+		RGB
+	};
+
 	/**
 	 * Constructor for Colour.
 	 */
@@ -23,6 +30,13 @@ public:
 	 */
 	Colour(float r, float g, float b, float a = 1.0f);
 
+	/**
+	 * Constructor for Colour.
+	 * @param i The integer value.
+	 * @param type The order components of colour are packed.
+	 */
+	Colour(uint32_t i, Type type = Type::RGB);
+	
 	/**
 	 * Constructor for Colour.
 	 * @param hex The new values from HEX.
@@ -105,6 +119,13 @@ public:
 	 */
 	Colour GetUnit() const;
 
+	/**
+	 * Gets a packed integer representing this colour.
+	 * @param type The order components of colour are packed.
+	 * @return The packed integer.
+	 */
+	uint32_t GetInt(Type type = Type::RGBA) const;
+	
 	/**
 	 * Gets the hex code from this colour.
 	 * @return The hex code.

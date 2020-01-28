@@ -7,21 +7,20 @@
 #include <Shadows/Shadows.hpp>
 
 namespace test {
-static const Colour FOG_COLOUR_SUNRISE("#ee9a90");
-static const Colour FOG_COLOUR_NIGHT("#0D0D1A");
-static const Colour FOG_COLOUR_DAY("#e6e6e6");
+static const Colour FOG_COLOUR_SUNRISE(0xEE9A90);
+static const Colour FOG_COLOUR_NIGHT(0x0D0D1A);
+static const Colour FOG_COLOUR_DAY(0xE6E6E6);
 
 World::World() :
 	m_driverDay(DriverLinear<float>(0.0f, 1.0f, 300s)),
-	m_factorDay(0.0f),
 	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
 	m_driverDay.Update(50s); // Starts during daytime.
 }
 
 void World::Update() {
-	m_factorDay = m_driverDay.Update(Engine::Get()->GetDelta());
+	m_driverDay.Update(Engine::Get()->GetDelta());
 
-	m_skyboxRotation = {360.0f * m_factorDay, 0.0f, 0.0f};
+	m_skyboxRotation = {360.0f * m_driverDay.Get(), 0.0f, 0.0f};
 	m_lightDirection = {0.154303f, 0.771517f, -0.617213f};
 
 	auto fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
@@ -51,7 +50,7 @@ void World::Update() {
 }
 
 float World::GetDayFactor() const {
-	return m_factorDay;
+	return m_driverDay.Get();
 }
 
 float World::GetSunriseFactor() const {

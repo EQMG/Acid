@@ -4,29 +4,54 @@
 #include <iomanip>
 
 namespace acid {
-const Colour Colour::Clear("#000000", 0.0f);
-const Colour Colour::Black("#000000");
-const Colour Colour::Grey("#808080");
-const Colour Colour::Silver("#C0C0C0");
-const Colour Colour::White("#FFFFFF");
-const Colour Colour::Maroon("#800000");
-const Colour Colour::Red("#FF0000");
-const Colour Colour::Olive("#808000");
-const Colour Colour::Yellow("#FFFF00");
-const Colour Colour::Green("#00FF00");
-const Colour Colour::Lime("#008000");
-const Colour Colour::Teal("#008080");
-const Colour Colour::Aqua("#00FFFF");
-const Colour Colour::Navy("#000080");
-const Colour Colour::Blue("#0000FF");
-const Colour Colour::Purple("#800080");
-const Colour Colour::Fuchsia("#FF00FF");
+const Colour Colour::Clear(0x00000000, Type::RGBA);
+const Colour Colour::Black(0x000000FF, Type::RGBA);
+const Colour Colour::Grey(0x808080);
+const Colour Colour::Silver(0xC0C0C0);
+const Colour Colour::White(0xFFFFFF);
+const Colour Colour::Maroon(0x800000);
+const Colour Colour::Red(0xFF0000);
+const Colour Colour::Olive(0x808000);
+const Colour Colour::Yellow(0xFFFF00);
+const Colour Colour::Green(0x00FF00);
+const Colour Colour::Lime(0x008000);
+const Colour Colour::Teal(0x008080);
+const Colour Colour::Aqua(0x00FFFF);
+const Colour Colour::Navy(0x000080);
+const Colour Colour::Blue(0x0000FF);
+const Colour Colour::Purple(0x800080);
+const Colour Colour::Fuchsia(0xFF00FF);
 
 Colour::Colour(float r, float g, float b, float a) :
 	m_r(r),
 	m_g(g),
 	m_b(b),
 	m_a(a) {
+}
+
+Colour::Colour(uint32_t i, Type type) {
+	switch (type) {
+	case Type::RGBA:
+		m_r = static_cast<float>((uint8_t)(i >> 24 & 0xFF)) / 255.0f;
+		m_g = static_cast<float>((uint8_t)(i >> 16 & 0xFF)) / 255.0f;
+		m_b = static_cast<float>((uint8_t)(i >> 8 & 0xFF)) / 255.0f;
+		m_a = static_cast<float>((uint8_t)(i & 0xFF)) / 255.0f;
+		break;
+	case Type::ARGB:
+		m_r = static_cast<float>((uint8_t)(i >> 16)) / 255.0f;
+		m_g = static_cast<float>((uint8_t)(i >> 8)) / 255.0f;
+		m_b = static_cast<float>((uint8_t)(i & 0xFF)) / 255.0f;
+		m_a = static_cast<float>((uint8_t)(i >> 24)) / 255.0f;
+		break;
+	case Type::RGB:
+		m_r = static_cast<float>((uint8_t)(i >> 16)) / 255.0f;
+		m_g = static_cast<float>((uint8_t)(i >> 8)) / 255.0f;
+		m_b = static_cast<float>((uint8_t)(i & 0xFF)) / 255.0f;
+		m_a = 1.0f;
+		break;
+	default:
+		throw std::runtime_error("Unknown Color type");
+	}
 }
 
 Colour::Colour(std::string hex, float a) :
@@ -94,6 +119,21 @@ Colour Colour::SmoothDamp(const Colour &target, const Colour &rate) const {
 Colour Colour::GetUnit() const {
 	auto l = Length();
 	return {m_r / l, m_g / l, m_b / l, m_a / l};
+}
+
+uint32_t Colour::GetInt(Type type) const {
+	switch (type) {
+	case Type::RGBA:
+		return (static_cast<uint8_t>(m_r * 255.0f) << 24) | (static_cast<uint8_t>(m_g * 255.0f) << 16) | (static_cast<uint8_t>(m_b * 255.0f) << 8) | (static_cast<uint8_t>(m_a * 255.0f) &
+			0xFF);
+	case Type::ARGB:
+		return (static_cast<uint8_t>(m_a * 255.0f) << 24) | (static_cast<uint8_t>(m_r * 255.0f) << 16) | (static_cast<uint8_t>(m_g * 255.0f) << 8) | (static_cast<uint8_t>(m_b * 255.0f) &
+			0xFF);
+	case Type::RGB:
+		return (static_cast<uint8_t>(m_r * 255.0f) << 16) | (static_cast<uint8_t>(m_g * 255.0f) << 8) | (static_cast<uint8_t>(m_b * 255.0f) & 0xFF);
+	default:
+		throw std::runtime_error("Unknown Color type");
+	}
 }
 
 std::string Colour::GetHex() const {

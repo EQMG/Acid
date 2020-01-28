@@ -9,12 +9,12 @@
 namespace test {
 bool CelestialBody::registered = Register("celestialBody");
 
-static const Colour SUN_COLOUR_SUNRISE("#ee9a90");
-static const Colour SUN_COLOUR_NIGHT("#0D0D1A");
-static const Colour SUN_COLOUR_DAY("#ffffff");
+static const Colour SUN_COLOUR_SUNRISE(0xEE9A90);
+static const Colour SUN_COLOUR_NIGHT(0x0D0D1A);
+static const Colour SUN_COLOUR_DAY(0xFFFFFF);
 
-static const Colour MOON_COLOUR_NIGHT("#666699");
-static const Colour MOON_COLOUR_DAY("#000000");
+static const Colour MOON_COLOUR_NIGHT(0x666699);
+static const Colour MOON_COLOUR_DAY(0x000000);
 
 CelestialBody::CelestialBody(Type type) :
 	m_type(type) {

@@ -151,20 +151,22 @@ public:
 	void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
 	UiDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
-
-	/**
-	 * Sets the glow driver, will disable solid borders.
-	 * @param glowDriver The new glow driver.
-	 */
-	void SetGlowDriver(std::unique_ptr<UiDriver<float>> &&glowDriver);
+	template<template<typename> typename T, typename... Args,
+		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
+		void SetGlowDriver(Args &&... args) {
+		m_glowDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
+		m_solidBorder = false;
+		m_glowBorder = true;
+	}
 
 	UiDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
-
-	/**
-	 * Sets the border driver, will disable glowing.
-	 * @param borderDriver The new border driver.
-	 */
-	void SetBorderDriver(std::unique_ptr<UiDriver<float>> &&borderDriver);
+	template<template<typename> typename T, typename... Args,
+		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
+		void SetBorderDriver(Args &&... args) {
+		m_borderDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
+		m_solidBorder = true;
+		m_glowBorder = false;
+	}
 
 	/**
 	 * Disables both solid borders and glow borders.
@@ -302,9 +304,6 @@ private:
 	bool m_glowBorder = false;
 
 	std::unique_ptr<UiDriver<float>> m_glowDriver;
-	float m_glowSize = 0.0f;
-
 	std::unique_ptr<UiDriver<float>> m_borderDriver;
-	float m_borderSize = 0.0f;
 };
 }

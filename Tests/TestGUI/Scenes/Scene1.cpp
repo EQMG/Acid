@@ -19,15 +19,15 @@ Scene1::Scene1() :
 		}
 	}, this);
 
-	//Uis::Get()->GetCanvas().SetScaleDriver(std::make_unique<DriverSinwave<Vector2f>>(Vector2f(0.3f), Vector2f(5.0f), 16s));
+	//Uis::Get()->GetCanvas().SetScaleDriver<DriverSinwave>(Vector2f(0.3f), Vector2f(5.0f), 16s);
 
-	m_uiStartLogo.SetAlphaDriver(std::make_unique<DriverConstant<float>>(1.0f));
-	m_overlayDebug.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
-	m_uiPanels.SetAlphaDriver(std::make_unique<DriverConstant<float>>(0.0f));
+	m_uiStartLogo.SetAlphaDriver<DriverConstant>(1.0f);
+	m_overlayDebug.SetAlphaDriver<DriverConstant>(0.0f);
+	m_uiPanels.SetAlphaDriver<DriverConstant>(0.0f);
 
 	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
-		//m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(0.0f, 1.0f, UI_SLIDE_TIME));
+		m_overlayDebug.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
+		//m_uiPanels.SetAlphaDriver<DriverSlide>(0.0f, 1.0f, UI_SLIDE_TIME);
 		TogglePause();
 	});
 }
@@ -39,7 +39,7 @@ void Scene1::Update() {
 }
 
 bool Scene1::IsPaused() const {
-	return !m_uiStartLogo.IsFinished() || m_uiPanels.GetAlpha() > 0.0f;
+	return !m_uiStartLogo.IsFinished() || m_uiPanels.GetAlphaDriver()->Get() > 0.0f;
 }
 
 void Scene1::TogglePause() {
@@ -47,10 +47,6 @@ void Scene1::TogglePause() {
 		return;
 	}
 
-	if (IsPaused()) {
-		m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_uiPanels.GetAlpha(), 0.0f, UI_SLIDE_TIME));
-	} else {
-		m_uiPanels.SetAlphaDriver(std::make_unique<DriverSlide<float>>(m_uiPanels.GetAlpha(), 1.0f, UI_SLIDE_TIME));
-	}
+	m_uiPanels.SetAlphaDriver<DriverSlide>(m_uiPanels.GetAlphaDriver()->Get(), IsPaused() ? 0.0f : 1.0f, UI_SLIDE_TIME);
 }
 }

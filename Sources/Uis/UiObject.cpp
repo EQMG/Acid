@@ -10,9 +10,7 @@ UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
 	m_enabled(true),
 	m_transform(transform),
 	m_alphaDriver(std::make_unique<DriverConstant<float>>(1.0f)),
-	m_alpha(1.0f),
 	m_scaleDriver(std::make_unique<DriverConstant<Vector2f>>(Vector3f(1.0f))),
-	m_scale(1.0f),
 	m_screenAlpha(1.0f),
 	m_screenScale(1.0f) {
 	if (m_parent) {
@@ -36,14 +34,14 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	}
 
 	// Alpha and scale updates.
-	m_alpha = m_alphaDriver->Update(Engine::Get()->GetDelta());
-	m_scale = m_scaleDriver->Update(Engine::Get()->GetDelta());
+	m_alphaDriver->Update(Engine::Get()->GetDelta());
+	m_scaleDriver->Update(Engine::Get()->GetDelta());
 
 	UpdateObject();
 
 	// Transform updates.
-	m_screenAlpha = m_alpha;
-	m_screenScale = m_scale;
+	m_screenAlpha = m_alphaDriver->Get();
+	m_screenScale = m_scaleDriver->Get();
 	m_screenTransform = m_transform;
 	m_screenTransform.SetAnchor(UiAnchor::LeftTop);
 

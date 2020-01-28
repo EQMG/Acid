@@ -28,10 +28,10 @@ void UiInputGrabber::UpdateObject() {
 	}
 	if (!m_updating) {
 		if (m_background.IsSelected() && !m_mouseOver) {
-			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
+			m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		} else if (!m_background.IsSelected() && m_mouseOver) {
-			m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), UiInputButton::PrimaryColour, UiInputButton::SlideTime));
+			m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 	}

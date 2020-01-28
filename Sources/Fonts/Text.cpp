@@ -25,8 +25,8 @@ void Text::UpdateObject() {
 	if (m_dirty)
 		LoadText();
 
-	m_glowSize = m_glowDriver->Update(Engine::Get()->GetDelta());
-	m_borderSize = m_borderDriver->Update(Engine::Get()->GetDelta());
+	m_glowDriver->Update(Engine::Get()->GetDelta());
+	m_borderDriver->Update(Engine::Get()->GetDelta());
 
 	// Updates uniforms.
 	m_uniformObject.Push("modelView", GetModelView());
@@ -90,18 +90,6 @@ void Text::SetLeading(float leading) {
 	m_leading = leading;
 }
 
-void Text::SetBorderDriver(std::unique_ptr<UiDriver<float>> &&borderDriver) {
-	m_borderDriver = std::move(borderDriver);
-	m_solidBorder = true;
-	m_glowBorder = false;
-}
-
-void Text::SetGlowDriver(std::unique_ptr<UiDriver<float>> &&glowDriver) {
-	m_glowDriver = std::move(glowDriver);
-	m_solidBorder = false;
-	m_glowBorder = true;
-}
-
 void Text::RemoveBorder() {
 	m_solidBorder = false;
 	m_glowBorder = false;
@@ -109,10 +97,11 @@ void Text::RemoveBorder() {
 
 float Text::GetTotalBorderSize() const {
 	if (m_solidBorder) {
-		if (m_borderSize == 0.0f)
+		auto borderSize = m_glowDriver->Get();
+		if (borderSize == 0.0f)
 			return 0.0f;
 
-		return CalculateEdgeStart() + m_borderSize;
+		return CalculateEdgeStart() + borderSize;
 	}
 
 	if (m_glowBorder)
@@ -124,18 +113,18 @@ float Text::GetGlowSize() const {
 	if (m_solidBorder)
 		return CalculateAntialiasSize();
 	if (m_glowBorder)
-		return m_glowSize;
+		return m_glowDriver->Get();
 	return 0.0f;
 }
 
 float Text::CalculateEdgeStart() const {
-	auto scale = GetScale() * m_fontSize;
+	auto scale = GetScaleDriver()->Get() * m_fontSize;
 	auto size = 0.5f * scale.m_x;
 	return 1.0f / 300.0f * size + 137.0f / 300.0f;
 }
 
 float Text::CalculateAntialiasSize() const {
-	auto scale = GetScale() * m_fontSize;
+	auto scale = GetScaleDriver()->Get() * m_fontSize;
 	auto size = 0.5f * scale.m_x;
 	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
 	return 0.1f / size;

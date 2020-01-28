@@ -30,7 +30,7 @@ void Gui::UpdateObject() {
 	auto row = m_selectedRow / numberOfRows;
 	m_atlasOffset = Vector2f(static_cast<float>(column), static_cast<float>(row)) / static_cast<float>(numberOfRows);
 
-	m_colourOffset = m_colourDriver->Update(Engine::Get()->GetDelta());
+	m_colourDriver->Update(Engine::Get()->GetDelta());
 
 	// Updates uniforms.
 	m_uniformObject.Push("modelView", GetModelView());
@@ -38,7 +38,7 @@ void Gui::UpdateObject() {
 
 	m_uniformObject.Push("aspectRatio", GetScreenTransform().GetSize().m_x / GetScreenTransform().GetSize().m_y);
 
-	m_uniformObject.Push("colourOffset", m_colourOffset);
+	m_uniformObject.Push("colourOffset", m_colourDriver->Get());
 	m_uniformObject.Push("atlasOffset", m_atlasOffset);
 	m_uniformObject.Push("atlasScale", m_atlasScale);
 	m_uniformObject.Push("atlasRows", static_cast<float>(m_numberOfRows));

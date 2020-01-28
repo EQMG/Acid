@@ -30,17 +30,17 @@ void UiScrollBar::UpdateObject() {
 		}
 
 		Vector2d position;
-		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenTransform().GetPosition()[m_index]; //  ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
+		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenTransform().GetPosition()[m_index]; // ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}
 
 	if (!m_updating) {
 		if (m_scroll.IsSelected() && !m_mouseOver) {
-			m_scroll.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_scroll.GetColourOffset(), UiInputButton::SelectedColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver<DriverSlide>(m_scroll.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
 			m_mouseOver = true;
 		} else if (!m_scroll.IsSelected() && m_mouseOver) {
-			m_scroll.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_scroll.GetColourOffset(), UiInputButton::ButtonColour, UiInputButton::SlideTime));
+			m_scroll.SetColourDriver<DriverSlide>(m_scroll.GetColourDriver()->Get(), UiInputButton::ButtonColour, UiInputButton::SlideTime);
 			m_mouseOver = false;
 		}
 	}

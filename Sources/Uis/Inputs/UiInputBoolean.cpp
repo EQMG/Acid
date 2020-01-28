@@ -16,8 +16,8 @@ UiInputBoolean::UiInputBoolean(UiObject *parent, const std::string &title, bool 
 	m_value(value) {
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver(std::make_unique<DriverSlide<Colour>>(m_background.GetColourOffset(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
-			UiInputButton::SlideTime));
+		m_background.SetColourDriver<DriverSlide>(m_background.GetColourDriver()->Get(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
+			UiInputButton::SlideTime);
 	});
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
