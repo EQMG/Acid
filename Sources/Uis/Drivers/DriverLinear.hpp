@@ -1,24 +1,23 @@
 #pragma once
 
-#include "Maths/Maths.hpp"
-#include "Driver.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
- * @brief A bounce driver that uses a sine wave.
+ * @brief A driver that linearly increases its value.
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverBounce : public Driver<T> {
+class DriverLinear : public UiDriver<T> {
 public:
 	/**
-	 * Creates a new sine wave driver.
+	 * Creates a new linear driver.
 	 * @param start The start value.
 	 * @param end The end value.
-	 * @param length The length between two waves.
+	 * @param length The time to go between values.
 	 */
-	DriverBounce(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
+	DriverLinear(const T &start, const T &end, const Time &length) :
+		UiDriver<T>(length),
 		m_start(start),
 		m_end(end) {
 	}
@@ -49,13 +48,7 @@ public:
 
 protected:
 	T Calculate(float factor) override {
-		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
-
-		if (Driver<T>::m_actualTime > Driver<T>::GetLength() / 2.0f) {
-			value = 0.0f;
-		}
-
-		return m_start + value * (m_end - m_start);
+		return m_start + factor * (m_end - m_start);
 	}
 
 private:

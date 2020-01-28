@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Models/Model.hpp"
-#include "Models/Vertex3d.hpp"
+#include "Models/Vertex3.hpp"
 #include "Scenes/Component.hpp"
 #include "Materials/Material.hpp"
 
@@ -23,7 +23,7 @@ public:
 
 	bool CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage);
 
-	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return Vertex3d::GetVertexInput(binding); }
+	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return Vertex3::GetVertexInput(binding); }
 
 	const Model *GetModel() const { return m_model.get(); }
 	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }

@@ -1,23 +1,24 @@
 #pragma once
 
-#include "Driver.hpp"
+#include "Maths/Maths.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
- * @brief A driver that slides to its destination using cosine interpolation.
+ * @brief A bounce driver that uses a sine wave.
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverSlide : public Driver<T> {
+class DriverBounce : public UiDriver<T> {
 public:
 	/**
-	 * Creates a new slide driver.
+	 * Creates a new sine wave driver.
 	 * @param start The start value.
 	 * @param end The end value.
-	 * @param length The time to get to the end value.
+	 * @param length The length between two waves.
 	 */
-	DriverSlide(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
+	DriverBounce(const T &start, const T &end, const Time &length) :
+		UiDriver<T>(length),
 		m_start(start),
 		m_end(end) {
 	}
@@ -36,7 +37,7 @@ public:
 
 	/**
 	 * Gets the end time.
-	 * @return The end time.
+	 * @return The ebd time.
 	 */
 	const T &GetEnd() const { return m_end; }
 
@@ -48,9 +49,13 @@ public:
 
 protected:
 	T Calculate(float factor) override {
-		auto realTime = static_cast<float>(std::min(Driver<T>::m_actualTime, Driver<T>::GetLength()) / Driver<T>::GetLength());
-		return m_start + realTime * (m_end - m_start);
-		//return Maths::CosInterpolate(m_start, m_end, realTime);
+		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
+
+		if (UiDriver<T>::m_actualTime > UiDriver<T>::GetLength() / 2.0f) {
+			value = 0.0f;
+		}
+
+		return m_start + value * (m_end - m_start);
 	}
 
 private:

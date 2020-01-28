@@ -8,17 +8,17 @@ namespace acid {
  * @tparam T The type to be driven.
  */
 template<typename T>
-class Driver {
+class UiDriver {
 public:
 	/**
 	 * Creates a new driver with a length.
 	 * @param length The drivers length.
 	 */
-	explicit Driver(const Time &length) :
+	explicit UiDriver(const Time &length) :
 		m_length(length) {
 	}
 
-	virtual ~Driver() = default;
+	virtual ~UiDriver() = default;
 
 	/**
 	 * Updates the driver with the passed time.
@@ -29,7 +29,8 @@ public:
 	T Update(const Time &delta) {
 		m_actualTime += delta;
 		m_currentTime += delta;
-		m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));
+		if (m_repeat)
+			m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));
 		auto time = static_cast<float>(m_currentTime / m_length);
 		return Calculate(time);
 	}
@@ -55,6 +56,7 @@ protected:
 	virtual T Calculate(float factor) = 0;
 
 	Time m_length;
+	bool m_repeat = true;
 	Time m_actualTime;
 	Time m_currentTime;
 };

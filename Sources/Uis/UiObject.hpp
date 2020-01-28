@@ -5,7 +5,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"
-#include "Maths/Visual/Driver.hpp"
+#include "Uis/Drivers/UiDriver.hpp"
 #include "UiTransform.hpp"
 
 namespace acid {
@@ -77,12 +77,12 @@ public:
 	const std::optional<Vector4f> &GetScissor() const { return m_scissor; }
 	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
 
-	Driver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
-	void SetAlphaDriver(std::unique_ptr<Driver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
+	UiDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
+	void SetAlphaDriver(std::unique_ptr<UiDriver<float>> &&alphaDriver) { m_alphaDriver = std::move(alphaDriver); }
 	float GetAlpha() const { return m_alpha; }
 
-	Driver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
-	void SetScaleDriver(std::unique_ptr<Driver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
+	UiDriver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
+	void SetScaleDriver(std::unique_ptr<UiDriver<Vector2f>> &&scaleDriver) { m_scaleDriver = std::move(scaleDriver); }
 	const Vector2f &GetScale() const { return m_scale; }
 
 	const UiTransform &GetScreenTransform() const { return m_screenTransform; }
@@ -117,10 +117,10 @@ private:
 	std::optional<CursorStandard> m_cursorHover;
 	std::optional<Vector4f> m_scissor;
 
-	std::unique_ptr<Driver<float>> m_alphaDriver;
+	std::unique_ptr<UiDriver<float>> m_alphaDriver;
 	float m_alpha;
 
-	std::unique_ptr<Driver<Vector2f>> m_scaleDriver;
+	std::unique_ptr<UiDriver<Vector2f>> m_scaleDriver;
 	Vector2f m_scale;
 
 	UiTransform m_screenTransform;

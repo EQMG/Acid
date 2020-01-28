@@ -9,8 +9,8 @@
 #include <Lights/Light.hpp>
 #include <Resources/Resources.hpp>
 #include <Materials/MaterialDefault.hpp>
-#include <Maths/Visual/DriverConstant.hpp>
-#include <Maths/Visual/DriverSlide.hpp>
+#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Shapes/ModelCube.hpp>
 #include <Models/Shapes/ModelCylinder.hpp>
@@ -274,7 +274,7 @@ void Scene1::Start() {
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json");
 	smokeSystem->AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));
-	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.ogg", Audio::Type::Music, true, true);
+	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.wav", Audio::Type::Music, true, true);
 
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabSmokeSystem("Prefabs/SmokeSystem.json");

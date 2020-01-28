@@ -12,7 +12,7 @@ public:
 	MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale);
 
 protected:
-	Vertex3d GetVertex(uint32_t col, uint32_t row) override;
+	Vertex3 GetVertex(uint32_t col, uint32_t row) override;
 
 private:
 	Vector3f GetPosition(float x, float z);

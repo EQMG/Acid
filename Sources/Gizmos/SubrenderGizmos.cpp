@@ -1,13 +1,13 @@
 #include "SubrenderGizmos.hpp"
 
-#include "Models/Vertex3d.hpp"
+#include "Models/Vertex3.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Gizmos.hpp"
 
 namespace acid {
 SubrenderGizmos::SubrenderGizmos(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {Vertex3d::GetVertexInput(0), GizmoType::Instance::GetVertexInput(1)}, {},
+	m_pipeline(pipelineStage, {"Shaders/Gizmos/Gizmo.vert", "Shaders/Gizmos/Gizmo.frag"}, {Vertex3::GetVertexInput(0), GizmoType::Instance::GetVertexInput(1)}, {},
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::ReadWrite, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_LINE, VK_CULL_MODE_NONE) {
 }
 

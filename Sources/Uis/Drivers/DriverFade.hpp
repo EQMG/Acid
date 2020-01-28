@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Driver.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
@@ -9,7 +9,7 @@ namespace acid {
  */
 template<typename T>
 class DriverFade :
-	public Driver<T> {
+	public UiDriver<T> {
 public:
 	/**
 	 * Creates a new fade driver.
@@ -19,7 +19,7 @@ public:
 	 * @param length The time taken to get to the end.
 	 */
 	DriverFade(const T &start, const T &end, const T &peak, const Time &length) :
-		Driver<T>(length),
+		UiDriver<T>(length),
 		m_start(start),
 		m_end(end),
 		m_peak(peak) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Driver.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
@@ -9,14 +9,14 @@ namespace acid {
  */
 
 template<typename T>
-class DriverConstant : public Driver<T> {
+class DriverConstant : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new constant driver.
 	 * @param constant The constant value.
 	 */
 	explicit DriverConstant(const T &constant) :
-		Driver<T>(-1s),
+		UiDriver<T>(-1s),
 		m_constant(constant) {
 	}
 

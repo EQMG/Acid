@@ -10,8 +10,8 @@
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiObject.hpp>
 #include <Uis/UiPanel.hpp>
-#include <Maths/Visual/DriverConstant.hpp>
-#include <Maths/Visual/DriverSinwave.hpp>
+#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/DriverSinwave.hpp>
 
 using namespace acid;
 

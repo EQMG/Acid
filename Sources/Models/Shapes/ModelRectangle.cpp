@@ -1,7 +1,7 @@
 #include "ModelRectangle.hpp"
 
 #include "Resources/Resources.hpp"
-#include "Models/Vertex3d.hpp"
+#include "Models/Vertex3.hpp"
 
 namespace acid {
 bool ModelRectangle::registered = Register("rectangle");
@@ -49,7 +49,7 @@ void ModelRectangle::Load() {
 		return;
 	}
 
-	std::vector<Vertex3d> vertices = {
+	std::vector<Vertex3> vertices = {
 		{{m_min, m_min, 0.0f}, {0.0f, 0.0f}, {}},
 		{{m_max, m_min, 0.0f}, {1.0f, 0.0f}, {}},
 		{{m_max, m_max, 0.0f}, {1.0f, 1.0f}, {}},

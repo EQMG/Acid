@@ -1,6 +1,6 @@
 #include "UiScrollBar.hpp"
 
-#include "Maths/Visual/DriverSlide.hpp"
+#include "Uis/Drivers/DriverSlide.hpp"
 #include "Inputs/UiInputButton.hpp"
 #include "Uis.hpp"
 

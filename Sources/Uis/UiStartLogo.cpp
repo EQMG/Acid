@@ -1,6 +1,6 @@
 #include "UiStartLogo.hpp"
 
-#include "Maths/Visual/DriverSlide.hpp"
+#include "Uis/Drivers/DriverSlide.hpp"
 #include "Timers/Timers.hpp"
 
 namespace acid {

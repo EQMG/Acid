@@ -3,8 +3,8 @@
 #include <Inputs/Input.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/MaterialDefault.hpp>
-#include <Maths/Visual/DriverConstant.hpp>
-#include <Maths/Visual/DriverSlide.hpp>
+#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/DriverSlide.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Obj/ModelObj.hpp>
 #include <Models/Shapes/ModelCube.hpp>

@@ -1,23 +1,23 @@
 #pragma once
 
-#include "Driver.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
- * @brief A driver that linearly increases its value.
+ * @brief A driver that slides to its destination using cosine interpolation.
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverLinear : public Driver<T> {
+class DriverSlide : public UiDriver<T> {
 public:
 	/**
-	 * Creates a new linear driver.
+	 * Creates a new slide driver.
 	 * @param start The start value.
 	 * @param end The end value.
-	 * @param length The time to go between values.
+	 * @param length The time to get to the end value.
 	 */
-	DriverLinear(const T &start, const T &end, const Time &length) :
-		Driver<T>(length),
+	DriverSlide(const T &start, const T &end, const Time &length) :
+		UiDriver<T>(length),
 		m_start(start),
 		m_end(end) {
 	}
@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * Gets the end time.
-	 * @return The ebd time.
+	 * @return The end time.
 	 */
 	const T &GetEnd() const { return m_end; }
 
@@ -48,7 +48,9 @@ public:
 
 protected:
 	T Calculate(float factor) override {
-		return m_start + factor * (m_end - m_start);
+		auto realTime = static_cast<float>(std::min(UiDriver<T>::m_actualTime, UiDriver<T>::GetLength()) / UiDriver<T>::GetLength());
+		return m_start + realTime * (m_end - m_start);
+		//return Maths::CosInterpolate(m_start, m_end, realTime);
 	}
 
 private:

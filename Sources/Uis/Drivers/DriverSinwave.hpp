@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Maths.hpp"
-#include "Driver.hpp"
+#include "UiDriver.hpp"
 
 namespace acid {
 /**
@@ -9,7 +9,7 @@ namespace acid {
  * @tparam T The type to be driven.
  */
 template<typename T>
-class DriverSinwave : public Driver<T> {
+class DriverSinwave : public UiDriver<T> {
 public:
 	/**
 	 * Creates a new sine wave driver.
@@ -18,7 +18,7 @@ public:
 	 * @param length The length between two waves.
 	 */
 	DriverSinwave(const T &min, const T &max, const Time &length) :
-		Driver<T>(length),
+		UiDriver<T>(length),
 		m_min(min),
 		m_max(max) {
 	}

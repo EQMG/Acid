@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Engine.hpp>
-#include <Maths/Visual/DriverLinear.hpp>
+#include <Uis/Drivers/DriverLinear.hpp>
 #include <Maths/Vector3.hpp>
 #include <Lights/Fog.hpp>
 

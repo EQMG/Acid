@@ -5,7 +5,7 @@
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
-#include "Models/Vertex3d.hpp"
+#include "Models/Vertex3.hpp"
 
 namespace acid {
 bool ModelObj::registered = Register("obj", ".obj");
@@ -99,16 +99,16 @@ void ModelObj::Load() {
 		throw std::runtime_error(warn + err);
 	}
 
-	std::vector<Vertex3d> vertices;
+	std::vector<Vertex3> vertices;
 	std::vector<uint32_t> indices;
-	std::unordered_map<Vertex3d, size_t> uniqueVertices;
+	std::unordered_map<Vertex3, size_t> uniqueVertices;
 
 	for (const auto &shape : shapes) {
 		for (const auto &index : shape.mesh.indices) {
 			Vector3f position(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
 			Vector2f uv(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
 			Vector3f normal(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
-			Vertex3d vertex(position, uv, normal);
+			Vertex3 vertex(position, uv, normal);
 
 			if (uniqueVertices.count(vertex) == 0) {
 				uniqueVertices[vertex] = vertices.size();

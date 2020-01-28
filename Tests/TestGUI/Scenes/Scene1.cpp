@@ -1,8 +1,8 @@
 #include "Scene1.hpp"
 
 #include <Inputs/Input.hpp>
-#include <Maths/Visual/DriverConstant.hpp>
-#include <Maths/Visual/DriverSlide.hpp>
+#include <Uis/Drivers/DriverConstant.hpp>
+#include <Uis/Drivers/DriverSlide.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test {

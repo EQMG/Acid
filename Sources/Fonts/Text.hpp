@@ -2,9 +2,9 @@
 
 #include "Maths/Colour.hpp"
 #include "Maths/Vector2.hpp"
-#include "Maths/Visual/Driver.hpp"
+#include "Uis/Drivers/UiDriver.hpp"
 #include "Models/Model.hpp"
-#include "Models/Vertex2d.hpp"
+#include "Models/Vertex2.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
@@ -150,21 +150,21 @@ public:
 	 */
 	void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
 
-	Driver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
+	UiDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
 
 	/**
 	 * Sets the glow driver, will disable solid borders.
 	 * @param glowDriver The new glow driver.
 	 */
-	void SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver);
+	void SetGlowDriver(std::unique_ptr<UiDriver<float>> &&glowDriver);
 
-	Driver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
+	UiDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
 
 	/**
 	 * Sets the border driver, will disable glowing.
 	 * @param borderDriver The new border driver.
 	 */
-	void SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver);
+	void SetBorderDriver(std::unique_ptr<UiDriver<float>> &&borderDriver);
 
 	/**
 	 * Disables both solid borders and glow borders.
@@ -276,9 +276,9 @@ private:
 	void LoadText();
 	std::vector<Line> CreateStructure() const;
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-	std::vector<Vertex2d> CreateQuad(const std::vector<Line> &lines) const;
-	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2d> &vertices);
-	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices);
+	std::vector<Vertex2> CreateQuad(const std::vector<Line> &lines) const;
+	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2> &vertices);
+	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2> &vertices);
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
@@ -301,10 +301,10 @@ private:
 	bool m_solidBorder = false;
 	bool m_glowBorder = false;
 
-	std::unique_ptr<Driver<float>> m_glowDriver;
+	std::unique_ptr<UiDriver<float>> m_glowDriver;
 	float m_glowSize = 0.0f;
 
-	std::unique_ptr<Driver<float>> m_borderDriver;
+	std::unique_ptr<UiDriver<float>> m_borderDriver;
 	float m_borderSize = 0.0f;
 };
 }

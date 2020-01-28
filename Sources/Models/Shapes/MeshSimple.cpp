@@ -8,7 +8,7 @@ MeshSimple::MeshSimple(float sideLength, float squareSize, uint32_t vertexCount,
 	m_uvScale(uvScale) {
 }
 
-Vertex3d MeshSimple::GetVertex(uint32_t col, uint32_t row) {
+Vertex3 MeshSimple::GetVertex(uint32_t col, uint32_t row) {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 
@@ -19,7 +19,7 @@ Vertex3d MeshSimple::GetVertex(uint32_t col, uint32_t row) {
 }
 
 void MeshSimple::GenerateMesh() {
-	std::vector<Vertex3d> vertices;
+	std::vector<Vertex3> vertices;
 	vertices.reserve(m_vertexCount * m_vertexCount);
 	std::vector<uint32_t> indices;
 	indices.reserve(6 * (m_vertexCount - 1) * (m_vertexCount - 1));

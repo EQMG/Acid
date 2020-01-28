@@ -1,6 +1,6 @@
 #include "Text.hpp"
 
-#include "Maths/Visual/DriverConstant.hpp"
+#include "Uis/Drivers/DriverConstant.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid {
@@ -90,13 +90,13 @@ void Text::SetLeading(float leading) {
 	m_leading = leading;
 }
 
-void Text::SetBorderDriver(std::unique_ptr<Driver<float>> &&borderDriver) {
+void Text::SetBorderDriver(std::unique_ptr<UiDriver<float>> &&borderDriver) {
 	m_borderDriver = std::move(borderDriver);
 	m_solidBorder = true;
 	m_glowBorder = false;
 }
 
-void Text::SetGlowDriver(std::unique_ptr<Driver<float>> &&glowDriver) {
+void Text::SetGlowDriver(std::unique_ptr<UiDriver<float>> &&glowDriver) {
 	m_glowDriver = std::move(glowDriver);
 	m_solidBorder = false;
 	m_glowBorder = true;
@@ -234,8 +234,8 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 	lines.emplace_back(currentLine);
 }
 
-std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
-	std::vector<Vertex2d> vertices;
+std::vector<Vertex2> Text::CreateQuad(const std::vector<Line> &lines) const {
+	std::vector<Vertex2> vertices;
 
 	float cursorX = 0.0f;
 	float cursorY = 0.0f;
@@ -277,7 +277,7 @@ std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
 	return vertices;
 }
 
-void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2d> &vertices) {
+void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2> &vertices) {
 	auto vertexX = cursorX + character.m_offsetX;
 	auto vertexY = cursorY + character.m_offsetY;
 	auto vertexMaxX = vertexX + character.m_sizeX;
@@ -296,7 +296,7 @@ void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontType:
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 }
 
-void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices) {
-	vertices.emplace_back(Vertex2d({vx, vy}, {tx, ty}));
+void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2> &vertices) {
+	vertices.emplace_back(Vertex2({vx, vy}, {tx, ty}));
 }
 }

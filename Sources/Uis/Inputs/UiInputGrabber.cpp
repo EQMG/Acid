@@ -1,6 +1,6 @@
 #include "UiInputGrabber.hpp"
 
-#include "Maths/Visual/DriverSlide.hpp"
+#include "Uis/Drivers/DriverSlide.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {

@@ -137,13 +137,6 @@ set(_temp_acid_headers
 		Maths/Vector3.inl
 		Maths/Vector4.hpp
 		Maths/Vector4.inl
-		Maths/Visual/Driver.hpp
-		Maths/Visual/DriverBounce.hpp
-		Maths/Visual/DriverConstant.hpp
-		Maths/Visual/DriverFade.hpp
-		Maths/Visual/DriverLinear.hpp
-		Maths/Visual/DriverSinwave.hpp
-		Maths/Visual/DriverSlide.hpp
 		Meshes/Mesh.hpp
 		Meshes/SubrenderMeshes.hpp
 		Models/Gltf/ModelGltf.hpp
@@ -157,8 +150,8 @@ set(_temp_acid_headers
 		Models/Shapes/ModelDisk.hpp
 		Models/Shapes/ModelRectangle.hpp
 		Models/Shapes/ModelSphere.hpp
-		Models/Vertex2d.hpp
-		Models/Vertex3d.hpp
+		Models/Vertex2.hpp
+		Models/Vertex3.hpp
 		Network/Ftp/Ftp.hpp
 		Network/Ftp/FtpDataChannel.hpp
 		Network/Ftp/FtpResponse.hpp
@@ -237,6 +230,13 @@ set(_temp_acid_headers
 		Shadows/SubrenderShadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Timers/Timers.hpp
+		Uis/Drivers/UiDriver.hpp
+		Uis/Drivers/DriverBounce.hpp
+		Uis/Drivers/DriverConstant.hpp
+		Uis/Drivers/DriverFade.hpp
+		Uis/Drivers/DriverLinear.hpp
+		Uis/Drivers/DriverSinwave.hpp
+		Uis/Drivers/DriverSlide.hpp
 		Uis/Inputs/UiInputBoolean.hpp
 		Uis/Inputs/UiInputButton.hpp
 		Uis/Inputs/UiInputDropdown.hpp
