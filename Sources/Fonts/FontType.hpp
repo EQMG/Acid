@@ -70,7 +70,7 @@ private:
 	std::unique_ptr<Image2dArray> m_image;
 
 	/// Char to glyphs index.
-	std::map<char, std::size_t> m_indices;
+	std::map<wchar_t, std::size_t> m_indices;
 	std::vector<Glyph> m_glyphs;
 	/// Glyph size in pixels.
 	std::size_t m_size;

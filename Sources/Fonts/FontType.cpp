@@ -8,7 +8,7 @@
 #include "stb_truetype.h"
 
 namespace acid {
-static constexpr std::string_view CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 \"!`?\'.,;:()[]{}<>|/@\\^$-%+=#_&~*\n";
+static constexpr std::wstring_view NEHE = L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 \"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*\t\r\n";
 
 std::shared_ptr<FontType> FontType::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<FontType>(node))
@@ -60,26 +60,49 @@ void FontType::Load() {
 	stbtt_fontinfo fontinfo;
 	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
 
-	auto layerCount = CHARACTERS.size();
+	auto glyphSize = 3 * m_size * m_size;
+	auto layerCount = NEHE.size();
+	auto bitmapData = std::make_unique<uint8_t[]>(glyphSize * layerCount);
 
-	std::size_t index = 0;
-	for (auto c : CHARACTERS) {
+	//m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
+
+	std::size_t arrayLayer = 0;
+	for (auto c : NEHE) {
 		ex_metrics_t metrics = {};
-		auto bitmap = ex_msdf_glyph(&fontinfo, ex_utf8(&c), m_size, m_size, &metrics);
+		auto bitmap = ex_msdf_glyph(&fontinfo, c, m_size, m_size, &metrics);
 		if (bitmap) {
+			auto bitmapSdfData = std::make_unique<uint8_t[]>(glyphSize);
+			for (std::size_t y = 0; y < m_size; y++) {
+				for (std::size_t x = 0; x < m_size; x++) {
+					auto index = 3 * ((y * m_size) + x);
+					bitmapSdfData[index + 0] = (uint8_t)(255 * (bitmap[index + 0] + m_size) / m_size);
+					bitmapSdfData[index + 1] = (uint8_t)(255 * (bitmap[index + 1] + m_size) / m_size);
+					bitmapSdfData[index + 2] = (uint8_t)(255 * (bitmap[index + 2] + m_size) / m_size);
+				}
+			}
+			std::memcpy(&bitmapData[glyphSize * arrayLayer], bitmapSdfData.get(), glyphSize);
+#if 0
+			Bitmap bitmapSdf(std::move(bitmapSdfData), {m_size, m_size}, 3);
+			bitmapSdf.Write("Fonts" / m_filename.stem() / (std::to_string(index) + ".png"));
+#endif
 
-			
+			//m_image->SetPixels(bitmap, arrayLayer);
+
 			free(bitmap);
-		} else {
-			// This will most likely be space or return characters, advance will still be loaded into it's metrics.
-			Log::Warning("Unable to load character: ", (uint32_t)c, "\n");
 		}
 
 		m_glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
-		m_indices[c] = index++;
+		m_indices[c] = arrayLayer++;
 	}
 
-	m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount);
+	auto bitmap = std::make_unique<Bitmap>(std::move(bitmapData), Vector2ui(m_size, m_size), 3);
+	m_image = std::make_unique<Image2dArray>(std::move(bitmap), layerCount, VK_FORMAT_R8G8B8_UNORM);
+#if 1
+	for (uint32_t layer = 0; layer < layerCount; layer++) {
+		auto bitmapSdf = m_image->GetBitmap(0, layer);
+		bitmapSdf->Write("Fonts" / m_filename.stem() / (std::to_string(layer) + ".png"));
+	}
+#endif
 
 #if defined(ACID_DEBUG)
 	Log::Out("Font Type ", m_filename, " loaded ", m_glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

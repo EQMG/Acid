@@ -104,6 +104,13 @@ void Text::LoadText() {
 	m_numberLines = static_cast<uint32_t>(lines.size());
 	auto vertices = CreateQuad(lines);
 
+	vertices.emplace_back(Vector2f(0.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+	vertices.emplace_back(Vector2f(0.0f, 0.0f), Vector3f(0.0f, 1.0f, 0.0f));
+	vertices.emplace_back(Vector2f(1.0f, 0.0f), Vector3f(1.0f, 1.0f, 0.0f));
+	vertices.emplace_back(Vector2f(0.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
+	vertices.emplace_back(Vector2f(1.0f, 0.0f), Vector3f(1.0f, 1.0f, 0.0f));
+	vertices.emplace_back(Vector2f(1.0f, 1.0f), Vector3f(1.0f, 0.0f, 0.0f));
+
 	// Loads the mesh data.
 	m_model = std::make_unique<Model>(vertices);
 	m_dirty = false;

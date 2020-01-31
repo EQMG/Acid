@@ -21,7 +21,7 @@ Scene1::Scene1() :
 
 	//Uis::Get()->GetCanvas().SetScaleDriver<SinewaveDriver>(Vector2f(0.3f), Vector2f(5.0f), 16s);
 
-	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
+	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(0.0f); // 1.0f
 	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	m_uiPanels.SetAlphaDriver<ConstantDriver>(0.0f);
 

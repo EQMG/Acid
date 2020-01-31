@@ -44,7 +44,15 @@ void BitmapPng::Write(const Bitmap *bitmap, const std::filesystem::path &filenam
 	auto debugStart = Time::Now();
 #endif
 
-	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().m_x, bitmap->GetSize().m_y);
+	LodePNGColorType colorType = LCT_GREY;
+	if (bitmap->GetBytesPerPixel() == 4)
+		colorType = LCT_RGBA;
+	else if (bitmap->GetBytesPerPixel() == 3)
+		colorType = LCT_RGB;
+	else
+		Log::Error("Cannot write PNG with ", bitmap->GetBytesPerPixel(), " bytes per pixel\n");
+
+	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().m_x, bitmap->GetSize().m_y, colorType);
 
 #if defined(ACID_DEBUG)
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
