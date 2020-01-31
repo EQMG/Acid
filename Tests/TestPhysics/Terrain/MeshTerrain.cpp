@@ -7,7 +7,7 @@ MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, float sideLength, 
 	GenerateMesh();
 }
 
-Vertex3 MeshTerrain::GetVertex(uint32_t col, uint32_t row) {
+Vertex3d MeshTerrain::GetVertex(uint32_t col, uint32_t row) {
 	auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
 	auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
 

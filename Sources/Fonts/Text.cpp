@@ -161,7 +161,7 @@ void Text::LoadText() {
 }
 
 std::vector<Text::Line> Text::CreateStructure() const {
-	auto maxLength = m_lastSize.m_x;// / m_fontSize * m_fontType->GetMetafile()->GetMaxAdvance();
+	/*auto maxLength = m_lastSize.m_x;// / m_fontSize * m_fontType->GetMetafile()->GetMaxAdvance();
 
 	std::vector<Line> lines;
 	Line currentLine(m_fontType->GetSpaceWidth(), maxLength);
@@ -208,11 +208,12 @@ std::vector<Text::Line> Text::CreateStructure() const {
 	}
 
 	CompleteStructure(lines, currentLine, currentWord, maxLength);
-	return lines;
+	return lines;*/
+	return {};
 }
 
 void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const {
-	auto added = currentLine.AddWord(currentWord);
+	/*auto added = currentLine.AddWord(currentWord);
 
 	if (!added) {
 		lines.emplace_back(currentLine);
@@ -220,11 +221,11 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 		currentLine.AddWord(currentWord);
 	}
 
-	lines.emplace_back(currentLine);
+	lines.emplace_back(currentLine);*/
 }
 
-std::vector<Vertex2> Text::CreateQuad(const std::vector<Line> &lines) const {
-	std::vector<Vertex2> vertices;
+std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
+	/*std::vector<Vertex2d> vertices;
 
 	float cursorX = 0.0f;
 	float cursorY = 0.0f;
@@ -247,9 +248,9 @@ std::vector<Vertex2> Text::CreateQuad(const std::vector<Line> &lines) const {
 		}
 
 		for (const auto &word : line.m_words) {
-			for (const auto &letter : word.m_characters) {
-				AddVerticesForCharacter(cursorX, cursorY, letter, vertices);
-				cursorX += m_kerning + letter.m_advanceX;
+			for (const auto &letter : word.m_glyphs) {
+				AddVerticesForGlyph(cursorX, cursorY, letter, vertices);
+				cursorX += m_kerning + letter.m_advance;
 			}
 
 			if (m_justify == Justify::Fully && lineOrder > 1) {
@@ -263,29 +264,30 @@ std::vector<Vertex2> Text::CreateQuad(const std::vector<Line> &lines) const {
 		lineOrder--;
 	}
 
-	return vertices;
+	return vertices;*/
+	return {};
 }
 
-void Text::AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2> &vertices) {
-	auto vertexX = cursorX + character.m_offsetX;
-	auto vertexY = cursorY + character.m_offsetY;
-	auto vertexMaxX = vertexX + character.m_sizeX;
-	auto vertexMaxY = vertexY + character.m_sizeY;
+void Text::AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<Vertex2d> &vertices) {
+	/*auto vertexX = cursorX + glyph.m_offsetX;
+	auto vertexY = cursorY + glyph.m_offsetY;
+	auto vertexMaxX = vertexX + glyph.m_sizeX;
+	auto vertexMaxY = vertexY + glyph.m_sizeY;
 
-	auto textureX = character.m_textureCoordX;
-	auto textureY = character.m_textureCoordY;
-	auto textureMaxX = character.m_maxTextureCoordX;
-	auto textureMaxY = character.m_maxTextureCoordY;
+	auto textureX = glyph.m_textureCoordX;
+	auto textureY = glyph.m_textureCoordY;
+	auto textureMaxX = glyph.m_maxTextureCoordX;
+	auto textureMaxY = glyph.m_maxTextureCoordY;
 
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);
 	AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
 	AddVertex(vertexMaxX, vertexMaxY, textureMaxX, textureMaxY, vertices);
 	AddVertex(vertexX, vertexMaxY, textureX, textureMaxY, vertices);
-	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
+	AddVertex(vertexX, vertexY, textureX, textureY, vertices);*/
 }
 
-void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2> &vertices) {
-	vertices.emplace_back(Vertex2({vx, vy}, {tx, ty}));
+void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices) {
+	vertices.emplace_back(Vertex2d({vx, vy}, {tx, ty}));
 }
 }

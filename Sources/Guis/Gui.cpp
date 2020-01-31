@@ -2,10 +2,10 @@
 
 #include "Graphics/Graphics.hpp"
 #include "Uis/Drivers/ConstantDriver.hpp"
-#include "Models/Vertex2.hpp"
+#include "Models/Vertex2d.hpp"
 
 namespace acid {
-static const std::vector<Vertex2> VERTICES = {
+static const std::vector<Vertex2d> VERTICES = {
 	{{0.0f, 0.0f}, {0.0f, 0.0f}},
 	{{1.0f, 0.0f}, {1.0f, 0.0f}},
 	{{1.0f, 1.0f}, {1.0f, 1.0f}},

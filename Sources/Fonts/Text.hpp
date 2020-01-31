@@ -4,7 +4,7 @@
 #include "Maths/Vector2.hpp"
 #include "Uis/Drivers/UiDriver.hpp"
 #include "Models/Model.hpp"
-#include "Models/Vertex2.hpp"
+#include "Models/Vertex2d.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
@@ -215,16 +215,16 @@ private:
 		Word() = default;
 
 		/**
-		 * Adds a character to the end of the current word and increases the screen-space width of the word.
-		 * @param character The character to be added.
-		 * @param kerning The character kerning.
+		 * Adds a glyph to the end of the current word and increases the screen-space width of the word.
+		 * @param glyph The glyph to be added.
+		 * @param kerning The glyph kerning.
 		 */
-		void AddCharacter(const FontType::Character &character, float kerning) {
-			m_characters.emplace_back(character);
-			m_width += kerning + character.m_advanceX;
+		void AddCharacter(const FontType::Glyph &glyph, float kerning) {
+			m_glyphs.emplace_back(glyph);
+			m_width += kerning + glyph.m_advance;
 		}
 
-		std::vector<FontType::Character> m_characters;
+		std::vector<FontType::Glyph> m_glyphs;
 		float m_width = 0.0f;
 	};
 
@@ -278,9 +278,9 @@ private:
 	void LoadText();
 	std::vector<Line> CreateStructure() const;
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-	std::vector<Vertex2> CreateQuad(const std::vector<Line> &lines) const;
-	static void AddVerticesForCharacter(float cursorX, float cursorY, const FontType::Character &character, std::vector<Vertex2> &vertices);
-	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2> &vertices);
+	std::vector<Vertex2d> CreateQuad(const std::vector<Line> &lines) const;
+	static void AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<Vertex2d> &vertices);
+	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices);
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;

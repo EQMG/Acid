@@ -2,14 +2,12 @@
 
 #include "Engine/Log.hpp"
 #include "Files/Files.hpp"
-
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
 namespace acid {
-
 Bitmap::Bitmap(std::filesystem::path filename) :
 	m_filename(std::move(filename)) {
 	Load(m_filename);

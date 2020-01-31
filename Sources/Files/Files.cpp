@@ -1,5 +1,6 @@
 #include "Files.hpp"
 
+#include <iterator>
 #include <physfs.h>
 #include "Engine/Engine.hpp"
 #include "Config.hpp"
@@ -262,6 +263,23 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path) {
 	}
 
 	return std::string(data.begin(), data.end());
+}
+
+std::vector<unsigned char> Files::ReadBytes(const std::filesystem::path &path) {
+	IFStream file(path);
+	file >> std::noskipws;
+
+	auto fileSize = file.tellg();
+	file.seekg(0, std::ios::beg);
+
+	std::vector<unsigned char> bytes;
+	bytes.reserve(fileSize);
+
+	std::copy(std::istream_iterator<unsigned char>(file),
+		std::istream_iterator<unsigned char>(),
+		back_inserter(bytes));
+
+	return bytes;
 }
 
 std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, bool recursive) {

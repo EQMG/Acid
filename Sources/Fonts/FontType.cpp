@@ -3,28 +3,34 @@
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Graphics/Graphics.hpp"
+#include "msdf.h"
+#define STB_TRUETYPE_IMPLEMENTATION
+#include "stb_truetype.h"
 
 namespace acid {
+static constexpr std::string_view CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 \"!`?\'.,;:()[]{}<>|/@\\^$-%+=#_&~*\n";
+
 std::shared_ptr<FontType> FontType::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<FontType>(node))
 		return resource;
 
-	auto result = std::make_shared<FontType>("", "");
+	auto result = std::make_shared<FontType>("", 0, false);
 	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
 	node >> *result;
 	result->Load();
 	return result;
 }
 
-std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename) {
-	FontType temp(filename, false);
+std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename, std::size_t size) {
+	FontType temp(filename, size, false);
 	Node node;
 	node << temp;
 	return Create(node);
 }
 
-FontType::FontType(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename)) {
+FontType::FontType(std::filesystem::path filename, std::size_t size, bool load) :
+	m_filename(std::move(filename)),
+	m_size(size) {
 	if (load) {
 		FontType::Load();
 	}
@@ -44,110 +50,43 @@ void FontType::Load() {
 	if (m_filename.empty()) {
 		return;
 	}
+#if defined(ACID_DEBUG)
+	auto debugStart = Time::Now();
+#endif
 
-	IFStream inStream(m_filename);
+	auto bytes = Files::ReadBytes(m_filename);
+	stbtt_fontinfo fontinfo;
+	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
 
-	std::size_t lineNum = 0;
-	std::string linebuf;
+	std::size_t index = 0;
+	for (auto c : CHARACTERS) {
+		ex_metrics_t metrics = {};
+		auto bitmap = ex_msdf_glyph(&fontinfo, ex_utf8(&c), m_size, m_size, &metrics);
+		if (bitmap) {
 
-	while (inStream.peek() != -1) {
-		Files::SafeGetLine(inStream, linebuf);
-		lineNum++;
-
-		ProcessNextLine(linebuf);
-
-		if (String::StartsWith(linebuf, "info ")) {
-			LoadPaddingData();
-		} else if (String::StartsWith(linebuf, "common ")) {
-			LoadLineSizes();
-		} else if (String::StartsWith(linebuf, "page ")) {
-			auto id = GetValueOfVariable("id");
-			auto file = GetValueOfVariable<std::string>("file");
-			file = file.substr(1, file.size() - 2);
-			m_image = Image2d::Create(m_filename.parent_path() / file);
-		} else if (String::StartsWith(linebuf, "char ")) {
-			LoadCharacterData();
+			
+			free(bitmap);
+		} else {
+			// This will most likely be space or return characters, advance will still be loaded into it's metrics.
+			Log::Error("Unable to load character: ", (uint32_t)c);
 		}
+
+		m_glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
+		m_indices[c] = index++;
 	}
+
+#if defined(ACID_DEBUG)
+	Log::Out("Font Type ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+#endif
 }
 
-std::optional<FontType::Character> FontType::GetCharacter(int32_t ascii) const {
-	auto it = m_characters.find(ascii);
+std::optional<FontType::Glyph> FontType::GetGlyph(wchar_t ascii) const {
+	auto it = m_indices.find(ascii);
 
-	if (it != m_characters.end()) {
-		return it->second;
+	if (it != m_indices.end()) {
+		return m_glyphs[it->second];
 	}
 
 	return std::nullopt;
-}
-
-void FontType::ProcessNextLine(const std::string &line) {
-	m_values.clear();
-	auto parts = String::Split(line, ' ');
-
-	for (const auto &part : parts) {
-		auto pairs = String::Split(part, '=');
-
-		if (pairs.size() == 2) {
-			m_values.emplace(pairs.at(0), pairs.at(1));
-		}
-	}
-}
-
-void FontType::LoadPaddingData() {
-	for (const auto &padding : GetValuesOfVariable("padding")) {
-		m_padding.emplace_back(padding);
-	}
-
-	m_paddingWidth = m_padding.at(PadLeft) + m_padding.at(PadRight);
-	m_paddingHeight = m_padding.at(PadTop) + m_padding.at(PadBottom);
-}
-
-void FontType::LoadLineSizes() {
-	auto lineHeightPixels = GetValueOfVariable("lineHeight") - m_paddingHeight;
-	m_verticalPerPixelSize = LineHeight / static_cast<float>(lineHeightPixels);
-	m_horizontalPerPixelSize = m_verticalPerPixelSize;
-	m_imageWidth = GetValueOfVariable("scaleW");
-}
-
-void FontType::LoadCharacterData() {
-	auto id = GetValueOfVariable("id");
-
-	if (id == SpaceAscii) {
-		m_spaceWidth = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
-		return;
-	}
-
-	auto xTextureCoord = (GetValueOfVariable<float>("x") + (m_padding.at(PadLeft) - DesiredPassing)) / m_imageWidth;
-	auto yTextureCoord = (GetValueOfVariable<float>("y") + (m_padding.at(PadTop) - DesiredPassing)) / m_imageWidth;
-	auto width = GetValueOfVariable("width") - (m_paddingWidth - (2 * DesiredPassing));
-	auto height = GetValueOfVariable("height") - (m_paddingHeight - (2 * DesiredPassing));
-	auto quadWidth = width * m_horizontalPerPixelSize;
-	auto quadHeight = height * m_verticalPerPixelSize;
-	auto xTexSize = static_cast<float>(width) / m_imageWidth;
-	auto yTexSize = static_cast<float>(height) / m_imageWidth;
-	auto xOffset = (GetValueOfVariable("xoffset") + m_padding.at(PadLeft) - DesiredPassing) * m_horizontalPerPixelSize;
-	auto yOffset = (GetValueOfVariable("yoffset") + (m_padding.at(PadTop) - DesiredPassing)) * m_verticalPerPixelSize;
-	auto xAdvance = (GetValueOfVariable("xadvance") - m_paddingWidth) * m_horizontalPerPixelSize;
-	//auto page = GetValueOfVariable("page");
-
-	m_maxHeight = std::max(quadHeight, m_maxHeight);
-	m_maxAdvance = std::max(xAdvance, m_maxAdvance);
-
-	Character character(id, xTextureCoord, yTextureCoord, xTexSize, yTexSize, xOffset, yOffset, quadWidth, quadHeight, xAdvance);
-	m_characters.emplace(character.m_id, character);
-}
-
-std::vector<int32_t> FontType::GetValuesOfVariable(const std::string &variable) {
-	auto numbers = String::Split(m_values.at(variable), ',');
-
-	std::vector<int32_t> values;
-	values.reserve(numbers.size());
-
-	for (const auto &number : numbers) {
-		values.emplace_back(String::From<int32_t>(number));
-	}
-
-	return values;
 }
 }

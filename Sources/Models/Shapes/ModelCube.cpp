@@ -1,7 +1,7 @@
 #include "ModelCube.hpp"
 
 #include "Resources/Resources.hpp"
-#include "Models/Vertex3.hpp"
+#include "Models/Vertex3d.hpp"
 
 namespace acid {
 bool ModelCube::registered = Register("cube");
@@ -46,7 +46,7 @@ void ModelCube::Load() {
 		return;
 	}
 
-	std::vector<Vertex3> vertices = {
+	std::vector<Vertex3d> vertices = {
 		{{-0.5f, -0.5f, 0.5f}, {0.375f, 1.0f}, {-1.0f, 0.0f, 0.0f}},
 		{{-0.5f, 0.5f, 0.5f}, {0.625f, 1.0f}, {-1.0f, 0.0f, 0.0f}},
 		{{-0.5f, -0.5f, -0.5f}, {0.375f, 0.75f}, {-1.0f, 0.0f, 0.0f}},

@@ -3,7 +3,7 @@
 #include "Files/File.hpp"
 #include "Files/Json/Json.hpp"
 #include "Lights/Light.hpp"
-#include "Models/Vertex3.hpp"
+#include "Models/Vertex3d.hpp"
 #include "Shadows/Shadows.hpp"
 #include "Resources/Resources.hpp"
 #include "Graphics/Pipelines/PipelineCompute.hpp"

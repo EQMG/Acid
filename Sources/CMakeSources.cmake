@@ -51,6 +51,7 @@ set(_temp_acid_headers
 		Files/Zip/ZipEntry.hpp
 		Files/Zip/ZipException.hpp
 		Fonts/FontType.hpp
+		Fonts/msdf.h
 		Fonts/SubrenderFonts.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
@@ -72,6 +73,7 @@ set(_temp_acid_headers
 		Graphics/Graphics.hpp
 		Graphics/Images/Image.hpp
 		Graphics/Images/Image2d.hpp
+		Graphics/Images/Image2dArray.hpp
 		Graphics/Images/ImageCube.hpp
 		Graphics/Images/ImageDepth.hpp
 		Graphics/Pipelines/Pipeline.hpp
@@ -149,8 +151,8 @@ set(_temp_acid_headers
 		Models/Shapes/ModelDisk.hpp
 		Models/Shapes/ModelRectangle.hpp
 		Models/Shapes/ModelSphere.hpp
-		Models/Vertex2.hpp
-		Models/Vertex3.hpp
+		Models/Vertex2d.hpp
+		Models/Vertex3d.hpp
 		Network/Ftp/Ftp.hpp
 		Network/Ftp/FtpDataChannel.hpp
 		Network/Ftp/FtpResponse.hpp
@@ -296,6 +298,7 @@ set(_temp_acid_sources
 		Files/Zip/ZipArchive.cpp
 		Files/Zip/ZipEntry.cpp
 		Fonts/FontType.cpp
+		Fonts/msdf.c
 		Fonts/SubrenderFonts.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
@@ -316,6 +319,7 @@ set(_temp_acid_sources
 		Graphics/Graphics.cpp
 		Graphics/Images/Image.cpp
 		Graphics/Images/Image2d.cpp
+		Graphics/Images/Image2dArray.cpp
 		Graphics/Images/ImageCube.cpp
 		Graphics/Images/ImageDepth.cpp
 		Graphics/Pipelines/PipelineCompute.cpp

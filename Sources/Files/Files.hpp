@@ -81,6 +81,13 @@ public:
 	static std::optional<std::string> Read(const std::filesystem::path &path);
 
 	/**
+	 * Reads all bytes from file found by real or partial path.
+	 * @param path The path to read.
+	 * @return The data read from the file.
+	 */
+	static std::vector<unsigned char> ReadBytes(const std::filesystem::path &path);
+
+	/**
 	 * Finds all the files in a path.
 	 * @param path The path to search.
 	 * @param recursive If paths will be recursively searched.
