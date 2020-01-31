@@ -68,7 +68,7 @@ void FontType::Load() {
 			free(bitmap);
 		} else {
 			// This will most likely be space or return characters, advance will still be loaded into it's metrics.
-			Log::Error("Unable to load character: ", (uint32_t)c);
+			Log::Warning("Unable to load character: ", (uint32_t)c, "\n");
 		}
 
 		m_glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
@@ -76,7 +76,7 @@ void FontType::Load() {
 	}
 
 #if defined(ACID_DEBUG)
-	Log::Out("Font Type ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Font Type ", m_filename, " loaded ", m_glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 

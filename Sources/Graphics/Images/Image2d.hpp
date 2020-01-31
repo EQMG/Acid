@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Bitmaps/Bitmap.hpp"
-#include "Helpers/NonCopyable.hpp"
 #include "Maths/Vector2.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
@@ -10,7 +9,7 @@ namespace acid {
 /**
  * @brief Resource that represents a 2D image.
  */
-class ACID_EXPORT Image2d : public Descriptor, public Resource, NonCopyable {
+class ACID_EXPORT Image2d : public Descriptor, public Resource {
 public:
 	/**
 	 * Creates a new 2D image, or finds one with the same values.

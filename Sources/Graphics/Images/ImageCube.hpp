@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
 #include "Maths/Vector2.hpp"
 #include "Resources/Resource.hpp"
 #include "Image.hpp"
@@ -11,7 +10,7 @@ class Bitmap;
 /**
  * @brief Resource that represents a cubemap image.
  */
-class ACID_EXPORT ImageCube : public Descriptor, public Resource, NonCopyable {
+class ACID_EXPORT ImageCube : public Descriptor, public Resource {
 public:
 	/**
 	 * Creates a new cubemap image, or finds one with the same values.

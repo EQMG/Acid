@@ -13,17 +13,17 @@ Pannable::Pannable(UiObject *parent) :
 	m_zoom(1.0f),
 	m_content(this, {{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}}),
 	m_title(&m_content, {{300, 80}, UiAnchor::CentreTop}, 72, "Acid Font",
-		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Centre, Colour::Red),
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Centre, Colour::Red),
 	m_body(&m_content, {{750, 1000}, UiAnchor::CentreTop, {0, 100}}, 12, "",
-		FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left, Colour::Black),
+		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, Colour::Black),
 	m_settings(this, {{300, 300}, UiAnchor::LeftTop, {20, 20}}, UiInputButton::BackgroundColour, UiManipulate::All,
 		ScrollBar::None),
 	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, {UiInputButton::Size, UiAnchor::LeftTop, {0, 0}}),
 	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, {UiInputButton::Size, UiAnchor::LeftTop, {0, 34}}),
-	m_textFrameTime(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova-Regular.fnt"),
+	m_textFrameTime(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova-Regular.ttf"),
 		Text::Justify::Left),
-	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "FPS: 0", FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left),
-	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova-Regular.fnt"), Text::Justify::Left) {
+	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "FPS: 0", FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left),
+	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left) {
 	Input::Get()->GetButton("reset")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			m_zoom = 1.0f;
