@@ -7,7 +7,7 @@
 namespace acid {
 SubrenderFonts::SubrenderFonts(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {Vertex2d::GetVertexInput()}) {
+	m_pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexText::GetVertexInput()}) {
 }
 
 void SubrenderFonts::Render(const CommandBuffer &commandBuffer) {

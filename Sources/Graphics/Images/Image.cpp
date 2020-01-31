@@ -10,16 +10,17 @@
 namespace acid {
 static const float ANISOTROPY = 16.0f;
 
-Image::Image(const VkExtent3D &extent, VkImageType imageType, VkFormat format, VkSampleCountFlagBits samples, VkImageTiling tiling,
-	VkImageUsageFlags usage, VkMemoryPropertyFlags properties, uint32_t mipLevels, uint32_t arrayLayers) :
+Image::Image(VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, VkImageLayout layout, VkImageUsageFlags usage, VkFormat format, uint32_t mipLevels,
+	uint32_t arrayLayers, const VkExtent3D &extent):
 	m_extent(extent),
 	m_samples(samples),
-	m_usage(usage | VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT),
+	m_usage(usage),
 	m_format(format),
-	m_mipLevels(mipLevels) {
-	CreateImage(m_image, m_memory, m_extent, m_format, m_samples, tiling, m_usage, properties, m_mipLevels, arrayLayers, imageType);
-	//CreateImageView(m_image, m_view, viewType, m_format, imageAspect, m_mipLevels, baseMipLevel, arrayLayers, baseArrayLayer);
-	//CreateImageSampler(m_sampler, m_filter, m_addressMode, m_anisotropic, m_mipLevels);
+	m_mipLevels(mipLevels),
+	m_arrayLayers(arrayLayers),
+	m_filter(filter),
+	m_addressMode(addressMode),
+	m_layout(layout) {
 }
 
 Image::~Image() {
@@ -29,16 +30,6 @@ Image::~Image() {
 	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
 	vkFreeMemory(*logicalDevice, m_memory, nullptr);
 	vkDestroyImage(*logicalDevice, m_image, nullptr);
-}
-
-VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count) {
-	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
-	descriptorSetLayoutBinding.binding = binding;
-	descriptorSetLayoutBinding.descriptorType = descriptorType;
-	descriptorSetLayoutBinding.descriptorCount = 1;
-	descriptorSetLayoutBinding.stageFlags = stage;
-	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
-	return descriptorSetLayoutBinding;
 }
 
 WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
@@ -58,6 +49,16 @@ WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, VkDescriptorType 
 	return {descriptorWrite, imageInfo};
 }
 
+VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count) {
+	VkDescriptorSetLayoutBinding descriptorSetLayoutBinding = {};
+	descriptorSetLayoutBinding.binding = binding;
+	descriptorSetLayoutBinding.descriptorType = descriptorType;
+	descriptorSetLayoutBinding.descriptorCount = 1;
+	descriptorSetLayoutBinding.stageFlags = stage;
+	descriptorSetLayoutBinding.pImmutableSamplers = nullptr;
+	return descriptorSetLayoutBinding;
+}
+
 std::unique_ptr<Bitmap> Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
@@ -65,7 +66,7 @@ std::unique_ptr<Bitmap> Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer)
 	
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y}, m_layout, mipLevel, arrayLayer);
+	CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y,  1}, m_layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -86,18 +87,6 @@ std::unique_ptr<Bitmap> Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer)
 	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
 	return bitmap;
-}
-
-void Image::SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer) {
-	Buffer bufferStaging(m_extent.width * m_extent.height * 4, VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-	void *data;
-	bufferStaging.MapMemory(&data);
-	std::memcpy(data, pixels, bufferStaging.GetSize());
-	bufferStaging.UnmapMemory();
-
-	CopyBufferToImage(bufferStaging.GetBuffer(), m_image, m_extent, layerCount, baseArrayLayer);
 }
 
 uint32_t Image::GetMipLevels(const VkExtent3D &extent) {

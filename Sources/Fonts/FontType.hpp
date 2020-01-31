@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Resources/Resource.hpp"
-#include "Graphics/Images/Image2d.hpp"
+#include "Graphics/Images/Image2dArray.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
 namespace acid {
@@ -54,8 +54,8 @@ public:
 	std::type_index GetTypeIndex() const override { return typeid(FontType); }
 
 	const std::filesystem::path &GetFilename() const { return m_filename; }
-
-	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
+	const Image2dArray *GetImage() const { return m_image.get(); }
+	std::size_t GetSize() const { return m_size; }
 
 	float GetMaxHeight() const { return m_maxHeight; }
 	float GetMaxAdvance() const { return m_maxAdvance; }
@@ -67,7 +67,7 @@ private:
 	void Load();
 
 	std::filesystem::path m_filename;
-	std::shared_ptr<Image2d> m_image;
+	std::unique_ptr<Image2dArray> m_image;
 
 	/// Char to glyphs index.
 	std::map<char, std::size_t> m_indices;

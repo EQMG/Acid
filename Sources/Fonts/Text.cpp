@@ -14,9 +14,7 @@ Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::
 	m_fontType(std::move(fontType)),
 	m_kerning(kerning),
 	m_leading(leading),
-	m_textColour(textColour),
-	m_glowDriver(std::make_unique<ConstantDriver<float>>(0.0f)),
-	m_borderDriver(std::make_unique<ConstantDriver<float>>(0.0f)) {
+	m_textColour(textColour) {
 	LoadText();
 }
 
@@ -25,17 +23,12 @@ void Text::UpdateObject() {
 	if (m_dirty)
 		LoadText();
 
-	m_glowDriver->Update(Engine::Get()->GetDelta());
-	m_borderDriver->Update(Engine::Get()->GetDelta());
-
 	// Updates uniforms.
 	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
 	m_uniformObject.Push("colour", m_textColour);
-	m_uniformObject.Push("borderColour", m_borderColour);
-	m_uniformObject.Push("borderSizes", Vector2f(GetTotalBorderSize(), GetGlowSize()));
-	m_uniformObject.Push("edgeData", Vector2f(CalculateEdgeStart(), CalculateAntialiasSize()));
+	m_uniformObject.Push("scale", 0.5f * GetScreenTransform().GetSize().m_x / (float)m_fontType->GetSize());
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
@@ -46,7 +39,7 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 
 	// Updates descriptors.
 	m_descriptorSet.Push("UniformObject", m_uniformObject);
-	m_descriptorSet.Push("samplerColour", m_fontType->GetImage());
+	m_descriptorSet.Push("samplerMsdf", m_fontType->GetImage());
 
 	if (!m_descriptorSet.Update(pipeline)) {
 		return false;
@@ -90,54 +83,14 @@ void Text::SetLeading(float leading) {
 	m_leading = leading;
 }
 
-void Text::RemoveBorder() {
-	m_solidBorder = false;
-	m_glowBorder = false;
-}
-
-float Text::GetTotalBorderSize() const {
-	if (m_solidBorder) {
-		auto borderSize = m_glowDriver->Get();
-		if (borderSize == 0.0f)
-			return 0.0f;
-
-		return CalculateEdgeStart() + borderSize;
-	}
-
-	if (m_glowBorder)
-		return CalculateEdgeStart();
-	return 0.0f;
-}
-
-float Text::GetGlowSize() const {
-	if (m_solidBorder)
-		return CalculateAntialiasSize();
-	if (m_glowBorder)
-		return m_glowDriver->Get();
-	return 0.0f;
-}
-
-float Text::CalculateEdgeStart() const {
-	auto scale = GetScaleDriver()->Get() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
-	return 1.0f / 300.0f * size + 137.0f / 300.0f;
-}
-
-float Text::CalculateAntialiasSize() const {
-	auto scale = GetScaleDriver()->Get() * m_fontSize;
-	auto size = 0.5f * scale.m_x;
-	size = (size - 1.0f) / (1.0f + size / 4.0f) + 1.0f;
-	return 0.1f / size;
-}
-
 bool Text::IsLoaded() const {
 	return !m_string.empty() && m_model;
 }
 
 void Text::LoadText() {
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
-#endif
+#endif*/
 
 	if (m_string.empty()) {
 		m_model = nullptr;
@@ -155,9 +108,9 @@ void Text::LoadText() {
 	m_model = std::make_unique<Model>(vertices);
 	m_dirty = false;
 
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	Log::Out("Text mesh with ", m_string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
-#endif
+#endif*/
 }
 
 std::vector<Text::Line> Text::CreateStructure() const {
@@ -224,8 +177,8 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 	lines.emplace_back(currentLine);*/
 }
 
-std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
-	/*std::vector<Vertex2d> vertices;
+std::vector<VertexText> Text::CreateQuad(const std::vector<Line> &lines) const {
+	/*std::vector<VertexText> vertices;
 
 	float cursorX = 0.0f;
 	float cursorY = 0.0f;
@@ -268,7 +221,7 @@ std::vector<Vertex2d> Text::CreateQuad(const std::vector<Line> &lines) const {
 	return {};
 }
 
-void Text::AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<Vertex2d> &vertices) {
+void Text::AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<VertexText> &vertices) {
 	/*auto vertexX = cursorX + glyph.m_offsetX;
 	auto vertexY = cursorY + glyph.m_offsetY;
 	auto vertexMaxX = vertexX + glyph.m_sizeX;
@@ -287,7 +240,7 @@ void Text::AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Gly
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);*/
 }
 
-void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices) {
-	vertices.emplace_back(Vertex2d({vx, vy}, {tx, ty}));
+void Text::AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexText> &vertices) {
+	vertices.emplace_back(VertexText({vx, vy}, {tx, ty, 0.0f}));
 }
 }

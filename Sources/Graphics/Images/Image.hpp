@@ -4,6 +4,7 @@
 
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
+#include "Maths/Vector2.hpp"
 
 namespace acid {
 class Bitmap;
@@ -15,23 +16,23 @@ class ACID_EXPORT Image : public Descriptor {
 public:
 	/**
 	 * Creates a new image object.
-	 * @param extent The number of data elements in each dimension of the base level.
-	 * @param imageType The dimensionality of the image.
-	 * @param format The format and type of the texel blocks that will be contained in the image.
+	 * @param filter The magnification/minification filter to apply to lookups.
+	 * @param addressMode The addressing mode for outside [0..1] range.
 	 * @param samples The number of samples per texel.
-	 * @param tiling The tiling arrangement of the texel blocks in memory.
+	 * @param layout The layout that the image subresources accessible from.
 	 * @param usage The intended usage of the image.
-	 * @param properties The images memory properties.
+	 * @param format The format and type of the texel blocks that will be contained in the image.
 	 * @param mipLevels The number of levels of detail available for minified sampling of the image.
 	 * @param arrayLayers The number of layers in the image.
+	 * @param extent The number of data elements in each dimension of the base level.
 	 */
-	Image(const VkExtent3D &extent, VkImageType imageType, VkFormat format, VkSampleCountFlagBits samples, VkImageTiling tiling,
-		VkImageUsageFlags usage, VkMemoryPropertyFlags properties, uint32_t mipLevels, uint32_t arrayLayers);
+	Image(VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, VkImageLayout layout, VkImageUsageFlags usage,
+		VkFormat format, uint32_t mipLevels, uint32_t arrayLayers, const VkExtent3D &extent);
 
 	~Image();
 
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
+	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage, uint32_t count);
 
 	/**
 	 * Copies the images pixels from memory to a bitmap. If this method is called from multiple threads at the same time Vulkan will crash!
@@ -41,15 +42,8 @@ public:
 	 */
 	std::unique_ptr<Bitmap> GetBitmap(uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
 
-	/**
-	 * Sets the pixels of this image.
-	 * @param pixels The pixels to copy from.
-	 * @param layerCount The amount of layers contained in the pixels.
-	 * @param baseArrayLayer The first layer to copy into.
-	 */
-	void SetPixels(const uint8_t *pixels, uint32_t layerCount, uint32_t baseArrayLayer);
-
 	const VkExtent3D &GetExtent() const { return m_extent; }
+	Vector2ui GetSize() const { return {m_extent.width, m_extent.height}; }
 	VkFormat GetFormat() const { return m_format; }
 	VkSampleCountFlagBits GetSamples() const { return m_samples; }
 	VkImageUsageFlags GetUsage() const { return m_usage; }
@@ -57,7 +51,6 @@ public:
 	uint32_t GetArrayLevels() const { return m_arrayLayers; }
 	VkFilter GetFilter() const { return m_filter; }
 	VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
-	bool IsAnisotropic() const { return m_anisotropic; }
 	VkImageLayout GetLayout() const { return m_layout; }
 	const VkImage &GetImage() { return m_image; }
 	const VkDeviceMemory &GetMemory() { return m_memory; }
@@ -105,17 +98,16 @@ public:
 	static bool CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, VkFormat srcFormat, const VkExtent3D &extent,
 		VkImageLayout srcImageLayout, uint32_t mipLevel, uint32_t arrayLayer);
 
-private:
+protected:
 	VkExtent3D m_extent;
 	VkSampleCountFlagBits m_samples;
 	VkImageUsageFlags m_usage;
-	VkFormat m_format;
-	uint32_t m_mipLevels;
+	VkFormat m_format = VK_FORMAT_UNDEFINED;
+	uint32_t m_mipLevels = 0;
 	uint32_t m_arrayLayers;
 
 	VkFilter m_filter;
 	VkSamplerAddressMode m_addressMode;
-	bool m_anisotropic;
 
 	VkImageLayout m_layout;
 

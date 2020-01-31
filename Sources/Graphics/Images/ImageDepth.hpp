@@ -1,36 +1,13 @@
 #pragma once
 
-#include "Maths/Vector2.hpp"
-#include "Graphics/Descriptors/Descriptor.hpp"
+#include "Image.hpp"
 
 namespace acid {
 /**
  * @brief Resource that represents a depth stencil image.
  */
-class ACID_EXPORT ImageDepth : public Descriptor {
+class ACID_EXPORT ImageDepth : public Image {
 public:
 	explicit ImageDepth(const Vector2ui &extent, VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
-
-	~ImageDepth();
-
-	WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const override;
-	static VkDescriptorSetLayoutBinding GetDescriptorSetLayout(uint32_t binding, VkDescriptorType descriptorType, VkShaderStageFlags stage);
-
-	const Vector2ui &GetExtent() const { return m_extent; }
-	const VkImage &GetImage() const { return m_image; }
-	const VkDeviceMemory &GetMemory() { return m_memory; }
-	const VkSampler &GetSampler() const { return m_sampler; }
-	const VkImageView &GetView() const { return m_view; }
-	VkFormat GetFormat() const { return m_format; }
-
-private:
-	VkFormat m_format = VK_FORMAT_UNDEFINED;
-	
-	Vector2ui m_extent;
-
-	VkImage m_image = VK_NULL_HANDLE;
-	VkDeviceMemory m_memory = VK_NULL_HANDLE;
-	VkSampler m_sampler = VK_NULL_HANDLE;
-	VkImageView m_view = VK_NULL_HANDLE;
 };
 }

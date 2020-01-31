@@ -130,7 +130,7 @@ std::unique_ptr<Image2d> SubrenderDeferred::ComputeBRDF(uint32_t size) {
 
 	// Runs the compute pipeline.
 	descriptorSet.BindDescriptor(commandBuffer, compute);
-	compute.CmdRender(commandBuffer, brdfImage->GetExtent());
+	compute.CmdRender(commandBuffer, brdfImage->GetSize());
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_DEBUG)
@@ -165,7 +165,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputeIrradiance(const std::share
 
 	// Runs the compute pipeline.
 	descriptorSet.BindDescriptor(commandBuffer, compute);
-	compute.CmdRender(commandBuffer, irradianceCubemap->GetExtent());
+	compute.CmdRender(commandBuffer, irradianceCubemap->GetSize());
 	commandBuffer.SubmitIdle();
 
 #if defined(ACID_DEBUG)
@@ -185,8 +185,8 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	auto prefilteredCubemap(std::make_unique<ImageCube>(Vector2ui(size), VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
-		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true));
+	auto prefilteredCubemap = std::make_unique<ImageCube>(Vector2ui(size), VK_FORMAT_R16G16B16A16_SFLOAT, VK_IMAGE_LAYOUT_GENERAL,
+		VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, VK_SAMPLE_COUNT_1_BIT, true, true);
 
 	// Creates the pipeline.
 	CommandBuffer commandBuffer(true, VK_QUEUE_COMPUTE_BIT);
@@ -227,7 +227,7 @@ std::unique_ptr<ImageCube> SubrenderDeferred::ComputePrefiltered(const std::shar
 
 		descriptorSet.BindDescriptor(commandBuffer, compute);
 		pushHandler.BindPush(commandBuffer, compute);
-		compute.CmdRender(commandBuffer, prefilteredCubemap->GetExtent() >> i);
+		compute.CmdRender(commandBuffer, prefilteredCubemap->GetSize() >> i);
 		commandBuffer.SubmitIdle();
 
 		vkDestroyImageView(*logicalDevice, levelView, nullptr);

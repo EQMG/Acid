@@ -43,11 +43,11 @@ constexpr auto Time::AsMicroseconds() const {
 }
 
 inline Time Time::Now() {
-	//static const auto LocalEpoch = std::chrono::high_resolution_clock::now();
-	//return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - LocalEpoch);
+	static const auto LocalEpoch = std::chrono::high_resolution_clock::now();
+	return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - LocalEpoch);
 
-	auto now = std::chrono::system_clock::now();
-	return std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch());
+//	auto now = std::chrono::system_clock::now();
+//	return std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch());
 }
 
 inline std::string Time::GetDateTime(const std::string &format) {

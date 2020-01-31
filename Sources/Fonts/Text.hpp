@@ -12,6 +12,37 @@
 #include "FontType.hpp"
 
 namespace acid {
+class VertexText {
+public:
+	VertexText() = default;
+	VertexText(const Vector2f &position, const Vector3f &uv) :
+		m_position(position),
+		m_uv(uv) {
+	}
+
+	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions = {
+			{baseBinding, sizeof(VertexText), VK_VERTEX_INPUT_RATE_VERTEX}
+		};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
+			{0, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexText, m_position)},
+			{1, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexText, m_uv)}
+		};
+		return {bindingDescriptions, attributeDescriptions};
+	}
+
+	bool operator==(const VertexText &other) const {
+		return m_position == other.m_position && m_uv == other.m_uv;
+	}
+
+	bool operator!=(const VertexText &other) const {
+		return !operator==(other);
+	}
+
+	Vector2f m_position;
+	Vector3f m_uv;
+};
+
 /**
  * @brief Class that represents a text in a GUI.
  */
@@ -139,65 +170,6 @@ public:
 	void SetTextColour(const Colour &textColour) { m_textColour = textColour; }
 
 	/**
-	 * Gets the border colour of the text. This is used with border and glow drivers.
-	 * @return The border colour of the text.
-	 */
-	const Colour &GetBorderColour() const { return m_borderColour; }
-
-	/**
-	 * Sets the border colour of the text. This is used with border and glow drivers.
-	 * @param borderColour The new border colour of the text.
-	 */
-	void SetBorderColour(const Colour &borderColour) { m_borderColour = borderColour; }
-
-	UiDriver<float> *GetGlowDriver() const { return m_glowDriver.get(); }
-	template<template<typename> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
-		void SetGlowDriver(Args &&... args) {
-		m_glowDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
-		m_solidBorder = false;
-		m_glowBorder = true;
-	}
-
-	UiDriver<float> *GetBorderDriver() const { return m_borderDriver.get(); }
-	template<template<typename> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
-		void SetBorderDriver(Args &&... args) {
-		m_borderDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
-		m_solidBorder = true;
-		m_glowBorder = false;
-	}
-
-	/**
-	 * Disables both solid borders and glow borders.
-	 */
-	void RemoveBorder();
-
-	/**
-	 * Gets the calculated border size.
-	 * @return The border size.
-	 */
-	float GetTotalBorderSize() const;
-
-	/**
-	 * Gets the size of the glow.
-	 * @return The glow size.
-	 */
-	float GetGlowSize() const;
-
-	/**
-	 * Gets the distance field edge before antialias.
-	 * @return The distance field edge.
-	 */
-	float CalculateEdgeStart() const;
-
-	/**
-	 * Gets the distance field antialias distance.
-	 * @return The distance field antialias distance.
-	 */
-	float CalculateAntialiasSize() const;
-
-	/**
 	 * Gets if the text has been loaded to a model.
 	 * @return If the text has been loaded to a model.
 	 */
@@ -278,9 +250,9 @@ private:
 	void LoadText();
 	std::vector<Line> CreateStructure() const;
 	void CompleteStructure(std::vector<Line> &lines, Line &currentLine, const Word &currentWord, float maxLength) const;
-	std::vector<Vertex2d> CreateQuad(const std::vector<Line> &lines) const;
-	static void AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<Vertex2d> &vertices);
-	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<Vertex2d> &vertices);
+	std::vector<VertexText> CreateQuad(const std::vector<Line> &lines) const;
+	static void AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<VertexText> &vertices);
+	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexText> &vertices);
 
 	DescriptorsHandler m_descriptorSet;
 	UniformHandler m_uniformObject;
@@ -299,11 +271,5 @@ private:
 	float m_leading;
 
 	Colour m_textColour;
-	Colour m_borderColour;
-	bool m_solidBorder = false;
-	bool m_glowBorder = false;
-
-	std::unique_ptr<UiDriver<float>> m_glowDriver;
-	std::unique_ptr<UiDriver<float>> m_borderDriver;
 };
 }

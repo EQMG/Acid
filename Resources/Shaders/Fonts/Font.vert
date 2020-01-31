@@ -7,15 +7,12 @@ layout(binding = 0) uniform UniformObject {
 	float alpha;
 
 	vec4 colour;
-	vec4 borderColour;
-	vec2 borderSizes;
-	vec2 edgeData;
 } object;
 
 layout(location = 0) in vec2 inPosition;
-layout(location = 1) in vec2 inUV;
+layout(location = 1) in vec3 inUV;
 
-layout(location = 0) out vec2 outUV;
+layout(location = 0) out vec3 outUV;
 
 out gl_PerVertex {
 	vec4 gl_Position;

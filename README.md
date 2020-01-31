@@ -24,7 +24,7 @@ This project is being worked on part-time by a single developer, this is under h
  * Entity component system
  * Particle effect systems
  * File multi-path searching, and packaging
- * UI constraints system, and SDF font rendering
+ * UI constraints system, and MSDF font rendering
  * Audio systems (FLAC, MP3, OGG, OPUS, WAVE)
  * Shadow mapping
  * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)

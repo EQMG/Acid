@@ -38,11 +38,13 @@ FontType::FontType(std::filesystem::path filename, std::size_t size, bool load) 
 
 const Node &operator>>(const Node &node, FontType &fontType) {
 	node["filename"].Get(fontType.m_filename);
+	node["size"].Get(fontType.m_size);
 	return node;
 }
 
 Node &operator<<(Node &node, const FontType &fontType) {
 	node["filename"].Set(fontType.m_filename);
+	node["size"].Set(fontType.m_size);
 	return node;
 }
 
@@ -57,6 +59,8 @@ void FontType::Load() {
 	auto bytes = Files::ReadBytes(m_filename);
 	stbtt_fontinfo fontinfo;
 	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
+
+	auto layerCount = CHARACTERS.size();
 
 	std::size_t index = 0;
 	for (auto c : CHARACTERS) {
@@ -74,6 +78,8 @@ void FontType::Load() {
 		m_glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
 		m_indices[c] = index++;
 	}
+
+	m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount);
 
 #if defined(ACID_DEBUG)
 	Log::Out("Font Type ", m_filename, " loaded ", m_glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

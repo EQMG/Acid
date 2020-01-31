@@ -446,6 +446,7 @@ void Shader::CreateReflection() {
 		switch (uniform.m_glType) {
 		case 0x8B5E: // GL_SAMPLER_2D
 		case 0x904D: // GL_IMAGE_2D
+		case 0x8DC1: // GL_TEXTURE_2D_ARRAY
 		case 0x9108: // GL_SAMPLER_2D_MULTISAMPLE
 		case 0x9055: // GL_IMAGE_2D_MULTISAMPLE
 			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -453,6 +454,7 @@ void Shader::CreateReflection() {
 			break;
 		case 0x8B60: // GL_SAMPLER_CUBE
 		case 0x9050: // GL_IMAGE_CUBE
+		case 0x9054: // GL_IMAGE_CUBE_MAP_ARRAY
 			descriptorType = uniform.m_writeOnly ? VK_DESCRIPTOR_TYPE_STORAGE_IMAGE : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			m_descriptorSetLayouts.emplace_back(ImageCube::GetDescriptorSetLayout(static_cast<uint32_t>(uniform.m_binding), descriptorType, uniform.m_stageFlags, 1));
 			break;
