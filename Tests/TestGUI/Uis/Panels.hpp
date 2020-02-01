@@ -27,7 +27,7 @@ public:
 			slot->SetTransform({{48, 48}, UiAnchor::LeftTop, {48 * i, 0}});
 			slot->SetImage(Image2d::Create("Guis/White.png"));
 			slot->SetColourDriver<ConstantDriver>(colour); // TODO: If colour for GUI is like this do the same for text.
-			this->AddChild(slot.get());
+			AddChild(slot.get());
 			m_slots.emplace_back(std::move(slot));
 
 			/*auto slotTitle = std::make_unique<Text>(m_slots[i].get(), UiTransform({24, 16}, UiAnchor::CentreBottom), 12,

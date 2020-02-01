@@ -5,14 +5,14 @@
 namespace acid {
 UiSection::UiSection(const std::string &string) {
 	m_icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
-	this->AddChild(&m_icon);
+	AddChild(&m_icon);
 
 	m_text.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_text.SetTextColour(Colour::White);
 	m_text.SetString(string);
-	this->AddChild(&m_text);
+	AddChild(&m_text);
 	
-	this->AddChild(&m_content);
+	AddChild(&m_content);
 
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {

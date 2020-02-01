@@ -21,7 +21,7 @@ public:
 
 	void UpdateObject() override;
 
-	UiObject &GetContent() { return m_content; }
+	void AddChild(UiObject *child) override;
 
 	void SetBackgroundColor(const Colour &colour);
 

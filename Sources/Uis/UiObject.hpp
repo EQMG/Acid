@@ -41,7 +41,7 @@ public:
 	 * Adds a child from this object.
 	 * @param child The child to add.
 	 */
-	void AddChild(UiObject *child);
+	virtual void AddChild(UiObject *child);
 
 	/**
 	 * Removes a child from this object.

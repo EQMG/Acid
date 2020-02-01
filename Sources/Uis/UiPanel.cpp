@@ -10,24 +10,24 @@ static const Vector2i PADDING(16, 16);
 UiPanel::UiPanel() {
 	m_background.SetTransform({UiMargins::All});
 	m_background.SetImage(Image2d::Create("Guis/White.png"));
-	this->AddChild(&m_background);
+	UiObject::AddChild(&m_background);
 
 	m_content.SetTransform({UiMargins::None, PADDING, -PADDING});
-	this->AddChild(&m_content);
+	UiObject::AddChild(&m_content);
 
 	m_resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
 	m_resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
 	m_resizeHandle.SetColourDriver<ConstantDriver>(UiInputButton::ButtonColour);
 	m_resizeHandle.SetCursorHover(CursorStandard::ResizeX);
-	this->AddChild(&m_resizeHandle);
+	UiObject::AddChild(&m_resizeHandle);
 
 	m_scrollX.SetTransform({UiMargins::None, {}, {-RESIZE_SIZE.m_x, 0}});
 	m_scrollX.SetType(ScrollBar::Horizontal);
-	this->AddChild(&m_scrollX);
+	UiObject::AddChild(&m_scrollX);
 
 	m_scrollY.SetTransform({UiMargins::None, {}, {0, -RESIZE_SIZE.m_y}});
 	m_scrollY.SetType(ScrollBar::Vertical);
-	this->AddChild(&m_scrollY);
+	UiObject::AddChild(&m_scrollY);
 }
 
 void UiPanel::UpdateObject() {
@@ -50,6 +50,10 @@ void UiPanel::UpdateObject() {
 	//SetScissor(&m_scrollX);
 	//SetScissor(&m_scrollY);
 	SetScissor(&m_content, true);
+}
+
+void UiPanel::AddChild(UiObject *child) {
+	m_content.AddChild(child);
 }
 
 void UiPanel::SetBackgroundColor(const Colour &colour) {

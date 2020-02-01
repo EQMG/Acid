@@ -13,18 +13,18 @@ const Time START_DELAY = 3s;
 UiStartLogo::UiStartLogo() {
 	m_guiBackground.SetTransform({UiMargins::All});
 	m_guiBackground.SetImage(Image2d::Create("Guis/Black.png"));
-	this->AddChild(&m_guiBackground);
+	AddChild(&m_guiBackground);
 
 	m_guiLogoAcid.SetTransform({{300, 300}, UiAnchor::Centre, {0, -100}});
 	m_guiLogoAcid.SetImage(Image2d::Create("Logos/Acid_01.png"));
-	this->AddChild(&m_guiLogoAcid);
+	AddChild(&m_guiLogoAcid);
 
 	m_textCopyright.SetTransform({{460, 64}, UiAnchor::Centre, {0, 128}});
 	m_textCopyright.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textCopyright.SetJustify(Text::Justify::Centre);
 	m_textCopyright.SetTextColour(Colour::White);
 	m_textCopyright.SetString("Copyright (C) 2019, Equilibrium Games - All Rights Reserved.");
-	this->AddChild(&m_textCopyright);
+	AddChild(&m_textCopyright);
 
 	Timers::Get()->Once(START_DELAY, [this]() {
 		SetAlphaDriver<SlideDriver>(1.0f, 0.0f, 1.4s);

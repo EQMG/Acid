@@ -13,12 +13,12 @@ UiScrollBar::UiScrollBar(ScrollBar type) :
 	m_background.SetTransform({UiMargins::All});
 	m_background.SetImage(Image2d::Create("Guis/White.png"));
 	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	this->AddChild(&m_background);
+	AddChild(&m_background);
 
 	m_scroll.SetTransform({UiMargins::RightBottom});
 	m_scroll.SetImage(Image2d::Create("Guis/White.png"));
 	m_scroll.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	this->AddChild(&m_scroll);
+	AddChild(&m_scroll);
 
 	Mouse::Get()->OnScroll().Add([this](Vector2d wheelDelta) {
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled()) {
