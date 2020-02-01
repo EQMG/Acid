@@ -15,14 +15,7 @@ namespace acid {
  */
 class ACID_EXPORT Gui : public UiObject {
 public:
-	/**
-	 * Creates a new GUI object.
-	 * @param parent The parent screen object.
-	 * @param rectangle The rectangle that will represent the bounds of the ui object.
-	 * @param image The objects image.
-	 * @param colourOffset The image colour offset.
-	 */
-	Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset = Colour::White);
+	Gui();
 
 	void UpdateObject() override;
 
@@ -67,7 +60,7 @@ private:
 	uint32_t m_numberOfRows = 1;
 	uint32_t m_selectedRow = 0;
 	Vector2f m_atlasOffset;
-	Vector2f m_atlasScale;
+	Vector2f m_atlasScale = Vector2f::One;
 	Vector4f m_ninePatches; // TODO: Use UiTransform
 
 	std::unique_ptr<UiDriver<Colour>> m_colourDriver;

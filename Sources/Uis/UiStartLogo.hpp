@@ -6,7 +6,7 @@
 namespace acid {
 class ACID_EXPORT UiStartLogo : public UiObject {
 public:
-	explicit UiStartLogo(UiObject *parent);
+	explicit UiStartLogo();
 
 	void UpdateObject() override;
 

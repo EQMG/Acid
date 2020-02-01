@@ -16,12 +16,9 @@ static const std::vector<uint32_t> INDICES = {
 	2, 3, 0
 };
 
-Gui::Gui(UiObject *parent, const UiTransform &rectangle, std::shared_ptr<Image2d> image, const Colour &colourOffset) :
-	UiObject(parent, rectangle),
+Gui::Gui() :
 	m_model(std::make_unique<Model>(VERTICES, INDICES)),
-	m_image(std::move(image)),
-	m_atlasScale(1.0f),
-	m_colourDriver(std::make_unique<ConstantDriver<Colour>>(colourOffset)) {
+	m_colourDriver(std::make_unique<ConstantDriver<Colour>>(Colour::White)) {
 }
 
 void Gui::UpdateObject() {

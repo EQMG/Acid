@@ -1,25 +1,37 @@
 #include "UiPanel.hpp"
 
 #include "Inputs/UiInputButton.hpp"
+#include "Drivers/ConstantDriver.hpp"
 
 namespace acid {
 static const Vector2i RESIZE_SIZE(16, 16);
 static const Vector2i PADDING(16, 16);
 
-UiPanel::UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour, const BitMask<UiManipulate> &manipulate, const BitMask<ScrollBar> &scrollBars) :
-	UiObject(parent, transform),
-	m_background(this, {UiMargins::All}, Image2d::Create("Guis/White.png"), colour),
-	m_content(this, {UiMargins::None, PADDING, -PADDING}),
-	m_resizeHandle(this, {RESIZE_SIZE, UiAnchor::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour),
-	m_manipulate(manipulate),
-	m_scrollX(this, ScrollBar::Horizontal, {UiMargins::None, {}, {-RESIZE_SIZE.m_x, 0}}),
-	m_scrollY(this, ScrollBar::Vertical, {UiMargins::None, {}, {0, -RESIZE_SIZE.m_y}}),
-	m_scrollBars(scrollBars) {
+UiPanel::UiPanel() {
+	m_background.SetTransform({UiMargins::All});
+	m_background.SetImage(Image2d::Create("Guis/White.png"));
+	this->AddChild(&m_background);
+
+	m_content.SetTransform({UiMargins::None, PADDING, -PADDING});
+	this->AddChild(&m_content);
+
+	m_resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
+	m_resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
+	m_resizeHandle.SetColourDriver<ConstantDriver>(UiInputButton::ButtonColour);
 	m_resizeHandle.SetCursorHover(CursorStandard::ResizeX);
-	m_resizeHandle.SetEnabled(m_manipulate & UiManipulate::Resize);
+	this->AddChild(&m_resizeHandle);
+
+	m_scrollX.SetTransform({UiMargins::None, {}, {-RESIZE_SIZE.m_x, 0}});
+	m_scrollX.SetType(ScrollBar::Horizontal);
+	this->AddChild(&m_scrollX);
+
+	m_scrollY.SetTransform({UiMargins::None, {}, {0, -RESIZE_SIZE.m_y}});
+	m_scrollY.SetType(ScrollBar::Vertical);
+	this->AddChild(&m_scrollY);
 }
 
 void UiPanel::UpdateObject() {
+	m_resizeHandle.SetEnabled(m_manipulate & UiManipulate::Resize);
 	auto contentSize = (m_max - m_min) / GetScreenTransform().GetSize();
 	m_scrollX.SetEnabled(m_scrollBars & ScrollBar::Horizontal && contentSize.m_x > 1.05f);
 	m_scrollY.SetEnabled(m_scrollBars & ScrollBar::Vertical && contentSize.m_y > 1.05f);
@@ -38,6 +50,10 @@ void UiPanel::UpdateObject() {
 	//SetScissor(&m_scrollX);
 	//SetScissor(&m_scrollY);
 	SetScissor(&m_content, true);
+}
+
+void UiPanel::SetBackgroundColor(const Colour &colour) {
+	m_background.SetColourDriver<ConstantDriver>(colour);
 }
 
 void UiPanel::SetScissor(UiObject *object, bool checkSize) {

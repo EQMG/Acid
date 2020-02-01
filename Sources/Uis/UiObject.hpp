@@ -5,7 +5,8 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"
-#include "Uis/Drivers/UiDriver.hpp"
+#include "Constraints/UiConstraints.hpp"
+#include "Drivers/UiDriver.hpp"
 #include "UiTransform.hpp"
 
 namespace acid {
@@ -16,13 +17,7 @@ namespace acid {
  */
 class ACID_EXPORT UiObject : public virtual Observer {
 public:
-	/**
-	 * Creates a new ui object.
-	 * @param parent The parent screen object.
-	 * @param transform The virtual space transform.
-	 */
-	UiObject(UiObject *parent, const UiTransform &transform);
-
+	UiObject();
 	virtual ~UiObject();
 
 	/**
@@ -40,14 +35,6 @@ public:
 
 	void CancelEvent(MouseButton button) const;
 
-	UiObject *GetParent() const { return m_parent; }
-
-	/**
-	 * Removes this object from the previous parent and attaches it to another parent.
-	 * @param parent The new parent object.
-	 */
-	void SetParent(UiObject *parent);
-
 	const std::vector<UiObject *> &GetChildren() const { return m_children; }
 
 	/**
@@ -62,14 +49,22 @@ public:
 	 */
 	void RemoveChild(UiObject *child);
 
-	void ClearChildren() { m_children.clear(); }
+	void ClearChildren();
+
+	UiObject *GetParent() const { return m_parent; }
+
+	/**
+	 * Removes this object from the previous parent and attaches it to another parent.
+	 * @param parent The new parent object.
+	 */
+	void SetParent(UiObject *parent);
 
 	bool IsEnabled() const;
 	void SetEnabled(bool enabled) { m_enabled = enabled; }
 
 	UiTransform &GetTransform() { return m_transform; }
 	const UiTransform &GetTransform() const { return m_transform; }
-	void SetTransform(const UiTransform &transform) { m_transform = transform; }
+	virtual void SetTransform(const UiTransform &transform) { m_transform = transform; }
 
 	const std::optional<CursorStandard> &GetCursorHover() const { return m_cursorHover; }
 	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
@@ -90,6 +85,9 @@ public:
 		void SetScaleDriver(Args &&... args) {
 		m_scaleDriver = std::make_unique<T<Vector2f>>(std::forward<Args>(args)...);
 	}
+
+	UiConstraints &GetConstraints() { return m_constraints; }
+	const UiConstraints &GetConstraints() const { return m_constraints; }
 
 	const UiTransform &GetScreenTransform() const { return m_screenTransform; }
 	const Matrix4 &GetModelView() const { return m_modelView; }
@@ -115,10 +113,10 @@ public:
 	Delegate<void(bool)> &OnSelected() { return m_onSelected; }
 
 private:
-	UiObject *m_parent;
 	std::vector<UiObject *> m_children;
+	UiObject *m_parent = nullptr;
 
-	bool m_enabled;
+	bool m_enabled = true;
 	UiTransform m_transform;
 	std::optional<CursorStandard> m_cursorHover;
 	std::optional<Vector4f> m_scissor;
@@ -126,6 +124,8 @@ private:
 	std::unique_ptr<UiDriver<float>> m_alphaDriver;
 	std::unique_ptr<UiDriver<Vector2f>> m_scaleDriver;
 
+	UiConstraints m_constraints;
+	
 	UiTransform m_screenTransform;
 	Matrix4 m_modelView;
 	float m_screenAlpha;

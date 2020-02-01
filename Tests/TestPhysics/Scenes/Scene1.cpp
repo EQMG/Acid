@@ -43,9 +43,19 @@ namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFps>()),
-	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	Scene(std::make_unique<CameraFps>()) {
+	m_uiStartLogo.SetTransform({UiMargins::All});
+	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
+	m_uiStartLogo.OnFinished().Add([this]() {
+		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
+		Mouse::Get()->SetCursorHidden(true);
+	});
+	Uis::Get()->GetCanvas().AddChild(&m_uiStartLogo);
+	
+	m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
+	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
+
 	Input::Get()->GetButton("spawnSphere")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
@@ -98,14 +108,6 @@ Scene1::Scene1() :
 			});
 		}
 	}, this);
-
-	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
-	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
-
-	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
-		Mouse::Get()->SetCursorHidden(true);
-	});
 
 	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths) {
 		for (const auto &path : paths) {

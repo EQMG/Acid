@@ -1,19 +1,32 @@
 #include "UiInputGrabber.hpp"
 
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
-UiInputGrabber::UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, "",
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour) {
-	SetCursorHover(CursorStandard::Hand);
-
+UiInputGrabber::UiInputGrabber() {
+	m_background.SetTransform({UiMargins::All});
+	m_background.SetImage(Image2d::Create("Guis/Button.png"));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	this->AddChild(&m_background);
+
+	m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textTitle.SetFontSize(UiInputButton::FontSize);
+	m_textTitle.SetJustify(Text::Justify::Right);
+	m_textTitle.SetTextColour(UiInputButton::TitleColour);
+	this->AddChild(&m_textTitle);
+
+	m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textValue.SetFontSize(UiInputButton::FontSize);
+	m_textValue.SetJustify(Text::Justify::Left);
+	m_textValue.SetTextColour(UiInputButton::ValueColour);
+	this->AddChild(&m_textValue);
+	
+	SetCursorHover(CursorStandard::Hand);
 }
 
 void UiInputGrabber::UpdateObject() {
@@ -46,10 +59,7 @@ void UiInputGrabber::UpdateValue() {
 	m_textValue.SetString(GetTextString());
 }
 
-UiGrabberJoystick::UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value, const UiTransform &transform) :
-	UiInputGrabber(parent, title, transform),
-	m_port(port),
-	m_value(value) {
+UiGrabberJoystick::UiGrabberJoystick() {
 	UpdateValue();
 
 	Joysticks::Get()->OnButton().Add([this](uint32_t port, uint32_t button, InputAction action) {
@@ -70,9 +80,7 @@ void UiGrabberJoystick::SetValue(uint32_t value) {
 	//m_onValue(m_value);
 }
 
-UiGrabberKeyboard::UiGrabberKeyboard(UiObject *parent, const std::string &title, Key value, const UiTransform &transform) :
-	UiInputGrabber(parent, title, transform),
-	m_value(value) {
+UiGrabberKeyboard::UiGrabberKeyboard() {
 	UpdateValue();
 
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
@@ -93,9 +101,7 @@ void UiGrabberKeyboard::SetValue(Key value) {
 	//m_onValue(m_value);
 }
 
-UiGrabberMouse::UiGrabberMouse(UiObject *parent, const std::string &title, MouseButton value, const UiTransform &transform) :
-	UiInputGrabber(parent, title, transform),
-	m_value(value) {
+UiGrabberMouse::UiGrabberMouse() {
 	UpdateValue();
 
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {

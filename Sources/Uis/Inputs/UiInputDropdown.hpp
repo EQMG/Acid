@@ -8,8 +8,7 @@
 namespace acid {
 class ACID_EXPORT UiInputDropdown : public UiObject {
 public:
-	UiInputDropdown(UiObject *parent, const std::string &title, uint32_t value, std::vector<std::string> options,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiInputDropdown();
 
 	void UpdateObject() override;
 

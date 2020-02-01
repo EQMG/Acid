@@ -11,7 +11,7 @@
 namespace acid {
 class ACID_EXPORT UiInputGrabber : public UiObject {
 public:
-	UiInputGrabber(UiObject *parent, const std::string &title, const UiTransform &transform);
+	UiInputGrabber();
 
 	void UpdateObject() override;
 
@@ -36,8 +36,7 @@ protected:
 
 class ACID_EXPORT UiGrabberJoystick : public UiInputGrabber {
 public:
-	UiGrabberJoystick(UiObject *parent, const std::string &title, uint32_t port, uint32_t value,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiGrabberJoystick();
 
 	uint32_t GetPort() const { return m_port; }
 	void SetPort(uint32_t port) { m_port = port; }
@@ -57,15 +56,14 @@ protected:
 	}
 
 private:
-	uint32_t m_port;
-	uint32_t m_value;
+	uint32_t m_port = 0; // -1
+	uint32_t m_value = 0;
 	Delegate<void(uint32_t, uint32_t)> m_onValue;
 };
 
 class ACID_EXPORT UiGrabberKeyboard : public UiInputGrabber {
 public:
-	UiGrabberKeyboard(UiObject *parent, const std::string &title, Key value,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiGrabberKeyboard();
 
 	Key GetValue() const { return m_value; }
 	void SetValue(Key value);
@@ -82,14 +80,13 @@ protected:
 	}
 
 private:
-	Key m_value;
+	Key m_value = Key::Unknown;
 	Delegate<void(Key)> m_onValue;
 };
 
 class ACID_EXPORT UiGrabberMouse : public UiInputGrabber {
 public:
-	UiGrabberMouse(UiObject *parent, const std::string &title, MouseButton value,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiGrabberMouse();
 
 	MouseButton GetValue() const { return m_value; }
 	void SetValue(MouseButton value);
@@ -106,7 +103,7 @@ protected:
 	}
 
 private:
-	MouseButton m_value;
+	MouseButton m_value = MouseButton::Last;
 	Delegate<void(MouseButton)> m_onValue;
 };
 }

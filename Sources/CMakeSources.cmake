@@ -231,6 +231,13 @@ set(_temp_acid_headers
 		Shadows/SubrenderShadows.hpp
 		Skyboxes/MaterialSkybox.hpp
 		Timers/Timers.hpp
+		Uis/Constraints/BestFitConstraint.hpp
+		Uis/Constraints/PixelConstraint.hpp
+		Uis/Constraints/RatioConstraint.hpp
+		Uis/Constraints/RelativeConstraint.hpp
+		Uis/Constraints/UiAnchor.hpp
+		Uis/Constraints/UiConstraint.hpp
+		Uis/Constraints/UiConstraints.hpp
 		Uis/Drivers/UiDriver.hpp
 		Uis/Drivers/BounceDriver.hpp
 		Uis/Drivers/ConstantDriver.hpp
@@ -447,6 +454,7 @@ set(_temp_acid_sources
 		Shadows/SubrenderShadows.cpp
 		Skyboxes/MaterialSkybox.cpp
 		Timers/Timers.cpp
+		Uis/Constraints/UiConstraints.cpp
 		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp
 		Uis/Inputs/UiInputDropdown.cpp

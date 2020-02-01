@@ -1,23 +1,33 @@
 #include "UiInputText.hpp"
 
 #include "Devices/Keyboard.hpp"
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
-UiInputText::UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button.png"), UiInputButton::PrimaryColour),
-	m_textTitle(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, title,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Right, UiInputButton::TitleColour),
-	m_textValue(this, {UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding}, UiInputButton::FontSize, value,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(std::move(value)),
-	m_maxLength(maxLength) {
-	SetCursorHover(CursorStandard::Hand);
-
+UiInputText::UiInputText() {
+	m_background.SetTransform({UiMargins::All});
+	m_background.SetImage(Image2d::Create("Guis/Button.png"));
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	this->AddChild(&m_background);
 
+	m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textTitle.SetFontSize(UiInputButton::FontSize);
+	m_textTitle.SetJustify(Text::Justify::Right);
+	m_textTitle.SetTextColour(UiInputButton::TitleColour);
+	this->AddChild(&m_textTitle);
+
+	m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textValue.SetFontSize(UiInputButton::FontSize);
+	m_textValue.SetJustify(Text::Justify::Left);
+	m_textValue.SetTextColour(UiInputButton::ValueColour);
+	this->AddChild(&m_textValue);
+
+	SetCursorHover(CursorStandard::Hand);
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
 		if (!m_updating) {
 			return;

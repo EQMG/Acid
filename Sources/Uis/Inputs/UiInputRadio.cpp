@@ -1,17 +1,27 @@
 #include "UiInputRadio.hpp"
 
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
 namespace acid {
-UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type type, bool value, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, {{24, 24}, UiAnchor::LeftCentre}, Image2d::Create("Guis/Radio.png"), UiInputButton::PrimaryColour),
-	m_fill(&m_background, {{24, 24}, UiAnchor::Centre}, nullptr, UiInputButton::SelectedColour),
-	m_text(this, {{140, 24}, UiAnchor::LeftCentre, {29, 0}}, UiInputButton::FontSize, string,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, UiInputButton::ValueColour),
-	m_value(value),
-	m_type(type) {
+UiInputRadio::UiInputRadio() {
+	m_background.SetTransform({{24, 24}, UiAnchor::LeftCentre});
+	m_background.SetImage(Image2d::Create("Guis/Radio.png"));
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	this->AddChild(&m_background);
+
+	m_fill.SetTransform({{24, 24}, UiAnchor::Centre});
+	m_fill.SetColourDriver<ConstantDriver>(UiInputButton::SelectedColour);
+	m_background.AddChild(&m_fill);
+
+	m_title.SetTransform({{140, 24}, UiAnchor::LeftCentre, {29, 0}});
+	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_title.SetFontSize(UiInputButton::FontSize);
+	m_title.SetTextColour(UiInputButton::ValueColour);
+	this->AddChild(&m_title);
+	
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
 		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(),
@@ -26,9 +36,6 @@ UiInputRadio::UiInputRadio(UiObject *parent, const std::string &string, Type typ
 			m_onValue(m_value);
 		}
 	});
-
-	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-
 	UpdateValue();
 }
 

@@ -1,8 +1,8 @@
 #include "Uis.hpp"
 
 namespace acid {
-Uis::Uis() :
-	m_canvas(nullptr, {Window::Get()->GetSize()}) {
+Uis::Uis() {
+	m_canvas.SetTransform({Window::Get()->GetSize()});
 	for (auto button : EnumIterator<MouseButton>()) {
 		m_selectors.emplace(button, SelectorMouse());
 	}

@@ -1,5 +1,6 @@
 #include "UiInputButton.hpp"
 
+#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Uis/Drivers/SlideDriver.hpp"
 #include "Uis/Uis.hpp"
 
@@ -17,17 +18,23 @@ const Colour UiInputButton::PrimaryColour(0x121113);
 const Colour UiInputButton::SelectedColour(0xFEA62A);
 const Colour UiInputButton::ButtonColour(0x3C3B3C);
 
-UiInputButton::UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, {UiMargins::All}, Image2d::Create("Guis/Button_Filled.png"), ButtonColour),
-	m_text(this, {UiMargins::None, Padding, -Padding}, FontSize, string,
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, ValueColour) {
+UiInputButton::UiInputButton() {
+	m_background.SetTransform({UiMargins::All});
+	m_background.SetImage(Image2d::Create("Guis/Button_Filled.png"));
+	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	m_background.SetColourDriver<ConstantDriver>(ButtonColour);
+	this->AddChild(&m_background);
+
+	m_title.SetTransform({UiMargins::None, Padding, -Padding});
+	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_title.SetFontSize(FontSize);
+	m_title.SetTextColour(ValueColour);
+	this->AddChild(&m_title);
+	
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
 		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
 	});
-
-	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 }
 
 void UiInputButton::UpdateObject() {

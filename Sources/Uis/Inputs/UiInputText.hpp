@@ -9,8 +9,7 @@
 namespace acid {
 class ACID_EXPORT UiInputText : public UiObject {
 public:
-	UiInputText(UiObject *parent, const std::string &title, std::string value, int32_t maxLength,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiInputText();
 
 	void UpdateObject() override;
 
@@ -19,6 +18,9 @@ public:
 
 	const std::string &GetValue() const { return m_value; }
 	void SetValue(const std::string &value);
+
+	int32_t GetMaxLength() const { return m_maxLength; }
+	void SetMaxLength(int32_t maxLength) { m_maxLength = maxLength; }
 
 	/**
 	 * Called when this value of the input changes.

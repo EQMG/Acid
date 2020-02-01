@@ -7,12 +7,12 @@
 namespace acid {
 class ACID_EXPORT UiInputButton : public UiObject {
 public:
-	UiInputButton(UiObject *parent, const std::string &string, const UiTransform &transform = {Size});
+	UiInputButton();
 
 	void UpdateObject() override;
 
-	const std::string &GetString() const { return m_text.GetString(); }
-	void SetString(const std::string &string) { m_text.SetString(string); }
+	const std::string &GetTitle() const { return m_title.GetString(); }
+	void SetTitle(const std::string &string) { m_title.SetString(string); }
 	
 	static const Vector2i Size;
 	static const Vector2i Padding;
@@ -29,6 +29,6 @@ public:
 
 private:
 	Gui m_background;
-	Text m_text;
+	Text m_title;
 };
 }

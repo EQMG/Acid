@@ -19,8 +19,10 @@
 
 namespace test {
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFree>()),
-	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	Scene(std::make_unique<CameraFree>()) {
+	m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
+	
 	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());

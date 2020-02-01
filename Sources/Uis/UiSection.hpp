@@ -7,9 +7,11 @@
 namespace acid {
 class ACID_EXPORT UiSection : public UiObject {
 public:
-	UiSection(UiObject *parent, const std::string &string, const UiTransform &transform = {});
+	explicit UiSection(const std::string &string);
 
 	void UpdateObject() override;
+
+	void SetTransform(const UiTransform &transform) override;
 
 	UiObject &GetContent() { return m_content; }
 

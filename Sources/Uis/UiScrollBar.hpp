@@ -15,12 +15,13 @@ ENABLE_BITMASK_OPERATORS(ScrollBar);
 
 class ACID_EXPORT UiScrollBar : public UiObject {
 public:
-	UiScrollBar(UiObject *parent, ScrollBar type, const UiTransform &transform = {Vector2ui(Size)});
+	explicit UiScrollBar(ScrollBar type = ScrollBar::None);
 
 	void UpdateObject() override;
 
 	float GetProgress();
 	void SetSize(const Vector2f &size);
+	void SetType(ScrollBar type);
 
 	static const uint32_t Size;
 

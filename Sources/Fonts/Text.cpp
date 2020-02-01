@@ -1,23 +1,8 @@
 #include "Text.hpp"
 
-#include "Uis/Drivers/ConstantDriver.hpp"
 #include "Models/Shapes/ModelRectangle.hpp"
 
 namespace acid {
-Text::Text(UiObject *parent, const UiTransform &rectangle, float fontSize, std::string text, std::shared_ptr<FontType> fontType, Justify justify,
-	const Colour &textColour, float kerning, float leading) :
-	UiObject(parent, rectangle),
-	m_lastSize(rectangle.GetSize()),
-	m_fontSize(fontSize),
-	m_string(std::move(text)),
-	m_justify(justify),
-	m_fontType(std::move(fontType)),
-	m_kerning(kerning),
-	m_leading(leading),
-	m_textColour(textColour) {
-	LoadText();
-}
-
 void Text::UpdateObject() {
 	m_dirty |= GetScreenTransform().GetSize() != m_lastSize;
 	if (m_dirty)
@@ -81,6 +66,11 @@ void Text::SetKerning(float kerning) {
 void Text::SetLeading(float leading) {
 	m_dirty |= m_leading != leading;
 	m_leading = leading;
+}
+
+void Text::SetFontType(const std::shared_ptr<FontType> &fontType) {
+	m_dirty |= m_fontType == fontType;
+	m_fontType = fontType;
 }
 
 bool Text::IsLoaded() const {

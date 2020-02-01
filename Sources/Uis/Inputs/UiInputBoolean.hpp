@@ -8,7 +8,7 @@
 namespace acid {
 class ACID_EXPORT UiInputBoolean : public UiObject {
 public:
-	UiInputBoolean(UiObject *parent, const std::string &title, bool value, const UiTransform &transform = {UiInputButton::Size});
+	UiInputBoolean();
 
 	void UpdateObject() override;
 
@@ -32,7 +32,7 @@ private:
 	Text m_textTitle;
 	Text m_textValue;
 
-	bool m_value;
+	bool m_value = false;
 
 	Delegate<void(bool)> m_onValue;
 };

@@ -5,27 +5,19 @@
 #include "Uis.hpp"
 
 namespace acid {
-UiObject::UiObject(UiObject *parent, const UiTransform &transform) :
-	m_parent(parent),
-	m_enabled(true),
-	m_transform(transform),
+UiObject::UiObject() :
 	m_alphaDriver(std::make_unique<ConstantDriver<float>>(1.0f)),
 	m_scaleDriver(std::make_unique<ConstantDriver<Vector2f>>(Vector3f(1.0f))),
 	m_screenAlpha(1.0f),
 	m_screenScale(1.0f) {
-	if (m_parent) {
-		m_parent->AddChild(this);
-	}
 }
 
 UiObject::~UiObject() {
-	if (m_parent) {
+	if (m_parent)
 		m_parent->RemoveChild(this);
-	}
 
-	for (auto &child : m_children) {
+	for (auto &child : m_children)
 		child->m_parent = nullptr;
-	}
 }
 
 void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, UiObject *&cursorSelect) {
@@ -146,24 +138,31 @@ void UiObject::CancelEvent(MouseButton button) const {
 	Uis::Get()->CancelWasEvent(button);
 }
 
-void UiObject::SetParent(UiObject *parent) {
-	if (m_parent) {
-		m_parent->RemoveChild(this);
-	}
-
-	if (parent) {
-		parent->AddChild(this);
-	}
-
-	m_parent = parent;
-}
-
 void UiObject::AddChild(UiObject *child) {
+	if (child->m_parent || this == child) {
+		throw std::runtime_error("Adding child to UI object with an existing parent!");
+	}
 	m_children.emplace_back(child);
+	child->m_parent = this;
 }
 
 void UiObject::RemoveChild(UiObject *child) {
 	m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
+	child->m_parent = nullptr;
+}
+
+void UiObject::ClearChildren() {
+	m_children.clear();
+}
+
+void UiObject::SetParent(UiObject *parent) {
+	if (m_parent)
+		m_parent->RemoveChild(this);
+
+	if (parent)
+		parent->AddChild(this);
+
+	m_parent = parent;
 }
 
 bool UiObject::IsEnabled() const {

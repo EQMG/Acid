@@ -15,13 +15,12 @@ public:
 		Check
 	};
 
-	UiInputRadio(UiObject *parent, const std::string &string, Type type = Type::Filled, bool value = false,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiInputRadio();
 
 	void UpdateObject() override;
 
-	const std::string &GetString() const { return m_text.GetString(); }
-	void SetString(const std::string &string) { m_text.SetString(string); }
+	const std::string &GetTitle() const { return m_title.GetString(); }
+	void SetTitle(const std::string &string) { m_title.SetString(string); }
 
 	bool GetValue() const { return m_value; }
 	void SetValue(bool value);
@@ -40,33 +39,17 @@ private:
 
 	Gui m_background;
 	Gui m_fill;
-	Text m_text;
+	Text m_title;
 
-	bool m_value;
-	Type m_type;
+	bool m_value = false;
+	Type m_type = Type::Filled;
 
 	Delegate<void(bool)> m_onValue;
 };
 
 class ACID_EXPORT UiRadioManager : public virtual Observer {
 public:
-	explicit UiRadioManager(const UiInputRadio::Type &type = UiInputRadio::Type::X, bool multiple = false, const std::vector<UiInputRadio *> &inputs = {}) :
-		m_type(type),
-		m_multiple(multiple),
-		m_inputs(inputs) {
-		for (auto &input : inputs) {
-			input->SetType(type);
-			input->OnValue().Add([this, input](bool value) {
-				if (!m_multiple) {
-					for (auto &input2 : m_inputs) {
-						if (input2 != input) {
-							input2->SetValue(false);
-						}
-					}
-				}
-			}, this);
-		}
-	}
+	UiRadioManager() = default;
 
 	const UiInputRadio::Type &GetMarkType() const { return m_type; }
 
@@ -80,8 +63,24 @@ public:
 
 	const std::vector<UiInputRadio *> &GetInputs() const { return m_inputs; }
 
+	void AddInputs(const std::vector<UiInputRadio *> &inputs) {
+		for (auto &input : inputs) {
+			AddInput(input);
+		}
+	}
+
 	void AddInput(UiInputRadio *input) {
 		m_inputs.emplace_back(input);
+		input->SetType(m_type);
+		input->OnValue().Add([this, input](bool value) {
+			if (!m_multiple) {
+				for (auto &input2 : m_inputs) {
+					if (input2 != input) {
+						input2->SetValue(false);
+					}
+				}
+			}
+		}, this);
 	}
 
 	void RemoveInput(UiInputRadio *input) {
@@ -91,8 +90,8 @@ public:
 	void ClearInputs() { m_inputs.clear(); }
 
 private:
-	UiInputRadio::Type m_type;
-	bool m_multiple;
+	UiInputRadio::Type m_type = UiInputRadio::Type::X;
+	bool m_multiple = false;
 	std::vector<UiInputRadio *> m_inputs;
 };
 }

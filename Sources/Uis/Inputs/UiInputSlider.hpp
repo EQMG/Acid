@@ -8,8 +8,7 @@
 namespace acid {
 class ACID_EXPORT UiInputSlider : public UiObject {
 public:
-	UiInputSlider(UiObject *parent, const std::string &title, float value, float valueMin, float valueMax, int32_t roundTo = 2,
-		const UiTransform &transform = {UiInputButton::Size});
+	UiInputSlider();
 
 	void UpdateObject() override;
 
@@ -27,6 +26,9 @@ public:
 
 	float GetProgress() const { return m_progress; }
 
+	int32_t GetRoundTo() const { return m_roundTo; }
+	void SetRoundTo(int32_t roundTo) { m_roundTo = roundTo; }
+
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
@@ -41,11 +43,11 @@ private:
 	Text m_textTitle;
 	Text m_textValue;
 
-	float m_value;
-	float m_valueMin;
-	float m_valueMax;
+	float m_value = 0.5f;
+	float m_valueMin = 0.0f;
+	float m_valueMax = 1.0f;
 	float m_progress = 0.0f;
-	int32_t m_roundTo;
+	int32_t m_roundTo = 2;
 
 	bool m_updating = false;
 	bool m_mouseOver = false;

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Guis/Gui.hpp"
-#include "Uis/UiObject.hpp"
-#include "UiScrollBar.hpp"
 #include "Inputs/UiInputButton.hpp"
+#include "UiObject.hpp"
+#include "UiScrollBar.hpp"
 
 namespace acid {
 enum class UiManipulate {
@@ -17,13 +17,17 @@ ENABLE_BITMASK_OPERATORS(UiManipulate);
 
 class ACID_EXPORT UiPanel : public UiObject {
 public:
-	UiPanel(UiObject *parent, const UiTransform &transform, const Colour &colour = UiInputButton::BackgroundColour,
-		const BitMask<UiManipulate> &manipulate = UiManipulate::None, const BitMask<ScrollBar> &scrollBars = ScrollBar::Vertical | ScrollBar::Horizontal);
+	UiPanel();
 
 	void UpdateObject() override;
 
 	UiObject &GetContent() { return m_content; }
 
+	void SetBackgroundColor(const Colour &colour);
+
+	const BitMask<UiManipulate> &GetManipulate() const { return m_manipulate; }
+	void SetManipulate(const BitMask<UiManipulate> &manipulate) { m_manipulate = manipulate; }
+	
 	const BitMask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
 	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
 

@@ -1,17 +1,25 @@
 #include "UiScrollBar.hpp"
 
-#include "Uis/Drivers/SlideDriver.hpp"
 #include "Inputs/UiInputButton.hpp"
+#include "Drivers/ConstantDriver.hpp"
+#include "Drivers/SlideDriver.hpp"
 #include "Uis.hpp"
 
 namespace acid {
 const uint32_t UiScrollBar::Size = 8;
 
-UiScrollBar::UiScrollBar(UiObject *parent, ScrollBar type, const UiTransform &transform) :
-	UiObject(parent, transform),
-	m_background(this, {UiMargins::All}, Image2d::Create("Guis/White.png"), UiInputButton::PrimaryColour),
-	m_scroll(this, {UiMargins::RightBottom}, Image2d::Create("Guis/White.png"), UiInputButton::ButtonColour),
+UiScrollBar::UiScrollBar(ScrollBar type) :
 	m_index(type == ScrollBar::Vertical) {
+	m_background.SetTransform({UiMargins::All});
+	m_background.SetImage(Image2d::Create("Guis/White.png"));
+	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	this->AddChild(&m_background);
+
+	m_scroll.SetTransform({UiMargins::RightBottom});
+	m_scroll.SetImage(Image2d::Create("Guis/White.png"));
+	m_scroll.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	this->AddChild(&m_scroll);
+
 	Mouse::Get()->OnScroll().Add([this](Vector2d wheelDelta) {
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled()) {
 			Vector2f position;
@@ -54,6 +62,10 @@ float UiScrollBar::GetProgress() {
 void UiScrollBar::SetSize(const Vector2f &size) {
 	m_scroll.GetTransform().SetAnchor0(m_scroll.GetTransform().GetPosition());
 	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
+}
+
+void UiScrollBar::SetType(ScrollBar type) {
+	m_index = type == ScrollBar::Vertical;
 }
 
 float UiScrollBar::ScrollByDelta(float delta) const {
