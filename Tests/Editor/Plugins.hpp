@@ -25,7 +25,7 @@ private:
 	std::filesystem::path m_loadedPath;
 	FileObserver m_fileObserver;
 	std::unique_ptr<cr_plugin> m_plugin;
-	bool m_update;
+	bool m_update = true;
 
 	//Panels m_panels;
 

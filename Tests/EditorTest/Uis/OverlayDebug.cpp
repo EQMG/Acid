@@ -5,11 +5,21 @@
 #include <Guis/Gui.hpp>
 
 namespace test {
-OverlayDebug::OverlayDebug(UiObject *parent) :
-	UiObject(parent, UiTransform(Vector2i(100, 36), UiAnchor::LeftBottom)),
-	m_textFrameTime(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -2)), 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")),
-	m_textFps(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -16)), 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")),
-	m_textUps(this, UiTransform(Vector2i(100, 12), UiAnchor::LeftBottom, Vector2i(2, -30)), 11, "", FontType::Create("Fonts/ProximaNova-Regular.ttf")) {
+OverlayDebug::OverlayDebug() {
+	m_textFrameTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2}});
+	m_textFrameTime.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textFrameTime.SetFontSize(11);
+	AddChild(&m_textFrameTime);
+
+	m_textFps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -16}});
+	m_textFps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textFps.SetFontSize(11);
+	AddChild(&m_textFps);
+
+	m_textUps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -30}});
+	m_textUps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textUps.SetFontSize(11);
+	AddChild(&m_textUps);
 }
 
 void OverlayDebug::UpdateObject() {

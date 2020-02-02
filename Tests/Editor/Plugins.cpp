@@ -13,9 +13,10 @@ Plugins::Plugins() :
 	m_loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
 	m_fileObserver(m_loadedPath, 0.5s),
 	m_plugin(std::make_unique<cr_plugin>()),
-	m_update(true),
-	//m_panels(&Uis::Get()->GetCanvas()),
 	m_buttonReload(Key::R) {
+	//m_panels.SetTransform({UiMargins::All});
+	//Uis::Get()->GetCanvas().AddChild(&m_panels);
+	
 	auto pathStr = m_loadedPath.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 	cr_plugin_load(*m_plugin, pathStr.c_str());
@@ -24,7 +25,6 @@ Plugins::Plugins() :
 	m_fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
 		m_update = true;
 	});
-
 	m_buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			//std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type(Time::Now()));

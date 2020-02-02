@@ -47,7 +47,7 @@ public:
 	 * Removes a child from this object.
 	 * @param child The child to remove.
 	 */
-	void RemoveChild(UiObject *child);
+	virtual void RemoveChild(UiObject *child);
 
 	void ClearChildren();
 

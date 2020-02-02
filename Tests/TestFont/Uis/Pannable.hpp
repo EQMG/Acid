@@ -12,12 +12,12 @@ using namespace acid;
 namespace test {
 class Pannable : public UiObject {
 public:
-	explicit Pannable(UiObject *parent);
+	Pannable();
 
 	void UpdateObject() override;
 
 private:
-	float m_zoom;
+	float m_zoom = 1.0f;
 
 	UiObject m_content;
 	Text m_title;

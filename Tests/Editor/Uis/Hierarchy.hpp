@@ -14,7 +14,7 @@ using namespace acid;
 namespace test {
 class Hierarchy : public UiPanel {
 public:
-	explicit Hierarchy(UiObject *parent);
+	Hierarchy();
 
 	void UpdateObject() override;
 

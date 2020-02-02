@@ -34,9 +34,15 @@ static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFps>()),
-	m_soundScreenshot("Sounds/Screenshot.ogg"),
-	m_uiStartLogo(&Uis::Get()->GetCanvas()),
-	m_overlayDebug(&Uis::Get()->GetCanvas()) {
+	m_soundScreenshot("Sounds/Screenshot.ogg") {
+	m_uiStartLogo.SetTransform({UiMargins::All});
+	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
+	m_uiStartLogo.OnFinished().Add([this]() {
+		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
+		Mouse::Get()->SetCursorHidden(true);
+	});
+	Uis::Get()->GetCanvas().AddChild(&m_uiStartLogo);
+	
 	Input::Get()->GetButton("spawnSphere")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
@@ -54,20 +60,11 @@ Scene1::Scene1() :
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
 	}, this);
-
 	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	}, this);
-
-	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
-	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
-
-	m_uiStartLogo.OnFinished().Add([this]() {
-		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
-		Mouse::Get()->SetCursorHidden(true);
-	});
 }
 
 void Scene1::Start() {

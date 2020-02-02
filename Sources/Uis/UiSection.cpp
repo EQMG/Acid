@@ -3,14 +3,13 @@
 #include "Uis/Uis.hpp"
 
 namespace acid {
-UiSection::UiSection(const std::string &string) {
+UiSection::UiSection() {
 	m_icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
 	AddChild(&m_icon);
 
-	m_text.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_text.SetTextColour(Colour::White);
-	m_text.SetString(string);
-	AddChild(&m_text);
+	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_title.SetTextColour(Colour::White);
+	AddChild(&m_title);
 	
 	AddChild(&m_content);
 
@@ -37,7 +36,7 @@ void UiSection::UpdateObject() {
 
 void UiSection::SetTransform(const UiTransform &transform) {
 	m_icon.SetTransform(transform);
-	m_text.SetTransform(transform);
+	m_title.SetTransform(transform);
 	m_content.SetTransform(transform);
 }
 }

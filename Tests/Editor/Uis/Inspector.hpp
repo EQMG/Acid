@@ -14,7 +14,7 @@ using namespace acid;
 namespace test {
 class Inspector : public UiPanel {
 public:
-	explicit Inspector(UiObject *parent);
+	Inspector();
 
 	void UpdateObject() override;
 

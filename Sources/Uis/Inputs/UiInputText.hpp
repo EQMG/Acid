@@ -36,7 +36,7 @@ private:
 	Text m_textValue;
 
 	std::string m_value;
-	int32_t m_maxLength;
+	int32_t m_maxLength = 16;
 
 	InputDelay m_inputDelay;
 	int32_t m_lastKey = 0;

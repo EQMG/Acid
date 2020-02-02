@@ -8,7 +8,7 @@ using namespace acid;
 namespace test {
 class Panels : public UiObject {
 public:
-	explicit Panels(UiObject *parent);
+	Panels();
 
 	void UpdateObject() override;
 

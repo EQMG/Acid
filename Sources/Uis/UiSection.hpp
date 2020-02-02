@@ -7,11 +7,14 @@
 namespace acid {
 class ACID_EXPORT UiSection : public UiObject {
 public:
-	explicit UiSection(const std::string &string);
+	UiSection();
 
 	void UpdateObject() override;
 
 	void SetTransform(const UiTransform &transform) override;
+
+	const std::string &GetTitle() const { return m_title.GetString(); }
+	void SetTitle(const std::string &string) { m_title.SetString(string); }
 
 	UiObject &GetContent() { return m_content; }
 
@@ -23,7 +26,7 @@ public:
 
 private:
 	Gui m_icon;
-	Text m_text;
+	Text m_title;
 	UiObject m_content;
 
 	bool m_collapsed = false;

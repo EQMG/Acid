@@ -8,38 +8,21 @@
 #include <Uis/Uis.hpp>
 
 namespace test {
-Pannable::Pannable(UiObject *parent) :
-	UiObject(parent, {UiMargins::All}),
-	m_zoom(1.0f),
-	m_content(this, {{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}}),
-	m_title(&m_content, {{300, 80}, UiAnchor::CentreTop}, 72, "Acid Font",
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Centre, Colour::Red),
-	m_body(&m_content, {{750, 1000}, UiAnchor::CentreTop, {0, 100}}, 12, "",
-		FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left, Colour::Black),
-	m_settings(this, {{300, 300}, UiAnchor::LeftTop, {20, 20}}, UiInputButton::BackgroundColour, UiManipulate::All,
-		ScrollBar::None),
-	m_masterVolume(&m_settings.GetContent(), "Master Volume", 100.0f, 0.0f, 100.0f, 0, {UiInputButton::Size, UiAnchor::LeftTop, {0, 0}}),
-	m_antialiasing(&m_settings.GetContent(), "Antialiasing", true, {UiInputButton::Size, UiAnchor::LeftTop, {0, 34}}),
-	m_textFrameTime(parent, {{100, 12}, UiAnchor::LeftBottom, {2, -2}}, 11, "Frame Time: 0ms", FontType::Create("Fonts/ProximaNova-Regular.ttf"),
-		Text::Justify::Left),
-	m_textFps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -16}}, 11, "FPS: 0", FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left),
-	m_textUps(this, {{100, 12}, UiAnchor::LeftBottom, {2, -30}}, 11, "UPS: 0", FontType::Create("Fonts/ProximaNova-Regular.ttf"), Text::Justify::Left) {
-	Input::Get()->GetButton("reset")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
-		if (action == InputAction::Press) {
-			m_zoom = 1.0f;
-			m_content.GetTransform().SetPosition({0.5f, 0.5f});
-		}
+Pannable::Pannable(){
+	m_content.SetTransform({{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}});
+	AddChild(&m_content);
 
-		Log::Out("Button Reset: ", static_cast<uint32_t>(action), '\n'); // TODO: Enum stream operators.
-	}, this);
+	m_title.SetTransform({{300, 80}, UiAnchor::CentreTop});
+	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_title.SetFontSize(72);
+	m_title.SetJustify(Text::Justify::Centre);
+	m_title.SetTextColour(Colour::Red);
+	m_title.SetString("Acid Font");
+	m_content.AddChild(&m_title);
 
-	//m_settings.GetTransform().SetDepth(-4.0f);
-	m_masterVolume.OnValue().Add([this](float value) {
-		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
-	});
-	m_antialiasing.OnValue().Add([this](bool value) {
-	});
-
+	m_body.SetTransform({{750, 1000}, UiAnchor::CentreTop, {0, 100}});
+	m_body.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_body.SetTextColour(Colour::Black);
 	m_body.SetString( //L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet scelerisque augue, sit amet commodo neque. Vestibulum\n"
 		"eu eros a justo molestie bibendum quis in urna. Integer quis tristique magna. Morbi in ultricies lorem. Donec lacinia nisi et\n"
@@ -71,6 +54,56 @@ Pannable::Pannable(UiObject *parent) :
 		"urna sed tempus. Vestibulum eu augue dolor. Vestibulum vehicula suscipit purus, sit amet ultricies ligula malesuada sit amet.\n"
 		"Duis consectetur elit euismod arcu aliquet vehicula. Pellentesque lobortis dui et nisl vehicula, in placerat quam dapibus.Fusce\n"
 		"auctor arcu a purus bibendum, eget blandit nisi lobortis.");
+	m_content.AddChild(&m_body);
+
+	m_settings.SetTransform({{300, 300}, UiAnchor::LeftTop, {20, 20}});
+	//m_settings.GetTransform().SetDepth(-4.0f);
+	m_settings.SetManipulate(UiManipulate::All);
+	m_settings.SetScrollBars(ScrollBar::None);
+	m_settings.SetBackgroundColor(UiInputButton::BackgroundColour);
+	AddChild(&m_settings);
+
+	m_masterVolume.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 0}});
+	m_masterVolume.SetTitle("Master Volume");
+	m_masterVolume.SetValueMin(0.0f);
+	m_masterVolume.SetValueMax(100.0f);
+	m_masterVolume.SetRoundTo(0);
+	m_masterVolume.SetValue(100.0f);
+	m_masterVolume.OnValue().Add([this](float value) {
+		Audio::Get()->SetGain(Audio::Type::Master, value / 100.0f);
+	}, this);
+	m_settings.AddChild(&m_masterVolume);
+
+	m_antialiasing.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 34}});
+	m_antialiasing.SetTitle("Antialiasing");
+	m_antialiasing.SetValue(true);
+	m_antialiasing.OnValue().Add([this](bool value) {
+	}, this);
+	m_settings.AddChild(&m_antialiasing);
+	
+	m_textFrameTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2}});
+	m_textFrameTime.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textFrameTime.SetFontSize(11);
+	AddChild(&m_textFrameTime);
+
+	m_textFps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -16}});
+	m_textFps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textFps.SetFontSize(11);
+	AddChild(&m_textFps);
+
+	m_textUps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -30}});
+	m_textUps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	m_textUps.SetFontSize(11);
+	AddChild(&m_textUps);
+
+	Input::Get()->GetButton("reset")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+		if (action == InputAction::Press) {
+			m_zoom = 1.0f;
+			m_content.GetTransform().SetPosition({0.5f, 0.5f});
+		}
+
+		Log::Out("Button Reset: ", static_cast<uint32_t>(action), '\n'); // TODO: Enum stream operators.
+	}, this);
 }
 
 void Pannable::UpdateObject() {
