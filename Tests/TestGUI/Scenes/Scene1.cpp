@@ -1,6 +1,8 @@
 #include "Scene1.hpp"
 
 #include <Inputs/Input.hpp>
+#include <Uis/Constraints/PixelConstraint.hpp>
+#include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Drivers/SlideDriver.hpp>
 #include <Uis/Uis.hpp>
@@ -10,20 +12,24 @@ const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<Camera>()) {
-	m_uiStartLogo.SetTransform({UiMargins::All});
+	//m_uiStartLogo.SetTransform({UiMargins::All});
 	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
 	m_uiStartLogo.OnFinished().Add([this]() {
 		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		//m_uiPanels.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		TogglePause();
-	});
+	}, this);
 	Uis::Get()->GetCanvas().AddChild(&m_uiStartLogo);
 
-	m_uiPanels.SetTransform({UiMargins::All});
+	//m_uiPanels.SetTransform({UiMargins::All});
 	m_uiPanels.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&m_uiPanels);
 
-	m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	//m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	m_overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
+		.SetHeight<PixelConstraint>(36)
+		.SetX<PixelConstraint>(0, UiAnchor::Left)
+		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
 	

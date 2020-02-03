@@ -159,13 +159,17 @@ constexpr auto Vector4<T>::MinMax() const {
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Min(const Vector4<K> &other) {
-	return Vector4<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y), std::min(m_z, other.m_z), std::min(m_w, other.m_w));
+	using THighestP = decltype(m_x + other.m_x);
+	return Vector4<THighestP>(std::min<THighestP>(m_x, other.m_x), std::min<THighestP>(m_y, other.m_y), std::min<THighestP>(m_z, other.m_z),
+		std::min<THighestP>(m_w, other.m_w));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Max(const Vector4<K> &other) {
-	return Vector4<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y), std::max(m_z, other.m_z), std::max(m_w, other.m_w));
+	using THighestP = decltype(m_x + other.m_x);
+	return Vector4<THighestP>(std::max<THighestP>(m_x, other.m_x), std::max<THighestP>(m_y, other.m_y), std::max<THighestP>(m_z, other.m_z),
+		std::max<THighestP>(m_w, other.m_w));
 }
 
 template<typename T>

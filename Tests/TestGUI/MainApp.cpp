@@ -46,7 +46,7 @@ MainApp::MainApp() :
 			Log::Out("Erased ", path, '\n');
 			break;
 		}
-	});
+	}, this);
 
 	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultGUI.json"), true);

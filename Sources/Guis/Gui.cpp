@@ -33,7 +33,7 @@ void Gui::UpdateObject() {
 	m_uniformObject.Push("modelView", GetModelView());
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
-	m_uniformObject.Push("aspectRatio", GetScreenTransform().GetSize().m_x / GetScreenTransform().GetSize().m_y);
+	m_uniformObject.Push("aspectRatio", static_cast<float>(GetScreenSize().m_x) / static_cast<float>(GetScreenSize().m_y));
 
 	m_uniformObject.Push("colourOffset", m_colourDriver->Get());
 	m_uniformObject.Push("atlasOffset", m_atlasOffset);

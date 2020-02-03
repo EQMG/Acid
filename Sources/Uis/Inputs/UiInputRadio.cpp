@@ -6,17 +6,17 @@
 
 namespace acid {
 UiInputRadio::UiInputRadio() {
-	m_background.SetTransform({{24, 24}, UiAnchor::LeftCentre});
+	//m_background.SetTransform({{24, 24}, UiAnchor::LeftCentre});
 	m_background.SetImage(Image2d::Create("Guis/Radio.png"));
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_background);
 
-	m_fill.SetTransform({{24, 24}, UiAnchor::Centre});
+	//m_fill.SetTransform({{24, 24}, UiAnchor::Centre});
 	m_fill.SetColourDriver<ConstantDriver>(UiInputButton::SelectedColour);
 	m_background.AddChild(&m_fill);
 
-	m_title.SetTransform({{140, 24}, UiAnchor::LeftCentre, {29, 0}});
+	//m_title.SetTransform({{140, 24}, UiAnchor::LeftCentre, {29, 0}});
 	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_title.SetFontSize(UiInputButton::FontSize);
 	m_title.SetTextColour(UiInputButton::ValueColour);
@@ -26,7 +26,7 @@ UiInputRadio::UiInputRadio() {
 	OnSelected().Add([this](bool selected) {
 		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(),
 			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime);
-	});
+	}, this);
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
@@ -35,7 +35,7 @@ UiInputRadio::UiInputRadio() {
 			UpdateValue();
 			m_onValue(m_value);
 		}
-	});
+	}, this);
 	UpdateValue();
 }
 

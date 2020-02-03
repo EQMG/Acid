@@ -31,6 +31,12 @@ public:
 		return m_value;
 	}
 
+	float GetValue() const { return m_value; }
+	void SetValue(float value) { m_value = value; }
+	const UiAnchor &GetAnchor() const { return m_anchor; }
+	void SetAnchor(UiAnchor &anchor) { m_anchor = anchor; }
+
+private:
 	int32_t m_value;
 	UiAnchor m_anchor = UiAnchor::Zero;
 };

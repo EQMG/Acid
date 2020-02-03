@@ -14,13 +14,19 @@
 #include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Uis/Constraints/PixelConstraint.hpp>
+#include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Uis.hpp>
 #include "CameraFree.hpp"
 
 namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFree>()) {
-	m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	//m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	m_overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
+		.SetHeight<PixelConstraint>(36)
+		.SetX<PixelConstraint>(0, UiAnchor::Left)
+		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
 	
 	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {

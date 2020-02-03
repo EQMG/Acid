@@ -10,6 +10,9 @@
 #include <Uis/Inputs/UiInputText.hpp>
 #include <Uis/UiObject.hpp>
 #include <Uis/UiPanel.hpp>
+#include <Uis/Constraints/PixelConstraint.hpp>
+#include <Uis/Constraints/RatioConstraint.hpp>
+#include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Drivers/SinewaveDriver.hpp>
 
@@ -24,7 +27,11 @@ public:
 			auto colour = Colour::Red.Lerp(Colour::Blue, static_cast<float>(i) / 10.0f);
 
 			auto slot = std::make_unique<Gui>();
-			slot->SetTransform({{48, 48}, UiAnchor::LeftTop, {48 * i, 0}});
+			//slot->SetTransform({{48, 48}, UiAnchor::LeftTop, {48 * i, 0}});
+			slot->GetConstraints().SetWidth<PixelConstraint>(48)
+				.SetHeight<PixelConstraint>(48)
+				.SetX<PixelConstraint>(48 * i)
+				.SetY<PixelConstraint>(0, UiAnchor::Top);
 			slot->SetImage(Image2d::Create("Guis/White.png"));
 			slot->SetColourDriver<ConstantDriver>(colour); // TODO: If colour for GUI is like this do the same for text.
 			AddChild(slot.get());

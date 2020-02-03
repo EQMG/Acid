@@ -1,6 +1,8 @@
 #include "UiStartLogo.hpp"
 
-#include "Uis/Drivers/SlideDriver.hpp"
+#include "Constraints/PixelConstraint.hpp"
+#include "Constraints/RatioConstraint.hpp"
+#include "Drivers/SlideDriver.hpp"
 #include "Timers/Timers.hpp"
 
 namespace acid {
@@ -11,15 +13,23 @@ const Time START_DELAY = 3s;
 #endif
 
 UiStartLogo::UiStartLogo() {
-	m_guiBackground.SetTransform({UiMargins::All});
+	//m_guiBackground.SetTransform({UiMargins::All});
 	m_guiBackground.SetImage(Image2d::Create("Guis/Black.png"));
 	AddChild(&m_guiBackground);
 
-	m_guiLogoAcid.SetTransform({{300, 300}, UiAnchor::Centre, {0, -100}});
+	//m_guiLogoAcid.SetTransform({{300, 300}, UiAnchor::Centre, {0, -100}});
+	m_guiLogoAcid.GetConstraints().SetWidth<PixelConstraint>(300)
+		.SetHeight<RatioConstraint>(1.0f)
+		.SetX<PixelConstraint>(0, UiAnchor::Centre)
+		.SetY<PixelConstraint>(-100, UiAnchor::Centre);
 	m_guiLogoAcid.SetImage(Image2d::Create("Logos/Acid_01.png"));
 	AddChild(&m_guiLogoAcid);
 
-	m_textCopyright.SetTransform({{460, 64}, UiAnchor::Centre, {0, 128}});
+	//m_textCopyright.SetTransform({{460, 64}, UiAnchor::Centre, {0, 128}});
+	m_textCopyright.GetConstraints().SetWidth<PixelConstraint>(460)
+		.SetHeight<PixelConstraint>(64)
+		.SetX<PixelConstraint>(0, UiAnchor::Centre)
+		.SetY<PixelConstraint>(128, UiAnchor::Centre);
 	m_textCopyright.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textCopyright.SetJustify(Text::Justify::Centre);
 	m_textCopyright.SetTextColour(Colour::White);

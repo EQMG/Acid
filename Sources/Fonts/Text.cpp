@@ -4,7 +4,7 @@
 
 namespace acid {
 void Text::UpdateObject() {
-	m_dirty |= GetScreenTransform().GetSize() != m_lastSize;
+	m_dirty |= GetScreenSize() != m_lastSize;
 	if (m_dirty)
 		LoadText();
 
@@ -13,7 +13,7 @@ void Text::UpdateObject() {
 	m_uniformObject.Push("alpha", GetScreenAlpha());
 
 	m_uniformObject.Push("colour", m_textColour);
-	m_uniformObject.Push("scale", 0.5f * GetScreenTransform().GetSize().m_x / (float)m_fontType->GetSize());
+	m_uniformObject.Push("scale", 0.5f * GetScreenSize().m_x / (float)m_fontType->GetSize());
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
@@ -87,7 +87,7 @@ void Text::LoadText() {
 		return;
 	}
 
-	m_lastSize = GetScreenTransform().GetSize();
+	m_lastSize = GetScreenSize();
 	
 	// Creates mesh data.
 	auto lines = CreateStructure();

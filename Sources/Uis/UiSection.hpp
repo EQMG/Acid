@@ -11,12 +11,10 @@ public:
 
 	void UpdateObject() override;
 
-	void SetTransform(const UiTransform &transform) override;
+	void AddChild(UiObject *child) override;
 
 	const std::string &GetTitle() const { return m_title.GetString(); }
 	void SetTitle(const std::string &string) { m_title.SetString(string); }
-
-	UiObject &GetContent() { return m_content; }
 
 	/**
 	 * Called when this section has been collapsed or uncollapsed.

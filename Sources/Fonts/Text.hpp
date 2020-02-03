@@ -251,7 +251,7 @@ private:
 
 	std::unique_ptr<Model> m_model;
 	uint32_t m_numberLines = 0;
-	Vector2f m_lastSize;
+	Vector2i m_lastSize;
 
 	float m_fontSize = 12;
 	std::string m_string;

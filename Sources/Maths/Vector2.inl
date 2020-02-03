@@ -154,13 +154,15 @@ constexpr auto Vector2<T>::MinMax() const {
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Min(const Vector2<K> &other) {
-	return Vector2<decltype(std::min(m_x, other.m_x))>(std::min(m_x, other.m_x), std::min(m_y, other.m_y));
+	using THighestP = decltype(m_x + other.m_x);
+	return Vector2<THighestP>(std::min<THighestP>(m_x, other.m_x), std::min<THighestP>(m_y, other.m_y));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Max(const Vector2<K> &other) {
-	return Vector2<decltype(std::max(m_x, other.m_x))>(std::max(m_x, other.m_x), std::max(m_y, other.m_y));
+	using THighestP = decltype(m_x + other.m_x);
+	return Vector2<THighestP>(std::max<THighestP>(m_x, other.m_x), std::max<THighestP>(m_y, other.m_y));
 }
 
 template<typename T>

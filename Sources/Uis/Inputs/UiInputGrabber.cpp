@@ -6,20 +6,20 @@
 
 namespace acid {
 UiInputGrabber::UiInputGrabber() {
-	m_background.SetTransform({UiMargins::All});
+	//m_background.SetTransform({UiMargins::All});
 	m_background.SetImage(Image2d::Create("Guis/Button.png"));
 	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
 	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_background);
 
-	m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
 	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textTitle.SetFontSize(UiInputButton::FontSize);
 	m_textTitle.SetJustify(Text::Justify::Right);
 	m_textTitle.SetTextColour(UiInputButton::TitleColour);
 	AddChild(&m_textTitle);
 
-	m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	//m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
 	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textValue.SetFontSize(UiInputButton::FontSize);
 	m_textValue.SetJustify(Text::Justify::Left);
@@ -71,7 +71,7 @@ UiGrabberJoystick::UiGrabberJoystick() {
 		m_onValue(m_port, m_value);
 		SetUpdating(false);
 		UpdateValue();
-	});
+	}, this);
 }
 
 void UiGrabberJoystick::SetValue(uint32_t value) {
@@ -92,7 +92,7 @@ UiGrabberKeyboard::UiGrabberKeyboard() {
 		m_onValue(m_value);
 		SetUpdating(false);
 		UpdateValue();
-	});
+	}, this);
 }
 
 void UiGrabberKeyboard::SetValue(Key value) {
@@ -122,7 +122,7 @@ UiGrabberMouse::UiGrabberMouse() {
 		m_onValue(m_value);
 		SetUpdating(false);
 		UpdateValue();
-	});
+	}, this);
 }
 
 void UiGrabberMouse::SetValue(MouseButton value) {

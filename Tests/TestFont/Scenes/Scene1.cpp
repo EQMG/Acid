@@ -5,7 +5,7 @@
 namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<Camera>()) {
-	m_pannable.SetTransform({UiMargins::All});
+	//m_pannable.SetTransform({UiMargins::All});
 	Uis::Get()->GetCanvas().AddChild(&m_pannable);
 }
 

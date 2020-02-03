@@ -6,26 +6,26 @@
 
 namespace acid {
 UiInputSlider::UiInputSlider() {
-	m_slider.SetTransform( {UiMargins::All});
+	//m_slider.SetTransform( {UiMargins::All});
 	m_slider.SetImage(Image2d::Create("Guis/Button_Filled.png"));
 	m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 	m_slider.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_slider);
 
-	m_background.SetTransform({UiMargins::All});
+	//m_background.SetTransform({UiMargins::All});
 	m_background.SetImage(Image2d::Create("Guis/Button.png"));
 	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
 	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_background);
 
-	m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
 	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textTitle.SetFontSize(UiInputButton::FontSize);
 	m_textTitle.SetJustify(Text::Justify::Right);
 	m_textTitle.SetTextColour(UiInputButton::TitleColour);
 	AddChild(&m_textTitle);
 
-	m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	//m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
 	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textValue.SetFontSize(UiInputButton::FontSize);
 	m_textValue.SetJustify(Text::Justify::Left);
@@ -43,8 +43,8 @@ void UiInputSlider::UpdateObject() {
 	} else if (!Uis::Get()->IsDown(MouseButton::Left)) {
 		m_updating = false;
 	} else if (m_updating) {
-		auto width = m_background.GetScreenTransform().GetSize().m_x;
-		auto positionX = m_background.GetScreenTransform().GetPosition().m_x;
+		auto width = m_background.GetScreenSize().m_x;
+		auto positionX = m_background.GetScreenPosition().m_x;
 		auto cursorX = static_cast<float>(Mouse::Get()->GetPosition().m_x) - positionX;
 		m_progress = cursorX / width;
 		m_progress = std::clamp(m_progress, 0.0f, 1.0f);

@@ -2,32 +2,32 @@
 
 #include <Scenes/Scenes.hpp>
 #include <Guis/Gui.hpp>
+#include <Uis/Constraints/PixelConstraint.hpp>
+#include <Uis/Constraints/RelativeConstraint.hpp>
 #include "World/World.hpp"
 
 namespace test {
 OverlayDebug::OverlayDebug() {
-	m_textFrameTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2}});
-	m_textFrameTime.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textFrameTime.SetFontSize(11);
-	AddChild(&m_textFrameTime);
-
-	m_textFps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -16}});
-	m_textFps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textFps.SetFontSize(11);
-	AddChild(&m_textFps);
-
-	m_textUps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -30}});
-	m_textUps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textUps.SetFontSize(11);
-	AddChild(&m_textUps);
-
-	m_textTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -44}});
-	m_textTime.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textTime.SetFontSize(11);
-	AddChild(&m_textTime);
+	auto createText = [this](int32_t i, Text &object) {
+		//object.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2 - (i * 14)}});
+		object.GetConstraints().SetWidth<PixelConstraint>(100)
+			.SetHeight<PixelConstraint>(12)
+			.SetX<PixelConstraint>(2, UiAnchor::Left)
+			.SetY<PixelConstraint>(-2 - (i * 14), UiAnchor::Bottom);
+		object.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+		object.SetFontSize(11);
+		AddChild(&object);
+	};
+	
+	createText(0, m_textFrameTime);
+	createText(1, m_textFps);
+	createText(2, m_textUps);
+	createText(3, m_textTime);
 }
 
 void OverlayDebug::UpdateObject() {
+	// TODO: Update every 0.333 seconds.
+	
 	m_textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));

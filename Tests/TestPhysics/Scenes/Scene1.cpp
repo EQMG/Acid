@@ -31,6 +31,8 @@
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/MaterialSkybox.hpp>
+#include <Uis/Constraints/PixelConstraint.hpp>
+#include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Uis.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
@@ -44,15 +46,19 @@ static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFps>()) {
-	m_uiStartLogo.SetTransform({UiMargins::All});
+	//m_uiStartLogo.SetTransform({UiMargins::All});
 	m_uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
 	m_uiStartLogo.OnFinished().Add([this]() {
 		m_overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		Mouse::Get()->SetCursorHidden(true);
-	});
+	}, this);
 	Uis::Get()->GetCanvas().AddChild(&m_uiStartLogo);
-	
-	m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+
+	//m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	m_overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
+		.SetHeight<PixelConstraint>(36)
+		.SetX<PixelConstraint>(0, UiAnchor::Left)
+		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	m_overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
 

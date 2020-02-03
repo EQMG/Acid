@@ -8,14 +8,13 @@
 namespace acid {
 const uint32_t UiScrollBar::Size = 8;
 
-UiScrollBar::UiScrollBar(ScrollBar type) :
-	m_index(type == ScrollBar::Vertical) {
-	m_background.SetTransform({UiMargins::All});
+UiScrollBar::UiScrollBar() {
+	//m_background.SetTransform({UiMargins::All});
 	m_background.SetImage(Image2d::Create("Guis/White.png"));
 	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_background);
 
-	m_scroll.SetTransform({UiMargins::RightBottom});
+	//m_scroll.SetTransform({UiMargins::RightBottom});
 	m_scroll.SetImage(Image2d::Create("Guis/White.png"));
 	m_scroll.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
 	AddChild(&m_scroll);
@@ -38,7 +37,7 @@ void UiScrollBar::UpdateObject() {
 		}
 
 		Vector2d position;
-		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenTransform().GetPosition()[m_index]; // ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
+		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenPosition()[m_index]; // ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
 		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}
@@ -69,19 +68,19 @@ void UiScrollBar::SetType(ScrollBar type) {
 }
 
 float UiScrollBar::ScrollByDelta(float delta) const {
-	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
-	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];
+	float puckLength = m_scroll.GetScreenSize()[m_index];
+	float barLength = GetParent()->GetScreenSize()[m_index];
 	auto maxValue = (barLength - puckLength) / barLength;
-	auto value = m_scroll.GetScreenTransform().m_position[m_index];
+	float value = m_scroll.GetScreenPosition()[m_index];
 	value += delta;
 	return std::clamp(value, 0.0f, maxValue);
 }
 
 float UiScrollBar::ScrollByPosition(float position) const {
-	auto puckLength = m_scroll.GetScreenTransform().m_size[m_index];
-	auto barLength = GetParent()->GetScreenTransform().m_size[m_index];
+	float puckLength = m_scroll.GetScreenSize()[m_index];
+	float barLength = GetParent()->GetScreenSize()[m_index];
 	auto maxValue = (barLength - puckLength) / barLength;
-	auto positionLength = GetParent()->GetScreenTransform().m_position[m_index];
+	float positionLength = GetParent()->GetScreenPosition()[m_index];
 	auto cursorLength = (position - positionLength) - (puckLength / 2.0f);
 	return std::clamp(cursorLength / barLength, 0.0f, maxValue);
 }

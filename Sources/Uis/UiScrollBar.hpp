@@ -15,7 +15,7 @@ ENABLE_BITMASK_OPERATORS(ScrollBar);
 
 class ACID_EXPORT UiScrollBar : public UiObject {
 public:
-	explicit UiScrollBar(ScrollBar type = ScrollBar::None);
+	UiScrollBar();
 
 	void UpdateObject() override;
 
@@ -32,7 +32,7 @@ private:
 
 	Gui m_background;
 	Gui m_scroll;
-	uint32_t m_index;
+	uint32_t m_index = 0;
 	bool m_updating = false;
 	bool m_mouseOver = false;
 };

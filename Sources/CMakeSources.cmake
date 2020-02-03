@@ -258,7 +258,6 @@ set(_temp_acid_headers
 		Uis/UiScrollBar.hpp
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
-		Uis/UiTransform.hpp
 		)
 set(_temp_acid_sources
 		Animations/Animation/Animation.cpp
@@ -468,7 +467,6 @@ set(_temp_acid_sources
 		Uis/UiScrollBar.cpp
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
-		Uis/UiTransform.cpp
 		)
 		
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)

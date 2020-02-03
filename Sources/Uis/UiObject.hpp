@@ -7,7 +7,6 @@
 #include "Maths/Transform.hpp"
 #include "Constraints/UiConstraints.hpp"
 #include "Drivers/UiDriver.hpp"
-#include "UiTransform.hpp"
 
 namespace acid {
 /**
@@ -62,15 +61,11 @@ public:
 	bool IsEnabled() const;
 	void SetEnabled(bool enabled) { m_enabled = enabled; }
 
-	UiTransform &GetTransform() { return m_transform; }
-	const UiTransform &GetTransform() const { return m_transform; }
-	virtual void SetTransform(const UiTransform &transform) { m_transform = transform; }
-
 	const std::optional<CursorStandard> &GetCursorHover() const { return m_cursorHover; }
 	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
 
-	const std::optional<Vector4f> &GetScissor() const { return m_scissor; }
-	void SetScissor(const std::optional<Vector4f> &scissor) { m_scissor = scissor; }
+	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
+	void SetScissor(const std::optional<Vector4i> &scissor) { m_scissor = scissor; }
 
 	UiDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
 	template<template<typename> typename T, typename... Args,
@@ -89,8 +84,10 @@ public:
 	UiConstraints &GetConstraints() { return m_constraints; }
 	const UiConstraints &GetConstraints() const { return m_constraints; }
 
-	const UiTransform &GetScreenTransform() const { return m_screenTransform; }
 	const Matrix4 &GetModelView() const { return m_modelView; }
+	const Vector2i &GetScreenPosition() const { return m_screenPosition; }
+	const Vector2i &GetScreenSize() const { return m_screenSize; }
+	float GetScreenDepth() const { return m_screenDepth; }
 	float GetScreenAlpha() const { return m_screenAlpha; }
 	const Vector2f &GetScreenScale() const { return m_screenScale; }
 
@@ -117,17 +114,17 @@ private:
 	UiObject *m_parent = nullptr;
 
 	bool m_enabled = true;
-	UiTransform m_transform;
 	std::optional<CursorStandard> m_cursorHover;
-	std::optional<Vector4f> m_scissor;
+	std::optional<Vector4i> m_scissor;
 
 	std::unique_ptr<UiDriver<float>> m_alphaDriver;
 	std::unique_ptr<UiDriver<Vector2f>> m_scaleDriver;
 
 	UiConstraints m_constraints;
 	
-	UiTransform m_screenTransform;
 	Matrix4 m_modelView;
+	Vector2i m_screenPosition, m_screenSize;
+	float m_screenDepth;
 	float m_screenAlpha;
 	Vector2f m_screenScale;
 	bool m_selected = false;

@@ -1,8 +1,11 @@
 #include "Uis.hpp"
 
+#include "Constraints/PixelConstraint.hpp"
+
 namespace acid {
 Uis::Uis() {
-	m_canvas.SetTransform({Window::Get()->GetSize()});
+	m_canvas.GetConstraints().SetWidth<PixelConstraint>(0)
+		.SetHeight<PixelConstraint>(0);
 	for (auto button : EnumIterator<MouseButton>()) {
 		m_selectors.emplace(button, SelectorMouse());
 	}
@@ -18,10 +21,11 @@ void Uis::Update() {
 	auto lastCursorSelect = m_cursorSelect;
 	m_cursorSelect = nullptr;
 
+	m_objects.clear();
 	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().m_x, 
 		0.0f, Window::Get()->GetSize().m_y, -1.0f, 1.0f);
-	m_objects.clear();
-	m_canvas.GetTransform().SetSize(Window::Get()->GetSize());
+	m_canvas.GetConstraints().GetWidth()->SetOffset(Window::Get()->GetSize().m_x);
+	m_canvas.GetConstraints().GetHeight()->SetOffset(Window::Get()->GetSize().m_y);
 	m_canvas.Update(viewMatrix, m_objects, m_cursorSelect);
 
 	if (lastCursorSelect != m_cursorSelect) {
