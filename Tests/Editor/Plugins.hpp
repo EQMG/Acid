@@ -13,7 +13,7 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins : public Module::Registrar<Plugins, Module::Stage::Always> {
+class Plugins : public Module::Registrar<Plugins, Module::Stage::Always>, public Observer {
 public:
 	Plugins();
 

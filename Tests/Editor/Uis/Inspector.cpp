@@ -5,31 +5,31 @@
 
 namespace test {
 Inspector::Inspector() {
-	m_section1.SetTransform({{0.08f, 0.05f}, UiAnchor::LeftTop});
+	//m_section1.SetTransform({{0.08f, 0.05f}, UiAnchor::LeftTop});
 	m_section1.SetTitle("Section Right");
 	UiPanel::AddChild(&m_section1);
 
-	m_button1.SetTransform({{0.0f, 0.0f}, UiAnchor::LeftTop});
+	//m_button1.SetTransform({{0.0f, 0.0f}, UiAnchor::LeftTop});
 	m_button1.SetTitle("Button #2");
 	m_section1.AddChild(&m_button1);
 
-	m_input1.SetTransform({{0.0f, 0.06f}, UiAnchor::LeftTop});
+	//m_input1.SetTransform({{0.0f, 0.06f}, UiAnchor::LeftTop});
 	m_input1.SetTitle("Mouse Grabber");
 	m_input1.SetValue(MouseButton::Left);
 	m_section1.AddChild(&m_input1);
 
-	m_input2.SetTransform({{0.0f, 0.12f}, UiAnchor::LeftTop});
+	//m_input2.SetTransform({{0.0f, 0.12f}, UiAnchor::LeftTop});
 	m_input2.SetTitle("Keyboard Grabber");
 	m_input2.SetValue(Key::W);
 	m_section1.AddChild(&m_input2);
 
-	m_input3.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop});
+	//m_input3.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop});
 	m_input3.SetTitle("Joystick Grabber");
 	m_input3.SetPort(0);
 	m_input3.SetValue(3);
 	m_section1.AddChild(&m_input3);
 
-	m_slider1.SetTransform({{0.0f, 0.24f}, UiAnchor::LeftTop});
+	//m_slider1.SetTransform({{0.0f, 0.24f}, UiAnchor::LeftTop});
 	m_slider1.SetTitle("Volume");
 	m_slider1.SetValueMin(0.0f);
 	m_slider1.SetValueMax(100.0f);
@@ -40,7 +40,7 @@ Inspector::Inspector() {
 	}, this);
 	m_section1.AddChild(&m_slider1);
 
-	m_text1.SetTransform({{0.0f, 0.30f}, UiAnchor::LeftTop});
+	//m_text1.SetTransform({{0.0f, 0.30f}, UiAnchor::LeftTop});
 	m_text1.SetTitle("Title");
 	m_text1.SetMaxLength(14);
 	m_text1.SetValue(Window::Get()->GetTitle());

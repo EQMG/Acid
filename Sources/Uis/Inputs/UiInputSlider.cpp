@@ -64,7 +64,7 @@ void UiInputSlider::UpdateObject() {
 		m_mouseOver = false;
 	}
 
-	m_slider.GetTransform().SetAnchor1({m_progress - 1.0f, 0.0f});
+//	m_slider.GetTransform().SetAnchor1({m_progress - 1.0f, 0.0f});
 }
 
 void UiInputSlider::SetValue(float value) {

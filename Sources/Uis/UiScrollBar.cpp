@@ -23,7 +23,7 @@ UiScrollBar::UiScrollBar() {
 		if (GetParent()->IsSelected() && !m_updating && m_scroll.IsEnabled()) {
 			Vector2f position;
 			position[m_index] = ScrollByDelta(wheelDelta[m_index]);
-			m_scroll.GetTransform().SetPosition(position);
+//			m_scroll.GetTransform().SetPosition(position);
 		}
 	}, this);
 }
@@ -38,7 +38,7 @@ void UiScrollBar::UpdateObject() {
 
 		Vector2d position;
 		position[m_index] = Mouse::Get()->GetPosition()[m_index] - GetScreenPosition()[m_index]; // ScrollByPosition(Mouse::Get()->GetPosition()[m_index]);
-		m_scroll.GetTransform().SetPosition(position);
+//		m_scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}
 
@@ -55,12 +55,13 @@ void UiScrollBar::UpdateObject() {
 
 float UiScrollBar::GetProgress() {
 	// TODO: Mark const
-	return m_scroll.GetTransform().GetPosition()[m_index];
+//	return m_scroll.GetTransform().GetPosition()[m_index];
+	return 0.0f;
 }
 
 void UiScrollBar::SetSize(const Vector2f &size) {
-	m_scroll.GetTransform().SetAnchor0(m_scroll.GetTransform().GetPosition());
-	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
+//	m_scroll.GetTransform().SetAnchor0(m_scroll.GetTransform().GetPosition());
+//	m_scroll.GetTransform().SetAnchor1(m_scroll.GetTransform().GetPosition() + size);
 }
 
 void UiScrollBar::SetType(ScrollBar type) {

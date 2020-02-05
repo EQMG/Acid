@@ -34,7 +34,8 @@ UiInputBoolean::UiInputBoolean() {
 
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
+		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), 
+			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
 			UiInputButton::SlideTime);
 	}, this);
 	OnClick().Add([this](MouseButton button) {

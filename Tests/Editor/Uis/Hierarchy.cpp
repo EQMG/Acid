@@ -9,11 +9,11 @@ int32_t GetNextY() {
 }
 
 Hierarchy::Hierarchy() {
-	m_section1.SetTransform({{0.08f, 0.05f}, UiAnchor::LeftTop});
+	//m_section1.SetTransform({{0.08f, 0.05f}, UiAnchor::LeftTop});
 	m_section1.SetTitle("Section Left");
 	UiPanel::AddChild(&m_section1);
 
-	m_button1.SetTransform({{0.0f, 0.0f}, UiAnchor::LeftTop});
+	//m_button1.SetTransform({{0.0f, 0.0f}, UiAnchor::LeftTop});
 	m_button1.SetTitle("Button #1");
 	m_button1.OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
@@ -29,7 +29,7 @@ Hierarchy::Hierarchy() {
 		m_textHex.SetValue(colour.GetHex());
 	};
 
-	m_sliderR.SetTransform({{0.0f, 0.06f}, UiAnchor::LeftTop});
+	//m_sliderR.SetTransform({{0.0f, 0.06f}, UiAnchor::LeftTop});
 	//m_sliderR.GetTransform().SetScale({0.071f, 0.042f});
 	m_sliderR.SetTitle("R");
 	m_sliderR.SetValueMin(0.0f);
@@ -39,7 +39,7 @@ Hierarchy::Hierarchy() {
 	m_sliderR.OnValue().Add(onSlide);
 	m_section1.AddChild(&m_sliderR);
 
-	m_sliderG.SetTransform({{0.074f, 0.06f}, UiAnchor::LeftTop});
+	//m_sliderG.SetTransform({{0.074f, 0.06f}, UiAnchor::LeftTop});
 	//m_sliderG.GetTransform().SetScale({0.071f, 0.042f});
 	m_sliderG.SetTitle("G");
 	m_sliderG.SetValueMin(0.0f);
@@ -49,7 +49,7 @@ Hierarchy::Hierarchy() {
 	m_sliderG.OnValue().Add(onSlide);
 	m_section1.AddChild(&m_sliderG);
 
-	m_sliderB.SetTransform({{0.1475f, 0.06f}, UiAnchor::LeftTop});
+	//m_sliderB.SetTransform({{0.1475f, 0.06f}, UiAnchor::LeftTop});
 	//m_sliderB.GetTransform().SetScale({0.071f, 0.042f});
 	m_sliderB.SetTitle("B");
 	m_sliderR.SetValueMin(0.0f);
@@ -59,13 +59,13 @@ Hierarchy::Hierarchy() {
 	m_sliderB.OnValue().Add(onSlide);
 	m_section1.AddChild(&m_sliderB);
 
-	m_textHex.SetTransform({{0.0f, 0.12f}, UiAnchor::LeftTop});
+	//m_textHex.SetTransform({{0.0f, 0.12f}, UiAnchor::LeftTop});
 	m_textHex.SetTitle("Hex");
 	m_textHex.SetMaxLength(14);
 	m_textHex.SetValue(Colour::Yellow.GetHex());
 	m_section1.AddChild(&m_textHex);
 
-	m_rgbColour.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop, UiInputButton::Size});
+	//m_rgbColour.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop, UiInputButton::Size});
 	m_rgbColour.SetImage(Image2d::Create("Guis/Button_Filled.png"));
 	m_rgbColour.SetNinePatches({0.125f, 0.125f, 0.75f, 0.75f});
 	m_rgbColour.SetColourDriver<ConstantDriver>(Colour::Yellow);

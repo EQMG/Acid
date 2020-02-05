@@ -9,10 +9,10 @@
 
 namespace test {
 Pannable::Pannable(){
-	m_content.SetTransform({{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}});
+	//m_content.SetTransform({{1000, 1000}, UiAnchor::LeftTop, {0.5f, 0.5f}});
 	AddChild(&m_content);
 
-	m_title.SetTransform({{300, 80}, UiAnchor::CentreTop});
+	//m_title.SetTransform({{300, 80}, UiAnchor::CentreTop});
 	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_title.SetFontSize(72);
 	m_title.SetJustify(Text::Justify::Centre);
@@ -20,7 +20,7 @@ Pannable::Pannable(){
 	m_title.SetString("Acid Font");
 	m_content.AddChild(&m_title);
 
-	m_body.SetTransform({{750, 1000}, UiAnchor::CentreTop, {0, 100}});
+	//m_body.SetTransform({{750, 1000}, UiAnchor::CentreTop, {0, 100}});
 	m_body.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_body.SetTextColour(Colour::Black);
 	m_body.SetString( //L"Hello world, Привет мир, schön! 0123456789 #$%^*@&( []{} «»½¼±¶§\n"
@@ -56,14 +56,14 @@ Pannable::Pannable(){
 		"auctor arcu a purus bibendum, eget blandit nisi lobortis.");
 	m_content.AddChild(&m_body);
 
-	m_settings.SetTransform({{300, 300}, UiAnchor::LeftTop, {20, 20}});
+	//m_settings.SetTransform({{300, 300}, UiAnchor::LeftTop, {20, 20}});
 	//m_settings.GetTransform().SetDepth(-4.0f);
 	m_settings.SetManipulate(UiManipulate::All);
 	m_settings.SetScrollBars(ScrollBar::None);
 	m_settings.SetBackgroundColor(UiInputButton::BackgroundColour);
 	AddChild(&m_settings);
 
-	m_masterVolume.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 0}});
+	//m_masterVolume.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 0}});
 	m_masterVolume.SetTitle("Master Volume");
 	m_masterVolume.SetValueMin(0.0f);
 	m_masterVolume.SetValueMax(100.0f);
@@ -74,24 +74,24 @@ Pannable::Pannable(){
 	}, this);
 	m_settings.AddChild(&m_masterVolume);
 
-	m_antialiasing.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 34}});
+	//m_antialiasing.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 34}});
 	m_antialiasing.SetTitle("Antialiasing");
 	m_antialiasing.SetValue(true);
 	m_antialiasing.OnValue().Add([this](bool value) {
 	}, this);
 	m_settings.AddChild(&m_antialiasing);
 	
-	m_textFrameTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2}});
+	//m_textFrameTime.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -2}});
 	m_textFrameTime.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textFrameTime.SetFontSize(11);
 	AddChild(&m_textFrameTime);
 
-	m_textFps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -16}});
+	//m_textFps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -16}});
 	m_textFps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textFps.SetFontSize(11);
 	AddChild(&m_textFps);
 
-	m_textUps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -30}});
+	//m_textUps.SetTransform({{100, 12}, UiAnchor::LeftBottom, {2, -30}});
 	m_textUps.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
 	m_textUps.SetFontSize(11);
 	AddChild(&m_textUps);
@@ -99,7 +99,7 @@ Pannable::Pannable(){
 	Input::Get()->GetButton("reset")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			m_zoom = 1.0f;
-			m_content.GetTransform().SetPosition({0.5f, 0.5f});
+//			m_content.GetTransform().SetPosition({0.5f, 0.5f});
 		}
 
 		Log::Out("Button Reset: ", static_cast<uint32_t>(action), '\n'); // TODO: Enum stream operators.
@@ -111,15 +111,15 @@ void Pannable::UpdateObject() {
 	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	auto offset = m_content.GetTransform().GetPosition();
+//	auto offset = m_content.GetTransform().GetPosition();
 
 	m_zoom += Mouse::Get()->GetScrollDelta().m_y;
 	dynamic_cast<ConstantDriver<Vector2f> *>(m_content.GetScaleDriver())->SetConstant(Vector2f(m_zoom));
 
 	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release) {
-		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
+//		offset -= Mouse::Get()->GetPositionDelta() / m_zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 
-	m_content.GetTransform().SetPosition(offset);
+//	m_content.GetTransform().SetPosition(offset);
 }
 }
