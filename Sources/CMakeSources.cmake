@@ -21,6 +21,7 @@ set(_temp_acid_headers
 		Audio/SoundBuffer.hpp
 		Audio/Wave/SoundBufferWave.hpp
 		Bitmaps/Bitmap.hpp
+		Bitmaps/Exr/BitmapExr.hpp
 		Bitmaps/Png/BitmapPng.hpp
 		Devices/Instance.hpp
 		Devices/Joysticks.hpp
@@ -270,6 +271,7 @@ set(_temp_acid_third_party_headers
 		third_party/stb/stb_image_write.h
 		third_party/stb/stb_truetype.h
 		third_party/stb/stb_vorbis.h
+		third_party/tinyexr/tinyexr.h
 		third_party/tinygltf/json.hpp
 		third_party/tinygltf/tiny_gltf.h
 		third_party/tinyobjloader/tiny_obj_loader.h
@@ -295,6 +297,7 @@ set(_temp_acid_sources
 		Audio/SoundBuffer.cpp
 		Audio/Wave/SoundBufferWave.cpp
 		Bitmaps/Bitmap.cpp
+		Bitmaps/Exr/BitmapExr.cpp
 		Bitmaps/Png/BitmapPng.cpp
 		Devices/Instance.cpp
 		Devices/Joysticks.cpp
@@ -494,6 +497,7 @@ set(_temp_acid_third_party_sources
 		third_party/stb/stb_image_write.c
 		third_party/stb/stb_truetype.c
 		third_party/stb/stb_vorbis.c
+		third_party/tinyexr/tinyexr.cc
 		third_party/tinygltf/tiny_gltf.cpp
 		third_party/tinyobjloader/tiny_obj_loader.cpp
 		)

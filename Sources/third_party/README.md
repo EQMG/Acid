@@ -6,6 +6,7 @@
  * [miniz](https://github.com/richgel999/miniz) - Data compression
  * [msdf-c](https://github.com/exezin/msdf-c) - Font multi-channel signed distance field generator
  * [stb](https://github.com/nothings/stb) - Single-file public domain libraries
+ * [tinyexr](https://github.com/syoyo/tinyexr) - OpenEXR image loader/writer
  * [tinygltf](https://github.com/syoyo/tinygltf) - glTF 2.0 model loader
  * [tinyobjloader](https://github.com/syoyo/tinyobjloader) - OBJ model loader
 
