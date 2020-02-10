@@ -1,6 +1,6 @@
 # 3.11.0 required for cxx_std_17 and FetchContent
 cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
-project(Acid VERSION 0.13.7 LANGUAGES CXX C)
+project(Acid VERSION 0.13.8 LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
