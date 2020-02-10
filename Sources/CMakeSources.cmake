@@ -46,12 +46,10 @@ set(_temp_acid_headers
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp
-		Files/Zip/miniz.h
 		Files/Zip/ZipArchive.hpp
 		Files/Zip/ZipEntry.hpp
 		Files/Zip/ZipException.hpp
 		Fonts/FontType.hpp
-		Fonts/msdf.h
 		Fonts/SubrenderFonts.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
@@ -127,7 +125,6 @@ set(_temp_acid_headers
 		Maths/Matrix2.hpp
 		Maths/Matrix3.hpp
 		Maths/Matrix4.hpp
-		Maths/Noise/Noise.hpp
 		Maths/Quaternion.hpp
 		Maths/Time.hpp
 		Maths/Time.inl
@@ -259,6 +256,24 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		)
+set(_temp_acid_third_party_headers
+		third_party/cr/cr.h
+		third_party/dr_libs/dr_flac.h
+		third_party/dr_libs/dr_mp3.h
+		third_party/dr_libs/dr_opus.h
+		third_party/dr_libs/dr_wav.h
+		third_party/FastNoise/FastNoise.h
+		third_party/lodepng/lodepng.h
+		third_party/miniz/miniz.h
+		third_party/msdf-c/msdf.h
+		third_party/stb/stb_image.h
+		third_party/stb/stb_image_write.h
+		third_party/stb/stb_truetype.h
+		third_party/stb/stb_vorbis.h
+		third_party/tinygltf/json.hpp
+		third_party/tinygltf/tiny_gltf.h
+		third_party/tinyobjloader/tiny_obj_loader.h
+		)
 set(_temp_acid_sources
 		Animations/Animation/Animation.cpp
 		Animations/Animation/AnimationLoader.cpp
@@ -300,11 +315,9 @@ set(_temp_acid_sources
 		Files/NodeConstView.cpp
 		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
-		Files/Zip/miniz.c
 		Files/Zip/ZipArchive.cpp
 		Files/Zip/ZipEntry.cpp
 		Fonts/FontType.cpp
-		Fonts/msdf.c
 		Fonts/SubrenderFonts.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
@@ -363,7 +376,6 @@ set(_temp_acid_sources
 		Maths/Matrix2.cpp
 		Maths/Matrix3.cpp
 		Maths/Matrix4.cpp
-		Maths/Noise/Noise.cpp
 		Maths/Quaternion.cpp
 		Maths/Transform.cpp
 		Maths/Vector2.cpp
@@ -468,6 +480,22 @@ set(_temp_acid_sources
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
 		)
+set(_temp_acid_third_party_sources
+		third_party/dr_libs/dr_flac.c
+		third_party/dr_libs/dr_mp3.c
+		third_party/dr_libs/dr_opus.c
+		third_party/dr_libs/dr_wav.c
+		third_party/FastNoise/FastNoise.cpp
+		third_party/lodepng/lodepng.cpp
+		third_party/miniz/miniz.c
+		third_party/msdf-c/msdf.c
+		third_party/stb/stb_image.c
+		third_party/stb/stb_image_write.c
+		third_party/stb/stb_truetype.c
+		third_party/stb/stb_vorbis.c
+		third_party/tinygltf/tiny_gltf.cpp
+		third_party/tinyobjloader/tiny_obj_loader.cpp
+		)
 		
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
@@ -492,7 +520,7 @@ configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" @ONLY)
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command
 # Otherwise it wouldn't know where to look for them
-foreach(_acid_header IN LISTS _temp_acid_headers)
+foreach(_acid_header IN LISTS _temp_acid_headers _temp_acid_third_party_headers)
 	target_sources(Acid PRIVATE
 			$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}>
 			$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header}>
@@ -500,7 +528,7 @@ foreach(_acid_header IN LISTS _temp_acid_headers)
 endforeach()
 # Sets all sources (cpp) as PRIVATE sources for Acid
 # An INSTALL_INTERFACE isn't needed, as cpp files aren't installed
-foreach(_acid_source IN LISTS _temp_acid_sources)
+foreach(_acid_source IN LISTS _temp_acid_sources _temp_acid_third_party_sources)
 	target_sources(Acid PRIVATE
 			$<BUILD_INTERFACE:${_acid_source}>
 			)
@@ -510,6 +538,8 @@ endforeach()
 include(AcidGroupSources)
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_headers}")
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_temp_acid_sources}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/third_party" "ThirdParty/" "${_temp_acid_third_party_headers}")
+acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/third_party" "ThirdParty/" "${_temp_acid_third_party_sources}")
 
 # Include this file in our project view.
 target_sources(Acid PRIVATE

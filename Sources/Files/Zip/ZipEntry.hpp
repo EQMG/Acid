@@ -4,8 +4,9 @@
 #include <vector>
 #include <string>
 
+#include <miniz/miniz.h>
+
 #include "Helpers/NonCopyable.hpp"
-#include "miniz.h"
 
 namespace acid {
 using ZipEntryInfo = mz_zip_archive_file_stat;

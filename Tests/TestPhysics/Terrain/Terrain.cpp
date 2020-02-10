@@ -8,11 +8,18 @@ namespace test {
 bool Terrain::registered = Register("terrain");
 
 Terrain::Terrain(float sideLength, float squareSize) :
-	m_noise(25653345, 0.01f, Noise::Interp::Quintic, Noise::Type::PerlinFractal, 5, 2.0f, 0.5f, Noise::Fractal::FBM),
+	m_noise(25653345),
 	m_sideLength(sideLength),
 	m_squareSize(squareSize),
 	m_minHeight(+std::numeric_limits<float>::infinity()),
 	m_maxHeight(-std::numeric_limits<float>::infinity()) {
+	m_noise.SetFrequency(0.01f);
+	m_noise.SetInterp(FastNoise::Quintic);
+	m_noise.SetNoiseType(FastNoise::PerlinFractal);
+	m_noise.SetFractalType(FastNoise::FBM);
+	m_noise.SetFractalOctaves(5);
+	m_noise.SetFractalLacunarity(2.0f);
+	m_noise.SetFractalGain(0.5f);
 }
 
 void Terrain::Start() {

@@ -1,11 +1,10 @@
 #include "Bitmap.hpp"
 
+#include <stb/stb_image.h>
+#include <stb/stb_image_write.h>
+
 #include "Engine/Log.hpp"
 #include "Files/Files.hpp"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
 
 namespace acid {
 Bitmap::Bitmap(std::filesystem::path filename) :
@@ -70,7 +69,6 @@ void Bitmap::Write(const std::filesystem::path &filename) const {
 		int32_t len;
 		std::unique_ptr<uint8_t[]> png(stbi_write_png_to_mem(m_data.get(), m_size.m_x * m_bytesPerPixel, m_size.m_x, m_size.m_y, m_bytesPerPixel, &len));
 		os.write(reinterpret_cast<char *>(png.get()), len);
-
 	}
 	
 	//Registry()[filename.extension().string()].second(this, filename);

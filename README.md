@@ -39,10 +39,7 @@ This project is being worked on part-time by a single developer, this is under h
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [PhysFS](https://icculus.org/physfs) - Archive file access
- * [STB](https://github.com/nothings/stb) - Texture and OGG loading
- * [FastNoise](https://github.com/Auburns/FastNoise) - Noise generation
- * [TinyOBJ](https://github.com/syoyo/tinyobjloader) - OBJ model loading
- * [TinyGLTF](https://github.com/syoyo/tinygltf/) - GLTF2 model loading
+ * [third_party](/Sources/third_party/README.md) - Small third party dependencies
 
 # Code Snippets
 ```cpp

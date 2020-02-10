@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     cr_plugin ctx;
 
     // the full path to the live-reloadable application
-    cr_plugin_load(ctx, "c:/path/to/build/game.dll");
+    cr_plugin_open(ctx, "c:/path/to/build/game.dll");
 
     // call the update function at any frequency matters to you, this will give
     // the real application a chance to run
@@ -57,8 +57,9 @@ While the guest (real application), would be like:
 CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation) {
     assert(ctx);
     switch (operation) {
-        case CR_LOAD:   return on_load(...);
-        case CR_UNLOAD: return on_unload(...);
+        case CR_LOAD:   return on_load(...); // loading back from a reload
+        case CR_UNLOAD: return on_unload(...); // preparing to a new reload
+        case CR_CLOSE: ...; // the plugin will close and not reload anymore
     }
     // CR_STEP
     return on_update(...);
@@ -66,6 +67,11 @@ CR_EXPORT int cr_main(struct cr_plugin *ctx, enum cr_op operation) {
 ```
 
 ### Changelog
+
+#### 2020-01-09
+
+- Deprecated `cr_plugin_load` in favor to `cr_plugin_open` for consistency with `cr_plugin_close`. See issue #49.
+- Minor documentation improvements.
 
 #### 2018-11-17
 
@@ -117,7 +123,7 @@ Return
  being set to `CR_USER`. 0 or a positive value that will be passed to the
   `host` process.
 
-#### `bool cr_plugin_load(cr_plugin &ctx, const char *fullpath)`
+#### `bool cr_plugin_open(cr_plugin &ctx, const char *fullpath)`
 
 Loads and initialize the plugin.
 
@@ -134,7 +140,7 @@ Return
 #### `void cr_set_temporary_path(cr_plugin& ctx, const std::string &path)`
 
 Sets temporary path to which temporary copies of plugin will be placed. Should be called
-immediately after `cr_plugin_load()`. If `temporary` path is not set, temporary copies of
+immediately after `cr_plugin_open()`. If `temporary` path is not set, temporary copies of
 the file will be copied to the same directory where the original file is located.
 
 Arguments
@@ -170,12 +176,14 @@ Arguments
 
 Enum indicating the kind of step that is being executed by the `host`:
 
-- `CR_LOAD` A load is being executed, can be used to restore any saved internal
- state;
+- `CR_LOAD` A load caused by reload is being executed, can be used to restore any
+ saved internal state. This does not happen when a plugin is loaded for the first
+ time as there is no state to restore;
 - `CR_STEP` An application update, this is the normal and most frequent operation;
-- `CR_UNLOAD` An unload will be executed, giving the application one chance to
- store any required data.
-- `CR_CLOSE` Like `CR_UNLOAD` but no `CR_LOAD` should be expected;
+- `CR_UNLOAD` An unload for reloading the plugin will be executed, giving the 
+ application one chance to store any required data;
+- `CR_CLOSE` Used when closing the plugin, This works like `CR_UNLOAD` but no `CR_LOAD` 
+ should be expected afterwards;
 
 #### `cr_plugin`
 
@@ -464,7 +472,6 @@ struct cr_plugin {
 #define CR_STATE __attribute__((used, section("__DATA,__state")))
 #else
 #if defined(__GNUC__) // clang & gcc
-#pragma section(".state", read, write)
 #define CR_STATE __attribute__((section(".state")))
 #endif // defined(__GNUC__)
 #endif
@@ -648,7 +655,7 @@ static bool cr_plugin_changed(cr_plugin &ctx);
 static bool cr_plugin_rollback(cr_plugin &ctx);
 static int cr_plugin_main(cr_plugin &ctx, cr_op operation);
 
-static void cr_set_temporary_path(cr_plugin &ctx, const std::string &path) {
+void cr_set_temporary_path(cr_plugin &ctx, const std::string &path) {
     auto pimpl = (cr_internal *)ctx.p;
     pimpl->temppath = path;
 }
@@ -1152,14 +1159,6 @@ static int cr_plugin_main(cr_plugin &ctx, cr_op operation) {
 
 using so_handle = void *;
 
-static size_t cr_file_size(const std::string &path) {
-    struct stat stats;
-    if (stat(path.c_str(), &stats) == -1) {
-        return 0;
-    }
-    return static_cast<size_t>(stats.st_size);
-}
-
 static time_t cr_last_write_time(const std::string &path) {
     struct stat stats;
     if (stat(path.c_str(), &stats) == -1) {
@@ -1230,6 +1229,14 @@ bool cr_is_empty(const void *const buf, int64_t len) {
 #if defined(CR_LINUX)
 #include <elf.h>
 #include <link.h>
+
+static size_t cr_file_size(const std::string &path) {
+    struct stat stats;
+    if (stat(path.c_str(), &stats) == -1) {
+        return 0;
+    }
+    return static_cast<size_t>(stats.st_size);
+}
 
 // unix,internal
 // save section information to be used during load/unload when copying
@@ -1373,27 +1380,27 @@ static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
         p = (char *)mmap(0, len, PROT_READ, MAP_PRIVATE, fd, 0);
         close(fd);
 
-        auto ehdr = (Elf32_Ehdr *)p;
-        if (ehdr->e_ident[EI_MAG0] != ELFMAG0 ||
-            ehdr->e_ident[EI_MAG1] != ELFMAG1 ||
-            ehdr->e_ident[EI_MAG2] != ELFMAG2 ||
-            ehdr->e_ident[EI_MAG3] != ELFMAG3) {
+        auto ehdr32 = (Elf32_Ehdr *)p;
+        if (ehdr32->e_ident[EI_MAG0] != ELFMAG0 ||
+            ehdr32->e_ident[EI_MAG1] != ELFMAG1 ||
+            ehdr32->e_ident[EI_MAG2] != ELFMAG2 ||
+            ehdr32->e_ident[EI_MAG3] != ELFMAG3) {
             break;
         }
 
-        if (ehdr->e_ident[EI_CLASS] == ELFCLASS32) {
-            auto shdr = (Elf32_Shdr *)(p + ehdr->e_shoff);
-            auto sh_strtab = &shdr[ehdr->e_shstrndx];
+        if (ehdr32->e_ident[EI_CLASS] == ELFCLASS32) {
+            auto shdr = (Elf32_Shdr *)(p + ehdr32->e_shoff);
+            auto sh_strtab = &shdr[ehdr32->e_shstrndx];
             const char *const sh_strtab_p = p + sh_strtab->sh_offset;
             result = cr_elf_validate_sections(ctx, rollback, shdr,
-                                              ehdr->e_shnum, sh_strtab_p);
+                                              ehdr32->e_shnum, sh_strtab_p);
         } else {
-            auto ehdr = (Elf64_Ehdr *)p; // shadow
-            auto shdr = (Elf64_Shdr *)(p + ehdr->e_shoff);
-            auto sh_strtab = &shdr[ehdr->e_shstrndx];
+            auto ehdr64 = (Elf64_Ehdr *)p;
+            auto shdr = (Elf64_Shdr *)(p + ehdr64->e_shoff);
+            auto sh_strtab = &shdr[ehdr64->e_shstrndx];
             const char *const sh_strtab_p = p + sh_strtab->sh_offset;
             result = cr_elf_validate_sections(ctx, rollback, shdr,
-                                              ehdr->e_shnum, sh_strtab_p);
+                                              ehdr64->e_shnum, sh_strtab_p);
         }
     } while (0);
 
@@ -1483,7 +1490,8 @@ static bool cr_plugin_validate_sections(cr_plugin &ctx, so_handle handle,
         }
 
         intptr_t vaddr = _dyld_get_image_vmaddr_slide(i);
-        auto cmd_stride = sizeof(struct mach_header);
+        (void)vaddr;
+        //auto cmd_stride = sizeof(struct mach_header);
         if (hdr->magic != CR_MH_MAGIC) {
             // check for conforming mach-o header
             continue;
@@ -1905,7 +1913,7 @@ extern "C" int cr_plugin_update(cr_plugin &ctx, bool reloadCheck = true) {
 }
 
 // Loads a plugin from the specified full path (or current directory if NULL).
-extern "C" bool cr_plugin_load(cr_plugin &ctx, const char *fullpath) {
+extern "C" bool cr_plugin_open(cr_plugin &ctx, const char *fullpath) {
     CR_TRACE
     CR_ASSERT(fullpath);
     if (!cr_exists(fullpath)) {
@@ -1921,6 +1929,11 @@ extern "C" bool cr_plugin_load(cr_plugin &ctx, const char *fullpath) {
     ctx.failure = CR_NONE;
     cr_plat_init();
     return true;
+}
+
+// 20200109 [DEPRECATED] Use `cr_plugin_open` instead.
+extern "C" bool cr_plugin_load(cr_plugin &ctx, const char *fullpath) {
+    return cr_plugin_open(ctx, fullpath);
 }
 
 // Call to cleanup internal state once the plugin is not required anymore.

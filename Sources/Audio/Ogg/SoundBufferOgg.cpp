@@ -6,11 +6,10 @@
 #include <al.h>
 #endif
 
+#include <stb/stb_vorbis.h>
+
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
-
-#define STB_VORBIS_NO_STDIO
-#include "stb_vorbis.c"
 
 namespace acid {
 bool SoundBufferOgg::registered = Register(".ogg");

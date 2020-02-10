@@ -1,9 +1,10 @@
 #pragma once
 
+#include <FastNoise/FastNoise.h>
+
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
 #include <Models/Model.hpp>
-#include <Maths/Noise/Noise.hpp>
 #include "MeshTerrain.hpp"
 
 using namespace acid;
@@ -26,7 +27,7 @@ private:
 	static float CalculateTextureScale(float sideLength);
 	std::vector<float> GenerateHeightmap(uint32_t vertexCount);
 
-	Noise m_noise;
+	FastNoise m_noise;
 	std::vector<float> m_heightmap;
 
 	float m_sideLength;

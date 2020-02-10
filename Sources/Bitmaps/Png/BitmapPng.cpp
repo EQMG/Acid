@@ -2,10 +2,10 @@
 
 #include <cstring>
 
+#include <lodepng/lodepng.h>
+
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
-
-#include "lodepng.cpp"
 
 namespace acid {
 bool BitmapPng::registered = Register(".png");
@@ -26,12 +26,13 @@ void BitmapPng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 	uint32_t width = 0, height = 0;
 	auto error = lodepng_decode_memory(&buffer, &width, &height, reinterpret_cast<const uint8_t *>(fileLoaded->data()), fileLoaded->length(), LCT_RGBA, 8);
 	if (buffer && !error) {
-		auto buffersize = lodepng_get_raw_size_lct(width, height, LCT_RGBA, 8);
+		LodePNGColorMode color = {LCT_RGBA, 8};
+		auto buffersize = lodepng_get_raw_size(width, height, &color);
 		bitmap->SetData(std::make_unique<uint8_t[]>(buffersize));
 		std::memcpy(bitmap->GetData().get(), buffer, buffersize);
 		bitmap->SetSize({ width, height });
 		bitmap->SetBytesPerPixel(buffersize / (width * height));
-		lodepng_free(buffer);
+		free(buffer); // lodepng_free
 	}
 
 #if defined(ACID_DEBUG)

@@ -1,11 +1,11 @@
 #include "FontType.hpp"
 
+#include <msdf-c/msdf.h>
+#include <stb/stb_truetype.h>
+
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
 #include "Graphics/Graphics.hpp"
-#include "msdf.h"
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "stb_truetype.h"
 
 namespace acid {
 static const std::wstring_view NEHE = L" \t\r\nABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*";
@@ -66,7 +66,7 @@ void FontType::Load() {
 	std::size_t arrayLayer = 0;
 	for (auto c : NEHE) {
 		ex_metrics_t metrics = {};
-		auto bitmap = ex_msdf_glyph(&fontinfo, c, m_size, m_size, &metrics);
+		auto bitmap = ex_msdf_glyph(&fontinfo, c, m_size, m_size, &metrics, 1);
 		if (bitmap) {
 			//m_image->SetPixels(bitmap, arrayLayer);
 

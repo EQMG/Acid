@@ -206,6 +206,8 @@ target_include_directories(Acid
 		PUBLIC
 		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		# Project third_party includes
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
 		# Generated headers
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 		# Helps the includes find what they need at runtime
@@ -251,7 +253,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp"
 		"${CMAKE_CURRENT_BINARY_DIR}/Export.hpp"
 		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
 		)
-foreach(_acid_header IN LISTS _temp_acid_headers)
+foreach(_acid_header IN LISTS _temp_acid_headers _temp_acid_third_party_headers)
     get_filename_component(_acid_header_dir ${_acid_header} DIRECTORY)
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_acid_header}
 			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_acid_header_dir}"

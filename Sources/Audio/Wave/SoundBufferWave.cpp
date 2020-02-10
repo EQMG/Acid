@@ -6,13 +6,10 @@
 #include <al.h>
 #endif
 
+#include <dr_libs/dr_wav.h>
+
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
-
-#define DR_WAV_IMPLEMENTATION
-#define DR_WAV_NO_STDIO
-#define DR_WAV_NO_SIMD
-#include "dr_wav.h"
 
 namespace acid {
 bool SoundBufferWave::registered = Register(".wav", ".wave");

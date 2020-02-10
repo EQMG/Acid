@@ -6,13 +6,10 @@
 #include <al.h>
 #endif
 
+#include <dr_libs/dr_mp3.h>
+
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
-
-#define DR_MP3_IMPLEMENTATION
-#define DR_MP3_NO_STDIO
-#define DR_MP3_NO_SIMD
-#include "dr_mp3.h"
 
 namespace acid {
 bool SoundBufferMp3::registered = Register(".mp3");
