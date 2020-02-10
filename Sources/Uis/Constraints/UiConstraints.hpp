@@ -6,7 +6,7 @@
 #include "UiConstraint.hpp"
 
 namespace acid {
-class UiConstraints final : NonCopyable {
+class ACID_EXPORT UiConstraints final : NonCopyable {
 public:
 	UiConstraints();
 

@@ -465,6 +465,7 @@ set(_temp_acid_sources
 		Shadows/SubrenderShadows.cpp
 		Skyboxes/MaterialSkybox.cpp
 		Timers/Timers.cpp
+		Uis/Constraints/UiAnchor.cpp
 		Uis/Constraints/UiConstraints.cpp
 		Uis/Inputs/UiInputBoolean.cpp
 		Uis/Inputs/UiInputButton.cpp
