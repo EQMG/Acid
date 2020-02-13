@@ -762,6 +762,9 @@ float* ex_msdf_glyph(stbtt_fontinfo *font, uint32_t c, size_t w, size_t h, ex_me
         j++;
       }
 
+	  if (j >= contour_count)
+		  break;
+
       contours[j].start = i;
     } else if (i >= num_verts) {
       contours[j].end = i;
