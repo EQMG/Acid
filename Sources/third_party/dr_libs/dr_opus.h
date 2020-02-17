@@ -124,13 +124,18 @@ typedef struct
 
 typedef struct
 {
-    dropus_uint8 toc;   /* TOC byte. RFC 6716 - Section 3.1 */
+    dropus_uint8 toc;               /* TOC byte. RFC 6716 - Section 3.1 */
     dropus_stream_frame frames[DROPUS_MAX_OPUS_FRAMES_PER_PACKET];
 } dropus_stream_packet;
 
 typedef struct
 {
-    dropus_stream_packet packet;   /* The current packet. */
+    dropus_stream_packet packet;    /* The current packet. */
+    struct
+    {
+        dropus_int32 w0_Q13_prev;   /* Previous stereo weights. */
+        dropus_int32 w1_Q13_prev;
+    } silk;
 } dropus_stream;
 
 /*
@@ -236,7 +241,7 @@ For more information, please refer to <http://unlicense.org/>
 ===============================================================================
 ALTERNATIVE 2 - MIT No Attribution
 ===============================================================================
-Copyright 2018 David Reid
+Copyright 2019 David Reid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

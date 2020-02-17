@@ -1,6 +1,6 @@
 #pragma once
 
-#include <FastNoise/FastNoise.h>
+#include <fastnoise/FastNoise.h>
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>

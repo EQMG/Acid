@@ -25,12 +25,12 @@ This project is being worked on part-time by a single developer, this is under h
  * Particle effect systems
  * File multi-path searching, and packaging
  * UI constraints system, and MSDF font rendering
- * Audio systems (FLAC, MP3, OGG, OPUS, WAVE)
+ * Audio systems (flac, mp3, ogg, opus, wave)
  * Shadow mapping
- * Post effects pipeline (Lensflare, Glow, Blur, SSAO, ...)
- * Model file loading (OBJ, GLTF2)
- * Animations loading (COLLADA)
- * Image file loading (JPG, PNG, TIFF, BMP, PSD, SVG)
+ * Post effects pipeline (lensflare, glow, blur, SSAO, ...)
+ * Model file loading (obj, glTF 2.0)
+ * Animations loading (Collada)
+ * Image file loading (png, jpeg, dng, tiff, OpenEXR, bmp, dds, ppm, tga)
 
 ## Dependencies
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface

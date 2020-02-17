@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <lodepng/lodepng.h>
+#include <libspng/spng.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
@@ -22,7 +22,7 @@ void BitmapPng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 		return;
 	}
 	
-	uint8_t *buffer;
+	/*uint8_t *buffer;
 	uint32_t width = 0, height = 0;
 	auto error = lodepng_decode_memory(&buffer, &width, &height, reinterpret_cast<const uint8_t *>(fileLoaded->data()), fileLoaded->length(), LCT_RGBA, 8);
 	if (buffer && !error) {
@@ -33,7 +33,7 @@ void BitmapPng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 		bitmap->SetSize({ width, height });
 		bitmap->SetBytesPerPixel(buffersize / (width * height));
 		free(buffer); // lodepng_free
-	}
+	}*/
 
 #if defined(ACID_DEBUG)
 	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
@@ -45,7 +45,7 @@ void BitmapPng::Write(const Bitmap *bitmap, const std::filesystem::path &filenam
 	auto debugStart = Time::Now();
 #endif
 
-	LodePNGColorType colorType = LCT_GREY;
+	/*LodePNGColorType colorType = LCT_GREY;
 	if (bitmap->GetBytesPerPixel() == 4)
 		colorType = LCT_RGBA;
 	else if (bitmap->GetBytesPerPixel() == 3)
@@ -53,7 +53,7 @@ void BitmapPng::Write(const Bitmap *bitmap, const std::filesystem::path &filenam
 	else
 		Log::Error("Cannot write PNG with ", bitmap->GetBytesPerPixel(), " bytes per pixel\n");
 
-	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().m_x, bitmap->GetSize().m_y, colorType);
+	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().m_x, bitmap->GetSize().m_y, colorType);*/
 
 #if defined(ACID_DEBUG)
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

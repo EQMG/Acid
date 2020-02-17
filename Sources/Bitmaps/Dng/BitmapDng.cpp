@@ -1,16 +1,16 @@
-#include "BitmapExr.hpp"
+#include "BitmapDng.hpp"
 
 #include <cstring>
 
-#include <tinyexr/tiny_exr.h>
+#include <tinydng/tiny_dng.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {
-bool BitmapExr::registered = Register(".exr");
+bool BitmapDng::registered = Register(".dng", ".tiff");
 
-void BitmapExr::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
+void BitmapDng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
@@ -29,7 +29,7 @@ void BitmapExr::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #endif
 }
 
-void BitmapExr::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
+void BitmapDng::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif

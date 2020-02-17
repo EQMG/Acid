@@ -107,7 +107,7 @@ extern "C" {
 #endif
 
 #ifndef TINYEXR_USE_THREAD
-#define TINYEXR_USE_THREAD (0)  // No threaded loading.
+#define TINYEXR_USE_THREAD (1)  // Threaded loading.
 // http://computation.llnl.gov/projects/floating-point-compression
 #endif
 

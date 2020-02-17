@@ -1,5 +1,5 @@
 #define TINYEXR_IMPLEMENTATION
-#include "tinyexr.h"
+#include "tiny_exr.h"
 
 #include <algorithm>
 #include <cassert>
@@ -16,7 +16,7 @@
 
 #if __cplusplus > 199711L
 // C++11
-#include <cstdint>
+#inclde <cstdint>
 
 #if TINYEXR_USE_THREAD
 #include <atomic>

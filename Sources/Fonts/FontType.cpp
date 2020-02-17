@@ -1,6 +1,6 @@
 #include "FontType.hpp"
 
-#include <msdf-c/msdf.h>
+#include <msdf/msdf.h>
 #include <stb/stb_truetype.h>
 
 #include "Files/Files.hpp"

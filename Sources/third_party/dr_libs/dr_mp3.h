@@ -1,6 +1,6 @@
 /*
 MP3 audio decoder. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_mp3 - v0.5.5 - 2020-01-29
+dr_mp3 - v0.5.6 - 2020-02-12
 
 David Reid - mackron@gmail.com
 
@@ -500,6 +500,9 @@ DIFFERENCES BETWEEN minimp3 AND dr_mp3
 /*
 REVISION HISTORY
 ================
+v0.5.6 - 2020-02-12
+  - Bring up to date with minimp3.
+
 v0.5.5 - 2020-01-29
   - Fix a memory allocation bug in high level s16 decoding APIs.
 
