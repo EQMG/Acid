@@ -105,11 +105,17 @@ void ModelObj::Load() {
 
 	for (const auto &shape : shapes) {
 		for (const auto &index : shape.mesh.indices) {
-			Vector3f position(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
-			Vector2f uv(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
-			Vector3f normal(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
-			Vertex3d vertex(position, uv, normal);
-
+			Vertex3d vertex;
+			if(attrib.normals.size()) {
+				Vector3f position(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
+				Vector2f uv(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
+				Vector3f normal(attrib.normals[3 * index.normal_index], attrib.normals[3 * index.normal_index + 1], attrib.normals[3 * index.normal_index + 2]);
+				vertex = Vertex3d(position, uv, normal);
+			} else {
+				Vector3f position(attrib.vertices[3 * index.vertex_index], attrib.vertices[3 * index.vertex_index + 1], attrib.vertices[3 * index.vertex_index + 2]);
+				Vector2f uv(attrib.texcoords[2 * index.texcoord_index], 1.0f - attrib.texcoords[2 * index.texcoord_index + 1]);
+				vertex = Vertex3d(position, uv, Vector3f());
+			}
 			if (uniqueVertices.count(vertex) == 0) {
 				uniqueVertices[vertex] = vertices.size();
 				vertices.emplace_back(vertex);
