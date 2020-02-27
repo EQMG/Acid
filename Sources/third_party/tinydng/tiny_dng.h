@@ -39,6 +39,10 @@ THE SOFTWARE.
 #include <stdexcept>
 #endif
 
+#ifndef TINY_DNG_LOADER_USE_THREAD
+#define TINY_DNG_LOADER_USE_THREAD (1)
+#endif
+
 #ifndef TINY_DNG_LOADER_ENABLE_ZIP
 #define TINY_DNG_LOADER_ENABLE_ZIP (1)
 #endif

@@ -14,7 +14,7 @@ target_include_directories(TestPhysics PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT
 target_link_libraries(TestPhysics PRIVATE Acid::Acid)
 
 set_target_properties(TestPhysics PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPhysics PROPERTIES 

@@ -10,7 +10,6 @@
 #include "SceneTutorial7.hpp"
 #include "Config.hpp"
 
-
 int main(int argc, char **argv) {
 	using namespace test;
 
@@ -34,8 +33,8 @@ MainApp::MainApp() :
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	//Files::Get()->AddSearchPath("Resources/Engine");
 	std::string p(ACID_RESOURCES_DEV);
-	
-	Files::Get()->AddSearchPath(p+"/Tutorial/chalet.zip");
+
+	Files::Get()->AddSearchPath(p + "/Tutorial/chalet.zip");
 	//std::string_view s = acid::ACID_RESOURCES_DIR;
 
 	// Loads a input scheme for this app.

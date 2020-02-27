@@ -52,6 +52,7 @@ void FontType::Load() {
 	if (m_filename.empty()) {
 		return;
 	}
+
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
 #endif
@@ -61,7 +62,7 @@ void FontType::Load() {
 	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
 
 	auto layerCount = NEHE.size();
-	m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
+	//m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
 
 	std::size_t arrayLayer = 0;
 	for (auto c : NEHE) {

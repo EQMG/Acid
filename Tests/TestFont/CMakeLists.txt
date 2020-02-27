@@ -16,7 +16,7 @@ target_include_directories(TestFont PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SO
 target_link_libraries(TestFont PRIVATE Acid::Acid)
 
 set_target_properties(TestFont PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestFont PROPERTIES 

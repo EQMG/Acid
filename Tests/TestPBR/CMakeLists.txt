@@ -14,7 +14,7 @@ target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOU
 target_link_libraries(TestPBR PRIVATE Acid::Acid)
 
 set_target_properties(TestPBR PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPBR PROPERTIES 

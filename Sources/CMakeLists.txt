@@ -14,8 +14,23 @@ include(FetchContent)
 
 # Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
+
 # Finds Vulkan, env "VULKAN_SDK" must be set
-find_package(Vulkan REQUIRED)
+find_package(volk 121 QUIET)
+if(NOT volk_FOUND)
+	set(_ACID_ALL_SYSTEM_LIBS false)
+	FetchContent_Declare(volk
+			URL https://github.com/zeux/volk/tarball/2638ad1b2b40f1ad402a0a6ac55b60bc51a23058
+			URL_MD5 56f2799070100d378c6b06e09013af97
+			)
+	FetchContent_GetProperties(volk)
+	if(NOT volk_POPULATED)
+		FetchContent_Populate(volk)
+		add_subdirectory(${volk_SOURCE_DIR} ${volk_BINARY_DIR})
+	endif()
+	set_target_properties(volk PROPERTIES FOLDER External)
+	add_library(volk::volk ALIAS volk)
+endif()
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
 find_package(OpenAL)
@@ -49,12 +64,13 @@ if(NOT TARGET glfw)
 			)
 	FetchContent_GetProperties(glfw3)
 	if(NOT glfw3_POPULATED)
-		foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS")
+		foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
 			set(${_glfw3_option} OFF CACHE INTERNAL "")
 		endforeach()
 		FetchContent_Populate(glfw3)
 		add_subdirectory(${glfw3_SOURCE_DIR} ${glfw3_BINARY_DIR})
 	endif()
+	set_target_properties(glfw PROPERTIES FOLDER External)
 endif()
 
 find_package(glslang QUIET)
@@ -77,6 +93,10 @@ if(NOT glslang_FOUND)
 		FetchContent_Populate(glslang)
 		add_subdirectory(${glslang_SOURCE_DIR} ${glslang_BINARY_DIR})
 	endif()
+	set_target_properties(glslang PROPERTIES FOLDER External/glslang)
+	set_target_properties(OGLCompiler PROPERTIES FOLDER External/glslang)
+	set_target_properties(OSDependent PROPERTIES FOLDER External/glslang)
+	set_target_properties(SPIRV PROPERTIES FOLDER External/glslang)
 
 	# Used in target_link_libraries()
 	set(GLSLANG_LIBRARIES SPIRV)
@@ -114,12 +134,12 @@ if(NOT BULLET_FOUND)
 		# Reset back to value before MSVC fix
 		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	endif()
-	set_target_properties(Bullet3Common PROPERTIES FOLDER Bullet)
-	set_target_properties(BulletCollision PROPERTIES FOLDER Bullet)
-	set_target_properties(BulletDynamics PROPERTIES FOLDER Bullet)
-	set_target_properties(BulletInverseDynamics PROPERTIES FOLDER Bullet)
-	set_target_properties(BulletSoftBody PROPERTIES FOLDER Bullet)
-	set_target_properties(LinearMath PROPERTIES FOLDER Bullet)
+	set_target_properties(Bullet3Common PROPERTIES FOLDER External/bullet)
+	set_target_properties(BulletCollision PROPERTIES FOLDER External/bullet)
+	set_target_properties(BulletDynamics PROPERTIES FOLDER External/bullet)
+	set_target_properties(BulletInverseDynamics PROPERTIES FOLDER External/bullet)
+	set_target_properties(BulletSoftBody PROPERTIES FOLDER External/bullet)
+	set_target_properties(LinearMath PROPERTIES FOLDER External/bullet)
 
 	set(BULLET_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/src")
 	set(BULLET_LIBRARIES BulletSoftBody BulletDynamics BulletCollision LinearMath)
@@ -140,18 +160,19 @@ if(NOT PhysFS_FOUND)
 		set(PHYSFS_TARGETNAME_DOCS "physfs-docs" CACHE INTERNAL STRING)
 		set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
 		set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
+		set(CMAKE_DISABLE_FIND_PACKAGE_Doxygen TRUE)
 		FetchContent_Populate(physfs)
 		add_subdirectory(${physfs_SOURCE_DIR} ${physfs_BINARY_DIR})
 	endif()
-	set_target_properties(physfs-static PROPERTIES FOLDER physfs)
+	set_target_properties(physfs-static PROPERTIES FOLDER External/physfs)
 	if(TARGET physfs)
-		set_target_properties(physfs PROPERTIES FOLDER physfs)
+		set_target_properties(physfs PROPERTIES FOLDER External/physfs)
 	endif()
 	if(TARGET physfs-docs)
-		set_target_properties(physfs-docs PROPERTIES FOLDER physfs)
+		set_target_properties(physfs-docs PROPERTIES FOLDER External/physfs)
 	endif()
 	if(TARGET physfs-uninstall)
-		set_target_properties(physfs-uninstall PROPERTIES FOLDER physfs)
+		set_target_properties(physfs-uninstall PROPERTIES FOLDER External/physfs)
 	endif()
 
 	# PhysFS disables rpath on GNU, when disabled Acid will not run on Unix.
@@ -222,17 +243,12 @@ target_include_directories(Acid
 target_link_libraries(Acid
 		PUBLIC
 		# All IMPORTED targets, which automatically handles includes
-		Threads::Threads
-		Vulkan::Vulkan
-		# Filesystem
-		$<$<CXX_COMPILER_ID:GNU>:stdc++fs>
-		# Unix
-		${CMAKE_DL_LIBS}
-		# Windows
-		$<$<PLATFORM_ID:Windows>:ws2_32>
-		$<$<PLATFORM_ID:Windows>:dbghelp>
-		# Android
-		$<$<PLATFORM_ID:Android>:log>
+		$<$<CXX_COMPILER_ID:GNU>:stdc++fs> # std::filesystem
+		$<$<PLATFORM_ID:Windows>:ws2_32> # Winsock 2.0
+		$<$<PLATFORM_ID:Android>:log> # log support
+		${CMAKE_DL_LIBS} # dlopen and dlclose
+		Threads::Threads # pthread
+		volk::volk
 		PRIVATE
 		# More IMPORTED
 		OpenAL::OpenAL

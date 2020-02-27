@@ -14,7 +14,7 @@ target_include_directories(TestMaths PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_S
 target_link_libraries(TestMaths PRIVATE Acid::Acid)
 
 set_target_properties(TestMaths PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(UNIX AND APPLE)
 	set_target_properties(TestMaths PROPERTIES

@@ -18,7 +18,7 @@ target_include_directories(EditorTest PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_
 target_link_libraries(EditorTest PRIVATE Acid::Acid)
 
 set_target_properties(EditorTest PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Editor"
 		)
 
 include(AcidGroupSources)

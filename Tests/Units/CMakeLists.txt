@@ -43,11 +43,11 @@ target_include_directories(UnitTests PRIVATE
 target_link_libraries(UnitTests PRIVATE Acid::Acid ${GTEST_BOTH_LIBRARIES})
 
 set_target_properties(UnitTests PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 
 add_test(NAME unit
-		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/vat_test
+		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit
 		)
 		
 include(AcidGroupSources)

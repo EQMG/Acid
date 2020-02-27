@@ -14,16 +14,13 @@
 #include <string>
 #include <vector>
 
-#if __cplusplus > 199711L
 // C++11
-#inclde <cstdint>
+#include <cstdint>
 
 #if TINYEXR_USE_THREAD
 #include <atomic>
 #include <thread>
 #endif
-
-#endif  // __cplusplus > 199711L
 
 #if TINYEXR_USE_OPENMP
 #include <omp.h>
@@ -39,23 +36,9 @@
 
 namespace tinyexr {
 
-#if __cplusplus > 199711L
 // C++11
 typedef uint64_t tinyexr_uint64;
 typedef int64_t tinyexr_int64;
-#else
-// Although `long long` is not a standard type pre C++11, assume it is defined
-// as a compiler's extension.
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wc++11-long-long"
-#endif
-typedef unsigned long long tinyexr_uint64;
-typedef long long tinyexr_int64;
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#endif
 
 // Reuse MINIZ_LITTE_ENDIAN macro
 
@@ -637,7 +620,7 @@ static void CompressZip(unsigned char *dst,
   int ret = mz_compress(
       dst, &outSize, static_cast<const unsigned char *>(&tmpBuf.at(0)),
       src_size);
-  assert(ret == miniz::MZ_OK);
+  assert(ret == MZ_OK);
   (void)ret;
 
   compressedSize = outSize;
@@ -3951,7 +3934,7 @@ static int DecodeChunk(EXRImage *exr_image, const EXRHeader *exr_header,
 
     int err_code = TINYEXR_SUCCESS;
 
-#if (__cplusplus > 199711L) && (TINYEXR_USE_THREAD > 0)
+#if TINYEXR_USE_THREAD > 0
 
     std::vector<std::thread> workers;
     std::atomic<size_t> tile_count(0);
@@ -4057,7 +4040,7 @@ static int DecodeChunk(EXRImage *exr_image, const EXRHeader *exr_header,
           exr_image->tiles[tile_idx].level_x = tile_coordinates[2];
           exr_image->tiles[tile_idx].level_y = tile_coordinates[3];
 
-#if (__cplusplus > 199711L) && (TINYEXR_USE_THREAD > 0)
+#if TINYEXR_USE_THREAD > 0
         }
       }));
     }  // num_thread loop
@@ -4098,7 +4081,7 @@ static int DecodeChunk(EXRImage *exr_image, const EXRHeader *exr_header,
         num_channels, exr_header->channels, exr_header->requested_pixel_types,
         data_width, data_height);
 
-#if (__cplusplus > 199711L) && (TINYEXR_USE_THREAD > 0)
+#if TINYEXR_USE_THREAD > 0
     std::vector<std::thread> workers;
     std::atomic<int> y_count(0);
 
@@ -4199,7 +4182,7 @@ static int DecodeChunk(EXRImage *exr_image, const EXRHeader *exr_header,
             }
           }
 
-#if (__cplusplus > 199711L) && (TINYEXR_USE_THREAD > 0)
+#if TINYEXR_USE_THREAD > 0
         }
       }));
     }

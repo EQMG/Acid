@@ -14,7 +14,7 @@ target_include_directories(TestSerial PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_
 target_link_libraries(TestSerial PRIVATE Acid::Acid)
 
 set_target_properties(TestSerial PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(UNIX AND APPLE)
 	set_target_properties(TestSerial PROPERTIES

@@ -14,7 +14,7 @@ target_include_directories(TestNetwork PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT
 target_link_libraries(TestNetwork PRIVATE Acid::Acid)
 
 set_target_properties(TestNetwork PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(UNIX AND APPLE)
 	set_target_properties(TestNetwork PROPERTIES

@@ -14,7 +14,7 @@ target_include_directories(TestPacker PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_
 target_link_libraries(TestPacker PRIVATE Acid::Acid)
 
 set_target_properties(TestPacker PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Tests"
 		)
 if(UNIX AND APPLE)
 	set_target_properties(TestPacker PROPERTIES

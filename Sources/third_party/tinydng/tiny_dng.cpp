@@ -18,13 +18,10 @@
 #include <chrono>
 #endif
 
-#if __cplusplus > 199911L
-
 #ifdef TINY_DNG_LOADER_USE_THREAD
+#include <algorithm>
 #include <atomic>
 #include <thread>
-#endif
-
 #endif
 
 #ifdef __clang__
@@ -4168,7 +4165,7 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
 
       if ((image->strip_byte_counts.size() > 0) &&
           (image->strip_byte_counts.size() == image->strip_offsets.size())) {
-#if (__cplusplus > 199711L) && defined(TINY_DNG_LOADER_USE_THREAD)
+#if defined(TINY_DNG_LOADER_USE_THREAD)
 
         const int num_strips = int(image->strip_byte_counts.size());
 
@@ -4451,10 +4448,8 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
         } else {
           memcpy(image->data.data(), static_cast<void*>(&(buf.at(0))), len);
         }
-
-      }
+      } else {
 #if 0
-    	else {
         // Baseline 8bit JPEG
 
         image->bits_per_sample = 8;
@@ -4492,8 +4487,10 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
 
         image->width = w;
         image->height = h;
-      }
+#else
+        TINY_DNG_ASSERT(0, "Cannot decode baseline 8bit JPEG image.");
 #endif
+      }
 
     } else if (image->compression ==
                COMPRESSION_NEW_JPEG) {  //  new JPEG(baseline DCT JPEG or

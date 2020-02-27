@@ -35,6 +35,7 @@ This project is being worked on part-time by a single developer, this is under h
 ## Dependencies
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
+ * [Volk](https://github.com/zeux/volk) - Meta loader for Vulkan API
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration

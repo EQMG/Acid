@@ -16,7 +16,7 @@ target_link_libraries(Editor PRIVATE Acid::Acid)
 add_dependencies(Editor EditorTest)
 
 set_target_properties(Editor PROPERTIES
-		FOLDER "Acid"
+		FOLDER "Acid/Editor"
 		)
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(Editor PROPERTIES 
