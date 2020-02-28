@@ -8,25 +8,15 @@
 
 namespace acid {
 Graphics::Graphics() :
-	m_elapsedPurge(5s) {
-	glslang::InitializeProcess();
-
-	// Initialize library by loading Vulkan loader; call this function before creating the Vulkan instance.
-	volkInitialize();
-
-	m_instance = std::make_unique<Instance>();
-
-	// Load global function pointers using application-created VkInstance; call this function after creating the Vulkan instance.
-	volkLoadInstance(*m_instance);
-	
-	m_physicalDevice = std::make_unique<PhysicalDevice>(m_instance.get());
-	m_surface = std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get());
-	m_logicalDevice = std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get());
-
-	// Load global function pointers using application-created VkDevice; call this function after creating the Vulkan device.
-	volkLoadDevice(*m_logicalDevice);
-	
+	m_elapsedPurge(5s),
+	m_instance(std::make_unique<Instance>()),
+	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
+	m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
+	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get())) {
 	CreatePipelineCache();
+	
+	if (!glslang::InitializeProcess())
+		throw std::runtime_error("Failed to initialize glslang process");
 }
 
 Graphics::~Graphics() {

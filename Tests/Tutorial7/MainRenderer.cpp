@@ -14,43 +14,40 @@
 #include "Models/Obj/ModelObj.hpp"
 #include "Meshes/SubrenderMeshes.hpp"
 
-namespace test
-{
+namespace test {
+/*
+ * Application main renderer
+ * Now our Renderer is just depth and swapchain
+ */
+MainRenderer::MainRenderer() {
 	/*
-	 * Application main renderer
-	 * Now our Renderer is just depth and swapchain
+	 * Define the attachments for the Pass
+	 * We are adding a depth buffer to the list of attachments
 	 */
-	MainRenderer::MainRenderer()
-	{
-		/*
-		 * Define the attachments for the Pass
-		 * We are adding a depth buffer to the list of attachments
-		 */
-		std::vector<Attachment> renderpassAttachments1{
-			{0, "depth", Attachment::Type::Depth, false},
-			{1, "swapchain", Attachment::Type::Swapchain, false, VK_FORMAT_UNDEFINED, Colour::Aqua},
-		};
-
-		/*
-		 * Add the references to the attachments for the SubPass
-		 * In our case, SubPass 1 will be using Attachment 1
-		 * We have added the depth buffer to the list of attachments that the SubPass will
-		 * since our pipeline uses it now
-		 */
-		std::vector<SubpassType> renderpassSubpasses1 = {{0, {0, 1}}};
-		AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
-	}
-
-	void MainRenderer::Start()
-	{
-		/*
-		 * We will be using the ECS system, this will render any Mesh Components in Pass1 Subpass 1
-		 */
-		AddSubrender<SubrenderMeshes>({0, 0});
-	}
+	std::vector<Attachment> renderpassAttachments1{
+		{0, "depth", Attachment::Type::Depth, false},
+		{1, "swapchain", Attachment::Type::Swapchain, false, VK_FORMAT_UNDEFINED, Colour::Aqua},
+	};
 
 	/*
-	 * No updates need for this
+	 * Add the references to the attachments for the SubPass
+	 * In our case, SubPass 1 will be using Attachment 1
+	 * We have added the depth buffer to the list of attachments that the SubPass will
+	 * since our pipeline uses it now
 	 */
-	void MainRenderer::Update() {}
+	std::vector<SubpassType> renderpassSubpasses1 = {{0, {0, 1}}};
+	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
+}
+
+void MainRenderer::Start() {
+	/*
+	 * We will be using the ECS system, this will render any Mesh Components in Pass1 Subpass 1
+	 */
+	AddSubrender<SubrenderMeshes>({0, 0});
+}
+
+/*
+ * No updates need for this
+ */
+void MainRenderer::Update() {}
 }

@@ -5,19 +5,16 @@
 #include "Graphics/Graphics.hpp"
 #include "Window.hpp"
 
-namespace acid {
-#if USE_DEBUG_MESSENGER
-const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"}; // "VK_LAYER_RENDERDOC_Capture"
-#else
 #ifndef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
 #define VK_EXT_DEBUG_UTILS_EXTENSION_NAME "VK_EXT_debug_utils"
 #endif
 
-const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_LUNARG_standard_validation"};
-#endif
-
+namespace acid {
 #if USE_DEBUG_MESSENGER
-VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
+const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"}; // "VK_LAYER_RENDERDOC_Capture"
+
+VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, 
+	const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
 	if (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
 		Log::Warning(pCallbackData->pMessage, '\n');
 	else if (messageSeverity &  VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
@@ -28,7 +25,8 @@ VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugUtilsMessageSeverityFlagBits
 	return VK_FALSE;
 }
 
-VkResult Instance::FvkCreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger) {
+VkResult Instance::FvkCreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, 
+	const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger) {
 	auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"));
 	if (func)
 		return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
@@ -41,7 +39,10 @@ void Instance::FvkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtil
 		return func(instance, messenger, pAllocator);
 }
 #else
-VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char *pLayerPrefix, const char *pMessage, void *pUserData) {
+const std::vector<const char *> Instance::ValidationLayers = {"VK_LAYER_LUNARG_standard_validation"};
+
+VKAPI_ATTR VkBool32 VKAPI_CALL CallbackDebug(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode,
+	const char *pLayerPrefix, const char *pMessage, void *pUserData) {
 	if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
 		Log::Warning(pMessage, '\n');
 	else if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT)
@@ -152,6 +153,8 @@ void Instance::CreateInstance() {
 	//const auto &appVersion = Engine::Get()->GetApp()->GetVersion();
 	//const auto &appName = Engine::Get()->GetApp()->GetName();
 
+	Graphics::CheckVk(volkInitialize());
+	
 	VkApplicationInfo applicationInfo = {};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	//applicationInfo.pApplicationName = appName.c_str();
@@ -179,8 +182,10 @@ void Instance::CreateInstance() {
 	if (m_enableValidationLayers) {
 #if USE_DEBUG_MESSENGER
 		debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-		debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | 
+			VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+		debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | 
+			VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 		debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
 		instanceCreateInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT *>(&debugUtilsMessengerCreateInfo);
 #endif
@@ -190,6 +195,12 @@ void Instance::CreateInstance() {
 	}
 
 	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+
+#if VOLK_HEADER_VERSION >= 131
+	volkLoadInstanceOnly(m_instance);
+#else
+	volkLoadInstance(m_instance);
+#endif
 }
 
 void Instance::CreateDebugMessenger() {
@@ -198,8 +209,10 @@ void Instance::CreateDebugMessenger() {
 #if USE_DEBUG_MESSENGER
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
 	debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | 
+		VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | 
+		VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
 	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugMessenger));
 #else
@@ -220,12 +233,14 @@ void Instance::CreateDebugMessenger() {
 }
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties) {
-	Log::Out("Instance Layers: ");
+	std::stringstream ss;
+	ss << "Instance Layers: ";
 
 	for (const auto &layer : layerProperties) {
-		Log::Out(layer.layerName, ", ");
+		ss << layer.layerName << ", ";
 	}
 
-	Log::Out("\n\n");
+	ss << "\n\n";
+	Log::Out(ss.str());
 }
 }

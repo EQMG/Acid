@@ -114,52 +114,54 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount() const {
 }
 
 void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties) {
+	std::stringstream ss;
 	switch (static_cast<int32_t>(physicalDeviceProperties.deviceType)) {
 	case 1:
-		Log::Out("Integrated");
+		ss << "Integrated";
 		break;
 	case 2:
-		Log::Out("Discrete");
+		ss << "Discrete";
 		break;
 	case 3:
-		Log::Out("Virtual");
+		ss << "Virtual";
 		break;
 	case 4:
-		Log::Out("CPU");
+		ss << "CPU";
 		break;
 	default:
-		Log::Out("Other ", physicalDeviceProperties.deviceType);
+		ss << "Other " << physicalDeviceProperties.deviceType;
 	}
 
-	Log::Out(" Physical Device: ", physicalDeviceProperties.deviceID);
+	ss << " Physical Device: " << physicalDeviceProperties.deviceID;
 
 	switch (physicalDeviceProperties.vendorID) {
 	case 0x8086:
-		Log::Out(" \"Intel\"");
+		ss << " \"Intel\"";
 		break;
 	case 0x10DE:
-		Log::Out(" \"Nvidia\"");
+		ss << " \"Nvidia\"";
 		break;
 	case 0x1002:
-		Log::Out(" \"AMD\"");
+		ss << " \"AMD\"";
 		break;
 	default:
-		Log::Out(" \"", physicalDeviceProperties.vendorID, '\"');
+		ss << " \"" << physicalDeviceProperties.vendorID << '\"';
 	}
 
-	Log::Out(" ", std::quoted(physicalDeviceProperties.deviceName), '\n');
+	ss << " " << std::quoted(physicalDeviceProperties.deviceName) << '\n';
 
 	uint32_t supportedVersion[3] = {
 		VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 	};
-	Log::Out("API Version: ", supportedVersion[0], ".", supportedVersion[1], ".", supportedVersion[2], '\n');
-	Log::Out("Extensions: ");
+	ss << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << '\n';
+	ss << "Extensions: ";
 
 	for (const auto &extension : extensionProperties) {
-		Log::Out(extension.extensionName, ", ");
+		ss << extension.extensionName << ", ";
 	}
 
-	Log::Out("\n\n");
+	ss << "\n\n";
+	Log::Out(ss.str());
 }
 }

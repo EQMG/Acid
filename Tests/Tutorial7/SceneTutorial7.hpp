@@ -7,14 +7,9 @@ using namespace acid;
 /*
  * A Camera that cant be controlled but can be pointed at things
  */
-class FixedCamera : public Camera
-{
+class FixedCamera : public Camera {
 public:
-	
-	void SetPosition(Vector3f position)
-	{
-		m_position = position;
-	}
+	void SetPosition(Vector3f position) { m_position = position; }
 
 	void LookAt(Vector3f pos, Vector3f up);
 };
@@ -22,10 +17,9 @@ public:
 /*
  * We are using Acid scenes now
  */
-class SceneTutorial7 : public Scene
-{
+class SceneTutorial7 : public Scene {
 public:
-	SceneTutorial7() : Scene(std::make_unique<FixedCamera>()) {};
+	SceneTutorial7() : Scene(std::make_unique<FixedCamera>()) {}
 
 	void Start() override;
 	void Update() override;

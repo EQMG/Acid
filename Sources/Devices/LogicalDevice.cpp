@@ -201,6 +201,8 @@ void LogicalDevice::CreateLogicalDevice() {
 	deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
 	Graphics::CheckVk(vkCreateDevice(*m_physicalDevice, &deviceCreateInfo, nullptr, &m_logicalDevice));
 
+	volkLoadDevice(m_logicalDevice);
+
 	vkGetDeviceQueue(m_logicalDevice, m_graphicsFamily, 0, &m_graphicsQueue);
 	vkGetDeviceQueue(m_logicalDevice, m_presentFamily, 0, &m_presentQueue);
 	vkGetDeviceQueue(m_logicalDevice, m_computeFamily, 0, &m_computeQueue);
