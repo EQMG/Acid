@@ -39,13 +39,13 @@
 #include "Behaviours/Rotate.hpp"
 #include "Terrain/TerrainMaterial.hpp"
 #include "Terrain/Terrain.hpp"
-#include "CameraFps.hpp"
+#include "FpsCamera.hpp"
 
 namespace test {
 constexpr Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFps>()) {
+	Scene(std::make_unique<FpsCamera>()) {
 	//uiStartLogo.SetTransform({UiMargins::All});
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
 	uiStartLogo.OnFinished().Add([this]() {

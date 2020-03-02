@@ -5,9 +5,9 @@
 using namespace acid;
 
 namespace test {
-class CameraFps : public Camera {
+class FpsCamera : public Camera {
 public:
-	CameraFps();
+	FpsCamera();
 
 	void Start() override;
 	void Update() override;

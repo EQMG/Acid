@@ -1,4 +1,4 @@
-#include "PlayerFps.hpp"
+#include "FpsPlayer.hpp"
 
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
@@ -13,16 +13,16 @@ constexpr float CROUCH_SPEED = 1.2f;
 constexpr float JUMP_SPEED = 4.1f;
 constexpr float NOCLIP_SPEED = 3.0f;
 
-PlayerFps::PlayerFps() {
+FpsPlayer::FpsPlayer() {
 }
 
-void PlayerFps::Start() {
+void FpsPlayer::Start() {
 	//auto collisionObject = GetParent()->GetComponent<CollisionObject>();
 	//collisionObject->GetCollisionEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player collided with ", std::quoted(other->GetParent()->GetName()), '\n';}));
 	//collisionObject->GetSeparationEvents().Subscribe([&](CollisionObject *other){ Log::Out("Player seperated with ", std::quoted(other->GetParent()->GetName()), '\n';}));
 }
 
-void PlayerFps::Update() {
+void FpsPlayer::Update() {
 	auto character = GetEntity()->GetComponent<KinematicCharacter>();
 
 	if (!character || !character->IsShapeCreated()) {
@@ -77,11 +77,11 @@ void PlayerFps::Update() {
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 
-const Node &operator>>(const Node &node, PlayerFps &player) {
+const Node &operator>>(const Node &node, FpsPlayer &player) {
 	return node;
 }
 
-Node &operator<<(Node &node, const PlayerFps &player) {
+Node &operator<<(Node &node, const FpsPlayer &player) {
 	return node;
 }
 }

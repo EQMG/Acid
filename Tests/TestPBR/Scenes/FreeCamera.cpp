@@ -1,4 +1,4 @@
-#include "CameraFree.hpp"
+#include "FreeCamera.hpp"
 
 #include <Devices/Mouse.hpp>
 #include <Inputs/Input.hpp>
@@ -10,16 +10,16 @@ constexpr float WALK_SPEED = 3.0f;
 constexpr float RUN_SPEED = 7.0f;
 constexpr Vector3f DAMP(20.0f, 20.0f, 20.0f);
 
-CameraFree::CameraFree() {
+FreeCamera::FreeCamera() {
 	nearPlane = 0.1f;
 	farPlane = 4098.0f;
 	fieldOfView = Maths::Radians(70.0f);
 }
 
-void CameraFree::Start() {
+void FreeCamera::Start() {
 }
 
-void CameraFree::Update() {
+void FreeCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
 	if (!Scenes::Get()->IsPaused()) {

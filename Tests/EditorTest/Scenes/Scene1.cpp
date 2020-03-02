@@ -29,13 +29,13 @@
 #include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Uis.hpp>
 #include <Files/Json/Json.hpp>
-#include "CameraFps.hpp"
+#include "FpsCamera.hpp"
 
 namespace test {
 static const Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFps>()),
+	Scene(std::make_unique<FpsCamera>()),
 	soundScreenshot("Sounds/Screenshot.ogg") {
 	//uiStartLogo.SetTransform({UiMargins::All});
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);

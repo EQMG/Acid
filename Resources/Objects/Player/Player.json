@@ -38,6 +38,6 @@
     "maxHeight": 1.5,
     "interpolate": true
   },
-  "playerFps": {
+  "fpsPlayer": {
   }
 }

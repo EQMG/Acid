@@ -1,28 +1,28 @@
-#include "CameraFps.hpp"
+#include "FpsCamera.hpp"
 
 #include <Inputs/Input.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
-#include "PlayerFps.hpp"
+#include "FpsPlayer.hpp"
 
 namespace test {
 static constexpr Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
 
-CameraFps::CameraFps() {
+FpsCamera::FpsCamera() {
 	nearPlane = 0.1f;
 	farPlane = 4098.0f;
 	fieldOfView = Maths::Radians(70.0f);
 }
 
-void CameraFps::Start() {
+void FpsCamera::Start() {
 }
 
-void CameraFps::Update() {
+void FpsCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>()) {
+	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>()) {
 		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>()) {
 			velocity = (transformPlayer->GetPosition() - position) / delta;
 			position = transformPlayer->GetPosition() + ViewOffset;

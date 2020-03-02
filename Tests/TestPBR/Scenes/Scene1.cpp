@@ -17,11 +17,11 @@
 #include <Uis/Constraints/PixelConstraint.hpp>
 #include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Uis.hpp>
-#include "CameraFree.hpp"
+#include "FreeCamera.hpp"
 
 namespace test {
 Scene1::Scene1() :
-	Scene(std::make_unique<CameraFree>()) {
+	Scene(std::make_unique<FreeCamera>()) {
 	//overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
 	overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
 		.SetHeight<PixelConstraint>(36)
