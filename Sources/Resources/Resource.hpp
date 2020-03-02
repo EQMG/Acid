@@ -2,7 +2,7 @@
 
 #include <typeindex>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "Export.hpp"
 
 namespace acid {

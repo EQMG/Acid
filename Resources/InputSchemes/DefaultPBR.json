@@ -1,15 +1,15 @@
 {
   "axes": {
     "mouseX": {
-      "type": "axisCompound",
+      "type": "compound",
       "axes": [
         {
-          "type": "axisMouse",
+          "type": "mouse",
           "axis": 0,
           "scale": 0.15
         },
         {
-          "type": "axisJoystick",
+          "type": "joystick",
           "port": 0,
           "axis": 2,
           "scale": -0.06
@@ -18,15 +18,15 @@
       "scale": 1.0
     },
     "mouseY": {
-      "type": "axisCompound",
+      "type": "compound",
       "axes": [
         {
-          "type": "axisMouse",
+          "type": "mouse",
           "axis": 1,
           "scale": 0.15
         },
         {
-          "type": "axisJoystick",
+          "type": "joystick",
           "port": 0,
           "axis": 3,
           "scale": -0.06
@@ -35,24 +35,24 @@
       "scale": 1.0
     },
     "forward": {
-      "type": "axisCompound",
+      "type": "compound",
       "axes": [
         {
-          "type": "axisButton",
+          "type": "button",
           "positive": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 83,
             "inverted": false
           },
           "negative": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 87,
             "inverted": false
           },
           "scale": 1.0
         },
         {
-          "type": "axisJoystick",
+          "type": "joystick",
           "port": 0,
           "axis": 1,
           "scale": 1.0
@@ -61,24 +61,24 @@
       "scale": 1.0
     },
     "strafe": {
-      "type": "axisCompound",
+      "type": "compound",
       "axes": [
         {
-          "type": "axisButton",
+          "type": "button",
           "negative": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 65,
             "inverted": false
           },
           "positive": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 68,
             "inverted": false
           },
           "scale": 1.0
         },
         {
-          "type": "axisJoystick",
+          "type": "joystick",
           "port": 0,
           "axis": 0,
           "scale": 1.0
@@ -87,17 +87,17 @@
       "scale": 1.0
     },
     "vertical": {
-      "type": "axisCompound",
+      "type": "compound",
       "axes": [
         {
-          "type": "axisButton",
+          "type": "button",
           "negative": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 32,
             "inverted": false
           },
           "positive": {
-            "type": "buttonKeyboard",
+            "type": "keyboard",
             "key": 341,
             "inverted": false
           },
@@ -109,30 +109,30 @@
   },
   "buttons": {
     "fullscreen": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 300,
       "inverted": false
     },
     "screenshot": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 298,
       "inverted": false
     },
     "exit": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 261,
       "inverted": false
     },
     "sprint": {
-      "type": "buttonCompound",
+      "type": "compound",
       "buttons": [
         {
-          "type": "buttonKeyboard",
+          "type": "keyboard",
           "key": 340,
           "inverted": false
         },
         {
-          "type": "buttonJoystick",
+          "type": "joystick",
           "port": 0,
           "button": 0,
           "inverted": false
@@ -141,15 +141,15 @@
       "inverted": false
     },
     "captureMouse": {
-      "type": "buttonCompound",
+      "type": "compound",
       "buttons": [
         {
-          "type": "buttonKeyboard",
+          "type": "keyboard",
           "key": 256,
           "inverted": false
         },
         {
-          "type": "buttonKeyboard",
+          "type": "keyboard",
           "key": 77,
           "inverted": false
         }
@@ -157,7 +157,7 @@
       "inverted": false
     },
     "noclip": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 78,
       "inverted": false
     }

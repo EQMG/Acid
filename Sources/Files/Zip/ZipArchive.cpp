@@ -4,7 +4,7 @@
 #include <fstream>
 #include <random>
 
-#include "Helpers/String.hpp"
+#include "Utils/String.hpp"
 #include "ZipException.hpp"
 
 namespace acid {

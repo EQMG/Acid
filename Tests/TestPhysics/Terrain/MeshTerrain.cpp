@@ -2,7 +2,7 @@
 
 namespace test {
 MeshTerrain::MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale) :
-	MeshSimple(sideLength, squareSize, vertexCount, textureScale),
+	SimpleMesh(sideLength, squareSize, vertexCount, textureScale),
 	heightmap(heightmap) {
 	GenerateMesh();
 }

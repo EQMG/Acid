@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "UiConstraint.hpp"
 
 namespace acid {

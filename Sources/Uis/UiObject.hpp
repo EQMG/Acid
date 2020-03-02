@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 #include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"

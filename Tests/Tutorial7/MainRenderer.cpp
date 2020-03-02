@@ -11,8 +11,8 @@
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
-#include "Models/Obj/ModelObj.hpp"
-#include "Meshes/SubrenderMeshes.hpp"
+#include "Models/Obj/ObjModel.hpp"
+#include "Meshes/MeshesSubrender.hpp"
 
 namespace test {
 /*
@@ -43,7 +43,7 @@ void MainRenderer::Start() {
 	/*
 	 * We will be using the ECS system, this will render any Mesh Components in Pass1 Subpass 1
 	 */
-	AddSubrender<SubrenderMeshes>({0, 0});
+	AddSubrender<MeshesSubrender>({0, 0});
 }
 
 /*

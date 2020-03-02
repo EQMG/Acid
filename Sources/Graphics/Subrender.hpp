@@ -2,7 +2,7 @@
 
 #include "Commands/CommandBuffer.hpp"
 #include "Graphics/Pipelines/Pipeline.hpp"
-#include "Helpers/TypeInfo.hpp"
+#include "Utils/TypeInfo.hpp"
 
 namespace acid {
 /**

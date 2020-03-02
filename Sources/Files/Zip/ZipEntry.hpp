@@ -6,7 +6,7 @@
 
 #include <miniz/miniz.h>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 
 namespace acid {
 using ZipEntryInfo = mz_zip_archive_file_stat;

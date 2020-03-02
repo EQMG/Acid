@@ -1,6 +1,6 @@
 #include "VertexWeights.hpp"
 
-#include "Helpers/Enumerate.hpp"
+#include "Utils/Enumerate.hpp"
 
 namespace acid {
 void VertexWeights::AddJointEffect(uint32_t jointId, float jointWeight) {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 
 typedef struct ALCdevice_struct ALCdevice;
 typedef struct ALCcontext_struct ALCcontext;

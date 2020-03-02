@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Guis/Gui.hpp>
-#include <Uis/Inputs/UiInputBoolean.hpp>
-#include <Uis/Inputs/UiInputButton.hpp>
-#include <Uis/Inputs/UiInputDropdown.hpp>
-#include <Uis/Inputs/UiInputGrabber.hpp>
-#include <Uis/Inputs/UiInputRadio.hpp>
-#include <Uis/Inputs/UiInputSlider.hpp>
-#include <Uis/Inputs/UiInputText.hpp>
+#include <Uis/Inputs/UiBooleanInput.hpp>
+#include <Uis/Inputs/UiButtonInput.hpp>
+#include <Uis/Inputs/UiDropdownInput.hpp>
+#include <Uis/Inputs/UiGrabberInput.hpp>
+#include <Uis/Inputs/UiRadioInput.hpp>
+#include <Uis/Inputs/UiSliderInput.hpp>
+#include <Uis/Inputs/UiTextInput.hpp>
 #include <Uis/UiObject.hpp>
 #include <Uis/UiPanel.hpp>
 #include <Uis/Constraints/PixelConstraint.hpp>
@@ -62,22 +62,22 @@ private:
 	Inventory inventory;
 
 	UiPanel gui0;
-	UiInputBoolean boolean0;
-	UiInputButton button0;
-	UiInputDropdown dropdown0;
+	UiBooleanInput boolean0;
+	UiButtonInput button0;
+	UiDropdownInput dropdown0;
 	UiGrabberJoystick grabber0;
 	UiGrabberKeyboard grabber1;
 	UiGrabberMouse grabber2;
-	UiInputRadio radio0a;
-	UiInputRadio radio0b;
-	UiInputRadio radio0c;
+	UiRadioInput radio0a;
+	UiRadioInput radio0b;
+	UiRadioInput radio0c;
 	UiRadioManager radioManager0;
-	UiInputSlider slider0;
-	UiInputText text0;
+	UiSliderInput slider0;
+	UiTextInput text0;
 
-	UiInputText textX;
-	UiInputText textY;
-	UiInputText textZ;
+	UiTextInput textX;
+	UiTextInput textY;
+	UiTextInput textZ;
 
 	Gui gui1;
 	Gui gui2;

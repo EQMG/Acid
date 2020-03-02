@@ -1,7 +1,7 @@
 #include "Animator.hpp"
 
 #include "Engine/Engine.hpp"
-#include "Helpers/Enumerate.hpp"
+#include "Utils/Enumerate.hpp"
 
 namespace acid {
 void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices) {

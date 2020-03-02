@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 
 #ifdef major
 #undef major

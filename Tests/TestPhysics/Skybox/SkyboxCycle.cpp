@@ -1,6 +1,6 @@
 #include "SkyboxCycle.hpp"
 
-#include <Skyboxes/MaterialSkybox.hpp>
+#include <Skyboxes/SkyboxMaterial.hpp>
 #include <Maths/Colour.hpp>
 #include <Maths/Transform.hpp>
 #include "World/World.hpp"
@@ -17,7 +17,7 @@ void SkyboxCycle::Start() {
 }
 
 void SkyboxCycle::Update() {
-	auto materialSkybox = GetEntity()->GetComponent<MaterialSkybox>();
+	auto materialSkybox = GetEntity()->GetComponent<SkyboxMaterial>();
 	if (!materialSkybox)
 		return;
 

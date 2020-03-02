@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "Pipelines/Pipeline.hpp"
 #include "Subrender.hpp"
 

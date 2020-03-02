@@ -1,5 +1,6 @@
 # All of these will be set as PUBLIC sources to Acid
 set(_temp_acid_headers
+		Animations/AnimatedMesh.hpp
 		Animations/Animation/Animation.hpp
 		Animations/Animation/AnimationLoader.hpp
 		Animations/Animation/JointTransform.hpp
@@ -7,24 +8,23 @@ set(_temp_acid_headers
 		Animations/Animator.hpp
 		Animations/Geometry/GeometryLoader.hpp
 		Animations/Geometry/VertexAnimated.hpp
-		Animations/MeshAnimated.hpp
 		Animations/Skeleton/Joint.hpp
 		Animations/Skeleton/SkeletonLoader.hpp
 		Animations/Skin/SkinLoader.hpp
 		Animations/Skin/VertexWeights.hpp
 		Audio/Audio.hpp
-		Audio/Flac/SoundBufferFlac.hpp
-		Audio/Mp3/SoundBufferMp3.hpp
-		Audio/Ogg/SoundBufferOgg.hpp
-		Audio/Opus/SoundBufferOpus.hpp
+		Audio/Flac/FlacSoundBuffer.hpp
+		Audio/Mp3/Mp3SoundBuffer.hpp
+		Audio/Ogg/OggSoundBuffer.hpp
+		Audio/Opus/OpusSoundBuffer.hpp
 		Audio/Sound.hpp
 		Audio/SoundBuffer.hpp
-		Audio/Wave/SoundBufferWave.hpp
+		Audio/Wave/WaveSoundBuffer.hpp
 		Bitmaps/Bitmap.hpp
-		Bitmaps/Dng/BitmapDng.hpp
-		Bitmaps/Exr/BitmapExr.hpp
-		Bitmaps/Jpg/BitmapJpg.hpp
-		Bitmaps/Png/BitmapPng.hpp
+		Bitmaps/Dng/DngBitmap.hpp
+		Bitmaps/Exr/ExrBitmap.hpp
+		Bitmaps/Jpg/JpgBitmap.hpp
+		Bitmaps/Png/PngBitmap.hpp
 		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
@@ -52,13 +52,13 @@ set(_temp_acid_headers
 		Files/Zip/ZipArchive.hpp
 		Files/Zip/ZipEntry.hpp
 		Files/Zip/ZipException.hpp
+		Fonts/FontsSubrender.hpp
 		Fonts/FontType.hpp
-		Fonts/SubrenderFonts.hpp
 		Fonts/Text.hpp
 		Gizmos/Gizmo.hpp
 		Gizmos/Gizmos.hpp
+		Gizmos/GizmosSubrender.hpp
 		Gizmos/GizmoType.hpp
-		Gizmos/SubrenderGizmos.hpp
 		Graphics/Buffers/Buffer.hpp
 		Graphics/Buffers/InstanceBuffer.hpp
 		Graphics/Buffers/PushHandler.hpp
@@ -89,39 +89,27 @@ set(_temp_acid_headers
 		Graphics/Subrender.hpp
 		Graphics/SubrenderHolder.hpp
 		Guis/Gui.hpp
-		Guis/SubrenderGuis.hpp
-		Helpers/ConstExpr.hpp
-		Helpers/Delegate.hpp
-		Helpers/EnumClass.hpp
-		Helpers/Enumerate.hpp
-		Helpers/Factory.hpp
-		Helpers/Future.hpp
-		Helpers/NonCopyable.hpp
-		Helpers/RingBuffer.hpp
-		Helpers/StreamFactory.hpp
-		Helpers/String.hpp
-		Helpers/ThreadPool.hpp
-		Helpers/TypeInfo.hpp
-		Inputs/Axes/Axis.hpp
-		Inputs/Axes/AxisButton.hpp
-		Inputs/Axes/AxisCompound.hpp
-		Inputs/Axes/AxisJoystick.hpp
-		Inputs/Axes/AxisMouse.hpp
-		Inputs/Axes/HatJoystick.hpp
-		Inputs/Buttons/Button.hpp
-		Inputs/Buttons/ButtonAxis.hpp
-		Inputs/Buttons/ButtonCompound.hpp
-		Inputs/Buttons/ButtonJoystick.hpp
-		Inputs/Buttons/ButtonKeyboard.hpp
-		Inputs/Buttons/ButtonMouse.hpp
+		Guis/GuisSubrender.hpp
+		Inputs/Axes/ButtonInputAxis.hpp
+		Inputs/Axes/CompoundInputAxis.hpp
+		Inputs/Axes/JoystickHatInput.hpp
+		Inputs/Axes/JoystickInputAxis.hpp
+		Inputs/Axes/MouseInputAxis.hpp
+		Inputs/Buttons/AxisInputButton.hpp
+		Inputs/Buttons/CompoundInputButton.hpp
+		Inputs/Buttons/JoystickInputButton.hpp
+		Inputs/Buttons/KeyboardInputButton.hpp
+		Inputs/Buttons/MouseInputButton.hpp
 		Inputs/Input.hpp
+		Inputs/InputAxis.hpp
+		Inputs/InputButton.hpp
 		Inputs/InputDelay.hpp
 		Inputs/InputScheme.hpp
 		Lights/Fog.hpp
 		Lights/Light.hpp
+		Materials/DefaultMaterial.hpp
 		Materials/Material.hpp
-		Materials/MaterialDefault.hpp
-		Materials/PipelineMaterial.hpp
+		Materials/MaterialPipeline.hpp
 		Maths/Colour.hpp
 		Maths/Colour.inl
 		Maths/ElapsedTime.hpp
@@ -140,18 +128,18 @@ set(_temp_acid_headers
 		Maths/Vector4.hpp
 		Maths/Vector4.inl
 		Meshes/Mesh.hpp
-		Meshes/SubrenderMeshes.hpp
-		Models/Gltf/ModelGltf.hpp
+		Meshes/MeshesSubrender.hpp
+		Models/Gltf/GltfModel.hpp
 		Models/Model.hpp
 		Models/Model.inl
-		Models/Obj/ModelObj.hpp
-		Models/Shapes/MeshPattern.hpp
-		Models/Shapes/MeshSimple.hpp
-		Models/Shapes/ModelCube.hpp
-		Models/Shapes/ModelCylinder.hpp
-		Models/Shapes/ModelDisk.hpp
-		Models/Shapes/ModelRectangle.hpp
-		Models/Shapes/ModelSphere.hpp
+		Models/Obj/ObjModel.hpp
+		Models/Shapes/CubeModel.hpp
+		Models/Shapes/CylinderModel.hpp
+		Models/Shapes/DiskModel.hpp
+		Models/Shapes/PatternMesh.hpp
+		Models/Shapes/RectangleModel.hpp
+		Models/Shapes/SimpleMesh.hpp
+		Models/Shapes/SphereModel.hpp
 		Models/Vertex2d.hpp
 		Models/Vertex3d.hpp
 		Network/Ftp/Ftp.hpp
@@ -169,51 +157,51 @@ set(_temp_acid_headers
 		Network/Tcp/TcpListener.hpp
 		Network/Tcp/TcpSocket.hpp
 		Network/Udp/UdpSocket.hpp
+		Particles/Emitters/CircleEmitter.hpp
 		Particles/Emitters/Emitter.hpp
-		Particles/Emitters/EmitterCircle.hpp
-		Particles/Emitters/EmitterLine.hpp
-		Particles/Emitters/EmitterPoint.hpp
-		Particles/Emitters/EmitterSphere.hpp
+		Particles/Emitters/LineEmitter.hpp
+		Particles/Emitters/PointEmitter.hpp
+		Particles/Emitters/SphereEmitter.hpp
 		Particles/Particle.hpp
 		Particles/Particles.hpp
+		Particles/ParticlesSubrender.hpp
 		Particles/ParticleSystem.hpp
 		Particles/ParticleType.hpp
-		Particles/SubrenderParticles.hpp
+		Physics/Colliders/CapsuleCollider.hpp
 		Physics/Colliders/Collider.hpp
-		Physics/Colliders/ColliderCapsule.hpp
-		Physics/Colliders/ColliderCone.hpp
-		Physics/Colliders/ColliderConvexHull.hpp
-		Physics/Colliders/ColliderCube.hpp
-		Physics/Colliders/ColliderCylinder.hpp
-		Physics/Colliders/ColliderHeightfield.hpp
-		Physics/Colliders/ColliderSphere.hpp
+		Physics/Colliders/ConeCollider.hpp
+		Physics/Colliders/ConvexHullCollider.hpp
+		Physics/Colliders/CubeCollider.hpp
+		Physics/Colliders/CylinderCollider.hpp
+		Physics/Colliders/HeightfieldCollider.hpp
+		Physics/Colliders/SphereCollider.hpp
 		Physics/CollisionObject.hpp
 		Physics/Force.hpp
 		Physics/Frustum.hpp
 		Physics/KinematicCharacter.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
-		Post/Deferred/SubrenderDeferred.hpp
-		Post/Filters/FilterBlit.hpp
-		Post/Filters/FilterBlur.hpp
-		Post/Filters/FilterCrt.hpp
-		Post/Filters/FilterDarken.hpp
-		Post/Filters/FilterDefault.hpp
-		Post/Filters/FilterDof.hpp
-		Post/Filters/FilterEmboss.hpp
-		Post/Filters/FilterFxaa.hpp
-		Post/Filters/FilterGrain.hpp
-		Post/Filters/FilterGrey.hpp
-		Post/Filters/FilterLensflare.hpp
-		Post/Filters/FilterNegative.hpp
-		Post/Filters/FilterPixel.hpp
-		Post/Filters/FilterSepia.hpp
-		Post/Filters/FilterSsao.hpp
-		Post/Filters/FilterTiltshift.hpp
-		Post/Filters/FilterTone.hpp
-		Post/Filters/FilterVignette.hpp
-		Post/Filters/FilterWobble.hpp
-		Post/Pipelines/PipelineBlur.hpp
+		Post/Deferred/DeferredSubrender.hpp
+		Post/Filters/BlitFilter.hpp
+		Post/Filters/BlurFilter.hpp
+		Post/Filters/CrtFilter.hpp
+		Post/Filters/DarkenFilter.hpp
+		Post/Filters/DefaultFilter.hpp
+		Post/Filters/DofFilter.hpp
+		Post/Filters/EmbossFilter.hpp
+		Post/Filters/FxaaFilter.hpp
+		Post/Filters/GrainFilter.hpp
+		Post/Filters/GreyFilter.hpp
+		Post/Filters/LensflareFilter.hpp
+		Post/Filters/NegativeFilter.hpp
+		Post/Filters/PixelFilter.hpp
+		Post/Filters/SepiaFilter.hpp
+		Post/Filters/SsaoFilter.hpp
+		Post/Filters/TiltshiftFilter.hpp
+		Post/Filters/ToneFilter.hpp
+		Post/Filters/VignetteFilter.hpp
+		Post/Filters/WobbleFilter.hpp
+		Post/Pipelines/BlurPipeline.hpp
 		Post/PostFilter.hpp
 		Post/PostPipeline.hpp
 		Resources/Resource.hpp
@@ -229,8 +217,8 @@ set(_temp_acid_headers
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
-		Shadows/SubrenderShadows.hpp
-		Skyboxes/MaterialSkybox.hpp
+		Shadows/ShadowsSubrender.hpp
+		Skyboxes/SkyboxMaterial.hpp
 		Timers/Timers.hpp
 		Uis/Constraints/BestFitConstraint.hpp
 		Uis/Constraints/PixelConstraint.hpp
@@ -239,26 +227,38 @@ set(_temp_acid_headers
 		Uis/Constraints/UiAnchor.hpp
 		Uis/Constraints/UiConstraint.hpp
 		Uis/Constraints/UiConstraints.hpp
-		Uis/Drivers/UiDriver.hpp
 		Uis/Drivers/BounceDriver.hpp
 		Uis/Drivers/ConstantDriver.hpp
 		Uis/Drivers/FadeDriver.hpp
 		Uis/Drivers/LinearDriver.hpp
 		Uis/Drivers/SinewaveDriver.hpp
 		Uis/Drivers/SlideDriver.hpp
-		Uis/Inputs/UiInputBoolean.hpp
-		Uis/Inputs/UiInputButton.hpp
-		Uis/Inputs/UiInputDropdown.hpp
-		Uis/Inputs/UiInputGrabber.hpp
-		Uis/Inputs/UiInputRadio.hpp
-		Uis/Inputs/UiInputSlider.hpp
-		Uis/Inputs/UiInputText.hpp
+		Uis/Drivers/UiDriver.hpp
+		Uis/Inputs/UiBooleanInput.hpp
+		Uis/Inputs/UiButtonInput.hpp
+		Uis/Inputs/UiDropdownInput.hpp
+		Uis/Inputs/UiGrabberInput.hpp
+		Uis/Inputs/UiRadioInput.hpp
+		Uis/Inputs/UiSliderInput.hpp
+		Uis/Inputs/UiTextInput.hpp
 		Uis/UiObject.hpp
 		Uis/UiPanel.hpp
 		Uis/Uis.hpp
 		Uis/UiScrollBar.hpp
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
+		Utils/ConstExpr.hpp
+		Utils/Delegate.hpp
+		Utils/EnumClass.hpp
+		Utils/Enumerate.hpp
+		Utils/Factory.hpp
+		Utils/Future.hpp
+		Utils/NonCopyable.hpp
+		Utils/RingBuffer.hpp
+		Utils/StreamFactory.hpp
+		Utils/String.hpp
+		Utils/ThreadPool.hpp
+		Utils/TypeInfo.hpp
 		)
 set(_temp_acid_third_party_headers
 		third_party/cr/cr.h
@@ -282,30 +282,30 @@ set(_temp_acid_third_party_headers
 		third_party/tinyobj/tiny_obj.h
 		)
 set(_temp_acid_sources
+		Animations/AnimatedMesh.cpp
 		Animations/Animation/Animation.cpp
 		Animations/Animation/AnimationLoader.cpp
 		Animations/Animation/JointTransform.cpp
 		Animations/Animation/Keyframe.cpp
 		Animations/Animator.cpp
 		Animations/Geometry/GeometryLoader.cpp
-		Animations/MeshAnimated.cpp
 		Animations/Skeleton/Joint.cpp
 		Animations/Skeleton/SkeletonLoader.cpp
 		Animations/Skin/SkinLoader.cpp
 		Animations/Skin/VertexWeights.cpp
 		Audio/Audio.cpp
-		Audio/Flac/SoundBufferFlac.cpp
-		Audio/Mp3/SoundBufferMp3.cpp
-		Audio/Ogg/SoundBufferOgg.cpp
-		Audio/Opus/SoundBufferOpus.cpp
+		Audio/Flac/FlacSoundBuffer.cpp
+		Audio/Mp3/Mp3SoundBuffer.cpp
+		Audio/Ogg/OggSoundBuffer.cpp
+		Audio/Opus/OpusSoundBuffer.cpp
 		Audio/Sound.cpp
 		Audio/SoundBuffer.cpp
-		Audio/Wave/SoundBufferWave.cpp
+		Audio/Wave/WaveSoundBuffer.cpp
 		Bitmaps/Bitmap.cpp
-		Bitmaps/Dng/BitmapDng.cpp
-		Bitmaps/Exr/BitmapExr.cpp
-		Bitmaps/Jpg/BitmapJpg.cpp
-		Bitmaps/Png/BitmapPng.cpp
+		Bitmaps/Dng/DngBitmap.cpp
+		Bitmaps/Exr/ExrBitmap.cpp
+		Bitmaps/Jpg/JpgBitmap.cpp
+		Bitmaps/Png/PngBitmap.cpp
 		Devices/Instance.cpp
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp
@@ -327,13 +327,13 @@ set(_temp_acid_sources
 		Files/Xml/Xml.cpp
 		Files/Zip/ZipArchive.cpp
 		Files/Zip/ZipEntry.cpp
+		Fonts/FontsSubrender.cpp
 		Fonts/FontType.cpp
-		Fonts/SubrenderFonts.cpp
 		Fonts/Text.cpp
 		Gizmos/Gizmo.cpp
 		Gizmos/Gizmos.cpp
+		Gizmos/GizmosSubrender.cpp
 		Gizmos/GizmoType.cpp
-		Gizmos/SubrenderGizmos.cpp
 		Graphics/Buffers/Buffer.cpp
 		Graphics/Buffers/InstanceBuffer.cpp
 		Graphics/Buffers/PushHandler.cpp
@@ -360,26 +360,24 @@ set(_temp_acid_sources
 		Graphics/RenderStage.cpp
 		Graphics/SubrenderHolder.cpp
 		Guis/Gui.cpp
-		Guis/SubrenderGuis.cpp
-		Helpers/String.cpp
-		Helpers/ThreadPool.cpp
-		Inputs/Axes/AxisButton.cpp
-		Inputs/Axes/AxisCompound.cpp
-		Inputs/Axes/AxisJoystick.cpp
-		Inputs/Axes/AxisMouse.cpp
-		Inputs/Axes/HatJoystick.cpp
-		Inputs/Buttons/ButtonAxis.cpp
-		Inputs/Buttons/ButtonCompound.cpp
-		Inputs/Buttons/ButtonJoystick.cpp
-		Inputs/Buttons/ButtonKeyboard.cpp
-		Inputs/Buttons/ButtonMouse.cpp
+		Guis/GuisSubrender.cpp
+		Inputs/Axes/ButtonInputAxis.cpp
+		Inputs/Axes/CompoundInputAxis.cpp
+		Inputs/Axes/JoystickHatInput.cpp
+		Inputs/Axes/JoystickInputAxis.cpp
+		Inputs/Axes/MouseInputAxis.cpp
+		Inputs/Buttons/AxisInputButton.cpp
+		Inputs/Buttons/CompoundInputButton.cpp
+		Inputs/Buttons/JoystickInputButton.cpp
+		Inputs/Buttons/KeyboardInputButton.cpp
+		Inputs/Buttons/MouseInputButton.cpp
 		Inputs/Input.cpp
 		Inputs/InputDelay.cpp
 		Inputs/InputScheme.cpp
 		Lights/Fog.cpp
 		Lights/Light.cpp
-		Materials/MaterialDefault.cpp
-		Materials/PipelineMaterial.cpp
+		Materials/DefaultMaterial.cpp
+		Materials/MaterialPipeline.cpp
 		Maths/Colour.cpp
 		Maths/ElapsedTime.cpp
 		Maths/Maths.cpp
@@ -392,17 +390,17 @@ set(_temp_acid_sources
 		Maths/Vector3.cpp
 		Maths/Vector4.cpp
 		Meshes/Mesh.cpp
-		Meshes/SubrenderMeshes.cpp
-		Models/Gltf/ModelGltf.cpp
+		Meshes/MeshesSubrender.cpp
+		Models/Gltf/GltfModel.cpp
 		Models/Model.cpp
-		Models/Obj/ModelObj.cpp
-		Models/Shapes/MeshPattern.cpp
-		Models/Shapes/MeshSimple.cpp
-		Models/Shapes/ModelCube.cpp
-		Models/Shapes/ModelCylinder.cpp
-		Models/Shapes/ModelDisk.cpp
-		Models/Shapes/ModelRectangle.cpp
-		Models/Shapes/ModelSphere.cpp
+		Models/Obj/ObjModel.cpp
+		Models/Shapes/CubeModel.cpp
+		Models/Shapes/CylinderModel.cpp
+		Models/Shapes/DiskModel.cpp
+		Models/Shapes/PatternMesh.cpp
+		Models/Shapes/RectangleModel.cpp
+		Models/Shapes/SimpleMesh.cpp
+		Models/Shapes/SphereModel.cpp
 		Network/Ftp/Ftp.cpp
 		Network/Ftp/FtpDataChannel.cpp
 		Network/Ftp/FtpResponse.cpp
@@ -418,50 +416,50 @@ set(_temp_acid_sources
 		Network/Tcp/TcpListener.cpp
 		Network/Tcp/TcpSocket.cpp
 		Network/Udp/UdpSocket.cpp
-		Particles/Emitters/EmitterCircle.cpp
-		Particles/Emitters/EmitterLine.cpp
-		Particles/Emitters/EmitterPoint.cpp
-		Particles/Emitters/EmitterSphere.cpp
+		Particles/Emitters/CircleEmitter.cpp
+		Particles/Emitters/LineEmitter.cpp
+		Particles/Emitters/PointEmitter.cpp
+		Particles/Emitters/SphereEmitter.cpp
 		Particles/Particle.cpp
 		Particles/Particles.cpp
+		Particles/ParticlesSubrender.cpp
 		Particles/ParticleSystem.cpp
 		Particles/ParticleType.cpp
-		Particles/SubrenderParticles.cpp
+		Physics/Colliders/CapsuleCollider.cpp
 		Physics/Colliders/Collider.cpp
-		Physics/Colliders/ColliderCapsule.cpp
-		Physics/Colliders/ColliderCone.cpp
-		Physics/Colliders/ColliderConvexHull.cpp
-		Physics/Colliders/ColliderCube.cpp
-		Physics/Colliders/ColliderCylinder.cpp
-		Physics/Colliders/ColliderHeightfield.cpp
-		Physics/Colliders/ColliderSphere.cpp
+		Physics/Colliders/ConeCollider.cpp
+		Physics/Colliders/ConvexHullCollider.cpp
+		Physics/Colliders/CubeCollider.cpp
+		Physics/Colliders/CylinderCollider.cpp
+		Physics/Colliders/HeightfieldCollider.cpp
+		Physics/Colliders/SphereCollider.cpp
 		Physics/CollisionObject.cpp
 		Physics/Force.cpp
 		Physics/Frustum.cpp
 		Physics/KinematicCharacter.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
-		Post/Deferred/SubrenderDeferred.cpp
-		Post/Filters/FilterBlit.cpp
-		Post/Filters/FilterBlur.cpp
-		Post/Filters/FilterCrt.cpp
-		Post/Filters/FilterDarken.cpp
-		Post/Filters/FilterDefault.cpp
-		Post/Filters/FilterDof.cpp
-		Post/Filters/FilterEmboss.cpp
-		Post/Filters/FilterFxaa.cpp
-		Post/Filters/FilterGrain.cpp
-		Post/Filters/FilterGrey.cpp
-		Post/Filters/FilterLensflare.cpp
-		Post/Filters/FilterNegative.cpp
-		Post/Filters/FilterPixel.cpp
-		Post/Filters/FilterSepia.cpp
-		Post/Filters/FilterSsao.cpp
-		Post/Filters/FilterTiltshift.cpp
-		Post/Filters/FilterTone.cpp
-		Post/Filters/FilterVignette.cpp
-		Post/Filters/FilterWobble.cpp
-		Post/Pipelines/PipelineBlur.cpp
+		Post/Deferred/DeferredSubrender.cpp
+		Post/Filters/BlitFilter.cpp
+		Post/Filters/BlurFilter.cpp
+		Post/Filters/CrtFilter.cpp
+		Post/Filters/DarkenFilter.cpp
+		Post/Filters/DefaultFilter.cpp
+		Post/Filters/DofFilter.cpp
+		Post/Filters/EmbossFilter.cpp
+		Post/Filters/FxaaFilter.cpp
+		Post/Filters/GrainFilter.cpp
+		Post/Filters/GreyFilter.cpp
+		Post/Filters/LensflareFilter.cpp
+		Post/Filters/NegativeFilter.cpp
+		Post/Filters/PixelFilter.cpp
+		Post/Filters/SepiaFilter.cpp
+		Post/Filters/SsaoFilter.cpp
+		Post/Filters/TiltshiftFilter.cpp
+		Post/Filters/ToneFilter.cpp
+		Post/Filters/VignetteFilter.cpp
+		Post/Filters/WobbleFilter.cpp
+		Post/Pipelines/BlurPipeline.cpp
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
 		Scenes/Entity.cpp
@@ -472,24 +470,26 @@ set(_temp_acid_sources
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp
-		Shadows/SubrenderShadows.cpp
-		Skyboxes/MaterialSkybox.cpp
+		Shadows/ShadowsSubrender.cpp
+		Skyboxes/SkyboxMaterial.cpp
 		Timers/Timers.cpp
 		Uis/Constraints/UiAnchor.cpp
 		Uis/Constraints/UiConstraints.cpp
-		Uis/Inputs/UiInputBoolean.cpp
-		Uis/Inputs/UiInputButton.cpp
-		Uis/Inputs/UiInputDropdown.cpp
-		Uis/Inputs/UiInputGrabber.cpp
-		Uis/Inputs/UiInputRadio.cpp
-		Uis/Inputs/UiInputSlider.cpp
-		Uis/Inputs/UiInputText.cpp
+		Uis/Inputs/UiBooleanInput.cpp
+		Uis/Inputs/UiButtonInput.cpp
+		Uis/Inputs/UiDropdownInput.cpp
+		Uis/Inputs/UiGrabberInput.cpp
+		Uis/Inputs/UiRadioInput.cpp
+		Uis/Inputs/UiSliderInput.cpp
+		Uis/Inputs/UiTextInput.cpp
 		Uis/UiObject.cpp
 		Uis/UiPanel.cpp
 		Uis/Uis.cpp
 		Uis/UiScrollBar.cpp
 		Uis/UiSection.cpp
 		Uis/UiStartLogo.cpp
+		Utils/String.cpp
+		Utils/ThreadPool.cpp
 		)
 set(_temp_acid_third_party_sources
 		third_party/dr_libs/dr_flac.c

@@ -1,6 +1,6 @@
 #include "Json.hpp"
 
-#include "Helpers/String.hpp"
+#include "Utils/String.hpp"
 
 namespace acid {
 Json::Json(const Node &node) :

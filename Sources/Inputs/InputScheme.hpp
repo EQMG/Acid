@@ -2,8 +2,8 @@
 
 #include "Devices/Joysticks.hpp"
 #include "Files/File.hpp"
-#include "Axes/Axis.hpp"
-#include "Buttons/Button.hpp"
+#include "InputAxis.hpp"
+#include "InputButton.hpp"
 
 namespace acid {
 /**
@@ -12,19 +12,19 @@ namespace acid {
 class ACID_EXPORT InputScheme {
 	friend class Input;
 public:
-	using AxisMap = std::map<std::string, std::unique_ptr<Axis>>;
-	using ButtonMap = std::map<std::string, std::unique_ptr<Button>>;
+	using AxisMap = std::map<std::string, std::unique_ptr<InputAxis>>;
+	using ButtonMap = std::map<std::string, std::unique_ptr<InputButton>>;
 	using JoystickMap = std::map<std::string, JoystickPort>;
 
 	InputScheme() = default;
 	explicit InputScheme(const std::filesystem::path &filename);
 
-	Axis *GetAxis(const std::string &name);
-	Axis *AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis);
+	InputAxis *GetAxis(const std::string &name);
+	InputAxis *AddAxis(const std::string &name, std::unique_ptr<InputAxis> &&axis);
 	void RemoveAxis(const std::string &name);
 
-	Button *GetButton(const std::string &name);
-	Button *AddButton(const std::string &name, std::unique_ptr<Button> &&button);
+	InputButton *GetButton(const std::string &name);
+	InputButton *AddButton(const std::string &name, std::unique_ptr<InputButton> &&button);
 	void RemoveButton(const std::string &name);
 
 	const File &GetFile() const { return file; }

@@ -1,6 +1,6 @@
 #include "GeometryLoader.hpp"
 
-#include "Animations/MeshAnimated.hpp"
+#include "Animations/AnimatedMesh.hpp"
 
 namespace acid {
 GeometryLoader::GeometryLoader(NodeConstView &&libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction) :

@@ -20,8 +20,8 @@ public:
 	void SetScheme(InputScheme *scheme);
 	void SetScheme(const std::string &name);
 
-	Axis *GetAxis(const std::string &name) const;
-	Button *GetButton(const std::string &name) const;
+	InputAxis *GetAxis(const std::string &name) const;
+	InputButton *GetButton(const std::string &name) const;
 
 private:
 	std::map<std::string, std::unique_ptr<InputScheme>> schemes;

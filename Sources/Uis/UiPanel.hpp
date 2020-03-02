@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Guis/Gui.hpp"
-#include "Inputs/UiInputButton.hpp"
+#include "Inputs/UiButtonInput.hpp"
 #include "UiObject.hpp"
 #include "UiScrollBar.hpp"
 

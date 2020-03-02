@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Maths/Colour.hpp>
-#include <Models/Shapes/MeshSimple.hpp>
+#include <Models/Shapes/SimpleMesh.hpp>
 #include <Maths/Maths.hpp>
 
 using namespace acid;
 
 namespace test {
-class MeshTerrain : public MeshSimple {
+class MeshTerrain : public SimpleMesh {
 public:
 	MeshTerrain(const std::vector<float> &heightmap, float sideLength, float squareSize, uint32_t vertexCount, float textureScale);
 

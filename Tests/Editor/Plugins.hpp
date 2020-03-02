@@ -2,7 +2,7 @@
 
 #include <Engine/Engine.hpp>
 #include <Files/FileObserver.hpp>
-#include <Inputs/Buttons/ButtonKeyboard.hpp>
+#include <Inputs/Buttons/KeyboardInputButton.hpp>
 #include "Uis/Panels.hpp"
 
 using namespace acid;
@@ -28,6 +28,6 @@ private:
 
 	//Panels panels;
 
-	ButtonKeyboard buttonReload;
+	KeyboardInputButton buttonReload;
 };
 }

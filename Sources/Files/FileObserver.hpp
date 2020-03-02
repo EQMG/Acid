@@ -4,7 +4,7 @@
 #include <thread>
 
 #include "Maths/Time.hpp"
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 
 namespace acid {
 /**

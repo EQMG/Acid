@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 
 namespace acid {
 template<typename Base>

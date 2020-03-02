@@ -7,7 +7,7 @@
 
 #include "Graphics/Graphics.hpp"
 #include "Files/Files.hpp"
-#include "Helpers/String.hpp"
+#include "Utils/String.hpp"
 #include "Graphics/Buffers/StorageBuffer.hpp"
 #include "Graphics/Buffers/UniformBuffer.hpp"
 #include "Graphics/Images/Image2d.hpp"

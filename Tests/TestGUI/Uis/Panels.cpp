@@ -4,11 +4,11 @@ namespace test {
 int32_t GetNextY(uint32_t inc = 1) {
 	static int32_t i = -1;
 	i += inc;
-	return i * (UiInputButton::Size.y + 6);
+	return i * (UiButtonInput::Size.y + 6);
 }
 
 constexpr uint32_t SIZE3_GAP = 2;
-constexpr auto SIZE3 = (UiInputButton::Size - Vector2f(2 * SIZE3_GAP, 0)) * Vector2f((1.0f / 3.0f), 1.0f);
+constexpr auto SIZE3 = (UiButtonInput::Size - Vector2f(2 * SIZE3_GAP, 0)) * Vector2f((1.0f / 3.0f), 1.0f);
 
 Panels::Panels() {
 	//background.SetTransform({UiMargins::All});
@@ -25,56 +25,56 @@ Panels::Panels() {
 	//gui0.SetTransform({{456, 500}, UiAnchor::LeftTop, {64, 64}});
 	gui0.SetManipulate(UiManipulate::All);
 	gui0.SetScrollBars(ScrollBar::Both);
-	gui0.SetBackgroundColor(UiInputButton::BackgroundColour);
+	gui0.SetBackgroundColor(UiButtonInput::BackgroundColour);
 	AddChild(&gui0);
 
-	//boolean0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//boolean0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	boolean0.SetTitle("Boolean");
 	gui0.AddChild(&boolean0);
 
-	//button0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//button0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	button0.SetTitle("Button");
 	gui0.AddChild(&button0);
 
-	//dropdown0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//dropdown0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	dropdown0.SetTitle("Dropdown");
 	dropdown0.SetOptions({"Option A", "Option B", "Option C"});
 	dropdown0.SetValue(0);
 	gui0.AddChild(&dropdown0);
 
-	//grabber0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//grabber0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	grabber0.SetTitle("Grabber Joystick");
 	grabber0.SetPort(0);
 	grabber0.SetValue(0);
 	gui0.AddChild(&grabber0);
 
-	//grabber1.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//grabber1.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	grabber1.SetTitle("Grabber Keyboard");
 	grabber1.SetValue(Key::A);
 	gui0.AddChild(&grabber1);
 
-	//grabber2.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//grabber2.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	grabber2.SetTitle("Grabber Mouse");
 	grabber2.SetValue(MouseButton::Left);
 	gui0.AddChild(&grabber2);
 
-	//radio0a.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//radio0a.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	radio0a.SetTitle("Radio A");
 	gui0.AddChild(&radio0a);
 
-	//radio0b.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//radio0b.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	radio0b.SetTitle("Radio B");
 	radio0b.SetValue(true);
 	gui0.AddChild(&radio0b);
 
-	//radio0c.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//radio0c.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	radio0c.SetTitle("Radio C");
 	gui0.AddChild(&radio0c);
 
-	radioManager0.SetMarkType(UiInputRadio::Type::Check);
+	radioManager0.SetMarkType(UiRadioInput::Type::Check);
 	radioManager0.AddInputs({&radio0a, &radio0b, &radio0c});
 	
-	//slider0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//slider0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	slider0.SetTitle("Slider");
 	slider0.SetValueMin(-100.0f);
 	slider0.SetValueMax(100.0f);
@@ -82,7 +82,7 @@ Panels::Panels() {
 	slider0.SetRoundTo(1);
 	gui0.AddChild(&slider0);
 
-	//text0.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, GetNextY()}});
+	//text0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	text0.SetTitle("Text");
 	text0.SetMaxLength(16);
 	text0.SetValue("ABC123");

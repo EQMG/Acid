@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Helpers/ThreadPool.hpp"
+#include "Utils/ThreadPool.hpp"
 #include "Files/Node.hpp"
 #include "Resource.hpp"
 

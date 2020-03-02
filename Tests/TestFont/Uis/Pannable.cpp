@@ -3,7 +3,7 @@
 #include <Audio/Audio.hpp>
 #include <Inputs/Input.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
-#include <Uis/Inputs/UiInputButton.hpp>
+#include <Uis/Inputs/UiButtonInput.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Uis/Uis.hpp>
 
@@ -60,10 +60,10 @@ Pannable::Pannable(){
 	//settings.GetTransform().SetDepth(-4.0f);
 	settings.SetManipulate(UiManipulate::All);
 	settings.SetScrollBars(ScrollBar::None);
-	settings.SetBackgroundColor(UiInputButton::BackgroundColour);
+	settings.SetBackgroundColor(UiButtonInput::BackgroundColour);
 	AddChild(&settings);
 
-	//masterVolume.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 0}});
+	//masterVolume.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, 0}});
 	masterVolume.SetTitle("Master Volume");
 	masterVolume.SetValueMin(0.0f);
 	masterVolume.SetValueMax(100.0f);
@@ -74,7 +74,7 @@ Pannable::Pannable(){
 	}, this);
 	settings.AddChild(&masterVolume);
 
-	//antialiasing.SetTransform({UiInputButton::Size, UiAnchor::LeftTop, {0, 34}});
+	//antialiasing.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, 34}});
 	antialiasing.SetTitle("Antialiasing");
 	antialiasing.SetValue(true);
 	antialiasing.OnValue().Add([this](bool value) {

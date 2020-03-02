@@ -1,6 +1,6 @@
 #include "Text.hpp"
 
-#include "Models/Shapes/ModelRectangle.hpp"
+#include "Models/Shapes/RectangleModel.hpp"
 
 namespace acid {
 void Text::UpdateObject() {

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Uis/Inputs/UiInputButton.hpp>
-#include <Uis/Inputs/UiInputGrabber.hpp>
-#include <Uis/Inputs/UiInputSlider.hpp>
-#include <Uis/Inputs/UiInputText.hpp>
+#include <Uis/Inputs/UiButtonInput.hpp>
+#include <Uis/Inputs/UiGrabberInput.hpp>
+#include <Uis/Inputs/UiSliderInput.hpp>
+#include <Uis/Inputs/UiTextInput.hpp>
 //#include <Uis/Inputs/UiColourWheel.hpp>
 #include <Uis/UiSection.hpp>
 #include <Uis/UiPanel.hpp>
@@ -20,12 +20,12 @@ public:
 
 private:
 	UiSection section1;
-	UiInputButton button1;
+	UiButtonInput button1;
 
-	UiInputSlider sliderR;
-	UiInputSlider sliderG;
-	UiInputSlider sliderB;
-	UiInputText textHex;
+	UiSliderInput sliderR;
+	UiSliderInput sliderG;
+	UiSliderInput sliderB;
+	UiTextInput textHex;
 	Gui rgbColour;
 	//UiColourWheel colourWheel;
 };

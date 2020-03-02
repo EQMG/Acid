@@ -10,10 +10,10 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	*file.GetNode() >> *this;
 
 	/*File argsFile("ArgumentDescriptionMap.json");
-	std::map<std::string, Axis::ArgumentDescription> argumentDescriptionMap;
-	for (const auto &[name, createFunc] : Axis::Registry())
+	std::map<std::string, InputAxis::ArgumentDescription> argumentDescriptionMap;
+	for (const auto &[name, createFunc] : InputAxis::Registry())
 		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	for (const auto &[name, createFunc] : Button::Registry())
+	for (const auto &[name, createFunc] : InputButton::Registry())
 		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
 	*argsFile.GetNode() << argumentDescriptionMap;
 	argsFile.Write(Node::Format::Beautified);*/
@@ -23,16 +23,16 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	testOutFile.Write(Node::Format::Beautified);
 }
 
-Axis *InputScheme::GetAxis(const std::string &name) {
+InputAxis *InputScheme::GetAxis(const std::string &name) {
 	auto it = axes.find(name);
 	if (it == axes.end()) {
-		Log::Error("Axis was not found in current input scheme: ", std::quoted(name), '\n');
-		it = axes.emplace(name, std::make_unique<Axis>()).first;
+		Log::Error("InputAxis was not found in current input scheme: ", std::quoted(name), '\n');
+		it = axes.emplace(name, std::make_unique<InputAxis>()).first;
 	}
 	return it->second.get();
 }
 
-Axis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<Axis> &&axis) {
+InputAxis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<InputAxis> &&axis) {
 	return axes.emplace(name, std::move(axis)).first->second.get();
 }
 
@@ -42,16 +42,16 @@ void InputScheme::RemoveAxis(const std::string &name) {
 		axes.erase(it);
 }
 
-Button *InputScheme::GetButton(const std::string &name) {
+InputButton *InputScheme::GetButton(const std::string &name) {
 	auto it = buttons.find(name);
 	if (it == buttons.end()) {
-		Log::Error("Button was not found in current input scheme: ", std::quoted(name), '\n');
-		it = buttons.emplace(name, std::make_unique<Button>()).first;
+		Log::Error("InputButton was not found in current input scheme: ", std::quoted(name), '\n');
+		it = buttons.emplace(name, std::make_unique<InputButton>()).first;
 	}
 	return it->second.get();
 }
 
-Button *InputScheme::AddButton(const std::string &name, std::unique_ptr<Button> &&button) {
+InputButton *InputScheme::AddButton(const std::string &name, std::unique_ptr<InputButton> &&button) {
 	return buttons.emplace(name, std::move(button)).first->second.get();
 }
 

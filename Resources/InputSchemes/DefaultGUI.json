@@ -3,22 +3,22 @@
   "axes": [],
   "buttons": {
     "fullscreen": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 300,
       "inverted": false
     },
     "screenshot": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 298,
       "inverted": false
     },
     "exit": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 261,
       "inverted": false
     },
     "pause": {
-      "type": "buttonKeyboard",
+      "type": "keyboard",
       "key": 256,
       "inverted": false
     }

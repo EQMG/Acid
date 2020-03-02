@@ -1,7 +1,7 @@
 #include "AnimationLoader.hpp"
 
-#include "Animations/MeshAnimated.hpp"
-#include "Helpers/Enumerate.hpp"
+#include "Animations/AnimatedMesh.hpp"
+#include "Utils/Enumerate.hpp"
 
 namespace acid {
 AnimationLoader::AnimationLoader(NodeConstView &&libraryAnimations, NodeConstView &&libraryVisualScenes, const Matrix4 &correction) :

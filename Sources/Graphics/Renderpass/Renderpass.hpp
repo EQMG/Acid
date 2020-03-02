@@ -4,7 +4,7 @@
 #include <vector>
 #include <volk.h>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 
 namespace acid {
 class ImageDepth;

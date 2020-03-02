@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <Helpers/RingBuffer.hpp>
+#include <Utils/RingBuffer.hpp>
 
 TEST(RingBuffer, pushPopResize) {
 	acid::RingBuffer<int32_t> buffer(4);

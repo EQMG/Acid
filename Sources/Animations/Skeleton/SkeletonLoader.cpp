@@ -1,7 +1,7 @@
 #include "SkeletonLoader.hpp"
 
-#include "Animations/MeshAnimated.hpp"
-#include "Helpers/Enumerate.hpp"
+#include "Animations/AnimatedMesh.hpp"
+#include "Utils/Enumerate.hpp"
 
 namespace acid {
 SkeletonLoader::SkeletonLoader(NodeConstView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :

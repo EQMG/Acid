@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "Component.hpp"
 
 namespace acid {

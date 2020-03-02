@@ -1,7 +1,7 @@
 #include "SceneTutorial7.hpp"
 #include "Devices/Window.hpp"
 #include "Meshes/Mesh.hpp"
-#include "Models/Obj/ModelObj.hpp"
+#include "Models/Obj/ObjModel.hpp"
 #include "SimpleMaterial.hpp"
 #include "Resources/Resources.hpp"
 
@@ -23,7 +23,7 @@ void SceneTutorial7::Start() {
 
 	// Now we will add a mesh to this entity using the obj file and a simple unlit material
 	// that has a diffuse texture
-	mesh->AddComponent<Mesh>(ModelObj::Create("chalet/chalet.obj"),
+	mesh->AddComponent<Mesh>(ObjModel::Create("chalet/chalet.obj"),
 		std::make_unique<SimpleMaterial>(Pipeline::Stage{0, 0}, std::make_shared<Image2d>("chalet/chalet.jpg"))
 		);
 }

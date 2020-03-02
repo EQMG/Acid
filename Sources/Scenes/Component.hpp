@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Engine/Log.hpp"
-#include "Helpers/Delegate.hpp"
-#include "Helpers/StreamFactory.hpp"
+#include "Utils/Delegate.hpp"
+#include "Utils/StreamFactory.hpp"
 
 namespace acid {
 class Entity;

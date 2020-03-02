@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Uis/Inputs/UiInputButton.hpp>
-#include <Uis/Inputs/UiInputGrabber.hpp>
-#include <Uis/Inputs/UiInputSlider.hpp>
-//#include <Uis/Inputs/UiInputRadio.hpp>
-#include <Uis/Inputs/UiInputText.hpp>
+#include <Uis/Inputs/UiButtonInput.hpp>
+#include <Uis/Inputs/UiGrabberInput.hpp>
+#include <Uis/Inputs/UiSliderInput.hpp>
+//#include <Uis/Inputs/UiRadioInput.hpp>
+#include <Uis/Inputs/UiTextInput.hpp>
 #include <Uis/UiSection.hpp>
 #include <Uis/UiPanel.hpp>
 #include <Guis/Gui.hpp>
@@ -20,15 +20,15 @@ public:
 
 private:
 	UiSection section1;
-	UiInputButton button1;
+	UiButtonInput button1;
 	UiGrabberMouse input1;
 	UiGrabberKeyboard input2;
 	UiGrabberJoystick input3;
-	UiInputSlider slider1;
-	UiInputText text1;
-	//UiInputRadio radio1;
-	//UiInputRadio radio2;
-	//UiInputRadio radio3;
+	UiSliderInput slider1;
+	UiTextInput text1;
+	//UiRadioInput radio1;
+	//UiRadioInput radio2;
+	//UiRadioInput radio3;
 	//UiRadioManager radioManager1;
 };
 }

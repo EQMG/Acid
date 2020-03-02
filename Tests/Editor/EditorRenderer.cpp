@@ -1,29 +1,29 @@
 #include "EditorRenderer.hpp"
 
-#include <Fonts/SubrenderFonts.hpp>
-#include <Gizmos/SubrenderGizmos.hpp>
-#include <Guis/SubrenderGuis.hpp>
+#include <Fonts/FontsSubrender.hpp>
+#include <Gizmos/GizmosSubrender.hpp>
+#include <Guis/GuisSubrender.hpp>
 #include <Devices/Keyboard.hpp>
-#include <Meshes/SubrenderMeshes.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/SubrenderParticles.hpp>
-#include <Post/Deferred/SubrenderDeferred.hpp>
-#include <Post/Filters/FilterBlit.hpp>
-#include <Post/Filters/FilterCrt.hpp>
-#include <Post/Filters/FilterDefault.hpp>
-#include <Post/Filters/FilterDof.hpp>
-#include <Post/Filters/FilterEmboss.hpp>
-#include <Post/Filters/FilterFxaa.hpp>
-#include <Post/Filters/FilterGrain.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
-#include <Post/Filters/FilterPixel.hpp>
-#include <Post/Filters/FilterSsao.hpp>
-#include <Post/Filters/FilterTiltshift.hpp>
-#include <Post/Filters/FilterTone.hpp>
-#include <Post/Filters/FilterVignette.hpp>
+#include <Meshes/MeshesSubrender.hpp>
+#include <Models/Shapes/SphereModel.hpp>
+#include <Particles/ParticlesSubrender.hpp>
+#include <Post/Deferred/DeferredSubrender.hpp>
+#include <Post/Filters/BlitFilter.hpp>
+#include <Post/Filters/CrtFilter.hpp>
+#include <Post/Filters/DefaultFilter.hpp>
+#include <Post/Filters/DofFilter.hpp>
+#include <Post/Filters/EmbossFilter.hpp>
+#include <Post/Filters/FxaaFilter.hpp>
+#include <Post/Filters/GrainFilter.hpp>
+#include <Post/Filters/LensflareFilter.hpp>
+#include <Post/Filters/PixelFilter.hpp>
+#include <Post/Filters/SsaoFilter.hpp>
+#include <Post/Filters/TiltshiftFilter.hpp>
+#include <Post/Filters/ToneFilter.hpp>
+#include <Post/Filters/VignetteFilter.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Shadows/SubrenderShadows.hpp>
+#include <Shadows/ShadowsSubrender.hpp>
 
 namespace test {
 EditorRenderer::EditorRenderer() {
@@ -38,8 +38,8 @@ EditorRenderer::EditorRenderer() {
 }
 
 void EditorRenderer::Start() {
-	AddSubrender<SubrenderGuis>({0, 0});
-	AddSubrender<SubrenderFonts>({0, 0});
+	AddSubrender<GuisSubrender>({0, 0});
+	AddSubrender<FontsSubrender>({0, 0});
 }
 
 void EditorRenderer::Update() {

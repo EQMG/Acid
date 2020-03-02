@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Helpers/StreamFactory.hpp"
+#include "Utils/StreamFactory.hpp"
 #include "Maths/Transform.hpp"
 #include "Maths/Quaternion.hpp"
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 
 class btCollisionShape;
 class btVector3;

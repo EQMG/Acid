@@ -2,7 +2,7 @@
 
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 
 namespace acid {
 enum class JoystickHatValue : uint8_t {

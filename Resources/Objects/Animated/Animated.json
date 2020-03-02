@@ -1,5 +1,5 @@
 {
-  "meshAnimated": {
+  "animatedMesh": {
     "filename": "Objects/Animated/Model.dae",
     "material": {
       "type": "default",

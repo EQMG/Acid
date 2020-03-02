@@ -3,8 +3,8 @@
 #include <volk.h>
 
 #include "Engine/Engine.hpp"
-#include "Helpers/Delegate.hpp"
-#include "Helpers/EnumClass.hpp"
+#include "Utils/Delegate.hpp"
+#include "Utils/EnumClass.hpp"
 #include "Maths/Vector2.hpp"
 #include "Monitor.hpp"
 

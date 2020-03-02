@@ -3,8 +3,8 @@
 #include <Uis/UiObject.hpp>
 #include <Fonts/Text.hpp>
 #include <Guis/Gui.hpp>
-#include <Uis/Inputs/UiInputBoolean.hpp>
-#include <Uis/Inputs/UiInputSlider.hpp>
+#include <Uis/Inputs/UiBooleanInput.hpp>
+#include <Uis/Inputs/UiSliderInput.hpp>
 #include <Uis/UiPanel.hpp>
 
 using namespace acid;
@@ -24,8 +24,8 @@ private:
 	Text body;
 
 	UiPanel settings;
-	UiInputSlider masterVolume;
-	UiInputBoolean antialiasing;
+	UiSliderInput masterVolume;
+	UiBooleanInput antialiasing;
 
 	Text textFrameTime;
 	Text textFps;

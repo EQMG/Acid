@@ -1,7 +1,7 @@
 #include "Terrain.hpp"
 
 #include <Meshes/Mesh.hpp>
-#include <Physics/Colliders/ColliderHeightfield.hpp>
+#include <Physics/Colliders/HeightfieldCollider.hpp>
 #include <Physics/Rigidbody.hpp>
 
 namespace test {
@@ -33,7 +33,7 @@ void Terrain::Start() {
 	heightmap = GenerateHeightmap(vertexCount);
 	mesh->SetModel(std::make_shared<MeshTerrain>(heightmap, sideLength, squareSize, vertexCount, textureScale));
 
-	auto colliderHeightfield = GetEntity()->GetComponent<ColliderHeightfield>(true);
+	auto colliderHeightfield = GetEntity()->GetComponent<HeightfieldCollider>(true);
 
 	if (!colliderHeightfield) {
 		Log::Error("Terrain does not contain a heightfield collider!\n");

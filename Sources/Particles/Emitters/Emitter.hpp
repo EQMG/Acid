@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/StreamFactory.hpp"
+#include "Utils/StreamFactory.hpp"
 #include "Maths/Vector3.hpp"
 
 namespace acid {

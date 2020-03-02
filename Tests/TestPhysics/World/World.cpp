@@ -1,15 +1,15 @@
 #include "World.hpp"
 
-#include <Post/Deferred/SubrenderDeferred.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Deferred/DeferredSubrender.hpp>
+#include <Post/Filters/LensflareFilter.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/Shadows.hpp>
 
 namespace test {
-static const Colour FOG_COLOUR_SUNRISE(0xEE9A90);
-static const Colour FOG_COLOUR_NIGHT(0x0D0D1A);
-static const Colour FOG_COLOUR_DAY(0xE6E6E6);
+static constexpr Colour FOG_COLOUR_SUNRISE = 0xEE9A90;
+static constexpr Colour FOG_COLOUR_NIGHT = 0x0D0D1A;
+static constexpr Colour FOG_COLOUR_DAY = 0xE6E6E6;
 
 World::World() :
 	driverDay(LinearDriver<float>(0.0f, 1.0f, 300s)),
@@ -31,12 +31,12 @@ void World::Update() {
 	fog.SetLowerLimit(0.0f);
 	fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
-	/*if (auto lensflare = Graphics::Get()->GetSubrender<FilterLensflare>()) {
+	/*if (auto lensflare = Graphics::Get()->GetSubrender<LensflareFilter>()) {
 		lensflare->SetSunPosition(Vector3f(1000.0f, 5000.0f, -4000.0f));
 		lensflare->SetSunHeight(1000.0f);
 	}*/
 
-	if (auto deferred = Graphics::Get()->GetRenderer()->GetSubrender<SubrenderDeferred>()) {
+	if (auto deferred = Graphics::Get()->GetRenderer()->GetSubrender<DeferredSubrender>()) {
 		deferred->SetFog(fog);
 	}
 

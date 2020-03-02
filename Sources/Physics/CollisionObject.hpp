@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 #include "Colliders/Collider.hpp"
 #include "Force.hpp"
 

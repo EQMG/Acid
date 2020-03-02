@@ -1,6 +1,6 @@
 #include "CelestialBody.hpp"
 
-#include <Post/Filters/FilterLensflare.hpp>
+#include <Post/Filters/LensflareFilter.hpp>
 #include <Lights/Light.hpp>
 #include <Graphics/Graphics.hpp>
 #include "World/World.hpp"
@@ -38,7 +38,7 @@ void CelestialBody::Update() {
 			light->SetColour(sunColour);
 		}
 
-		if (auto filterLensflare = Graphics::Get()->GetRenderer()->GetSubrender<FilterLensflare>()) {
+		if (auto filterLensflare = Graphics::Get()->GetRenderer()->GetSubrender<LensflareFilter>()) {
 			filterLensflare->SetSunPosition(transform->GetPosition());
 			filterLensflare->SetSunHeight(transform->GetPosition().y);
 		}

@@ -1,6 +1,6 @@
 #include "HttpRequest.hpp"
 
-#include "Helpers/String.hpp"
+#include "Utils/String.hpp"
 
 namespace acid {
 HttpRequest::HttpRequest(const std::string &uri, Method method, const std::string &body) :

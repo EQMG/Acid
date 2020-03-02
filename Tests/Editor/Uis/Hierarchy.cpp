@@ -5,7 +5,7 @@
 namespace test {
 int32_t GetNextY() {
 	static uint32_t i = 0;
-	return i++ * (UiInputButton::Size.y + 6);
+	return i++ * (UiButtonInput::Size.y + 6);
 }
 
 Hierarchy::Hierarchy() {
@@ -65,7 +65,7 @@ Hierarchy::Hierarchy() {
 	textHex.SetValue(Colour::Yellow.GetHex());
 	section1.AddChild(&textHex);
 
-	//rgbColour.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop, UiInputButton::Size});
+	//rgbColour.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop, UiButtonInput::Size});
 	rgbColour.SetImage(Image2d::Create("Guis/Button_Filled.png"));
 	rgbColour.SetNinePatches({0.125f, 0.125f, 0.75f, 0.75f});
 	rgbColour.SetColourDriver<ConstantDriver>(Colour::Yellow);
@@ -83,7 +83,7 @@ Hierarchy::Hierarchy() {
 	
 	SetManipulate(UiManipulate::None);
 	SetScrollBars(ScrollBar::None);
-	SetBackgroundColor(UiInputButton::BackgroundColour);
+	SetBackgroundColor(UiButtonInput::BackgroundColour);
 }
 
 void Hierarchy::UpdateObject() {

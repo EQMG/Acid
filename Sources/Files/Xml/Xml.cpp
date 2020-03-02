@@ -1,6 +1,6 @@
 #include "Xml.hpp"
 
-#include "Helpers/String.hpp"
+#include "Utils/String.hpp"
 
 namespace acid {
 Xml::Xml(const std::string &rootName) {

@@ -11,8 +11,8 @@
 #include <vector>
 #include <map>
 
-#include "Helpers/ConstExpr.hpp"
-#include "Helpers/String.hpp"
+#include "Utils/ConstExpr.hpp"
+#include "Utils/String.hpp"
 #include "Resources/Resource.hpp"
 
 namespace acid {

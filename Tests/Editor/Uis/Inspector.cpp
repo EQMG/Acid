@@ -62,12 +62,12 @@ Inspector::Inspector() {
 	//radio3.SetTitle("Third Value");
 	//section1.SetValue(&radio3);
 
-	//radioManager1.SetType(UiInputRadio::Type::Filled);
+	//radioManager1.SetType(UiRadioInput::Type::Filled);
 	//radioManager1.SetInputs({&radio1, &radio2, &radio3});
 
 	SetManipulate(UiManipulate::None);
 	SetScrollBars(ScrollBar::None);
-	SetBackgroundColor(UiInputButton::BackgroundColour);
+	SetBackgroundColor(UiButtonInput::BackgroundColour);
 }
 
 void Inspector::UpdateObject() {

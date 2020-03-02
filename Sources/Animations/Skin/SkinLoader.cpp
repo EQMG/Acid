@@ -1,6 +1,6 @@
 #include "SkinLoader.hpp"
 
-#include "Helpers/Enumerate.hpp"
+#include "Utils/Enumerate.hpp"
 
 namespace acid {
 SkinLoader::SkinLoader(NodeConstView &&libraryControllers, uint32_t maxWeights) :

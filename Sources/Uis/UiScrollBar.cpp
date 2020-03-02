@@ -1,6 +1,6 @@
 #include "UiScrollBar.hpp"
 
-#include "Inputs/UiInputButton.hpp"
+#include "Inputs/UiButtonInput.hpp"
 #include "Drivers/ConstantDriver.hpp"
 #include "Drivers/SlideDriver.hpp"
 #include "Uis.hpp"
@@ -9,12 +9,12 @@ namespace acid {
 UiScrollBar::UiScrollBar() {
 	//background.SetTransform({UiMargins::All});
 	background.SetImage(Image2d::Create("Guis/White.png"));
-	background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	background.SetColourDriver<ConstantDriver>(UiButtonInput::PrimaryColour);
 	AddChild(&background);
 
 	//scroll.SetTransform({UiMargins::RightBottom});
 	scroll.SetImage(Image2d::Create("Guis/White.png"));
-	scroll.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	scroll.SetColourDriver<ConstantDriver>(UiButtonInput::PrimaryColour);
 	AddChild(&scroll);
 
 	Mouse::Get()->OnScroll().Add([this](Vector2d wheelDelta) {
@@ -42,10 +42,10 @@ void UiScrollBar::UpdateObject() {
 
 	if (!updating) {
 		if (scroll.IsSelected() && !mouseOver) {
-			scroll.SetColourDriver<SlideDriver>(scroll.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			scroll.SetColourDriver<SlideDriver>(scroll.GetColourDriver()->Get(), UiButtonInput::SelectedColour, UiButtonInput::SlideTime);
 			mouseOver = true;
 		} else if (!scroll.IsSelected() && mouseOver) {
-			scroll.SetColourDriver<SlideDriver>(scroll.GetColourDriver()->Get(), UiInputButton::ButtonColour, UiInputButton::SlideTime);
+			scroll.SetColourDriver<SlideDriver>(scroll.GetColourDriver()->Get(), UiButtonInput::ButtonColour, UiButtonInput::SlideTime);
 			mouseOver = false;
 		}
 	}

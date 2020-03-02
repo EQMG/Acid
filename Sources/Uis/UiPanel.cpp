@@ -1,6 +1,6 @@
 #include "UiPanel.hpp"
 
-#include "Inputs/UiInputButton.hpp"
+#include "Inputs/UiButtonInput.hpp"
 #include "Drivers/ConstantDriver.hpp"
 
 namespace acid {
@@ -17,7 +17,7 @@ UiPanel::UiPanel() {
 
 	//resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
 	resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
-	resizeHandle.SetColourDriver<ConstantDriver>(UiInputButton::ButtonColour);
+	resizeHandle.SetColourDriver<ConstantDriver>(UiButtonInput::ButtonColour);
 	resizeHandle.SetCursorHover(CursorStandard::ResizeX);
 	UiObject::AddChild(&resizeHandle);
 

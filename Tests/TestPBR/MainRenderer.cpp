@@ -1,13 +1,13 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/SubrenderFonts.hpp>
-#include <Guis/SubrenderGuis.hpp>
-#include <Meshes/SubrenderMeshes.hpp>
-#include <Particles/SubrenderParticles.hpp>
-#include <Post/Deferred/SubrenderDeferred.hpp>
-#include <Post/Filters/FilterDefault.hpp>
+#include <Fonts/FontsSubrender.hpp>
+#include <Guis/GuisSubrender.hpp>
+#include <Meshes/MeshesSubrender.hpp>
+#include <Particles/ParticlesSubrender.hpp>
+#include <Post/Deferred/DeferredSubrender.hpp>
+#include <Post/Filters/DefaultFilter.hpp>
 #include <Graphics/Graphics.hpp>
-#include <Shadows/SubrenderShadows.hpp>
+#include <Shadows/ShadowsSubrender.hpp>
 
 namespace test {
 MainRenderer::MainRenderer() {
@@ -39,14 +39,14 @@ MainRenderer::MainRenderer() {
 void MainRenderer::Start() {
 	//AddSubrender<RenderShadows>({0, 0});
 
-	AddSubrender<SubrenderMeshes>({1, 0});
+	AddSubrender<MeshesSubrender>({1, 0});
 
-	AddSubrender<SubrenderDeferred>({1, 1});
-	AddSubrender<SubrenderParticles>({1, 1});
+	AddSubrender<DeferredSubrender>({1, 1});
+	AddSubrender<ParticlesSubrender>({1, 1});
 
-	AddSubrender<FilterDefault>({1, 2}, true);
-	AddSubrender<SubrenderGuis>({1, 2});
-	AddSubrender<SubrenderFonts>({1, 2});
+	AddSubrender<DefaultFilter>({1, 2}, true);
+	AddSubrender<GuisSubrender>({1, 2});
+	AddSubrender<FontsSubrender>({1, 2});
 }
 
 void MainRenderer::Update() {

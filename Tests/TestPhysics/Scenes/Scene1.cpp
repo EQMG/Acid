@@ -1,43 +1,43 @@
 #include "Scene1.hpp"
 
 #include <Audio/Sound.hpp>
-#include <Animations/MeshAnimated.hpp>
+#include <Animations/AnimatedMesh.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Devices/Mouse.hpp>
 #include <Inputs/Input.hpp>
 #include <Lights/Light.hpp>
 #include <Resources/Resources.hpp>
-#include <Materials/MaterialDefault.hpp>
+#include <Materials/DefaultMaterial.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Drivers/SlideDriver.hpp>
 #include <Meshes/Mesh.hpp>
-#include <Models/Shapes/ModelCube.hpp>
-#include <Models/Shapes/ModelCylinder.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/Emitters/EmitterCircle.hpp>
+#include <Models/Shapes/CubeModel.hpp>
+#include <Models/Shapes/CylinderModel.hpp>
+#include <Models/Shapes/SphereModel.hpp>
+#include <Particles/Emitters/CircleEmitter.hpp>
 #include <Particles/ParticleSystem.hpp>
-#include <Physics/Colliders/ColliderCapsule.hpp>
-#include <Physics/Colliders/ColliderCone.hpp>
-#include <Physics/Colliders/ColliderConvexHull.hpp>
-#include <Physics/Colliders/ColliderCube.hpp>
-#include <Physics/Colliders/ColliderCylinder.hpp>
-#include <Physics/Colliders/ColliderHeightfield.hpp>
-#include <Physics/Colliders/ColliderSphere.hpp>
+#include <Physics/Colliders/CapsuleCollider.hpp>
+#include <Physics/Colliders/ConeCollider.hpp>
+#include <Physics/Colliders/ConvexHullCollider.hpp>
+#include <Physics/Colliders/CubeCollider.hpp>
+#include <Physics/Colliders/CylinderCollider.hpp>
+#include <Physics/Colliders/HeightfieldCollider.hpp>
+#include <Physics/Colliders/SphereCollider.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Files/Json/Json.hpp>
 #include <Files/File.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
-#include <Skyboxes/MaterialSkybox.hpp>
+#include <Skyboxes/SkyboxMaterial.hpp>
 #include <Uis/Constraints/PixelConstraint.hpp>
 #include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Uis.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
 #include "Behaviours/Rotate.hpp"
-#include "Terrain/MaterialTerrain.hpp"
+#include "Terrain/TerrainMaterial.hpp"
 #include "Terrain/Terrain.hpp"
 #include "CameraFps.hpp"
 
@@ -69,11 +69,11 @@ Scene1::Scene1() :
 
 			auto sphere = GetStructure()->CreateEntity();
 			sphere->AddComponent<Transform>(cameraPosition, Vector3f());
-			sphere->AddComponent<Mesh>(ModelSphere::Create(0.5f, 32, 32), 
-				std::make_unique<MaterialDefault>(Colour::White, nullptr, 0.0f, 1.0f));
-			auto rigidbody = sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 0.5f);
+			sphere->AddComponent<Mesh>(SphereModel::Create(0.5f, 32, 32), 
+				std::make_unique<DefaultMaterial>(Colour::White, nullptr, 0.0f, 1.0f));
+			auto rigidbody = sphere->AddComponent<Rigidbody>(std::make_unique<SphereCollider>(), 0.5f);
 			rigidbody->AddForce(std::make_unique<Force>(-3.0f * (Quaternion(cameraRotation) * Vector3f::Front).Normalize(), 2s));
-			//sphere->AddComponent<ColliderSphere>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
+			//sphere->AddComponent<SphereCollider>(0.5f, Transform(Vector3(0.0f, 1.0f, 0.0f)));
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<HeightDespawn>(-75.0f);
 
@@ -146,9 +146,9 @@ void Scene1::Start() {
 
 	auto animated = GetStructure()->CreateEntity();
 	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
-	animated->AddComponent<MeshAnimated>("Objects/Animated/Model.dae.json", 
-		std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f));
-	//animated->AddComponent<Rigidbody>(std::make_unique<ColliderCapsule>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f))), 0.0f);
+	animated->AddComponent<AnimatedMesh>("Objects/Animated/Model.dae.json", 
+		std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f));
+	//animated->AddComponent<Rigidbody>(std::make_unique<CapsuleCollider>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f))), 0.0f);
 	animated->AddComponent<ShadowRender>();
 
 #if defined(ACID_DEBUG)
@@ -164,23 +164,23 @@ void Scene1::Start() {
 
 	auto plane = GetStructure()->CreateEntity();
 	plane->AddComponent<Transform>(Vector3f(0.0f, -0.5f, 0.0f), Vector3f(), Vector3f(50.0f, 1.0f, 50.0f));
-	plane->AddComponent<Mesh>(ModelCube::Create({1.0f, 1.0f, 1.0f}),
-		std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST)));
-	plane->AddComponent<Rigidbody>(std::make_unique<ColliderCube>(Vector3f(1.0f, 1.0f, 1.0f)), 0.0f, 0.5f);
+	plane->AddComponent<Mesh>(CubeModel::Create({1.0f, 1.0f, 1.0f}),
+		std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST)));
+	plane->AddComponent<Rigidbody>(std::make_unique<CubeCollider>(Vector3f(1.0f, 1.0f, 1.0f)), 0.0f, 0.5f);
 	plane->AddComponent<ShadowRender>();
 
 	auto terrain = GetStructure()->CreateEntity();
 	terrain->AddComponent<Transform>(Vector3f(0.0f, -10.0f, 0.0f));
-	terrain->AddComponent<Mesh>(ModelCube::Create({50.0f, 1.0f, 50.0f}), 
-		std::make_unique<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
+	terrain->AddComponent<Mesh>(CubeModel::Create({50.0f, 1.0f, 50.0f}), 
+		std::make_unique<TerrainMaterial>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
 	terrain->AddComponent<ShadowRender>();
 
 	//auto terrain = GetStructure()->CreateEntity();
 	//terrain->AddComponent<Transform>();
 	//terrain->AddComponent<Mesh>(nullptr,
-	//	std::make_unique<MaterialTerrain>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
+	//	std::make_unique<TerrainMaterial>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
 	//terrain->AddComponent<Terrain>(150.0f, 2.0f);
-	//terrain->AddComponent<Rigidbody>(std::make_unique<ColliderHeightfield>(), 0.0f, 0.7f);
+	//terrain->AddComponent<Rigidbody>(std::make_unique<HeightfieldCollider>(), 0.0f, 0.7f);
 	//terrain->AddComponent<ShadowRender>();
 
 #if defined(ACID_DEBUG)
@@ -195,9 +195,9 @@ void Scene1::Start() {
 		for (int32_t j = 0; j < 5; j++) {
 			auto cube = GetStructure()->CreateEntity();
 			cube->AddComponent<Transform>(Vector3f(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f));
-			cube->AddComponent<Mesh>(ModelCube::Create({1.0f, 1.0f, 1.0f}), 
-				std::make_unique<MaterialDefault>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f));
-			cube->AddComponent<Rigidbody>(std::make_unique<ColliderCube>(), 0.5f, 0.3f);
+			cube->AddComponent<Mesh>(CubeModel::Create({1.0f, 1.0f, 1.0f}), 
+				std::make_unique<DefaultMaterial>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f));
+			cube->AddComponent<Rigidbody>(std::make_unique<CubeCollider>(), 0.5f, 0.3f);
 			cube->AddComponent<ShadowRender>();
 		}
 	}
@@ -205,21 +205,21 @@ void Scene1::Start() {
 	auto suzanne = GetStructure()->CreateEntity();
 	suzanne->AddComponent<Transform>(Vector3f(-1.0f, 2.0f, 10.0f));
 	suzanne->AddComponent<Mesh>(Model::Create("Objects/Suzanne/Suzanne.obj"),
-		std::make_unique<MaterialDefault>(Colour::Red, nullptr, 0.2f, 0.8f));
+		std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.2f, 0.8f));
 	suzanne->AddComponent<ShadowRender>();
 
 	//auto suzanne1 = GetStructure()->CreateEntity();
 	//suzanne1->AddComponent<Transform>(Vector3f(-1.0f, 2.0f, 10.0f));
-	//suzanne1->AddComponent<Mesh>(ModelGltf::Create("Objects/Suzanne/Suzanne.glb"),
-	//	std::make_unique<MaterialDefault>(Colour::Red, nullptr, 0.5f, 0.2f));
+	//suzanne1->AddComponent<Mesh>(GltfModel::Create("Objects/Suzanne/Suzanne.glb"),
+	//	std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.5f, 0.2f));
 	//suzanne1->AddComponent<MeshRender>();
 	//suzanne1->AddComponent<ShadowRender>();
 
 	auto teapot1 = GetStructure()->CreateEntity();
 	teapot1->AddComponent<Transform>(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot1->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
-		std::make_unique<MaterialDefault>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")));
-	//teapot1->AddComponent<Rigidbody>(std::make_unique<ColliderConvexHull>(), 1.0f);
+		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")));
+	//teapot1->AddComponent<Rigidbody>(std::make_unique<ConvexHullCollider>(), 1.0f);
 	teapot1->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 0);
 	teapot1->AddComponent<NameTag>("Vector3", 1.4f);
 	teapot1->AddComponent<ShadowRender>();
@@ -232,8 +232,8 @@ void Scene1::Start() {
 
 	auto teapotCone = GetStructure()->CreateEntity();
 	teapotCone->AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1);
-	teapotCone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 24, 2), 
-		std::make_unique<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
+	teapotCone->AddComponent<Mesh>(CylinderModel::Create(1.0f, 0.0f, 2.0f, 24, 2), 
+		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotCone->AddComponent<ShadowRender>();
 
 	auto teapotConeLight = GetStructure()->CreateEntity();
@@ -243,15 +243,15 @@ void Scene1::Start() {
 
 	auto teapotConeSphere = GetStructure()->CreateEntity();
 	teapotConeSphere->AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), Vector3f(0.5f))->SetParent(teapotCone);
-	teapotConeSphere->AddComponent<Mesh>(ModelSphere::Create(1.0f, 32, 32), 
-		std::make_unique<MaterialDefault>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
+	teapotConeSphere->AddComponent<Mesh>(SphereModel::Create(1.0f, 32, 32), 
+		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotConeSphere->AddComponent<ShadowRender>();
 
 	auto teapot2 = GetStructure()->CreateEntity();
 	teapot2->AddComponent<Transform>(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot2->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
-		std::make_unique<MaterialDefault>(Colour::Lime, nullptr, 0.6f, 0.7f));
-	//teapot2->AddComponent<Rigidbody>(std::make_unique<ColliderConvexHull>(), 1.0f);
+		std::make_unique<DefaultMaterial>(Colour::Lime, nullptr, 0.6f, 0.7f));
+	//teapot2->AddComponent<Rigidbody>(std::make_unique<ConvexHullCollider>(), 1.0f);
 	teapot2->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 1);
 	teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
 	teapot2->AddComponent<ShadowRender>();
@@ -259,25 +259,25 @@ void Scene1::Start() {
 	auto teapot3 = GetStructure()->CreateEntity();
 	teapot3->AddComponent<Transform>(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot3->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
-		std::make_unique<MaterialDefault>(Colour::Teal, nullptr, 0.8f, 0.2f));
-	//teapot3->AddComponent<Rigidbody>(std::make_unique<ColliderConvexHull>(), 1.0f);
+		std::make_unique<DefaultMaterial>(Colour::Teal, nullptr, 0.8f, 0.2f));
+	//teapot3->AddComponent<Rigidbody>(std::make_unique<ConvexHullCollider>(), 1.0f);
 	teapot3->AddComponent<Rotate>(Maths::Radians(Vector3f(50.0f, 30.0f, 40.0f)), 2);
 	teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
 	teapot3->AddComponent<ShadowRender>();
 
 	auto cone = GetStructure()->CreateEntity();
 	cone->AddComponent<Transform>(Vector3f(-3.0f, 2.0f, 10.0f));
-	cone->AddComponent<Mesh>(ModelCylinder::Create(1.0f, 0.0f, 2.0f, 28, 2), 
-		std::make_unique<MaterialDefault>(Colour::Blue, nullptr, 0.0f, 1.0f));
-	cone->AddComponent<Rigidbody>(std::make_unique<ColliderCone>(1.0f, 2.0f),
-		/*std::make_unique<ColliderSphere>(1.0f, Transform({0.0f, 2.0f, 0.0f})),*/ 1.5f);
+	cone->AddComponent<Mesh>(CylinderModel::Create(1.0f, 0.0f, 2.0f, 28, 2), 
+		std::make_unique<DefaultMaterial>(Colour::Blue, nullptr, 0.0f, 1.0f));
+	cone->AddComponent<Rigidbody>(std::make_unique<ConeCollider>(1.0f, 2.0f),
+		/*std::make_unique<SphereCollider>(1.0f, Transform({0.0f, 2.0f, 0.0f})),*/ 1.5f);
 	cone->AddComponent<ShadowRender>();
 
 	auto cylinder = GetStructure()->CreateEntity();
 	cylinder->AddComponent<Transform>(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, Maths::Radians(90.0f)));
-	cylinder->AddComponent<Mesh>(ModelCylinder::Create(1.1f, 1.1f, 2.2f, 32, 2), 
-		std::make_unique<MaterialDefault>(Colour::Red, nullptr, 0.0f, 1.0f));
-	cylinder->AddComponent<Rigidbody>(std::make_unique<ColliderCylinder>(1.1f, 2.2f), 2.5f);
+	cylinder->AddComponent<Mesh>(CylinderModel::Create(1.1f, 1.1f, 2.2f, 32, 2), 
+		std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.0f, 1.0f));
+	cylinder->AddComponent<Rigidbody>(std::make_unique<CylinderCollider>(1.1f, 2.2f), 2.5f);
 	cylinder->AddComponent<ShadowRender>();
 
 	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json");

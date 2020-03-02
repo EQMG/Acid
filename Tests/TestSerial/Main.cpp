@@ -1,6 +1,6 @@
 #include <Files/File.hpp>
 #include <Files/Files.hpp>
-#include <Helpers/EnumClass.hpp>
+#include <Utils/EnumClass.hpp>
 #include <Maths/Matrix4.hpp>
 #include <Maths/Vector2.hpp>
 #include <Files/Node.hpp>

@@ -1,27 +1,27 @@
 #include "MainRenderer.hpp"
 
-#include <Fonts/SubrenderFonts.hpp>
-#include <Gizmos/SubrenderGizmos.hpp>
-#include <Guis/SubrenderGuis.hpp>
-#include <Meshes/SubrenderMeshes.hpp>
-#include <Models/Shapes/ModelSphere.hpp>
-#include <Particles/SubrenderParticles.hpp>
-#include <Post/Deferred/SubrenderDeferred.hpp>
-#include <Post/Filters/FilterCrt.hpp>
-#include <Post/Filters/FilterDefault.hpp>
-#include <Post/Filters/FilterDof.hpp>
-#include <Post/Filters/FilterEmboss.hpp>
-#include <Post/Filters/FilterFxaa.hpp>
-#include <Post/Filters/FilterGrain.hpp>
-#include <Post/Filters/FilterLensflare.hpp>
-#include <Post/Filters/FilterPixel.hpp>
-#include <Post/Filters/FilterSsao.hpp>
-#include <Post/Filters/FilterTiltshift.hpp>
-#include <Post/Filters/FilterTone.hpp>
-#include <Post/Filters/FilterVignette.hpp>
-#include <Post/Pipelines/PipelineBlur.hpp>
+#include <Fonts/FontsSubrender.hpp>
+#include <Gizmos/GizmosSubrender.hpp>
+#include <Guis/GuisSubrender.hpp>
+#include <Meshes/MeshesSubrender.hpp>
+#include <Models/Shapes/SphereModel.hpp>
+#include <Particles/ParticlesSubrender.hpp>
+#include <Post/Deferred/DeferredSubrender.hpp>
+#include <Post/Filters/CrtFilter.hpp>
+#include <Post/Filters/DefaultFilter.hpp>
+#include <Post/Filters/DofFilter.hpp>
+#include <Post/Filters/EmbossFilter.hpp>
+#include <Post/Filters/FxaaFilter.hpp>
+#include <Post/Filters/GrainFilter.hpp>
+#include <Post/Filters/LensflareFilter.hpp>
+#include <Post/Filters/PixelFilter.hpp>
+#include <Post/Filters/SsaoFilter.hpp>
+#include <Post/Filters/TiltshiftFilter.hpp>
+#include <Post/Filters/ToneFilter.hpp>
+#include <Post/Filters/VignetteFilter.hpp>
+#include <Post/Pipelines/BlurPipeline.hpp>
 #include <Graphics/Graphics.hpp>
-#include <Shadows/SubrenderShadows.hpp>
+#include <Shadows/ShadowsSubrender.hpp>
 #include "Devices/Keyboard.hpp"
 
 namespace test {
@@ -54,27 +54,27 @@ MainRenderer::MainRenderer() {
 void MainRenderer::Start() {
 	//AddSubrender<RenderShadows>({0, 0});
 
-	AddSubrender<SubrenderMeshes>({1, 0});
+	AddSubrender<MeshesSubrender>({1, 0});
 
-	AddSubrender<SubrenderDeferred>({1, 1});
-	AddSubrender<SubrenderParticles>({1, 1});
+	AddSubrender<DeferredSubrender>({1, 1});
+	AddSubrender<ParticlesSubrender>({1, 1});
 
-	AddSubrender<FilterFxaa>({1, 2});
-	//AddSubrender<FilterTone>({1, 2});
-	//AddSubrender<FilterSsao>({1, 2});
-	//auto sceneBlur = AddSubrender<PipelineBlur>({1, 2}, 1.8f, FilterBlur::Type::_5, false, 0.6f, 1.0f);
-	//AddSubrender<FilterDof>({1, 2}, sceneBlur, 1.11f);
-	//AddSubrender<FilterEmboss>({1, 2});
-	//AddSubrender<FilterCrt>({1, 2});
-	//AddSubrender<FilterLensflare>({1, 2});
-	//AddSubrender<FilterTiltshift>({1, 2});
-	//AddSubrender<FilterPixel>({1, 2}, 8.0f);
-	//AddSubrender<FilterVignette>({1, 2});
-	//AddSubrender<FilterGrain>({1, 2});
-	AddSubrender<FilterDefault>({1, 2}, true);
+	AddSubrender<FxaaFilter>({1, 2});
+	//AddSubrender<ToneFilter>({1, 2});
+	//AddSubrender<SsaoFilter>({1, 2});
+	//auto sceneBlur = AddSubrender<BlurPipeline>({1, 2}, 1.8f, BlurFilter::Type::_5, false, 0.6f, 1.0f);
+	//AddSubrender<DofFilter>({1, 2}, sceneBlur, 1.11f);
+	//AddSubrender<EmbossFilter>({1, 2});
+	//AddSubrender<CrtFilter>({1, 2});
+	//AddSubrender<LensflareFilter>({1, 2});
+	//AddSubrender<TiltshiftFilter>({1, 2});
+	//AddSubrender<PixelFilter>({1, 2}, 8.0f);
+	//AddSubrender<VignetteFilter>({1, 2});
+	//AddSubrender<GrainFilter>({1, 2});
+	AddSubrender<DefaultFilter>({1, 2}, true);
 	//AddSubrender<RendererGizmos>({1, 2});
-	AddSubrender<SubrenderGuis>({1, 2});
-	AddSubrender<SubrenderFonts>({1, 2});
+	AddSubrender<GuisSubrender>({1, 2});
+	AddSubrender<FontsSubrender>({1, 2});
 }
 
 void MainRenderer::Update() {
@@ -91,6 +91,6 @@ void MainRenderer::Update() {
 		renderpassCreate1->GetViewport().SetOffset({100, 100});
 	}*/
 
-	//GetSubrender<FilterVignette>()->SetEnabled(Keyboard::Get()->GetKey(Key::I) != InputAction::Release);
+	//GetSubrender<VignetteFilter>()->SetEnabled(Keyboard::Get()->GetKey(Key::I) != InputAction::Release);
 }
 }

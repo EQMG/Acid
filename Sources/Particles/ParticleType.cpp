@@ -2,7 +2,7 @@
 
 #include "Resources/Resources.hpp"
 #include "Maths/Maths.hpp"
-#include "Models/Shapes/ModelRectangle.hpp"
+#include "Models/Shapes/RectangleModel.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Particle.hpp"
 
@@ -33,7 +33,7 @@ std::shared_ptr<ParticleType> ParticleType::Create(const std::shared_ptr<Image2d
 ParticleType::ParticleType(std::shared_ptr<Image2d> image, uint32_t numberOfRows, const Colour &colourOffset, float lifeLength, float stageCycles,
 	float scale) :
 	image(std::move(image)),
-	model(ModelRectangle::Create(-0.5f, 0.5f)),
+	model(RectangleModel::Create(-0.5f, 0.5f)),
 	numberOfRows(numberOfRows),
 	colourOffset(colourOffset),
 	lifeLength(lifeLength),

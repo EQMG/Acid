@@ -6,7 +6,7 @@
 #include <thread>
 
 #include "Engine/Engine.hpp"
-#include "Helpers/Delegate.hpp"
+#include "Utils/Delegate.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {

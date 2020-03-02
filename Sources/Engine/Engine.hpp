@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "Helpers/NonCopyable.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"
 #include "Module.hpp"

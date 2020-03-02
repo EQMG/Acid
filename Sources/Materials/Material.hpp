@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Helpers/StreamFactory.hpp"
+#include "Utils/StreamFactory.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Maths/Transform.hpp"
-#include "PipelineMaterial.hpp"
+#include "MaterialPipeline.hpp"
 
 namespace acid {
 /**
@@ -35,9 +35,9 @@ public:
 	 * Gets the material pipeline defined in this material.
 	 * @return The material pipeline.
 	 */
-	const std::shared_ptr<PipelineMaterial> &GetPipelineMaterial() const { return pipelineMaterial; }
+	const std::shared_ptr<MaterialPipeline> &GetPipelineMaterial() const { return pipelineMaterial; }
 
 protected:
-	std::shared_ptr<PipelineMaterial> pipelineMaterial;
+	std::shared_ptr<MaterialPipeline> pipelineMaterial;
 };
 }

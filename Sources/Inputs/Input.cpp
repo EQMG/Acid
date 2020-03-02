@@ -51,13 +51,13 @@ void Input::SetScheme(const std::string &name) {
 	SetScheme(scheme);
 }
 
-Axis *Input::GetAxis(const std::string &name) const {
+InputAxis *Input::GetAxis(const std::string &name) const {
 	if (currentScheme)
 		return currentScheme->GetAxis(name);
 	return nullptr;
 }
 
-Button *Input::GetButton(const std::string &name) const {
+InputButton *Input::GetButton(const std::string &name) const {
 	if (currentScheme)
 		return currentScheme->GetButton(name);
 	return nullptr;
