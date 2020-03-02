@@ -12,6 +12,7 @@ namespace acid {
  * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT Rigidbody : public Component::Registrar<Rigidbody>, public CollisionObject {
+	inline static const bool Registered = Register("rigidbody");
 public:
 	/**
 	 * Creates a new rigidbody.
@@ -23,7 +24,6 @@ public:
 	 */
 	explicit Rigidbody(std::unique_ptr<Collider> &&collider = nullptr, float mass = 1.0f, float friction = 0.2f,
 		const Vector3f &linearFactor = Vector3f(1.0f), const Vector3f &angularFactor = Vector3f(1.0f));
-
 	~Rigidbody();
 
 	void Start() override;
@@ -45,8 +45,6 @@ protected:
 	void RecalculateMass() override;
 
 private:
-	static bool registered;
-
-	std::unique_ptr<btRigidBody> m_rigidBody;
+	std::unique_ptr<btRigidBody> rigidBody;
 };
 }

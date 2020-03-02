@@ -11,33 +11,33 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const PipelineBlur *GetPipelineBlur() const { return m_pipelineBlur; }
-	void SetPipelineBlur(PipelineBlur *pipelineBlur) { m_pipelineBlur = pipelineBlur; }
+	const PipelineBlur *GetPipelineBlur() const { return pipelineBlur; }
+	void SetPipelineBlur(PipelineBlur *pipelineBlur) { this->pipelineBlur = pipelineBlur; }
 
-	float GetFocusPoint() const { return m_focusPoint; }
-	void SetFocusPoint(float focusPoint) { m_focusPoint = focusPoint; }
+	float GetFocusPoint() const { return focusPoint; }
+	void SetFocusPoint(float focusPoint) { this->focusPoint = focusPoint; }
 
-	float GetNearField() const { return m_nearField; }
-	void SetNearField(float nearField) { m_nearField = nearField; }
+	float GetNearField() const { return nearField; }
+	void SetNearField(float nearField) { this->nearField = nearField; }
 
-	float GetNearTransition() const { return m_nearTransition; }
-	void SetNearTransition(float nearTransition) { m_nearTransition = nearTransition; }
+	float GetNearTransition() const { return nearTransition; }
+	void SetNearTransition(float nearTransition) { this->nearTransition = nearTransition; }
 
-	float GetFarField() const { return m_farField; }
-	void SetFarField(float farField) { m_farField = farField; }
+	float GetFarField() const { return farField; }
+	void SetFarField(float farField) { this->farField = farField; }
 
-	float GetFarTransition() const { return m_farTransition; }
-	void SetFarTransition(float farTransition) { m_farTransition = farTransition; }
+	float GetFarTransition() const { return farTransition; }
+	void SetFarTransition(float farTransition) { this->farTransition = farTransition; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	PipelineBlur *m_pipelineBlur;
+	PipelineBlur *pipelineBlur;
 
-	float m_focusPoint;
-	float m_nearField;
-	float m_nearTransition;
-	float m_farField;
-	float m_farTransition;
+	float focusPoint;
+	float nearField;
+	float nearTransition;
+	float farField;
+	float farTransition;
 };
 }

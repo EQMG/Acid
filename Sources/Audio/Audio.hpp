@@ -12,10 +12,11 @@ namespace acid {
  */
 class ACID_EXPORT Audio : public Module::Registrar<Audio, Module::Stage::Pre> {
 public:
-	enum class Type { Master, General, Effect, Music };
+	enum class Type {
+		Master, General, Effect, Music
+	};
 
 	Audio();
-
 	~Audio();
 
 	void Update() override;
@@ -23,8 +24,8 @@ public:
 	ACID_NO_EXPORT static std::string StringifyResultAl(int32_t result);
 	ACID_NO_EXPORT static void CheckAl(int32_t result);
 
-	ACID_NO_EXPORT ALCdevice *GetDevice() const { return m_device; }
-	ACID_NO_EXPORT ALCcontext *GetContext() const { return m_context; }
+	ACID_NO_EXPORT ALCdevice *GetDevice() const { return device; }
+	ACID_NO_EXPORT ALCcontext *GetContext() const { return context; }
 
 	float GetGain(Type type) const;
 	void SetGain(Type type, float volume);
@@ -33,14 +34,14 @@ public:
 	 * Called when a gain value has been modified.
 	 * @return The delegate.
 	 */
-	Delegate<void(Type, float)> &OnGain() { return m_onGain; }
+	Delegate<void(Type, float)> &OnGain() { return onGain; }
 
 private:
-	ALCdevice *m_device = nullptr;
-	ALCcontext *m_context = nullptr;
+	ALCdevice *device = nullptr;
+	ALCcontext *context = nullptr;
 
-	std::map<Type, float> m_gains;
+	std::map<Type, float> gains;
 
-	Delegate<void(Type, float)> m_onGain;
+	Delegate<void(Type, float)> onGain;
 };
 }

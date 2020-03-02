@@ -12,7 +12,8 @@ namespace acid {
 using ZipEntryInfo = mz_zip_archive_file_stat;
 using ZipEntryData = std::vector<std::byte>;
 
-struct ZipEntryMetaData {
+class ACID_EXPORT ZipEntryMetaData {
+public:
 	explicit ZipEntryMetaData(const ZipEntryInfo &info);
 
 	uint32_t index;
@@ -26,7 +27,7 @@ struct ZipEntryMetaData {
 	const time_t time;
 };
 
-class ZipEntry : NonCopyable {
+class ACID_EXPORT ZipEntry : NonCopyable {
 	friend class ZipArchive;
 public:
 	/**
@@ -54,7 +55,7 @@ public:
 
 	virtual ~ZipEntry() = default;
 
-	ZipEntryData GetData() const { return m_entryData; }
+	ZipEntryData GetData() const { return entryData; }
 
 	std::string GetDataAsString() const;
 
@@ -64,8 +65,8 @@ public:
 		for (auto &ch : data)
 			result.push_back(static_cast<std::byte>(ch));
 
-		m_entryData = result;
-		m_isModified = true;
+		entryData = result;
+		isModified = true;
 	}
 
 	void SetData(const ZipEntryData &data);
@@ -79,24 +80,24 @@ public:
 		// TODO: Implement
 	}
 
-	uint32_t GetIndex() const { return m_entryInfo.m_file_index; }
-	uint64_t GetCompressedSize() const { return m_entryInfo.m_comp_size; }
-	uint64_t GetUncompressedSize() const { return m_entryInfo.m_uncomp_size; }
-	bool IsDirectory() const { return m_entryInfo.m_is_directory; }
-	bool IsEncrypted() const { return m_entryInfo.m_is_encrypted; }
-	bool IsSupported() const { return m_entryInfo.m_is_supported; }
-	std::string GetFilename() const { return m_entryInfo.m_filename; }
-	std::string GetComment() const { return m_entryInfo.m_comment; }
-	const time_t &GetTime() const { return m_entryInfo.m_time; }
+	uint32_t GetIndex() const { return entryInfo.m_file_index; }
+	uint64_t GetCompressedSize() const { return entryInfo.m_comp_size; }
+	uint64_t GetUncompressedSize() const { return entryInfo.m_uncomp_size; }
+	bool IsDirectory() const { return entryInfo.m_is_directory; }
+	bool IsEncrypted() const { return entryInfo.m_is_encrypted; }
+	bool IsSupported() const { return entryInfo.m_is_supported; }
+	std::string GetFilename() const { return entryInfo.m_filename; }
+	std::string GetComment() const { return entryInfo.m_comment; }
+	const time_t &GetTime() const { return entryInfo.m_time; }
 
 private:
-	bool IsModified() const { return m_isModified; }
+	bool IsModified() const { return isModified; }
 
 	static uint32_t GetNewIndex(uint32_t latestIndex = 0);
 	static ZipEntryInfo CreateInfo(const std::string &name);
 
-	ZipEntryInfo m_entryInfo = {};
-	ZipEntryData m_entryData;
-	bool m_isModified = false;
+	ZipEntryInfo entryInfo = {};
+	ZipEntryData entryData;
+	bool isModified = false;
 };
 }

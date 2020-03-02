@@ -123,6 +123,7 @@ set(_temp_acid_headers
 		Materials/MaterialDefault.hpp
 		Materials/PipelineMaterial.hpp
 		Maths/Colour.hpp
+		Maths/Colour.inl
 		Maths/ElapsedTime.hpp
 		Maths/Maths.hpp
 		Maths/Matrix2.hpp
@@ -270,6 +271,8 @@ set(_temp_acid_third_party_headers
 		third_party/libspng/spng.h
 		third_party/miniz/miniz.h
 		third_party/msdf/msdf.h
+		third_party/stb/stb_image.h
+		third_party/stb/stb_image_write.h
 		third_party/stb/stb_truetype.h
 		third_party/stb/stb_vorbis.h
 		third_party/tinydng/tiny_dng.h
@@ -498,6 +501,8 @@ set(_temp_acid_third_party_sources
 		third_party/libspng/spng.c
 		third_party/miniz/miniz.c
 		third_party/msdf/msdf.c
+		third_party/stb/stb_image.c
+		third_party/stb/stb_image_write.c
 		third_party/stb/stb_truetype.c
 		third_party/stb/stb_vorbis.c
 		third_party/tinydng/tiny_dng.cpp

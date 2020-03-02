@@ -10,6 +10,7 @@ namespace acid {
  * @brief Component that is used to render a entity as a shadow.
  */
 class ACID_EXPORT ShadowRender : public Component::Registrar<ShadowRender> {
+	inline static const bool Registered = Register("shadowRender");
 public:
 	ShadowRender();
 
@@ -22,9 +23,7 @@ public:
 	friend Node &operator<<(Node &node, const ShadowRender &shadowRender);
 
 private:
-	static bool registered;
-
-	DescriptorsHandler m_descriptorSet;
-	PushHandler m_pushObject;
+	DescriptorsHandler descriptorSet;
+	PushHandler pushObject;
 };
 }

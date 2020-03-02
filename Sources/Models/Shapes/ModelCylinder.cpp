@@ -5,8 +5,6 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelCylinder::registered = Register("cylinder");
-
 std::shared_ptr<ModelCylinder> ModelCylinder::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ModelCylinder>(node))
 		return resource;
@@ -26,65 +24,65 @@ std::shared_ptr<ModelCylinder> ModelCylinder::Create(float radiusBase, float rad
 }
 
 ModelCylinder::ModelCylinder(float radiusBase, float radiusTop, float height, uint32_t slices, uint32_t stacks, bool load) :
-	m_radiusBase(radiusBase),
-	m_radiusTop(radiusTop),
-	m_height(height),
-	m_slices(slices),
-	m_stacks(stacks) {
+	radiusBase(radiusBase),
+	radiusTop(radiusTop),
+	height(height),
+	slices(slices),
+	stacks(stacks) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelCylinder &model) {
-	node["radiusBase"].Get(model.m_radiusBase);
-	node["radiusTop"].Get(model.m_radiusTop);
-	node["height"].Get(model.m_height);
-	node["slices"].Get(model.m_slices);
-	node["stacks"].Get(model.m_stacks);
+	node["radiusBase"].Get(model.radiusBase);
+	node["radiusTop"].Get(model.radiusTop);
+	node["height"].Get(model.height);
+	node["slices"].Get(model.slices);
+	node["stacks"].Get(model.stacks);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelCylinder &model) {
-	node["radiusBase"].Set(model.m_radiusBase);
-	node["radiusTop"].Set(model.m_radiusTop);
-	node["height"].Set(model.m_height);
-	node["slices"].Set(model.m_slices);
-	node["stacks"].Set(model.m_stacks);
+	node["radiusBase"].Set(model.radiusBase);
+	node["radiusTop"].Set(model.radiusTop);
+	node["height"].Set(model.height);
+	node["slices"].Set(model.slices);
+	node["stacks"].Set(model.stacks);
 	return node;
 }
 
 void ModelCylinder::Load() {
-	if (m_radiusBase == 0.0f && m_radiusTop == 0.0f) {
+	if (radiusBase == 0.0f && radiusTop == 0.0f) {
 		return;
 	}
 
 	std::vector<Vertex3d> vertices;
 	std::vector<uint32_t> indices;
-	vertices.reserve((m_slices + 1) * (m_stacks + 1));
-	indices.reserve(m_slices * m_stacks * 6);
+	vertices.reserve((slices + 1) * (stacks + 1));
+	indices.reserve(slices * stacks * 6);
 
-	for (uint32_t i = 0; i < m_slices + 1; i++) {
-		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
-		auto alpha = (i == 0 || i == m_slices) ? 0.0f : iDivSlices * 2.0f * Maths::Pi<float>;
+	for (uint32_t i = 0; i < slices + 1; i++) {
+		auto iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
+		auto alpha = (i == 0 || i == slices) ? 0.0f : iDivSlices * 2.0f * Maths::PI<float>;
 		auto xDir = std::cos(alpha);
 		auto zDir = std::sin(alpha);
 
-		for (uint32_t j = 0; j < m_stacks + 1; j++) {
-			auto jDivStacks = static_cast<float>(j) / static_cast<float>(m_stacks);
-			auto radius = m_radiusBase * (1.0f - jDivStacks) + m_radiusTop * jDivStacks;
+		for (uint32_t j = 0; j < stacks + 1; j++) {
+			auto jDivStacks = static_cast<float>(j) / static_cast<float>(stacks);
+			auto radius = radiusBase * (1.0f - jDivStacks) + radiusTop * jDivStacks;
 
-			Vector3f position(xDir * radius, jDivStacks * m_height - (m_height / 2.0f), zDir * radius);
+			Vector3f position(xDir * radius, jDivStacks * height - (height / 2.0f), zDir * radius);
 			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivStacks);
 			Vector3f normal(xDir, 0.0f, zDir);
 			vertices.emplace_back(Vertex3d(position, uvs, normal));
 		}
 	}
 
-	for (uint32_t i = 0; i < m_slices; i++) {
-		for (uint32_t j = 0; j < m_stacks; j++) {
-			auto first = j + ((m_stacks + 1) * i);
-			auto second = j + ((m_stacks + 1) * (i + 1));
+	for (uint32_t i = 0; i < slices; i++) {
+		for (uint32_t j = 0; j < stacks; j++) {
+			auto first = j + ((stacks + 1) * i);
+			auto second = j + ((stacks + 1) * (i + 1));
 
 			indices.emplace_back(first + 1);
 			indices.emplace_back(second + 1);

@@ -7,13 +7,11 @@
 #include <Uis/Uis.hpp>
 
 namespace test {
-bool PlayerFps::registered = Register("playerFps");
-
-const float WALK_SPEED = 3.1f;
-const float RUN_SPEED = 5.7f;
-const float CROUCH_SPEED = 1.2f;
-const float JUMP_SPEED = 4.1f;
-const float NOCLIP_SPEED = 3.0f;
+constexpr float WALK_SPEED = 3.1f;
+constexpr float RUN_SPEED = 5.7f;
+constexpr float CROUCH_SPEED = 1.2f;
+constexpr float JUMP_SPEED = 4.1f;
+constexpr float NOCLIP_SPEED = 3.0f;
 
 PlayerFps::PlayerFps() {
 }
@@ -34,14 +32,14 @@ void PlayerFps::Update() {
 	Vector3f direction;
 
 	if (!Scenes::Get()->IsPaused()) {
-		direction.m_x = Input::Get()->GetAxis("strafe")->GetAmount();
-		direction.m_z = Input::Get()->GetAxis("forward")->GetAmount();
+		direction.x = Input::Get()->GetAxis("strafe")->GetAmount();
+		direction.z = Input::Get()->GetAxis("forward")->GetAmount();
 
-		if (m_noclipEnabled) {
+		if (noclipEnabled) {
 			if (Input::Get()->GetButton("jump")->IsDown()) {
-				direction.m_y = 1.0f;
+				direction.y = 1.0f;
 			} else if (Input::Get()->GetButton("crouch")->IsDown()) {
-				direction.m_y = -1.0f;
+				direction.y = -1.0f;
 			}
 		} else {
 			if (Input::Get()->GetButton("jump")->WasDown() && character->IsOnGround()) {
@@ -50,32 +48,32 @@ void PlayerFps::Update() {
 		}
 
 		if (Input::Get()->GetButton("noclip")->WasDown()) {
-			m_noclipEnabled = !m_noclipEnabled;
+			noclipEnabled = !noclipEnabled;
 
-			if (m_noclipEnabled) {
+			if (noclipEnabled) {
 				character->SetGravity({});
 				character->SetLinearVelocity({});
 			} else {
 				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
 			}
 
-			Log::Out("Player Noclip: ", std::boolalpha, m_noclipEnabled, '\n');
+			Log::Out("Player Noclip: ", std::boolalpha, noclipEnabled, '\n');
 		}
 	}
 
 	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
 
 	if (auto transform = GetEntity()->GetComponent<Transform>()) {
-		transform->SetLocalRotation({0.0f, cameraRotation.m_y, 0.0f});
+		transform->SetLocalRotation({0.0f, cameraRotation.y, 0.0f});
 	}
 
 	auto walkDirection = direction;
-	walkDirection.m_x = -(direction.m_z * std::sin(cameraRotation.m_y) + direction.m_x * std::cos(cameraRotation.m_y));
-	walkDirection.m_z = direction.m_z * std::cos(cameraRotation.m_y) - direction.m_x * std::sin(cameraRotation.m_y);
+	walkDirection.x = -(direction.z * std::sin(cameraRotation.y) + direction.x * std::cos(cameraRotation.y));
+	walkDirection.z = direction.z * std::cos(cameraRotation.y) - direction.x * std::sin(cameraRotation.y);
 
 	//walkDirection = walkDirection.Normalize();
 	walkDirection *= Input::Get()->GetButton("sprint")->IsDown() ? RUN_SPEED : Input::Get()->GetButton("crouch")->IsDown() ? CROUCH_SPEED : WALK_SPEED;
-	walkDirection *= m_noclipEnabled ? NOCLIP_SPEED : 1.0f;
+	walkDirection *= noclipEnabled ? NOCLIP_SPEED : 1.0f;
 	character->SetWalkDirection(0.02f * walkDirection);
 }
 

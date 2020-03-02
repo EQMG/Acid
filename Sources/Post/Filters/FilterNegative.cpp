@@ -9,14 +9,13 @@ void FilterNegative::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

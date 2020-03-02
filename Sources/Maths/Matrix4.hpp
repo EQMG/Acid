@@ -272,7 +272,7 @@ public:
 	friend Node &operator<<(Node &node, const Matrix4 &matrix);
 	friend std::ostream &operator<<(std::ostream &stream, const Matrix4 &matrix);
 
-	Vector4f m_rows[4];
+	Vector4f rows[4];
 };
 }
 

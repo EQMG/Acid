@@ -10,6 +10,7 @@ namespace acid {
  * @brief Class that represents a skybox material shader.
  */
 class ACID_EXPORT MaterialSkybox : public Material::Registrar<MaterialSkybox> {
+	inline static const bool Registered = Register("skybox");
 public:
 	explicit MaterialSkybox(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);
 
@@ -17,31 +18,29 @@ public:
 	void PushUniforms(UniformHandler &uniformObject, const Transform *transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-	const std::shared_ptr<ImageCube> &GetImage() const { return m_image; }
-	void SetImage(const std::shared_ptr<ImageCube> &image) { m_image = image; }
+	const std::shared_ptr<ImageCube> &GetImage() const { return image; }
+	void SetImage(const std::shared_ptr<ImageCube> &image) { this->image = image; }
 
-	const Colour &GetBaseColour() const { return m_baseColour; }
-	void SetBaseColour(const Colour &baseColour) { m_baseColour = baseColour; }
+	const Colour &GetBaseColour() const { return baseColour; }
+	void SetBaseColour(const Colour &baseColour) { this->baseColour = baseColour; }
 
-	float GetBlend() const { return m_blend; }
-	void SetBlend(float blend) { m_blend = blend; }
+	float GetBlend() const { return blend; }
+	void SetBlend(float blend) { this->blend = blend; }
 
-	const Colour &GetFogColour() const { return m_fogColour; }
-	void SetFogColour(const Colour &fogColour) { m_fogColour = fogColour; }
+	const Colour &GetFogColour() const { return fogColour; }
+	void SetFogColour(const Colour &fogColour) { this->fogColour = fogColour; }
 
-	const Vector2f &GetFogLimits() const { return m_fogLimits; }
-	void SetFogLimits(const Vector2f &fogLimits) { m_fogLimits = fogLimits; }
+	const Vector2f &GetFogLimits() const { return fogLimits; }
+	void SetFogLimits(const Vector2f &fogLimits) { this->fogLimits = fogLimits; }
 
 	friend const Node &operator>>(const Node &node, MaterialSkybox &material);
 	friend Node &operator<<(Node &node, const MaterialSkybox &material);
 
 private:
-	static bool registered;
-
-	std::shared_ptr<ImageCube> m_image;
-	Colour m_baseColour;
-	float m_blend;
-	Colour m_fogColour;
-	Vector2f m_fogLimits;
+	std::shared_ptr<ImageCube> image;
+	Colour baseColour;
+	float blend;
+	Colour fogColour;
+	Vector2f fogLimits;
 };
 }

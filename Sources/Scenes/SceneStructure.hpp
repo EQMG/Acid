@@ -65,7 +65,7 @@ public:
 	 * Gets the size of this structure.
 	 * @return The structures size.
 	 */
-	uint32_t GetSize() const { return static_cast<uint32_t>(m_objects.size()); }
+	uint32_t GetSize() const { return static_cast<uint32_t>(objects.size()); }
 
 	/**
 	 * Gets a set of all objects in the spatial structure.
@@ -94,7 +94,7 @@ public:
 	std::vector<T *> QueryComponents(bool allowDisabled = false) {
 		std::vector<T *> components;
 
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
 			for (const auto &component : (*it)->GetComponents<T>()) {
 				if (component && (component->IsEnabled() || allowDisabled)) {
 					components.emplace_back(component);
@@ -113,7 +113,7 @@ public:
 	 */
 	template<typename T>
 	T *GetComponent(bool allowDisabled = false) {
-		for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
 			auto component = (*it)->GetComponent<T>();
 
 			if (component && (component->IsEnabled() || allowDisabled)) {
@@ -132,6 +132,6 @@ public:
 	bool Contains(Entity *object);
 
 private:
-	std::vector<std::unique_ptr<Entity>> m_objects;
+	std::vector<std::unique_ptr<Entity>> objects;
 };
 }

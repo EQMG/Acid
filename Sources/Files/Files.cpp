@@ -12,46 +12,46 @@ using std::ios_base;
 class FBuffer : public streambuf, NonCopyable {
 public:
 	explicit FBuffer(PHYSFS_File *file, std::size_t bufferSize = 2048) :
-		m_bufferSize(bufferSize),
-		m_file(file) {
-		m_buffer = new char[m_bufferSize];
-		auto end = m_buffer + m_bufferSize;
+		bufferSize(bufferSize),
+		file(file) {
+		buffer = new char[bufferSize];
+		auto end = buffer + bufferSize;
 		setg(end, end, end);
-		setp(m_buffer, end);
+		setp(buffer, end);
 	}
 
 	~FBuffer() {
 		sync();
-		delete[] m_buffer;
+		delete[] buffer;
 	}
 
 private:
 	int_type underflow() override {
-		if (PHYSFS_eof(m_file)) {
+		if (PHYSFS_eof(file)) {
 			return traits_type::eof();
 		}
 
-		auto bytesRead = PHYSFS_readBytes(m_file, m_buffer, static_cast<PHYSFS_uint32>(m_bufferSize));
+		auto bytesRead = PHYSFS_readBytes(file, buffer, static_cast<PHYSFS_uint32>(bufferSize));
 
 		if (bytesRead < 1) {
 			return traits_type::eof();
 		}
 
-		setg(m_buffer, m_buffer, m_buffer + static_cast<size_t>(bytesRead));
+		setg(buffer, buffer, buffer + static_cast<size_t>(bytesRead));
 		return static_cast<int_type>(*gptr());
 	}
 
 	pos_type seekoff(off_type pos, ios_base::seekdir dir, ios_base::openmode mode) override {
 		switch (dir) {
 		case std::ios_base::beg:
-			PHYSFS_seek(m_file, pos);
+			PHYSFS_seek(file, pos);
 			break;
 		case std::ios_base::cur:
 			// Subtract characters currently in buffer from seek position.
-			PHYSFS_seek(m_file, (PHYSFS_tell(m_file) + pos) - (egptr() - gptr()));
+			PHYSFS_seek(file, (PHYSFS_tell(file) + pos) - (egptr() - gptr()));
 			break;
 		case std::ios_base::end:
-			PHYSFS_seek(m_file, PHYSFS_fileLength(m_file) + pos);
+			PHYSFS_seek(file, PHYSFS_fileLength(file) + pos);
 			break;
 		}
 
@@ -60,24 +60,24 @@ private:
 		}
 
 		if (mode & std::ios_base::out) {
-			setp(m_buffer, m_buffer);
+			setp(buffer, buffer);
 		}
 
-		return PHYSFS_tell(m_file);
+		return PHYSFS_tell(file);
 	}
 
 	pos_type seekpos(pos_type pos, std::ios_base::openmode mode) override {
-		PHYSFS_seek(m_file, pos);
+		PHYSFS_seek(file, pos);
 
 		if (mode & std::ios_base::in) {
 			setg(egptr(), egptr(), egptr());
 		}
 
 		if (mode & std::ios_base::out) {
-			setp(m_buffer, m_buffer);
+			setp(buffer, buffer);
 		}
 
-		return PHYSFS_tell(m_file);
+		return PHYSFS_tell(file);
 	}
 
 	int_type overflow(int_type c = traits_type::eof()) override {
@@ -85,12 +85,12 @@ private:
 			return 0; // no-op
 		}
 
-		if (PHYSFS_writeBytes(m_file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase())) < 1) {
+		if (PHYSFS_writeBytes(file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase())) < 1) {
 			return traits_type::eof();
 		}
 
 		if (c != traits_type::eof()) {
-			if (PHYSFS_writeBytes(m_file, &c, 1) < 1) {
+			if (PHYSFS_writeBytes(file, &c, 1) < 1) {
 				return traits_type::eof();
 			}
 		}
@@ -102,10 +102,10 @@ private:
 		return overflow();
 	}
 
-	char *m_buffer;
-	size_t m_bufferSize;
+	char *buffer;
+	size_t bufferSize;
 protected:
-	PHYSFS_File *m_file;
+	PHYSFS_File *file;
 };
 
 BaseFStream::BaseFStream(PHYSFS_File *file) :
@@ -190,7 +190,7 @@ void Files::Update() {
 }
 
 void Files::AddSearchPath(const std::string &path) {
-	if (std::find(m_searchPaths.begin(), m_searchPaths.end(), path) != m_searchPaths.end()) {
+	if (std::find(searchPaths.begin(), searchPaths.end(), path) != searchPaths.end()) {
 		return;
 	}
 
@@ -199,13 +199,13 @@ void Files::AddSearchPath(const std::string &path) {
 		return;
 	}
 
-	m_searchPaths.emplace_back(path);
+	searchPaths.emplace_back(path);
 }
 
 void Files::RemoveSearchPath(const std::string &path) {
-	auto it = std::find(m_searchPaths.begin(), m_searchPaths.end(), path);
+	auto it = std::find(searchPaths.begin(), searchPaths.end(), path);
 
-	if (it == m_searchPaths.end()) {
+	if (it == searchPaths.end()) {
 		return;
 	}
 
@@ -214,17 +214,17 @@ void Files::RemoveSearchPath(const std::string &path) {
 		return;
 	}
 
-	m_searchPaths.erase(it);
+	searchPaths.erase(it);
 }
 
 void Files::ClearSearchPath() {
-	for (const auto &searchPath : m_searchPaths) {
+	for (const auto &searchPath : searchPaths) {
 		if (PHYSFS_unmount(searchPath.c_str()) == 0) {
 			Log::Warning("Failed to unmount path ", searchPath, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
 		}
 	}
 
-	m_searchPaths.clear();
+	searchPaths.clear();
 }
 
 bool Files::ExistsInPath(const std::filesystem::path &path) {
@@ -295,9 +295,7 @@ std::vector<std::string> Files::FilesInPath(const std::filesystem::path &path, b
 				auto filesInFound = FilesInPath(*i, recursive);
 				files.insert(result.end(), filesInFound.begin(), filesInFound.end());
 			}
-		}
-		else
-		{*/
+		} else {*/
 		files.emplace_back(*i);
 		//}
 	}
@@ -319,7 +317,7 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t) {
 	auto sb = is.rdbuf();
 
 	if (se) {
-		for (;;) {
+		while (true) {
 			auto c = sb->sbumpc();
 
 			switch (c) {

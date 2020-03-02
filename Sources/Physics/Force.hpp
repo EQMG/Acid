@@ -26,21 +26,21 @@ public:
 
 	void Update(const Time &delta);
 
-	bool IsExpired() const { return !m_neverExpires && m_timeLeft.AsMicroseconds() <= 0.0f; }
+	bool IsExpired() const { return !neverExpires && timeLeft.AsMicroseconds() <= 0.0f; }
 
-	const Vector3f &GetForce() const { return m_force; }
-	void SetForce(const Vector3f &force) { m_force = force; }
+	const Vector3f &GetForce() const { return force; }
+	void SetForce(const Vector3f &force) { this->force = force; }
 
-	const Time &GetTimeLeft() const { return m_timeLeft; }
-	void SetTimeLeft(const Time &timeLeft) { m_timeLeft = timeLeft; }
+	const Time &GetTimeLeft() const { return timeLeft; }
+	void SetTimeLeft(const Time &timeLeft) { this->timeLeft = timeLeft; }
 
-	const Vector3f &GetPosition() const { return m_position; }
-	void SetPosition(const Vector3f &position) { m_position = position; }
+	const Vector3f &GetPosition() const { return position; }
+	void SetPosition(const Vector3f &position) { this->position = position; }
 
 private:
-	Vector3f m_force;
-	bool m_neverExpires;
-	Time m_timeLeft;
-	Vector3f m_position;
+	Vector3f force;
+	bool neverExpires;
+	Time timeLeft;
+	Vector3f position;
 };
 }

@@ -13,8 +13,8 @@ public:
 	void UpdateObject() override;
 
 private:
-	Text m_textFrameTime;
-	Text m_textFps;
-	Text m_textUps;
+	Text textFrameTime;
+	Text textFps;
+	Text textUps;
 };
 }

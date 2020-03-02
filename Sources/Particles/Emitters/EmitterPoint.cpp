@@ -3,22 +3,20 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool EmitterPoint::registered = Register("point");
-
 EmitterPoint::EmitterPoint() {
 }
 
 Vector3f EmitterPoint::GeneratePosition() const {
-	return m_point;
+	return point;
 }
 
 const Node &operator>>(const Node &node, EmitterPoint &emitter) {
-	node["point"].Get(emitter.m_point);
+	node["point"].Get(emitter.point);
 	return node;
 }
 
 Node &operator<<(Node &node, const EmitterPoint &emitter) {
-	node["point"].Set(emitter.m_point);
+	node["point"].Set(emitter.point);
 	return node;
 }
 }

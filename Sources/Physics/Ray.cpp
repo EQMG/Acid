@@ -2,57 +2,57 @@
 
 namespace acid {
 Ray::Ray(bool useMouse, const Vector2f &screenStart) :
-	m_useMouse(useMouse),
-	m_screenStart(screenStart) {
+	useMouse(useMouse),
+	screenStart(screenStart) {
 }
 
 void Ray::Update(const Vector3f &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) {
-	m_origin = currentPosition;
+	origin = currentPosition;
 
-	if (m_useMouse) {
-		UpdateNormalizedDeviceCoordinates(mousePosition.m_x, mousePosition.m_y);
+	if (useMouse) {
+		UpdateNormalizedDeviceCoordinates(mousePosition.x, mousePosition.y);
 	} else {
-		m_normalizedCoords = m_screenStart;
+		normalizedCoords = screenStart;
 	}
 
-	m_viewMatrix = viewMatrix;
-	m_projectionMatrix = projectionMatrix;
-	m_clipCoords = {m_normalizedCoords.m_x, m_normalizedCoords.m_y, -1.0f};
+	this->viewMatrix = viewMatrix;
+	this->projectionMatrix = projectionMatrix;
+	clipCoords = {normalizedCoords.x, normalizedCoords.y, -1.0f};
 	UpdateEyeCoords();
 	UpdateWorldCoords();
 }
 
 Vector3f Ray::GetPointOnRay(float distance) const {
-	auto vector = distance * m_currentRay;
-	return m_origin + vector;
+	auto vector = distance * currentRay;
+	return origin + vector;
 }
 
 Vector3f Ray::ConvertToScreenSpace(const Vector3f &position) const {
 	Vector4f coords(position);
-	coords = m_viewMatrix.Transform(coords);
-	coords = m_projectionMatrix.Transform(coords);
+	coords = viewMatrix.Transform(coords);
+	coords = projectionMatrix.Transform(coords);
 
-	if (coords.m_w < 0.0f) {
+	if (coords.w < 0.0f) {
 		return {};
 	}
 
-	return {(coords.m_x / coords.m_w + 1.0f) / 2.0f, 1.0f - (coords.m_y / coords.m_w + 1.0f) / 2.0f, coords.m_z};
+	return {(coords.x / coords.w + 1.0f) / 2.0f, 1.0f - (coords.y / coords.w + 1.0f) / 2.0f, coords.z};
 }
 
 void Ray::UpdateNormalizedDeviceCoordinates(float mouseX, float mouseY) {
-	m_normalizedCoords.m_x = (2.0f * mouseX) - 1.0f;
-	m_normalizedCoords.m_y = (2.0f * mouseY) - 1.0f;
+	normalizedCoords.x = (2.0f * mouseX) - 1.0f;
+	normalizedCoords.y = (2.0f * mouseY) - 1.0f;
 }
 
 void Ray::UpdateEyeCoords() {
-	m_invertedProjection = m_projectionMatrix.Inverse();
-	m_eyeCoords = m_invertedProjection.Transform(m_clipCoords);
-	m_eyeCoords = {m_eyeCoords.m_x, m_eyeCoords.m_y, -1.0f, 0.0f};
+	invertedProjection = projectionMatrix.Inverse();
+	eyeCoords = invertedProjection.Transform(clipCoords);
+	eyeCoords = {eyeCoords.x, eyeCoords.y, -1.0f, 0.0f};
 }
 
 void Ray::UpdateWorldCoords() {
-	m_invertedView = m_viewMatrix.Inverse();
-	m_rayWorld = m_invertedView.Transform(m_eyeCoords);
-	m_currentRay = {m_rayWorld};
+	invertedView = viewMatrix.Inverse();
+	rayWorld = invertedView.Transform(eyeCoords);
+	currentRay = {rayWorld};
 }
 }

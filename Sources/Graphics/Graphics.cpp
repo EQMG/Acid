@@ -8,11 +8,11 @@
 
 namespace acid {
 Graphics::Graphics() :
-	m_elapsedPurge(5s),
-	m_instance(std::make_unique<Instance>()),
-	m_physicalDevice(std::make_unique<PhysicalDevice>(m_instance.get())),
-	m_surface(std::make_unique<Surface>(m_instance.get(), m_physicalDevice.get())),
-	m_logicalDevice(std::make_unique<LogicalDevice>(m_instance.get(), m_physicalDevice.get(), m_surface.get())) {
+	elapsedPurge(5s),
+	instance(std::make_unique<Instance>()),
+	physicalDevice(std::make_unique<PhysicalDevice>(instance.get())),
+	surface(std::make_unique<Surface>(instance.get(), physicalDevice.get())),
+	logicalDevice(std::make_unique<LogicalDevice>(instance.get(), physicalDevice.get(), surface.get())) {
 	CreatePipelineCache();
 	
 	if (!glslang::InitializeProcess())
@@ -20,35 +20,35 @@ Graphics::Graphics() :
 }
 
 Graphics::~Graphics() {
-	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
+	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 	glslang::FinalizeProcess();
 
-	vkDestroyPipelineCache(*m_logicalDevice, m_pipelineCache, nullptr);
+	vkDestroyPipelineCache(*logicalDevice, pipelineCache, nullptr);
 
-	for (std::size_t i = 0; i < m_flightFences.size(); i++) {
-		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
-		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
-		vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
+	for (std::size_t i = 0; i < flightFences.size(); i++) {
+		vkDestroyFence(*logicalDevice, flightFences[i], nullptr);
+		vkDestroySemaphore(*logicalDevice, renderCompletes[i], nullptr);
+		vkDestroySemaphore(*logicalDevice, presentCompletes[i], nullptr);
 	}
 }
 
 void Graphics::Update() {
-	if (!m_renderer || Window::Get()->IsIconified()) {
+	if (!renderer || Window::Get()->IsIconified()) {
 		return;
 	}
 
-	if (!m_renderer->m_started) {
+	if (!renderer->started) {
 		ResetRenderStages();
-		m_renderer->Start();
-		m_renderer->m_started = true;
+		renderer->Start();
+		renderer->started = true;
 	}
 
-	m_renderer->Update();
+	renderer->Update();
 
-	auto acquireResult = m_swapchain->AcquireNextImage(m_presentCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
+	auto acquireResult = swapchain->AcquireNextImage(presentCompletes[currentFrame], flightFences[currentFrame]);
 
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR) {
 		RecreateSwapchain();
@@ -62,20 +62,20 @@ void Graphics::Update() {
 
 	Pipeline::Stage stage;
 
-	for (auto &renderStage : m_renderer->m_renderStages) {
+	for (auto &renderStage : renderer->renderStages) {
 		renderStage->Update();
 
 		if (!StartRenderpass(*renderStage)) {
 			return;
 		}
 
-		auto &commandBuffer = m_commandBuffers[m_swapchain->GetActiveImageIndex()];
+		auto &commandBuffer = commandBuffers[swapchain->GetActiveImageIndex()];
 		
 		for (const auto &subpass : renderStage->GetSubpasses()) {
 			stage.second = subpass.GetBinding();
 
 			// Renders subpass subrender pipelines.
-			m_renderer->m_subrenderHolder.RenderStage(stage, *commandBuffer);
+			renderer->subrenderHolder.RenderStage(stage, *commandBuffer);
 
 			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding()) {
 				vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
@@ -87,10 +87,10 @@ void Graphics::Update() {
 	}
 
 	// Purges unused command pools.
-	if (m_elapsedPurge.GetElapsed() != 0) {
-		for (auto it = m_commandPools.begin(); it != m_commandPools.end();) {
+	if (elapsedPurge.GetElapsed() != 0) {
+		for (auto it = commandPools.begin(); it != commandPools.end();) {
 			if ((*it).second.use_count() <= 1) {
-				it = m_commandPools.erase(it);
+				it = commandPools.erase(it);
 				continue;
 			}
 
@@ -173,7 +173,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	auto supportsBlit = Image::CopyImage(m_swapchain->GetActiveImage(), dstImage, dstImageMemory, m_surface->GetFormat().format, {size.m_x, size.m_y, 1},
+	auto supportsBlit = Image::CopyImage(swapchain->GetActiveImage(), dstImage, dstImageMemory, surface->GetFormat().format, {size.x, size.y, 1},
 		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR, 0, 0);
 
 	// Get layout of the image (including row pitch).
@@ -183,18 +183,18 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	imageSubresource.arrayLayer = 0;
 
 	VkSubresourceLayout dstSubresourceLayout;
-	vkGetImageSubresourceLayout(*m_logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
+	vkGetImageSubresourceLayout(*logicalDevice, dstImage, &imageSubresource, &dstSubresourceLayout);
 
 	Bitmap bitmap(std::make_unique<uint8_t[]>(dstSubresourceLayout.size), size);
 
 	void *data;
-	vkMapMemory(*m_logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
+	vkMapMemory(*logicalDevice, dstImageMemory, dstSubresourceLayout.offset, dstSubresourceLayout.size, 0, &data);
 	std::memcpy(bitmap.GetData().get(), data, static_cast<size_t>(dstSubresourceLayout.size));
-	vkUnmapMemory(*m_logicalDevice, dstImageMemory);
+	vkUnmapMemory(*logicalDevice, dstImageMemory);
 
 	// Frees temp image and memory.
-	vkFreeMemory(*m_logicalDevice, dstImageMemory, nullptr);
-	vkDestroyImage(*m_logicalDevice, dstImage, nullptr);
+	vkFreeMemory(*logicalDevice, dstImageMemory, nullptr);
+	vkDestroyImage(*logicalDevice, dstImage, nullptr);
 
 	// Writes the screenshot bitmap to the file.
 	bitmap.Write(filename);
@@ -205,15 +205,15 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 }
 
 RenderStage *Graphics::GetRenderStage(uint32_t index) const {
-	if (!m_renderer)
+	if (!renderer)
 		return nullptr;
-	return m_renderer->GetRenderStage(index);
+	return renderer->GetRenderStage(index);
 }
 
 const Descriptor *Graphics::GetAttachment(const std::string &name) const {
-	auto it = m_attachments.find(name);
+	auto it = attachments.find(name);
 
-	if (it == m_attachments.end()) {
+	if (it == attachments.end()) {
 		return nullptr;
 	}
 
@@ -221,59 +221,59 @@ const Descriptor *Graphics::GetAttachment(const std::string &name) const {
 }
 
 const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId) {
-	auto it = m_commandPools.find(threadId);
+	auto it = commandPools.find(threadId);
 
-	if (it != m_commandPools.end()) {
+	if (it != commandPools.end()) {
 		return it->second;
 	}
 
 	// TODO: Cleanup and fix crashes
-	return m_commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
+	return commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
 }
 
 void Graphics::CreatePipelineCache() {
 	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 	pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
-	CheckVk(vkCreatePipelineCache(*m_logicalDevice, &pipelineCacheCreateInfo, nullptr, &m_pipelineCache));
+	CheckVk(vkCreatePipelineCache(*logicalDevice, &pipelineCacheCreateInfo, nullptr, &pipelineCache));
 }
 
 void Graphics::ResetRenderStages() {
 	RecreateSwapchain();
 
-	if (m_flightFences.size() != m_swapchain->GetImageCount()) {
+	if (flightFences.size() != swapchain->GetImageCount()) {
 		RecreateCommandBuffers();
 	}
 
-	for (const auto &renderStage : m_renderer->m_renderStages) {
-		renderStage->Rebuild(*m_swapchain);
+	for (const auto &renderStage : renderer->renderStages) {
+		renderStage->Rebuild(*swapchain);
 	}
 
 	RecreateAttachmentsMap();
 }
 
 void Graphics::RecreateSwapchain() {
-	vkDeviceWaitIdle(*m_logicalDevice);
+	vkDeviceWaitIdle(*logicalDevice);
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
+	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
 #if defined(ACID_DEBUG)
-	if (m_swapchain)
-		Log::Out("Recreating swapchain old (", m_swapchain->GetExtent().width, ", ", m_swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
+	if (swapchain)
+		Log::Out("Recreating swapchain old (", swapchain->GetExtent().width, ", ", swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
-	m_swapchain = std::make_unique<Swapchain>(displayExtent, m_swapchain.get());
+	swapchain = std::make_unique<Swapchain>(displayExtent, swapchain.get());
 	RecreateCommandBuffers();
 }
 
 void Graphics::RecreateCommandBuffers() {
-	for (std::size_t i = 0; i < m_flightFences.size(); i++) {
-		vkDestroyFence(*m_logicalDevice, m_flightFences[i], nullptr);
-		vkDestroySemaphore(*m_logicalDevice, m_renderCompletes[i], nullptr);
-		vkDestroySemaphore(*m_logicalDevice, m_presentCompletes[i], nullptr);
+	for (std::size_t i = 0; i < flightFences.size(); i++) {
+		vkDestroyFence(*logicalDevice, flightFences[i], nullptr);
+		vkDestroySemaphore(*logicalDevice, renderCompletes[i], nullptr);
+		vkDestroySemaphore(*logicalDevice, presentCompletes[i], nullptr);
 	}
 
-	m_presentCompletes.resize(m_swapchain->GetImageCount());
-	m_renderCompletes.resize(m_swapchain->GetImageCount());
-	m_flightFences.resize(m_swapchain->GetImageCount());
-	m_commandBuffers.resize(m_swapchain->GetImageCount());
+	presentCompletes.resize(swapchain->GetImageCount());
+	renderCompletes.resize(swapchain->GetImageCount());
+	flightFences.resize(swapchain->GetImageCount());
+	commandBuffers.resize(swapchain->GetImageCount());
 
 	VkSemaphoreCreateInfo semaphoreCreateInfo = {};
 	semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -282,37 +282,37 @@ void Graphics::RecreateCommandBuffers() {
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 	fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-	for (std::size_t i = 0; i < m_flightFences.size(); i++) {
-		CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_presentCompletes[i]));
+	for (std::size_t i = 0; i < flightFences.size(); i++) {
+		CheckVk(vkCreateSemaphore(*logicalDevice, &semaphoreCreateInfo, nullptr, &presentCompletes[i]));
 
-		CheckVk(vkCreateSemaphore(*m_logicalDevice, &semaphoreCreateInfo, nullptr, &m_renderCompletes[i]));
+		CheckVk(vkCreateSemaphore(*logicalDevice, &semaphoreCreateInfo, nullptr, &renderCompletes[i]));
 
-		CheckVk(vkCreateFence(*m_logicalDevice, &fenceCreateInfo, nullptr, &m_flightFences[i]));
+		CheckVk(vkCreateFence(*logicalDevice, &fenceCreateInfo, nullptr, &flightFences[i]));
 
-		m_commandBuffers[i] = std::make_unique<CommandBuffer>(false);
+		commandBuffers[i] = std::make_unique<CommandBuffer>(false);
 	}
 }
 
 void Graphics::RecreatePass(RenderStage &renderStage) {
-	auto graphicsQueue = m_logicalDevice->GetGraphicsQueue();
+	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().m_x, Window::Get()->GetSize().m_y};
+	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-	if (renderStage.HasSwapchain() && (m_framebufferResized || !m_swapchain->IsSameExtent(displayExtent))) {
+	if (renderStage.HasSwapchain() && (framebufferResized || !swapchain->IsSameExtent(displayExtent))) {
 		RecreateSwapchain();
 	}
 
-	renderStage.Rebuild(*m_swapchain);
+	renderStage.Rebuild(*swapchain);
 	RecreateAttachmentsMap(); // TODO: Maybe not recreate on a single change.
 }
 
 void Graphics::RecreateAttachmentsMap() {
-	m_attachments.clear();
+	attachments.clear();
 
-	for (const auto &renderStage : m_renderer->m_renderStages) {
-		m_attachments.insert(renderStage->m_descriptors.begin(), renderStage->m_descriptors.end());
+	for (const auto &renderStage : renderer->renderStages) {
+		attachments.insert(renderStage->descriptors.begin(), renderStage->descriptors.end());
 	}
 }
 
@@ -322,14 +322,14 @@ bool Graphics::StartRenderpass(RenderStage &renderStage) {
 		return false;
 	}
 
-	auto &commandBuffer = m_commandBuffers[m_swapchain->GetActiveImageIndex()];
+	auto &commandBuffer = commandBuffers[swapchain->GetActiveImageIndex()];
 	
 	if (!commandBuffer->IsRunning())
 		commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 
 	VkRect2D renderArea = {};
-	renderArea.offset = {renderStage.GetRenderArea().GetOffset().m_x, renderStage.GetRenderArea().GetOffset().m_y};
-	renderArea.extent = {renderStage.GetRenderArea().GetExtent().m_x, renderStage.GetRenderArea().GetExtent().m_y};
+	renderArea.offset = {renderStage.GetRenderArea().GetOffset().x, renderStage.GetRenderArea().GetOffset().y};
+	renderArea.extent = {renderStage.GetRenderArea().GetExtent().x, renderStage.GetRenderArea().GetExtent().y};
 
 	VkViewport viewport = {};
 	viewport.x = 0.0f;
@@ -350,7 +350,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage) {
 	VkRenderPassBeginInfo renderPassBeginInfo = {};
 	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	renderPassBeginInfo.renderPass = *renderStage.GetRenderpass();
-	renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(m_swapchain->GetActiveImageIndex());
+	renderPassBeginInfo.framebuffer = renderStage.GetActiveFramebuffer(swapchain->GetActiveImageIndex());
 	renderPassBeginInfo.renderArea = renderArea;
 	renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 	renderPassBeginInfo.pClearValues = clearValues.data();
@@ -360,8 +360,8 @@ bool Graphics::StartRenderpass(RenderStage &renderStage) {
 }
 
 void Graphics::EndRenderpass(RenderStage &renderStage) {
-	auto presentQueue = m_logicalDevice->GetPresentQueue();
-	auto &commandBuffer = m_commandBuffers[m_swapchain->GetActiveImageIndex()];
+	auto presentQueue = logicalDevice->GetPresentQueue();
+	auto &commandBuffer = commandBuffers[swapchain->GetActiveImageIndex()];
 
 	vkCmdEndRenderPass(*commandBuffer);
 
@@ -369,17 +369,17 @@ void Graphics::EndRenderpass(RenderStage &renderStage) {
 		return;
 
 	commandBuffer->End();
-	commandBuffer->Submit(m_presentCompletes[m_currentFrame], m_renderCompletes[m_currentFrame], m_flightFences[m_currentFrame]);
+	commandBuffer->Submit(presentCompletes[currentFrame], renderCompletes[currentFrame], flightFences[currentFrame]);
 
-	auto presentResult = m_swapchain->QueuePresent(presentQueue, m_renderCompletes[m_currentFrame]);
-	if (presentResult == VK_ERROR_OUT_OF_DATE_KHR || presentResult == VK_SUBOPTIMAL_KHR) { // || m_framebufferResized
-		m_framebufferResized = true; // false
+	auto presentResult = swapchain->QueuePresent(presentQueue, renderCompletes[currentFrame]);
+	if (presentResult == VK_ERROR_OUT_OF_DATE_KHR || presentResult == VK_SUBOPTIMAL_KHR) { // || framebufferResized
+		framebufferResized = true; // false
 		//RecreateSwapchain();
 	} else if (presentResult != VK_SUCCESS) {
 		CheckVk(presentResult);
 		Log::Error("Failed to present swap chain image!\n");
 	}
 
-	m_currentFrame = (m_currentFrame + 1) % m_swapchain->GetImageCount();
+	currentFrame = (currentFrame + 1) % swapchain->GetImageCount();
 }
 }

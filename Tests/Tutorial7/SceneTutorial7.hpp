@@ -9,7 +9,7 @@ using namespace acid;
  */
 class FixedCamera : public Camera {
 public:
-	void SetPosition(Vector3f position) { m_position = position; }
+	void SetPosition(Vector3f position) { this->position = position; }
 
 	void LookAt(Vector3f pos, Vector3f up);
 };

@@ -9,6 +9,7 @@ namespace acid {
  * @brief Component that represents a point light.
  */
 class ACID_EXPORT Light : public Component::Registrar<Light> {
+	inline static const bool Registered = Register("light");
 public:
 	/**
 	 * Creates a new point light.
@@ -20,20 +21,18 @@ public:
 	void Start() override;
 	void Update() override;
 
-	const Colour &GetColour() const { return m_colour; }
-	void SetColour(const Colour &colour) { m_colour = colour; }
+	const Colour &GetColour() const { return colour; }
+	void SetColour(const Colour &colour) { this->colour = colour; }
 
-	float GetRadius() const { return m_radius; }
-	void SetRadius(float radius) { m_radius = radius; }
+	float GetRadius() const { return radius; }
+	void SetRadius(float radius) { this->radius = radius; }
 
 	friend const Node &operator>>(const Node &node, Light &light);
 	friend Node &operator<<(Node &node, const Light &light);
 
 private:
-	static bool registered;
-
-	Colour m_colour;
-	Vector3f m_position;
-	float m_radius;
+	Colour colour;
+	Vector3f position;
+	float radius;
 };
 }

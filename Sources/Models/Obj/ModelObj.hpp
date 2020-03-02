@@ -7,6 +7,7 @@ namespace acid {
  * @brief Resource that represents a OBJ model.
  */
 class ACID_EXPORT ModelObj : public Model::Registrar<ModelObj> {
+	inline static const bool Registered = Register("obj", ".obj");;
 public:
 	/**
 	 * Creates a new OBJ model, or finds one with the same values.
@@ -35,8 +36,6 @@ public:
 private:
 	void Load();
 	
-	static bool registered;
-
-	std::filesystem::path m_filename;
+	std::filesystem::path filename;
 };
 }

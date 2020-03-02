@@ -11,15 +11,13 @@ class ACID_EXPORT Colour {
 public:
 	// In order of how bits are mapped [24, 16, 8, 0xFF].
 	enum class Type {
-		RGBA,
-		ARGB,
-		RGB
+		RGBA, ARGB, RGB
 	};
 
 	/**
 	 * Constructor for Colour.
 	 */
-	Colour() = default;
+	constexpr Colour() = default;
 
 	/**
 	 * Constructor for Colour.
@@ -28,14 +26,14 @@ public:
 	 * @param b The new B value.
 	 * @param a The new A value.
 	 */
-	Colour(float r, float g, float b, float a = 1.0f);
+	constexpr Colour(float r, float g, float b, float a = 1.0f);
 
 	/**
 	 * Constructor for Colour.
 	 * @param i The integer value.
 	 * @param type The order components of colour are packed.
 	 */
-	Colour(uint32_t i, Type type = Type::RGB);
+	constexpr Colour(uint32_t i, Type type = Type::RGB);
 	
 	/**
 	 * Constructor for Colour.
@@ -49,35 +47,35 @@ public:
 	 * @param other The other colour.
 	 * @return The resultant colour.
 	 */
-	Colour Add(const Colour &other) const;
+	constexpr Colour Add(const Colour &other) const;
 
 	/**
 	 * Subtracts this colour to another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
 	 */
-	Colour Subtract(const Colour &other) const;
+	constexpr Colour Subtract(const Colour &other) const;
 
 	/**
 	 * Multiplies this colour with another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
 	 */
-	Colour Multiply(const Colour &other) const;
+	constexpr Colour Multiply(const Colour &other) const;
 
 	/**
 	 * Divides this colour by another colour.
 	 * @param other The other colour.
 	 * @return The resultant colour.
 	 */
-	Colour Divide(const Colour &other) const;
+	constexpr Colour Divide(const Colour &other) const;
 
 	/**
 	 * Scales this colour by a scalar.
 	 * @param scalar The scalar value.
 	 * @return The scaled colour.
 	 */
-	Colour Scale(float scalar) const;
+	constexpr Colour Scale(float scalar) const;
 
 	/**
 	 * Calculates the linear interpolation between this colour and another colour.
@@ -85,7 +83,7 @@ public:
 	 * @param progression The progression.
 	 * @return Left lerp right.
 	 */
-	Colour Lerp(const Colour &other, float progression) const;
+	constexpr Colour Lerp(const Colour &other, float progression) const;
 
 	/**
 	 * Normalizes this colour.
@@ -97,7 +95,7 @@ public:
 	 * Gets the length squared of this colour.
 	 * @return The length squared.
 	 */
-	float LengthSquared() const;
+	constexpr float LengthSquared() const;
 
 	/**
 	 * Gets the length of this colour.
@@ -111,7 +109,7 @@ public:
 	 * @param rate The rate to go from current to the target.
 	 * @return The changed colour.
 	 */
-	Colour SmoothDamp(const Colour &target, const Colour &rate) const;
+	constexpr Colour SmoothDamp(const Colour &target, const Colour &rate) const;
 
 	/**
 	 * Gets a colour representing the unit value of this colour.
@@ -124,7 +122,7 @@ public:
 	 * @param type The order components of colour are packed.
 	 * @return The packed integer.
 	 */
-	uint32_t GetInt(Type type = Type::RGBA) const;
+	constexpr uint32_t GetInt(Type type = Type::RGBA) const;
 	
 	/**
 	 * Gets the hex code from this colour.
@@ -132,33 +130,33 @@ public:
 	 */
 	std::string GetHex() const;
 
-	float operator[](uint32_t index) const;
-	float &operator[](uint32_t index);
+	constexpr float operator[](uint32_t index) const;
+	constexpr float &operator[](uint32_t index);
 
-	bool operator==(const Colour &other) const;
-	bool operator!=(const Colour &other) const;
+	constexpr bool operator==(const Colour &other) const;
+	constexpr bool operator!=(const Colour &other) const;
 
-	friend Colour operator+(const Colour &left, const Colour &right);
-	friend Colour operator-(const Colour &left, const Colour &right);
-	friend Colour operator*(const Colour &left, const Colour &right);
-	friend Colour operator/(const Colour &left, const Colour &right);
-	friend Colour operator+(float value, const Colour &left);
-	friend Colour operator-(float value, const Colour &left);
-	friend Colour operator*(float value, const Colour &left);
-	friend Colour operator/(float value, const Colour &left);
-	friend Colour operator+(const Colour &left, float value);
-	friend Colour operator-(const Colour &left, float value);
-	friend Colour operator*(const Colour &left, float value);
-	friend Colour operator/(const Colour &left, float value);
+	friend constexpr Colour operator+(const Colour &left, const Colour &right);
+	friend constexpr Colour operator-(const Colour &left, const Colour &right);
+	friend constexpr Colour operator*(const Colour &left, const Colour &right);
+	friend constexpr Colour operator/(const Colour &left, const Colour &right);
+	friend constexpr Colour operator+(float value, const Colour &left);
+	friend constexpr Colour operator-(float value, const Colour &left);
+	friend constexpr Colour operator*(float value, const Colour &left);
+	friend constexpr Colour operator/(float value, const Colour &left);
+	friend constexpr Colour operator+(const Colour &left, float value);
+	friend constexpr Colour operator-(const Colour &left, float value);
+	friend constexpr Colour operator*(const Colour &left, float value);
+	friend constexpr Colour operator/(const Colour &left, float value);
 
-	Colour &operator+=(const Colour &other);
-	Colour &operator-=(const Colour &other);
-	Colour &operator*=(const Colour &other);
-	Colour &operator/=(const Colour &other);
-	Colour &operator+=(float value);
-	Colour &operator-=(float value);
-	Colour &operator*=(float value);
-	Colour &operator/=(float value);
+	constexpr Colour &operator+=(const Colour &other);
+	constexpr Colour &operator-=(const Colour &other);
+	constexpr Colour &operator*=(const Colour &other);
+	constexpr Colour &operator/=(const Colour &other);
+	constexpr Colour &operator+=(float value);
+	constexpr Colour &operator-=(float value);
+	constexpr Colour &operator*=(float value);
+	constexpr Colour &operator/=(float value);
 
 	friend const Node &operator>>(const Node &node, Colour &colour);
 	friend Node &operator<<(Node &node, const Colour &colour);
@@ -182,20 +180,8 @@ public:
 	static const Colour Purple;
 	static const Colour Fuchsia;
 
-	float m_r = 0.0f, m_g = 0.0f, m_b = 0.0f, m_a = 1.0f;
+	float r = 0.0f, g = 0.0f, b = 0.0f, a = 1.0f;
 };
 }
 
-namespace std {
-template<>
-struct hash<acid::Colour> {
-	size_t operator()(const acid::Colour &colour) const {
-		size_t seed = 0;
-		acid::Maths::HashCombine(seed, colour.m_r);
-		acid::Maths::HashCombine(seed, colour.m_g);
-		acid::Maths::HashCombine(seed, colour.m_b);
-		acid::Maths::HashCombine(seed, colour.m_a);
-		return seed;
-	}
-};
-}
+#include "Colour.inl"

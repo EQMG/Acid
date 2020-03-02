@@ -16,19 +16,18 @@ namespace test {
 class Plugins : public Module::Registrar<Plugins, Module::Stage::Always>, public Observer {
 public:
 	Plugins();
-
 	~Plugins();
 
 	void Update() override;
 
 private:
-	std::filesystem::path m_loadedPath;
-	FileObserver m_fileObserver;
-	std::unique_ptr<cr_plugin> m_plugin;
-	bool m_update = true;
+	std::filesystem::path loadedPath;
+	FileObserver fileObserver;
+	std::unique_ptr<cr_plugin> plugin;
+	bool update = true;
 
-	//Panels m_panels;
+	//Panels panels;
 
-	ButtonKeyboard m_buttonReload;
+	ButtonKeyboard buttonReload;
 };
 }

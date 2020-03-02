@@ -7,78 +7,78 @@
 namespace acid {
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &a):
-	m_x(a),
-	m_y(a),
-	m_z(a),
-	m_w(a) {
+	x(a),
+	y(a),
+	z(a),
+	w(a) {
 }
 
 template<typename T>
 constexpr Vector4<T>::Vector4(const T &x, const T &y, const T &z, const T &w):
-	m_x(x),
-	m_y(y),
-	m_z(z),
-	m_w(w) {
+	x(x),
+	y(y),
+	z(z),
+	w(w) {
 }
 
 template<typename T>
 template<typename K, typename J, typename H, typename F>
 constexpr Vector4<T>::Vector4(const K &x, const J &y, const H &z, const F &w) :
-	m_x(static_cast<T>(x)),
-	m_y(static_cast<T>(y)),
-	m_z(static_cast<T>(z)),
-	m_w(static_cast<T>(w)) {
+	x(static_cast<T>(x)),
+	y(static_cast<T>(y)),
+	z(static_cast<T>(z)),
+	w(static_cast<T>(w)) {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector4<T>::Vector4(const Vector2<K> &left, const Vector2<J> &right):
-	m_x(static_cast<T>(left.m_x)),
-	m_y(static_cast<T>(left.m_y)),
-	m_z(static_cast<T>(right.m_x)),
-	m_w(static_cast<T>(right.m_y)) {
+	x(static_cast<T>(left.x)),
+	y(static_cast<T>(left.y)),
+	z(static_cast<T>(right.x)),
+	w(static_cast<T>(right.y)) {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector4<T>::Vector4(const Vector3<K> &source, const J &w):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)),
-	m_z(static_cast<T>(source.m_z)),
-	m_w(static_cast<T>(w)) {
+	x(static_cast<T>(source.x)),
+	y(static_cast<T>(source.y)),
+	z(static_cast<T>(source.z)),
+	w(static_cast<T>(w)) {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector4<T>::Vector4(const Vector4<K> &source):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)),
-	m_z(static_cast<T>(source.m_z)),
-	m_w(static_cast<T>(source.m_w)) {
+	x(static_cast<T>(source.x)),
+	y(static_cast<T>(source.y)),
+	z(static_cast<T>(source.z)),
+	w(static_cast<T>(source.w)) {
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Add(const Vector4<K> &other) const {
-	return Vector4<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y, m_z + other.m_z, m_w + other.m_w);
+	return Vector4<decltype(x + other.x)>(x + other.x, y + other.y, z + other.z, w + other.w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Subtract(const Vector4<K> &other) const {
-	return Vector4<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y, m_z - other.m_z, m_w - other.m_w);
+	return Vector4<decltype(x - other.x)>(x - other.x, y - other.y, z - other.z, w - other.w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Multiply(const Vector4<K> &other) const {
-	return Vector4<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y, m_z * other.m_z, m_w * other.m_w);
+	return Vector4<decltype(x * other.x)>(x * other.x, y * other.y, z * other.z, w * other.w);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Divide(const Vector4<K> &other) const {
-	return Vector4<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y, m_z / other.m_z, m_w / other.m_w);
+	return Vector4<decltype(x / other.x)>(x / other.x, y / other.y, z / other.z, w / other.w);
 }
 
 template<typename T>
@@ -98,7 +98,7 @@ auto Vector4<T>::Angle(const Vector4<K> &other) const {
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Dot(const Vector4<K> &other) const {
-	return m_x * other.m_x + m_y * other.m_y + m_z * other.m_z + m_w * other.m_w;
+	return x * other.x + y * other.y + z * other.z + w * other.w;
 }
 
 template<typename T>
@@ -112,7 +112,7 @@ constexpr auto Vector4<T>::Lerp(const Vector4<K> &other, const J &progression) c
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Scale(const K &scalar) const {
-	return Vector4<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar, m_z * scalar, m_w * scalar);
+	return Vector4<decltype(x * scalar)>(x * scalar, y * scalar, z * scalar, w * scalar);
 }
 
 template<typename T>
@@ -128,7 +128,7 @@ auto Vector4<T>::Normalize() const {
 
 template<typename T>
 constexpr auto Vector4<T>::LengthSquared() const {
-	return m_x * m_x + m_y * m_y + m_z * m_z + m_w * m_w;
+	return x * x + y * y + z * z + w * w;
 }
 
 template<typename T>
@@ -138,47 +138,47 @@ auto Vector4<T>::Length() const {
 
 template<typename T>
 auto Vector4<T>::Abs() const {
-	return Vector2<T>(std::abs(m_x), std::abs(m_y), std::abs(m_z), std::abs(m_w));
+	return Vector2<T>(std::abs(x), std::abs(y), std::abs(z), std::abs(w));
 }
 
 template<typename T>
 constexpr auto Vector4<T>::Min() const {
-	return std::min({m_x, m_y, m_z, m_w});
+	return std::min({x, y, z, w});
 }
 
 template<typename T>
 constexpr auto Vector4<T>::Max() const {
-	return std::max({m_x, m_y, m_z, m_w});
+	return std::max({x, y, z, w});
 }
 
 template<typename T>
 constexpr auto Vector4<T>::MinMax() const {
-	return std::minmax({m_x, m_y, m_z, m_w});
+	return std::minmax({x, y, z, w});
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Min(const Vector4<K> &other) {
-	using THighestP = decltype(m_x + other.m_x);
-	return Vector4<THighestP>(std::min<THighestP>(m_x, other.m_x), std::min<THighestP>(m_y, other.m_y), std::min<THighestP>(m_z, other.m_z),
-		std::min<THighestP>(m_w, other.m_w));
+	using THighestP = decltype(x + other.x);
+	return Vector4<THighestP>(std::min<THighestP>(x, other.x), std::min<THighestP>(y, other.y), std::min<THighestP>(z, other.z),
+		std::min<THighestP>(w, other.w));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::Max(const Vector4<K> &other) {
-	using THighestP = decltype(m_x + other.m_x);
-	return Vector4<THighestP>(std::max<THighestP>(m_x, other.m_x), std::max<THighestP>(m_y, other.m_y), std::max<THighestP>(m_z, other.m_z),
-		std::max<THighestP>(m_w, other.m_w));
+	using THighestP = decltype(x + other.x);
+	return Vector4<THighestP>(std::max<THighestP>(x, other.x), std::max<THighestP>(y, other.y), std::max<THighestP>(z, other.z),
+		std::max<THighestP>(w, other.w));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector4<T>::DistanceSquared(const Vector4<K> &other) const {
-	auto dx = m_x - other.m_x;
-	auto dy = m_y - other.m_y;
-	auto dz = m_z - other.m_z;
-	auto dw = m_w - other.m_w;
+	auto dx = x - other.x;
+	auto dy = y - other.y;
+	auto dz = z - other.z;
+	auto dw = w - other.w;
 	return dx * dx + dy * dy + dz * dz + dw * dw;
 }
 
@@ -204,13 +204,13 @@ template<typename T>
 constexpr const T &Vector4<T>::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
-		return m_x;
+		return x;
 	case 1:
-		return m_y;
+		return y;
 	case 2:
-		return m_z;
+		return z;
 	case 3:
-		return m_w;
+		return w;
 	default:
 		throw std::runtime_error("Vector4 index out of bounds!");
 	}
@@ -220,13 +220,13 @@ template<typename T>
 constexpr T &Vector4<T>::operator[](uint32_t index) {
 	switch (index) {
 	case 0:
-		return m_x;
+		return x;
 	case 1:
-		return m_y;
+		return y;
 	case 2:
-		return m_z;
+		return z;
 	case 3:
-		return m_w;
+		return w;
 	default:
 		throw std::runtime_error("Vector4 index out of bounds!");
 	}
@@ -235,7 +235,7 @@ constexpr T &Vector4<T>::operator[](uint32_t index) {
 template<typename T>
 template<typename K>
 constexpr bool Vector4<T>::operator==(const Vector4<K> &other) const {
-	return m_x == other.m_x && m_y == other.m_y && m_z == other.m_z && m_w == other.m_w;
+	return x == other.x && y == other.y && z == other.z && w == other.w;
 }
 
 template<typename T>
@@ -247,13 +247,13 @@ constexpr bool Vector4<T>::operator!=(const Vector4<K> &other) const {
 template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_signed_v<U>, Vector4<T>> Vector4<T>::operator-() const {
-	return {-m_x, -m_y, -m_z, -m_w};
+	return {-x, -y, -z, -w};
 }
 
 template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_integral_v<U>, Vector4<T>> Vector4<T>::operator~() const {
-	return {~m_x, ~m_y, ~m_z, ~m_w};
+	return {~x, ~y, ~z, ~w};
 }
 
 template<typename T>
@@ -302,25 +302,25 @@ constexpr Vector4<T> &Vector4<T>::operator/=(const T &other) {
 
 template<typename K>
 const Node &operator>>(const Node &node, Vector4<K> &vector) {
-	node["x"].Get(vector.m_x);
-	node["y"].Get(vector.m_y);
-	node["z"].Get(vector.m_z);
-	node["w"].Get(vector.m_w);
+	node["x"].Get(vector.x);
+	node["y"].Get(vector.y);
+	node["z"].Get(vector.z);
+	node["w"].Get(vector.w);
 	return node;
 }
 
 template<typename K>
 Node &operator<<(Node &node, const Vector4<K> &vector) {
-	node["x"].Set(vector.m_x);
-	node["y"].Set(vector.m_y);
-	node["z"].Set(vector.m_z);
-	node["w"].Set(vector.m_w);
+	node["x"].Set(vector.x);
+	node["y"].Set(vector.y);
+	node["z"].Set(vector.z);
+	node["w"].Set(vector.w);
 	return node;
 }
 
 template<typename K>
 std::ostream &operator<<(std::ostream &stream, const Vector4<K> &vector) {
-	return stream << vector.m_x << ", " << vector.m_y << ", " << vector.m_z << ", " << vector.m_w;
+	return stream << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w;
 }
 
 template<typename K, typename J>
@@ -385,42 +385,42 @@ constexpr auto operator/(const Vector4<K> &left, const J &right) {
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator&(const Vector4<K> &left, const Vector4<J> &right) {
-	return {left.m_x & right.m_x, left.m_y & right.m_y, left.m_z & right.m_z, left.m_w & right.m_w};
+	return {left.x & right.x, left.y & right.y, left.z & right.z, left.w & right.w};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator|(const Vector4<K> &left, const Vector4<J> &right) {
-	return {left.m_x | right.m_x, left.m_y | right.m_y, left.m_z | right.m_z, left.m_w | right.m_w};
+	return {left.x | right.x, left.y | right.y, left.z | right.z, left.w | right.w};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator>>(const Vector4<K> &left, const Vector4<J> &right) {
-	return {left.m_x >> right.m_x, left.m_y >> right.m_y, left.m_z >> right.m_z, left.m_w >> right.m_w};
+	return {left.x >> right.x, left.y >> right.y, left.z >> right.z, left.w >> right.w};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator<<(const Vector4<K> &left, const Vector4<J> &right) {
-	return {left.m_x << right.m_x, left.m_y << right.m_y, left.m_z << right.m_z, left.m_w << right.m_w};
+	return {left.x << right.x, left.y << right.y, left.z << right.z, left.w << right.w};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator&(const Vector4<K> &left, const J &right) {
-	return {left.m_x & right, left.m_y & right, left.m_z & right, left.m_w & right};
+	return {left.x & right, left.y & right, left.z & right, left.w & right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator|(const Vector4<K> &left, const J &right) {
-	return {left.m_x | right, left.m_y | right, left.m_z | right, left.m_w | right};
+	return {left.x | right, left.y | right, left.z | right, left.w | right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator>>(const Vector4<K> &left, const J &right) {
-	return {left.m_x >> right, left.m_y >> right, left.m_z >> right, left.m_w >> right};
+	return {left.x >> right, left.y >> right, left.z >> right, left.w >> right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator<<(const Vector4<K> &left, const J &right) {
-	return {left.m_x << right, left.m_y << right, left.m_z << right, left.m_w << right};
+	return {left.x << right, left.y << right, left.z << right, left.w << right};
 }
 
 }
@@ -430,10 +430,10 @@ template<typename T>
 struct hash<acid::Vector4<T>> {
 	size_t operator()(const acid::Vector4<T> &vector) const {
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vector.m_x);
-		acid::Maths::HashCombine(seed, vector.m_y);
-		acid::Maths::HashCombine(seed, vector.m_z);
-		acid::Maths::HashCombine(seed, vector.m_w);
+		acid::Maths::HashCombine(seed, vector.x);
+		acid::Maths::HashCombine(seed, vector.y);
+		acid::Maths::HashCombine(seed, vector.z);
+		acid::Maths::HashCombine(seed, vector.w);
 		return seed;
 	}
 };

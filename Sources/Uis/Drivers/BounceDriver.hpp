@@ -19,47 +19,45 @@ public:
 	 */
 	BounceDriver(const T &start, const T &end, const Time &length) :
 		UiDriver<T>(length),
-		m_start(start),
-		m_end(end) {
+		start(start),
+		end(end) {
 	}
 
 	/**
 	 * Gets the start time.
 	 * @return The start time.
 	 */
-	const T &GetStart() const { return m_start; }
-
+	const T &GetStart() const { return start; }
 	/**
 	 * Sets the start time.
 	 * @param start The new start time.
 	 */
-	void SetStart(const T &start) { m_start = start; }
+	void SetStart(const T &start) { this->start = start; }
 
 	/**
 	 * Gets the end time.
 	 * @return The ebd time.
 	 */
-	const T &GetEnd() const { return m_end; }
-
+	const T &GetEnd() const { return end; }
 	/**
 	 * Sets the end time.
 	 * @param end The new end time.
 	 */
-	void SetEnd(const T &end) { m_end = end; }
+	void SetEnd(const T &end) { this->end = end; }
 
 protected:
 	T Calculate(float factor) override {
-		auto value = 0.5f + std::sin(Maths::Pi<float> * 2.0f * factor) * 0.5f;
+		auto value = 0.5f + std::sin(Maths::PI<float> * 2.0f * factor) * 0.5f;
 
-		if (UiDriver<T>::m_actualTime > UiDriver<T>::m_length / 2.0f) {
+		if (UiDriver<T>::actualTime > UiDriver<T>::length / 2.0f) {
 			value = 0.0f;
 		}
 
-		return m_start + value * (m_end - m_start);
+		return start + value * (end - start);
 	}
 
 private:
-	T m_start;
-	T m_end;
+	T start;
+	T end;
 };
 }

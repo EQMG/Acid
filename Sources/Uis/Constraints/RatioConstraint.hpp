@@ -14,25 +14,25 @@ template<UiConstraintType Type,
 class RatioConstraint final : public UiConstraint<Type> {
 public:
 	explicit RatioConstraint(float ratio = 1.0f) :
-		m_ratio(ratio) {
+		ratio(ratio) {
 	}
 
 	int32_t Calculate(const UiConstraints *object, const UiConstraints *parent) const override {
 		if constexpr (Type == UiConstraintType::Width) {
 			assert(dynamic_cast<RatioConstraint<UiConstraintType::Height> *>(object->GetHeight()) == nullptr &&
 				"Ratio constraint can only be applied to one side of a object");
-			return object->GetHeight()->Get() * m_ratio;
+			return object->GetHeight()->Get() * ratio;
 		} else if constexpr (Type == UiConstraintType::Height) {
 			assert(dynamic_cast<RatioConstraint<UiConstraintType::Width> *>(object->GetWidth()) == nullptr &&
 				"Ratio constraint can only be applied to one side of a object");
-			return object->GetWidth()->Get() * m_ratio;
+			return object->GetWidth()->Get() * ratio;
 		}
 	}
 
-	float GetRatio() const { return m_ratio; }
-	void SetRatio(float ratio) { m_ratio = ratio; }
+	float GetRatio() const { return ratio; }
+	void SetRatio(float ratio) { this->ratio = ratio; }
 
 private:
-	float m_ratio;
+	float ratio;
 };
 }

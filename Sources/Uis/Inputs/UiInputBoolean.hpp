@@ -12,28 +12,28 @@ public:
 
 	void UpdateObject() override;
 
-	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
+	const std::string &GetTitle() const { return textTitle.GetString(); }
+	void SetTitle(const std::string &string) { textTitle.SetString(string); }
 
-	bool GetValue() const { return m_value; }
+	bool GetValue() const { return value; }
 	void SetValue(bool value);
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnValue() { return m_onValue; }
+	Delegate<void(bool)> &OnValue() { return onValue; }
 
 private:
 	void UpdateValue();
 
-	Gui m_slider;
-	Gui m_background;
-	Text m_textTitle;
-	Text m_textValue;
+	Gui slider;
+	Gui background;
+	Text textTitle;
+	Text textValue;
 
-	bool m_value = false;
+	bool value = false;
 
-	Delegate<void(bool)> m_onValue;
+	Delegate<void(bool)> onValue;
 };
 }

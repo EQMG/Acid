@@ -9,13 +9,12 @@ namespace test {
 class MainApp : public App {
 public:
 	MainApp();
-
 	~MainApp();
 
 	void Start() override;
 	void Update() override;
 
 private:
-	FileObserver m_fileObserver;
+	FileObserver fileObserver;
 };
 }

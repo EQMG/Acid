@@ -13,31 +13,31 @@ namespace acid {
 class ACID_EXPORT Delta {
 public:
 	void Update() {
-		m_currentFrameTime = Time::Now();
-		m_change = m_currentFrameTime - m_lastFrameTime;
-		m_lastFrameTime = m_currentFrameTime;
+		currentFrameTime = Time::Now();
+		change = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
 	}
 
-	Time m_currentFrameTime;
-	Time m_lastFrameTime;
-	Time m_change;
+	Time currentFrameTime;
+	Time lastFrameTime;
+	Time change;
 };
 
 class ACID_EXPORT ChangePerSecond {
 public:
 	void Update(const Time &time) {
-		m_valueTemp++;
+		valueTemp++;
 
-		if (std::floor(time.AsSeconds()) > std::floor(m_valueTime.AsSeconds())) {
-			m_value = m_valueTemp;
-			m_valueTemp = 0;
+		if (std::floor(time.AsSeconds()) > std::floor(valueTime.AsSeconds())) {
+			value = valueTemp;
+			valueTemp = 0;
 		}
 
-		m_valueTime = time;
+		valueTime = time;
 	}
 
-	uint32_t m_valueTemp = 0, m_value = 0;
-	Time m_valueTime;
+	uint32_t valueTemp = 0, value = 0;
+	Time valueTime;
 };
 
 /**
@@ -57,7 +57,6 @@ public:
 	 * @param emptyRegister If the module register will start empty.
 	 */
 	explicit Engine(std::string argv0, bool emptyRegister = false);
-
 	~Engine();
 
 	/**
@@ -70,91 +69,88 @@ public:
 	 * Gets the first argument passed to main.
 	 * @return The first argument passed to main.
 	 */
-	const std::string &GetArgv0() const { return m_argv0; };
+	const std::string &GetArgv0() const { return argv0; };
 
 	/**
 	 * Gets the engine's version.
 	 * @return The engine's version.
 	 */
-	const Version &GetVersion() const { return m_version; }
+	const Version &GetVersion() const { return version; }
 
 	/**
 	 * Gets the current application.
 	 * @return The renderer manager.
 	 */
-	App *GetApp() const { return m_app.get(); }
+	App *GetApp() const { return app.get(); }
 
 	/**
 	 * Sets the current application to a new application.
 	 * @param app The new application.
 	 */
-	void SetApp(std::unique_ptr<App> &&app) { m_app = std::move(app); }
+	void SetApp(std::unique_ptr<App> &&app) { this->app = std::move(app); }
 
 	/**
 	 * Gets the fps limit.
 	 * @return The frame per second limit.
 	 */
-	float GetFpsLimit() const { return m_fpsLimit; }
+	float GetFpsLimit() const { return fpsLimit; }
 
 	/**
 	 * Sets the fps limit. -1 disables limits.
 	 * @param fpsLimit The new frame per second limit.
 	 */
-	void SetFpsLimit(float fpsLimit) { m_fpsLimit = fpsLimit; }
+	void SetFpsLimit(float fpsLimit) { this->fpsLimit = fpsLimit; }
 
 	/**
 	 * Gets if the engine is running.
 	 * @return If the engine is running.
 	 */
-	bool IsRunning() const { return m_running; }
+	bool IsRunning() const { return running; }
 
 	/**
 	 * Gets the delta (seconds) between updates.
 	 * @return The delta between updates.
 	 */
-	const Time &GetDelta() const { return m_deltaUpdate.m_change; }
+	const Time &GetDelta() const { return deltaUpdate.change; }
 
 	/**
 	 * Gets the delta (seconds) between renders.
 	 * @return The delta between renders.
 	 */
-	const Time &GetDeltaRender() const { return m_deltaRender.m_change; }
+	const Time &GetDeltaRender() const { return deltaRender.change; }
 
 	/**
 	 * Gets the average UPS over a short interval.
 	 * @return The updates per second.
 	 */
-	uint32_t GetUps() const { return m_ups.m_value; }
+	uint32_t GetUps() const { return ups.value; }
 
 	/**
 	 * Gets the average FPS over a short interval.
 	 * @return The frames per second.
 	 */
-	uint32_t GetFps() const { return m_fps.m_value; }
+	uint32_t GetFps() const { return fps.value; }
 
 	/**
 	 * Requests the engine to stop the game-loop.
 	 */
-	void RequestClose() { m_running = false; }
+	void RequestClose() { running = false; }
 
 private:
 	void UpdateStage(Module::Stage stage);
 	
 	static Engine *Instance;
 
-	std::string m_argv0;
-	Version m_version;
+	std::string argv0;
+	Version version;
 
-	std::unique_ptr<App> m_app;
+	std::unique_ptr<App> app;
 
-	float m_fpsLimit;
-	bool m_running;
+	float fpsLimit;
+	bool running;
 
-	Delta m_deltaUpdate;
-	Delta m_deltaRender;
-	ElapsedTime m_elapsedUpdate;
-	ElapsedTime m_elapsedRender;
-
-	ChangePerSecond m_ups, m_fps;
+	Delta deltaUpdate, deltaRender;
+	ElapsedTime elapsedUpdate, elapsedRender;
+	ChangePerSecond ups, fps;
 };
 }

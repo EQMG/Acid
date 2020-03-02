@@ -12,24 +12,24 @@ static const Colour FOG_COLOUR_NIGHT(0x0D0D1A);
 static const Colour FOG_COLOUR_DAY(0xE6E6E6);
 
 World::World() :
-	m_driverDay(LinearDriver<float>(0.0f, 1.0f, 300s)),
-	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
-	m_driverDay.Update(50s); // Starts during daytime.
+	driverDay(LinearDriver<float>(0.0f, 1.0f, 300s)),
+	fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
+	driverDay.Update(50s); // Starts during daytime.
 }
 
 void World::Update() {
-	m_driverDay.Update(Engine::Get()->GetDelta());
+	driverDay.Update(Engine::Get()->GetDelta());
 
-	m_skyboxRotation = {360.0f * m_driverDay.Get(), 0.0f, 0.0f};
-	m_lightDirection = {0.154303f, 0.771517f, -0.617213f};
+	skyboxRotation = {360.0f * driverDay.Get(), 0.0f, 0.0f};
+	lightDirection = {0.154303f, 0.771517f, -0.617213f};
 
 	auto fogColour = FOG_COLOUR_SUNRISE.Lerp(FOG_COLOUR_NIGHT, GetSunriseFactor());
 	fogColour = fogColour.Lerp(FOG_COLOUR_DAY, GetShadowFactor());
-	m_fog.SetColour(fogColour);
-	m_fog.SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
-	m_fog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
-	m_fog.SetLowerLimit(0.0f);
-	m_fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
+	fog.SetColour(fogColour);
+	fog.SetDensity(0.002f + ((1.0f - GetShadowFactor()) * 0.002f));
+	fog.SetGradient(2.0f - ((1.0f - GetShadowFactor()) * 0.380f));
+	fog.SetLowerLimit(0.0f);
+	fog.SetUpperLimit(0.15f - ((1.0f - GetShadowFactor()) * 0.03f));
 
 	/*if (auto lensflare = Graphics::Get()->GetSubrender<FilterLensflare>()) {
 		lensflare->SetSunPosition(Vector3f(1000.0f, 5000.0f, -4000.0f));
@@ -37,11 +37,11 @@ void World::Update() {
 	}*/
 
 	if (auto deferred = Graphics::Get()->GetRenderer()->GetSubrender<SubrenderDeferred>()) {
-		deferred->SetFog(m_fog);
+		deferred->SetFog(fog);
 	}
 
 	if (Shadows::Get()) {
-		Shadows::Get()->SetLightDirection(-m_lightDirection);
+		Shadows::Get()->SetLightDirection(-lightDirection);
 		//Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
 		//Shadows::Get()->SetShadowBoxDistance(40.0f);
 		//Shadows::Get()->SetShadowTransition(5.0f);
@@ -50,15 +50,15 @@ void World::Update() {
 }
 
 float World::GetDayFactor() const {
-	return m_driverDay.Get();
+	return driverDay.Get();
 }
 
 float World::GetSunriseFactor() const {
-	return std::clamp(-(std::sin(2.0f * Maths::Pi<float> * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
+	return std::clamp(-(std::sin(2.0f * Maths::PI<float> * GetDayFactor()) - 1.0f) / 2.0f, 0.0f, 1.0f);
 }
 
 float World::GetShadowFactor() const {
-	return std::clamp(1.7f * std::sin(2.0f * Maths::Pi<float> * GetDayFactor()), 0.0f, 1.0f);
+	return std::clamp(1.7f * std::sin(2.0f * Maths::PI<float> * GetDayFactor()), 0.0f, 1.0f);
 }
 
 float World::GetStarIntensity() const {

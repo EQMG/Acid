@@ -12,7 +12,6 @@ namespace acid {
 class ACID_EXPORT Resource : NonCopyable {
 public:
 	Resource() = default;
-
 	virtual ~Resource() = default;
 
 	virtual std::type_index GetTypeIndex() const = 0;

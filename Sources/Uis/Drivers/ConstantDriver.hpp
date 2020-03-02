@@ -17,26 +17,26 @@ public:
 	 */
 	explicit ConstantDriver(const T &constant) :
 		UiDriver<T>(-1s),
-		m_constant(constant) {
+		constant(constant) {
 	}
 
 	/**
 	 * Gets the constant.
 	 * @return The constant.
 	 */
-	const T &GetConstant() const { return m_constant; }
-
+	const T &GetConstant() const { return constant; }
 	/**
 	 * Sets the constant.
 	 * @param constant The new constant.
 	 */
-	void SetConstant(const T &constant) { m_constant = constant; };
+	void SetConstant(const T &constant) { this->constant = constant; };
+	
 protected:
 	T Calculate(float factor) override {
-		return m_constant;
+		return constant;
 	}
 
 private:
-	T m_constant;
+	T constant;
 };
 }

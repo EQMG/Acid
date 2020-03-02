@@ -42,12 +42,12 @@ std::basic_string<_Elem> Node::WriteString(const Format &format) const {
 template<typename T>
 T Node::GetName() const {
 	// Only supports basic string to type conversions.
-	return String::From<T>(m_name);
+	return String::From<T>(name);
 }
 
 template<typename T>
 void Node::SetName(const T &value) {
-	m_name = String::To<T>(value);
+	name = String::To<T>(value);
 }
 
 template<typename T>

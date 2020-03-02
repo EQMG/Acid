@@ -28,32 +28,32 @@ public:
 	 */
 	VkResult QueuePresent(const VkQueue &presentQueue, const VkSemaphore &waitSemaphore = VK_NULL_HANDLE);
 
-	bool IsSameExtent(const VkExtent2D &extent2D) { return m_extent.width == extent2D.width && m_extent.height == extent2D.height; }
+	bool IsSameExtent(const VkExtent2D &extent2D) { return extent.width == extent2D.width && extent.height == extent2D.height; }
 
-	operator const VkSwapchainKHR &() const { return m_swapchain; }
+	operator const VkSwapchainKHR &() const { return swapchain; }
 
-	const VkExtent2D &GetExtent() const { return m_extent; }
-	uint32_t GetImageCount() const { return m_imageCount; }
-	VkSurfaceTransformFlagsKHR GetPreTransform() const { return m_preTransform; }
-	VkCompositeAlphaFlagBitsKHR GetCompositeAlpha() const { return m_compositeAlpha; }
-	const std::vector<VkImage> &GetImages() const { return m_images; }
-	const VkImage &GetActiveImage() const { return m_images[m_activeImageIndex]; }
-	const std::vector<VkImageView> &GetImageViews() const { return m_imageViews; }
-	const VkSwapchainKHR &GetSwapchain() const { return m_swapchain; }
-	uint32_t GetActiveImageIndex() const { return m_activeImageIndex; }
+	const VkExtent2D &GetExtent() const { return extent; }
+	uint32_t GetImageCount() const { return imageCount; }
+	VkSurfaceTransformFlagsKHR GetPreTransform() const { return preTransform; }
+	VkCompositeAlphaFlagBitsKHR GetCompositeAlpha() const { return compositeAlpha; }
+	const std::vector<VkImage> &GetImages() const { return images; }
+	const VkImage &GetActiveImage() const { return images[activeImageIndex]; }
+	const std::vector<VkImageView> &GetImageViews() const { return imageViews; }
+	const VkSwapchainKHR &GetSwapchain() const { return swapchain; }
+	uint32_t GetActiveImageIndex() const { return activeImageIndex; }
 
 private:
-	VkExtent2D m_extent;
-	VkPresentModeKHR m_presentMode;
+	VkExtent2D extent;
+	VkPresentModeKHR presentMode;
 
-	uint32_t m_imageCount = 0;
-	VkSurfaceTransformFlagsKHR m_preTransform;
-	VkCompositeAlphaFlagBitsKHR m_compositeAlpha;
-	std::vector<VkImage> m_images;
-	std::vector<VkImageView> m_imageViews;
-	VkSwapchainKHR m_swapchain = VK_NULL_HANDLE;
+	uint32_t imageCount = 0;
+	VkSurfaceTransformFlagsKHR preTransform;
+	VkCompositeAlphaFlagBitsKHR compositeAlpha;
+	std::vector<VkImage> images;
+	std::vector<VkImageView> imageViews;
+	VkSwapchainKHR swapchain = VK_NULL_HANDLE;
 
-	VkFence m_fenceImage = VK_NULL_HANDLE;
-	uint32_t m_activeImageIndex;
+	VkFence fenceImage = VK_NULL_HANDLE;
+	uint32_t activeImageIndex;
 };
 }

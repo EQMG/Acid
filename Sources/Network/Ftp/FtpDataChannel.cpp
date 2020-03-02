@@ -5,12 +5,12 @@
 
 namespace acid {
 FtpDataChannel::FtpDataChannel(Ftp &owner) :
-	m_ftp(owner) {
+	ftp(owner) {
 }
 
 FtpResponse FtpDataChannel::Open(Mode mode) {
 	// Open a data connection in active mode (we connect to the server).
-	auto response = m_ftp.SendCommand("PASV");
+	auto response = ftp.SendCommand("PASV");
 
 	if (response.IsOk()) {
 		// Extract the connection address and port from the response
@@ -37,7 +37,7 @@ FtpResponse FtpDataChannel::Open(Mode mode) {
 			IpAddress address(static_cast<uint8_t>(data[0]), static_cast<uint8_t>(data[1]), static_cast<uint8_t>(data[2]), static_cast<uint8_t>(data[3]));
 
 			// Connect the data channel to the server.
-			if (m_dataSocket.Connect(address, port) == Socket::Status::Done) {
+			if (dataSocket.Connect(address, port) == Socket::Status::Done) {
 				// Translate the transfer mode to the corresponding FTP parameter.
 				std::string modeStr;
 
@@ -54,7 +54,7 @@ FtpResponse FtpDataChannel::Open(Mode mode) {
 				}
 
 				// Set the transfer mode.
-				response = m_ftp.SendCommand("TYPE", modeStr);
+				response = ftp.SendCommand("TYPE", modeStr);
 			} else {
 				// Failed to connect to the server.
 				response = {FtpResponse::Status::ConnectionFailed};
@@ -70,7 +70,7 @@ void FtpDataChannel::Receive(std::ostream &stream) {
 	char buffer[1024];
 	std::size_t received;
 
-	while (m_dataSocket.Receive(buffer, sizeof(buffer), received) == Socket::Status::Done) {
+	while (dataSocket.Receive(buffer, sizeof(buffer), received) == Socket::Status::Done) {
 		stream.write(buffer, static_cast<std::streamsize>(received));
 
 		if (!stream.good()) {
@@ -80,7 +80,7 @@ void FtpDataChannel::Receive(std::ostream &stream) {
 	}
 
 	// Close the data socket.
-	m_dataSocket.Disconnect();
+	dataSocket.Disconnect();
 }
 
 void FtpDataChannel::Send(std::istream &stream) {
@@ -101,7 +101,7 @@ void FtpDataChannel::Send(std::istream &stream) {
 
 		if (count > 0) {
 			// We could read more data from the stream: send them.
-			if (m_dataSocket.Send(buffer, count) != Socket::Status::Done) {
+			if (dataSocket.Send(buffer, count) != Socket::Status::Done) {
 				break;
 			}
 		} else {
@@ -111,6 +111,6 @@ void FtpDataChannel::Send(std::istream &stream) {
 	}
 
 	// Close the data socket.
-	m_dataSocket.Disconnect();
+	dataSocket.Disconnect();
 }
 }

@@ -13,7 +13,7 @@ public:
 	void UpdateObject() override;
 
 private:
-	Hierarchy m_hierarchy;
-	Inspector m_inspector;
+	Hierarchy hierarchy;
+	Inspector inspector;
 };
 }

@@ -60,7 +60,7 @@ public:
 	 * The method is HTTP_REQUEST_METHOD_GET by default.
 	 * @param method Method to use for the request.
 	 */
-	void SetMethod(Method method) { m_method = method; }
+	void SetMethod(Method method) { this->method = method; }
 
 	/**
 	 * Set the requested URI.
@@ -83,7 +83,7 @@ public:
 	 * It is ignored for all other methods. The body is empty by default.
 	 * @param body Content of the body.
 	 */
-	void SetBody(const std::string &body) { m_body = body; }
+	void SetBody(const std::string &body) { this->body = body; }
 
 private:
 	using FieldTable = std::map<std::string, std::string>;
@@ -103,16 +103,16 @@ private:
 	bool HasField(const std::string &field) const;
 
 	/// Fields of the header associated to their value.
-	FieldTable m_fields;
+	FieldTable fields;
 	/// Method to use for the request.
-	Method m_method;
+	Method method;
 	/// Target URI of the request.
-	std::string m_uri;
+	std::string uri;
 	/// Major HTTP version.
-	uint32_t m_majorVersion;
+	uint32_t majorVersion;
 	/// Minor HTTP version.
-	uint32_t m_minorVersion;
+	uint32_t minorVersion;
 	/// Body of the request.
-	std::string m_body;
+	std::string body;
 };
 }

@@ -8,8 +8,8 @@ class ACID_EXPORT SkinLoader {
 public:
 	SkinLoader(NodeConstView &&libraryControllers, uint32_t maxWeights);
 
-	const std::vector<std::string> &GetJointOrder() const { return m_jointOrder; }
-	const std::vector<VertexWeights> &GetVertexWeights() const { return m_vertexWeights; }
+	const std::vector<std::string> &GetJointOrder() const { return jointOrder; }
+	const std::vector<VertexWeights> &GetVertexWeights() const { return vertexWeights; }
 
 private:
 	void LoadJointsList();
@@ -17,10 +17,10 @@ private:
 	std::vector<uint32_t> GetEffectiveJointsCounts(const Node &weightsDataNode) const;
 	void GetSkinWeights(const Node &weightsDataNode, const std::vector<uint32_t> &counts, const std::vector<float> &weights);
 
-	NodeConstView m_skinData;
-	uint32_t m_maxWeights;
+	NodeConstView skinData;
+	uint32_t maxWeights;
 
-	std::vector<std::string> m_jointOrder;
-	std::vector<VertexWeights> m_vertexWeights;
+	std::vector<std::string> jointOrder;
+	std::vector<VertexWeights> vertexWeights;
 };
 }

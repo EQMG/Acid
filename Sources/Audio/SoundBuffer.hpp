@@ -42,7 +42,6 @@ public:
 	 * @return The sound buffer with the requested values.
 	 */
 	static std::shared_ptr<SoundBuffer> Create(const Node &node);
-
 	/**
 	 * Creates a new sound buffer, or finds one with the same values.
 	 * @param filename The file to load the sound buffer from.
@@ -56,13 +55,12 @@ public:
 	 * @param load If this resource will be loaded immediately, otherwise {@link SoundBuffer#Load} can be called later.
 	 */
 	explicit SoundBuffer(std::filesystem::path filename, bool load = true);
-
 	~SoundBuffer();
 
 	std::type_index GetTypeIndex() const override { return typeid(SoundBuffer); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; };
-	uint32_t GetBuffer() const { return m_buffer; }
+	const std::filesystem::path &GetFilename() const { return filename; };
+	uint32_t GetBuffer() const { return buffer; }
 	void SetBuffer(uint32_t buffer);
 
 	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer);
@@ -71,7 +69,7 @@ public:
 private:
 	void Load();
 
-	std::filesystem::path m_filename;
-	uint32_t m_buffer = 0;
+	std::filesystem::path filename;
+	uint32_t buffer = 0;
 };
 }

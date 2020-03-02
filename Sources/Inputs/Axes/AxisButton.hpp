@@ -8,6 +8,7 @@ namespace acid {
  * @brief Axis composed of two buttons.
  */
 class ACID_EXPORT AxisButton : public Axis::Registrar<AxisButton> {
+	inline static const bool Registered = Register("axisButton");
 public:
 	/**
 	 * Creates a new axis button.
@@ -25,18 +26,16 @@ public:
 
 	ArgumentDescription GetArgumentDescription() const override;
 
-	const Button *GetNegative() const { return m_negative.get(); }
+	const Button *GetNegative() const { return negative.get(); }
 	void SetNegative(std::unique_ptr<Button> &&negative);
-	const Button *GetPositive() const { return m_positive.get(); }
+	const Button *GetPositive() const { return positive.get(); }
 	void SetPositive(std::unique_ptr<Button> &&positive);
 
 	friend const Node &operator>>(const Node &node, AxisButton &axisButton);
 	friend Node &operator<<(Node &node, const AxisButton &axisButton);
 
 private:
-	static bool registered;
-
-	std::unique_ptr<Button> m_negative;
-	std::unique_ptr<Button> m_positive;
+	std::unique_ptr<Button> negative;
+	std::unique_ptr<Button> positive;
 };
 }

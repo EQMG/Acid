@@ -11,17 +11,17 @@ namespace acid {
 class ACID_EXPORT VideoMode {
 public:
 	/// The width, in screen coordinates, of the video mode.
-	int32_t m_width;
+	int32_t width;
 	/// The height, in screen coordinates, of the video mode.
-	int32_t m_height;
+	int32_t height;
 	/// The bit depth of the red channel of the video mode.
-	int32_t m_redBits;
+	int32_t redBits;
 	/// The bit depth of the green channel of the video mode.
-	int32_t m_greenBits;
+	int32_t greenBits;
 	/// The bit depth of the blue channel of the video mode.
-	int32_t m_blueBits;
+	int32_t blueBits;
 	/// The refresh rate, in Hz, of the video mode.
-	int32_t m_refreshRate;
+	int32_t refreshRate;
 };
 
 /**
@@ -30,13 +30,13 @@ public:
 class ACID_EXPORT GammaRamp {
 public:
 	/// An array of value describing the response of the red channel.
-	uint16_t *m_red;
+	uint16_t *red;
 	/// An array of value describing the response of the green channel.
-	uint16_t *m_green;
+	uint16_t *green;
 	/// An array of value describing the response of the blue channel.
-	uint16_t *m_blue;
+	uint16_t *blue;
 	/// The number of elements in each array.
-	uint32_t m_size;
+	uint32_t size;
 };
 
 /**
@@ -47,7 +47,7 @@ class ACID_EXPORT Monitor {
 public:
 	explicit Monitor(GLFWmonitor *monitor = nullptr);
 
-	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return m_monitor; }
+	ACID_NO_EXPORT GLFWmonitor *GetMonitor() const { return monitor; }
 
 	bool IsPrimary() const;
 
@@ -112,6 +112,6 @@ public:
 	void SetGammaRamp(const GammaRamp &gammaRamp) const;
 
 private:
-	GLFWmonitor *m_monitor;
+	GLFWmonitor *monitor;
 };
 }

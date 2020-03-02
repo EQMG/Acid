@@ -313,7 +313,7 @@ public:
 	ACID_EXPORT static const Vector3 PositiveInfinity;
 	ACID_EXPORT static const Vector3 NegativeInfinity;
 
-	T m_x = 0, m_y = 0, m_z = 0;
+	T x = 0, y = 0, z = 0;
 };
 
 using Vector3f = Vector3<float>;

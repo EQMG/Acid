@@ -21,53 +21,52 @@ using CollisionPairs = std::set<CollisionPair>;
 
 class ACID_EXPORT Raycast {
 public:
-	Raycast(bool m_hasHit, const Vector3f &m_pointWorld, CollisionObject *collisionObject) :
-		m_hasHit(m_hasHit),
-		m_pointWorld(m_pointWorld),
-		m_collisionObject(collisionObject) {
+	Raycast(bool hasHit, const Vector3f &pointWorld, CollisionObject *collisionObject) :
+		hasHit(hasHit),
+		pointWorld(pointWorld),
+		collisionObject(collisionObject) {
 	}
 
-	bool HasHit() const { return m_hasHit; }
-	const Vector3f &GetPointWorld() const { return m_pointWorld; }
-	CollisionObject *GetCollisionObject() const { return m_collisionObject; }
+	bool HasHit() const { return hasHit; }
+	const Vector3f &GetPointWorld() const { return pointWorld; }
+	CollisionObject *GetCollisionObject() const { return collisionObject; }
 
 private:
-	bool m_hasHit;
-	Vector3f m_pointWorld;
-	CollisionObject *m_collisionObject;
+	bool hasHit;
+	Vector3f pointWorld;
+	CollisionObject *collisionObject;
 };
 
 class ACID_EXPORT ScenePhysics {
 public:
 	ScenePhysics();
-
 	~ScenePhysics();
 
 	void Update();
 
 	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 
-	const Vector3f &GetGravity() const { return m_gravity; }
+	const Vector3f &GetGravity() const { return gravity; }
 	void SetGravity(const Vector3f &gravity);
 
-	float GetAirDensity() const { return m_airDensity; }
+	float GetAirDensity() const { return airDensity; }
 	void SetAirDensity(float airDensity);
 
-	btBroadphaseInterface *GetBroadphase() { return m_broadphase.get(); }
+	btBroadphaseInterface *GetBroadphase() { return broadphase.get(); }
 
-	btDiscreteDynamicsWorld *GetDynamicsWorld() { return m_dynamicsWorld.get(); }
+	btDiscreteDynamicsWorld *GetDynamicsWorld() { return dynamicsWorld.get(); }
 
 private:
 	void CheckForCollisionEvents();
 
-	std::unique_ptr<btCollisionConfiguration> m_collisionConfiguration;
-	std::unique_ptr<btBroadphaseInterface> m_broadphase;
-	std::unique_ptr<btCollisionDispatcher> m_dispatcher;
-	std::unique_ptr<btConstraintSolver> m_solver;
-	std::unique_ptr<btDiscreteDynamicsWorld> m_dynamicsWorld;
-	CollisionPairs m_pairsLastUpdate;
+	std::unique_ptr<btCollisionConfiguration> collisionConfiguration;
+	std::unique_ptr<btBroadphaseInterface> broadphase;
+	std::unique_ptr<btCollisionDispatcher> dispatcher;
+	std::unique_ptr<btConstraintSolver> solver;
+	std::unique_ptr<btDiscreteDynamicsWorld> dynamicsWorld;
+	CollisionPairs pairsLastUpdate;
 
-	Vector3f m_gravity;
-	float m_airDensity;
+	Vector3f gravity;
+	float airDensity;
 };
 }

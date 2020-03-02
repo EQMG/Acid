@@ -12,15 +12,15 @@ UniformBuffer::UniformBuffer(VkDeviceSize size, const void *data) :
 void UniformBuffer::Update(const void *newData) {
 	void *data;
 	MapMemory(&data);
-	std::memcpy(data, newData, static_cast<std::size_t>(m_size));
+	std::memcpy(data, newData, static_cast<std::size_t>(size));
 	UnmapMemory();
 }
 
 WriteDescriptorSet UniformBuffer::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorBufferInfo bufferInfo = {};
-	bufferInfo.buffer = m_buffer;
+	bufferInfo.buffer = buffer;
 	bufferInfo.offset = 0;
-	bufferInfo.range = m_size;
+	bufferInfo.range = size;
 
 	if (offsetSize) {
 		bufferInfo.offset = offsetSize->GetOffset();

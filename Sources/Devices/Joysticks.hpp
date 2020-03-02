@@ -92,42 +92,43 @@ public:
 	 * Called when a joystick has been connected or disconnected.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, bool)> &OnConnect() { return m_onConnect; }
+	Delegate<void(JoystickPort, bool)> &OnConnect() { return onConnect; }
 
 	/**
 	 * Called when a joystick buttons changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, InputAction)> &OnButton() { return m_onButton; }
+	Delegate<void(JoystickPort, uint8_t, InputAction)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when a joystick axis moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, float)> &OnAxis() { return m_onAxis; }
+	Delegate<void(JoystickPort, uint8_t, float)> &OnAxis() { return onAxis; }
 
 	/**
 	 * Called when a joystick had changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return m_onHat; }
+	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return onHat; }
 
 private:
-	struct JoystickImpl {
-		std::string m_name;
-		std::vector<float> m_axes;
-		std::vector<InputAction> m_buttons;
-		std::vector<BitMask<JoystickHatValue>> m_hats;
+	class JoystickImpl {
+	public:
+		std::string name;
+		std::vector<float> axes;
+		std::vector<InputAction> buttons;
+		std::vector<BitMask<JoystickHatValue>> hats;
 	};
 
 	std::optional<JoystickImpl> GetJoystick(JoystickPort port) const;
 
 	friend void CallbackJoystick(int32_t id, int32_t event);
 
-	std::map<JoystickPort, JoystickImpl> m_connected;
-	Delegate<void(JoystickPort, bool)> m_onConnect;
-	Delegate<void(JoystickPort, uint8_t, InputAction)> m_onButton;
-	Delegate<void(JoystickPort, uint8_t, float)> m_onAxis;
-	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> m_onHat;
+	std::map<JoystickPort, JoystickImpl> connected;
+	Delegate<void(JoystickPort, bool)> onConnect;
+	Delegate<void(JoystickPort, uint8_t, InputAction)> onButton;
+	Delegate<void(JoystickPort, uint8_t, float)> onAxis;
+	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> onHat;
 };
 }

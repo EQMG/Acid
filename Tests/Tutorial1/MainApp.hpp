@@ -8,7 +8,6 @@ namespace test {
 class MainApp : public App {
 public:
 	MainApp();
-
 	~MainApp();
 
 	void Start() override;

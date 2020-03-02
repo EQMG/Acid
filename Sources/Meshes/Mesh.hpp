@@ -10,6 +10,7 @@ namespace acid {
  * @brief Component that represents a model/mesh.
  */
 class ACID_EXPORT Mesh : public Component::Registrar<Mesh> {
+	inline static const bool Registered = Register("mesh");
 public:
 	/**
 	 * Creates a new mesh component.
@@ -25,10 +26,10 @@ public:
 
 	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return Vertex3d::GetVertexInput(binding); }
 
-	const Model *GetModel() const { return m_model.get(); }
-	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+	const Model *GetModel() const { return model.get(); }
+	void SetModel(const std::shared_ptr<Model> &model) { this->model = model; }
 
-	const Material *GetMaterial() const { return m_material.get(); }
+	const Material *GetMaterial() const { return material.get(); }
 	void SetMaterial(std::unique_ptr<Material> &&material);
 
 	bool operator<(const Mesh &other) const;
@@ -38,14 +39,10 @@ public:
 	friend Node &operator<<(Node &node, const Mesh &mesh);
 
 private:
-	static bool registered;
+	std::shared_ptr<Model> model;
+	std::unique_ptr<Material> material;
 
-	std::shared_ptr<Model> m_model;
-	std::unique_ptr<Material> m_material;
-
-	//bool m_render, m_castShadow;
-
-	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformObject;
+	DescriptorsHandler descriptorSet;
+	UniformHandler uniformObject;
 };
 }

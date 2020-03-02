@@ -19,14 +19,14 @@ public:
 	void UpdateObject() override;
 
 private:
-	UiSection m_section1;
-	UiInputButton m_button1;
+	UiSection section1;
+	UiInputButton button1;
 
-	UiInputSlider m_sliderR;
-	UiInputSlider m_sliderG;
-	UiInputSlider m_sliderB;
-	UiInputText m_textHex;
-	Gui m_rgbColour;
-	//UiColourWheel m_colourWheel;
+	UiInputSlider sliderR;
+	UiInputSlider sliderG;
+	UiInputSlider sliderB;
+	UiInputText textHex;
+	Gui rgbColour;
+	//UiColourWheel colourWheel;
 };
 }

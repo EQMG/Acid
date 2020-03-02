@@ -35,7 +35,6 @@ ENABLE_BITMASK_OPERATORS(InputMod);
 class ACID_EXPORT Window : public Module::Registrar<Window, Module::Stage::Pre> {
 public:
 	Window();
-	
 	~Window();
 
 	void Update() override;
@@ -45,13 +44,13 @@ public:
 	 * @param checkFullscreen If in fullscreen and true size will be the screens size.
 	 * @return The size of the window.
 	 */
-	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (m_fullscreen && checkFullscreen) ? m_fullscreenSize : m_size; }
+	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (fullscreen && checkFullscreen) ? fullscreenSize : size; }
 
 	/**
 	 * Gets the aspect ratio between the windows width and height.
 	 * @return The aspect ratio.
 	 */
-	float GetAspectRatio() const { return static_cast<float>(GetSize().m_x) / static_cast<float>(GetSize().m_y); }
+	float GetAspectRatio() const { return static_cast<float>(GetSize().x) / static_cast<float>(GetSize().y); }
 
 	/**
 	 * Sets the window size.
@@ -63,7 +62,7 @@ public:
 	 * Gets the windows position in pixels.
 	 * @return The windows position.
 	 */
-	const Vector2ui &GetPosition() const { return m_position; }
+	const Vector2ui &GetPosition() const { return position; }
 
 	/**
 	 * Sets the window position to a new position in pixels.
@@ -75,7 +74,7 @@ public:
 	 * Gets the window's title.
 	 * @return The window's title.
 	 */
-	const std::string &GetTitle() const { return m_title; }
+	const std::string &GetTitle() const { return title; }
 
 	/**
 	 * Sets window title.
@@ -93,7 +92,7 @@ public:
 	 * Gets weather the window is borderless or not.
 	 * @return If the window is borderless.
 	 */
-	bool IsBorderless() const { return m_borderless; }
+	bool IsBorderless() const { return borderless; }
 
 	/**
 	 * Sets the window to be borderless.
@@ -105,7 +104,7 @@ public:
 	 * Gets weather the window is resizable or not.
 	 * @return If the window is resizable.
 	 */
-	bool IsResizable() const { return m_resizable; }
+	bool IsResizable() const { return resizable; }
 
 	/**
 	 * Sets the window to be resizable.
@@ -117,7 +116,7 @@ public:
 	 * Gets weather the window is floating or not, if floating the window will always display above other windows.
 	 * @return If the window is floating.
 	 */
-	bool IsFloating() const { return m_floating; }
+	bool IsFloating() const { return floating; }
 
 	/**
 	 * Sets the window to be floating.
@@ -129,7 +128,7 @@ public:
 	 * Gets weather the window is fullscreen or not.
 	 * @return Fullscreen or windowed.
 	 */
-	bool IsFullscreen() const { return m_fullscreen; }
+	bool IsFullscreen() const { return fullscreen; }
 
 	/**
 	 * Sets the window to be fullscreen or windowed.
@@ -142,19 +141,19 @@ public:
 	 * Gets if the window is closed.
 	 * @return If the window is closed.
 	 */
-	bool IsClosed() const { return m_closed; }
+	bool IsClosed() const { return closed; }
 
 	/**
 	 * Gets if the window is selected.
 	 * @return If the window is selected.
 	 */
-	bool IsFocused() const { return m_focused; }
+	bool IsFocused() const { return focused; }
 
 	/**
 	 * Gets the windows is minimized.
 	 * @return If the window is minimized.
 	 */
-	bool IsIconified() const { return m_iconified; }
+	bool IsIconified() const { return iconified; }
 
 	/**
 	 * Sets the window to be iconified (minimized).
@@ -162,9 +161,9 @@ public:
 	 */
 	void SetIconified(bool iconify);
 
-	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return m_window; }
+	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return window; }
 
-	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return m_monitors; };
+	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return monitors; };
 
 	const Monitor *GetPrimaryMonitor() const;
 	const Monitor *GetCurrentMonitor() const;
@@ -173,67 +172,67 @@ public:
 	 * Called when the window is resized.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2ui)> &OnSize() { return m_onSize; }
+	Delegate<void(Vector2ui)> &OnSize() { return onSize; }
 
 	/**
 	 * Called when the window is moved.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2ui)> &OnPosition() { return m_onPosition; }
+	Delegate<void(Vector2ui)> &OnPosition() { return onPosition; }
 
 	/**
 	 * Called when a monitor has been connected or disconnected.
 	 * @return The delegate.
 	 */
-	Delegate<void(Monitor *, bool)> &OnMonitorConnect() { return m_onMonitorConnect; }
+	Delegate<void(Monitor *, bool)> &OnMonitorConnect() { return onMonitorConnect; }
 
 	/**
 	 * Called when the windows title changed.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::string)> &OnTitle() { return m_onTitle; }
+	Delegate<void(std::string)> &OnTitle() { return onTitle; }
 
 	/**
 	 * Called when the window has toggled borderless on or off.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnBorderless() { return m_onBorderless; }
+	Delegate<void(bool)> &OnBorderless() { return onBorderless; }
 
 	/**
 	 * Called when the window has toggled resizable on or off.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnResizable() { return m_onResizable; }
+	Delegate<void(bool)> &OnResizable() { return onResizable; }
 
 	/**
 	 * Called when the window has toggled floating on or off.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnFloating() { return m_onFloating; }
+	Delegate<void(bool)> &OnFloating() { return onFloating; }
 
 	/**
 	 * Called when the has gone fullscreen or windowed.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnFullscreen() { return m_onFullscreen; }
+	Delegate<void(bool)> &OnFullscreen() { return onFullscreen; }
 
 	/**
 	 * Called when the window requests a close.
 	 * @return The delegate.
 	 */
-	Delegate<void()> &OnClose() { return m_onClose; }
+	Delegate<void()> &OnClose() { return onClose; }
 
 	/**
 	 * Called when the window is focused or unfocused.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnFocus() { return m_onFocus; }
+	Delegate<void(bool)> &OnFocus() { return onFocus; }
 
 	/**
 	 * Called when the window is minimized or maximized.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnIconify() { return m_onIconify; }
+	Delegate<void(bool)> &OnIconify() { return onIconify; }
 
 	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
 	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
@@ -251,34 +250,34 @@ private:
 	friend void CallbackWindowIconify(GLFWwindow *window, int32_t iconified);
 	friend void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height);
 
-	Vector2ui m_size;
-	Vector2ui m_fullscreenSize;
+	Vector2ui size;
+	Vector2ui fullscreenSize;
 
-	Vector2ui m_position;
+	Vector2ui position;
 
-	std::string m_title;
-	bool m_borderless = false;
-	bool m_resizable = false;
-	bool m_floating = false;
-	bool m_fullscreen = false;
+	std::string title;
+	bool borderless = false;
+	bool resizable = false;
+	bool floating = false;
+	bool fullscreen = false;
 
-	bool m_closed = false;
-	bool m_focused = false;
-	bool m_iconified = false;
+	bool closed = false;
+	bool focused = false;
+	bool iconified = false;
 
-	GLFWwindow *m_window = nullptr;
-	std::vector<std::unique_ptr<Monitor>> m_monitors;
+	GLFWwindow *window = nullptr;
+	std::vector<std::unique_ptr<Monitor>> monitors;
 
-	Delegate<void(Vector2ui)> m_onSize;
-	Delegate<void(Vector2ui)> m_onPosition;
-	Delegate<void(Monitor *, bool)> m_onMonitorConnect;
-	Delegate<void(std::string)> m_onTitle;
-	Delegate<void(bool)> m_onBorderless;
-	Delegate<void(bool)> m_onResizable;
-	Delegate<void(bool)> m_onFloating;
-	Delegate<void(bool)> m_onFullscreen;
-	Delegate<void()> m_onClose;
-	Delegate<void(bool)> m_onFocus;
-	Delegate<void(bool)> m_onIconify;
+	Delegate<void(Vector2ui)> onSize;
+	Delegate<void(Vector2ui)> onPosition;
+	Delegate<void(Monitor *, bool)> onMonitorConnect;
+	Delegate<void(std::string)> onTitle;
+	Delegate<void(bool)> onBorderless;
+	Delegate<void(bool)> onResizable;
+	Delegate<void(bool)> onFloating;
+	Delegate<void(bool)> onFullscreen;
+	Delegate<void()> onClose;
+	Delegate<void(bool)> onFocus;
+	Delegate<void(bool)> onIconify;
 };
 }

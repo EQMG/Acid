@@ -7,6 +7,7 @@ namespace acid {
  * @brief Resource that represents a sphere model.
  */
 class ACID_EXPORT ModelSphere : public Model::Registrar<ModelSphere> {
+	inline static const bool Registered = Register("sphere");
 public:
 	/**
 	 * Creates a new sphere model, or finds one with the same values.
@@ -39,10 +40,7 @@ public:
 private:
 	void Load();
 
-	static bool registered;
-
-	float m_radius;
-	uint32_t m_latitudeBands;
-	uint32_t m_longitudeBands;
+	float radius;
+	uint32_t latitudeBands, longitudeBands;
 };
 }

@@ -178,7 +178,7 @@ public:
 	static const Quaternion PositiveInfinity;
 	static const Quaternion NegativeInfinity;
 
-	float m_x = 0.0f, m_y = 0.0f, m_z = 0.0f, m_w = 1.0f;
+	float x = 0.0f, y = 0.0f, z = 0.0f, w = 1.0f;
 };
 }
 
@@ -187,10 +187,10 @@ template<>
 struct hash<acid::Quaternion> {
 	size_t operator()(const acid::Quaternion &quaternion) const {
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, quaternion.m_x);
-		acid::Maths::HashCombine(seed, quaternion.m_y);
-		acid::Maths::HashCombine(seed, quaternion.m_z);
-		acid::Maths::HashCombine(seed, quaternion.m_w);
+		acid::Maths::HashCombine(seed, quaternion.x);
+		acid::Maths::HashCombine(seed, quaternion.y);
+		acid::Maths::HashCombine(seed, quaternion.z);
+		acid::Maths::HashCombine(seed, quaternion.w);
 		return seed;
 	}
 };

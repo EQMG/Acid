@@ -4,8 +4,6 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelRectangle::registered = Register("rectangle");
-
 std::shared_ptr<ModelRectangle> ModelRectangle::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ModelRectangle>(node))
 		return resource;
@@ -25,35 +23,34 @@ std::shared_ptr<ModelRectangle> ModelRectangle::Create(float min, float max) {
 }
 
 ModelRectangle::ModelRectangle(float min, float max, bool load) :
-	m_min(min),
-	m_max(max) {
+	min(min),
+	max(max) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelRectangle &model) {
-	node["min"].Get(model.m_min);
-	node["max"].Get(model.m_max);
+	node["min"].Get(model.min);
+	node["max"].Get(model.max);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelRectangle &model) {
-	node["min"].Set(model.m_min);
-	node["max"].Set(model.m_max);
+	node["min"].Set(model.min);
+	node["max"].Set(model.max);
 	return node;
 }
 
 void ModelRectangle::Load() {
-	if (m_min == m_max) {
+	if (min == max)
 		return;
-	}
 
 	std::vector<Vertex3d> vertices = {
-		{{m_min, m_min, 0.0f}, {0.0f, 0.0f}, {}},
-		{{m_max, m_min, 0.0f}, {1.0f, 0.0f}, {}},
-		{{m_max, m_max, 0.0f}, {1.0f, 1.0f}, {}},
-		{{m_min, m_max, 0.0f}, {0.0f, 1.0f}, {}}
+		{{min, min, 0.0f}, {0.0f, 0.0f}, {}},
+		{{max, min, 0.0f}, {1.0f, 0.0f}, {}},
+		{{max, max, 0.0f}, {1.0f, 1.0f}, {}},
+		{{min, max, 0.0f}, {0.0f, 1.0f}, {}}
 	};
 	static std::vector<uint32_t> indices = {
 		0, 1, 2,

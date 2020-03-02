@@ -5,12 +5,12 @@
 
 namespace acid {
 SkeletonLoader::SkeletonLoader(NodeConstView &&libraryControllers, std::vector<std::string> boneOrder, const Matrix4 &correction) :
-	m_armatureData(libraryControllers["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature")),
-	m_boneOrder(std::move(boneOrder)),
-	m_correction(correction) {
-	auto headNode = m_armatureData["node"];
-	m_headJoint = LoadJointData(headNode, true);
-	m_headJoint.CalculateInverseBindTransform({});
+	armatureData(libraryControllers["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature")),
+	boneOrder(std::move(boneOrder)),
+	correction(correction) {
+	auto headNode = armatureData["node"];
+	headJoint = LoadJointData(headNode, true);
+	headJoint.CalculateInverseBindTransform({});
 }
 
 Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
@@ -48,15 +48,15 @@ Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
 	transform = transform.Transpose();
 
 	if (isRoot) {
-		transform = m_correction * transform;
+		transform = correction * transform;
 	}
 
-	m_jointCount++;
+	jointCount++;
 	return {*index, nameId, transform};
 }
 
 std::optional<uint32_t> SkeletonLoader::GetBoneIndex(const std::string &name) const {
-	for (const auto &[i, bone] : Enumerate(m_boneOrder)) {
+	for (const auto &[i, bone] : Enumerate(boneOrder)) {
 		if (bone == name) {
 			return static_cast<uint32_t>(i);
 		}

@@ -20,9 +20,9 @@ public:
 	T *Get() const {
 		const auto typeId = GetSubrenderTypeId<T>();
 
-		auto it = m_subrenders.find(typeId);
+		auto it = subrenders.find(typeId);
 
-		if (it == m_subrenders.end() || !it->second) {
+		if (it == subrenders.end() || !it->second) {
 			//throw std::runtime_error("Subrender Holder does not have requested Subrender");
 			return nullptr;
 		}
@@ -45,11 +45,11 @@ public:
 		const auto typeId = GetSubrenderTypeId<T>();
 
 		// Insert the stage value
-		m_stages.insert({StageIndex(stage, m_subrenders.size()), typeId});
+		stages.insert({StageIndex(stage, subrenders.size()), typeId});
 
 		// Then, add the Subrender
-		m_subrenders[typeId] = std::move(subrender);
-		return static_cast<T *>(m_subrenders[typeId].get());
+		subrenders[typeId] = std::move(subrender);
+		return static_cast<T *>(subrenders[typeId].get());
 	}
 
 	/**
@@ -64,13 +64,14 @@ public:
 		RemoveSubrenderStage(typeId);
 
 		// Then, remove the Subrender.
-		m_subrenders.erase(typeId);
+		subrenders.erase(typeId);
 	}
 
 	/**
 	 * Clears all subrenders.
 	 */
 	void Clear();
+	
 private:
 	using StageIndex = std::pair<Pipeline::Stage, std::size_t>;
 
@@ -83,10 +84,9 @@ private:
 	 */
 	void RenderStage(const Pipeline::Stage &stage, const CommandBuffer &commandBuffer);
 
-	// List of all Subrenders.
-	std::unordered_map<TypeId, std::unique_ptr<Subrender>> m_subrenders;
-
-	// List of subrender stages.
-	std::multimap<StageIndex, TypeId> m_stages;
+	/// List of all Subrenders.
+	std::unordered_map<TypeId, std::unique_ptr<Subrender>> subrenders;
+	/// List of subrender stages.
+	std::multimap<StageIndex, TypeId> stages;
 };
 }

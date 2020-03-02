@@ -36,24 +36,24 @@ public:
 	 */
 	bool IsInBox(const Vector3f &position, float radius) const;
 
-	const Matrix4 &GetProjectionViewMatrix() const { return m_projectionViewMatrix; }
+	const Matrix4 &GetProjectionViewMatrix() const { return projectionViewMatrix; }
 
 	/**
 	 * This biased projection-view matrix is used to convert fragments into "shadow map space" when rendering the main render pass.
 	 * @return The to-shadow-map-space matrix.
 	 */
-	const Matrix4 &GetToShadowMapSpaceMatrix() const { return m_shadowMapSpaceMatrix; }
+	const Matrix4 &GetToShadowMapSpaceMatrix() const { return shadowMapSpaceMatrix; }
 
 	/**
 	 * Gets the light's "view" matrix
 	 * @return The light's "view" matrix.
 	 */
-	const Matrix4 &GetLightSpaceTransform() const { return m_lightViewMatrix; }
-	const Vector3f &GetMinExtents() const { return m_minExtents; }
-	const Vector3f &GetMaxExtents() const { return m_maxExtents; }
-	float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
-	float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
-	float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
+	const Matrix4 &GetLightSpaceTransform() const { return lightViewMatrix; }
+	const Vector3f &GetMinExtents() const { return minExtents; }
+	const Vector3f &GetMaxExtents() const { return maxExtents; }
+	float GetWidth() const { return maxExtents.x - minExtents.x; }
+	float GetHeight() const { return maxExtents.y - minExtents.y; }
+	float GetDepth() const { return maxExtents.z - minExtents.z; }
 
 private:
 	void UpdateShadowBox(const Camera &camera);
@@ -92,21 +92,20 @@ private:
 	void UpdateLightViewMatrix();
 	void UpdateViewShadowMatrix();
 
-	Vector3f m_lightDirection;
-	float m_shadowOffset = 0.0f;
-	float m_shadowDistance = 0.0f;;
+	Vector3f lightDirection;
+	float shadowOffset = 0.0f;
+	float shadowDistance = 0.0f;
 
-	Matrix4 m_projectionMatrix;
-	Matrix4 m_lightViewMatrix;
-	Matrix4 m_projectionViewMatrix;
-	Matrix4 m_shadowMapSpaceMatrix;
-	Matrix4 m_offset;
-	Vector3f m_centre;
+	Matrix4 projectionMatrix;
+	Matrix4 lightViewMatrix;
+	Matrix4 projectionViewMatrix;
+	Matrix4 shadowMapSpaceMatrix;
+	Matrix4 offset;
+	Vector3f centre;
 
-	float m_farHeight = 0.0f, m_farWidth = 0.0f;
-	float m_nearHeight = 0.0f, m_nearWidth = 0.0f;
+	float farHeight = 0.0f, farWidth = 0.0f;
+	float nearHeight = 0.0f, nearWidth = 0.0f;
 
-	Vector3f m_minExtents;
-	Vector3f m_maxExtents;
+	Vector3f minExtents, maxExtents;
 };
 }

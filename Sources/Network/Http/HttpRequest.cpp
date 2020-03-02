@@ -4,29 +4,29 @@
 
 namespace acid {
 HttpRequest::HttpRequest(const std::string &uri, Method method, const std::string &body) :
-	m_method(method),
-	m_majorVersion(1),
-	m_minorVersion(0) {
+	method(method),
+	majorVersion(1),
+	minorVersion(0) {
 	SetUri(uri);
 	SetBody(body);
 }
 
 void HttpRequest::SetField(const std::string &field, const std::string &value) {
-	m_fields[String::Lowercase(field)] = value;
+	fields[String::Lowercase(field)] = value;
 }
 
 void HttpRequest::SetUri(const std::string &uri) {
-	m_uri = uri;
+	this->uri = uri;
 
 	// Make sure it starts with a '/'.
-	if (m_uri.empty() || (m_uri[0] != '/')) {
-		m_uri.insert(0, "/");
+	if (this->uri.empty() || (this->uri[0] != '/')) {
+		this->uri.insert(0, "/");
 	}
 }
 
 void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor) {
-	m_majorVersion = major;
-	m_minorVersion = minor;
+	majorVersion = major;
+	minorVersion = minor;
 }
 
 std::string HttpRequest::Prepare() const {
@@ -35,7 +35,7 @@ std::string HttpRequest::Prepare() const {
 	// Convert the method to its string representation.
 	std::string method;
 
-	switch (m_method) {
+	switch (this->method) {
 	case Method::Get:
 		method = "GET";
 		break;
@@ -66,11 +66,11 @@ std::string HttpRequest::Prepare() const {
 	}
 
 	// Write the first line containing the request type.
-	out << method << " " << m_uri << " ";
-	out << "HTTP/" << m_majorVersion << "." << m_minorVersion << "\r\n";
+	out << method << " " << uri << " ";
+	out << "HTTP/" << majorVersion << "." << minorVersion << "\r\n";
 
 	// Write fields.
-	for (const auto &[fieldName, fieldValue] : m_fields) {
+	for (const auto &[fieldName, fieldValue] : fields) {
 		out << fieldName << ": " << fieldValue << "\r\n";
 	}
 
@@ -78,12 +78,12 @@ std::string HttpRequest::Prepare() const {
 	out << "\r\n";
 
 	// Add the body.
-	out << m_body;
+	out << body;
 
 	return out.str();
 }
 
 bool HttpRequest::HasField(const std::string &field) const {
-	return m_fields.find(String::Lowercase(field)) != m_fields.end();
+	return fields.find(String::Lowercase(field)) != fields.end();
 }
 }

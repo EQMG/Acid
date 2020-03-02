@@ -16,7 +16,7 @@ public:
 	bool IsPaused() const override;
 
 private:
-	UiStartLogo m_uiStartLogo;
-	OverlayDebug m_overlayDebug;
+	UiStartLogo uiStartLogo;
+	OverlayDebug overlayDebug;
 };
 }

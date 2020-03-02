@@ -4,10 +4,8 @@
 #include <Scenes/Entity.hpp>
 
 namespace test {
-bool HeightDespawn::registered = Register("heightDespawn");
-
 HeightDespawn::HeightDespawn(float removeHeight) :
-	m_removeHeight(removeHeight) {
+	removeHeight(removeHeight) {
 }
 
 void HeightDespawn::Start() {
@@ -15,19 +13,19 @@ void HeightDespawn::Start() {
 
 void HeightDespawn::Update() {
 	if (auto transform = GetEntity()->GetComponent<Transform>(); 
-		transform && transform->GetPosition().m_y < m_removeHeight) {
+		transform && transform->GetPosition().y < removeHeight) {
 		// TODO: Fix collider delete crash and crash from children not seeing this parent.
 		//GetEntity()->SetRemoved(true);
 	}
 }
 
 const Node &operator>>(const Node &node, HeightDespawn &heightDespawn) {
-	node["removeHeight"].Get(heightDespawn.m_removeHeight);
+	node["removeHeight"].Get(heightDespawn.removeHeight);
 	return node;
 }
 
 Node &operator<<(Node &node, const HeightDespawn &heightDespawn) {
-	node["removeHeight"].Set(heightDespawn.m_removeHeight);
+	node["removeHeight"].Set(heightDespawn.removeHeight);
 	return node;
 }
 }

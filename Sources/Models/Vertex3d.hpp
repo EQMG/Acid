@@ -9,9 +9,9 @@ class ACID_EXPORT Vertex3d {
 public:
 	Vertex3d() = default;
 	Vertex3d(const Vector3f &position, const Vector2f &uv, const Vector3f &normal) :
-		m_position(position),
-		m_uv(uv),
-		m_normal(normal) {
+		position(position),
+		uv(uv),
+		normal(normal) {
 	}
 
 	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
@@ -19,24 +19,24 @@ public:
 			{baseBinding, sizeof(Vertex3d), VK_VERTEX_INPUT_RATE_VERTEX}
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex3d, m_position)},
-			{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex3d, m_uv)},
-			{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex3d, m_normal)}
+			{0, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex3d, position)},
+			{1, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex3d, uv)},
+			{2, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex3d, normal)}
 		};
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
 	bool operator==(const Vertex3d &other) const {
-		return m_position == other.m_position && m_uv == other.m_uv && m_normal == other.m_normal;
+		return position == other.position && uv == other.uv && normal == other.normal;
 	}
 
 	bool operator!=(const Vertex3d &other) const {
 		return !operator==(other);
 	}
 
-	Vector3f m_position;
-	Vector2f m_uv;
-	Vector3f m_normal;
+	Vector3f position;
+	Vector2f uv;
+	Vector3f normal;
 };
 }
 
@@ -45,9 +45,9 @@ template<>
 struct hash<acid::Vertex3d> {
 	size_t operator()(const acid::Vertex3d &vertex) const noexcept {
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vertex.m_position);
-		acid::Maths::HashCombine(seed, vertex.m_uv);
-		acid::Maths::HashCombine(seed, vertex.m_normal);
+		acid::Maths::HashCombine(seed, vertex.position);
+		acid::Maths::HashCombine(seed, vertex.uv);
+		acid::Maths::HashCombine(seed, vertex.normal);
 		return seed;
 	}
 };

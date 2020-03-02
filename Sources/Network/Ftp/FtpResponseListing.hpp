@@ -21,10 +21,10 @@ public:
 	 * Return the array of directory/file names.
 	 * @return Array containing the requested listing.
 	 */
-	const std::vector<std::string> &GetListing() const { return m_listing; }
+	const std::vector<std::string> &GetListing() const { return listing; }
 
 private:
 	/// Directory/file names extracted from the data.
-	std::vector<std::string> m_listing;
+	std::vector<std::string> listing;
 };
 }

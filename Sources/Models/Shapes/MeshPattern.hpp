@@ -13,9 +13,9 @@ protected:
 
 	void GenerateMesh();
 
-	float m_sideLength;
-	float m_squareSize;
-	uint32_t m_vertexCount;
-	float m_uvScale;
+	float sideLength;
+	float squareSize;
+	uint32_t vertexCount;
+	float uvScale;
 };
 }

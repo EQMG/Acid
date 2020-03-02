@@ -8,6 +8,7 @@ namespace acid {
  * @brief Resource that represents a GLTF model.
  */
 class ACID_EXPORT ModelGltf : public Model::Registrar<ModelGltf> {
+	inline static const bool Registered = Register("gltf", ".gltf");
 public:
 	/**
 	 * Creates a new GLTF model, or finds one with the same values.
@@ -36,15 +37,13 @@ public:
 private:
 	void Load();
 	
-	static bool registered;
-
 	//struct Node;
 	//struct Skin;
 
-	std::filesystem::path m_filename;
+	std::filesystem::path filename;
 
 	//std::vector<Node *> nodes;
 	//std::vector<Node *> linearNodes;
-	//std::vector<Skin *> m_skins;
+	//std::vector<Skin *> skins;
 };
 }

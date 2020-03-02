@@ -4,77 +4,76 @@
 
 namespace acid {
 void Text::UpdateObject() {
-	m_dirty |= GetScreenSize() != m_lastSize;
-	if (m_dirty)
+	dirty |= GetScreenSize() != lastSize;
+	if (dirty)
 		LoadText();
 
 	// Updates uniforms.
-	m_uniformObject.Push("modelView", GetModelView());
-	m_uniformObject.Push("alpha", GetScreenAlpha());
+	uniformObject.Push("modelView", GetModelView());
+	uniformObject.Push("alpha", GetScreenAlpha());
 
-	m_uniformObject.Push("colour", m_textColour);
-	m_uniformObject.Push("scale", 0.5f * GetScreenSize().m_x / (float)m_fontType->GetSize());
+	uniformObject.Push("colour", textColour);
+	uniformObject.Push("scale", 0.5f * GetScreenSize().x / (float)fontType->GetSize());
 }
 
 bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
 	// Gets if this should be rendered.
-	if (!m_model || !m_fontType || !IsEnabled()) {
+	/*if (!model || !fontType || !IsEnabled())
 		return false;
-	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformObject", m_uniformObject);
-	m_descriptorSet.Push("samplerMsdf", m_fontType->GetImage());
+	descriptorSet.Push("UniformObject", uniformObject);
+	descriptorSet.Push("samplerMsdf", fontType->GetImage());
 
-	if (!m_descriptorSet.Update(pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return false;
-	}
 
 	auto scissor = GetScissor();
 	VkRect2D scissorRect = {};
-	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->m_x) : 0;
-	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->m_y) : 0;
-	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->m_z) : Window::Get()->GetSize().m_x;
-	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->m_w) : Window::Get()->GetSize().m_y;
+	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->x) : 0;
+	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->y) : 0;
+	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->z) : Window::Get()->GetSize().x;
+	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->w) : Window::Get()->GetSize().y;
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.
-	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-	return m_model->CmdRender(commandBuffer);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	return model->CmdRender(commandBuffer);*/
+	return false;
 }
 
 void Text::SetFontSize(float fontSize) {
-	m_dirty |= m_fontSize != fontSize;
-	m_fontSize = fontSize;
+	dirty |= this->fontSize != fontSize;
+	this->fontSize = fontSize;
 }
 
 void Text::SetString(const std::string &string) {
-	m_dirty |= m_string != string;
-	m_string = string;
+	dirty |= this->string != string;
+	this->string = string;
 }
 
 void Text::SetJustify(Justify justify) {
-	m_dirty |= m_justify != justify;
-	m_justify = justify;
+	dirty |= this->justify != justify;
+	this->justify = justify;
 }
 
 void Text::SetKerning(float kerning) {
-	m_dirty |= m_kerning != kerning;
-	m_kerning = kerning;
+	dirty |= this->kerning != kerning;
+	this->kerning = kerning;
 }
 
 void Text::SetLeading(float leading) {
-	m_dirty |= m_leading != leading;
-	m_leading = leading;
+	dirty |= this->leading != leading;
+	this->leading = leading;
 }
 
 void Text::SetFontType(const std::shared_ptr<FontType> &fontType) {
-	m_dirty |= m_fontType == fontType;
-	m_fontType = fontType;
+	dirty |= this->fontType == fontType;
+	this->fontType = fontType;
 }
 
 bool Text::IsLoaded() const {
-	return !m_string.empty() && m_model;
+	return !string.empty() && model;
 }
 
 void Text::LoadText() {
@@ -82,16 +81,16 @@ void Text::LoadText() {
 	auto debugStart = Time::Now();
 #endif*/
 
-	if (m_string.empty()) {
-		m_model = nullptr;
+	if (string.empty()) {
+		model = nullptr;
 		return;
 	}
 
-	m_lastSize = GetScreenSize();
+	lastSize = GetScreenSize();
 	
 	// Creates mesh data.
 	auto lines = CreateStructure();
-	m_numberLines = static_cast<uint32_t>(lines.size());
+	numberLines = static_cast<uint32_t>(lines.size());
 	auto vertices = CreateQuad(lines);
 
 	vertices.emplace_back(Vector2f(0.0f, 1.0f), Vector3f(0.0f, 0.0f, 0.0f));
@@ -102,22 +101,22 @@ void Text::LoadText() {
 	vertices.emplace_back(Vector2f(1.0f, 1.0f), Vector3f(1.0f, 0.0f, 0.0f));
 
 	// Loads the mesh data.
-	m_model = std::make_unique<Model>(vertices);
-	m_dirty = false;
+	model = std::make_unique<Model>(vertices);
+	dirty = false;
 
 /*#if defined(ACID_DEBUG)
-	Log::Out("Text mesh with ", m_string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Text mesh with ", string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif*/
 }
 
 std::vector<Text::Line> Text::CreateStructure() const {
-	/*auto maxLength = m_lastSize.m_x;// / m_fontSize * m_fontType->GetMetafile()->GetMaxAdvance();
+	/*auto maxLength = lastSize.x;// / fontSize * fontType->GetMetafile()->GetMaxAdvance();
 
 	std::vector<Line> lines;
-	Line currentLine(m_fontType->GetSpaceWidth(), maxLength);
+	Line currentLine(fontType->GetSpaceWidth(), maxLength);
 	Word currentWord;
 
-	auto formattedText = String::ReplaceAll(m_string, "\t", "	");
+	auto formattedText = String::ReplaceAll(string, "\t", "	");
 	auto textLines = String::Split(formattedText, '\n');
 
 	for (uint32_t i = 0; i < textLines.size(); i++) {
@@ -131,7 +130,7 @@ std::vector<Text::Line> Text::CreateStructure() const {
 			if (ascii == FontType::SpaceAscii) {
 				if (!currentLine.AddWord(currentWord)) {
 					lines.emplace_back(currentLine);
-					currentLine = {m_fontType->GetSpaceWidth(), maxLength};
+					currentLine = {fontType->GetSpaceWidth(), maxLength};
 					currentLine.AddWord(currentWord);
 				}
 
@@ -139,15 +138,15 @@ std::vector<Text::Line> Text::CreateStructure() const {
 				continue;
 			}
 
-			if (auto character = m_fontType->GetCharacter(ascii)) {
-				currentWord.AddCharacter(*character, m_kerning);
+			if (auto character = fontType->GetCharacter(ascii)) {
+				currentWord.AddCharacter(*character, kerning);
 			}
 		}
 
 		if (i != textLines.size() - 1) {
 			auto wordAdded = currentLine.AddWord(currentWord);
 			lines.emplace_back(currentLine);
-			currentLine = {m_fontType->GetSpaceWidth(), maxLength};
+			currentLine = {fontType->GetSpaceWidth(), maxLength};
 
 			if (!wordAdded) {
 				currentLine.AddWord(currentWord);
@@ -167,7 +166,7 @@ void Text::CompleteStructure(std::vector<Line> &lines, Line &currentLine, const 
 
 	if (!added) {
 		lines.emplace_back(currentLine);
-		currentLine = {m_fontType->GetSpaceWidth(), maxLength};
+		currentLine = {fontType->GetSpaceWidth(), maxLength};
 		currentLine.AddWord(currentWord);
 	}
 
@@ -182,35 +181,35 @@ std::vector<VertexText> Text::CreateQuad(const std::vector<Line> &lines) const {
 	auto lineOrder = static_cast<int32_t>(lines.size());
 
 	for (const auto &line : lines) {
-		switch (m_justify) {
+		switch (justify) {
 		case Justify::Left:
 			cursorX = 0.0f;
 			break;
 		case Justify::Centre:
-			cursorX = (line.m_maxLength - line.m_currentLineLength) / 2.0f;
+			cursorX = (line.maxLength - line.currentLineLength) / 2.0f;
 			break;
 		case Justify::Right:
-			cursorX = line.m_maxLength - line.m_currentLineLength;
+			cursorX = line.maxLength - line.currentLineLength;
 			break;
 		case Justify::Fully:
 			cursorX = 0.0f;
 			break;
 		}
 
-		for (const auto &word : line.m_words) {
-			for (const auto &letter : word.m_glyphs) {
+		for (const auto &word : line.words) {
+			for (const auto &letter : word.glyphs) {
 				AddVerticesForGlyph(cursorX, cursorY, letter, vertices);
-				cursorX += m_kerning + letter.m_advance;
+				cursorX += kerning + letter.advance;
 			}
 
-			if (m_justify == Justify::Fully && lineOrder > 1) {
-				cursorX += (line.m_maxLength - line.m_currentWordsLength) / line.m_words.size();
+			if (justify == Justify::Fully && lineOrder > 1) {
+				cursorX += (line.maxLength - line.currentWordsLength) / line.words.size();
 			} else {
-				cursorX += m_fontType->GetSpaceWidth();
+				cursorX += fontType->GetSpaceWidth();
 			}
 		}
 
-		cursorY += m_leading + FontType::LineHeight;
+		cursorY += leading + FontType::LineHeight;
 		lineOrder--;
 	}
 
@@ -219,15 +218,15 @@ std::vector<VertexText> Text::CreateQuad(const std::vector<Line> &lines) const {
 }
 
 void Text::AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<VertexText> &vertices) {
-	/*auto vertexX = cursorX + glyph.m_offsetX;
-	auto vertexY = cursorY + glyph.m_offsetY;
-	auto vertexMaxX = vertexX + glyph.m_sizeX;
-	auto vertexMaxY = vertexY + glyph.m_sizeY;
+	/*auto vertexX = cursorX + glyph.offsetX;
+	auto vertexY = cursorY + glyph.offsetY;
+	auto vertexMaxX = vertexX + glyph.sizeX;
+	auto vertexMaxY = vertexY + glyph.sizeY;
 
-	auto textureX = glyph.m_textureCoordX;
-	auto textureY = glyph.m_textureCoordY;
-	auto textureMaxX = glyph.m_maxTextureCoordX;
-	auto textureMaxY = glyph.m_maxTextureCoordY;
+	auto textureX = glyph.textureCoordX;
+	auto textureY = glyph.textureCoordY;
+	auto textureMaxX = glyph.maxTextureCoordX;
+	auto textureMaxY = glyph.maxTextureCoordY;
 
 	AddVertex(vertexX, vertexY, textureX, textureY, vertices);
 	AddVertex(vertexMaxX, vertexY, textureMaxX, textureY, vertices);

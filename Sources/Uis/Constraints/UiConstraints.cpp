@@ -13,10 +13,10 @@ UiConstraints::UiConstraints() {
 
 bool UiConstraints::Update(const UiConstraints *parent) {
 	bool dirty = false;
-	dirty |= m_x->Update(this, parent);
-	dirty |= m_y->Update(this, parent);
-	dirty |= m_width->Update(this, parent);
-	dirty |= m_height->Update(this, parent);
+	dirty |= x->Update(this, parent);
+	dirty |= y->Update(this, parent);
+	dirty |= width->Update(this, parent);
+	dirty |= height->Update(this, parent);
 	return dirty;
 }
 }

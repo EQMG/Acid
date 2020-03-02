@@ -6,7 +6,7 @@
 
 namespace acid {
 Buffer::Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, const void *data) :
-	m_size(size) {
+	size(size) {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
 	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
@@ -23,17 +23,17 @@ Buffer::Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlag
 	bufferCreateInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 	bufferCreateInfo.queueFamilyIndexCount = static_cast<uint32_t>(queueFamily.size());
 	bufferCreateInfo.pQueueFamilyIndices = queueFamily.data();
-	Graphics::CheckVk(vkCreateBuffer(*logicalDevice, &bufferCreateInfo, nullptr, &m_buffer));
+	Graphics::CheckVk(vkCreateBuffer(*logicalDevice, &bufferCreateInfo, nullptr, &buffer));
 
 	// Create the memory backing up the buffer handle.
 	VkMemoryRequirements memoryRequirements;
-	vkGetBufferMemoryRequirements(*logicalDevice, m_buffer, &memoryRequirements);
+	vkGetBufferMemoryRequirements(*logicalDevice, buffer, &memoryRequirements);
 
 	VkMemoryAllocateInfo memoryAllocateInfo = {};
 	memoryAllocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 	memoryAllocateInfo.allocationSize = memoryRequirements.size;
 	memoryAllocateInfo.memoryTypeIndex = FindMemoryType(memoryRequirements.memoryTypeBits, properties);
-	Graphics::CheckVk(vkAllocateMemory(*logicalDevice, &memoryAllocateInfo, nullptr, &m_bufferMemory));
+	Graphics::CheckVk(vkAllocateMemory(*logicalDevice, &memoryAllocateInfo, nullptr, &bufferMemory));
 
 	// If a pointer to the buffer data has been passed, map the buffer and copy over the data.
 	if (data) {
@@ -45,7 +45,7 @@ Buffer::Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlag
 		if ((properties & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) == 0) {
 			VkMappedMemoryRange mappedMemoryRange = {};
 			mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-			mappedMemoryRange.memory = m_bufferMemory;
+			mappedMemoryRange.memory = bufferMemory;
 			mappedMemoryRange.offset = 0;
 			mappedMemoryRange.size = size;
 			vkFlushMappedMemoryRanges(*logicalDevice, 1, &mappedMemoryRange);
@@ -55,24 +55,24 @@ Buffer::Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlag
 	}
 
 	// Attach the memory to the buffer object.
-	Graphics::CheckVk(vkBindBufferMemory(*logicalDevice, m_buffer, m_bufferMemory, 0));
+	Graphics::CheckVk(vkBindBufferMemory(*logicalDevice, buffer, bufferMemory, 0));
 }
 
 Buffer::~Buffer() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	vkDestroyBuffer(*logicalDevice, m_buffer, nullptr);
-	vkFreeMemory(*logicalDevice, m_bufferMemory, nullptr);
+	vkDestroyBuffer(*logicalDevice, buffer, nullptr);
+	vkFreeMemory(*logicalDevice, bufferMemory, nullptr);
 }
 
 void Buffer::MapMemory(void **data) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	Graphics::CheckVk(vkMapMemory(*logicalDevice, m_bufferMemory, 0, m_size, 0, data));
+	Graphics::CheckVk(vkMapMemory(*logicalDevice, bufferMemory, 0, size, 0, data));
 }
 
 void Buffer::UnmapMemory() const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-	vkUnmapMemory(*logicalDevice, m_bufferMemory);
+	vkUnmapMemory(*logicalDevice, bufferMemory);
 }
 
 uint32_t Buffer::FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties) {

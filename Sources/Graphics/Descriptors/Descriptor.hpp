@@ -11,15 +11,15 @@ namespace acid {
 class ACID_EXPORT OffsetSize {
 public:
 	OffsetSize(uint32_t offset, uint32_t size) :
-		m_offset(offset),
-		m_size(size) {
+		offset(offset),
+		size(size) {
 	}
 
-	uint32_t GetOffset() const { return m_offset; }
-	uint32_t GetSize() const { return m_size; }
+	uint32_t GetOffset() const { return offset; }
+	uint32_t GetSize() const { return size; }
 
 	bool operator==(const OffsetSize &other) const {
-		return m_offset == other.m_offset && m_size == other.m_size;
+		return offset == other.offset && size == other.size;
 	}
 
 	bool operator!=(const OffsetSize &other) const {
@@ -27,30 +27,30 @@ public:
 	}
 
 private:
-	uint32_t m_offset;
-	uint32_t m_size;
+	uint32_t offset;
+	uint32_t size;
 };
 
 class ACID_EXPORT WriteDescriptorSet {
 public:
 	WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorImageInfo &imageInfo) :
-		m_writeDescriptorSet(writeDescriptorSet),
-		m_imageInfo(std::make_unique<VkDescriptorImageInfo>(imageInfo)) {
-		m_writeDescriptorSet.pImageInfo = m_imageInfo.get();
+		writeDescriptorSet(writeDescriptorSet),
+		imageInfo(std::make_unique<VkDescriptorImageInfo>(imageInfo)) {
+		this->writeDescriptorSet.pImageInfo = this->imageInfo.get();
 	}
 
 	WriteDescriptorSet(const VkWriteDescriptorSet &writeDescriptorSet, const VkDescriptorBufferInfo &bufferInfo) :
-		m_writeDescriptorSet(writeDescriptorSet),
-		m_bufferInfo(std::make_unique<VkDescriptorBufferInfo>(bufferInfo)) {
-		m_writeDescriptorSet.pBufferInfo = m_bufferInfo.get();
+		writeDescriptorSet(writeDescriptorSet),
+		bufferInfo(std::make_unique<VkDescriptorBufferInfo>(bufferInfo)) {
+		this->writeDescriptorSet.pBufferInfo = this->bufferInfo.get();
 	}
 
-	const VkWriteDescriptorSet &GetWriteDescriptorSet() const { return m_writeDescriptorSet; }
+	const VkWriteDescriptorSet &GetWriteDescriptorSet() const { return writeDescriptorSet; }
 
 private:
-	VkWriteDescriptorSet m_writeDescriptorSet;
-	std::unique_ptr<VkDescriptorImageInfo> m_imageInfo;
-	std::unique_ptr<VkDescriptorBufferInfo> m_bufferInfo;
+	VkWriteDescriptorSet writeDescriptorSet;
+	std::unique_ptr<VkDescriptorImageInfo> imageInfo;
+	std::unique_ptr<VkDescriptorBufferInfo> bufferInfo;
 };
 
 class ACID_EXPORT Descriptor {

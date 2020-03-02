@@ -15,11 +15,11 @@ public:
 	void RefillWeightList(const std::vector<float> &topWeights, float total);
 	void RemoveExcessJointIds(uint32_t max);
 
-	const std::vector<uint32_t> &GetJointIds() const { return m_jointIds; }
-	const std::vector<float> &GetWeights() const { return m_weights; }
+	const std::vector<uint32_t> &GetJointIds() const { return jointIds; }
+	const std::vector<float> &GetWeights() const { return weights; }
 
 private:
-	std::vector<uint32_t> m_jointIds;
-	std::vector<float> m_weights;
+	std::vector<uint32_t> jointIds;
+	std::vector<float> weights;
 };
 }

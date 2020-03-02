@@ -25,26 +25,24 @@ public:
 
 	void SetBackgroundColor(const Colour &colour);
 
-	const BitMask<UiManipulate> &GetManipulate() const { return m_manipulate; }
-	void SetManipulate(const BitMask<UiManipulate> &manipulate) { m_manipulate = manipulate; }
+	const BitMask<UiManipulate> &GetManipulate() const { return manipulate; }
+	void SetManipulate(const BitMask<UiManipulate> &manipulate) { this->manipulate = manipulate; }
 	
-	const BitMask<ScrollBar> &GetScrollBars() const { return m_scrollBars; }
-	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { m_scrollBars = scrollBars; }
+	const BitMask<ScrollBar> &GetScrollBars() const { return scrollBars; }
+	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { this->scrollBars = scrollBars; }
 
 private:
 	void SetScissor(UiObject *object, bool checkSize = false);
 
-	Gui m_background;
-	UiObject m_content;
+	Gui background;
+	UiObject content;
 
-	Gui m_resizeHandle;
-	BitMask<UiManipulate> m_manipulate;
+	Gui resizeHandle;
+	BitMask<UiManipulate> manipulate;
 
-	UiScrollBar m_scrollX;
-	UiScrollBar m_scrollY;
-	BitMask<ScrollBar> m_scrollBars;
+	UiScrollBar scrollX, scrollY;
+	BitMask<ScrollBar> scrollBars;
 
-	Vector2f m_min;
-	Vector2f m_max;
+	Vector2f min, max;
 };
 }

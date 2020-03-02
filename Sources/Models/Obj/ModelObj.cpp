@@ -7,19 +7,14 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelObj::registered = Register("obj", ".obj");
-
 class MaterialStreamReader : public tinyobj::MaterialReader {
 public:
 	explicit MaterialStreamReader(std::filesystem::path folder) :
-		m_folder(std::move(folder)) {
+		folder(std::move(folder)) {
 	}
 
 	bool operator()(const std::string &matId, std::vector<tinyobj::material_t> *materials, std::map<std::string, int> *matMap, std::string *warn, std::string *err) override {
-		(void)err;
-		(void)matId;
-
-		auto filepath = m_folder / matId;
+		auto filepath = folder / matId;
 
 		if (!Files::ExistsInPath(filepath)) {
 			std::stringstream ss;
@@ -38,7 +33,7 @@ public:
 	}
 
 private:
-	std::filesystem::path m_folder;
+	std::filesystem::path folder;
 };
 
 std::shared_ptr<ModelObj> ModelObj::Create(const Node &node) {
@@ -60,24 +55,24 @@ std::shared_ptr<ModelObj> ModelObj::Create(const std::filesystem::path &filename
 }
 
 ModelObj::ModelObj(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename)) {
+	filename(std::move(filename)) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelObj &model) {
-	node["filename"].Get(model.m_filename);
+	node["filename"].Get(model.filename);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelObj &model) {
-	node["filename"].Set(model.m_filename);
+	node["filename"].Set(model.filename);
 	return node;
 }
 
 void ModelObj::Load() {
-	if (m_filename.empty()) {
+	if (filename.empty()) {
 		return;
 	}
 
@@ -85,8 +80,8 @@ void ModelObj::Load() {
 	auto debugStart = Time::Now();
 #endif
 
-	auto folder = m_filename.parent_path();
-	IFStream inStream(m_filename);
+	auto folder = filename.parent_path();
+	IFStream inStream(filename);
 	MaterialStreamReader materialReader(folder);
 
 	tinyobj::attrib_t attrib;
@@ -125,7 +120,7 @@ void ModelObj::Load() {
 	}
 
 #if defined(ACID_DEBUG)
-	Log::Out("Model ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Model ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
 	Initialize(vertices, indices);

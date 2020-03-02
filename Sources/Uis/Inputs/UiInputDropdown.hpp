@@ -12,29 +12,29 @@ public:
 
 	void UpdateObject() override;
 
-	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
+	const std::string &GetTitle() const { return textTitle.GetString(); }
+	void SetTitle(const std::string &string) { textTitle.SetString(string); }
 
-	uint32_t GetValue() const { return m_value; }
+	uint32_t GetValue() const { return value; }
 	void SetValue(uint32_t value);
 
-	const std::vector<std::string> &GetOptions() const { return m_options; }
+	const std::vector<std::string> &GetOptions() const { return options; }
 	void SetOptions(const std::vector<std::string> &options);
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t)> &OnValue() { return m_onValue; }
+	Delegate<void(uint32_t)> &OnValue() { return onValue; }
 
 private:
-	//Gui m_slider;
-	Gui m_background;
-	Text m_textTitle;
+	//Gui slider;
+	Gui background;
+	Text textTitle;
 
-	uint32_t m_value;
-	std::vector<std::string> m_options;
+	uint32_t value;
+	std::vector<std::string> options;
 
-	Delegate<void(uint32_t)> m_onValue;
+	Delegate<void(uint32_t)> onValue;
 };
 }

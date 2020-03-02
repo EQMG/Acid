@@ -4,27 +4,27 @@
 
 namespace acid {
 SkinLoader::SkinLoader(NodeConstView &&libraryControllers, uint32_t maxWeights) :
-	m_skinData(libraryControllers["controller"]["skin"]),
-	m_maxWeights(maxWeights) {
+	skinData(libraryControllers["controller"]["skin"]),
+	maxWeights(maxWeights) {
 	LoadJointsList();
 	auto weights = LoadWeights();
-	auto weightsDataNode = m_skinData["vertex_weights"];
+	auto weightsDataNode = skinData["vertex_weights"];
 	auto effectorJointCounts = GetEffectiveJointsCounts(weightsDataNode);
 	GetSkinWeights(weightsDataNode, effectorJointCounts, weights);
 }
 
 void SkinLoader::LoadJointsList() {
-	auto inputNode = m_skinData["vertex_weights"];
+	auto inputNode = skinData["vertex_weights"];
 	auto jointDataIdNode = inputNode["input"].GetPropertyWithValue("-semantic", "JOINT")["-source"].Get<std::string>().substr(1);
 	auto jointDataId = inputNode["input"].GetPropertyWithValue("-semantic", "JOINT")["-source"].Get<std::string>().substr(1);
-	auto jointsNode = m_skinData["source"].GetPropertyWithValue("-id", jointDataId)["Name_array"];
-	m_jointOrder = String::Split(jointsNode["#text"].Get<std::string>(), ' ');
+	auto jointsNode = skinData["source"].GetPropertyWithValue("-id", jointDataId)["Name_array"];
+	jointOrder = String::Split(jointsNode["#text"].Get<std::string>(), ' ');
 }
 
 std::vector<float> SkinLoader::LoadWeights() const {
-	auto inputNode = m_skinData["vertex_weights"];
+	auto inputNode = skinData["vertex_weights"];
 	auto weightsDataId = inputNode["input"].GetPropertyWithValue("-semantic", "WEIGHT")["-source"].Get<std::string>().substr(1);
-	auto weightsNode = m_skinData["source"].GetPropertyWithValue("-id", weightsDataId)["float_array"]["#text"];
+	auto weightsNode = skinData["source"].GetPropertyWithValue("-id", weightsDataId)["float_array"]["#text"];
 
 	auto rawDatas = String::Split(weightsNode.Get<std::string>(), ' ');
 	std::vector<float> weights(rawDatas.size());
@@ -60,8 +60,8 @@ void SkinLoader::GetSkinWeights(const Node &weightsDataNode, const std::vector<u
 			skinData.AddJointEffect(jointId, weights[weightId]);
 		}
 
-		skinData.LimitJointNumber(m_maxWeights);
-		m_vertexWeights.emplace_back(skinData);
+		skinData.LimitJointNumber(maxWeights);
+		vertexWeights.emplace_back(skinData);
 	}
 }
 }

@@ -15,6 +15,6 @@ public:
 	bool IsPaused() const override;
 
 private:
-	OverlayDebug m_overlayDebug;
+	OverlayDebug overlayDebug;
 };
 }

@@ -32,40 +32,39 @@ public:
 
 	bool operator<(const Particle &other) const;
 
-	bool IsAlive() const { return m_transparency > 0.0f; }
-	const std::shared_ptr<ParticleType> &GetParticleType() const { return m_particleType; }
-	const Vector3f &GetPosition() const { return m_position; }
-	const Vector3f &GetVelocity() const { return m_velocity; }
-	const Vector3f &GetChange() const { return m_change; }
-	float GetLifeLength() const { return m_lifeLength; }
-	float GetRotation() const { return m_rotation; }
-	float GetScale() const { return m_scale; }
-	float GetGravityEffect() const { return m_gravityEffect; }
-	float GetElapsedTime() const { return m_elapsedTime; }
-	float GetTransparency() const { return m_transparency; }
-	float DistanceToCamera() const { return m_distanceToCamera; }
+	bool IsAlive() const { return transparency > 0.0f; }
+	const std::shared_ptr<ParticleType> &GetParticleType() const { return particleType; }
+	const Vector3f &GetPosition() const { return position; }
+	const Vector3f &GetVelocity() const { return velocity; }
+	const Vector3f &GetChange() const { return change; }
+	float GetLifeLength() const { return lifeLength; }
+	float GetRotation() const { return rotation; }
+	float GetScale() const { return scale; }
+	float GetGravityEffect() const { return gravityEffect; }
+	float GetElapsedTime() const { return elapsedTime; }
+	float GetTransparency() const { return transparency; }
+	float DistanceToCamera() const { return distanceToCamera; }
 
 private:
 	Vector2f CalculateImageOffset(int32_t index) const;
 
-	std::shared_ptr<ParticleType> m_particleType;
+	std::shared_ptr<ParticleType> particleType;
 
-	Vector3f m_position;
-	Vector3f m_velocity;
-	Vector3f m_change;
+	Vector3f position;
+	Vector3f velocity;
+	Vector3f change;
 
-	Vector2f m_imageOffset1;
-	Vector2f m_imageOffset2;
+	Vector2f imageOffset1, imageOffset2;
 
-	float m_lifeLength;
-	float m_stageCycles;
-	float m_rotation;
-	float m_scale;
-	float m_gravityEffect;
+	float lifeLength;
+	float stageCycles;
+	float rotation;
+	float scale;
+	float gravityEffect;
 
-	float m_elapsedTime = 0.0f;
-	float m_transparency = 1.0f;
-	float m_imageBlendFactor = 0.0f;
-	float m_distanceToCamera = 0.0f;
+	float elapsedTime = 0.0f;
+	float transparency = 1.0f;
+	float imageBlendFactor = 0.0f;
+	float distanceToCamera = 0.0f;
 };
 }

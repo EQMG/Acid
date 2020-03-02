@@ -18,10 +18,10 @@ public:
 	 * Get the directory returned in the response.
 	 * @return Directory name.
 	 */
-	const std::string &GetDirectory() const { return m_directory; }
+	const std::string &GetDirectory() const { return directory; }
 
 private:
 	/// Directory extracted from the response message.
-	std::string m_directory;
+	std::string directory;
 };
 }

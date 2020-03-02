@@ -33,8 +33,8 @@ public:
 
 private:
 	/// Reference to the owner Ftp instance.
-	Ftp &m_ftp;
+	Ftp &ftp;
 	/// Socket used for data transfers.
-	TcpSocket m_dataSocket;
+	TcpSocket dataSocket;
 };
 }

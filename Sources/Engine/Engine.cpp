@@ -22,12 +22,12 @@ namespace acid {
 Engine *Engine::Instance = nullptr;
 
 Engine::Engine(std::string argv0, bool emptyRegister) :
-	m_argv0(std::move(argv0)),
-	m_version{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
-	m_fpsLimit(-1.0f),
-	m_running(true),
-	m_elapsedUpdate(15.77ms),
-	m_elapsedRender(-1s) {
+	argv0(std::move(argv0)),
+	version{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
+	fpsLimit(-1.0f),
+	running(true),
+	elapsedUpdate(15.77ms),
+	elapsedRender(-1s) {
 	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
@@ -63,24 +63,24 @@ Engine::~Engine() {
 }
 
 int32_t Engine::Run() {
-	while (m_running) {
-		if (m_app) {
-			if (!m_app->m_started) {
-				m_app->Start();
-				m_app->m_started = true;
+	while (running) {
+		if (app) {
+			if (!app->started) {
+				app->Start();
+				app->started = true;
 			}
 			
-			m_app->Update();
+			app->Update();
 		}
 
-		m_elapsedRender.SetInterval(Time::Seconds(1.0f / m_fpsLimit));
+		elapsedRender.SetInterval(Time::Seconds(1.0f / fpsLimit));
 
 		// Always-Update.
 		UpdateStage(Module::Stage::Always);
 
-		if (m_elapsedUpdate.GetElapsed() != 0) {
+		if (elapsedUpdate.GetElapsed() != 0) {
 			// Resets the timer.
-			m_ups.Update(Time::Now());
+			ups.Update(Time::Now());
 
 			// Pre-Update.
 			UpdateStage(Module::Stage::Pre);
@@ -92,24 +92,24 @@ int32_t Engine::Run() {
 			UpdateStage(Module::Stage::Post);
 
 			// Updates the engines delta.
-			m_deltaUpdate.Update();
+			deltaUpdate.Update();
 		}
 
 		// Prioritize updates over rendering.
-		//if (!Maths::AlmostEqual(m_elapsedUpdate.GetInterval().AsSeconds(), m_deltaUpdate.m_change.AsSeconds(), 0.8f)) {
+		//if (!Maths::AlmostEqual(elapsedUpdate.GetInterval().AsSeconds(), deltaUpdate.change.AsSeconds(), 0.8f)) {
 		//	continue;
 		//}
 
 		// Renders when needed.
-		if (m_elapsedRender.GetElapsed() != 0) {
+		if (elapsedRender.GetElapsed() != 0) {
 			// Resets the timer.
-			m_fps.Update(Time::Now());
+			fps.Update(Time::Now());
 
 			// Render
 			UpdateStage(Module::Stage::Render);
 
 			// Updates the render delta, and render time extension.
-			m_deltaRender.Update();
+			deltaRender.Update();
 		}
 	}
 

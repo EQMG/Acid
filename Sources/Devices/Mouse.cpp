@@ -8,22 +8,22 @@ namespace acid {
 static_assert(GLFW_MOUSE_BUTTON_LAST == static_cast<int16_t>(MouseButton::Last), "GLFW mouse button count does not match our mouse button enum count.");
 
 void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) {
-	Mouse::Get()->m_onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
+	Mouse::Get()->onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
 }
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos) {
-	Mouse::Get()->m_position = {xpos, ypos};
-	Mouse::Get()->m_onPosition(Mouse::Get()->m_position);
+	Mouse::Get()->position = {xpos, ypos};
+	Mouse::Get()->onPosition(Mouse::Get()->position);
 }
 
 void CallbackCursorEnter(GLFWwindow *window, int32_t entered) {
-	Mouse::Get()->m_windowSelected = entered == GLFW_TRUE;
-	Mouse::Get()->m_onEnter(entered == GLFW_TRUE);
+	Mouse::Get()->windowSelected = entered == GLFW_TRUE;
+	Mouse::Get()->onEnter(entered == GLFW_TRUE);
 }
 
 void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset) {
-	Mouse::Get()->m_scroll = {yoffset, yoffset};
-	Mouse::Get()->m_onScroll(Mouse::Get()->m_scroll);
+	Mouse::Get()->scroll = {yoffset, yoffset};
+	Mouse::Get()->onScroll(Mouse::Get()->scroll);
 }
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths) {
@@ -33,7 +33,7 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths) {
 		files[i] = paths[i];
 	}
 
-	Mouse::Get()->m_onDrop(files);
+	Mouse::Get()->onDrop(files);
 }
 
 Mouse::Mouse() {
@@ -45,23 +45,23 @@ Mouse::Mouse() {
 }
 
 Mouse::~Mouse() {
-	glfwDestroyCursor(m_cursor);
+	glfwDestroyCursor(cursor);
 }
 
 void Mouse::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
 	// Updates the position delta.
-	m_positionDelta = delta * (m_lastPosition - m_position);
-	m_lastPosition = m_position;
+	positionDelta = delta * (lastPosition - position);
+	lastPosition = position;
 
 	// Updates the scroll delta.
-	m_scrollDelta = delta * (m_lastScroll - m_scroll);
-	m_lastScroll = m_scroll;
+	scrollDelta = delta * (lastScroll - scroll);
+	lastScroll = scroll;
 }
 
 void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotspot) {
-	if (m_currentCursor && m_currentCursor->first == filename && m_currentCursor->second == hotspot) {
+	if (currentCursor && currentCursor->first == filename && currentCursor->second == hotspot) {
 		return;
 	}
 
@@ -70,47 +70,47 @@ void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotsp
 	if (!bitmap) return;
 
 	GLFWimage image[1];
-	image[0].width = bitmap.GetSize().m_x;
-	image[0].height = bitmap.GetSize().m_y;
+	image[0].width = bitmap.GetSize().x;
+	image[0].height = bitmap.GetSize().y;
 	image[0].pixels = bitmap.GetData().get();
 
-	glfwDestroyCursor(m_cursor);
+	glfwDestroyCursor(cursor);
 
 	switch (hotspot) {
 	case CursorHotspot::UpperLeft:
-		m_cursor = glfwCreateCursor(image, 0, 0);
+		cursor = glfwCreateCursor(image, 0, 0);
 		break;
 	case CursorHotspot::UpperRight:
-		m_cursor = glfwCreateCursor(image, image->width - 1, 0);
+		cursor = glfwCreateCursor(image, image->width - 1, 0);
 		break;
 	case CursorHotspot::BottomLeft:
-		m_cursor = glfwCreateCursor(image, 0, image->height - 1);
+		cursor = glfwCreateCursor(image, 0, image->height - 1);
 		break;
 	case CursorHotspot::BottomRight:
-		m_cursor = glfwCreateCursor(image, image->width - 1, image->height - 1);
+		cursor = glfwCreateCursor(image, image->width - 1, image->height - 1);
 		break;
 	case CursorHotspot::Centered:
-		m_cursor = glfwCreateCursor(image, image->width / 2, image->height / 2);
+		cursor = glfwCreateCursor(image, image->width / 2, image->height / 2);
 		break;
 	}
 
-	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
-	m_currentCursor = {filename, hotspot};
-	m_currentStandard = std::nullopt;
+	glfwSetCursor(Window::Get()->GetWindow(), cursor);
+	currentCursor = {filename, hotspot};
+	currentStandard = std::nullopt;
 }
 
 void Mouse::SetCursor(CursorStandard standard) {
-	if (m_currentStandard == standard) {
+	if (currentStandard == standard) {
 		return;
 	}
 
-	glfwDestroyCursor(m_cursor);
+	glfwDestroyCursor(cursor);
 
-	m_cursor = glfwCreateStandardCursor(static_cast<int32_t>(standard));
+	cursor = glfwCreateStandardCursor(static_cast<int32_t>(standard));
 
-	glfwSetCursor(Window::Get()->GetWindow(), m_cursor);
-	m_currentCursor = std::nullopt;
-	m_currentStandard = standard;
+	glfwSetCursor(Window::Get()->GetWindow(), cursor);
+	currentCursor = std::nullopt;
+	currentStandard = standard;
 }
 
 std::string Mouse::GetClipboard() const {
@@ -127,26 +127,26 @@ InputAction Mouse::GetButton(MouseButton mouseButton) const {
 }
 
 void Mouse::SetPosition(const Vector2d &position) {
-	m_lastPosition = position;
-	m_position = position;
-	glfwSetCursorPos(Window::Get()->GetWindow(), m_position.m_x, m_position.m_y);
+	this->lastPosition = position;
+	this->position = position;
+	glfwSetCursorPos(Window::Get()->GetWindow(), position.x, position.y);
 }
 
 void Mouse::SetScroll(const Vector2d &scroll) {
-	m_lastScroll = scroll;
-	m_scroll = scroll;
+	this->lastScroll = scroll;
+	this->scroll = scroll;
 }
 
 void Mouse::SetCursorHidden(bool hidden) {
-	if (m_cursorHidden != hidden) {
+	if (cursorHidden != hidden) {
 		glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
-		if (!hidden && m_cursorHidden) {
-			SetPosition(m_position);
+		if (!hidden && cursorHidden) {
+			SetPosition(position);
 		}
 	}
 
-	m_cursorHidden = hidden;
+	cursorHidden = hidden;
 }
 
 double Mouse::SmoothScrollWheel(double value, float delta) {

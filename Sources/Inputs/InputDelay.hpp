@@ -11,15 +11,15 @@ public:
 
 	bool CanInput();
 
-	const Time &GetDelay() const { return m_elapsedDelay.GetInterval(); }
-	void SetDelay(const Time &delay) { m_elapsedDelay.SetInterval(delay); }
+	const Time &GetDelay() const { return elapsedDelay.GetInterval(); }
+	void SetDelay(const Time &delay) { elapsedDelay.SetInterval(delay); }
 
-	const Time &GetRepeat() const { return m_elapsedRepeat.GetInterval(); }
-	void SetRepeat(const Time &repeat) { m_elapsedRepeat.SetInterval(repeat); }
+	const Time &GetRepeat() const { return elapsedRepeat.GetInterval(); }
+	void SetRepeat(const Time &repeat) { elapsedRepeat.SetInterval(repeat); }
 
 private:
-	ElapsedTime m_elapsedDelay;
-	ElapsedTime m_elapsedRepeat;
-	bool m_delayOver = false;
+	ElapsedTime elapsedDelay;
+	ElapsedTime elapsedRepeat;
+	bool delayOver = false;
 };
 }

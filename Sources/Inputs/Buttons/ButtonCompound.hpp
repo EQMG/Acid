@@ -8,6 +8,7 @@ namespace acid {
  * @brief Combines multiple button inputs into a single button.
  */
 class ACID_EXPORT ButtonCompound : public Button::Registrar<ButtonCompound>, NonCopyable {
+	inline static const bool Registered = Register("buttonCompound");
 public:
 	/**
 	 * Creates a new compound button.
@@ -24,9 +25,9 @@ public:
 	 */
 	template<typename... Args>
 	ButtonCompound(bool useAnd, Args &&... args) :
-		m_useAnd(useAnd) {
-		m_buttons.reserve(sizeof...(Args));
-		(m_buttons.emplace_back(std::forward<Args>(args)), ...);
+		useAnd(useAnd) {
+		buttons.reserve(sizeof...(Args));
+		(buttons.emplace_back(std::forward<Args>(args)), ...);
 		ConnectButtons();
 	}
 
@@ -37,8 +38,8 @@ public:
 	 */
 	template<typename... Args>
 	ButtonCompound(Args &&... args) {
-		m_buttons.reserve(sizeof...(Args));
-		(m_buttons.emplace_back(std::forward<Args>(args)), ...);
+		buttons.reserve(sizeof...(Args));
+		(buttons.emplace_back(std::forward<Args>(args)), ...);
 		ConnectButtons();
 	}
 
@@ -46,12 +47,12 @@ public:
 
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
-	const std::vector<std::unique_ptr<Button>> &GetButtons() const { return m_buttons; }
+	const std::vector<std::unique_ptr<Button>> &GetButtons() const { return buttons; }
 	Button *AddButton(std::unique_ptr<Button> &&button);
 	void RemoveButton(Button *button);
 
-	bool IsUseAnd() const { return m_useAnd; }
-	void SetUseAnd(bool useAnd) { m_useAnd = useAnd; }
+	bool IsUseAnd() const { return useAnd; }
+	void SetUseAnd(bool useAnd) { this->useAnd = useAnd; }
 
 	friend const Node &operator>>(const Node &node, ButtonCompound &buttonCompound);
 	friend Node &operator<<(Node &node, const ButtonCompound &buttonCompound);
@@ -60,10 +61,8 @@ private:
 	void ConnectButton(std::unique_ptr<Button> &button);
 	void ConnectButtons();
 
-	static bool registered;
-
-	std::vector<std::unique_ptr<Button>> m_buttons;
-	bool m_useAnd = false;
-	bool m_lastDown = false;
+	std::vector<std::unique_ptr<Button>> buttons;
+	bool useAnd = false;
+	bool lastDown = false;
 };
 }

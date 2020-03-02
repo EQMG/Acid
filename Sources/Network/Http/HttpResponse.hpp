@@ -96,19 +96,19 @@ public:
 	 * it defines whether it is a success, a failure or anything else (see the Status enumeration).
 	 * @return Status code of the response.
 	 */
-	Status GetStatus() const { return m_status; }
+	Status GetStatus() const { return status; }
 
 	/**
 	 * Get the major HTTP version number of the response.
 	 * @return Major HTTP version number.
 	 */
-	uint32_t GetMajorHttpVersion() const { return m_majorVersion; }
+	uint32_t GetMajorHttpVersion() const { return majorVersion; }
 
 	/**
 	 * Get the minor HTTP version number of the response.
 	 * @return Minor HTTP version number.
 	 */
-	uint32_t GetMinorHttpVersion() const { return m_minorVersion; }
+	uint32_t GetMinorHttpVersion() const { return minorVersion; }
 
 	/**
 	 * Get the body of the response.
@@ -121,7 +121,7 @@ public:
 	 * </ul>
 	 * @return The response body.
 	 */
-	const std::string &GetBody() const { return m_body; }
+	const std::string &GetBody() const { return body; }
 
 private:
 	using FieldTable = std::map<std::string, std::string>;
@@ -141,14 +141,14 @@ private:
 	void ParseFields(std::istream &in);
 
 	/// Fields of the header.
-	FieldTable m_fields;
+	FieldTable fields;
 	/// Status code.
-	Status m_status;
+	Status status;
 	/// Major HTTP version.
-	uint32_t m_majorVersion;
+	uint32_t majorVersion;
 	/// Minor HTTP version.
-	uint32_t m_minorVersion;
+	uint32_t minorVersion;
 	/// Body of the response.
-	std::string m_body;
+	std::string body;
 };
 }

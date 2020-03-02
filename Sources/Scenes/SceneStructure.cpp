@@ -7,56 +7,54 @@ SceneStructure::SceneStructure() {
 }
 
 Entity *SceneStructure::GetEntity(const std::string &name) const {
-	for (auto &object : m_objects) {
-		if (object->GetName() == name) {
+	for (auto &object : objects) {
+		if (object->GetName() == name)
 			return object.get();
-		}
 	}
 
 	return nullptr;
 }
 
 Entity *SceneStructure::CreateEntity() {
-	return m_objects.emplace_back(std::make_unique<Entity>()).get();
+	return objects.emplace_back(std::make_unique<Entity>()).get();
 }
 
 Entity *SceneStructure::CreateEntity(const std::string &filename) {
-	return m_objects.emplace_back(std::make_unique<Entity>(filename)).get();
+	return objects.emplace_back(std::make_unique<Entity>(filename)).get();
 }
 
 void SceneStructure::Add(Entity *object) {
-	m_objects.emplace_back(object);
+	objects.emplace_back(object);
 }
 
 void SceneStructure::Add(std::unique_ptr<Entity> object) {
-	m_objects.emplace_back(std::move(object));
+	objects.emplace_back(std::move(object));
 }
 
 void SceneStructure::Remove(Entity *object) {
-	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), [object](std::unique_ptr<Entity> &e) {
+	objects.erase(std::remove_if(objects.begin(), objects.end(), [object](std::unique_ptr<Entity> &e) {
 		return e.get() == object;
-	}), m_objects.end());
+	}), objects.end());
 }
 
 void SceneStructure::Move(Entity *object, SceneStructure &structure) {
-	for (auto it = --m_objects.end(); it != m_objects.begin(); --it) {
-		if ((*it).get() != object) {
+	for (auto it = --objects.end(); it != objects.begin(); --it) {
+		if ((*it).get() != object)
 			continue;
-		}
 
 		structure.Add(std::move(*it));
-		m_objects.erase(it);
+		objects.erase(it);
 	}
 }
 
 void SceneStructure::Clear() {
-	m_objects.clear();
+	objects.clear();
 }
 
 void SceneStructure::Update() {
-	for (auto it = m_objects.begin(); it != m_objects.end();) {
+	for (auto it = objects.begin(); it != objects.end();) {
 		if ((*it)->IsRemoved()) {
-			it = m_objects.erase(it);
+			it = objects.erase(it);
 			continue;
 		}
 
@@ -68,10 +66,9 @@ void SceneStructure::Update() {
 std::vector<Entity *> SceneStructure::QueryAll() {
 	std::vector<Entity *> entities;
 
-	for (const auto &object : m_objects) {
-		if (object->IsRemoved()) {
+	for (const auto &object : objects) {
+		if (object->IsRemoved())
 			continue;
-		}
 
 		entities.emplace_back(object.get());
 	}
@@ -82,10 +79,9 @@ std::vector<Entity *> SceneStructure::QueryAll() {
 std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range) {
 	std::vector<Entity *> entities;
 
-	for (const auto &object : m_objects) {
-		if (object->IsRemoved()) {
+	for (const auto &object : objects) {
+		if (object->IsRemoved())
 			continue;
-		}
 
 		auto rigidbody = object->GetComponent<Rigidbody>();
 
@@ -97,18 +93,16 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range) {
 	return entities;
 }
 
-/*std::vector<Entity *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius)
-{
+/*std::vector<Entity *> SceneStructure::QuerySphere(const Vector3 &centre, const Vector3 &radius) {
 	return {};
 }*/
 
-/*std::vector<Entity *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max)
-{
+/*std::vector<Entity *> SceneStructure::QueryCube(const Vector3 &min, const Vector3 &max) {
 	return {};
 }*/
 
 bool SceneStructure::Contains(Entity *object) {
-	for (const auto &object2 : m_objects) {
+	for (const auto &object2 : objects) {
 		if (object2.get() == object) {
 			return true;
 		}

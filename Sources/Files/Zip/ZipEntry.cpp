@@ -14,34 +14,34 @@ ZipEntryMetaData::ZipEntryMetaData(const ZipEntryInfo &info) :
 }
 
 ZipEntry::ZipEntry(const ZipEntryInfo &info) :
-	m_entryInfo(info) {
+	entryInfo(info) {
 	GetNewIndex(info.m_file_index);
 }
 
 ZipEntry::ZipEntry(const std::string &name, const ZipEntryData &data) {
-	m_entryInfo = CreateInfo(name);
-	m_entryData = data;
-	m_isModified = true;
+	entryInfo = CreateInfo(name);
+	entryData = data;
+	isModified = true;
 }
 
 ZipEntry::ZipEntry(const std::string &name, const std::string &data) {
-	m_entryInfo = CreateInfo(name);
-	m_entryData.reserve(data.size());
+	entryInfo = CreateInfo(name);
+	entryData.reserve(data.size());
 	for (auto &ch : data)
-		m_entryData.emplace_back(static_cast<std::byte>(ch));
-	m_isModified = true;
+		entryData.emplace_back(static_cast<std::byte>(ch));
+	isModified = true;
 }
 
 std::string ZipEntry::GetDataAsString() const {
 	std::string result;
-	for (auto &ch : m_entryData)
+	for (auto &ch : entryData)
 		result += static_cast<char>(ch);
 	return result;
 }
 
 void ZipEntry::SetData(const ZipEntryData &data) {
-	m_entryData = data;
-	m_isModified = true;
+	entryData = data;
+	isModified = true;
 }
 
 uint32_t ZipEntry::GetNewIndex(uint32_t latestIndex) {

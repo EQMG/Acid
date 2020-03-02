@@ -23,17 +23,17 @@ public:
 	void SetSize(const Vector2f &size);
 	void SetType(ScrollBar type);
 
-	static const uint32_t Size;
+	static constexpr uint32_t Size = 8;
 
 private:
 	float ScrollByDelta(float delta) const;
 
 	float ScrollByPosition(float position) const;
 
-	Gui m_background;
-	Gui m_scroll;
-	uint32_t m_index = 0;
-	bool m_updating = false;
-	bool m_mouseOver = false;
+	Gui background;
+	Gui scroll;
+	uint32_t index = 0;
+	bool updating = false;
+	bool mouseOver = false;
 };
 }

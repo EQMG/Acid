@@ -10,16 +10,22 @@ public:
 
 	void UpdateObject() override;
 
-	bool IsFinished() const { return m_finished; }
-	Delegate<void()> &OnFinished() { return m_onFinished; }
+	bool IsFinished() const { return finished; }
+	Delegate<void()> &OnFinished() { return onFinished; }
 
+#if defined(ACID_DEBUG)
+	static constexpr Time StartDelay = 1s;
+#else
+	static constexpr Time StartDelay = 3s;
+#endif
+	
 private:
-	Gui m_guiBackground;
-	Gui m_guiLogoAcid;
-	Text m_textCopyright;
+	Gui background;
+	Gui logoAcid;
+	Text textCopyright;
 
-	bool m_finished = false;
+	bool finished = false;
 
-	Delegate<void()> m_onFinished;
+	Delegate<void()> onFinished;
 };
 }

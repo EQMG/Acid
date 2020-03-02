@@ -5,27 +5,25 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-bool Mesh::registered = Register("mesh");
-
 Mesh::Mesh(std::shared_ptr<Model> model, std::unique_ptr<Material> &&material) :
-	m_model(std::move(model)),
-	m_material(std::move(material)) {
+	model(std::move(model)),
+	material(std::move(material)) {
 }
 
 void Mesh::Start() {
-	if (m_material)
-		m_material->CreatePipeline(GetVertexInput(), false);
+	if (material)
+		material->CreatePipeline(GetVertexInput(), false);
 }
 
 void Mesh::Update() {
-	if (m_material) {
+	if (material) {
 		auto transform = GetEntity()->GetComponent<Transform>();
-		m_material->PushUniforms(m_uniformObject, transform);
+		material->PushUniforms(uniformObject, transform);
 	}
 }
 
 bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
-	if (!m_model || !m_material)
+	if (!model || !material)
 		return false;
 
 	// Checks if the mesh is in view.
@@ -35,7 +33,7 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 	}
 
 	// Check if we are in the correct pipeline stage.
-	auto materialPipeline = m_material->GetPipelineMaterial();
+	auto materialPipeline = material->GetPipelineMaterial();
 	if (!materialPipeline || materialPipeline->GetStage() != pipelineStage)
 		return false;
 
@@ -46,22 +44,22 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 	const auto &pipeline = *materialPipeline->GetPipeline();
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", uniformScene);
-	m_descriptorSet.Push("UniformObject", m_uniformObject);
+	descriptorSet.Push("UniformScene", uniformScene);
+	descriptorSet.Push("UniformObject", uniformObject);
 
-	m_material->PushDescriptors(m_descriptorSet);
+	material->PushDescriptors(descriptorSet);
 
-	if (!m_descriptorSet.Update(pipeline))
+	if (!descriptorSet.Update(pipeline))
 		return false;
 
 	// Draws the object.
-	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-	return m_model->CmdRender(commandBuffer);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	return model->CmdRender(commandBuffer);
 }
 
 void Mesh::SetMaterial(std::unique_ptr<Material> &&material) {
-	m_material = std::move(material);
-	m_material->CreatePipeline(GetVertexInput(), false);
+	this->material = std::move(material);
+	this->material->CreatePipeline(GetVertexInput(), false);
 }
 
 bool Mesh::operator<(const Mesh &other) const {
@@ -81,14 +79,14 @@ bool Mesh::operator>(const Mesh &other) const {
 }
 
 const Node &operator>>(const Node &node, Mesh &mesh) {
-	node["model"].Get(mesh.m_model);
-	node["material"].Get(mesh.m_material);
+	node["model"].Get(mesh.model);
+	node["material"].Get(mesh.material);
 	return node;
 }
 
 Node &operator<<(Node &node, const Mesh &mesh) {
-	node["model"].Set(mesh.m_model);
-	node["material"].Set(mesh.m_material);
+	node["model"].Set(mesh.model);
+	node["material"].Set(mesh.material);
 	return node;
 }
 }

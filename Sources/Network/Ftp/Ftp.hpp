@@ -38,7 +38,6 @@ public:
 	 * Default constructor.
 	 */
 	Ftp();
-
 	/**
 	 * Automatically closes the connection with the server if it is still opened.
 	 */
@@ -202,8 +201,8 @@ private:
 	FtpResponse GetResponse();
 
 	/// Socket holding the control connection with the server.
-	TcpSocket m_commandSocket;
+	TcpSocket commandSocket;
 	/// Received command data that is yet to be processed.
-	std::string m_receiveBuffer;
+	std::string receiveBuffer;
 };
 }

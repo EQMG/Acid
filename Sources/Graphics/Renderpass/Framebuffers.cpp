@@ -15,19 +15,19 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 
 		switch (attachment.GetType()) {
 		case Attachment::Type::Image:
-			m_imageAttachments.emplace_back(std::make_unique<Image2d>(extent, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+			imageAttachments.emplace_back(std::make_unique<Image2d>(extent, attachment.GetFormat(), VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 				VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_LINEAR, VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE, attachmentSamples));
 			break;
 		case Attachment::Type::Depth:
-			m_imageAttachments.emplace_back(nullptr);
+			imageAttachments.emplace_back(nullptr);
 			break;
 		case Attachment::Type::Swapchain:
-			m_imageAttachments.emplace_back(nullptr);
+			imageAttachments.emplace_back(nullptr);
 			break;
 		}
 	}
 
-	m_framebuffers.resize(swapchain.GetImageCount());
+	framebuffers.resize(swapchain.GetImageCount());
 
 	for (uint32_t i = 0; i < swapchain.GetImageCount(); i++) {
 		std::vector<VkImageView> attachments;
@@ -51,17 +51,17 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 		framebufferCreateInfo.renderPass = renderPass;
 		framebufferCreateInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 		framebufferCreateInfo.pAttachments = attachments.data();
-		framebufferCreateInfo.width = extent.m_x;
-		framebufferCreateInfo.height = extent.m_y;
+		framebufferCreateInfo.width = extent.x;
+		framebufferCreateInfo.height = extent.y;
 		framebufferCreateInfo.layers = 1;
-		Graphics::CheckVk(vkCreateFramebuffer(*logicalDevice, &framebufferCreateInfo, nullptr, &m_framebuffers[i]));
+		Graphics::CheckVk(vkCreateFramebuffer(*logicalDevice, &framebufferCreateInfo, nullptr, &framebuffers[i]));
 	}
 }
 
 Framebuffers::~Framebuffers() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &framebuffer : m_framebuffers) {
+	for (const auto &framebuffer : framebuffers) {
 		vkDestroyFramebuffer(*logicalDevice, framebuffer, nullptr);
 	}
 }

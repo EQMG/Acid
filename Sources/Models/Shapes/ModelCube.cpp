@@ -4,8 +4,6 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelCube::registered = Register("cube");
-
 std::shared_ptr<ModelCube> ModelCube::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ModelCube>(node))
 		return resource;
@@ -25,26 +23,25 @@ std::shared_ptr<ModelCube> ModelCube::Create(const Vector3f &extents) {
 }
 
 ModelCube::ModelCube(const Vector3f &extents, bool load) :
-	m_extents(extents) {
+	extents(extents) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelCube &model) {
-	node["extents"].Get(model.m_extents);
+	node["extents"].Get(model.extents);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelCube &model) {
-	node["extents"].Set(model.m_extents);
+	node["extents"].Set(model.extents);
 	return node;
 }
 
 void ModelCube::Load() {
-	if (m_extents == Vector3f::Zero) {
+	if (extents == Vector3f::Zero)
 		return;
-	}
 
 	std::vector<Vertex3d> vertices = {
 		{{-0.5f, -0.5f, 0.5f}, {0.375f, 1.0f}, {-1.0f, 0.0f, 0.0f}},
@@ -87,9 +84,8 @@ void ModelCube::Load() {
 		15, 23, 16,
 	};
 
-	for (auto &vertex : vertices) {
-		vertex.m_position *= m_extents;
-	}
+	for (auto &vertex : vertices)
+		vertex.position *= extents;
 
 	Initialize(vertices, indices);
 }

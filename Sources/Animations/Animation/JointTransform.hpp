@@ -60,17 +60,17 @@ public:
 	 */
 	static Vector3f Interpolate(const Vector3f &start, const Vector3f &end, float progression);
 
-	const Vector3f &GetPosition() const { return m_position; }
-	void SetPosition(const Vector3f &position) { m_position = position; }
+	const Vector3f &GetPosition() const { return position; }
+	void SetPosition(const Vector3f &position) { this->position = position; }
 
-	const Quaternion &GetRotation() const { return m_rotation; }
-	void SetRotation(const Quaternion &rotation) { m_rotation = rotation; }
+	const Quaternion &GetRotation() const { return rotation; }
+	void SetRotation(const Quaternion &rotation) { this->rotation = rotation; }
 
 	friend const Node &operator>>(const Node &node, JointTransform &jointTransform);
 	friend Node &operator<<(Node &node, const JointTransform &jointTransform);
 
 private:
-	Vector3f m_position;
-	Quaternion m_rotation;
+	Vector3f position;
+	Quaternion rotation;
 };
 }

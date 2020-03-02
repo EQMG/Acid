@@ -10,11 +10,11 @@ namespace acid {
  * @brief Class that represents a playable sound.
  */
 class ACID_EXPORT Sound : public Component::Registrar<Sound> {
+	inline static const bool Registered = Register("sound");
 public:
 	Sound() = default;
 	explicit Sound(const std::string &filename, const Audio::Type &type = Audio::Type::General, bool begin = false,
 		bool loop = false, float gain = 1.0f, float pitch = 1.0f);
-
 	~Sound();
 
 	void Start() override;
@@ -31,30 +31,28 @@ public:
 	void SetDirection(const Vector3f &direction);
 	void SetVelocity(const Vector3f &velocity);
 
-	const Audio::Type &GetType() const { return m_type; }
-	void SetType(const Audio::Type &type) { m_type = type; }
+	const Audio::Type &GetType() const { return type; }
+	void SetType(const Audio::Type &type) { this->type = type; }
 
-	float GetGain() const { return m_gain; }
+	float GetGain() const { return gain; }
 	void SetGain(float gain);
 
-	float GetPitch() const { return m_pitch; }
+	float GetPitch() const { return pitch; }
 	void SetPitch(float pitch);
 
 	friend const Node &operator>>(const Node &node, Sound &sound);
 	friend Node &operator<<(Node &node, const Sound &sound);
 
 private:
-	static bool registered;
-	
-	std::shared_ptr<SoundBuffer> m_buffer;
-	uint32_t m_source = 0;
+	std::shared_ptr<SoundBuffer> buffer;
+	uint32_t source = 0;
 
-	Vector3f m_position;
-	Vector3f m_direction;
-	Vector3f m_velocity;
+	Vector3f position;
+	Vector3f direction;
+	Vector3f velocity;
 
-	Audio::Type m_type = Audio::Type::General;
-	float m_gain = 1.0f;
-	float m_pitch = 1.0f;
+	Audio::Type type = Audio::Type::General;
+	float gain = 1.0f;
+	float pitch = 1.0f;
 };
 }

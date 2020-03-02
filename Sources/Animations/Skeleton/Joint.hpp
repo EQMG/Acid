@@ -46,13 +46,13 @@ public:
 	 */
 	void CalculateInverseBindTransform(const Matrix4 &parentBindTransform);
 
-	uint32_t GetIndex() const { return m_index; }
-	void SetIndex(uint32_t index) { m_index = index; }
+	uint32_t GetIndex() const { return index; }
+	void SetIndex(uint32_t index) { this->index = index; }
 
-	const std::string &GetName() const { return m_name; }
-	void SetName(const std::string &name) { m_name = name; }
+	const std::string &GetName() const { return name; }
+	void SetName(const std::string &name) { this->name = name; }
 
-	const std::vector<Joint> &GetChildren() const { return m_children; }
+	const std::vector<Joint> &GetChildren() const { return children; }
 
 	/**
 	 * Adds a child joint to this joint. Used during the creation of the joint hierarchy. Joints can have multiple children,
@@ -61,8 +61,8 @@ public:
 	 */
 	void AddChild(const Joint &child);
 
-	const Matrix4 &GetLocalBindTransform() const { return m_localBindTransform; }
-	void SetLocalBindTransform(const Matrix4 &localBindTransform) { m_localBindTransform = localBindTransform; }
+	const Matrix4 &GetLocalBindTransform() const { return localBindTransform; }
+	void SetLocalBindTransform(const Matrix4 &localBindTransform) { this->localBindTransform = localBindTransform; }
 
 	/**
 	 * This returns the inverted model-space bind transform.
@@ -70,18 +70,18 @@ public:
 	 * This returns the inverse of that, which is used to calculate the animated transform matrix which gets used to transform vertices in the shader.
 	 * @return The inverse of the joint's bind transform (in model-space).
 	 */
-	const Matrix4 &GetInverseBindTransform() const { return m_inverseBindTransform; }
-	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { m_inverseBindTransform = inverseBindTransform; }
+	const Matrix4 &GetInverseBindTransform() const { return inverseBindTransform; }
+	void SetInverseBindTransform(const Matrix4 &inverseBindTransform) { this->inverseBindTransform = inverseBindTransform; }
 
 	friend const Node &operator>>(const Node &node, Joint &joint);
 	friend Node &operator<<(Node &node, const Joint &joint);
 
 private:
-	uint32_t m_index = 0;
-	std::string m_name;
-	std::vector<Joint> m_children;
+	uint32_t index = 0;
+	std::string name;
+	std::vector<Joint> children;
 
-	Matrix4 m_localBindTransform;
-	Matrix4 m_inverseBindTransform;
+	Matrix4 localBindTransform;
+	Matrix4 inverseBindTransform;
 };
 }

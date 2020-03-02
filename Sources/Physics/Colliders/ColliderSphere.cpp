@@ -3,38 +3,36 @@
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 
 namespace acid {
-bool ColliderSphere::registered = Register("sphere");
-
 ColliderSphere::ColliderSphere(float radius, const Transform &localTransform) :
 	//Collider(localTransform),
-	m_shape(std::make_unique<btSphereShape>(radius)),
-	m_radius(radius) {
-	m_localTransform = localTransform;
-	m_localTransform.SetLocalScale({m_radius, m_radius, m_radius});
+	shape(std::make_unique<btSphereShape>(radius)),
+	radius(radius) {
+	this->localTransform = localTransform;
+	this->localTransform.SetLocalScale({radius, radius, radius});
 }
 
 ColliderSphere::~ColliderSphere() {
 }
 
 btCollisionShape *ColliderSphere::GetCollisionShape() const {
-	return m_shape.get();
+	return shape.get();
 }
 
 void ColliderSphere::SetRadius(float radius) {
-	m_radius = radius;
-	m_shape->setUnscaledRadius(m_radius);
-	m_localTransform.SetLocalScale({m_radius, m_radius, m_radius});
+	this->radius = radius;
+	shape->setUnscaledRadius(radius);
+	localTransform.SetLocalScale({radius, radius, radius});
 }
 
 const Node &operator>>(const Node &node, ColliderSphere &collider) {
-	node["localTransform"].Get(collider.m_localTransform);
-	node["radius"].Get(collider.m_radius);
+	node["localTransform"].Get(collider.localTransform);
+	node["radius"].Get(collider.radius);
 	return node;
 }
 
 Node &operator<<(Node &node, const ColliderSphere &collider) {
-	node["localTransform"].Set(collider.m_localTransform);
-	node["radius"].Set(collider.m_radius);
+	node["localTransform"].Set(collider.localTransform);
+	node["radius"].Set(collider.radius);
 	return node;
 }
 }

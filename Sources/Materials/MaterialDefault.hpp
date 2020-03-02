@@ -9,6 +9,7 @@ namespace acid {
  * @brief Class that represents the default material shader.
  */
 class ACID_EXPORT MaterialDefault : public Material::Registrar<MaterialDefault> {
+	inline static const bool Registered = Register("default");
 public:
 	explicit MaterialDefault(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,
 		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,
@@ -18,32 +19,32 @@ public:
 	void PushUniforms(UniformHandler &uniformObject, const Transform *transform) override;
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override;
 
-	const Colour &GetBaseDiffuse() const { return m_baseDiffuse; }
-	void SetBaseDiffuse(const Colour &baseDiffuse) { m_baseDiffuse = baseDiffuse; }
+	const Colour &GetBaseDiffuse() const { return baseDiffuse; }
+	void SetBaseDiffuse(const Colour &baseDiffuse) { this->baseDiffuse = baseDiffuse; }
 
-	const std::shared_ptr<Image2d> &GetImageDiffuse() const { return m_imageDiffuse; }
-	void SetImageDiffuse(const std::shared_ptr<Image2d> &imageDiffuse) { m_imageDiffuse = imageDiffuse; }
+	const std::shared_ptr<Image2d> &GetImageDiffuse() const { return imageDiffuse; }
+	void SetImageDiffuse(const std::shared_ptr<Image2d> &imageDiffuse) { this->imageDiffuse = imageDiffuse; }
 
-	float GetMetallic() const { return m_metallic; }
-	void SetMetallic(float metallic) { m_metallic = metallic; }
+	float GetMetallic() const { return metallic; }
+	void SetMetallic(float metallic) { this->metallic = metallic; }
 
-	float GetRoughness() const { return m_roughness; }
-	void SetRoughness(float roughness) { m_roughness = roughness; }
+	float GetRoughness() const { return roughness; }
+	void SetRoughness(float roughness) { this->roughness = roughness; }
 
-	const std::shared_ptr<Image2d> &GetImageMaterial() const { return m_imageMaterial; }
-	void SetImageMaterial(const std::shared_ptr<Image2d> &imageMaterial) { m_imageMaterial = imageMaterial; }
+	const std::shared_ptr<Image2d> &GetImageMaterial() const { return imageMaterial; }
+	void SetImageMaterial(const std::shared_ptr<Image2d> &imageMaterial) { this->imageMaterial = imageMaterial; }
 
-	const std::shared_ptr<Image2d> &GetImageNormal() const { return m_imageNormal; }
-	void SetImageNormal(const std::shared_ptr<Image2d> &imageNormal) { m_imageNormal = imageNormal; }
+	const std::shared_ptr<Image2d> &GetImageNormal() const { return imageNormal; }
+	void SetImageNormal(const std::shared_ptr<Image2d> &imageNormal) { this->imageNormal = imageNormal; }
 
-	bool IsCastsShadows() const { return m_castsShadows; }
-	void SetCastsShadows(bool castsShadows) { m_castsShadows = castsShadows; }
+	bool IsCastsShadows() const { return castsShadows; }
+	void SetCastsShadows(bool castsShadows) { this->castsShadows = castsShadows; }
 
-	bool IsIgnoringLighting() const { return m_ignoreLighting; }
-	void SetIgnoreLighting(bool ignoreLighting) { m_ignoreLighting = ignoreLighting; }
+	bool IsIgnoringLighting() const { return ignoreLighting; }
+	void SetIgnoreLighting(bool ignoreLighting) { this->ignoreLighting = ignoreLighting; }
 
-	bool IsIgnoringFog() const { return m_ignoreFog; }
-	void SetIgnoreFog(bool ignoreFog) { m_ignoreFog = ignoreFog; }
+	bool IsIgnoringFog() const { return ignoreFog; }
+	void SetIgnoreFog(bool ignoreFog) { this->ignoreFog = ignoreFog; }
 
 	friend const Node &operator>>(const Node &node, MaterialDefault &material);
 	friend Node &operator<<(Node &node, const MaterialDefault &material);
@@ -51,19 +52,17 @@ public:
 private:
 	std::vector<Shader::Define> GetDefines() const;
 
-	static bool registered;
+	bool animated = false;
+	Colour baseDiffuse;
+	std::shared_ptr<Image2d> imageDiffuse;
 
-	bool m_animated = false;
-	Colour m_baseDiffuse;
-	std::shared_ptr<Image2d> m_imageDiffuse;
+	float metallic;
+	float roughness;
+	std::shared_ptr<Image2d> imageMaterial;
+	std::shared_ptr<Image2d> imageNormal;
 
-	float m_metallic;
-	float m_roughness;
-	std::shared_ptr<Image2d> m_imageMaterial;
-	std::shared_ptr<Image2d> m_imageNormal;
-
-	bool m_castsShadows;
-	bool m_ignoreLighting;
-	bool m_ignoreFog;
+	bool castsShadows;
+	bool ignoreLighting;
+	bool ignoreFog;
 };
 }

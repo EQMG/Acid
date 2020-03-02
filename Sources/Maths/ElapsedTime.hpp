@@ -9,17 +9,17 @@ public:
 
 	uint32_t GetElapsed();
 
-	const Time &GetStartTime() const { return m_startTime; }
-	void SetStartTime(const Time &startTime) { m_startTime = startTime; }
+	const Time &GetStartTime() const { return startTime; }
+	void SetStartTime(const Time &startTime) { this->startTime = startTime; }
 
-	const Time &GetInterval() const { return m_interval; }
-	void SetInterval(const Time &interval) { m_interval = interval; }
+	const Time &GetInterval() const { return interval; }
+	void SetInterval(const Time &interval) { this->interval = interval; }
 
 	friend const Node &operator>>(const Node &node, ElapsedTime &elapsedTime);
 	friend Node &operator<<(Node &node, const ElapsedTime &elapsedTime);
 
 private:
-	Time m_startTime;
-	Time m_interval;
+	Time startTime;
+	Time interval;
 };
 }

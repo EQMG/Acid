@@ -46,7 +46,6 @@ enum class CursorStandard : uint32_t {
 class ACID_EXPORT Mouse : public Module::Registrar<Mouse, Module::Stage::Pre> {
 public:
 	Mouse();
-	
 	~Mouse();
 
 	void Update() override;
@@ -87,7 +86,7 @@ public:
 	 * Gets the mouses position.
 	 * @return The mouses position.
 	 */
-	const Vector2d &GetPosition() const { return m_position; }
+	const Vector2d &GetPosition() const { return position; }
 
 	/**
 	 * Sets the mouse position.
@@ -99,13 +98,13 @@ public:
 	 * Gets the mouse position delta.
 	 * @return The mouse position delta.
 	 */
-	const Vector2d &GetPositionDelta() const { return m_positionDelta; }
+	const Vector2d &GetPositionDelta() const { return positionDelta; }
 
 	/**
 	 * Gets the mouses virtual scroll position.
 	 * @return The mouses virtual scroll position.
 	 */
-	const Vector2d &GetScroll() const { return m_scroll; }
+	const Vector2d &GetScroll() const { return scroll; }
 
 	/**
 	 * Sets the mouse virtual scroll position.
@@ -117,19 +116,19 @@ public:
 	 * Gets the mouse scroll delta.
 	 * @return The mouse scroll delta.
 	 */
-	const Vector2d &GetScrollDelta() const { return m_scrollDelta; }
+	const Vector2d &GetScrollDelta() const { return scrollDelta; }
 
 	/**
 	 * Gets if the display is selected.
 	 * @return If the display is selected.
 	 */
-	bool IsWindowSelected() const { return m_windowSelected; }
+	bool IsWindowSelected() const { return windowSelected; }
 
 	/**
 	 * If the cursor is hidden, the mouse is the display locked if true.
 	 * @return If the cursor is hidden.
 	 */
-	bool IsCursorHidden() const { return m_cursorHidden; }
+	bool IsCursorHidden() const { return cursorHidden; }
 
 	/**
 	 * Sets if the operating systems cursor is hidden whilst in the display.
@@ -141,31 +140,31 @@ public:
 	 * Called when a mouse button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
+	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when the mouse moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnPosition() { return m_onPosition; }
+	Delegate<void(Vector2d)> &OnPosition() { return onPosition; }
 
 	/**
 	 * Called when the mouse enters the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnEnter() { return m_onEnter; }
+	Delegate<void(bool)> &OnEnter() { return onEnter; }
 
 	/**
 	 * Called when the scroll wheel changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnScroll() { return m_onScroll; }
+	Delegate<void(Vector2d)> &OnScroll() { return onScroll; }
 
 	/**
 	 * Called when a group of files/folders is dropped onto the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::vector<std::string>)> &OnDrop() { return m_onDrop; }
+	Delegate<void(std::vector<std::string>)> &OnDrop() { return onDrop; }
 
 private:
 	static double SmoothScrollWheel(double value, float delta);
@@ -176,23 +175,23 @@ private:
 	friend void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset);
 	friend void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths);
 
-	std::optional<std::pair<std::filesystem::path, CursorHotspot>> m_currentCursor;
-	std::optional<CursorStandard> m_currentStandard;
-	GLFWcursor *m_cursor = nullptr;
+	std::optional<std::pair<std::filesystem::path, CursorHotspot>> currentCursor;
+	std::optional<CursorStandard> currentStandard;
+	GLFWcursor *cursor = nullptr;
 
-	Vector2d m_lastPosition;
-	Vector2d m_position;
-	Vector2d m_positionDelta;
-	Vector2d m_lastScroll;
-	Vector2d m_scroll;
-	Vector2d m_scrollDelta;
-	bool m_windowSelected = false;
-	bool m_cursorHidden = false;
+	Vector2d lastPosition;
+	Vector2d position;
+	Vector2d positionDelta;
+	Vector2d lastScroll;
+	Vector2d scroll;
+	Vector2d scrollDelta;
+	bool windowSelected = false;
+	bool cursorHidden = false;
 
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> m_onButton;
-	Delegate<void(Vector2d)> m_onPosition;
-	Delegate<void(bool)> m_onEnter;
-	Delegate<void(Vector2d)> m_onScroll;
-	Delegate<void(std::vector<std::string>)> m_onDrop;
+	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> onButton;
+	Delegate<void(Vector2d)> onPosition;
+	Delegate<void(bool)> onEnter;
+	Delegate<void(Vector2d)> onScroll;
+	Delegate<void(std::vector<std::string>)> onDrop;
 };
 }

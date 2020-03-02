@@ -8,6 +8,7 @@ namespace acid {
  * @brief Button composed of a axis.
  */
 class ACID_EXPORT ButtonAxis : public Button::Registrar<ButtonAxis> {
+	inline static const bool Registered = Register("buttonAxis");
 public:
 	/**
 	 * Creates a new button axis.
@@ -21,21 +22,19 @@ public:
 
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
-	const Axis *GetAxis() const { return m_axis.get(); }
+	const Axis *GetAxis() const { return axis.get(); }
 	void SetAxis(std::unique_ptr<Axis> &&axis);
 
-	float GetMin() const { return m_min; }
-	void SetMin(float min) { m_min = min; }
-	float GetMax() const { return m_max; }
-	void SetMax(float max) { m_max = max; }
+	float GetMin() const { return min; }
+	void SetMin(float min) { this->min = min; }
+	float GetMax() const { return max; }
+	void SetMax(float max) { this->max = max; }
 
 	friend const Node &operator>>(const Node &node, ButtonAxis &buttonAxis);
 	friend Node &operator<<(Node &node, const ButtonAxis &buttonAxis);
 
 private:
-	static bool registered;
-
-	std::unique_ptr<Axis> m_axis;
-	float m_min, m_max;
+	std::unique_ptr<Axis> axis;
+	float min, max;
 };
 }

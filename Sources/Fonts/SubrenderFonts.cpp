@@ -7,11 +7,11 @@
 namespace acid {
 SubrenderFonts::SubrenderFonts(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexText::GetVertexInput()}) {
+	pipeline(pipelineStage, {"Shaders/Fonts/Font.vert", "Shaders/Fonts/Font.frag"}, {VertexText::GetVertexInput()}) {
 }
 
 void SubrenderFonts::Render(const CommandBuffer &commandBuffer) {
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
 	for (const auto &screenObject : Uis::Get()->GetObjects()) {
 		if (!screenObject->IsEnabled()) {
@@ -19,7 +19,7 @@ void SubrenderFonts::Render(const CommandBuffer &commandBuffer) {
 		}
 
 		if (auto object = dynamic_cast<Text *>(screenObject)) {
-			object->CmdRender(commandBuffer, m_pipeline);
+			object->CmdRender(commandBuffer, pipeline);
 		}
 	}
 }

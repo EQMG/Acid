@@ -8,6 +8,7 @@ namespace acid {
  * @brief Combines multiple axes inputs into a single axis.
  */
 class ACID_EXPORT AxisCompound : public Axis::Registrar<AxisCompound>, NonCopyable {
+	inline static const bool Registered = Register("axisCompound");
 public:
 	/**
 	 * Creates a new compound axis.
@@ -22,8 +23,8 @@ public:
 	 */
 	template<typename... Args>
 	AxisCompound(Args &&... args) {
-		m_axes.reserve(sizeof...(Args));
-		(m_axes.emplace_back(std::forward<Args>(args)), ...);
+		axes.reserve(sizeof...(Args));
+		(axes.emplace_back(std::forward<Args>(args)), ...);
 		ConnectAxes();
 	}
 
@@ -31,7 +32,7 @@ public:
 
 	ArgumentDescription GetArgumentDescription() const override;
 
-	const std::vector<std::unique_ptr<Axis>> &GetAxes() const { return m_axes; }
+	const std::vector<std::unique_ptr<Axis>> &GetAxes() const { return axes; }
 	Axis *AddAxis(std::unique_ptr<Axis> &&axis);
 	void RemoveAxis(Axis *axis);
 
@@ -42,8 +43,6 @@ private:
 	void ConnectAxis(std::unique_ptr<Axis> &axis);
 	void ConnectAxes();
 
-	static bool registered;
-
-	std::vector<std::unique_ptr<Axis>> m_axes;
+	std::vector<std::unique_ptr<Axis>> axes;
 };
 }

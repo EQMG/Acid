@@ -136,18 +136,18 @@ public:
 	 * Get the status code of the response.
 	 * @return Status code.
 	 */
-	Status GetStatus() const { return m_status; }
+	Status GetStatus() const { return status; }
 
 	/**
 	 * Get the full message contained in the response.
 	 * @return The response message.
 	 */
-	const std::string &GetFullMessage() const { return m_message; }
+	const std::string &GetFullMessage() const { return message; }
 
 private:
 	/// Status code returned from the server.
-	Status m_status;
+	Status status;
 	/// Last message received from the server.
-	std::string m_message;
+	std::string message;
 };
 }

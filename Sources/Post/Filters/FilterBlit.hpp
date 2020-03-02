@@ -12,6 +12,6 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
-	bool m_lastFilter;
+	bool lastFilter;
 };
 }

@@ -12,25 +12,25 @@ static const std::vector<VkSampleCountFlagBits> STAGE_FLAG_BITS = {
 };
 
 PhysicalDevice::PhysicalDevice(const Instance *instance) :
-	m_instance(instance) {
+	instance(instance) {
 	uint32_t physicalDeviceCount;
-	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, nullptr);
+	vkEnumeratePhysicalDevices(*instance, &physicalDeviceCount, nullptr);
 	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
-	vkEnumeratePhysicalDevices(*m_instance, &physicalDeviceCount, physicalDevices.data());
+	vkEnumeratePhysicalDevices(*instance, &physicalDeviceCount, physicalDevices.data());
 
-	m_physicalDevice = ChoosePhysicalDevice(physicalDevices);
+	physicalDevice = ChoosePhysicalDevice(physicalDevices);
 
-	if (!m_physicalDevice) {
+	if (!physicalDevice) {
 		throw std::runtime_error("Vulkan runtime error, failed to find a suitable GPU");
 	}
 
-	vkGetPhysicalDeviceProperties(m_physicalDevice, &m_properties);
-	vkGetPhysicalDeviceFeatures(m_physicalDevice, &m_features);
-	vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &m_memoryProperties);
-	m_msaaSamples = GetMaxUsableSampleCount();
+	vkGetPhysicalDeviceProperties(physicalDevice, &properties);
+	vkGetPhysicalDeviceFeatures(physicalDevice, &features);
+	vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memoryProperties);
+	msaaSamples = GetMaxUsableSampleCount();
 
 #if defined(ACID_DEBUG)
-	Log::Out("Selected Physical Device: ", m_properties.deviceID, " ", std::quoted(m_properties.deviceName), '\n');
+	Log::Out("Selected Physical Device: ", properties.deviceID, " ", std::quoted(properties.deviceName), '\n');
 #endif
 }
 
@@ -100,7 +100,7 @@ uint32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 
 VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount() const {
 	VkPhysicalDeviceProperties physicalDeviceProperties;
-	vkGetPhysicalDeviceProperties(m_physicalDevice, &physicalDeviceProperties);
+	vkGetPhysicalDeviceProperties(physicalDevice, &physicalDeviceProperties);
 
 	auto counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
 
@@ -151,7 +151,8 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 	ss << " " << std::quoted(physicalDeviceProperties.deviceName) << '\n';
 
 	uint32_t supportedVersion[3] = {
-		VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion), VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
+		VK_VERSION_MAJOR(physicalDeviceProperties.apiVersion),
+		VK_VERSION_MINOR(physicalDeviceProperties.apiVersion),
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 	};
 	ss << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << '\n';

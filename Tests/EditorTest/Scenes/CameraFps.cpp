@@ -9,12 +9,12 @@
 #include "PlayerFps.hpp"
 
 namespace test {
-static const Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
+static constexpr Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
 
 CameraFps::CameraFps() {
-	m_nearPlane = 0.1f;
-	m_farPlane = 4098.0f;
-	m_fieldOfView = Maths::Radians(70.0f);
+	nearPlane = 0.1f;
+	farPlane = 4098.0f;
+	fieldOfView = Maths::Radians(70.0f);
 }
 
 void CameraFps::Start() {
@@ -25,8 +25,8 @@ void CameraFps::Update() {
 
 	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<PlayerFps>()) {
 		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>()) {
-			m_velocity = (transformPlayer->GetPosition() - m_position) / delta;
-			m_position = transformPlayer->GetPosition() + ViewOffset;
+			velocity = (transformPlayer->GetPosition() - position) / delta;
+			position = transformPlayer->GetPosition() + ViewOffset;
 		}
 	}
 
@@ -34,15 +34,15 @@ void CameraFps::Update() {
 		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Input::Get()->GetAxis("mouseX")->GetAmount(),
 			Input::Get()->GetAxis("mouseY")->GetAmount());
 
-		m_rotation.m_y += rotationDelta.m_x;
-		m_rotation.m_x += rotationDelta.m_y;
-		m_rotation.m_x = std::clamp(m_rotation.m_x, Maths::Radians(90.0f), Maths::Radians(270.0f));
+		rotation.y += rotationDelta.x;
+		rotation.x += rotationDelta.y;
+		rotation.x = std::clamp(rotation.x, Maths::Radians(90.0f), Maths::Radians(270.0f));
 	}
 
-	m_viewMatrix = Matrix4::ViewMatrix(m_position, m_rotation);
-	m_projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+	viewMatrix = Matrix4::ViewMatrix(position, rotation);
+	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
-	m_viewFrustum.Update(m_viewMatrix, m_projectionMatrix);
-	m_viewRay.Update(m_position, {0.5f, 0.5f}, m_viewMatrix, m_projectionMatrix);
+	viewFrustum.Update(viewMatrix, projectionMatrix);
+	viewRay.Update(position, {0.5f, 0.5f}, viewMatrix, projectionMatrix);
 }
 }

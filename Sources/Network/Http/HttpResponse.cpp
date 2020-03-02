@@ -4,15 +4,15 @@
 
 namespace acid {
 HttpResponse::HttpResponse() :
-	m_status(Status::ConnectionFailed),
-	m_majorVersion(0),
-	m_minorVersion(0) {
+	status(Status::ConnectionFailed),
+	majorVersion(0),
+	minorVersion(0) {
 }
 
 std::string HttpResponse::GetField(const std::string &field) const {
-	auto it = m_fields.find(String::Lowercase(field));
+	auto it = fields.find(String::Lowercase(field));
 
-	if (it != m_fields.end()) {
+	if (it != fields.end()) {
 		return it->second;
 	}
 
@@ -27,11 +27,11 @@ void HttpResponse::Parse(const std::string &data) {
 
 	if (in >> version) {
 		if ((version.size() >= 8) && (version[6] == '.') && (String::Lowercase(version.substr(0, 5)) == "http/") && isdigit(version[5]) && isdigit(version[7])) {
-			m_majorVersion = version[5] - '0';
-			m_minorVersion = version[7] - '0';
+			majorVersion = version[5] - '0';
+			minorVersion = version[7] - '0';
 		} else {
 			// Invalid HTTP version.
-			m_status = Status::InvalidResponse;
+			status = Status::InvalidResponse;
 			return;
 		}
 	}
@@ -40,10 +40,10 @@ void HttpResponse::Parse(const std::string &data) {
 	int status;
 
 	if (in >> status) {
-		m_status = static_cast<Status>(status);
+		this->status = static_cast<Status>(status);
 	} else {
 		// Invalid status code.
-		m_status = Status::InvalidResponse;
+		this->status = Status::InvalidResponse;
 		return;
 	}
 
@@ -53,12 +53,12 @@ void HttpResponse::Parse(const std::string &data) {
 	// Parse the other lines, which contain fields, one by one.
 	ParseFields(in);
 
-	m_body.clear();
+	body.clear();
 
 	// Determine whether the transfer is chunked.
 	if (String::Lowercase(GetField("transfer-encoding")) != "chunked") {
 		// Not chunked - just read everything at once.
-		std::copy(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>(), std::back_inserter(m_body));
+		std::copy(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>(), std::back_inserter(body));
 	} else {
 		// Chunked - have to read chunk by chunk.
 		std::size_t length;
@@ -73,7 +73,7 @@ void HttpResponse::Parse(const std::string &data) {
 			std::istreambuf_iterator<char> itEnd;
 
 			for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++) {
-				m_body.push_back(*it++);
+				body.push_back(*it++);
 			}
 		}
 
@@ -102,7 +102,7 @@ void HttpResponse::ParseFields(std::istream &in) {
 			}
 
 			// Add the field.
-			m_fields[String::Lowercase(field)] = value;
+			fields[String::Lowercase(field)] = value;
 		}
 	}
 }

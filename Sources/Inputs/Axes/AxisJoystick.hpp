@@ -8,6 +8,7 @@ namespace acid {
  * @brief Axis input from a joystick input device.
  */
 class ACID_EXPORT AxisJoystick : public Axis::Registrar<AxisJoystick> {
+	inline static const bool Registered = Register("axisJoystick");
 public:
 	/**
 	 * Creates a new axis joystick.
@@ -22,19 +23,17 @@ public:
 
 	bool IsConnected() const;
 
-	JoystickPort GetPort() const { return m_port; }
-	void SetPort(JoystickPort port) { m_port = port; }
+	JoystickPort GetPort() const { return port; }
+	void SetPort(JoystickPort port) { this->port = port; }
 
-	JoystickAxis GetAxis() const { return m_axis; }
-	void SetAxis(JoystickAxis axis) { m_axis = axis; }
+	JoystickAxis GetAxis() const { return axis; }
+	void SetAxis(JoystickAxis axis) { this->axis = axis; }
 
 	friend const Node &operator>>(const Node &node, AxisJoystick &axisJoystick);
 	friend Node &operator<<(Node &node, const AxisJoystick &axisJoystick);
 
 private:
-	static bool registered;
-
-	JoystickPort m_port;
-	JoystickAxis m_axis;
+	JoystickPort port;
+	JoystickAxis axis;
 };
 }

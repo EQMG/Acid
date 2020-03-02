@@ -7,17 +7,15 @@
 #include "Maths/Transform.hpp"
 
 namespace test {
-bool CelestialBody::registered = Register("celestialBody");
-
-static const Colour SUN_COLOUR_SUNRISE(0xEE9A90);
-static const Colour SUN_COLOUR_NIGHT(0x0D0D1A);
-static const Colour SUN_COLOUR_DAY(0xFFFFFF);
-
-static const Colour MOON_COLOUR_NIGHT(0x666699);
-static const Colour MOON_COLOUR_DAY(0x000000);
+static constexpr Colour SUN_COLOUR_SUNRISE(0xEE9A90);
+static constexpr Colour SUN_COLOUR_NIGHT(0x0D0D1A);
+static constexpr Colour SUN_COLOUR_DAY(0xFFFFFF);
+			
+static constexpr Colour MOON_COLOUR_NIGHT(0x666699);
+static constexpr Colour MOON_COLOUR_DAY(0x000000);
 
 CelestialBody::CelestialBody(Type type) :
-	m_type(type) {
+	type(type) {
 }
 
 void CelestialBody::Start() {
@@ -25,12 +23,10 @@ void CelestialBody::Start() {
 
 void CelestialBody::Update() {
 	auto transform = GetEntity()->GetComponent<Transform>();
-
-	if (!transform) {
+	if (!transform)
 		return;
-	}
 
-	switch (m_type) {
+	switch (type) {
 	case Type::Sun: {
 		auto sunPosition = World::Get()->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
 		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
@@ -44,7 +40,7 @@ void CelestialBody::Update() {
 
 		if (auto filterLensflare = Graphics::Get()->GetRenderer()->GetSubrender<FilterLensflare>()) {
 			filterLensflare->SetSunPosition(transform->GetPosition());
-			filterLensflare->SetSunHeight(transform->GetPosition().m_y);
+			filterLensflare->SetSunHeight(transform->GetPosition().y);
 		}
 	}
 	break;
@@ -65,12 +61,12 @@ void CelestialBody::Update() {
 }
 
 const Node &operator>>(const Node &node, CelestialBody &celestialBody) {
-	node["type"].Get(celestialBody.m_type);
+	node["type"].Get(celestialBody.type);
 	return node;
 }
 
 Node &operator<<(Node &node, const CelestialBody &celestialBody) {
-	node["type"].Set(celestialBody.m_type);
+	node["type"].Set(celestialBody.type);
 	return node;
 }
 }

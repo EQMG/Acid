@@ -9,8 +9,8 @@ class ACID_EXPORT AnimationLoader {
 public:
 	AnimationLoader(NodeConstView &&libraryAnimations, NodeConstView &&libraryVisualScenes, const Matrix4 &correction);
 
-	const Time &GetLengthSeconds() const { return m_lengthSeconds; }
-	const std::vector<Keyframe> &GetKeyframes() const { return m_keyframes; }
+	const Time &GetLengthSeconds() const { return lengthSeconds; }
+	const std::vector<Keyframe> &GetKeyframes() const { return keyframes; }
 
 private:
 	std::string FindRootJointName() const;
@@ -24,11 +24,11 @@ private:
 
 	void ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root);
 
-	NodeConstView m_libraryAnimations;
-	NodeConstView m_libraryVisualScenes;
-	Matrix4 m_correction;
+	NodeConstView libraryAnimations;
+	NodeConstView libraryVisualScenes;
+	Matrix4 correction;
 
-	Time m_lengthSeconds;
-	std::vector<Keyframe> m_keyframes;
+	Time lengthSeconds;
+	std::vector<Keyframe> keyframes;
 };
 }

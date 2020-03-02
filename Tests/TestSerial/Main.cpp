@@ -28,10 +28,6 @@ class Example1 {
 public:
 	class XML {
 	public:
-		std::vector<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
-		std::optional<float> optional0;
-		std::optional<std::string> optional1 = "Hello optional string!";
-
 		friend const Node &operator>>(const Node &node, XML &xml) {
 			node["data"].Get(xml.data);
 			node["optional0"].Get(xml.optional0);
@@ -45,15 +41,14 @@ public:
 			node["optional1"].Set(xml.optional1);
 			return node;
 		}
+		
+		std::vector<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
+		std::optional<float> optional0;
+		std::optional<std::string> optional1 = "Hello optional string!";
 	} xml;
 
 	class Objects {
 	public:
-		std::string url = R"(<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>)";
-		std::string key = "value";
-		std::vector<float> values = {190.0f, 11.0f, -0.001f};
-		std::vector<Vector3f> vectors = {Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
-
 		friend const Node &operator>>(const Node &node, Objects &objects) {
 			node["url"].Get(objects.url);
 			node["key"].Get(objects.key);
@@ -69,26 +64,12 @@ public:
 			node["vectors"].Set(objects.vectors);
 			return node;
 		}
+		
+		std::string url = R"(<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>)";
+		std::string key = "value";
+		std::vector<float> values = {190.0f, 11.0f, -0.001f};
+		std::vector<Vector3f> vectors = {Vector3f::Left, Vector3f::Right, Vector3f::Up, Vector3f::Down};
 	} objects;
-
-	std::string paragraph = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n";
-	std::unique_ptr<std::string> content = std::make_unique<std::string>(
-		"Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
-
-	Time timeNow = Time::Now();
-	std::filesystem::path currentPath = std::filesystem::current_path();
-	std::vector<std::string> json = {"rigid", "better for data interchange"};
-	std::vector<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
-	std::map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
-	std::map<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
-	std::vector<std::pair<std::string, BitMask<ExampleType>>> types = {
-		{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
-		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
-	};
-	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
-	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
-	//std::array<double, 5> array = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
-	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 
 	friend const Node &operator>>(const Node &node, Example1 &example1) {
 		node["timeNow"].Get(example1.timeNow);
@@ -127,16 +108,29 @@ public:
 		node["objects"].Set(example1.objects);
 		return node;
 	}
+
+	std::string paragraph = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n";
+	std::unique_ptr<std::string> content = std::make_unique<std::string>(
+		"Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+
+	Time timeNow = Time::Now();
+	std::filesystem::path currentPath = std::filesystem::current_path();
+	std::vector<std::string> json = {"rigid", "better for data interchange"};
+	std::vector<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
+	std::map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
+	std::map<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
+	std::vector<std::pair<std::string, BitMask<ExampleType>>> types = {
+		{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
+		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
+	};
+	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
+	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
+	//std::array<double, 5> array = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
+	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 };
 
 class User {
 public:
-	std::string username;
-	std::string fullname;
-	std::string description;
-	bool employed = false;
-	std::string birthday;
-
 	friend const Node &operator>>(const Node &node, User &user) {
 		node["_username"].Get(user.username);
 		node["_fullname"].Get(user.fullname);
@@ -154,6 +148,12 @@ public:
 		node["_birthday"].Set(user.birthday);
 		return node;
 	}
+	
+	std::string username;
+	std::string fullname;
+	std::string description;
+	bool employed = false;
+	std::string birthday;
 };
 }
 

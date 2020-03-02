@@ -14,7 +14,7 @@ namespace acid {
 class ACID_EXPORT Maths {
 public:
 	template<typename T>
-	static constexpr T Pi = static_cast<T>(3.14159265358979323846264338327950288L);
+	static constexpr T PI = static_cast<T>(3.14159265358979323846264338327950288L);
 
 	/**
 	 * Generates a random value from between a range.
@@ -48,7 +48,7 @@ public:
 	 */
 	template<typename T = float>
 	static constexpr T Radians(const T &degrees) {
-		return static_cast<T>(degrees * Pi<long double> / 180);
+		return static_cast<T>(degrees * PI<long double> / 180);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public:
 	 */
 	template<typename T = float>
 	static constexpr T Degrees(const T &radians) {
-		return static_cast<T>(radians * 180 / Pi<long double>);
+		return static_cast<T>(radians * 180 / PI<long double>);
 	}
 
 	/**
@@ -87,10 +87,10 @@ public:
 	 */
 	template<typename T = float>
 	static T WrapRadians(const T &radians) {
-		auto x = std::fmod(radians, 2 * Pi<T>);
+		auto x = std::fmod(radians, 2 * PI<T>);
 
 		if (x < 0) {
-			x += 2 * Pi<T>;
+			x += 2 * PI<T>;
 		}
 
 		return static_cast<T>(x);
@@ -174,7 +174,7 @@ public:
 	 */
 	template<typename T = float, typename K = float>
 	static auto CosLerp(const T &a, const T &b, const K &factor) {
-		auto ft = factor * Pi<T>;
+		auto ft = factor * PI<T>;
 		auto f = 1 - std::cos(ft) / 2;
 		return (a * (1 - f)) + (b * f);
 	}
@@ -206,14 +206,14 @@ public:
 	static auto CosFromSin(const T &sin, const K &angle) {
 		// sin(x)^2 + cos(x)^2 = 1
 		auto cos = std::sqrt(1 - sin * sin);
-		auto a = angle + (Pi<T> / 2);
-		auto b = a - static_cast<int32_t>(a / (2 * Pi<T>)) * (2 * Pi<T>);
+		auto a = angle + (PI<T> / 2);
+		auto b = a - static_cast<int32_t>(a / (2 * PI<T>)) * (2 * PI<T>);
 
 		if (b < 0) {
-			b = (2 * Pi<T>) + b;
+			b = (2 * PI<T>) + b;
 		}
 
-		if (b >= Pi<T>) {
+		if (b >= PI<T>) {
 			return -cos;
 		}
 

@@ -8,6 +8,7 @@ namespace acid {
  * @brief Button input from a joystick input device.
  */
 class ACID_EXPORT ButtonJoystick : public Button::Registrar<ButtonJoystick> {
+	inline static const bool Registered = Register("buttonJoystick");
 public:
 	/**
 	 * Creates a new joystick button.
@@ -20,19 +21,17 @@ public:
 
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
-	JoystickPort GetPort() const { return m_port; }
-	void SetPort(JoystickPort port) { m_port = port; }
+	JoystickPort GetPort() const { return port; }
+	void SetPort(JoystickPort port) { this->port = port; }
 
-	JoystickButton GetButton() const { return m_button; }
-	void SetButton(JoystickButton button) { m_button = button; }
+	JoystickButton GetButton() const { return button; }
+	void SetButton(JoystickButton button) { this->button = button; }
 
 	friend const Node &operator>>(const Node &node, ButtonJoystick &buttonJoystick);
 	friend Node &operator<<(Node &node, const ButtonJoystick &buttonJoystick);
 
 private:
-	static bool registered;
-
-	JoystickPort m_port;
-	JoystickButton m_button;
+	JoystickPort port;
+	JoystickButton button;
 };
 }

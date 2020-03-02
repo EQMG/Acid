@@ -42,20 +42,20 @@ public:
 	 */
 	std::unique_ptr<Bitmap> GetBitmap(uint32_t mipLevel = 0, uint32_t arrayLayer = 0) const;
 
-	const VkExtent3D &GetExtent() const { return m_extent; }
-	Vector2ui GetSize() const { return {m_extent.width, m_extent.height}; }
-	VkFormat GetFormat() const { return m_format; }
-	VkSampleCountFlagBits GetSamples() const { return m_samples; }
-	VkImageUsageFlags GetUsage() const { return m_usage; }
-	uint32_t GetMipLevels() const { return m_mipLevels; }
-	uint32_t GetArrayLevels() const { return m_arrayLayers; }
-	VkFilter GetFilter() const { return m_filter; }
-	VkSamplerAddressMode GetAddressMode() const { return m_addressMode; }
-	VkImageLayout GetLayout() const { return m_layout; }
-	const VkImage &GetImage() { return m_image; }
-	const VkDeviceMemory &GetMemory() { return m_memory; }
-	const VkSampler &GetSampler() const { return m_sampler; }
-	const VkImageView &GetView() const { return m_view; }
+	const VkExtent3D &GetExtent() const { return extent; }
+	Vector2ui GetSize() const { return {extent.width, extent.height}; }
+	VkFormat GetFormat() const { return format; }
+	VkSampleCountFlagBits GetSamples() const { return samples; }
+	VkImageUsageFlags GetUsage() const { return usage; }
+	uint32_t GetMipLevels() const { return mipLevels; }
+	uint32_t GetArrayLevels() const { return arrayLayers; }
+	VkFilter GetFilter() const { return filter; }
+	VkSamplerAddressMode GetAddressMode() const { return addressMode; }
+	VkImageLayout GetLayout() const { return layout; }
+	const VkImage &GetImage() { return image; }
+	const VkDeviceMemory &GetMemory() { return memory; }
+	const VkSampler &GetSampler() const { return sampler; }
+	const VkImageView &GetView() const { return view; }
 
 	static uint32_t GetMipLevels(const VkExtent3D &extent);
 
@@ -99,21 +99,21 @@ public:
 		VkImageLayout srcImageLayout, uint32_t mipLevel, uint32_t arrayLayer);
 
 protected:
-	VkExtent3D m_extent;
-	VkSampleCountFlagBits m_samples;
-	VkImageUsageFlags m_usage;
-	VkFormat m_format = VK_FORMAT_UNDEFINED;
-	uint32_t m_mipLevels = 0;
-	uint32_t m_arrayLayers;
+	VkExtent3D extent;
+	VkSampleCountFlagBits samples;
+	VkImageUsageFlags usage;
+	VkFormat format = VK_FORMAT_UNDEFINED;
+	uint32_t mipLevels = 0;
+	uint32_t arrayLayers;
 
-	VkFilter m_filter;
-	VkSamplerAddressMode m_addressMode;
+	VkFilter filter;
+	VkSamplerAddressMode addressMode;
 
-	VkImageLayout m_layout;
+	VkImageLayout layout;
 
-	VkImage m_image = VK_NULL_HANDLE;
-	VkDeviceMemory m_memory = VK_NULL_HANDLE;
-	VkSampler m_sampler = VK_NULL_HANDLE;
-	VkImageView m_view = VK_NULL_HANDLE;
+	VkImage image = VK_NULL_HANDLE;
+	VkDeviceMemory memory = VK_NULL_HANDLE;
+	VkSampler sampler = VK_NULL_HANDLE;
+	VkImageView view = VK_NULL_HANDLE;
 };
 }

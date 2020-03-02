@@ -9,8 +9,8 @@ using namespace acid;
  */
 class SimpleMaterial : public Material {
 public:
-	explicit SimpleMaterial(const Pipeline::Stage &stage, const std::shared_ptr<Image2d> &image) :
-		stage(stage), m_imageMaterial(image) {
+	explicit SimpleMaterial(Pipeline::Stage stage, std::shared_ptr<Image2d> image) :
+		stage(std::move(stage)), imageMaterial(std::move(image)) {
 	}
 
 	/*
@@ -21,9 +21,8 @@ public:
 	 * So we have inNormal in our shader even though we dont use it.
 	 */
 	void CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) override {
-		m_pipelineMaterial = PipelineMaterial::Create(
-			stage,
-			{
+		pipelineMaterial = PipelineMaterial::Create(
+			stage, {
 				{"Tutorial/Shaders/tri7.vert", "Tutorial/Shaders/tri7.frag"},
 				{vertexInput}//, {}, PipelineGraphics::Mode::Polygon
 			}
@@ -35,7 +34,7 @@ public:
 	 * The renderer calls this to push the descriptors we want
 	 */
 	void PushDescriptors(DescriptorsHandler &descriptorSet) override {
-		descriptorSet.Push("texSampler", m_imageMaterial);
+		descriptorSet.Push("texSampler", imageMaterial);
 	}
 
 	/*
@@ -51,7 +50,7 @@ public:
 			uniformObject.Push("transform", transform->GetWorldMatrix());
 		}
 	}
-	
+
 	Pipeline::Stage stage;
-	std::shared_ptr<Image2d> m_imageMaterial;
+	std::shared_ptr<Image2d> imageMaterial;
 };

@@ -7,7 +7,7 @@ template<typename T>
 T NodeConstView::GetName() const {
 	if (!has_value())
 		return {};
-	return m_value->GetName<T>();
+	return value->GetName<T>();
 }
 
 template<typename T>
@@ -15,7 +15,7 @@ T NodeConstView::Get() const {
 	if (!has_value())
 		return {};
 
-	return m_value->Get<T>();
+	return value->Get<T>();
 }
 
 template<typename T>
@@ -23,7 +23,7 @@ T NodeConstView::Get(const T &fallback) const {
 	if (!has_value())
 		return fallback;
 
-	return m_value->Get<T>(fallback);
+	return value->Get<T>(fallback);
 }
 
 template<typename T>
@@ -31,7 +31,7 @@ bool NodeConstView::Get(T &dest) const {
 	if (!has_value())
 		return false;
 
-	return m_value->Get<T>(dest);
+	return value->Get<T>(dest);
 }
 
 template<typename T, typename K>
@@ -41,6 +41,6 @@ bool NodeConstView::Get(T &dest, const K &fallback) const {
 		return false;
 	}
 
-	return m_value->Get<T>(dest, fallback);
+	return value->Get<T>(dest, fallback);
 }
 }

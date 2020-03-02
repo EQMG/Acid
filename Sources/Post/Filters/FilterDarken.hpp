@@ -9,12 +9,12 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetFactor() const { return m_factor; }
-	void SetFactor(float factor) { m_factor = factor; }
+	float GetFactor() const { return factor; }
+	void SetFactor(float factor) { this->factor = factor; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_factor;
+	float factor;
 };
 }

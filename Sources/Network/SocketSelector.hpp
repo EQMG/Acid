@@ -98,6 +98,6 @@ private:
 	struct SocketSelectorImpl;
 
 	/// Opaque pointer to the implementation (which requires OS-specific types).
-	std::unique_ptr<SocketSelectorImpl> m_impl;
+	std::unique_ptr<SocketSelectorImpl> impl;
 };
 }

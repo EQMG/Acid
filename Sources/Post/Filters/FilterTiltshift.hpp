@@ -10,24 +10,24 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetBlurAmount() const { return m_blurAmount; }
-	void SetBlurAmount(float blurAmount) { m_blurAmount = blurAmount; }
+	float GetBlurAmount() const { return blurAmount; }
+	void SetBlurAmount(float blurAmount) { this->blurAmount = blurAmount; }
 
-	float GetCentre() const { return m_centre; }
-	void SetCentre(float centre) { m_centre = centre; }
+	float GetCentre() const { return centre; }
+	void SetCentre(float centre) { this->centre = centre; }
 
-	float GetStepSize() const { return m_stepSize; }
-	void SetStepSize(float stepSize) { m_stepSize = stepSize; }
+	float GetStepSize() const { return stepSize; }
+	void SetStepSize(float stepSize) { this->stepSize = stepSize; }
 
-	float GetSteps() const { return m_steps; }
-	void SetSteps(float steps) { m_steps = steps; }
+	float GetSteps() const { return steps; }
+	void SetSteps(float steps) { this->steps = steps; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_blurAmount;
-	float m_centre;
-	float m_stepSize;
-	float m_steps;
+	float blurAmount;
+	float centre;
+	float stepSize;
+	float steps;
 };
 }

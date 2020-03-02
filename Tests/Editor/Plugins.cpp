@@ -10,42 +10,42 @@
 
 namespace test {
 Plugins::Plugins() :
-	m_loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
-	m_fileObserver(m_loadedPath, 0.5s),
-	m_plugin(std::make_unique<cr_plugin>()),
-	m_buttonReload(Key::R) {
-	//m_panels.SetTransform({UiMargins::All});
-	//Uis::Get()->GetCanvas().AddChild(&m_panels);
+	loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
+	fileObserver(loadedPath, 0.5s),
+	plugin(std::make_unique<cr_plugin>()),
+	buttonReload(Key::R) {
+	//panels.SetTransform({UiMargins::All});
+	//Uis::Get()->GetCanvas().AddChild(&panels);
 	
-	auto pathStr = m_loadedPath.string();
+	auto pathStr = loadedPath.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
-	cr_plugin_load(*m_plugin, pathStr.c_str());
+	cr_plugin_load(*plugin, pathStr.c_str());
 
 	// Watches the plugin path.
-	m_fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
-		m_update = true;
+	fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
+		update = true;
 	}, this);
-	m_buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			//std::filesystem::last_write_time(m_loadedPath, std::filesystem::file_time_type(Time::Now()));
-			m_update = true;
+			//std::filesystem::last_write_time(loadedPath, std::filesystem::file_time_type(Time::Now()));
+			update = true;
 		}
 	}, this);
 }
 
 Plugins::~Plugins() {
-	cr_plugin_close(*m_plugin);
+	cr_plugin_close(*plugin);
 }
 
 void Plugins::Update() {
-	if (m_update) {
+	if (update) {
 		Log::Debug("[Host] Updating plugin\n");
 		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
-		//m_panels.SetParent(nullptr);
-		cr_plugin_unload(*m_plugin, false, false);
-		cr_plugin_update(*m_plugin);
-		//m_panels.SetParent(&Uis::Get()->GetCanvas());
-		m_update = false;
+		//panels.SetParent(nullptr);
+		cr_plugin_unload(*plugin, false, false);
+		cr_plugin_update(*plugin);
+		//panels.SetParent(&Uis::Get()->GetCanvas());
+		update = false;
 	}
 }
 }

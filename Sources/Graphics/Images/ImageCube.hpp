@@ -56,7 +56,7 @@ public:
 	 * @param anisotropic If anisotropic filtering is enabled.
 	 * @param mipmap If mapmaps will be generated.
 	 */
-	ImageCube(const Vector2ui &extent, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM, VkImageLayout layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+	explicit ImageCube(const Vector2ui &extent, VkFormat format = VK_FORMAT_R8G8B8A8_UNORM, VkImageLayout layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
 		VkImageUsageFlags usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT,
 		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
@@ -97,12 +97,12 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(ImageCube); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; }
-	const std::string &GetFileSuffix() const { return m_fileSuffix; }
-	const std::vector<std::string> &GetFileSides() const { return m_fileSides; }
-	bool IsAnisotropic() const { return m_anisotropic; }
-	bool IsMipmap() const { return m_mipmap; }
-	uint32_t GetComponents() const { return m_components; }
+	const std::filesystem::path &GetFilename() const { return filename; }
+	const std::string &GetFileSuffix() const { return fileSuffix; }
+	const std::vector<std::string> &GetFileSides() const { return fileSides; }
+	bool IsAnisotropic() const { return anisotropic; }
+	bool IsMipmap() const { return mipmap; }
+	uint32_t GetComponents() const { return components; }
 
 private:
 	friend const Node &operator>>(const Node &node, ImageCube &image);
@@ -110,13 +110,13 @@ private:
 
 	void Load(std::unique_ptr<Bitmap> loadBitmap = nullptr);
 
-	std::filesystem::path m_filename;
-	std::string m_fileSuffix;
+	std::filesystem::path filename;
+	std::string fileSuffix;
 	/// X, -X, +Y, -Y, +Z, -Z
-	std::vector<std::string> m_fileSides = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
+	std::vector<std::string> fileSides = {"Right", "Left", "Top", "Bottom", "Back", "Front"};
 
-	bool m_anisotropic;
-	bool m_mipmap;
-	uint32_t m_components = 0;
+	bool anisotropic;
+	bool mipmap;
+	uint32_t components = 0;
 };
 }

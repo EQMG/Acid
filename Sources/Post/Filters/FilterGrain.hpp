@@ -9,12 +9,12 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetStrength() const { return m_strength; }
-	void SetStrength(float strength) { m_strength = strength; }
+	float GetStrength() const { return strength; }
+	void SetStrength(float strength) { this->strength = strength; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_strength;
+	float strength;
 };
 }

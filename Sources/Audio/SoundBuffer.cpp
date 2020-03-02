@@ -28,37 +28,37 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &fi
 }
 
 SoundBuffer::SoundBuffer(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename)) {
+	filename(std::move(filename)) {
 	if (load) {
 		Load();
 	}
 }
 
 SoundBuffer::~SoundBuffer() {
-	alDeleteBuffers(1, &m_buffer);
+	alDeleteBuffers(1, &buffer);
 }
 
 void SoundBuffer::SetBuffer(uint32_t buffer) {
-	if (buffer)
-		alDeleteBuffers(1, &m_buffer);
-	m_buffer = buffer;
+	if (this->buffer)
+		alDeleteBuffers(1, &this->buffer);
+	this->buffer = buffer;
 }
 
 const Node &operator>>(const Node &node, SoundBuffer &soundBuffer) {
-	node["filename"].Get(soundBuffer.m_filename);
+	node["filename"].Get(soundBuffer.filename);
 	return node;
 }
 
 Node &operator<<(Node &node, const SoundBuffer &soundBuffer) {
-	node["filename"].Set(soundBuffer.m_filename);
+	node["filename"].Set(soundBuffer.filename);
 	return node;
 }
 
 void SoundBuffer::Load() {
-	if (m_filename.empty()) {
+	if (filename.empty()) {
 		return;
 	}
 
-	Registry()[m_filename.extension().string()].first(this, m_filename);
+	Registry()[filename.extension().string()].first(this, filename);
 }
 }

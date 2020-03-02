@@ -16,15 +16,15 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Vector2f &GetDirection() const { return m_direction; }
-	void SetDirection(const Vector2f &direction) { m_direction = direction; }
+	const Vector2f &GetDirection() const { return direction; }
+	void SetDirection(const Vector2f &direction) { this->direction = direction; }
 
 private:
 	std::vector<Shader::Define> GetDefines(const Type &type);
 
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	Type m_type;
-	Vector2f m_direction;
+	Type type;
+	Vector2f direction;
 };
 }

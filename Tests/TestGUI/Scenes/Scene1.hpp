@@ -19,8 +19,8 @@ public:
 	void TogglePause();
 
 private:
-	UiStartLogo m_uiStartLogo;
-	Panels m_uiPanels;
-	OverlayDebug m_overlayDebug;
+	UiStartLogo uiStartLogo;
+	Panels uiPanels;
+	OverlayDebug overlayDebug;
 };
 }

@@ -42,18 +42,18 @@ public:
 	 */
 	void Submit(const VkSemaphore &waitSemaphore = VK_NULL_HANDLE, const VkSemaphore &signalSemaphore = VK_NULL_HANDLE, VkFence fence = VK_NULL_HANDLE);
 
-	operator const VkCommandBuffer &() const { return m_commandBuffer; }
+	operator const VkCommandBuffer &() const { return commandBuffer; }
 
-	bool IsRunning() const { return m_running; }
-	const VkCommandBuffer &GetCommandBuffer() const { return m_commandBuffer; }
+	const VkCommandBuffer &GetCommandBuffer() const { return commandBuffer; }
+	bool IsRunning() const { return running; }
 
 private:
 	VkQueue GetQueue() const;
 
-	std::shared_ptr<CommandPool> m_commandPool;
+	std::shared_ptr<CommandPool> commandPool;
 
-	VkQueueFlagBits m_queueType;
-	VkCommandBuffer m_commandBuffer = VK_NULL_HANDLE;
-	bool m_running = false;
+	VkQueueFlagBits queueType;
+	VkCommandBuffer commandBuffer = VK_NULL_HANDLE;
+	bool running = false;
 };
 }

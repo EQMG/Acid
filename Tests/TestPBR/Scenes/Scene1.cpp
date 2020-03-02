@@ -22,12 +22,12 @@
 namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<CameraFree>()) {
-	//m_overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
-	m_overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
+	//overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
+	overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
 		.SetHeight<PixelConstraint>(36)
 		.SetX<PixelConstraint>(0, UiAnchor::Left)
 		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
-	Uis::Get()->GetCanvas().AddChild(&m_overlayDebug);
+	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
 	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {

@@ -7,59 +7,59 @@
 namespace acid {
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &a):
-	m_x(a),
-	m_y(a) {
+	x(a),
+	y(a) {
 }
 
 template<typename T>
 constexpr Vector2<T>::Vector2(const T &x, const T &y):
-	m_x(x),
-	m_y(y) {
+	x(x),
+	y(y) {
 }
 
 template<typename T>
 template<typename K, typename J>
 constexpr Vector2<T>::Vector2(const K &x, const J &y) :
-	m_x(static_cast<T>(x)),
-	m_y(static_cast<T>(y)) {
+	x(static_cast<T>(x)),
+	y(static_cast<T>(y)) {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector2<K> &source) :
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)) {
+	x(static_cast<T>(source.x)),
+	y(static_cast<T>(source.y)) {
 }
 
 template<typename T>
 template<typename K>
 constexpr Vector2<T>::Vector2(const Vector3<K> &source):
-	m_x(static_cast<T>(source.m_x)),
-	m_y(static_cast<T>(source.m_y)) {
+	x(static_cast<T>(source.x)),
+	y(static_cast<T>(source.y)) {
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Add(const Vector2<K> &other) const {
-	return Vector2<decltype(m_x + other.m_x)>(m_x + other.m_x, m_y + other.m_y);
+	return Vector2<decltype(x + other.x)>(x + other.x, y + other.y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Subtract(const Vector2<K> &other) const {
-	return Vector2<decltype(m_x - other.m_x)>(m_x - other.m_x, m_y - other.m_y);
+	return Vector2<decltype(x - other.x)>(x - other.x, y - other.y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Multiply(const Vector2<K> &other) const {
-	return Vector2<decltype(m_x * other.m_x)>(m_x * other.m_x, m_y * other.m_y);
+	return Vector2<decltype(x * other.x)>(x * other.x, y * other.y);
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Divide(const Vector2<K> &other) const {
-	return Vector2<decltype(m_x / other.m_x)>(m_x / other.m_x, m_y / other.m_y);
+	return Vector2<decltype(x / other.x)>(x / other.x, y / other.y);
 }
 
 template<typename T>
@@ -79,7 +79,7 @@ constexpr auto Vector2<T>::Angle(const Vector2<K> &other) const {
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Dot(const Vector2<K> &other) const {
-	return m_x * other.m_x + m_y * other.m_y;
+	return x * other.x + y * other.y;
 }
 
 template<typename T>
@@ -93,21 +93,21 @@ constexpr auto Vector2<T>::Lerp(const Vector2<K> &other, const J &progression) c
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Scale(const K &scalar) const {
-	return Vector2<decltype(m_x * scalar)>(m_x * scalar, m_y * scalar);
+	return Vector2<decltype(x * scalar)>(x * scalar, y * scalar);
 }
 
 template<typename T>
 template<typename K>
 auto Vector2<T>::Rotate(const K &angle) const {
-	return Vector2<decltype(m_x * angle)>(m_x * std::cos(angle) - m_y * std::sin(angle), m_x * std::sin(angle) + m_y * std::cos(angle));
+	return Vector2<decltype(x * angle)>(x * std::cos(angle) - y * std::sin(angle), x * std::sin(angle) + y * std::cos(angle));
 }
 
 template<typename T>
 template<typename K, typename J>
 auto Vector2<T>::Rotate(const K &angle, const Vector2<J> &rotationAxis) const {
-	auto x = ((m_x - rotationAxis.m_x) * std::cos(angle)) - ((m_y - rotationAxis.m_y) * std::sin(angle) + rotationAxis.m_x);
-	auto y = ((m_x - rotationAxis.m_x) * std::sin(angle)) + ((m_y - rotationAxis.m_y) * std::cos(angle) + rotationAxis.m_y);
-	return Vector2<decltype(x)>(x, y);
+	auto x1 = ((x - rotationAxis.x) * std::cos(angle)) - ((y - rotationAxis.y) * std::sin(angle) + rotationAxis.x);
+	auto y1 = ((x - rotationAxis.x) * std::sin(angle)) + ((y - rotationAxis.y) * std::cos(angle) + rotationAxis.y);
+	return Vector2<decltype(x1)>(x1, y1);
 }
 
 template<typename T>
@@ -123,7 +123,7 @@ auto Vector2<T>::Normalize() const {
 
 template<typename T>
 constexpr auto Vector2<T>::LengthSquared() const {
-	return m_x * m_x + m_y * m_y;
+	return x * x + y * y;
 }
 
 template<typename T>
@@ -133,43 +133,43 @@ auto Vector2<T>::Length() const {
 
 template<typename T>
 auto Vector2<T>::Abs() const {
-	return Vector2<T>(std::abs(m_x), std::abs(m_y));
+	return Vector2<T>(std::abs(x), std::abs(y));
 }
 
 template<typename T>
 constexpr auto Vector2<T>::Min() const {
-	return std::min({m_x, m_y});
+	return std::min({x, y});
 }
 
 template<typename T>
 constexpr auto Vector2<T>::Max() const {
-	return std::max({m_x, m_y});
+	return std::max({x, y});
 }
 
 template<typename T>
 constexpr auto Vector2<T>::MinMax() const {
-	return std::minmax({m_x, m_y});
+	return std::minmax({x, y});
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Min(const Vector2<K> &other) {
-	using THighestP = decltype(m_x + other.m_x);
-	return Vector2<THighestP>(std::min<THighestP>(m_x, other.m_x), std::min<THighestP>(m_y, other.m_y));
+	using THighestP = decltype(x + other.x);
+	return Vector2<THighestP>(std::min<THighestP>(x, other.x), std::min<THighestP>(y, other.y));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::Max(const Vector2<K> &other) {
-	using THighestP = decltype(m_x + other.m_x);
-	return Vector2<THighestP>(std::max<THighestP>(m_x, other.m_x), std::max<THighestP>(m_y, other.m_y));
+	using THighestP = decltype(x + other.x);
+	return Vector2<THighestP>(std::max<THighestP>(x, other.x), std::max<THighestP>(y, other.y));
 }
 
 template<typename T>
 template<typename K>
 constexpr auto Vector2<T>::DistanceSquared(const Vector2<K> &other) const {
-	auto dx = m_x - other.m_x;
-	auto dy = m_y - other.m_y;
+	auto dx = x - other.x;
+	auto dy = y - other.y;
 	return dx * dx + dy * dy;
 }
 
@@ -188,9 +188,9 @@ constexpr auto Vector2<T>::DistanceVector(const Vector2<K> &other) const {
 template<typename T>
 template<typename K>
 constexpr bool Vector2<T>::InTriangle(const Vector2<K> &v1, const Vector2<K> &v2, const Vector2<K> &v3) const {
-	auto b1 = ((m_x - v2.m_x) * (v1.m_y - v2.m_y) - (v1.m_x - v2.m_x) * (m_y - v2.m_y)) < 0;
-	auto b2 = ((m_x - v3.m_x) * (v2.m_y - v3.m_y) - (v2.m_x - v3.m_x) * (m_y - v3.m_y)) < 0;
-	auto b3 = ((m_x - v1.m_x) * (v3.m_y - v1.m_y) - (v3.m_x - v1.m_x) * (m_y - v1.m_y)) < 0;
+	auto b1 = ((x - v2.x) * (v1.y - v2.y) - (v1.x - v2.x) * (y - v2.y)) < 0;
+	auto b2 = ((x - v3.x) * (v2.y - v3.y) - (v2.x - v3.x) * (y - v3.y)) < 0;
+	auto b3 = ((x - v1.x) * (v3.y - v1.y) - (v3.x - v1.x) * (y - v1.y)) < 0;
 	return ((b1 == b2) & (b2 == b3));
 }
 
@@ -202,25 +202,25 @@ constexpr auto Vector2<T>::SmoothDamp(const Vector2<K> &target, const Vector2<J>
 
 template<typename T>
 auto Vector2<T>::CartesianToPolar() const {
-	auto radius = std::sqrt(m_x * m_x + m_y * m_y);
-	auto theta = std::atan2(m_y, m_x);
+	auto radius = std::sqrt(x * x + y * y);
+	auto theta = std::atan2(y, x);
 	return Vector2<decltype(radius)>(radius, theta);
 }
 
 template<typename T>
 auto Vector2<T>::PolarToCartesian() const {
-	auto x = m_x * std::cos(m_y);
-	auto y = m_x * std::sin(m_y);
-	return Vector2<decltype(x)>(x, y);
+	auto x1 = x * std::cos(y);
+	auto y1 = x * std::sin(y);
+	return Vector2<decltype(x1)>(x1, y1);
 }
 
 template<typename T>
 constexpr const T &Vector2<T>::operator[](uint32_t index) const {
 	switch (index) {
 	case 0:
-		return m_x;
+		return x;
 	case 1:
-		return m_y;
+		return y;
 	default:
 		throw std::runtime_error("Vector2 index out of bounds!");
 	}
@@ -230,9 +230,9 @@ template<typename T>
 constexpr T &Vector2<T>::operator[](uint32_t index) {
 	switch (index) {
 	case 0:
-		return m_x;
+		return x;
 	case 1:
-		return m_y;
+		return y;
 	default:
 		throw std::runtime_error("Vector2 index out of bounds!");
 	}
@@ -241,7 +241,7 @@ constexpr T &Vector2<T>::operator[](uint32_t index) {
 template<typename T>
 template<typename K>
 constexpr bool Vector2<T>::operator==(const Vector2<K> &other) const {
-	return m_x == other.m_x && m_y == other.m_y;
+	return x == other.x && y == other.y;
 }
 
 template<typename T>
@@ -253,13 +253,13 @@ constexpr bool Vector2<T>::operator!=(const Vector2<K> &other) const {
 template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_signed_v<U>, Vector2<T>> Vector2<T>::operator-() const {
-	return {-m_x, -m_y};
+	return {-x, -y};
 }
 
 template<typename T>
 template<typename U>
 constexpr std::enable_if_t<std::is_integral_v<U>, Vector2<T>> Vector2<T>::operator~() const {
-	return {~m_x, ~m_y};
+	return {~x, ~y};
 }
 
 template<typename T>
@@ -308,21 +308,21 @@ constexpr Vector2<T> &Vector2<T>::operator/=(const T &other) {
 
 template<typename K>
 const Node &operator>>(const Node &node, Vector2<K> &vector) {
-	node["x"].Get(vector.m_x);
-	node["y"].Get(vector.m_y);
+	node["x"].Get(vector.x);
+	node["y"].Get(vector.y);
 	return node;
 }
 
 template<typename K>
 Node &operator<<(Node &node, const Vector2<K> &vector) {
-	node["x"].Set(vector.m_x);
-	node["y"].Set(vector.m_y);
+	node["x"].Set(vector.x);
+	node["y"].Set(vector.y);
 	return node;
 }
 
 template<typename K>
 std::ostream &operator<<(std::ostream &stream, const Vector2<K> &vector) {
-	return stream << vector.m_x << ", " << vector.m_y;
+	return stream << vector.x << ", " << vector.y;
 }
 
 template<typename K, typename J>
@@ -387,42 +387,42 @@ constexpr auto operator/(const Vector2<K> &left, const J &right) {
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator&(const Vector2<K> &left, const Vector2<J> &right) {
-	return {left.m_x & right.m_x, left.m_y & right.m_y};
+	return {left.x & right.x, left.y & right.y};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator|(const Vector2<K> &left, const Vector2<J> &right) {
-	return {left.m_x | right.m_x, left.m_y | right.m_y};
+	return {left.x | right.x, left.y | right.y};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator>>(const Vector2<K> &left, const Vector2<J> &right) {
-	return {left.m_x >> right.m_x, left.m_y >> right.m_y};
+	return {left.x >> right.x, left.y >> right.y};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator<<(const Vector2<K> &left, const Vector2<J> &right) {
-	return {left.m_x << right.m_x, left.m_y << right.m_y};
+	return {left.x << right.x, left.y << right.y};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator&(const Vector2<K> &left, const J &right) {
-	return {left.m_x & right, left.m_y & right};
+	return {left.x & right, left.y & right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator|(const Vector2<K> &left, const J &right) {
-	return {left.m_x | right, left.m_y | right};
+	return {left.x | right, left.y | right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator>>(const Vector2<K> &left, const J &right) {
-	return {left.m_x >> right, left.m_y >> right};
+	return {left.x >> right, left.y >> right};
 }
 
 template<typename K, typename J>
 constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector2<J>> operator<<(const Vector2<K> &left, const J &right) {
-	return {left.m_x << right, left.m_y << right};
+	return {left.x << right, left.y << right};
 }
 
 }
@@ -432,8 +432,8 @@ template<typename T>
 struct hash<acid::Vector2<T>> {
 	size_t operator()(const acid::Vector2<T> &vector) const {
 		size_t seed = 0;
-		acid::Maths::HashCombine(seed, vector.m_x);
-		acid::Maths::HashCombine(seed, vector.m_y);
+		acid::Maths::HashCombine(seed, vector.x);
+		acid::Maths::HashCombine(seed, vector.y);
 		return seed;
 	}
 };

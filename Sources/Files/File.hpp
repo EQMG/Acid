@@ -21,13 +21,13 @@ public:
 	
 	void Clear();
 
-	Node *GetNode() const { return m_node.get(); }
+	Node *GetNode() const { return node.get(); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; }
-	void SetFilename(const std::filesystem::path &filename) { m_filename = filename; }
+	const std::filesystem::path &GetFilename() const { return filename; }
+	void SetFilename(const std::filesystem::path &filename) { this->filename = filename; }
 
 private:
-	std::unique_ptr<Node> m_node;
-	std::filesystem::path m_filename;
+	std::unique_ptr<Node> node;
+	std::filesystem::path filename;
 };
 }

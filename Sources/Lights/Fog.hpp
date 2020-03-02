@@ -9,6 +9,7 @@ namespace acid {
  * @brief Component that represents a 3d fog.
  */
 class ACID_EXPORT Fog : public Component::Registrar<Fog> {
+	inline static const bool Registered = Register("fog");
 public:
 	/**
 	 * Creates a new hazy fog.
@@ -23,31 +24,28 @@ public:
 	void Start() override;
 	void Update() override;
 
-	const Colour &GetColour() const { return m_colour; }
-	void SetColour(const Colour &colour) { m_colour = colour; }
+	const Colour &GetColour() const { return colour; }
+	void SetColour(const Colour &colour) { this->colour = colour; }
 
-	float GetDensity() const { return m_density; }
-	void SetDensity(float density) { m_density = density; }
+	float GetDensity() const { return density; }
+	void SetDensity(float density) { this->density = density; }
 
-	float GetGradient() const { return m_gradient; }
-	void SetGradient(float gradient) { m_gradient = gradient; }
+	float GetGradient() const { return gradient; }
+	void SetGradient(float gradient) { this->gradient = gradient; }
 
-	float GetLowerLimit() const { return m_lowerLimit; }
-	void SetLowerLimit(float lowerLimit) { m_lowerLimit = lowerLimit; }
+	float GetLowerLimit() const { return lowerLimit; }
+	void SetLowerLimit(float lowerLimit) { this->lowerLimit = lowerLimit; }
 
-	float GetUpperLimit() const { return m_upperLimit; }
-	void SetUpperLimit(float upperLimit) { m_upperLimit = upperLimit; }
+	float GetUpperLimit() const { return upperLimit; }
+	void SetUpperLimit(float upperLimit) { this->upperLimit = upperLimit; }
 
 	friend const Node &operator>>(const Node &node, Fog &fog);
 	friend Node &operator<<(Node &node, const Fog &fog);
 
 private:
-	static bool registered;
-
-	Colour m_colour;
-	float m_density;
-	float m_gradient;
-	float m_lowerLimit;
-	float m_upperLimit;
+	Colour colour;
+	float density;
+	float gradient;
+	float lowerLimit, upperLimit;
 };
 }

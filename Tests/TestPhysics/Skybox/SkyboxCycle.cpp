@@ -6,13 +6,11 @@
 #include "World/World.hpp"
 
 namespace test {
-bool SkyboxCycle::registered = Register("skyboxCycle");
-
 static const Colour SKYBOX_COLOUR_DAY(0x003C8A);
 
 SkyboxCycle::SkyboxCycle(bool enableFog, bool enableRotation) :
-	m_enableFog(enableFog),
-	m_enableRotation(enableRotation) {
+	enableFog(enableFog),
+	enableRotation(enableRotation) {
 }
 
 void SkyboxCycle::Start() {
@@ -20,12 +18,10 @@ void SkyboxCycle::Start() {
 
 void SkyboxCycle::Update() {
 	auto materialSkybox = GetEntity()->GetComponent<MaterialSkybox>();
-
-	if (!materialSkybox) {
+	if (!materialSkybox)
 		return;
-	}
 
-	if (m_enableFog) {
+	if (enableFog) {
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(World::Get()->GetFog().GetColour());
 		materialSkybox->SetFogLimits({World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()});
@@ -36,12 +32,10 @@ void SkyboxCycle::Update() {
 	}
 
 	auto transform = GetEntity()->GetComponent<Transform>();
-
-	if (!transform) {
+	if (!transform)
 		return;
-	}
 
-	if (m_enableRotation) {
+	if (enableRotation) {
 		materialSkybox->SetBlend(World::Get()->GetStarIntensity());
 		transform->SetLocalRotation(World::Get()->GetSkyboxRotation());
 	} else {
@@ -51,14 +45,14 @@ void SkyboxCycle::Update() {
 }
 
 const Node &operator>>(const Node &node, SkyboxCycle &skyboxCycle) {
-	node["enableFog"].Get(skyboxCycle.m_enableFog);
-	node["enableRotation"].Get(skyboxCycle.m_enableRotation);
+	node["enableFog"].Get(skyboxCycle.enableFog);
+	node["enableRotation"].Get(skyboxCycle.enableRotation);
 	return node;
 }
 
 Node &operator<<(Node &node, const SkyboxCycle &skyboxCycle) {
-	node["enableFog"].Set(skyboxCycle.m_enableFog);
-	node["enableRotation"].Set(skyboxCycle.m_enableRotation);
+	node["enableFog"].Set(skyboxCycle.enableFog);
+	node["enableRotation"].Set(skyboxCycle.enableRotation);
 	return node;
 }
 }

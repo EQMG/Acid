@@ -17,16 +17,16 @@ public:
 	friend const Node &operator>>(const Node &node, MaterialTerrain &material);
 	friend Node &operator<<(Node &node, const MaterialTerrain &material);
 
-	const std::shared_ptr<Image2d> &GetImageR() const { return m_imageR; }
-	void SetImageR(const std::shared_ptr<Image2d> &imageR) { m_imageR = imageR; }
+	const std::shared_ptr<Image2d> &GetImageR() const { return imageR; }
+	void SetImageR(std::shared_ptr<Image2d> imageR) { this->imageR = std::move(imageR); }
 
-	const std::shared_ptr<Image2d> &GetImageG() const { return m_imageG; }
-	void SetImageG(const std::shared_ptr<Image2d> &imageG) { m_imageG = imageG; }
+	const std::shared_ptr<Image2d> &GetImageG() const { return imageG; }
+	void SetImageG(std::shared_ptr<Image2d> imageG) { this->imageG = std::move(imageG); }
 
 private:
-	static bool registered;
+	inline static bool Registered = Register("terrain");
 
-	std::shared_ptr<Image2d> m_imageR;
-	std::shared_ptr<Image2d> m_imageG;
+	std::shared_ptr<Image2d> imageR;
+	std::shared_ptr<Image2d> imageG;
 };
 }

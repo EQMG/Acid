@@ -12,41 +12,40 @@ static const float SSAO_RADIUS = 0.5f;
 
 FilterSsao::FilterSsao(const Pipeline::Stage &pipelineStage) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Ssao.frag"}, GetDefines()),
-	m_noise(Resources::Get()->GetThreadPool().Enqueue(ComputeNoise, SSAO_NOISE_DIM)),
-	m_kernel(SSAO_KERNEL_SIZE) {
+	noise(Resources::Get()->GetThreadPool().Enqueue(ComputeNoise, SSAO_NOISE_DIM)),
+	kernel(SSAO_KERNEL_SIZE) {
 	for (uint32_t i = 0; i < SSAO_KERNEL_SIZE; ++i) {
 		Vector3f sample(Maths::Random(-1.0f, 1.0f), Maths::Random(-1.0f, 1.0f), Maths::Random(0.0f, 1.0f));
 		sample = sample.Normalize();
 		sample *= Maths::Random(0.0f, 1.0f);
 		auto scale = static_cast<float>(i) / static_cast<float>(SSAO_KERNEL_SIZE);
 		scale = Maths::Lerp(0.1f, 1.0f, scale * scale);
-		m_kernel[i] = sample * scale;
+		kernel[i] = sample * scale;
 	}
 }
 
 void FilterSsao::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
 	auto camera = Scenes::Get()->GetCamera();
-	m_uniformScene.Push("kernel", *m_kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
-	m_uniformScene.Push("projection", camera->GetProjectionMatrix());
-	m_uniformScene.Push("view", camera->GetViewMatrix());
-	m_uniformScene.Push("cameraPosition", camera->GetPosition());
+	uniformScene.Push("kernel", *kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
+	uniformScene.Push("projection", camera->GetProjectionMatrix());
+	uniformScene.Push("view", camera->GetViewMatrix());
+	uniformScene.Push("cameraPosition", camera->GetPosition());
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", m_uniformScene);
-	m_descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
-	m_descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
-	m_descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
-	m_descriptorSet.Push("samplerNoise", *m_noise);
+	descriptorSet.Push("UniformScene", uniformScene);
+	descriptorSet.Push("writeColour", GetAttachment("writeColour", "resolved"));
+	descriptorSet.Push("samplerPosition", GetAttachment("samplerPosition", "position"));
+	descriptorSet.Push("samplerNormal", GetAttachment("samplerNormal", "normals"));
+	descriptorSet.Push("samplerNoise", *noise);
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 

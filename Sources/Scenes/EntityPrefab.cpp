@@ -1,9 +1,6 @@
 #include "EntityPrefab.hpp"
 
 #include "Files/File.hpp"
-#include "Files/Json/Json.hpp"
-//#include "Serialized/Xml/Xml.hpp"
-//#include "Serialized/Yaml/Yaml.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
 #include "Scenes.hpp"
@@ -28,23 +25,23 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &
 }
 
 EntityPrefab::EntityPrefab(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename)) {
+	filename(std::move(filename)) {
 	if (load) {
 		Load();
 	}
 }
 
 void EntityPrefab::Load() {
-	if (m_filename.empty()) {
+	if (filename.empty()) {
 		return;
 	}
 
-	m_file = std::make_unique<File>(m_filename);
-	m_file->Load();
+	file = std::make_unique<File>(filename);
+	file->Load();
 }
 
 void EntityPrefab::Write(Node::Format format) const {
-	m_file->Write(m_filename, format);
+	file->Write(filename, format);
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {
@@ -63,7 +60,7 @@ const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity)
 }
 
 EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
-	entityPrefab.m_file->Clear();
+	entityPrefab.file->Clear();
 
 	for (const auto &component : entity.GetComponents()) {
 		auto componentName = component->GetTypeName();
@@ -72,7 +69,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 			continue;
 		}
 
-		auto property = (*entityPrefab.m_file->GetNode())[componentName];
+		auto property = (*entityPrefab.file->GetNode())[componentName];
 		property << *component;
 	}
 
@@ -80,12 +77,12 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 }
 
 const Node &operator>>(const Node &node, EntityPrefab &entityPrefab) {
-	node["filename"].Get(entityPrefab.m_filename);
+	node["filename"].Get(entityPrefab.filename);
 	return node;
 }
 
 Node &operator<<(Node &node, const EntityPrefab &entityPrefab) {
-	node["filename"].Set(entityPrefab.m_filename);
+	node["filename"].Set(entityPrefab.filename);
 	return node;
 }
 }

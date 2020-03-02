@@ -18,11 +18,10 @@ public:
 	 * @param defines A list of names that will be added as a define.
 	 */
 	PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<std::filesystem::path> &shaderStages, const std::vector<Shader::Define> &defines = {});
-
 	virtual ~PostFilter() = default;
 
-	const DescriptorsHandler &GetDescriptorSet() const { return m_descriptorSet; }
-	const PipelineGraphics &GetPipeline() const { return m_pipeline; }
+	const DescriptorsHandler &GetDescriptorSet() const { return descriptorSet; }
+	const PipelineGraphics &GetPipeline() const { return pipeline; }
 
 	const Descriptor *GetAttachment(const std::string &descriptorName, const Descriptor *descriptor) const;
 	const Descriptor *GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const;
@@ -41,11 +40,11 @@ protected:
 	 */
 	void PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2);
 
-	static uint32_t GlobalSwitching;
+	inline static uint32_t GlobalSwitching = 0;
 
-	DescriptorsHandler m_descriptorSet;
-	PipelineGraphics m_pipeline;
+	DescriptorsHandler descriptorSet;
+	PipelineGraphics pipeline;
 
-	std::map<std::string, const Descriptor *> m_attachments;
+	std::map<std::string, const Descriptor *> attachments;
 };
 }

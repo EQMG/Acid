@@ -3,30 +3,29 @@
 namespace acid {
 FilterVignette::FilterVignette(const Pipeline::Stage &pipelineStage, float innerRadius, float outerRadius, float opacity) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Vignette.frag"}),
-	m_innerRadius(innerRadius),
-	m_outerRadius(outerRadius),
-	m_opacity(opacity) {
+	innerRadius(innerRadius),
+	outerRadius(outerRadius),
+	opacity(opacity) {
 }
 
 void FilterVignette::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	m_pushScene.Push("innerRadius", m_innerRadius);
-	m_pushScene.Push("outerRadius", m_outerRadius);
-	m_pushScene.Push("opacity", m_opacity);
+	pushScene.Push("innerRadius", innerRadius);
+	pushScene.Push("outerRadius", outerRadius);
+	pushScene.Push("opacity", opacity);
 
 	// Updates descriptors.
-	m_descriptorSet.Push("PushScene", m_pushScene);
+	descriptorSet.Push("PushScene", pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-	m_pushScene.BindPush(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	pushScene.BindPush(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

@@ -16,12 +16,12 @@ public:
 
 	void BindDescriptor(const CommandBuffer &commandBuffer) const;
 
-	const VkDescriptorSet &GetDescriptorSet() const { return m_descriptorSet; }
+	const VkDescriptorSet &GetDescriptorSet() const { return descriptorSet; }
 
 private:
-	VkPipelineLayout m_pipelineLayout;
-	VkPipelineBindPoint m_pipelineBindPoint;
-	VkDescriptorPool m_descriptorPool;
-	VkDescriptorSet m_descriptorSet = VK_NULL_HANDLE;
+	VkPipelineLayout pipelineLayout;
+	VkPipelineBindPoint pipelineBindPoint;
+	VkDescriptorPool descriptorPool;
+	VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
 };
 }

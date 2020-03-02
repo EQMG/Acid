@@ -7,42 +7,38 @@
 #include <Maths/Maths.hpp>
 
 namespace test {
-bool Rotate::registered = Register("rotate");
-
 Rotate::Rotate(const Vector3f &direction, const int &test) :
-	m_direction(direction),
-	m_test(test) {
+	direction(direction),
+	test(test) {
 }
 
 void Rotate::Start() {
 }
 
 void Rotate::Update() {
-	m_rotation += m_direction * Engine::Get()->GetDelta().AsSeconds();
+	rotation += direction * Engine::Get()->GetDelta().AsSeconds();
 	auto transform = GetEntity()->GetComponent<Transform>();
-
-	if (!transform) {
+	if (!transform)
 		return;
-	}
 
-	transform->SetLocalRotation(m_rotation);
+	transform->SetLocalRotation(rotation);
 
-	if (m_test == 1) {
-		Quaternion rotation(m_rotation);
+	if (test == 1) {
+		Quaternion rotation(rotation);
 		transform->SetLocalRotation(rotation.ToEuler());
-	} else if (m_test == 2) {
+	} else if (test == 2) {
 		//auto transform1 = Collider::Convert(transform);
 		//*transform = Collider::Convert(transform1, transform.GetScaling());
 	}
 }
 
 const Node &operator>>(const Node &node, Rotate &rotate) {
-	node["Direction"].Get(rotate.m_direction);
+	node["Direction"].Get(rotate.direction);
 	return node;
 }
 
 Node &operator<<(Node &node, const Rotate &rotate) {
-	node["Direction"].Set(rotate.m_direction);
+	node["Direction"].Set(rotate.direction);
 	return node;
 }
 }

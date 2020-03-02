@@ -14,13 +14,13 @@ public:
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
 	~Framebuffers();
 
-	Image2d *GetAttachment(uint32_t index) const { return m_imageAttachments[index].get(); }
+	Image2d *GetAttachment(uint32_t index) const { return imageAttachments[index].get(); }
 
-	const std::vector<std::unique_ptr<Image2d>> &GetImageAttachments() const { return m_imageAttachments; }
-	const std::vector<VkFramebuffer> &GetFramebuffers() const { return m_framebuffers; }
+	const std::vector<std::unique_ptr<Image2d>> &GetImageAttachments() const { return imageAttachments; }
+	const std::vector<VkFramebuffer> &GetFramebuffers() const { return framebuffers; }
 
 private:
-	std::vector<std::unique_ptr<Image2d>> m_imageAttachments;
-	std::vector<VkFramebuffer> m_framebuffers;
+	std::vector<std::unique_ptr<Image2d>> imageAttachments;
+	std::vector<VkFramebuffer> framebuffers;
 };
 }

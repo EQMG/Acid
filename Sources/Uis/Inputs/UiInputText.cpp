@@ -7,97 +7,95 @@
 
 namespace acid {
 UiInputText::UiInputText() {
-	//m_background.SetTransform({UiMargins::All});
-	m_background.SetImage(Image2d::Create("Guis/Button.png"));
-	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	AddChild(&m_background);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/Button.png"));
+	background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	AddChild(&background);
 
-	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textTitle.SetFontSize(UiInputButton::FontSize);
-	m_textTitle.SetJustify(Text::Justify::Right);
-	m_textTitle.SetTextColour(UiInputButton::TitleColour);
-	AddChild(&m_textTitle);
+	//textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textTitle.SetFontSize(UiInputButton::FontSize);
+	textTitle.SetJustify(Text::Justify::Right);
+	textTitle.SetTextColour(UiInputButton::TitleColour);
+	AddChild(&textTitle);
 
-	//m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textValue.SetFontSize(UiInputButton::FontSize);
-	m_textValue.SetJustify(Text::Justify::Left);
-	m_textValue.SetTextColour(UiInputButton::ValueColour);
-	AddChild(&m_textValue);
+	//textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textValue.SetFontSize(UiInputButton::FontSize);
+	textValue.SetJustify(Text::Justify::Left);
+	textValue.SetTextColour(UiInputButton::ValueColour);
+	AddChild(&textValue);
 
 	SetCursorHover(CursorStandard::Hand);
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
-		if (!m_updating) {
+		if (!updating)
 			return;
-		}
 
 		if (key == Key::Backspace && action != InputAction::Release) {
-			m_inputDelay.Update(true);
+			inputDelay.Update(true);
 
-			if (m_lastKey != 8 || m_inputDelay.CanInput()) {
-				m_value = m_value.substr(0, m_value.length() - 1);
-				m_textValue.SetString(m_value);
-				m_onValue(m_value);
-				m_lastKey = 8;
+			if (lastKey != 8 || inputDelay.CanInput()) {
+				value = value.substr(0, value.length() - 1);
+				textValue.SetString(value);
+				onValue(value);
+				lastKey = 8;
 			}
-		} else if (key == Key::Enter && action != InputAction::Release && m_lastKey != 13) {
-			m_inputDelay.Update(true);
+		} else if (key == Key::Enter && action != InputAction::Release && lastKey != 13) {
+			inputDelay.Update(true);
 			SetUpdating(false);
 		}
 	}, this);
 	Keyboard::Get()->OnChar().Add([this](char c) {
-		if (!m_updating) {
+		if (!updating)
 			return;
-		}
 
-		if (m_value.length() < static_cast<uint32_t>(m_maxLength)) {
-			m_inputDelay.Update(true);
+		if (value.length() < static_cast<uint32_t>(maxLength)) {
+			inputDelay.Update(true);
 
-			if (m_lastKey != c || m_inputDelay.CanInput()) {
-				m_value += c;
-				m_textValue.SetString(m_value);
-				m_onValue(m_value);
-				m_lastKey = c;
+			if (lastKey != c || inputDelay.CanInput()) {
+				value += c;
+				textValue.SetString(value);
+				onValue(value);
+				lastKey = c;
 			}
 		} else {
-			m_inputDelay.Update(false);
-			m_lastKey = 0;
+			inputDelay.Update(false);
+			lastKey = 0;
 		}
 	}, this);
 }
 
 void UiInputText::UpdateObject() {
 	if (Uis::Get()->WasDown(MouseButton::Left)) {
-		if (m_background.IsSelected()) {
+		if (background.IsSelected()) {
 			SetUpdating(true);
 			CancelEvent(MouseButton::Left);
-		} else if (m_updating) {
+		} else if (updating) {
 			SetUpdating(false);
 			CancelEvent(MouseButton::Left);
 		}
 	}
 
-	if (!m_updating) {
-		if (m_background.IsSelected() && !m_mouseOver) {
-			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
-			m_mouseOver = true;
-		} else if (!m_background.IsSelected() && m_mouseOver) {
-			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
-			m_mouseOver = false;
+	if (!updating) {
+		if (background.IsSelected() && !mouseOver) {
+			background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			mouseOver = true;
+		} else if (!background.IsSelected() && mouseOver) {
+			background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+			mouseOver = false;
 		}
 	}
 }
 
 void UiInputText::SetUpdating(bool updating) {
-	m_updating = updating;
-	m_mouseOver = true;
+	this->updating = updating;
+	mouseOver = true;
 }
 
 void UiInputText::SetValue(const std::string &value) {
-	m_value = value;
-	m_textValue.SetString(value);
-	//m_onValue(m_value);
+	this->value = value;
+	textValue.SetString(value);
+	//onValue(value);
 }
 }

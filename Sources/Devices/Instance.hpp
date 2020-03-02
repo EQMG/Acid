@@ -20,10 +20,7 @@ public:
 		const char *pLayerPrefix, const char *pMessage, void *pUserData);
 #endif
 
-	static const std::vector<const char *> ValidationLayers;
-
 	Instance();
-
 	~Instance();
 
 #if USE_DEBUG_MESSENGER
@@ -42,10 +39,12 @@ public:
 	static uint32_t FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *deviceMemoryProperties, const VkMemoryRequirements *memoryRequirements,
 		VkMemoryPropertyFlags requiredProperties);
 
-	operator const VkInstance &() const { return m_instance; }
+	operator const VkInstance &() const { return instance; }
 
-	bool GetEnableValidationLayers() const { return m_enableValidationLayers; }
-	const VkInstance &GetInstance() const { return m_instance; }
+	bool GetEnableValidationLayers() const { return enableValidationLayers; }
+	const VkInstance &GetInstance() const { return instance; }
+
+	static const std::vector<const char *> ValidationLayers;
 
 private:
 	bool CheckValidationLayerSupport() const;
@@ -55,13 +54,13 @@ private:
 
 	static void LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties);
 
-	bool m_enableValidationLayers = false;
+	bool enableValidationLayers = false;
 
-	VkInstance m_instance = VK_NULL_HANDLE;
+	VkInstance instance = VK_NULL_HANDLE;
 #if USE_DEBUG_MESSENGER
-	VkDebugUtilsMessengerEXT m_debugMessenger = VK_NULL_HANDLE;
+	VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;
 #else
-	VkDebugReportCallbackEXT m_debugReportCallback = VK_NULL_HANDLE;
+	VkDebugReportCallbackEXT debugReportCallback = VK_NULL_HANDLE;
 #endif
 };
 }

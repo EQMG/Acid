@@ -19,6 +19,6 @@ private:
 	Vector3f GetNormal(float x, float z);
 	Colour GetColour(const Vector3f &normal);
 
-	std::vector<float> m_heightmap;
+	std::vector<float> heightmap;
 };
 }

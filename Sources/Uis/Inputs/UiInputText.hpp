@@ -13,37 +13,37 @@ public:
 
 	void UpdateObject() override;
 
-	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
+	const std::string &GetTitle() const { return textTitle.GetString(); }
+	void SetTitle(const std::string &string) { textTitle.SetString(string); }
 
-	const std::string &GetValue() const { return m_value; }
+	const std::string &GetValue() const { return value; }
 	void SetValue(const std::string &value);
 
-	int32_t GetMaxLength() const { return m_maxLength; }
-	void SetMaxLength(int32_t maxLength) { m_maxLength = maxLength; }
+	int32_t GetMaxLength() const { return maxLength; }
+	void SetMaxLength(int32_t maxLength) { this->maxLength = maxLength; }
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::string)> &OnValue() { return m_onValue; }
+	Delegate<void(std::string)> &OnValue() { return onValue; }
 
 private:
 	void SetUpdating(bool updating);
 
-	Gui m_background;
-	Text m_textTitle;
-	Text m_textValue;
+	Gui background;
+	Text textTitle;
+	Text textValue;
 
-	std::string m_value;
-	int32_t m_maxLength = 16;
+	std::string value;
+	int32_t maxLength = 16;
 
-	InputDelay m_inputDelay;
-	int32_t m_lastKey = 0;
+	InputDelay inputDelay;
+	int32_t lastKey = 0;
 
-	bool m_updating = false;
-	bool m_mouseOver = false;
+	bool updating = false;
+	bool mouseOver = false;
 
-	Delegate<void(std::string)> m_onValue;
+	Delegate<void(std::string)> onValue;
 };
 }

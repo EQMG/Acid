@@ -12,6 +12,7 @@ namespace acid {
  * @brief Class that represents an animated armature with a skin mesh.
  */
 class ACID_EXPORT MeshAnimated : public Component::Registrar<MeshAnimated> {
+	inline static const bool Registered = Register("meshAnimated");
 public:
 	/**
 	 * Creates a new animated mesh component.
@@ -27,13 +28,13 @@ public:
 
 	static Shader::VertexInput GetVertexInput(uint32_t binding = 0) { return VertexAnimated::GetVertexInput(binding); }
 
-	const std::shared_ptr<Model> &GetModel() const { return m_model; }
-	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+	const std::shared_ptr<Model> &GetModel() const { return model; }
+	void SetModel(const std::shared_ptr<Model> &model) { this->model = model; }
 
-	const std::unique_ptr<Material> &GetMaterial() const { return m_material; }
+	const std::unique_ptr<Material> &GetMaterial() const { return material; }
 	void SetMaterial(std::unique_ptr<Material> &&material);
 
-	StorageHandler &GetStorageAnimation() { return m_storageAnimation; }
+	StorageHandler &GetStorageAnimation() { return storageAnimation; }
 
 	friend const Node &operator>>(const Node &node, MeshAnimated &meshAnimated);
 	friend Node &operator<<(Node &node, const MeshAnimated &meshAnimated);
@@ -42,19 +43,17 @@ public:
 	static constexpr uint32_t MaxWeights = 3;
 
 private:
-	static bool registered;
-
-	std::shared_ptr<Model> m_model;
-	std::unique_ptr<Material> m_material;
+	std::shared_ptr<Model> model;
+	std::unique_ptr<Material> material;
 	
-	std::filesystem::path m_filename;
-	Animator m_animator;
-	Joint m_headJoint;
+	std::filesystem::path filename;
+	Animator animator;
+	Joint headJoint;
 	
-	std::unique_ptr<Animation> m_animation;
+	std::unique_ptr<Animation> animation;
 
-	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformObject;
-	StorageHandler m_storageAnimation;
+	DescriptorsHandler descriptorSet;
+	UniformHandler uniformObject;
+	StorageHandler storageAnimation;
 };
 }

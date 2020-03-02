@@ -21,7 +21,7 @@ void Xml::ParseString(std::string_view string) {
 }
 
 void Xml::WriteStream(std::ostream &stream, const Format &format) const {
-	stream << R"(<?xml version="1.0" encoding="utf-8"?>)" << format.m_newLine;
+	stream << R"(<?xml version="1.0" encoding="utf-8"?>)" << format.newLine;
 	AppendData(*this, stream, format, 0);
 }
 
@@ -51,7 +51,7 @@ void Xml::AppendData(const Node &source, std::ostream &stream, const Format &for
 	stream << indents;
 
 	if (source.GetName()[0] == '?') {
-		stream << "<" << nameAndAttribs << "?>" << format.m_newLine;
+		stream << "<" << nameAndAttribs << "?>" << format.newLine;
 
 		for (const auto &property : source.GetProperties()) {
 			if (property.GetName().rfind('_', 0) != 0)
@@ -62,18 +62,18 @@ void Xml::AppendData(const Node &source, std::ostream &stream, const Format &for
 	}
 
 	if (source.GetProperties().size() - attributeCount == 0 && source.GetValue().empty()) {
-		stream << "<" << nameAndAttribs << "/>" << format.m_newLine;
+		stream << "<" << nameAndAttribs << "/>" << format.newLine;
 		return;
 	}
 
 	stream << "<" << nameAndAttribs << ">";
 	if (!source.GetValue().empty()) {
-		stream << format.m_newLine << format.GetIndents(indent + 1);
+		stream << format.newLine << format.GetIndents(indent + 1);
 		stream << source.GetValue();
 	}
 
 	if (!source.GetProperties().empty()) {
-		stream << format.m_newLine;
+		stream << format.newLine;
 
 		for (const auto &property : source.GetProperties()) {
 			if (property.GetName().rfind('_', 0) != 0)
@@ -83,6 +83,6 @@ void Xml::AppendData(const Node &source, std::ostream &stream, const Format &for
 		stream << indents;
 	}
 
-	stream << "</" << tagName << '>' << format.m_newLine;
+	stream << "</" << tagName << '>' << format.newLine;
 }
 }

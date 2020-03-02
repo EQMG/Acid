@@ -16,44 +16,43 @@ namespace acid {
 class ACID_EXPORT ThreadPool {
 public:
 	explicit ThreadPool(uint32_t threadCount = std::thread::hardware_concurrency());
-	
 	~ThreadPool();
 
 	template<typename F, typename... Args>
-	decltype(auto) Enqueue(F &&f, Args &&... args);
+	auto Enqueue(F &&f, Args &&... args);
 
 	void Wait();
 
-	const std::vector<std::thread> &GetWorkers() const { return m_workers; }
+	const std::vector<std::thread> &GetWorkers() const { return workers; }
 
 private:
-	std::vector<std::thread> m_workers;
-	std::queue<std::function<void()>> m_tasks;
+	std::vector<std::thread> workers;
+	std::queue<std::function<void()>> tasks;
 
-	std::mutex m_queueMutex;
-	std::condition_variable m_condition;
-	bool m_stop = false;
+	std::mutex queueMutex;
+	std::condition_variable condition;
+	bool stop = false;
 };
 
 template<typename F, typename ... Args>
-decltype(auto) ThreadPool::Enqueue(F &&f, Args &&... args) {
+auto ThreadPool::Enqueue(F &&f, Args &&... args) {
 	using return_type = typename std::result_of<F(Args ...)>::type;
 
 	auto task = std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 	auto result = task->get_future();
 
 	{
-		std::unique_lock<std::mutex> lock(m_queueMutex);
+		std::unique_lock<std::mutex> lock(queueMutex);
 
-		if (m_stop)
+		if (stop)
 			throw std::runtime_error("Enqueue called on a stopped ThreadPool");
 
-		m_tasks.emplace([task]() {
+		tasks.emplace([task]() {
 			(*task)();
 		});
 	}
 
-	m_condition.notify_one();
+	condition.notify_one();
 	return result;
 }
 }

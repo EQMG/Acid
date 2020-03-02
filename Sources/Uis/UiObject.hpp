@@ -34,7 +34,7 @@ public:
 
 	void CancelEvent(MouseButton button) const;
 
-	const std::vector<UiObject *> &GetChildren() const { return m_children; }
+	const std::vector<UiObject *> &GetChildren() const { return children; }
 
 	/**
 	 * Adds a child from this object.
@@ -50,7 +50,7 @@ public:
 
 	void ClearChildren();
 
-	UiObject *GetParent() const { return m_parent; }
+	UiObject *GetParent() const { return parent; }
 
 	/**
 	 * Removes this object from the previous parent and attaches it to another parent.
@@ -59,77 +59,77 @@ public:
 	void SetParent(UiObject *parent);
 
 	bool IsEnabled() const;
-	void SetEnabled(bool enabled) { m_enabled = enabled; }
+	void SetEnabled(bool enabled) { this->enabled = enabled; }
 
-	const std::optional<CursorStandard> &GetCursorHover() const { return m_cursorHover; }
-	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { m_cursorHover = cursorHover; }
+	const std::optional<CursorStandard> &GetCursorHover() const { return cursorHover; }
+	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { this->cursorHover = cursorHover; }
 
-	const std::optional<Vector4i> &GetScissor() const { return m_scissor; }
-	void SetScissor(const std::optional<Vector4i> &scissor) { m_scissor = scissor; }
+	const std::optional<Vector4i> &GetScissor() const { return scissor; }
+	void SetScissor(const std::optional<Vector4i> &scissor) { this->scissor = scissor; }
 
-	UiDriver<float> *GetAlphaDriver() const { return m_alphaDriver.get(); }
+	UiDriver<float> *GetAlphaDriver() const { return alphaDriver.get(); }
 	template<template<typename> typename T, typename... Args,
 		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
 		void SetAlphaDriver(Args &&... args) {
-		m_alphaDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
+		alphaDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
 	}
 
-	UiDriver<Vector2f> *GetScaleDriver() const { return m_scaleDriver.get(); }
+	UiDriver<Vector2f> *GetScaleDriver() const { return scaleDriver.get(); }
 	template<template<typename> typename T, typename... Args,
 		typename = std::enable_if_t<std::is_convertible_v<T<Vector2f> *, UiDriver<Vector2f> *>>>
 		void SetScaleDriver(Args &&... args) {
-		m_scaleDriver = std::make_unique<T<Vector2f>>(std::forward<Args>(args)...);
+		scaleDriver = std::make_unique<T<Vector2f>>(std::forward<Args>(args)...);
 	}
 
-	UiConstraints &GetConstraints() { return m_constraints; }
-	const UiConstraints &GetConstraints() const { return m_constraints; }
+	UiConstraints &GetConstraints() { return constraints; }
+	const UiConstraints &GetConstraints() const { return constraints; }
 
-	const Matrix4 &GetModelView() const { return m_modelView; }
-	const Vector2i &GetScreenPosition() const { return m_screenPosition; }
-	const Vector2i &GetScreenSize() const { return m_screenSize; }
-	float GetScreenDepth() const { return m_screenDepth; }
-	float GetScreenAlpha() const { return m_screenAlpha; }
-	const Vector2f &GetScreenScale() const { return m_screenScale; }
+	const Matrix4 &GetModelView() const { return modelView; }
+	const Vector2i &GetScreenPosition() const { return screenPosition; }
+	const Vector2i &GetScreenSize() const { return screenSize; }
+	float GetScreenDepth() const { return screenDepth; }
+	float GetScreenAlpha() const { return screenAlpha; }
+	const Vector2f &GetScreenScale() const { return screenScale; }
 
 	/**
 	 * Gets if the object provided has the cursor hovered above it.
 	 * @return If the object has the cursor inside of its bounds.
 	 */
-	bool IsSelected() const { return m_selected; }
+	bool IsSelected() const { return selected; }
 
 	/**
 	 * Called when this object has been clicked on.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnClick() { return m_onClick; }
+	Delegate<void(MouseButton)> &OnClick() { return onClick; }
 
 	/**
 	 * Called when this object has has the cursor hovered over, or removed.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnSelected() { return m_onSelected; }
+	Delegate<void(bool)> &OnSelected() { return onSelected; }
 
 private:
-	std::vector<UiObject *> m_children;
-	UiObject *m_parent = nullptr;
+	std::vector<UiObject *> children;
+	UiObject *parent = nullptr;
 
-	bool m_enabled = true;
-	std::optional<CursorStandard> m_cursorHover;
-	std::optional<Vector4i> m_scissor;
+	bool enabled = true;
+	std::optional<CursorStandard> cursorHover;
+	std::optional<Vector4i> scissor;
 
-	std::unique_ptr<UiDriver<float>> m_alphaDriver;
-	std::unique_ptr<UiDriver<Vector2f>> m_scaleDriver;
+	std::unique_ptr<UiDriver<float>> alphaDriver;
+	std::unique_ptr<UiDriver<Vector2f>> scaleDriver;
 
-	UiConstraints m_constraints;
+	UiConstraints constraints;
 	
-	Matrix4 m_modelView;
-	Vector2i m_screenPosition, m_screenSize;
-	float m_screenDepth;
-	float m_screenAlpha;
-	Vector2f m_screenScale;
-	bool m_selected = false;
+	Matrix4 modelView;
+	Vector2i screenPosition, screenSize;
+	float screenDepth;
+	float screenAlpha;
+	Vector2f screenScale;
+	bool selected = false;
 
-	Delegate<void(MouseButton)> m_onClick;
-	Delegate<void(bool)> m_onSelected;
+	Delegate<void(MouseButton)> onClick;
+	Delegate<void(bool)> onSelected;
 };
 }

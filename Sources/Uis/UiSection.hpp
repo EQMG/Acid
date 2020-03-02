@@ -13,22 +13,22 @@ public:
 
 	void AddChild(UiObject *child) override;
 
-	const std::string &GetTitle() const { return m_title.GetString(); }
-	void SetTitle(const std::string &string) { m_title.SetString(string); }
+	const std::string &GetTitle() const { return title.GetString(); }
+	void SetTitle(const std::string &string) { title.SetString(string); }
 
 	/**
 	 * Called when this section has been collapsed or uncollapsed.
 	 * @return The delegate.
 	 */
-	Delegate<void(UiSection *, bool)> &OnCollapsed() { return m_onCollapsed; }
+	Delegate<void(UiSection *, bool)> &OnCollapsed() { return onCollapsed; }
 
 private:
-	Gui m_icon;
-	Text m_title;
-	UiObject m_content;
+	Gui icon;
+	Text title;
+	UiObject content;
 
-	bool m_collapsed = false;
+	bool collapsed = false;
 
-	Delegate<void(UiSection *, bool)> m_onCollapsed;
+	Delegate<void(UiSection *, bool)> onCollapsed;
 };
 }

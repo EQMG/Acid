@@ -7,8 +7,6 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelGltf::registered = Register("gltf", ".gltf");
-
 std::shared_ptr<ModelGltf> ModelGltf::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ModelGltf>(node))
 		return resource;
@@ -28,24 +26,24 @@ std::shared_ptr<ModelGltf> ModelGltf::Create(const std::filesystem::path &filena
 }
 
 ModelGltf::ModelGltf(std::filesystem::path filename, bool load) :
-	m_filename(std::move(filename)) {
+	filename(std::move(filename)) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelGltf &model) {
-	node["filename"].Get(model.m_filename);
+	node["filename"].Get(model.filename);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelGltf &model) {
-	node["filename"].Set(model.m_filename);
+	node["filename"].Set(model.filename);
 	return node;
 }
 
 void ModelGltf::Load() {
-	if (m_filename.empty()) {
+	if (filename.empty()) {
 		return;
 	}
 
@@ -53,11 +51,11 @@ void ModelGltf::Load() {
 	auto debugStart = Time::Now();
 #endif
 
-	auto folder = m_filename.parent_path();
-	auto fileLoaded = Files::Read(m_filename);
+	auto folder = filename.parent_path();
+	auto fileLoaded = Files::Read(filename);
 
 	if (!fileLoaded) {
-		Log::Error("Model could not be loaded: ", m_filename, '\n');
+		Log::Error("Model could not be loaded: ", filename, '\n');
 		return;
 	}
 
@@ -65,7 +63,7 @@ void ModelGltf::Load() {
 	tinygltf::TinyGLTF gltfContext;
 	std::string warn, err;
 
-	if (m_filename.extension() == ".glb") {
+	if (filename.extension() == ".glb") {
 		if (!gltfContext.LoadBinaryFromMemory(&gltfModel, &err, &warn, reinterpret_cast<uint8_t *>(fileLoaded->data()), static_cast<uint32_t>(fileLoaded->size()))) {
 			throw std::runtime_error(warn + err);
 		}
@@ -113,7 +111,7 @@ void ModelGltf::Load() {
 	auto extensions = gltfModel.extensionsUsed;*/
 
 #if defined(ACID_DEBUG)
-	Log::Out("Model ", m_filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Model ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 
 	Initialize(vertices, indices);

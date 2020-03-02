@@ -124,7 +124,7 @@ public:
 	friend Node &operator<<(Node &node, const Time &time);
 
 private:
-	std::chrono::microseconds m_value{};
+	std::chrono::microseconds value{};
 };
 }
 

@@ -6,10 +6,10 @@ class btHeightfieldTerrainShape;
 
 namespace acid {
 class ACID_EXPORT ColliderHeightfield : public Collider::Registrar<ColliderHeightfield> {
+	inline static const bool Registered = Register("heightfield");
 public:
 	explicit ColliderHeightfield(int32_t heightStickWidth = 100, int32_t heightStickLength = 100, const void *heightfieldData = nullptr,
 		float minHeight = -1.0f, float maxHeight = 1.0f, bool flipQuadEdges = false, const Transform &localTransform = {});
-
 	~ColliderHeightfield();
 
 	btCollisionShape *GetCollisionShape() const override;
@@ -21,8 +21,6 @@ public:
 	friend Node &operator<<(Node &node, const ColliderHeightfield &collider);
 
 private:
-	static bool registered;
-
-	std::unique_ptr<btHeightfieldTerrainShape> m_shape;
+	std::unique_ptr<btHeightfieldTerrainShape> shape;
 };
 }

@@ -14,7 +14,7 @@ public:
 	void Save() const;
 
 private:
-	File m_audio;
-	File m_graphics;
+	File audio;
+	File graphics;
 };
 }

@@ -19,17 +19,23 @@ public:
 
 	void Update();
 
+	const std::string &GetName() const { return name; }
+	void SetName(const std::string &name) { this->name = name; }
+
+	bool IsRemoved() const { return removed; }
+	void SetRemoved(bool removed) { this->removed = removed; }
+
 	/**
 	 * Gets all components attached to this entity.
 	 * @return The list of components.
 	 */
-	const std::vector<std::unique_ptr<Component>> &GetComponents() const { return m_components; }
+	const std::vector<std::unique_ptr<Component>> &GetComponents() const { return components; }
 
 	/**
 	 * Gets the count of components attached to this entity.
 	 * @return The count of components.
 	 */
-	uint32_t GetComponentCount() const { return static_cast<uint32_t>(m_components.size()); }
+	uint32_t GetComponentCount() const { return static_cast<uint32_t>(components.size()); }
 
 	/**
 	 * Gets a component by type.
@@ -41,7 +47,7 @@ public:
 	T *GetComponent(bool allowDisabled = false) const {
 		T *alternative = nullptr;
 
-		for (const auto &component : m_components) {
+		for (const auto &component : components) {
 			auto casted = dynamic_cast<T *>(component.get());
 
 			if (casted) {
@@ -67,7 +73,7 @@ public:
 	std::vector<T *> GetComponents(bool allowDisabled = false) const {
 		std::vector<T *> components;
 
-		for (const auto &component : m_components) {
+		for (const auto &component : this->components) {
 			auto casted = dynamic_cast<T *>(component.get());
 
 			if (casted) {
@@ -120,25 +126,19 @@ public:
 	 */
 	template<typename T>
 	void RemoveComponent() {
-		for (auto it = m_components.begin(); it != m_components.end(); ++it) {
+		for (auto it = components.begin(); it != components.end(); ++it) {
 			auto casted = dynamic_cast<T *>((*it).get());
 
 			if (casted) {
 				(*it)->SetEntity(nullptr);
-				m_components.erase(it);
+				components.erase(it);
 			}
 		}
 	}
 
-	const std::string &GetName() const { return m_name; }
-	void SetName(const std::string &name) { m_name = name; }
-
-	bool IsRemoved() const { return m_removed; }
-	void SetRemoved(bool removed) { m_removed = removed; }
-
 private:
-	std::string m_name;
-	std::vector<std::unique_ptr<Component>> m_components;
-	bool m_removed = false;
+	std::string name;
+	bool removed = false;
+	std::vector<std::unique_ptr<Component>> components;
 };
 }

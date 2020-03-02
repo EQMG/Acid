@@ -13,13 +13,13 @@ class ACID_EXPORT PhysicalDevice {
 public:
 	explicit PhysicalDevice(const Instance *instance);
 
-	operator const VkPhysicalDevice &() const { return m_physicalDevice; }
+	operator const VkPhysicalDevice &() const { return physicalDevice; }
 
-	const VkPhysicalDevice &GetPhysicalDevice() const { return m_physicalDevice; }
-	const VkPhysicalDeviceProperties &GetProperties() const { return m_properties; }
-	const VkPhysicalDeviceFeatures &GetFeatures() const { return m_features; }
-	const VkPhysicalDeviceMemoryProperties &GetMemoryProperties() const { return m_memoryProperties; }
-	VkSampleCountFlagBits GetMsaaSamples() const { return m_msaaSamples; }
+	const VkPhysicalDevice &GetPhysicalDevice() const { return physicalDevice; }
+	const VkPhysicalDeviceProperties &GetProperties() const { return properties; }
+	const VkPhysicalDeviceFeatures &GetFeatures() const { return features; }
+	const VkPhysicalDeviceMemoryProperties &GetMemoryProperties() const { return memoryProperties; }
+	const VkSampleCountFlagBits &GetMsaaSamples() const { return msaaSamples; }
 
 private:
 	VkPhysicalDevice ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices);
@@ -28,12 +28,12 @@ private:
 
 	static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties);
 
-	const Instance *m_instance;
+	const Instance *instance;
 
-	VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
-	VkPhysicalDeviceProperties m_properties = {};
-	VkPhysicalDeviceFeatures m_features = {};
-	VkPhysicalDeviceMemoryProperties m_memoryProperties = {};
-	VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+	VkPhysicalDeviceProperties properties = {};
+	VkPhysicalDeviceFeatures features = {};
+	VkPhysicalDeviceMemoryProperties memoryProperties = {};
+	VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 };
 }

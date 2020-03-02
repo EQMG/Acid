@@ -14,18 +14,18 @@ public:
 	Surface(const Instance *instance, const PhysicalDevice *physicalDevice);
 	~Surface();
 
-	operator const VkSurfaceKHR &() const { return m_surface; }
+	operator const VkSurfaceKHR &() const { return surface; }
 
-	const VkSurfaceKHR &GetSurface() const { return m_surface; }
-	const VkSurfaceCapabilitiesKHR &GetCapabilities() const { return m_capabilities; }
-	const VkSurfaceFormatKHR &GetFormat() const { return m_format; }
+	const VkSurfaceKHR &GetSurface() const { return surface; }
+	const VkSurfaceCapabilitiesKHR &GetCapabilities() const { return capabilities; }
+	const VkSurfaceFormatKHR &GetFormat() const { return format; }
 
 private:
-	const Instance *m_instance;
-	const PhysicalDevice *m_physicalDevice;
+	const Instance *instance;
+	const PhysicalDevice *physicalDevice;
 
-	VkSurfaceKHR m_surface = VK_NULL_HANDLE;
-	VkSurfaceCapabilitiesKHR m_capabilities = {};
-	VkSurfaceFormatKHR m_format = {};
+	VkSurfaceKHR surface = VK_NULL_HANDLE;
+	VkSurfaceCapabilitiesKHR capabilities = {};
+	VkSurfaceFormatKHR format = {};
 };
 }

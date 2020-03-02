@@ -117,12 +117,12 @@ Renderpass::Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkF
 	renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
 	renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 	renderPassCreateInfo.pDependencies = dependencies.data();
-	Graphics::CheckVk(vkCreateRenderPass(*logicalDevice, &renderPassCreateInfo, nullptr, &m_renderpass));
+	Graphics::CheckVk(vkCreateRenderPass(*logicalDevice, &renderPassCreateInfo, nullptr, &renderpass));
 }
 
 Renderpass::~Renderpass() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	vkDestroyRenderPass(*logicalDevice, m_renderpass, nullptr);
+	vkDestroyRenderPass(*logicalDevice, renderpass, nullptr);
 }
 }

@@ -10,16 +10,16 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Vector3f &GetSunPosition() const { return m_sunPosition; }
+	const Vector3f &GetSunPosition() const { return sunPosition; }
 	void SetSunPosition(const Vector3f &sunPosition);
 
-	float GetSunHeight() const { return m_sunHeight; }
-	void SetSunHeight(float sunHeight) { m_sunHeight = sunHeight; }
+	float GetSunHeight() const { return sunHeight; }
+	void SetSunHeight(float sunHeight) { this->sunHeight = sunHeight; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	Vector3f m_sunPosition;
-	float m_sunHeight = 0.0f;
+	Vector3f sunPosition;
+	float sunHeight = 0.0f;
 };
 }

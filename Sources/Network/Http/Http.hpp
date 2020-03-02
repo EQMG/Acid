@@ -48,7 +48,7 @@ public:
 	 * @param host Web server to connect to.
 	 * @param port Port to use for connection.
 	 */
-	Http(const std::string &host, uint16_t port = 0);
+	explicit Http(const std::string &host, uint16_t port = 0);
 
 	/**
 	 * Set the target host.
@@ -76,12 +76,12 @@ public:
 
 private:
 	/// Connection to the host.
-	TcpSocket m_connection;
+	TcpSocket connection;
 	/// Web host address.
-	IpAddress m_host;
+	IpAddress host;
 	/// Web host name.
-	std::string m_hostName;
+	std::string hostName;
 	/// Port used for connection with host.
-	uint16_t m_port = 0;
+	uint16_t port = 0;
 };
 }

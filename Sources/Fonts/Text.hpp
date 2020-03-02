@@ -16,8 +16,8 @@ class VertexText {
 public:
 	VertexText() = default;
 	VertexText(const Vector2f &position, const Vector3f &uv) :
-		m_position(position),
-		m_uv(uv) {
+		position(position),
+		uv(uv) {
 	}
 
 	static Shader::VertexInput GetVertexInput(uint32_t baseBinding = 0) {
@@ -25,22 +25,22 @@ public:
 			{baseBinding, sizeof(VertexText), VK_VERTEX_INPUT_RATE_VERTEX}
 		};
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-			{0, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexText, m_position)},
-			{1, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexText, m_uv)}
+			{0, baseBinding, VK_FORMAT_R32G32_SFLOAT, offsetof(VertexText, position)},
+			{1, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(VertexText, uv)}
 		};
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
 	bool operator==(const VertexText &other) const {
-		return m_position == other.m_position && m_uv == other.m_uv;
+		return position == other.position && uv == other.uv;
 	}
 
 	bool operator!=(const VertexText &other) const {
 		return !operator==(other);
 	}
 
-	Vector2f m_position;
-	Vector3f m_uv;
+	Vector2f position;
+	Vector3f uv;
 };
 
 /**
@@ -53,10 +53,7 @@ public:
 	 * @brief A enum that represents how the text will be justified.
 	 */
 	enum class Justify {
-		Left,
-		Centre,
-		Right,
-		Fully
+		Left, Centre, Right, Fully
 	};
 
 	Text() = default;
@@ -69,13 +66,13 @@ public:
 	 * Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.
 	 * @return The model of the text.
 	 */
-	const Model *GetModel() const { return m_model.get(); }
+	const Model *GetModel() const { return model.get(); }
 
 	/**
 	 * Gets the font size.
 	 * @return The font size.
 	 */
-	float GetFontSize() const { return m_fontSize; }
+	float GetFontSize() const { return fontSize; }
 
 	/**
 	 * Sets the font size.
@@ -87,13 +84,13 @@ public:
 	 * Gets the number of lines in this text.
 	 * @return The number of lines.
 	 */
-	uint32_t GetNumberLines() const { return m_numberLines; }
+	uint32_t GetNumberLines() const { return numberLines; }
 
 	/**
 	 * Gets the string of text represented.
 	 * @return The string of text.
 	 */
-	const std::string &GetString() const { return m_string; }
+	const std::string &GetString() const { return string; }
 
 	/**
 	 * Changed the current string in this text.
@@ -105,7 +102,7 @@ public:
 	 * Gets how the text should justify.
 	 * @return How the text should justify.
 	 */
-	Justify GetJustify() const { return m_justify; }
+	Justify GetJustify() const { return justify; }
 
 	/**
 	 * Sets how the text should justify.
@@ -117,7 +114,7 @@ public:
 	 * Gets the kerning (type character spacing multiplier) of this text.
 	 * @return The type kerning.
 	 */
-	float GetKerning() const { return m_kerning; }
+	float GetKerning() const { return kerning; }
 
 	/**
 	 * Sets the kerning (type character spacing multiplier) of this text.
@@ -129,7 +126,7 @@ public:
 	 * Gets the leading (vertical line spacing multiplier) of this text.
 	 * @return The line leading.
 	 */
-	float GetLeading() const { return m_leading; }
+	float GetLeading() const { return leading; }
 
 	/**
 	 * Sets the leading (vertical line spacing multiplier) of this text.
@@ -141,7 +138,7 @@ public:
 	 * Gets the font used by this text.
 	 * @return The font used by this text.
 	 */
-	const std::shared_ptr<FontType> &GetFontType() const { return m_fontType; }
+	const std::shared_ptr<FontType> &GetFontType() const { return fontType; }
 
 	/**
 	 * Sets the font used by this text.
@@ -153,13 +150,13 @@ public:
 	 * Gets the colour of the text.
 	 * @return The colour of the text.
 	 */
-	const Colour &GetTextColour() const { return m_textColour; }
+	const Colour &GetTextColour() const { return textColour; }
 
 	/**
 	 * Sets the colour of the text.
 	 * @param textColour The new colour of the text.
 	 */
-	void SetTextColour(const Colour &textColour) { m_textColour = textColour; }
+	void SetTextColour(const Colour &textColour) { this->textColour = textColour; }
 
 	/**
 	 * Gets if the text has been loaded to a model.
@@ -184,12 +181,12 @@ private:
 		 * @param kerning The glyph kerning.
 		 */
 		void AddCharacter(const FontType::Glyph &glyph, float kerning) {
-			m_glyphs.emplace_back(glyph);
-			m_width += kerning + glyph.m_advance;
+			glyphs.emplace_back(glyph);
+			width += kerning + glyph.advance;
 		}
 
-		std::vector<FontType::Glyph> m_glyphs;
-		float m_width = 0.0f;
+		std::vector<FontType::Glyph> glyphs;
+		float width = 0.0f;
 	};
 
 	/**
@@ -203,8 +200,8 @@ private:
 		 * @param maxLength The screen-space maximum length of a line.
 		 */
 		Line(float spaceWidth, float maxLength) :
-			m_maxLength(maxLength),
-			m_spaceSize(spaceWidth) {
+			maxLength(maxLength),
+			spaceSize(spaceWidth) {
 		}
 
 		/**
@@ -213,25 +210,25 @@ private:
 		 * @return {@code true} if the word has successfully been added to the line.
 		 */
 		bool AddWord(const Word &word) {
-			auto additionalLength = word.m_width;
-			additionalLength += !m_words.empty() ? m_spaceSize : 0.0f;
+			auto additionalLength = word.width;
+			additionalLength += !words.empty() ? spaceSize : 0.0f;
 
-			if (m_currentLineLength + additionalLength <= m_maxLength) {
-				m_words.emplace_back(word);
-				m_currentWordsLength += word.m_width;
-				m_currentLineLength += additionalLength;
+			if (currentLineLength + additionalLength <= maxLength) {
+				words.emplace_back(word);
+				currentWordsLength += word.width;
+				currentLineLength += additionalLength;
 				return true;
 			}
 
 			return false;
 		}
 
-		float m_maxLength;
-		float m_spaceSize;
+		float maxLength;
+		float spaceSize;
 
-		std::vector<Word> m_words;
-		float m_currentWordsLength = 0.0f;
-		float m_currentLineLength = 0.0f;
+		std::vector<Word> words;
+		float currentWordsLength = 0.0f;
+		float currentLineLength = 0.0f;
 	};
 
 	/**
@@ -246,22 +243,22 @@ private:
 	static void AddVerticesForGlyph(float cursorX, float cursorY, const FontType::Glyph &glyph, std::vector<VertexText> &vertices);
 	static void AddVertex(float vx, float vy, float tx, float ty, std::vector<VertexText> &vertices);
 
-	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformObject;
+	DescriptorsHandler descriptorSet;
+	UniformHandler uniformObject;
 
-	std::unique_ptr<Model> m_model;
-	uint32_t m_numberLines = 0;
-	Vector2i m_lastSize;
+	std::unique_ptr<Model> model;
+	uint32_t numberLines = 0;
+	Vector2i lastSize;
 
-	float m_fontSize = 12;
-	std::string m_string;
-	Justify m_justify = Justify::Left;
-	bool m_dirty = true;
+	float fontSize = 12;
+	std::string string;
+	Justify justify = Justify::Left;
+	bool dirty = true;
 
-	std::shared_ptr<FontType> m_fontType;
-	float m_kerning = 0.0f;
-	float m_leading = 0.0f;
+	std::shared_ptr<FontType> fontType;
+	float kerning = 0.0f;
+	float leading = 0.0f;
 
-	Colour m_textColour = Colour::Black;
+	Colour textColour = Colour::Black;
 };
 }

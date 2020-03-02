@@ -25,23 +25,23 @@ IpAddress::IpAddress(const std::string &address) {
 }
 
 IpAddress::IpAddress(uint8_t byte0, uint8_t byte1, uint8_t byte2, uint8_t byte3) :
-	m_address(htonl((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3)),
-	m_valid(true) {
+	address(htonl((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3)),
+	valid(true) {
 }
 
 IpAddress::IpAddress(uint32_t address) :
-	m_address(htonl(address)),
-	m_valid(true) {
+	address(htonl(address)),
+	valid(true) {
 }
 
 std::string IpAddress::ToString() const {
 	in_addr address = {};
-	address.s_addr = m_address;
+	address.s_addr = this->address;
 	return inet_ntoa(address);
 }
 
 uint32_t IpAddress::ToInteger() const {
-	return ntohl(m_address);
+	return ntohl(address);
 }
 
 IpAddress IpAddress::GetLocalAddress() {
@@ -111,7 +111,7 @@ bool IpAddress::operator!=(const IpAddress &other) const {
 }
 
 bool IpAddress::operator<(const IpAddress &other) const {
-	return std::make_pair(m_valid, m_address) < std::make_pair(other.m_valid, other.m_address);
+	return std::make_pair(valid, address) < std::make_pair(other.valid, other.address);
 }
 
 bool IpAddress::operator<=(const IpAddress &other) const {
@@ -139,23 +139,23 @@ std::istream &operator>>(std::istream &stream, IpAddress &address) {
 }
 
 void IpAddress::Resolve(const std::string &address) {
-	m_address = 0;
-	m_valid = false;
+	this->address = 0;
+	valid = false;
 
 	if (address == "255.255.255.255") {
 		// The broadcast address needs to be handled explicitly, because it is also the value returned by inet_addr on error.
-		m_address = INADDR_BROADCAST;
-		m_valid = true;
+		this->address = INADDR_BROADCAST;
+		valid = true;
 	} else if (address == "0.0.0.0") {
-		m_address = INADDR_ANY;
-		m_valid = true;
+		this->address = INADDR_ANY;
+		valid = true;
 	} else {
 		// Try to convert the address as a byte representation ("xxx.xxx.xxx.xxx").
 		uint32_t ip = inet_addr(address.c_str());
 
 		if (ip != INADDR_NONE) {
-			m_address = ip;
-			m_valid = true;
+			this->address = ip;
+			valid = true;
 		} else {
 			// Not a valid address, try to convert it as a host name.
 			addrinfo hints = {};
@@ -166,8 +166,8 @@ void IpAddress::Resolve(const std::string &address) {
 				if (result) {
 					ip = reinterpret_cast<sockaddr_in *>(result->ai_addr)->sin_addr.s_addr;
 					freeaddrinfo(result);
-					m_address = ip;
-					m_valid = true;
+					this->address = ip;
+					valid = true;
 				}
 			}
 		}

@@ -15,13 +15,13 @@ public:
 
 	~CommandPool();
 
-	operator const VkCommandPool &() const { return m_commandPool; }
+	operator const VkCommandPool &() const { return commandPool; }
 
-	const VkCommandPool &GetCommandPool() const { return m_commandPool; }
-	const std::thread::id &GetThreadId() const { return m_threadId; }
+	const VkCommandPool &GetCommandPool() const { return commandPool; }
+	const std::thread::id &GetThreadId() const { return threadId; }
 
 private:
-	VkCommandPool m_commandPool = VK_NULL_HANDLE;
-	std::thread::id m_threadId;
+	VkCommandPool commandPool = VK_NULL_HANDLE;
+	std::thread::id threadId;
 };
 }

@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
 namespace test {
 MainApp::MainApp() :
 	App("Test GUI", {1, 0, 0}),
-	m_fileObserver(std::filesystem::current_path(), 2s) {
+	fileObserver(std::filesystem::current_path(), 2s) {
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Watches all files in the working directory.
-	m_fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
+	fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
 		switch (status) {
 		case FileObserver::Status::Created:
 			Log::Out("Created ", path, '\n');

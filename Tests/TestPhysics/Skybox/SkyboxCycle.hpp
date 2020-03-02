@@ -8,6 +8,7 @@ using namespace acid;
 
 namespace test {
 class SkyboxCycle : public Component::Registrar<SkyboxCycle> {
+	inline static const bool Registered = Register("skyboxCycle");
 public:
 	explicit SkyboxCycle(bool enableFog = true, bool enableRotation = false);
 
@@ -18,9 +19,7 @@ public:
 	friend Node &operator<<(Node &node, const SkyboxCycle &skyboxCycle);
 
 private:
-	static bool registered;
-
-	bool m_enableFog;
-	bool m_enableRotation;
+	bool enableFog;
+	bool enableRotation;
 };
 }

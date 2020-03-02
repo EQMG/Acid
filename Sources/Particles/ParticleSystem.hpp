@@ -12,6 +12,7 @@ namespace acid {
  * @brief A system of particles.
  */
 class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, NonCopyable {
+	inline static const bool Registered = Register("particleSystem");
 public:
 	/**
 	 * Creates a new particle system.
@@ -34,32 +35,32 @@ public:
 
 	Vector3f RandomUnitVectorWithinCone(const Vector3f &coneDirection, float angle) const;
 
-	float GetPps() const { return m_pps; }
+	float GetPps() const { return pps; }
 	void SetPps(float pps);
 
-	float GetAverageSpeed() const { return m_averageSpeed; }
-	void SetAverageSpeed(float averageSpeed) { m_averageSpeed = averageSpeed; }
+	float GetAverageSpeed() const { return averageSpeed; }
+	void SetAverageSpeed(float averageSpeed) { this->averageSpeed = averageSpeed; }
 
-	float GetGravityEffect() const { return m_gravityEffect; }
-	void SetGravityEffect(float gravityEffect) { m_gravityEffect = gravityEffect; }
+	float GetGravityEffect() const { return gravityEffect; }
+	void SetGravityEffect(float gravityEffect) { this->gravityEffect = gravityEffect; }
 
-	bool IsRandomRotation() const { return m_randomRotation; }
-	void SetRandomRotation(bool randomRotation) { m_randomRotation = randomRotation; }
+	bool IsRandomRotation() const { return randomRotation; }
+	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
 
-	const Vector3f &GetDirection() const { return m_direction; }
+	const Vector3f &GetDirection() const { return direction; }
 	void SetDirection(const Vector3f &direction, float deviation);
 
-	float GetSpeedDeviation() const { return m_speedDeviation; }
-	void SetSpeedDeviation(float speedDeviation) { m_speedDeviation = speedDeviation; }
+	float GetSpeedDeviation() const { return speedDeviation; }
+	void SetSpeedDeviation(float speedDeviation) { this->speedDeviation = speedDeviation; }
 
-	float GetLifeDeviation() const { return m_lifeDeviation; }
-	void SetLifeDeviation(float lifeDeviation) { m_lifeDeviation = lifeDeviation; }
+	float GetLifeDeviation() const { return lifeDeviation; }
+	void SetLifeDeviation(float lifeDeviation) { this->lifeDeviation = lifeDeviation; }
 
-	float GetStageDeviation() const { return m_stageDeviation; }
-	void SetStageDeviation(float stageDeviation) { m_stageDeviation = stageDeviation; }
+	float GetStageDeviation() const { return stageDeviation; }
+	void SetStageDeviation(float stageDeviation) { this->stageDeviation = stageDeviation; }
 
-	float GetScaleDeviation() const { return m_scaleDeviation; }
-	void SetScaleDeviation(float scaleDeviation) { m_scaleDeviation = scaleDeviation; }
+	float GetScaleDeviation() const { return scaleDeviation; }
+	void SetScaleDeviation(float scaleDeviation) { this->scaleDeviation = scaleDeviation; }
 
 	friend const Node &operator>>(const Node &node, ParticleSystem &particleSystem);
 	friend Node &operator<<(Node &node, const ParticleSystem &particleSystem);
@@ -70,23 +71,21 @@ private:
 	float GenerateRotation() const;
 	Vector3f GenerateRandomUnitVector() const;
 
-	static bool registered;
+	std::vector<std::shared_ptr<ParticleType>> types;
+	std::vector<std::unique_ptr<Emitter>> emitters;
 
-	std::vector<std::shared_ptr<ParticleType>> m_types;
-	std::vector<std::unique_ptr<Emitter>> m_emitters;
+	float pps;
+	float averageSpeed;
+	float gravityEffect;
+	bool randomRotation;
 
-	float m_pps;
-	float m_averageSpeed;
-	float m_gravityEffect;
-	bool m_randomRotation;
+	Vector3f direction;
+	float directionDeviation = 0.0f;
+	float speedDeviation = 0.0f;
+	float lifeDeviation = 0.0f;
+	float stageDeviation = 0.0f;
+	float scaleDeviation = 0.0f;
 
-	Vector3f m_direction;
-	float m_directionDeviation = 0.0f;
-	float m_speedDeviation = 0.0f;
-	float m_lifeDeviation = 0.0f;
-	float m_stageDeviation = 0.0f;
-	float m_scaleDeviation = 0.0f;
-
-	ElapsedTime m_elapsedEmit;
+	ElapsedTime elapsedEmit;
 };
 }

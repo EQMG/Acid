@@ -20,29 +20,30 @@ public:
 	static std::unique_ptr<ImageCube> ComputeIrradiance(const std::shared_ptr<ImageCube> &source, uint32_t size);
 	static std::unique_ptr<ImageCube> ComputePrefiltered(const std::shared_ptr<ImageCube> &source, uint32_t size);
 
-	const Fog &GetFog() const { return m_fog; }
-	void SetFog(const Fog &fog) { m_fog = fog; }
+	const Fog &GetFog() const { return fog; }
+	void SetFog(const Fog &fog) { this->fog = fog; }
 
 private:
-	struct DeferredLight {
-		Colour m_colour;
-		Vector3f m_position;
-		float m_radius = 0.0f;
+	class DeferredLight {
+	public:
+		Colour colour;
+		Vector3f position;
+		float radius = 0.0f;
 	};
 
-	DescriptorsHandler m_descriptorSet;
-	UniformHandler m_uniformScene;
-	StorageHandler m_storageLights;
+	DescriptorsHandler descriptorSet;
+	UniformHandler uniformScene;
+	StorageHandler storageLights;
 
-	PipelineGraphics m_pipeline;
+	PipelineGraphics pipeline;
 
-	Future<std::unique_ptr<Image2d>> m_brdf;
+	Future<std::unique_ptr<Image2d>> brdf;
 
-	std::shared_ptr<ImageCube> m_skybox;
+	std::shared_ptr<ImageCube> skybox;
 
-	Future<std::unique_ptr<ImageCube>> m_irradiance;
-	Future<std::unique_ptr<ImageCube>> m_prefiltered;
+	Future<std::unique_ptr<ImageCube>> irradiance;
+	Future<std::unique_ptr<ImageCube>> prefiltered;
 
-	Fog m_fog;
+	Fog fog;
 };
 }

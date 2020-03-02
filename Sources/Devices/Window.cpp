@@ -13,15 +13,15 @@ void CallbackError(int32_t error, const char *description) {
 }
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
-	auto &monitors = Window::Get()->m_monitors;
+	auto &monitors = Window::Get()->monitors;
 
 	if (event == GLFW_CONNECTED) {
 		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
-		Window::Get()->m_onMonitorConnect(it.get(), true);
+		Window::Get()->onMonitorConnect(it.get(), true);
 	} else if (event == GLFW_DISCONNECTED) {
 		for (auto &m : monitors) {
 			if (m->GetMonitor() == monitor) {
-				Window::Get()->m_onMonitorConnect(m.get(), false);
+				Window::Get()->onMonitorConnect(m.get(), false);
 			}
 		}
 
@@ -32,10 +32,10 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 }
 
 void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos) {
-	if (Window::Get()->m_fullscreen) 
+	if (Window::Get()->fullscreen) 
 		return;
-	Window::Get()->m_position = {xpos, ypos};
-	Window::Get()->m_onPosition(Window::Get()->m_position);
+	Window::Get()->position = {xpos, ypos};
+	Window::Get()->onPosition(Window::Get()->position);
 }
 
 void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height) {
@@ -43,44 +43,44 @@ void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height) {
 		return;
 	}
 
-	if (Window::Get()->m_fullscreen) {
-		Window::Get()->m_fullscreenSize = {width, height};
-		Window::Get()->m_onSize(Window::Get()->m_fullscreenSize);
+	if (Window::Get()->fullscreen) {
+		Window::Get()->fullscreenSize = {width, height};
+		Window::Get()->onSize(Window::Get()->fullscreenSize);
 	} else {
-		Window::Get()->m_size = {width, height};
-		Window::Get()->m_onSize(Window::Get()->m_size);
+		Window::Get()->size = {width, height};
+		Window::Get()->onSize(Window::Get()->size);
 	}
 }
 
 void CallbackWindowClose(GLFWwindow *window) {
-	Window::Get()->m_closed = false;
+	Window::Get()->closed = false;
 	Engine::Get()->RequestClose();
-	Window::Get()->m_onClose();
+	Window::Get()->onClose();
 }
 
 void CallbackWindowFocus(GLFWwindow *window, int32_t focused) {
-	Window::Get()->m_focused = static_cast<bool>(focused);
-	Window::Get()->m_onFocus(focused == GLFW_TRUE);
+	Window::Get()->focused = static_cast<bool>(focused);
+	Window::Get()->onFocus(focused == GLFW_TRUE);
 }
 
 void CallbackWindowIconify(GLFWwindow *window, int32_t iconified) {
-	Window::Get()->m_iconified = iconified;
-	Window::Get()->m_onIconify(iconified);
+	Window::Get()->iconified = iconified;
+	Window::Get()->onIconify(iconified);
 }
 
 void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height) {
-	if (Window::Get()->m_fullscreen)
-		Window::Get()->m_fullscreenSize = {width, height};
+	if (Window::Get()->fullscreen)
+		Window::Get()->fullscreenSize = {width, height};
 	else
-		Window::Get()->m_size = {width, height};
+		Window::Get()->size = {width, height};
 	Graphics::Get()->SetFramebufferResized();
 }
 
 Window::Window() :
-	m_size(1080, 720),
-	m_title("Acid Window"),
-	m_resizable(true),
-	m_focused(true) {
+	size(1080, 720),
+	title("Acid Window"),
+	resizable(true),
+	focused(true) {
 	// Set the error error callback
 	glfwSetErrorCallback(CallbackError);
 
@@ -111,58 +111,58 @@ Window::Window() :
 	auto monitors = glfwGetMonitors(&monitorCount);
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++) {
-		m_monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
+		this->monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
 	}
 
-	auto videoMode = m_monitors[0]->GetVideoMode();
+	auto videoMode = this->monitors[0]->GetVideoMode();
 
 	// Create a windowed mode window and its context.
-	m_window = glfwCreateWindow(m_size.m_x, m_size.m_y, m_title.c_str(), nullptr, nullptr);
+	window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
 
 	// Gets any window errors.
-	if (!m_window) {
+	if (!window) {
 		glfwTerminate();
 		throw std::runtime_error("GLFW failed to create the window");
 	}
 
 	// Sets the user pointer.
-	glfwSetWindowUserPointer(m_window, this);
+	glfwSetWindowUserPointer(window, this);
 
 	// Window attributes that can change later.
-	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
-	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
-	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
+	glfwSetWindowAttrib(window, GLFW_DECORATED, !borderless);
+	glfwSetWindowAttrib(window, GLFW_RESIZABLE, resizable);
+	glfwSetWindowAttrib(window, GLFW_FLOATING, floating);
 
 	// Centre the window position.
-	m_position.m_x = (videoMode.m_width - m_size.m_x) / 2;
-	m_position.m_y = (videoMode.m_height - m_size.m_y) / 2;
-	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
+	position.x = (videoMode.width - size.x) / 2;
+	position.y = (videoMode.height - size.y) / 2;
+	glfwSetWindowPos(window, position.x, position.y);
 
 	// Sets fullscreen if enabled.
-	if (m_fullscreen) {
+	if (fullscreen) {
 		SetFullscreen(true);
 	}
 
 	// Shows the glfw window.
-	glfwShowWindow(m_window);
+	glfwShowWindow(window);
 
 	// Sets the displays callbacks.
-	glfwSetWindowPosCallback(m_window, CallbackWindowPosition);
-	glfwSetWindowSizeCallback(m_window, CallbackWindowSize);
-	glfwSetWindowCloseCallback(m_window, CallbackWindowClose);
-	glfwSetWindowFocusCallback(m_window, CallbackWindowFocus);
-	glfwSetWindowIconifyCallback(m_window, CallbackWindowIconify);
-	glfwSetFramebufferSizeCallback(m_window, CallbackFramebufferSize);
+	glfwSetWindowPosCallback(window, CallbackWindowPosition);
+	glfwSetWindowSizeCallback(window, CallbackWindowSize);
+	glfwSetWindowCloseCallback(window, CallbackWindowClose);
+	glfwSetWindowFocusCallback(window, CallbackWindowFocus);
+	glfwSetWindowIconifyCallback(window, CallbackWindowIconify);
+	glfwSetFramebufferSizeCallback(window, CallbackFramebufferSize);
 }
 
 Window::~Window() {
 	// Free the window callbacks and destroy the window.
-	glfwDestroyWindow(m_window);
+	glfwDestroyWindow(window);
 
 	// Terminate GLFW.
 	glfwTerminate();
 
-	m_closed = true;
+	closed = true;
 }
 
 void Window::Update() {
@@ -171,21 +171,21 @@ void Window::Update() {
 }
 
 void Window::SetSize(const Vector2i &size) {
-	m_size.m_x = size.m_x == -1 ? m_size.m_x : size.m_x;
-	m_size.m_y = size.m_y == -1 ? m_size.m_y : size.m_y;
-	glfwSetWindowSize(m_window, m_size.m_x, m_size.m_y);
+	this->size.x = size.x == -1 ? size.x : size.x;
+	this->size.y = size.y == -1 ? size.y : size.y;
+	glfwSetWindowSize(window, size.x, size.y);
 }
 
 void Window::SetPosition(const Vector2i &position) {
-	m_position.m_x = position.m_x == -1 ? m_position.m_x : position.m_x;
-	m_position.m_y = position.m_y == -1 ? m_position.m_y : position.m_y;
-	glfwSetWindowPos(m_window, m_position.m_x, m_position.m_y);
+	this->position.x = position.x == -1 ? position.x : position.x;
+	this->position.y = position.y == -1 ? position.y : position.y;
+	glfwSetWindowPos(window, position.x, position.y);
 }
 
 void Window::SetTitle(const std::string &title) {
-	m_title = title;
-	glfwSetWindowTitle(m_window, m_title.c_str());
-	m_onTitle(m_title);
+	this->title = title;
+	glfwSetWindowTitle(window, title.c_str());
+	onTitle(title);
 }
 
 void Window::SetIcons(const std::vector<std::filesystem::path> &filenames) {
@@ -195,70 +195,70 @@ void Window::SetIcons(const std::vector<std::filesystem::path> &filenames) {
 	for (const auto &filename : filenames) {
 		auto bitmap = std::make_unique<Bitmap>(filename);
 
-		if (!bitmap.get()) continue;
+		if (!bitmap) continue;
 
 		GLFWimage icon = {};
-		icon.width = bitmap->GetSize().m_x;
-		icon.height = bitmap->GetSize().m_y;
+		icon.width = bitmap->GetSize().x;
+		icon.height = bitmap->GetSize().y;
 		icon.pixels = bitmap->GetData().get();
 		icons.emplace_back(icon);
 		bitmaps.emplace_back(std::move(bitmap));
 	}
 
-	glfwSetWindowIcon(m_window, static_cast<int32_t>(icons.size()), icons.data());
+	glfwSetWindowIcon(window, static_cast<int32_t>(icons.size()), icons.data());
 }
 
 void Window::SetBorderless(bool borderless) {
-	m_borderless = borderless;
-	glfwSetWindowAttrib(m_window, GLFW_DECORATED, !m_borderless);
-	m_onBorderless(m_borderless);
+	this->borderless = borderless;
+	glfwSetWindowAttrib(window, GLFW_DECORATED, !borderless);
+	onBorderless(borderless);
 }
 
 void Window::SetResizable(bool resizable) {
-	m_resizable = resizable;
-	glfwSetWindowAttrib(m_window, GLFW_RESIZABLE, m_resizable);
-	m_onResizable(m_resizable);
+	this->resizable = resizable;
+	glfwSetWindowAttrib(window, GLFW_RESIZABLE, resizable);
+	onResizable(resizable);
 }
 
 void Window::SetFloating(bool floating) {
-	m_floating = floating;
-	glfwSetWindowAttrib(m_window, GLFW_FLOATING, m_floating);
-	m_onFloating(m_floating);
+	this->floating = floating;
+	glfwSetWindowAttrib(window, GLFW_FLOATING, floating);
+	onFloating(floating);
 }
 
 void Window::SetFullscreen(bool fullscreen, Monitor *monitor) {
 	auto selected = monitor ? monitor : GetCurrentMonitor();
 	auto videoMode = selected->GetVideoMode();
 
-	m_fullscreen = fullscreen;
+	this->fullscreen = fullscreen;
 
-	if (m_fullscreen) {
+	if (fullscreen) {
 #if defined(ACID_DEBUG)
 		Log::Out("Window is going fullscreen\n");
 #endif
-		m_fullscreenSize = {videoMode.m_width, videoMode.m_height};
-		glfwSetWindowMonitor(m_window, selected->GetMonitor(), 0, 0, m_fullscreenSize.m_x, m_fullscreenSize.m_y, GLFW_DONT_CARE);
+		fullscreenSize = {videoMode.width, videoMode.height};
+		glfwSetWindowMonitor(window, selected->GetMonitor(), 0, 0, fullscreenSize.x, fullscreenSize.y, GLFW_DONT_CARE);
 	} else {
 #if defined(ACID_DEBUG)
 		Log::Out("Window is going windowed\n");
 #endif
-		m_position = ((Vector2i(videoMode.m_width, videoMode.m_height) - m_size) / 2) + selected->GetPosition();
-		glfwSetWindowMonitor(m_window, nullptr, m_position.m_x, m_position.m_y, m_size.m_x, m_size.m_y, GLFW_DONT_CARE);
+		position = ((Vector2i(videoMode.width, videoMode.height) - size) / 2) + selected->GetPosition();
+		glfwSetWindowMonitor(window, nullptr, position.x, position.y, size.x, size.y, GLFW_DONT_CARE);
 	}
 
-	m_onFullscreen(m_fullscreen);
+	onFullscreen(fullscreen);
 }
 
 void Window::SetIconified(bool iconify) {
-	if (!m_iconified && iconify) {
-		glfwIconifyWindow(m_window);
-	} else if (m_iconified && !iconify) {
-		glfwRestoreWindow(m_window);
+	if (!iconified && iconify) {
+		glfwIconifyWindow(window);
+	} else if (iconified && !iconify) {
+		glfwRestoreWindow(window);
 	}
 }
 
 const Monitor *Window::GetPrimaryMonitor() const {
-	for (const auto &monitor : m_monitors) {
+	for (const auto &monitor : monitors) {
 		if (monitor->IsPrimary())
 			return monitor.get();
 	}
@@ -266,34 +266,34 @@ const Monitor *Window::GetPrimaryMonitor() const {
 }
 
 int32_t OverlappingArea(Vector2i l1, Vector2i r1, Vector2i l2, Vector2i r2) {
-	int area1 = abs(l1.m_x - r1.m_x) *
-		abs(l1.m_y - r1.m_y);
+	int area1 = abs(l1.x - r1.x) *
+		abs(l1.y - r1.y);
 
-	int area2 = abs(l2.m_x - r2.m_x) *
-		abs(l2.m_y - r2.m_y);
+	int area2 = abs(l2.x - r2.x) *
+		abs(l2.y - r2.y);
 
-	int areaI = (std::min(r1.m_x, r2.m_x) -
-		std::max(l1.m_x, l2.m_x)) *
-		(std::min(r1.m_y, r2.m_y) -
-			std::max(l1.m_y, l2.m_y));
+	int areaI = (std::min(r1.x, r2.x) -
+		std::max(l1.x, l2.x)) *
+		(std::min(r1.y, r2.y) -
+			std::max(l1.y, l2.y));
 
 	return (area1 + area2 - areaI);
 }
 
 const Monitor *Window::GetCurrentMonitor() const {
-	if (m_fullscreen) {
-		auto glfwMonitor = glfwGetWindowMonitor(m_window);
-		for (const auto &monitor : m_monitors) {
-			if (monitor->m_monitor == glfwMonitor)
+	if (fullscreen) {
+		auto glfwMonitor = glfwGetWindowMonitor(window);
+		for (const auto &monitor : monitors) {
+			if (monitor->monitor == glfwMonitor)
 				return monitor.get();
 		}
 		return nullptr;
 	}
 	std::multimap<int32_t, const Monitor *> rankedMonitor;
 
-	for (const auto &monitor : m_monitors) {
+	for (const auto &monitor : monitors) {
 		rankedMonitor.emplace(OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(), 
-			m_position, m_position + m_size), monitor.get());
+			position, position + size), monitor.get());
 	}
 
 	if (rankedMonitor.begin()->first > 0) {
@@ -349,6 +349,6 @@ std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const {
 }
 
 VkResult Window::CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const {
-	return glfwCreateWindowSurface(instance, m_window, allocator, surface);
+	return glfwCreateWindowSurface(instance, window, allocator, surface);
 }
 }

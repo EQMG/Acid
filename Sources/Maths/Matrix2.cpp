@@ -8,25 +8,25 @@
 
 namespace acid {
 Matrix2::Matrix2(float diagonal) {
-	std::memset(m_rows, 0, 2 * 2 * sizeof(float));
-	m_rows[0][0] = diagonal;
-	m_rows[1][1] = diagonal;
+	std::memset(rows, 0, 2 * 2 * sizeof(float));
+	rows[0][0] = diagonal;
+	rows[1][1] = diagonal;
 }
 
 Matrix2::Matrix2(const Matrix3 &source) {
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
+	std::memcpy(rows, source.rows, 2 * sizeof(Vector2f));
 }
 
 Matrix2::Matrix2(const Matrix4 &source) {
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
+	std::memcpy(rows, source.rows, 2 * sizeof(Vector2f));
 }
 
 Matrix2::Matrix2(const float *source) {
-	std::memcpy(m_rows, source, 2 * 2 * sizeof(float));
+	std::memcpy(rows, source, 2 * 2 * sizeof(float));
 }
 
 Matrix2::Matrix2(const Vector2f *source) {
-	std::memcpy(m_rows, source, 2 * sizeof(Vector2f));
+	std::memcpy(rows, source, 2 * sizeof(Vector2f));
 }
 
 Matrix2 Matrix2::Add(const Matrix2 &other) const {
@@ -34,7 +34,7 @@ Matrix2 Matrix2::Add(const Matrix2 &other) const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[row][col] + other[row][col];
+			result[row][col] = rows[row][col] + other[row][col];
 		}
 	}
 
@@ -46,7 +46,7 @@ Matrix2 Matrix2::Subtract(const Matrix2 &other) const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[row][col] - other[row][col];
+			result[row][col] = rows[row][col] - other[row][col];
 		}
 	}
 
@@ -58,7 +58,7 @@ Matrix2 Matrix2::Multiply(const Matrix2 &other) const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1];
+			result[row][col] = rows[0][col] * other[row][0] + rows[1][col] * other[row][1];
 		}
 	}
 
@@ -70,7 +70,7 @@ Matrix2 Matrix2::Divide(const Matrix2 &other) const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1];
+			result[row][col] = rows[0][col] / other[row][0] + rows[1][col] / other[row][1];
 		}
 	}
 
@@ -81,7 +81,7 @@ Vector2f Matrix2::Transform(const Vector2f &other) const {
 	Vector2f result;
 
 	for (uint32_t row = 0; row < 3; row++) {
-		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y;
+		result[row] = rows[0][row] * other.x + rows[1][row] * other.y;
 	}
 
 	return result;
@@ -92,7 +92,7 @@ Matrix2 Matrix2::Scale(const Vector2f &other) const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[row][col] * other[row];
+			result[row][col] = rows[row][col] * other[row];
 		}
 	}
 
@@ -104,7 +104,7 @@ Matrix2 Matrix2::Negate() const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = -m_rows[row][col];
+			result[row][col] = -rows[row][col];
 		}
 	}
 
@@ -141,7 +141,7 @@ Matrix2 Matrix2::Transpose() const {
 
 	for (uint32_t row = 0; row < 2; row++) {
 		for (uint32_t col = 0; col < 2; col++) {
-			result[row][col] = m_rows[col][row];
+			result[row][col] = rows[col][row];
 		}
 	}
 
@@ -158,7 +158,7 @@ float Matrix2::Determinant() const {
 		// If this is an odd-numbered row, negate the value.
 		auto factor = (i % 2 == 1) ? -1.0f : 1.0f;
 
-		result += factor * m_rows[0][i] * minor;
+		result += factor * rows[0][i] * minor;
 	}
 
 	return result;
@@ -175,7 +175,7 @@ float Matrix2::GetSubmatrix(uint32_t row, uint32_t col) const {
 
 			for (uint32_t j = 0; j < 2; j++) {
 				if (j != col) {
-					result = m_rows[i][j];
+					result = rows[i][j];
 					colCount++;
 				}
 			}
@@ -189,16 +189,16 @@ float Matrix2::GetSubmatrix(uint32_t row, uint32_t col) const {
 
 const Vector2f &Matrix2::operator[](uint32_t index) const {
 	assert(index < 2);
-	return m_rows[index];
+	return rows[index];
 }
 
 Vector2f &Matrix2::operator[](uint32_t index) {
 	assert(index < 2);
-	return m_rows[index];
+	return rows[index];
 }
 
 bool Matrix2::operator==(const Matrix2 &other) const {
-	return m_rows[0] == other.m_rows[0] && m_rows[1] == other.m_rows[1];
+	return rows[0] == other.rows[0] && rows[1] == other.rows[1];
 }
 
 bool Matrix2::operator!=(const Matrix2 &other) const {
@@ -290,14 +290,14 @@ Matrix2 &Matrix2::operator/=(float other) {
 }
 
 const Node &operator>>(const Node &node, Matrix2 &matrix) {
-	node["m0"].Get(matrix.m_rows[0]);
-	node["m1"].Get(matrix.m_rows[1]);
+	node["m0"].Get(matrix.rows[0]);
+	node["m1"].Get(matrix.rows[1]);
 	return node;
 }
 
 Node &operator<<(Node &node, const Matrix2 &matrix) {
-	node["m0"].Set(matrix.m_rows[0]);
-	node["m1"].Set(matrix.m_rows[1]);
+	node["m0"].Set(matrix.rows[0]);
+	node["m1"].Set(matrix.rows[1]);
 	return node;
 }
 

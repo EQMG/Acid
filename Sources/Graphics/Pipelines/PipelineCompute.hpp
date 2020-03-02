@@ -21,15 +21,15 @@ public:
 
 	void CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const;
 
-	const std::filesystem::path &GetShaderStage() const { return m_shaderStage; }
-	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
-	bool IsPushDescriptors() const override { return m_pushDescriptors; }
-	const Shader *GetShader() const override { return m_shader.get(); }
-	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
-	const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
-	const VkPipeline &GetPipeline() const override { return m_pipeline; }
-	const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
-	const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
+	const std::filesystem::path &GetShaderStage() const { return shaderStage; }
+	const std::vector<Shader::Define> &GetDefines() const { return defines; }
+	bool IsPushDescriptors() const override { return pushDescriptors; }
+	const Shader *GetShader() const override { return shader.get(); }
+	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return descriptorSetLayout; }
+	const VkDescriptorPool &GetDescriptorPool() const override { return descriptorPool; }
+	const VkPipeline &GetPipeline() const override { return pipeline; }
+	const VkPipelineLayout &GetPipelineLayout() const override { return pipelineLayout; }
+	const VkPipelineBindPoint &GetPipelineBindPoint() const override { return pipelineBindPoint; }
 
 private:
 	void CreateShaderProgram();
@@ -38,20 +38,20 @@ private:
 	void CreatePipelineLayout();
 	void CreatePipelineCompute();
 
-	std::filesystem::path m_shaderStage;
-	std::vector<Shader::Define> m_defines;
-	bool m_pushDescriptors;
+	std::filesystem::path shaderStage;
+	std::vector<Shader::Define> defines;
+	bool pushDescriptors;
 
-	std::unique_ptr<Shader> m_shader;
+	std::unique_ptr<Shader> shader;
 
-	VkShaderModule m_shaderModule = VK_NULL_HANDLE;
-	VkPipelineShaderStageCreateInfo m_shaderStageCreateInfo = {};
+	VkShaderModule shaderModule = VK_NULL_HANDLE;
+	VkPipelineShaderStageCreateInfo shaderStageCreateInfo = {};
 
-	VkDescriptorSetLayout m_descriptorSetLayout = VK_NULL_HANDLE;
-	VkDescriptorPool m_descriptorPool = VK_NULL_HANDLE;
+	VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
+	VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
 
-	VkPipeline m_pipeline = VK_NULL_HANDLE;
-	VkPipelineLayout m_pipelineLayout = VK_NULL_HANDLE;
-	VkPipelineBindPoint m_pipelineBindPoint;
+	VkPipeline pipeline = VK_NULL_HANDLE;
+	VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
+	VkPipelineBindPoint pipelineBindPoint;
 };
 }

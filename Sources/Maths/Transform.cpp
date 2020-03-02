@@ -3,68 +3,54 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool Transform::registered = Register("transform");
-
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scale) :
-	m_position(position),
-	m_rotation(rotation),
-	m_scale(scale) {
+	position(position),
+	rotation(rotation),
+	scale(scale) {
 }
 
 Transform::~Transform() {
-	delete m_worldTransform;
+	delete worldTransform;
 
-	if (m_parent) {
-		m_parent->RemoveChild(this);
+	if (parent) {
+		parent->RemoveChild(this);
 	}
 
-	for (auto &child : m_children) {
-		child->m_parent = nullptr;
+	for (auto &child : children) {
+		child->parent = nullptr;
 	}
 }
 
 Transform Transform::Multiply(const Transform &other) const {
-	return {Vector3f(GetWorldMatrix().Transform(Vector4f(other.m_position))), m_rotation + other.m_rotation, m_scale * other.m_scale};
+	return {Vector3f(GetWorldMatrix().Transform(Vector4f(other.position))), rotation + other.rotation, scale * other.scale};
 }
 
 Matrix4 Transform::GetWorldMatrix() const {
 	auto worldTransform = GetWorldTransform();
-	return Matrix4::TransformationMatrix(worldTransform->m_position, worldTransform->m_rotation, worldTransform->m_scale);
+	return Matrix4::TransformationMatrix(worldTransform->position, worldTransform->rotation, worldTransform->scale);
 }
 
 Vector3f Transform::GetPosition() const {
-	return GetWorldTransform()->m_position;
+	return GetWorldTransform()->position;
 }
 
 Vector3f Transform::GetRotation() const {
-	return GetWorldTransform()->m_rotation;
+	return GetWorldTransform()->rotation;
 }
 
 Vector3f Transform::GetScale() const {
-	return GetWorldTransform()->m_scale;
-}
-
-void Transform::SetLocalPosition(const Vector3f &localPosition) {
-	m_position = localPosition;
-}
-
-void Transform::SetLocalRotation(const Vector3f &localRotation) {
-	m_rotation = localRotation;
-}
-
-void Transform::SetLocalScale(const Vector3f &localScale) {
-	m_scale = localScale;
+	return GetWorldTransform()->scale;
 }
 
 void Transform::SetParent(Transform *parent) {
-	if (m_parent) {
-		m_parent->RemoveChild(this);
+	if (parent) {
+		parent->RemoveChild(this);
 	}
 
-	m_parent = parent;
+	this->parent = parent;
 
-	if (m_parent) {
-		m_parent->AddChild(this);
+	if (parent) {
+		parent->AddChild(this);
 	}
 }
 
@@ -73,7 +59,7 @@ void Transform::SetParent(Entity *parent) {
 }
 
 bool Transform::operator==(const Transform &other) const {
-	return m_position == other.m_position && m_rotation == other.m_rotation && m_scale == other.m_scale;
+	return position == other.position && rotation == other.rotation && scale == other.scale;
 }
 
 bool Transform::operator!=(const Transform &other) const {
@@ -89,46 +75,46 @@ Transform &Transform::operator*=(const Transform &other) {
 }
 
 const Node &operator>>(const Node &node, Transform &transform) {
-	node["position"].Get(transform.m_position);
-	node["rotation"].Get(transform.m_rotation);
-	node["scale"].Get(transform.m_scale);
+	node["position"].Get(transform.position);
+	node["rotation"].Get(transform.rotation);
+	node["scale"].Get(transform.scale);
 	return node;
 }
 
 Node &operator<<(Node &node, const Transform &transform) {
-	node["position"].Set(transform.m_position);
-	node["rotation"].Set(transform.m_rotation);
-	node["scale"].Set(transform.m_scale);
+	node["position"].Set(transform.position);
+	node["rotation"].Set(transform.rotation);
+	node["scale"].Set(transform.scale);
 	return node;
 }
 
 std::ostream &operator<<(std::ostream &stream, const Transform &transform) {
-	return stream << transform.m_position << ", " << transform.m_rotation << ", " << transform.m_scale;
+	return stream << transform.position << ", " << transform.rotation << ", " << transform.scale;
 }
 
 const Transform *Transform::GetWorldTransform() const {
-	if (!m_parent) {
-		if (m_worldTransform) {
-			delete m_worldTransform;
-			m_worldTransform = nullptr;
+	if (!parent) {
+		if (worldTransform) {
+			delete worldTransform;
+			worldTransform = nullptr;
 		}
 
 		return this;
 	}
 
-	if (!m_worldTransform) {
-		m_worldTransform = new Transform();
+	if (!worldTransform) {
+		worldTransform = new Transform();
 	}
 
-	*m_worldTransform = *m_parent->GetWorldTransform() * *this;
-	return m_worldTransform;
+	*worldTransform = *parent->GetWorldTransform() * *this;
+	return worldTransform;
 }
 
 void Transform::AddChild(Transform *child) {
-	m_children.emplace_back(child);
+	children.emplace_back(child);
 }
 
 void Transform::RemoveChild(Transform *child) {
-	m_children.erase(std::remove(m_children.begin(), m_children.end(), child), m_children.end());
+	children.erase(std::remove(children.begin(), children.end(), child), children.end());
 }
 }

@@ -15,9 +15,9 @@ public:
 	virtual ~UiConstraint() = default;
 
 	bool Update(const UiConstraints *object, const UiConstraints *parent) {
-		auto last = m_current;
-		m_current = Calculate(object, parent) + m_offset;
-		return m_current != last;
+		auto last = current;
+		current = Calculate(object, parent) + offset;
+		return current != last;
 	}
 
 	virtual int32_t Calculate(const UiConstraints *object, const UiConstraints *parent) const = 0;
@@ -26,16 +26,16 @@ public:
 	 * Gets the constraints value.
 	 * @return The current value.
 	 */
-	virtual int32_t Get() const { return m_current; }
+	virtual int32_t Get() const { return current; }
 
-	int32_t GetOffset() const { return m_offset; }
-	void SetOffset(int32_t offset) { m_offset = offset; }
+	int32_t GetOffset() const { return offset; }
+	void SetOffset(int32_t offset) { this->offset = offset; }
 
 protected:
 	/// The most recent value calculation.
-	int32_t m_current = 0;
+	int32_t current = 0;
 	/// Value offset in pixels.
-	int32_t m_offset = 0;
+	int32_t offset = 0;
 };
 }
 

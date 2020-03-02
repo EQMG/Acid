@@ -63,7 +63,7 @@ public:
 	protected:
 		template<int Dummy = 0>
 		static bool Register(const std::string &typeName) {
-			Registrar::name = typeName;
+			name = typeName;
 			ModelFactory::RegistryNode()[typeName] = [](const Node &node) -> TCreateReturn {
 				return T::Create(node);
 			};
@@ -98,6 +98,7 @@ public:
 	friend Node &operator<<(Node &node, const Base &base) {
 		return base.Write(node);
 	}
+	
 protected:
 	virtual const Node &Load(const Node &node) { return node; }
 	virtual Node &Write(Node &node) const { return node; }
@@ -139,16 +140,16 @@ public:
 
 	std::vector<float> GetPointCloud() const;
 
-	const Vector3f &GetMinExtents() const { return m_minExtents; }
-	const Vector3f &GetMaxExtents() const { return m_maxExtents; }
-	float GetWidth() const { return m_maxExtents.m_x - m_minExtents.m_x; }
-	float GetHeight() const { return m_maxExtents.m_y - m_minExtents.m_y; }
-	float GetDepth() const { return m_maxExtents.m_z - m_minExtents.m_z; }
-	float GetRadius() const { return m_radius; }
-	const Buffer *GetVertexBuffer() const { return m_vertexBuffer.get(); }
-	const Buffer *GetIndexBuffer() const { return m_indexBuffer.get(); }
-	uint32_t GetVertexCount() const { return m_vertexCount; }
-	uint32_t GetIndexCount() const { return m_indexCount; }
+	const Vector3f &GetMinExtents() const { return minExtents; }
+	const Vector3f &GetMaxExtents() const { return maxExtents; }
+	float GetWidth() const { return maxExtents.x - minExtents.x; }
+	float GetHeight() const { return maxExtents.y - minExtents.y; }
+	float GetDepth() const { return maxExtents.z - minExtents.z; }
+	float GetRadius() const { return radius; }
+	const Buffer *GetVertexBuffer() const { return vertexBuffer.get(); }
+	const Buffer *GetIndexBuffer() const { return indexBuffer.get(); }
+	uint32_t GetVertexCount() const { return vertexCount; }
+	uint32_t GetIndexCount() const { return indexCount; }
 	static VkIndexType GetIndexType() { return VK_INDEX_TYPE_UINT32; }
 
 protected:
@@ -156,14 +157,14 @@ protected:
 	void Initialize(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {});
 
 private:
-	std::unique_ptr<Buffer> m_vertexBuffer;
-	std::unique_ptr<Buffer> m_indexBuffer;
-	uint32_t m_vertexCount = 0;
-	uint32_t m_indexCount = 0;
+	std::unique_ptr<Buffer> vertexBuffer;
+	std::unique_ptr<Buffer> indexBuffer;
+	uint32_t vertexCount = 0;
+	uint32_t indexCount = 0;
 
-	Vector3f m_minExtents;
-	Vector3f m_maxExtents;
-	float m_radius = 0.0f;
+	Vector3f minExtents;
+	Vector3f maxExtents;
+	float radius = 0.0f;
 };
 }
 

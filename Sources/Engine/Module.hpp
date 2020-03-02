@@ -12,7 +12,9 @@ public:
 	/**
 	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
 	 */
-	enum class Stage : uint8_t { Never, Always, Pre, Normal, Post, Render };
+	enum class Stage : uint8_t {
+		Never, Always, Pre, Normal, Post, Render
+	};
 	
 	using StageIndex = std::pair<Stage, std::size_t>;
 	using TRegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;

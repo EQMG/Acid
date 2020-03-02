@@ -12,10 +12,10 @@ namespace acid {
 class ACID_EXPORT Camera {
 public:
 	Camera() :
-		m_nearPlane(0.1f),
-		m_farPlane(1000.0f),
-		m_fieldOfView(Maths::Radians(45.0f)),
-		m_viewRay(false, {0.5f, 0.5f}) {
+		nearPlane(0.1f),
+		farPlane(1000.0f),
+		fieldOfView(Maths::Radians(45.0f)),
+		viewRay(false, {0.5f, 0.5f}) {
 	}
 
 	virtual ~Camera() = default;
@@ -27,64 +27,63 @@ public:
 	 * Gets the distance of the near pane of the view frustum.
 	 * @return The distance of the near pane of the view frustum.
 	 */
-	float GetNearPlane() const { return m_nearPlane; }
-	void SetNearPlane(float nearPlane) { m_nearPlane = nearPlane; }
+	float GetNearPlane() const { return nearPlane; }
+	void SetNearPlane(float nearPlane) { this->nearPlane = nearPlane; }
 
 	/**
 	 * Gets the distance of the view frustum's far plane.
 	 * @return The distance of the view frustum's far plane.
 	 */
-	float GetFarPlane() const { return m_farPlane; }
-	void SetFarPlane(float farPlane) { m_farPlane = farPlane; }
+	float GetFarPlane() const { return farPlane; }
+	void SetFarPlane(float farPlane) { this->farPlane = farPlane; }
 
 	/**
 	 * Gets the field of view angle for the view frustum.
 	 * @return The field of view angle for the view frustum.
 	 */
-	float GetFieldOfView() const { return m_fieldOfView; }
-	void SetFieldOfView(float fieldOfView) { m_fieldOfView = fieldOfView; }
+	float GetFieldOfView() const { return fieldOfView; }
+	void SetFieldOfView(float fieldOfView) { this->fieldOfView = fieldOfView; }
 
-	const Vector3f &GetPosition() const { return m_position; }
-	const Vector3f &GetRotation() const { return m_rotation; }
-	const Vector3f &GetVelocity() const { return m_velocity; }
+	const Vector3f &GetPosition() const { return position; }
+	const Vector3f &GetRotation() const { return rotation; }
+	const Vector3f &GetVelocity() const { return velocity; }
 
 	/**
 	 * Gets the view matrix created by the current camera position and rotation.
 	 * @return The view matrix created by the current camera position and rotation.
 	 */
-	const Matrix4 &GetViewMatrix() const { return m_viewMatrix; }
+	const Matrix4 &GetViewMatrix() const { return viewMatrix; }
 
 	/**
 	 * Gets the projection matrix used in the current scene render.
 	 * @return The projection matrix used in the current scene render.
 	 */
-	const Matrix4 &GetProjectionMatrix() const { return m_projectionMatrix; }
+	const Matrix4 &GetProjectionMatrix() const { return projectionMatrix; }
 
 	/**
 	 * Gets the view frustum created by the current camera position and rotation.
 	 * @return The view frustum created by the current camera position and rotation.
 	 */
-	const Frustum &GetViewFrustum() const { return m_viewFrustum; }
+	const Frustum &GetViewFrustum() const { return viewFrustum; }
 
 	/**
 	 * Gets the ray that extends from the cameras position though the screen.
 	 * @return The cameras view ray.
 	 */
-	const Ray &GetViewRay() const { return m_viewRay; }
+	const Ray &GetViewRay() const { return viewRay; }
 
 protected:
-	float m_nearPlane;
-	float m_farPlane;
-	float m_fieldOfView;
+	float nearPlane, farPlane;
+	float fieldOfView;
 
-	Vector3f m_position;
-	Vector3f m_rotation;
-	Vector3f m_velocity;
+	Vector3f position;
+	Vector3f rotation;
+	Vector3f velocity;
 
-	Matrix4 m_viewMatrix;
-	Matrix4 m_projectionMatrix;
+	Matrix4 viewMatrix;
+	Matrix4 projectionMatrix;
 
-	Frustum m_viewFrustum;
-	Ray m_viewRay;
+	Frustum viewFrustum;
+	Ray viewRay;
 };
 }

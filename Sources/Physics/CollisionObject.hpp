@@ -26,7 +26,6 @@ public:
 	 */
 	explicit CollisionObject(std::vector<std::unique_ptr<Collider>> &&colliders = {}, float mass = 1.0f, float friction = 0.2f, const Vector3f & linearFactor = Vector3f(1.0f),
 		const Vector3f &angularFactor = Vector3f(1.0f));
-
 	virtual ~CollisionObject();
 
 	/**
@@ -42,7 +41,7 @@ public:
 	Force *AddForce(std::unique_ptr<Force> &&force);
 	virtual void ClearForces() = 0;
 
-	bool IsShapeCreated() const { return m_shape != nullptr; }
+	bool IsShapeCreated() const { return shape != nullptr; }
 
 	void SetChildTransform(Collider *child, const Transform &transform);
 	void AddChild(Collider *child);
@@ -50,73 +49,69 @@ public:
 
 	void SetIgnoreCollisionCheck(CollisionObject *other, bool ignore);
 
-	const std::vector<std::unique_ptr<Collider>> &GetColliders() const { return m_colliders; }
+	const std::vector<std::unique_ptr<Collider>> &GetColliders() const { return colliders; }
 
-	float GetMass() const { return m_mass; }
+	float GetMass() const { return mass; }
 	virtual void SetMass(float mass) = 0;
 
-	const Vector3f &GetGravity() const { return m_gravity; }
+	const Vector3f &GetGravity() const { return gravity; }
 	virtual void SetGravity(const Vector3f &gravity) = 0;
 
-	const Vector3f &GetLinearFactor() const { return m_linearFactor; }
+	const Vector3f &GetLinearFactor() const { return linearFactor; }
 	virtual void SetLinearFactor(const Vector3f &linearFactor) = 0;
 
-	const Vector3f &GetAngularFactor() const { return m_angularFactor; }
+	const Vector3f &GetAngularFactor() const { return angularFactor; }
 	virtual void SetAngularFactor(const Vector3f &angularFactor) = 0;
 
-	float GetFriction() const { return m_friction; }
+	float GetFriction() const { return friction; }
 	void SetFriction(float friction);
 
-	float GetFrictionRolling() const { return m_frictionRolling; }
+	float GetFrictionRolling() const { return frictionRolling; }
 	void SetFrictionRolling(float frictionRolling);
 
-	float GetFrictionSpinning() const { return m_frictionSpinning; }
+	float GetFrictionSpinning() const { return frictionSpinning; }
 	void SetFrictionSpinning(float frictionSpinning);
 
-	const Vector3f &GetLinearVelocity() const { return m_linearVelocity; }
+	const Vector3f &GetLinearVelocity() const { return linearVelocity; }
 	virtual void SetLinearVelocity(const Vector3f &linearVelocity) = 0;
 
-	const Vector3f &GetAngularVelocity() const { return m_angularVelocity; }
+	const Vector3f &GetAngularVelocity() const { return angularVelocity; }
 	virtual void SetAngularVelocity(const Vector3f &angularVelocity) = 0;
 
 	/**
 	 * Called when this object collides from a object.
 	 * @return The delegate.
 	 */
-	Delegate<void(CollisionObject *)> &OnCollision() { return m_onCollision; }
+	Delegate<void(CollisionObject *)> &OnCollision() { return onCollision; }
 
 	/**
 	 * Called when this object separates from a object.
 	 * @return The delegate.
 	 */
-	Delegate<void(CollisionObject *)> &OnSeparation() { return m_onSeparation; }
+	Delegate<void(CollisionObject *)> &OnSeparation() { return onSeparation; }
 
 protected:
 	virtual void RecalculateMass() = 0;
 
 	void CreateShape(bool forceSingle = false);
 
-	std::vector<std::unique_ptr<Collider>> m_colliders;
+	std::vector<std::unique_ptr<Collider>> colliders;
 
-	float m_mass;
-	Vector3f m_gravity;
+	float mass;
+	Vector3f gravity;
 
-	float m_friction;
-	float m_frictionRolling;
-	float m_frictionSpinning;
+	float friction, frictionRolling, frictionSpinning;
 
-	Vector3f m_linearFactor;
-	Vector3f m_angularFactor;
+	Vector3f linearFactor, angularFactor;
 
-	Vector3f m_linearVelocity;
-	Vector3f m_angularVelocity;
+	Vector3f linearVelocity, angularVelocity;
 
-	std::unique_ptr<btCollisionShape> m_shape;
-	btCollisionObject *m_body = nullptr;
+	std::unique_ptr<btCollisionShape> shape;
+	btCollisionObject *body = nullptr;
 
-	std::vector<std::unique_ptr<Force>> m_forces;
+	std::vector<std::unique_ptr<Force>> forces;
 
-	Delegate<void(CollisionObject *)> m_onCollision;
-	Delegate<void(CollisionObject *)> m_onSeparation;
+	Delegate<void(CollisionObject *)> onCollision;
+	Delegate<void(CollisionObject *)> onSeparation;
 };
 }

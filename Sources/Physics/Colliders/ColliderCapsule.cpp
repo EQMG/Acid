@@ -3,47 +3,45 @@
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
 
 namespace acid {
-bool ColliderCapsule::registered = Register("capsule");
-
 ColliderCapsule::ColliderCapsule(float radius, float height, const Transform &localTransform) :
 	//Collider(localTransform),
-	m_shape(std::make_unique<btCapsuleShape>(radius, height)),
-	m_radius(radius),
-	m_height(height) {
-	m_localTransform = localTransform;
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	shape(std::make_unique<btCapsuleShape>(radius, height)),
+	radius(radius),
+	height(height) {
+	this->localTransform = localTransform;
+	this->localTransform.SetLocalScale({radius, height, radius});
 }
 
 ColliderCapsule::~ColliderCapsule() {
 }
 
 btCollisionShape *ColliderCapsule::GetCollisionShape() const {
-	return m_shape.get();
+	return shape.get();
 }
 
 void ColliderCapsule::SetRadius(float radius) {
-	m_radius = radius;
-	m_shape->setImplicitShapeDimensions({m_radius, 0.5f * m_height, m_radius});
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	this->radius = radius;
+	shape->setImplicitShapeDimensions({radius, 0.5f * height, radius});
+	localTransform.SetLocalScale({radius, height, radius});
 }
 
 void ColliderCapsule::SetHeight(float height) {
-	m_height = height;
-	m_shape->setImplicitShapeDimensions({m_radius, 0.5f * m_height, m_radius});
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	this->height = height;
+	shape->setImplicitShapeDimensions({radius, 0.5f * height, radius});
+	localTransform.SetLocalScale({radius, height, radius});
 }
 
 const Node &operator>>(const Node &node, ColliderCapsule &collider) {
-	node["localTransform"].Get(collider.m_localTransform);
-	node["radius"].Get(collider.m_radius);
-	node["height"].Get(collider.m_height);
+	node["localTransform"].Get(collider.localTransform);
+	node["radius"].Get(collider.radius);
+	node["height"].Get(collider.height);
 	return node;
 }
 
 Node &operator<<(Node &node, const ColliderCapsule &collider) {
-	node["localTransform"].Set(collider.m_localTransform);
-	node["radius"].Set(collider.m_radius);
-	node["height"].Set(collider.m_height);
+	node["localTransform"].Set(collider.localTransform);
+	node["radius"].Set(collider.radius);
+	node["height"].Set(collider.height);
 	return node;
 }
 }

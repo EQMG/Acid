@@ -26,21 +26,21 @@ public:
 				{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
 			};
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-				{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-				{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-				{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-				{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colourOffset)},
-				{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_offsets)},
-				{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Instance, m_blend)}
+				{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[0])},
+				{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[1])},
+				{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[2])},
+				{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[3])},
+				{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, colourOffset)},
+				{5, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, offsets)},
+				{6, baseBinding, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Instance, blend)}
 			};
 			return {bindingDescriptions, attributeDescriptions};
 		}
 
-		Matrix4 m_modelMatrix;
-		Colour m_colourOffset;
-		Vector4f m_offsets;
-		Vector3f m_blend;
+		Matrix4 modelMatrix;
+		Colour colourOffset;
+		Vector4f offsets;
+		Vector3f blend;
 	};
 
 	/**
@@ -81,40 +81,40 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(ParticleType); }
 
-	const std::shared_ptr<Image2d> &GetImage() const { return m_image; }
-	void SetImage(const std::shared_ptr<Image2d> &image) { m_image = image; }
+	const std::shared_ptr<Image2d> &GetImage() const { return image; }
+	void SetImage(const std::shared_ptr<Image2d> &image) { this->image = image; }
 
-	uint32_t GetNumberOfRows() const { return m_numberOfRows; }
-	void SetNumberOfRows(uint32_t numberOfRows) { m_numberOfRows = numberOfRows; }
+	uint32_t GetNumberOfRows() const { return numberOfRows; }
+	void SetNumberOfRows(uint32_t numberOfRows) { this->numberOfRows = numberOfRows; }
 
-	const Colour &GetColourOffset() const { return m_colourOffset; }
-	void SetColourOffset(const Colour &colourOffset) { m_colourOffset = colourOffset; }
+	const Colour &GetColourOffset() const { return colourOffset; }
+	void SetColourOffset(const Colour &colourOffset) { this->colourOffset = colourOffset; }
 
-	float GetLifeLength() const { return m_lifeLength; }
-	void SetLifeLength(float lifeLength) { m_lifeLength = lifeLength; }
+	float GetLifeLength() const { return lifeLength; }
+	void SetLifeLength(float lifeLength) { this->lifeLength = lifeLength; }
 
-	float GetStageCycles() const { return m_stageCycles; }
-	void SetStageCycles(float stageCycles) { m_stageCycles = stageCycles; }
+	float GetStageCycles() const { return stageCycles; }
+	void SetStageCycles(float stageCycles) { this->stageCycles = stageCycles; }
 
-	float GetScale() const { return m_scale; }
-	void SetScale(float scale) { m_scale = scale; }
+	float GetScale() const { return scale; }
+	void SetScale(float scale) { this->scale = scale; }
 
 	friend const Node &operator>>(const Node &node, ParticleType &particleType);
 	friend Node &operator<<(Node &node, const ParticleType &particleType);
 
 private:
-	std::shared_ptr<Image2d> m_image;
-	std::shared_ptr<Model> m_model;
-	uint32_t m_numberOfRows;
-	Colour m_colourOffset;
-	float m_lifeLength;
-	float m_stageCycles;
-	float m_scale;
+	std::shared_ptr<Image2d> image;
+	std::shared_ptr<Model> model;
+	uint32_t numberOfRows;
+	Colour colourOffset;
+	float lifeLength;
+	float stageCycles;
+	float scale;
 
-	uint32_t m_maxInstances = 0;
-	uint32_t m_instances = 0;
+	uint32_t maxInstances = 0;
+	uint32_t instances = 0;
 
-	DescriptorsHandler m_descriptorSet;
-	InstanceBuffer m_instanceBuffer;
+	DescriptorsHandler descriptorSet;
+	InstanceBuffer instanceBuffer;
 };
 }

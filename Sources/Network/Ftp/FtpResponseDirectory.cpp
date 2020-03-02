@@ -7,7 +7,7 @@ FtpResponseDirectory::FtpResponseDirectory(const FtpResponse &response) :
 		// Extract the directory from the server response
 		auto begin = GetFullMessage().find('"', 0);
 		auto end = GetFullMessage().find('"', begin + 1);
-		m_directory = GetFullMessage().substr(begin + 1, end - begin - 1);
+		directory = GetFullMessage().substr(begin + 1, end - begin - 1);
 	}
 }
 }

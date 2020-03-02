@@ -91,7 +91,7 @@ uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *d
 
 Instance::Instance() {
 #if defined(ACID_DEBUG)
-	m_enableValidationLayers = true;
+	enableValidationLayers = true;
 #endif
 	
 	CreateInstance();
@@ -100,11 +100,11 @@ Instance::Instance() {
 
 Instance::~Instance() {
 #if USE_DEBUG_MESSENGER
-	FvkDestroyDebugUtilsMessengerEXT(m_instance, m_debugMessenger, nullptr);
+	FvkDestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
 #else
-	FvkDestroyDebugReportCallbackEXT(m_instance, m_debugReportCallback, nullptr);
+	FvkDestroyDebugReportCallbackEXT(instance, debugReportCallback, nullptr);
 #endif
-	vkDestroyInstance(m_instance, nullptr);
+	vkDestroyInstance(instance, nullptr);
 }
 
 bool Instance::CheckValidationLayerSupport() const {
@@ -142,7 +142,7 @@ std::vector<const char *> Instance::GetExtensions() const {
 
 	std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionsCount);
 
-	if (m_enableValidationLayers)
+	if (enableValidationLayers)
 		extensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 	//extensions.emplace_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
 	return extensions;
@@ -158,14 +158,14 @@ void Instance::CreateInstance() {
 	VkApplicationInfo applicationInfo = {};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	//applicationInfo.pApplicationName = appName.c_str();
-	//applicationInfo.applicationVersion = VK_MAKE_VERSION(appVersion.m_major, appVersion.m_minor, appVersion.m_patch);
+	//applicationInfo.applicationVersion = VK_MAKE_VERSION(appVersion.major, appVersion.minor, appVersion.patch);
 	applicationInfo.pEngineName = "Acid";
-	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.m_major, engineVersion.m_minor, engineVersion.m_patch);
+	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.major, engineVersion.minor, engineVersion.patch);
 	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
 
-	if (m_enableValidationLayers && !CheckValidationLayerSupport()) {
+	if (enableValidationLayers && !CheckValidationLayerSupport()) {
 		Log::Error("Validation layers requested, but not available!\n");
-		m_enableValidationLayers = false;
+		enableValidationLayers = false;
 	}
 
 	auto extensions = GetExtensions();
@@ -179,7 +179,7 @@ void Instance::CreateInstance() {
 #if USE_DEBUG_MESSENGER
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
 #endif
-	if (m_enableValidationLayers) {
+	if (enableValidationLayers) {
 #if USE_DEBUG_MESSENGER
 		debugUtilsMessengerCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 		debugUtilsMessengerCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | 
@@ -194,17 +194,17 @@ void Instance::CreateInstance() {
 		instanceCreateInfo.ppEnabledLayerNames = ValidationLayers.data();
 	}
 
-	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance));
+	Graphics::CheckVk(vkCreateInstance(&instanceCreateInfo, nullptr, &instance));
 
 #if VOLK_HEADER_VERSION >= 131
-	volkLoadInstanceOnly(m_instance);
+	volkLoadInstanceOnly(instance);
 #else
-	volkLoadInstance(m_instance);
+	volkLoadInstance(instance);
 #endif
 }
 
 void Instance::CreateDebugMessenger() {
-	if (!m_enableValidationLayers) return;
+	if (!enableValidationLayers) return;
 
 #if USE_DEBUG_MESSENGER
 	VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfo = {};
@@ -214,7 +214,7 @@ void Instance::CreateDebugMessenger() {
 	debugUtilsMessengerCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | 
 		VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 	debugUtilsMessengerCreateInfo.pfnUserCallback = &CallbackDebug;
-	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(m_instance, &debugUtilsMessengerCreateInfo, nullptr, &m_debugMessenger));
+	Graphics::CheckVk(FvkCreateDebugUtilsMessengerEXT(instance, &debugUtilsMessengerCreateInfo, nullptr, &debugMessenger));
 #else
 	VkDebugReportCallbackCreateInfoEXT debugReportCallbackCreateInfo = {};
 	debugReportCallbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
@@ -222,9 +222,9 @@ void Instance::CreateDebugMessenger() {
 	debugReportCallbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
 	debugReportCallbackCreateInfo.pfnCallback = &CallbackDebug;
 	debugReportCallbackCreateInfo.pUserData = nullptr;
-	auto debugReportResult = FvkCreateDebugReportCallbackEXT(m_instance, &debugReportCallbackCreateInfo, nullptr, &m_debugReportCallback);
+	auto debugReportResult = FvkCreateDebugReportCallbackEXT(instance, &debugReportCallbackCreateInfo, nullptr, &debugReportCallback);
 	if (debugReportResult == VK_ERROR_EXTENSION_NOT_PRESENT) {
-		m_enableValidationLayers = false;
+		enableValidationLayers = false;
 		Log::Error("Extension vkCreateDebugReportCallbackEXT not present!\n");
 	} else {
 		Graphics::CheckVk(debugReportResult);

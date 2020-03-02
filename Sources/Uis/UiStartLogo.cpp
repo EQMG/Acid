@@ -6,45 +6,39 @@
 #include "Timers/Timers.hpp"
 
 namespace acid {
-#if defined(ACID_DEBUG)
-const Time START_DELAY = 1s;
-#else
-const Time START_DELAY = 3s;
-#endif
-
 UiStartLogo::UiStartLogo() {
-	//m_guiBackground.SetTransform({UiMargins::All});
-	m_guiBackground.SetImage(Image2d::Create("Guis/Black.png"));
-	AddChild(&m_guiBackground);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/Black.png"));
+	AddChild(&background);
 
-	//m_guiLogoAcid.SetTransform({{300, 300}, UiAnchor::Centre, {0, -100}});
-	m_guiLogoAcid.GetConstraints().SetWidth<PixelConstraint>(300)
+	//logoAcid.SetTransform({{300, 300}, UiAnchor::Centre, {0, -100}});
+	logoAcid.GetConstraints().SetWidth<PixelConstraint>(300)
 		.SetHeight<RatioConstraint>(1.0f)
 		.SetX<PixelConstraint>(0, UiAnchor::Centre)
 		.SetY<PixelConstraint>(-100, UiAnchor::Centre);
-	m_guiLogoAcid.SetImage(Image2d::Create("Logos/Acid_01.png"));
-	AddChild(&m_guiLogoAcid);
+	logoAcid.SetImage(Image2d::Create("Logos/Acid_01.png"));
+	AddChild(&logoAcid);
 
-	//m_textCopyright.SetTransform({{460, 64}, UiAnchor::Centre, {0, 128}});
-	m_textCopyright.GetConstraints().SetWidth<PixelConstraint>(460)
+	//textCopyright.SetTransform({{460, 64}, UiAnchor::Centre, {0, 128}});
+	textCopyright.GetConstraints().SetWidth<PixelConstraint>(460)
 		.SetHeight<PixelConstraint>(64)
 		.SetX<PixelConstraint>(0, UiAnchor::Centre)
 		.SetY<PixelConstraint>(128, UiAnchor::Centre);
-	m_textCopyright.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textCopyright.SetJustify(Text::Justify::Centre);
-	m_textCopyright.SetTextColour(Colour::White);
-	m_textCopyright.SetString("Copyright (C) 2019, Equilibrium Games - All Rights Reserved.");
-	AddChild(&m_textCopyright);
+	textCopyright.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textCopyright.SetJustify(Text::Justify::Centre);
+	textCopyright.SetTextColour(Colour::White);
+	textCopyright.SetString("Copyright (C) 2019, Equilibrium Games - All Rights Reserved.");
+	AddChild(&textCopyright);
 
-	Timers::Get()->Once(START_DELAY, [this]() {
+	Timers::Get()->Once(StartDelay, [this]() {
 		SetAlphaDriver<SlideDriver>(1.0f, 0.0f, 1.4s);
 	}, this);
 }
 
 void UiStartLogo::UpdateObject() {
-	if (GetScreenAlpha() <= 0.0f && !m_finished) {
-		m_finished = true;
-		m_onFinished();
+	if (GetScreenAlpha() <= 0.0f && !finished) {
+		finished = true;
+		onFinished();
 	}
 }
 }

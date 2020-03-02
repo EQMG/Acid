@@ -36,7 +36,6 @@ public:
 	 * Creates an empty packet.
 	 */
 	Packet();
-
 	virtual ~Packet() = default;
 
 	/**
@@ -167,12 +166,12 @@ protected:
 	bool CheckSize(std::size_t size);
 
 	/// Data stored in the packet.
-	std::vector<char> m_data;
+	std::vector<char> data;
 	/// Current reading position in the packet.
-	std::size_t m_readPos = 0;
+	std::size_t readPos = 0;
 	/// Current send position in the packet (for handling partial sends).
-	std::size_t m_sendPos = 0;
+	std::size_t sendPos = 0;
 	/// Reading state of the packet.
-	bool m_isValid;
+	bool isValid;
 };
 }

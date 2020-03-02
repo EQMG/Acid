@@ -8,7 +8,9 @@ namespace acid {
  */
 class ACID_EXPORT Buffer {
 public:
-	enum class Status { Reset, Changed, Normal };
+	enum class Status {
+		Reset, Changed, Normal
+	};
 
 	/**
 	 * Creates a new buffer with optional data.
@@ -24,9 +26,9 @@ public:
 	void MapMemory(void **data) const;
 	void UnmapMemory() const;
 
-	VkDeviceSize GetSize() const { return m_size; }
-	const VkBuffer &GetBuffer() const { return m_buffer; }
-	const VkDeviceMemory &GetBufferMemory() const { return m_bufferMemory; }
+	VkDeviceSize GetSize() const { return size; }
+	const VkBuffer &GetBuffer() const { return buffer; }
+	const VkDeviceMemory &GetBufferMemory() const { return bufferMemory; }
 
 	static uint32_t FindMemoryType(uint32_t typeFilter, const VkMemoryPropertyFlags &requiredProperties);
 
@@ -34,8 +36,8 @@ public:
 		VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkDeviceSize offset = 0, VkDeviceSize size = VK_WHOLE_SIZE);
 
 protected:
-	VkDeviceSize m_size;
-	VkBuffer m_buffer = VK_NULL_HANDLE;
-	VkDeviceMemory m_bufferMemory = VK_NULL_HANDLE;
+	VkDeviceSize size;
+	VkBuffer buffer = VK_NULL_HANDLE;
+	VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 };
 }

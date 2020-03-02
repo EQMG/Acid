@@ -8,8 +8,6 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-bool BitmapPng::registered = Register(".png");
-
 void BitmapPng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();
@@ -53,7 +51,7 @@ void BitmapPng::Write(const Bitmap *bitmap, const std::filesystem::path &filenam
 	else
 		Log::Error("Cannot write PNG with ", bitmap->GetBytesPerPixel(), " bytes per pixel\n");
 
-	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().m_x, bitmap->GetSize().m_y, colorType);*/
+	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().x, bitmap->GetSize().y, colorType);*/
 
 #if defined(ACID_DEBUG)
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

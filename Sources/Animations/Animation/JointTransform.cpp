@@ -2,17 +2,17 @@
 
 namespace acid {
 JointTransform::JointTransform(const Vector3f &position, const Quaternion &rotation) :
-	m_position(position),
-	m_rotation(rotation) {
+	position(position),
+	rotation(rotation) {
 }
 
 JointTransform::JointTransform(const Matrix4 &localTransform) :
-	m_position(localTransform[3]),
-	m_rotation(localTransform) {
+	position(localTransform[3]),
+	rotation(localTransform) {
 }
 
 Matrix4 JointTransform::GetLocalTransform() const {
-	return Matrix4().Translate(m_position) * m_rotation.ToRotationMatrix();
+	return Matrix4().Translate(position) * rotation.ToRotationMatrix();
 }
 
 JointTransform JointTransform::Interpolate(const JointTransform &frameA, const JointTransform &frameB, float progression) {
@@ -26,14 +26,14 @@ Vector3f JointTransform::Interpolate(const Vector3f &start, const Vector3f &end,
 }
 
 const Node &operator>>(const Node &node, JointTransform &jointTransform) {
-	node["position"].Get(jointTransform.m_position);
-	node["rotation"].Get(jointTransform.m_rotation);
+	node["position"].Get(jointTransform.position);
+	node["rotation"].Get(jointTransform.rotation);
 	return node;
 }
 
 Node &operator<<(Node &node, const JointTransform &jointTransform) {
-	node["position"].Set(jointTransform.m_position);
-	node["rotation"].Set(jointTransform.m_rotation);
+	node["position"].Set(jointTransform.position);
+	node["rotation"].Set(jointTransform.rotation);
 	return node;
 }
 }

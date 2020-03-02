@@ -71,7 +71,7 @@ public:
 		inline static std::string name;
 	};
 
-	friend inline const Node &operator>>(const Node &node, std::unique_ptr<Base> &object) {
+	friend const Node &operator>>(const Node &node, std::unique_ptr<Base> &object) {
 		if (node["type"].has_value())
 			object = Create(node["type"].Get<std::string>());
 		node >> *object;
@@ -88,6 +88,7 @@ public:
 	friend Node &operator<<(Node &node, const Base &base) {
 		return base.Write(node);
 	}
+	
 protected:
 	virtual const Node &Load(const Node &node) { return node; }
 	virtual Node &Write(Node &node) const { return node; }

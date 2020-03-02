@@ -9,13 +9,12 @@ namespace test {
 class MainApp : public App {
 public:
 	MainApp();
-
 	~MainApp();
 
 	void Start() override;
 	void Update() override;
 
 private:
-	ConfigManager m_configManager;
+	ConfigManager configManager;
 };
 }

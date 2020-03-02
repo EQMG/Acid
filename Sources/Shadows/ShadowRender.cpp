@@ -18,30 +18,27 @@ void ShadowRender::Update() {
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
 	auto transform = GetEntity()->GetComponent<Transform>();
 
-	if (!transform) {
+	if (!transform)
 		return false;
-	}
 
 	// Update push constants.
-	m_pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
+	pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
 
 	// Gets required components.
 	auto mesh = GetEntity()->GetComponent<Mesh>();
 
-	if (!mesh || !mesh->GetModel()) {
+	if (!mesh || !mesh->GetModel())
 		return false;
-	}
 
 	// Updates descriptors.
-	m_descriptorSet.Push("PushObject", m_pushObject);
+	descriptorSet.Push("PushObject", pushObject);
 
-	if (!m_descriptorSet.Update(pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return false;
-	}
 
 	// Draws the object.
-	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-	m_pushObject.BindPush(commandBuffer, pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	pushObject.BindPush(commandBuffer, pipeline);
 	return mesh->GetModel()->CmdRender(commandBuffer);
 }
 

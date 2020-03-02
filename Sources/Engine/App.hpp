@@ -2,9 +2,23 @@
 
 #include "Helpers/Delegate.hpp"
 
+#ifdef major
+#undef major
+#endif
+#ifdef minor
+#undef minor
+#endif
+
 namespace acid {
-struct Version {
-	uint8_t m_major, m_minor, m_patch;
+class ACID_EXPORT Version {
+public:
+	Version(uint8_t major, uint8_t minor, uint8_t patch) :
+		major(major),
+		minor(minor),
+		patch(patch) {
+	}
+
+	uint8_t major, minor, patch;
 };
 
 /**
@@ -14,8 +28,8 @@ class ACID_EXPORT App : public virtual Observer {
 	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :
-		m_name(std::move(name)),
-		m_version(version) {
+		name(std::move(name)),
+		version(version) {
 	}
 
 	virtual ~App() = default;
@@ -34,29 +48,29 @@ public:
 	 * Gets the application's name.
 	 * @return The application's name.
 	 */
-	const std::string &GetName() const { return m_name; }
+	const std::string &GetName() const { return name; }
 
 	/**
 	 * Sets the application's name, for driver support.
 	 * @param name The application's name.
 	 */
-	void SetName(const std::string &name) { m_name = name; }
+	void SetName(const std::string &name) { this->name = name; }
 
 	/**
 	 * Gets the application's version.
 	 * @return The application's version.
 	 */
-	const Version &GetVersion() const { return m_version; }
+	const Version &GetVersion() const { return version; }
 
 	/**
 	 * Sets the application's version, for driver support.
 	 * @param version The application version.
 	 */
-	void SetVersion(const Version &version) { m_version = version; }
+	void SetVersion(const Version &version) { this->version = version; }
 
 private:
-	bool m_started = false;
-	std::string m_name;
-	Version m_version;
+	bool started = false;
+	std::string name;
+	Version version;
 };
 }

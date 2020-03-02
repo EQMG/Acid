@@ -11,6 +11,6 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
-	PipelineGraphics m_pipeline;
+	PipelineGraphics pipeline;
 };
 }

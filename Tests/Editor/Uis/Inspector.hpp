@@ -19,16 +19,16 @@ public:
 	void UpdateObject() override;
 
 private:
-	UiSection m_section1;
-	UiInputButton m_button1;
-	UiGrabberMouse m_input1;
-	UiGrabberKeyboard m_input2;
-	UiGrabberJoystick m_input3;
-	UiInputSlider m_slider1;
-	UiInputText m_text1;
-	//UiInputRadio m_radio1;
-	//UiInputRadio m_radio2;
-	//UiInputRadio m_radio3;
-	//UiRadioManager m_radioManager1;
+	UiSection section1;
+	UiInputButton button1;
+	UiGrabberMouse input1;
+	UiGrabberKeyboard input2;
+	UiGrabberJoystick input3;
+	UiInputSlider slider1;
+	UiInputText text1;
+	//UiInputRadio radio1;
+	//UiInputRadio radio2;
+	//UiInputRadio radio3;
+	//UiRadioManager radioManager1;
 };
 }

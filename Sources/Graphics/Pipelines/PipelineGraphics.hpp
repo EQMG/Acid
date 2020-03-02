@@ -17,8 +17,7 @@ class Image2d;
 class ACID_EXPORT PipelineGraphics : public Pipeline {
 public:
 	enum class Mode {
-		Polygon,
-		Mrt
+		Polygon, MRT
 	};
 
 	enum class Depth {
@@ -69,23 +68,23 @@ public:
 	 */
 	RenderArea GetRenderArea(const std::optional<uint32_t> &stage = std::nullopt) const;
 
-	const Stage &GetStage() const { return m_stage; }
-	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
-	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
-	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
-	Mode GetMode() const { return m_mode; }
-	Depth GetDepth() const { return m_depth; }
-	VkPrimitiveTopology GetTopology() const { return m_topology; }
-	VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
-	VkCullModeFlags GetCullMode() const { return m_cullMode; }
-	VkFrontFace GetFrontFace() const { return m_frontFace; }
-	bool IsPushDescriptors() const override { return m_pushDescriptors; }
-	const Shader *GetShader() const override { return m_shader.get(); }
-	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return m_descriptorSetLayout; }
-	const VkDescriptorPool &GetDescriptorPool() const override { return m_descriptorPool; }
-	const VkPipeline &GetPipeline() const override { return m_pipeline; }
-	const VkPipelineLayout &GetPipelineLayout() const override { return m_pipelineLayout; }
-	const VkPipelineBindPoint &GetPipelineBindPoint() const override { return m_pipelineBindPoint; }
+	const Stage &GetStage() const { return stage; }
+	const std::vector<std::filesystem::path> &GetShaderStages() const { return shaderStages; }
+	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return vertexInputs; }
+	const std::vector<Shader::Define> &GetDefines() const { return defines; }
+	Mode GetMode() const { return mode; }
+	Depth GetDepth() const { return depth; }
+	VkPrimitiveTopology GetTopology() const { return topology; }
+	VkPolygonMode GetPolygonMode() const { return polygonMode; }
+	VkCullModeFlags GetCullMode() const { return cullMode; }
+	VkFrontFace GetFrontFace() const { return frontFace; }
+	bool IsPushDescriptors() const override { return pushDescriptors; }
+	const Shader *GetShader() const override { return shader.get(); }
+	const VkDescriptorSetLayout &GetDescriptorSetLayout() const override { return descriptorSetLayout; }
+	const VkDescriptorPool &GetDescriptorPool() const override { return descriptorPool; }
+	const VkPipeline &GetPipeline() const override { return pipeline; }
+	const VkPipelineLayout &GetPipelineLayout() const override { return pipelineLayout; }
+	const VkPipelineBindPoint &GetPipelineBindPoint() const override { return pipelineBindPoint; }
 
 private:
 	void CreateShaderProgram();
@@ -97,42 +96,42 @@ private:
 	void CreatePipelinePolygon();
 	void CreatePipelineMrt();
 
-	Stage m_stage;
-	std::vector<std::filesystem::path> m_shaderStages;
-	std::vector<Shader::VertexInput> m_vertexInputs;
-	std::vector<Shader::Define> m_defines;
-	Mode m_mode;
-	Depth m_depth;
-	VkPrimitiveTopology m_topology;
-	VkPolygonMode m_polygonMode;
-	VkCullModeFlags m_cullMode;
-	VkFrontFace m_frontFace;
-	bool m_pushDescriptors;
+	Stage stage;
+	std::vector<std::filesystem::path> shaderStages;
+	std::vector<Shader::VertexInput> vertexInputs;
+	std::vector<Shader::Define> defines;
+	Mode mode;
+	Depth depth;
+	VkPrimitiveTopology topology;
+	VkPolygonMode polygonMode;
+	VkCullModeFlags cullMode;
+	VkFrontFace frontFace;
+	bool pushDescriptors;
 
-	std::unique_ptr<Shader> m_shader;
+	std::unique_ptr<Shader> shader;
 
-	std::vector<VkDynamicState> m_dynamicStates;
+	std::vector<VkDynamicState> dynamicStates;
 
-	std::vector<VkShaderModule> m_modules;
-	std::vector<VkPipelineShaderStageCreateInfo> m_stages;
+	std::vector<VkShaderModule> modules;
+	std::vector<VkPipelineShaderStageCreateInfo> stages;
 
-	VkDescriptorSetLayout m_descriptorSetLayout = VK_NULL_HANDLE;
-	VkDescriptorPool m_descriptorPool = VK_NULL_HANDLE;
+	VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
+	VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
 
-	VkPipeline m_pipeline = VK_NULL_HANDLE;
-	VkPipelineLayout m_pipelineLayout = VK_NULL_HANDLE;
-	VkPipelineBindPoint m_pipelineBindPoint;
+	VkPipeline pipeline = VK_NULL_HANDLE;
+	VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
+	VkPipelineBindPoint pipelineBindPoint;
 
-	VkPipelineVertexInputStateCreateInfo m_vertexInputStateCreateInfo = {};
-	VkPipelineInputAssemblyStateCreateInfo m_inputAssemblyState = {};
-	VkPipelineRasterizationStateCreateInfo m_rasterizationState = {};
-	std::array<VkPipelineColorBlendAttachmentState, 1> m_blendAttachmentStates;
-	VkPipelineColorBlendStateCreateInfo m_colourBlendState = {};
-	VkPipelineDepthStencilStateCreateInfo m_depthStencilState = {};
-	VkPipelineViewportStateCreateInfo m_viewportState = {};
-	VkPipelineMultisampleStateCreateInfo m_multisampleState = {};
-	VkPipelineDynamicStateCreateInfo m_dynamicState = {};
-	VkPipelineTessellationStateCreateInfo m_tessellationState = {};
+	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = {};
+	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState = {};
+	VkPipelineRasterizationStateCreateInfo rasterizationState = {};
+	std::array<VkPipelineColorBlendAttachmentState, 1> blendAttachmentStates;
+	VkPipelineColorBlendStateCreateInfo colourBlendState = {};
+	VkPipelineDepthStencilStateCreateInfo depthStencilState = {};
+	VkPipelineViewportStateCreateInfo viewportState = {};
+	VkPipelineMultisampleStateCreateInfo multisampleState = {};
+	VkPipelineDynamicStateCreateInfo dynamicState = {};
+	VkPipelineTessellationStateCreateInfo tessellationState = {};
 };
 
 class ACID_EXPORT PipelineGraphicsCreate {
@@ -141,16 +140,16 @@ public:
 		PipelineGraphics::Mode mode = PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth depth = PipelineGraphics::Depth::ReadWrite,
 		VkPrimitiveTopology topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL,
 		VkCullModeFlags cullMode = VK_CULL_MODE_BACK_BIT, VkFrontFace frontFace = VK_FRONT_FACE_CLOCKWISE, bool pushDescriptors = false) :
-		m_shaderStages(std::move(shaderStages)),
-		m_vertexInputs(std::move(vertexInputs)),
-		m_defines(std::move(defines)),
-		m_mode(mode),
-		m_depth(depth),
-		m_topology(topology),
-		m_polygonMode(polygonMode),
-		m_cullMode(cullMode),
-		m_frontFace(frontFace),
-		m_pushDescriptors(pushDescriptors) {
+		shaderStages(std::move(shaderStages)),
+		vertexInputs(std::move(vertexInputs)),
+		defines(std::move(defines)),
+		mode(mode),
+		depth(depth),
+		topology(topology),
+		polygonMode(polygonMode),
+		cullMode(cullMode),
+		frontFace(frontFace),
+		pushDescriptors(pushDescriptors) {
 	}
 
 	/**
@@ -159,58 +158,58 @@ public:
 	 * @return The created graphics pipeline.
 	 */
 	PipelineGraphics *Create(const Pipeline::Stage &pipelineStage) const {
-		return new PipelineGraphics(pipelineStage, m_shaderStages, m_vertexInputs, m_defines, m_mode, m_depth, m_topology, m_polygonMode, m_cullMode, m_frontFace,
-			m_pushDescriptors);
+		return new PipelineGraphics(pipelineStage, shaderStages, vertexInputs, defines, mode, depth, topology, polygonMode, cullMode, frontFace,
+			pushDescriptors);
 	}
 
 	friend const Node &operator>>(const Node &node, PipelineGraphicsCreate &pipelineCreate) {
-		node["shaderStages"].Get(pipelineCreate.m_shaderStages);
-		node["vertexInputs"].Get(pipelineCreate.m_vertexInputs);
-		node["defines"].Get(pipelineCreate.m_defines);
-		node["mode"].Get(pipelineCreate.m_mode);
-		node["depth"].Get(pipelineCreate.m_depth);
-		node["polygonMode"].Get(pipelineCreate.m_polygonMode);
-		node["cullMode"].Get(pipelineCreate.m_cullMode);
-		node["frontFace"].Get(pipelineCreate.m_frontFace);
-		node["pushDescriptors"].Get(pipelineCreate.m_pushDescriptors);
+		node["shaderStages"].Get(pipelineCreate.shaderStages);
+		node["vertexInputs"].Get(pipelineCreate.vertexInputs);
+		node["defines"].Get(pipelineCreate.defines);
+		node["mode"].Get(pipelineCreate.mode);
+		node["depth"].Get(pipelineCreate.depth);
+		node["polygonMode"].Get(pipelineCreate.polygonMode);
+		node["cullMode"].Get(pipelineCreate.cullMode);
+		node["frontFace"].Get(pipelineCreate.frontFace);
+		node["pushDescriptors"].Get(pipelineCreate.pushDescriptors);
 		return node;
 	}
 
 	friend Node &operator<<(Node &node, const PipelineGraphicsCreate &pipelineCreate) {
-		node["shaderStages"].Set(pipelineCreate.m_shaderStages);
-		node["vertexInputs"].Set(pipelineCreate.m_vertexInputs);
-		node["defines"].Set(pipelineCreate.m_defines);
-		node["mode"].Set(pipelineCreate.m_mode);
-		node["depth"].Set(pipelineCreate.m_depth);
-		node["polygonMode"].Set(pipelineCreate.m_polygonMode);
-		node["cullMode"].Set(pipelineCreate.m_cullMode);
-		node["frontFace"].Set(pipelineCreate.m_frontFace);
-		node["pushDescriptors"].Set(pipelineCreate.m_pushDescriptors);
+		node["shaderStages"].Set(pipelineCreate.shaderStages);
+		node["vertexInputs"].Set(pipelineCreate.vertexInputs);
+		node["defines"].Set(pipelineCreate.defines);
+		node["mode"].Set(pipelineCreate.mode);
+		node["depth"].Set(pipelineCreate.depth);
+		node["polygonMode"].Set(pipelineCreate.polygonMode);
+		node["cullMode"].Set(pipelineCreate.cullMode);
+		node["frontFace"].Set(pipelineCreate.frontFace);
+		node["pushDescriptors"].Set(pipelineCreate.pushDescriptors);
 		return node;
 	}
 
-	const std::vector<std::filesystem::path> &GetShaderStages() const { return m_shaderStages; }
-	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return m_vertexInputs; }
-	const std::vector<Shader::Define> &GetDefines() const { return m_defines; }
-	PipelineGraphics::Mode GetMode() const { return m_mode; }
-	PipelineGraphics::Depth GetDepth() const { return m_depth; }
-	VkPrimitiveTopology GetTopology() const { return m_topology; }
-	VkPolygonMode GetPolygonMode() const { return m_polygonMode; }
-	VkCullModeFlags GetCullMode() const { return m_cullMode; }
-	VkFrontFace GetFrontFace() const { return m_frontFace; }
-	bool GetPushDescriptors() const { return m_pushDescriptors; }
+	const std::vector<std::filesystem::path> &GetShaderStages() const { return shaderStages; }
+	const std::vector<Shader::VertexInput> &GetVertexInputs() const { return vertexInputs; }
+	const std::vector<Shader::Define> &GetDefines() const { return defines; }
+	PipelineGraphics::Mode GetMode() const { return mode; }
+	PipelineGraphics::Depth GetDepth() const { return depth; }
+	VkPrimitiveTopology GetTopology() const { return topology; }
+	VkPolygonMode GetPolygonMode() const { return polygonMode; }
+	VkCullModeFlags GetCullMode() const { return cullMode; }
+	VkFrontFace GetFrontFace() const { return frontFace; }
+	bool GetPushDescriptors() const { return pushDescriptors; }
 
 private:
-	std::vector<std::filesystem::path> m_shaderStages;
-	std::vector<Shader::VertexInput> m_vertexInputs;
-	std::vector<Shader::Define> m_defines;
+	std::vector<std::filesystem::path> shaderStages;
+	std::vector<Shader::VertexInput> vertexInputs;
+	std::vector<Shader::Define> defines;
 
-	PipelineGraphics::Mode m_mode;
-	PipelineGraphics::Depth m_depth;
-	VkPrimitiveTopology m_topology;
-	VkPolygonMode m_polygonMode;
-	VkCullModeFlags m_cullMode;
-	VkFrontFace m_frontFace;
-	bool m_pushDescriptors;
+	PipelineGraphics::Mode mode;
+	PipelineGraphics::Depth depth;
+	VkPrimitiveTopology topology;
+	VkPolygonMode polygonMode;
+	VkCullModeFlags cullMode;
+	VkFrontFace frontFace;
+	bool pushDescriptors;
 };
 }

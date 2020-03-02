@@ -8,35 +8,35 @@
 #include "Files/Files.hpp"
 
 namespace acid {
-static const float ANISOTROPY = 16.0f;
+static constexpr float ANISOTROPY = 16.0f;
 
 Image::Image(VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, VkImageLayout layout, VkImageUsageFlags usage, VkFormat format, uint32_t mipLevels,
 	uint32_t arrayLayers, const VkExtent3D &extent):
-	m_extent(extent),
-	m_samples(samples),
-	m_usage(usage),
-	m_format(format),
-	m_mipLevels(mipLevels),
-	m_arrayLayers(arrayLayers),
-	m_filter(filter),
-	m_addressMode(addressMode),
-	m_layout(layout) {
+	extent(extent),
+	samples(samples),
+	usage(usage),
+	format(format),
+	mipLevels(mipLevels),
+	arrayLayers(arrayLayers),
+	filter(filter),
+	addressMode(addressMode),
+	layout(layout) {
 }
 
 Image::~Image() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	vkDestroyImageView(*logicalDevice, m_view, nullptr);
-	vkDestroySampler(*logicalDevice, m_sampler, nullptr);
-	vkFreeMemory(*logicalDevice, m_memory, nullptr);
-	vkDestroyImage(*logicalDevice, m_image, nullptr);
+	vkDestroyImageView(*logicalDevice, view, nullptr);
+	vkDestroySampler(*logicalDevice, sampler, nullptr);
+	vkFreeMemory(*logicalDevice, memory, nullptr);
+	vkDestroyImage(*logicalDevice, image, nullptr);
 }
 
 WriteDescriptorSet Image::GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const {
 	VkDescriptorImageInfo imageInfo = {};
-	imageInfo.sampler = m_sampler;
-	imageInfo.imageView = m_view;
-	imageInfo.imageLayout = m_layout;
+	imageInfo.sampler = sampler;
+	imageInfo.imageView = view;
+	imageInfo.imageLayout = layout;
 
 	VkWriteDescriptorSet descriptorWrite = {};
 	descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
@@ -62,11 +62,11 @@ VkDescriptorSetLayoutBinding Image::GetDescriptorSetLayout(uint32_t binding, VkD
 std::unique_ptr<Bitmap> Image::GetBitmap(uint32_t mipLevel, uint32_t arrayLayer) const {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	Vector2ui size(int32_t(m_extent.width >> mipLevel), int32_t(m_extent.height >> mipLevel));
+	Vector2ui size(int32_t(extent.width >> mipLevel), int32_t(extent.height >> mipLevel));
 	
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
-	CopyImage(m_image, dstImage, dstImageMemory, m_format, {size.m_x, size.m_y,  1}, m_layout, mipLevel, arrayLayer);
+	CopyImage(image, dstImage, dstImageMemory, format, {size.x, size.y,  1}, layout, mipLevel, arrayLayer);
 
 	VkImageSubresource dstImageSubresource = {};
 	dstImageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

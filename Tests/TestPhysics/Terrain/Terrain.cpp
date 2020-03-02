@@ -5,21 +5,19 @@
 #include <Physics/Rigidbody.hpp>
 
 namespace test {
-bool Terrain::registered = Register("terrain");
-
 Terrain::Terrain(float sideLength, float squareSize) :
-	m_noise(25653345),
-	m_sideLength(sideLength),
-	m_squareSize(squareSize),
-	m_minHeight(+std::numeric_limits<float>::infinity()),
-	m_maxHeight(-std::numeric_limits<float>::infinity()) {
-	m_noise.SetFrequency(0.01f);
-	m_noise.SetInterp(FastNoise::Quintic);
-	m_noise.SetNoiseType(FastNoise::PerlinFractal);
-	m_noise.SetFractalType(FastNoise::FBM);
-	m_noise.SetFractalOctaves(5);
-	m_noise.SetFractalLacunarity(2.0f);
-	m_noise.SetFractalGain(0.5f);
+	noise(25653345),
+	sideLength(sideLength),
+	squareSize(squareSize),
+	minHeight(+std::numeric_limits<float>::infinity()),
+	maxHeight(-std::numeric_limits<float>::infinity()) {
+	noise.SetFrequency(0.01f);
+	noise.SetInterp(FastNoise::Quintic);
+	noise.SetNoiseType(FastNoise::PerlinFractal);
+	noise.SetFractalType(FastNoise::FBM);
+	noise.SetFractalOctaves(5);
+	noise.SetFractalLacunarity(2.0f);
+	noise.SetFractalGain(0.5f);
 }
 
 void Terrain::Start() {
@@ -30,10 +28,10 @@ void Terrain::Start() {
 		return;
 	}
 
-	auto vertexCount = CalculateVertexCount(m_sideLength, m_squareSize);
-	auto textureScale = CalculateTextureScale(m_sideLength);
-	m_heightmap = GenerateHeightmap(vertexCount);
-	mesh->SetModel(std::make_shared<MeshTerrain>(m_heightmap, m_sideLength, m_squareSize, vertexCount, textureScale));
+	auto vertexCount = CalculateVertexCount(sideLength, squareSize);
+	auto textureScale = CalculateTextureScale(sideLength);
+	heightmap = GenerateHeightmap(vertexCount);
+	mesh->SetModel(std::make_shared<MeshTerrain>(heightmap, sideLength, squareSize, vertexCount, textureScale));
 
 	auto colliderHeightfield = GetEntity()->GetComponent<ColliderHeightfield>(true);
 
@@ -42,11 +40,11 @@ void Terrain::Start() {
 		return;
 	}
 
-	colliderHeightfield->SetHeightfield(vertexCount, vertexCount, m_heightmap.data(), m_minHeight, m_maxHeight, true);
+	colliderHeightfield->SetHeightfield(vertexCount, vertexCount, heightmap.data(), minHeight, maxHeight, true);
 }
 
 void Terrain::Update() {
-	if (m_heightmap.empty()) {
+	if (heightmap.empty()) {
 		Start();
 	}
 }
@@ -74,24 +72,24 @@ std::vector<float> Terrain::GenerateHeightmap(uint32_t vertexCount) {
 
 	for (uint32_t row = 0; row < vertexCount; row++) {
 		for (uint32_t col = 0; col < vertexCount; col++) {
-			auto x = ((row * m_squareSize) - m_sideLength) / 2.0f;
-			auto z = ((col * m_squareSize) - m_sideLength) / 2.0f;
+			auto x = ((row * squareSize) - sideLength) / 2.0f;
+			auto z = ((col * squareSize) - sideLength) / 2.0f;
 			float height;
 
 			if (transform) {
-				height = 16.0f * m_noise.GetValueFractal(transform->GetPosition().m_x + x, transform->GetPosition().m_z + z);
+				height = 16.0f * noise.GetValueFractal(transform->GetPosition().x + x, transform->GetPosition().z + z);
 			} else {
-				height = 16.0f * m_noise.GetValueFractal(x, z);
+				height = 16.0f * noise.GetValueFractal(x, z);
 			}
 
 			heightmap[row * vertexCount + col] = height;
 
-			if (height < m_minHeight) {
-				m_minHeight = height;
+			if (height < minHeight) {
+				minHeight = height;
 			}
 
-			if (height > m_maxHeight) {
-				m_maxHeight = height;
+			if (height > maxHeight) {
+				maxHeight = height;
 			}
 		}
 	}

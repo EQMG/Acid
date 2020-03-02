@@ -10,9 +10,9 @@ Entity::Entity(const std::filesystem::path &filename) {
 }
 
 void Entity::Update() {
-	for (auto it = m_components.begin(); it != m_components.end();) {
+	for (auto it = components.begin(); it != components.end();) {
 		if ((*it)->IsRemoved()) {
-			it = m_components.erase(it);
+			it = components.erase(it);
 			continue;
 		}
 
@@ -21,9 +21,9 @@ void Entity::Update() {
 		}
 
 		if ((*it)->IsEnabled()) {
-			if (!(*it)->m_started) {
+			if (!(*it)->started) {
 				(*it)->Start();
-				(*it)->m_started = true;
+				(*it)->started = true;
 			}
 
 			(*it)->Update();
@@ -39,18 +39,18 @@ Component *Entity::AddComponent(std::unique_ptr<Component> &&component) {
 	}
 
 	component->SetEntity(this);
-	return m_components.emplace_back(std::move(component)).get();
+	return components.emplace_back(std::move(component)).get();
 }
 
 void Entity::RemoveComponent(Component *component) {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [component](std::unique_ptr<Component> &c) {
+	components.erase(std::remove_if(components.begin(), components.end(), [component](std::unique_ptr<Component> &c) {
 		return c.get() == component;
-	}), m_components.end());
+	}), components.end());
 }
 
 void Entity::RemoveComponent(const std::string &name) {
-	m_components.erase(std::remove_if(m_components.begin(), m_components.end(), [name](std::unique_ptr<Component> &c) {
+	components.erase(std::remove_if(components.begin(), components.end(), [name](std::unique_ptr<Component> &c) {
 		return name == c->GetTypeName();
-	}), m_components.end());
+	}), components.end());
 }
 }

@@ -19,42 +19,40 @@ public:
 	 */
 	SinewaveDriver(const T &min, const T &max, const Time &length) :
 		UiDriver<T>(length),
-		m_min(min),
-		m_max(max) {
+		min(min),
+		max(max) {
 	}
 
 	/**
 	 * Gets the min value.
 	 * @return The min value.
 	 */
-	const T &GetMin() const { return m_min; }
-
+	const T &GetMin() const { return min; }
 	/**
 	 * Sets the min value.
 	 * @param min The new min value.
 	 */
-	void SetMin(const T &min) { m_min = min; }
+	void SetMin(const T &min) { this->min = min; }
 
 	/**
 	 * Gets the max value.
 	 * @return The max value.
 	 */
-	const T &GetMax() const { return m_max; }
-
+	const T &GetMax() const { return max; }
 	/**
 	 * Sets the max value.
 	 * @param max The new max value.
 	 */
-	void SetMax(const T &max) { m_max = max; }
+	void SetMax(const T &max) { this->max = max; }
 
 protected:
 	T Calculate(float factor) override {
-		auto value = 0.5f + std::sin(2.0f * Maths::Pi<float> * factor) * 0.5f;
-		return m_min + value * (m_max - m_min);
+		auto value = 0.5f + std::sin(2.0f * Maths::PI<float> * factor) * 0.5f;
+		return min + value * (max - min);
 	}
 
 private:
-	T m_min;
-	T m_max;
+	T min;
+	T max;
 };
 }

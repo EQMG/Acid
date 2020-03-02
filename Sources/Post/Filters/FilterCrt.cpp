@@ -6,35 +6,34 @@ namespace acid {
 FilterCrt::FilterCrt(const Pipeline::Stage &pipelineStage, const Colour &screenColour, float curveAmountX, float curveAmountY, float scanLineSize,
 	float scanIntensity) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Crt.frag"}),
-	m_screenColour(screenColour),
-	m_curveAmountX(curveAmountX),
-	m_curveAmountY(curveAmountY),
-	m_scanLineSize(scanLineSize),
-	m_scanIntensity(scanIntensity) {
+	screenColour(screenColour),
+	curveAmountX(curveAmountX),
+	curveAmountY(curveAmountY),
+	scanLineSize(scanLineSize),
+	scanIntensity(scanIntensity) {
 }
 
 void FilterCrt::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	m_pushScene.Push("screenColour", m_screenColour);
-	m_pushScene.Push("curveAmountX", m_curveAmountX * m_pipeline.GetRenderArea().GetAspectRatio());
-	m_pushScene.Push("curveAmountY", m_curveAmountY);
-	m_pushScene.Push("scanLineSize", m_scanLineSize);
-	m_pushScene.Push("scanIntensity", m_scanIntensity);
-	m_pushScene.Push("moveTime", Time::Now() / 100.0f);
+	pushScene.Push("screenColour", screenColour);
+	pushScene.Push("curveAmountX", curveAmountX * pipeline.GetRenderArea().GetAspectRatio());
+	pushScene.Push("curveAmountY", curveAmountY);
+	pushScene.Push("scanLineSize", scanLineSize);
+	pushScene.Push("scanIntensity", scanIntensity);
+	pushScene.Push("moveTime", Time::Now() / 100.0f);
 
 	// Updates descriptors.
-	m_descriptorSet.Push("PushScene", m_pushScene);
+	descriptorSet.Push("PushScene", pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-	m_pushScene.BindPush(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	pushScene.BindPush(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

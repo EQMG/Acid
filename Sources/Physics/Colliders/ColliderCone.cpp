@@ -3,47 +3,45 @@
 #include <BulletCollision/CollisionShapes/btConeShape.h>
 
 namespace acid {
-bool ColliderCone::registered = Register("cone");
-
 ColliderCone::ColliderCone(float radius, float height, const Transform &localTransform) :
 	//Collider(localTransform),
-	m_shape(std::make_unique<btConeShape>(radius, height)),
-	m_radius(radius),
-	m_height(height) {
-	m_localTransform = localTransform;
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	shape(std::make_unique<btConeShape>(radius, height)),
+	radius(radius),
+	height(height) {
+	this->localTransform = localTransform;
+	this->localTransform.SetLocalScale({radius, height, radius});
 }
 
 ColliderCone::~ColliderCone() {
 }
 
 btCollisionShape *ColliderCone::GetCollisionShape() const {
-	return m_shape.get();
+	return shape.get();
 }
 
 void ColliderCone::SetRadius(float radius) {
-	m_radius = radius;
-	m_shape->setRadius(m_radius);
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	this->radius = radius;
+	shape->setRadius(radius);
+	localTransform.SetLocalScale({radius, height, radius});
 }
 
 void ColliderCone::SetHeight(float height) {
-	m_height = height;
-	m_shape->setHeight(m_height);
-	m_localTransform.SetLocalScale({m_radius, m_height, m_radius});
+	this->height = height;
+	shape->setHeight(height);
+	localTransform.SetLocalScale({radius, height, radius});
 }
 
 const Node &operator>>(const Node &node, ColliderCone &collider) {
-	node["localTransform"].Get(collider.m_localTransform);
-	node["radius"].Get(collider.m_radius);
-	node["height"].Get(collider.m_height);
+	node["localTransform"].Get(collider.localTransform);
+	node["radius"].Get(collider.radius);
+	node["height"].Get(collider.height);
 	return node;
 }
 
 Node &operator<<(Node &node, const ColliderCone &collider) {
-	node["localTransform"].Set(collider.m_localTransform);
-	node["radius"].Set(collider.m_radius);
-	node["height"].Set(collider.m_height);
+	node["localTransform"].Set(collider.localTransform);
+	node["radius"].Set(collider.radius);
+	node["height"].Set(collider.height);
 	return node;
 }
 }

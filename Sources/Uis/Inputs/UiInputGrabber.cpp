@@ -6,111 +6,108 @@
 
 namespace acid {
 UiInputGrabber::UiInputGrabber() {
-	//m_background.SetTransform({UiMargins::All});
-	m_background.SetImage(Image2d::Create("Guis/Button.png"));
-	m_background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
-	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	AddChild(&m_background);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/Button.png"));
+	background.SetNinePatches(Vector4f(0.125f, 0.125f, 0.875f, 0.875f));
+	background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	AddChild(&background);
 
-	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textTitle.SetFontSize(UiInputButton::FontSize);
-	m_textTitle.SetJustify(Text::Justify::Right);
-	m_textTitle.SetTextColour(UiInputButton::TitleColour);
-	AddChild(&m_textTitle);
+	//textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textTitle.SetFontSize(UiInputButton::FontSize);
+	textTitle.SetJustify(Text::Justify::Right);
+	textTitle.SetTextColour(UiInputButton::TitleColour);
+	AddChild(&textTitle);
 
-	//m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textValue.SetFontSize(UiInputButton::FontSize);
-	m_textValue.SetJustify(Text::Justify::Left);
-	m_textValue.SetTextColour(UiInputButton::ValueColour);
-	AddChild(&m_textValue);
+	//textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textValue.SetFontSize(UiInputButton::FontSize);
+	textValue.SetJustify(Text::Justify::Left);
+	textValue.SetTextColour(UiInputButton::ValueColour);
+	AddChild(&textValue);
 	
 	SetCursorHover(CursorStandard::Hand);
 }
 
 void UiInputGrabber::UpdateObject() {
 	if (Uis::Get()->WasDown(MouseButton::Left)) {
-		if (m_background.IsSelected()) {
+		if (background.IsSelected()) {
 			SetUpdating(true);
 			CancelEvent(MouseButton::Left);
-		} else if (m_updating) {
+		} else if (updating) {
 			SetUpdating(false);
 			CancelEvent(MouseButton::Left);
 		}
 	}
-	if (!m_updating) {
-		if (m_background.IsSelected() && !m_mouseOver) {
-			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
-			m_mouseOver = true;
-		} else if (!m_background.IsSelected() && m_mouseOver) {
-			m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
-			m_mouseOver = false;
+	if (!updating) {
+		if (background.IsSelected() && !mouseOver) {
+			background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), UiInputButton::SelectedColour, UiInputButton::SlideTime);
+			mouseOver = true;
+		} else if (!background.IsSelected() && mouseOver) {
+			background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), UiInputButton::PrimaryColour, UiInputButton::SlideTime);
+			mouseOver = false;
 		}
 	}
 }
 
 void UiInputGrabber::SetUpdating(bool updating) {
-	m_updating = updating;
-	m_mouseOver = true;
+	this->updating = updating;
+	mouseOver = true;
 }
 
 void UiInputGrabber::UpdateValue() {
-	m_textValue.SetString(GetTextString());
+	textValue.SetString(GetTextString());
 }
 
 UiGrabberJoystick::UiGrabberJoystick() {
 	UpdateValue();
 
 	Joysticks::Get()->OnButton().Add([this](uint32_t port, uint32_t button, InputAction action) {
-		if (!m_updating || port != m_port) {
+		if (!updating || this->port != port)
 			return;
-		}
 
-		m_value = button;
-		m_onValue(m_port, m_value);
+		value = button;
+		onValue(port, value);
 		SetUpdating(false);
 		UpdateValue();
 	}, this);
 }
 
 void UiGrabberJoystick::SetValue(uint32_t value) {
-	m_value = value;
+	this->value = value;
 	UpdateValue();
-	//m_onValue(m_value);
+	//onValue(value);
 }
 
 UiGrabberKeyboard::UiGrabberKeyboard() {
 	UpdateValue();
 
 	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
-		if (!m_updating) {
+		if (!updating)
 			return;
-		}
 
-		m_value = key;
-		m_onValue(m_value);
+		value = key;
+		onValue(value);
 		SetUpdating(false);
 		UpdateValue();
 	}, this);
 }
 
 void UiGrabberKeyboard::SetValue(Key value) {
-	m_value = value;
+	this->value = value;
 	UpdateValue();
-	//m_onValue(m_value);
+	//onValue(value);
 }
 
 UiGrabberMouse::UiGrabberMouse() {
 	UpdateValue();
 
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
-		if (!m_updating || action != InputAction::Press) {
+		if (!updating || action != InputAction::Press)
 			return;
-		}
 
 		if (button == MouseButton::Left) {
-			if (!m_background.IsSelected()) {
+			if (!background.IsSelected()) {
 				SetUpdating(false);
 				return;
 			}
@@ -118,16 +115,16 @@ UiGrabberMouse::UiGrabberMouse() {
 			CancelEvent(MouseButton::Left);
 		}
 
-		m_value = button;
-		m_onValue(m_value);
+		value = button;
+		onValue(value);
 		SetUpdating(false);
 		UpdateValue();
 	}, this);
 }
 
 void UiGrabberMouse::SetValue(MouseButton value) {
-	m_value = value;
+	this->value = value;
 	UpdateValue();
-	//m_onValue(m_value);
+	//onValue(value);
 }
 }

@@ -1,1 +1,0 @@
-#include "SimpleMaterial.hpp"

@@ -12,8 +12,6 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-bool SoundBufferMp3::registered = Register(".mp3");
-
 void SoundBufferMp3::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();

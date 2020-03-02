@@ -27,9 +27,9 @@ public:
 	 * Gets a list of all gizmos.
 	 * @return All gizmos.
 	 */
-	const GizmosContainer &GetGizmos() const { return m_gizmos; }
+	const GizmosContainer &GetGizmos() const { return gizmos; }
 
 private:
-	GizmosContainer m_gizmos;
+	GizmosContainer gizmos;
 };
 }

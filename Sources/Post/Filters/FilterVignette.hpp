@@ -9,20 +9,19 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetInnerRadius() const { return m_innerRadius; }
-	void SetInnerRadius(float innerRadius) { m_innerRadius = innerRadius; }
+	float GetInnerRadius() const { return innerRadius; }
+	void SetInnerRadius(float innerRadius) { this->innerRadius = innerRadius; }
 
-	float GetOuterRadius() const { return m_outerRadius; }
-	void SetOuterRadius(float outerRadius) { m_outerRadius = outerRadius; }
+	float GetOuterRadius() const { return outerRadius; }
+	void SetOuterRadius(float outerRadius) { this->outerRadius = outerRadius; }
 
-	float GetOpacity() const { return m_opacity; }
-	void SetOpacity(float opacity) { m_opacity = opacity; }
+	float GetOpacity() const { return opacity; }
+	void SetOpacity(float opacity) { this->opacity = opacity; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_innerRadius;
-	float m_outerRadius;
-	float m_opacity;
+	float innerRadius, outerRadius;
+	float opacity;
 };
 }

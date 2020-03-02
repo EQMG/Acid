@@ -11,6 +11,7 @@ using namespace acid;
 
 namespace test {
 class Terrain : public Component::Registrar<Terrain> {
+	inline static const bool Registered = Register("terrain");
 public:
 	explicit Terrain(float sideLength = 200.0f, float squareSize = 2.0f);
 
@@ -21,19 +22,17 @@ public:
 	friend Node &operator<<(Node &node, const Terrain &terrain);
 
 private:
-	static bool registered;
-
 	static uint32_t CalculateVertexCount(float sideLength, float squareSize);
 	static float CalculateTextureScale(float sideLength);
 	std::vector<float> GenerateHeightmap(uint32_t vertexCount);
 
-	FastNoise m_noise;
-	std::vector<float> m_heightmap;
+	FastNoise noise;
+	std::vector<float> heightmap;
 
-	float m_sideLength;
-	float m_squareSize;
+	float sideLength;
+	float squareSize;
 
-	float m_minHeight;
-	float m_maxHeight;
+	float minHeight;
+	float maxHeight;
 };
 }

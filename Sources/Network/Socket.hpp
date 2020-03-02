@@ -101,7 +101,7 @@ public:
 	 * Tell whether the socket is in blocking or non-blocking mode.
 	 * @return True if the socket is blocking, false otherwise.
 	 */
-	bool IsBlocking() const { return m_isBlocking; }
+	bool IsBlocking() const { return blocking; }
 
 	/**
 	 * Set the blocking state of the socket.
@@ -137,7 +137,7 @@ protected:
 	 * This function can only be accessed by derived classes.
 	 * @return The internal (OS-specific) handle of the socket.
 	 */
-	const SocketHandle &GetHandle() const { return m_socket; }
+	const SocketHandle &GetHandle() const { return socket; }
 
 	/**
 	 * Create the internal representation of the socket.
@@ -160,10 +160,10 @@ protected:
 
 private:
 	/// Type of the socket (TCP or UDP).
-	Type m_type;
+	Type type;
 	/// Socket descriptor.
-	SocketHandle m_socket;
+	SocketHandle socket;
 	/// Current blocking mode of the socket.
-	bool m_isBlocking = true;
+	bool blocking = true;
 };
 }

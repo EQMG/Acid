@@ -11,20 +11,20 @@ class ACID_EXPORT GeometryLoader : NonCopyable {
 public:
 	GeometryLoader(NodeConstView &&libraryGeometries, std::vector<VertexWeights> vertexWeights, const Matrix4 &correction);
 
-	const std::vector<VertexAnimated> &GetVertices() const { return m_vertices; }
-	const std::vector<uint32_t> &GetIndices() const { return m_indices; }
+	const std::vector<VertexAnimated> &GetVertices() const { return vertices; }
+	const std::vector<uint32_t> &GetIndices() const { return indices; }
 
 private:
 	std::vector<Vector3f> GetPositions() const;
 	std::vector<Vector2f> GetUvs() const;
 	std::vector<Vector3f> GetNormals() const;
 
-	NodeConstView m_meshData;
+	NodeConstView meshData;
 
-	std::vector<VertexWeights> m_vertexWeights;
-	Matrix4 m_correction;
+	std::vector<VertexWeights> vertexWeights;
+	Matrix4 correction;
 
-	std::vector<VertexAnimated> m_vertices;
-	std::vector<uint32_t> m_indices;
+	std::vector<VertexAnimated> vertices;
+	std::vector<uint32_t> indices;
 };
 }

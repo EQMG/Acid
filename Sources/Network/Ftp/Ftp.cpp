@@ -15,7 +15,7 @@ Ftp::~Ftp() {
 
 FtpResponse Ftp::Connect(const IpAddress &server, uint16_t port, const Time &timeout) {
 	// Connect to the server.
-	if (m_commandSocket.Connect(server, port, timeout) != Socket::Status::Done) {
+	if (commandSocket.Connect(server, port, timeout) != Socket::Status::Done) {
 		return {FtpResponse::Status::ConnectionFailed};
 	}
 
@@ -42,7 +42,7 @@ FtpResponse Ftp::Disconnect() {
 	auto response = SendCommand("QUIT");
 
 	if (response.IsOk()) {
-		m_commandSocket.Disconnect();
+		commandSocket.Disconnect();
 	}
 
 	return response;
@@ -213,7 +213,7 @@ FtpResponse Ftp::SendCommand(const std::string &command, const std::string &para
 	}
 
 	// Send it to the server.
-	if (m_commandSocket.Send(commandStr.c_str(), commandStr.length()) != Socket::Status::Done) {
+	if (commandSocket.Send(commandStr.c_str(), commandStr.length()) != Socket::Status::Done) {
 		return {FtpResponse::Status::ConnectionClosed};
 	}
 
@@ -233,14 +233,14 @@ FtpResponse Ftp::GetResponse() {
 		char buffer[1024];
 		std::size_t length;
 
-		if (m_receiveBuffer.empty()) {
-			if (m_commandSocket.Receive(buffer, sizeof(buffer), length) != Socket::Status::Done) {
+		if (receiveBuffer.empty()) {
+			if (commandSocket.Receive(buffer, sizeof(buffer), length) != Socket::Status::Done) {
 				return {FtpResponse::Status::ConnectionClosed};
 			}
 		} else {
-			std::copy(m_receiveBuffer.begin(), m_receiveBuffer.end(), buffer);
-			length = m_receiveBuffer.size();
-			m_receiveBuffer.clear();
+			std::copy(receiveBuffer.begin(), receiveBuffer.end(), buffer);
+			length = receiveBuffer.size();
+			receiveBuffer.clear();
 		}
 
 		// There can be several lines inside the received buffer, extract them all.
@@ -291,7 +291,7 @@ FtpResponse Ftp::GetResponse() {
 						}
 
 						// Save the remaining data for the next time getResponse() is called.
-						m_receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()), length - static_cast<std::size_t>(in.tellg()));
+						receiveBuffer.assign(buffer + static_cast<std::size_t>(in.tellg()), length - static_cast<std::size_t>(in.tellg()));
 
 						// Return the response code and message.
 						return {static_cast<FtpResponse::Status>(code), message};

@@ -11,27 +11,26 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetInputScale() const { return m_inputScale; }
-	void SetInputScale(float inputScale) { m_inputScale = inputScale; }
+	float GetInputScale() const { return inputScale; }
+	void SetInputScale(float inputScale) { this->inputScale = inputScale; }
 
-	float GetOutputScale() const { return m_outputScale; }
-	void SetOutputScale(float outputScale) { m_outputScale = outputScale; }
+	float GetOutputScale() const { return outputScale; }
+	void SetOutputScale(float outputScale) { this->outputScale = outputScale; }
 
-	float GetBlur() const { return m_blur; }
-	void SetBlur(float blur) { m_blur = blur; }
+	float GetBlur() const { return blur; }
+	void SetBlur(float blur) { this->blur = blur; }
 
-	const Image2d *GetOutput() const { return m_output.get(); }
+	const Image2d *GetOutput() const { return output.get(); }
 
 private:
-	FilterBlur m_filterBlurVertical;
-	FilterBlur m_filterBlurHorizontal;
+	FilterBlur filterBlurVertical, filterBlurHorizontal;
 
-	bool m_toScreen;
-	float m_inputScale;
-	float m_outputScale;
-	float m_blur;
+	bool toScreen;
+	float inputScale;
+	float outputScale;
+	float blur;
 
-	std::unique_ptr<Image2d> m_output;
-	Vector2i m_lastSize;
+	std::unique_ptr<Image2d> output;
+	Vector2i lastSize;
 };
 }

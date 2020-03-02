@@ -67,7 +67,7 @@ MainApp::MainApp() :
 }
 
 MainApp::~MainApp() {
-	m_configManager.Save();
+	configManager.Save();
 	// TODO: Only clear our search paths (leave Engine resources alone!)
 	Files::Get()->ClearSearchPath();
 
@@ -76,7 +76,7 @@ MainApp::~MainApp() {
 }
 
 void MainApp::Start() {
-	m_configManager.Load();
+	configManager.Load();
 	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 

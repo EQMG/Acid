@@ -9,11 +9,8 @@ namespace acid {
  */
 class ACID_EXPORT Axis : public StreamFactory<Axis>, public virtual Observer {
 public:
-	struct Argument {
-		std::string name;
-		std::string type;
-		std::string description;
-
+	class Argument {
+	public:
 		friend const Node &operator>>(const Node &node, Argument &argument) {
 			node["name"].Get(argument.name);
 			node["type"].Get(argument.type);
@@ -26,6 +23,10 @@ public:
 			node["description"].Set(argument.description);
 			return node;
 		}
+		
+		std::string name;
+		std::string type;
+		std::string description;
 	};
 	using ArgumentDescription = std::vector<Argument>;
 
@@ -43,13 +44,13 @@ public:
 	 * Called when the axis changes value.
 	 * @return The delegate.
 	 */
-	Delegate<void(float)> &OnAxis() { return m_onAxis; }
+	Delegate<void(float)> &OnAxis() { return onAxis; }
 
-	float GetScale() const { return m_scale; }
-	void SetScale(float scale) { m_scale = scale; }
+	float GetScale() const { return scale; }
+	void SetScale(float scale) { scale = scale; }
 
 protected:
-	Delegate<void(float)> m_onAxis;
-	float m_scale = 1.0f;
+	Delegate<void(float)> onAxis;
+	float scale = 1.0f;
 };
 }

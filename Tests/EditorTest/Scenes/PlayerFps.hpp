@@ -6,6 +6,7 @@ using namespace acid;
 
 namespace test {
 class PlayerFps : public Component::Registrar<PlayerFps> {
+	inline static const bool Registered = Register("playerFps");
 public:
 	PlayerFps();
 
@@ -16,8 +17,6 @@ public:
 	friend Node &operator<<(Node &node, const PlayerFps &player);
 
 private:
-	static bool registered;
-
-	bool m_noclipEnabled = false;
+	bool noclipEnabled = false;
 };
 }

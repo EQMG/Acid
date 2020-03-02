@@ -9,13 +9,13 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetWobbleSpeed() const { return m_wobbleSpeed; }
-	void SetWobbleSpeed(float wobbleSpeed) { m_wobbleSpeed = wobbleSpeed; }
+	float GetWobbleSpeed() const { return wobbleSpeed; }
+	void SetWobbleSpeed(float wobbleSpeed) { this->wobbleSpeed = wobbleSpeed; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_wobbleSpeed;
-	float m_wobbleAmount;
+	float wobbleSpeed;
+	float wobbleAmount;
 };
 }

@@ -14,10 +14,10 @@ public:
 	void UpdateObject() override;
 
 private:
-	//Gui m_slices;
+	//Gui slices;
 
-	Text m_textFrameTime;
-	Text m_textFps;
-	Text m_textUps;
+	Text textFrameTime;
+	Text textFps;
+	Text textUps;
 };
 }

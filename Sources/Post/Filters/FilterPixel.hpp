@@ -9,12 +9,12 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetPixelSize() const { return m_pixelSize; }
-	void SetPixelSize(float pixelSize) { m_pixelSize = pixelSize; }
+	float GetPixelSize() const { return pixelSize; }
+	void SetPixelSize(float pixelSize) { this->pixelSize = pixelSize; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_pixelSize;
+	float pixelSize;
 };
 }

@@ -15,8 +15,8 @@ public:
 
 	void UpdateObject() override;
 
-	const std::string &GetTitle() const { return m_textTitle.GetString(); }
-	void SetTitle(const std::string &string) { m_textTitle.SetString(string); }
+	const std::string &GetTitle() const { return textTitle.GetString(); }
+	void SetTitle(const std::string &string) { textTitle.SetString(string); }
 
 protected:
 	virtual std::string GetTextString() const = 0;
@@ -24,86 +24,86 @@ protected:
 	void SetUpdating(bool updating);
 	void UpdateValue();
 
-	Gui m_background;
-	Text m_textTitle;
-	Text m_textValue;
+	Gui background;
+	Text textTitle;
+	Text textValue;
 
-	int32_t m_lastKey = 0;
+	int32_t lastKey = 0;
 
-	bool m_updating = false;
-	bool m_mouseOver = false;
+	bool updating = false;
+	bool mouseOver = false;
 };
 
 class ACID_EXPORT UiGrabberJoystick : public UiInputGrabber {
 public:
 	UiGrabberJoystick();
 
-	uint32_t GetPort() const { return m_port; }
-	void SetPort(uint32_t port) { m_port = port; }
+	uint32_t GetPort() const { return port; }
+	void SetPort(uint32_t port) { this->port = port; }
 
-	uint32_t GetValue() const { return m_value; }
+	uint32_t GetValue() const { return value; }
 	void SetValue(uint32_t value);
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t)> &OnValue() { return m_onValue; }
+	Delegate<void(uint32_t, uint32_t)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
-		return String::To(m_value);
+		return String::To(value);
 	}
 
 private:
-	uint32_t m_port = 0; // -1
-	uint32_t m_value = 0;
-	Delegate<void(uint32_t, uint32_t)> m_onValue;
+	uint32_t port = 0; // -1
+	uint32_t value = 0;
+	Delegate<void(uint32_t, uint32_t)> onValue;
 };
 
 class ACID_EXPORT UiGrabberKeyboard : public UiInputGrabber {
 public:
 	UiGrabberKeyboard();
 
-	Key GetValue() const { return m_value; }
+	Key GetValue() const { return value; }
 	void SetValue(Key value);
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Key)> &OnValue() { return m_onValue; }
+	Delegate<void(Key)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
-		return Keyboard::ToString(m_value);
+		return Keyboard::ToString(value);
 	}
 
 private:
-	Key m_value = Key::Unknown;
-	Delegate<void(Key)> m_onValue;
+	Key value = Key::Unknown;
+	Delegate<void(Key)> onValue;
 };
 
 class ACID_EXPORT UiGrabberMouse : public UiInputGrabber {
 public:
 	UiGrabberMouse();
 
-	MouseButton GetValue() const { return m_value; }
+	MouseButton GetValue() const { return value; }
 	void SetValue(MouseButton value);
 
 	/**
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnValue() { return m_onValue; }
+	Delegate<void(MouseButton)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
-		return String::To(static_cast<int32_t>(m_value));
+		return String::To(static_cast<int32_t>(value));
 	}
 
 private:
-	MouseButton m_value = MouseButton::Last;
-	Delegate<void(MouseButton)> m_onValue;
+	MouseButton value = MouseButton::Last;
+	Delegate<void(MouseButton)> onValue;
 };
 }

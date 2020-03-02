@@ -107,7 +107,7 @@ public:
 	 */
 	static void CalculateJointPose(const std::map<std::string, Matrix4> &currentPose, const Joint &joint, const Matrix4 &parentTransform, std::vector<Matrix4> &jointMatrices);
 
-	const Animation *GetCurrentAnimation() const { return m_currentAnimation; }
+	const Animation *GetCurrentAnimation() const { return currentAnimation; }
 
 	/**
 	 * Indicates that the entity should carry out the given animation. Resets the animation time so that the new animation starts from the beginning.
@@ -116,7 +116,7 @@ public:
 	void DoAnimation(Animation *animation);
 
 private:
-	Time m_animationTime;
-	Animation *m_currentAnimation = nullptr;
+	Time animationTime;
+	Animation *currentAnimation = nullptr;
 };
 }

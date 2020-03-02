@@ -12,7 +12,7 @@ public:
 	void Render(const CommandBuffer &commandBuffer) override;
 
 private:
-	PipelineGraphics m_pipeline;
-	UniformHandler m_uniformScene;
+	PipelineGraphics pipeline;
+	UniformHandler uniformScene;
 };
 }

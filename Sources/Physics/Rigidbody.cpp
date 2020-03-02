@@ -11,15 +11,13 @@
 #include "Colliders/Collider.hpp"
 
 namespace acid {
-bool Rigidbody::registered = Register("rigidbody");
-
 Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	CollisionObject({}, mass, friction, linearFactor, angularFactor) {
 	AddCollider(std::move(collider));
 }
 
 Rigidbody::~Rigidbody() {
-	auto body = btRigidBody::upcast(m_body);
+	auto body = btRigidBody::upcast(this->body);
 
 	if (body && body->getMotionState()) {
 		delete body->getMotionState();
@@ -28,61 +26,61 @@ Rigidbody::~Rigidbody() {
 	auto physics = Scenes::Get()->GetPhysics();
 
 	if (physics) {
-		physics->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
+		physics->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
 	}
 }
 
 void Rigidbody::Start() {
-	if (m_rigidBody) {
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(m_rigidBody.get());
+	if (rigidBody) {
+		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
 	}
 
 	CreateShape();
-	assert((!m_shape || m_shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
-	m_gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
+	gravity = Scenes::Get()->GetPhysics()->GetGravity();
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-	if (m_mass != 0.0f) {
-		m_shape->calculateLocalInertia(m_mass, localInertia);
+	if (mass != 0.0f) {
+		shape->calculateLocalInertia(mass, localInertia);
 	}
 
 	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
 	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects.
 	auto motionState = new btDefaultMotionState(worldTransform);
-	btRigidBody::btRigidBodyConstructionInfo cInfo(m_mass, motionState, m_shape.get(), localInertia);
+	btRigidBody::btRigidBodyConstructionInfo cInfo(mass, motionState, shape.get(), localInertia);
 
-	m_rigidBody = std::make_unique<btRigidBody>(cInfo);
-	//m_rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
-	m_rigidBody->setWorldTransform(worldTransform);
-	//m_rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
-	m_rigidBody->setFriction(m_friction);
-	m_rigidBody->setRollingFriction(m_frictionRolling);
-	m_rigidBody->setSpinningFriction(m_frictionSpinning);
-	m_rigidBody->setGravity(Collider::Convert(m_gravity));
-	m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
-	m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
-	m_rigidBody->setUserPointer(dynamic_cast<CollisionObject *>(this));
-	m_body = m_rigidBody.get();
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(m_rigidBody.get());
-	m_rigidBody->activate(true);
+	rigidBody = std::make_unique<btRigidBody>(cInfo);
+	//rigidBody->setContactProcessingThreshold(m_defaultContactProcessingThreshold);
+	rigidBody->setWorldTransform(worldTransform);
+	//rigidBody->setContactStiffnessAndDamping(1000.0f, 0.1f);
+	rigidBody->setFriction(friction);
+	rigidBody->setRollingFriction(frictionRolling);
+	rigidBody->setSpinningFriction(frictionSpinning);
+	rigidBody->setGravity(Collider::Convert(gravity));
+	rigidBody->setLinearFactor(Collider::Convert(linearFactor));
+	rigidBody->setAngularFactor(Collider::Convert(angularFactor));
+	rigidBody->setUserPointer(dynamic_cast<CollisionObject *>(this));
+	body = rigidBody.get();
+	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(rigidBody.get());
+	rigidBody->activate(true);
 	RecalculateMass();
 }
 
 void Rigidbody::Update() {
-	if (m_shape.get() != m_body->getCollisionShape()) {
-		m_body->setCollisionShape(m_shape.get());
+	if (shape.get() != body->getCollisionShape()) {
+		body->setCollisionShape(shape.get());
 	}
 
 	auto delta = Engine::Get()->GetDelta();
 
-	for (auto it = m_forces.begin(); it != m_forces.end();) {
+	for (auto it = forces.begin(); it != forces.end();) {
 		(*it)->Update(delta);
-		m_rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
+		rigidBody->applyForce(Collider::Convert((*it)->GetForce()), Collider::Convert((*it)->GetPosition()));
 
 		if ((*it)->IsExpired()) {
-			it = m_forces.erase(it);
+			it = forces.erase(it);
 			continue;
 		}
 
@@ -91,112 +89,106 @@ void Rigidbody::Update() {
 
 	auto &transform = *GetEntity()->GetComponent<Transform>();
 	btTransform motionTransform;
-	m_rigidBody->getMotionState()->getWorldTransform(motionTransform);
+	rigidBody->getMotionState()->getWorldTransform(motionTransform);
 	transform = Collider::Convert(motionTransform, transform.GetScale());
 
-	m_shape->setLocalScaling(Collider::Convert(transform.GetScale()));
-	//m_rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
-	m_linearVelocity = Collider::Convert(m_rigidBody->getLinearVelocity());
-	m_angularVelocity = Collider::Convert(m_rigidBody->getAngularVelocity());
+	shape->setLocalScaling(Collider::Convert(transform.GetScale()));
+	//rigidBody->getMotionState()->setWorldTransform(Collider::Convert(transform));
+	linearVelocity = Collider::Convert(rigidBody->getLinearVelocity());
+	angularVelocity = Collider::Convert(rigidBody->getAngularVelocity());
 }
 
 bool Rigidbody::InFrustum(const Frustum &frustum) {
 	btVector3 min;
 	btVector3 max;
 
-	if (m_body && m_shape) {
-		m_rigidBody->getAabb(min, max);
-	}
+	if (body && shape)
+		rigidBody->getAabb(min, max);
 
 	return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
 }
 
 void Rigidbody::ClearForces() {
-	if (m_rigidBody) {
-		m_rigidBody->clearForces();
+	if (rigidBody) {
+		rigidBody->clearForces();
 	}
 }
 
 void Rigidbody::SetMass(float mass) {
-	m_mass = mass;
+	this->mass = mass;
 	RecalculateMass();
 }
 
 void Rigidbody::SetGravity(const Vector3f &gravity) {
-	m_gravity = gravity;
+	this->gravity = gravity;
 
-	if (m_rigidBody) {
-		m_rigidBody->setGravity(Collider::Convert(gravity));
-	}
+	if (rigidBody)
+		rigidBody->setGravity(Collider::Convert(gravity));
 }
 
 void Rigidbody::SetLinearFactor(const Vector3f &linearFactor) {
-	m_linearFactor = linearFactor;
+	this->linearFactor = linearFactor;
 
-	if (m_rigidBody) {
-		m_rigidBody->setLinearFactor(Collider::Convert(m_linearFactor));
-	}
+	if (rigidBody)
+		rigidBody->setLinearFactor(Collider::Convert(linearFactor));
 }
 
 void Rigidbody::SetAngularFactor(const Vector3f &angularFactor) {
-	m_angularFactor = angularFactor;
+	this->angularFactor = angularFactor;
 
-	if (m_rigidBody) {
-		m_rigidBody->setAngularFactor(Collider::Convert(m_angularFactor));
-	}
+	if (rigidBody)
+		rigidBody->setAngularFactor(Collider::Convert(angularFactor));
 }
 
 void Rigidbody::SetLinearVelocity(const Vector3f &linearVelocity) {
-	m_linearVelocity = linearVelocity;
+	this->linearVelocity = linearVelocity;
 
-	if (m_rigidBody) {
-		m_rigidBody->setLinearVelocity(Collider::Convert(m_linearVelocity));
-	}
+	if (rigidBody)
+		rigidBody->setLinearVelocity(Collider::Convert(linearVelocity));
 }
 
 void Rigidbody::SetAngularVelocity(const Vector3f &angularVelocity) {
-	m_angularVelocity = angularVelocity;
+	this->angularVelocity = angularVelocity;
 
-	if (m_rigidBody) {
-		m_rigidBody->setAngularVelocity(Collider::Convert(m_angularVelocity));
-	}
+	if (rigidBody)
+		rigidBody->setAngularVelocity(Collider::Convert(angularVelocity));
 }
 
 const Node &operator>>(const Node &node, Rigidbody &rigidbody) {
-	node["colliders"].Get(rigidbody.m_colliders);
-	node["mass"].Get(rigidbody.m_mass);
-	node["friction"].Get(rigidbody.m_friction);
-	node["frictionRolling"].Get(rigidbody.m_frictionRolling);
-	node["frictionSpinning"].Get(rigidbody.m_frictionSpinning);
-	node["linearFactor"].Get(rigidbody.m_linearFactor);
-	node["angularFactor"].Get(rigidbody.m_angularFactor);
+	node["colliders"].Get(rigidbody.colliders);
+	node["mass"].Get(rigidbody.mass);
+	node["friction"].Get(rigidbody.friction);
+	node["frictionRolling"].Get(rigidbody.frictionRolling);
+	node["frictionSpinning"].Get(rigidbody.frictionSpinning);
+	node["linearFactor"].Get(rigidbody.linearFactor);
+	node["angularFactor"].Get(rigidbody.angularFactor);
 	return node;
 }
 
 Node &operator<<(Node &node, const Rigidbody &rigidbody) {
-	node["colliders"].Set(rigidbody.m_colliders);
-	node["mass"].Set(rigidbody.m_mass);
-	node["friction"].Set(rigidbody.m_friction);
-	node["frictionRolling"].Set(rigidbody.m_frictionRolling);
-	node["frictionSpinning"].Set(rigidbody.m_frictionSpinning);
-	node["linearFactor"].Set(rigidbody.m_linearFactor);
-	node["angularFactor"].Set(rigidbody.m_angularFactor);
+	node["colliders"].Set(rigidbody.colliders);
+	node["mass"].Set(rigidbody.mass);
+	node["friction"].Set(rigidbody.friction);
+	node["frictionRolling"].Set(rigidbody.frictionRolling);
+	node["frictionSpinning"].Set(rigidbody.frictionSpinning);
+	node["linearFactor"].Set(rigidbody.linearFactor);
+	node["angularFactor"].Set(rigidbody.angularFactor);
 	return node;
 }
 
 void Rigidbody::RecalculateMass() {
-	if (!m_rigidBody) {
+	if (!rigidBody) {
 		return;
 	}
 
-	auto isDynamic = m_mass != 0.0f;
+	auto isDynamic = mass != 0.0f;
 
 	btVector3 localInertia;
 
-	if (!m_colliders.empty() && isDynamic) {
-		m_colliders[0]->GetCollisionShape()->calculateLocalInertia(m_mass, localInertia);
+	if (!colliders.empty() && isDynamic) {
+		colliders[0]->GetCollisionShape()->calculateLocalInertia(mass, localInertia);
 	}
 
-	m_rigidBody->setMassProps(m_mass, localInertia);
+	rigidBody->setMassProps(mass, localInertia);
 }
 }

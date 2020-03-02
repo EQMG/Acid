@@ -29,27 +29,27 @@ std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename
 }
 
 FontType::FontType(std::filesystem::path filename, std::size_t size, bool load) :
-	m_filename(std::move(filename)),
-	m_size(size) {
+	filename(std::move(filename)),
+	size(size) {
 	if (load) {
 		FontType::Load();
 	}
 }
 
 const Node &operator>>(const Node &node, FontType &fontType) {
-	node["filename"].Get(fontType.m_filename);
-	node["size"].Get(fontType.m_size);
+	node["filename"].Get(fontType.filename);
+	node["size"].Get(fontType.size);
 	return node;
 }
 
 Node &operator<<(Node &node, const FontType &fontType) {
-	node["filename"].Set(fontType.m_filename);
-	node["size"].Set(fontType.m_size);
+	node["filename"].Set(fontType.filename);
+	node["size"].Set(fontType.size);
 	return node;
 }
 
 void FontType::Load() {
-	if (m_filename.empty()) {
+	if (filename.empty()) {
 		return;
 	}
 
@@ -57,37 +57,37 @@ void FontType::Load() {
 	auto debugStart = Time::Now();
 #endif
 
-	auto bytes = Files::ReadBytes(m_filename);
+	auto bytes = Files::ReadBytes(filename);
 	stbtt_fontinfo fontinfo;
 	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
 
 	auto layerCount = NEHE.size();
-	//m_image = std::make_unique<Image2dArray>(Vector2ui(m_size, m_size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
+	//image = std::make_unique<Image2dArray>(Vector2ui(size, size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
 
 	std::size_t arrayLayer = 0;
 	for (auto c : NEHE) {
 		ex_metrics_t metrics = {};
-		auto bitmap = ex_msdf_glyph(&fontinfo, c, m_size, m_size, &metrics, 1);
+		auto bitmap = ex_msdf_glyph(&fontinfo, c, size, size, &metrics, 1);
 		if (bitmap) {
-			//m_image->SetPixels(bitmap, arrayLayer);
+			//image->SetPixels(bitmap, arrayLayer);
 
 			free(bitmap);
 		}
 
-		m_glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
-		m_indices[c] = arrayLayer++;
+		glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
+		indices[c] = arrayLayer++;
 	}
 
 #if defined(ACID_DEBUG)
-	Log::Out("Font Type ", m_filename, " loaded ", m_glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
+	Log::Out("Font Type ", filename, " loaded ", glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
 std::optional<FontType::Glyph> FontType::GetGlyph(wchar_t ascii) const {
-	auto it = m_indices.find(ascii);
+	auto it = indices.find(ascii);
 
-	if (it != m_indices.end()) {
-		return m_glyphs[it->second];
+	if (it != indices.end()) {
+		return glyphs[it->second];
 	}
 
 	return std::nullopt;

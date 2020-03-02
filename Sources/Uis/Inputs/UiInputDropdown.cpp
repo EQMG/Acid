@@ -6,42 +6,42 @@
 
 namespace acid {
 UiInputDropdown::UiInputDropdown() {
-	//m_slider.SetTransform({{0.5f, 0.0f}, UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale});
-	//m_slider.SetImage(Image2d::Create("Guis/Button_Filled.png"));
-	//m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-	//m_slider.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	//m_slider.SetHeight(1.0f);
-	//AddChild(&m_slider);
+	//slider.SetTransform({{0.5f, 0.0f}, UiAnchor::TopCentre, UiAspect::Position | UiAspect::Scale});
+	//slider.SetImage(Image2d::Create("Guis/Button_Filled.png"));
+	//slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	//slider.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	//slider.SetHeight(1.0f);
+	//AddChild(&slider);
 
-	//m_background.SetTransform({UiMargins::All});
-	m_background.SetImage(Image2d::Create("Guis/Button.png"));
-	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	AddChild(&m_background);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/Button.png"));
+	background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	AddChild(&background);
 
-	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textTitle.SetFontSize(UiInputButton::FontSize);
-	m_textTitle.SetTextColour(UiInputButton::TitleColour);
-	AddChild(&m_textTitle);
+	//textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textTitle.SetFontSize(UiInputButton::FontSize);
+	textTitle.SetTextColour(UiInputButton::TitleColour);
+	AddChild(&textTitle);
 
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(),
+		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(),
 			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour, UiInputButton::SlideTime);
 	}, this);
 }
 
 void UiInputDropdown::UpdateObject() {
-	//m_slider.GetTransform().SetSize({1.0f, 2.0f * static_cast<float>(m_options.size())});
+	//slider.GetTransform().SetSize({1.0f, 2.0f * static_cast<float>(options.size())});
 }
 
 void UiInputDropdown::SetValue(uint32_t value) {
-	m_value = value;
-	//m_onValue(m_value);
+	this->value = value;
+	//onValue(value);
 }
 
 void UiInputDropdown::SetOptions(const std::vector<std::string> &options) {
-	m_options = options;
+	this->options = options;
 }
 }

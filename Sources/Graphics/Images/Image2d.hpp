@@ -87,10 +87,10 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(Image2d); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; }
-	bool IsAnisotropic() const { return m_anisotropic; }
-	bool IsMipmap() const { return m_mipmap; }
-	uint32_t GetComponents() const { return m_components; }
+	const std::filesystem::path &GetFilename() const { return filename; }
+	bool IsAnisotropic() const { return anisotropic; }
+	bool IsMipmap() const { return mipmap; }
+	uint32_t GetComponents() const { return components; }
 
 	friend const Node &operator>>(const Node &node, Image2d &image);
 	friend Node &operator<<(Node &node, const Image2d &image);
@@ -98,10 +98,10 @@ public:
 private:
 	void Load(std::unique_ptr<Bitmap> loadBitmap = nullptr);
 
-	std::filesystem::path m_filename;
+	std::filesystem::path filename;
 
-	bool m_anisotropic;
-	bool m_mipmap;
-	uint32_t m_components = 0;
+	bool anisotropic;
+	bool mipmap;
+	uint32_t components = 0;
 };
 }

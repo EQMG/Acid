@@ -23,37 +23,36 @@ std::shared_ptr<PipelineMaterial> PipelineMaterial::Create(const Pipeline::Stage
 }
 
 PipelineMaterial::PipelineMaterial(Pipeline::Stage pipelineStage, PipelineGraphicsCreate pipelineCreate) :
-	m_pipelineStage(std::move(pipelineStage)),
-	m_pipelineCreate(std::move(pipelineCreate)) {
+	pipelineStage(std::move(pipelineStage)),
+	pipelineCreate(std::move(pipelineCreate)) {
 }
 
 bool PipelineMaterial::BindPipeline(const CommandBuffer &commandBuffer) {
-	auto renderStage = Graphics::Get()->GetRenderStage(m_pipelineStage.first);
+	auto renderStage = Graphics::Get()->GetRenderStage(pipelineStage.first);
 
-	if (!renderStage) {
+	if (!renderStage)
 		return false;
+
+	if (this->renderStage != renderStage) {
+		this->renderStage = renderStage;
+		pipeline.reset(pipelineCreate.Create(pipelineStage));
 	}
 
-	if (m_renderStage != renderStage) {
-		m_renderStage = renderStage;
-		m_pipeline.reset(m_pipelineCreate.Create(m_pipelineStage));
-	}
-
-	m_pipeline->BindPipeline(commandBuffer);
+	pipeline->BindPipeline(commandBuffer);
 	return true;
 }
 
 const Node &operator>>(const Node &node, PipelineMaterial &pipeline) {
-	node["renderpass"].Get(pipeline.m_pipelineStage.first);
-	node["subpass"].Get(pipeline.m_pipelineStage.second);
-	node["pipelineCreate"].Get(pipeline.m_pipelineCreate);
+	node["renderpass"].Get(pipeline.pipelineStage.first);
+	node["subpass"].Get(pipeline.pipelineStage.second);
+	node["pipelineCreate"].Get(pipeline.pipelineCreate);
 	return node;
 }
 
 Node &operator<<(Node &node, const PipelineMaterial &pipeline) {
-	node["renderpass"].Set(pipeline.m_pipelineStage.first);
-	node["subpass"].Set(pipeline.m_pipelineStage.second);
-	node["pipelineCreate"].Set(pipeline.m_pipelineCreate);
+	node["renderpass"].Set(pipeline.pipelineStage.first);
+	node["subpass"].Set(pipeline.pipelineStage.second);
+	node["pipelineCreate"].Set(pipeline.pipelineCreate);
 	return node;
 }
 }

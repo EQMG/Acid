@@ -15,8 +15,8 @@
 
 namespace acid {
 Socket::Socket(Type type) :
-	m_type(type),
-	m_socket(InvalidSocketHandle()) {
+	type(type),
+	socket(InvalidSocketHandle()) {
 }
 
 Socket::~Socket() {
@@ -144,17 +144,17 @@ SocketInitializer globalInitializer;
 
 void Socket::SetBlocking(bool blocking) {
 	// Apply if the socket is already created.
-	if (m_socket != InvalidSocketHandle()) {
-		SetHandleBlocking(m_socket, blocking);
+	if (socket != InvalidSocketHandle()) {
+		SetHandleBlocking(socket, blocking);
 	}
 
-	m_isBlocking = blocking;
+	blocking = blocking;
 }
 
 void Socket::Create() {
 	// Don't create the socket if it already exists.
-	if (m_socket == InvalidSocketHandle()) {
-		auto handle = socket(PF_INET, m_type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
+	if (socket == InvalidSocketHandle()) {
+		auto handle = ::socket(PF_INET, type == Type::Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
 
 		if (handle == InvalidSocketHandle()) {
 			Log::Error("Failed to create socket\n");
@@ -167,25 +167,24 @@ void Socket::Create() {
 
 void Socket::Create(SocketHandle handle) {
 	// Don't create the socket if it already exists.
-	if (m_socket == InvalidSocketHandle()) {
+	if (socket == InvalidSocketHandle()) {
 		// Assign the new handle.
-		m_socket = handle;
+		socket = handle;
 
 		// Set the current blocking state.
-		SetBlocking(m_isBlocking);
+		SetBlocking(blocking);
 
-		if (m_type == Type::Tcp) {
+		if (type == Type::Tcp) {
 			// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
 			int32_t yes = 1;
 
-			if (setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
+			if (setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
 				Log::Error("Failed to set socket option \"TCP_NODELAY\" ; all your TCP packets will be buffered\n");
 			}
 
 			// On Mac OS X, disable the SIGPIPE signal on disconnection.
 #if defined(ACID_BUILD_MACOS)
-			if (setsockopt(m_socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1)
-			{
+			if (setsockopt(socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1) {
 				Log::Error("Failed to set socket option \"SO_NOSIGPIPE\"\n");
 			}
 #endif
@@ -193,7 +192,7 @@ void Socket::Create(SocketHandle handle) {
 			// Enable broadcast by default for UDP sockets.
 			int32_t yes = 1;
 
-			if (setsockopt(m_socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
+			if (setsockopt(socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
 				Log::Error("Failed to enable broadcast on UDP socket\n");
 			}
 		}
@@ -202,9 +201,9 @@ void Socket::Create(SocketHandle handle) {
 
 void Socket::Close() {
 	// Close the socket.
-	if (m_socket != InvalidSocketHandle()) {
-		CloseSocketHandle(m_socket);
-		m_socket = InvalidSocketHandle();
+	if (socket != InvalidSocketHandle()) {
+		CloseSocketHandle(socket);
+		socket = InvalidSocketHandle();
 	}
 }
 }

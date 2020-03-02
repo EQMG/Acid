@@ -40,17 +40,17 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(PipelineMaterial); }
 
-	const Pipeline::Stage &GetStage() const { return m_pipelineStage; }
-	const PipelineGraphicsCreate &GetPipelineCreate() const { return m_pipelineCreate; }
-	const PipelineGraphics *GetPipeline() { return m_pipeline.get(); }
+	const Pipeline::Stage &GetStage() const { return pipelineStage; }
+	const PipelineGraphicsCreate &GetPipelineCreate() const { return pipelineCreate; }
+	const PipelineGraphics *GetPipeline() { return pipeline.get(); }
 
 	friend const Node &operator>>(const Node &node, PipelineMaterial &pipeline);
 	friend Node &operator<<(Node &node, const PipelineMaterial &pipeline);
 
 private:
-	Pipeline::Stage m_pipelineStage;
-	PipelineGraphicsCreate m_pipelineCreate;
-	const RenderStage *m_renderStage = nullptr;
-	std::unique_ptr<PipelineGraphics> m_pipeline;
+	Pipeline::Stage pipelineStage;
+	PipelineGraphicsCreate pipelineCreate;
+	const RenderStage *renderStage = nullptr;
+	std::unique_ptr<PipelineGraphics> pipeline;
 };
 }

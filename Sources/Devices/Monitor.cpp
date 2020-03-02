@@ -5,55 +5,55 @@
 
 namespace acid {
 Monitor::Monitor(GLFWmonitor *monitor) :
-	m_monitor(monitor) {
+	monitor(monitor) {
 }
 
 bool Monitor::IsPrimary() const {
-	return m_monitor == glfwGetPrimaryMonitor();
+	return monitor == glfwGetPrimaryMonitor();
 }
 
 Vector2ui Monitor::GetWorkareaSize() const {
 	int32_t width;
 	int32_t height;
-	glfwGetMonitorWorkarea(m_monitor, nullptr, nullptr, &width, &height);
+	glfwGetMonitorWorkarea(monitor, nullptr, nullptr, &width, &height);
 	return {width, height};
 }
 
 Vector2ui Monitor::GetWorkareaPosition() const {
 	int32_t xPos;
 	int32_t yPos;
-	glfwGetMonitorWorkarea(m_monitor, &xPos, &yPos, nullptr, nullptr);
+	glfwGetMonitorWorkarea(monitor, &xPos, &yPos, nullptr, nullptr);
 	return Vector2ui(xPos, yPos);
 }
 
 Vector2ui Monitor::GetSize() const {
 	int32_t widthMM;
 	int32_t heightMM;
-	glfwGetMonitorPhysicalSize(m_monitor, &widthMM, &heightMM);
+	glfwGetMonitorPhysicalSize(monitor, &widthMM, &heightMM);
 	return {widthMM, heightMM};
 }
 
 Vector2f Monitor::GetContentScale() const {
 	float xScale;
 	float yScale;
-	glfwGetMonitorContentScale(m_monitor, &xScale, &yScale);
+	glfwGetMonitorContentScale(monitor, &xScale, &yScale);
 	return {xScale, yScale};
 }
 
 Vector2ui Monitor::GetPosition() const {
 	int32_t xpos;
 	int32_t ypos;
-	glfwGetMonitorPos(m_monitor, &xpos, &ypos);
+	glfwGetMonitorPos(monitor, &xpos, &ypos);
 	return {xpos, ypos};
 }
 
 std::string Monitor::GetName() const {
-	return glfwGetMonitorName(m_monitor);
+	return glfwGetMonitorName(monitor);
 }
 
 std::vector<VideoMode> Monitor::GetVideoModes() const {
 	int32_t videoModeCount;
-	auto videoModes = glfwGetVideoModes(m_monitor, &videoModeCount);
+	auto videoModes = glfwGetVideoModes(monitor, &videoModeCount);
 	std::vector<VideoMode> modes(static_cast<uint32_t>(videoModeCount));
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(videoModeCount); i++) {
@@ -64,17 +64,17 @@ std::vector<VideoMode> Monitor::GetVideoModes() const {
 }
 
 VideoMode Monitor::GetVideoMode() const {
-	auto videoMode = glfwGetVideoMode(m_monitor);
+	auto videoMode = glfwGetVideoMode(monitor);
 	return *reinterpret_cast<const VideoMode *>(videoMode);
 }
 
 GammaRamp Monitor::GetGammaRamp() const {
-	auto gamaRamp = glfwGetGammaRamp(m_monitor);
+	auto gamaRamp = glfwGetGammaRamp(monitor);
 	return *reinterpret_cast<const GammaRamp *>(gamaRamp);
 }
 
 void Monitor::SetGammaRamp(const GammaRamp &gammaRamp) const {
 	auto ramp = reinterpret_cast<const GLFWgammaramp *>(&gammaRamp);
-	glfwSetGammaRamp(m_monitor, ramp);
+	glfwSetGammaRamp(monitor, ramp);
 }
 }

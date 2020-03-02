@@ -15,7 +15,7 @@ static const uint32_t MAX_DATAGRAM_SIZE = 65507;
 
 UdpSocket::UdpSocket() :
 	Socket(Type::Udp),
-	m_buffer(MAX_DATAGRAM_SIZE) {
+	buffer(MAX_DATAGRAM_SIZE) {
 }
 
 uint16_t UdpSocket::GetLocalPort() const {
@@ -138,13 +138,13 @@ Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint
 
 	// Receive the datagram.
 	std::size_t received = 0;
-	auto status = Receive(&m_buffer[0], m_buffer.size(), received, remoteAddress, remotePort);
+	auto status = Receive(&buffer[0], buffer.size(), received, remoteAddress, remotePort);
 
 	// If we received valid data, we can copy it to the user packet.
 	packet.Clear();
 
 	if ((status == Status::Done) && (received > 0)) {
-		packet.OnReceive(&m_buffer[0], received);
+		packet.OnReceive(&buffer[0], received);
 	}
 
 	return status;

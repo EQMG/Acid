@@ -5,36 +5,35 @@
 struct PHYSFS_File;
 
 namespace acid {
-enum class FileMode { Read, Write, Append };
+enum class FileMode {
+	Read, Write, Append
+};
 
 class ACID_EXPORT BaseFStream {
-protected:
-	PHYSFS_File *file;
 public:
 	explicit BaseFStream(PHYSFS_File *file);
 	virtual ~BaseFStream();
 
 	size_t length();
+protected:
+	PHYSFS_File *file;
 };
 
 class ACID_EXPORT IFStream : public BaseFStream, public std::istream {
 public:
 	explicit IFStream(const std::filesystem::path &filename);
-
 	virtual ~IFStream();
 };
 
 class ACID_EXPORT OFStream : public BaseFStream, public std::ostream {
 public:
 	explicit OFStream(const std::filesystem::path &filename, FileMode writeMode = FileMode::Write);
-
 	virtual ~OFStream();
 };
 
 class ACID_EXPORT FStream : public BaseFStream, public std::iostream {
 public:
 	explicit FStream(const std::filesystem::path &filename, FileMode openMode = FileMode::Read);
-
 	virtual ~FStream();
 };
 
@@ -44,7 +43,6 @@ public:
 class ACID_EXPORT Files : public Module::Registrar<Files, Module::Stage::Post> {
 public:
 	Files();
-
 	~Files();
 
 	void Update() override;
@@ -104,6 +102,6 @@ public:
 	static std::istream &SafeGetLine(std::istream &is, std::string &t);
 
 private:
-	std::vector<std::string> m_searchPaths;
+	std::vector<std::string> searchPaths;
 };
 }

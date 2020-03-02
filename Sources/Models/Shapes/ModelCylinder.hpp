@@ -7,6 +7,7 @@ namespace acid {
  * @brief Resource that represents a cylinder model.
  */
 class ACID_EXPORT ModelCylinder : public Model::Registrar<ModelCylinder> {
+	inline static const bool Registered = Register("cylinder");
 public:
 	/**
 	 * Creates a new cylinder model, or finds one with the same values.
@@ -45,12 +46,8 @@ public:
 private:
 	void Load();
 
-	static bool registered;
-
-	float m_radiusBase;
-	float m_radiusTop;
-	float m_height;
-	uint32_t m_slices;
-	uint32_t m_stacks;
+	float radiusBase, radiusTop;
+	float height;
+	uint32_t slices, stacks;
 };
 }

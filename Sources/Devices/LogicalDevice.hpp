@@ -13,45 +13,44 @@ class Surface;
 class ACID_EXPORT LogicalDevice {
 	friend class Graphics;
 public:
-	static const std::vector<const char *> DeviceExtensions;
-	
 	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
-	
 	~LogicalDevice();
 
-	operator const VkDevice &() const { return m_logicalDevice; }
+	operator const VkDevice &() const { return logicalDevice; }
 
-	const VkDevice &GetLogicalDevice() const { return m_logicalDevice; }
-	const VkPhysicalDeviceFeatures &GetEnabledFeatures() const { return m_enabledFeatures; }
-	const VkQueue &GetGraphicsQueue() const { return m_graphicsQueue; }
-	const VkQueue &GetPresentQueue() const { return m_presentQueue; }
-	const VkQueue &GetComputeQueue() const { return m_computeQueue; }
-	const VkQueue &GetTransferQueue() const { return m_transferQueue; }
-	uint32_t GetGraphicsFamily() const { return m_graphicsFamily; }
-	uint32_t GetPresentFamily() const { return m_presentFamily; }
-	uint32_t GetComputeFamily() const { return m_computeFamily; }
-	uint32_t GetTransferFamily() const { return m_transferFamily; }
+	const VkDevice &GetLogicalDevice() const { return logicalDevice; }
+	const VkPhysicalDeviceFeatures &GetEnabledFeatures() const { return enabledFeatures; }
+	const VkQueue &GetGraphicsQueue() const { return graphicsQueue; }
+	const VkQueue &GetPresentQueue() const { return presentQueue; }
+	const VkQueue &GetComputeQueue() const { return computeQueue; }
+	const VkQueue &GetTransferQueue() const { return transferQueue; }
+	uint32_t GetGraphicsFamily() const { return graphicsFamily; }
+	uint32_t GetPresentFamily() const { return presentFamily; }
+	uint32_t GetComputeFamily() const { return computeFamily; }
+	uint32_t GetTransferFamily() const { return transferFamily; }
 
+	static const std::vector<const char *> DeviceExtensions;
+	
 private:
 	void CreateQueueIndices();
 	void CreateLogicalDevice();
 
-	const Instance *m_instance;
-	const PhysicalDevice *m_physicalDevice;
-	const Surface *m_surface;
+	const Instance *instance;
+	const PhysicalDevice *physicalDevice;
+	const Surface *surface;
 
-	VkDevice m_logicalDevice = VK_NULL_HANDLE;
-	VkPhysicalDeviceFeatures m_enabledFeatures = {};
+	VkDevice logicalDevice = VK_NULL_HANDLE;
+	VkPhysicalDeviceFeatures enabledFeatures = {};
 
-	VkQueueFlags m_supportedQueues = {};
-	uint32_t m_graphicsFamily = 0;
-	uint32_t m_presentFamily = 0;
-	uint32_t m_computeFamily = 0;
-	uint32_t m_transferFamily = 0;
+	VkQueueFlags supportedQueues = {};
+	uint32_t graphicsFamily = 0;
+	uint32_t presentFamily = 0;
+	uint32_t computeFamily = 0;
+	uint32_t transferFamily = 0;
 
-	VkQueue m_graphicsQueue = VK_NULL_HANDLE;
-	VkQueue m_presentQueue = VK_NULL_HANDLE;
-	VkQueue m_computeQueue = VK_NULL_HANDLE;
-	VkQueue m_transferQueue = VK_NULL_HANDLE;
+	VkQueue graphicsQueue = VK_NULL_HANDLE;
+	VkQueue presentQueue = VK_NULL_HANDLE;
+	VkQueue computeQueue = VK_NULL_HANDLE;
+	VkQueue transferQueue = VK_NULL_HANDLE;
 };
 }

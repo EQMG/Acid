@@ -17,13 +17,13 @@ static const uint32_t MAX_LIGHTS = 32; // TODO: Make configurable.
 
 SubrenderDeferred::SubrenderDeferred(const Pipeline::Stage &pipelineStage) :
 	Subrender(pipelineStage),
-	m_pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, {},
+	pipeline(pipelineStage, {"Shaders/Deferred/Deferred.vert", "Shaders/Deferred/Deferred.frag"}, {}, {},
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
-	m_brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
-	m_fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
+	brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
+	fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
 #if defined(ACID_DEBUG)
 	Node node;
-	node << *m_pipeline.GetShader();
+	node << *pipeline.GetShader();
 	File("Deferred/Shader.json", std::make_unique<Json>(node)).Write(Node::Format::Beautified);
 #endif
 }
@@ -41,10 +41,10 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 		}
 	}
 
-	if (m_skybox != skybox) {
-		m_skybox = skybox;
-		m_irradiance = Resources::Get()->GetThreadPool().Enqueue(ComputeIrradiance, m_skybox, 64);
-		m_prefiltered = Resources::Get()->GetThreadPool().Enqueue(ComputePrefiltered, m_skybox, 512);
+	if (this->skybox != skybox) {
+		this->skybox = skybox;
+		irradiance = Resources::Get()->GetThreadPool().Enqueue(ComputeIrradiance, skybox, 64);
+		prefiltered = Resources::Get()->GetThreadPool().Enqueue(ComputePrefiltered, skybox, 512);
 	}
 
 	// Updates uniforms.
@@ -63,13 +63,13 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 		//}
 
 		DeferredLight deferredLight = {};
-		deferredLight.m_colour = light->GetColour();
+		deferredLight.colour = light->GetColour();
 
 		if (auto transform = light->GetEntity()->GetComponent<Transform>()) {
-			deferredLight.m_position = transform->GetPosition();
+			deferredLight.position = transform->GetPosition();
 		}
 
-		deferredLight.m_radius = light->GetRadius();
+		deferredLight.radius = light->GetRadius();
 		deferredLights[lightCount] = deferredLight;
 		lightCount++;
 
@@ -79,37 +79,36 @@ void SubrenderDeferred::Render(const CommandBuffer &commandBuffer) {
 	}
 
 	// Updates uniforms.
-	m_uniformScene.Push("view", camera->GetViewMatrix());
-	m_uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
-	m_uniformScene.Push("cameraPosition", camera->GetPosition());
-	m_uniformScene.Push("lightsCount", lightCount);
-	m_uniformScene.Push("fogColour", m_fog.GetColour());
-	m_uniformScene.Push("fogDensity", m_fog.GetDensity());
-	m_uniformScene.Push("fogGradient", m_fog.GetGradient());
+	uniformScene.Push("view", camera->GetViewMatrix());
+	uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
+	uniformScene.Push("cameraPosition", camera->GetPosition());
+	uniformScene.Push("lightsCount", lightCount);
+	uniformScene.Push("fogColour", fog.GetColour());
+	uniformScene.Push("fogDensity", fog.GetDensity());
+	uniformScene.Push("fogGradient", fog.GetGradient());
 
 	// Updates storage buffers.
-	m_storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
+	storageLights.Push(deferredLights.data(), sizeof(DeferredLight) * MAX_LIGHTS);
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", m_uniformScene);
-	m_descriptorSet.Push("BufferLights", m_storageLights);
-	m_descriptorSet.Push("samplerShadows", Graphics::Get()->GetAttachment("shadows"));
-	m_descriptorSet.Push("samplerPosition", Graphics::Get()->GetAttachment("position"));
-	m_descriptorSet.Push("samplerDiffuse", Graphics::Get()->GetAttachment("diffuse"));
-	m_descriptorSet.Push("samplerNormal", Graphics::Get()->GetAttachment("normal"));
-	m_descriptorSet.Push("samplerMaterial", Graphics::Get()->GetAttachment("material"));
-	m_descriptorSet.Push("samplerBRDF", *m_brdf);
-	m_descriptorSet.Push("samplerIrradiance", *m_irradiance);
-	m_descriptorSet.Push("samplerPrefiltered", *m_prefiltered);
+	descriptorSet.Push("UniformScene", uniformScene);
+	descriptorSet.Push("BufferLights", storageLights);
+	descriptorSet.Push("samplerShadows", Graphics::Get()->GetAttachment("shadows"));
+	descriptorSet.Push("samplerPosition", Graphics::Get()->GetAttachment("position"));
+	descriptorSet.Push("samplerDiffuse", Graphics::Get()->GetAttachment("diffuse"));
+	descriptorSet.Push("samplerNormal", Graphics::Get()->GetAttachment("normal"));
+	descriptorSet.Push("samplerMaterial", Graphics::Get()->GetAttachment("material"));
+	descriptorSet.Push("samplerBRDF", *brdf);
+	descriptorSet.Push("samplerIrradiance", *irradiance);
+	descriptorSet.Push("samplerPrefiltered", *prefiltered);
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 

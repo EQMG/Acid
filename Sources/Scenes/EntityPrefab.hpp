@@ -38,8 +38,8 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(EntityPrefab); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; }
-	Node *GetParent() const { return m_file->GetNode(); }
+	const std::filesystem::path &GetFilename() const { return filename; }
+	Node *GetParent() const { return file->GetNode(); }
 
 	friend const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity);
 	friend EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity);
@@ -47,7 +47,7 @@ public:
 	friend Node &operator<<(Node &node, const EntityPrefab &entityPrefab);
 
 private:
-	std::filesystem::path m_filename;
-	std::unique_ptr<File> m_file;
+	std::filesystem::path filename;
+	std::unique_ptr<File> file;
 };
 }

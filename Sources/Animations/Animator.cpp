@@ -5,7 +5,7 @@
 
 namespace acid {
 void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices) {
-	if (!m_currentAnimation) {
+	if (!currentAnimation) {
 		return;
 	}
 
@@ -15,10 +15,10 @@ void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrice
 }
 
 void Animator::IncreaseAnimationTime() {
-	m_animationTime += Engine::Get()->GetDelta();
+	animationTime += Engine::Get()->GetDelta();
 
-	if (m_animationTime > m_currentAnimation->GetLength()) {
-		m_animationTime = Time::Seconds(std::fmod(m_animationTime.AsSeconds(), m_currentAnimation->GetLength().AsSeconds()));
+	if (animationTime > currentAnimation->GetLength()) {
+		animationTime = Time::Seconds(std::fmod(animationTime.AsSeconds(), currentAnimation->GetLength().AsSeconds()));
 	}
 }
 
@@ -29,13 +29,13 @@ std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const {
 }
 
 std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const {
-	const auto &allFrames = m_currentAnimation->GetKeyframes();
+	const auto &allFrames = currentAnimation->GetKeyframes();
 	const Keyframe *previousFrame = nullptr;
 	const Keyframe *nextFrame = nullptr;
 
 	for (const auto &[i, frame] : Enumerate(allFrames)) {
 		nextFrame = &frame;
-		if (frame.GetTimeStamp() > m_animationTime)
+		if (frame.GetTimeStamp() > animationTime)
 			break;
 
 		previousFrame = &frame;
@@ -46,7 +46,7 @@ std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const {
 
 float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyframe &nextFrame) const {
 	auto totalTime = nextFrame.GetTimeStamp() - previousFrame.GetTimeStamp();
-	auto currentTime = m_animationTime - previousFrame.GetTimeStamp();
+	auto currentTime = animationTime - previousFrame.GetTimeStamp();
 	return static_cast<float>(currentTime / totalTime);
 }
 
@@ -79,7 +79,7 @@ void Animator::CalculateJointPose(const std::map<std::string, Matrix4> &currentP
 }
 
 void Animator::DoAnimation(Animation *animation) {
-	m_animationTime = 0s;
-	m_currentAnimation = animation;
+	animationTime = 0s;
+	currentAnimation = animation;
 }
 }

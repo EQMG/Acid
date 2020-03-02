@@ -24,17 +24,17 @@ public:
 				{baseBinding, sizeof(Instance), VK_VERTEX_INPUT_RATE_INSTANCE}
 			};
 			std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {
-				{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[0])},
-				{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[1])},
-				{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[2])},
-				{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_modelMatrix) + offsetof(Matrix4, m_rows[3])},
-				{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, m_colour)}
+				{0, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[0])},
+				{1, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[1])},
+				{2, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[2])},
+				{3, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, modelMatrix) + offsetof(Matrix4, rows[3])},
+				{4, baseBinding, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(Instance, colour)}
 			};
 			return {bindingDescriptions, attributeDescriptions};
 		}
 
-		Matrix4 m_modelMatrix;
-		Colour m_colour;
+		Matrix4 modelMatrix;
+		Colour colour;
 	};
 
 	/**
@@ -67,27 +67,27 @@ public:
 
 	std::type_index GetTypeIndex() const override { return typeid(GizmoType); }
 
-	const std::shared_ptr<Model> &GetModel() const { return m_model; }
-	void SetModel(const std::shared_ptr<Model> &model) { m_model = model; }
+	const std::shared_ptr<Model> &GetModel() const { return model; }
+	void SetModel(const std::shared_ptr<Model> &model) { this->model = model; }
 
-	float GetLineThickness() const { return m_lineThickness; }
-	void SetLineThickness(float lineThickness) { m_lineThickness = lineThickness; }
+	float GetLineThickness() const { return lineThickness; }
+	void SetLineThickness(float lineThickness) { this->lineThickness = lineThickness; }
 
-	const Colour &GetColour() const { return m_colour; }
-	void SetColour(const Colour &colour) { m_colour = colour; }
+	const Colour &GetColour() const { return colour; }
+	void SetColour(const Colour &colour) { this->colour = colour; }
 
 	friend const Node &operator>>(const Node &node, GizmoType &gizmoType);
 	friend Node &operator<<(Node &node, const GizmoType &gizmoType);
 
 private:
-	std::shared_ptr<Model> m_model;
-	float m_lineThickness;
-	Colour m_colour;
+	std::shared_ptr<Model> model;
+	float lineThickness;
+	Colour colour;
 
-	uint32_t m_maxInstances = 0;
-	uint32_t m_instances = 0;
+	uint32_t maxInstances = 0;
+	uint32_t instances = 0;
 
-	DescriptorsHandler m_descriptorSet;
-	InstanceBuffer m_instanceBuffer;
+	DescriptorsHandler descriptorSet;
+	InstanceBuffer instanceBuffer;
 };
 }

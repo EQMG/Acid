@@ -27,33 +27,33 @@ public:
 	class VertexInput {
 	public:
 		VertexInput(std::vector<VkVertexInputBindingDescription> bindingDescriptions = {}, std::vector<VkVertexInputAttributeDescription> attributeDescriptions = {}) :
-			m_bindingDescriptions(std::move(bindingDescriptions)),
-			m_attributeDescriptions(std::move(attributeDescriptions)) {
+			bindingDescriptions(std::move(bindingDescriptions)),
+			attributeDescriptions(std::move(attributeDescriptions)) {
 		}
 
-		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return m_bindingDescriptions; }
-		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
+		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return bindingDescriptions; }
+		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return attributeDescriptions; }
 
 		bool operator<(const VertexInput &other) const {
-			return m_bindingDescriptions.front().binding < other.m_bindingDescriptions.front().binding;
+			return bindingDescriptions.front().binding < other.bindingDescriptions.front().binding;
 		}
 
 		friend const Node &operator>>(const Node &node, VertexInput &vertexInput) {
-			node["bindingDescriptions"].Get(vertexInput.m_bindingDescriptions);
-			node["attributeDescriptions"].Get(vertexInput.m_attributeDescriptions);
+			node["bindingDescriptions"].Get(vertexInput.bindingDescriptions);
+			node["attributeDescriptions"].Get(vertexInput.attributeDescriptions);
 			return node;
 		}
 
 		friend Node &operator<<(Node &node, const VertexInput &vertexInput) {
-			node["bindingDescriptions"].Set(vertexInput.m_bindingDescriptions);
-			node["attributeDescriptions"].Set(vertexInput.m_attributeDescriptions);
+			node["bindingDescriptions"].Set(vertexInput.bindingDescriptions);
+			node["attributeDescriptions"].Set(vertexInput.attributeDescriptions);
 			return node;
 		}
 
 	private:
-		uint32_t m_binding = 0;
-		std::vector<VkVertexInputBindingDescription> m_bindingDescriptions;
-		std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
+		uint32_t binding = 0;
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions;
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
 	};
 
 	class Uniform {
@@ -61,26 +61,26 @@ public:
 	public:
 		explicit Uniform(int32_t binding = -1, int32_t offset = -1, int32_t size = -1, int32_t glType = -1, bool readOnly = false,
 			bool writeOnly = false, VkShaderStageFlags stageFlags = 0) :
-			m_binding(binding),
-			m_offset(offset),
-			m_size(size),
-			m_glType(glType),
-			m_readOnly(readOnly),
-			m_writeOnly(writeOnly),
-			m_stageFlags(stageFlags) {
+			binding(binding),
+			offset(offset),
+			size(size),
+			glType(glType),
+			readOnly(readOnly),
+			writeOnly(writeOnly),
+			stageFlags(stageFlags) {
 		}
 
-		int32_t GetBinding() const { return m_binding; }
-		int32_t GetOffset() const { return m_offset; }
-		int32_t GetSize() const { return m_size; }
-		int32_t GetGlType() const { return m_glType; }
-		bool IsReadOnly() const { return m_readOnly; }
-		bool IsWriteOnly() const { return m_writeOnly; }
-		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
+		int32_t GetBinding() const { return binding; }
+		int32_t GetOffset() const { return offset; }
+		int32_t GetSize() const { return size; }
+		int32_t GetGlType() const { return glType; }
+		bool IsReadOnly() const { return readOnly; }
+		bool IsWriteOnly() const { return writeOnly; }
+		VkShaderStageFlags GetStageFlags() const { return stageFlags; }
 
 		bool operator==(const Uniform &other) const {
-			return m_binding == other.m_binding && m_offset == other.m_offset && m_size == other.m_size && m_glType == other.m_glType && m_readOnly == other.m_readOnly && 
-				m_writeOnly == other.m_writeOnly && m_stageFlags == other.m_stageFlags;
+			return binding == other.binding && offset == other.offset && size == other.size && glType == other.glType && readOnly == other.readOnly && 
+				writeOnly == other.writeOnly && stageFlags == other.stageFlags;
 		}
 
 		bool operator!=(const Uniform &other) const {
@@ -88,35 +88,35 @@ public:
 		}
 
 		friend const Node &operator>>(const Node &node, Uniform &uniform) {
-			node["binding"].Get(uniform.m_binding);
-			node["offset"].Get(uniform.m_offset);
-			node["size"].Get(uniform.m_size);
-			node["glType"].Get(uniform.m_glType);
-			node["readOnly"].Get(uniform.m_readOnly);
-			node["writeOnly"].Get(uniform.m_writeOnly);
-			node["stageFlags"].Get(uniform.m_stageFlags);
+			node["binding"].Get(uniform.binding);
+			node["offset"].Get(uniform.offset);
+			node["size"].Get(uniform.size);
+			node["glType"].Get(uniform.glType);
+			node["readOnly"].Get(uniform.readOnly);
+			node["writeOnly"].Get(uniform.writeOnly);
+			node["stageFlags"].Get(uniform.stageFlags);
 			return node;
 		}
 
 		friend Node &operator<<(Node &node, const Uniform &uniform) {
-			node["binding"].Set(uniform.m_binding);
-			node["offset"].Set(uniform.m_offset);
-			node["size"].Set(uniform.m_size);
-			node["glType"].Set(uniform.m_glType);
-			node["readOnly"].Set(uniform.m_readOnly);
-			node["writeOnly"].Set(uniform.m_writeOnly);
-			node["stageFlags"].Set(uniform.m_stageFlags);
+			node["binding"].Set(uniform.binding);
+			node["offset"].Set(uniform.offset);
+			node["size"].Set(uniform.size);
+			node["glType"].Set(uniform.glType);
+			node["readOnly"].Set(uniform.readOnly);
+			node["writeOnly"].Set(uniform.writeOnly);
+			node["stageFlags"].Set(uniform.stageFlags);
 			return node;
 		}
 
 	private:
-		int32_t m_binding;
-		int32_t m_offset;
-		int32_t m_size;
-		int32_t m_glType;
-		bool m_readOnly;
-		bool m_writeOnly;
-		VkShaderStageFlags m_stageFlags;
+		int32_t binding;
+		int32_t offset;
+		int32_t size;
+		int32_t glType;
+		bool readOnly;
+		bool writeOnly;
+		VkShaderStageFlags stageFlags;
 	};
 
 	class UniformBlock {
@@ -125,22 +125,22 @@ public:
 		enum class Type { None, Uniform, Storage, Push };
 
 		explicit UniformBlock(int32_t binding = -1, int32_t size = -1, VkShaderStageFlags stageFlags = 0, Type type = Type::Uniform) :
-			m_binding(binding),
-			m_size(size),
-			m_stageFlags(stageFlags),
-			m_type(type) {
+			binding(binding),
+			size(size),
+			stageFlags(stageFlags),
+			type(type) {
 		}
 
-		int32_t GetBinding() const { return m_binding; }
-		int32_t GetSize() const { return m_size; }
-		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
-		Type GetType() const { return m_type; }
-		const std::map<std::string, Uniform> &GetUniforms() const { return m_uniforms; }
+		int32_t GetBinding() const { return binding; }
+		int32_t GetSize() const { return size; }
+		VkShaderStageFlags GetStageFlags() const { return stageFlags; }
+		Type GetType() const { return type; }
+		const std::map<std::string, Uniform> &GetUniforms() const { return uniforms; }
 
 		std::optional<Uniform> GetUniform(const std::string &name) const {
-			auto it = m_uniforms.find(name);
+			auto it = uniforms.find(name);
 
-			if (it == m_uniforms.end()) {
+			if (it == uniforms.end()) {
 				return std::nullopt;
 			}
 
@@ -148,7 +148,7 @@ public:
 		}
 
 		bool operator==(const UniformBlock &other) const {
-			return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_type == other.m_type && m_uniforms == other.m_uniforms;
+			return binding == other.binding && size == other.size && stageFlags == other.stageFlags && type == other.type && uniforms == other.uniforms;
 		}
 
 		bool operator!=(const UniformBlock &other) const {
@@ -156,48 +156,48 @@ public:
 		}
 
 		friend const Node &operator>>(const Node &node, UniformBlock &uniformBlock) {
-			node["binding"].Get(uniformBlock.m_binding);
-			node["size"].Get(uniformBlock.m_size);
-			node["stageFlags"].Get(uniformBlock.m_stageFlags);
-			node["type"].Get(uniformBlock.m_type);
-			node["uniforms"].Get(uniformBlock.m_uniforms);
+			node["binding"].Get(uniformBlock.binding);
+			node["size"].Get(uniformBlock.size);
+			node["stageFlags"].Get(uniformBlock.stageFlags);
+			node["type"].Get(uniformBlock.type);
+			node["uniforms"].Get(uniformBlock.uniforms);
 			return node;
 		}
 
 		friend Node &operator<<(Node &node, const UniformBlock &uniformBlock) {
-			node["binding"].Set(uniformBlock.m_binding);
-			node["size"].Set(uniformBlock.m_size);
-			node["stageFlags"].Set(uniformBlock.m_stageFlags);
-			node["type"].Set(uniformBlock.m_type);
-			node["uniforms"].Set(uniformBlock.m_uniforms);
+			node["binding"].Set(uniformBlock.binding);
+			node["size"].Set(uniformBlock.size);
+			node["stageFlags"].Set(uniformBlock.stageFlags);
+			node["type"].Set(uniformBlock.type);
+			node["uniforms"].Set(uniformBlock.uniforms);
 			return node;
 		}
 
 	private:
-		int32_t m_binding;
-		int32_t m_size;
-		VkShaderStageFlags m_stageFlags;
-		Type m_type;
-		std::map<std::string, Uniform> m_uniforms;
+		int32_t binding;
+		int32_t size;
+		VkShaderStageFlags stageFlags;
+		Type type;
+		std::map<std::string, Uniform> uniforms;
 	};
 
 	class Attribute {
 		friend class Shader;
 	public:
 		explicit Attribute(int32_t set = -1, int32_t location = -1, int32_t size = -1, int32_t glType = -1) :
-			m_set(set),
-			m_location(location),
-			m_size(size),
-			m_glType(glType) {
+			set(set),
+			location(location),
+			size(size),
+			glType(glType) {
 		}
 
-		int32_t GetSet() const { return m_set; }
-		int32_t GetLocation() const { return m_location; }
-		int32_t GetSize() const { return m_size; }
-		int32_t GetGlType() const { return m_glType; }
+		int32_t GetSet() const { return set; }
+		int32_t GetLocation() const { return location; }
+		int32_t GetSize() const { return size; }
+		int32_t GetGlType() const { return glType; }
 
 		bool operator==(const Attribute &other) const {
-			return m_set == other.m_set && m_location == other.m_location && m_size == other.m_size && m_glType == other.m_glType;
+			return set == other.set && location == other.location && size == other.size && glType == other.glType;
 		}
 
 		bool operator!=(const Attribute &other) const {
@@ -205,45 +205,45 @@ public:
 		}
 
 		friend const Node &operator>>(const Node &node, Attribute &attribute) {
-			node["set"].Get(attribute.m_set);
-			node["location"].Get(attribute.m_location);
-			node["size"].Get(attribute.m_size);
-			node["glType"].Get(attribute.m_glType);
+			node["set"].Get(attribute.set);
+			node["location"].Get(attribute.location);
+			node["size"].Get(attribute.size);
+			node["glType"].Get(attribute.glType);
 			return node;
 		}
 
 		friend Node &operator<<(Node &node, const Attribute &attribute) {
-			node["set"].Set(attribute.m_set);
-			node["location"].Set(attribute.m_location);
-			node["size"].Set(attribute.m_size);
-			node["glType"].Set(attribute.m_glType);
+			node["set"].Set(attribute.set);
+			node["location"].Set(attribute.location);
+			node["size"].Set(attribute.size);
+			node["glType"].Set(attribute.glType);
 			return node;
 		}
 
 	private:
-		int32_t m_set;
-		int32_t m_location;
-		int32_t m_size;
-		int32_t m_glType;
+		int32_t set;
+		int32_t location;
+		int32_t size;
+		int32_t glType;
 	};
 
 	class Constant {
 		friend class Shader;
 	public:
 		explicit Constant(int32_t binding = -1, int32_t size = -1, VkShaderStageFlags stageFlags = 0, int32_t glType = -1) :
-			m_binding(binding),
-			m_size(size),
-			m_stageFlags(stageFlags),
-			m_glType(glType) {
+			binding(binding),
+			size(size),
+			stageFlags(stageFlags),
+			glType(glType) {
 		}
 
-		int32_t GetBinding() const { return m_binding; }
-		int32_t GetSize() const { return m_size; }
-		VkShaderStageFlags GetStageFlags() const { return m_stageFlags; }
-		int32_t GetGlType() const { return m_glType; }
+		int32_t GetBinding() const { return binding; }
+		int32_t GetSize() const { return size; }
+		VkShaderStageFlags GetStageFlags() const { return stageFlags; }
+		int32_t GetGlType() const { return glType; }
 
 		bool operator==(const Constant &other) const {
-			return m_binding == other.m_binding && m_size == other.m_size && m_stageFlags == other.m_stageFlags && m_glType == other.m_glType;
+			return binding == other.binding && size == other.size && stageFlags == other.stageFlags && glType == other.glType;
 		}
 
 		bool operator!=(const Constant &other) const {
@@ -251,26 +251,26 @@ public:
 		}
 
 		friend const Node &operator>>(const Node &node, Constant &constant) {
-			node["binding"].Get(constant.m_binding);
-			node["size"].Get(constant.m_size);
-			node["stageFlags"].Get(constant.m_stageFlags);
-			node["glType"].Get(constant.m_glType);
+			node["binding"].Get(constant.binding);
+			node["size"].Get(constant.size);
+			node["stageFlags"].Get(constant.stageFlags);
+			node["glType"].Get(constant.glType);
 			return node;
 		}
 
 		friend Node &operator<<(Node &node, const Constant &constant) {
-			node["binding"].Set(constant.m_binding);
-			node["size"].Set(constant.m_size);
-			node["stageFlags"].Set(constant.m_stageFlags);
-			node["glType"].Set(constant.m_glType);
+			node["binding"].Set(constant.binding);
+			node["size"].Set(constant.size);
+			node["stageFlags"].Set(constant.stageFlags);
+			node["glType"].Set(constant.glType);
 			return node;
 		}
 
 	private:
-		int32_t m_binding;
-		int32_t m_size;
-		VkShaderStageFlags m_stageFlags;
-		int32_t m_glType;
+		int32_t binding;
+		int32_t size;
+		VkShaderStageFlags stageFlags;
+		int32_t glType;
 	};
 
 	Shader();
@@ -289,16 +289,16 @@ public:
 	VkShaderModule CreateShaderModule(const std::filesystem::path &moduleName, const std::string &moduleCode, const std::string &preamble, VkShaderStageFlags moduleFlag);
 	void CreateReflection();
 
-	const std::filesystem::path &GetName() const { return m_stages.back(); }
-	uint32_t GetLastDescriptorBinding() const { return m_lastDescriptorBinding; }
-	const std::map<std::string, Uniform> &GetUniforms() const { return m_uniforms; };
-	const std::map<std::string, UniformBlock> &GetUniformBlocks() const { return m_uniformBlocks; };
-	const std::map<std::string, Attribute> &GetAttributes() const { return m_attributes; };
-	const std::map<std::string, Constant> &GetConstants() const { return m_constants; };
-	const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return m_localSizes; }
-	const std::vector<VkDescriptorSetLayoutBinding> &GetDescriptorSetLayouts() const { return m_descriptorSetLayouts; }
-	const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return m_descriptorPools; }
-	const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return m_attributeDescriptions; }
+	const std::filesystem::path &GetName() const { return stages.back(); }
+	uint32_t GetLastDescriptorBinding() const { return lastDescriptorBinding; }
+	const std::map<std::string, Uniform> &GetUniforms() const { return uniforms; };
+	const std::map<std::string, UniformBlock> &GetUniformBlocks() const { return uniformBlocks; };
+	const std::map<std::string, Attribute> &GetAttributes() const { return attributes; };
+	const std::map<std::string, Constant> &GetConstants() const { return constants; };
+	const std::array<std::optional<uint32_t>, 3> &GetLocalSizes() const { return localSizes; }
+	const std::vector<VkDescriptorSetLayoutBinding> &GetDescriptorSetLayouts() const { return descriptorSetLayouts; }
+	const std::vector<VkDescriptorPoolSize> &GetDescriptorPools() const { return descriptorPools; }
+	const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return attributeDescriptions; }
 
 	friend const Node &operator>>(const Node &node, Shader &shader);
 	friend Node &operator<<(Node &node, const Shader &shader);
@@ -310,24 +310,24 @@ private:
 	void LoadAttribute(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i);
 	static int32_t ComputeSize(const glslang::TType *ttype);
 
-	std::vector<std::filesystem::path> m_stages;
-	std::map<std::string, Uniform> m_uniforms;
-	std::map<std::string, UniformBlock> m_uniformBlocks;
-	std::map<std::string, Attribute> m_attributes;
-	std::map<std::string, Constant> m_constants;
+	std::vector<std::filesystem::path> stages;
+	std::map<std::string, Uniform> uniforms;
+	std::map<std::string, UniformBlock> uniformBlocks;
+	std::map<std::string, Attribute> attributes;
+	std::map<std::string, Constant> constants;
 
-	std::array<std::optional<uint32_t>, 3> m_localSizes;
+	std::array<std::optional<uint32_t>, 3> localSizes;
 
-	std::map<std::string, uint32_t> m_descriptorLocations;
-	std::map<std::string, uint32_t> m_descriptorSizes;
+	std::map<std::string, uint32_t> descriptorLocations;
+	std::map<std::string, uint32_t> descriptorSizes;
 
-	std::vector<VkDescriptorSetLayoutBinding> m_descriptorSetLayouts;
-	uint32_t m_lastDescriptorBinding = 0;
-	std::vector<VkDescriptorPoolSize> m_descriptorPools;
-	std::map<uint32_t, VkDescriptorType> m_descriptorTypes;
-	std::vector<VkVertexInputAttributeDescription> m_attributeDescriptions;
+	std::vector<VkDescriptorSetLayoutBinding> descriptorSetLayouts;
+	uint32_t lastDescriptorBinding = 0;
+	std::vector<VkDescriptorPoolSize> descriptorPools;
+	std::map<uint32_t, VkDescriptorType> descriptorTypes;
+	std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
 
-	mutable std::vector<std::string> m_notFoundNames;
+	mutable std::vector<std::string> notFoundNames;
 };
 
 inline const Node &operator>>(const Node &node, VkVertexInputBindingDescription &bindingDescription) {

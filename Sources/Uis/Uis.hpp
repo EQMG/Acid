@@ -22,22 +22,23 @@ public:
 	 * Gets the screen canvas.
 	 * @return The screen canvas.
 	 */
-	UiObject &GetCanvas() { return m_canvas; }
+	UiObject &GetCanvas() { return canvas; }
 
 	/**
 	 * The rendering objects from the canvas.
 	 * @return The objects.
 	 */
-	const std::vector<UiObject *> &GetObjects() const { return m_objects; };
+	const std::vector<UiObject *> &GetObjects() const { return objects; };
 private:
-	struct SelectorMouse {
-		bool m_isDown;
-		bool m_wasDown;
+	class SelectorMouse {
+	public:
+		bool isDown;
+		bool wasDown;
 	};
 
-	std::map<MouseButton, SelectorMouse> m_selectors;
-	UiObject m_canvas;
-	UiObject *m_cursorSelect = nullptr;
-	std::vector<UiObject *> m_objects;
+	std::map<MouseButton, SelectorMouse> selectors;
+	UiObject canvas;
+	UiObject *cursorSelect = nullptr;
+	std::vector<UiObject *> objects;
 };
 }

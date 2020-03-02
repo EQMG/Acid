@@ -6,43 +6,43 @@
 
 namespace acid {
 UiInputBoolean::UiInputBoolean() {
-	//m_slider.SetTransform({UiMargins::All});
-	m_slider.SetImage(Image2d::Create("Guis/Button_Filled.png"));
-	m_slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-	m_slider.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	AddChild(&m_slider);
+	//slider.SetTransform({UiMargins::All});
+	slider.SetImage(Image2d::Create("Guis/Button_Filled.png"));
+	slider.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	slider.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	AddChild(&slider);
 
-	//m_background.SetTransform({UiMargins::All});
-	m_background.SetImage(Image2d::Create("Guis/Button.png"));
-	m_background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
-	m_background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
-	AddChild(&m_background);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/Button.png"));
+	background.SetNinePatches({0.125f, 0.125f, 0.875f, 0.875f});
+	background.SetColourDriver<ConstantDriver>(UiInputButton::PrimaryColour);
+	AddChild(&background);
 
-	//m_textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textTitle.SetFontSize(UiInputButton::FontSize);
-	m_textTitle.SetJustify(Text::Justify::Right);
-	m_textTitle.SetTextColour(UiInputButton::TitleColour);
-	AddChild(&m_textTitle);
+	//textTitle.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textTitle.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textTitle.SetFontSize(UiInputButton::FontSize);
+	textTitle.SetJustify(Text::Justify::Right);
+	textTitle.SetTextColour(UiInputButton::TitleColour);
+	AddChild(&textTitle);
 
-	//m_textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
-	m_textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_textValue.SetFontSize(UiInputButton::FontSize);
-	m_textValue.SetJustify(Text::Justify::Left);
-	m_textValue.SetTextColour(UiInputButton::ValueColour);
-	AddChild(&m_textValue);
+	//textValue.SetTransform({UiMargins::None, UiInputButton::Padding, -UiInputButton::Padding});
+	textValue.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	textValue.SetFontSize(UiInputButton::FontSize);
+	textValue.SetJustify(Text::Justify::Left);
+	textValue.SetTextColour(UiInputButton::ValueColour);
+	AddChild(&textValue);
 
 	SetCursorHover(CursorStandard::Hand);
 	OnSelected().Add([this](bool selected) {
-		m_background.SetColourDriver<SlideDriver>(m_background.GetColourDriver()->Get(), 
+		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), 
 			selected ? UiInputButton::SelectedColour : UiInputButton::PrimaryColour,
 			UiInputButton::SlideTime);
 	}, this);
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
-			m_value = !m_value;
-			m_onValue(m_value);
+			value = !value;
+			onValue(value);
 			UpdateValue();
 		}
 	}, this);
@@ -53,13 +53,13 @@ void UiInputBoolean::UpdateObject() {
 }
 
 void UiInputBoolean::SetValue(bool value) {
-	m_value = value;
+	this->value = value;
 	UpdateValue();
-	//m_onValue(m_value);
+	//onValue(value);
 }
 
 void UiInputBoolean::UpdateValue() {
-	m_textValue.SetString(String::To(m_value));
-	m_slider.SetEnabled(m_value);
+	textValue.SetString(String::To(value));
+	slider.SetEnabled(value);
 }
 }

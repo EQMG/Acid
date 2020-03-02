@@ -7,22 +7,22 @@
 
 namespace acid {
 File::File(std::unique_ptr<Node> &&node) :
-	m_node(std::move(node)) {
+	node(std::move(node)) {
 }
 
 File::File(const std::filesystem::path &filename) :
-	m_filename(filename) {
+	filename(filename) {
 	// TODO: Node factory.
 	if (filename.extension() == ".json") {
-		m_node = std::make_unique<Json>();
+		node = std::make_unique<Json>();
 	} else if (filename.extension() == ".xml") {
-		m_node = std::make_unique<Xml>("root");
+		node = std::make_unique<Xml>("root");
 	}
 }
 
 File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
-	m_node(std::move(node)),
-	m_filename(std::move(filename)) {
+	node(std::move(node)),
+	filename(std::move(filename)) {
 }
 
 void File::Load(const std::filesystem::path &filename) {
@@ -32,10 +32,10 @@ void File::Load(const std::filesystem::path &filename) {
 
 	if (Files::ExistsInPath(filename)) {
 		IFStream inStream(filename);
-		m_node->ParseStream(inStream);
+		node->ParseStream(inStream);
 	} else if (std::filesystem::exists(filename)) {
 		std::ifstream inStream(filename);
-		m_node->ParseStream(inStream);
+		node->ParseStream(inStream);
 		inStream.close();
 	}
 
@@ -45,7 +45,7 @@ void File::Load(const std::filesystem::path &filename) {
 }
 
 void File::Load() {
-	Load(m_filename);
+	Load(filename);
 }
 
 void File::Write(const std::filesystem::path &filename, Node::Format format) const {
@@ -55,14 +55,14 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 
 	/*if (Files::ExistsInPath(filename)) {
 		OFStream os(filename);
-		m_node->WriteStream(os, format);
+		node->WriteStream(os, format);
 	} else {*/ // if (std::filesystem::exists(filename))
 		if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
 
 		std::ofstream os(filename);
-		m_node->WriteStream(os, format);
+		node->WriteStream(os, format);
 		os.close();
 	//}
 
@@ -72,10 +72,10 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 }
 
 void File::Write(Node::Format format) const {
-	Write(m_filename, format);
+	Write(filename, format);
 }
 
 void File::Clear() {
-	m_node->Clear();
+	node->Clear();
 }
 }

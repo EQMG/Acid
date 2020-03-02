@@ -19,16 +19,16 @@ public:
 	float GetShadowFactor() const;
 	float GetStarIntensity() const;
 
-	Fog GetFog() const { return m_fog; }
-	Vector3f GetSkyboxRotation() const { return m_skyboxRotation; }
-	Vector3f GetLightDirection() const { return m_lightDirection; }
+	const Fog &GetFog() const { return fog; }
+	const Vector3f &GetSkyboxRotation() const { return skyboxRotation; }
+	const Vector3f &GetLightDirection() const { return lightDirection; }
 
 private:
-	LinearDriver<float> m_driverDay;
+	LinearDriver<float> driverDay;
 
-	Fog m_fog;
+	Fog fog;
 
-	Vector3f m_skyboxRotation;
-	Vector3f m_lightDirection;
+	Vector3f skyboxRotation;
+	Vector3f lightDirection;
 };
 }

@@ -13,9 +13,9 @@
 
 namespace acid {
 Audio::Audio() :
-	m_device(alcOpenDevice(nullptr)),
-	m_context(alcCreateContext(m_device, nullptr)) {
-	alcMakeContextCurrent(m_context);
+	device(alcOpenDevice(nullptr)),
+	context(alcCreateContext(device, nullptr)) {
+	alcMakeContextCurrent(context);
 
 #if defined(ACID_DEBUG)
 	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
@@ -29,15 +29,15 @@ Audio::Audio() :
 		next += len + 2;
 	}
 
-	auto deviceName = alcGetString(m_device, ALC_DEVICE_SPECIFIER);
+	auto deviceName = alcGetString(this->device, ALC_DEVICE_SPECIFIER);
 	Log::Out("Selected Audio Device: ", std::quoted(deviceName), '\n');
 #endif
 }
 
 Audio::~Audio() {
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(m_context);
-	alcCloseDevice(m_device);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
 }
 
 void Audio::Update() {
@@ -52,15 +52,15 @@ void Audio::Update() {
 
 	// Listener position.
 	auto position = camera->GetPosition();
-	alListener3f(AL_POSITION, position.m_x, position.m_y, position.m_z);
+	alListener3f(AL_POSITION, position.x, position.y, position.z);
 
 	// Listener velocity.
 	auto velocity = camera->GetPosition();
-	alListener3f(AL_VELOCITY, velocity.m_x, velocity.m_y, velocity.m_z);
+	alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 
 	// Listener orientation.
 	auto currentRay = camera->GetViewRay().GetCurrentRay();
-	ALfloat orientation[6] = {currentRay.m_x, currentRay.m_y, currentRay.m_z, 0.0f, 1.0f, 0.0f};
+	ALfloat orientation[6] = {currentRay.x, currentRay.y, currentRay.z, 0.0f, 1.0f, 0.0f};
 	alListenerfv(AL_ORIENTATION, orientation);
 
 	//CheckAl(alGetError());
@@ -97,9 +97,9 @@ void Audio::CheckAl(int32_t result) {
 }
 
 float Audio::GetGain(Type type) const {
-	auto it = m_gains.find(type);
+	auto it = gains.find(type);
 
-	if (it == m_gains.end()) {
+	if (it == gains.end()) {
 		return 1.0f;
 	}
 
@@ -107,15 +107,15 @@ float Audio::GetGain(Type type) const {
 }
 
 void Audio::SetGain(Type type, float volume) {
-	auto it = m_gains.find(type);
+	auto it = gains.find(type);
 
-	if (it != m_gains.end()) {
+	if (it != gains.end()) {
 		it->second = volume;
-		m_onGain(type, volume);
+		onGain(type, volume);
 		return;
 	}
 
-	m_gains.emplace(type, volume);
-	m_onGain(type, volume);
+	gains.emplace(type, volume);
+	onGain(type, volume);
 }
 }

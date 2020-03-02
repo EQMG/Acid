@@ -23,9 +23,9 @@ public:
 	 * @return Is the key down and was not down before?
 	 */
 	bool WasDown() {
-		auto stillDown = m_wasDown && IsDown();
-		m_wasDown = IsDown();
-		return m_wasDown == !stillDown;
+		auto stillDown = wasDown && IsDown();
+		wasDown = IsDown();
+		return wasDown == !stillDown;
 	}
 
 	virtual Axis::ArgumentDescription GetArgumentDescription() const { return {}; }
@@ -34,16 +34,16 @@ public:
 	 * Called when the button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return m_onButton; }
+	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
 
-	bool IsInverted() const { return m_inverted; }
-	void SetInverted(bool inverted) { m_inverted = inverted; }
+	bool IsInverted() const { return inverted; }
+	void SetInverted(bool inverted) { this->inverted = inverted; }
 
 protected:
-	Delegate<void(InputAction, BitMask<InputMod>)> m_onButton;
-	bool m_inverted = false;
+	Delegate<void(InputAction, BitMask<InputMod>)> onButton;
+	bool inverted = false;
 
 private:
-	bool m_wasDown = false;
+	bool wasDown = false;
 };
 }

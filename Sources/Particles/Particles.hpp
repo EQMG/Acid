@@ -27,9 +27,9 @@ public:
 	 * Gets a list of all particles.
 	 * @return All particles.
 	 */
-	const ParticlesContainer &GetParticles() const { return m_particles; }
+	const ParticlesContainer &GetParticles() const { return particles; }
 
 private:
-	ParticlesContainer m_particles;
+	ParticlesContainer particles;
 };
 }

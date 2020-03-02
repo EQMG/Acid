@@ -1,5 +1,5 @@
 # Acid Guidelines 
-September 14, 2019
+March 1, 2020
  
 This document is a rough outline for guidelines for Acid. This document covers the languages of C++, C#, and GLSL. Acid is licenced on the MIT Licence, read more on our [LICENSE.md](../LICENSE.md) file. For more about the project read our read more on our [README.md](../README.md) file.
 
@@ -36,20 +36,20 @@ namespace Examples {
 		 */
 		int32_t DoStuff(bool doThing);
 
-		uint32_t GetX() const { return m_x; }
-		void SetX(uint32_t x) { m_x = x; }
-		float GetY() const { return m_y; }
-		void SetY(float y) { m_y = y; }
+		uint32_t GetX() const { return x; }
+		void SetX(uint32_t x) { this->x = x; }
+		float GetY() const { return y; }
+		void SetY(float y) { this->y = y; }
 
-		const std::vector<std::string> &GetList() const { return m_list; }
+		const std::vector<std::string> &GetList() const { return list; }
 		void AddListItem(const std::string &item) {
-			m_list.emplace_back(item);
+			list.emplace_back(item);
 		}
 
 	private:
-		uint32_t m_x;
-		float m_y;
-		std::vector<std::string> m_list;
+		uint32_t x;
+		float y = -1.0f;
+		std::vector<std::string> list;
 	}
 }
 ```
@@ -61,18 +61,18 @@ namespace Examples {
 #include "Example.hpp"
 
 namespace Examples {
-	Example::Example(int x) : m_x(x), m_y(-1.0f) {
+	Example::Example(int x) : x(x) {
 	}
 	
 	Example::~Example() {
 	}
 
 	int32_t Example::DoStuff(bool doThing) {
-		printf("X: %i\n", m_x);
+		printf("X: %i\n", x);
 
 		if (doThing) {
-			for (const auto &item : m_list) {
-				printf("Item: %i\n", m_x);
+			for (const auto &item : list) {
+				printf("Item: %i\n", x);
 			}
 		} else {
 			printf("doThing is false!\n");
@@ -93,9 +93,6 @@ namespace Examples {
 	}
 }
 ```
-
-# Styling Guide
-Classes, all methods, functions, and files are camelcase + first letter upper. Member variables start with m_, paramaters are normal camelcased. Tabs are used for indentations, and braces are required for all blocks. Use the member initializer list no matter what. Avoid compiler macros where possible! Use multiple lines instead of long lines, const as much as possible. Line length is usualy never wrapped, VS wraps lines for readability.
 
 # Date Guide
 Our date format is day.month.year, for example January 20th 2019 is written as '20.1.19'. 

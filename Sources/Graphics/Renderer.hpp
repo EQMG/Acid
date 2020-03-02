@@ -11,7 +11,7 @@ class ACID_EXPORT Renderer {
 	friend class Graphics;
 public:
 	/**
-	 * Creates a new renderer, fill {@link m_renderStages} in your subclass of this.
+	 * Creates a new renderer, fill {@link renderStages} in your subclass of this.
 	 */
 	Renderer() = default;
 	
@@ -34,7 +34,7 @@ public:
 	 */
 	 /*template<typename T>
 	 bool HasSubrender() const  {
-		 return m_subrenderHolder.Has<T>();
+		 return subrenderHolder.Has<T>();
 	 }*/
 
 	 /**
@@ -44,15 +44,15 @@ public:
 	  */
 	template<typename T>
 	T *GetSubrender() const {
-		return m_subrenderHolder.Get<T>();
+		return subrenderHolder.Get<T>();
 	}
 
 	RenderStage *GetRenderStage(uint32_t index) const {
-		if (m_renderStages.empty() || m_renderStages.size() < index) {
+		if (renderStages.empty() || renderStages.size() < index) {
 			return nullptr;
 		}
 
-		return m_renderStages.at(index).get();
+		return renderStages.at(index).get();
 	}
 
 protected:
@@ -65,7 +65,7 @@ protected:
 	 */
 	template<typename T, typename... Args>
 	T *AddSubrender(const Pipeline::Stage &pipelineStage, Args &&...args) {
-		return m_subrenderHolder.Add<T>(pipelineStage, std::make_unique<T>(pipelineStage, std::forward<Args>(args)...));
+		return subrenderHolder.Add<T>(pipelineStage, std::make_unique<T>(pipelineStage, std::forward<Args>(args)...));
 	}
 
 	/**
@@ -74,23 +74,23 @@ protected:
 	 */
 	template<typename T>
 	void RemoveSubrender() {
-		m_subrenderHolder.Remove<T>();
+		subrenderHolder.Remove<T>();
 	}
 
 	/**
 	 * Clears all Subrenders.
 	 */
 	void ClearSubrenders() {
-		m_subrenderHolder.Clear();
+		subrenderHolder.Clear();
 	}
 
 	void AddRenderStage(std::unique_ptr<RenderStage> &&renderStage) {
-		m_renderStages.emplace_back(std::move(renderStage));
+		renderStages.emplace_back(std::move(renderStage));
 	}
 
 private:
-	bool m_started = false;
-	SubrenderHolder m_subrenderHolder;
-	std::vector<std::unique_ptr<RenderStage>> m_renderStages;
+	bool started = false;
+	SubrenderHolder subrenderHolder;
+	std::vector<std::unique_ptr<RenderStage>> renderStages;
 };
 }

@@ -2,19 +2,19 @@
 
 namespace acid {
 PushHandler::PushHandler(bool multipipeline) :
-	m_multipipeline(multipipeline) {
+	multipipeline(multipipeline) {
 }
 
 PushHandler::PushHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline) :
-	m_multipipeline(multipipeline),
-	m_uniformBlock(uniformBlock),
-	m_data(std::make_unique<char[]>(m_uniformBlock->GetSize())) {
+	multipipeline(multipipeline),
+	uniformBlock(uniformBlock),
+	data(std::make_unique<char[]>(this->uniformBlock->GetSize())) {
 }
 
 bool PushHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock) {
-	if ((m_multipipeline && !m_uniformBlock) || (!m_multipipeline && m_uniformBlock != uniformBlock)) {
-		m_uniformBlock = uniformBlock;
-		m_data = std::make_unique<char[]>(m_uniformBlock->GetSize());
+	if ((multipipeline && !this->uniformBlock) || (!multipipeline && this->uniformBlock != uniformBlock)) {
+		this->uniformBlock = uniformBlock;
+		data = std::make_unique<char[]>(this->uniformBlock->GetSize());
 		return false;
 	}
 
@@ -22,6 +22,6 @@ bool PushHandler::Update(const std::optional<Shader::UniformBlock> &uniformBlock
 }
 
 void PushHandler::BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline) {
-	vkCmdPushConstants(commandBuffer, pipeline.GetPipelineLayout(), m_uniformBlock->GetStageFlags(), 0, static_cast<uint32_t>(m_uniformBlock->GetSize()), m_data.get());
+	vkCmdPushConstants(commandBuffer, pipeline.GetPipelineLayout(), uniformBlock->GetStageFlags(), 0, static_cast<uint32_t>(uniformBlock->GetSize()), data.get());
 }
 }

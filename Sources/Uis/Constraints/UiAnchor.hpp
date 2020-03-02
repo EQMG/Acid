@@ -5,11 +5,12 @@
 namespace acid {
 class ACID_EXPORT UiAnchor {
 public:
-	explicit constexpr UiAnchor(float value) : m_value(value) {}
-	constexpr float Get() const { return m_value; }
+	explicit constexpr UiAnchor(float value) : value(value) {}
+
+	constexpr float Get() const { return value; }
 
 	bool operator==(const UiAnchor &rhs) const {
-		return m_value == rhs.m_value;
+		return value == rhs.value;
 	}
 
 	bool operator!=(const UiAnchor &rhs) const {
@@ -24,6 +25,6 @@ public:
 	static const UiAnchor Bottom;
 
 private:
-	float m_value;
+	float value;
 };
 }

@@ -6,56 +6,52 @@
 #include <Uis/Drivers/ConstantDriver.hpp>
 
 namespace test {
-bool NameTag::registered = Register("heightDespawn");
-
 static const float TEXT_SIZE = 8.0f;
 static const float VIEW_DISTANCE = 16.0f;
 
 NameTag::NameTag(const std::string &name, float heightOffset) :
-	m_name(name),
-	m_heightOffset(heightOffset)
-//m_text(&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova-Regular.ttf"),
+	name(name),
+	heightOffset(heightOffset)
+//text(&Uis::Get()->GetCanvas(), {{0.5f, 0.5f}, UiAnchor::BottomCentre), TEXT_SIZE, "Undefined", FontType::Create("Fonts/ProximaNova-Regular.ttf"),
 //	Text::Justify::Left}
 {
-	//m_text.SetTextColour(0xFFFFFF);
-	//m_text.SetBorderColour(0x262626);
-	//m_text.SetBorderDriver<ConstantDriver>(0.1f);
+	//text.SetTextColour(0xFFFFFF);
+	//text.SetBorderColour(0x262626);
+	//text.SetBorderDriver<ConstantDriver>(0.1f);
 }
 
 void NameTag::Start() {
-	//m_text.SetString(m_name);
+	//text.SetString(name);
 }
 
 void NameTag::Update() {
 	// Calculates the tag position, this component should be added after a rigidbody body.
 	auto transform = GetEntity()->GetComponent<Transform>();
-
-	if (!transform) {
+	if (!transform)
 		return;
-	}
 
 	auto worldPosition = transform->GetPosition();
-	worldPosition.m_y += m_heightOffset;
+	worldPosition.y += heightOffset;
 
-	m_transform.SetLocalPosition(worldPosition);
-	m_transform.SetLocalRotation(Vector3f());
+	this->transform.SetLocalPosition(worldPosition);
+	this->transform.SetLocalRotation(Vector3f());
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
 	auto toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);
-	//dynamic_cast<ConstantDriver<float> *>(m_text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
+	//dynamic_cast<ConstantDriver<float> *>(text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
 
 	// Will always face the screen, like a particle.
-	//m_text.SetLockRotation(true);
-	//m_text.SetWorldTransform(m_transform);
+	//text.SetLockRotation(true);
+	//text.SetWorldTransform(transform);
 }
 
 const Node &operator>>(const Node &node, NameTag &nameTag) {
-	node["heightOffset"].Get(nameTag.m_heightOffset);
+	node["heightOffset"].Get(nameTag.heightOffset);
 	return node;
 }
 
 Node &operator<<(Node &node, const NameTag &nameTag) {
-	node["heightOffset"].Set(nameTag.m_heightOffset);
+	node["heightOffset"].Set(nameTag.heightOffset);
 	return node;
 }
 }

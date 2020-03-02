@@ -15,7 +15,7 @@ public:
 	 * @param length The drivers length.
 	 */
 	explicit UiDriver(const Time &length) :
-		m_length(length) {
+		length(length) {
 	}
 
 	virtual ~UiDriver() = default;
@@ -26,33 +26,32 @@ public:
 	 * @return If the driver has not completed.
 	 */
 	bool Update(const Time &delta) {
-		m_actualTime += delta;
-		m_currentTime += delta;
-		if (m_repeat)
-			m_currentTime = Time::Seconds(std::fmod(m_currentTime.AsSeconds(), m_length.AsSeconds()));
-		auto factor = static_cast<float>(m_currentTime / m_length);
+		actualTime += delta;
+		currentTime += delta;
+		if (repeat)
+			currentTime = Time::Seconds(std::fmod(currentTime.AsSeconds(), length.AsSeconds()));
+		auto factor = static_cast<float>(currentTime / length);
 		factor = std::clamp(factor, 0.0f, 1.0f);
 		current = Calculate(factor);
-		return factor != 1.0f && !m_repeat;
+		return factor != 1.0f && !repeat;
 	}
-
-	/**
-	 * Gets the length.
-	 * @return The length.
-	 */
-	const Time &GetLength() const { return m_length; }
-
-	/**
-	 * Sets the length.
-	 * @param length The new length.
-	 */
-	void SetLength(const Time &length) { m_length = length; }
 
 	/**
 	 * Gets the current driver value.
 	 * @return The current value.
 	 */
 	T Get() const { return current; }
+
+	/**
+	 * Gets the length.
+	 * @return The length.
+	 */
+	const Time &GetLength() const { return length; }
+	/**
+	 * Sets the length.
+	 * @param length The new length.
+	 */
+	void SetLength(const Time &length) { this->length = length; }
 
 protected:
 	/**
@@ -62,11 +61,12 @@ protected:
 	 */
 	virtual T Calculate(float factor) = 0;
 
-	Time m_length;
-	bool m_repeat = true;
-	Time m_actualTime;
-	Time m_currentTime;
 	/// The most recent value calculation.
 	T current{};
+	
+	Time length;
+	bool repeat = true;
+	Time actualTime;
+	Time currentTime;
 };
 }

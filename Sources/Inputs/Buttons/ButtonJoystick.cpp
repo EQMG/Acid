@@ -1,20 +1,18 @@
 #include "ButtonJoystick.hpp"
 
 namespace acid {
-bool ButtonJoystick::registered = Register("buttonJoystick");
-
 ButtonJoystick::ButtonJoystick(JoystickPort port, JoystickButton button) :
-	m_port(port),
-	m_button(button) {
+	port(port),
+	button(button) {
 	Joysticks::Get()->OnButton().Add([this](JoystickPort port, JoystickButton button, InputAction action) {
-		if (port == m_port && button == m_button) {
-			m_onButton(action, 0);
+		if (this->port == port && this->button == button) {
+			onButton(action, 0);
 		}
 	}, this);
 }
 
 bool ButtonJoystick::IsDown() const {
-	return (Joysticks::Get()->GetButton(m_port, m_button) != InputAction::Release) ^ m_inverted;
+	return (Joysticks::Get()->GetButton(port, button) != InputAction::Release) ^ inverted;
 }
 
 Axis::ArgumentDescription ButtonJoystick::GetArgumentDescription() const {
@@ -26,16 +24,16 @@ Axis::ArgumentDescription ButtonJoystick::GetArgumentDescription() const {
 }
 
 const Node &operator>>(const Node &node, ButtonJoystick &buttonJoystick) {
-	node["inverted"].Get(buttonJoystick.m_inverted);
-	node["port"].Get(buttonJoystick.m_port);
-	node["button"].Get(buttonJoystick.m_button);
+	node["inverted"].Get(buttonJoystick.inverted);
+	node["port"].Get(buttonJoystick.port);
+	node["button"].Get(buttonJoystick.button);
 	return node;
 }
 
 Node &operator<<(Node &node, const ButtonJoystick &buttonJoystick) {
-	node["inverted"].Set(buttonJoystick.m_inverted);
-	node["port"].Set(buttonJoystick.m_port);
-	node["button"].Set(buttonJoystick.m_button);
+	node["inverted"].Set(buttonJoystick.inverted);
+	node["port"].Set(buttonJoystick.port);
+	node["button"].Set(buttonJoystick.button);
 	return node;
 }
 }

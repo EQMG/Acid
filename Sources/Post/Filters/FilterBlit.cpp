@@ -7,16 +7,15 @@ FilterBlit::FilterBlit(const Pipeline::Stage &pipelineStage) :
 
 void FilterBlit::Render(const CommandBuffer &commandBuffer) {
 	// Updates descriptors.
-	m_descriptorSet.Push("samplerColour", Graphics::Get()->GetAttachment("swapchain"));
+	descriptorSet.Push("samplerColour", Graphics::Get()->GetAttachment("swapchain"));
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

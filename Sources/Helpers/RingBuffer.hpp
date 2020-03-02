@@ -14,30 +14,28 @@ template<typename T>
 class RingBuffer : NonCopyable {
 public:
 	explicit RingBuffer(std::size_t capacity) :
-		m_data(capacity) {
-		if (capacity == 0) {
+		data(capacity) {
+		if (capacity == 0)
 			throw std::runtime_error("Capacity must be non-zero");
-		}
 	}
 
-	std::size_t size() const { return m_elements; }
-	std::size_t capacity() const { return m_data.capacity(); }
+	std::size_t size() const { return elements; }
+	std::size_t capacity() const { return data.capacity(); }
 
 	void resize(std::size_t s) {
-		if (s == 0) {
+		if (s == 0)
 			throw std::runtime_error("Capacity must be non-zero");
-		}
 
 		// Don't need to resize.
-		if (s == m_data.size()) {
+		if (s == data.size()) {
 			return;
 		}
 
 		// If size if smaller than number of elements, faux-pop elements.
-		if (s < m_elements) {
-			m_tail += m_elements - s;
-			m_tail %= m_data.capacity();
-			m_elements = s;
+		if (s < elements) {
+			tail += elements - s;
+			tail %= data.capacity();
+			elements = s;
 		}
 
 		// Allocate new vector.
@@ -45,100 +43,100 @@ public:
 		std::size_t i = 0;
 
 		// Check for a split buffer.
-		if (m_tail > m_head || m_elements > 0) {
+		if (tail > head || elements > 0) {
 			// Pop from tail to end.
-			while (m_tail < m_data.capacity()) {
-				copy[i++] = m_data[m_tail++];
+			while (tail < data.capacity()) {
+				copy[i++] = data[tail++];
 			}
 
-			m_tail = 0;
+			tail = 0;
 		}
 
 		// Pop from tail to head.
-		while (m_tail < m_head) {
-			copy[i++] = m_data[m_tail++];
+		while (tail < head) {
+			copy[i++] = data[tail++];
 		}
 
 		// Swap contents.
-		m_data.swap(copy);
+		data.swap(copy);
 
 		// Update new head and tail.
-		m_head = m_elements;
-		m_tail = 0;
+		head = elements;
+		tail = 0;
 	}
 
 	void clear() {
 		// Faux-clear.
-		m_head = 0;
-		m_tail = 0;
-		m_elements = 0;
+		head = 0;
+		tail = 0;
+		elements = 0;
 	}
 
-	auto begin() { return m_data.begin(); }
-	auto begin() const { return m_data.begin(); }
+	auto begin() { return data.begin(); }
+	auto begin() const { return data.begin(); }
 
-	auto end() { return m_data.end(); }
-	auto end() const { return m_data.end(); }
+	auto end() { return data.end(); }
+	auto end() const { return data.end(); }
 
 	const T &front() const {
-		return m_data[m_tail];
+		return data[tail];
 	}
 
 	T &front() {
-		return m_data[m_tail];
+		return data[tail];
 	}
 
 	const T &back() const {
-		std::size_t i = m_head + (m_data.capacity() - 1);
-		return m_data[i % m_data.capacity()];
+		std::size_t i = head + (data.capacity() - 1);
+		return data[i % data.capacity()];
 	}
 
 	T &back() {
-		std::size_t i = m_head + (m_data.capacity() - 1);
-		return m_data[i % m_data.capacity()];
+		std::size_t i = head + (data.capacity() - 1);
+		return data[i % data.capacity()];
 	}
 
-	T &operator[](std::size_t i) { return m_data[i]; }
-	const T &operator[](std::size_t i) const { return m_data[i]; }
+	T &operator[](std::size_t i) { return data[i]; }
+	const T &operator[](std::size_t i) const { return data[i]; }
 
 	const T &at(std::size_t i) const {
-		std::size_t ind = m_tail + i;
-		return m_data[ind % m_data.capacity()];
+		std::size_t ind = tail + i;
+		return data[ind % data.capacity()];
 	}
 
 	T &at(std::size_t i) {
-		std::size_t ind = m_tail + i;
-		return m_data[ind % m_data.capacity()];
+		std::size_t ind = tail + i;
+		return data[ind % data.capacity()];
 	}
 
 	template<typename... Args>
 	bool push(Args &&... values) {
-		std::size_t numElements = NumArgs(values...);
+		auto numElements = NumArgs(values...);
 
-		if (m_elements + numElements > m_data.capacity()) {
+		if (elements + numElements > data.capacity()) {
 			return false;
 		}
 
-		m_elements += numElements;
+		elements += numElements;
 
 		// Add data at head.
-		MoveAll(m_data, m_head, values...);
+		MoveAll(data, head, values...);
 
 		// Move head.
-		m_head += numElements;
-		m_head %= m_data.capacity();
+		head += numElements;
+		head %= data.capacity();
 		return true;
 	}
 
 	void pop() {
-		if (m_elements == 0) {
+		if (elements == 0) {
 			return;
 		}
 
-		m_elements--;
+		elements--;
 
-		m_tail++;
-		m_tail %= m_data.capacity();
+		tail++;
+		tail %= data.capacity();
 	}
 
 private:
@@ -163,9 +161,9 @@ private:
 		return 0;
 	}
 
-	std::vector<T> m_data;
-	std::size_t m_head = 0;
-	std::size_t m_tail = 0;
-	std::size_t m_elements = 0;
+	std::vector<T> data;
+	std::size_t head = 0;
+	std::size_t tail = 0;
+	std::size_t elements = 0;
 };
 }

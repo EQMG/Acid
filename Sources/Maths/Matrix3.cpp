@@ -8,28 +8,28 @@
 
 namespace acid {
 Matrix3::Matrix3(float diagonal) {
-	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
-	m_rows[0][0] = diagonal;
-	m_rows[1][1] = diagonal;
-	m_rows[2][2] = diagonal;
+	std::memset(rows, 0, 3 * 3 * sizeof(float));
+	rows[0][0] = diagonal;
+	rows[1][1] = diagonal;
+	rows[2][2] = diagonal;
 }
 
 Matrix3::Matrix3(const Matrix2 &source) {
-	std::memset(m_rows, 0, 3 * 3 * sizeof(float));
-	m_rows[2][2] = 1.0f;
-	std::memcpy(m_rows, source.m_rows, 2 * sizeof(Vector2f));
+	std::memset(rows, 0, 3 * 3 * sizeof(float));
+	rows[2][2] = 1.0f;
+	std::memcpy(rows, source.rows, 2 * sizeof(Vector2f));
 }
 
 Matrix3::Matrix3(const Matrix4 &source) {
-	std::memcpy(m_rows, source.m_rows, 3 * sizeof(Vector3f));
+	std::memcpy(rows, source.rows, 3 * sizeof(Vector3f));
 }
 
 Matrix3::Matrix3(const float *source) {
-	std::memcpy(m_rows, source, 3 * 3 * sizeof(float));
+	std::memcpy(rows, source, 3 * 3 * sizeof(float));
 }
 
 Matrix3::Matrix3(const Vector3f *source) {
-	std::memcpy(m_rows, source, 3 * sizeof(Vector3f));
+	std::memcpy(rows, source, 3 * sizeof(Vector3f));
 }
 
 Matrix3 Matrix3::Add(const Matrix3 &other) const {
@@ -37,7 +37,7 @@ Matrix3 Matrix3::Add(const Matrix3 &other) const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[row][col] + other[row][col];
+			result[row][col] = rows[row][col] + other[row][col];
 		}
 	}
 
@@ -49,7 +49,7 @@ Matrix3 Matrix3::Subtract(const Matrix3 &other) const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[row][col] - other[row][col];
+			result[row][col] = rows[row][col] - other[row][col];
 		}
 	}
 
@@ -61,7 +61,7 @@ Matrix3 Matrix3::Multiply(const Matrix3 &other) const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[0][col] * other[row][0] + m_rows[1][col] * other[row][1] + m_rows[2][col] * other[row][2];
+			result[row][col] = rows[0][col] * other[row][0] + rows[1][col] * other[row][1] + rows[2][col] * other[row][2];
 		}
 	}
 
@@ -72,7 +72,7 @@ Vector3f Matrix3::Multiply(const Vector3f &other) const {
 	Vector3f result;
 
 	for (uint32_t row = 0; row < 3; row++) {
-		result[row] = m_rows[row][0] * other[0] + m_rows[row][1] * other[1] + m_rows[row][2] * other[2];
+		result[row] = rows[row][0] * other[0] + rows[row][1] * other[1] + rows[row][2] * other[2];
 	}
 
 	return result;
@@ -83,7 +83,7 @@ Matrix3 Matrix3::Divide(const Matrix3 &other) const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[0][col] / other[row][0] + m_rows[1][col] / other[row][1] + m_rows[2][col] / other[row][2];
+			result[row][col] = rows[0][col] / other[row][0] + rows[1][col] / other[row][1] + rows[2][col] / other[row][2];
 		}
 	}
 
@@ -94,7 +94,7 @@ Vector3f Matrix3::Transform(const Vector3f &other) const {
 	Vector3f result;
 
 	for (uint32_t row = 0; row < 3; row++) {
-		result[row] = m_rows[0][row] * other.m_x + m_rows[1][row] * other.m_y + m_rows[2][row] * other.m_z;
+		result[row] = rows[0][row] * other.x + rows[1][row] * other.y + rows[2][row] * other.z;
 	}
 
 	return result;
@@ -105,7 +105,7 @@ Matrix3 Matrix3::Scale(const Vector3f &other) const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[row][col] * other[row];
+			result[row][col] = rows[row][col] * other[row];
 		}
 	}
 
@@ -117,7 +117,7 @@ Matrix3 Matrix3::Negate() const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = -m_rows[row][col];
+			result[row][col] = -rows[row][col];
 		}
 	}
 
@@ -155,7 +155,7 @@ Matrix3 Matrix3::Transpose() const {
 
 	for (uint32_t row = 0; row < 3; row++) {
 		for (uint32_t col = 0; col < 3; col++) {
-			result[row][col] = m_rows[col][row];
+			result[row][col] = rows[col][row];
 		}
 	}
 
@@ -173,7 +173,7 @@ float Matrix3::Determinant() const {
 		// If this is an odd-numbered row, negate the value.
 		auto factor = (i % 2 == 1) ? -1.0f : 1.0f;
 
-		result += factor * m_rows[0][i] * minor;
+		result += factor * rows[0][i] * minor;
 	}
 
 	return result;
@@ -190,7 +190,7 @@ Matrix2 Matrix3::GetSubmatrix(uint32_t row, uint32_t col) const {
 
 			for (uint32_t j = 0; j < 3; j++) {
 				if (j != col) {
-					result[rowCount][colCount] = m_rows[i][j];
+					result[rowCount][colCount] = rows[i][j];
 					colCount++;
 				}
 			}
@@ -204,16 +204,16 @@ Matrix2 Matrix3::GetSubmatrix(uint32_t row, uint32_t col) const {
 
 const Vector3f &Matrix3::operator[](uint32_t index) const {
 	assert(index < 3);
-	return m_rows[index];
+	return rows[index];
 }
 
 Vector3f &Matrix3::operator[](uint32_t index) {
 	assert(index < 3);
-	return m_rows[index];
+	return rows[index];
 }
 
 bool Matrix3::operator==(const Matrix3 &other) const {
-	return m_rows[0] == other[0] && m_rows[1] == other[1] && m_rows[2] == other[2];
+	return rows[0] == other[0] && rows[1] == other[1] && rows[2] == other[2];
 }
 
 bool Matrix3::operator!=(const Matrix3 &other) const {
@@ -305,16 +305,16 @@ Matrix3 &Matrix3::operator/=(float other) {
 }
 
 const Node &operator>>(const Node &node, Matrix3 &matrix) {
-	node["m0"].Get(matrix.m_rows[0]);
-	node["m1"].Get(matrix.m_rows[1]);
-	node["m2"].Get(matrix.m_rows[2]);
+	node["m0"].Get(matrix.rows[0]);
+	node["m1"].Get(matrix.rows[1]);
+	node["m2"].Get(matrix.rows[2]);
 	return node;
 }
 
 Node &operator<<(Node &node, const Matrix3 &matrix) {
-	node["m0"].Set(matrix.m_rows[0]);
-	node["m1"].Set(matrix.m_rows[1]);
-	node["m2"].Set(matrix.m_rows[2]);
+	node["m0"].Set(matrix.rows[0]);
+	node["m1"].Set(matrix.rows[1]);
+	node["m2"].Set(matrix.rows[2]);
 	return node;
 }
 

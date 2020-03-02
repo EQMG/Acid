@@ -11,28 +11,27 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	const Colour &GetScreenColour() const { return m_screenColour; }
-	void SetScreenColour(const Colour &screenColour) { m_screenColour = screenColour; }
+	const Colour &GetScreenColour() const { return screenColour; }
+	void SetScreenColour(const Colour &screenColour) { this->screenColour = screenColour; }
 
-	float GetCurveAmountX() const { return m_curveAmountX; }
-	void SetCurveAmountX(float curveAmountX) { m_curveAmountX = curveAmountX; }
+	float GetCurveAmountX() const { return curveAmountX; }
+	void SetCurveAmountX(float curveAmountX) { this->curveAmountX = curveAmountX; }
 
-	float GetCurveAmountY() const { return m_curveAmountY; }
-	void SetCurveAmountY(float curveAmountY) { m_curveAmountY = curveAmountY; }
+	float GetCurveAmountY() const { return curveAmountY; }
+	void SetCurveAmountY(float curveAmountY) { this->curveAmountY = curveAmountY; }
 
-	float GetScanLineSize() const { return m_scanLineSize; }
-	void SetScanLineSize(float scanLineSize) { m_scanLineSize = scanLineSize; }
+	float GetScanLineSize() const { return scanLineSize; }
+	void SetScanLineSize(float scanLineSize) { this->scanLineSize = scanLineSize; }
 
-	float GetScanIntensity() const { return m_scanIntensity; }
-	void SetScanIntensity(float scanIntensity) { m_scanIntensity = scanIntensity; }
+	float GetScanIntensity() const { return scanIntensity; }
+	void SetScanIntensity(float scanIntensity) { this->scanIntensity = scanIntensity; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	Colour m_screenColour;
-	float m_curveAmountX;
-	float m_curveAmountY;
-	float m_scanLineSize;
-	float m_scanIntensity;
+	Colour screenColour;
+	float curveAmountX, curveAmountY;
+	float scanLineSize;
+	float scanIntensity;
 };
 }

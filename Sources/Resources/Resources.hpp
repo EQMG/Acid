@@ -20,10 +20,10 @@ public:
 
 	template<typename T>
 	std::shared_ptr<T> Find(const Node &node) const {
-		if (m_resources.find(typeid(T)) == m_resources.end())
+		if (resources.find(typeid(T)) == resources.end())
 			return nullptr;
 		
-		for (const auto &[key, resource] : m_resources.at(typeid(T))) {
+		for (const auto &[key, resource] : resources.at(typeid(T))) {
 			if (key == node)
 				return std::dynamic_pointer_cast<T>(resource);
 		}
@@ -38,12 +38,12 @@ public:
 	 * Gets the resource loader thread pool.
 	 * @return The resource loader thread pool.
 	 */
-	ThreadPool &GetThreadPool() { return m_threadPool; }
+	ThreadPool &GetThreadPool() { return threadPool; }
 
 private:
-	std::unordered_map<std::type_index, std::map<Node, std::shared_ptr<Resource>>> m_resources;
-	ElapsedTime m_elapsedPurge;
+	std::unordered_map<std::type_index, std::map<Node, std::shared_ptr<Resource>>> resources;
+	ElapsedTime elapsedPurge;
 
-	ThreadPool m_threadPool;
+	ThreadPool threadPool;
 };
 }

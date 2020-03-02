@@ -9,12 +9,12 @@ public:
 
 	void Render(const CommandBuffer &commandBuffer) override;
 
-	float GetSpanMax() const { return m_spanMax; }
-	void SetSpanMax(float spanMax) { m_spanMax = spanMax; }
+	float GetSpanMax() const { return spanMax; }
+	void SetSpanMax(float spanMax) { this->spanMax = spanMax; }
 
 private:
-	PushHandler m_pushScene;
+	PushHandler pushScene;
 
-	float m_spanMax;
+	float spanMax;
 };
 }

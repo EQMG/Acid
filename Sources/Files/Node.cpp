@@ -9,13 +9,13 @@ const Node::Format Node::Format::Minified = Format(0, '\0', '\0', false);
 static const Node NullNode = Node("null", Node::Type::Null);
 
 Node::Node(std::string value, Type type) :
-	m_value(std::move(value)),
-	m_type(type) {
+	value(std::move(value)),
+	type(type) {
 }
 
 Node::Node(std::string value, std::vector<Node> &&properties) :
-	m_properties(std::move(properties)),
-	m_value(std::move(value)) {
+	properties(std::move(properties)),
+	value(std::move(value)) {
 }
 
 void Node::ParseString(std::string_view string) {
@@ -25,27 +25,27 @@ void Node::WriteStream(std::ostream &stream, const Format &format) const {
 }
 
 void Node::Clear() {
-	m_properties.clear();
+	properties.clear();
 }
 
 bool Node::IsValid() const {
-	switch (m_type) {
+	switch (type) {
 	case Type::Token:
 	case Type::Unknown:
 		return false;
 	case Type::Object:
 	case Type::Array:
-		return !m_properties.empty();
+		return !properties.empty();
 	case Type::Null:
 		return true;
 	default:
-		return !m_value.empty();
+		return !value.empty();
 	}
 }
 
 bool Node::HasProperty(std::string_view name) const {
-	for (const auto &property : m_properties) {
-		if (property.m_name == name)
+	for (const auto &property : properties) {
+		if (property.name == name)
 			return true;
 	}
 
@@ -53,8 +53,8 @@ bool Node::HasProperty(std::string_view name) const {
 }
 
 NodeConstView Node::GetProperty(std::string_view name) const {
-	for (const auto &property : m_properties) {
-		if (property.m_name == name)
+	for (const auto &property : properties) {
+		if (property.name == name)
 			return {this, std::string(name), &property};
 	}
 
@@ -62,16 +62,16 @@ NodeConstView Node::GetProperty(std::string_view name) const {
 }
 
 NodeConstView Node::GetProperty(uint32_t index) const {
-	if (index < m_properties.size())
-		return {this, index, &m_properties[index]};
+	if (index < properties.size())
+		return {this, index, &properties[index]};
 
 	return {this, index, nullptr};
 }
 
 // TODO: Duplicate
 NodeView Node::GetProperty(std::string_view name) {
-	for (auto &property : m_properties) {
-		if (property.m_name == name)
+	for (auto &property : properties) {
+		if (property.name == name)
 			return {this, std::string(name), &property};
 	}
 
@@ -80,56 +80,56 @@ NodeView Node::GetProperty(std::string_view name) {
 
 // TODO: Duplicate
 NodeView Node::GetProperty(uint32_t index) {
-	if (index < m_properties.size())
-		return {this, index, &m_properties[index]};
+	if (index < properties.size())
+		return {this, index, &properties[index]};
 
 	return {this, index, nullptr};
 }
 
 Node &Node::AddProperty() {
-	return m_properties.emplace_back();
+	return properties.emplace_back();
 }
 
 Node &Node::AddProperty(std::string_view name, Node &&node) {
-	node.m_name = name;
-	return m_properties.emplace_back(std::move(node));
+	node.name = name;
+	return properties.emplace_back(std::move(node));
 }
 
 Node &Node::AddProperty(std::string_view name) {
 	Node node;
-	node.m_name = name;
-	return m_properties.emplace_back(std::move(node));
+	node.name = name;
+	return properties.emplace_back(std::move(node));
 }
 
 Node &Node::AddProperty(uint32_t index, Node &&node) {
-	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
-	return m_properties[index] = std::move(node);
+	properties.resize(std::max(properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
+	return properties[index] = std::move(node);
 }
 
 Node &Node::AddProperty(uint32_t index) {
-	m_properties.resize(std::max(m_properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
-	return m_properties[index];
+	properties.resize(std::max(properties.size(), static_cast<std::size_t>(index + 1)), NullNode);
+	return properties[index];
 }
 
 void Node::RemoveProperty(std::string_view name) {
-	//node.m_parent = nullptr;
-	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [name](const auto &n) {
+	//node.parent = nullptr;
+	properties.erase(std::remove_if(properties.begin(), properties.end(), [name](const auto &n) {
 		return n.GetName() == name;
-	}), m_properties.end());
+	}), properties.end());
 }
 
 void Node::RemoveProperty(const Node &node) {
-	//node.m_parent = nullptr;
-	m_properties.erase(std::remove_if(m_properties.begin(), m_properties.end(), [node](const auto &n) {
+	//node.parent = nullptr;
+	properties.erase(std::remove_if(properties.begin(), properties.end(), [node](const auto &n) {
 		return n == node;
-	}), m_properties.end());
+	}), properties.end());
 }
 
 std::vector<NodeConstView> Node::GetProperties(std::string_view name) const {
 	std::vector<NodeConstView> properties;
 
-	for (const auto &property : m_properties) {
-		if (property.m_name == name)
+	for (const auto &property : this->properties) {
+		if (property.name == name)
 			properties.emplace_back(NodeConstView(this, std::string(name), &property));
 	}
 
@@ -145,7 +145,7 @@ NodeConstView Node::GetPropertyWithBackup(std::string_view name, std::string_vie
 }
 
 NodeConstView Node::GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const {
-	for (const auto &property : m_properties) {
+	for (const auto &property : properties) {
 		auto properties1 = property.GetProperties(propertyName);
 		if (properties1.empty())
 			return {this, std::string(propertyName), nullptr};
@@ -163,8 +163,8 @@ NodeConstView Node::GetPropertyWithValue(std::string_view propertyName, std::str
 std::vector<NodeView> Node::GetProperties(std::string_view name) {
 	std::vector<NodeView> properties;
 
-	for (auto &property : m_properties) {
-		if (property.m_name == name)
+	for (auto &property : this->properties) {
+		if (property.name == name)
 			properties.emplace_back(NodeView(this, std::string(name), &property));
 	}
 
@@ -182,7 +182,7 @@ NodeView Node::GetPropertyWithBackup(std::string_view name, std::string_view bac
 
 // TODO: Duplicate
 NodeView Node::GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) {
-	for (auto &property : m_properties) {
+	for (auto &property : properties) {
 		auto properties1 = property.GetProperties(propertyName);
 		if (properties1.empty())
 			return {this, std::string(propertyName), nullptr};
@@ -215,8 +215,8 @@ NodeView Node::operator[](uint32_t index) {
 }
 
 bool Node::operator==(const Node &other) const {
-	return m_value == other.m_value && m_properties.size() == other.m_properties.size() &&
-		std::equal(m_properties.begin(), m_properties.end(), other.m_properties.begin(), [](const auto &left, const auto &right) {
+	return value == other.value && properties.size() == other.properties.size() &&
+		std::equal(properties.begin(), properties.end(), other.properties.begin(), [](const auto &left, const auto &right) {
 			return left == right;
 		});
 }
@@ -226,14 +226,14 @@ bool Node::operator!=(const Node &other) const {
 }
 
 bool Node::operator<(const Node &other) const {
-	if (m_name < other.m_name) return true;
-	if (other.m_name < m_name) return false;
+	if (name < other.name) return true;
+	if (other.name < name) return false;
 
-	if (m_value < other.m_value) return true;
-	if (other.m_value < m_value) return false;
+	if (value < other.value) return true;
+	if (other.value < value) return false;
 
-	if (m_properties < other.m_properties) return true;
-	if (other.m_properties < m_properties) return false;
+	if (properties < other.properties) return true;
+	if (other.properties < properties) return false;
 	
 	return false;
 }

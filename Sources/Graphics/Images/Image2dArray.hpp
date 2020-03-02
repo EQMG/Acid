@@ -49,11 +49,11 @@ public:
 	 */
 	void SetPixels(const float *pixels, uint32_t arrayLayer);
 
-	bool IsAnisotropic() const { return m_anisotropic; }
-	bool IsMipmap() const { return m_mipmap; }
+	bool IsAnisotropic() const { return anisotropic; }
+	bool IsMipmap() const { return mipmap; }
 	
 private:
-	bool m_anisotropic;
-	bool m_mipmap;
+	bool anisotropic;
+	bool mipmap;
 };
 }

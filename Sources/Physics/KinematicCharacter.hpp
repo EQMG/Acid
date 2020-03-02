@@ -13,6 +13,7 @@ namespace acid {
  * @brief Represents a kinematic character controller.
  */
 class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject {
+	inline static const bool Registered = Register("kinematicCharacter");
 public:
 	/**
 	 * Creates a new kinematic character controller.
@@ -21,7 +22,6 @@ public:
 	 * @param friction The amount of surface friction.
 	 */
 	explicit KinematicCharacter(std::unique_ptr<Collider> &&collider = nullptr, float mass = 1.0f, float friction = 0.2f);
-
 	~KinematicCharacter();
 
 	void Start() override;
@@ -36,22 +36,22 @@ public:
 	void SetLinearVelocity(const Vector3f &linearVelocity) override;
 	void SetAngularVelocity(const Vector3f &angularVelocity) override;
 
-	const Vector3f &GetUp() const { return m_up; }
+	const Vector3f &GetUp() const { return up; }
 	void SetUp(const Vector3f &up);
 
-	float GetStepHeight() const { return m_stepHeight; }
+	float GetStepHeight() const { return stepHeight; }
 	void SetStepHeight(float stepHeight);
 
-	float GetFallSpeed() const { return m_fallSpeed; }
+	float GetFallSpeed() const { return fallSpeed; }
 	void SetFallSpeed(float fallSpeed);
 
-	float GetJumpSpeed() const { return m_jumpSpeed; }
+	float GetJumpSpeed() const { return jumpSpeed; }
 	void SetJumpSpeed(float jumpSpeed);
 
-	float GetMaxJumpHeight() const { return m_maxHeight; }
+	float GetMaxJumpHeight() const { return maxHeight; }
 	void SetMaxJumpHeight(float maxHeight);
 
-	bool IsInterpolate() const { return m_interpolate; }
+	bool IsInterpolate() const { return interpolate; }
 	void SetInterpolate(bool interpolate);
 
 	bool IsOnGround() const;
@@ -65,16 +65,14 @@ protected:
 	void RecalculateMass() override;
 
 private:
-	static bool registered;
+	Vector3f up;
+	float stepHeight;
+	float fallSpeed;
+	float jumpSpeed;
+	float maxHeight;
+	bool interpolate;
 
-	Vector3f m_up;
-	float m_stepHeight;
-	float m_fallSpeed;
-	float m_jumpSpeed;
-	float m_maxHeight;
-	bool m_interpolate;
-
-	std::unique_ptr<btPairCachingGhostObject> m_ghostObject;
-	std::unique_ptr<btKinematicCharacterController> m_controller;
+	std::unique_ptr<btPairCachingGhostObject> ghostObject;
+	std::unique_ptr<btKinematicCharacterController> controller;
 };
 }

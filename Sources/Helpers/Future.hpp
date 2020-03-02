@@ -14,19 +14,19 @@ public:
 	Future() noexcept = default;
 
 	Future(std::future<T> &&future) noexcept :
-		m_future(std::move(future)) {
+		future(std::move(future)) {
 	}
 
 	bool has_value() const noexcept {
-		return m_future.valid() || m_current;
+		return future.valid() || current;
 	}
 
 	T &get() noexcept {
-		if (m_future.valid()) {
-			m_current = m_future.get();
+		if (future.valid()) {
+			current = future.get();
 		}
 
-		return *m_current;
+		return *current;
 	}
 
 	constexpr explicit operator bool() const noexcept { return has_value(); }
@@ -36,7 +36,7 @@ public:
 	T &operator->() noexcept { return get(); }
 
 	bool operator==(const Future &other) const noexcept {
-		return m_future == other.m_future && m_current == other.m_current;
+		return future == other.future && current == other.current;
 	}
 
 	bool operator!=(const Future &other) const noexcept {
@@ -44,7 +44,7 @@ public:
 	}
 
 private:
-	std::future<T> m_future;
-	std::optional<T> m_current;
+	std::future<T> future;
+	std::optional<T> current;
 };
 }

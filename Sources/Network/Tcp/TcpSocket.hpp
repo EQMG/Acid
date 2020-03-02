@@ -37,11 +37,11 @@ public:
 	PendingPacket() = default;
 
 	/// Data of packet size.
-	uint32_t m_size = 0;
+	uint32_t size = 0;
 	/// Number of size bytes received so far.
-	std::size_t m_sizeReceived = 0;
+	std::size_t sizeReceived = 0;
 	/// Data of the packet.
-	std::vector<char> m_data;
+	std::vector<char> data;
 };
 
 /**
@@ -145,6 +145,6 @@ public:
 
 private:
 	/// Temporary data of the packet currently being received.
-	PendingPacket m_pendingPacket;
+	PendingPacket pendingPacket;
 };
 }

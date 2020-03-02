@@ -15,34 +15,34 @@ public:
 	class SubpassDescription : NonCopyable {
 	public:
 		SubpassDescription(VkPipelineBindPoint bindPoint, std::vector<VkAttachmentReference> colorAttachments, const std::optional<uint32_t> &depthAttachment) :
-			m_colorAttachments(std::move(colorAttachments)) {
-			m_subpassDescription.pipelineBindPoint = bindPoint;
-			m_subpassDescription.colorAttachmentCount = static_cast<uint32_t>(m_colorAttachments.size());
-			m_subpassDescription.pColorAttachments = m_colorAttachments.data();
+			colorAttachments(std::move(colorAttachments)) {
+			subpassDescription.pipelineBindPoint = bindPoint;
+			subpassDescription.colorAttachmentCount = static_cast<uint32_t>(this->colorAttachments.size());
+			subpassDescription.pColorAttachments = this->colorAttachments.data();
 
 			if (depthAttachment) {
-				m_depthStencilAttachment.attachment = *depthAttachment;
-				m_depthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-				m_subpassDescription.pDepthStencilAttachment = &m_depthStencilAttachment;
+				depthStencilAttachment.attachment = *depthAttachment;
+				depthStencilAttachment.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				subpassDescription.pDepthStencilAttachment = &depthStencilAttachment;
 			}
 		}
 
-		const VkSubpassDescription &GetSubpassDescription() const { return m_subpassDescription; }
+		const VkSubpassDescription &GetSubpassDescription() const { return subpassDescription; }
 
 	private:
-		VkSubpassDescription m_subpassDescription = {};
-		std::vector<VkAttachmentReference> m_colorAttachments;
-		VkAttachmentReference m_depthStencilAttachment = {};
+		VkSubpassDescription subpassDescription = {};
+		std::vector<VkAttachmentReference> colorAttachments;
+		VkAttachmentReference depthStencilAttachment = {};
 	};
 
 	Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
 	
 	~Renderpass();
 
-	operator const VkRenderPass &() const { return m_renderpass; }
-	const VkRenderPass &GetRenderpass() const { return m_renderpass; }
+	operator const VkRenderPass &() const { return renderpass; }
+	const VkRenderPass &GetRenderpass() const { return renderpass; }
 
 private:
-	VkRenderPass m_renderpass = VK_NULL_HANDLE;
+	VkRenderPass renderpass = VK_NULL_HANDLE;
 };
 }

@@ -17,18 +17,18 @@ public:
 	void UpdateObject() override;
 
 private:
-	float m_zoom = 1.0f;
+	float zoom = 1.0f;
 
-	UiObject m_content;
-	Text m_title;
-	Text m_body;
+	UiObject content;
+	Text title;
+	Text body;
 
-	UiPanel m_settings;
-	UiInputSlider m_masterVolume;
-	UiInputBoolean m_antialiasing;
+	UiPanel settings;
+	UiInputSlider masterVolume;
+	UiInputBoolean antialiasing;
 
-	Text m_textFrameTime;
-	Text m_textFps;
-	Text m_textUps;
+	Text textFrameTime;
+	Text textFps;
+	Text textUps;
 };
 }

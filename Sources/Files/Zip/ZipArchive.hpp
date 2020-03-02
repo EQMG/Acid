@@ -46,7 +46,7 @@ namespace acid {
  *
  * Note that the actual files in the .zip archive can be retrieved via the ZipEntry interface, not the ZipArchive interface.
  */
-class ZipArchive : NonCopyable {
+class ACID_EXPORT ZipArchive : NonCopyable {
 public:
 	/**
 	 * @brief Constructor. Constructs a null-archive, which can be used for creating a new .zip file
@@ -55,7 +55,6 @@ public:
 	 * performed. Otherwise, the object will be in a null-state and calls to member functions will be undefined.
 	 */
 	explicit ZipArchive() = default;
-
 	/**
 	 * @brief Constructor. Constructs an archive object, using the filename input parameter. If the file already exists,
 	 * it will be opened. Otherwise, a new object will be created.
@@ -66,7 +65,6 @@ public:
 	 * @param filename The name of the file to open or create.
 	 */
 	explicit ZipArchive(const std::filesystem::path &filename);
-
 	/**
 	 * @brief Destructor.
 	 * @note The destructor will call the Close() member function. If the archive has been modified but not saved,
@@ -105,7 +103,7 @@ public:
 	 * @brief Checks if the archive file is open for reading and writing.
 	 * @return true if it is open; otherwise false;
 	 */
-	bool IsOpen() const { return m_isOpen; }
+	bool IsOpen() const { return isOpen; }
 
 	/**
 	 * @brief Get a list of the entries in the archive. Depending on the input parameters, the list will include
@@ -261,10 +259,10 @@ private:
 	 */
 	static std::string GenerateRandomName(int length);
 
-	mz_zip_archive m_archive = {}; /// The struct used by miniz, to handle archive files.
-	std::filesystem::path m_archivePath; /// The path of the archive file.
-	bool m_isOpen = false; /// A flag indicating if the file is currently open for reading and writing.
+	mz_zip_archive archive = {}; /// The struct used by miniz, to handle archive files.
+	std::filesystem::path archivePath; /// The path of the archive file.
+	bool isOpen = false; /// A flag indicating if the file is currently open for reading and writing.
 
-	std::vector<std::unique_ptr<ZipEntry>> m_zipEntries; /// Data structure for all entries in the archive.
+	std::vector<std::unique_ptr<ZipEntry>> zipEntries; /// Data structure for all entries in the archive.
 };
 }

@@ -3,26 +3,25 @@
 namespace acid {
 FilterDarken::FilterDarken(const Pipeline::Stage &pipelineStage, float factor) :
 	PostFilter(pipelineStage, {"Shaders/Post/Default.vert", "Shaders/Post/Darken.frag"}),
-	m_factor(factor) {
+	factor(factor) {
 }
 
 void FilterDarken::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	m_pushScene.Push("factor", m_factor);
+	pushScene.Push("factor", factor);
 
 	// Updates descriptors.
-	m_descriptorSet.Push("PushScene", m_pushScene);
+	descriptorSet.Push("PushScene", pushScene);
 	PushConditional("writeColour", "samplerColour", "resolved", "diffuse");
 
-	if (!m_descriptorSet.Update(m_pipeline)) {
+	if (!descriptorSet.Update(pipeline))
 		return;
-	}
 
 	// Draws the object.
-	m_pipeline.BindPipeline(commandBuffer);
+	pipeline.BindPipeline(commandBuffer);
 
-	m_descriptorSet.BindDescriptor(commandBuffer, m_pipeline);
-	m_pushScene.BindPush(commandBuffer, m_pipeline);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	pushScene.BindPush(commandBuffer, pipeline);
 	vkCmdDraw(commandBuffer, 3, 1, 0, 0);
 }
 }

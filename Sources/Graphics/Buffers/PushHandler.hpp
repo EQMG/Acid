@@ -15,16 +15,16 @@ public:
 
 	template<typename T>
 	void Push(const T &object, std::size_t offset, std::size_t size) {
-		std::memcpy(m_data.get() + offset, &object, size);
+		std::memcpy(data.get() + offset, &object, size);
 	}
 
 	template<typename T>
 	void Push(const std::string &uniformName, const T &object, std::size_t size = 0) {
-		if (!m_uniformBlock) {
+		if (!uniformBlock) {
 			return;
 		}
 
-		auto uniform = m_uniformBlock->GetUniform(uniformName);
+		auto uniform = uniformBlock->GetUniform(uniformName);
 
 		if (!uniform) {
 			return;
@@ -44,8 +44,8 @@ public:
 	void BindPush(const CommandBuffer &commandBuffer, const Pipeline &pipeline);
 
 private:
-	bool m_multipipeline;
-	std::optional<Shader::UniformBlock> m_uniformBlock;
-	std::unique_ptr<char[]> m_data;
+	bool multipipeline;
+	std::optional<Shader::UniformBlock> uniformBlock;
+	std::unique_ptr<char[]> data;
 };
 }

@@ -11,24 +11,22 @@
 #include "Maths/Transform.hpp"
 
 namespace acid {
-bool MeshAnimated::registered = Register("meshAnimated");
-
 MeshAnimated::MeshAnimated(std::filesystem::path filename, std::unique_ptr<Material> &&material) :
-	m_material(std::move(material)),
-	m_filename(std::move(filename)) {
+	material(std::move(material)),
+	filename(std::move(filename)) {
 }
 
 void MeshAnimated::Start() {
-	if (m_material)
-		m_material->CreatePipeline(GetVertexInput(), true);
+	if (material)
+		material->CreatePipeline(GetVertexInput(), true);
 
-	if (m_filename.empty())
+	if (filename.empty())
 		return;
 
-	//File file(m_filename, std::make_unique<Xml>("COLLADA"));
+	//File file(filename, std::make_unique<Xml>("COLLADA"));
 	//file.Load();
 	//auto &fileNode = *file.GetNode();
-	File file(m_filename);
+	File file(filename);
 	file.Load();
 	auto fileNode = (*file.GetNode())["COLLADA"];
 
@@ -39,47 +37,47 @@ void MeshAnimated::Start() {
 	SkeletonLoader skeletonLoader(fileNode["library_visual_scenes"], skinLoader.GetJointOrder(), Correction);
 	GeometryLoader geometryLoader(fileNode["library_geometries"], skinLoader.GetVertexWeights(), Correction);
 
-	m_model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
-	m_headJoint = skeletonLoader.GetHeadJoint();
+	model = std::make_shared<Model>(geometryLoader.GetVertices(), geometryLoader.GetIndices());
+	headJoint = skeletonLoader.GetHeadJoint();
 
 	AnimationLoader animationLoader(fileNode["library_animations"], fileNode["library_visual_scenes"], Correction);
 
-	m_animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
-	m_animator.DoAnimation(m_animation.get());
+	animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
+	animator.DoAnimation(animation.get());
 
 /*#if defined(ACID_DEBUG)
 	{
 		File fileModel("Animation/Model.json");
-		(*fileModel.GetNode())["vertices"].Set(m_model->GetVertices<VertexAnimated>());
-		(*fileModel.GetNode())["indices"].Set(m_model->GetIndices());
+		(*fileModel.GetNode())["vertices"].Set(model->GetVertices<VertexAnimated>());
+		(*fileModel.GetNode())["indices"].Set(model->GetIndices());
 		fileModel.Write(Node::Format::Beautified);
 	}
 	{
 		File fileJoints("Animation/Joints.json");
-		*fileJoints.GetNode() << m_headJoint;
+		*fileJoints.GetNode() << headJoint;
 		fileJoints.Write(Node::Format::Beautified);
 	}
 	{
 		File fileAnimation0("Animation/Animation0.json");
-		*fileAnimation0.GetNode() << *m_animation;
+		*fileAnimation0.GetNode() << *animation;
 		fileAnimation0.Write(Node::Format::Beautified);
 	}
 #endif*/
 }
 
 void MeshAnimated::Update() {
-	if (m_material) {
+	if (material) {
 		auto transform = GetEntity()->GetComponent<Transform>();
-		m_material->PushUniforms(m_uniformObject, transform);
+		material->PushUniforms(uniformObject, transform);
 	}
 	
 	std::vector<Matrix4> jointMatrices(MaxJoints);
-	m_animator.Update(m_headJoint, jointMatrices);
-	m_storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
+	animator.Update(headJoint, jointMatrices);
+	storageAnimation.Push(jointMatrices.data(), sizeof(Matrix4) * jointMatrices.size());
 }
 
 bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniformScene, const Pipeline::Stage &pipelineStage) {
-	if (!m_model || !m_material)
+	if (!model || !material)
 		return false;
 
 	// Checks if the mesh is in view.
@@ -89,7 +87,7 @@ bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler 
 	}*/
 
 	// Check if we are in the correct pipeline stage.
-	auto materialPipeline = m_material->GetPipelineMaterial();
+	auto materialPipeline = material->GetPipelineMaterial();
 	if (!materialPipeline || materialPipeline->GetStage() != pipelineStage)
 		return false;
 
@@ -100,34 +98,34 @@ bool MeshAnimated::CmdRender(const CommandBuffer &commandBuffer, UniformHandler 
 	const auto &pipeline = *materialPipeline->GetPipeline();
 
 	// Updates descriptors.
-	m_descriptorSet.Push("UniformScene", uniformScene);
-	m_descriptorSet.Push("UniformObject", m_uniformObject);
-	m_descriptorSet.Push("BufferAnimation", m_storageAnimation);
+	descriptorSet.Push("UniformScene", uniformScene);
+	descriptorSet.Push("UniformObject", uniformObject);
+	descriptorSet.Push("BufferAnimation", storageAnimation);
 
-	m_material->PushDescriptors(m_descriptorSet);
+	material->PushDescriptors(descriptorSet);
 
-	if (!m_descriptorSet.Update(pipeline))
+	if (!descriptorSet.Update(pipeline))
 		return false;
 
 	// Draws the object.
-	m_descriptorSet.BindDescriptor(commandBuffer, pipeline);
-	return m_model->CmdRender(commandBuffer);
+	descriptorSet.BindDescriptor(commandBuffer, pipeline);
+	return model->CmdRender(commandBuffer);
 }
 
 void MeshAnimated::SetMaterial(std::unique_ptr<Material> &&material) {
-	m_material = std::move(material);
-	m_material->CreatePipeline(GetVertexInput(), true);
+	this->material = std::move(material);
+	this->material->CreatePipeline(GetVertexInput(), true);
 }
 
 const Node &operator>>(const Node &node, MeshAnimated &meshAnimated) {
-	node["filename"].Get(meshAnimated.m_filename);
-	node["material"].Get(meshAnimated.m_material);
+	node["filename"].Get(meshAnimated.filename);
+	node["material"].Get(meshAnimated.material);
 	return node;
 }
 
 Node &operator<<(Node &node, const MeshAnimated &meshAnimated) {
-	node["filename"].Set(meshAnimated.m_filename);
-	node["material"].Set(meshAnimated.m_material);
+	node["filename"].Set(meshAnimated.filename);
+	node["material"].Set(meshAnimated.material);
 	return node;
 }
 }

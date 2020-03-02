@@ -19,18 +19,18 @@ OverlayDebug::OverlayDebug() {
 		AddChild(&object);
 	};
 	
-	createText(0, m_textFrameTime);
-	createText(1, m_textFps);
-	createText(2, m_textUps);
-	createText(3, m_textTime);
+	createText(0, textFrameTime);
+	createText(1, textFps);
+	createText(2, textUps);
+	createText(3, textTime);
 }
 
 void OverlayDebug::UpdateObject() {
 	// TODO: Update every 0.333 seconds.
 	
-	m_textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
-	m_textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
-	m_textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
+	textFrameTime.SetString("Frame Time: " + String::To(1000.0f / Engine::Get()->GetFps()) + "ms");
+	textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
+	textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
 	if (World::Get()) {
 		auto timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
@@ -41,7 +41,7 @@ void OverlayDebug::UpdateObject() {
 			hour -= 24;
 		}
 
-		m_textTime.SetString("Time: " + String::To(hour) + ":" + String::To(minute));
+		textTime.SetString("Time: " + String::To(hour) + ":" + String::To(minute));
 	}
 }
 }

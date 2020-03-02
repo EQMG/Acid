@@ -9,6 +9,8 @@ namespace acid {
  * @brief Button from a joystick.
  */
 class ACID_EXPORT HatJoystick : public Axis::Registrar<HatJoystick>, public Button::Registrar<HatJoystick> {
+	inline static const bool Registered = Axis::Registrar<HatJoystick>::Register("hatJoystick") &&
+		Button::Registrar<HatJoystick>::Register("hatJoystick");
 public:
 	/**
 	 * Creates a new joystick button.
@@ -23,24 +25,22 @@ public:
 	float GetAmount() const override;
 	bool IsDown() const override;
 
-	JoystickPort GetPort() const { return m_port; }
-	void SetPort(JoystickPort port) { m_port = port; }
+	JoystickPort GetPort() const { return port; }
+	void SetPort(JoystickPort port) { this->port = port; }
 
-	JoystickHat GetHat() const { return m_hat; }
-	void SetHat(JoystickHat hat) { m_hat = hat; }
+	JoystickHat GetHat() const { return hat; }
+	void SetHat(JoystickHat hat) { this->hat = hat; }
 
-	const BitMask<JoystickHatValue> &GetHatFlags() const { return m_hatFlags; }
-	void SetHatFlags(JoystickHatValue hatFlags) { m_hatFlags = hatFlags; }
+	const BitMask<JoystickHatValue> &GetHatFlags() const { return hatFlags; }
+	void SetHatFlags(JoystickHatValue hatFlags) { this->hatFlags = hatFlags; }
 
 	friend const Node &operator>>(const Node &node, HatJoystick &hatJoystick);
 	friend Node &operator<<(Node &node, const HatJoystick &hatJoystick);
 
 private:
-	static bool registered;
-
-	JoystickPort m_port;
-	JoystickHat m_hat;
-	BitMask<JoystickHatValue> m_hatFlags;
-	bool m_lastDown = false;
+	JoystickPort port;
+	JoystickHat hat;
+	BitMask<JoystickHatValue> hatFlags;
+	bool lastDown = false;
 };
 }

@@ -9,15 +9,13 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool Sound::registered = Register("sound");
-
 Sound::Sound(const std::string &filename, const Audio::Type &type, bool begin, bool loop, float gain, float pitch) :
-	m_buffer(SoundBuffer::Create(filename)),
-	m_type(type),
-	m_gain(gain),
-	m_pitch(pitch) {
-	alGenSources(1, &m_source);
-	alSourcei(m_source, AL_BUFFER, m_buffer->GetBuffer());
+	buffer(SoundBuffer::Create(filename)),
+	type(type),
+	gain(gain),
+	pitch(pitch) {
+	alGenSources(1, &source);
+	alSourcei(source, AL_BUFFER, buffer->GetBuffer());
 
 	Audio::CheckAl(alGetError());
 
@@ -29,14 +27,14 @@ Sound::Sound(const std::string &filename, const Audio::Type &type, bool begin, b
 	}
 
 	Audio::Get()->OnGain().Add([this](Audio::Type type, float volume) {
-		if (type == m_type) {
-			SetGain(m_gain);
+		if (this->type == type) {
+			SetGain(this->gain);
 		}
 	}, this);
 }
 
 Sound::~Sound() {
-	alDeleteSources(1, &m_source);
+	alDeleteSources(1, &source);
 	Audio::CheckAl(alGetError());
 }
 
@@ -50,11 +48,11 @@ void Sound::Update() {
 }
 
 void Sound::Play(bool loop) {
-	alSourcei(m_source, AL_LOOPING, loop);
-	alSourcePlay(m_source);
+	alSourcei(source, AL_LOOPING, loop);
+	alSourcePlay(source);
 	Audio::CheckAl(alGetError());
 
-	SetGain(m_gain);
+	SetGain(gain);
 }
 
 void Sound::Pause() {
@@ -62,7 +60,7 @@ void Sound::Pause() {
 		return;
 	}
 
-	alSourcePause(m_source);
+	alSourcePause(source);
 	Audio::CheckAl(alGetError());
 }
 
@@ -71,10 +69,10 @@ void Sound::Resume() {
 		return;
 	}
 
-	alSourcePlay(m_source);
+	alSourcePlay(source);
 	Audio::CheckAl(alGetError());
 
-	SetGain(m_gain);
+	SetGain(gain);
 }
 
 void Sound::Stop() {
@@ -82,59 +80,59 @@ void Sound::Stop() {
 		return;
 	}
 
-	alSourceStop(m_source);
+	alSourceStop(source);
 	Audio::CheckAl(alGetError());
 }
 
 bool Sound::IsPlaying() const {
 	ALenum state;
-	alGetSourcei(m_source, AL_SOURCE_STATE, &state);
+	alGetSourcei(source, AL_SOURCE_STATE, &state);
 	return state == AL_PLAYING;
 }
 
 void Sound::SetPosition(const Vector3f &position) {
-	m_position = position;
-	alSource3f(m_source, AL_POSITION, m_position.m_x, m_position.m_y, m_position.m_z);
+	this->position = position;
+	alSource3f(source, AL_POSITION, position.x, position.y, position.z);
 	Audio::CheckAl(alGetError());
 }
 
 void Sound::SetDirection(const Vector3f &direction) {
-	m_direction = direction;
-	alSource3f(m_source, AL_DIRECTION, m_direction.m_x, m_direction.m_y, m_direction.m_z);
+	this->direction = direction;
+	alSource3f(source, AL_DIRECTION, direction.x, direction.y, direction.z);
 	Audio::CheckAl(alGetError());
 }
 
 void Sound::SetVelocity(const Vector3f &velocity) {
-	m_velocity = velocity;
-	alSource3f(m_source, AL_VELOCITY, m_velocity.m_x, m_velocity.m_y, m_velocity.m_z);
+	this->velocity = velocity;
+	alSource3f(source, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 	Audio::CheckAl(alGetError());
 }
 
 void Sound::SetGain(float gain) {
-	m_gain = gain;
-	alSourcef(m_source, AL_GAIN, m_gain * Audio::Get()->GetGain(m_type));
+	this->gain = gain;
+	alSourcef(source, AL_GAIN, gain * Audio::Get()->GetGain(type));
 	Audio::CheckAl(alGetError());
 }
 
 void Sound::SetPitch(float pitch) {
-	m_pitch = pitch;
-	alSourcef(m_source, AL_PITCH, m_pitch);
+	this->pitch = pitch;
+	alSourcef(source, AL_PITCH, pitch);
 	Audio::CheckAl(alGetError());
 }
 
 const Node &operator>>(const Node &node, Sound &sound) {
-	node["buffer"].Get(sound.m_buffer);
-	node["type"].Get(sound.m_type);
-	node["gain"].Get(sound.m_gain);
-	node["pitch"].Get(sound.m_pitch);
+	node["buffer"].Get(sound.buffer);
+	node["type"].Get(sound.type);
+	node["gain"].Get(sound.gain);
+	node["pitch"].Get(sound.pitch);
 	return node;
 }
 
 Node &operator<<(Node &node, const Sound &sound) {
-	node["buffer"].Set(sound.m_buffer);
-	node["type"].Set(sound.m_type);
-	node["gain"].Set(sound.m_gain);
-	node["pitch"].Set(sound.m_pitch);
+	node["buffer"].Set(sound.buffer);
+	node["type"].Set(sound.type);
+	node["gain"].Set(sound.gain);
+	node["pitch"].Set(sound.pitch);
 	return node;
 }
 }

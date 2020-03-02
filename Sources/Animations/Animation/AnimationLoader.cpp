@@ -5,14 +5,14 @@
 
 namespace acid {
 AnimationLoader::AnimationLoader(NodeConstView &&libraryAnimations, NodeConstView &&libraryVisualScenes, const Matrix4 &correction) :
-	m_libraryAnimations(std::move(libraryAnimations)),
-	m_libraryVisualScenes(std::move(libraryVisualScenes)),
-	m_correction(correction) {
-	auto animationNodes = m_libraryAnimations["animation"];
+	libraryAnimations(std::move(libraryAnimations)),
+	libraryVisualScenes(std::move(libraryVisualScenes)),
+	correction(correction) {
+	auto animationNodes = libraryAnimations["animation"];
 
 	auto rootNode = FindRootJointName();
 	auto times = GetKeyTimes();
-	m_lengthSeconds = times[times.size() - 1];
+	lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
 	for (auto &jointNode : animationNodes.GetProperties())
@@ -20,13 +20,13 @@ AnimationLoader::AnimationLoader(NodeConstView &&libraryAnimations, NodeConstVie
 }
 
 std::string AnimationLoader::FindRootJointName() const {
-	auto skeleton = m_libraryVisualScenes["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature");
+	auto skeleton = libraryVisualScenes["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature");
 	return skeleton["node"]["-id"].Get<std::string>();
 }
 
 std::vector<Time> AnimationLoader::GetKeyTimes() const {
 	// Times should be the same for each pose so we grab the first joint times.
-	auto timeData = m_libraryAnimations["animation"][0]["source"][0]["float_array"];
+	auto timeData = libraryAnimations["animation"][0]["source"][0]["float_array"];
 	auto rawTimes = String::Split(timeData["#text"].Get<std::string>(), ' ');
 
 	std::vector<Time> times;
@@ -38,7 +38,7 @@ std::vector<Time> AnimationLoader::GetKeyTimes() const {
 
 void AnimationLoader::CreateKeyframe(const std::vector<Time> &times) {
 	for (const auto &time : times) {
-		m_keyframes.emplace_back(Keyframe(time, {}));
+		keyframes.emplace_back(Keyframe(time, {}));
 	}
 }
 
@@ -66,7 +66,7 @@ std::string AnimationLoader::GetJointName(const Node &jointData) {
 }
 
 void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root) {
-	for (auto &&[i, keyframe] : Enumerate(m_keyframes)) {
+	for (auto &&[i, keyframe] : Enumerate(keyframes)) {
 		Matrix4 transform;
 
 		for (uint32_t row = 0; row < 4; row++) {
@@ -77,7 +77,7 @@ void AnimationLoader::ProcessTransforms(const std::string &jointName, const std:
 
 		transform = transform.Transpose();
 		if (root)
-			transform = m_correction * transform;
+			transform = correction * transform;
 
 		keyframe.AddJointTransform(jointName, transform);
 	}

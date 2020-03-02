@@ -3,38 +3,36 @@
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 
 namespace acid {
-bool ColliderCube::registered = Register("cube");
-
 ColliderCube::ColliderCube(const Vector3f &extents, const Transform &localTransform) :
 	//Collider(localTransform),
-	m_shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),
-	m_extents(extents) {
-	m_localTransform = localTransform;
-	m_localTransform.SetLocalScale(m_extents);
+	shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),
+	extents(extents) {
+	this->localTransform = localTransform;
+	this->localTransform.SetLocalScale(extents);
 }
 
 ColliderCube::~ColliderCube() {
 }
 
 btCollisionShape *ColliderCube::GetCollisionShape() const {
-	return m_shape.get();
+	return shape.get();
 }
 
 void ColliderCube::SetExtents(const Vector3f &extents) {
-	m_extents = extents;
-	m_shape->setImplicitShapeDimensions(Convert(m_extents));
-	m_localTransform.SetLocalScale(m_extents);
+	this->extents = extents;
+	shape->setImplicitShapeDimensions(Convert(extents));
+	localTransform.SetLocalScale(extents);
 }
 
 const Node &operator>>(const Node &node, ColliderCube &collider) {
-	node["localTransform"].Get(collider.m_localTransform);
-	node["extents"].Get(collider.m_extents);
+	node["localTransform"].Get(collider.localTransform);
+	node["extents"].Get(collider.extents);
 	return node;
 }
 
 Node &operator<<(Node &node, const ColliderCube &collider) {
-	node["localTransform"].Set(collider.m_localTransform);
-	node["extents"].Set(collider.m_extents);
+	node["localTransform"].Set(collider.localTransform);
+	node["extents"].Set(collider.extents);
 	return node;
 }
 }

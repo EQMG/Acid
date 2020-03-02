@@ -3,11 +3,9 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
-bool Light::registered = Register("light");
-
 Light::Light(const Colour &colour, float radius) :
-	m_colour(colour),
-	m_radius(radius) {
+	colour(colour),
+	radius(radius) {
 }
 
 void Light::Start() {
@@ -17,14 +15,14 @@ void Light::Update() {
 }
 
 const Node &operator>>(const Node &node, Light &light) {
-	node["colour"].Get(light.m_colour);
-	node["radius"].Get(light.m_radius);
+	node["colour"].Get(light.colour);
+	node["radius"].Get(light.radius);
 	return node;
 }
 
 Node &operator<<(Node &node, const Light &light) {
-	node["colour"].Set(light.m_colour);
-	node["radius"].Set(light.m_radius);
+	node["colour"].Set(light.colour);
+	node["radius"].Set(light.radius);
 	return node;
 }
 }

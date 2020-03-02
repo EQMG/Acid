@@ -15,6 +15,6 @@ public:
 	bool IsPaused() const override;
 
 private:
-	Pannable m_pannable;
+	Pannable pannable;
 };
 }

@@ -4,70 +4,70 @@
 #include "Drivers/ConstantDriver.hpp"
 
 namespace acid {
-static const Vector2i RESIZE_SIZE(16, 16);
-static const Vector2i PADDING(16, 16);
+static constexpr Vector2i RESIZE_SIZE(16, 16);
+static constexpr Vector2i PADDING(16, 16);
 
 UiPanel::UiPanel() {
-	//m_background.SetTransform({UiMargins::All});
-	m_background.SetImage(Image2d::Create("Guis/White.png"));
-	UiObject::AddChild(&m_background);
+	//background.SetTransform({UiMargins::All});
+	background.SetImage(Image2d::Create("Guis/White.png"));
+	UiObject::AddChild(&background);
 
-	//m_content.SetTransform({UiMargins::None, PADDING, -PADDING});
-	UiObject::AddChild(&m_content);
+	//content.SetTransform({UiMargins::None, PADDING, -PADDING});
+	UiObject::AddChild(&content);
 
-	//m_resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
-	m_resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
-	m_resizeHandle.SetColourDriver<ConstantDriver>(UiInputButton::ButtonColour);
-	m_resizeHandle.SetCursorHover(CursorStandard::ResizeX);
-	UiObject::AddChild(&m_resizeHandle);
+	//resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
+	resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
+	resizeHandle.SetColourDriver<ConstantDriver>(UiInputButton::ButtonColour);
+	resizeHandle.SetCursorHover(CursorStandard::ResizeX);
+	UiObject::AddChild(&resizeHandle);
 
-	//m_scrollX.SetTransform({UiMargins::None, {}, {-RESIZE_SIZE.m_x, 0}});
-	m_scrollX.SetType(ScrollBar::Horizontal);
-	UiObject::AddChild(&m_scrollX);
+	//scrollX.SetTransform({UiMargins::None, {}, {-RESIZE_SIZE.x, 0}});
+	scrollX.SetType(ScrollBar::Horizontal);
+	UiObject::AddChild(&scrollX);
 
-	//m_scrollY.SetTransform({UiMargins::None, {}, {0, -RESIZE_SIZE.m_y}});
-	m_scrollY.SetType(ScrollBar::Vertical);
-	UiObject::AddChild(&m_scrollY);
+	//scrollY.SetTransform({UiMargins::None, {}, {0, -RESIZE_SIZE.y}});
+	scrollY.SetType(ScrollBar::Vertical);
+	UiObject::AddChild(&scrollY);
 }
 
 void UiPanel::UpdateObject() {
-	m_resizeHandle.SetEnabled(m_manipulate & UiManipulate::Resize);
-	auto contentSize = (m_max - m_min) / GetScreenSize();
-	m_scrollX.SetEnabled(m_scrollBars & ScrollBar::Horizontal && contentSize.m_x > 1.05f);
-	m_scrollY.SetEnabled(m_scrollBars & ScrollBar::Vertical && contentSize.m_y > 1.05f);
+	resizeHandle.SetEnabled(manipulate & UiManipulate::Resize);
+	auto contentSize = (max - min) / GetScreenSize();
+	scrollX.SetEnabled(scrollBars & ScrollBar::Horizontal && contentSize.x > 1.05f);
+	scrollY.SetEnabled(scrollBars & ScrollBar::Vertical && contentSize.y > 1.05f);
 
 	// TODO: Abstract math into UiTransform.
-//	m_scrollX.GetTransform().SetAnchor0({0, GetScreenSize().m_y - UiScrollBar::Size});
-//	m_scrollY.GetTransform().SetAnchor0({GetScreenSize().m_x - UiScrollBar::Size, 0});
+//	scrollX.GetTransform().SetAnchor0({0, GetScreenSize().y - UiScrollBar::Size});
+//	scrollY.GetTransform().SetAnchor0({GetScreenSize().x - UiScrollBar::Size, 0});
 
-	m_scrollX.SetSize({-1.0f / contentSize.m_x, 0.0f});
-	m_scrollY.SetSize({0.0f, -1.0f / contentSize.m_y});
+	scrollX.SetSize({-1.0f / contentSize.x, 0.0f});
+	scrollY.SetSize({0.0f, -1.0f / contentSize.y});
 
-	//m_content.GetTransform().SetPosition(0.5f - (Vector2f(m_scrollX.GetProgress(), m_scrollY.GetProgress()) * contentSize));
+	//content.GetTransform().SetPosition(0.5f - (Vector2f(scrollX.GetProgress(), scrollY.GetProgress()) * contentSize));
 
-	m_min = Vector2f::PositiveInfinity;
-	m_max = Vector2f::NegativeInfinity;
-	//SetScissor(&m_scrollX);
-	//SetScissor(&m_scrollY);
-	SetScissor(&m_content, true);
+	min = Vector2f::PositiveInfinity;
+	max = Vector2f::NegativeInfinity;
+	//SetScissor(&scrollX);
+	//SetScissor(&scrollY);
+	SetScissor(&content, true);
 }
 
 void UiPanel::AddChild(UiObject *child) {
-	m_content.AddChild(child);
+	content.AddChild(child);
 }
 
 void UiPanel::SetBackgroundColor(const Colour &colour) {
-	m_background.SetColourDriver<ConstantDriver>(colour);
+	background.SetColourDriver<ConstantDriver>(colour);
 }
 
 void UiPanel::SetScissor(UiObject *object, bool checkSize) {
-	auto position = m_background.GetScreenPosition();
-	auto size = m_background.GetScreenSize();
+	auto position = background.GetScreenPosition();
+	auto size = background.GetScreenSize();
 	object->SetScissor(Vector4i(position, size));
 
 	if (object->IsEnabled() && checkSize) {
-		m_min = m_min.Min(object->GetScreenPosition());
-		m_max = m_max.Max(object->GetScreenPosition() + object->GetScreenSize());
+		min = min.Min(object->GetScreenPosition());
+		max = max.Max(object->GetScreenPosition() + object->GetScreenSize());
 	}
 
 	for (auto &child : object->GetChildren()) {

@@ -9,7 +9,7 @@
 
 namespace acid {
 ZipArchive::ZipArchive(const std::filesystem::path &filename) :
-	m_archivePath(filename) {
+	archivePath(filename) {
 	std::ifstream f(filename.c_str());
 	if (f.good()) {
 		f.close();
@@ -46,39 +46,39 @@ void ZipArchive::Create(const std::filesystem::path &filename) {
 
 void ZipArchive::Open(const std::filesystem::path &filename) {
 	// Open the archive file for reading.
-	if (m_isOpen)
-		mz_zip_reader_end(&m_archive);
-	m_archivePath = filename;
-	auto archivePathU8 = m_archivePath.u8string();
-	if (!mz_zip_reader_init_file(&m_archive, archivePathU8.c_str(), 0))
-		ThrowException(m_archive.m_last_error, "Error opening archive file " + archivePathU8 + ".");
-	m_isOpen = true;
+	if (isOpen)
+		mz_zip_reader_end(&archive);
+	archivePath = filename;
+	auto archivePathU8 = archivePath.u8string();
+	if (!mz_zip_reader_init_file(&archive, archivePathU8.c_str(), 0))
+		ThrowException(archive.m_last_error, "Error opening archive file " + archivePathU8 + ".");
+	isOpen = true;
 
 	// Iterate through the archive and add the entries to the internal data structure
-	for (unsigned int i = 0; i < mz_zip_reader_get_num_files(&m_archive); i++) {
+	for (unsigned int i = 0; i < mz_zip_reader_get_num_files(&archive); i++) {
 		ZipEntryInfo info;
-		if (!mz_zip_reader_file_stat(&m_archive, i, &info))
-			ThrowException(m_archive.m_last_error, "Failed getting entry info.");
-		m_zipEntries.emplace_back(std::make_unique<ZipEntry>(info));
+		if (!mz_zip_reader_file_stat(&archive, i, &info))
+			ThrowException(archive.m_last_error, "Failed getting entry info.");
+		zipEntries.emplace_back(std::make_unique<ZipEntry>(info));
 	}
 
 	// Remove entries with identical names. The newest entries will be retained.
 	auto isEqual = [](const auto &a, const auto &b) { return a->GetFilename() == b->GetFilename(); };
-	std::reverse(m_zipEntries.begin(), m_zipEntries.end());
-	m_zipEntries.erase(std::unique(m_zipEntries.begin(), m_zipEntries.end(), isEqual), m_zipEntries.end());
-	std::reverse(m_zipEntries.begin(), m_zipEntries.end());
+	std::reverse(zipEntries.begin(), zipEntries.end());
+	zipEntries.erase(std::unique(zipEntries.begin(), zipEntries.end(), isEqual), zipEntries.end());
+	std::reverse(zipEntries.begin(), zipEntries.end());
 }
 
 void ZipArchive::Close() {
-	if (m_isOpen)
-		mz_zip_reader_end(&m_archive);
-	m_zipEntries.clear();
-	m_archivePath = "";
+	if (isOpen)
+		mz_zip_reader_end(&archive);
+	zipEntries.clear();
+	archivePath = "";
 }
 
 std::vector<std::string> ZipArchive::GetEntryNames(bool includeDirs, bool includeFiles) const {
 	std::vector<std::string> result;
-	for (const auto &item : m_zipEntries) {
+	for (const auto &item : zipEntries) {
 		if (includeDirs && item->IsDirectory()) {
 			result.emplace_back(item->GetFilename());
 			continue;
@@ -111,14 +111,14 @@ std::vector<std::string> ZipArchive::GetEntryNamesInDir(const std::string &dir, 
 
 std::vector<ZipEntryMetaData> ZipArchive::GetMetaData(bool includeDirs, bool includeFiles) const {
 	std::vector<ZipEntryMetaData> result;
-	for (const auto &item : m_zipEntries) {
+	for (const auto &item : zipEntries) {
 		if (includeDirs && item->IsDirectory()) {
-			result.emplace_back(ZipEntryMetaData(item->m_entryInfo));
+			result.emplace_back(ZipEntryMetaData(item->entryInfo));
 			continue;
 		}
 
 		if (includeFiles && !item->IsDirectory()) {
-			result.emplace_back(ZipEntryMetaData(item->m_entryInfo));
+			result.emplace_back(ZipEntryMetaData(item->entryInfo));
 			continue;
 		}
 	}
@@ -128,17 +128,17 @@ std::vector<ZipEntryMetaData> ZipArchive::GetMetaData(bool includeDirs, bool inc
 
 std::vector<ZipEntryMetaData> ZipArchive::GetMetaDataInDir(const std::string &dir, bool includeDirs, bool includeFiles) const {
 	std::vector<ZipEntryMetaData> result;
-	for (const auto &item : m_zipEntries) {
+	for (const auto &item : zipEntries) {
 		if (item->GetFilename().substr(0, dir.size()) != dir)
 			continue;
 
 		if (includeDirs && item->IsDirectory()) {
-			result.emplace_back(ZipEntryMetaData(item->m_entryInfo));
+			result.emplace_back(ZipEntryMetaData(item->entryInfo));
 			continue;
 		}
 
 		if (includeFiles && !item->IsDirectory()) {
-			result.emplace_back(ZipEntryMetaData(item->m_entryInfo));
+			result.emplace_back(ZipEntryMetaData(item->entryInfo));
 			continue;
 		}
 	}
@@ -161,7 +161,7 @@ bool ZipArchive::HasEntry(const std::string &entryName) const {
 
 void ZipArchive::Write(std::filesystem::path filename) {
 	if (filename.empty())
-		filename = m_archivePath;
+		filename = archivePath;
 
 	// Generate a random file name with the same path as the current file
 	auto tempPath = filename.parent_path() / GenerateRandomName(20);
@@ -172,17 +172,17 @@ void ZipArchive::Write(std::filesystem::path filename) {
 	mz_zip_writer_init_file(&tempArchive, tempPathU8.c_str(), 0);
 
 	// Iterate through the ZipEntries and add entries to the temporary file
-	for (const auto &file : m_zipEntries) {
+	for (const auto &file : zipEntries) {
 		if (!file->IsModified()) {
-			if (!mz_zip_writer_add_from_zip_reader(&tempArchive, &m_archive, file->GetIndex()))
-				ThrowException(m_archive.m_last_error, "Failed copying archive entry.");
+			if (!mz_zip_writer_add_from_zip_reader(&tempArchive, &archive, file->GetIndex()))
+				ThrowException(archive.m_last_error, "Failed copying archive entry.");
 		} else {
 			if (!mz_zip_writer_add_mem(&tempArchive,
 				file->GetFilename().c_str(),
-				file->m_entryData.data(),
-				file->m_entryData.size(),
+				file->entryData.data(),
+				file->entryData.size(),
 				MZ_DEFAULT_COMPRESSION))
-				ThrowException(m_archive.m_last_error, "Failed adding archive entry.");
+				ThrowException(archive.m_last_error, "Failed adding archive entry.");
 		}
 
 	}
@@ -209,24 +209,24 @@ void ZipArchive::Write(std::ostream &stream) {
 }
 
 void ZipArchive::DeleteEntry(const std::string &name) {
-	m_zipEntries.erase(std::remove_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	zipEntries.erase(std::remove_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
-	}), m_zipEntries.end());
+	}), zipEntries.end());
 }
 
 ZipEntry *ZipArchive::GetEntry(const std::string &name) {
 	// Look up ZipEntry object.
-	const auto &result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	const auto &result = std::find_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
 	});
 
 	// Extract the data from the archive to the ZipEntry object.
-	(*result)->m_entryData.resize(static_cast<std::size_t>((*result)->GetUncompressedSize()));
-	mz_zip_reader_extract_file_to_mem(&m_archive, name.c_str(), (*result)->m_entryData.data(), (*result)->m_entryData.size(), 0);
+	(*result)->entryData.resize(static_cast<std::size_t>((*result)->GetUncompressedSize()));
+	mz_zip_reader_extract_file_to_mem(&archive, name.c_str(), (*result)->entryData.data(), (*result)->entryData.size(), 0);
 
 	// Check that the operation was successful
-	if ((*result)->m_entryData.data() == nullptr)
-		ThrowException(m_archive.m_last_error, "Error extracting archive entry.");
+	if ((*result)->entryData.data() == nullptr)
+		ThrowException(archive.m_last_error, "Error extracting archive entry.");
 
 	// Return ZipEntry object with the file data.
 	return (*result).get();
@@ -234,7 +234,7 @@ ZipEntry *ZipArchive::GetEntry(const std::string &name) {
 
 void ZipArchive::ExtractEntry(const std::string &name, const std::filesystem::path &dest) {
 	// Look up ZipEntry object.
-	const auto &result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	const auto &result = std::find_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
 	});
 
@@ -245,12 +245,12 @@ void ZipArchive::ExtractEntry(const std::string &name, const std::filesystem::pa
 	auto destU8 = dest.u8string();
 
 	// Extract the data from the archive to the ZipEntry object.
-	(*result)->m_entryData.resize((*result)->GetUncompressedSize());
-	mz_zip_reader_extract_file_to_file(&m_archive, name.c_str(), destU8.c_str(), 0);
+	(*result)->entryData.resize((*result)->GetUncompressedSize());
+	mz_zip_reader_extract_file_to_file(&archive, name.c_str(), destU8.c_str(), 0);
 
 	// Check that the operation was successful
-	if ((*result)->m_entryData.data() == nullptr)
-		ThrowException(m_archive.m_last_error, "Error extracting archive entry.");
+	if ((*result)->entryData.data() == nullptr)
+		ThrowException(archive.m_last_error, "Error extracting archive entry.");
 }
 
 void ZipArchive::ExtractDir(const std::string &dir, const std::filesystem::path &dest) {
@@ -268,51 +268,51 @@ void ZipArchive::ExtractAll(const std::filesystem::path &dest) {
 
 ZipEntry *ZipArchive::AddEntry(const std::string &name, const ZipEntryData &data) {
 	// Check if an entry with the given name already exists in the archive.
-	auto result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	auto result = std::find_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
 	});
 
 	// If the entry exists, replace the existing data with the new data, and return the ZipEntry object.
-	if (result != m_zipEntries.end()) {
+	if (result != zipEntries.end()) {
 		(*result)->SetData(data);
 		return (*result).get();
 	}
 
 	// Otherwise, add a new entry with the given name and data, and return the object.
-	return m_zipEntries.emplace_back(std::make_unique<ZipEntry>(name, data)).get();
+	return zipEntries.emplace_back(std::make_unique<ZipEntry>(name, data)).get();
 }
 
 ZipEntry *ZipArchive::AddEntry(const std::string &name, const std::string &data) {
 	// Check if an entry with the given name already exists in the archive.
-	auto result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	auto result = std::find_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
 	});
 
 	// If the entry exists, replace the existing data with the new data, and return the ZipEntry object.
-	if (result != m_zipEntries.end()) {
+	if (result != zipEntries.end()) {
 		(*result)->SetData(data);
 		return (*result).get();
 	}
 
 	// Otherwise, add a new entry with the given name and data, and return the object.
-	return m_zipEntries.emplace_back(std::make_unique<ZipEntry>(name, data)).get();
+	return zipEntries.emplace_back(std::make_unique<ZipEntry>(name, data)).get();
 }
 
 ZipEntry *ZipArchive::AddEntry(const std::string &name, const ZipEntry &entry) {
 	// TODO: Ensure to check for self-asignment.
 	// Check if an entry with the given name already exists in the archive.
-	auto result = std::find_if(m_zipEntries.begin(), m_zipEntries.end(), [&](const auto &entry) {
+	auto result = std::find_if(zipEntries.begin(), zipEntries.end(), [&](const auto &entry) {
 		return name == entry->GetFilename();
 	});
 
 	// If the entry exists, replace the existing data with the new data, and return the ZipEntry object.
-	if (result != m_zipEntries.end()) {
+	if (result != zipEntries.end()) {
 		(*result)->SetData(entry.GetData());
 		return (*result).get();
 	}
 
 	// Otherwise, add a new entry with the given name and data, and return the object.
-	return m_zipEntries.emplace_back(std::make_unique<ZipEntry>(name, entry.GetData())).get();
+	return zipEntries.emplace_back(std::make_unique<ZipEntry>(name, entry.GetData())).get();
 }
 
 void ZipArchive::ThrowException(mz_zip_error error, const std::string &errorString) {

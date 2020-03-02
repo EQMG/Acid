@@ -16,9 +16,9 @@ private:
 
 	static std::shared_ptr<Image2d> ComputeNoise(uint32_t size);
 
-	UniformHandler m_uniformScene;
+	UniformHandler uniformScene;
 
-	Future<std::shared_ptr<Image2d>> m_noise;
-	std::vector<Vector3f> m_kernel;
+	Future<std::shared_ptr<Image2d>> noise;
+	std::vector<Vector3f> kernel;
 };
 }

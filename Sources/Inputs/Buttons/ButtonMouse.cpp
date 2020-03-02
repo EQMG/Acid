@@ -1,19 +1,17 @@
 #include "ButtonMouse.hpp"
 
 namespace acid {
-bool ButtonMouse::registered = Register("buttonMouse");
-
 ButtonMouse::ButtonMouse(MouseButton button) :
-	m_button(button) {
+	button(button) {
 	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
-		if (button == m_button) {
-			m_onButton(action, mods);
+		if (this->button == button) {
+			onButton(action, mods);
 		}
 	}, this);
 }
 
 bool ButtonMouse::IsDown() const {
-	return (Mouse::Get()->GetButton(m_button) != InputAction::Release) ^ m_inverted;
+	return (Mouse::Get()->GetButton(button) != InputAction::Release) ^ inverted;
 }
 
 Axis::ArgumentDescription ButtonMouse::GetArgumentDescription() const {
@@ -24,14 +22,14 @@ Axis::ArgumentDescription ButtonMouse::GetArgumentDescription() const {
 }
 
 const Node &operator>>(const Node &node, ButtonMouse &buttonMouse) {
-	node["inverted"].Get(buttonMouse.m_inverted);
-	node["button"].Get(buttonMouse.m_button);
+	node["inverted"].Get(buttonMouse.inverted);
+	node["button"].Get(buttonMouse.button);
 	return node;
 }
 
 Node &operator<<(Node &node, const ButtonMouse &buttonMouse) {
-	node["inverted"].Set(buttonMouse.m_inverted);
-	node["button"].Set(buttonMouse.m_button);
+	node["inverted"].Set(buttonMouse.inverted);
+	node["button"].Set(buttonMouse.button);
 	return node;
 }
 }

@@ -6,11 +6,11 @@ namespace acid {
 static_assert(GLFW_KEY_LAST == static_cast<int16_t>(Key::Last), "GLFW keys count does not match our keys enum count.");
 
 void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
-	Keyboard::Get()->m_onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
+	Keyboard::Get()->onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
 }
 
 void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
-	Keyboard::Get()->m_onChar(static_cast<char>(codepoint));
+	Keyboard::Get()->onChar(static_cast<char>(codepoint));
 }
 
 Keyboard::Keyboard() {

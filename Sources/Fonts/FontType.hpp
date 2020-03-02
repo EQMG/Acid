@@ -15,15 +15,15 @@ public:
 	class Glyph {
 	public:
 		Glyph(int32_t leftBearing, int32_t advance, const Vector2i &i0, const Vector2i &i1) :
-			m_leftBearing(leftBearing),
-			m_advance(advance),
-			m_i0(i0),
-			m_i1(i1) {
+			leftBearing(leftBearing),
+			advance(advance),
+			i0(i0),
+			i1(i1) {
 		}
 
-		int32_t m_leftBearing;
-		int32_t m_advance;
-		Vector2i m_i0, m_i1;
+		int32_t leftBearing;
+		int32_t advance;
+		Vector2i i0, i1;
 	};
 	
 	/**
@@ -53,12 +53,12 @@ public:
 	
 	std::type_index GetTypeIndex() const override { return typeid(FontType); }
 
-	const std::filesystem::path &GetFilename() const { return m_filename; }
-	const Image2dArray *GetImage() const { return m_image.get(); }
-	std::size_t GetSize() const { return m_size; }
+	const std::filesystem::path &GetFilename() const { return filename; }
+	const Image2dArray *GetImage() const { return image.get(); }
+	std::size_t GetSize() const { return size; }
 
-	float GetMaxHeight() const { return m_maxHeight; }
-	float GetMaxAdvance() const { return m_maxAdvance; }
+	float GetMaxHeight() const { return maxHeight; }
+	float GetMaxAdvance() const { return maxAdvance; }
 
 	friend const Node &operator>>(const Node &node, FontType &fontType);
 	friend Node &operator<<(Node &node, const FontType &fontType);
@@ -66,15 +66,15 @@ public:
 private:
 	void Load();
 
-	std::filesystem::path m_filename;
-	std::unique_ptr<Image2dArray> m_image;
+	std::filesystem::path filename;
+	std::unique_ptr<Image2dArray> image;
 
 	/// Char to glyphs index.
-	std::map<wchar_t, std::size_t> m_indices;
-	std::vector<Glyph> m_glyphs;
+	std::map<wchar_t, std::size_t> indices;
+	std::vector<Glyph> glyphs;
 	/// Glyph size in pixels.
-	std::size_t m_size;
+	std::size_t size;
 	
-	float m_maxHeight = 0.0f, m_maxAdvance = 0.0f;
+	float maxHeight = 0.0f, maxAdvance = 0.0f;
 };
 }

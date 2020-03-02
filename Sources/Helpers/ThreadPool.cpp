@@ -2,24 +2,24 @@
 
 namespace acid {
 ThreadPool::ThreadPool(uint32_t threadCount) {
-	m_workers.reserve(threadCount);
+	workers.reserve(threadCount);
 
 	for (std::size_t i = 0; i < threadCount; ++i) {
-		m_workers.emplace_back([this] {
+		workers.emplace_back([this] {
 			while (true) {
 				std::function<void()> task;
 
 				{
-					std::unique_lock<std::mutex> lock(m_queueMutex);
-					m_condition.wait(lock, [this] {
-						return m_stop || !m_tasks.empty();
+					std::unique_lock<std::mutex> lock(queueMutex);
+					condition.wait(lock, [this] {
+						return stop || !tasks.empty();
 					});
 
-					if (m_stop && m_tasks.empty())
+					if (stop && tasks.empty())
 						return;
 
-					task = std::move(m_tasks.front());
-					m_tasks.pop();
+					task = std::move(tasks.front());
+					tasks.pop();
 				}
 
 				task();
@@ -30,21 +30,21 @@ ThreadPool::ThreadPool(uint32_t threadCount) {
 
 ThreadPool::~ThreadPool() {
 	{
-		std::unique_lock<std::mutex> lock(m_queueMutex);
-		m_stop = true;
+		std::unique_lock<std::mutex> lock(queueMutex);
+		stop = true;
 	}
 
-	m_condition.notify_all();
+	condition.notify_all();
 
-	for (auto &worker : m_workers)
+	for (auto &worker : workers)
 		worker.join();
 }
 
 void ThreadPool::Wait() {
-	std::unique_lock<std::mutex> lock(m_queueMutex);
+	std::unique_lock<std::mutex> lock(queueMutex);
 
-	m_condition.wait(lock, [this]() {
-		return m_tasks.empty();
+	condition.wait(lock, [this]() {
+		return tasks.empty();
 	});
 }
 }

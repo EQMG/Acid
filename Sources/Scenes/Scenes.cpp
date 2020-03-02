@@ -5,24 +5,19 @@ Scenes::Scenes() {
 }
 
 void Scenes::Update() {
-	if (!m_scene) {
+	if (!scene)
 		return;
+
+	if (!scene->started) {
+		scene->Start();
+		scene->started = true;
 	}
 
-	if (!m_scene->m_started) {
-		m_scene->Start();
-		m_scene->m_started = true;
-	}
-
-	m_scene->Update();
-	m_scene->GetPhysics()->Update();
-
-	if (m_scene->GetStructure()) {
-		m_scene->GetStructure()->Update();
-	}
-
-	if (m_scene->GetCamera()) {
-		m_scene->GetCamera()->Update();
-	}
+	scene->Update();
+	scene->GetPhysics()->Update();
+	if (scene->GetStructure())
+		scene->GetStructure()->Update();
+	if (scene->GetCamera())
+		scene->GetCamera()->Update();
 }
 }

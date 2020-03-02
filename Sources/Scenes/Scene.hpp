@@ -16,9 +16,9 @@ public:
 	 * @param camera The scenes camera.
 	 */
 	explicit Scene(std::unique_ptr<Camera> &&camera) :
-		m_camera(std::move(camera)),
-		m_structure(std::make_unique<SceneStructure>()),
-		m_physics(std::make_unique<ScenePhysics>()) {
+		camera(std::move(camera)),
+		structure(std::make_unique<SceneStructure>()),
+		physics(std::make_unique<ScenePhysics>()) {
 	}
 
 	virtual ~Scene() = default;
@@ -37,25 +37,25 @@ public:
 	 * Gets the current camera object.
 	 * @return The current camera.
 	 */
-	Camera *GetCamera() const { return m_camera.get(); }
+	Camera *GetCamera() const { return camera.get(); }
 
 	/**
 	 * Sets the current camera to a new camera.
 	 * @param camera The new camera.
 	 */
-	void SetCamera(Camera *camera) { m_camera.reset(camera); }
+	void SetCamera(Camera *camera) { this->camera.reset(camera); }
 
 	/**
 	 * Gets the scene object structure.
 	 * @return The scene object structure.
 	 */
-	SceneStructure *GetStructure() const { return m_structure.get(); }
+	SceneStructure *GetStructure() const { return structure.get(); }
 
 	/**
 	 * Gets the scene physics system.
 	 * @return The scenes physics system.
 	 */
-	ScenePhysics *GetPhysics() const { return m_physics.get(); }
+	ScenePhysics *GetPhysics() const { return physics.get(); }
 
 	/**
 	 * Gets if the scene is paused.
@@ -64,9 +64,9 @@ public:
 	virtual bool IsPaused() const = 0;
 
 private:
-	std::unique_ptr<Camera> m_camera;
-	std::unique_ptr<SceneStructure> m_structure;
-	std::unique_ptr<ScenePhysics> m_physics;
-	bool m_started = false;
+	bool started = false;
+	std::unique_ptr<Camera> camera;
+	std::unique_ptr<SceneStructure> structure;
+	std::unique_ptr<ScenePhysics> physics;
 };
 }

@@ -8,8 +8,6 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-bool BitmapDng::registered = Register(".dng", ".tiff");
-
 void BitmapDng::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();

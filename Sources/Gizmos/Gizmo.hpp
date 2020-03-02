@@ -21,18 +21,18 @@ public:
 	bool operator==(const Gizmo &other) const;
 	bool operator!=(const Gizmo &other) const;
 
-	std::shared_ptr<GizmoType> GetGizmoType() const { return m_gizmoType; }
+	std::shared_ptr<GizmoType> GetGizmoType() const { return gizmoType; }
 
-	const Transform &GetTransform() const { return m_transform; }
-	Transform &GetTransform() { return m_transform; }
-	void SetTransform(const Transform &transform) { m_transform = transform; }
+	const Transform &GetTransform() const { return transform; }
+	Transform &GetTransform() { return transform; }
+	void SetTransform(const Transform &transform) { this->transform = transform; }
 
-	const Colour &GetColour() const { return m_colour; }
-	void SetColour(const Colour &colour) { m_colour = colour; }
+	const Colour &GetColour() const { return colour; }
+	void SetColour(const Colour &colour) { this->colour = colour; }
 
 private:
-	std::shared_ptr<GizmoType> m_gizmoType;
-	Transform m_transform;
-	Colour m_colour;
+	std::shared_ptr<GizmoType> gizmoType;
+	Transform transform;
+	Colour colour;
 };
 }

@@ -8,6 +8,7 @@ namespace acid {
  * @brief Button input from the mouse input device.
  */
 class ACID_EXPORT ButtonMouse : public Button::Registrar<ButtonMouse> {
+	inline static const bool Registered = Register("buttonMouse");
 public:
 	/**
 	 * Creates a new button mouse.
@@ -19,15 +20,13 @@ public:
 
 	Axis::ArgumentDescription GetArgumentDescription() const override;
 
-	MouseButton GetButton() const { return m_button; }
-	void SetButton(MouseButton button) { m_button = button; }
+	MouseButton GetButton() const { return button; }
+	void SetButton(MouseButton button) { this->button = button; }
 
 	friend const Node &operator>>(const Node &node, ButtonMouse &buttonMouse);
 	friend Node &operator<<(Node &node, const ButtonMouse &buttonMouse);
 
 private:
-	static bool registered;
-
-	MouseButton m_button;
+	MouseButton button;
 };
 }

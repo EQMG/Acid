@@ -9,7 +9,7 @@
 namespace acid {
 /**
  * @brief Component that represents a material shader that is used to render a model.
- * The implementation of this object must initialize {@link Material#m_pipelineMaterial} in {@link Material#CreatePipeline()}.
+ * The implementation of this object must initialize {@link Material#pipelineMaterial} in {@link Material#CreatePipeline()}.
  */
 class ACID_EXPORT Material : public StreamFactory<Material> {
 public:
@@ -35,9 +35,9 @@ public:
 	 * Gets the material pipeline defined in this material.
 	 * @return The material pipeline.
 	 */
-	const std::shared_ptr<PipelineMaterial> &GetPipelineMaterial() const { return m_pipelineMaterial; }
+	const std::shared_ptr<PipelineMaterial> &GetPipelineMaterial() const { return pipelineMaterial; }
 
 protected:
-	std::shared_ptr<PipelineMaterial> m_pipelineMaterial;
+	std::shared_ptr<PipelineMaterial> pipelineMaterial;
 };
 }

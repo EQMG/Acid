@@ -41,35 +41,33 @@ public:
 	 */
 	Vector3f ConvertToScreenSpace(const Vector3f &position) const;
 
-	bool IsUseMouse() const { return m_useMouse; }
-	void SetUseMouse(bool useMouse) { m_useMouse = useMouse; }
+	bool IsUseMouse() const { return useMouse; }
+	void SetUseMouse(bool useMouse) { this->useMouse = useMouse; }
 
-	const Vector2f &GetScreenStart() const { return m_screenStart; }
-	void SetScreenStart(const Vector2f &screenStart) { m_screenStart = screenStart; }
+	const Vector2f &GetScreenStart() const { return screenStart; }
+	void SetScreenStart(const Vector2f &screenStart) { this->screenStart = screenStart; }
 
-	const Vector3f &GetOrigin() const { return m_origin; }
-	const Vector3f &GetCurrentRay() const { return m_currentRay; }
+	const Vector3f &GetOrigin() const { return origin; }
+	const Vector3f &GetCurrentRay() const { return currentRay; }
 
 private:
 	void UpdateNormalizedDeviceCoordinates(float mouseX, float mouseY);
 	void UpdateEyeCoords();
 	void UpdateWorldCoords();
 
-	bool m_useMouse;
-	Vector2f m_screenStart;
+	bool useMouse;
+	Vector2f screenStart;
 
-	Matrix4 m_viewMatrix;
-	Matrix4 m_projectionMatrix;
+	Matrix4 projectionMatrix, viewMatrix;
 
-	Vector2f m_normalizedCoords;
-	Vector4f m_clipCoords;
-	Vector4f m_eyeCoords;
+	Vector2f normalizedCoords;
+	Vector4f clipCoords;
+	Vector4f eyeCoords;
 
-	Matrix4 m_invertedProjection;
-	Matrix4 m_invertedView;
-	Vector4f m_rayWorld;
+	Matrix4 invertedProjection, invertedView;
+	Vector4f rayWorld;
 
-	Vector3f m_origin;
-	Vector3f m_currentRay;
+	Vector3f origin;
+	Vector3f currentRay;
 };
 }

@@ -5,8 +5,6 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
-bool ModelDisk::registered = Register("disk");
-
 std::shared_ptr<ModelDisk> ModelDisk::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ModelDisk>(node))
 		return resource;
@@ -26,50 +24,49 @@ std::shared_ptr<ModelDisk> ModelDisk::Create(float innerRadius, float outerRadiu
 }
 
 ModelDisk::ModelDisk(float innerRadius, float outerRadius, uint32_t slices, uint32_t loops, bool load) :
-	m_innerRadius(innerRadius),
-	m_outerRadius(outerRadius),
-	m_slices(slices),
-	m_loops(loops) {
+	innerRadius(innerRadius),
+	outerRadius(outerRadius),
+	slices(slices),
+	loops(loops) {
 	if (load) {
 		Load();
 	}
 }
 
 const Node &operator>>(const Node &node, ModelDisk &model) {
-	node["innerRadius"].Get(model.m_innerRadius);
-	node["outerRadius"].Get(model.m_outerRadius);
-	node["slices"].Get(model.m_slices);
-	node["loops"].Get(model.m_loops);
+	node["innerRadius"].Get(model.innerRadius);
+	node["outerRadius"].Get(model.outerRadius);
+	node["slices"].Get(model.slices);
+	node["loops"].Get(model.loops);
 	return node;
 }
 
 Node &operator<<(Node &node, const ModelDisk &model) {
-	node["innerRadius"].Set(model.m_innerRadius);
-	node["outerRadius"].Set(model.m_outerRadius);
-	node["slices"].Set(model.m_slices);
-	node["loops"].Set(model.m_loops);
+	node["innerRadius"].Set(model.innerRadius);
+	node["outerRadius"].Set(model.outerRadius);
+	node["slices"].Set(model.slices);
+	node["loops"].Set(model.loops);
 	return node;
 }
 
 void ModelDisk::Load() {
-	if (m_innerRadius == 0.0f && m_outerRadius == 0.0f) {
+	if (innerRadius == 0.0f && outerRadius == 0.0f)
 		return;
-	}
 
 	std::vector<Vertex3d> vertices;
 	std::vector<uint32_t> indices;
-	vertices.reserve(m_slices * (m_loops + 1));
-	indices.reserve(m_slices * m_loops * 6);
+	vertices.reserve(slices * (loops + 1));
+	indices.reserve(slices * loops * 6);
 
-	for (uint32_t i = 0; i < m_slices; i++) {
-		auto iDivSlices = static_cast<float>(i) / static_cast<float>(m_slices);
-		auto alpha = iDivSlices * 2.0f * Maths::Pi<float>;
+	for (uint32_t i = 0; i < slices; i++) {
+		auto iDivSlices = static_cast<float>(i) / static_cast<float>(slices);
+		auto alpha = iDivSlices * 2.0f * Maths::PI<float>;
 		auto xDir = std::cos(alpha);
 		auto yDir = std::sin(alpha);
 
-		for (uint32_t j = 0; j < m_loops + 1; j++) {
-			auto jDivLoops = static_cast<float>(j) / static_cast<float>(m_loops);
-			auto radius = m_innerRadius + jDivLoops * (m_outerRadius - m_innerRadius);
+		for (uint32_t j = 0; j < loops + 1; j++) {
+			auto jDivLoops = static_cast<float>(j) / static_cast<float>(loops);
+			auto radius = innerRadius + jDivLoops * (outerRadius - innerRadius);
 
 			Vector3f position(radius * xDir, 0.0f, radius * yDir);
 			Vector2f uvs(1.0f - iDivSlices, 1.0f - jDivLoops);
@@ -78,10 +75,10 @@ void ModelDisk::Load() {
 		}
 	}
 
-	for (uint32_t i = 0; i < m_slices; i++) {
-		for (uint32_t j = 0; j < m_loops; j++) {
-			auto first = i * (m_loops + 1) + j;
-			auto second = (first + m_loops + 1) % (m_slices * (m_loops + 1));
+	for (uint32_t i = 0; i < slices; i++) {
+		for (uint32_t j = 0; j < loops; j++) {
+			auto first = i * (loops + 1) + j;
+			auto second = (first + loops + 1) % (slices * (loops + 1));
 
 			indices.emplace_back(second + 1);
 			indices.emplace_back(first + 1);

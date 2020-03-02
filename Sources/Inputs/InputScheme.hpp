@@ -27,7 +27,7 @@ public:
 	Button *AddButton(const std::string &name, std::unique_ptr<Button> &&button);
 	void RemoveButton(const std::string &name);
 
-	const File &GetFile() const { return m_file; }
+	const File &GetFile() const { return file; }
 	
 	friend const Node &operator>>(const Node &node, InputScheme &inputScheme);
 	friend Node &operator<<(Node &node, const InputScheme &inputScheme);
@@ -35,9 +35,9 @@ public:
 private:
 	void MoveDelegateOwnership(InputScheme *other);
 
-	AxisMap m_axes;
-	ButtonMap m_buttons;
+	AxisMap axes;
+	ButtonMap buttons;
 
-	File m_file;
+	File file;
 };
 }

@@ -36,23 +36,23 @@ public:
 	 * Gets the current renderer.
 	 * @return The renderer.
 	 */
-	Renderer *GetRenderer() const { return m_renderer.get(); }
+	Renderer *GetRenderer() const { return renderer.get(); }
 
 	/**
 	 * Sets the current renderer to a new renderer.
 	 * @param renderer The new renderer.
 	 */
-	void SetRenderer(std::unique_ptr<Renderer> &&renderer) { m_renderer = std::move(renderer); }
+	void SetRenderer(std::unique_ptr<Renderer> &&renderer) { this->renderer = std::move(renderer); }
 
 	RenderStage *GetRenderStage(uint32_t index) const;
 
 	const Descriptor *GetAttachment(const std::string &name) const;
-	const Swapchain *GetSwapchain() const { return m_swapchain.get(); }
-	const VkPipelineCache &GetPipelineCache() const { return m_pipelineCache; }
-	void SetFramebufferResized() { m_framebufferResized = true; }
-	const PhysicalDevice *GetPhysicalDevice() const { return m_physicalDevice.get(); }
-	const Surface *GetSurface() const { return m_surface.get(); }
-	const LogicalDevice *GetLogicalDevice() const { return m_logicalDevice.get(); }
+	const Swapchain *GetSwapchain() const { return swapchain.get(); }
+	const VkPipelineCache &GetPipelineCache() const { return pipelineCache; }
+	void SetFramebufferResized() { framebufferResized = true; }
+	const PhysicalDevice *GetPhysicalDevice() const { return physicalDevice.get(); }
+	const Surface *GetSurface() const { return surface.get(); }
+	const LogicalDevice *GetLogicalDevice() const { return logicalDevice.get(); }
 
 private:
 	void CreatePipelineCache();
@@ -64,25 +64,26 @@ private:
 	bool StartRenderpass(RenderStage &renderStage);
 	void EndRenderpass(RenderStage &renderStage);
 
-	std::unique_ptr<Renderer> m_renderer;
-	std::map<std::string, const Descriptor *> m_attachments;
-	std::unique_ptr<Swapchain> m_swapchain;
+	std::unique_ptr<Renderer> renderer;
+	std::map<std::string, const Descriptor *> attachments;
+	std::unique_ptr<Swapchain> swapchain;
 
-	std::map<std::thread::id, std::shared_ptr<CommandPool>> m_commandPools;
-	ElapsedTime m_elapsedPurge;
+	std::map<std::thread::id, std::shared_ptr<CommandPool>> commandPools;
+	/// Timer used to remove unused command pools.
+	ElapsedTime elapsedPurge;
 
-	VkPipelineCache m_pipelineCache = VK_NULL_HANDLE;
-	std::vector<VkSemaphore> m_presentCompletes;
-	std::vector<VkSemaphore> m_renderCompletes;
-	std::vector<VkFence> m_flightFences;
-	std::size_t m_currentFrame = 0;
-	bool m_framebufferResized = false;
+	VkPipelineCache pipelineCache = VK_NULL_HANDLE;
+	std::vector<VkSemaphore> presentCompletes;
+	std::vector<VkSemaphore> renderCompletes;
+	std::vector<VkFence> flightFences;
+	std::size_t currentFrame = 0;
+	bool framebufferResized = false;
 
-	std::vector<std::unique_ptr<CommandBuffer>> m_commandBuffers;
+	std::vector<std::unique_ptr<CommandBuffer>> commandBuffers;
 
-	std::unique_ptr<Instance> m_instance;
-	std::unique_ptr<PhysicalDevice> m_physicalDevice;
-	std::unique_ptr<Surface> m_surface;
-	std::unique_ptr<LogicalDevice> m_logicalDevice;
+	std::unique_ptr<Instance> instance;
+	std::unique_ptr<PhysicalDevice> physicalDevice;
+	std::unique_ptr<Surface> surface;
+	std::unique_ptr<LogicalDevice> logicalDevice;
 };
 }

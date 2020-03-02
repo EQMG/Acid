@@ -4,37 +4,37 @@
 
 namespace acid {
 UiSection::UiSection() {
-	m_icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
-	UiObject::AddChild(&m_icon);
+	icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
+	UiObject::AddChild(&icon);
 
-	m_title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
-	m_title.SetTextColour(Colour::White);
-	UiObject::AddChild(&m_title);
+	title.SetFontType(FontType::Create("Fonts/ProximaNova-Regular.ttf"));
+	title.SetTextColour(Colour::White);
+	UiObject::AddChild(&title);
 	
-	UiObject::AddChild(&m_content);
+	UiObject::AddChild(&content);
 
 	OnClick().Add([this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
 
-			m_collapsed = !m_collapsed;
+			collapsed = !collapsed;
 
-			if (m_collapsed) {
-				m_icon.SetImage(Image2d::Create("Guis/Triangle_Right.png"));
+			if (collapsed) {
+				icon.SetImage(Image2d::Create("Guis/Triangle_Right.png"));
 			} else {
-				m_icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
+				icon.SetImage(Image2d::Create("Guis/Triangle_Down.png"));
 			}
 
-			m_onCollapsed(this, m_collapsed);
+			onCollapsed(this, collapsed);
 		}
 	}, this);
 }
 
 void UiSection::UpdateObject() {
-	m_content.SetEnabled(!m_collapsed);
+	content.SetEnabled(!collapsed);
 }
 
 void UiSection::AddChild(UiObject *child) {
-	m_content.AddChild(child);
+	content.AddChild(child);
 }
 }

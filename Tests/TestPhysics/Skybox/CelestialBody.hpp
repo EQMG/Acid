@@ -8,8 +8,11 @@ using namespace acid;
 
 namespace test {
 class CelestialBody : public Component::Registrar<CelestialBody> {
+	inline static const bool Registered = Register("celestialBody");
 public:
-	enum class Type { Sun, Moon };
+	enum class Type {
+		Sun, Moon
+	};
 
 	explicit CelestialBody(Type type = Type::Sun);
 
@@ -19,12 +22,10 @@ public:
 	friend const Node &operator>>(const Node &node, CelestialBody &celestialBody);
 	friend Node &operator<<(Node &node, const CelestialBody &celestialBody);
 
-	Type GetType() const { return m_type; }
-	void SetType(const Type &type) { m_type = type; }
+	Type GetType() const { return type; }
+	void SetType(const Type &type) { this->type = type; }
 
 private:
-	static bool registered;
-
-	Type m_type;
+	Type type;
 };
 }
