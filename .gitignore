@@ -4,4 +4,8 @@
 cmake-build-debug/*
 cmake-build-release/*
 Build/*
+Resources/Sounds/Music/Hiitori-Bocchi.wav
+Resources/Sounds/Music/Hiitori-Bocchi.mp3
+Resources/Sounds/Music/Hiitori-Bocchi.flac
+Resources/Sounds/Music/Hiitori-Bocchi.aiff
 .DS_Store

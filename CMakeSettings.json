@@ -1,24 +1,24 @@
 ﻿{
   "configurations": [
     {
-      "name": "x64-RelWithDebInfo",
-      "generator": "Visual Studio 16 2019 Win64",
-      "configurationType": "RelWithDebInfo",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "buildRoot": "${projectDir}\\Build\\${name}",
-      "installRoot": "${projectDir}\\Build\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
-      "ctestCommandArgs": "",
-      "variables": []
-    },
-    {
       "name": "x64-Debug",
       "generator": "Visual Studio 16 2019 Win64",
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
       "installRoot": "${workspaceRoot}\\Build\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": []
+    },
+    {
+      "name": "x64-RelWithDebInfo",
+      "generator": "Visual Studio 16 2019 Win64",
+      "configurationType": "RelWithDebInfo",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\Build\\${name}",
+      "installRoot": "${projectDir}\\Build\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",

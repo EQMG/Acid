@@ -10,7 +10,7 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 	instance(instance),
 	physicalDevice(physicalDevice) {
 	// Creates the surface.
-	Window::Get()->CreateSurface(*instance, nullptr, &surface);
+	Graphics::CheckVk(Window::Get()->CreateSurface(*instance, nullptr, &surface));
 
 	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*physicalDevice, surface, &capabilities));
 

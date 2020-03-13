@@ -132,12 +132,12 @@ std::unique_ptr<Image2d> DeferredSubrender::ComputeBRDF(uint32_t size) {
 	compute.CmdRender(commandBuffer, brdfImage->GetSize());
 	commandBuffer.SubmitIdle();
 
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
 		image->GetBitmap()->Write("Deferred/Brdf.png");
 	}, brdfImage.get());
-#endif
+#endif*/
 
 	return brdfImage;
 }

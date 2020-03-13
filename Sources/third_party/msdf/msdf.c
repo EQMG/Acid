@@ -47,29 +47,29 @@ typedef enum {
     WHITE = 7
 } edge_color_t;
 
-inline double median(double a, double b, double c)
+double median(double a, double b, double c)
 {
   return MAX(MIN(a, b), MIN(MAX(a, b), c));
 }
 
-inline int nonzero_sign(double n)
+int nonzero_sign(double n)
 {
   return 2*(n > 0)-1;
 }
 
-inline double cross(vec2 a, vec2 b)
+double cross(vec2 a, vec2 b)
 {
   return a[0]*b[1] - a[1]*b[0];
 }
 
-inline void vec2_scale(vec2 r, vec2 const v, float const s)
+void vec2_scale(vec2 r, vec2 const v, float const s)
 {
   int i;
   for(i=0; i<2; ++i)
     r[i] = v[i] * s;
 }
 
-inline float vec2_mul_inner(vec2 const a, vec2 const b)
+float vec2_mul_inner(vec2 const a, vec2 const b)
 {
   float p = 0.;
   int i;
@@ -78,18 +78,18 @@ inline float vec2_mul_inner(vec2 const a, vec2 const b)
   return p;
 }
 
-inline float vec2_len(vec2 const v)
+float vec2_len(vec2 const v)
 {
   return sqrtf(vec2_mul_inner(v,v));
 }
 
-inline void vec2_norm(vec2 r, vec2 const v)
+void vec2_norm(vec2 r, vec2 const v)
 {
   float k = 1.0 / vec2_len(v);
   vec2_scale(r, v, k);
 }
 
-inline void vec2_sub(vec2 r, vec2 const a, vec2 const b)
+void vec2_sub(vec2 r, vec2 const a, vec2 const b)
 {
   int i;
   for(i=0; i<2; ++i)

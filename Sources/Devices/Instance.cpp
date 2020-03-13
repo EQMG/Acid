@@ -161,7 +161,7 @@ void Instance::CreateInstance() {
 	//applicationInfo.applicationVersion = VK_MAKE_VERSION(appVersion.major, appVersion.minor, appVersion.patch);
 	applicationInfo.pEngineName = "Acid";
 	applicationInfo.engineVersion = VK_MAKE_VERSION(engineVersion.major, engineVersion.minor, engineVersion.patch);
-	applicationInfo.apiVersion = VK_MAKE_VERSION(1, 1, 0);
+	applicationInfo.apiVersion = volkGetInstanceVersion() >= VK_API_VERSION_1_1 ? VK_API_VERSION_1_1 : VK_MAKE_VERSION(1, 0, 57);
 
 	if (enableValidationLayers && !CheckValidationLayerSupport()) {
 		Log::Error("Validation layers requested, but not available!\n");

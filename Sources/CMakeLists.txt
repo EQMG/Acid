@@ -33,22 +33,22 @@ if(NOT volk_FOUND)
 endif()
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
-find_package(OpenAL)
 find_package(OpenALSoft)
-if(OPENAL_FOUND)
-	if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
-		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
-		set_target_properties(OpenAL::OpenAL PROPERTIES
-				IMPORTED_LOCATION "${OPENAL_LIBRARY}"
-				INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}"
-				)
-	endif()
-elseif(OPENALSOFT_FOUND)
+find_package(OpenAL)
+if(OPENALSOFT_FOUND)
 	if(OPENALSOFT_FOUND AND NOT TARGET OpenAL::OpenAL)
 		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 		set_target_properties(OpenAL::OpenAL PROPERTIES
 				IMPORTED_LOCATION "${OPENALSOFT_LIBRARY}"
 				INTERFACE_INCLUDE_DIRECTORIES "${OPENALSOFT_INCLUDE_DIR}"
+				)
+	endif()
+elseif(OPENAL_FOUND)
+	if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
+		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
+		set_target_properties(OpenAL::OpenAL PROPERTIES
+				IMPORTED_LOCATION "${OPENAL_LIBRARY}"
+				INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}"
 				)
 	endif()
 else()
@@ -59,8 +59,8 @@ find_package(glfw3 3.3 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glfw3
-			URL https://github.com/glfw/glfw/archive/3.3.1.tar.gz
-			URL_MD5 ffa7c0d8547f56b0897276c59efdd641
+			URL https://github.com/glfw/glfw/archive/3.3.2.tar.gz
+			URL_MD5 865e54ff0a100e9041a40429db98be0b
 			)
 	FetchContent_GetProperties(glfw3)
 	if(NOT glfw3_POPULATED)

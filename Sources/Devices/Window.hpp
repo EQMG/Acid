@@ -47,16 +47,16 @@ public:
 	const Vector2ui &GetSize(bool checkFullscreen = true) const { return (fullscreen && checkFullscreen) ? fullscreenSize : size; }
 
 	/**
-	 * Gets the aspect ratio between the windows width and height.
-	 * @return The aspect ratio.
-	 */
-	float GetAspectRatio() const { return static_cast<float>(GetSize().x) / static_cast<float>(GetSize().y); }
-
-	/**
 	 * Sets the window size.
 	 * @param size The new size in pixels.
 	 */
 	void SetSize(const Vector2i &size);
+
+	/**
+	 * Gets the aspect ratio between the windows width and height.
+	 * @return The aspect ratio.
+	 */
+	float GetAspectRatio() const { return static_cast<float>(GetSize().x) / static_cast<float>(GetSize().y); }
 
 	/**
 	 * Gets the windows position in pixels.

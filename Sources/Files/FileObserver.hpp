@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <unordered_map>
 #include <thread>
 
 #include "Maths/Time.hpp"

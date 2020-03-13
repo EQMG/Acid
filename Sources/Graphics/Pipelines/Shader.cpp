@@ -336,13 +336,12 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 	shader.setStringsWithLengthsAndNames(&shaderSource, nullptr, &shaderNameCstr, 1);
 	shader.setPreamble(preamble.c_str());
 
+	auto defaultVersion = glslang::EShTargetVulkan_1_1;
 	shader.setEnvInput(glslang::EShSourceGlsl, language, glslang::EShClientVulkan, 110);
-	shader.setEnvClient(glslang::EShClientVulkan, glslang::EShTargetVulkan_1_1);
-	shader.setEnvTarget(glslang::EShTargetSpv, glslang::EShTargetSpv_1_3);
+	shader.setEnvClient(glslang::EShClientVulkan, defaultVersion);
+	shader.setEnvTarget(glslang::EShTargetSpv, volkGetInstanceVersion() >= VK_API_VERSION_1_1 ? glslang::EShTargetSpv_1_3 : glslang::EShTargetSpv_1_0);
 
 	ShaderIncluder includer;
-
-	auto defaultVersion = glslang::EShTargetVulkan_1_1;
 
 	std::string str;
 
