@@ -20,8 +20,8 @@ find_package(volk 121 QUIET)
 if(NOT volk_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(volk
-			URL https://github.com/zeux/volk/tarball/2638ad1b2b40f1ad402a0a6ac55b60bc51a23058
-			URL_MD5 56f2799070100d378c6b06e09013af97
+			URL https://github.com/zeux/volk/tarball/ec2d51377f5bdccda3663bf06de21964da137bd8
+			URL_MD5 412217d6be8f7bd859768973529f4214
 			)
 	FetchContent_GetProperties(volk)
 	if(NOT volk_POPULATED)

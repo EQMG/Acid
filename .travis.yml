@@ -65,6 +65,7 @@ matrix:
     addons:
       homebrew:
         taps:
+        - homebrew/bundle
         - homebrew/cask
         casks:
         - apenngrace/vulkan/vulkan-sdk
@@ -75,7 +76,6 @@ matrix:
         - glslang
         - bullet
         - physfs
-        - ninja
         - cmake
         - gcc
         - llvm

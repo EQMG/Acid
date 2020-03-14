@@ -8,8 +8,7 @@ namespace acid {
 /**
  * @brief Class that handles a storage buffer.
  */
-class ACID_EXPORT
-	StorageHandler {
+class ACID_EXPORT StorageHandler {
 public:
 	explicit StorageHandler(bool multipipeline = false);
 	explicit StorageHandler(const Shader::UniformBlock &uniformBlock, bool multipipeline = false);
