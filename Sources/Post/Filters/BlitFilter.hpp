@@ -5,7 +5,7 @@
 using namespace acid;
 
 namespace acid {
-class BlitFilter : public PostFilter {
+class ACID_EXPORT BlitFilter : public PostFilter {
 public:
 	explicit BlitFilter(const Pipeline::Stage &pipelineStage);
 

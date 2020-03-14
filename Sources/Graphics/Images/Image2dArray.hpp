@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief Resource that represents an array of 2D images.
  */
-class Image2dArray : public Image {
+class ACID_EXPORT Image2dArray : public Image {
 public:
 	/**
 	 * Creates a new array of 2D images.

@@ -92,5 +92,11 @@ matrix:
 script:
 - git submodule update --init --recursive
 - mkdir Build && cd Build
-- cmake .. -GNinja -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-- ninja
+- |
+    if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      cmake .. -GNinja -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      ninja
+    else
+      cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      xcodebuild -target Acid -configuration $BUILD_TYPE
+    fi

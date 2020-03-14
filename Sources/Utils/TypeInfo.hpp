@@ -18,7 +18,7 @@ public:
 	 */
 	template<typename K>
 	static TypeId GetTypeId() noexcept {
-		auto typeIndex = std::type_index(typeid(K));
+		std::type_index typeIndex(typeid(K));
 		if (auto it = typeMap.find(typeIndex); it != typeMap.end())
 			return it->second;
 		const auto id = NextTypeId();
@@ -38,7 +38,13 @@ private:
 	}
 
 	// Next type ID for T.
-	inline static TypeId nextTypeId = 0;
-	inline static std::unordered_map<std::type_index, TypeId> typeMap = {};
+	static TypeId nextTypeId;
+	static std::unordered_map<std::type_index, TypeId> typeMap;
 };
+
+template<typename K>
+TypeId TypeInfo<K>::nextTypeId = 0;
+
+template<typename K>
+std::unordered_map<std::type_index, TypeId> TypeInfo<K>::typeMap = {};
 }

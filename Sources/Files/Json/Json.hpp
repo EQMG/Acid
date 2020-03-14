@@ -3,7 +3,7 @@
 #include "Files/Node.hpp"
 
 namespace acid {
-class Json : public Node {
+class ACID_EXPORT Json : public Node {
 public:
 	Json() = default;
 	explicit Json(const Node &node);

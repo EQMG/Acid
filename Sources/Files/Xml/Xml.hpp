@@ -3,7 +3,7 @@
 #include "Files/Node.hpp"
 
 namespace acid {
-class Xml : public Node {
+class ACID_EXPORT Xml : public Node {
 public:
 	explicit Xml(const std::string &rootName);
 	Xml(const std::string &rootName, const Node &node);

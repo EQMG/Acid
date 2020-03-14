@@ -12,7 +12,7 @@
 #include "FontType.hpp"
 
 namespace acid {
-class VertexText {
+class ACID_EXPORT VertexText {
 public:
 	VertexText() = default;
 	VertexText(const Vector2f &position, const Vector3f &uv) :
