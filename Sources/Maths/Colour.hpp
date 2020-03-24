@@ -17,7 +17,7 @@ public:
 	/**
 	 * Constructor for Colour.
 	 */
-	constexpr Colour() = default;
+	Colour() = default;
 
 	/**
 	 * Constructor for Colour.

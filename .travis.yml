@@ -18,7 +18,10 @@ matrix:
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
-        - libfreetype6-dev
+        - libglfw3-dev
+#       - glslang-dev
+#       - libbullet-dev
+#       - libphysfs-dev
     language: cpp
     compiler: gcc
     env:
@@ -49,7 +52,10 @@ matrix:
         - libglu1-mesa-dev
         - libvulkan-dev
         - libopenal-dev
-        - libfreetype6-dev
+        - libglfw3-dev
+#       - glslang-dev
+#       - libbullet-dev
+#       - libphysfs-dev
     language: cpp
     compiler: clang
     env:
@@ -58,27 +64,26 @@ matrix:
     - BUILD_TYPE=Release
     before_install:
     - sudo apt-get update -qq
-  # XCode 11.2
+  # XCode 11.3
   - os: osx
-    osx_image: xcode11.2
+    osx_image: xcode11.3
     sudo: required
     addons:
       homebrew:
         taps:
-        - homebrew/bundle
         - homebrew/cask
         casks:
         - apenngrace/vulkan/vulkan-sdk
         packages:
         - pkg-config
+        - cmake
+        - gcc
+        - llvm
         - openal-soft
         - glfw
         - glslang
         - bullet
         - physfs
-        - cmake
-        - gcc
-        - llvm
       update: true
     language: cpp
     compiler: clang
@@ -90,7 +95,6 @@ matrix:
     - export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 script:
-- git submodule update --init --recursive
 - mkdir Build && cd Build
 - |
     if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then

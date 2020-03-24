@@ -20,8 +20,8 @@ find_package(volk 121 QUIET)
 if(NOT volk_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(volk
-			URL https://github.com/zeux/volk/tarball/ec2d51377f5bdccda3663bf06de21964da137bd8
-			URL_MD5 412217d6be8f7bd859768973529f4214
+			URL https://github.com/zeux/volk/tarball/ed4c168595bc7c5d36925f0036ea14d36b20c87c
+			URL_MD5 1e5f7e3fedbaf5223751418ebbd43aa3
 			)
 	FetchContent_GetProperties(volk)
 	if(NOT volk_POPULATED)
@@ -77,8 +77,8 @@ find_package(glslang QUIET)
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/7.13.3496.tar.gz
-			URL_MD5 9bfbff6115e490654e149fd0558dba0c
+			URL https://github.com/KhronosGroup/glslang/archive/8.13.3559.tar.gz
+			URL_MD5 cb32322377cee2bc1cee5b60ebe46133
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
@@ -215,7 +215,7 @@ target_compile_definitions(Acid
 target_compile_options(Acid
 		PUBLIC
 		# Disables symbol warnings.
-		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309>
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309 /wd26812>
 		PRIVATE
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
 		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
