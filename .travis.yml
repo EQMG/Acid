@@ -77,8 +77,6 @@ matrix:
         packages:
         - pkg-config
         - cmake
-        - gcc
-        - llvm
         - openal-soft
         - glfw
         - glslang
