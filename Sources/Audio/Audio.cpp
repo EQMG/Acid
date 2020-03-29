@@ -12,10 +12,16 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+struct Audio::_intern {
+	ALCdevice *device = nullptr;
+	ALCcontext *context = nullptr;
+};
+
 Audio::Audio() :
-	device(alcOpenDevice(nullptr)),
-	context(alcCreateContext(device, nullptr)) {
-	alcMakeContextCurrent(context);
+	impl(std::make_unique<_intern>()) {
+	impl->device = alcOpenDevice(nullptr);
+	impl->context = alcCreateContext(impl->device, nullptr);
+	alcMakeContextCurrent(impl->context);
 
 #if defined(ACID_DEBUG)
 	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
@@ -29,15 +35,15 @@ Audio::Audio() :
 		next += len + 2;
 	}
 
-	auto deviceName = alcGetString(this->device, ALC_DEVICE_SPECIFIER);
+	auto deviceName = alcGetString(impl->device, ALC_DEVICE_SPECIFIER);
 	Log::Out("Selected Audio Device: ", std::quoted(deviceName), '\n');
 #endif
 }
 
 Audio::~Audio() {
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(context);
-	alcCloseDevice(device);
+	alcDestroyContext(impl->context);
+	alcCloseDevice(impl->device);
 }
 
 void Audio::Update() {

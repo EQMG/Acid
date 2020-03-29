@@ -3,9 +3,6 @@
 #include "Engine/Engine.hpp"
 #include "Utils/Delegate.hpp"
 
-typedef struct ALCdevice ALCdevice;
-typedef struct ALCcontext ALCcontext;
-
 namespace acid {
 /**
  * @brief Module used for loading, managing and playing a variety of different sound types.
@@ -24,9 +21,6 @@ public:
 	ACID_NO_EXPORT static std::string StringifyResultAl(int32_t result);
 	ACID_NO_EXPORT static void CheckAl(int32_t result);
 
-	ACID_NO_EXPORT ALCdevice *GetDevice() const { return device; }
-	ACID_NO_EXPORT ALCcontext *GetContext() const { return context; }
-
 	float GetGain(Type type) const;
 	void SetGain(Type type, float volume);
 
@@ -37,8 +31,8 @@ public:
 	Delegate<void(Type, float)> &OnGain() { return onGain; }
 
 private:
-	ALCdevice *device = nullptr;
-	ALCcontext *context = nullptr;
+	struct _intern;
+	std::unique_ptr<_intern> impl;
 
 	std::map<Type, float> gains;
 
