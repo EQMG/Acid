@@ -62,11 +62,11 @@ void Mesh::SetMaterial(std::unique_ptr<Material> &&material) {
 	this->material->CreatePipeline(GetVertexInput(), false);
 }
 
-bool Mesh::operator<(const Mesh &other) const {
+bool Mesh::operator<(const Mesh &rhs) const {
 	auto camera = Scenes::Get()->GetCamera();
 
 	auto transform0 = GetEntity()->GetComponent<Transform>();
-	auto transform1 = other.GetEntity()->GetComponent<Transform>();
+	auto transform1 = rhs.GetEntity()->GetComponent<Transform>();
 
 	auto thisDistance2 = (camera->GetPosition() - transform0->GetPosition()).LengthSquared();
 	auto otherDistance2 = (camera->GetPosition() - transform1->GetPosition()).LengthSquared();
@@ -74,8 +74,8 @@ bool Mesh::operator<(const Mesh &other) const {
 	return thisDistance2 > otherDistance2;
 }
 
-bool Mesh::operator>(const Mesh &other) const {
-	return !operator<(other);
+bool Mesh::operator>(const Mesh &rhs) const {
+	return !operator<(rhs);
 }
 
 const Node &operator>>(const Node &node, Mesh &mesh) {

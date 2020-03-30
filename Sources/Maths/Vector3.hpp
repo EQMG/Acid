@@ -304,14 +304,13 @@ public:
 
 	ACID_EXPORT static const Vector3 Zero;
 	ACID_EXPORT static const Vector3 One;
+	ACID_EXPORT static const Vector3 Infinity;
 	ACID_EXPORT static const Vector3 Left;
 	ACID_EXPORT static const Vector3 Right;
 	ACID_EXPORT static const Vector3 Up;
 	ACID_EXPORT static const Vector3 Down;
 	ACID_EXPORT static const Vector3 Front;
 	ACID_EXPORT static const Vector3 Back;
-	ACID_EXPORT static const Vector3 PositiveInfinity;
-	ACID_EXPORT static const Vector3 NegativeInfinity;
 
 	T x = 0, y = 0, z = 0;
 };

@@ -6,6 +6,12 @@
 
 namespace acid {
 template<typename T>
+Model::Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices):
+	Model() {
+	Initialize(vertices, indices);
+}
+
+template<typename T>
 std::vector<T> Model::GetVertices(std::size_t offset) const {
 	Buffer vertexStaging(vertexBuffer->GetSize(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
@@ -59,8 +65,8 @@ void Model::Initialize(const std::vector<T> &vertices, const std::vector<uint32_
 	SetVertices(vertices);
 	SetIndices(indices);
 
-	minExtents = Vector3f::PositiveInfinity;
-	maxExtents = Vector3f::NegativeInfinity;
+	minExtents = Vector3f::Infinity;
+	maxExtents = -Vector3f::Infinity;
 
 	for (const auto &vertex : vertices) {
 		Vector3f position(vertex.position);

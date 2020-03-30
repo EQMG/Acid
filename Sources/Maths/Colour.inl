@@ -141,12 +141,12 @@ constexpr float &Colour::operator[](uint32_t index) {
 	}
 }
 
-constexpr bool Colour::operator==(const Colour &other) const {
-	return r == other.r && g == other.g && b == other.b && a == other.a;
+constexpr bool Colour::operator==(const Colour &rhs) const {
+	return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
 }
 
-constexpr bool Colour::operator!=(const Colour &other) const {
-	return !operator==(other);
+constexpr bool Colour::operator!=(const Colour &rhs) const {
+	return !operator==(rhs);
 }
 
 constexpr Colour operator+(const Colour &lhs, const Colour &rhs) {
@@ -197,8 +197,8 @@ constexpr Colour operator/(const Colour &lhs, float rhs) {
 	return lhs / Colour(rhs, rhs, rhs);
 }
 
-constexpr Colour &Colour::operator+=(const Colour &other) {
-	return *this = *this + other;
+constexpr Colour &Colour::operator+=(const Colour &rhs) {
+	return *this = *this + rhs;
 }
 
 constexpr Colour &Colour::operator-=(const Colour &rhs) {

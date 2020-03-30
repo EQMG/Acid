@@ -137,9 +137,9 @@ public:
 	template<typename T>
 	Node &operator=(const T &rhs);
 
-	bool operator==(const Node &other) const;
-	bool operator!=(const Node &other) const;
-	bool operator<(const Node &other) const;
+	bool operator==(const Node &rhs) const;
+	bool operator!=(const Node &rhs) const;
+	bool operator<(const Node &rhs) const;
 
 	const std::vector<Node> &GetProperties() const { return properties; }
 	std::vector<Node> &GetProperties() { return properties; }
@@ -164,15 +164,15 @@ protected:
 
 		/**
 		 * Compares if two tokens have the same type and string contents.
-		 * @param other The other token to compare.
+		 * @param rhs The other token to compare.
 		 * @return If the tokens are equal.
 		 */
-		bool operator==(const Token &other) const {
-			return type == other.type && view == other.view.data();
+		bool operator==(const Token &rhs) const {
+			return type == rhs.type && view == rhs.view.data();
 		}
 
-		bool operator!=(const Token &other) const {
-			return !operator==(other);
+		bool operator!=(const Token &rhs) const {
+			return !operator==(rhs);
 		}
 
 		Type type;

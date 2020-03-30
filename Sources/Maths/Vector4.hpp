@@ -279,8 +279,7 @@ public:
 
 	ACID_EXPORT static const Vector4 Zero;
 	ACID_EXPORT static const Vector4 One;
-	ACID_EXPORT static const Vector4 PositiveInfinity;
-	ACID_EXPORT static const Vector4 NegativeInfinity;
+	ACID_EXPORT static const Vector4 Infinity;
 
 	T x = 0, y = 0, z = 0, w = 1;
 };

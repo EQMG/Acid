@@ -121,10 +121,7 @@ public:
 	 * @param indices The model indices.
 	 */
 	template<typename T>
-	explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {}) :
-		Model() {
-		Initialize(vertices, indices);
-	}
+	explicit Model(const std::vector<T> &vertices, const std::vector<uint32_t> &indices = {});
 
 	bool CmdRender(const CommandBuffer &commandBuffer, uint32_t instances = 1) const;
 

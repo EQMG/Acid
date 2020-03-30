@@ -31,12 +31,12 @@ public:
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
-	bool operator==(const VertexAnimated &other) const {
-		return position == other.position && uv == other.uv && normal == other.normal && jointId == other.jointId && vertexWeight == other.vertexWeight;
+	bool operator==(const VertexAnimated &rhs) const {
+		return position == rhs.position && uv == rhs.uv && normal == rhs.normal && jointId == rhs.jointId && vertexWeight == rhs.vertexWeight;
 	}
 
-	bool operator!=(const VertexAnimated &other) const {
-		return !operator==(other);
+	bool operator!=(const VertexAnimated &rhs) const {
+		return !operator==(rhs);
 	}
 
 	friend const Node &operator>>(const Node &node, VertexAnimated &vertexAnimated) {

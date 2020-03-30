@@ -18,12 +18,12 @@ public:
 	uint32_t GetOffset() const { return offset; }
 	uint32_t GetSize() const { return size; }
 
-	bool operator==(const OffsetSize &other) const {
-		return offset == other.offset && size == other.size;
+	bool operator==(const OffsetSize &rhs) const {
+		return offset == rhs.offset && size == rhs.size;
 	}
 
-	bool operator!=(const OffsetSize &other) const {
-		return !operator==(other);
+	bool operator!=(const OffsetSize &rhs) const {
+		return !operator==(rhs);
 	}
 
 private:

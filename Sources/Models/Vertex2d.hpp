@@ -23,12 +23,12 @@ public:
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
-	bool operator==(const Vertex2d &other) const {
-		return position == other.position && uv == other.uv;
+	bool operator==(const Vertex2d &rhs) const {
+		return position == rhs.position && uv == rhs.uv;
 	}
 
-	bool operator!=(const Vertex2d &other) const {
-		return !operator==(other);
+	bool operator!=(const Vertex2d &rhs) const {
+		return !operator==(rhs);
 	}
 
 	Vector2f position;

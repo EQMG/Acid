@@ -34,8 +34,8 @@ public:
 		const std::vector<VkVertexInputBindingDescription> &GetBindingDescriptions() const { return bindingDescriptions; }
 		const std::vector<VkVertexInputAttributeDescription> &GetAttributeDescriptions() const { return attributeDescriptions; }
 
-		bool operator<(const VertexInput &other) const {
-			return bindingDescriptions.front().binding < other.bindingDescriptions.front().binding;
+		bool operator<(const VertexInput &rhs) const {
+			return bindingDescriptions.front().binding < rhs.bindingDescriptions.front().binding;
 		}
 
 		friend const Node &operator>>(const Node &node, VertexInput &vertexInput) {
@@ -78,13 +78,13 @@ public:
 		bool IsWriteOnly() const { return writeOnly; }
 		VkShaderStageFlags GetStageFlags() const { return stageFlags; }
 
-		bool operator==(const Uniform &other) const {
-			return binding == other.binding && offset == other.offset && size == other.size && glType == other.glType && readOnly == other.readOnly && 
-				writeOnly == other.writeOnly && stageFlags == other.stageFlags;
+		bool operator==(const Uniform &rhs) const {
+			return binding == rhs.binding && offset == rhs.offset && size == rhs.size && glType == rhs.glType && readOnly == rhs.readOnly && 
+				writeOnly == rhs.writeOnly && stageFlags == rhs.stageFlags;
 		}
 
-		bool operator!=(const Uniform &other) const {
-			return !operator==(other);
+		bool operator!=(const Uniform &rhs) const {
+			return !operator==(rhs);
 		}
 
 		friend const Node &operator>>(const Node &node, Uniform &uniform) {
@@ -147,12 +147,12 @@ public:
 			return it->second;
 		}
 
-		bool operator==(const UniformBlock &other) const {
-			return binding == other.binding && size == other.size && stageFlags == other.stageFlags && type == other.type && uniforms == other.uniforms;
+		bool operator==(const UniformBlock &rhs) const {
+			return binding == rhs.binding && size == rhs.size && stageFlags == rhs.stageFlags && type == rhs.type && uniforms == rhs.uniforms;
 		}
 
-		bool operator!=(const UniformBlock &other) const {
-			return !operator==(other);
+		bool operator!=(const UniformBlock &rhs) const {
+			return !operator==(rhs);
 		}
 
 		friend const Node &operator>>(const Node &node, UniformBlock &uniformBlock) {
@@ -196,12 +196,12 @@ public:
 		int32_t GetSize() const { return size; }
 		int32_t GetGlType() const { return glType; }
 
-		bool operator==(const Attribute &other) const {
-			return set == other.set && location == other.location && size == other.size && glType == other.glType;
+		bool operator==(const Attribute &rhs) const {
+			return set == rhs.set && location == rhs.location && size == rhs.size && glType == rhs.glType;
 		}
 
-		bool operator!=(const Attribute &other) const {
-			return !operator==(other);
+		bool operator!=(const Attribute &rhs) const {
+			return !operator==(rhs);
 		}
 
 		friend const Node &operator>>(const Node &node, Attribute &attribute) {
@@ -242,12 +242,12 @@ public:
 		VkShaderStageFlags GetStageFlags() const { return stageFlags; }
 		int32_t GetGlType() const { return glType; }
 
-		bool operator==(const Constant &other) const {
-			return binding == other.binding && size == other.size && stageFlags == other.stageFlags && glType == other.glType;
+		bool operator==(const Constant &rhs) const {
+			return binding == rhs.binding && size == rhs.size && stageFlags == rhs.stageFlags && glType == rhs.glType;
 		}
 
-		bool operator!=(const Constant &other) const {
-			return !operator==(other);
+		bool operator!=(const Constant &rhs) const {
+			return !operator==(rhs);
 		}
 
 		friend const Node &operator>>(const Node &node, Constant &constant) {

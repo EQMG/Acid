@@ -79,28 +79,6 @@ Quaternion::Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vecto
 	*this = rotation;
 }
 
-Quaternion Quaternion::Add(const Quaternion &other) const {
-	return {x + other.x, y + other.y, z + other.z, w + other.w};
-}
-
-Quaternion Quaternion::Subtract(const Quaternion &other) const {
-	return {x - other.x, y - other.y, z - other.z, w - other.w};
-}
-
-Quaternion Quaternion::Multiply(const Quaternion &other) const {
-	return {
-		x * other.w + w * other.x + y * other.z - z * other.y, y * other.w + w * other.y + z * other.x - x * other.z,
-		z * other.w + w * other.z + x * other.y - y * other.x, w * other.w - x * other.x - y * other.y - z * other.z
-	};
-}
-
-Vector3f Quaternion::Multiply(const Vector3f &other) const {
-	Vector3f q(x, y, z);
-	auto cross1 = q.Cross(other);
-	auto cross2 = q.Cross(cross1);
-	return other + 2.0f * (cross1 * w + cross2);
-}
-
 Quaternion Quaternion::MultiplyInverse(const Quaternion &other) const {
 	auto n = other.LengthSquared();
 	n = n == 0.0f ? n : 1.0f / n;
@@ -137,10 +115,6 @@ Quaternion Quaternion::Slerp(const Quaternion &other, float progression) const {
 	result.z = scale0 * z + scale1 * other.z;
 	result.w = scale0 * w + scale1 * other.w;
 	return result;
-}
-
-Quaternion Quaternion::Scale(float scalar) const {
-	return {x * scalar, y * scalar, z * scalar, w * scalar};
 }
 
 Quaternion Quaternion::Normalize() const {
@@ -253,52 +227,60 @@ float &Quaternion::operator[](uint32_t index) {
 	}
 }
 
-bool Quaternion::operator==(const Quaternion &other) const {
-	return x == other.x && y == other.y && z == other.z && w == other.w;
+bool Quaternion::operator==(const Quaternion &rhs) const {
+	return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w;
 }
 
-bool Quaternion::operator!=(const Quaternion &other) const {
-	return !operator==(other);
+bool Quaternion::operator!=(const Quaternion &rhs) const {
+	return !operator==(rhs);
 }
 
 Quaternion Quaternion::operator-() const {
 	return {-x, -y, -z, -w};
 }
 
-Quaternion operator+(const Quaternion &left, const Quaternion &right) {
-	return left.Add(right);
+Quaternion operator+(const Quaternion &lhs, const Quaternion &rhs) {
+	return {lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w};
 }
 
-Quaternion operator-(const Quaternion &left, const Quaternion &right) {
-	return left.Subtract(right);
+Quaternion operator-(const Quaternion &lhs, const Quaternion &rhs) {
+	return {lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w};
 }
 
-Quaternion operator*(const Quaternion &left, const Quaternion &right) {
-	return left.Multiply(right);
+Quaternion operator*(const Quaternion &lhs, const Quaternion &rhs) {
+	return {
+		lhs.x * rhs.w + lhs.w * rhs.x + lhs.y * rhs.z - lhs.z * rhs.y,
+		lhs.y * rhs.w + lhs.w * rhs.y + lhs.z * rhs.x - lhs.x * rhs.z,
+		lhs.z * rhs.w + lhs.w * rhs.z + lhs.x * rhs.y - lhs.y * rhs.x,
+		lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z
+	};
 }
 
-Vector3f operator*(const Vector3f &left, const Quaternion &right) {
-	return right.Multiply(left);
+Vector3f operator*(const Vector3f &lhs, const Quaternion &rhs) {
+	Vector3f q(rhs.x, rhs.y, rhs.z);
+	auto cross1 = q.Cross(lhs);
+	auto cross2 = q.Cross(cross1);
+	return lhs + 2.0f * (cross1 * rhs.w + cross2);
 }
 
-Vector3f operator*(const Quaternion &left, const Vector3f &right) {
-	return left.Multiply(right);
+Vector3f operator*(const Quaternion &lhs, const Vector3f &rhs) {
+	return lhs * rhs;
 }
 
-Quaternion operator*(float left, const Quaternion &right) {
-	return right.Scale(left);
+Quaternion operator*(float lhs, const Quaternion &rhs) {
+	return {rhs.x * lhs, rhs.y * lhs, rhs.z * lhs, rhs.w * lhs};
 }
 
-Quaternion operator*(const Quaternion &left, float right) {
-	return left.Scale(right);
+Quaternion operator*(const Quaternion &lhs, float rhs) {
+	return {lhs.x * rhs, lhs.y * rhs, lhs.z * rhs, lhs.w * rhs};
 }
 
-Quaternion &Quaternion::operator*=(const Quaternion &other) {
-	return *this = Multiply(other);
+Quaternion &Quaternion::operator*=(const Quaternion &rhs) {
+	return *this = *this * rhs;
 }
 
-Quaternion &Quaternion::operator*=(float other) {
-	return *this = Scale(other);
+Quaternion &Quaternion::operator*=(float rhs) {
+	return *this = *this * rhs;
 }
 
 const Node &operator>>(const Node &node, Quaternion &quaternion) {

@@ -21,10 +21,6 @@ Transform::~Transform() {
 	}
 }
 
-Transform Transform::Multiply(const Transform &other) const {
-	return {Vector3f(GetWorldMatrix().Transform(Vector4f(other.position))), rotation + other.rotation, scale * other.scale};
-}
-
 Matrix4 Transform::GetWorldMatrix() const {
 	auto worldTransform = GetWorldTransform();
 	return Matrix4::TransformationMatrix(worldTransform->position, worldTransform->rotation, worldTransform->scale);
@@ -65,11 +61,11 @@ bool Transform::operator!=(const Transform &rhs) const {
 }
 
 Transform operator*(const Transform &lhs, const Transform &rhs) {
-	return lhs.Multiply(rhs);
+	return {Vector3f(lhs.GetWorldMatrix().Transform(Vector4f(rhs.position))), lhs.rotation + rhs.rotation, lhs.scale * rhs.scale};
 }
 
 Transform &Transform::operator*=(const Transform &rhs) {
-	return *this = Multiply(rhs);
+	return *this = *this * rhs;
 }
 
 const Node &operator>>(const Node &node, Transform &transform) {

@@ -45,34 +45,6 @@ public:
 	Quaternion(const Vector3f &axisX, const Vector3f &axisY, const Vector3f &axisZ);
 
 	/**
-	 * Adds this quaternion to another quaternion.
-	 * @param other The other quaternion.
-	 * @return The resultant quaternion.
-	 */
-	Quaternion Add(const Quaternion &other) const;
-
-	/**
-	 * Subtracts this quaternion to another quaternion.
-	 * @param other The other quaternion.
-	 * @return The resultant quaternion.
-	 */
-	Quaternion Subtract(const Quaternion &other) const;
-
-	/**
-	 * Multiplies this quaternion with another quaternion.
-	 * @param other The other quaternion.
-	 * @return The resultant quaternion.
-	 */
-	Quaternion Multiply(const Quaternion &other) const;
-
-	/**
-	 * Multiplies this quaternion with another vector.
-	 * @param other The other vector.
-	 * @return The resultant vector.
-	 */
-	Vector3f Multiply(const Vector3f &other) const;
-
-	/**
 	 * Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).
 	 * @param other The other quaternion.
 	 * @return The resultant quaternion.
@@ -93,13 +65,6 @@ public:
 	 * @return Left slerp right.
 	 */
 	Quaternion Slerp(const Quaternion &other, float progression) const;
-
-	/**
-	 * Scales this quaternion by a scalar.
-	 * @param scalar The scalar value.
-	 * @return The scaled quaternion.
-	 */
-	Quaternion Scale(float scalar) const;
 
 	/**
 	 * Normalizes this quaternion.
@@ -153,21 +118,21 @@ public:
 	float operator[](uint32_t index) const;
 	float &operator[](uint32_t index);
 
-	bool operator==(const Quaternion &other) const;
-	bool operator!=(const Quaternion &other) const;
+	bool operator==(const Quaternion &rhs) const;
+	bool operator!=(const Quaternion &rhs) const;
 
 	Quaternion operator-() const;
 
-	friend Quaternion operator+(const Quaternion &left, const Quaternion &right);
-	friend Quaternion operator-(const Quaternion &left, const Quaternion &right);
-	friend Quaternion operator*(const Quaternion &left, const Quaternion &right);
-	friend Vector3f operator*(const Vector3f &left, const Quaternion &right);
-	friend Vector3f operator*(const Quaternion &left, const Vector3f &right);
-	friend Quaternion operator*(float left, const Quaternion &right);
-	friend Quaternion operator*(const Quaternion &left, float right);
+	friend Quaternion operator+(const Quaternion &lhs, const Quaternion &rhs);
+	friend Quaternion operator-(const Quaternion &lhs, const Quaternion &rhs);
+	friend Quaternion operator*(const Quaternion &lhs, const Quaternion &rhs);
+	friend Vector3f operator*(const Vector3f &lhs, const Quaternion &rhs);
+	friend Vector3f operator*(const Quaternion &lhs, const Vector3f &rhs);
+	friend Quaternion operator*(float lhs, const Quaternion &rhs);
+	friend Quaternion operator*(const Quaternion &lhs, float rhs);
 
-	Quaternion &operator*=(const Quaternion &other);
-	Quaternion &operator*=(float other);
+	Quaternion &operator*=(const Quaternion &rhs);
+	Quaternion &operator*=(float rhs);
 
 	friend const Node &operator>>(const Node &node, Quaternion &quaternion);
 	friend Node &operator<<(Node &node, const Quaternion &quaternion);

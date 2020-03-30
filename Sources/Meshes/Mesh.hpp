@@ -32,8 +32,8 @@ public:
 	const Material *GetMaterial() const { return material.get(); }
 	void SetMaterial(std::unique_ptr<Material> &&material);
 
-	bool operator<(const Mesh &other) const;
-	bool operator>(const Mesh &other) const;
+	bool operator<(const Mesh &rhs) const;
+	bool operator>(const Mesh &rhs) const;
 
 	friend const Node &operator>>(const Node &node, Mesh &mesh);
 	friend Node &operator<<(Node &node, const Mesh &mesh);

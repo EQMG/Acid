@@ -98,8 +98,8 @@ public:
 	constexpr float operator[](uint32_t index) const;
 	constexpr float &operator[](uint32_t index);
 
-	constexpr bool operator==(const Colour &other) const;
-	constexpr bool operator!=(const Colour &other) const;
+	constexpr bool operator==(const Colour &rhs) const;
+	constexpr bool operator!=(const Colour &rhs) const;
 
 	friend constexpr Colour operator+(const Colour &lhs, const Colour &rhs);
 	friend constexpr Colour operator-(const Colour &lhs, const Colour &rhs);

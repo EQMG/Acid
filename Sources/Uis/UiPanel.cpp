@@ -45,8 +45,8 @@ void UiPanel::UpdateObject() {
 
 	//content.GetTransform().SetPosition(0.5f - (Vector2f(scrollX.GetProgress(), scrollY.GetProgress()) * contentSize));
 
-	min = Vector2f::PositiveInfinity;
-	max = Vector2f::NegativeInfinity;
+	min = Vector2f::Infinity;
+	max = -Vector2f::Infinity;
 	//SetScissor(&scrollX);
 	//SetScissor(&scrollY);
 	SetScissor(&content, true);

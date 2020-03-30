@@ -30,7 +30,7 @@ public:
 	 */
 	void Update();
 
-	bool operator<(const Particle &other) const;
+	bool operator<(const Particle &rhs) const;
 
 	bool IsAlive() const { return transparency > 0.0f; }
 	const std::shared_ptr<ParticleType> &GetParticleType() const { return particleType; }

@@ -35,12 +35,12 @@ public:
 	T &operator*() noexcept { return get(); }
 	T &operator->() noexcept { return get(); }
 
-	bool operator==(const Future &other) const noexcept {
-		return future == other.future && current == other.current;
+	bool operator==(const Future &rhs) const noexcept {
+		return future == rhs.future && current == rhs.current;
 	}
 
-	bool operator!=(const Future &other) const noexcept {
-		return !operator==(other);
+	bool operator!=(const Future &rhs) const noexcept {
+		return !operator==(rhs);
 	}
 
 private:

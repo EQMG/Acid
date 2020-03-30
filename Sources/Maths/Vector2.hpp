@@ -301,12 +301,11 @@ public:
 
 	ACID_EXPORT static const Vector2 Zero;
 	ACID_EXPORT static const Vector2 One;
+	ACID_EXPORT static const Vector2 Infinity;
 	ACID_EXPORT static const Vector2 Left;
 	ACID_EXPORT static const Vector2 Right;
 	ACID_EXPORT static const Vector2 Up;
 	ACID_EXPORT static const Vector2 Down;
-	ACID_EXPORT static const Vector2 PositiveInfinity;
-	ACID_EXPORT static const Vector2 NegativeInfinity;
 
 	T x = 0, y = 0;
 };

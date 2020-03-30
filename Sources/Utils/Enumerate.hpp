@@ -14,7 +14,7 @@ template<typename T,
 	struct iterator {
 		size_t i;
 		TIter iter;
-		bool operator!=(const iterator &other) const { return iter != other.iter; }
+		bool operator!=(const iterator &rhs) const { return iter != rhs.iter; }
 		void operator++() { ++i; ++iter; }
 		auto operator*() const { return std::tie(i, *iter); }
 	};

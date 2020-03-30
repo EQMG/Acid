@@ -20,13 +20,6 @@ public:
 	Transform(const Vector3f &position = {}, const Vector3f &rotation = {}, const Vector3f &scale = Vector3f(1.0f));
 	~Transform();
 
-	/**
-	 * Multiplies this transform with another transform.
-	 * @param other The other transform.
-	 * @return The resultant transform.
-	 */
-	Transform Multiply(const Transform &other) const;
-
 	Matrix4 GetWorldMatrix() const;
 	Vector3f GetPosition() const;
 	Vector3f GetRotation() const;

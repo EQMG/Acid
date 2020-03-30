@@ -102,28 +102,28 @@ IpAddress IpAddress::GetPublicAddress(const Time &timeout) {
 	return {};
 }
 
-bool IpAddress::operator==(const IpAddress &other) const {
-	return !(*this < other) && !(other < *this);
+bool IpAddress::operator==(const IpAddress &rhs) const {
+	return !(*this < rhs) && !(rhs < *this);
 }
 
-bool IpAddress::operator!=(const IpAddress &other) const {
-	return !operator==(other);
+bool IpAddress::operator!=(const IpAddress &rhs) const {
+	return !operator==(rhs);
 }
 
-bool IpAddress::operator<(const IpAddress &other) const {
-	return std::make_pair(valid, address) < std::make_pair(other.valid, other.address);
+bool IpAddress::operator<(const IpAddress &rhs) const {
+	return std::make_pair(valid, address) < std::make_pair(rhs.valid, rhs.address);
 }
 
-bool IpAddress::operator<=(const IpAddress &other) const {
-	return !(other < *this);
+bool IpAddress::operator<=(const IpAddress &rhs) const {
+	return !(rhs < *this);
 }
 
-bool IpAddress::operator>(const IpAddress &other) const {
-	return other < *this;
+bool IpAddress::operator>(const IpAddress &rhs) const {
+	return rhs < *this;
 }
 
-bool IpAddress::operator>=(const IpAddress &other) const {
-	return !(*this < other);
+bool IpAddress::operator>=(const IpAddress &rhs) const {
+	return !(*this < rhs);
 }
 
 std::ostream &operator<<(std::ostream &stream, const IpAddress &address) {

@@ -54,8 +54,8 @@ void ShadowBox::UpdateShadowBox(const Camera &camera) {
 
 	auto points = CalculateFrustumVertices(rotation, forwardVector, centreNear, centreFar);
 
-	minExtents = Vector3f::PositiveInfinity;
-	maxExtents = Vector3f::NegativeInfinity;
+	minExtents = Vector3f::Infinity;
+	maxExtents = -Vector3f::Infinity;
 
 	for (const auto &point : points) {
 		Vector3f extent(point);

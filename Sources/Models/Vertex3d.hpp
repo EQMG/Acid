@@ -26,12 +26,12 @@ public:
 		return {bindingDescriptions, attributeDescriptions};
 	}
 
-	bool operator==(const Vertex3d &other) const {
-		return position == other.position && uv == other.uv && normal == other.normal;
+	bool operator==(const Vertex3d &rhs) const {
+		return position == rhs.position && uv == rhs.uv && normal == rhs.normal;
 	}
 
-	bool operator!=(const Vertex3d &other) const {
-		return !operator==(other);
+	bool operator!=(const Vertex3d &rhs) const {
+		return !operator==(rhs);
 	}
 
 	Vector3f position;

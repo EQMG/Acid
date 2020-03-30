@@ -7,11 +7,11 @@ Gizmo::Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &trans
 	colour(colour ? *colour : gizmoType->GetColour()) {
 }
 
-bool Gizmo::operator==(const Gizmo &other) const {
-	return gizmoType == other.gizmoType && transform == other.transform && colour == other.colour;
+bool Gizmo::operator==(const Gizmo &rhs) const {
+	return gizmoType == rhs.gizmoType && transform == rhs.transform && colour == rhs.colour;
 }
 
-bool Gizmo::operator!=(const Gizmo &other) const {
-	return !operator==(other);
+bool Gizmo::operator!=(const Gizmo &rhs) const {
+	return !operator==(rhs);
 }
 }

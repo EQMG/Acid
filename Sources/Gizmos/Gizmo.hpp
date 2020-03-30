@@ -18,8 +18,8 @@ public:
 	 */
 	Gizmo(const std::shared_ptr<GizmoType> &gizmoType, const Transform &transform, const std::optional<Colour> &colour = {});
 
-	bool operator==(const Gizmo &other) const;
-	bool operator!=(const Gizmo &other) const;
+	bool operator==(const Gizmo &rhs) const;
+	bool operator!=(const Gizmo &rhs) const;
 
 	std::shared_ptr<GizmoType> GetGizmoType() const { return gizmoType; }
 

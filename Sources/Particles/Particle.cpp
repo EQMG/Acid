@@ -27,24 +27,21 @@ void Particle::Update() {
 	position += change;
 	elapsedTime += delta;
 
-	if (elapsedTime > lifeLength - FADE_TIME) {
+	if (elapsedTime > lifeLength - FADE_TIME)
 		transparency -= delta / FADE_TIME;
-	}
 
-	if (!IsAlive() || !Scenes::Get()->GetCamera()) {
+	if (!IsAlive() || !Scenes::Get()->GetCamera())
 		return;
-	}
 
 	auto cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - position;
 	distanceToCamera = cameraToParticle.LengthSquared();
 
 	auto lifeFactor = stageCycles * elapsedTime / lifeLength;
 
-	if (!particleType->GetImage()) {
+	if (!particleType->GetImage())
 		return;
-	}
 
-	auto stageCount = static_cast<int32_t>(pow(particleType->GetNumberOfRows(), 2));
+	auto stageCount = static_cast<int32_t>(std::pow(particleType->GetNumberOfRows(), 2));
 	auto atlasProgression = lifeFactor * stageCount;
 	auto index1 = static_cast<int32_t>(std::floor(atlasProgression));
 	auto index2 = index1 < stageCount - 1 ? index1 + 1 : index1;
@@ -54,8 +51,8 @@ void Particle::Update() {
 	imageOffset2 = CalculateImageOffset(index2);
 }
 
-bool Particle::operator<(const Particle &other) const {
-	return distanceToCamera > other.distanceToCamera;
+bool Particle::operator<(const Particle &rhs) const {
+	return distanceToCamera > rhs.distanceToCamera;
 }
 
 Vector2f Particle::CalculateImageOffset(int32_t index) const {

@@ -88,12 +88,12 @@ public:
 	 */
 	static IpAddress GetPublicAddress(const Time &timeout = 0s);
 
-	bool operator==(const IpAddress &other) const;
-	bool operator!=(const IpAddress &other) const;
-	bool operator<(const IpAddress &other) const;
-	bool operator<=(const IpAddress &other) const;
-	bool operator>(const IpAddress &other) const;
-	bool operator>=(const IpAddress &other) const;
+	bool operator==(const IpAddress &rhs) const;
+	bool operator!=(const IpAddress &rhs) const;
+	bool operator<(const IpAddress &rhs) const;
+	bool operator<=(const IpAddress &rhs) const;
+	bool operator>(const IpAddress &rhs) const;
+	bool operator>=(const IpAddress &rhs) const;
 
 	friend std::ostream &operator<<(std::ostream &stream, const IpAddress &address);
 	friend std::istream &operator>>(std::istream &stream, IpAddress &address);

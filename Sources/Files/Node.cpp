@@ -214,26 +214,26 @@ NodeView Node::operator[](uint32_t index) {
 	return GetProperty(index);
 }
 
-bool Node::operator==(const Node &other) const {
-	return value == other.value && properties.size() == other.properties.size() &&
-		std::equal(properties.begin(), properties.end(), other.properties.begin(), [](const auto &left, const auto &right) {
+bool Node::operator==(const Node &rhs) const {
+	return value == rhs.value && properties.size() == rhs.properties.size() &&
+		std::equal(properties.begin(), properties.end(), rhs.properties.begin(), [](const auto &left, const auto &right) {
 			return left == right;
 		});
 }
 
-bool Node::operator!=(const Node &other) const {
-	return !operator==(other);
+bool Node::operator!=(const Node &rhs) const {
+	return !operator==(rhs);
 }
 
-bool Node::operator<(const Node &other) const {
-	if (name < other.name) return true;
-	if (other.name < name) return false;
+bool Node::operator<(const Node &rhs) const {
+	if (name < rhs.name) return true;
+	if (rhs.name < name) return false;
 
-	if (value < other.value) return true;
-	if (other.value < value) return false;
+	if (value < rhs.value) return true;
+	if (rhs.value < value) return false;
 
-	if (properties < other.properties) return true;
-	if (other.properties < properties) return false;
+	if (properties < rhs.properties) return true;
+	if (rhs.properties < properties) return false;
 	
 	return false;
 }

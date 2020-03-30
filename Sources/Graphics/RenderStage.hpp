@@ -74,12 +74,12 @@ public:
 		offset(offset) {
 	}
 
-	bool operator==(const RenderArea &other) const {
-		return extent == other.extent && offset == other.offset;
+	bool operator==(const RenderArea &rhs) const {
+		return extent == rhs.extent && offset == rhs.offset;
 	}
 
-	bool operator!=(const RenderArea &other) const {
-		return !operator==(other);
+	bool operator!=(const RenderArea &rhs) const {
+		return !operator==(rhs);
 	}
 
 	const Vector2ui &GetExtent() const { return extent; }
