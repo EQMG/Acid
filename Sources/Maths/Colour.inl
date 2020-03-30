@@ -52,26 +52,6 @@ inline Colour::Colour(std::string hex, float a) :
 	b = static_cast<float>((hexValue >> 0) & 0xff) / 255.0f;
 }
 
-constexpr Colour Colour::Add(const Colour &other) const {
-	return {r + other.r, g + other.g, b + other.b, a + other.a};
-}
-
-constexpr Colour Colour::Subtract(const Colour &other) const {
-	return {r - other.r, g - other.g, b - other.b, a - other.a};
-}
-
-constexpr Colour Colour::Multiply(const Colour &other) const {
-	return {r * other.r, g * other.g, b * other.b, a * other.a};
-}
-
-constexpr Colour Colour::Divide(const Colour &other) const {
-	return {r / other.r, g / other.g, b / other.b, a / other.a};
-}
-
-constexpr Colour Colour::Scale(float scalar) const {
-	return {r * scalar, g * scalar, b * scalar, a * scalar};
-}
-
 constexpr Colour Colour::Lerp(const Colour &other, float progression) const {
 	auto ta = *this * (1.0f - progression);
 	auto tb = other * progression;
@@ -169,84 +149,84 @@ constexpr bool Colour::operator!=(const Colour &other) const {
 	return !operator==(other);
 }
 
-constexpr Colour operator+(const Colour &left, const Colour &right) {
-	return left.Add(right);
+constexpr Colour operator+(const Colour &lhs, const Colour &rhs) {
+	return {lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b, lhs.a + rhs.a};
 }
 
-constexpr Colour operator-(const Colour &left, const Colour &right) {
-	return left.Subtract(right);
+constexpr Colour operator-(const Colour &lhs, const Colour &rhs) {
+	return {lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b, lhs.a - rhs.a};
 }
 
-constexpr Colour operator*(const Colour &left, const Colour &right) {
-	return left.Multiply(right);
+constexpr Colour operator*(const Colour &lhs, const Colour &rhs) {
+	return {lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b, lhs.a * rhs.a};
 }
 
-constexpr Colour operator/(const Colour &left, const Colour &right) {
-	return left.Divide(right);
+constexpr Colour operator/(const Colour &lhs, const Colour &rhs) {
+	return {lhs.r / rhs.r, lhs.g / rhs.g, lhs.b / rhs.b, lhs.a / rhs.a};
 }
 
-constexpr Colour operator+(float value, const Colour &left) {
-	return Colour(value, value, value, 0.0f).Add(left);
+constexpr Colour operator+(float lhs, const Colour &rhs) {
+	return Colour(lhs, lhs, lhs, 0.0f) + rhs;
 }
 
-constexpr Colour operator-(float value, const Colour &left) {
-	return Colour(value, value, value, 0.0f).Subtract(left);
+constexpr Colour operator-(float lhs, const Colour &rhs) {
+	return Colour(lhs, lhs, lhs, 0.0f) - rhs;
 }
 
-constexpr Colour operator*(float value, const Colour &left) {
-	return Colour(value, value, value).Multiply(left);
+constexpr Colour operator*(float lhs, const Colour &rhs) {
+	return Colour(lhs, lhs, lhs) * rhs;
 }
 
-constexpr Colour operator/(float value, const Colour &left) {
-	return Colour(value, value, value).Divide(left);
+constexpr Colour operator/(float lhs, const Colour &rhs) {
+	return Colour(lhs, lhs, lhs) / rhs;
 }
 
-constexpr Colour operator+(const Colour &left, float value) {
-	return left.Add({value, value, value, 0.0f});
+constexpr Colour operator+(const Colour &lhs, float rhs) {
+	return lhs + Colour(rhs, rhs, rhs, 0.0f);
 }
 
-constexpr Colour operator-(const Colour &left, float value) {
-	return left.Subtract({value, value, value, 0.0f});
+constexpr Colour operator-(const Colour &lhs, float rhs) {
+	return lhs - Colour(rhs, rhs, rhs, 0.0f);
 }
 
-constexpr Colour operator*(const Colour &left, float value) {
-	return left.Multiply({value, value, value});
+constexpr Colour operator*(const Colour &lhs, float rhs) {
+	return lhs * Colour(rhs, rhs, rhs);
 }
 
-constexpr Colour operator/(const Colour &left, float value) {
-	return left.Divide({value, value, value});
+constexpr Colour operator/(const Colour &lhs, float rhs) {
+	return lhs / Colour(rhs, rhs, rhs);
 }
 
 constexpr Colour &Colour::operator+=(const Colour &other) {
-	return *this = Add(other);
+	return *this = *this + other;
 }
 
-constexpr Colour &Colour::operator-=(const Colour &other) {
-	return *this = Subtract(other);
+constexpr Colour &Colour::operator-=(const Colour &rhs) {
+	return *this = *this - rhs;
 }
 
-constexpr Colour &Colour::operator*=(const Colour &other) {
-	return *this = Multiply(other);
+constexpr Colour &Colour::operator*=(const Colour &rhs) {
+	return *this = *this * rhs;
 }
 
-constexpr Colour &Colour::operator/=(const Colour &other) {
-	return *this = Divide(other);
+constexpr Colour &Colour::operator/=(const Colour &rhs) {
+	return *this = *this / rhs;
 }
 
-constexpr Colour &Colour::operator+=(float value) {
-	return *this = Add({value, value, value, 0.0f});
+constexpr Colour &Colour::operator+=(float rhs) {
+	return *this = *this + rhs;
 }
 
-constexpr Colour &Colour::operator-=(float value) {
-	return *this = Subtract({value, value, value, 0.0f});
+constexpr Colour &Colour::operator-=(float rhs) {
+	return *this = *this - rhs;
 }
 
-constexpr Colour &Colour::operator*=(float value) {
-	return *this = Multiply({value, value, value});
+constexpr Colour &Colour::operator*=(float rhs) {
+	return *this = *this * rhs;
 }
 
-constexpr Colour &Colour::operator/=(float value) {
-	return *this = Divide({value, value, value});
+constexpr Colour &Colour::operator/=(float rhs) {
+	return *this = *this / rhs;
 }
 
 inline const Node &operator>>(const Node &node, Colour &colour) {
@@ -282,7 +262,7 @@ inline std::ostream &operator<<(std::ostream &stream, const Colour &colour) {
 namespace std {
 template<>
 struct hash<acid::Colour> {
-	size_t operator()(const acid::Colour &colour) const {
+	size_t operator()(const acid::Colour &colour) const noexcept {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, colour.r);
 		acid::Maths::HashCombine(seed, colour.g);

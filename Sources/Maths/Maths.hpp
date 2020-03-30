@@ -218,7 +218,7 @@ public:
 		}
 
 		return cos;
-	};
+	}
 
 	/**
 	 * Combines a seed into a hash and modifies the seed by the new hash.
@@ -226,7 +226,7 @@ public:
 	 * @param v The value to hash.
 	 */
 	template<typename T>
-	static void HashCombine(std::size_t &seed, const T &v) {
+	static void HashCombine(std::size_t &seed, const T &v) noexcept {
 		std::hash<T> hasher;
 		seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 	}

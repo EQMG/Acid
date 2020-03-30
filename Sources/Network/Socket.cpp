@@ -148,7 +148,7 @@ void Socket::SetBlocking(bool blocking) {
 		SetHandleBlocking(socket, blocking);
 	}
 
-	blocking = blocking;
+	this->blocking = blocking;
 }
 
 void Socket::Create() {

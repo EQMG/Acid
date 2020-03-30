@@ -98,64 +98,64 @@ constexpr Time Time::operator-() const {
 	return Time(-value);
 }
 
-constexpr Time operator+(const Time &left, const Time &right) {
-	return left.value + right.value;
+constexpr Time operator+(const Time &lhs, const Time &rhs) {
+	return lhs.value + rhs.value;
 }
 
-constexpr Time operator-(const Time &left, const Time &right) {
-	return left.value - right.value;
+constexpr Time operator-(const Time &lhs, const Time &rhs) {
+	return lhs.value - rhs.value;
 }
 
-constexpr Time operator*(const Time &left, float right) {
-	return left.value * right;
+constexpr Time operator*(const Time &lhs, float rhs) {
+	return lhs.value * rhs;
 }
 
-constexpr Time operator*(const Time &left, int64_t right) {
-	return left.value * right;
+constexpr Time operator*(const Time &lhs, int64_t rhs) {
+	return lhs.value * rhs;
 }
 
-constexpr Time operator*(float left, const Time &right) {
-	return right * left;
+constexpr Time operator*(float lhs, const Time &rhs) {
+	return rhs * lhs;
 }
 
-constexpr Time operator*(int64_t left, const Time &right) {
-	return right * left;
+constexpr Time operator*(int64_t lhs, const Time &rhs) {
+	return rhs * lhs;
 }
 
-constexpr Time operator/(const Time &left, float right) {
-	return left.value / right;
+constexpr Time operator/(const Time &lhs, float rhs) {
+	return lhs.value / rhs;
 }
 
-constexpr Time operator/(const Time &left, int64_t right) {
-	return left.value / right;
+constexpr Time operator/(const Time &lhs, int64_t rhs) {
+	return lhs.value / rhs;
 }
 
-constexpr double operator/(const Time &left, const Time &right) {
-	return static_cast<double>(left.value.count()) / static_cast<double>(right.value.count());
+constexpr double operator/(const Time &lhs, const Time &right) {
+	return static_cast<double>(lhs.value.count()) / static_cast<double>(right.value.count());
 }
 
-constexpr Time &Time::operator+=(const Time &other) {
-	return *this = *this + other;
+constexpr Time &Time::operator+=(const Time &rhs) {
+	return *this = *this + rhs;
 }
 
-constexpr Time &Time::operator-=(const Time &other) {
-	return *this = *this - other;
+constexpr Time &Time::operator-=(const Time &rhs) {
+	return *this = *this - rhs;
 }
 
-constexpr Time &Time::operator*=(float other) {
-	return *this = *this * other;
+constexpr Time &Time::operator*=(float rhs) {
+	return *this = *this * rhs;
 }
 
-constexpr Time &Time::operator*=(int64_t other) {
-	return *this = *this * other;
+constexpr Time &Time::operator*=(int64_t rhs) {
+	return *this = *this * rhs;
 }
 
-constexpr Time &Time::operator/=(float other) {
-	return *this = *this / other;
+constexpr Time &Time::operator/=(float rhs) {
+	return *this = *this / rhs;
 }
 
-constexpr Time &Time::operator/=(int64_t other) {
-	return *this = *this / other;
+constexpr Time &Time::operator/=(int64_t rhs) {
+	return *this = *this / rhs;
 }
 
 inline const Node &operator>>(const Node &node, Time &time) {

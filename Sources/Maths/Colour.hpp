@@ -43,41 +43,6 @@ public:
 	Colour(std::string hex, float a = 1.0f);
 
 	/**
-	 * Adds this colour to another colour.
-	 * @param other The other colour.
-	 * @return The resultant colour.
-	 */
-	constexpr Colour Add(const Colour &other) const;
-
-	/**
-	 * Subtracts this colour to another colour.
-	 * @param other The other colour.
-	 * @return The resultant colour.
-	 */
-	constexpr Colour Subtract(const Colour &other) const;
-
-	/**
-	 * Multiplies this colour with another colour.
-	 * @param other The other colour.
-	 * @return The resultant colour.
-	 */
-	constexpr Colour Multiply(const Colour &other) const;
-
-	/**
-	 * Divides this colour by another colour.
-	 * @param other The other colour.
-	 * @return The resultant colour.
-	 */
-	constexpr Colour Divide(const Colour &other) const;
-
-	/**
-	 * Scales this colour by a scalar.
-	 * @param scalar The scalar value.
-	 * @return The scaled colour.
-	 */
-	constexpr Colour Scale(float scalar) const;
-
-	/**
 	 * Calculates the linear interpolation between this colour and another colour.
 	 * @param other The other quaternion.
 	 * @param progression The progression.
@@ -136,27 +101,27 @@ public:
 	constexpr bool operator==(const Colour &other) const;
 	constexpr bool operator!=(const Colour &other) const;
 
-	friend constexpr Colour operator+(const Colour &left, const Colour &right);
-	friend constexpr Colour operator-(const Colour &left, const Colour &right);
-	friend constexpr Colour operator*(const Colour &left, const Colour &right);
-	friend constexpr Colour operator/(const Colour &left, const Colour &right);
-	friend constexpr Colour operator+(float value, const Colour &left);
-	friend constexpr Colour operator-(float value, const Colour &left);
-	friend constexpr Colour operator*(float value, const Colour &left);
-	friend constexpr Colour operator/(float value, const Colour &left);
-	friend constexpr Colour operator+(const Colour &left, float value);
-	friend constexpr Colour operator-(const Colour &left, float value);
-	friend constexpr Colour operator*(const Colour &left, float value);
-	friend constexpr Colour operator/(const Colour &left, float value);
+	friend constexpr Colour operator+(const Colour &lhs, const Colour &rhs);
+	friend constexpr Colour operator-(const Colour &lhs, const Colour &rhs);
+	friend constexpr Colour operator*(const Colour &lhs, const Colour &rhs);
+	friend constexpr Colour operator/(const Colour &lhs, const Colour &rhs);
+	friend constexpr Colour operator+(float lhs, const Colour &rhs);
+	friend constexpr Colour operator-(float lhs, const Colour &rhs);
+	friend constexpr Colour operator*(float lhs, const Colour &rhs);
+	friend constexpr Colour operator/(float lhs, const Colour &rhs);
+	friend constexpr Colour operator+(const Colour &lhs, float rhs);
+	friend constexpr Colour operator-(const Colour &lhs, float rhs);
+	friend constexpr Colour operator*(const Colour &lhs, float rhs);
+	friend constexpr Colour operator/(const Colour &lhs, float rhs);
 
-	constexpr Colour &operator+=(const Colour &other);
-	constexpr Colour &operator-=(const Colour &other);
-	constexpr Colour &operator*=(const Colour &other);
-	constexpr Colour &operator/=(const Colour &other);
-	constexpr Colour &operator+=(float value);
-	constexpr Colour &operator-=(float value);
-	constexpr Colour &operator*=(float value);
-	constexpr Colour &operator/=(float value);
+	constexpr Colour &operator+=(const Colour &rhs);
+	constexpr Colour &operator-=(const Colour &rhs);
+	constexpr Colour &operator*=(const Colour &rhs);
+	constexpr Colour &operator/=(const Colour &rhs);
+	constexpr Colour &operator+=(float rhs);
+	constexpr Colour &operator-=(float rhs);
+	constexpr Colour &operator*=(float rhs);
+	constexpr Colour &operator/=(float rhs);
 
 	friend const Node &operator>>(const Node &node, Colour &colour);
 	friend Node &operator<<(Node &node, const Colour &colour);

@@ -94,31 +94,31 @@ public:
 	template<typename Rep, typename Period>
 	constexpr operator std::chrono::duration<Rep, Period>() const;
 
-	constexpr bool operator==(const Time &other) const;
-	constexpr bool operator!=(const Time &other) const;
-	constexpr bool operator<(const Time &other) const;
-	constexpr bool operator<=(const Time &other) const;
-	constexpr bool operator>(const Time &other) const;
-	constexpr bool operator>=(const Time &other) const;
+	constexpr bool operator==(const Time &rhs) const;
+	constexpr bool operator!=(const Time &rhs) const;
+	constexpr bool operator<(const Time &rhs) const;
+	constexpr bool operator<=(const Time &rhs) const;
+	constexpr bool operator>(const Time &rhs) const;
+	constexpr bool operator>=(const Time &rhs) const;
 
 	constexpr Time operator-() const;
 
-	friend constexpr Time operator+(const Time &left, const Time &right);
-	friend constexpr Time operator-(const Time &left, const Time &right);
-	friend constexpr Time operator*(const Time &left, float right);
-	friend constexpr Time operator*(const Time &left, int64_t right);
-	friend constexpr Time operator*(float left, const Time &right);
-	friend constexpr Time operator*(int64_t left, const Time &right);
-	friend constexpr Time operator/(const Time &left, float right);
-	friend constexpr Time operator/(const Time &left, int64_t right);
-	friend constexpr double operator/(const Time &left, const Time &right);
+	friend constexpr Time operator+(const Time &lhs, const Time &rhs);
+	friend constexpr Time operator-(const Time &lhs, const Time &rhs);
+	friend constexpr Time operator*(const Time &lhs, float rhs);
+	friend constexpr Time operator*(const Time &lhs, int64_t rhs);
+	friend constexpr Time operator*(float lhs, const Time &rhs);
+	friend constexpr Time operator*(int64_t lhs, const Time &rhs);
+	friend constexpr Time operator/(const Time &lhs, float rhs);
+	friend constexpr Time operator/(const Time &lhs, int64_t rhs);
+	friend constexpr double operator/(const Time &lhs, const Time &rhs);
 
-	constexpr Time &operator+=(const Time &other);
-	constexpr Time &operator-=(const Time &other);
-	constexpr Time &operator*=(float other);
-	constexpr Time &operator*=(int64_t other);
-	constexpr Time &operator/=(float other);
-	constexpr Time &operator/=(int64_t other);
+	constexpr Time &operator+=(const Time &rhs);
+	constexpr Time &operator-=(const Time & rhs);
+	constexpr Time &operator*=(float rhs);
+	constexpr Time &operator*=(int64_t rhs);
+	constexpr Time &operator/=(float rhs);
+	constexpr Time &operator/=(int64_t rhs);
 
 	friend const Node &operator>>(const Node &node, Time &time);
 	friend Node &operator<<(Node &node, const Time &time);

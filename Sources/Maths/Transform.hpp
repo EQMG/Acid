@@ -47,12 +47,12 @@ public:
 
 	const std::vector<Transform *> &GetChildren() const { return children; }
 
-	bool operator==(const Transform &other) const;
-	bool operator!=(const Transform &other) const;
+	bool operator==(const Transform &rhs) const;
+	bool operator!=(const Transform &rhs) const;
 
-	friend Transform operator*(const Transform &left, const Transform &right);
+	friend Transform operator*(const Transform &lhs, const Transform &rhs);
 
-	Transform &operator*=(const Transform &other);
+	Transform &operator*=(const Transform &rhs);
 
 	friend const Node &operator>>(const Node &node, Transform &transform);
 	friend Node &operator<<(Node &node, const Transform &transform);

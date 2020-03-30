@@ -93,7 +93,7 @@ public:
 	 * @return The aspect ratio.
 	 */
 	float GetAspectRatio() const { return aspectRatio; }
-	void SetAspectRatio(float aspectRatio) { aspectRatio = aspectRatio; }
+	void SetAspectRatio(float aspectRatio) { this->aspectRatio = aspectRatio; }
 
 private:
 	Vector2ui extent;

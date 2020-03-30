@@ -158,7 +158,7 @@ public:
 	explicit Loggable(std::string &&className) :
 		className(std::move(className)) {
 	}
-	template<std::enable_if_t<!std::is_same_v<T, std::nullptr_t>, int> = 0>
+	template<typename = std::enable_if_t<!std::is_same_v<T, std::nullptr_t>>>
 	Loggable() :
 		Loggable(typeid(T).name()) {
 	}

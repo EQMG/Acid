@@ -43,35 +43,33 @@ Vector3f Transform::GetScale() const {
 }
 
 void Transform::SetParent(Transform *parent) {
-	if (parent) {
+	if (parent)
 		parent->RemoveChild(this);
-	}
 
 	this->parent = parent;
 
-	if (parent) {
+	if (parent)
 		parent->AddChild(this);
-	}
 }
 
 void Transform::SetParent(Entity *parent) {
 	SetParent(parent->GetComponent<Transform>());
 }
 
-bool Transform::operator==(const Transform &other) const {
-	return position == other.position && rotation == other.rotation && scale == other.scale;
+bool Transform::operator==(const Transform &rhs) const {
+	return position == rhs.position && rotation == rhs.rotation && scale == rhs.scale;
 }
 
-bool Transform::operator!=(const Transform &other) const {
-	return !operator==(other);
+bool Transform::operator!=(const Transform &rhs) const {
+	return !operator==(rhs);
 }
 
-Transform operator*(const Transform &left, const Transform &right) {
-	return left.Multiply(right);
+Transform operator*(const Transform &lhs, const Transform &rhs) {
+	return lhs.Multiply(rhs);
 }
 
-Transform &Transform::operator*=(const Transform &other) {
-	return *this = Multiply(other);
+Transform &Transform::operator*=(const Transform &rhs) {
+	return *this = Multiply(rhs);
 }
 
 const Node &operator>>(const Node &node, Transform &transform) {

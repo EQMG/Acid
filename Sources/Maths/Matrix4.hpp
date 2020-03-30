@@ -279,7 +279,7 @@ public:
 namespace std {
 template<>
 struct hash<acid::Matrix4> {
-	size_t operator()(const acid::Matrix4 &matrix) const {
+	size_t operator()(const acid::Matrix4 &matrix) const noexcept {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, matrix[0]);
 		acid::Maths::HashCombine(seed, matrix[1]);

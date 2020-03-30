@@ -428,7 +428,7 @@ constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vecto
 namespace std {
 template<typename T>
 struct hash<acid::Vector4<T>> {
-	size_t operator()(const acid::Vector4<T> &vector) const {
+	size_t operator()(const acid::Vector4<T> &vector) const noexcept {
 		size_t seed = 0;
 		acid::Maths::HashCombine(seed, vector.x);
 		acid::Maths::HashCombine(seed, vector.y);

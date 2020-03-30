@@ -47,7 +47,7 @@ public:
 	Delegate<void(float)> &OnAxis() { return onAxis; }
 
 	float GetScale() const { return scale; }
-	void SetScale(float scale) { scale = scale; }
+	void SetScale(float scale) { this->scale = scale; }
 
 protected:
 	Delegate<void(float)> onAxis;

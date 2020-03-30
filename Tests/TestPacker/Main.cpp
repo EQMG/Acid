@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 			currentSizeBytes = 0;
 		}
 		
-		acid::Log::Out(file, '\n');
+		acid::Log::Out(file.path(), '\n');
 		
 		std::ifstream t(file.path(), std::ios::in | std::ios::binary);
 		std::string str((std::istreambuf_iterator<char>(t)),
