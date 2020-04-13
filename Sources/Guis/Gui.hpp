@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Maths/Vector2.hpp"
 #include "Models/Model.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"

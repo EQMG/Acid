@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Maths/Vector2.hpp"
-#include "Uis/Drivers/UiDriver.hpp"
 #include "Models/Model.hpp"
 #include "Models/Vertex2d.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"

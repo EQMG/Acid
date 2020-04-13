@@ -2,8 +2,6 @@
 
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Maths/Vector4.hpp"
-#include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
 #include "Graphics/Buffers/InstanceBuffer.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"

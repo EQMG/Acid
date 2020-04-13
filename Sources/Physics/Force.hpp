@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Maths/Time.hpp"
+#include "Maths/Vector.hpp"
 
 namespace acid {
 /**

@@ -2,7 +2,6 @@
 
 #include "Utils/Future.hpp"
 #include "Post/PostFilter.hpp"
-#include "Maths/Vector3.hpp"
 
 namespace acid {
 class ACID_EXPORT SsaoFilter : public PostFilter {

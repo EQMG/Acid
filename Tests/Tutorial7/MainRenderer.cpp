@@ -9,7 +9,6 @@
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Materials/Material.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
 #include "Models/Obj/ObjModel.hpp"
 #include "Meshes/MeshesSubrender.hpp"

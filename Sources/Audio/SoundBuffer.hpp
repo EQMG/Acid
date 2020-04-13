@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 
-#include "Maths/Vector3.hpp"
 #include "Resources/Resource.hpp"
 #include "Audio.hpp"
 

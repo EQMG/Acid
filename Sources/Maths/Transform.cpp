@@ -61,7 +61,7 @@ bool Transform::operator!=(const Transform &rhs) const {
 }
 
 Transform operator*(const Transform &lhs, const Transform &rhs) {
-	return {Vector3f(lhs.GetWorldMatrix().Transform(Vector4f(rhs.position))), lhs.rotation + rhs.rotation, lhs.scale * rhs.scale};
+	return {lhs.GetWorldMatrix().Transform(Vector4f(rhs.position, 1.0f)).xyz(), lhs.rotation + rhs.rotation, lhs.scale * rhs.scale};
 }
 
 Transform &Transform::operator*=(const Transform &rhs) {

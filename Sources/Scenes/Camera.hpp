@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Matrix4.hpp"
-#include "Maths/Vector3.hpp"
 #include "Physics/Frustum.hpp"
 #include "Physics/Ray.hpp"
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Post/PostFilter.hpp"
 
 namespace acid {

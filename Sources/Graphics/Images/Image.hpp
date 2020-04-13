@@ -4,7 +4,7 @@
 
 #include "Graphics/Commands/CommandBuffer.hpp"
 #include "Graphics/Descriptors/Descriptor.hpp"
-#include "Maths/Vector2.hpp"
+#include "Maths/Vector.hpp"
 
 namespace acid {
 class Bitmap;

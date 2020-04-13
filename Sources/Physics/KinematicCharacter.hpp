@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Maths/Vector3.hpp"
 #include "Scenes/Component.hpp"
 #include "Colliders/Collider.hpp"
 #include "CollisionObject.hpp"

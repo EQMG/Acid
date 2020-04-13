@@ -47,7 +47,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	}
 
 	auto modelMatrix = Matrix4::TransformationMatrix(Vector3f(screenPosition, 0.01f * screenDepth),
-		Vector3f(), Vector3f(screenSize));
+		Vector3f(), Vector3f(screenSize, 0.0f));
 	modelView = viewMatrix * modelMatrix;
 
 	bool selected = false;

@@ -257,19 +257,19 @@ Matrix3 operator/(const Matrix3 &left, const Vector3f &right) {
 }
 
 Matrix3 operator*(float left, const Matrix3 &right) {
-	return right.Scale(Vector3(left));
+	return right.Scale(Vector3f(left));
 }
 
 Matrix3 operator/(float left, const Matrix3 &right) {
-	return right.Scale(1.0f / Vector3(left));
+	return right.Scale(1.0f / Vector3f(left));
 }
 
 Matrix3 operator*(const Matrix3 &left, float right) {
-	return left.Scale(Vector3(right));
+	return left.Scale(Vector3f(right));
 }
 
 Matrix3 operator/(const Matrix3 &left, float right) {
-	return left.Scale(1.0f / Vector3(right));
+	return left.Scale(1.0f / Vector3f(right));
 }
 
 Matrix3 &Matrix3::operator+=(const Matrix3 &other) {
@@ -297,11 +297,11 @@ Matrix3 &Matrix3::operator/=(const Vector3f &other) {
 }
 
 Matrix3 &Matrix3::operator*=(float other) {
-	return *this = Scale(Vector3(other));
+	return *this = Scale(Vector3f(other));
 }
 
 Matrix3 &Matrix3::operator/=(float other) {
-	return *this = Scale(1.0f / Vector3(other));
+	return *this = Scale(1.0f / Vector3f(other));
 }
 
 const Node &operator>>(const Node &node, Matrix3 &matrix) {

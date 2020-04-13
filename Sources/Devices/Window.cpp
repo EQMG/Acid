@@ -266,11 +266,11 @@ const Monitor *Window::GetPrimaryMonitor() const {
 }
 
 int32_t OverlappingArea(Vector2i l1, Vector2i r1, Vector2i l2, Vector2i r2) {
-	int area1 = abs(l1.x - r1.x) *
-		abs(l1.y - r1.y);
+	int area1 = std::abs(l1.x - r1.x) *
+		std::abs(l1.y - r1.y);
 
 	int area2 = abs(l2.x - r2.x) *
-		abs(l2.y - r2.y);
+		std::abs(l2.y - r2.y);
 
 	int areaI = (std::min(r1.x, r2.x) -
 		std::max(l1.x, l2.x)) *

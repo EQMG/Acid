@@ -15,6 +15,8 @@ namespace acid {
  */
 class ACID_EXPORT String {
 public:
+	String() = default;
+	
 	/**
 	 * Converts a CTF16 (wide) string to a UTF8 string.
 	 * @param string The view of the string to convert.

@@ -1,6 +1,5 @@
 #include "SsaoFilter.hpp"
 
-#include "Maths/Vector4.hpp"
 #include "Maths/Maths.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Resources/Resources.hpp"

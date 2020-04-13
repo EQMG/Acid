@@ -2,8 +2,6 @@
 
 #include "Utils/Delegate.hpp"
 #include "Devices/Mouse.hpp"
-#include "Maths/Vector2.hpp"
-#include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"
 #include "Constraints/UiConstraints.hpp"
 #include "Drivers/UiDriver.hpp"

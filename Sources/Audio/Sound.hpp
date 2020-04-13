@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Maths/Vector3.hpp"
+#include "Maths/Vector.hpp"
 #include "Scenes/Component.hpp"
 #include "SoundBuffer.hpp"
 #include "Audio.hpp"

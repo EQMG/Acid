@@ -3,7 +3,7 @@
 #include <set>
 #include <memory>
 
-#include "Maths/Vector3.hpp"
+#include "Maths/Vector.hpp"
 
 class btCollisionObject;
 class btCollisionConfiguration;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Matrix4.hpp"
-#include "Vector3.hpp"
 
 namespace acid {
 /**

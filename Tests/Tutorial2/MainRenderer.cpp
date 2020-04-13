@@ -1,7 +1,6 @@
 #include "MainRenderer.hpp"
 #include <Graphics/Graphics.hpp>
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
 
 namespace test {

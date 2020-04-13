@@ -7,7 +7,7 @@ JointTransform::JointTransform(const Vector3f &position, const Quaternion &rotat
 }
 
 JointTransform::JointTransform(const Matrix4 &localTransform) :
-	position(localTransform[3]),
+	position(localTransform[3].xyz()),
 	rotation(localTransform) {
 }
 

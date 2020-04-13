@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Maths/Colour.hpp"
-#include "Maths/Vector2.hpp"
 #include "Images/ImageDepth.hpp"
 #include "Renderpass/Framebuffers.hpp"
 #include "Renderpass/Renderpass.hpp"

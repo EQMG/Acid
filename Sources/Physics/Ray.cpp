@@ -17,7 +17,7 @@ void Ray::Update(const Vector3f &currentPosition, const Vector2f &mousePosition,
 
 	this->viewMatrix = viewMatrix;
 	this->projectionMatrix = projectionMatrix;
-	clipCoords = {normalizedCoords.x, normalizedCoords.y, -1.0f};
+	clipCoords = {normalizedCoords.x, normalizedCoords.y, -1.0f, 1.0f};
 	UpdateEyeCoords();
 	UpdateWorldCoords();
 }
@@ -28,14 +28,12 @@ Vector3f Ray::GetPointOnRay(float distance) const {
 }
 
 Vector3f Ray::ConvertToScreenSpace(const Vector3f &position) const {
-	Vector4f coords(position);
+	Vector4f coords(position, 1.0f);
 	coords = viewMatrix.Transform(coords);
 	coords = projectionMatrix.Transform(coords);
 
-	if (coords.w < 0.0f) {
+	if (coords.w < 0.0f)
 		return {};
-	}
-
 	return {(coords.x / coords.w + 1.0f) / 2.0f, 1.0f - (coords.y / coords.w + 1.0f) / 2.0f, coords.z};
 }
 
@@ -53,6 +51,6 @@ void Ray::UpdateEyeCoords() {
 void Ray::UpdateWorldCoords() {
 	invertedView = viewMatrix.Inverse();
 	rayWorld = invertedView.Transform(eyeCoords);
-	currentRay = {rayWorld};
+	currentRay = rayWorld.xyz();
 }
 }

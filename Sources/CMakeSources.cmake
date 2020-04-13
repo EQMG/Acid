@@ -121,12 +121,8 @@ set(_temp_acid_headers
 		Maths/Time.hpp
 		Maths/Time.inl
 		Maths/Transform.hpp
-		Maths/Vector2.hpp
-		Maths/Vector2.inl
-		Maths/Vector3.hpp
-		Maths/Vector3.inl
-		Maths/Vector4.hpp
-		Maths/Vector4.inl
+		Maths/Vector.hpp
+		Maths/Vector.inl
 		Meshes/Mesh.hpp
 		Meshes/MeshesSubrender.hpp
 		Models/Gltf/GltfModel.hpp
@@ -386,9 +382,6 @@ set(_temp_acid_sources
 		Maths/Matrix4.cpp
 		Maths/Quaternion.cpp
 		Maths/Transform.cpp
-		Maths/Vector2.cpp
-		Maths/Vector3.cpp
-		Maths/Vector4.cpp
 		Meshes/Mesh.cpp
 		Meshes/MeshesSubrender.cpp
 		Models/Gltf/GltfModel.cpp

@@ -3,7 +3,7 @@
 #include <functional>
 #include <unordered_map>
 
-#include "Maths/Vector3.hpp"
+#include "Maths/Vector.hpp"
 #include "Graphics/Buffers/Buffer.hpp"
 #include "Resources/Resource.hpp"
 

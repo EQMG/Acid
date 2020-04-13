@@ -34,7 +34,7 @@ void Particle::Update() {
 		return;
 
 	auto cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - position;
-	distanceToCamera = cameraToParticle.LengthSquared();
+	distanceToCamera = cameraToParticle.Length2();
 
 	auto lifeFactor = stageCycles * elapsedTime / lifeLength;
 

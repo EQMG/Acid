@@ -68,8 +68,8 @@ bool Mesh::operator<(const Mesh &rhs) const {
 	auto transform0 = GetEntity()->GetComponent<Transform>();
 	auto transform1 = rhs.GetEntity()->GetComponent<Transform>();
 
-	auto thisDistance2 = (camera->GetPosition() - transform0->GetPosition()).LengthSquared();
-	auto otherDistance2 = (camera->GetPosition() - transform1->GetPosition()).LengthSquared();
+	auto thisDistance2 = (camera->GetPosition() - transform0->GetPosition()).Length2();
+	auto otherDistance2 = (camera->GetPosition() - transform1->GetPosition()).Length2();
 
 	return thisDistance2 > otherDistance2;
 }

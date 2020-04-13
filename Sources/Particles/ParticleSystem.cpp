@@ -80,7 +80,7 @@ Vector3f ParticleSystem::RandomUnitVectorWithinCone(const Vector3f &coneDirectio
 		direction.z *= -1.0f;
 	}
 
-	return {direction};
+	return direction.xyz();
 }
 
 void ParticleSystem::SetPps(float pps) {

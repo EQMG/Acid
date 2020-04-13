@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Scenes/Component.hpp>
-#include <Maths/Vector3.hpp>
+#include <Maths/Vector.hpp>
 
 using namespace acid;
 

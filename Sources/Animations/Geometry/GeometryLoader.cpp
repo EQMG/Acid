@@ -45,8 +45,8 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const {
 	std::vector<Vector3f> positions;
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++) {
-		Vector4f position(String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[i * 3 + 1]),
-			String::From<float>(positionsRawData[3 * i + 2]));
+		Vector4f position(String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[3 * i + 1]),
+			String::From<float>(positionsRawData[3 * i + 2]), 1.0f);
 		positions.emplace_back(correction.Transform(position));
 	}
 
@@ -78,7 +78,8 @@ std::vector<Vector3f> GeometryLoader::GetNormals() const {
 	std::vector<Vector3f> normals;
 
 	for (uint32_t i = 0; i < normalsCount / 3; i++) {
-		Vector4f normal(String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), String::From<float>(normalsRawData[3 * i + 2]));
+		Vector4f normal(String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), 
+			String::From<float>(normalsRawData[3 * i + 2]), 1.0f);
 		normals.emplace_back(correction.Transform(normal));
 	}
 

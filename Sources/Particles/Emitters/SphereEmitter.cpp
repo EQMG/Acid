@@ -1,7 +1,6 @@
 #include "SphereEmitter.hpp"
 
 #include "Maths/Maths.hpp"
-#include "Maths/Vector2.hpp"
 
 namespace acid {
 SphereEmitter::SphereEmitter(float radius) :

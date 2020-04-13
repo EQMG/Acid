@@ -5,7 +5,6 @@
 #include "Engine/Engine.hpp"
 #include "Utils/Delegate.hpp"
 #include "Utils/EnumClass.hpp"
-#include "Maths/Vector2.hpp"
 #include "Monitor.hpp"
 
 struct GLFWwindow;

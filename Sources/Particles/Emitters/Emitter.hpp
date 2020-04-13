@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Maths/Vector.hpp"
 #include "Utils/StreamFactory.hpp"
-#include "Maths/Vector3.hpp"
 
 namespace acid {
 /**

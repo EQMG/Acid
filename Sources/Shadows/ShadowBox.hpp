@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Maths/Matrix4.hpp"
-#include "Maths/Vector4.hpp"
 #include "Scenes/Camera.hpp"
 
 namespace acid {

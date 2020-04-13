@@ -2,7 +2,6 @@
 
 #include "Utils/Future.hpp"
 #include "Lights/Fog.hpp"
-#include "Maths/Vector3.hpp"
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"

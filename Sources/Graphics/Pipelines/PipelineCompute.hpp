@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Graphics/Commands/CommandBuffer.hpp"
-#include "Maths/Vector2.hpp"
+#include "Maths/Vector.hpp"
 #include "Pipeline.hpp"
 
 namespace acid {

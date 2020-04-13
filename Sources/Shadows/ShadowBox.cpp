@@ -24,16 +24,16 @@ void ShadowBox::Update(const Camera &camera, const Vector3f &lightDirection, flo
 }
 
 bool ShadowBox::IsInBox(const Vector3f &position, float radius) const {
-	auto entityPos = lightViewMatrix.Transform(Vector4f(position));
+	auto entityPos = lightViewMatrix.Transform(Vector4f(position, 1.0f));
 
 	Vector3f closestPoint;
 	closestPoint.x = std::clamp(entityPos.x, minExtents.x, maxExtents.x);
 	closestPoint.y = std::clamp(entityPos.y, minExtents.y, maxExtents.y);
 	closestPoint.z = std::clamp(entityPos.z, minExtents.z, maxExtents.z);
 
-	Vector3f centre(entityPos);
+	auto centre = entityPos.xyz();
 	auto distance = centre - closestPoint;
-	auto distanceSquared = distance.LengthSquared();
+	auto distanceSquared = distance.Length2();
 
 	return distanceSquared < radius * radius;
 }
@@ -45,7 +45,7 @@ void ShadowBox::UpdateShadowBox(const Camera &camera) {
 	rotation = rotation.Rotate(-camera.GetRotation().y, Vector3f::Up);
 	rotation = rotation.Rotate(-camera.GetRotation().x, Vector3f::Right);
 
-	Vector3f forwardVector(rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f)));
+	auto forwardVector = rotation.Transform(Vector4f(0.0f, 0.0f, -1.0f, 0.0f)).xyz();
 
 	auto toFar = forwardVector * shadowDistance;
 	auto toNear = forwardVector * camera.GetNearPlane();
@@ -58,7 +58,7 @@ void ShadowBox::UpdateShadowBox(const Camera &camera) {
 	maxExtents = -Vector3f::Infinity;
 
 	for (const auto &point : points) {
-		Vector3f extent(point);
+		auto extent = point.xyz();
 		minExtents = minExtents.Min(extent);
 		maxExtents = minExtents.Max(extent);
 	}
@@ -74,7 +74,7 @@ void ShadowBox::UpdateSizes(const Camera &camera) {
 }
 
 std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const {
-	Vector3f upVector(rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f)));
+	auto upVector = rotation.Transform(Vector4f(0.0f, 1.0f, 0.0f, 0.0f)).xyz();
 	auto rightVector = forwardVector.Cross(upVector);
 	auto downVector = -upVector;
 	auto leftVector = -rightVector;
@@ -97,7 +97,7 @@ std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotat
 }
 
 Vector4f ShadowBox::CalculateLightSpaceFrustumCorner(const Vector3f &startPoint, const Vector3f &direction, float width) const {
-	Vector4f point(startPoint + (direction * width));
+	Vector4f point(startPoint + (direction * width), 1.0f);
 	point = lightViewMatrix.Transform(point);
 	return point;
 }
@@ -111,7 +111,7 @@ void ShadowBox::UpdateOrthoProjectionMatrix() {
 }
 
 void ShadowBox::UpdateCenter() {
-	Vector4f centre((minExtents + maxExtents) / 2.0f);
+	Vector4f centre((minExtents + maxExtents) / 2.0f, 1.0f);
 	auto invertedLight = lightViewMatrix.Inverse();
 	centre = {invertedLight.Transform(centre)};
 }

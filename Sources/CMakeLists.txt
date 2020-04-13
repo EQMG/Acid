@@ -77,8 +77,8 @@ find_package(glslang QUIET)
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/8.13.3559.tar.gz
-			URL_MD5 cb32322377cee2bc1cee5b60ebe46133
+			URL https://github.com/KhronosGroup/glslang/archive/SDK-candidate-2.tar.gz
+			URL_MD5 f238d01ae6e1a59ce67bc79aec2f6b33
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)

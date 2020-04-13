@@ -353,7 +353,7 @@ Vector3f Matrix4::Project(const Vector3f &worldSpace, const Matrix4 &viewMatrix,
 	point4 = viewMatrix.Transform(point4);
 	point4 = projectionMatrix.Transform(point4);
 
-	Vector3f result(point4);
+	auto result = point4.xyz();
 	result.x /= result.z;
 	result.y /= result.z;
 	return result;

@@ -2,7 +2,6 @@
 
 #include <Graphics/Graphics.hpp>
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Maths/Vector3.hpp"
 #include "Models/Model.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"

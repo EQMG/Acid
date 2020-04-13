@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include "Maths/Vector2.hpp"
+#include "Maths/Vector.hpp"
 
 namespace acid {
 template<typename Base>
