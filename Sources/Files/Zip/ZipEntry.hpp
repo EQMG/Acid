@@ -63,7 +63,7 @@ public:
 		ZipEntryData result;
 
 		for (auto &ch : data)
-			result.push_back(static_cast<std::byte>(ch));
+			result.emplace_back(static_cast<std::byte>(ch));
 
 		entryData = result;
 		isModified = true;

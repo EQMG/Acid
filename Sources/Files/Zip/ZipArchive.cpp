@@ -18,7 +18,6 @@ ZipArchive::ZipArchive(const std::filesystem::path &filename) :
 		f.close();
 		Create(filename);
 	}
-
 }
 
 ZipArchive::~ZipArchive() {
@@ -37,9 +36,9 @@ void ZipArchive::Create(const std::filesystem::path &filename) {
 	mz_zip_writer_end(&archive);
 
 	// Validate the temporary file
-	mz_zip_error errordata;
-	if (!mz_zip_validate_file_archive(filenameU8.c_str(), 0, &errordata))
-		ThrowException(errordata, "Archive creation failed!");
+	mz_zip_error errorData;
+	if (!mz_zip_validate_file_archive(filenameU8.c_str(), 0, &errorData))
+		ThrowException(errorData, "Archive creation failed!");
 
 	Open(filename);
 }
@@ -177,14 +176,9 @@ void ZipArchive::Write(std::filesystem::path filename) {
 			if (!mz_zip_writer_add_from_zip_reader(&tempArchive, &archive, file->GetIndex()))
 				ThrowException(archive.m_last_error, "Failed copying archive entry.");
 		} else {
-			if (!mz_zip_writer_add_mem(&tempArchive,
-				file->GetFilename().c_str(),
-				file->entryData.data(),
-				file->entryData.size(),
-				MZ_DEFAULT_COMPRESSION))
+			if (!mz_zip_writer_add_mem(&tempArchive, file->GetFilename().c_str(), file->entryData.data(), file->entryData.size(), MZ_DEFAULT_COMPRESSION))
 				ThrowException(archive.m_last_error, "Failed adding archive entry.");
 		}
-
 	}
 
 	// Finalize and close the temporary archive
@@ -225,7 +219,7 @@ ZipEntry *ZipArchive::GetEntry(const std::string &name) {
 	mz_zip_reader_extract_file_to_mem(&archive, name.c_str(), (*result)->entryData.data(), (*result)->entryData.size(), 0);
 
 	// Check that the operation was successful
-	if ((*result)->entryData.data() == nullptr)
+	if (!(*result)->entryData.data())
 		ThrowException(archive.m_last_error, "Error extracting archive entry.");
 
 	// Return ZipEntry object with the file data.
@@ -249,7 +243,7 @@ void ZipArchive::ExtractEntry(const std::string &name, const std::filesystem::pa
 	mz_zip_reader_extract_file_to_file(&archive, name.c_str(), destU8.c_str(), 0);
 
 	// Check that the operation was successful
-	if ((*result)->entryData.data() == nullptr)
+	if (!(*result)->entryData.data())
 		ThrowException(archive.m_last_error, "Error extracting archive entry.");
 }
 

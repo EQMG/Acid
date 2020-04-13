@@ -19,11 +19,11 @@ public:
 
 	int32_t Calculate(const UiConstraints *object, const UiConstraints *parent) const override {
 		if constexpr (Type == UiConstraintType::Width) {
-			assert(dynamic_cast<RatioConstraint<UiConstraintType::Height> *>(object->GetHeight()) == nullptr &&
+			assert(!dynamic_cast<RatioConstraint<UiConstraintType::Height> *>(object->GetHeight()) &&
 				"Ratio constraint can only be applied to one side of a object");
 			return object->GetHeight()->Get() * ratio;
 		} else if constexpr (Type == UiConstraintType::Height) {
-			assert(dynamic_cast<RatioConstraint<UiConstraintType::Width> *>(object->GetWidth()) == nullptr &&
+			assert(!dynamic_cast<RatioConstraint<UiConstraintType::Width> *>(object->GetWidth()) &&
 				"Ratio constraint can only be applied to one side of a object");
 			return object->GetWidth()->Get() * ratio;
 		}

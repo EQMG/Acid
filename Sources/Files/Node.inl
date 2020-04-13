@@ -131,9 +131,8 @@ inline Node &operator<<(Node &node, const std::nullptr_t &object) {
 
 template<typename T, std::enable_if_t<std::is_pointer_v<T>, int> = 0>
 Node &operator<<(Node &node, const T object) {
-	if (object == nullptr) {
+	if (!object)
 		return node << nullptr;
-	}
 
 	node << *object;
 	return node;
@@ -148,9 +147,8 @@ const Node &operator>>(const Node &node, std::unique_ptr<T> &object) {
 
 template<typename T>
 Node &operator<<(Node &node, const std::unique_ptr<T> &object) {
-	if (object == nullptr) {
+	if (!object)
 		return node << nullptr;
-	}
 
 	node << *object;
 	return node;
@@ -171,9 +169,8 @@ const Node &operator>>(const Node &node, std::shared_ptr<T> &object) {
 
 template<typename T>
 Node &operator<<(Node &node, const std::shared_ptr<T> &object) {
-	if (object == nullptr) {
+	if (!object)
 		return node << nullptr;
-	}
 
 	node << *object;
 	return node;
@@ -275,9 +272,8 @@ const Node &operator>>(const Node &node, std::optional<T> &optional) {
 
 template<typename T>
 Node &operator<<(Node &node, const std::optional<T> &optional) {
-	if (optional) {
+	if (optional)
 		return node << *optional;
-	}
 
 	return node << nullptr;
 }
@@ -298,9 +294,8 @@ const Node &operator>>(const Node &node, std::vector<T> &vector) {
 
 template<typename T>
 Node &operator<<(Node &node, const std::vector<T> &vector) {
-	for (const auto &x : vector) {
+	for (const auto &x : vector)
 		node.AddProperty() << x;
-	}
 
 	node.SetType(Node::Type::Array);
 	return node;
@@ -321,9 +316,8 @@ const Node &operator>>(const Node &node, std::map<T, K> &map) {
 
 template<typename T, typename K>
 Node &operator<<(Node &node, const std::map<T, K> &map) {
-	for (const auto &x : map) {
+	for (const auto &x : map)
 		node.AddProperty() << x;
-	}
 
 	node.SetType(Node::Type::Array);
 	return node;

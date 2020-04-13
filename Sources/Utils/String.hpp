@@ -15,6 +15,8 @@ namespace acid {
  */
 class ACID_EXPORT String {
 public:
+	String() = delete;
+	
 	/**
 	 * Converts a CTF16 (wide) string to a UTF8 string.
 	 * @param string The view of the string to convert.
@@ -95,7 +97,7 @@ public:
 	 * @param whitespace The whitespace type.
 	 * @return The trimmed string.
 	 */
-	static std::string Trim(std::string str, std::string_view whitespace = " \t\n\r");
+	static std::string_view Trim(std::string_view str, std::string_view whitespace = " \t\n\r");
 
 	/**
 	 * Removes all tokens from a string.

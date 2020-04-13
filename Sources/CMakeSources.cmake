@@ -131,7 +131,6 @@ set(_temp_acid_headers
 		Meshes/MeshesSubrender.hpp
 		Models/Gltf/GltfModel.hpp
 		Models/Model.hpp
-		Models/Model.inl
 		Models/Obj/ObjModel.hpp
 		Models/Shapes/CubeModel.hpp
 		Models/Shapes/CylinderModel.hpp

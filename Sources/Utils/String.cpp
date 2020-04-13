@@ -29,15 +29,13 @@ std::vector<std::string> String::Split(const std::string &str, char sep) {
 	std::istringstream tokenStream(str);
 
 	while (std::getline(tokenStream, token, sep))
-		tokens.push_back(token);
-
+		tokens.emplace_back(token);
 	return tokens;
 }
 
 bool String::StartsWith(std::string_view str, std::string_view token) {
 	if (str.length() < token.length()) 
 		return false;
-
 	return str.compare(0, token.length(), token) == 0;
 }
 
@@ -60,18 +58,14 @@ int32_t String::FindCharPos(std::string_view str, char c) noexcept {
 	return res == std::string::npos ? -1 : static_cast<int32_t>(res);
 }
 
-std::string String::Trim(std::string str, std::string_view whitespace) {
+std::string_view String::Trim(std::string_view str, std::string_view whitespace) {
 	auto strBegin = str.find_first_not_of(whitespace);
-
 	if (strBegin == std::string::npos)
 		return "";
 
 	auto strEnd = str.find_last_not_of(whitespace);
 	auto strRange = strEnd - strBegin + 1;
-
-	auto trimmed = str;
-	trimmed = trimmed.substr(strBegin, strRange);
-	return trimmed;
+	return str.substr(strBegin, strRange);
 }
 
 std::string String::RemoveAll(std::string str, char token) {
@@ -92,7 +86,6 @@ std::string String::RemoveLast(std::string str, char token) {
 
 std::string String::ReplaceAll(std::string str, std::string_view token, std::string_view to) {
 	auto pos = str.find(token);
-
 	while (pos != std::string::npos) {
 		str.replace(pos, token.size(), to);
 		pos = str.find(token, pos + token.size());
@@ -103,7 +96,6 @@ std::string String::ReplaceAll(std::string str, std::string_view token, std::str
 
 std::string String::ReplaceFirst(std::string str, std::string_view token, std::string_view to) {
 	const auto startPos = str.find(token);
-
 	if (startPos == std::string::npos)
 		return str;
 
@@ -143,12 +135,12 @@ std::string String::UnfixEscapedChars(std::string str) {
 }
 
 std::string String::Lowercase(std::string str) {
-	std::transform(str.begin(), str.end(), str.begin(), tolower);
+	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
 	return str;
 }
 
 std::string String::Uppercase(std::string str) {
-	std::transform(str.begin(), str.end(), str.begin(), toupper);
+	std::transform(str.begin(), str.end(), str.begin(), ::toupper);
 	return str;
 }
 }

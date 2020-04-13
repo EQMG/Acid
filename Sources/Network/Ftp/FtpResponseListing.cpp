@@ -8,7 +8,7 @@ FtpResponseListing::FtpResponseListing(const FtpResponse &response, const std::s
 		std::string::size_type lastPos = 0;
 
 		for (auto pos = data.find("\r\n"); pos != std::string::npos; pos = data.find("\r\n", lastPos)) {
-			listing.push_back(data.substr(lastPos, pos - lastPos));
+			listing.emplace_back(data.substr(lastPos, pos - lastPos));
 			lastPos = pos + 2;
 		}
 	}

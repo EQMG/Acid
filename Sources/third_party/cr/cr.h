@@ -180,9 +180,9 @@ Enum indicating the kind of step that is being executed by the `host`:
  saved internal state. This does not happen when a plugin is loaded for the first
  time as there is no state to restore;
 - `CR_STEP` An application update, this is the normal and most frequent operation;
-- `CR_UNLOAD` An unload for reloading the plugin will be executed, giving the 
+- `CR_UNLOAD` An unload for reloading the plugin will be executed, giving the
  application one chance to store any required data;
-- `CR_CLOSE` Used when closing the plugin, This works like `CR_UNLOAD` but no `CR_LOAD` 
+- `CR_CLOSE` Used when closing the plugin, This works like `CR_UNLOAD` but no `CR_LOAD`
  should be expected afterwards;
 
 #### `cr_plugin`
@@ -993,8 +993,7 @@ static bool cr_pdb_replace(const std::string &filename, const std::string &pdbna
     return result;
 }
 
-bool static cr_pdb_process(const std::string &source,
-                           const std::string &desination) {
+bool static cr_pdb_process(const std::string &desination) {
     std::string folder, fname, ext, orig_pdb;
     cr_split_path(desination, folder, fname, ext);
     bool result = cr_pdb_replace(desination, fname + ".pdb", orig_pdb);
@@ -1330,7 +1329,7 @@ struct cr_ld_data {
 // Some useful references:
 // http://www.skyfree.org/linux/references/ELF_Format.pdf
 // https://eli.thegreenplace.net/2011/08/25/load-time-relocation-of-shared-libraries/
-static int cr_dl_header_handler(struct dl_phdr_info *info, size_t size,
+static int cr_dl_header_handler(struct dl_phdr_info *info, size_t,
                                 void *data) {
     CR_ASSERT(info && data);
     auto p = (cr_ld_data *)data;
@@ -1657,7 +1656,7 @@ static bool cr_plugin_load_internal(cr_plugin &ctx, bool rollback) {
             ctx.next_version = new_version + 1;
 
 #if defined(_MSC_VER)
-            if (!cr_pdb_process(file, new_file)) {
+            if (!cr_pdb_process(new_file)) {
                 CR_ERROR("Couldn't process PDB, debugging may be "
                          "affected and/or reload may fail\n");
             }

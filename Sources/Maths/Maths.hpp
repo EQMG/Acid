@@ -16,6 +16,8 @@ public:
 	template<typename T>
 	static constexpr T PI = static_cast<T>(3.14159265358979323846264338327950288L);
 
+	Maths() = delete;
+
 	/**
 	 * Generates a random value from between a range.
 	 * @param min The min value.

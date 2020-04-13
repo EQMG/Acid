@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid_03.png" alt="Acid" height="130px">
 
-[![Financial Contributors on Open Collective](https://opencollective.com/Acid/all/badge.svg?label=financial+contributors)](https://opencollective.com/Acid) [![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
+[![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
 [![CodeDocs](https://codedocs.xyz/EQMG/Acid.svg)](https://codedocs.xyz/EQMG/Acid/)
 [![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
@@ -51,10 +51,10 @@ auto guiBlack = Image2d::Create("Guis/Black.png", VK_FILTER_NEAREST);
 auto skyboxSnowy = ImageCube::Create("Objects/SkyboxSnowy", ".png");
 
 // Imports a OBJ model.
-auto dragon = ModelObj::Create("Objects/Testing/ModelDragon.obj");
+auto dragon = ObjModel::Create("Objects/Testing/ModelDragon.obj");
 
 // Creates a sphere model with 20 latitude and longitude bands with a radius of 1.
-auto sphere = ModelSphere::Create(20, 20, 1.0f);
+auto sphere = SphereModel::Create(20, 20, 1.0f);
 
 // Plays a 3D sound (sound buffer resource internally managed), at half volume.
 Sound jump("Sounds/Jump.ogg", Audio::Type::Effect, false, true, 0.5f);
@@ -66,7 +66,7 @@ playerObject->AddComponent<Transform>();
 // Creates a entity in code.
 auto sphere = GetStructure()->CreateEntity();
 sphere->AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
-sphere->AddComponent<Mesh>(ModelSphere::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
+sphere->AddComponent<Mesh>(SphereModel::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
 	std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
 		Image2d::Create("Objects/Testing/Material.png"), Image2d::Create("Objects/Testing/Normal.png")));
 sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 2.0f); // Will be created weighing 2 units.
@@ -85,15 +85,15 @@ std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, ' ');
 
 // Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
-Window::Get()->OnSize().Add([](Vector2ui size) {
+Window::Get()->OnSize() += [](Vector2ui size) {
 	Log::Out("Hello world: ", size, '\n');
-});
+};
 
 // A value container that calls a delegate on value assignments.
 DelegateValue<Vector3f> da;
-da.Add([](Vector3f value) {
+da += [](Vector3f value) {
 	Log::Out("New value: ", value, '\n');
-});
+};
 da = {10.0f, -4.11f, 99.991f};
 
 // Time addition.
@@ -127,14 +127,14 @@ Timers::Get()->Repeat(7s, 3, []() {
 <img src="/Documents/Screenshot5.png" alt="Acid" width="600px">
 
 ## Compiling
-All platforms depend on [CMake](https://cmake.org/download), 3.11 or higher, to generate IDE/make files.
+All platforms depend on [CMake](https://cmake.org/download), 3.11.0 or higher, to generate IDE/make files.
 
-Cmake options (default ON):
+CMake options (default ON):
 * `BUILD_TESTS`
 * `ACID_INSTALL_EXAMPLES`
 * `ACID_INSTALL_RESOURCES`  
 
-If you installed Acid using only system libs, then `find_package(Acid)` will work from Cmake. Versioning is also supported.  
+If you installed Acid using only system libs, then `find_package(Acid)` will work from CMake. Versioning is also supported.  
 When using `find_package(Acid)` the imported target `Acid::Acid` will be created.  
 The `ACID_RESOURCES_DIR` variable will also be available, which will point to the on-disk location of `Acid/Resources` (if installed).
 
@@ -152,33 +152,3 @@ Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 
 
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the [GUIDELINES.md](.github/GUIDELINES.md).
-
-## Contributors
-
-### Code Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/EQMG/Acid/graphs/contributors"><img src="https://opencollective.com/Acid/contributors.svg?width=890&button=false" /></a>
-
-### Financial Contributors
-
-Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/Acid/contribute)]
-
-#### Individuals
-
-<a href="https://opencollective.com/Acid"><img src="https://opencollective.com/Acid/individuals.svg?width=890"></a>
-
-#### Organizations
-
-Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/Acid/contribute)]
-
-<a href="https://opencollective.com/Acid/organization/0/website"><img src="https://opencollective.com/Acid/organization/0/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/1/website"><img src="https://opencollective.com/Acid/organization/1/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/2/website"><img src="https://opencollective.com/Acid/organization/2/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/3/website"><img src="https://opencollective.com/Acid/organization/3/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/4/website"><img src="https://opencollective.com/Acid/organization/4/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/5/website"><img src="https://opencollective.com/Acid/organization/5/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/6/website"><img src="https://opencollective.com/Acid/organization/6/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/7/website"><img src="https://opencollective.com/Acid/organization/7/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/8/website"><img src="https://opencollective.com/Acid/organization/8/avatar.svg"></a>
-<a href="https://opencollective.com/Acid/organization/9/website"><img src="https://opencollective.com/Acid/organization/9/avatar.svg"></a>

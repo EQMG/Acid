@@ -22,7 +22,7 @@ InputScheme *Input::GetScheme(const std::string &name) const {
 
 InputScheme *Input::AddScheme(const std::string &name, std::unique_ptr<InputScheme> &&scheme, bool setCurrent) {
 	auto inputScheme = schemes.emplace(name, std::move(scheme)).first->second.get();
-	if (currentScheme == nullptr || setCurrent)
+	if (!currentScheme || setCurrent)
 		SetScheme(inputScheme);
 	return inputScheme;
 } 
