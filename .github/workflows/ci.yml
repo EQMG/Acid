@@ -2,6 +2,10 @@ name: CI
 
 on: [push, pull_request]
 
+env:
+  BUILD_TYPE: Release
+  VULKAN_VERSION: 1.2.135.0
+
 jobs:
   job:
     name: ${{ matrix.config.name }}
@@ -33,13 +37,26 @@ jobs:
             cc: "clang", cxx: "clang++",
             triplet: x64-osx,
             vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
-            vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
+            vcpkgPackages: 'volk glfw3 glslang bullet3 physfs gtest'
           }
 
     steps:
       - uses: actions/checkout@v1
       - uses: lukka/get-cmake@latest
-      - name: Installing Homebrew
+      - name: Install Vulkan SDK (Windows)
+        if: "contains( matrix.config.os, 'windows')"
+        run: |
+          set(vulkan_version $ENV{VULKAN_VERSION})
+          set(vulkan_url "https://sdk.lunarg.com/sdk/download/${vulkan_version}/windows/vulkan-sdk.exe?Human=true;u=")
+          file(DOWNLOAD "${vulkan_url}" ./vulkan-sdk.exe SHOW_PROGRESS)
+          ./vulkan-sdk.exe /S
+          set(ENV{PATH} "C:\\VulkanSDK\\${vulkan_version}")
+      - name: Install Vulkan SDK (Ubuntu)
+        if: "contains( matrix.config.os, 'ubuntu')"
+        run: |
+          sudo apt-get install pkg-config libvulkan-dev
+          source ~/.bashrc
+      - name: Install Vulkan SDK (macOS)
         if: "contains( matrix.config.os, 'macos')"
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -47,13 +64,12 @@ jobs:
           test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
           echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
           echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
-          brew --version
-          brew tap caskroom/cask
+          brew update
+          brew install pkg-config
+          brew install openal-soft
+          brew tap homebrew/cask
           brew cask install apenngrace/vulkan/vulkan-sdk
-      - name: Installing Aptitude
-        if: "contains( matrix.config.os, 'ubuntu')"
-        run: |
-          apt-get install pkg-config libvulkan-dev
+          source ~/.bashrc
       - name: Restore artifacts, or run vcpkg, build and cache artifacts
         uses: lukka/run-vcpkg@master
         id: runvcpkg

@@ -39,7 +39,7 @@ This project is being worked on part-time by a single developer, this is under h
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
  * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
  * [PhysFS](https://icculus.org/physfs) - Archive file access
- * [third_party](/Sources/third_party/README.md) - Small third party dependencies
+ * [third_party](Sources/third_party/README.md) - Small third party dependencies
 
 # Code Snippets
 ```cpp
@@ -115,15 +115,15 @@ Timers::Get()->Repeat(7s, 3, []() {
 ```
 
 ## Screenshots
-<img src="/Documents/Screenshot1.png" alt="Acid" width="600px">
+<img src="Documents/Screenshot1.png" alt="Acid" width="600px">
 
-<img src="/Documents/Screenshot2.png" alt="Acid" width="600px">
+<img src="Documents/Screenshot2.png" alt="Acid" width="600px">
 
-<img src="/Documents/Screenshot3.png" alt="Acid" width="600px">
+<img src="Documents/Screenshot3.png" alt="Acid" width="600px">
 
-<img src="/Documents/Screenshot4.png" alt="Acid" width="600px">
+<img src="Documents/Screenshot4.png" alt="Acid" width="600px">
 
-<img src="/Documents/Screenshot5.png" alt="Acid" width="600px">
+<img src="Documents/Screenshot5.png" alt="Acid" width="600px">
 
 ## Compiling
 All platforms depend on [CMake](https://cmake.org/download), 3.11.0 or higher, to generate IDE/make files.
