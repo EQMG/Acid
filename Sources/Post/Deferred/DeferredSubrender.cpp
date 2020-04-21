@@ -167,12 +167,12 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputeIrradiance(const std::share
 	compute.CmdRender(commandBuffer, irradianceCubemap->GetSize());
 	commandBuffer.SubmitIdle();
 
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		image->GetBitmap()->Write("Deferred/Irradiance.png");
 	}, irradianceCubemap.get());
-#endif
+#endif*/
 
 	return irradianceCubemap;
 }
@@ -233,14 +233,14 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputePrefiltered(const std::shar
 	}
 
 	// TODO: This debug write causes a crash at runtime, why?
-#if defined(ACID_DEBUG)
+/*#if defined(ACID_DEBUG)
 	// Saves the prefiltered Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		for (uint32_t i = 0; i < image->GetMipLevels(); i++) {
 			image->GetBitmap(i)->Write("Deferred/Prefiltered_" + String::To(i) + ".png");
 		}
 	}, prefilteredCubemap.get());
-#endif
+#endif*/
 
 	return prefilteredCubemap;
 }

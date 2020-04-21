@@ -264,7 +264,7 @@ Vector3f operator*(const Vector3f &lhs, const Quaternion &rhs) {
 }
 
 Vector3f operator*(const Quaternion &lhs, const Vector3f &rhs) {
-	return lhs * rhs;
+	return rhs * lhs;
 }
 
 Quaternion operator*(float lhs, const Quaternion &rhs) {

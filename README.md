@@ -1,7 +1,7 @@
 <img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid_03.png" alt="Acid" height="130px">
 
 [![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
-[![CodeDocs](https://codedocs.xyz/EQMG/Acid.svg)](https://codedocs.xyz/EQMG/Acid/)
+[![Doxygen](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://eqmg.github.io/Acid/namespaces.html)
 [![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
 [![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
 

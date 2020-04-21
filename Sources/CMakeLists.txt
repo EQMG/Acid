@@ -73,7 +73,8 @@ if(NOT TARGET glfw)
 	set_target_properties(glfw PROPERTIES FOLDER External)
 endif()
 
-find_package(glslang QUIET)
+# TODO: Prebuilt glslang binaries are unreliable between systems
+#find_package(glslang QUIET)
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
