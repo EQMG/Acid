@@ -3,12 +3,13 @@ name: CI
 on: [push, pull_request]
 
 env:
+  BUILD_TYPE: Debug
   VULKAN_VERSION: 1.2.135.0
 
 jobs:
   build_linux_gcc:
     name: Linux Build (GCC 9)
-    runs-on: ubuntu-19.04
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: Download Dependencies
@@ -23,12 +24,13 @@ jobs:
     - name: Build Acid
       run: |
         mkdir Build && cd Build
-        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
-        cmake --build . --target install --parallel 4
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        ninja
+        ninja install
         
   build_linux_clang:
     name: Linux Build (Clang 9)
-    runs-on: ubuntu-19.04
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: Download Dependencies
@@ -49,27 +51,30 @@ jobs:
         CXX: clang++-9
       run: |
         mkdir Build && cd Build
-        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
-        cmake --Build . --target install --parallel 4
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        ninja
+        ninja install
         
   build_windows:
     name: Windows Build (MSVC 19.25.28614)
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
+    - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Download Dependencies
       run: |
+        cl
         set(vulkan_url "https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/windows/vulkan-sdk.exe?Human=true;u=")
         file(DOWNLOAD "${vulkan_url}" ./vulkan-sdk.exe SHOW_PROGRESS)
-        ./vulkan-sdk.exe /S
-        set(ENV{PATH} "C:\\VulkanSDK\\${VULKAN_VERSION}")
+#        ./vulkan-sdk.exe /S
+#        set(ENV{PATH} "C:\\VulkanSDK\\${VULKAN_VERSION}")
     - name: Build Acid
       run: |
-        cl
         mkdir Build
         cd Build
-        cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=install ..
-        cmake --Build . --target install --parallel 4
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        ninja
+        ninja install
         
   build_macos:
     name: macOS Build (clang 6.0)
@@ -94,8 +99,8 @@ jobs:
         CXX: clang++
       run: |
         mkdir Build && cd Build
-        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
-        cmake --Build . --target install --parallel 4
+        cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        xcodebuild -target Acid -configuration ${BUILD_TYPE}
 
   generate_docs:
     name: Doxygen
