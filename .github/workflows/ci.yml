@@ -1,46 +1,52 @@
-name: CMake Build Matrix
+name: CI
 
 on: [push, pull_request]
 
 jobs:
   job:
-    name: ${{ matrix.os }}-hosted-basic
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: windows-latest
-            triplet: x64-windows
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349'
+        config:
+        - {
+            name: "Windows Latest MSVC", artifact: "Windows-MSVC.tar.xz",
+            os: windows-latest,
+            cc: "cl", cxx: "cl",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+            triplet: x64-windows,
+            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
             vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
-          - os: ubuntu-latest
-            triplet: x64-linux
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349'
+          }
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+            triplet: x64-linux,
+            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
             vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
-          - os: macos-latest
-            triplet: x64-osx
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349'
+          }
+        - {
+            name: "macOS Latest Clang", artifact: "macOS.tar.xz",
+            os: macos-latest,
+            cc: "clang", cxx: "clang++",
+            triplet: x64-osx,
+            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
             vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
+          }
 
     steps:
       - uses: actions/checkout@v1
       - uses: lukka/get-cmake@latest
-      - name: dir
-        run: find ${{ runner.workspace }}
-        if: "!contains( matrix.os, 'windows')"
-      - name: dir
-        run: gci -recurse ${{ runner.workspace }}
-        if: contains( matrix.os, 'windows')
       - name: Restore artifacts, or run vcpkg, build and cache artifacts
         uses: lukka/run-vcpkg@master
         id: runvcpkg
         with:
-          vcpkgArguments: '${{ matrix.vcpkgPackages }}'
-          vcpkgTriplet: '${{ matrix.triplet }}'
+          vcpkgArguments: '${{ matrix.config.vcpkgPackages }}'
+          vcpkgTriplet: '${{ matrix.config.triplet }}'
           vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          vcpkgGitCommitId: '${{ matrix.vcpkgCommitId }}'
+          vcpkgGitCommitId: '${{ matrix.config.vcpkgCommitId }}'
       - name: Prints outputs of run-vcpkg task
         run: echo "'${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}' '${{  steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}' "
       - name: Run CMake+Ninja without triplet
@@ -77,3 +83,18 @@ jobs:
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
           buildDirectory: '${{ runner.workspace }}/b/ninja-bash/'
           useShell: bash
+  docs:
+    name: "Doxygen"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          mkdir -p Build/docs/html/Documents
+          cp Documents/Screenshot*.png Build/docs/html/Documents
+      - uses: mattnotmitt/doxygen-action@v1
+      - name: Deploy Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./Build/docs/html

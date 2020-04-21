@@ -2,8 +2,7 @@
 
 [![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
 [![Doxygen](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://eqmg.github.io/Acid/namespaces.html)
-[![Build Status](https://travis-ci.org/EQMG/Acid.svg?branch=master)](https://travis-ci.org/EQMG/Acid)
-[![Build status](https://ci.appveyor.com/api/projects/status/e1an80wt6rb5nfk3?svg=true)](https://ci.appveyor.com/project/Mattparks/acid)
+[![Build Status](https://github.com/EQMG/Acid/workflows/CI/badge.svg)](https://github.com/EQMG/Acid/actions?query=workflow%3ACI)
 
 Acid is an open-source, cross-platform game engine written in modern C++17 and structured to be fast, simple, and extremely modular.
 
