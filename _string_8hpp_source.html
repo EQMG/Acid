@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classacid_1_1_string.html">   16</a></span>&#160;<span class="keyword">class </span>ACID_EXPORT <a class="code" href="classacid_1_1_string.html">String</a> {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classacid_1_1_string.html#a6c9279d3dda395dcdf2bc26e5ea2345c">   18</a></span>&#160;    <a class="code" href="classacid_1_1_string.html#a6c9279d3dda395dcdf2bc26e5ea2345c">String</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> std::string ConvertUtf8(<span class="keyword">const</span> std::wstring_view &amp;<span class="keywordtype">string</span>);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">char</span> ConvertUtf8(<span class="keywordtype">wchar_t</span> c);</div>
@@ -198,13 +198,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><a class="code" href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3">T</a><span class="keyword">&gt;</span>(temp);</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        }</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;};</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="comment">// fnv1a 32 and 64 bit hash functions</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// key is the data to hash, len is the size of the data (or how much of it to hash against)</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="comment">// code license: public domain or equivalent</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="comment">// post: https://notes.underscorediscovery.com/constexpr-fnv1a/</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="classacid_1_1_string.html#ac5745813368be4f4e85ef59f81ab2b3b">  228</a></span>&#160;    <span class="keyword">static</span> constexpr uint32_t <a class="code" href="classacid_1_1_string.html#ac5745813368be4f4e85ef59f81ab2b3b">fnv1a_32</a>(std::string_view str, <span class="keyword">const</span> uint32_t value = 0x811c9dc5) noexcept {</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keywordflow">return</span> str.size() == 0 ? value : fnv1a_32(std::string_view(str.data() + 1, str.size() - 1),</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            (value ^ uint32_t(str[0])) * 0x1000193);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="classacid_1_1_string.html#acb0d93639abe11478725692dadcc82d0">  233</a></span>&#160;    <span class="keyword">static</span> constexpr uint64_t <a class="code" href="classacid_1_1_string.html#acb0d93639abe11478725692dadcc82d0">fnv1a_64</a>(std::string_view str, <span class="keyword">const</span> uint64_t value = 0xcbf29ce484222325) noexcept {</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordflow">return</span> str.size() == 0 ? value : fnv1a_64(std::string_view(str.data() + 1, str.size() - 1),</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            (value ^ uint64_t(str[0])) * 0x100000001b3);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    }</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;};</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="namespaceacid.html#ad2ea48671c17ed7ea5392d530ab20db8">  239</a></span>&#160;constexpr std::uint32_t <span class="keyword">operator</span><span class="stringliteral">&quot;&quot;</span> _hash(<span class="keyword">const</span> <span class="keywordtype">char</span> *s, std::size_t count) {</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classacid_1_1_string.html#ac5745813368be4f4e85ef59f81ab2b3b">String::fnv1a_32</a>(std::string_view(s, count));</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassacid_1_1_string_html_a6c9279d3dda395dcdf2bc26e5ea2345c"><div class="ttname"><a href="classacid_1_1_string.html#a6c9279d3dda395dcdf2bc26e5ea2345c">acid::String::String</a></div><div class="ttdeci">String()=delete</div></div>
 <div class="ttc" id="anamespaceacid_html"><div class="ttname"><a href="namespaceacid.html">acid</a></div><div class="ttdef"><b>Definition:</b> AnimatedMesh.cpp:13</div></div>
 <div class="ttc" id="anamespaceacid_html_a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3"><div class="ttname"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3">acid::Key::T</a></div><div class="ttdeci">@ T</div></div>
+<div class="ttc" id="aclassacid_1_1_string_html_acb0d93639abe11478725692dadcc82d0"><div class="ttname"><a href="classacid_1_1_string.html#acb0d93639abe11478725692dadcc82d0">acid::String::fnv1a_64</a></div><div class="ttdeci">static constexpr uint64_t fnv1a_64(std::string_view str, const uint64_t value=0xcbf29ce484222325) noexcept</div><div class="ttdef"><b>Definition:</b> String.hpp:233</div></div>
 <div class="ttc" id="aclassacid_1_1_string_html_a85cb60a139811318d7e1d8349768c668"><div class="ttname"><a href="classacid_1_1_string.html#a85cb60a139811318d7e1d8349768c668">acid::String::To</a></div><div class="ttdeci">static std::string To(T val)</div><div class="ttdef"><b>Definition:</b> String.hpp:171</div></div>
+<div class="ttc" id="aclassacid_1_1_string_html_ac5745813368be4f4e85ef59f81ab2b3b"><div class="ttname"><a href="classacid_1_1_string.html#ac5745813368be4f4e85ef59f81ab2b3b">acid::String::fnv1a_32</a></div><div class="ttdeci">static constexpr uint32_t fnv1a_32(std::string_view str, const uint32_t value=0x811c9dc5) noexcept</div><div class="ttdef"><b>Definition:</b> String.hpp:228</div></div>
 <div class="ttc" id="aclassacid_1_1_string_html_aba0a8273e16345f4432076532ef2af5f"><div class="ttname"><a href="classacid_1_1_string.html#aba0a8273e16345f4432076532ef2af5f">acid::String::From</a></div><div class="ttdeci">static T From(const std::string &amp;str)</div><div class="ttdef"><b>Definition:</b> String.hpp:199</div></div>
 <div class="ttc" id="aclassacid_1_1_string_html"><div class="ttname"><a href="classacid_1_1_string.html">acid::String</a></div><div class="ttdoc">Helper class for C++ strings.</div><div class="ttdef"><b>Definition:</b> String.hpp:16</div></div>
 <div class="ttc" id="a_const_expr_8hpp_html"><div class="ttname"><a href="_const_expr_8hpp.html">ConstExpr.hpp</a></div></div>
