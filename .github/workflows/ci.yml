@@ -3,119 +3,102 @@ name: CI
 on: [push, pull_request]
 
 env:
-  BUILD_TYPE: Release
   VULKAN_VERSION: 1.2.135.0
 
 jobs:
-  job:
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - {
-            name: "Windows Latest MSVC", artifact: "Windows-MSVC.tar.xz",
-            os: windows-latest,
-            cc: "cl", cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-            triplet: x64-windows,
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
-            vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
-          }
-        - {
-            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
-            os: ubuntu-latest,
-            cc: "gcc", cxx: "g++",
-            triplet: x64-linux,
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
-            vcpkgPackages: 'volk openal-soft glfw3 glslang bullet3 physfs gtest'
-          }
-        - {
-            name: "macOS Latest Clang", artifact: "macOS.tar.xz",
-            os: macos-latest,
-            cc: "clang", cxx: "clang++",
-            triplet: x64-osx,
-            vcpkgCommitId: '0591528cbfde14ccfd3900c3fb19aba382c05349',
-            vcpkgPackages: 'volk glfw3 glslang bullet3 physfs gtest'
-          }
-
+  build_linux_gcc:
+    name: Linux Build (GCC 9)
+    runs-on: ubuntu-19.04
     steps:
-      - uses: actions/checkout@v1
-      - uses: lukka/get-cmake@latest
-      - name: Install Vulkan SDK (Windows)
-        if: "contains( matrix.config.os, 'windows')"
-        run: |
-          set(vulkan_version $ENV{VULKAN_VERSION})
-          set(vulkan_url "https://sdk.lunarg.com/sdk/download/${vulkan_version}/windows/vulkan-sdk.exe?Human=true;u=")
-          file(DOWNLOAD "${vulkan_url}" ./vulkan-sdk.exe SHOW_PROGRESS)
-          ./vulkan-sdk.exe /S
-          set(ENV{PATH} "C:\\VulkanSDK\\${vulkan_version}")
-      - name: Install Vulkan SDK (Ubuntu)
-        if: "contains( matrix.config.os, 'ubuntu')"
-        run: |
-          sudo apt-get install pkg-config libvulkan-dev
-          source ~/.bashrc
-      - name: Install Vulkan SDK (macOS)
-        if: "contains( matrix.config.os, 'macos')"
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-          test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-          test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-          echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-          echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
-          brew update
-          brew install pkg-config
-          brew install openal-soft
-          brew tap homebrew/cask
-          brew cask install apenngrace/vulkan/vulkan-sdk
-          source ~/.bashrc
-      - name: Restore artifacts, or run vcpkg, build and cache artifacts
-        uses: lukka/run-vcpkg@master
-        id: runvcpkg
-        with:
-          vcpkgArguments: '${{ matrix.config.vcpkgPackages }}'
-          vcpkgTriplet: '${{ matrix.config.triplet }}'
-          vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
-          vcpkgGitCommitId: '${{ matrix.config.vcpkgCommitId }}'
-      - name: Prints outputs of run-vcpkg task
-        run: echo "'${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}' '${{  steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}' "
-      - name: Run CMake+Ninja without triplet
-        uses: lukka/run-cmake@master
-        id: runcmake
-        with:
-          cmakeGenerator: 'Ninja'  
-          cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          useVcpkgToolchainFile: true
-          buildWithCMakeArgs: '-- -v'
-          buildDirectory: '${{ runner.workspace }}/b/ninja/'
-      - name: Run CMake+Ninja with triplet (cmd)
-        uses: lukka/run-cmake@master
-        id: runcmake_cmd
-        with:
-          cmakeGenerator: 'Ninja'  
-          cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          useVcpkgToolchainFile: true
-          buildWithCMakeArgs: '-- -v'
-          vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
-          buildDirectory: '${{ runner.workspace }}/b/ninja/'
-      - name: Run CMake+Ninja with triplet (bash)
-        if: false
-        uses: lukka/run-cmake@master
-        id: runcmake_bash
-        with:
-          cmakeGenerator: 'Ninja'  
-          cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          useVcpkgToolchainFile: true
-          buildWithCMakeArgs: '-- -v'
-          vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
-          buildDirectory: '${{ runner.workspace }}/b/ninja-bash/'
-          useShell: bash
-  docs:
-    name: "Doxygen"
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y build-essential pkg-config cmake ninja-build gcc-9 g++-9 xorg-dev libglu1-mesa-dev libvulkan-dev libopenal-dev
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
+        wget -O vulkansdk.tar.gz https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/linux/vulkansdk-linux-x86_64-${VULKAN_VERSION}.tar.gz
+        mkdir "$GITHUB_WORKSPACE/vulkan_sdk/"
+        tar zxf vulkansdk.tar.gz -C "$GITHUB_WORKSPACE/vulkan_sdk/"
+        export VULKAN_SDK="$GITHUB_WORKSPACE/vulkan_sdk/${VULKAN_VERSION}/x86_64"
+    - name: Build Acid
+      run: |
+        mkdir Build && cd Build
+        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
+        cmake --build . --target install --parallel 4
+        
+  build_linux_clang:
+    name: Linux Build (Clang 9)
+    runs-on: ubuntu-19.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main"
+        sudo apt-get update -y
+        sudo apt-get install -y build-essential pkg-config cmake ninja-build g++-9 clang-9 xorg-dev libglu1-mesa-dev libvulkan-dev libopenal-dev
+        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 1000
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-9 1000
+        wget -O vulkansdk.tar.gz https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/linux/vulkansdk-linux-x86_64-${VULKAN_VERSION}.tar.gz
+        mkdir "$GITHUB_WORKSPACE/vulkan_sdk/"
+        tar zxf vulkansdk.tar.gz -C "$GITHUB_WORKSPACE/vulkan_sdk/"
+        export VULKAN_SDK="$GITHUB_WORKSPACE/vulkan_sdk/${VULKAN_VERSION}/x86_64"
+    - name: Build Acid
+      env:
+        CC: clang-9
+        CXX: clang++-9
+      run: |
+        mkdir Build && cd Build
+        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
+        cmake --Build . --target install --parallel 4
+        
+  build_windows:
+    name: Windows Build (MSVC 19.25.28614)
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        set(vulkan_url "https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/windows/vulkan-sdk.exe?Human=true;u=")
+        file(DOWNLOAD "${vulkan_url}" ./vulkan-sdk.exe SHOW_PROGRESS)
+        ./vulkan-sdk.exe /S
+        set(ENV{PATH} "C:\\VulkanSDK\\${VULKAN_VERSION}")
+    - name: Build Acid
+      run: |
+        cl
+        mkdir Build
+        cd Build
+        cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=install ..
+        cmake --Build . --target install --parallel 4
+        
+  build_macos:
+    name: macOS Build (clang 6.0)
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+        echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
+        brew update
+        brew install pkg-config
+        brew install openal-soft
+        brew tap homebrew/cask
+        brew cask install apenngrace/vulkan/vulkan-sdk
+    - name: Build Acid
+      env:
+        CC: clang
+        CXX: clang++
+      run: |
+        mkdir Build && cd Build
+        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=install ..
+        cmake --Build . --target install --parallel 4
+
+  generate_docs:
+    name: Doxygen
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

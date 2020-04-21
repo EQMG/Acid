@@ -16,7 +16,7 @@ namespace acid {
 class ACID_EXPORT String {
 public:
 	String() = delete;
-	
+
 	/**
 	 * Converts a CTF16 (wide) string to a UTF8 string.
 	 * @param string The view of the string to convert.
@@ -219,5 +219,24 @@ public:
 			return static_cast<T>(temp);
 		}
 	}
+
+	// fnv1a 32 and 64 bit hash functions
+	// key is the data to hash, len is the size of the data (or how much of it to hash against)
+	// code license: public domain or equivalent
+	// post: https://notes.underscorediscovery.com/constexpr-fnv1a/
+
+	static constexpr uint32_t fnv1a_32(std::string_view str, const uint32_t value = 0x811c9dc5) noexcept {
+		return str.size() == 0 ? value : fnv1a_32(std::string_view(str.data() + 1, str.size() - 1),
+			(value ^ uint32_t(str[0])) * 0x1000193);
+	}
+
+	static constexpr uint64_t fnv1a_64(std::string_view str, const uint64_t value = 0xcbf29ce484222325) noexcept {
+		return str.size() == 0 ? value : fnv1a_64(std::string_view(str.data() + 1, str.size() - 1),
+			(value ^ uint64_t(str[0])) * 0x100000001b3);
+	}
 };
+
+constexpr std::uint32_t operator"" _hash(const char *s, std::size_t count) {
+	return String::fnv1a_32(std::string_view(s, count));
+}
 }
