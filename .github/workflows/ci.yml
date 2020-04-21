@@ -39,6 +39,21 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: lukka/get-cmake@latest
+      - name: Installing Homebrew
+        if: "contains( matrix.config.os, 'macos')"
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+          test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+          test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+          echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+          echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
+          brew --version
+          brew tap caskroom/cask
+          brew cask install apenngrace/vulkan/vulkan-sdk
+      - name: Installing Aptitude
+        if: "contains( matrix.config.os, 'ubuntu')"
+        run: |
+          apt-get install pkg-config libvulkan-dev
       - name: Restore artifacts, or run vcpkg, build and cache artifacts
         uses: lukka/run-vcpkg@master
         id: runvcpkg
