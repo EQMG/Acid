@@ -498,6 +498,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>operator Node &amp;()
 : <a class="el" href="classacid_1_1_node_view.html#a4f933c6fa30a9a7468ff884a2b1062cf">acid::NodeView</a>
 </li>
+<li>operator std::chrono::duration&lt; Rep, Period &gt;()
+: <a class="el" href="classacid_1_1_time.html#abb668e003f66d5f2b3b3b413beff0fda">acid::Time</a>
+</li>
 <li>operator T()
 : <a class="el" href="classacid_1_1_enumerator.html#ae5be4ba74245ab92709a8838aa5f5ad2">acid::Enumerator&lt; T &gt;</a>
 </li>
@@ -536,6 +539,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>operator()()
 : <a class="el" href="classacid_1_1_delegate_3_01_t_return_type_07_t_args_01_8_8_8_08_4.html#ac390aeb530f50b0e2ed26712e0a18a6e">acid::Delegate&lt; TReturnType(TArgs ...)&gt;</a>
 , <a class="el" href="classacid_1_1_material_stream_reader.html#a096cc041dd3cbccdd1e9dd58de206a0c">acid::MaterialStreamReader</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_colour_01_4.html#ae3191501707e6321af28f24a76d88d06">std::hash&lt; acid::Colour &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_matrix2_01_4.html#a88506f73cfca92f80f48578b1027277e">std::hash&lt; acid::Matrix2 &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_matrix3_01_4.html#a52541026568e253ec2d7d8780e3df8d0">std::hash&lt; acid::Matrix3 &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_matrix4_01_4.html#ab48db4a56f25d8cec5b058d3c7aac577">std::hash&lt; acid::Matrix4 &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_quaternion_01_4.html#a3478dd2c7ee1dd6383cce2f32700fb41">std::hash&lt; acid::Quaternion &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vector2_3_01_t_01_4_01_4.html#a1a768faeafcffb261386860d16b0a8eb">std::hash&lt; acid::Vector2&lt; T &gt; &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vector3_3_01_t_01_4_01_4.html#a32cae65e9d1f363866d30bdf0a63be41">std::hash&lt; acid::Vector3&lt; T &gt; &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vector4_3_01_t_01_4_01_4.html#a0e512ac400b04b7dbd60c46b66a2f84c">std::hash&lt; acid::Vector4&lt; T &gt; &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vertex2d_01_4.html#a1c9c14875535238bb403e500b0777697">std::hash&lt; acid::Vertex2d &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vertex3d_01_4.html#a07bd9f90752243c0056921bf88a5afbe">std::hash&lt; acid::Vertex3d &gt;</a>
+, <a class="el" href="structstd_1_1hash_3_01acid_1_1_vertex_animated_01_4.html#a88e69b88814ef7ce2340aa59805c4b4b">std::hash&lt; acid::VertexAnimated &gt;</a>
 </li>
 <li>operator*
 : <a class="el" href="classacid_1_1_colour.html#a52092b06b51ea8c4b41d1861ae319cb9">acid::Colour</a>
@@ -583,7 +597,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classacid_1_1_time.html#a2089444d59f55b750f71e72572068225">acid::Time</a>
 , <a class="el" href="classacid_1_1_vector2.html#a910d73200f9487266bdefbe3b10a55fe">acid::Vector2&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector3.html#a1f6039ded41624a7c92df368a1b79fa8">acid::Vector3&lt; T &gt;</a>
-, <a class="el" href="classacid_1_1_vector4.html#a6154672b08f7622dccf2ca10c16c5c8e">acid::Vector4&lt; T &gt;</a>
+, <a class="el" href="classacid_1_1_vector4.html#a69602eb47a5b669f8072e81a184558b2">acid::Vector4&lt; T &gt;</a>
 </li>
 <li>operator-
 : <a class="el" href="classacid_1_1_colour.html#a9ddd4ec9327a2c6a4d27b66b48614f3a">acid::Colour</a>
@@ -618,17 +632,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classacid_1_1_matrix2.html#a53b20780403929b69d8a912e47e0d0b6">acid::Matrix2</a>
 , <a class="el" href="classacid_1_1_matrix3.html#ac5ffe6a6d747eef1a21aeb9ff3467903">acid::Matrix3</a>
 , <a class="el" href="classacid_1_1_matrix4.html#ae9a7266bc9306b54d4bd7a5676a2f56a">acid::Matrix4</a>
-, <a class="el" href="classacid_1_1_time.html#a7b2da101804f725427ffe845027fbda3">acid::Time</a>
+, <a class="el" href="classacid_1_1_time.html#a07dde49a4ff4fe0446a7f430d6e8b35e">acid::Time</a>
 </li>
 <li>operator/=()
 : <a class="el" href="classacid_1_1_colour.html#a7f1462587852d0843d1398afa837dbec">acid::Colour</a>
 , <a class="el" href="classacid_1_1_matrix2.html#a2601622ae4ddb9ee9268471a278ac0e4">acid::Matrix2</a>
-, <a class="el" href="classacid_1_1_matrix3.html#ab193c2def3cca6a7d18265c289293a1a">acid::Matrix3</a>
+, <a class="el" href="classacid_1_1_matrix3.html#a0d377d0097c0b1cd57afe84fb9cd7ffa">acid::Matrix3</a>
 , <a class="el" href="classacid_1_1_matrix4.html#ad8e7455435361d2db90ca7d5911d198e">acid::Matrix4</a>
 , <a class="el" href="classacid_1_1_time.html#a0b6d1dab45844930ba0ec6f4258f0d83">acid::Time</a>
 , <a class="el" href="classacid_1_1_vector2.html#a1988c68402a7031b345973730c682fdd">acid::Vector2&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector3.html#af3ad4d9440f99ec068ae5836a4bf1315">acid::Vector3&lt; T &gt;</a>
-, <a class="el" href="classacid_1_1_vector4.html#ae62d3086e008d20873722c3eb77210b4">acid::Vector4&lt; T &gt;</a>
+, <a class="el" href="classacid_1_1_vector4.html#ad26ccbb102c9042e1e6be8c5c9785e83">acid::Vector4&lt; T &gt;</a>
 </li>
 <li>operator&lt;()
 : <a class="el" href="classacid_1_1_ip_address.html#ab29106fdbb98d8a24dea37654301da4e">acid::IpAddress</a>
@@ -689,7 +703,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classacid_1_1_mouse_input_button.html#a5f7ec844e330c3c3c36280954459a805">acid::MouseInputButton</a>
 , <a class="el" href="classacid_1_1_node_1_1_nullable_char.html#a4894bcad79dd82a97580b8a16f5e20c7">acid::Node::NullableChar</a>
 , <a class="el" href="classacid_1_1_obj_model.html#ad3d0a9883f74c21a0998ca97304ebf38">acid::ObjModel</a>
-, <a class="el" href="classacid_1_1_packet.html#a9a5cdc6329579aab3486071caba2aa83">acid::Packet</a>
+, <a class="el" href="classacid_1_1_packet.html#a8c8c7840476fce384a4d0e7ae0e5d322">acid::Packet</a>
 , <a class="el" href="classacid_1_1_particle_system.html#a52b4d2ea9c02d02328238b67a95acf81">acid::ParticleSystem</a>
 , <a class="el" href="classacid_1_1_particle_type.html#a6f9aff3d16f5d999578317760fa17c92">acid::ParticleType</a>
 , <a class="el" href="classacid_1_1_pipeline_graphics_create.html#aef8edfd861e1ab2acdbadf9fb666e467">acid::PipelineGraphicsCreate</a>
@@ -721,12 +735,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>operator=()
 : <a class="el" href="classacid_1_1_delegate_value.html#af41219601d13ccc70a1d394ff9442103">acid::DelegateValue&lt; T &gt;</a>
-, <a class="el" href="classacid_1_1_json.html#a306352fe67905a1d3881c5cb2e6145b8">acid::Json</a>
-, <a class="el" href="classacid_1_1_node.html#aa59e1e52130b0293e6a20cefc0465114">acid::Node</a>
+, <a class="el" href="classacid_1_1_json.html#a1738e1d4d759f8cdc53482a0c4ecf584">acid::Json</a>
+, <a class="el" href="classacid_1_1_node.html#aa48094e2e370ef3ede38243a3adeb7a8">acid::Node</a>
 , <a class="el" href="classacid_1_1_node_view.html#a74dbd676b36a74595abd5121099e0784">acid::NodeView</a>
 , <a class="el" href="classacid_1_1_non_copyable.html#ae4e802c4de64fa1d264afdb7c991f449">acid::NonCopyable</a>
 , <a class="el" href="classacid_1_1_socket_selector.html#acffa66e218e150a4abd7e428c7a81f52">acid::SocketSelector</a>
-, <a class="el" href="classacid_1_1_xml.html#a69a8bd2e1f1fcd6af6acca7dd2433a6c">acid::Xml</a>
+, <a class="el" href="classacid_1_1_xml.html#a041c57a9ee7f6db572b529cf5f4e2b8e">acid::Xml</a>
 </li>
 <li>operator==()
 : <a class="el" href="classacid_1_1_colour.html#ac4e7e4c40803c615b5e660af1a9968b2">acid::Colour</a>
@@ -785,7 +799,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classacid_1_1_default_material.html#a5f1036f907feb3336dd5403b67b23e0e">acid::DefaultMaterial</a>
 , <a class="el" href="classacid_1_1_disk_model.html#a07d1a025f190d0795fe8c1e4c88eb52d">acid::DiskModel</a>
 , <a class="el" href="classacid_1_1_elapsed_time.html#a664ab788ec81d854105154c073498cd5">acid::ElapsedTime</a>
-, <a class="el" href="classacid_1_1_entity_prefab.html#a49505ab26a0406dced46245361866373">acid::EntityPrefab</a>
+, <a class="el" href="classacid_1_1_entity_prefab.html#a704fb38e9e0ebbbdde1ee6f59e50191c">acid::EntityPrefab</a>
 , <a class="el" href="classacid_1_1_fog.html#ac9442b7a1398402e3a7240179ceeb394">acid::Fog</a>
 , <a class="el" href="classacid_1_1_font_type.html#aa7d402db11319ef30b5b836f9dfc0d1f">acid::FontType</a>
 , <a class="el" href="classacid_1_1_gizmo_type.html#a0fcf5e33507f12d2227e5c54d53e2149">acid::GizmoType</a>
@@ -842,21 +856,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classacid_1_1_vertex_animated.html#a05506b6922eaa959f5e2e8efbe2add4e">acid::VertexAnimated</a>
 </li>
 <li>operator[]()
-: <a class="el" href="classacid_1_1_colour.html#a384be744c78a99e2f5aab94098814407">acid::Colour</a>
+: <a class="el" href="classacid_1_1_colour.html#abf9a3e35d43a330680003fc652342ee3">acid::Colour</a>
 , <a class="el" href="classacid_1_1_matrix2.html#a9633c5560b9214a68cd02df814df16ee">acid::Matrix2</a>
-, <a class="el" href="classacid_1_1_matrix3.html#a44f97e1c206a7a452741f34708990332">acid::Matrix3</a>
-, <a class="el" href="classacid_1_1_matrix4.html#a4684546b8e17115d5dccc2aaf7e472a7">acid::Matrix4</a>
-, <a class="el" href="classacid_1_1_node.html#aa95528ade36e44dceffb24569de2e1aa">acid::Node</a>
-, <a class="el" href="classacid_1_1_node_const_view.html#a4ccc1fb8792c09c7fb105ea7457f5b67">acid::NodeConstView</a>
+, <a class="el" href="classacid_1_1_matrix3.html#ab1cc33b9c8a72f38e9ffa8ef13fdcad2">acid::Matrix3</a>
+, <a class="el" href="classacid_1_1_matrix4.html#a62cfb615553e3763885eecb41bc956a4">acid::Matrix4</a>
+, <a class="el" href="classacid_1_1_node.html#aacc36f0f73806c6b4abd7b94c9074e8f">acid::Node</a>
+, <a class="el" href="classacid_1_1_node_const_view.html#a1c4d2322aee4ffb329b8a7c51fcbb0d4">acid::NodeConstView</a>
 , <a class="el" href="classacid_1_1_node_view.html#a7fb9942b56ec4fe202095b1f5b16f5c8">acid::NodeView</a>
-, <a class="el" href="classacid_1_1_quaternion.html#a814d230271fb4f6d5d7d0ed2bbf8c4af">acid::Quaternion</a>
+, <a class="el" href="classacid_1_1_quaternion.html#ae3065d6c9d56e48af9afaadfff3f5b3d">acid::Quaternion</a>
 , <a class="el" href="classacid_1_1_ring_buffer.html#a09e46f040fe990a2bb877d97c7dfa061">acid::RingBuffer&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector2.html#ad19b7559e5df0986603650298bf454b5">acid::Vector2&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector3.html#a1d8ba27687fa3e1f0fc5cc01cff0d781">acid::Vector3&lt; T &gt;</a>
-, <a class="el" href="classacid_1_1_vector4.html#ae560d1b1d796521775410191eb86f879">acid::Vector4&lt; T &gt;</a>
+, <a class="el" href="classacid_1_1_vector4.html#a121031b3d554eb1a0ad2be9a57afcfdd">acid::Vector4&lt; T &gt;</a>
 </li>
 <li>operator~()
-: <a class="el" href="classacid_1_1_vector2.html#a21fc66848a1ad3c97ad6fa349e9df020">acid::Vector2&lt; T &gt;</a>
+: <a class="el" href="classacid_1_1_vector2.html#af12db918ce731f5b1d296ad9dbeb680c">acid::Vector2&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector3.html#aa4629c7d89cba5efc2f8f63ea6154d98">acid::Vector3&lt; T &gt;</a>
 , <a class="el" href="classacid_1_1_vector4.html#a1434f6aee15006c7ad60cd5e8950a812">acid::Vector4&lt; T &gt;</a>
 </li>

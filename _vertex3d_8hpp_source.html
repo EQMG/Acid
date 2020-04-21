@@ -140,14 +140,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">namespace </span>std {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacestd.html">std</a> {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">struct </span>hash&lt;<a class="code" href="namespaceacid.html">acid</a>::Vertex3d&gt; {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">size_t</span> operator()(<span class="keyword">const</span> <a class="code" href="classacid_1_1_vertex3d.html">acid::Vertex3d</a> &amp;vertex) <span class="keyword">const</span> noexcept {</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01acid_1_1_vertex3d_01_4.html">   45</a></span>&#160;<span class="keyword">struct </span>hash&lt;<a class="code" href="namespaceacid.html">acid</a>::Vertex3d&gt; {</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01acid_1_1_vertex3d_01_4.html#a07bd9f90752243c0056921bf88a5afbe">   46</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="structstd_1_1hash_3_01acid_1_1_vertex3d_01_4.html#a07bd9f90752243c0056921bf88a5afbe">operator()</a>(<span class="keyword">const</span> <a class="code" href="classacid_1_1_vertex3d.html">acid::Vertex3d</a> &amp;vertex) <span class="keyword">const</span> noexcept {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">size_t</span> seed = 0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.<a class="code" href="classacid_1_1_vertex3d.html#ab38201eda4358b80f6013c06cb06faa6">position</a>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.<a class="code" href="classacid_1_1_vertex3d.html#a153d1d34a36f67f176c843944a0539dc">uv</a>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.<a class="code" href="classacid_1_1_vertex3d.html#a6ff39b00436aee1b17901c7b2e41786c">normal</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.position);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.uv);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a>(seed, vertex.normal);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> seed;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
@@ -170,7 +170,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="a_vector3_8hpp_html"><div class="ttname"><a href="_vector3_8hpp.html">Vector3.hpp</a></div></div>
 <div class="ttc" id="aclassacid_1_1_maths_html_aef8fc08075b0be25442db6a943ded917"><div class="ttname"><a href="classacid_1_1_maths.html#aef8fc08075b0be25442db6a943ded917">acid::Maths::HashCombine</a></div><div class="ttdeci">static void HashCombine(std::size_t &amp;seed, const T &amp;v) noexcept</div><div class="ttdef"><b>Definition:</b> Maths.hpp:231</div></div>
 <div class="ttc" id="aclassacid_1_1_vector3_html"><div class="ttname"><a href="classacid_1_1_vector3.html">acid::Vector3&lt; float &gt;</a></div></div>
+<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdef"><b>Definition:</b> VertexAnimated.hpp:68</div></div>
 <div class="ttc" id="aclassacid_1_1_vertex3d_html_a6ff39b00436aee1b17901c7b2e41786c"><div class="ttname"><a href="classacid_1_1_vertex3d.html#a6ff39b00436aee1b17901c7b2e41786c">acid::Vertex3d::normal</a></div><div class="ttdeci">Vector3f normal</div><div class="ttdef"><b>Definition:</b> Vertex3d.hpp:39</div></div>
+<div class="ttc" id="astructstd_1_1hash_3_01acid_1_1_vertex3d_01_4_html_a07bd9f90752243c0056921bf88a5afbe"><div class="ttname"><a href="structstd_1_1hash_3_01acid_1_1_vertex3d_01_4.html#a07bd9f90752243c0056921bf88a5afbe">std::hash&lt; acid::Vertex3d &gt;::operator()</a></div><div class="ttdeci">size_t operator()(const acid::Vertex3d &amp;vertex) const noexcept</div><div class="ttdef"><b>Definition:</b> Vertex3d.hpp:46</div></div>
 <!-- start footer part -->
 		<script src="custom.js"></script>
 	</body>
