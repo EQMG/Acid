@@ -150,8 +150,8 @@ find_package(PhysFS 3.0.1 QUIET)
 if(NOT PhysFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
-			URL https://icculus.org/physfs/downloads/physfs-3.0.2.tar.bz2
-			URL_MD5 dc751294aaf59d1359bbe34e693d1d87
+			URL https://github.com/mattparks/physfs/archive/3.0.2.tar.gz
+			URL_MD5 7126c5276b8fa14cdb0dccee8820d944
 			)
 	FetchContent_GetProperties(physfs)
 	if(NOT physfs_POPULATED)
@@ -188,6 +188,10 @@ if(NOT PhysFS_FOUND)
 	else()
 		set(PHYSFS_LIBRARY physfs)
 	endif()
+endif()
+
+if(APPLE)
+    set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-framework IOKit -framework Foundation -framework CoreFoundation")
 endif()
 
 target_compile_features(Acid PUBLIC c_std_11 cxx_std_17)
@@ -247,6 +251,7 @@ target_link_libraries(Acid
 		$<$<CXX_COMPILER_ID:GNU>:stdc++fs> # std::filesystem
 		$<$<PLATFORM_ID:Windows>:ws2_32> # Winsock 2.0
 		$<$<PLATFORM_ID:Android>:log> # log support
+		${OTHER_LDFLAGS}
 		${CMAKE_DL_LIBS} # dlopen and dlclose
 		Threads::Threads # pthread
 		volk::volk

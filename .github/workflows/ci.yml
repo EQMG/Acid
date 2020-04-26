@@ -2,34 +2,27 @@ name: CI
 
 on: [push, pull_request]
 
-env:
-  BUILD_TYPE: Debug
-  VULKAN_VERSION: 1.2.135.0
-
 jobs:
   build_linux_gcc:
-    name: Linux Build (GCC 9)
+    name: Linux Build (GCC)
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: Download Dependencies
       run: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get update -y
         sudo apt-get install -y build-essential pkg-config cmake ninja-build gcc-9 g++-9 xorg-dev libglu1-mesa-dev libvulkan-dev libopenal-dev
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
-        wget -O vulkansdk.tar.gz https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/linux/vulkansdk-linux-x86_64-${VULKAN_VERSION}.tar.gz
-        mkdir "$GITHUB_WORKSPACE/vulkan_sdk/"
-        tar zxf vulkansdk.tar.gz -C "$GITHUB_WORKSPACE/vulkan_sdk/"
-        export VULKAN_SDK="$GITHUB_WORKSPACE/vulkan_sdk/${VULKAN_VERSION}/x86_64"
     - name: Build Acid
       run: |
         mkdir Build && cd Build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-        ninja
-        ninja install
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
+        cmake --build .
+        sudo cmake --install .
         
   build_linux_clang:
-    name: Linux Build (Clang 9)
+    name: Linux Build (Clang)
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
@@ -41,43 +34,45 @@ jobs:
         sudo apt-get install -y build-essential pkg-config cmake ninja-build g++-9 clang-9 xorg-dev libglu1-mesa-dev libvulkan-dev libopenal-dev
         sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-9 1000
         sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-9 1000
-        wget -O vulkansdk.tar.gz https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/linux/vulkansdk-linux-x86_64-${VULKAN_VERSION}.tar.gz
-        mkdir "$GITHUB_WORKSPACE/vulkan_sdk/"
-        tar zxf vulkansdk.tar.gz -C "$GITHUB_WORKSPACE/vulkan_sdk/"
-        export VULKAN_SDK="$GITHUB_WORKSPACE/vulkan_sdk/${VULKAN_VERSION}/x86_64"
     - name: Build Acid
       env:
         CC: clang-9
         CXX: clang++-9
+        LD_LIBRARY_PATH: /usr/bin/clang++-9/lib
       run: |
         mkdir Build && cd Build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-        ninja
-        ninja install
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
+        cmake --build .
+        sudo cmake --install .
         
   build_windows:
-    name: Windows Build (MSVC 19.25.28614)
+    name: Windows Build (MSVC)
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
     - uses: seanmiddleditch/gha-setup-ninja@master
-    - name: Download Dependencies
+    - name: Setup Vulkan
       run: |
-        cl
-        set(vulkan_url "https://sdk.lunarg.com/sdk/download/${VULKAN_VERSION}/windows/vulkan-sdk.exe?Human=true;u=")
-        file(DOWNLOAD "${vulkan_url}" ./vulkan-sdk.exe SHOW_PROGRESS)
-#        ./vulkan-sdk.exe /S
-#        set(ENV{PATH} "C:\\VulkanSDK\\${VULKAN_VERSION}")
+        Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/1.2.135.0/windows/VulkanSDK-1.2.135.0-Installer.exe" -OutFile VulkanSDK.exe
+        $installer = Start-Process -FilePath VulkanSDK.exe -Wait -PassThru -ArgumentList @("/S");
+        $installer.WaitForExit();
+    - name: Setup OpenAL
+      run: |
+        Invoke-WebRequest -Uri "https://openal-soft.org/openal-binaries/openal-soft-1.20.1-bin.zip" -OutFile openal-soft.zip
+        Expand-Archive -Path openal-soft.zip -DestinationPath C:\\
     - name: Build Acid
+      env:
+        VULKAN_SDK: "C:\\VulkanSDK\\1.2.135.0"
+        OPENALDIR: "C:\\openal-soft-1.20.1-bin"
       run: |
         mkdir Build
         cd Build
-        cmake .. -GNinja -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
         ninja
         ninja install
         
   build_macos:
-    name: macOS Build (clang 6.0)
+    name: macOS Build (Apple clang)
     runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v1
@@ -99,12 +94,14 @@ jobs:
         CXX: clang++
       run: |
         mkdir Build && cd Build
-        cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-        xcodebuild -target Acid -configuration ${BUILD_TYPE}
+        cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Debug
+        cmake --build .
 
   generate_docs:
     name: Doxygen
     runs-on: ubuntu-latest
+    if: >
+      contains(github.ref, 'master')
     steps:
       - uses: actions/checkout@v1
       - run: |
