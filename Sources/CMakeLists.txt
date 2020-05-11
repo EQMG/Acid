@@ -78,8 +78,8 @@ endif()
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/8.13.3559.tar.gz
-			URL_MD5 cb32322377cee2bc1cee5b60ebe46133
+			URL https://github.com/KhronosGroup/glslang/archive/8.13.3743.tar.gz
+			URL_MD5 93dca40a44fc88b6710348458d06b54f
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
