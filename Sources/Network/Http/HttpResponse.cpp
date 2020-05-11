@@ -1,5 +1,7 @@
 #include "HttpResponse.hpp"
 
+#include <limits>
+
 #include "Utils/String.hpp"
 
 namespace acid {
