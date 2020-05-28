@@ -1,0 +1,28 @@
+name: macos_clang
+
+on: [push, pull_request]
+
+jobs:
+  macos_clang:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+        echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
+        brew update
+        brew tap homebrew/cask
+        brew install pkg-config
+        brew install openal-soft
+        brew cask install apenngrace/vulkan/vulkan-sdk
+    - name: Build Acid
+      env:
+        CC: clang
+        CXX: clang++
+      run: |
+        cmake -B Build -G "Xcode" -DCMAKE_BUILD_TYPE=Release
+        cmake --build Build

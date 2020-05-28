@@ -1,0 +1,22 @@
+name: doxygen
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          mkdir -p Build/docs/html/Documents
+          cp Documents/Screenshot*.png Build/docs/html/Documents
+      - uses: mattnotmitt/doxygen-action@v1
+      - name: Deploy Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: Build/docs/html
