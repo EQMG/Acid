@@ -7,12 +7,6 @@ option(BUILD_TESTS "Build test applications" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Passes local Resources directory into debug Confg" ON)
 
-# Sets the install directories defined by GNU
-include(GNUInstallDirs)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
-
 # Add property to allow making project folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON CACHE BOOL "")
@@ -54,6 +48,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 # Used to include Acid CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/CMake" CACHE STRING "Modules for CMake" FORCE)
+include(AcidIncludeDirs)
 
 # Uses Git to find the current git branch and commit.
 execute_process(
