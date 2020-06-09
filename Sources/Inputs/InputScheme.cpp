@@ -2,12 +2,14 @@
 
 #include <iomanip>
 
+#include "Files/Json/Json.hpp"
+
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
-	file(filename) {
+	file(filename, File::Type::Json) {
 	// Load this scheme from the file right away.
 	file.Load();
-	*file.GetNode() >> *this;
+	file.GetNode() >> *this;
 
 	/*File argsFile("ArgumentDescriptionMap.json");
 	std::map<std::string, InputAxis::ArgumentDescription> argumentDescriptionMap;
@@ -18,8 +20,8 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	*argsFile.GetNode() << argumentDescriptionMap;
 	argsFile.Write(Node::Format::Beautified);*/
 
-	File testOutFile(filename);
-	*testOutFile.GetNode() << *this;
+	File testOutFile(filename, File::Type::Json);
+	testOutFile.GetNode() = *this;
 	testOutFile.Write(Node::Format::Beautified);
 }
 

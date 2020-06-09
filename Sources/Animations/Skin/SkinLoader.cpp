@@ -18,13 +18,13 @@ void SkinLoader::LoadJointsList() {
 	auto jointDataIdNode = inputNode["input"].GetPropertyWithValue("-semantic", "JOINT")["-source"].Get<std::string>().substr(1);
 	auto jointDataId = inputNode["input"].GetPropertyWithValue("-semantic", "JOINT")["-source"].Get<std::string>().substr(1);
 	auto jointsNode = skinData["source"].GetPropertyWithValue("-id", jointDataId)["Name_array"];
-	jointOrder = String::Split(jointsNode["#text"].Get<std::string>(), ' ');
+	jointOrder = String::Split(jointsNode.Get<std::string>(), ' ');
 }
 
 std::vector<float> SkinLoader::LoadWeights() const {
 	auto inputNode = skinData["vertex_weights"];
 	auto weightsDataId = inputNode["input"].GetPropertyWithValue("-semantic", "WEIGHT")["-source"].Get<std::string>().substr(1);
-	auto weightsNode = skinData["source"].GetPropertyWithValue("-id", weightsDataId)["float_array"]["#text"];
+	auto weightsNode = skinData["source"].GetPropertyWithValue("-id", weightsDataId)["float_array"];
 
 	auto rawDatas = String::Split(weightsNode.Get<std::string>(), ' ');
 	std::vector<float> weights(rawDatas.size());

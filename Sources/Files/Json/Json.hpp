@@ -3,27 +3,17 @@
 #include "Files/Node.hpp"
 
 namespace acid {
-class ACID_EXPORT Json : public Node {
+class ACID_EXPORT Json {
 public:
-	Json() = default;
-	explicit Json(const Node &node);
-	explicit Json(Node &&node);
-
-	void ParseString(std::string_view string) override;
-	void WriteStream(std::ostream &stream, const Format &format = Format::Minified) const override;
-
-	Json& operator=(const Json& node) = default;
-	Json& operator=(Json && node) = default;
-	template<typename T>
-	Json& operator=(const T & rhs) {
-		Set(rhs);
-		return *this;
-	}
+	Json() = delete;
+	
+	static void ParseString(Node &node, std::string_view string);
+	static void WriteStream(const Node &node, std::ostream &stream, Node::Format format);
 
 private:
-	static void AddToken(std::string_view view, Tokens &tokens);
-	static void Convert(Node &current, const Tokens &tokens, int32_t i, int32_t &r);
+	static void AddToken(std::string_view view, std::vector<Node::Token> &tokens);
+	static void Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t &k);
 
-	static void AppendData(const Node &source, std::ostream &stream, const Format &format, int32_t indent);
+	static void AppendData(const Node &node, std::ostream &stream, Node::Format format, int32_t indent);
 };
 }

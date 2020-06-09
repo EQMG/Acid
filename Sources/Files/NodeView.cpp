@@ -16,9 +16,9 @@ Node *NodeView::get() {
 		// This will build the tree of nodes from the return keys tree.
 		for (const auto &key : keys) {
 			if (const auto name = std::get_if<std::string>(&key))
-				value = &const_cast<Node *>(parent)->AddProperty(*name, {});
+				value = &const_cast<Node *>(parent)->AddProperty(*name);
 			else if (const auto index = std::get_if<std::uint32_t>(&key))
-				value = &const_cast<Node *>(parent)->AddProperty(*index, {});
+				value = &const_cast<Node *>(parent)->AddProperty(*index);
 			else
 				throw std::runtime_error("Key for node return is neither a int or a string");
 			
@@ -32,27 +32,27 @@ Node *NodeView::get() {
 	return const_cast<Node *>(value);
 }
 
-std::vector<NodeView> NodeView::GetProperties(std::string_view name) {
+std::vector<NodeView> NodeView::GetProperties(const std::string &name) {
 	if (!has_value())
 		return {};
 	return const_cast<Node *>(value)->GetProperties(name);
 }
 
-NodeView NodeView::GetPropertyWithBackup(std::string_view name, std::string_view backupName) {
+NodeView NodeView::GetPropertyWithBackup(const std::string &name, const std::string &backupName) {
 	if (!has_value())
-		return {this, std::string(name)};
+		return {this, name};
 	return const_cast<Node *>(value)->GetPropertyWithBackup(name, backupName);
 }
 
-NodeView NodeView::GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) {
+NodeView NodeView::GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) {
 	if (!has_value())
-		return {this, std::string(propertyName)};
+		return {this, propertyName};
 	return const_cast<Node *>(value)->GetPropertyWithValue(propertyName, propertyValue);
 }
 
-NodeView NodeView::operator[](std::string_view key) {
+NodeView NodeView::operator[](const std::string &key) {
 	if (!has_value())
-		return {this, std::string(key)};
+		return {this, key};
 	return const_cast<Node *>(value)->operator[](key);
 }
 
@@ -66,14 +66,5 @@ std::vector<Node> &NodeView::GetProperties() {
 	if (!has_value())
 		return get()->GetProperties();
 	return const_cast<Node *>(value)->GetProperties();
-}
-
-void NodeView::SetName(const std::string &name) {
-	if (!has_value()) {
-		keys.back() = name;
-		return;
-	}
-
-	const_cast<Node *>(value)->SetName(name);
 }
 }

@@ -15,27 +15,27 @@ NodeConstView::NodeConstView(const NodeConstView *parent, Key key) :
 	keys.emplace_back(std::move(key));
 }
 
-std::vector<NodeConstView> NodeConstView::GetProperties(std::string_view name) const {
+std::vector<NodeConstView> NodeConstView::GetProperties(const std::string &name) const {
 	if (!has_value())
 		return {};
 	return value->GetProperties(name);
 }
 
-NodeConstView NodeConstView::GetPropertyWithBackup(std::string_view name, std::string_view backupName) const {
+NodeConstView NodeConstView::GetPropertyWithBackup(const std::string &name, const std::string &backupName) const {
 	if (!has_value())
-		return {this, std::string(name)};
+		return {this, name};
 	return value->GetPropertyWithBackup(name, backupName);
 }
 
-NodeConstView NodeConstView::GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const {
+NodeConstView NodeConstView::GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const {
 	if (!has_value())
-		return {this, std::string(propertyName)};
+		return {this, propertyName};
 	return value->GetPropertyWithValue(propertyName, propertyValue);
 }
 
-NodeConstView NodeConstView::operator[](std::string_view key) const {
+NodeConstView NodeConstView::operator[](const std::string &key) const {
 	if (!has_value())
-		return {this, std::string(key)};
+		return {this, key};
 	return value->operator[](key);
 }
 
@@ -53,13 +53,7 @@ std::vector<Node> NodeConstView::GetProperties() const {
 
 std::string NodeConstView::GetName() const {
 	if (!has_value())
-		return *std::get_if<std::string>(&keys.back());
+		return "";
 	return value->GetName();
-}
-
-NodeView::Type NodeConstView::GetType() const {
-	if (!has_value())
-		return Type::Unknown;
-	return value->GetType();
 }
 }

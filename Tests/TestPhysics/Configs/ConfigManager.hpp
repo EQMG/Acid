@@ -11,7 +11,7 @@ public:
 	ConfigManager();
 
 	void Load();
-	void Save() const;
+	void Save();
 
 private:
 	File audio;

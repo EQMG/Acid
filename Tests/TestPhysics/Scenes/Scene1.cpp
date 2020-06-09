@@ -92,9 +92,9 @@ Scene1::Scene1() :
 	Input::Get()->GetButton("save")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
-				File sceneFile("Scene1.json");
+				File sceneFile("Scene1.json", File::Type::Json);
 
-				auto entitiesNode = (*sceneFile.GetNode())["entities"];
+				auto entitiesNode = sceneFile.GetNode()["entities"];
 
 				for (auto &entity : GetStructure()->QueryAll()) {
 					auto &entityNode = entitiesNode->AddProperty();
@@ -146,7 +146,7 @@ void Scene1::Start() {
 
 	auto animated = GetStructure()->CreateEntity();
 	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
-	animated->AddComponent<AnimatedMesh>("Objects/Animated/Model.dae.json", 
+	animated->AddComponent<AnimatedMesh>("Objects/Animated/Model.dae", 
 		std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f));
 	//animated->AddComponent<Rigidbody>(std::make_unique<CapsuleCollider>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f))), 0.0f);
 	animated->AddComponent<ShadowRender>();

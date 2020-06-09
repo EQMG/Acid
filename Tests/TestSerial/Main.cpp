@@ -193,18 +193,19 @@ int main(int argc, char **argv) {
 
 	{
 		// Test Json writer.
-		File fileJson1(std::make_unique<Json>(node));
+		File fileJson1(File::Type::Json, node);
 		fileJson1.Write("Serial/Test1.json", Node::Format::Beautified);
 
 		// Test Json reader.
-		File fileJson2(std::make_unique<Json>());
+		File fileJson2(File::Type::Json);
 		fileJson2.Load("Serial/Test1.json");
 		// Ensure Test1.json and Test2.json values are the same.
 		fileJson2.Write("Serial/Test2.json", Node::Format::Beautified);
 	}
 	{
 		// Test Xml writer.
-		File fileXml1(std::make_unique<Xml>("root", node));
+		File fileXml1(File::Type::Xml, node);
+		fileXml1.GetNode().SetName("root");
 		fileXml1.Write("Serial/Test1.xml", Node::Format::Beautified);
 
 		/*// Test Xml reader.
@@ -215,15 +216,15 @@ int main(int argc, char **argv) {
 	}
 	{
 		std::string source = R"({"message":"hello world","value":3})";
-		Json json;
-		json.ParseString(source);
+		Node json;
+		json.ParseString<Json>(source);
 
 		auto value = json["value"];
 		value.Set(3 * value->Get<int32_t>() + 2);
 
 		json["values"] = std::vector{10, 11, -1, 2};
 
-		Log::Out(json.WriteString(Node::Format::Minified), '\n');
+		Log::Out(json.WriteString<Json>(Node::Format::Minified), '\n');
 	}
 	
 	/*ZipArchive zip0("Serial.zip");

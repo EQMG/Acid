@@ -39,7 +39,7 @@ public:
 	std::type_index GetTypeIndex() const override { return typeid(EntityPrefab); }
 
 	const std::filesystem::path &GetFilename() const { return filename; }
-	Node *GetParent() const { return file->GetNode(); }
+	const Node &GetParent() const { return file->GetNode(); }
 
 	friend const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity);
 	friend EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity);

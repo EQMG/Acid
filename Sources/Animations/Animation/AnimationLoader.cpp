@@ -27,7 +27,7 @@ std::string AnimationLoader::FindRootJointName() const {
 std::vector<Time> AnimationLoader::GetKeyTimes() const {
 	// Times should be the same for each pose so we grab the first joint times.
 	auto timeData = libraryAnimations["animation"][0]["source"][0]["float_array"];
-	auto rawTimes = String::Split(timeData["#text"].Get<std::string>(), ' ');
+	auto rawTimes = String::Split(timeData.Get<std::string>(), ' ');
 
 	std::vector<Time> times;
 	times.reserve(rawTimes.size());
@@ -48,7 +48,7 @@ void AnimationLoader::LoadJointTransforms(const Node &jointData, const std::stri
 
 	auto transformData = jointData["source"].GetPropertyWithValue("-id", dataId);
 
-	auto data = transformData["float_array"]["#text"].Get<std::string>();
+	auto data = transformData["float_array"].Get<std::string>();
 	auto splitData = String::Split(data, ' ');
 	ProcessTransforms(jointNameId, splitData, jointNameId == rootNodeId);
 }

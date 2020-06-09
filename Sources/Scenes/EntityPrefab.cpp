@@ -36,7 +36,7 @@ void EntityPrefab::Load() {
 		return;
 	}
 
-	file = std::make_unique<File>(filename);
+	file = std::make_unique<File>(filename, File::Type::Json);
 	file->Load();
 }
 
@@ -45,7 +45,7 @@ void EntityPrefab::Write(Node::Format format) const {
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {
-	for (const auto &property : entityPrefab.GetParent()->GetProperties()) {
+	for (const auto &property : entityPrefab.GetParent().GetProperties()) {
 		if (property.GetName().empty()) {
 			continue;
 		}
@@ -69,7 +69,7 @@ EntityPrefab &operator<<(EntityPrefab &entityPrefab, const Entity &entity) {
 			continue;
 		}
 
-		auto property = (*entityPrefab.file->GetNode())[componentName];
+		auto property = entityPrefab.file->GetNode()[componentName];
 		property << *component;
 	}
 

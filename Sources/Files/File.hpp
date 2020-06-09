@@ -8,10 +8,16 @@ namespace acid {
  */
 class ACID_EXPORT File {
 public:
+	// TODO: Implement a more dynamic, less hard-coded, file parse/write.
+	enum class Type {
+		Json, Xml
+	};
+	
 	File() = default;
-	explicit File(std::unique_ptr<Node> &&node);
-	explicit File(const std::filesystem::path &filename);
-	File(std::filesystem::path filename, std::unique_ptr<Node> &&node);
+	File(Type type, const Node &node);
+	explicit File(Type type, Node &&node = {});
+	File(std::filesystem::path filename, Type type, const Node &node);
+	File(std::filesystem::path filename, Type type, Node &&node = {});
 
 	void Load(const std::filesystem::path &filename);
 	void Load();
@@ -21,13 +27,15 @@ public:
 	
 	void Clear();
 
-	Node *GetNode() const { return node.get(); }
+	const Node &GetNode() const { return node; }
+	Node &GetNode() { return node; }
 
 	const std::filesystem::path &GetFilename() const { return filename; }
 	void SetFilename(const std::filesystem::path &filename) { this->filename = filename; }
 
 private:
-	std::unique_ptr<Node> node;
+	Node node;
+	Type type;
 	std::filesystem::path filename;
 };
 }

@@ -20,7 +20,7 @@ Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 	if (!childJointNode)
 		return joint;
 	
-	if (childJointNode.GetType() == Node::Type::Array) {
+	if (childJointNode->GetType() == Node::Type::Array) {
 		for (auto &childNode : childJointNode.GetProperties())
 			joint.AddChild(LoadJointData(childNode, false));
 	} else {
@@ -33,7 +33,7 @@ Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 Joint SkeletonLoader::ExtractMainJointData(const Node &jointNode, bool isRoot) {
 	auto nameId = jointNode["-id"].Get<std::string>();
 	auto index = GetBoneIndex(nameId);
-	auto matrixData = String::Split(jointNode["matrix"]["#text"].Get<std::string>(), ' ');
+	auto matrixData = String::Split(jointNode["matrix"].Get<std::string>(), ' ');
 
 	assert(matrixData.size() == 16);
 

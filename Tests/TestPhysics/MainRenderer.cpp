@@ -59,7 +59,7 @@ void MainRenderer::Start() {
 	AddSubrender<DeferredSubrender>({1, 1});
 	AddSubrender<ParticlesSubrender>({1, 1});
 
-	AddSubrender<FxaaFilter>({1, 2});
+	//AddSubrender<FxaaFilter>({1, 2});
 	//AddSubrender<ToneFilter>({1, 2});
 	//AddSubrender<SsaoFilter>({1, 2});
 	//auto sceneBlur = AddSubrender<BlurPipeline>({1, 2}, 1.8f, BlurFilter::Type::_5, false, 0.6f, 1.0f);

@@ -23,12 +23,9 @@ void AnimatedMesh::Start() {
 	if (filename.empty())
 		return;
 
-	//File file(filename, std::make_unique<Xml>("COLLADA"));
-	//file.Load();
-	//auto &fileNode = *file.GetNode();
-	File file(filename);
+	File file(filename, File::Type::Xml);
 	file.Load();
-	auto fileNode = (*file.GetNode())["COLLADA"];
+	auto fileNode = file.GetNode()["COLLADA"];
 
 	// Because in Blender z is up, but Acid is y up. A correction must be applied to positions and normals.
 	static const auto Correction = Matrix4().Rotate(Maths::Radians(-90.0f), Vector3f::Right);
@@ -47,19 +44,19 @@ void AnimatedMesh::Start() {
 
 /*#if defined(ACID_DEBUG)
 	{
-		File fileModel("Animation/Model.json");
-		(*fileModel.GetNode())["vertices"].Set(model->GetVertices<VertexAnimated>());
-		(*fileModel.GetNode())["indices"].Set(model->GetIndices());
+		File fileModel("Animation/Model.json", File::Type::Json);
+		fileModel.GetNode()["vertices"] = model->GetVertices<VertexAnimated>();
+		fileModel.GetNode()["indices"] = model->GetIndices();
 		fileModel.Write(Node::Format::Beautified);
 	}
 	{
-		File fileJoints("Animation/Joints.json");
-		*fileJoints.GetNode() << headJoint;
+		File fileJoints("Animation/Joints.json", File::Type::Json);
+		fileJoints.GetNode() = headJoint;
 		fileJoints.Write(Node::Format::Beautified);
 	}
 	{
-		File fileAnimation0("Animation/Animation0.json");
-		*fileAnimation0.GetNode() << *animation;
+		File fileAnimation0("Animation/Animation0.json", File::Type::Json);
+		fileAnimation0.GetNode() = *animation;
 		fileAnimation0.Write(Node::Format::Beautified);
 	}
 #endif*/

@@ -6,22 +6,25 @@
 #include "Files.hpp"
 
 namespace acid {
-File::File(std::unique_ptr<Node> &&node) :
-	node(std::move(node)) {
+File::File(Type type, const Node &node) :
+	node(node),
+	type(type) {
 }
 
-File::File(const std::filesystem::path &filename) :
-	filename(filename) {
-	// TODO: Node factory.
-	if (filename.extension() == ".json") {
-		node = std::make_unique<Json>();
-	} else if (filename.extension() == ".xml") {
-		node = std::make_unique<Xml>("root");
-	}
-}
-
-File::File(std::filesystem::path filename, std::unique_ptr<Node> &&node) :
+File::File(Type type, Node &&node) :
 	node(std::move(node)),
+	type(type) {
+}
+
+File::File(std::filesystem::path filename, Type type, const Node &node) :
+	node(node),
+	type(type),
+	filename(std::move(filename)) {
+}
+
+File::File(std::filesystem::path filename, Type type, Node &&node) :
+	node(std::move(node)),
+	type(type),
 	filename(std::move(filename)) {
 }
 
@@ -32,10 +35,16 @@ void File::Load(const std::filesystem::path &filename) {
 
 	if (Files::ExistsInPath(filename)) {
 		IFStream inStream(filename);
-		node->ParseStream(inStream);
+		if (type == Type::Json)
+			node.ParseStream<Json>(inStream);
+		else if (type == Type::Xml)
+			node.ParseStream<Xml>(inStream);
 	} else if (std::filesystem::exists(filename)) {
 		std::ifstream inStream(filename);
-		node->ParseStream(inStream);
+		if (type == Type::Json)
+			node.ParseStream<Json>(inStream);
+		else if (type == Type::Xml)
+			node.ParseStream<Xml>(inStream);
 		inStream.close();
 	}
 
@@ -55,14 +64,17 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 
 	/*if (Files::ExistsInPath(filename)) {
 		OFStream os(filename);
-		node->WriteStream(os, format);
+		node->WriteStream(os, *formatter);
 	} else {*/ // if (std::filesystem::exists(filename))
 		if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
 			std::filesystem::create_directories(parentPath);
 		}
 
 		std::ofstream os(filename);
-		node->WriteStream(os, format);
+		if (type == Type::Json)
+			node.WriteStream<Json>(os, format);
+		else if (type == Type::Xml)
+			node.WriteStream<Xml>(os, format);
 		os.close();
 	//}
 
@@ -76,6 +88,6 @@ void File::Write(Node::Format format) const {
 }
 
 void File::Clear() {
-	node->Clear();
+	node.Clear();
 }
 }

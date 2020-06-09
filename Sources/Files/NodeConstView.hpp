@@ -24,10 +24,6 @@ protected:
 	NodeConstView(const NodeConstView *parent, Key key);
 
 public:
-	enum class Type : uint8_t {
-		Object, Array, String, Boolean, Integer, Decimal, Null, Token, Unknown
-	};
-
 	bool has_value() const noexcept { return value != nullptr; }
 	const Node *get() const { return value; }
 
@@ -49,18 +45,16 @@ public:
 	template<typename T, typename K>
 	bool Get(T &dest, const K &fallback) const;
 
-	std::vector<NodeConstView> GetProperties(std::string_view name) const;
-	NodeConstView GetPropertyWithBackup(std::string_view name, std::string_view backupName) const;
-	NodeConstView GetPropertyWithValue(std::string_view propertyName, std::string_view propertyValue) const;
+	std::vector<NodeConstView> GetProperties(const std::string &name) const;
+	NodeConstView GetPropertyWithBackup(const std::string &name, const std::string &backupName) const;
+	NodeConstView GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const;
 
-	NodeConstView operator[](std::string_view key) const;
+	NodeConstView operator[](const std::string &key) const;
 	NodeConstView operator[](uint32_t index) const;
 
 	std::vector<Node> GetProperties() const;
-	
-	std::string GetName() const;
 
-	Type GetType() const;
+	std::string GetName() const;
 	
 protected:
 	const Node *parent = nullptr;

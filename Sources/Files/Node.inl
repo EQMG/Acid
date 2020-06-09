@@ -10,17 +10,29 @@
 #include <optional>
 #include <vector>
 #include <map>
+#include <set>
+#include <sstream>
 
+#include "Resources/Resource.hpp"
 #include "Utils/ConstExpr.hpp"
 #include "Utils/String.hpp"
-#include "Resources/Resource.hpp"
 
 namespace acid {
-template<typename _Elem>
-void Node::ParseStream(std::basic_istream<_Elem> & stream) {
+template<typename NodeParser>
+void Node::ParseString(std::string_view string) {
+	NodeParser::ParseString(*this, string);
+}
+
+template<typename NodeParser>
+void Node::WriteStream(std::ostream &stream, Format format) const {
+	NodeParser::WriteStream(*this, stream, format);
+}
+
+template<typename NodeParser, typename _Elem>
+void Node::ParseStream(std::basic_istream<_Elem> &stream) {
 	// We must read as UTF8 chars.
 	if constexpr (!std::is_same_v<_Elem, char>) {
-#if defined(ACID_BUILD_CLANG) || defined(ACID_BUILD_GNU)
+#if !defined(ACID_BUILD_MSVC)
 		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
 #else
 		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
@@ -29,25 +41,26 @@ void Node::ParseStream(std::basic_istream<_Elem> & stream) {
 
 	// Reading into a string before iterating is much faster.
 	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-	ParseString(s);
+	ParseString<NodeParser>(s);
 }
 
-template<typename _Elem>
-std::basic_string<_Elem> Node::WriteString(const Format &format) const {
+template<typename NodeParser, typename _Elem>
+std::basic_string<_Elem> Node::WriteString(Format format) const {
 	std::basic_stringstream<_Elem> stream;
-	WriteStream(stream, format);
+	WriteStream<NodeParser>(stream, format);
 	return stream.str();
 }
 
 template<typename T>
 T Node::GetName() const {
-	// Only supports basic string to type conversions.
+	// String to basic type conversion.
 	return String::From<T>(name);
 }
 
 template<typename T>
 void Node::SetName(const T &value) {
-	name = String::To<T>(value);
+	// Basic type to string conversion.
+	name = String::To(value);
 }
 
 template<typename T>
@@ -214,7 +227,7 @@ inline Node &operator<<(Node &node, const char *string) {
 //inline const Node &operator>>(const Node &node, std::string_view &string)
 
 inline Node &operator<<(Node &node, std::string_view string) {
-	node.SetValue(string.data());
+	node.SetValue(std::string(string));
 	node.SetType(Node::Type::String);
 	return node;
 }
@@ -294,6 +307,28 @@ const Node &operator>>(const Node &node, std::vector<T> &vector) {
 
 template<typename T>
 Node &operator<<(Node &node, const std::vector<T> &vector) {
+	for (const auto &x : vector)
+		node.AddProperty() << x;
+
+	node.SetType(Node::Type::Array);
+	return node;
+}
+
+template<typename T>
+const Node &operator>>(const Node &node, std::set<T> &vector) {
+	vector.clear();
+
+	for (const auto &property : node.GetProperties()) {
+		T x;
+		property >> x;
+		vector.emplace(std::move(x));
+	}
+
+	return node;
+}
+
+template<typename T>
+Node &operator<<(Node &node, const std::set<T> &vector) {
 	for (const auto &x : vector)
 		node.AddProperty() << x;
 

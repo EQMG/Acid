@@ -7,8 +7,8 @@
 
 namespace test {
 ConfigManager::ConfigManager() :
-	audio("Configs/Audio.json"),
-	graphics("Configs/Graphics.json") {
+	audio("Configs/Audio.json", File::Type::Json),
+	graphics("Configs/Graphics.json", File::Type::Json) {
 	Timers::Get()->Every(160s, [this]() {
 		Save();
 	}, this);
@@ -16,14 +16,14 @@ ConfigManager::ConfigManager() :
 
 void ConfigManager::Load() {
 	audio.Load();
-	auto &audioData = *audio.GetNode();
+	auto &audioData = audio.GetNode();
 	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::General, audioData["generalVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::Effect, audioData["effectVolume"].Get<float>(1.0f));
 	Audio::Get()->SetGain(Audio::Type::Music, audioData["musicVolume"].Get<float>(1.0f));
 
 	graphics.Load();
-	auto &graphicsData = *graphics.GetNode();
+	auto &graphicsData = graphics.GetNode();
 	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].Get<bool>(true));
 	Window::Get()->SetSize(graphicsData["size"].Get<Vector2f>(Vector2i(1080, 720)));
 	//Window::Get()->SetPosition(graphicsData["position"].Get<Vector2f>(Vector2i(0, 0)));
@@ -38,15 +38,15 @@ void ConfigManager::Load() {
 #endif
 }
 
-void ConfigManager::Save() const {
-	auto &audioData = *audio.GetNode();
+void ConfigManager::Save() {
+	auto &audioData = audio.GetNode();
 	audioData["masterVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Master));
 	audioData["generalVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::General));
 	audioData["effectVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Effect));
 	audioData["musicVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Music));
 	audio.Write(Node::Format::Beautified);
 
-	auto &graphicsData = *graphics.GetNode();
+	auto &graphicsData = graphics.GetNode();
 	//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
 	graphicsData["size"].Set<Vector2f>(Window::Get()->GetSize(false));
 	//graphicsData["position"].Set<Vector2f>(Window::Get()->GetPosition());

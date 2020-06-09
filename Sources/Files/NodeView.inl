@@ -17,4 +17,9 @@ template<typename T>
 Node &NodeView::operator=(const T &rhs) {
 	return *get() = rhs;
 }
+
+template<typename T>
+Node &NodeView::operator=(T &&rhs) {
+	return *get() = std::move(rhs);
+}
 }
