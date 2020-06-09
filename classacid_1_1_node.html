@@ -100,10 +100,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-types">Protected Types</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">acid::Node Class Reference</div>  </div>
+<div class="title">acid::Node Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -111,16 +110,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <a href="classacid_1_1_node.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_node_8hpp_source.html">Node.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for acid::Node:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classacid_1_1_node.png" usemap="#acid::Node_map" alt=""/>
-  <map id="acid::Node_map" name="acid::Node_map">
-<area href="classacid_1_1_json.html" alt="acid::Json" shape="rect" coords="0,56,72,80"/>
-<area href="classacid_1_1_xml.html" alt="acid::Xml" shape="rect" coords="82,56,154,80"/>
-  </map>
-</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -135,33 +124,46 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a0b2cad6f8f31dc57ddcea15332ed13e5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0b2cad6f8f31dc57ddcea15332ed13e5">Type</a> = <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">NodeConstView::Type</a></td></tr>
-<tr class="separator:a0b2cad6f8f31dc57ddcea15332ed13e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871af52b224b9f4fbf188cb4fc72b371"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a497031794414a552435f90151ac3b54b">Type::Object</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a4410ec34d9e6c1a68100ca0ce033fb17">Type::Array</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a27118326006d3829667a400ad23d5d98">Type::String</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a27226c864bac7454a8504f8edb15d95b">Type::Boolean</a>, 
+<br />
+&#160;&#160;<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371aa0faef0851b4294c06f2b94bb1cb2044">Type::Integer</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a937504f318f04eaf0f1d701df4c4d7f3">Type::Decimal</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371abbb93ef26e3c101ff11cdd21cab08a94">Type::Null</a>, 
+<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a459a6f79ad9b13cbcb5f692d2cc7a94d">Type::Token</a>, 
+<br />
+&#160;&#160;<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371a88183b946cc5f0e8c96b2e66e1c74a7e">Type::Unknown</a>
+<br />
+ }</td></tr>
+<tr class="separator:a871af52b224b9f4fbf188cb4fc72b371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6fae00f6295dee4d1fde678896b69045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a6fae00f6295dee4d1fde678896b69045">Node</a> ()=default</td></tr>
-<tr class="separator:a6fae00f6295dee4d1fde678896b69045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a978b25ae848f6823ea25d5866b7cb005"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a978b25ae848f6823ea25d5866b7cb005">Node</a> ()</td></tr>
+<tr class="separator:a978b25ae848f6823ea25d5866b7cb005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd41663ad56f149764c48a109bb81bbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#acd41663ad56f149764c48a109bb81bbc">Node</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
+<tr class="separator:acd41663ad56f149764c48a109bb81bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc886b861e120685491451aebdb30ff7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#afc886b861e120685491451aebdb30ff7">Node</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)</td></tr>
+<tr class="separator:afc886b861e120685491451aebdb30ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67f4ff17a798a1430b928023ee6da39b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a67f4ff17a798a1430b928023ee6da39b">Node</a> (const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)=default</td></tr>
 <tr class="separator:a67f4ff17a798a1430b928023ee6da39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a436bce33f1c73f91a52fa2ad241ceadd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a436bce33f1c73f91a52fa2ad241ceadd">Node</a> (<a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node)=default</td></tr>
 <tr class="separator:a436bce33f1c73f91a52fa2ad241ceadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5a2279284c40933160536efe07a4d6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ac5a2279284c40933160536efe07a4d6e">Node</a> (std::string <a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a>, <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a> <a class="el" href="classacid_1_1_node.html#a228ae09ab5e1681d31a6a8f215922546">type</a>=<a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6fa27118326006d3829667a400ad23d5d98">Type::String</a>)</td></tr>
-<tr class="separator:ac5a2279284c40933160536efe07a4d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d9aa888831cf1a5964ae468863f19c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0d9aa888831cf1a5964ae468863f19c0">Node</a> (std::string <a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a>, std::vector&lt; <a class="el" href="classacid_1_1_node.html">Node</a> &gt; &amp;&amp;<a class="el" href="classacid_1_1_node.html#a287587325547b633bb50e8c59bf992b6">properties</a>)</td></tr>
-<tr class="separator:a0d9aa888831cf1a5964ae468863f19c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc5119c338ae415976e47d5d5c74513a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#acc5119c338ae415976e47d5d5c74513a">~Node</a> ()=default</td></tr>
-<tr class="separator:acc5119c338ae415976e47d5d5c74513a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f4ec677e50f7e49f8d568d29047161b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0f4ec677e50f7e49f8d568d29047161b">ParseString</a> (std::string_view string)</td></tr>
-<tr class="separator:a0f4ec677e50f7e49f8d568d29047161b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add5026984f926d9e2e17dae3477f2cfe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#add5026984f926d9e2e17dae3477f2cfe">WriteStream</a> (std::ostream &amp;stream, const <a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> &amp;format=<a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a>) const</td></tr>
-<tr class="separator:add5026984f926d9e2e17dae3477f2cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca1c78dc831e5af0649ddac480b0ec5d"><td class="memTemplParams" colspan="2">template&lt;typename _Elem  = char&gt; </td></tr>
-<tr class="memitem:aca1c78dc831e5af0649ddac480b0ec5d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aca1c78dc831e5af0649ddac480b0ec5d">ParseStream</a> (std::basic_istream&lt; _Elem &gt; &amp;stream)</td></tr>
-<tr class="separator:aca1c78dc831e5af0649ddac480b0ec5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cd8654590b374e48b61f139747e71f6"><td class="memTemplParams" colspan="2">template&lt;typename _Elem  = char&gt; </td></tr>
-<tr class="memitem:a4cd8654590b374e48b61f139747e71f6"><td class="memTemplItemLeft" align="right" valign="top">std::basic_string&lt; _Elem &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a4cd8654590b374e48b61f139747e71f6">WriteString</a> (const <a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> &amp;format=<a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a>) const</td></tr>
-<tr class="separator:a4cd8654590b374e48b61f139747e71f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc837d3283af32523ce3adcb67e96e72"><td class="memTemplParams" colspan="2">template&lt;typename NodeParser &gt; </td></tr>
+<tr class="memitem:afc837d3283af32523ce3adcb67e96e72"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#afc837d3283af32523ce3adcb67e96e72">ParseString</a> (std::string_view string)</td></tr>
+<tr class="separator:afc837d3283af32523ce3adcb67e96e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad02bbdd5ca546416cdf0f58f9cca2ea8"><td class="memTemplParams" colspan="2">template&lt;typename NodeParser &gt; </td></tr>
+<tr class="memitem:ad02bbdd5ca546416cdf0f58f9cca2ea8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ad02bbdd5ca546416cdf0f58f9cca2ea8">WriteStream</a> (std::ostream &amp;stream, <a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> format=<a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a>) const</td></tr>
+<tr class="separator:ad02bbdd5ca546416cdf0f58f9cca2ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2332615c506300bb74d4cb7fc816f9b0"><td class="memTemplParams" colspan="2">template&lt;typename NodeParser , typename _Elem  = char&gt; </td></tr>
+<tr class="memitem:a2332615c506300bb74d4cb7fc816f9b0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a2332615c506300bb74d4cb7fc816f9b0">ParseStream</a> (std::basic_istream&lt; _Elem &gt; &amp;stream)</td></tr>
+<tr class="separator:a2332615c506300bb74d4cb7fc816f9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1240ac9d79f1ed9bbde6c85551ed5aef"><td class="memTemplParams" colspan="2">template&lt;typename NodeParser , typename _Elem  = char&gt; </td></tr>
+<tr class="memitem:a1240ac9d79f1ed9bbde6c85551ed5aef"><td class="memTemplItemLeft" align="right" valign="top">std::basic_string&lt; _Elem &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a1240ac9d79f1ed9bbde6c85551ed5aef">WriteString</a> (<a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> format=<a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a>) const</td></tr>
+<tr class="separator:a1240ac9d79f1ed9bbde6c85551ed5aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b4f9345a787a13c10b64db59079c75e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a3b4f9345a787a13c10b64db59079c75e"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a3b4f9345a787a13c10b64db59079c75e">GetName</a> () const</td></tr>
 <tr class="separator:a3b4f9345a787a13c10b64db59079c75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,54 +195,66 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae3bcf3bb03ee2087a3a5751a1bbe2737"><td class="memTemplParams" colspan="2">template&lt;typename ... Args&gt; </td></tr>
 <tr class="memitem:ae3bcf3bb03ee2087a3a5751a1bbe2737"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ae3bcf3bb03ee2087a3a5751a1bbe2737">Append</a> (const Args &amp;...args)</td></tr>
 <tr class="separator:ae3bcf3bb03ee2087a3a5751a1bbe2737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dccdf81315f952c301fee424795188b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5dccdf81315f952c301fee424795188b">HasProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
-<tr class="separator:a5dccdf81315f952c301fee424795188b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4697df5028d7a995fe1e23342ad227eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a4697df5028d7a995fe1e23342ad227eb">GetProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
-<tr class="separator:a4697df5028d7a995fe1e23342ad227eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e8453b75fd5eec647e5a7748a67a37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a37e8453b75fd5eec647e5a7748a67a37">HasProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
+<tr class="separator:a37e8453b75fd5eec647e5a7748a67a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d3f60bd73ae4cd1832acd39c315ff0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a39d3f60bd73ae4cd1832acd39c315ff0">HasProperty</a> (uint32_t index) const</td></tr>
+<tr class="separator:a39d3f60bd73ae4cd1832acd39c315ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f8686b74cb7ab2195c7510211eb8b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#af5f8686b74cb7ab2195c7510211eb8b4">GetProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
+<tr class="separator:af5f8686b74cb7ab2195c7510211eb8b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a586732885e666a7c8dedef42286ef546"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a586732885e666a7c8dedef42286ef546">GetProperty</a> (uint32_t index) const</td></tr>
 <tr class="separator:a586732885e666a7c8dedef42286ef546"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1617d430f462536f111716a16ab12d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#af1617d430f462536f111716a16ab12d5">GetProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
-<tr class="separator:af1617d430f462536f111716a16ab12d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23126123e7aa51ec1794ab1744500d9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a23126123e7aa51ec1794ab1744500d9d">GetProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
+<tr class="separator:a23126123e7aa51ec1794ab1744500d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0abc5b59eca96999f66217b10d7bd7a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0abc5b59eca96999f66217b10d7bd7a0">GetProperty</a> (uint32_t index)</td></tr>
 <tr class="separator:a0abc5b59eca96999f66217b10d7bd7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0604e7caca440e903045cfb1bf78bda9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0604e7caca440e903045cfb1bf78bda9">AddProperty</a> ()</td></tr>
-<tr class="separator:a0604e7caca440e903045cfb1bf78bda9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3d6f80ac9eb4b486dde1d54c84e9d2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#af3d6f80ac9eb4b486dde1d54c84e9d2c">AddProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node)</td></tr>
-<tr class="separator:af3d6f80ac9eb4b486dde1d54c84e9d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea3e6e58a70c83a70cbdcc99bb0ef081"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aea3e6e58a70c83a70cbdcc99bb0ef081">AddProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
-<tr class="separator:aea3e6e58a70c83a70cbdcc99bb0ef081"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4960d2a66fb46a38584a7339896a779"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ac4960d2a66fb46a38584a7339896a779">AddProperty</a> (uint32_t index, <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node)</td></tr>
-<tr class="separator:ac4960d2a66fb46a38584a7339896a779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52ed5c135973f9ff1786391a3511cce2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a52ed5c135973f9ff1786391a3511cce2">AddProperty</a> (uint32_t index)</td></tr>
-<tr class="separator:a52ed5c135973f9ff1786391a3511cce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b349f72e02f34bf4af6031c8f573ef8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0b349f72e02f34bf4af6031c8f573ef8">RemoveProperty</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
-<tr class="separator:a0b349f72e02f34bf4af6031c8f573ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71ba446fdfcd4e363f209c3c35af35bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a71ba446fdfcd4e363f209c3c35af35bd">AddProperty</a> (const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)</td></tr>
+<tr class="separator:a71ba446fdfcd4e363f209c3c35af35bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e670e5a9a1ed8cda9ad502c0dee8e83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8e670e5a9a1ed8cda9ad502c0dee8e83">AddProperty</a> (<a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node={})</td></tr>
+<tr class="separator:a8e670e5a9a1ed8cda9ad502c0dee8e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1bd4d96de7871024466f050c57835f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a9f1bd4d96de7871024466f050c57835f">AddProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)</td></tr>
+<tr class="separator:a9f1bd4d96de7871024466f050c57835f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8853fb6098b161cee04de3ae9a42611f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8853fb6098b161cee04de3ae9a42611f">AddProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node={})</td></tr>
+<tr class="separator:a8853fb6098b161cee04de3ae9a42611f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5efa09b6de12cdc90de015fd5cbbd007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5efa09b6de12cdc90de015fd5cbbd007">AddProperty</a> (uint32_t index, const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)</td></tr>
+<tr class="separator:a5efa09b6de12cdc90de015fd5cbbd007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b98d27862ce2ee7da9d56b28ff820e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ae7b98d27862ce2ee7da9d56b28ff820e">AddProperty</a> (uint32_t index, <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node={})</td></tr>
+<tr class="separator:ae7b98d27862ce2ee7da9d56b28ff820e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69fedbebaeee7becc1ba6737a7788630"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a69fedbebaeee7becc1ba6737a7788630">RemoveProperty</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
+<tr class="separator:a69fedbebaeee7becc1ba6737a7788630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81fc8f00ac3a96a0478ffc17a6412236"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a81fc8f00ac3a96a0478ffc17a6412236">RemoveProperty</a> (const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)</td></tr>
 <tr class="separator:a81fc8f00ac3a96a0478ffc17a6412236"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58a33f6da970f0dee526f7543081d32c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a58a33f6da970f0dee526f7543081d32c">GetProperties</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
-<tr class="separator:a58a33f6da970f0dee526f7543081d32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8654d0b0a3260c72decbc034787dd884"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8654d0b0a3260c72decbc034787dd884">GetPropertyWithBackup</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, std::string_view backupName) const</td></tr>
-<tr class="separator:a8654d0b0a3260c72decbc034787dd884"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b35ca56f8a914493352690f29a5d35e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a0b35ca56f8a914493352690f29a5d35e">GetPropertyWithValue</a> (std::string_view propertyName, std::string_view propertyValue) const</td></tr>
-<tr class="separator:a0b35ca56f8a914493352690f29a5d35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98e87fa0dd37ccbebd1aa797b86025cb"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classacid_1_1_node_view.html">NodeView</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a98e87fa0dd37ccbebd1aa797b86025cb">GetProperties</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
-<tr class="separator:a98e87fa0dd37ccbebd1aa797b86025cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb8a4e1fa22f4e433609c4bc007a182f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#afb8a4e1fa22f4e433609c4bc007a182f">GetPropertyWithBackup</a> (std::string_view <a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, std::string_view backupName)</td></tr>
-<tr class="separator:afb8a4e1fa22f4e433609c4bc007a182f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a605d96e20aa22304af3dfef129f7fb89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a605d96e20aa22304af3dfef129f7fb89">GetPropertyWithValue</a> (std::string_view propertyName, std::string_view propertyValue)</td></tr>
-<tr class="separator:a605d96e20aa22304af3dfef129f7fb89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e0b93348846d03b111de609ea8e690"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a66e0b93348846d03b111de609ea8e690">operator[]</a> (std::string_view key) const</td></tr>
-<tr class="separator:a66e0b93348846d03b111de609ea8e690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8be1396ecf6c53b96b8e6158fe06378d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8be1396ecf6c53b96b8e6158fe06378d">GetProperties</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>) const</td></tr>
+<tr class="separator:a8be1396ecf6c53b96b8e6158fe06378d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da91e3ebb49f8223b9d34bdde380a5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a2da91e3ebb49f8223b9d34bdde380a5a">GetPropertyWithBackup</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const std::string &amp;backupName) const</td></tr>
+<tr class="separator:a2da91e3ebb49f8223b9d34bdde380a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5084f611408fd9f10665c025271039da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5084f611408fd9f10665c025271039da">GetPropertyWithValue</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const std::string &amp;<a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a>) const</td></tr>
+<tr class="separator:a5084f611408fd9f10665c025271039da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f35d0135c088799e571164c74127bc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classacid_1_1_node_view.html">NodeView</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a73f35d0135c088799e571164c74127bc">GetProperties</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>)</td></tr>
+<tr class="separator:a73f35d0135c088799e571164c74127bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaec20e713bb456d5d983b24601fbd617"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aaec20e713bb456d5d983b24601fbd617">GetPropertyWithBackup</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const std::string &amp;backupName)</td></tr>
+<tr class="separator:aaec20e713bb456d5d983b24601fbd617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a780877afc9d2a2d646ead4968ce0735d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a780877afc9d2a2d646ead4968ce0735d">GetPropertyWithValue</a> (const std::string &amp;<a class="el" href="classacid_1_1_node.html#a2fb31d7c2d3342d2c61d64ec403ec2c3">name</a>, const std::string &amp;<a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a>)</td></tr>
+<tr class="separator:a780877afc9d2a2d646ead4968ce0735d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0bd62d74764d9f699786c28da3233a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a4d0bd62d74764d9f699786c28da3233a">operator[]</a> (const std::string &amp;key) const</td></tr>
+<tr class="separator:a4d0bd62d74764d9f699786c28da3233a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc36f0f73806c6b4abd7b94c9074e8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aacc36f0f73806c6b4abd7b94c9074e8f">operator[]</a> (uint32_t index) const</td></tr>
 <tr class="separator:aacc36f0f73806c6b4abd7b94c9074e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa95528ade36e44dceffb24569de2e1aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aa95528ade36e44dceffb24569de2e1aa">operator[]</a> (std::string_view key)</td></tr>
-<tr class="separator:aa95528ade36e44dceffb24569de2e1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8822f9c504fa144e6ec1822e2686a95b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8822f9c504fa144e6ec1822e2686a95b">operator[]</a> (const std::string &amp;key)</td></tr>
+<tr class="separator:a8822f9c504fa144e6ec1822e2686a95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55731a9fd1e9c000b8a651b6e5627db5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_view.html">NodeView</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a55731a9fd1e9c000b8a651b6e5627db5">operator[]</a> (uint32_t index)</td></tr>
 <tr class="separator:a55731a9fd1e9c000b8a651b6e5627db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa48094e2e370ef3ede38243a3adeb7a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aa48094e2e370ef3ede38243a3adeb7a8">operator=</a> (const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;node)=default</td></tr>
-<tr class="separator:aa48094e2e370ef3ede38243a3adeb7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa59e1e52130b0293e6a20cefc0465114"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#aa59e1e52130b0293e6a20cefc0465114">operator=</a> (<a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;node)=default</td></tr>
-<tr class="separator:aa59e1e52130b0293e6a20cefc0465114"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a681811e30ed266ef166df3a6b4ca4cbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a681811e30ed266ef166df3a6b4ca4cbe">operator=</a> (const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;rhs)</td></tr>
+<tr class="separator:a681811e30ed266ef166df3a6b4ca4cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fcf07c32f3a19982e9d161caa3e7886"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5fcf07c32f3a19982e9d161caa3e7886">operator=</a> (<a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;rhs) noexcept</td></tr>
+<tr class="separator:a5fcf07c32f3a19982e9d161caa3e7886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02e89028cf521f5a3fefc9e70b4e74fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a02e89028cf521f5a3fefc9e70b4e74fd">operator=</a> (const <a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &amp;rhs)</td></tr>
+<tr class="separator:a02e89028cf521f5a3fefc9e70b4e74fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4afb0875c1c377c0f8added16c696ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#af4afb0875c1c377c0f8added16c696ef">operator=</a> (<a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &amp;&amp;rhs) noexcept</td></tr>
+<tr class="separator:af4afb0875c1c377c0f8added16c696ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df9acbb1703ae6c5965a694eac5c8b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5df9acbb1703ae6c5965a694eac5c8b3">operator=</a> (<a class="el" href="classacid_1_1_node_view.html">NodeView</a> &amp;rhs)</td></tr>
+<tr class="separator:a5df9acbb1703ae6c5965a694eac5c8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e916567473422a4e7192211a306e582"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a5e916567473422a4e7192211a306e582">operator=</a> (<a class="el" href="classacid_1_1_node_view.html">NodeView</a> &amp;&amp;rhs) noexcept</td></tr>
+<tr class="separator:a5e916567473422a4e7192211a306e582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a6613e810e69d0145dd29e68f9acbb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a73a6613e810e69d0145dd29e68f9acbb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a73a6613e810e69d0145dd29e68f9acbb">operator=</a> (const T &amp;rhs)</td></tr>
 <tr class="separator:a73a6613e810e69d0145dd29e68f9acbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,15 +276,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a272e17e4ed1f563cdad6cb28615ddda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d27890b78806c19bed9387cbb8bc645"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a7d27890b78806c19bed9387cbb8bc645">SetValue</a> (std::string <a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a>)</td></tr>
 <tr class="separator:a7d27890b78806c19bed9387cbb8bc645"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3449f7e22d34e966ed4d0b7d77ea3b8d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a3449f7e22d34e966ed4d0b7d77ea3b8d">GetType</a> () const</td></tr>
+<tr class="memitem:a3449f7e22d34e966ed4d0b7d77ea3b8d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a3449f7e22d34e966ed4d0b7d77ea3b8d">GetType</a> () const</td></tr>
 <tr class="separator:a3449f7e22d34e966ed4d0b7d77ea3b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9001fa765c5cc8bff1fe60a9b94f8af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ab9001fa765c5cc8bff1fe60a9b94f8af">SetType</a> (<a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a> <a class="el" href="classacid_1_1_node.html#a228ae09ab5e1681d31a6a8f215922546">type</a>)</td></tr>
+<tr class="memitem:ab9001fa765c5cc8bff1fe60a9b94f8af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#ab9001fa765c5cc8bff1fe60a9b94f8af">SetType</a> (<a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a> <a class="el" href="classacid_1_1_node.html#a228ae09ab5e1681d31a6a8f215922546">type</a>)</td></tr>
 <tr class="separator:ab9001fa765c5cc8bff1fe60a9b94f8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
-Protected Types</h2></td></tr>
-<tr class="memitem:a348fae000535fe0b146dcad63687690d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a348fae000535fe0b146dcad63687690d">Tokens</a> = std::vector&lt; <a class="el" href="classacid_1_1_node_1_1_token.html">Token</a> &gt;</td></tr>
-<tr class="separator:a348fae000535fe0b146dcad63687690d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -280,14 +289,14 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a2fb31d7c2d3342d2c61d64ec403ec2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e427baef137d2482afe7437f2b505b8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a8e427baef137d2482afe7437f2b505b8">value</a></td></tr>
 <tr class="separator:a8e427baef137d2482afe7437f2b505b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a228ae09ab5e1681d31a6a8f215922546"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a228ae09ab5e1681d31a6a8f215922546">type</a> = <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6fa497031794414a552435f90151ac3b54b">Type::Object</a></td></tr>
+<tr class="memitem:a228ae09ab5e1681d31a6a8f215922546"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classacid_1_1_node.html#a228ae09ab5e1681d31a6a8f215922546">type</a></td></tr>
 <tr class="separator:a228ae09ab5e1681d31a6a8f215922546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that is used to represent a tree of UFT-8 values, used in serialization. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a348fae000535fe0b146dcad63687690d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a348fae000535fe0b146dcad63687690d">&#9670;&nbsp;</a></span>Tokens</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a871af52b224b9f4fbf188cb4fc72b371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871af52b224b9f4fbf188cb4fc72b371">&#9670;&nbsp;</a></span>Type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,35 +305,49 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classacid_1_1_node.html#a348fae000535fe0b146dcad63687690d">acid::Node::Tokens</a> =  std::vector&lt;<a class="el" href="classacid_1_1_node_1_1_token.html">Token</a>&gt;</td>
+          <td class="memname">enum <a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">acid::Node::Type</a> : uint8_t</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a497031794414a552435f90151ac3b54b"></a>Object&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a4410ec34d9e6c1a68100ca0ce033fb17"></a>Array&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a27118326006d3829667a400ad23d5d98"></a>String&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a27226c864bac7454a8504f8edb15d95b"></a>Boolean&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371aa0faef0851b4294c06f2b94bb1cb2044"></a>Integer&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a937504f318f04eaf0f1d701df4c4d7f3"></a>Decimal&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371abbb93ef26e3c101ff11cdd21cab08a94"></a>Null&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a459a6f79ad9b13cbcb5f692d2cc7a94d"></a>Token&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a871af52b224b9f4fbf188cb4fc72b371a88183b946cc5f0e8c96b2e66e1c74a7e"></a>Unknown&#160;</td><td class="fielddoc"></td></tr>
+</table>
 
 </div>
 </div>
-<a id="a0b2cad6f8f31dc57ddcea15332ed13e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b2cad6f8f31dc57ddcea15332ed13e5">&#9670;&nbsp;</a></span>Type</h2>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a978b25ae848f6823ea25d5866b7cb005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a978b25ae848f6823ea25d5866b7cb005">&#9670;&nbsp;</a></span>Node() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">acid::Node::Type</a> =  <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">NodeConstView::Type</a></td>
+          <td class="memname">acid::Node::Node </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6fae00f6295dee4d1fde678896b69045"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fae00f6295dee4d1fde678896b69045">&#9670;&nbsp;</a></span>Node() <span class="overload">[1/5]</span></h2>
+<a id="acd41663ad56f149764c48a109bb81bbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd41663ad56f149764c48a109bb81bbc">&#9670;&nbsp;</a></span>Node() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,21 +358,50 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">acid::Node::Node </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
+<a id="afc886b861e120685491451aebdb30ff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc886b861e120685491451aebdb30ff7">&#9670;&nbsp;</a></span>Node() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">acid::Node::Node </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a67f4ff17a798a1430b928023ee6da39b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67f4ff17a798a1430b928023ee6da39b">&#9670;&nbsp;</a></span>Node() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a67f4ff17a798a1430b928023ee6da39b">&#9670;&nbsp;</a></span>Node() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -375,7 +427,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a436bce33f1c73f91a52fa2ad241ceadd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a436bce33f1c73f91a52fa2ad241ceadd">&#9670;&nbsp;</a></span>Node() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a436bce33f1c73f91a52fa2ad241ceadd">&#9670;&nbsp;</a></span>Node() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -400,98 +452,9 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac5a2279284c40933160536efe07a4d6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5a2279284c40933160536efe07a4d6e">&#9670;&nbsp;</a></span>Node() <span class="overload">[4/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">acid::Node::Node </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a>&#160;</td>
-          <td class="paramname"><em>type</em> = <code><a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6fa27118326006d3829667a400ad23d5d98">Type::String</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0d9aa888831cf1a5964ae468863f19c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d9aa888831cf1a5964ae468863f19c0">&#9670;&nbsp;</a></span>Node() <span class="overload">[5/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">acid::Node::Node </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classacid_1_1_node.html">Node</a> &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"><em>properties</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="acc5119c338ae415976e47d5d5c74513a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc5119c338ae415976e47d5d5c74513a">&#9670;&nbsp;</a></span>~Node()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual acid::Node::~Node </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0604e7caca440e903045cfb1bf78bda9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0604e7caca440e903045cfb1bf78bda9">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[1/5]</span></h2>
+<a id="a71ba446fdfcd4e363f209c3c35af35bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71ba446fdfcd4e363f209c3c35af35bd">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,7 +462,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -507,8 +471,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aea3e6e58a70c83a70cbdcc99bb0ef081"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea3e6e58a70c83a70cbdcc99bb0ef081">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[2/5]</span></h2>
+<a id="a9f1bd4d96de7871024466f050c57835f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1bd4d96de7871024466f050c57835f">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -516,31 +480,13 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af3d6f80ac9eb4b486dde1d54c84e9d2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3d6f80ac9eb4b486dde1d54c84e9d2c">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[3/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td>
           <td class="paramname"><em>node</em>&#160;</td>
         </tr>
         <tr>
@@ -553,8 +499,54 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a52ed5c135973f9ff1786391a3511cce2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52ed5c135973f9ff1786391a3511cce2">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[4/5]</span></h2>
+<a id="a8853fb6098b161cee04de3ae9a42611f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8853fb6098b161cee04de3ae9a42611f">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>node</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e670e5a9a1ed8cda9ad502c0dee8e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e670e5a9a1ed8cda9ad502c0dee8e83">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>node</em> = <code>{}</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5efa09b6de12cdc90de015fd5cbbd007"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5efa09b6de12cdc90de015fd5cbbd007">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -563,16 +555,26 @@ Protected Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::AddProperty </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>index</em></td><td>)</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac4960d2a66fb46a38584a7339896a779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4960d2a66fb46a38584a7339896a779">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[5/5]</span></h2>
+<a id="ae7b98d27862ce2ee7da9d56b28ff820e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7b98d27862ce2ee7da9d56b28ff820e">&#9670;&nbsp;</a></span>AddProperty() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -587,7 +589,7 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>node</em>&#160;</td>
+          <td class="paramname"><em>node</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -834,8 +836,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a98e87fa0dd37ccbebd1aa797b86025cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98e87fa0dd37ccbebd1aa797b86025cb">&#9670;&nbsp;</a></span>GetProperties() <span class="overload">[3/4]</span></h2>
+<a id="a73f35d0135c088799e571164c74127bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73f35d0135c088799e571164c74127bc">&#9670;&nbsp;</a></span>GetProperties() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -843,7 +845,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">std::vector&lt; <a class="el" href="classacid_1_1_node_view.html">NodeView</a> &gt; acid::Node::GetProperties </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -852,8 +854,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a58a33f6da970f0dee526f7543081d32c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58a33f6da970f0dee526f7543081d32c">&#9670;&nbsp;</a></span>GetProperties() <span class="overload">[4/4]</span></h2>
+<a id="a8be1396ecf6c53b96b8e6158fe06378d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8be1396ecf6c53b96b8e6158fe06378d">&#9670;&nbsp;</a></span>GetProperties() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -861,7 +863,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">std::vector&lt; <a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &gt; acid::Node::GetProperties </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -870,8 +872,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="af1617d430f462536f111716a16ab12d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1617d430f462536f111716a16ab12d5">&#9670;&nbsp;</a></span>GetProperty() <span class="overload">[1/4]</span></h2>
+<a id="a23126123e7aa51ec1794ab1744500d9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23126123e7aa51ec1794ab1744500d9d">&#9670;&nbsp;</a></span>GetProperty() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -879,7 +881,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> acid::Node::GetProperty </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -888,8 +890,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a4697df5028d7a995fe1e23342ad227eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4697df5028d7a995fe1e23342ad227eb">&#9670;&nbsp;</a></span>GetProperty() <span class="overload">[2/4]</span></h2>
+<a id="af5f8686b74cb7ab2195c7510211eb8b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5f8686b74cb7ab2195c7510211eb8b4">&#9670;&nbsp;</a></span>GetProperty() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -897,7 +899,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> acid::Node::GetProperty </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -942,8 +944,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="afb8a4e1fa22f4e433609c4bc007a182f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb8a4e1fa22f4e433609c4bc007a182f">&#9670;&nbsp;</a></span>GetPropertyWithBackup() <span class="overload">[1/2]</span></h2>
+<a id="aaec20e713bb456d5d983b24601fbd617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaec20e713bb456d5d983b24601fbd617">&#9670;&nbsp;</a></span>GetPropertyWithBackup() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -951,13 +953,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> acid::Node::GetPropertyWithBackup </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>backupName</em>&#160;</td>
         </tr>
         <tr>
@@ -970,8 +972,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a8654d0b0a3260c72decbc034787dd884"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8654d0b0a3260c72decbc034787dd884">&#9670;&nbsp;</a></span>GetPropertyWithBackup() <span class="overload">[2/2]</span></h2>
+<a id="a2da91e3ebb49f8223b9d34bdde380a5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da91e3ebb49f8223b9d34bdde380a5a">&#9670;&nbsp;</a></span>GetPropertyWithBackup() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -979,13 +981,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> acid::Node::GetPropertyWithBackup </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>backupName</em>&#160;</td>
         </tr>
         <tr>
@@ -998,8 +1000,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a605d96e20aa22304af3dfef129f7fb89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a605d96e20aa22304af3dfef129f7fb89">&#9670;&nbsp;</a></span>GetPropertyWithValue() <span class="overload">[1/2]</span></h2>
+<a id="a780877afc9d2a2d646ead4968ce0735d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a780877afc9d2a2d646ead4968ce0735d">&#9670;&nbsp;</a></span>GetPropertyWithValue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1007,14 +1009,14 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> acid::Node::GetPropertyWithValue </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>propertyName</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>propertyValue</em>&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1026,8 +1028,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a0b35ca56f8a914493352690f29a5d35e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b35ca56f8a914493352690f29a5d35e">&#9670;&nbsp;</a></span>GetPropertyWithValue() <span class="overload">[2/2]</span></h2>
+<a id="a5084f611408fd9f10665c025271039da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5084f611408fd9f10665c025271039da">&#9670;&nbsp;</a></span>GetPropertyWithValue() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1035,14 +1037,14 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> acid::Node::GetPropertyWithValue </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>propertyName</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>propertyValue</em>&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1064,7 +1066,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a>&amp; acid::Node::GetType </td>
+          <td class="memname">const <a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a>&amp; acid::Node::GetType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1104,8 +1106,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a5dccdf81315f952c301fee424795188b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dccdf81315f952c301fee424795188b">&#9670;&nbsp;</a></span>HasProperty()</h2>
+<a id="a37e8453b75fd5eec647e5a7748a67a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e8453b75fd5eec647e5a7748a67a37">&#9670;&nbsp;</a></span>HasProperty() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1113,8 +1115,26 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">bool acid::Node::HasProperty </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a39d3f60bd73ae4cd1832acd39c315ff0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d3f60bd73ae4cd1832acd39c315ff0">&#9670;&nbsp;</a></span>HasProperty() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool acid::Node::HasProperty </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1176,34 +1196,44 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa48094e2e370ef3ede38243a3adeb7a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa48094e2e370ef3ede38243a3adeb7a8">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/3]</span></h2>
+<a id="a681811e30ed266ef166df3a6b4ca4cbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a681811e30ed266ef166df3a6b4ca4cbe">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a>&amp; acid::Node::operator= </td>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classacid_1_1_node.html">Node</a> &amp;&#160;</td>
-          <td class="paramname"><em>node</em></td><td>)</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02e89028cf521f5a3fefc9e70b4e74fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02e89028cf521f5a3fefc9e70b4e74fd">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <a id="a73a6613e810e69d0145dd29e68f9acbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73a6613e810e69d0145dd29e68f9acbb">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a6613e810e69d0145dd29e68f9acbb">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1222,8 +1252,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa59e1e52130b0293e6a20cefc0465114"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa59e1e52130b0293e6a20cefc0465114">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
+<a id="a5fcf07c32f3a19982e9d161caa3e7886"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fcf07c32f3a19982e9d161caa3e7886">&#9670;&nbsp;</a></span>operator=() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1232,18 +1262,88 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a>&amp; acid::Node::operator= </td>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classacid_1_1_node.html">Node</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>node</em></td><td>)</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af4afb0875c1c377c0f8added16c696ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4afb0875c1c377c0f8added16c696ef">&#9670;&nbsp;</a></span>operator=() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5e916567473422a4e7192211a306e582"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e916567473422a4e7192211a306e582">&#9670;&nbsp;</a></span>operator=() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5df9acbb1703ae6c5965a694eac5c8b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5df9acbb1703ae6c5965a694eac5c8b3">&#9670;&nbsp;</a></span>operator=() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html">Node</a> &amp; acid::Node::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -1266,8 +1366,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa95528ade36e44dceffb24569de2e1aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa95528ade36e44dceffb24569de2e1aa">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[1/4]</span></h2>
+<a id="a8822f9c504fa144e6ec1822e2686a95b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8822f9c504fa144e6ec1822e2686a95b">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1275,7 +1375,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_view.html">NodeView</a> acid::Node::operator[] </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1284,8 +1384,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a66e0b93348846d03b111de609ea8e690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66e0b93348846d03b111de609ea8e690">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[2/4]</span></h2>
+<a id="a4d0bd62d74764d9f699786c28da3233a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0bd62d74764d9f699786c28da3233a">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1293,7 +1393,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classacid_1_1_node_const_view.html">NodeConstView</a> acid::Node::operator[] </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -1338,13 +1438,13 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aca1c78dc831e5af0649ddac480b0ec5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca1c78dc831e5af0649ddac480b0ec5d">&#9670;&nbsp;</a></span>ParseStream()</h2>
+<a id="a2332615c506300bb74d4cb7fc816f9b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2332615c506300bb74d4cb7fc816f9b0">&#9670;&nbsp;</a></span>ParseStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename _Elem &gt; </div>
+template&lt;typename NodeParser , typename _Elem &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void acid::Node::ParseStream </td>
@@ -1358,14 +1458,13 @@ template&lt;typename _Elem &gt; </div>
 
 </div>
 </div>
-<a id="a0f4ec677e50f7e49f8d568d29047161b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f4ec677e50f7e49f8d568d29047161b">&#9670;&nbsp;</a></span>ParseString()</h2>
+<a id="afc837d3283af32523ce3adcb67e96e72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc837d3283af32523ce3adcb67e96e72">&#9670;&nbsp;</a></span>ParseString()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+<div class="memtemplate">
+template&lt;typename NodeParser &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void acid::Node::ParseString </td>
@@ -1375,14 +1474,7 @@ template&lt;typename _Elem &gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Reimplemented in <a class="el" href="classacid_1_1_json.html#ae8408da46b9ad0dac0be1e54d66f9157">acid::Json</a>, and <a class="el" href="classacid_1_1_xml.html#a5178e301ff70163a21b903be78120ef7">acid::Xml</a>.</p>
 
 </div>
 </div>
@@ -1404,8 +1496,8 @@ template&lt;typename _Elem &gt; </div>
 
 </div>
 </div>
-<a id="a0b349f72e02f34bf4af6031c8f573ef8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b349f72e02f34bf4af6031c8f573ef8">&#9670;&nbsp;</a></span>RemoveProperty() <span class="overload">[2/2]</span></h2>
+<a id="a69fedbebaeee7becc1ba6737a7788630"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69fedbebaeee7becc1ba6737a7788630">&#9670;&nbsp;</a></span>RemoveProperty() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1413,7 +1505,7 @@ template&lt;typename _Elem &gt; </div>
         <tr>
           <td class="memname">void acid::Node::RemoveProperty </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1500,7 +1592,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">void acid::Node::SetType </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a>&#160;</td>
           <td class="paramname"><em>type</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1540,14 +1632,13 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="add5026984f926d9e2e17dae3477f2cfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add5026984f926d9e2e17dae3477f2cfe">&#9670;&nbsp;</a></span>WriteStream()</h2>
+<a id="ad02bbdd5ca546416cdf0f58f9cca2ea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad02bbdd5ca546416cdf0f58f9cca2ea8">&#9670;&nbsp;</a></span>WriteStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+<div class="memtemplate">
+template&lt;typename NodeParser &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void acid::Node::WriteStream </td>
@@ -1558,7 +1649,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node_1_1_format.html">Format</a>&#160;</td>
           <td class="paramname"><em>format</em> = <code><a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a></code>&#160;</td>
         </tr>
         <tr>
@@ -1567,29 +1658,22 @@ template&lt;typename T &gt; </div>
           <td></td><td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classacid_1_1_json.html#ad13fd70ecf0e2fca07d63417575f7d62">acid::Json</a>, and <a class="el" href="classacid_1_1_xml.html#a4aebfc55a5ee345927dd7290d668e2c3">acid::Xml</a>.</p>
-
 </div>
 </div>
-<a id="a4cd8654590b374e48b61f139747e71f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cd8654590b374e48b61f139747e71f6">&#9670;&nbsp;</a></span>WriteString()</h2>
+<a id="a1240ac9d79f1ed9bbde6c85551ed5aef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1240ac9d79f1ed9bbde6c85551ed5aef">&#9670;&nbsp;</a></span>WriteString()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename _Elem &gt; </div>
+template&lt;typename NodeParser , typename _Elem &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">std::basic_string&lt; _Elem &gt; acid::Node::WriteString </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classacid_1_1_node_1_1_format.html">Format</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classacid_1_1_node_1_1_format.html">Format</a>&#160;</td>
           <td class="paramname"><em>format</em> = <code><a class="el" href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8">Format::Minified</a></code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -1653,7 +1737,7 @@ template&lt;typename _Elem &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6f">Type</a> acid::Node::type = <a class="el" href="classacid_1_1_node_const_view.html#a20af87588d5d0a1dcd8244aaa53cbc6fa497031794414a552435f90151ac3b54b">Type::Object</a></td>
+          <td class="memname"><a class="el" href="classacid_1_1_node.html#a871af52b224b9f4fbf188cb4fc72b371">Type</a> acid::Node::type</td>
         </tr>
       </table>
   </td>

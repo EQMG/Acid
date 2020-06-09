@@ -31,7 +31,7 @@ var searchData=
   ['fogcolour_5991',['fogColour',['../classacid_1_1_skybox_material.html#a755337619b8e55a01a0c60cb015d8cc1',1,'acid::SkyboxMaterial']]],
   ['foglimits_5992',['fogLimits',['../classacid_1_1_skybox_material.html#a30c9d3e31d755bb9e624a96f5967728b',1,'acid::SkyboxMaterial']]],
   ['folder_5993',['folder',['../classacid_1_1_material_stream_reader.html#ada2a26949aa4202b7481d90384c25f92',1,'acid::MaterialStreamReader']]],
-  ['fontsize_5994',['fontSize',['../classacid_1_1_text.html#a5e6bec8c76c7e7b0b415f2e1b7252705',1,'acid::Text::fontSize()'],['../classacid_1_1_ui_button_input.html#ae23068089a9b5b6631f162b275a2cd4f',1,'acid::UiButtonInput::FontSize()']]],
+  ['fontsize_5994',['FontSize',['../classacid_1_1_ui_button_input.html#ae23068089a9b5b6631f162b275a2cd4f',1,'acid::UiButtonInput::FontSize()'],['../classacid_1_1_text.html#a5e6bec8c76c7e7b0b415f2e1b7252705',1,'acid::Text::fontSize()']]],
   ['fonttype_5995',['fontType',['../classacid_1_1_text.html#a6cf36156e7b15d89d2f18102d34d8f80',1,'acid::Text']]],
   ['force_5996',['force',['../classacid_1_1_force.html#acba9cddd25967c817b2bfa0338402fbd',1,'acid::Force']]],
   ['forces_5997',['forces',['../classacid_1_1_collision_object.html#ab1a215ebafb28e5fd2134bf99d7410f3',1,'acid::CollisionObject']]],

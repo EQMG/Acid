@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['use_5fdebug_5fmessenger_6952',['USE_DEBUG_MESSENGER',['../_instance_8hpp.html#ad2f0c33a5dca2302153846a5b99140f1',1,'Instance.hpp']]]
+  ['enable_5fbitmask_5foperators_6952',['ENABLE_BITMASK_OPERATORS',['../_enum_class_8hpp.html#ad0efd7d9f56b1011dcd8c1c57d767b44',1,'EnumClass.hpp']]]
 ];

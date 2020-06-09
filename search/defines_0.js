@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enable_5fbitmask_5foperators_6951',['ENABLE_BITMASK_OPERATORS',['../_enum_class_8hpp.html#ad0efd7d9f56b1011dcd8c1c57d767b44',1,'EnumClass.hpp']]]
+  ['attribute_5ftext_5fsupport_6951',['ATTRIBUTE_TEXT_SUPPORT',['../_json_8cpp.html#a04c5af1a3d8ede422c3bb9d76a6c9532',1,'Json.cpp']]]
 ];
