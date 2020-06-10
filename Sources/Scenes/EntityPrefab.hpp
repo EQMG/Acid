@@ -34,7 +34,7 @@ public:
 	explicit EntityPrefab(std::filesystem::path filename, bool load = true);
 
 	void Load();
-	void Write(Node::Format format = Node::Format::Minified) const;
+	void Write(NodeFormat::Format format = NodeFormat::Minified) const;
 
 	std::type_index GetTypeIndex() const override { return typeid(EntityPrefab); }
 

@@ -18,18 +18,8 @@
 #include "Utils/String.hpp"
 
 namespace acid {
-template<typename NodeParser>
-void Node::ParseString(std::string_view string) {
-	NodeParser::ParseString(*this, string);
-}
-
-template<typename NodeParser>
-void Node::WriteStream(std::ostream &stream, Format format) const {
-	NodeParser::WriteStream(*this, stream, format);
-}
-
-template<typename NodeParser, typename _Elem>
-void Node::ParseStream(std::basic_istream<_Elem> &stream) {
+template<typename _Elem>
+void NodeFormat::ParseStream(Node &node, std::basic_istream<_Elem> &stream) {
 	// We must read as UTF8 chars.
 	if constexpr (!std::is_same_v<_Elem, char>) {
 #if !defined(ACID_BUILD_MSVC)
@@ -41,13 +31,13 @@ void Node::ParseStream(std::basic_istream<_Elem> &stream) {
 
 	// Reading into a string before iterating is much faster.
 	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-	ParseString<NodeParser>(s);
+	ParseString(node, s);
 }
 
-template<typename NodeParser, typename _Elem>
-std::basic_string<_Elem> Node::WriteString(Format format) const {
-	std::basic_stringstream<_Elem> stream;
-	WriteStream<NodeParser>(stream, format);
+template<typename _Elem>
+std::basic_string<_Elem> NodeFormat::WriteString(const Node &node, Format format) const {
+	std::basic_ostringstream<_Elem> stream;
+	WriteStream(node, stream, format);
 	return stream.str();
 }
 

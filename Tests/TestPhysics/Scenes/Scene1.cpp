@@ -92,7 +92,7 @@ Scene1::Scene1() :
 	Input::Get()->GetButton("save")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
-				File sceneFile("Scene1.json", File::Type::Json);
+				File sceneFile("Scene1.json", std::make_unique<Json>());
 
 				auto entitiesNode = sceneFile.GetNode()["entities"];
 
@@ -110,7 +110,7 @@ Scene1::Scene1() :
 					}
 				}
 
-				sceneFile.Write(Node::Format::Beautified);
+				sceneFile.Write(NodeFormat::Beautified);
 			});
 		}
 	}, this);
@@ -154,7 +154,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabAnimated("Prefabs/Animated.json");
 	prefabAnimated << *animated;
-	prefabAnimated.Write(Node::Format::Beautified);
+	prefabAnimated.Write(NodeFormat::Beautified);
 #endif
 
 	auto sun = GetStructure()->CreateEntity();
@@ -186,7 +186,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabTerrain("Prefabs/Terrain.json");
 	prefabTerrain << *terrain;
-	prefabTerrain.Write(Node::Format::Beautified);
+	prefabTerrain.Write(NodeFormat::Beautified);
 #endif
 
 	static const std::vector cubeColours = {Colour::Red, Colour::Lime, Colour::Yellow, Colour::Blue, Colour::Purple, Colour::Grey, Colour::White};
@@ -227,7 +227,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabTeapot1("Prefabs/Teapot1.json");
 	prefabTeapot1 << *teapot1;
-	prefabTeapot1.Write(Node::Format::Beautified);
+	prefabTeapot1.Write(NodeFormat::Beautified);
 #endif
 
 	auto teapotCone = GetStructure()->CreateEntity();
@@ -287,7 +287,7 @@ void Scene1::Start() {
 #if defined(ACID_DEBUG)
 	EntityPrefab prefabSmokeSystem("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem << *smokeSystem;
-	prefabSmokeSystem.Write(Node::Format::Beautified);
+	prefabSmokeSystem.Write(NodeFormat::Beautified);
 #endif
 }
 

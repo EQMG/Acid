@@ -8,22 +8,17 @@ namespace acid {
  */
 class ACID_EXPORT File {
 public:
-	// TODO: Implement a more dynamic, less hard-coded, file parse/write.
-	enum class Type {
-		Json, Xml
-	};
-	
 	File() = default;
-	File(Type type, const Node &node);
-	explicit File(Type type, Node &&node = {});
-	File(std::filesystem::path filename, Type type, const Node &node);
-	File(std::filesystem::path filename, Type type, Node &&node = {});
+	File(std::unique_ptr<NodeFormat> &&type, const Node &node);
+	explicit File(std::unique_ptr<NodeFormat> &&type, Node &&node = {});
+	File(std::filesystem::path filename, std::unique_ptr<NodeFormat> &&type, const Node &node);
+	File(std::filesystem::path filename, std::unique_ptr<NodeFormat> &&type, Node &&node = {});
 
 	void Load(const std::filesystem::path &filename);
 	void Load();
 	
-	void Write(const std::filesystem::path &filename, Node::Format format = Node::Format::Minified) const;
-	void Write(Node::Format format = Node::Format::Minified) const;
+	void Write(const std::filesystem::path &filename, NodeFormat::Format format = NodeFormat::Minified) const;
+	void Write(NodeFormat::Format format = NodeFormat::Minified) const;
 	
 	void Clear();
 
@@ -35,7 +30,7 @@ public:
 
 private:
 	Node node;
-	Type type;
+	std::unique_ptr<NodeFormat> type;
 	std::filesystem::path filename;
 };
 }

@@ -8,7 +8,7 @@
 namespace acid {
 void Json::ParseString(Node &node, std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
-	std::vector<Node::Token> tokens;
+	std::vector<Token> tokens;
 
 	std::size_t tokenStart = 0;
 	enum class QuoteState : char {
@@ -44,13 +44,13 @@ void Json::ParseString(Node &node, std::string_view string) {
 	Convert(node, tokens, k);
 }
 
-void Json::WriteStream(const Node &node, std::ostream &stream, Node::Format format) {
+void Json::WriteStream(const Node &node, std::ostream &stream, Format format) {
 	stream << (node.GetType() == Node::Type::Array ? '[' : '{') << format.newLine;
 	AppendData(node, stream, format, 1);
 	stream << (node.GetType() == Node::Type::Array ? ']' : '}');
 }
 
-void Json::AddToken(std::string_view view, std::vector<Node::Token> &tokens) {
+void Json::AddToken(std::string_view view, std::vector<Token> &tokens) {
 	if (view.length() != 0) {
 		// Finds the node value type of the string and adds it to the tokens vector.
 		if (view == "null") {
@@ -74,11 +74,11 @@ void Json::AddToken(std::string_view view, std::vector<Node::Token> &tokens) {
 	}
 }
 
-void Json::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t &k) {
-	if (tokens[k] == Node::Token(Node::Type::Token, "{")) {
+void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) {
+	if (tokens[k] == Token(Node::Type::Token, "{")) {
 		k++;
 
-		while (tokens[k] != Node::Token(Node::Type::Token, "}")) {
+		while (tokens[k] != Token(Node::Type::Token, "}")) {
 			auto key = tokens[k].view;
 			if (k + 2 >= tokens.size())
 				throw std::runtime_error("Missing end of {} array");
@@ -98,10 +98,10 @@ void Json::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_
 		k++;
 
 		current.SetType(Node::Type::Object);
-	} else if (tokens[k] == Node::Token(Node::Type::Token, "[")) {
+	} else if (tokens[k] == Token(Node::Type::Token, "[")) {
 		k++;
 
-		while (tokens[k] != Node::Token(Node::Type::Token, "]")) {
+		while (tokens[k] != Token(Node::Type::Token, "]")) {
 			if (k >= tokens.size())
 				throw std::runtime_error("Missing end of [] object");
 			Convert(current.AddProperty(), tokens, k);
@@ -121,7 +121,7 @@ void Json::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_
 	}
 }
 
-void Json::AppendData(const Node &node, std::ostream &stream, Node::Format format, int32_t indent) {
+void Json::AppendData(const Node &node, std::ostream &stream, Format format, int32_t indent) {
 	auto indents = format.GetIndents(indent);
 
 	// Only output the value if no properties exist.
@@ -179,7 +179,7 @@ void Json::AppendData(const Node &node, std::ostream &stream, Node::Format forma
 		if (isArray && format.inlineArrays && !it->GetProperties().empty() && IsPrimitive(it->GetProperties()[0])) {
 			stream << format.GetIndents(indent + 1);
 			// New lines are printed a a space, no spaces are ever emitted by primitives.
-			AppendData(*it, stream, Node::Format(0, '\0', '\0', false), indent);
+			AppendData(*it, stream, Format(0, '\0', '\0', false), indent);
 			stream << '\n';
 		} else {
 			AppendData(*it, stream, format, indent + 1);

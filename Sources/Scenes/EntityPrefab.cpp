@@ -1,5 +1,6 @@
 #include "EntityPrefab.hpp"
 
+#include "Files/Json/Json.hpp"
 #include "Files/File.hpp"
 #include "Resources/Resources.hpp"
 #include "Entity.hpp"
@@ -36,11 +37,11 @@ void EntityPrefab::Load() {
 		return;
 	}
 
-	file = std::make_unique<File>(filename, File::Type::Json);
+	file = std::make_unique<File>(filename, std::make_unique<Json>());
 	file->Load();
 }
 
-void EntityPrefab::Write(Node::Format format) const {
+void EntityPrefab::Write(NodeFormat::Format format) const {
 	file->Write(filename, format);
 }
 

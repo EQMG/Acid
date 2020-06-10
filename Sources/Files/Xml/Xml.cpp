@@ -8,7 +8,7 @@
 namespace acid {
 void Xml::ParseString(Node &node, std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
-	std::vector<Node::Token> tokens;
+	std::vector<Token> tokens;
 
 	std::size_t tokenStart = 0;
 	enum class QuoteState : char {
@@ -51,7 +51,7 @@ void Xml::ParseString(Node &node, std::string_view string) {
 	Convert(node, tokens, k);
 }
 
-void Xml::WriteStream(const Node &node, std::ostream &stream, Node::Format format) {
+void Xml::WriteStream(const Node &node, std::ostream &stream, Format format) {
 	stream << R"(<?xml version="1.0" encoding="utf-8"?>)" << format.newLine;
 	// TODO: Taken from body of AppendData properties loop to write parent node tags.
 	stream << '<' << node.GetName();
@@ -64,21 +64,21 @@ void Xml::WriteStream(const Node &node, std::ostream &stream, Node::Format forma
 	stream << "</" << node.GetName() << ">";
 }
 
-void Xml::AddToken(std::string_view view, std::vector<Node::Token> &tokens) {
+void Xml::AddToken(std::string_view view, std::vector<Token> &tokens) {
 	if (view.length() != 0 && !std::all_of(view.cbegin(), view.cend(), String::IsWhitespace))
 		tokens.emplace_back(Node::Type::String, view);
 }
 
-void Xml::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t &k) {
+void Xml::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) {
 	// Only start to parse if we are at the start of a tag.
-	if (tokens[k] != Node::Token(Node::Type::Token, "<"))
+	if (tokens[k] != Token(Node::Type::Token, "<"))
 		return;
 	k++;
 
 	// Ignore prolog and DOCTYPE.
-	if (tokens[k] == Node::Token(Node::Type::Token, "?") || tokens[k] == Node::Token(Node::Type::Token, "!")) {
+	if (tokens[k] == Token(Node::Type::Token, "?") || tokens[k] == Token(Node::Type::Token, "!")) {
 		k += 2;
-		while (tokens[k] != Node::Token(Node::Type::Token, ">"))
+		while (tokens[k] != Token(Node::Type::Token, ">"))
 			k++;
 		k++;
 		Convert(current, tokens, k);
@@ -91,9 +91,9 @@ void Xml::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t
 	// Create the property that will contain the attributes and children found in the tag.
 	auto &property = CreateProperty(current, std::string(name));
 
-	while (tokens[k] != Node::Token(Node::Type::Token, ">")) {
+	while (tokens[k] != Token(Node::Type::Token, ">")) {
 		// Attributes are added as properties.
-		if (tokens[k] == Node::Token(Node::Type::Token, "=")) {
+		if (tokens[k] == Token(Node::Type::Token, "=")) {
 			property.AddProperty("-" + std::string(tokens[k - 1].view)) = tokens[k + 1].view.substr(1, tokens[k + 1].view.size() - 2);
 			k++;
 		}
@@ -102,10 +102,10 @@ void Xml::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t
 	k++;
 
 	// Inline tag has no children.
-	if (tokens[k - 2] == Node::Token(Node::Type::Token, "/"))
+	if (tokens[k - 2] == Token(Node::Type::Token, "/"))
 		return;
 	// Continue through all children until the end tag is found.
-	while (!(tokens[k] == Node::Token(Node::Type::Token, "<") && tokens[k + 1] == Node::Token(Node::Type::Token, "/") && tokens[k + 2].view == name)) {
+	while (!(tokens[k] == Token(Node::Type::Token, "<") && tokens[k + 1] == Token(Node::Type::Token, "/") && tokens[k + 2].view == name)) {
 		if (tokens[k].type == Node::Type::String) {
 			property = tokens[k].view;
 			k++;
@@ -136,7 +136,7 @@ Node &Xml::CreateProperty(Node &current, const std::string &name) {
 	return current.AddProperty(name);
 }
 
-void Xml::AppendData(const Node &node, std::ostream &stream, Node::Format format, int32_t indent) {
+void Xml::AppendData(const Node &node, std::ostream &stream, Format format, int32_t indent) {
 	stream << node.GetValue();
 
 	auto indents = format.GetIndents(indent + 1);
