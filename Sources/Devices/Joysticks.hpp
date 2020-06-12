@@ -2,7 +2,6 @@
 
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 
 namespace acid {
 enum class JoystickHatValue : uint8_t {
@@ -92,25 +91,25 @@ public:
 	 * Called when a joystick has been connected or disconnected.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, bool)> &OnConnect() { return onConnect; }
+	rocket::signal<void(JoystickPort, bool)> &OnConnect() { return onConnect; }
 
 	/**
 	 * Called when a joystick buttons changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, InputAction)> &OnButton() { return onButton; }
+	rocket::signal<void(JoystickPort, uint8_t, InputAction)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when a joystick axis moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, float)> &OnAxis() { return onAxis; }
+	rocket::signal<void(JoystickPort, uint8_t, float)> &OnAxis() { return onAxis; }
 
 	/**
 	 * Called when a joystick had changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return onHat; }
+	rocket::signal<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return onHat; }
 
 private:
 	class JoystickImpl {
@@ -126,9 +125,9 @@ private:
 	friend void CallbackJoystick(int32_t id, int32_t event);
 
 	std::map<JoystickPort, JoystickImpl> connected;
-	Delegate<void(JoystickPort, bool)> onConnect;
-	Delegate<void(JoystickPort, uint8_t, InputAction)> onButton;
-	Delegate<void(JoystickPort, uint8_t, float)> onAxis;
-	Delegate<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> onHat;
+	rocket::signal<void(JoystickPort, bool)> onConnect;
+	rocket::signal<void(JoystickPort, uint8_t, InputAction)> onButton;
+	rocket::signal<void(JoystickPort, uint8_t, float)> onAxis;
+	rocket::signal<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> onHat;
 };
 }

@@ -35,18 +35,18 @@ Inspector::Inspector() {
 	slider1.SetValueMax(100.0f);
 	slider1.SetRoundTo(0);
 	slider1.SetValue(100.0f);
-	slider1.OnValue().Add([this](float value) {
+	slider1.OnValue().connect(this, [this](float value) {
 		Audio::Get()->SetGain(Audio::Type::Effect, value);
-	}, this);
+	});
 	section1.AddChild(&slider1);
 
 	//text1.SetTransform({{0.0f, 0.30f}, UiAnchor::LeftTop});
 	text1.SetTitle("Title");
 	text1.SetMaxLength(14);
 	text1.SetValue(Window::Get()->GetTitle());
-	text1.OnValue().Add([this](std::string text) {
+	text1.OnValue().connect(this, [this](std::string text) {
 		Window::Get()->SetTitle(text);
-	}, this);
+	});
 	section1.AddChild(&text1);
 
 	//radio1.SetTransform({{0.0f, 0.36f}, UiAnchor::LeftTop});

@@ -4,10 +4,10 @@ namespace acid {
 JoystickInputAxis::JoystickInputAxis(JoystickPort port, JoystickAxis axis) :
 	port(port),
 	axis(axis) {
-	Joysticks::Get()->OnAxis().Add([this](JoystickPort port, JoystickAxis axis, float value) {
+	Joysticks::Get()->OnAxis().connect(this, [this](JoystickPort port, JoystickAxis axis, float value) {
 		if (this->port == port && this->axis == axis)
 			onAxis(GetAmount());
-	}, this);
+	});
 }
 
 float JoystickInputAxis::GetAmount() const {

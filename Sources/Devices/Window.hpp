@@ -1,9 +1,9 @@
 #pragma once
 
 #include <volk.h>
+#include <rocket/rocket.hpp>
 
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 #include "Utils/EnumClass.hpp"
 #include "Maths/Vector2.hpp"
 #include "Monitor.hpp"
@@ -170,69 +170,69 @@ public:
 
 	/**
 	 * Called when the window is resized.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(Vector2ui)> &OnSize() { return onSize; }
+	rocket::signal<void(Vector2ui)> &OnSize() { return onSize; }
 
 	/**
 	 * Called when the window is moved.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(Vector2ui)> &OnPosition() { return onPosition; }
+	rocket::signal<void(Vector2ui)> &OnPosition() { return onPosition; }
 
 	/**
 	 * Called when a monitor has been connected or disconnected.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(Monitor *, bool)> &OnMonitorConnect() { return onMonitorConnect; }
+	rocket::signal<void(Monitor *, bool)> &OnMonitorConnect() { return onMonitorConnect; }
 
 	/**
 	 * Called when the windows title changed.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(std::string)> &OnTitle() { return onTitle; }
+	rocket::signal<void(std::string)> &OnTitle() { return onTitle; }
 
 	/**
 	 * Called when the window has toggled borderless on or off.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnBorderless() { return onBorderless; }
+	rocket::signal<void(bool)> &OnBorderless() { return onBorderless; }
 
 	/**
 	 * Called when the window has toggled resizable on or off.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnResizable() { return onResizable; }
+	rocket::signal<void(bool)> &OnResizable() { return onResizable; }
 
 	/**
 	 * Called when the window has toggled floating on or off.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnFloating() { return onFloating; }
+	rocket::signal<void(bool)> &OnFloating() { return onFloating; }
 
 	/**
 	 * Called when the has gone fullscreen or windowed.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnFullscreen() { return onFullscreen; }
+	rocket::signal<void(bool)> &OnFullscreen() { return onFullscreen; }
 
 	/**
 	 * Called when the window requests a close.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void()> &OnClose() { return onClose; }
+	rocket::signal<void()> &OnClose() { return onClose; }
 
 	/**
 	 * Called when the window is focused or unfocused.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnFocus() { return onFocus; }
+	rocket::signal<void(bool)> &OnFocus() { return onFocus; }
 
 	/**
 	 * Called when the window is minimized or maximized.
-	 * @return The delegate.
+	 * @return The rocket::signal.
 	 */
-	Delegate<void(bool)> &OnIconify() { return onIconify; }
+	rocket::signal<void(bool)> &OnIconify() { return onIconify; }
 
 	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
 	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
@@ -268,16 +268,16 @@ private:
 	GLFWwindow *window = nullptr;
 	std::vector<std::unique_ptr<Monitor>> monitors;
 
-	Delegate<void(Vector2ui)> onSize;
-	Delegate<void(Vector2ui)> onPosition;
-	Delegate<void(Monitor *, bool)> onMonitorConnect;
-	Delegate<void(std::string)> onTitle;
-	Delegate<void(bool)> onBorderless;
-	Delegate<void(bool)> onResizable;
-	Delegate<void(bool)> onFloating;
-	Delegate<void(bool)> onFullscreen;
-	Delegate<void()> onClose;
-	Delegate<void(bool)> onFocus;
-	Delegate<void(bool)> onIconify;
+	rocket::signal<void(Vector2ui)> onSize;
+	rocket::signal<void(Vector2ui)> onPosition;
+	rocket::signal<void(Monitor *, bool)> onMonitorConnect;
+	rocket::signal<void(std::string)> onTitle;
+	rocket::signal<void(bool)> onBorderless;
+	rocket::signal<void(bool)> onResizable;
+	rocket::signal<void(bool)> onFloating;
+	rocket::signal<void(bool)> onFullscreen;
+	rocket::signal<void()> onClose;
+	rocket::signal<void(bool)> onFocus;
+	rocket::signal<void(bool)> onIconify;
 };
 }

@@ -247,7 +247,6 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		Utils/ConstExpr.hpp
-		Utils/Delegate.hpp
 		Utils/EnumClass.hpp
 		Utils/Enumerate.hpp
 		Utils/Factory.hpp
@@ -270,6 +269,7 @@ set(_temp_acid_third_party_headers
 		third_party/libspng/spng.h
 		third_party/miniz/miniz.h
 		third_party/msdf/msdf.h
+		third_party/rocket/rocket.hpp
 		third_party/stb/stb_image.h
 		third_party/stb/stb_image_write.h
 		third_party/stb/stb_truetype.h

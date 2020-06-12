@@ -2,7 +2,6 @@
 
 #include "Devices/Window.hpp"
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 
 struct GLFWcursor;
 
@@ -140,31 +139,31 @@ public:
 	 * Called when a mouse button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
+	rocket::signal<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when the mouse moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnPosition() { return onPosition; }
+	rocket::signal<void(Vector2d)> &OnPosition() { return onPosition; }
 
 	/**
 	 * Called when the mouse enters the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnEnter() { return onEnter; }
+	rocket::signal<void(bool)> &OnEnter() { return onEnter; }
 
 	/**
 	 * Called when the scroll wheel changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnScroll() { return onScroll; }
+	rocket::signal<void(Vector2d)> &OnScroll() { return onScroll; }
 
 	/**
 	 * Called when a group of files/folders is dropped onto the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::vector<std::string>)> &OnDrop() { return onDrop; }
+	rocket::signal<void(std::vector<std::string>)> &OnDrop() { return onDrop; }
 
 private:
 	static double SmoothScrollWheel(double value, float delta);
@@ -188,10 +187,10 @@ private:
 	bool windowSelected = false;
 	bool cursorHidden = false;
 
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> onButton;
-	Delegate<void(Vector2d)> onPosition;
-	Delegate<void(bool)> onEnter;
-	Delegate<void(Vector2d)> onScroll;
-	Delegate<void(std::vector<std::string>)> onDrop;
+	rocket::signal<void(MouseButton, InputAction, BitMask<InputMod>)> onButton;
+	rocket::signal<void(Vector2d)> onPosition;
+	rocket::signal<void(bool)> onEnter;
+	rocket::signal<void(Vector2d)> onScroll;
+	rocket::signal<void(std::vector<std::string>)> onDrop;
 };
 }

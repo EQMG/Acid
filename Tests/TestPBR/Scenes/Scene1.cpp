@@ -29,11 +29,11 @@ Scene1::Scene1() :
 		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
-	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	}, this);
+	});
 }
 
 void Scene1::Start() {

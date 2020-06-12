@@ -14,9 +14,9 @@ CollisionObject::CollisionObject(std::vector<std::unique_ptr<Collider>> &&collid
 	linearFactor(linearFactor),
 	angularFactor(angularFactor) {
 	for (auto &collider : colliders) {
-		collider->OnTransformChange().Add([this](Collider *collider, const Transform &localTransform) {
+		collider->OnTransformChange().connect(this, [this](Collider *collider, const Transform &localTransform) {
 			SetChildTransform(collider, localTransform);
-		}, this);
+		});
 	}
 }
 
@@ -26,9 +26,9 @@ CollisionObject::~CollisionObject() {
 Collider *CollisionObject::AddCollider(std::unique_ptr<Collider> &&collider) {
 	if (!collider) return nullptr;
 	auto ret = colliders.emplace_back(std::move(collider)).get();
-	ret->OnTransformChange().Add([this](Collider *collider, const Transform &localTransform) {
+	ret->OnTransformChange().connect(this, [this](Collider *collider, const Transform &localTransform) {
 		SetChildTransform(collider, localTransform);
-	}, this);
+	});
 	return ret;
 }
 

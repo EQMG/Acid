@@ -4,9 +4,9 @@
 #include <condition_variable>
 #include <mutex>
 #include <thread>
+#include <rocket/rocket.hpp>
 
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {
@@ -23,14 +23,14 @@ public:
 	const std::optional<uint32_t> &GetRepeat() const { return repeat; }
 	bool IsDestroyed() const { return destroyed; }
 	void Destroy() { destroyed = true; }
-	Delegate<void()> &OnTick() { return onTick; };
+	rocket::signal<void()> &OnTick() { return onTick; };
 
 private:
 	Time interval;
 	Time next;
 	std::optional<uint32_t> repeat;
 	bool destroyed = false;
-	Delegate<void()> onTick;
+	rocket::signal<void()> onTick;
 };
 
 /**
@@ -43,31 +43,58 @@ public:
 
 	void Update() override;
 
-	template<typename ...Args>
-	Timer *Once(const Time &delay, std::function<void()> &&function, Args ...args) {
+	template<class Instance>
+	Timer *Once(Instance *object, std::function<void()> &&function, const Time &delay) {
 		std::unique_lock<std::mutex> lock(mutex);
 		auto instance = std::make_unique<Timer>(delay, 1);
-		instance->onTick.Add(std::move(function), args...);
+		instance->onTick.connect(object, std::move(function));
 		timers.emplace_back(std::move(instance));
 		condition.notify_all();
 		return instance.get();
 	}
 
-	template<typename ...Args>
-	Timer *Every(const Time &interval, std::function<void()> &&function, Args ...args) {
+	template<class Instance>
+	Timer *Every(Instance *object, std::function<void()> &&function, const Time &interval) {
 		std::unique_lock<std::mutex> lock(mutex);
 		auto instance = std::make_unique<Timer>(interval, std::nullopt);
-		instance->onTick.Add(std::move(function), args...);
+		instance->onTick.connect(object, std::move(function));
 		timers.emplace_back(std::move(instance));
 		condition.notify_all();
 		return instance.get();
 	}
 
-	template<typename ...Args>
-	Timer *Repeat(const Time &interval, uint32_t repeat, std::function<void()> &&function, Args ...args) {
+	template<class Instance>
+	Timer *Repeat(Instance *object, std::function<void()> &&function, const Time &interval, uint32_t repeat) {
 		std::unique_lock<std::mutex> lock(mutex);
 		auto instance = std::make_unique<Timer>(interval, repeat);
-		instance->onTick.Add(std::move(function), args...);
+		instance->onTick.connect(object, std::move(function));
+		timers.emplace_back(std::move(instance));
+		condition.notify_all();
+		return instance.get();
+	}
+
+	Timer *Once(std::function<void()> &&function, const Time &delay) {
+		std::unique_lock<std::mutex> lock(mutex);
+		auto instance = std::make_unique<Timer>(delay, 1);
+		instance->onTick.connect(std::move(function));
+		timers.emplace_back(std::move(instance));
+		condition.notify_all();
+		return instance.get();
+	}
+
+	Timer *Every(std::function<void()> &&function, const Time &interval) {
+		std::unique_lock<std::mutex> lock(mutex);
+		auto instance = std::make_unique<Timer>(interval, std::nullopt);
+		instance->onTick.connect(std::move(function));
+		timers.emplace_back(std::move(instance));
+		condition.notify_all();
+		return instance.get();
+	}
+
+	Timer *Repeat(std::function<void()> &&function, const Time &interval, uint32_t repeat) {
+		std::unique_lock<std::mutex> lock(mutex);
+		auto instance = std::make_unique<Timer>(interval, repeat);
+		instance->onTick.connect(std::move(function));
 		timers.emplace_back(std::move(instance));
 		condition.notify_all();
 		return instance.get();

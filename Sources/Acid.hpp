@@ -239,7 +239,6 @@
 #include "Uis/UiSection.hpp"
 #include "Uis/UiStartLogo.hpp"
 #include "Utils/ConstExpr.hpp"
-#include "Utils/Delegate.hpp"
 #include "Utils/EnumClass.hpp"
 #include "Utils/Enumerate.hpp"
 #include "Utils/Factory.hpp"

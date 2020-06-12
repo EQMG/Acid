@@ -13,7 +13,7 @@ UiSection::UiSection() {
 	
 	UiObject::AddChild(&content);
 
-	OnClick().Add([this](MouseButton button) {
+	OnClick().connect(this, [this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
 
@@ -27,7 +27,7 @@ UiSection::UiSection() {
 
 			onCollapsed(this, collapsed);
 		}
-	}, this);
+	});
 }
 
 void UiSection::UpdateObject() {

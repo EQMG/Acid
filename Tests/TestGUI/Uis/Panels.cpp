@@ -109,9 +109,9 @@ Panels::Panels() {
 	//gui1.SetTransform({UiMargins::Left | UiMargins::Right | UiMargins::Top, {0.5f, 0.0f}, {0.0f, -100}});
 	gui1.SetImage(Image2d::Create("Guis/White.png"));
 	gui1.SetColourDriver<ConstantDriver>(Colour::Blue);
-	gui1.OnSelected().Add([this](bool selected) {
+	gui1.OnSelected().connect(this, [this](bool selected) {
 		gui1.SetColourDriver<ConstantDriver>(selected ? Colour::Green : Colour::Blue);
-	}, this);
+	});
 	AddChild(&gui1);
 
 	//gui2.SetTransform({UiMargins::None, {48, 48}, {-48, -48}});

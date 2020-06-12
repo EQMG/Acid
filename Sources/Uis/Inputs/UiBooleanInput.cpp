@@ -33,19 +33,19 @@ UiBooleanInput::UiBooleanInput() {
 	AddChild(&textValue);
 
 	SetCursorHover(CursorStandard::Hand);
-	OnSelected().Add([this](bool selected) {
+	OnSelected().connect([this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), 
 			selected ? UiButtonInput::SelectedColour : UiButtonInput::PrimaryColour,
 			UiButtonInput::SlideTime);
-	}, this);
-	OnClick().Add([this](MouseButton button) {
+	});
+	OnClick().connect(this, [this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			CancelEvent(MouseButton::Left);
 			value = !value;
 			onValue(value);
 			UpdateValue();
 		}
-	}, this);
+	});
 	UpdateValue();
 }
 

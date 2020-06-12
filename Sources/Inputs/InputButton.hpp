@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT InputButton : public StreamFactory<InputButton>, public virtual Observer {
+class ACID_EXPORT InputButton : public StreamFactory<InputButton>, public virtual rocket::trackable {
 public:
 	virtual ~InputButton() = default;
 
@@ -34,13 +34,13 @@ public:
 	 * Called when the button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
+	rocket::signal<void(InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
 
 	bool IsInverted() const { return inverted; }
 	void SetInverted(bool inverted) { this->inverted = inverted; }
 
 protected:
-	Delegate<void(InputAction, BitMask<InputMod>)> onButton;
+	rocket::signal<void(InputAction, BitMask<InputMod>)> onButton;
 	bool inverted = false;
 
 private:

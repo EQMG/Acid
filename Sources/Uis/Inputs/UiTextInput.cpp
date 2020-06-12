@@ -28,7 +28,7 @@ UiTextInput::UiTextInput() {
 	AddChild(&textValue);
 
 	SetCursorHover(CursorStandard::Hand);
-	Keyboard::Get()->OnKey().Add([this](Key key, InputAction action, BitMask<InputMod> mods) {
+	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, BitMask<InputMod> mods) {
 		if (!updating)
 			return;
 
@@ -45,8 +45,8 @@ UiTextInput::UiTextInput() {
 			inputDelay.Update(true);
 			SetUpdating(false);
 		}
-	}, this);
-	Keyboard::Get()->OnChar().Add([this](char c) {
+	});
+	Keyboard::Get()->OnChar().connect(this, [this](char c) {
 		if (!updating)
 			return;
 
@@ -63,7 +63,7 @@ UiTextInput::UiTextInput() {
 			inputDelay.Update(false);
 			lastKey = 0;
 		}
-	}, this);
+	});
 }
 
 void UiTextInput::UpdateObject() {

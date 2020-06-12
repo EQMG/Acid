@@ -5,7 +5,7 @@ JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const Bit
 	port(port),
 	hat(hat),
 	hatFlags(hatFlags) {
-	Joysticks::Get()->OnHat().Add([this](JoystickPort port, JoystickHat hat, BitMask<JoystickHatValue> value) {
+	Joysticks::Get()->OnHat().connect(static_cast<InputButton *>(this), [this](JoystickPort port, JoystickHat hat, BitMask<JoystickHatValue> value) {
 		if (this->port == port && this->hat == hat) {
 			onAxis(GetAmount());
 			auto isDown = IsDown();
@@ -20,7 +20,7 @@ JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const Bit
 				onButton(InputAction::Repeat, 0);
 			}
 		}
-	}, static_cast<InputButton *>(this));
+	});
 }
 
 InputAxis::ArgumentDescription JoystickHatInput::GetArgumentDescription() const {

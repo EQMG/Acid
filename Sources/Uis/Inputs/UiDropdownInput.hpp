@@ -25,7 +25,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t)> &OnValue() { return onValue; }
+	rocket::signal<void(uint32_t)> &OnValue() { return onValue; }
 
 private:
 	//Gui slider;
@@ -35,6 +35,6 @@ private:
 	uint32_t value;
 	std::vector<std::string> options;
 
-	Delegate<void(uint32_t)> onValue;
+	rocket::signal<void(uint32_t)> onValue;
 };
 }

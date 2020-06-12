@@ -78,9 +78,9 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 void InputScheme::MoveDelegateOwnership(InputScheme *other) {
 	if (!other) return;
 	// Move all delegate functions except those owned internally by the axis or button.
-	for (auto &[axisName, axis] : other->axes)
-		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
-	for (auto &[buttonName, button] : other->buttons)
-		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
+	//for (auto &[axisName, axis] : other->axes)
+	//	GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
+	//for (auto &[buttonName, button] : other->buttons)
+	//	GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
 }
 }

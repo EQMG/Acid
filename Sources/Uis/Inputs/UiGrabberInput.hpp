@@ -48,7 +48,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t)> &OnValue() { return onValue; }
+	rocket::signal<void(uint32_t, uint32_t)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -58,7 +58,7 @@ protected:
 private:
 	uint32_t port = 0; // -1
 	uint32_t value = 0;
-	Delegate<void(uint32_t, uint32_t)> onValue;
+	rocket::signal<void(uint32_t, uint32_t)> onValue;
 };
 
 class ACID_EXPORT UiGrabberKeyboard : public UiGrabberInput {
@@ -72,7 +72,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Key)> &OnValue() { return onValue; }
+	rocket::signal<void(Key)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -81,7 +81,7 @@ protected:
 
 private:
 	Key value = Key::Unknown;
-	Delegate<void(Key)> onValue;
+	rocket::signal<void(Key)> onValue;
 };
 
 class ACID_EXPORT UiGrabberMouse : public UiGrabberInput {
@@ -95,7 +95,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnValue() { return onValue; }
+	rocket::signal<void(MouseButton)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -104,6 +104,6 @@ protected:
 
 private:
 	MouseButton value = MouseButton::Last;
-	Delegate<void(MouseButton)> onValue;
+	rocket::signal<void(MouseButton)> onValue;
 };
 }

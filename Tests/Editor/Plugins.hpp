@@ -13,7 +13,7 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins : public Module::Registrar<Plugins, Module::Stage::Always>, public Observer {
+class Plugins : public Module::Registrar<Plugins, Module::Stage::Always>, public rocket::trackable {
 public:
 	Plugins();
 	~Plugins();

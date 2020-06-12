@@ -15,11 +15,11 @@ Hierarchy::Hierarchy() {
 
 	//button1.SetTransform({{0.0f, 0.0f}, UiAnchor::LeftTop});
 	button1.SetTitle("Button #1");
-	button1.OnClick().Add([this](MouseButton button) {
+	button1.OnClick().connect(this, [this](MouseButton button) {
 		if (button == MouseButton::Left) {
 			Log::Out("Button #1 pressed!\n");
 		}
-	}, this);
+	});
 	section1.AddChild(&button1);
 
 	auto onSlide = [this](float value) {
@@ -36,7 +36,7 @@ Hierarchy::Hierarchy() {
 	sliderR.SetValueMax(255.0f);
 	sliderR.SetRoundTo(0);
 	sliderR.SetValue(255.0f);
-	sliderR.OnValue().Add(onSlide);
+	sliderR.OnValue().connect(this, onSlide);
 	section1.AddChild(&sliderR);
 
 	//sliderG.SetTransform({{0.074f, 0.06f}, UiAnchor::LeftTop});
@@ -46,7 +46,7 @@ Hierarchy::Hierarchy() {
 	sliderG.SetValueMax(255.0f);
 	sliderG.SetRoundTo(0);
 	sliderG.SetValue(255.0f);
-	sliderG.OnValue().Add(onSlide);
+	sliderG.OnValue().connect(this, onSlide);
 	section1.AddChild(&sliderG);
 
 	//sliderB.SetTransform({{0.1475f, 0.06f}, UiAnchor::LeftTop});
@@ -56,7 +56,7 @@ Hierarchy::Hierarchy() {
 	sliderB.SetValueMax(255.0f);
 	sliderB.SetRoundTo(0);
 	sliderB.SetValue(0.0f);
-	sliderB.OnValue().Add(onSlide);
+	sliderB.OnValue().connect(this, onSlide);
 	section1.AddChild(&sliderB);
 
 	//textHex.SetTransform({{0.0f, 0.12f}, UiAnchor::LeftTop});

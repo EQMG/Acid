@@ -3,11 +3,11 @@
 namespace acid {
 MouseInputButton::MouseInputButton(MouseButton button) :
 	button(button) {
-	Mouse::Get()->OnButton().Add([this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
+	Mouse::Get()->OnButton().connect(this, [this](MouseButton button, InputAction action, BitMask<InputMod> mods) {
 		if (this->button == button) {
 			onButton(action, mods);
 		}
-	}, this);
+	});
 }
 
 bool MouseInputButton::IsDown() const {

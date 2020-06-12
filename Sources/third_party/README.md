@@ -6,6 +6,7 @@
  * [libspng](https://github.com/randy408/libspng) - PNG image loader/writer
  * [miniz](https://github.com/richgel999/miniz) - Data compression (zlib replacement)
  * [msdf](https://github.com/exezin/msdf-c) - Font multi-channel signed distance field generator
+ * [rocket](https://github.com/tripleslash/rocket) - Fast signal/slots library
  * [stb](https://github.com/nothings/stb) - Single-file public domain libraries
  * [tinydng](https://github.com/syoyo/tinydngloader) - DNG/TIFF image loader
  * [tinyexr](https://github.com/syoyo/tinyexr) - OpenEXR image loader/writer

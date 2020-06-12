@@ -20,7 +20,7 @@ public:
 	 * Called when this section has been collapsed or uncollapsed.
 	 * @return The delegate.
 	 */
-	Delegate<void(UiSection *, bool)> &OnCollapsed() { return onCollapsed; }
+	rocket::signal<void(UiSection *, bool)> &OnCollapsed() { return onCollapsed; }
 
 private:
 	Gui icon;
@@ -29,6 +29,6 @@ private:
 
 	bool collapsed = false;
 
-	Delegate<void(UiSection *, bool)> onCollapsed;
+	rocket::signal<void(UiSection *, bool)> onCollapsed;
 };
 }

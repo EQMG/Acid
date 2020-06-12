@@ -5,9 +5,9 @@
 namespace acid {
 MouseInputAxis::MouseInputAxis(uint8_t axis) :
 	axis(axis) {
-	Mouse::Get()->OnPosition().Add([this](Vector2d value) {
+	Mouse::Get()->OnPosition().connect(this, [this](Vector2d value) {
 		onAxis(GetAmount());
-	}, this);
+	});
 }
 
 float MouseInputAxis::GetAmount() const {

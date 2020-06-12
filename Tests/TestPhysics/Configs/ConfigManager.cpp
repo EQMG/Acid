@@ -9,9 +9,9 @@ namespace test {
 ConfigManager::ConfigManager() :
 	audio("Configs/Audio.json", File::Type::Json),
 	graphics("Configs/Graphics.json", File::Type::Json) {
-	Timers::Get()->Every(160s, [this]() {
+	Timers::Get()->Every(this, [this]() {
 		Save();
-	}, this);
+	}, 160s);
 }
 
 void ConfigManager::Load() {
