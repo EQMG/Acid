@@ -44,9 +44,8 @@ public:
 	void SetNinePatches(const Vector4f &ninePatches) { this->ninePatches = ninePatches; }
 
 	UiDriver<Colour> *GetColourDriver() const { return colourDriver.get(); }
-	template<template<typename> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<Colour> *, UiDriver<Colour> *>>>
-		void SetColourDriver(Args &&... args) {
+	template<template<typename> typename T, typename... Args>
+	auto SetColourDriver(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<Colour> *, UiDriver<Colour> *>, void> {
 		colourDriver = std::make_unique<T<Colour>>(std::forward<Args>(args)...);
 	}
 

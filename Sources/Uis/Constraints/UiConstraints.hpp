@@ -6,7 +6,7 @@
 #include "UiConstraint.hpp"
 
 namespace acid {
-class ACID_EXPORT UiConstraints final : NonCopyable {
+class ACID_EXPORT UiConstraints final : NonCopyable{
 public:
 	UiConstraints();
 
@@ -17,30 +17,26 @@ public:
 	UiConstraint<UiConstraintType::Width> *GetWidth() const { return width.get(); }
 	UiConstraint<UiConstraintType::Height> *GetHeight() const { return height.get(); }
 
-	template<template<UiConstraintType, typename = void> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<UiConstraintType::X> *, UiConstraint<UiConstraintType::X> *>>>
-		UiConstraints &SetX(Args &&... args) {
+	template<template<UiConstraintType, typename = void> typename T, typename... Args>
+	auto SetX(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<UiConstraintType::X> *, UiConstraint<UiConstraintType::X> *>, UiConstraints &> {
 		x = std::make_unique<T<UiConstraintType::X>>(std::forward<Args>(args)...);
 		return *this;
 	}
 
-	template<template<UiConstraintType, typename = void> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Y> *, UiConstraint<UiConstraintType::Y> *>>>
-		UiConstraints &SetY(Args &&... args) {
+	template<template<UiConstraintType, typename = void> typename T, typename... Args>
+	auto SetY(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Y> *, UiConstraint<UiConstraintType::Y> *>, UiConstraints &> {
 		y = std::make_unique<T<UiConstraintType::Y>>(std::forward<Args>(args)...);
 		return *this;
 	}
 
-	template<template<UiConstraintType, typename = void> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Width> *, UiConstraint<UiConstraintType::Width> *>>>
-		UiConstraints &SetWidth(Args &&... args) {
+	template<template<UiConstraintType, typename = void> typename T, typename... Args>
+	auto SetWidth(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Width> *, UiConstraint<UiConstraintType::Width> *>, UiConstraints &> {
 		width = std::make_unique<T<UiConstraintType::Width>>(std::forward<Args>(args)...);
 		return *this;
 	}
 
-	template<template<UiConstraintType, typename = void> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Height> *, UiConstraint<UiConstraintType::Height> *>>>
-		UiConstraints &SetHeight(Args &&... args) {
+	template<template<UiConstraintType, typename = void> typename T, typename... Args>
+	auto SetHeight(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<UiConstraintType::Height> *, UiConstraint<UiConstraintType::Height> *>, UiConstraints &> {
 		height = std::make_unique<T<UiConstraintType::Height>>(std::forward<Args>(args)...);
 		return *this;
 	}

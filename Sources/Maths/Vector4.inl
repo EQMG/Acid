@@ -246,13 +246,13 @@ constexpr bool Vector4<T>::operator!=(const Vector4<K> &other) const {
 
 template<typename T>
 template<typename U>
-constexpr std::enable_if_t<std::is_signed_v<U>, Vector4<T>> Vector4<T>::operator-() const {
+constexpr auto Vector4<T>::operator-() const -> std::enable_if_t<std::is_signed_v<U>, Vector4<T>> {
 	return {-x, -y, -z, -w};
 }
 
 template<typename T>
 template<typename U>
-constexpr std::enable_if_t<std::is_integral_v<U>, Vector4<T>> Vector4<T>::operator~() const {
+constexpr auto Vector4<T>::operator~() const -> std::enable_if_t<std::is_integral_v<U>, Vector4<T>> {
 	return {~x, ~y, ~z, ~w};
 }
 
@@ -384,45 +384,44 @@ constexpr auto operator/(const Vector4<K> &left, const J &right) {
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator&(const Vector4<K> &left, const Vector4<J> &right) {
+constexpr auto operator&(const Vector4<K> &left, const Vector4<J> &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x & right.x, left.y & right.y, left.z & right.z, left.w & right.w};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator|(const Vector4<K> &left, const Vector4<J> &right) {
+constexpr auto operator|(const Vector4<K> &left, const Vector4<J> &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x | right.x, left.y | right.y, left.z | right.z, left.w | right.w};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator>>(const Vector4<K> &left, const Vector4<J> &right) {
+constexpr auto operator>>(const Vector4<K> &left, const Vector4<J> &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x >> right.x, left.y >> right.y, left.z >> right.z, left.w >> right.w};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator<<(const Vector4<K> &left, const Vector4<J> &right) {
+constexpr auto operator<<(const Vector4<K> &left, const Vector4<J> &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x << right.x, left.y << right.y, left.z << right.z, left.w << right.w};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator&(const Vector4<K> &left, const J &right) {
+constexpr auto operator&(const Vector4<K> &left, const J &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x & right, left.y & right, left.z & right, left.w & right};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator|(const Vector4<K> &left, const J &right) {
+constexpr auto operator|(const Vector4<K> &left, const J &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x | right, left.y | right, left.z | right, left.w | right};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator>>(const Vector4<K> &left, const J &right) {
+constexpr auto operator>>(const Vector4<K> &left, const J &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x >> right, left.y >> right, left.z >> right, left.w >> right};
 }
 
 template<typename K, typename J>
-constexpr std::enable_if_t<std::is_integral_v<K> && std::is_integral_v<J>, Vector4<J>> operator<<(const Vector4<K> &left, const J &right) {
+constexpr auto operator<<(const Vector4<K> &left, const J &right) -> std::enable_if_t<std::is_integral_v<K> &&std::is_integral_v<J>, Vector4<J>> {
 	return {left.x << right, left.y << right, left.z << right, left.w << right};
 }
-
 }
 
 namespace std {

@@ -17,7 +17,7 @@ public:
 	virtual std::type_index GetTypeIndex() const = 0;
 	
 	/*template<typename T>
-	friend std::enable_if_t<std::is_base_of_v<Resource, T>, const Node &> operator>>(const Node &node, std::shared_ptr<T> &object) {
+	friend auto operator>>(const Node &node, std::shared_ptr<T> &object) -> std::enable_if_t<std::is_base_of_v<Resource, T>, const Node &> {
 		object = T::Create(node);
 		return node;
 	}*/

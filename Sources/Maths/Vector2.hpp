@@ -282,9 +282,9 @@ public:
 	constexpr bool operator!=(const Vector2<K> &other) const;
 
 	template<typename U = T>
-	constexpr std::enable_if_t<std::is_signed_v<U>, Vector2> operator-() const;
+	constexpr auto operator-() const -> std::enable_if_t<std::is_signed_v<U>, Vector2>;
 	template<typename U = T>
-	constexpr std::enable_if_t<std::is_integral_v<U>, Vector2> operator~() const;
+	constexpr auto operator~() const -> std::enable_if_t<std::is_integral_v<U>, Vector2>;
 
 	template<typename K>
 	constexpr Vector2 &operator+=(const Vector2<K> &other);
