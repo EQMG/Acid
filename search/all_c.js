@@ -4,7 +4,7 @@ var searchData=
   ['last_1602',['Last',['../namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aad55b30607c2a9a2616347d6edb789f6b',1,'acid::Last()'],['../namespaceacid.html#a91c2051d74062e655f6a79167e3530c4ad55b30607c2a9a2616347d6edb789f6b',1,'acid::Last()']]],
   ['lastdescriptorbinding_1603',['lastDescriptorBinding',['../classacid_1_1_shader.html#aef0c3a687e770da21e27f80e303b1fa4',1,'acid::Shader']]],
   ['lastdown_1604',['lastDown',['../classacid_1_1_joystick_hat_input.html#a655496f0645cd712f489d36db7f47ed5',1,'acid::JoystickHatInput::lastDown()'],['../classacid_1_1_compound_input_button.html#aa32af135ad8bddf83c79e9f41866debc',1,'acid::CompoundInputButton::lastDown()']]],
-  ['lastfilter_1605',['lastFilter',['../classacid_1_1_blit_filter.html#aac56c58f3ca0bc9f011d0f56967f0658',1,'acid::BlitFilter::lastFilter()'],['../classacid_1_1_default_filter.html#a2e2c81073895a90b3a27bd958d4f0476',1,'acid::DefaultFilter::lastFilter()']]],
+  ['lastfilter_1605',['lastFilter',['../classacid_1_1_default_filter.html#a2e2c81073895a90b3a27bd958d4f0476',1,'acid::DefaultFilter']]],
   ['lastframetime_1606',['lastFrameTime',['../classacid_1_1_delta.html#a49deb35805b4e347f85ab104c187ea88',1,'acid::Delta']]],
   ['lastkey_1607',['lastKey',['../classacid_1_1_ui_grabber_input.html#a975c339abdcac628330c183c59b59863',1,'acid::UiGrabberInput::lastKey()'],['../classacid_1_1_ui_text_input.html#a9651797b228ef53761e6b9a10a380530',1,'acid::UiTextInput::lastKey()']]],
   ['lastposition_1608',['lastPosition',['../classacid_1_1_mouse.html#a0d219b58df272da17f3e25c4e3e4ade9',1,'acid::Mouse']]],

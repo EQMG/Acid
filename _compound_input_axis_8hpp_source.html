@@ -110,7 +110,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classacid_1_1_compound_input_axis.html">CompoundInputAxis</a>(std::vector&lt;std::unique_ptr&lt;InputAxis&gt;&gt; &amp;&amp;axes = {});</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classacid_1_1_compound_input_axis.html#a319f034548dca07a15776979a8fb3796">   25</a></span>&#160;    <a class="code" href="classacid_1_1_compound_input_axis.html#a319f034548dca07a15776979a8fb3796">CompoundInputAxis</a>(Args &amp;&amp;... args) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classacid_1_1_compound_input_axis.html#a319f034548dca07a15776979a8fb3796">   25</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classacid_1_1_compound_input_axis.html#a319f034548dca07a15776979a8fb3796">CompoundInputAxis</a>(Args &amp;&amp;... args) {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        axes.reserve(<span class="keyword">sizeof</span>...(Args));</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        (axes.emplace_back(std::forward&lt;Args&gt;(args)), ...);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        ConnectAxes();</div>

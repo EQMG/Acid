@@ -85,7 +85,7 @@ var searchData=
   ['descriptorset_2ehpp_523',['DescriptorSet.hpp',['../_descriptor_set_8hpp.html',1,'']]],
   ['descriptorsetlayout_524',['descriptorSetLayout',['../classacid_1_1_pipeline_compute.html#ab6312924fd1b941f4f8feeef41bde085',1,'acid::PipelineCompute::descriptorSetLayout()'],['../classacid_1_1_pipeline_graphics.html#ac8c6084feadbd03068e079b5506267bb',1,'acid::PipelineGraphics::descriptorSetLayout()']]],
   ['descriptorsetlayouts_525',['descriptorSetLayouts',['../classacid_1_1_shader.html#a95e8f17745159593cefccbf23100cdca',1,'acid::Shader']]],
-  ['descriptorshandler_526',['DescriptorsHandler',['../classacid_1_1_descriptors_handler.html',1,'acid::DescriptorsHandler'],['../classacid_1_1_descriptors_handler.html#a203575c02cc71172cac8d30a90338f3e',1,'acid::DescriptorsHandler::DescriptorsHandler()'],['../classacid_1_1_descriptors_handler.html#a66de48e1f6f3581253491293aae7a425',1,'acid::DescriptorsHandler::DescriptorsHandler(const Pipeline &amp;pipeline)']]],
+  ['descriptorshandler_526',['DescriptorsHandler',['../classacid_1_1_descriptors_handler.html',1,'acid::DescriptorsHandler'],['../classacid_1_1_descriptors_handler.html#a11eb07d7e769f6639194a19c2dcd34b5',1,'acid::DescriptorsHandler::DescriptorsHandler()=default'],['../classacid_1_1_descriptors_handler.html#a66de48e1f6f3581253491293aae7a425',1,'acid::DescriptorsHandler::DescriptorsHandler(const Pipeline &amp;pipeline)']]],
   ['descriptorshandler_2ecpp_527',['DescriptorsHandler.cpp',['../_descriptors_handler_8cpp.html',1,'']]],
   ['descriptorshandler_2ehpp_528',['DescriptorsHandler.hpp',['../_descriptors_handler_8hpp.html',1,'']]],
   ['descriptorsizes_529',['descriptorSizes',['../classacid_1_1_shader.html#acb6942768e8a3587cd67b12b3aacc34a',1,'acid::Shader']]],
