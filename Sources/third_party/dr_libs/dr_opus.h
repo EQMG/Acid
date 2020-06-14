@@ -17,6 +17,7 @@ David Reid - mackron@gmail.com
     #if defined(__clang__)
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wlanguage-extension-token"
+        #pragma GCC diagnostic ignored "-Wlong-long"
         #pragma GCC diagnostic ignored "-Wc++11-long-long"
     #endif
     typedef   signed __int8  dropus_int8;
@@ -30,22 +31,7 @@ David Reid - mackron@gmail.com
     #if defined(__clang__)
         #pragma GCC diagnostic pop
     #endif
-#else
-    #define DROPUS_HAS_STDINT
-    #include <stdint.h>
-    typedef int8_t   dropus_int8;
-    typedef uint8_t  dropus_uint8;
-    typedef int16_t  dropus_int16;
-    typedef uint16_t dropus_uint16;
-    typedef int32_t  dropus_int32;
-    typedef uint32_t dropus_uint32;
-    typedef int64_t  dropus_int64;
-    typedef uint64_t dropus_uint64;
-#endif
 
-#ifdef DROPUS_HAS_STDINT
-    typedef uintptr_t dropus_uintptr;
-#else
     #if defined(_WIN32)
         #if defined(_WIN64)
             typedef dropus_uint64 dropus_uintptr;
@@ -61,8 +47,18 @@ David Reid - mackron@gmail.com
     #else
         typedef dropus_uint64 dropus_uintptr;   /* Fallback. */
     #endif
+#else
+    #include <stdint.h>
+    typedef int8_t    dropus_int8;
+    typedef uint8_t   dropus_uint8;
+    typedef int16_t   dropus_int16;
+    typedef uint16_t  dropus_uint16;
+    typedef int32_t   dropus_int32;
+    typedef uint32_t  dropus_uint32;
+    typedef int64_t   dropus_int64;
+    typedef uint64_t  dropus_uint64;
+    typedef uintptr_t dropus_uintptr;
 #endif
-
 typedef dropus_uint8  dropus_bool8;
 typedef dropus_uint32 dropus_bool32;
 #define DROPUS_TRUE   1
@@ -82,22 +78,112 @@ typedef void (* dropus_proc)(void);
     #define DROPUS_SIZE_MAX 0xFFFFFFFF  /* When SIZE_MAX is not defined by the standard library just default to the maximum 32-bit unsigned integer. */
 #endif
 
-
 #ifdef _MSC_VER
-#define DROPUS_INLINE __forceinline
+    #define DROPUS_INLINE __forceinline
+#elif defined(__GNUC__)
+    /*
+    I've had a bug report where GCC is emitting warnings about functions possibly not being inlineable. This warning happens when
+    the __attribute__((always_inline)) attribute is defined without an "inline" statement. I think therefore there must be some
+    case where "__inline__" is not always defined, thus the compiler emitting these warnings. When using -std=c89 or -ansi on the
+    command line, we cannot use the "inline" keyword and instead need to use "__inline__". In an attempt to work around this issue
+    I am using "__inline__" only when we're compiling in strict ANSI mode.
+    */
+    #if defined(__STRICT_ANSI__)
+        #define DROPUS_INLINE __inline__ __attribute__((always_inline))
+    #else
+        #define DROPUS_INLINE inline __attribute__((always_inline))
+    #endif
 #else
-#ifdef __GNUC__
-#define DROPUS_INLINE __inline__ __attribute__((always_inline))
-#else
-#define DROPUS_INLINE inline
+    #define DROPUS_INLINE
 #endif
+
+#if !defined(DROPUS_API)
+    #if defined(DROPUS_DLL)
+        #if defined(_WIN32)
+            #define DROPUS_DLL_IMPORT  __declspec(dllimport)
+            #define DROPUS_DLL_EXPORT  __declspec(dllexport)
+            #define DROPUS_DLL_PRIVATE static
+        #else
+            #if defined(__GNUC__) && __GNUC__ >= 4
+                #define DROPUS_DLL_IMPORT  __attribute__((visibility("default")))
+                #define DROPUS_DLL_EXPORT  __attribute__((visibility("default")))
+                #define DROPUS_DLL_PRIVATE __attribute__((visibility("hidden")))
+            #else
+                #define DROPUS_DLL_IMPORT
+                #define DROPUS_DLL_EXPORT
+                #define DROPUS_DLL_PRIVATE static
+            #endif
+        #endif
+
+        #if defined(DR_OPUS_IMPLEMENTATION) || defined(DROPUS_IMPLEMENTATION)
+            #define DROPUS_API  DROPUS_DLL_EXPORT
+        #else
+            #define DROPUS_API  DROPUS_DLL_IMPORT
+        #endif
+        #define DROPUS_PRIVATE DROPUS_DLL_PRIVATE
+    #else
+        #define DROPUS_API extern
+        #define DROPUS_PRIVATE static
+    #endif
 #endif
 
 typedef int dropus_result;
-#define DROPUS_SUCCESS           0
-#define DROPUS_ERROR            -1  /* Generic or unknown error. */
-#define DROPUS_INVALID_ARGS     -2
-#define DROPUS_BAD_DATA         -100
+#define DROPUS_SUCCESS                           0
+#define DROPUS_ERROR                            -1   /* A generic error. */
+#define DROPUS_INVALID_ARGS                     -2
+#define DROPUS_INVALID_OPERATION                -3
+#define DROPUS_OUT_OF_MEMORY                    -4
+#define DROPUS_OUT_OF_RANGE                     -5
+#define DROPUS_ACCESS_DENIED                    -6
+#define DROPUS_DOES_NOT_EXIST                   -7
+#define DROPUS_ALREADY_EXISTS                   -8
+#define DROPUS_TOO_MANY_OPEN_FILES              -9
+#define DROPUS_INVALID_FILE                     -10
+#define DROPUS_TOO_BIG                          -11
+#define DROPUS_PATH_TOO_LONG                    -12
+#define DROPUS_NAME_TOO_LONG                    -13
+#define DROPUS_NOT_DIRECTORY                    -14
+#define DROPUS_IS_DIRECTORY                     -15
+#define DROPUS_DIRECTORY_NOT_EMPTY              -16
+#define DROPUS_END_OF_FILE                      -17
+#define DROPUS_NO_SPACE                         -18
+#define DROPUS_BUSY                             -19
+#define DROPUS_IO_ERROR                         -20
+#define DROPUS_INTERRUPT                        -21
+#define DROPUS_UNAVAILABLE                      -22
+#define DROPUS_ALREADY_IN_USE                   -23
+#define DROPUS_BAD_ADDRESS                      -24
+#define DROPUS_BAD_SEEK                         -25
+#define DROPUS_BAD_PIPE                         -26
+#define DROPUS_DEADLOCK                         -27
+#define DROPUS_TOO_MANY_LINKS                   -28
+#define DROPUS_NOT_IMPLEMENTED                  -29
+#define DROPUS_NO_MESSAGE                       -30
+#define DROPUS_BAD_MESSAGE                      -31
+#define DROPUS_NO_DATA_AVAILABLE                -32
+#define DROPUS_INVALID_DATA                     -33
+#define DROPUS_TIMEOUT                          -34
+#define DROPUS_NO_NETWORK                       -35
+#define DROPUS_NOT_UNIQUE                       -36
+#define DROPUS_NOT_SOCKET                       -37
+#define DROPUS_NO_ADDRESS                       -38
+#define DROPUS_BAD_PROTOCOL                     -39
+#define DROPUS_PROTOCOL_UNAVAILABLE             -40
+#define DROPUS_PROTOCOL_NOT_SUPPORTED           -41
+#define DROPUS_PROTOCOL_FAMILY_NOT_SUPPORTED    -42
+#define DROPUS_ADDRESS_FAMILY_NOT_SUPPORTED     -43
+#define DROPUS_SOCKET_NOT_SUPPORTED             -44
+#define DROPUS_CONNECTION_RESET                 -45
+#define DROPUS_ALREADY_CONNECTED                -46
+#define DROPUS_NOT_CONNECTED                    -47
+#define DROPUS_CONNECTION_REFUSED               -48
+#define DROPUS_NO_HOST                          -49
+#define DROPUS_IN_PROGRESS                      -50
+#define DROPUS_CANCELLED                        -51
+#define DROPUS_MEMORY_ALREADY_MAPPED            -52
+#define DROPUS_AT_END                           -53
+#define DROPUS_CRC_MISMATCH                     -100
+#define DROPUS_BAD_DATA                         -101
 
 /***********************************************************************************************************************************************************
 
@@ -141,12 +227,12 @@ typedef struct
 /*
 Initializes a new low-level Opus stream object.
 */
-dropus_result dropus_stream_init(dropus_stream* pOpusStream);
+DROPUS_API dropus_result dropus_stream_init(dropus_stream* pOpusStream);
 
 /*
-Decodes a packet from the given compressed data.
+Decodes a packet from raw compressed data.
 */
-dropus_result dropus_stream_decode_packet(dropus_stream* pOpusStream, const void* pData, size_t dataSize);
+DROPUS_API dropus_result dropus_stream_decode_packet(dropus_stream* pOpusStream, const void* pData, size_t dataSize);
 
 
 
@@ -155,21 +241,29 @@ dropus_result dropus_stream_decode_packet(dropus_stream* pOpusStream, const void
 High-Level Opus Decoding API
 
 ************************************************************************************************************************************************************/
-
 typedef enum
 {
     dropus_seek_origin_start,
     dropus_seek_origin_current
 } dropus_seek_origin;
 
-typedef size_t (* dropus_read_proc)(void* pUserData, void* pBufferOut, size_t bytesToRead);
+typedef size_t        (* dropus_read_proc)(void* pUserData, void* pBufferOut, size_t bytesToRead);
 typedef dropus_bool32 (* dropus_seek_proc)(void* pUserData, int offset, dropus_seek_origin origin);
+
+typedef struct
+{
+    void* pUserData;
+    void* (* onMalloc)(size_t sz, void* pUserData);
+    void* (* onRealloc)(void* p, size_t sz, void* pUserData);
+    void  (* onFree)(void* p, void* pUserData);
+} dropus_allocation_callbacks;
 
 typedef struct
 {
     dropus_read_proc onRead;
     dropus_seek_proc onSeek;
     void* pUserData;
+    dropus_allocation_callbacks allocationCallbacks;
     void* pFile;    /* Only used for decoders that were opened against a file. */
     struct
     {
@@ -182,7 +276,7 @@ typedef struct
 /*
 Initializes a pre-allocated decoder object from callbacks.
 */
-dropus_bool32 dropus_init(dropus* pOpus, dropus_read_proc onRead, dropus_seek_proc onSeek, void* pUserData);
+DROPUS_API dropus_result dropus_init(dropus* pOpus, dropus_read_proc onRead, dropus_seek_proc onSeek, void* pUserData, const dropus_allocation_callbacks* pAllocationCallbacks);
 
 #ifndef DR_OPUS_NO_STDIO
 /*
@@ -190,7 +284,8 @@ Initializes a pre-allocated decoder object from a file.
 
 This keeps hold of the file handle throughout the lifetime of the decoder and closes it in dropus_uninit().
 */
-dropus_bool32 dropus_init_file(dropus* pOpus, const char* pFilePath);
+DROPUS_API dropus_result dropus_init_file(dropus* pOpus, const char* pFilePath, const dropus_allocation_callbacks* pAllocationCallbacks);
+DROPUS_API dropus_result dropus_init_file_w(dropus* pOpus, const wchar_t* pFilePath, const dropus_allocation_callbacks* pAllocationCallbacks);
 #endif
 
 /*
@@ -198,16 +293,95 @@ Initializes a pre-allocated decoder object from a block of memory.
 
 This does not make a copy of the memory.
 */
-dropus_bool32 dropus_init_memory(dropus* pOpus, const void* pData, size_t dataSize);
+DROPUS_API dropus_result dropus_init_memory(dropus* pOpus, const void* pData, size_t dataSize, const dropus_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Uninitializes an Opus decoder.
 */
-void dropus_uninit(dropus* pOpus);
+DROPUS_API void dropus_uninit(dropus* pOpus);
+
+
+
+/************************************************************************************************************************************************************
+
+Utilities
+
+************************************************************************************************************************************************************/
+/*
+Retrieves a human readable description of the given result code.
+*/
+DROPUS_API const char* dropus_result_description(dropus_result result);
+
+/*
+Allocates memory from callbacks.
+
+
+Parameters
+----------
+sz (in)
+    The size of the allocation in bytes.
+
+pAllocationCallbacks (in, optional)
+    A pointer to the `dropus_allocation_callbacks` object containing pointers to the allocation routines.
+
+
+Return Value
+------------
+A pointer to the allocated block of memory. NULL if an error occurs.
+
+
+Remarks
+-------
+`pAllocationCallbacks` can be NULL, in which case DROPUS_MALLOC() will be used. Otherwise, if `pAllocationCallbacks` is not null, either `onMalloc` or
+`onRealloc` must be set. If `onMalloc` is NULL, it will fall back to `onRealloc`. If both `onMalloc` and `onRealloc` are NULL, NULL will be returned.
+*/
+DROPUS_API void* dropus_malloc(size_t sz, const dropus_allocation_callbacks* pAllocationCallbacks);
+
+/*
+Reallocates memory from callbacks.
+
+
+Parameters
+----------
+p (in)
+    A pointer to the memory being reallocated.
+
+sz (in)
+    The size of the allocation in bytes.
+
+pAllocationCallbacks (in, optional)
+    A pointer to the `dropus_allocation_callbacks` object containing pointers to the allocation routines.
+
+
+Return Value
+------------
+A pointer to the allocated block of memory. NULL if an error occurs.
+
+
+Remarks
+-------
+`pAllocationCallbacks` can be NULL, in which case DROPUS_REALLOC() will be used. If `onRealloc` is NULL, this will fail and NULL will be returned.
+*/
+DROPUS_API void* dropus_realloc(void* p, size_t sz, const dropus_allocation_callbacks* pAllocationCallbacks);
+
+/*
+Frees memory allocated by `dropus_malloc()` or `dropus_realloc()`.
+
+
+Parameters
+----------
+p (in)
+    A pointer to the memory being freed.
+
+
+Remarks
+-------
+`pAllocationCallbacks` can be NULL in which case DROPUS_FREE() will be used. If `onFree` is NULL, this will be a no-op.
+*/
+DROPUS_API void dropus_free(void* p, const dropus_allocation_callbacks* pAllocationCallbacks);
 
 
 #endif  /* dr_opus_h */
-
 
 /*
 This software is available as a choice of the following licenses. Choose
@@ -241,7 +415,7 @@ For more information, please refer to <http://unlicense.org/>
 ===============================================================================
 ALTERNATIVE 2 - MIT No Attribution
 ===============================================================================
-Copyright 2019 David Reid
+Copyright 2020 David Reid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

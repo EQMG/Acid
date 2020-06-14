@@ -402,7 +402,6 @@ enum STBVorbisError
 
 #endif // STB_VORBIS_INCLUDE_STB_VORBIS_H
 
-
 /* Version history
     1.17    - 2019-07-08 - fix CVE-2019-13217, -13218, -13219, -13220, -13221, -13222, -13223
                            found with Mayhem by ForAllSecure
@@ -463,7 +462,6 @@ enum STBVorbisError
     0.91 - conditional compiles to omit parts of the API and the infrastructure to support them: STB_VORBIS_NO_PULLDATA_API, STB_VORBIS_NO_PUSHDATA_API, STB_VORBIS_NO_STDIO, STB_VORBIS_NO_INTEGER_CONVERSION
     0.90 - first public release
 */
-
 /*
 ------------------------------------------------------------------------------
 This software is available under 2 licenses -- choose whichever you prefer.

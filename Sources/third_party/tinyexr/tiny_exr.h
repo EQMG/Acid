@@ -1,3 +1,5 @@
+#ifndef TINYEXR_H_
+#define TINYEXR_H_
 
 /*
 Copyright (c) 2014 - 2019, Syoyo Fujita and many contributors.
@@ -64,8 +66,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // End of OpenEXR license -------------------------------------------------
 
-#ifndef TINYEXR_H_
-#define TINYEXR_H_
 
 //
 //
@@ -107,7 +107,7 @@ extern "C" {
 #endif
 
 #ifndef TINYEXR_USE_THREAD
-#define TINYEXR_USE_THREAD (1)
+#define TINYEXR_USE_THREAD (0)  // No threaded loading.
 // http://computation.llnl.gov/projects/floating-point-compression
 #endif
 
@@ -288,7 +288,7 @@ typedef struct _DeepImage {
 extern int LoadEXR(float **out_rgba, int *width, int *height,
                    const char *filename, const char **err);
 
-// Loads single-frame OpenEXR image by specifing layer name. Assume EXR image contains A(single channel
+// Loads single-frame OpenEXR image by specifying layer name. Assume EXR image contains A(single channel
 // alpha) or RGB(A) channels.
 // Application must free image data as returned by `out_rgba`
 // Result image format is: float x RGBA x width x hight
@@ -303,7 +303,7 @@ extern int LoadEXRWithLayer(float **out_rgba, int *width, int *height,
 //
 // @param[out] layer_names List of layer names. Application must free memory after using this.
 // @param[out] num_layers The number of layers
-// @param[out] err Error string(wll be filled when the function returns error code). Free it using FreeEXRErrorMessage after using this value.
+// @param[out] err Error string(will be filled when the function returns error code). Free it using FreeEXRErrorMessage after using this value.
 //
 // @return TINYEXR_SUCCEES upon success.
 //
@@ -337,13 +337,13 @@ extern void InitEXRHeader(EXRHeader *exr_header);
 // Initialize EXRImage struct
 extern void InitEXRImage(EXRImage *exr_image);
 
-// Free's internal data of EXRHeader struct
+// Frees internal data of EXRHeader struct
 extern int FreeEXRHeader(EXRHeader *exr_header);
 
-// Free's internal data of EXRImage struct
+// Frees internal data of EXRImage struct
 extern int FreeEXRImage(EXRImage *exr_image);
 
-// Free's error message
+// Frees error message
 extern void FreeEXRErrorMessage(const char *msg);
 
 // Parse EXR version header of a file.

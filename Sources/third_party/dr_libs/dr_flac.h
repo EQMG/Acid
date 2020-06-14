@@ -1,8 +1,10 @@
 /*
 FLAC audio decoder. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_flac - v0.12.5 - 2020-01-30
+dr_flac - v0.12.13 - 2020-05-16
 
 David Reid - mackron@gmail.com
+
+GitHub: https://github.com/mackron/dr_libs
 */
 
 /*
@@ -115,16 +117,18 @@ to the old per-sample APIs. You now need to use the "pcm_frame" versions.
 
 
 /*
-USAGE
-=====
-dr_flac is a single-file library. To use it, do something like the following in one .c file.
+Introduction
+============
+dr_flac is a single file library. To use it, do something like the following in one .c file.
 
+    ```c
     #define DR_FLAC_IMPLEMENTATION
     #include "dr_flac.h"
+    ```
 
-You can then #include this file in other parts of the program as you would with any other header file. To decode audio data,
-do something like the following:
+You can then #include this file in other parts of the program as you would with any other header file. To decode audio data, do something like the following:
 
+    ```c
     drflac* pFlac = drflac_open_file("MySong.flac", NULL);
     if (pFlac == NULL) {
         // Failed to open FLAC file
@@ -132,28 +136,26 @@ do something like the following:
 
     drflac_int32* pSamples = malloc(pFlac->totalPCMFrameCount * pFlac->channels * sizeof(drflac_int32));
     drflac_uint64 numberOfInterleavedSamplesActuallyRead = drflac_read_pcm_frames_s32(pFlac, pFlac->totalPCMFrameCount, pSamples);
+    ```
 
-The drflac object represents the decoder. It is a transparent type so all the information you need, such as the number of
-channels and the bits per sample, should be directly accessible - just make sure you don't change their values. Samples are
-always output as interleaved signed 32-bit PCM. In the example above a native FLAC stream was opened, however dr_flac has
-seamless support for Ogg encapsulated FLAC streams as well.
+The drflac object represents the decoder. It is a transparent type so all the information you need, such as the number of channels and the bits per sample,
+should be directly accessible - just make sure you don't change their values. Samples are always output as interleaved signed 32-bit PCM. In the example above
+a native FLAC stream was opened, however dr_flac has seamless support for Ogg encapsulated FLAC streams as well.
 
-You do not need to decode the entire stream in one go - you just specify how many samples you'd like at any given time and
-the decoder will give you as many samples as it can, up to the amount requested. Later on when you need the next batch of
-samples, just call it again. Example:
+You do not need to decode the entire stream in one go - you just specify how many samples you'd like at any given time and the decoder will give you as many
+samples as it can, up to the amount requested. Later on when you need the next batch of samples, just call it again. Example:
 
+    ```c
     while (drflac_read_pcm_frames_s32(pFlac, chunkSizeInPCMFrames, pChunkSamples) > 0) {
         do_something();
     }
+    ```
 
-You can seek to a specific sample with drflac_seek_to_sample(). The given sample is based on interleaving. So for example,
-if you were to seek to the sample at index 0 in a stereo stream, you'll be seeking to the first sample of the left channel.
-The sample at index 1 will be the first sample of the right channel. The sample at index 2 will be the second sample of the
-left channel, etc.
-
+You can seek to a specific PCM frame with `drflac_seek_to_pcm_frame()`.
 
 If you just want to quickly decode an entire FLAC file in one go you can do something like this:
 
+    ```c
     unsigned int channels;
     unsigned int sampleRate;
     drflac_uint64 totalPCMFrameCount;
@@ -165,94 +167,140 @@ If you just want to quickly decode an entire FLAC file in one go you can do some
     ...
 
     drflac_free(pSampleData);
+    ```
+
+You can read samples as signed 16-bit integer and 32-bit floating-point PCM with the *_s16() and *_f32() family of APIs respectively, but note that these
+should be considered lossy.
 
 
-You can read samples as signed 16-bit integer and 32-bit floating-point PCM with the *_s16() and *_f32() family of APIs
-respectively, but note that these should be considered lossy.
+If you need access to metadata (album art, etc.), use `drflac_open_with_metadata()`, `drflac_open_file_with_metdata()` or `drflac_open_memory_with_metadata()`.
+The rationale for keeping these APIs separate is that they're slightly slower than the normal versions and also just a little bit harder to use. dr_flac
+reports metadata to the application through the use of a callback, and every metadata block is reported before `drflac_open_with_metdata()` returns.
 
+The main opening APIs (`drflac_open()`, etc.) will fail if the header is not present. The presents a problem in certain scenarios such as broadcast style
+streams or internet radio where the header may not be present because the user has started playback mid-stream. To handle this, use the relaxed APIs:
+    
+    `drflac_open_relaxed()`
+    `drflac_open_with_metadata_relaxed()`
 
-If you need access to metadata (album art, etc.), use drflac_open_with_metadata(), drflac_open_file_with_metdata() or
-drflac_open_memory_with_metadata(). The rationale for keeping these APIs separate is that they're slightly slower than the
-normal versions and also just a little bit harder to use.
-
-dr_flac reports metadata to the application through the use of a callback, and every metadata block is reported before
-drflac_open_with_metdata() returns.
-
-
-The main opening APIs (drflac_open(), etc.) will fail if the header is not present. The presents a problem in certain
-scenarios such as broadcast style streams or internet radio where the header may not be present because the user has
-started playback mid-stream. To handle this, use the relaxed APIs: drflac_open_relaxed() and drflac_open_with_metadata_relaxed().
-
-It is not recommended to use these APIs for file based streams because a missing header would usually indicate a
-corrupt or perverse file. In addition, these APIs can take a long time to initialize because they may need to spend
-a lot of time finding the first frame.
+It is not recommended to use these APIs for file based streams because a missing header would usually indicate a corrupt or perverse file. In addition, these
+APIs can take a long time to initialize because they may need to spend a lot of time finding the first frame.
 
 
 
-OPTIONS
-=======
+Build Options
+=============
 #define these options before including this file.
 
 #define DR_FLAC_NO_STDIO
-  Disable drflac_open_file() and family.
+  Disable `drflac_open_file()` and family.
 
 #define DR_FLAC_NO_OGG
   Disables support for Ogg/FLAC streams.
 
 #define DR_FLAC_BUFFER_SIZE <number>
-  Defines the size of the internal buffer to store data from onRead(). This buffer is used to reduce the number of calls
-  back to the client for more data. Larger values means more memory, but better performance. My tests show diminishing
-  returns after about 4KB (which is the default). Consider reducing this if you have a very efficient implementation of
-  onRead(), or increase it if it's very inefficient. Must be a multiple of 8.
+  Defines the size of the internal buffer to store data from onRead(). This buffer is used to reduce the number of calls back to the client for more data.
+  Larger values means more memory, but better performance. My tests show diminishing returns after about 4KB (which is the default). Consider reducing this if
+  you have a very efficient implementation of onRead(), or increase it if it's very inefficient. Must be a multiple of 8.
 
 #define DR_FLAC_NO_CRC
-  Disables CRC checks. This will offer a performance boost when CRC is unnecessary. This will disable binary search seeking.
-  When seeking, the seek table will be used if available. Otherwise the seek will be performed using brute force.
+  Disables CRC checks. This will offer a performance boost when CRC is unnecessary. This will disable binary search seeking. When seeking, the seek table will
+  be used if available. Otherwise the seek will be performed using brute force.
 
 #define DR_FLAC_NO_SIMD
-  Disables SIMD optimizations (SSE on x86/x64 architectures, NEON on ARM architectures). Use this if you are having
-  compatibility issues with your compiler.
+  Disables SIMD optimizations (SSE on x86/x64 architectures, NEON on ARM architectures). Use this if you are having compatibility issues with your compiler.
 
 
 
-QUICK NOTES
-===========
-- dr_flac does not currently support changing the sample rate nor channel count mid stream.
-- This has not been tested on big-endian architectures.
+Notes
+=====
+- dr_flac does not support changing the sample rate nor channel count mid stream.
 - dr_flac is not thread-safe, but its APIs can be called from any thread so long as you do your own synchronization.
-- When using Ogg encapsulation, a corrupted metadata block will result in drflac_open_with_metadata() and drflac_open()
-  returning inconsistent samples.
+- When using Ogg encapsulation, a corrupted metadata block will result in `drflac_open_with_metadata()` and `drflac_open()` returning inconsistent samples due
+  to differences in corrupted stream recorvery logic between the two APIs.
 */
 
 #ifndef dr_flac_h
 #define dr_flac_h
 
-#include <stddef.h>
-
-#if defined(_MSC_VER) && _MSC_VER < 1600
-typedef   signed char    drflac_int8;
-typedef unsigned char    drflac_uint8;
-typedef   signed short   drflac_int16;
-typedef unsigned short   drflac_uint16;
-typedef   signed int     drflac_int32;
-typedef unsigned int     drflac_uint32;
-typedef   signed __int64 drflac_int64;
-typedef unsigned __int64 drflac_uint64;
-#else
-#include <stdint.h>
-typedef int8_t           drflac_int8;
-typedef uint8_t          drflac_uint8;
-typedef int16_t          drflac_int16;
-typedef uint16_t         drflac_uint16;
-typedef int32_t          drflac_int32;
-typedef uint32_t         drflac_uint32;
-typedef int64_t          drflac_int64;
-typedef uint64_t         drflac_uint64;
+#ifdef __cplusplus
+extern "C" {
 #endif
-typedef drflac_uint8     drflac_bool8;
-typedef drflac_uint32    drflac_bool32;
-#define DRFLAC_TRUE      1
-#define DRFLAC_FALSE     0
+
+#define DRFLAC_STRINGIFY(x)      #x
+#define DRFLAC_XSTRINGIFY(x)     DRFLAC_STRINGIFY(x)
+
+#define DRFLAC_VERSION_MAJOR     0
+#define DRFLAC_VERSION_MINOR     12
+#define DRFLAC_VERSION_REVISION  13
+#define DRFLAC_VERSION_STRING    DRFLAC_XSTRINGIFY(DRFLAC_VERSION_MAJOR) "." DRFLAC_XSTRINGIFY(DRFLAC_VERSION_MINOR) "." DRFLAC_XSTRINGIFY(DRFLAC_VERSION_REVISION)
+
+#include <stddef.h> /* For size_t. */
+
+/* Sized types. Prefer built-in types. Fall back to stdint. */
+#ifdef _MSC_VER
+    #if defined(__clang__)
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wlanguage-extension-token"
+        #pragma GCC diagnostic ignored "-Wlong-long"        
+        #pragma GCC diagnostic ignored "-Wc++11-long-long"
+    #endif
+    typedef   signed __int8  drflac_int8;
+    typedef unsigned __int8  drflac_uint8;
+    typedef   signed __int16 drflac_int16;
+    typedef unsigned __int16 drflac_uint16;
+    typedef   signed __int32 drflac_int32;
+    typedef unsigned __int32 drflac_uint32;
+    typedef   signed __int64 drflac_int64;
+    typedef unsigned __int64 drflac_uint64;
+    #if defined(__clang__)
+        #pragma GCC diagnostic pop
+    #endif
+#else
+    #include <stdint.h>
+    typedef int8_t           drflac_int8;
+    typedef uint8_t          drflac_uint8;
+    typedef int16_t          drflac_int16;
+    typedef uint16_t         drflac_uint16;
+    typedef int32_t          drflac_int32;
+    typedef uint32_t         drflac_uint32;
+    typedef int64_t          drflac_int64;
+    typedef uint64_t         drflac_uint64;
+#endif
+typedef drflac_uint8         drflac_bool8;
+typedef drflac_uint32        drflac_bool32;
+#define DRFLAC_TRUE          1
+#define DRFLAC_FALSE         0
+
+#if !defined(DRFLAC_API)
+    #if defined(DRFLAC_DLL)
+        #if defined(_WIN32)
+            #define DRFLAC_DLL_IMPORT  __declspec(dllimport)
+            #define DRFLAC_DLL_EXPORT  __declspec(dllexport)
+            #define DRFLAC_DLL_PRIVATE static
+        #else
+            #if defined(__GNUC__) && __GNUC__ >= 4
+                #define DRFLAC_DLL_IMPORT  __attribute__((visibility("default")))
+                #define DRFLAC_DLL_EXPORT  __attribute__((visibility("default")))
+                #define DRFLAC_DLL_PRIVATE __attribute__((visibility("hidden")))
+            #else
+                #define DRFLAC_DLL_IMPORT
+                #define DRFLAC_DLL_EXPORT
+                #define DRFLAC_DLL_PRIVATE static
+            #endif
+        #endif
+
+        #if defined(DR_FLAC_IMPLEMENTATION) || defined(DRFLAC_IMPLEMENTATION)
+            #define DRFLAC_API  DRFLAC_DLL_EXPORT
+        #else
+            #define DRFLAC_API  DRFLAC_DLL_IMPORT
+        #endif
+        #define DRFLAC_PRIVATE DRFLAC_DLL_PRIVATE
+    #else
+        #define DRFLAC_API extern
+        #define DRFLAC_PRIVATE static
+    #endif
+#endif
 
 #if defined(_MSC_VER) && _MSC_VER >= 1700   /* Visual Studio 2012 */
     #define DRFLAC_DEPRECATED       __declspec(deprecated)
@@ -268,17 +316,15 @@ typedef drflac_uint32    drflac_bool32;
     #define DRFLAC_DEPRECATED
 #endif
 
+DRFLAC_API void drflac_version(drflac_uint32* pMajor, drflac_uint32* pMinor, drflac_uint32* pRevision);
+DRFLAC_API const char* drflac_version_string();
+
 /*
-As data is read from the client it is placed into an internal buffer for fast access. This controls the
-size of that buffer. Larger values means more speed, but also more memory. In my testing there is diminishing
-returns after about 4KB, but you can fiddle with this to suit your own needs. Must be a multiple of 8.
+As data is read from the client it is placed into an internal buffer for fast access. This controls the size of that buffer. Larger values means more speed,
+but also more memory. In my testing there is diminishing returns after about 4KB, but you can fiddle with this to suit your own needs. Must be a multiple of 8.
 */
 #ifndef DR_FLAC_BUFFER_SIZE
 #define DR_FLAC_BUFFER_SIZE   4096
-#endif
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 /* Check if we can enable 64-bit optimizations. */
@@ -436,40 +482,77 @@ typedef struct
 /*
 Callback for when data needs to be read from the client.
 
-pUserData   [in]  The user data that was passed to drflac_open() and family.
-pBufferOut  [out] The output buffer.
-bytesToRead [in]  The number of bytes to read.
 
-Returns the number of bytes actually read.
+Parameters
+----------
+pUserData (in)
+    The user data that was passed to drflac_open() and family.
 
-A return value of less than bytesToRead indicates the end of the stream. Do _not_ return from this callback until
-either the entire bytesToRead is filled or you have reached the end of the stream.
+pBufferOut (out)
+    The output buffer.
+
+bytesToRead (in)
+    The number of bytes to read.
+
+
+Return Value
+------------
+The number of bytes actually read.
+
+
+Remarks
+-------
+A return value of less than bytesToRead indicates the end of the stream. Do _not_ return from this callback until either the entire bytesToRead is filled or
+you have reached the end of the stream.
 */
 typedef size_t (* drflac_read_proc)(void* pUserData, void* pBufferOut, size_t bytesToRead);
 
 /*
 Callback for when data needs to be seeked.
 
-pUserData [in] The user data that was passed to drflac_open() and family.
-offset    [in] The number of bytes to move, relative to the origin. Will never be negative.
-origin    [in] The origin of the seek - the current position or the start of the stream.
 
-Returns whether or not the seek was successful.
+Parameters
+----------
+pUserData (in)
+    The user data that was passed to drflac_open() and family.
 
-The offset will never be negative. Whether or not it is relative to the beginning or current position is determined
-by the "origin" parameter which will be either drflac_seek_origin_start or drflac_seek_origin_current.
+offset (in)
+    The number of bytes to move, relative to the origin. Will never be negative.
 
-When seeking to a PCM frame using drflac_seek_to_pcm_frame(), dr_flac may call this with an offset beyond the end of
-the FLAC stream. This needs to be detected and handled by returning DRFLAC_FALSE.
+origin (in)
+    The origin of the seek - the current position or the start of the stream.
+
+
+Return Value
+------------
+Whether or not the seek was successful.
+
+
+Remarks
+-------
+The offset will never be negative. Whether or not it is relative to the beginning or current position is determined by the "origin" parameter which will be
+either drflac_seek_origin_start or drflac_seek_origin_current.
+
+When seeking to a PCM frame using drflac_seek_to_pcm_frame(), dr_flac may call this with an offset beyond the end of the FLAC stream. This needs to be detected
+and handled by returning DRFLAC_FALSE.
 */
 typedef drflac_bool32 (* drflac_seek_proc)(void* pUserData, int offset, drflac_seek_origin origin);
 
 /*
 Callback for when a metadata block is read.
 
-pUserData [in] The user data that was passed to drflac_open() and family.
-pMetadata [in] A pointer to a structure containing the data of the metadata block.
 
+Parameters
+----------
+pUserData (in)
+    The user data that was passed to drflac_open() and family.
+
+pMetadata (in)
+    A pointer to a structure containing the data of the metadata block.
+
+
+Remarks
+-------
 Use pMetadata->type to determine which metadata block is being handled and how to read the data.
 */
 typedef void (* drflac_meta_proc)(void* pUserData, drflac_metadata* pMetadata);
@@ -676,135 +759,292 @@ typedef struct
     drflac_uint8 pExtraData[1];
 } drflac;
 
+
 /*
 Opens a FLAC decoder.
 
-onRead               [in]           The function to call when data needs to be read from the client.
-onSeek               [in]           The function to call when the read position of the client data needs to move.
-pUserData            [in, optional] A pointer to application defined data that will be passed to onRead and onSeek.
-pAllocationCallbacks [in, optional] A pointer to application defined callbacks for managing memory allocations.
 
+Parameters
+----------
+onRead (in)
+    The function to call when data needs to be read from the client.
+
+onSeek (in)
+    The function to call when the read position of the client data needs to move.
+
+pUserData (in, optional)
+    A pointer to application defined data that will be passed to onRead and onSeek.
+
+pAllocationCallbacks (in, optional)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Return Value
+------------
 Returns a pointer to an object representing the decoder.
 
-Close the decoder with drflac_close().
 
-pAllocationCallbacks can be NULL in which case it will use DRFLAC_MALLOC, DRFLAC_REALLOC and DRFLAC_FREE.
+Remarks
+-------
+Close the decoder with `drflac_close()`.
 
-This function will automatically detect whether or not you are attempting to open a native or Ogg encapsulated
-FLAC, both of which should work seamlessly without any manual intervention. Ogg encapsulation also works with
-multiplexed streams which basically means it can play FLAC encoded audio tracks in videos.
+`pAllocationCallbacks` can be NULL in which case it will use `DRFLAC_MALLOC`, `DRFLAC_REALLOC` and `DRFLAC_FREE`.
 
-This is the lowest level function for opening a FLAC stream. You can also use drflac_open_file() and drflac_open_memory()
-to open the stream from a file or from a block of memory respectively.
+This function will automatically detect whether or not you are attempting to open a native or Ogg encapsulated FLAC, both of which should work seamlessly
+without any manual intervention. Ogg encapsulation also works with multiplexed streams which basically means it can play FLAC encoded audio tracks in videos.
 
-The STREAMINFO block must be present for this to succeed. Use drflac_open_relaxed() to open a FLAC stream where
-the header may not be present.
+This is the lowest level function for opening a FLAC stream. You can also use `drflac_open_file()` and `drflac_open_memory()` to open the stream from a file or
+from a block of memory respectively.
 
-See also: drflac_open_file(), drflac_open_memory(), drflac_open_with_metadata(), drflac_close()
+The STREAMINFO block must be present for this to succeed. Use `drflac_open_relaxed()` to open a FLAC stream where the header may not be present.
+
+
+Seek Also
+---------
+drflac_open_file()
+drflac_open_memory()
+drflac_open_with_metadata()
+drflac_close()
 */
-drflac* drflac_open(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
+Opens a FLAC stream with relaxed validation of the header block.
+
+
+Parameters
+----------
+onRead (in)
+    The function to call when data needs to be read from the client.
+
+onSeek (in)
+    The function to call when the read position of the client data needs to move.
+
+container (in)
+    Whether or not the FLAC stream is encapsulated using standard FLAC encapsulation or Ogg encapsulation.
+
+pUserData (in, optional)
+    A pointer to application defined data that will be passed to onRead and onSeek.
+
+pAllocationCallbacks (in, optional)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Return Value
+------------
+A pointer to an object representing the decoder.
+
+
+Remarks
+-------
 The same as drflac_open(), except attempts to open the stream even when a header block is not present.
 
-Because the header is not necessarily available, the caller must explicitly define the container (Native or Ogg). Do
-not set this to drflac_container_unknown - that is for internal use only.
+Because the header is not necessarily available, the caller must explicitly define the container (Native or Ogg). Do not set this to `drflac_container_unknown`
+as that is for internal use only.
 
-Opening in relaxed mode will continue reading data from onRead until it finds a valid frame. If a frame is never
-found it will continue forever. To abort, force your onRead callback to return 0, which dr_flac will use as an
-indicator that the end of the stream was found.
+Opening in relaxed mode will continue reading data from onRead until it finds a valid frame. If a frame is never found it will continue forever. To abort,
+force your `onRead` callback to return 0, which dr_flac will use as an indicator that the end of the stream was found.
 */
-drflac* drflac_open_relaxed(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_container container, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_relaxed(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_container container, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Opens a FLAC decoder and notifies the caller of the metadata chunks (album art, etc.).
 
-onRead               [in]           The function to call when data needs to be read from the client.
-onSeek               [in]           The function to call when the read position of the client data needs to move.
-onMeta               [in]           The function to call for every metadata block.
-pUserData            [in, optional] A pointer to application defined data that will be passed to onRead, onSeek and onMeta.
-pAllocationCallbacks [in, optional] A pointer to application defined callbacks for managing memory allocations.
 
-Returns a pointer to an object representing the decoder.
+Parameters
+----------
+onRead (in)
+    The function to call when data needs to be read from the client.
 
-Close the decoder with drflac_close().
+onSeek (in)
+    The function to call when the read position of the client data needs to move.
 
-pAllocationCallbacks can be NULL in which case it will use DRFLAC_MALLOC, DRFLAC_REALLOC and DRFLAC_FREE.
+onMeta (in)
+    The function to call for every metadata block.
 
-This is slower than drflac_open(), so avoid this one if you don't need metadata. Internally, this will allocate and free
-memory on the heap for every metadata block except for STREAMINFO and PADDING blocks.
+pUserData (in, optional)
+    A pointer to application defined data that will be passed to onRead, onSeek and onMeta.
 
-The caller is notified of the metadata via the onMeta callback. All metadata blocks will be handled before the function
-returns.
+pAllocationCallbacks (in, optional)
+    A pointer to application defined callbacks for managing memory allocations.
 
-The STREAMINFO block must be present for this to succeed. Use drflac_open_with_metadata_relaxed() to open a FLAC
-stream where the header may not be present.
 
-Note that this will behave inconsistently with drflac_open() if the stream is an Ogg encapsulated stream and a metadata
-block is corrupted. This is due to the way the Ogg stream recovers from corrupted pages. When drflac_open_with_metadata()
-is being used, the open routine will try to read the contents of the metadata block, whereas drflac_open() will simply
-seek past it (for the sake of efficiency). This inconsistency can result in different samples being returned depending on
-whether or not the stream is being opened with metadata.
+Return Value
+------------
+A pointer to an object representing the decoder.
 
-See also: drflac_open_file_with_metadata(), drflac_open_memory_with_metadata(), drflac_open(), drflac_close()
+
+Remarks
+-------
+Close the decoder with `drflac_close()`.
+
+`pAllocationCallbacks` can be NULL in which case it will use `DRFLAC_MALLOC`, `DRFLAC_REALLOC` and `DRFLAC_FREE`.
+
+This is slower than `drflac_open()`, so avoid this one if you don't need metadata. Internally, this will allocate and free memory on the heap for every
+metadata block except for STREAMINFO and PADDING blocks.
+
+The caller is notified of the metadata via the `onMeta` callback. All metadata blocks will be handled before the function returns.
+
+The STREAMINFO block must be present for this to succeed. Use `drflac_open_with_metadata_relaxed()` to open a FLAC stream where the header may not be present.
+
+Note that this will behave inconsistently with `drflac_open()` if the stream is an Ogg encapsulated stream and a metadata block is corrupted. This is due to
+the way the Ogg stream recovers from corrupted pages. When `drflac_open_with_metadata()` is being used, the open routine will try to read the contents of the
+metadata block, whereas `drflac_open()` will simply seek past it (for the sake of efficiency). This inconsistency can result in different samples being
+returned depending on whether or not the stream is being opened with metadata.
+
+
+Seek Also
+---------
+drflac_open_file_with_metadata()
+drflac_open_memory_with_metadata()
+drflac_open()
+drflac_close()
 */
-drflac* drflac_open_with_metadata(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_with_metadata(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 The same as drflac_open_with_metadata(), except attempts to open the stream even when a header block is not present.
 
-See also: drflac_open_with_metadata(), drflac_open_relaxed()
+See Also
+--------
+drflac_open_with_metadata()
+drflac_open_relaxed()
 */
-drflac* drflac_open_with_metadata_relaxed(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_meta_proc onMeta, drflac_container container, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_with_metadata_relaxed(drflac_read_proc onRead, drflac_seek_proc onSeek, drflac_meta_proc onMeta, drflac_container container, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Closes the given FLAC decoder.
 
-pFlac [in] The decoder to close.
 
+Parameters
+----------
+pFlac (in)
+    The decoder to close.
+
+
+Remarks
+-------
 This will destroy the decoder object.
+
+
+See Also
+--------
+drflac_open()
+drflac_open_with_metadata()
+drflac_open_file()
+drflac_open_file_w()
+drflac_open_file_with_metadata()
+drflac_open_file_with_metadata_w()
+drflac_open_memory()
+drflac_open_memory_with_metadata()
 */
-void drflac_close(drflac* pFlac);
+DRFLAC_API void drflac_close(drflac* pFlac);
 
 
 /*
 Reads sample data from the given FLAC decoder, output as interleaved signed 32-bit PCM.
 
-pFlac        [in]            The decoder.
-framesToRead [in]            The number of PCM frames to read.
-pBufferOut   [out, optional] A pointer to the buffer that will receive the decoded samples.
 
-Returns the number of PCM frames actually read.
+Parameters
+----------
+pFlac (in)
+    The decoder.
 
-pBufferOut can be null, in which case the call will act as a seek, and the return value will be the number of frames
-seeked.
+framesToRead (in)
+    The number of PCM frames to read.
+
+pBufferOut (out, optional)
+    A pointer to the buffer that will receive the decoded samples.
+
+
+Return Value
+------------
+Returns the number of PCM frames actually read. If the return value is less than `framesToRead` it has reached the end.
+
+
+Remarks
+-------
+pBufferOut can be null, in which case the call will act as a seek, and the return value will be the number of frames seeked.
 */
-drflac_uint64 drflac_read_pcm_frames_s32(drflac* pFlac, drflac_uint64 framesToRead, drflac_int32* pBufferOut);
+DRFLAC_API drflac_uint64 drflac_read_pcm_frames_s32(drflac* pFlac, drflac_uint64 framesToRead, drflac_int32* pBufferOut);
+
 
 /*
-Same as drflac_read_pcm_frames_s32(), except outputs samples as 16-bit integer PCM rather than 32-bit.
+Reads sample data from the given FLAC decoder, output as interleaved signed 16-bit PCM.
+
+
+Parameters
+----------
+pFlac (in)
+    The decoder.
+
+framesToRead (in)
+    The number of PCM frames to read.
+
+pBufferOut (out, optional)
+    A pointer to the buffer that will receive the decoded samples.
+
+
+Return Value
+------------
+Returns the number of PCM frames actually read. If the return value is less than `framesToRead` it has reached the end.
+
+
+Remarks
+-------
+pBufferOut can be null, in which case the call will act as a seek, and the return value will be the number of frames seeked.
 
 Note that this is lossy for streams where the bits per sample is larger than 16.
 */
-drflac_uint64 drflac_read_pcm_frames_s16(drflac* pFlac, drflac_uint64 framesToRead, drflac_int16* pBufferOut);
+DRFLAC_API drflac_uint64 drflac_read_pcm_frames_s16(drflac* pFlac, drflac_uint64 framesToRead, drflac_int16* pBufferOut);
 
 /*
-Same as drflac_read_pcm_frames_s32(), except outputs samples as 32-bit floating-point PCM.
+Reads sample data from the given FLAC decoder, output as interleaved 32-bit floating point PCM.
 
-Note that this should be considered lossy due to the nature of floating point numbers not being able to exactly
-represent every possible number.
+
+Parameters
+----------
+pFlac (in)
+    The decoder.
+
+framesToRead (in)
+    The number of PCM frames to read.
+
+pBufferOut (out, optional)
+    A pointer to the buffer that will receive the decoded samples.
+
+
+Return Value
+------------
+Returns the number of PCM frames actually read. If the return value is less than `framesToRead` it has reached the end.
+
+
+Remarks
+-------
+pBufferOut can be null, in which case the call will act as a seek, and the return value will be the number of frames seeked.
+
+Note that this should be considered lossy due to the nature of floating point numbers not being able to exactly represent every possible number.
 */
-drflac_uint64 drflac_read_pcm_frames_f32(drflac* pFlac, drflac_uint64 framesToRead, float* pBufferOut);
+DRFLAC_API drflac_uint64 drflac_read_pcm_frames_f32(drflac* pFlac, drflac_uint64 framesToRead, float* pBufferOut);
 
 /*
 Seeks to the PCM frame at the given index.
 
-pFlac         [in] The decoder.
-pcmFrameIndex [in] The index of the PCM frame to seek to. See notes below.
 
-Returns DRFLAC_TRUE if successful; DRFLAC_FALSE otherwise.
+Parameters
+----------
+pFlac (in)
+    The decoder.
+
+pcmFrameIndex (in)
+    The index of the PCM frame to seek to. See notes below.
+
+
+Return Value
+-------------
+`DRFLAC_TRUE` if successful; `DRFLAC_FALSE` otherwise.
 */
-drflac_bool32 drflac_seek_to_pcm_frame(drflac* pFlac, drflac_uint64 pcmFrameIndex);
+DRFLAC_API drflac_bool32 drflac_seek_to_pcm_frame(drflac* pFlac, drflac_uint64 pcmFrameIndex);
 
 
 
@@ -812,43 +1052,145 @@ drflac_bool32 drflac_seek_to_pcm_frame(drflac* pFlac, drflac_uint64 pcmFrameInde
 /*
 Opens a FLAC decoder from the file at the given path.
 
-filename             [in]           The path of the file to open, either absolute or relative to the current directory.
-pAllocationCallbacks [in, optional] A pointer to application defined callbacks for managing memory allocations.
 
-Returns a pointer to an object representing the decoder.
+Parameters
+----------
+pFileName (in)
+    The path of the file to open, either absolute or relative to the current directory.
 
+pAllocationCallbacks (in, optional)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Return Value
+------------
+A pointer to an object representing the decoder.
+
+
+Remarks
+-------
 Close the decoder with drflac_close().
 
-This will hold a handle to the file until the decoder is closed with drflac_close(). Some platforms will restrict the
-number of files a process can have open at any given time, so keep this mind if you have many decoders open at the
-same time.
 
-See also: drflac_open(), drflac_open_file_with_metadata(), drflac_close()
+Remarks
+-------
+This will hold a handle to the file until the decoder is closed with drflac_close(). Some platforms will restrict the number of files a process can have open
+at any given time, so keep this mind if you have many decoders open at the same time.
+
+
+See Also
+--------
+drflac_open_file_with_metadata()
+drflac_open()
+drflac_close()
 */
-drflac* drflac_open_file(const char* filename, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_file(const char* pFileName, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_file_w(const wchar_t* pFileName, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Opens a FLAC decoder from the file at the given path and notifies the caller of the metadata chunks (album art, etc.)
 
+
+Parameters
+----------
+pFileName (in)
+    The path of the file to open, either absolute or relative to the current directory.
+
+pAllocationCallbacks (in, optional)
+    A pointer to application defined callbacks for managing memory allocations.
+
+onMeta (in)
+    The callback to fire for each metadata block.
+
+pUserData (in)
+    A pointer to the user data to pass to the metadata callback.
+
+pAllocationCallbacks (in)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Remarks
+-------
 Look at the documentation for drflac_open_with_metadata() for more information on how metadata is handled.
+
+
+See Also
+--------
+drflac_open_with_metadata()
+drflac_open()
+drflac_close()
 */
-drflac* drflac_open_file_with_metadata(const char* filename, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_file_with_metadata(const char* pFileName, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_file_with_metadata_w(const wchar_t* pFileName, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 #endif
 
 /*
 Opens a FLAC decoder from a pre-allocated block of memory
 
-This does not create a copy of the data. It is up to the application to ensure the buffer remains valid for
-the lifetime of the decoder.
+
+Parameters
+----------
+pData (in)
+    A pointer to the raw encoded FLAC data.
+
+dataSize (in)
+    The size in bytes of `data`.
+
+pAllocationCallbacks (in)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Return Value
+------------
+A pointer to an object representing the decoder.
+
+
+Remarks
+-------
+This does not create a copy of the data. It is up to the application to ensure the buffer remains valid for the lifetime of the decoder.
+
+
+See Also
+--------
+drflac_open()
+drflac_close()
 */
-drflac* drflac_open_memory(const void* data, size_t dataSize, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_memory(const void* pData, size_t dataSize, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Opens a FLAC decoder from a pre-allocated block of memory and notifies the caller of the metadata chunks (album art, etc.)
 
+
+Parameters
+----------
+pData (in)
+    A pointer to the raw encoded FLAC data.
+
+dataSize (in)
+    The size in bytes of `data`.
+
+onMeta (in)
+    The callback to fire for each metadata block.
+
+pUserData (in)
+    A pointer to the user data to pass to the metadata callback.
+
+pAllocationCallbacks (in)
+    A pointer to application defined callbacks for managing memory allocations.
+
+
+Remarks
+-------
 Look at the documentation for drflac_open_with_metadata() for more information on how metadata is handled.
+
+
+See Also
+-------
+drflac_open_with_metadata()
+drflac_open()
+drflac_close()
 */
-drflac* drflac_open_memory_with_metadata(const void* data, size_t dataSize, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac* drflac_open_memory_with_metadata(const void* pData, size_t dataSize, drflac_meta_proc onMeta, void* pUserData, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 
 
@@ -866,40 +1208,40 @@ read samples into a dynamically sized buffer on the heap until no samples are le
 
 Do not call this function on a broadcast type of stream (like internet radio streams and whatnot).
 */
-drflac_int32* drflac_open_and_read_pcm_frames_s32(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int32* drflac_open_and_read_pcm_frames_s32(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_and_read_pcm_frames_s32(), except returns signed 16-bit integer samples. */
-drflac_int16* drflac_open_and_read_pcm_frames_s16(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int16* drflac_open_and_read_pcm_frames_s16(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_and_read_pcm_frames_s32(), except returns 32-bit floating-point samples. */
-float* drflac_open_and_read_pcm_frames_f32(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API float* drflac_open_and_read_pcm_frames_f32(drflac_read_proc onRead, drflac_seek_proc onSeek, void* pUserData, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 #ifndef DR_FLAC_NO_STDIO
 /* Same as drflac_open_and_read_pcm_frames_s32() except opens the decoder from a file. */
-drflac_int32* drflac_open_file_and_read_pcm_frames_s32(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int32* drflac_open_file_and_read_pcm_frames_s32(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_file_and_read_pcm_frames_s32(), except returns signed 16-bit integer samples. */
-drflac_int16* drflac_open_file_and_read_pcm_frames_s16(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int16* drflac_open_file_and_read_pcm_frames_s16(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_file_and_read_pcm_frames_s32(), except returns 32-bit floating-point samples. */
-float* drflac_open_file_and_read_pcm_frames_f32(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API float* drflac_open_file_and_read_pcm_frames_f32(const char* filename, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 #endif
 
 /* Same as drflac_open_and_read_pcm_frames_s32() except opens the decoder from a block of memory. */
-drflac_int32* drflac_open_memory_and_read_pcm_frames_s32(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int32* drflac_open_memory_and_read_pcm_frames_s32(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_memory_and_read_pcm_frames_s32(), except returns signed 16-bit integer samples. */
-drflac_int16* drflac_open_memory_and_read_pcm_frames_s16(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API drflac_int16* drflac_open_memory_and_read_pcm_frames_s16(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /* Same as drflac_open_memory_and_read_pcm_frames_s32(), except returns 32-bit floating-point samples. */
-float* drflac_open_memory_and_read_pcm_frames_f32(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API float* drflac_open_memory_and_read_pcm_frames_f32(const void* data, size_t dataSize, unsigned int* channels, unsigned int* sampleRate, drflac_uint64* totalPCMFrameCount, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 /*
 Frees memory that was allocated internally by dr_flac.
 
 Set pAllocationCallbacks to the same object that was passed to drflac_open_*_and_read_pcm_frames_*(). If you originally passed in NULL, pass in NULL for this.
 */
-void drflac_free(void* p, const drflac_allocation_callbacks* pAllocationCallbacks);
+DRFLAC_API void drflac_free(void* p, const drflac_allocation_callbacks* pAllocationCallbacks);
 
 
 /* Structure representing an iterator for vorbis comments in a VORBIS_COMMENT metadata block. */
@@ -913,13 +1255,13 @@ typedef struct
 Initializes a vorbis comment iterator. This can be used for iterating over the vorbis comments in a VORBIS_COMMENT
 metadata block.
 */
-void drflac_init_vorbis_comment_iterator(drflac_vorbis_comment_iterator* pIter, drflac_uint32 commentCount, const void* pComments);
+DRFLAC_API void drflac_init_vorbis_comment_iterator(drflac_vorbis_comment_iterator* pIter, drflac_uint32 commentCount, const void* pComments);
 
 /*
 Goes to the next vorbis comment in the given iterator. If null is returned it means there are no more comments. The
 returned string is NOT null terminated.
 */
-const char* drflac_next_vorbis_comment(drflac_vorbis_comment_iterator* pIter, drflac_uint32* pCommentLengthOut);
+DRFLAC_API const char* drflac_next_vorbis_comment(drflac_vorbis_comment_iterator* pIter, drflac_uint32* pCommentLengthOut);
 
 
 /* Structure representing an iterator for cuesheet tracks in a CUESHEET metadata block. */
@@ -954,10 +1296,10 @@ typedef struct
 Initializes a cuesheet track iterator. This can be used for iterating over the cuesheet tracks in a CUESHEET metadata
 block.
 */
-void drflac_init_cuesheet_track_iterator(drflac_cuesheet_track_iterator* pIter, drflac_uint32 trackCount, const void* pTrackData);
+DRFLAC_API void drflac_init_cuesheet_track_iterator(drflac_cuesheet_track_iterator* pIter, drflac_uint32 trackCount, const void* pTrackData);
 
 /* Goes to the next cuesheet track in the given iterator. If DRFLAC_FALSE is returned it means there are no more comments. */
-drflac_bool32 drflac_next_cuesheet_track(drflac_cuesheet_track_iterator* pIter, drflac_cuesheet_track* pCuesheetTrack);
+DRFLAC_API drflac_bool32 drflac_next_cuesheet_track(drflac_cuesheet_track_iterator* pIter, drflac_cuesheet_track* pCuesheetTrack);
 
 
 #ifdef __cplusplus
@@ -965,10 +1307,42 @@ drflac_bool32 drflac_next_cuesheet_track(drflac_cuesheet_track_iterator* pIter, 
 #endif
 #endif  /* dr_flac_h */
 
-
 /*
 REVISION HISTORY
 ================
+v0.12.13 - 2020-05-16
+  - Add compile-time and run-time version querying.
+    - DRFLAC_VERSION_MINOR
+    - DRFLAC_VERSION_MAJOR
+    - DRFLAC_VERSION_REVISION
+    - DRFLAC_VERSION_STRING
+    - drflac_version()
+    - drflac_version_string()
+
+v0.12.12 - 2020-04-30
+  - Fix compilation errors with VC6.
+
+v0.12.11 - 2020-04-19
+  - Fix some pedantic warnings.
+  - Fix some undefined behaviour warnings.
+
+v0.12.10 - 2020-04-10
+  - Fix some bugs when trying to seek with an invalid seek table.
+
+v0.12.9 - 2020-04-05
+  - Fix warnings.
+
+v0.12.8 - 2020-04-04
+  - Add drflac_open_file_w() and drflac_open_file_with_metadata_w().
+  - Fix some static analysis warnings.
+  - Minor documentation updates.
+
+v0.12.7 - 2020-03-14
+  - Fix compilation errors with VC6.
+
+v0.12.6 - 2020-03-07
+  - Fix compilation error with Visual Studio .NET 2003.
+
 v0.12.5 - 2020-01-30
   - Silence some static analysis warnings.
 

@@ -34,7 +34,7 @@ void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 
 	uint32_t buffer;
 	alGenBuffers(1, &buffer);
-	alBufferData(buffer, (config.outputChannels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sampleData, totalPCMFrameCount, config.outputSampleRate);
+	alBufferData(buffer, (config.channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sampleData, totalPCMFrameCount, config.sampleRate);
 
 	Audio::CheckAl(alGetError());
 

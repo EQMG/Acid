@@ -267,6 +267,7 @@ set(_temp_acid_third_party_headers
 		third_party/dr_libs/dr_wav.h
 		third_party/fastnoise/FastNoise.h
 		third_party/libjpgd/jpgd.h
+		third_party/libjpgd/jpgd_idct.h
 		third_party/libspng/spng.h
 		third_party/miniz/miniz.h
 		third_party/msdf/msdf.h
