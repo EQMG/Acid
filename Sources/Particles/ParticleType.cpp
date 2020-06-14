@@ -49,17 +49,15 @@ void ParticleType::Update(const std::vector<Particle> &particles) {
 	maxInstances = MAX_INSTANCES;
 	this->instances = 0;
 
-	if (particles.empty()) {
+	if (particles.empty())
 		return;
-	}
 
 	Instance *instances;
 	instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &particle : particles) {
-		if (this->instances >= maxInstances) {
+		if (this->instances >= maxInstances)
 			break;
-		}
 
 		if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale())) {
 			continue;
@@ -89,8 +87,7 @@ void ParticleType::Update(const std::vector<Particle> &particles) {
 }
 
 bool ParticleType::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline, UniformHandler &uniformScene) {
-	if (instances == 0)
-		return false;
+	if (instances == 0) return false;
 
 	// Updates descriptors.
 	descriptorSet.Push("UniformScene", uniformScene);

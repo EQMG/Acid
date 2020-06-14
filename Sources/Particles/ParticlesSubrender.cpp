@@ -21,8 +21,7 @@ void ParticlesSubrender::Render(const CommandBuffer &commandBuffer) {
 
 	auto particles = Particles::Get()->GetParticles();
 
-	for (auto &[type, typeParticles] : particles) {
+	for (auto &[type, typeParticles] : particles)
 		type->CmdRender(commandBuffer, pipeline, uniformScene);
-	}
 }
 }

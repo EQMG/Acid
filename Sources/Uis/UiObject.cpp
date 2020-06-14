@@ -63,26 +63,22 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	}
 
 	if (selected) {
-		if (cursorHover) {
+		if (cursorHover)
 			cursorSelect = this;
-		}
 
 		for (auto button : EnumIterator<MouseButton>()) {
-			if (Uis::Get()->WasDown(button)) {
+			if (Uis::Get()->WasDown(button))
 				onClick(button);
-			}
 		}
 	}
 
 	// Adds this object to the list if it is visible.
-	if (screenAlpha > 0.0f) {
+	if (screenAlpha > 0.0f)
 		list.emplace_back(this);
-	}
 
 	// Update all children objects.
-	for (auto &child : children) {
+	for (auto &child : children)
 		child->Update(viewMatrix, list, cursorSelect);
-	}
 }
 
 void UiObject::UpdateObject() {
@@ -93,9 +89,8 @@ void UiObject::CancelEvent(MouseButton button) const {
 }
 
 void UiObject::AddChild(UiObject *child) {
-	if (child->parent || this == child) {
+	if (child->parent || this == child)
 		throw std::runtime_error("Adding child to UI object with an existing parent!");
-	}
 	children.emplace_back(child);
 	child->parent = this;
 }

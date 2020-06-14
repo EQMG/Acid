@@ -66,9 +66,8 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 		OFStream os(filename);
 		node->WriteStream(os, *formatter);
 	} else {*/ // if (std::filesystem::exists(filename))
-		if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
+		if (auto parentPath = filename.parent_path(); !parentPath.empty())
 			std::filesystem::create_directories(parentPath);
-		}
 
 		std::ofstream os(filename);
 		if (type == Type::Json)

@@ -121,10 +121,8 @@ void ShadowBox::UpdateLightViewMatrix() {
 	auto pitch = std::acos(Vector2f(lightDirection.x, lightDirection.z).Length());
 	lightViewMatrix = lightViewMatrix.Rotate(pitch, Vector3f::Right);
 	auto yaw = std::atan(lightDirection.x / lightDirection.z);
-
-	if (lightDirection.z > 0.0f) {
+	if (lightDirection.z > 0.0f)
 		yaw -= Maths::PI<float>;
-	}
 
 	lightViewMatrix = lightViewMatrix.Rotate(-yaw, Vector3f::Up);
 	lightViewMatrix = lightViewMatrix.Translate(centre);

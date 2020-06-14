@@ -10,8 +10,5 @@ public:
 	explicit BlitFilter(const Pipeline::Stage &pipelineStage);
 
 	void Render(const CommandBuffer &commandBuffer) override;
-
-private:
-	bool lastFilter;
 };
 }

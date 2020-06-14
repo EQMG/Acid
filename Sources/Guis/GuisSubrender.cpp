@@ -14,13 +14,11 @@ void GuisSubrender::Render(const CommandBuffer &commandBuffer) {
 	pipeline.BindPipeline(commandBuffer);
 
 	for (const auto &screenObject : Uis::Get()->GetObjects()) {
-		if (!screenObject->IsEnabled()) {
+		if (!screenObject->IsEnabled())
 			continue;
-		}
 
-		if (auto object = dynamic_cast<Gui *>(screenObject)) {
+		if (auto object = dynamic_cast<Gui *>(screenObject))
 			object->CmdRender(commandBuffer, pipeline);
-		}
 	}
 }
 }

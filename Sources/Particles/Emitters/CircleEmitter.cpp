@@ -21,10 +21,8 @@ Vector3f CircleEmitter::GeneratePosition() const {
 
 	auto a = Maths::Random(0.0f, 1.0f);
 	auto b = Maths::Random(0.0f, 1.0f);
-
-	if (a > b) {
+	if (a > b)
 		std::swap(a, b);
-	}
 
 	auto randX = b * std::cos(2.0f * Maths::PI<float> * (a / b));
 	auto randY = b * std::sin(2.0f * Maths::PI<float> * (a / b));

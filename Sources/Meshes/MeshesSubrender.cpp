@@ -23,14 +23,12 @@ void MeshesSubrender::Render(const CommandBuffer &commandBuffer) {
 	else if (sort == Sort::Back)
 		std::sort(meshes.begin(), meshes.end(), std::less<>());
 
-	for (const auto &mesh : meshes) {
+	for (const auto &mesh : meshes)
 		mesh->CmdRender(commandBuffer, uniformScene, GetStage());
-	}
 
 	// TODO: Split animated meshes into it's own subrender.
 	auto animatedMeshes = Scenes::Get()->GetStructure()->QueryComponents<AnimatedMesh>();
-	for (const auto &animatedMesh : animatedMeshes) {
+	for (const auto &animatedMesh : animatedMeshes)
 		animatedMesh->CmdRender(commandBuffer, uniformScene, GetStage());
-	}
 }
 }

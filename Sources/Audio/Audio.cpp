@@ -49,9 +49,7 @@ Audio::~Audio() {
 void Audio::Update() {
 	auto camera = Scenes::Get()->GetCamera();
 
-	if (!camera) {
-		return;
-	}
+	if (!camera) return;
 
 	// Listener gain.
 	alListenerf(AL_GAIN, GetGain(Type::Master));
@@ -92,9 +90,7 @@ std::string Audio::StringifyResultAl(int32_t result) {
 }
 
 void Audio::CheckAl(int32_t result) {
-	if (result == AL_NO_ERROR) {
-		return;
-	}
+	if (result == AL_NO_ERROR) return;
 
 	auto failure = StringifyResultAl(result);
 
@@ -103,13 +99,9 @@ void Audio::CheckAl(int32_t result) {
 }
 
 float Audio::GetGain(Type type) const {
-	auto it = gains.find(type);
-
-	if (it == gains.end()) {
-		return 1.0f;
-	}
-
-	return it->second;
+	if (auto it = gains.find(type); it != gains.end())
+		return it->second;
+	return 1.0f;
 }
 
 void Audio::SetGain(Type type, float volume) {

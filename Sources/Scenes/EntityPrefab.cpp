@@ -26,15 +26,12 @@ std::shared_ptr<EntityPrefab> EntityPrefab::Create(const std::filesystem::path &
 
 EntityPrefab::EntityPrefab(std::filesystem::path filename, bool load) :
 	filename(std::move(filename)) {
-	if (load) {
-		Load();
-	}
+	if (load)
+		EntityPrefab::Load();
 }
 
 void EntityPrefab::Load() {
-	if (filename.empty()) {
-		return;
-	}
+	if (filename.empty()) return;
 
 	file = std::make_unique<File>(filename, File::Type::Json);
 	file->Load();

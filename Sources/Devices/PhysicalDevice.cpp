@@ -19,10 +19,8 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	vkEnumeratePhysicalDevices(*instance, &physicalDeviceCount, physicalDevices.data());
 
 	physicalDevice = ChoosePhysicalDevice(physicalDevices);
-
-	if (!physicalDevice) {
+	if (!physicalDevice)
 		throw std::runtime_error("Vulkan runtime error, failed to find a suitable GPU");
-	}
 
 	vkGetPhysicalDeviceProperties(physicalDevice, &properties);
 	vkGetPhysicalDeviceFeatures(physicalDevice, &features);
@@ -39,14 +37,12 @@ VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysic
 	std::multimap<uint32_t, VkPhysicalDevice> rankedDevices;
 
 	// Iterates through all devices and rate their suitability.
-	for (const auto &device : devices) {
+	for (const auto &device : devices)
 		rankedDevices.emplace(ScorePhysicalDevice(device), device);
-	}
 
 	// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.
-	if (rankedDevices.rbegin()->first > 0) {
+	if (rankedDevices.rbegin()->first > 0)
 		return rankedDevices.rbegin()->second;
-	}
 
 	return nullptr;
 }
@@ -73,9 +69,8 @@ uint32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 		}
 
 		// Returns a score of 0 if this device is missing a required extension.
-		if (!extensionFound) {
+		if (!extensionFound)
 			return 0;
-		}
 	}
 
 	// Obtain the device features and properties of the current device being rateds.
@@ -89,9 +84,8 @@ uint32_t PhysicalDevice::ScorePhysicalDevice(const VkPhysicalDevice &device) {
 #endif
 
 	// Adds a large score boost for discrete GPUs (dedicated graphics cards).
-	if (physicalDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+	if (physicalDeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
 		score += 1000;
-	}
 
 	// Gives a higher score to devices with a higher maximum texture size.
 	score += physicalDeviceProperties.limits.maxImageDimension2D;
@@ -105,9 +99,8 @@ VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount() const {
 	auto counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
 
 	for (const auto &sampleFlag : STAGE_FLAG_BITS) {
-		if (counts & sampleFlag) {
+		if (counts & sampleFlag)
 			return sampleFlag;
-		}
 	}
 
 	return VK_SAMPLE_COUNT_1_BIT;
@@ -133,7 +126,6 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 	}
 
 	ss << " Physical Device: " << physicalDeviceProperties.deviceID;
-
 	switch (physicalDeviceProperties.vendorID) {
 	case 0x8086:
 		ss << " \"Intel\"";
@@ -156,11 +148,10 @@ void PhysicalDevice::LogVulkanDevice(const VkPhysicalDeviceProperties &physicalD
 		VK_VERSION_PATCH(physicalDeviceProperties.apiVersion)
 	};
 	ss << "API Version: " << supportedVersion[0] << "." << supportedVersion[1] << "." << supportedVersion[2] << '\n';
-	ss << "Extensions: ";
 
-	for (const auto &extension : extensionProperties) {
+	ss << "Extensions: ";
+	for (const auto &extension : extensionProperties)
 		ss << extension.extensionName << ", ";
-	}
 
 	ss << "\n\n";
 	Log::Out(ss.str());

@@ -22,14 +22,12 @@ Sound::Sound(const std::string &filename, const Audio::Type &type, bool begin, b
 	SetGain(gain);
 	SetPitch(pitch);
 
-	if (begin) {
+	if (begin)
 		Play(loop);
-	}
 
 	Audio::Get()->OnGain().Add([this](Audio::Type type, float volume) {
-		if (this->type == type) {
+		if (this->type == type)
 			SetGain(this->gain);
-		}
 	}, this);
 }
 
@@ -56,18 +54,16 @@ void Sound::Play(bool loop) {
 }
 
 void Sound::Pause() {
-	if (!IsPlaying()) {
+	if (!IsPlaying())
 		return;
-	}
 
 	alSourcePause(source);
 	Audio::CheckAl(alGetError());
 }
 
 void Sound::Resume() {
-	if (IsPlaying()) {
+	if (IsPlaying())
 		return;
-	}
 
 	alSourcePlay(source);
 	Audio::CheckAl(alGetError());
@@ -76,9 +72,8 @@ void Sound::Resume() {
 }
 
 void Sound::Stop() {
-	if (!IsPlaying()) {
+	if (!IsPlaying())
 		return;
-	}
 
 	alSourceStop(source);
 	Audio::CheckAl(alGetError());

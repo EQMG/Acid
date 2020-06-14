@@ -16,7 +16,7 @@ namespace acid {
  */
 class ACID_EXPORT DescriptorsHandler {
 public:
-	DescriptorsHandler();
+	DescriptorsHandler() = default;
 	explicit DescriptorsHandler(const Pipeline &pipeline);
 
 	template<typename T>

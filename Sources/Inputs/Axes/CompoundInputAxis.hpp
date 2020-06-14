@@ -22,7 +22,7 @@ public:
 	 * @param args The axes on the being added.
 	 */
 	template<typename... Args>
-	CompoundInputAxis(Args &&... args) {
+	explicit CompoundInputAxis(Args &&... args) {
 		axes.reserve(sizeof...(Args));
 		(axes.emplace_back(std::forward<Args>(args)), ...);
 		ConnectAxes();

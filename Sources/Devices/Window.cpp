@@ -32,16 +32,14 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 }
 
 void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos) {
-	if (Window::Get()->fullscreen) 
-		return;
+	if (Window::Get()->fullscreen) return;
+	
 	Window::Get()->position = {xpos, ypos};
 	Window::Get()->onPosition(Window::Get()->position);
 }
 
 void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height) {
-	if (width <= 0 || height <= 0) {
-		return;
-	}
+	if (width <= 0 || height <= 0) return;
 
 	if (Window::Get()->fullscreen) {
 		Window::Get()->fullscreenSize = {width, height};
@@ -85,14 +83,12 @@ Window::Window() :
 	glfwSetErrorCallback(CallbackError);
 
 	// Initialize the GLFW library.
-	if (glfwInit() == GLFW_FALSE) {
+	if (glfwInit() == GLFW_FALSE)
 		throw std::runtime_error("GLFW failed to initialize");
-	}
 
 	// Checks Vulkan support on GLFW.
-	if (glfwVulkanSupported() == GLFW_FALSE) {
+	if (glfwVulkanSupported() == GLFW_FALSE)
 		throw std::runtime_error("GLFW failed to find Vulkan support");
-	}
 
 	// Set the monitor callback
 	glfwSetMonitorCallback(CallbackMonitor);
@@ -110,9 +106,8 @@ Window::Window() :
 	int32_t monitorCount;
 	auto monitors = glfwGetMonitors(&monitorCount);
 
-	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++) {
+	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 		this->monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
-	}
 
 	auto videoMode = this->monitors[0]->GetVideoMode();
 
@@ -139,9 +134,8 @@ Window::Window() :
 	glfwSetWindowPos(window, position.x, position.y);
 
 	// Sets fullscreen if enabled.
-	if (fullscreen) {
+	if (fullscreen)
 		SetFullscreen(true);
-	}
 
 	// Shows the glfw window.
 	glfwShowWindow(window);
@@ -171,14 +165,18 @@ void Window::Update() {
 }
 
 void Window::SetSize(const Vector2i &size) {
-	this->size.x = size.x == -1 ? size.x : size.x;
-	this->size.y = size.y == -1 ? size.y : size.y;
+	if (size.x != -1)
+		this->size.x = size.x;
+	if (size.y != -1)
+		this->size.y = size.y;
 	glfwSetWindowSize(window, size.x, size.y);
 }
 
 void Window::SetPosition(const Vector2i &position) {
-	this->position.x = position.x == -1 ? position.x : position.x;
-	this->position.y = position.y == -1 ? position.y : position.y;
+	if (position.x != -1)
+		this->position.x = position.x;
+	if (position.x != -1)
+		this->position.y = position.y;
 	glfwSetWindowPos(window, position.x, position.y);
 }
 
@@ -266,18 +264,14 @@ const Monitor *Window::GetPrimaryMonitor() const {
 }
 
 int32_t OverlappingArea(Vector2i l1, Vector2i r1, Vector2i l2, Vector2i r2) {
-	int area1 = abs(l1.x - r1.x) *
-		abs(l1.y - r1.y);
+	int area1 = std::abs(l1.x - r1.x) * std::abs(l1.y - r1.y);
 
-	int area2 = abs(l2.x - r2.x) *
-		abs(l2.y - r2.y);
+	int area2 = std::abs(l2.x - r2.x) * std::abs(l2.y - r2.y);
 
-	int areaI = (std::min(r1.x, r2.x) -
-		std::max(l1.x, l2.x)) *
-		(std::min(r1.y, r2.y) -
-			std::max(l1.y, l2.y));
+	int areaI = (std::min(r1.x, r2.x) - std::max(l1.x, l2.x)) *
+		(std::min(r1.y, r2.y) - std::max(l1.y, l2.y));
 
-	return (area1 + area2 - areaI);
+	return area1 + area2 - areaI;
 }
 
 const Monitor *Window::GetCurrentMonitor() const {
@@ -296,9 +290,8 @@ const Monitor *Window::GetCurrentMonitor() const {
 			position, position + size), monitor.get());
 	}
 
-	if (rankedMonitor.begin()->first > 0) {
+	if (rankedMonitor.begin()->first > 0)
 		return rankedMonitor.begin()->second;
-	}
 
 	return nullptr;
 }
@@ -333,9 +326,7 @@ std::string Window::StringifyResultGlfw(int32_t result) {
 }
 
 void Window::CheckGlfw(int32_t result) {
-	if (result) {
-		return;
-	}
+	if (result) return;
 
 	auto failure = StringifyResultGlfw(result);
 	Log::Error("GLFW error: ", failure, ", ", result, '\n');

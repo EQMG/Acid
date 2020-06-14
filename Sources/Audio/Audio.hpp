@@ -31,6 +31,7 @@ public:
 	Delegate<void(Type, float)> &OnGain() { return onGain; }
 
 private:
+	// TODO: Only using p-impl because of signature differences from OpenAL and OpenALSoft.
 	struct _intern;
 	std::unique_ptr<_intern> impl;
 

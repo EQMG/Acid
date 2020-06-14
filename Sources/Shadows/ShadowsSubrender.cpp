@@ -19,8 +19,7 @@ void ShadowsSubrender::Render(const CommandBuffer &commandBuffer) {
 
 	auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
 
-	for (const auto &shadowRender : sceneShadowRenders) {
+	for (const auto &shadowRender : sceneShadowRenders)
 		shadowRender->CmdRender(commandBuffer, pipeline);
-	}
 }
 }

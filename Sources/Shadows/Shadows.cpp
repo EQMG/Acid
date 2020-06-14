@@ -15,8 +15,7 @@ Shadows::Shadows() :
 }
 
 void Shadows::Update() {
-	if (auto camera = Scenes::Get()->GetCamera()) {
+	if (auto camera = Scenes::Get()->GetCamera())
 		shadowBox.Update(*camera, lightDirection, shadowBoxOffset, shadowBoxDistance);
-	}
 }
 }

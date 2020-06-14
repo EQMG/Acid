@@ -20,8 +20,7 @@ void GizmosSubrender::Render(const CommandBuffer &commandBuffer) {
 
 	pipeline.BindPipeline(commandBuffer);
 
-	for (const auto &[type, typeGizmos] : gizmos) {
+	for (const auto &[type, typeGizmos] : gizmos)
 		type->CmdRender(commandBuffer, pipeline, uniformScene);
-	}
 }
 }

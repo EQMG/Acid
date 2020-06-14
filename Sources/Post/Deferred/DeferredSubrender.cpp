@@ -65,17 +65,15 @@ void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
 		DeferredLight deferredLight = {};
 		deferredLight.colour = light->GetColour();
 
-		if (auto transform = light->GetEntity()->GetComponent<Transform>()) {
+		if (auto transform = light->GetEntity()->GetComponent<Transform>())
 			deferredLight.position = transform->GetPosition();
-		}
 
 		deferredLight.radius = light->GetRadius();
 		deferredLights[lightCount] = deferredLight;
 		lightCount++;
 
-		if (lightCount >= MAX_LIGHTS) {
+		if (lightCount >= MAX_LIGHTS)
 			break;
-		}
 	}
 
 	// Updates uniforms.

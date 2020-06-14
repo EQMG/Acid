@@ -7,40 +7,26 @@ PostFilter::PostFilter(const Pipeline::Stage &pipelineStage, const std::vector<s
 }
 
 const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const Descriptor *descriptor) const {
-	auto it = attachments.find(descriptorName);
-
-	if (it == attachments.end()) {
-		return descriptor;
-	}
-
-	return it->second;
+	if (auto it = attachments.find(descriptorName); it != attachments.end())
+		return it->second;
+	return descriptor;
 }
 
 const Descriptor *PostFilter::GetAttachment(const std::string &descriptorName, const std::string &rendererAttachment) const {
-	auto it = attachments.find(descriptorName);
-
-	if (it == attachments.end()) {
-		return Graphics::Get()->GetAttachment(rendererAttachment);
-	}
-
-	return it->second;
+	if (auto it = attachments.find(descriptorName); it != attachments.end())
+		return it->second;
+	return Graphics::Get()->GetAttachment(rendererAttachment);
 }
 
 void PostFilter::SetAttachment(const std::string &descriptorName, const Descriptor *descriptor) {
-	auto it = attachments.find(descriptorName);
-
-	if (it == attachments.end()) {
+	if (auto it = attachments.find(descriptorName); it != attachments.end())
+		it->second = descriptor;
+	else
 		attachments.emplace(descriptorName, descriptor);
-		return;
-	}
-
-	it->second = descriptor;
 }
 
 bool PostFilter::RemoveAttachment(const std::string &name) {
-	auto it = attachments.find(name);
-
-	if (it != attachments.end()) {
+	if (auto it = attachments.find(name); it != attachments.end()) {
 		attachments.erase(it);
 		return true;
 	}

@@ -31,9 +31,8 @@ std::shared_ptr<FontType> FontType::Create(const std::filesystem::path &filename
 FontType::FontType(std::filesystem::path filename, std::size_t size, bool load) :
 	filename(std::move(filename)),
 	size(size) {
-	if (load) {
+	if (load)
 		FontType::Load();
-	}
 }
 
 const Node &operator>>(const Node &node, FontType &fontType) {
@@ -49,9 +48,7 @@ Node &operator<<(Node &node, const FontType &fontType) {
 }
 
 void FontType::Load() {
-	if (filename.empty()) {
-		return;
-	}
+	if (filename.empty()) return;
 
 #if defined(ACID_DEBUG)
 	auto debugStart = Time::Now();

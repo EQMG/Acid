@@ -16,9 +16,8 @@ void Entity::Update() {
 			continue;
 		}
 
-		if ((*it)->GetEntity() != this) {
+		if ((*it)->GetEntity() != this)
 			(*it)->SetEntity(this);
-		}
 
 		if ((*it)->IsEnabled()) {
 			if (!(*it)->started) {
@@ -34,9 +33,7 @@ void Entity::Update() {
 }
 
 Component *Entity::AddComponent(std::unique_ptr<Component> &&component) {
-	if (!component) {
-		return nullptr;
-	}
+	if (!component) return nullptr;
 
 	component->SetEntity(this);
 	return components.emplace_back(std::move(component)).get();

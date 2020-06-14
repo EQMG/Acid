@@ -103,9 +103,8 @@ std::vector<Entity *> SceneStructure::QueryFrustum(const Frustum &range) {
 
 bool SceneStructure::Contains(Entity *object) {
 	for (const auto &object2 : objects) {
-		if (object2.get() == object) {
+		if (object2.get() == object)
 			return true;
-		}
 	}
 
 	return false;

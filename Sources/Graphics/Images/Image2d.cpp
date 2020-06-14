@@ -99,9 +99,8 @@ void Image2d::Load(std::unique_ptr<Bitmap> loadBitmap) {
 		components = loadBitmap->GetBytesPerPixel();
 	}
 		
-	if (extent.width == 0 || extent.height == 0) {
+	if (extent.width == 0 || extent.height == 0)
 		return;
-	}
 
 	mipLevels = mipmap ? GetMipLevels(extent) : 1;
 

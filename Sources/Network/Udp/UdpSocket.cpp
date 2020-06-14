@@ -24,9 +24,8 @@ uint16_t UdpSocket::GetLocalPort() const {
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
+		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			return ntohs(address.sin_port);
-		}
 	}
 
 	// We failed to retrieve the port.
@@ -41,9 +40,8 @@ Socket::Status UdpSocket::Bind(uint16_t port, const IpAddress &address) {
 	Create();
 
 	// Check if the address is valid/
-	if ((address == IpAddress::None) || (address == IpAddress::Broadcast)) {
+	if (address == IpAddress::None || address == IpAddress::Broadcast)
 		return Status::Error;
-	}
 
 	// Bind the socket/
 	auto addr = CreateAddress(address.ToInteger(), port);
@@ -78,9 +76,8 @@ Socket::Status UdpSocket::Send(const void *data, std::size_t size, const IpAddre
 	auto sent = sendto(GetHandle(), static_cast<const char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), sizeof(address));
 
 	// Check for errors.
-	if (sent < 0) {
+	if (sent < 0)
 		return GetErrorStatus();
-	}
 
 	return Status::Done;
 }
@@ -105,9 +102,8 @@ Socket::Status UdpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 	auto sizeReceived = recvfrom(GetHandle(), static_cast<char *>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr *>(&address), &addressSize);
 
 	// Check for errors.
-	if (sizeReceived < 0) {
+	if (sizeReceived < 0)
 		return GetErrorStatus();
-	}
 
 	// Fill the sender informations.
 	received = static_cast<std::size_t>(sizeReceived);
@@ -143,9 +139,8 @@ Socket::Status UdpSocket::Receive(Packet &packet, IpAddress &remoteAddress, uint
 	// If we received valid data, we can copy it to the user packet.
 	packet.Clear();
 
-	if ((status == Status::Done) && (received > 0)) {
+	if (status == Status::Done && received > 0)
 		packet.OnReceive(&buffer[0], received);
-	}
 
 	return status;
 }

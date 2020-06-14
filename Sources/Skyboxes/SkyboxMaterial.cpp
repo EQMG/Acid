@@ -14,7 +14,7 @@ void SkyboxMaterial::CreatePipeline(const Shader::VertexInput &vertexInput, bool
 	pipelineMaterial = MaterialPipeline::Create({1, 0}, {
 		{"Shaders/Skyboxes/Skybox.vert", "Shaders/Skyboxes/Skybox.frag"}, {vertexInput}, {},
 		PipelineGraphics::Mode::MRT, PipelineGraphics::Depth::None, VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_POLYGON_MODE_FILL, VK_CULL_MODE_FRONT_BIT
-		});
+	});
 }
 
 void SkyboxMaterial::PushUniforms(UniformHandler &uniformObject, const Transform *transform) {

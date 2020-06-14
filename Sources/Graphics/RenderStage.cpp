@@ -22,9 +22,8 @@ RenderStage::RenderStage(std::vector<Attachment> images, std::vector<SubpassType
 					std::find(subpassBindings.begin(), subpassBindings.end(), image.GetBinding()) != subpassBindings.end()) {
 					subpassAttachmentCount[subpass.GetBinding()]++;
 
-					if (image.IsMultisampled()) {
+					if (image.IsMultisampled())
 						subpassMultisampled[subpass.GetBinding()] = true;
-					}
 				}
 			}
 
@@ -71,13 +70,11 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 
 	auto msaaSamples = physicalDevice->GetMsaaSamples();
 
-	if (depthAttachment) {
+	if (depthAttachment)
 		depthStencil = std::make_unique<ImageDepth>(renderArea.GetExtent(), depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
-	}
 
-	if (!renderpass) {
+	if (!renderpass)
 		renderpass = std::make_unique<Renderpass>(*this, depthStencil ? depthStencil->GetFormat() : VK_FORMAT_UNDEFINED, surface->GetFormat().format, msaaSamples);
-	}
 
 	framebuffers = std::make_unique<Framebuffers>(renderArea.GetExtent(), *this, *renderpass, swapchain, *depthStencil, msaaSamples);
 	outOfDate = false;
@@ -85,11 +82,10 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 	descriptors.clear();
 
 	for (const auto &image : attachments) {
-		if (image.GetType() == Attachment::Type::Depth) {
+		if (image.GetType() == Attachment::Type::Depth)
 			descriptors.emplace(image.GetName(), depthStencil.get());
-		} else {
+		else
 			descriptors.emplace(image.GetName(), framebuffers->GetAttachment(image.GetBinding()));
-		}
 	}
 
 #if defined(ACID_DEBUG)
@@ -102,9 +98,9 @@ std::optional<Attachment> RenderStage::GetAttachment(const std::string &name) co
 		return a.GetName() == name;
 	});
 
-	if (it == attachments.end())
-		return std::nullopt;
-	return *it;
+	if (it != attachments.end())
+		return *it;
+	return std::nullopt;
 }
 
 std::optional<Attachment> RenderStage::GetAttachment(uint32_t binding) const {
@@ -112,9 +108,9 @@ std::optional<Attachment> RenderStage::GetAttachment(uint32_t binding) const {
 		return a.GetBinding() == binding;
 	});
 
-	if (it == attachments.end())
-		return std::nullopt;
-	return *it;
+	if (it != attachments.end())
+		return *it;
+	return std::nullopt;
 }
 
 const Descriptor *RenderStage::GetDescriptor(const std::string &name) const {

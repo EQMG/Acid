@@ -56,11 +56,10 @@ public:
 		 */
 		static bool Deregister() {
 			for (auto it = Registry().begin(); it != Registry().end();) {
-				if (it->second.get() == ModuleInstance) {
+				if (it->second.get() == ModuleInstance)
 					it = Registry().erase(it);
-				} else {
+				else
 					++it;
-				}
 			}
 			ModuleInstance = nullptr;
 			return true;

@@ -45,10 +45,8 @@ Force *CollisionObject::AddForce(std::unique_ptr<Force> &&force) {
 
 void CollisionObject::SetChildTransform(Collider *child, const Transform &transform) {
 	auto compoundShape = dynamic_cast<btCompoundShape *>(shape.get());
-
-	if (!compoundShape) {
+	if (!compoundShape)
 		return;
-	}
 
 	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++) {
 		if (compoundShape->getChildShape(i) == child->GetCollisionShape()) {
@@ -103,19 +101,16 @@ void CollisionObject::CreateShape(bool forceSingle) {
 		return;
 	}
 
-	if (!dynamic_cast<btCompoundShape *>(shape.get())) {
+	if (!dynamic_cast<btCompoundShape *>(shape.get()))
 		shape.release();
-	}
 
 	auto compoundShape = new btCompoundShape();
 
-	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++) {
+	for (int32_t i = 0; i < compoundShape->getNumChildShapes(); i++)
 		compoundShape->removeChildShapeByIndex(i);
-	}
 
-	for (const auto &collider : colliders) {
+	for (const auto &collider : colliders)
 		compoundShape->addChildShape(Collider::Convert(collider->GetLocalTransform()), collider->GetCollisionShape());
-	}
 
 	shape.reset(compoundShape);
 	RecalculateMass();

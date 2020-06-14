@@ -13,11 +13,8 @@ HttpResponse::HttpResponse() :
 
 std::string HttpResponse::GetField(const std::string &field) const {
 	auto it = fields.find(String::Lowercase(field));
-
-	if (it != fields.end()) {
+	if (it != fields.end())
 		return it->second;
-	}
-
 	return {};
 }
 
@@ -28,7 +25,7 @@ void HttpResponse::Parse(const std::string &data) {
 	std::string version;
 
 	if (in >> version) {
-		if ((version.size() >= 8) && (version[6] == '.') && (String::Lowercase(version.substr(0, 5)) == "http/") && isdigit(version[5]) && isdigit(version[7])) {
+		if (version.size() >= 8 && version[6] == '.' && String::Lowercase(version.substr(0, 5)) == "http/" && isdigit(version[5]) && isdigit(version[7])) {
 			majorVersion = version[5] - '0';
 			minorVersion = version[7] - '0';
 		} else {
@@ -74,9 +71,8 @@ void HttpResponse::Parse(const std::string &data) {
 			std::istreambuf_iterator<char> it = in;
 			std::istreambuf_iterator<char> itEnd;
 
-			for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++) {
+			for (std::size_t i = 0; i < length && it != itEnd; i++)
 				body.push_back(*it++);
-			}
 		}
 
 		// Drop the rest of the line (chunk-extension).
@@ -90,7 +86,7 @@ void HttpResponse::Parse(const std::string &data) {
 void HttpResponse::ParseFields(std::istream &in) {
 	std::string line;
 
-	while (std::getline(in, line) && (line.size() > 2)) {
+	while (std::getline(in, line) && line.size() > 2) {
 		auto pos = line.find(": ");
 
 		if (pos != std::string::npos) {
@@ -99,9 +95,8 @@ void HttpResponse::ParseFields(std::istream &in) {
 			auto value = line.substr(pos + 2);
 
 			// Remove any trailing '\r'.
-			if (!value.empty() && (*value.rbegin() == '\r')) {
+			if (!value.empty() && (*value.rbegin() == '\r'))
 				value.erase(value.size() - 1);
-			}
 
 			// Add the field.
 			fields[String::Lowercase(field)] = value;

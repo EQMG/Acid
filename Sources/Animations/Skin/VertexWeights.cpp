@@ -48,14 +48,12 @@ float VertexWeights::SaveTopWeights(std::vector<float> &topWeightsArray) {
 void VertexWeights::RefillWeightList(const std::vector<float> &topWeights, float total) {
 	weights.clear();
 
-	for (const auto &topWeight : topWeights) {
+	for (const auto &topWeight : topWeights)
 		weights.emplace_back(topWeight / total);
-	}
 }
 
 void VertexWeights::RemoveExcessJointIds(uint32_t max) {
-	while (jointIds.size() > max) {
+	while (jointIds.size() > max)
 		jointIds.pop_back();
-	}
 }
 }

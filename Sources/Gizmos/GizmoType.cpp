@@ -41,17 +41,15 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos) {
 	maxInstances = MAX_INSTANCES;
 	instances = 0;
 
-	if (gizmos.empty()) {
+	if (gizmos.empty())
 		return;
-	}
 
 	Instance *instances;
 	instanceBuffer.MapMemory(reinterpret_cast<void **>(&instances));
 
 	for (const auto &gizmo : gizmos) {
-		if (this->instances >= maxInstances) {
+		if (this->instances >= maxInstances)
 			break;
-		}
 
 		//if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(gizmo->GetTransform().GetPosition(), FRUSTUM_BUFFER * gizmo->GetTransform().GetPosition().GetScale())) {
 		//	continue;

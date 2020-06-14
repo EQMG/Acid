@@ -89,9 +89,8 @@ void ScenePhysics::CheckForCollisionEvents() {
 		auto manifold = dispatcher->getManifoldByIndexInternal(i);
 
 		// Ignore manifolds that have no contact points..
-		if (manifold->getNumContacts() == 0) {
+		if (manifold->getNumContacts() == 0)
 			continue;
-		}
 
 		// Get the two rigid bodies involved in the collision.
 		auto body0 = manifold->getBody0();

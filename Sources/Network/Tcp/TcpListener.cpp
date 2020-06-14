@@ -20,9 +20,8 @@ uint16_t TcpListener::GetLocalPort() const {
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
+		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			return ntohs(address.sin_port);
-		}
 	}
 
 	// We failed to retrieve the port.
@@ -37,9 +36,8 @@ Socket::Status TcpListener::Listen(uint16_t port, const IpAddress &address) {
 	Create();
 
 	// Check if the address is valid.
-	if ((address == IpAddress::None) || (address == IpAddress::Broadcast)) {
+	if (address == IpAddress::None || address == IpAddress::Broadcast)
 		return Status::Error;
-	}
 
 	// Bind the socket to the specified port.
 	auto addr = CreateAddress(address.ToInteger(), port);
@@ -78,9 +76,8 @@ Socket::Status TcpListener::Accept(TcpSocket &socket) {
 	SocketHandle remote = accept(GetHandle(), reinterpret_cast<sockaddr *>(&address), &length);
 
 	// Check for errors.
-	if (remote == InvalidSocketHandle()) {
+	if (remote == InvalidSocketHandle())
 		return GetErrorStatus();
-	}
 
 	// Initialize the new connected socket.
 	socket.Close();

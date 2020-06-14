@@ -52,9 +52,8 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 PipelineGraphics::~PipelineGraphics() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &shaderModule : modules) {
+	for (const auto &shaderModule : modules)
 		vkDestroyShaderModule(*logicalDevice, shaderModule, nullptr);
-	}
 
 	vkDestroyDescriptorPool(*logicalDevice, descriptorPool, nullptr);
 	vkDestroyPipeline(*logicalDevice, pipeline, nullptr);
@@ -76,17 +75,14 @@ RenderArea PipelineGraphics::GetRenderArea(const std::optional<uint32_t> &stage)
 
 void PipelineGraphics::CreateShaderProgram() {
 	std::stringstream defineBlock;
-
-	for (const auto &[defineName, defineValue] : defines) {
+	for (const auto &[defineName, defineValue] : defines)
 		defineBlock << "#define " << defineName << " " << defineValue << '\n';
-	}
 
 	for (const auto &shaderStage : shaderStages) {
 		auto fileLoaded = Files::Read(shaderStage);
 
-		if (!fileLoaded) {
+		if (!fileLoaded)
 			throw std::runtime_error("Could not create pipeline, missing shader stage");
-		}
 
 		auto stageFlag = Shader::GetShaderStage(shaderStage);
 		auto shaderModule = shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);
@@ -241,9 +237,8 @@ void PipelineGraphics::CreatePipeline() {
 	uint32_t lastAttribute = 0;
 
 	for (const auto &vertexInput : vertexInputs) {
-		for (const auto &binding : vertexInput.GetBindingDescriptions()) {
+		for (const auto &binding : vertexInput.GetBindingDescriptions())
 			bindingDescriptions.emplace_back(binding);
-		}
 
 		for (const auto &attribute : vertexInput.GetAttributeDescriptions()) {
 			/*bool shaderContains = false;
@@ -255,17 +250,15 @@ void PipelineGraphics::CreatePipeline() {
 				}
 			}
 
-			if (!shaderContains) {
-				continue;
-			}*/
+			if (!shaderContains)
+				continue;*/
 
 			auto &newAttribute = attributeDescriptions.emplace_back(attribute);
 			newAttribute.location += lastAttribute;
 		}
 
-		if (!vertexInput.GetAttributeDescriptions().empty()) {
+		if (!vertexInput.GetAttributeDescriptions().empty())
 			lastAttribute = attributeDescriptions.back().location + 1;
-		}
 	}
 
 	vertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;

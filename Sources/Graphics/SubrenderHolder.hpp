@@ -20,14 +20,11 @@ public:
 	T *Get() const {
 		const auto typeId = GetSubrenderTypeId<T>();
 
-		auto it = subrenders.find(typeId);
+		if (auto it = subrenders.find(typeId);  it != subrenders.end() && it->second)
+			return static_cast<T *>(it->second.get());
 
-		if (it == subrenders.end() || !it->second) {
-			//throw std::runtime_error("Subrender Holder does not have requested Subrender");
-			return nullptr;
-		}
-
-		return static_cast<T *>(it->second.get());
+		//throw std::runtime_error("Subrender Holder does not have requested Subrender");
+		return nullptr;
 	}
 
 	/**

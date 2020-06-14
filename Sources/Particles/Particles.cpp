@@ -7,8 +7,7 @@ Particles::Particles() {
 }
 
 void Particles::Update() {
-	if (Scenes::Get()->IsPaused())
-		return;
+	if (Scenes::Get()->IsPaused()) return;
 
 	for (auto it = particles.begin(); it != particles.end();) {
 		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();) {
