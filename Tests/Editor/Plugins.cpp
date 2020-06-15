@@ -25,7 +25,7 @@ Plugins::Plugins() :
 	fileObserver.OnChange().connect(this, [this](std::filesystem::path path, FileObserver::Status status) {
 		update = true;
 	});
-	buttonReload.OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	buttonReload.OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			//std::filesystem::last_write_time(loadedPath, std::filesystem::file_time_type(Time::Now()));
 			update = true;

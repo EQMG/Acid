@@ -34,13 +34,13 @@ public:
 	 * Called when the button changes state.
 	 * @return The delegate.
 	 */
-	rocket::signal<void(InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
+	rocket::signal<void(InputAction, bitmask::bitmask<InputMod>)> &OnButton() { return onButton; }
 
 	bool IsInverted() const { return inverted; }
 	void SetInverted(bool inverted) { this->inverted = inverted; }
 
 protected:
-	rocket::signal<void(InputAction, BitMask<InputMod>)> onButton;
+	rocket::signal<void(InputAction, bitmask::bitmask<InputMod>)> onButton;
 	bool inverted = false;
 
 private:

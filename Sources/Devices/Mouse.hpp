@@ -140,7 +140,7 @@ public:
 	 * Called when a mouse button changes state.
 	 * @return The delegate.
 	 */
-	rocket::signal<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
+	rocket::signal<void(MouseButton, InputAction, bitmask::bitmask<InputMod>)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when the mouse moves.
@@ -188,7 +188,7 @@ private:
 	bool windowSelected = false;
 	bool cursorHidden = false;
 
-	rocket::signal<void(MouseButton, InputAction, BitMask<InputMod>)> onButton;
+	rocket::signal<void(MouseButton, InputAction, bitmask::bitmask<InputMod>)> onButton;
 	rocket::signal<void(Vector2d)> onPosition;
 	rocket::signal<void(bool)> onEnter;
 	rocket::signal<void(Vector2d)> onScroll;

@@ -247,7 +247,6 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		Utils/ConstExpr.hpp
-		Utils/EnumClass.hpp
 		Utils/Enumerate.hpp
 		Utils/Factory.hpp
 		Utils/Future.hpp
@@ -259,6 +258,7 @@ set(_temp_acid_headers
 		Utils/TypeInfo.hpp
 		)
 set(_temp_acid_third_party_headers
+		third_party/bitmask/bitmask.hpp
 		third_party/cr/cr.h
 		third_party/dr_libs/dr_flac.h
 		third_party/dr_libs/dr_mp3.h

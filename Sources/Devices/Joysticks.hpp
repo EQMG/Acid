@@ -12,8 +12,6 @@ enum class JoystickHatValue : uint8_t {
 	Left = 8
 };
 
-ENABLE_BITMASK_OPERATORS(JoystickHatValue);
-
 using JoystickPort = uint8_t;
 using JoystickAxis = uint8_t;
 using JoystickButton = uint8_t;
@@ -86,7 +84,7 @@ public:
 	 * @param hat The hat id to get the value from.
 	 * @return The value of the joystick's hat.
 	 */
-	BitMask<JoystickHatValue> GetHat(JoystickPort port, uint8_t hat) const;
+	bitmask::bitmask<JoystickHatValue> GetHat(JoystickPort port, uint8_t hat) const;
 
 	/**
 	 * Called when a joystick has been connected or disconnected.
@@ -110,7 +108,7 @@ public:
 	 * Called when a joystick had changes state.
 	 * @return The delegate.
 	 */
-	rocket::signal<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> &OnHat() { return onHat; }
+	rocket::signal<void(JoystickPort, uint8_t, bitmask::bitmask<JoystickHatValue>)> &OnHat() { return onHat; }
 
 private:
 	class JoystickImpl {
@@ -118,7 +116,7 @@ private:
 		std::string name;
 		std::vector<float> axes;
 		std::vector<InputAction> buttons;
-		std::vector<BitMask<JoystickHatValue>> hats;
+		std::vector<bitmask::bitmask<JoystickHatValue>> hats;
 	};
 
 	std::optional<JoystickImpl> GetJoystick(JoystickPort port) const;
@@ -129,6 +127,12 @@ private:
 	rocket::signal<void(JoystickPort, bool)> onConnect;
 	rocket::signal<void(JoystickPort, uint8_t, InputAction)> onButton;
 	rocket::signal<void(JoystickPort, uint8_t, float)> onAxis;
-	rocket::signal<void(JoystickPort, uint8_t, BitMask<JoystickHatValue>)> onHat;
+	rocket::signal<void(JoystickPort, uint8_t, bitmask::bitmask<JoystickHatValue>)> onHat;
+};
+}
+
+namespace bitmask {
+template<>
+struct enable_bitmask_operators<acid::JoystickHatValue> : std::true_type {
 };
 }

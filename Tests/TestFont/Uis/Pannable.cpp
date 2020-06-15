@@ -96,7 +96,7 @@ Pannable::Pannable(){
 	textUps.SetFontSize(11);
 	AddChild(&textUps);
 
-	Input::Get()->GetButton("reset")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("reset")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			zoom = 1.0f;
 //			content.GetTransform().SetPosition({0.5f, 0.5f});

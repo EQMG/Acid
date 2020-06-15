@@ -12,6 +12,7 @@
 #include <map>
 #include <set>
 #include <sstream>
+#include <bitmask/bitmask.hpp>
 
 #include "Resources/Resource.hpp"
 #include "Utils/ConstExpr.hpp"
@@ -210,6 +211,18 @@ template<typename T, std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<
 Node &operator<<(Node &node, T object) {
 	node.SetValue(String::To(object));
 	node.SetType(std::is_floating_point_v<T> ? Node::Type::Decimal : Node::Type::Integer);
+	return node;
+}
+
+template<typename T>
+const Node &operator>>(const Node &node, bitmask::bitmask<T> &bitmask) {
+	node >> bitmask.value;
+	return node;
+}
+
+template<typename T>
+Node &operator<<(Node &node, const bitmask::bitmask<T> &bitmask) {
+	node << bitmask.value;
 	return node;
 }
 

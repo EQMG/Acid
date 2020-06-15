@@ -1,11 +1,11 @@
 #include "JoystickHatInput.hpp"
 
 namespace acid {
-JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags) :
+JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const bitmask::bitmask<JoystickHatValue> &hatFlags) :
 	port(port),
 	hat(hat),
 	hatFlags(hatFlags) {
-	Joysticks::Get()->OnHat().connect(static_cast<InputButton *>(this), [this](JoystickPort port, JoystickHat hat, BitMask<JoystickHatValue> value) {
+	Joysticks::Get()->OnHat().connect(static_cast<InputButton *>(this), [this](JoystickPort port, JoystickHat hat, bitmask::bitmask<JoystickHatValue> value) {
 		if (this->port == port && this->hat == hat) {
 			onAxis(GetAmount());
 			auto isDown = IsDown();
@@ -60,7 +60,7 @@ float JoystickHatInput::GetAmount() const {
 }
 
 bool JoystickHatInput::IsDown() const {
-	return (Joysticks::Get()->GetHat(port, hat) & hatFlags) ^ inverted;
+	return (Joysticks::Get()->GetHat(port, hat) & hatFlags).value ^ inverted;
 }
 
 const Node &operator>>(const Node &node, JoystickHatInput &input) {

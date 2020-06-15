@@ -57,19 +57,19 @@ MainApp::MainApp() :
 	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	Input::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	Input::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}

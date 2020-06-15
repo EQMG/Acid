@@ -66,9 +66,9 @@ playerObject->AddComponent<Transform>();
 auto sphere = GetStructure()->CreateEntity();
 sphere->AddComponent<Transform>(Vector3f(6.7f, 6.7f, -8.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f), Vector3f(3.0f));
 sphere->AddComponent<Mesh>(SphereModel::Create(20, 20, 1.0f), // This will used the sphere buffers created earlier.
-	std::make_unique<MaterialDefault>(Colour::White, Image2d::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
+	std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Objects/Testing/Albedo.png"), 0.0f, 0.5f,
 		Image2d::Create("Objects/Testing/Material.png"), Image2d::Create("Objects/Testing/Normal.png")));
-sphere->AddComponent<Rigidbody>(std::make_unique<ColliderSphere>(), 2.0f); // Will be created weighing 2 units.
+sphere->AddComponent<Rigidbody>(std::make_unique<SphereCollider>(), 2.0f); // Will be created weighing 2 units.
 
 // Vector maths.
 Vector2f a(3.0f, -7.2f);
@@ -83,35 +83,28 @@ Vector2i rightShift = Vector2i(5, 9) >> 1;
 std::string stringSource = "Hello world!";
 std::vector<std::string> stringSplit = String::Split(stringSource, ' ');
 
-// Will run a lambda on window resize, and when this object is deleted the lamdba is removed.
-Window::Get()->OnSize() += [](Vector2ui size) {
+// Will run a lambda on window resize, and when this object is deleted the lambda is removed.
+Window::Get()->OnSize().connect([](Vector2ui size) {
 	Log::Out("Hello world: ", size, '\n');
-};
-
-// A value container that calls a delegate on value assignments.
-DelegateValue<Vector3f> da;
-da += [](Vector3f value) {
-	Log::Out("New value: ", value, '\n');
-};
-da = {10.0f, -4.11f, 99.991f};
+});
 
 // Time addition.
 Time dateTime = 4h + 2min + 11s + 9ms + 1us + 4ns;
 
 // Calls the function once after 150 milliseconds.
-Timers::Get()->Once(150ms, []() {
+Timers::Get()->Once([]() {
 	Log::Out("Timer Once After\n");
-});
+}, 150ms);
 // Calls the function every 4 seconds. 
-Timers::Get()->Every(4s, []() {
+Timers::Get()->Every([]() {
 	Log::Out("Timer Every Tick\n");
-});
-// Calls the funcion every 7 seconds 3 times.
-Timers::Get()->Repeat(7s, 3, []() {
+}, 4s);
+// Calls the function every 7 seconds 3 times.
+Timers::Get()->Repeat([]() {
 	static uint32_t i = 0;
 	Log::Out("Timer Repeat Tick #", i, '\n');
 	i++;
-});
+}, 7s, 3);
 ```
 
 ## Screenshots

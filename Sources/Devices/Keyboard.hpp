@@ -153,7 +153,7 @@ public:
 	 * Called when a key changes state.
 	 * @return The delegate.
 	 */
-	rocket::signal<void(Key, InputAction, BitMask<InputMod>)> &OnKey() { return onKey; }
+	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> &OnKey() { return onKey; }
 
 	/**
 	 * Called when a character has been typed.
@@ -165,7 +165,7 @@ private:
 	friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
 	friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 
-	rocket::signal<void(Key, InputAction, BitMask<InputMod>)> onKey;
+	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> onKey;
 	rocket::signal<void(char)> onChar;
 };
 }

@@ -41,7 +41,7 @@ void CompoundInputButton::RemoveButton(InputButton *button) {
 }
 
 void CompoundInputButton::ConnectButton(std::unique_ptr<InputButton> &button) {
-	button->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	button->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		auto isDown = IsDown();
 
 		if (!lastDown && isDown) {

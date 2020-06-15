@@ -4,10 +4,10 @@ namespace acid {
 ButtonInputAxis::ButtonInputAxis(std::unique_ptr<InputButton> &&negative, std::unique_ptr<InputButton> &&positive) :
 	negative(std::move(negative)),
 	positive(std::move(positive)) {
-	negative->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	negative->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		onAxis(GetAmount());
 	});
-	positive->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	positive->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		onAxis(GetAmount());
 	});
 }
@@ -32,14 +32,14 @@ InputAxis::ArgumentDescription ButtonInputAxis::GetArgumentDescription() const {
 
 void ButtonInputAxis::SetNegative(std::unique_ptr<InputButton> &&negative) {
 	this->negative = std::move(negative);
-	this->negative->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	this->negative->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		onAxis(GetAmount());
 	});
 }
 
 void ButtonInputAxis::SetPositive(std::unique_ptr<InputButton> &&positive) {
 	this->positive = std::move(positive);
-	this->positive->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	this->positive->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		onAxis(GetAmount());
 	});
 }

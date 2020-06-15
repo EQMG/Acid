@@ -34,7 +34,7 @@ Scene1::Scene1() :
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
 	//Uis::Get()->GetCanvas().SetScaleDriver<SinewaveDriver>(Vector2f(0.3f), Vector2f(5.0f), 16s);
-	Input::Get()->GetButton("pause")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("pause")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			TogglePause();
 		}

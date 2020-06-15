@@ -62,7 +62,7 @@ Scene1::Scene1() :
 	overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 
-	Input::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -83,13 +83,13 @@ Scene1::Scene1() :
 		}
 	});
 
-	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 
-	Input::Get()->GetButton("save")->OnButton().connect(this, [this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("save")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile("Scene1.json", File::Type::Json);

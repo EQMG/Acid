@@ -1,10 +1,10 @@
 #pragma once
 
 #include <volk.h>
+#include <bitmask/bitmask.hpp>
 #include <rocket/rocket.hpp>
 
 #include "Engine/Engine.hpp"
-#include "Utils/EnumClass.hpp"
 #include "Maths/Vector2.hpp"
 #include "Monitor.hpp"
 
@@ -17,8 +17,6 @@ enum class InputAction : int32_t {
 	Repeat = 2
 };
 
-ENABLE_BITMASK_OPERATORS(InputAction);
-
 enum class InputMod : int32_t {
 	None = 0,
 	Shift = 1,
@@ -26,8 +24,6 @@ enum class InputMod : int32_t {
 	Alt = 4,
 	Super = 8
 };
-
-ENABLE_BITMASK_OPERATORS(InputMod);
 
 /**
  * @brief Module used for managing a window.
@@ -280,5 +276,15 @@ private:
 	rocket::signal<void()> onClose;
 	rocket::signal<void(bool)> onFocus;
 	rocket::signal<void(bool)> onIconify;
+};
+}
+
+namespace bitmask {
+template<>
+struct enable_bitmask_operators<acid::InputAction> : std::true_type {
+};
+
+template<>
+struct enable_bitmask_operators<acid::InputMod> : std::true_type {
 };
 }

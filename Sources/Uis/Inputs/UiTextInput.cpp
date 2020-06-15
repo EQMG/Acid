@@ -28,7 +28,7 @@ UiTextInput::UiTextInput() {
 	AddChild(&textValue);
 
 	SetCursorHover(CursorStandard::Hand);
-	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, BitMask<InputMod> mods) {
+	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (!updating)
 			return;
 
