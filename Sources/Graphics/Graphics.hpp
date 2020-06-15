@@ -15,7 +15,7 @@ namespace acid {
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
 class ACID_EXPORT Graphics : public Module::Registrar<Graphics> {
-	inline static const bool Registered = Register<Window>(Stage::Render);
+	inline static const bool Registered = Register(Stage::Render, Requires<Window>());
 public:
 	Graphics();
 	

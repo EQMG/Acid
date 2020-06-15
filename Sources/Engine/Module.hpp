@@ -26,6 +26,16 @@ public:
 		return impl;
 	}
 
+	template<typename ... Args>
+	class Requires {
+	public:
+		std::vector<TypeId> Get() const {
+			std::vector<TypeId> requires;
+			(requires.emplace_back(TypeInfo<Base>::template GetTypeId<Args>()), ...);
+			return requires;
+		}
+	};
+
 	template<typename T>
 	class Registrar : public Base {
 	public:
@@ -42,13 +52,11 @@ public:
 		 * @return A dummy value in static initialization.
 		 */
 		template<typename ... Args>
-		static bool Register(typename Base::Stage stage) {
-			std::vector<TypeId> requires;
-			(requires.emplace_back(TypeInfo<Base>::template GetTypeId<Args>()), ...);
+		static bool Register(typename Base::Stage stage, Requires<Args...> &&requires = {}) {
 			ModuleFactory::Registry()[TypeInfo<Base>::template GetTypeId<T>()] = {[]() {
 				moduleInstance = new T();
 				return std::unique_ptr<Base>(moduleInstance);
-			}, stage, std::move(requires)};
+			}, stage, requires.Get()};
 			return true;
 		}
 		

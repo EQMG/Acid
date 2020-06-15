@@ -15,7 +15,7 @@ namespace test {
  * Module used for managing the world.
  */
 class Plugins : public Module::Registrar<Plugins>, public Observer {
-	inline static const bool Registered = Register<Files>(Stage::Always);
+	inline static const bool Registered = Register(Stage::Always, Requires<Files>());
 public:
 	Plugins();
 	~Plugins();

@@ -11,7 +11,7 @@ using namespace acid;
 
 namespace test {
 class World : public Module::Registrar<World> {
-	inline static const bool Registered = Register<Graphics, Scenes>(Stage::Always);
+	inline static const bool Registered = Register(Stage::Always, Requires<Graphics, Scenes>());
 public:
 	World();
 
