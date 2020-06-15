@@ -11,9 +11,8 @@ void Joint::CalculateInverseBindTransform(const Matrix4 &parentBindTransform) {
 	auto bindTransform = parentBindTransform * localBindTransform;
 	inverseBindTransform = bindTransform.Inverse();
 
-	for (auto &child : children) {
+	for (auto &child : children)
 		child.CalculateInverseBindTransform(bindTransform);
-	}
 }
 
 void Joint::AddChild(const Joint &child) {

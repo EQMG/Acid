@@ -37,8 +37,7 @@ void CommandBuffer::Begin(VkCommandBufferUsageFlags usage) {
 }
 
 void CommandBuffer::End() {
-	if (!running)
-		return;
+	if (!running) return;
 
 	Graphics::CheckVk(vkEndCommandBuffer(commandBuffer));
 	running = false;

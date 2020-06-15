@@ -47,5 +47,4 @@ private:
 	bool removed = false;
 	Entity *entity = nullptr;
 };
-
 }

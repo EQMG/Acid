@@ -14,7 +14,7 @@ Graphics::Graphics() :
 	surface(std::make_unique<Surface>(instance.get(), physicalDevice.get())),
 	logicalDevice(std::make_unique<LogicalDevice>(instance.get(), physicalDevice.get(), surface.get())) {
 	CreatePipelineCache();
-	
+
 	if (!glslang::InitializeProcess())
 		throw std::runtime_error("Failed to initialize glslang process");
 }
@@ -36,9 +36,7 @@ Graphics::~Graphics() {
 }
 
 void Graphics::Update() {
-	if (!renderer || Window::Get()->IsIconified()) {
-		return;
-	}
+	if (!renderer || Window::Get()->IsIconified()) return;
 
 	if (!renderer->started) {
 		ResetRenderStages();
@@ -65,21 +63,19 @@ void Graphics::Update() {
 	for (auto &renderStage : renderer->renderStages) {
 		renderStage->Update();
 
-		if (!StartRenderpass(*renderStage)) {
+		if (!StartRenderpass(*renderStage))
 			return;
-		}
 
 		auto &commandBuffer = commandBuffers[swapchain->GetActiveImageIndex()];
-		
+
 		for (const auto &subpass : renderStage->GetSubpasses()) {
 			stage.second = subpass.GetBinding();
 
 			// Renders subpass subrender pipelines.
 			renderer->subrenderHolder.RenderStage(stage, *commandBuffer);
 
-			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding()) {
+			if (subpass.GetBinding() != renderStage->GetSubpasses().back().GetBinding())
 				vkCmdNextSubpass(*commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
-			}
 		}
 
 		EndRenderpass(*renderStage);
@@ -155,9 +151,7 @@ std::string Graphics::StringifyResultVk(VkResult result) {
 }
 
 void Graphics::CheckVk(VkResult result) {
-	if (result >= 0) {
-		return;
-	}
+	if (result >= 0) return;
 
 	auto failure = StringifyResultVk(result);
 
@@ -205,28 +199,20 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 }
 
 RenderStage *Graphics::GetRenderStage(uint32_t index) const {
-	if (!renderer)
-		return nullptr;
-	return renderer->GetRenderStage(index);
+	if (renderer)
+		return renderer->GetRenderStage(index);
+	return nullptr;
 }
 
 const Descriptor *Graphics::GetAttachment(const std::string &name) const {
-	auto it = attachments.find(name);
-
-	if (it == attachments.end()) {
-		return nullptr;
-	}
-
-	return it->second;
+	if (auto it = attachments.find(name); it != attachments.end())
+		return it->second;
+	return nullptr;
 }
 
 const std::shared_ptr<CommandPool> &Graphics::GetCommandPool(const std::thread::id &threadId) {
-	auto it = commandPools.find(threadId);
-
-	if (it != commandPools.end()) {
+	if (auto it = commandPools.find(threadId); it != commandPools.end())
 		return it->second;
-	}
-
 	// TODO: Cleanup and fix crashes
 	return commandPools.emplace(threadId, std::make_shared<CommandPool>(threadId)).first->second;
 }
@@ -240,13 +226,11 @@ void Graphics::CreatePipelineCache() {
 void Graphics::ResetRenderStages() {
 	RecreateSwapchain();
 
-	if (flightFences.size() != swapchain->GetImageCount()) {
+	if (flightFences.size() != swapchain->GetImageCount())
 		RecreateCommandBuffers();
-	}
 
-	for (const auto &renderStage : renderer->renderStages) {
+	for (const auto &renderStage : renderer->renderStages)
 		renderStage->Rebuild(*swapchain);
-	}
 
 	RecreateAttachmentsMap();
 }
@@ -300,9 +284,8 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-	if (renderStage.HasSwapchain() && (framebufferResized || !swapchain->IsSameExtent(displayExtent))) {
+	if (renderStage.HasSwapchain() && (framebufferResized || !swapchain->IsSameExtent(displayExtent)))
 		RecreateSwapchain();
-	}
 
 	renderStage.Rebuild(*swapchain);
 	RecreateAttachmentsMap(); // TODO: Maybe not recreate on a single change.
@@ -311,9 +294,8 @@ void Graphics::RecreatePass(RenderStage &renderStage) {
 void Graphics::RecreateAttachmentsMap() {
 	attachments.clear();
 
-	for (const auto &renderStage : renderer->renderStages) {
+	for (const auto &renderStage : renderer->renderStages)
 		attachments.insert(renderStage->descriptors.begin(), renderStage->descriptors.end());
-	}
 }
 
 bool Graphics::StartRenderpass(RenderStage &renderStage) {
@@ -323,7 +305,7 @@ bool Graphics::StartRenderpass(RenderStage &renderStage) {
 	}
 
 	auto &commandBuffer = commandBuffers[swapchain->GetActiveImageIndex()];
-	
+
 	if (!commandBuffer->IsRunning())
 		commandBuffer->Begin(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
 

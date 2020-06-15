@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <bitset>
 
 #include "Utils/NonCopyable.hpp"
 #include "Maths/ElapsedTime.hpp"
@@ -54,9 +55,9 @@ public:
 	/**
 	 * Carries out the setup for basic engine components and the engine. Call {@link Engine#Run} after creating a instance.
 	 * @param argv0 The first argument passed to main.
-	 * @param emptyRegister If the module register will start empty.
+	 * @param moduleFilter A filter for blacklisting/whitelisting modules.
 	 */
-	explicit Engine(std::string argv0, bool emptyRegister = false);
+	explicit Engine(std::string argv0, ModuleFilter &&moduleFilter = {});
 	~Engine();
 
 	/**
@@ -145,6 +146,8 @@ private:
 	Version version;
 
 	std::unique_ptr<App> app;
+	
+	std::multimap<Module::StageIndex, std::unique_ptr<Module>> modules;
 
 	float fpsLimit;
 	bool running;

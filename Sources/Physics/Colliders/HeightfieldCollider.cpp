@@ -19,9 +19,7 @@ btCollisionShape *HeightfieldCollider::GetCollisionShape() const {
 
 void HeightfieldCollider::SetHeightfield(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight, float maxHeight,
 	bool flipQuadEdges) {
-	if (!heightfieldData) {
-		return;
-	}
+	if (!heightfieldData) return;
 
 	shape = std::make_unique<btHeightfieldTerrainShape>(heightStickWidth, heightStickLength, heightfieldData, 1.0f, minHeight, maxHeight, 1, PHY_FLOAT, flipQuadEdges);
 }

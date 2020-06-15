@@ -29,9 +29,8 @@ std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &fi
 
 SoundBuffer::SoundBuffer(std::filesystem::path filename, bool load) :
 	filename(std::move(filename)) {
-	if (load) {
-		Load();
-	}
+	if (load)
+		SoundBuffer::Load();
 }
 
 SoundBuffer::~SoundBuffer() {
@@ -55,9 +54,8 @@ Node &operator<<(Node &node, const SoundBuffer &soundBuffer) {
 }
 
 void SoundBuffer::Load() {
-	if (filename.empty()) {
+	if (filename.empty())
 		return;
-	}
 
 	Registry()[filename.extension().string()].first(this, filename);
 }

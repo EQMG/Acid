@@ -62,13 +62,11 @@ void Socket::SetHandleBlocking(SocketHandle sock, bool block) {
 	int32_t status = fcntl(sock, F_GETFL);
 
 	if (block) {
-		if (fcntl(sock, F_SETFL, status & ~O_NONBLOCK) == -1) {
+		if (fcntl(sock, F_SETFL, status & ~O_NONBLOCK) == -1)
 			Log::Error("Failed to set file status flags: ", errno, '\n');
-		}
 	} else {
-		if (fcntl(sock, F_SETFL, status | O_NONBLOCK) == -1) {
+		if (fcntl(sock, F_SETFL, status | O_NONBLOCK) == -1)
 			Log::Error("Failed to set file status flags: ", errno, '\n');
-		}
 	}
 #endif
 }
@@ -144,9 +142,8 @@ SocketInitializer globalInitializer;
 
 void Socket::SetBlocking(bool blocking) {
 	// Apply if the socket is already created.
-	if (socket != InvalidSocketHandle()) {
+	if (socket != InvalidSocketHandle())
 		SetHandleBlocking(socket, blocking);
-	}
 
 	this->blocking = blocking;
 }
@@ -178,23 +175,20 @@ void Socket::Create(SocketHandle handle) {
 			// Disable the Nagle algorithm (i.e. removes buffering of TCP packets).
 			int32_t yes = 1;
 
-			if (setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
+			if (setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 				Log::Error("Failed to set socket option \"TCP_NODELAY\" ; all your TCP packets will be buffered\n");
-			}
 
 			// On Mac OS X, disable the SIGPIPE signal on disconnection.
 #if defined(ACID_BUILD_MACOS)
-			if (setsockopt(socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1) {
+			if (setsockopt(socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1)
 				Log::Error("Failed to set socket option \"SO_NOSIGPIPE\"\n");
-			}
 #endif
 		} else {
 			// Enable broadcast by default for UDP sockets.
 			int32_t yes = 1;
 
-			if (setsockopt(socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1) {
+			if (setsockopt(socket, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char *>(&yes), sizeof(yes)) == -1)
 				Log::Error("Failed to enable broadcast on UDP socket\n");
-			}
 		}
 	}
 }

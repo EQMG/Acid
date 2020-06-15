@@ -234,11 +234,10 @@ void Instance::CreateDebugMessenger() {
 
 void Instance::LogVulkanLayers(const std::vector<VkLayerProperties> &layerProperties) {
 	std::stringstream ss;
+	
 	ss << "Instance Layers: ";
-
-	for (const auto &layer : layerProperties) {
+	for (const auto &layer : layerProperties)
 		ss << layer.layerName << ", ";
-	}
 
 	ss << "\n\n";
 	Log::Out(ss.str());

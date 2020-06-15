@@ -99,53 +99,33 @@ VkFormat Shader::GlTypeToVk(int32_t type) {
 }
 
 std::optional<uint32_t> Shader::GetDescriptorLocation(const std::string &name) const {
-	auto it = descriptorLocations.find(name);
-
-	if (it == descriptorLocations.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = descriptorLocations.find(name); it != descriptorLocations.end())
+		return it->second;
+	return std::nullopt;
 }
 
 std::optional<uint32_t> Shader::GetDescriptorSize(const std::string &name) const {
-	auto it = descriptorSizes.find(name);
-
-	if (it == descriptorSizes.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = descriptorSizes.find(name); it != descriptorSizes.end())
+		return it->second;
+	return std::nullopt;
 }
 
 std::optional<Shader::Uniform> Shader::GetUniform(const std::string &name) const {
-	auto it = uniforms.find(name);
-
-	if (it == uniforms.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = uniforms.find(name); it != uniforms.end())
+		return it->second;
+	return std::nullopt;
 }
 
 std::optional<Shader::UniformBlock> Shader::GetUniformBlock(const std::string &name) const {
-	auto it = uniformBlocks.find(name);
-
-	if (it == uniformBlocks.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = uniformBlocks.find(name); it != uniformBlocks.end())
+		return it->second;
+	return std::nullopt;
 }
 
 std::optional<Shader::Attribute> Shader::GetAttribute(const std::string &name) const {
-	auto it = attributes.find(name);
-
-	if (it == attributes.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = attributes.find(name); it != attributes.end())
+		return it->second;
+	return std::nullopt;
 }
 
 std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const {
@@ -153,9 +133,8 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const {
 	uint32_t currentOffset = 0;
 
 	for (const auto &[uniformBlockName, uniformBlock] : uniformBlocks) {
-		if (uniformBlock.GetType() != UniformBlock::Type::Push) {
+		if (uniformBlock.GetType() != UniformBlock::Type::Push)
 			continue;
-		}
 
 		VkPushConstantRange pushConstantRange = {};
 		pushConstantRange.stageFlags = uniformBlock.GetStageFlags();
@@ -169,13 +148,9 @@ std::vector<VkPushConstantRange> Shader::GetPushConstantRanges() const {
 }
 
 std::optional<VkDescriptorType> Shader::GetDescriptorType(uint32_t location) const {
-	auto it = descriptorTypes.find(location);
-
-	if (it == descriptorTypes.end()) {
-		return std::nullopt;
-	}
-
-	return it->second;
+	if (auto it = descriptorTypes.find(location); it != descriptorTypes.end())
+		return it->second;
+	return std::nullopt;
 }
 
 VkShaderStageFlagBits Shader::GetShaderStage(const std::filesystem::path &filename) {
@@ -367,24 +342,18 @@ VkShaderModule Shader::CreateShaderModule(const std::filesystem::path &moduleNam
 	//program.dumpReflection();
 
 	for (uint32_t dim = 0; dim < 3; ++dim) {
-		auto localSize = program.getLocalSize(dim);
-
-		if (localSize > 1) {
+		if (auto localSize = program.getLocalSize(dim); localSize > 1)
 			localSizes[dim] = localSize;
-		}
 	}
 
-	for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--) {
+	for (int32_t i = program.getNumLiveUniformBlocks() - 1; i >= 0; i--)
 		LoadUniformBlock(program, moduleFlag, i);
-	}
 
-	for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++) {
+	for (int32_t i = 0; i < program.getNumLiveUniformVariables(); i++)
 		LoadUniform(program, moduleFlag, i);
-	}
 
-	for (int32_t i = 0; i < program.getNumLiveAttributes(); i++) {
+	for (int32_t i = 0; i < program.getNumLiveAttributes(); i++)
 		LoadAttribute(program, moduleFlag, i);
-	}
 
 	glslang::SpvOptions spvOptions;
 #if defined(ACID_DEBUG)
@@ -495,14 +464,12 @@ void Shader::CreateReflection() {
 	});
 
 	// Gets the last descriptors binding.
-	if (!descriptorSetLayouts.empty()) {
+	if (!descriptorSetLayouts.empty())
 		lastDescriptorBinding = descriptorSetLayouts.back().binding;
-	}
 
 	// Gets the descriptor type for each descriptor.
-	for (const auto &descriptor : descriptorSetLayouts) {
+	for (const auto &descriptor : descriptorSetLayouts)
 		descriptorTypes.emplace(descriptor.binding, descriptor.descriptorType);
-	}
 
 	// Process attribute descriptions.
 	uint32_t currentOffset = 4;
@@ -538,17 +505,13 @@ Node &operator<<(Node &node, const Shader &shader) {
 }
 
 void Shader::IncrementDescriptorPool(std::map<VkDescriptorType, uint32_t> &descriptorPoolCounts, VkDescriptorType type) {
-	if (type == VK_DESCRIPTOR_TYPE_MAX_ENUM) {
+	if (type == VK_DESCRIPTOR_TYPE_MAX_ENUM)
 		return;
-	}
 
-	auto it = descriptorPoolCounts.find(type);
-
-	if (it != descriptorPoolCounts.end()) {
+	if (auto it = descriptorPoolCounts.find(type); it != descriptorPoolCounts.end())
 		it->second++;
-	} else {
+	else
 		descriptorPoolCounts.emplace(type, 1);
-	}
 }
 
 void Shader::LoadUniformBlock(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i) {
@@ -562,18 +525,12 @@ void Shader::LoadUniformBlock(const glslang::TProgram &program, VkShaderStageFla
 	}
 
 	auto type = UniformBlock::Type::None;
-
-	if (reflection.getType()->getQualifier().storage == glslang::EvqUniform) {
+	if (reflection.getType()->getQualifier().storage == glslang::EvqUniform)
 		type = UniformBlock::Type::Uniform;
-	}
-
-	if (reflection.getType()->getQualifier().storage == glslang::EvqBuffer) {
+	if (reflection.getType()->getQualifier().storage == glslang::EvqBuffer)
 		type = UniformBlock::Type::Storage;
-	}
-
-	if (reflection.getType()->getQualifier().layoutPushConstant) {
+	if (reflection.getType()->getQualifier().layoutPushConstant)
 		type = UniformBlock::Type::Push;
-	}
 
 	uniformBlocks.emplace(reflection.name, UniformBlock(reflection.getBinding(), reflection.size, stageFlag, type));
 }
@@ -610,14 +567,12 @@ void Shader::LoadUniform(const glslang::TProgram &program, VkShaderStageFlags st
 void Shader::LoadAttribute(const glslang::TProgram &program, VkShaderStageFlags stageFlag, int32_t i) {
 	auto reflection = program.getPipeInput(i);
 
-	if (reflection.name.empty()) {
+	if (reflection.name.empty())
 		return;
-	}
 
 	for (const auto &[attributeName, attribute] : attributes) {
-		if (attributeName == reflection.name) {
+		if (attributeName == reflection.name)
 			return;
-		}
 	}
 
 	auto &qualifier = reflection.getType()->getQualifier();
@@ -629,9 +584,8 @@ int32_t Shader::ComputeSize(const glslang::TType *ttype) {
 	int32_t components = 0;
 
 	if (ttype->getBasicType() == glslang::EbtStruct || ttype->getBasicType() == glslang::EbtBlock) {
-		for (const auto &tl : *ttype->getStruct()) {
+		for (const auto &tl : *ttype->getStruct())
 			components += ComputeSize(tl.type);
-		}
 	} else if (ttype->getMatrixCols() != 0) {
 		components = ttype->getMatrixCols() * ttype->getMatrixRows();
 	} else {
@@ -642,12 +596,9 @@ int32_t Shader::ComputeSize(const glslang::TType *ttype) {
 		int32_t arraySize = 1;
 
 		for (int32_t d = 0; d < ttype->getArraySizes()->getNumDims(); ++d) {
-			auto dimSize = ttype->getArraySizes()->getDimSize(d);
-
 			// This only makes sense in paths that have a known array size.
-			if (dimSize != glslang::UnsizedArraySize) {
+			if (auto dimSize = ttype->getArraySizes()->getDimSize(d); dimSize != glslang::UnsizedArraySize)
 				arraySize *= dimSize;
-			}
 		}
 
 		components *= arraySize;

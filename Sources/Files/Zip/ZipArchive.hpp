@@ -37,7 +37,7 @@ namespace acid {
  * can be both files and folders. It is the main access point into a .zip archive on disk and can be
  * used to create new archives and to open and modify existing archives.
  * @details
- * #### Implementation and usage details
+ * Implementation and usage details
  * Using the ZipArchive class, it is possible to create new .zip archive files, as well as open and modify existing ones.
  *
  * A ZipArchive object holds a mz_zip_archive object (a miniz struct representing a .zip archive) as well as a std::vector
@@ -59,7 +59,7 @@ public:
 	 * @brief Constructor. Constructs an archive object, using the filename input parameter. If the file already exists,
 	 * it will be opened. Otherwise, a new object will be created.
 	 * @details
-	 * #### Implementation details
+	 * Implementation details
 	 * The constructors tries to open an std::ifstream. If it is valid, it means that a file already exists
 	 * and will be opened. Otherwise, the file does not exist and will be created.
 	 * @param filename The name of the file to open or create.
@@ -75,7 +75,7 @@ public:
 	/**
 	 * @brief Creates a new (empty) archive file with the given filename.
 	 * @details
-	 * #### Implementation details
+	 * Implementation details
 	 * A new archive file is created and initialized and thereafter closed, creating an empty archive file.
 	 * After ensuring that the file is valid (i.e. not somehow corrupted), it is opened using the Open() member function.
 	 * @param filename The filename for the new archive.
@@ -85,7 +85,7 @@ public:
 	/**
 	 * @brief Open an existing archive file with the given filename.
 	 * @details
-	 * ##### Implementation details
+	 * #Implementation details
 	 * The archive file is opened and meta data for all the entries in the archive is loaded into memory.
 	 * @param filename The filename of the archive to open.
 	 * @note If more than one entry with the same name exists in the archive, only the newest one will be loaded.

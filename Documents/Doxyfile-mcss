@@ -1,0 +1,6 @@
+@INCLUDE                = Doxyfile
+OUTPUT_DIRECTORY        = ../Build/doc-mcss
+GENERATE_HTML           = NO
+GENERATE_XML            = YES
+XML_PROGRAMLISTING      = NO
+XML_NS_MEMB_FILE_SCOPE  = YES

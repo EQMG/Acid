@@ -28,10 +28,8 @@ void CallbackScroll(GLFWwindow *window, double xoffset, double yoffset) {
 
 void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths) {
 	std::vector<std::string> files(static_cast<uint32_t>(count));
-
-	for (uint32_t i = 0; i < static_cast<uint32_t>(count); i++) {
+	for (uint32_t i = 0; i < static_cast<uint32_t>(count); i++)
 		files[i] = paths[i];
-	}
 
 	Mouse::Get()->onDrop(files);
 }
@@ -66,7 +64,6 @@ void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotsp
 	}
 
 	Bitmap bitmap(filename);
-
 	if (!bitmap) return;
 
 	GLFWimage image[1];
@@ -100,9 +97,7 @@ void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotsp
 }
 
 void Mouse::SetCursor(CursorStandard standard) {
-	if (currentStandard == standard) {
-		return;
-	}
+	if (currentStandard == standard) return;
 
 	glfwDestroyCursor(cursor);
 
@@ -141,9 +136,8 @@ void Mouse::SetCursorHidden(bool hidden) {
 	if (cursorHidden != hidden) {
 		glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
-		if (!hidden && cursorHidden) {
+		if (!hidden && cursorHidden)
 			SetPosition(position);
-		}
 	}
 
 	cursorHidden = hidden;

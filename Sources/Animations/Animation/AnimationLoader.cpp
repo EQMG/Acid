@@ -37,9 +37,8 @@ std::vector<Time> AnimationLoader::GetKeyTimes() const {
 }
 
 void AnimationLoader::CreateKeyframe(const std::vector<Time> &times) {
-	for (const auto &time : times) {
+	for (const auto &time : times)
 		keyframes.emplace_back(Keyframe(time, {}));
-	}
 }
 
 void AnimationLoader::LoadJointTransforms(const Node &jointData, const std::string &rootNodeId) {

@@ -21,9 +21,7 @@ void ParticleSystem::Start() {
 }
 
 void ParticleSystem::Update() {
-	if (types.empty()) {
-		return;
-	}
+	if (types.empty()) return;
 
 	elapsedEmit.SetInterval(Time::Seconds(1.0f / pps));
 
@@ -36,9 +34,8 @@ void ParticleSystem::Update() {
 }
 
 void ParticleSystem::AddParticleType(const std::shared_ptr<ParticleType> &type) {
-	if (std::find(types.begin(), types.end(), type) != types.end()) {
+	if (std::find(types.begin(), types.end(), type) != types.end())
 		return;
-	}
 
 	types.emplace_back(type);
 }
@@ -95,9 +92,8 @@ void ParticleSystem::SetDirection(const Vector3f &direction, float deviation) {
 Particle ParticleSystem::EmitParticle(const Emitter *emitter) {
 	auto spawnPos = emitter->GeneratePosition();
 
-	if (auto transform = GetEntity()->GetComponent<Transform>()) {
+	if (auto transform = GetEntity()->GetComponent<Transform>())
 		spawnPos += transform->GetPosition();
-	}
 
 	Vector3f velocity;
 
@@ -123,9 +119,8 @@ float ParticleSystem::GenerateValue(float average, float errorPercent) {
 }
 
 float ParticleSystem::GenerateRotation() const {
-	if (randomRotation) {
+	if (randomRotation)
 		return Maths::Random(0.0f, Maths::PI<float>);
-	}
 
 	return 0.0f;
 }

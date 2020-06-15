@@ -1,27 +1,11 @@
 #include "Engine.hpp"
 
-#include "Audio/Audio.hpp"
-#include "Devices/Joysticks.hpp"
-#include "Devices/Keyboard.hpp"
-#include "Devices/Mouse.hpp"
-#include "Devices/Window.hpp"
-#include "Files/Files.hpp"
-#include "Gizmos/Gizmos.hpp"
-#include "Inputs/Input.hpp"
-#include "Particles/Particles.hpp"
-#include "Graphics/Graphics.hpp"
-#include "Resources/Resources.hpp"
-#include "Scenes/Scenes.hpp"
-#include "Shadows/Shadows.hpp"
-#include "Timers/Timers.hpp"
-#include "Uis/Uis.hpp"
-
 #include "Config.hpp"
 
 namespace acid {
 Engine *Engine::Instance = nullptr;
 
-Engine::Engine(std::string argv0, bool emptyRegister) :
+Engine::Engine(std::string argv0, ModuleFilter &&moduleFilter) :
 	argv0(std::move(argv0)),
 	version{ACID_VERSION_MAJOR, ACID_VERSION_MINOR, ACID_VERSION_PATCH},
 	fpsLimit(-1.0f),
@@ -37,23 +21,28 @@ Engine::Engine(std::string argv0, bool emptyRegister) :
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 #endif
 
-	// Modules are not self registering so we can ensure regular initialization order.
-	if (!emptyRegister) {
-		Files::Register();
-		Timers::Register();
-		Resources::Register();
-		Window::Register();
-		Audio::Register();
-		Joysticks::Register();
-		Keyboard::Register();
-		Mouse::Register();
-		Graphics::Register();
-		Input::Register();
-		Scenes::Register();
-		Gizmos::Register();
-		Particles::Register();
-		Shadows::Register();
-		Uis::Register();
+	// TODO: Optimize and clean up!
+	std::vector<TypeId> created;
+	for (const auto &[moduleId, moduleTest] : Module::Registry()) {
+		for (const auto &requireId : moduleTest.requires) {
+			const auto &requireTest = Module::Registry()[requireId];
+			if (std::find(created.begin(), created.end(), requireId) == created.end() &&
+				moduleFilter.Check(requireId)) {
+				auto &&module = Module::Registry()[requireId].create();
+				modules.emplace(Module::StageIndex(requireTest.stage, requireId), std::move(module));
+				created.emplace_back(requireId);
+				Log::Debug("Module created: ", requireId, "\n");
+			} else if (!moduleFilter.Check(requireId)) {
+				Log::Error("Module depends on another module this is excluded!");
+			}
+		}
+
+		if (std::find(created.begin(), created.end(), moduleId) == created.end() &&
+			moduleFilter.Check(moduleId)) {
+			auto &&module = moduleTest.create();
+			modules.emplace(Module::StageIndex(moduleTest.stage, moduleId), std::move(module));
+			created.emplace_back(moduleId);
+		}
 	}
 }
 
@@ -117,7 +106,7 @@ int32_t Engine::Run() {
 }
 
 void Engine::UpdateStage(Module::Stage stage) {
-	for (auto &[stageIndex, module] : Module::Registry()) {
+	for (auto &[stageIndex, module] : modules) {
 		if (stageIndex.first == stage)
 			module->Update();
 	}

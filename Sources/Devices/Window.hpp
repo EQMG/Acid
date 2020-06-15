@@ -32,7 +32,8 @@ ENABLE_BITMASK_OPERATORS(InputMod);
 /**
  * @brief Module used for managing a window.
  */
-class ACID_EXPORT Window : public Module::Registrar<Window, Module::Stage::Pre> {
+class ACID_EXPORT Window : public Module::Registrar<Window> {
+	inline static const bool Registered = Register(Stage::Pre);
 public:
 	Window();
 	~Window();

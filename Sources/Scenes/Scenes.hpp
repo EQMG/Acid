@@ -8,7 +8,8 @@ namespace acid {
 /**
  * @brief Module used for managing game scenes.
  */
-class ACID_EXPORT Scenes : public Module::Registrar<Scenes, Module::Stage::Normal> {
+class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
+	inline static const bool Registered = Register(Stage::Normal);
 public:
 	Scenes();
 

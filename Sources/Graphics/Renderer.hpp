@@ -48,9 +48,8 @@ public:
 	}
 
 	RenderStage *GetRenderStage(uint32_t index) const {
-		if (renderStages.empty() || renderStages.size() < index) {
+		if (renderStages.empty() || renderStages.size() < index)
 			return nullptr;
-		}
 
 		return renderStages.at(index).get();
 	}

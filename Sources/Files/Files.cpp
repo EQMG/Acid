@@ -32,10 +32,8 @@ private:
 		}
 
 		auto bytesRead = PHYSFS_readBytes(file, buffer, static_cast<PHYSFS_uint32>(bufferSize));
-
-		if (bytesRead < 1) {
+		if (bytesRead < 1)
 			return traits_type::eof();
-		}
 
 		setg(buffer, buffer, buffer + static_cast<size_t>(bytesRead));
 		return static_cast<int_type>(*gptr());
@@ -55,13 +53,10 @@ private:
 			break;
 		}
 
-		if (mode & std::ios_base::in) {
+		if (mode & std::ios_base::in)
 			setg(egptr(), egptr(), egptr());
-		}
-
-		if (mode & std::ios_base::out) {
+		if (mode & std::ios_base::out)
 			setp(buffer, buffer);
-		}
 
 		return PHYSFS_tell(file);
 	}
@@ -69,30 +64,24 @@ private:
 	pos_type seekpos(pos_type pos, std::ios_base::openmode mode) override {
 		PHYSFS_seek(file, pos);
 
-		if (mode & std::ios_base::in) {
+		if (mode & std::ios_base::in)
 			setg(egptr(), egptr(), egptr());
-		}
-
-		if (mode & std::ios_base::out) {
+		if (mode & std::ios_base::out)
 			setp(buffer, buffer);
-		}
 
 		return PHYSFS_tell(file);
 	}
 
 	int_type overflow(int_type c = traits_type::eof()) override {
-		if (pptr() == pbase() && c == traits_type::eof()) {
+		if (pptr() == pbase() && c == traits_type::eof())
 			return 0; // no-op
-		}
 
-		if (PHYSFS_writeBytes(file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase())) < 1) {
+		if (PHYSFS_writeBytes(file, pbase(), static_cast<PHYSFS_uint32>(pptr() - pbase())) < 1)
 			return traits_type::eof();
-		}
 
 		if (c != traits_type::eof()) {
-			if (PHYSFS_writeBytes(file, &c, 1) < 1) {
+			if (PHYSFS_writeBytes(file, &c, 1) < 1)
 				return traits_type::eof();
-			}
 		}
 
 		return 0;
@@ -140,10 +129,8 @@ PHYSFS_File *OpenWithMode(const std::filesystem::path &filename, FileMode openMo
 		file = PHYSFS_openRead(pathStr.c_str());
 	}
 
-	if (file == NULL) {
+	if (file == NULL)
 		throw std::invalid_argument("File could not be found");
-	}
-
 	return file;
 }
 
@@ -177,9 +164,8 @@ FStream::~FStream() {
 Files::Files() {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	// TODO: Only when not installed. 
-	if (std::filesystem::exists(ACID_RESOURCES_DEV)) {
+	if (std::filesystem::exists(ACID_RESOURCES_DEV))
 		AddSearchPath(std::string(ACID_RESOURCES_DEV));
-	}
 }
 
 Files::~Files() {
@@ -190,9 +176,8 @@ void Files::Update() {
 }
 
 void Files::AddSearchPath(const std::string &path) {
-	if (std::find(searchPaths.begin(), searchPaths.end(), path) != searchPaths.end()) {
+	if (std::find(searchPaths.begin(), searchPaths.end(), path) != searchPaths.end())
 		return;
-	}
 
 	if (PHYSFS_mount(path.c_str(), nullptr, true) == 0) {
 		Log::Warning("Failed to mount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
@@ -205,9 +190,8 @@ void Files::AddSearchPath(const std::string &path) {
 void Files::RemoveSearchPath(const std::string &path) {
 	auto it = std::find(searchPaths.begin(), searchPaths.end(), path);
 
-	if (it == searchPaths.end()) {
+	if (it == searchPaths.end())
 		return;
-	}
 
 	if (PHYSFS_unmount(path.c_str()) == 0) {
 		Log::Warning("Failed to unmount path ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
@@ -219,18 +203,15 @@ void Files::RemoveSearchPath(const std::string &path) {
 
 void Files::ClearSearchPath() {
 	for (const auto &searchPath : searchPaths) {
-		if (PHYSFS_unmount(searchPath.c_str()) == 0) {
+		if (PHYSFS_unmount(searchPath.c_str()) == 0)
 			Log::Warning("Failed to unmount path ", searchPath, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
-		}
 	}
 
 	searchPaths.clear();
 }
 
 bool Files::ExistsInPath(const std::filesystem::path &path) {
-	if (PHYSFS_isInit() == 0) {
-		return false;
-	}
+	if (PHYSFS_isInit() == 0) return false;
 
 	auto pathStr = path.string();
 	std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
@@ -258,9 +239,8 @@ std::optional<std::string> Files::Read(const std::filesystem::path &path) {
 	std::vector<uint8_t> data(size);
 	PHYSFS_readBytes(fsFile, data.data(), static_cast<PHYSFS_uint64>(size));
 
-	if (PHYSFS_close(fsFile) == 0) {
+	if (PHYSFS_close(fsFile) == 0)
 		Log::Error("Failed to close file ", path, ", ", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()), '\n');
-	}
 
 	return std::string(data.begin(), data.end());
 }
@@ -324,15 +304,13 @@ std::istream &Files::SafeGetLine(std::istream &is, std::string &t) {
 			case '\n':
 				return is;
 			case '\r':
-				if (sb->sgetc() == '\n') {
+				if (sb->sgetc() == '\n')
 					sb->sbumpc();
-				}
 				return is;
 			case EOF:
 				// Also handle the case when the last line has no line ending
-				if (t.empty()) {
+				if (t.empty())
 					is.setstate(std::ios::eofbit);
-				}
 
 				return is;
 			default:

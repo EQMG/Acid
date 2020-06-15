@@ -39,9 +39,8 @@ void Timers::ThreadRun() {
 				instance->next += instance->interval;
 
 				if (instance->repeat) {
-					if (--(*instance->repeat) == 0) {
+					if (--*instance->repeat == 0)
 						timers.erase(std::remove(timers.begin(), timers.end(), instance), timers.end());
-					}
 				}
 			} else {
 				std::chrono::microseconds timePoint(instance->next - time);

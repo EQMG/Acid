@@ -61,8 +61,7 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 Framebuffers::~Framebuffers() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	for (const auto &framebuffer : framebuffers) {
+	for (const auto &framebuffer : framebuffers)
 		vkDestroyFramebuffer(*logicalDevice, framebuffer, nullptr);
-	}
 }
 }

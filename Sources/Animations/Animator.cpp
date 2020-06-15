@@ -5,9 +5,7 @@
 
 namespace acid {
 void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrices) {
-	if (!currentAnimation) {
-		return;
-	}
+	if (!currentAnimation) return;
 
 	IncreaseAnimationTime();
 	auto currentPose = CalculateCurrentAnimationPose();
@@ -17,9 +15,8 @@ void Animator::Update(const Joint &rootJoint, std::vector<Matrix4> &jointMatrice
 void Animator::IncreaseAnimationTime() {
 	animationTime += Engine::Get()->GetDelta();
 
-	if (animationTime > currentAnimation->GetLength()) {
+	if (animationTime > currentAnimation->GetLength())
 		animationTime = Time::Seconds(std::fmod(animationTime.AsSeconds(), currentAnimation->GetLength().AsSeconds()));
-	}
 }
 
 std::map<std::string, Matrix4> Animator::CalculateCurrentAnimationPose() const {
@@ -67,15 +64,13 @@ void Animator::CalculateJointPose(const std::map<std::string, Matrix4> &currentP
 	auto currentLocalTransform = currentPose.find(joint.GetName())->second;
 	auto currentTransform = parentTransform * currentLocalTransform;
 
-	for (const auto &childJoint : joint.GetChildren()) {
+	for (const auto &childJoint : joint.GetChildren())
 		CalculateJointPose(currentPose, childJoint, currentTransform, jointMatrices);
-	}
 
 	currentTransform = currentTransform * joint.GetInverseBindTransform();
 
-	if (joint.GetIndex() < jointMatrices.size()) {
+	if (joint.GetIndex() < jointMatrices.size())
 		jointMatrices[joint.GetIndex()] = currentTransform;
-	}
 }
 
 void Animator::DoAnimation(Animation *animation) {

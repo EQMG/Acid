@@ -1,7 +1,11 @@
-#define TINY_DNG_LOADER_IMPLEMENTATION
 #include "tiny_dng.h"
 
+#if defined(_WIN32)
+#include <windows.h>  // wchar apis
+#endif
+
 #include <stdint.h>  // for lj92
+
 #include <cassert>
 #include <cmath>
 #include <cstdio>
@@ -18,10 +22,13 @@
 #include <chrono>
 #endif
 
+#if __cplusplus > 199911L
+
 #ifdef TINY_DNG_LOADER_USE_THREAD
-#include <algorithm>
 #include <atomic>
 #include <thread>
+#endif
+
 #endif
 
 #ifdef __clang__
@@ -109,12 +116,13 @@
 
 #ifdef TINY_DNG_LOADER_ENABLE_ZIP
 #ifndef TINY_DNG_LOADER_USE_SYSTEM_ZLIB
-#include <miniz/miniz.h>
+#include "miniz.h"
 #endif
 #endif
 
-// linjpgd to decode jpeg image.
-#include <libjpgd/jpgd.h>
+// STB image to decode jpeg image.
+// Assume STB_IMAGE_IMPLEMENTATION is defined elsewhere
+#include "stb/stb_image.h"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -2403,7 +2411,7 @@ static bool DecompressZIPedTile(const StreamReader& sr, unsigned char* dst_data,
       tmp_buf.resize(uncompressed_size);
 
       if (!DecompressZIP(tmp_buf.data(), &uncompressed_size, sr.data() + offset,
-                         input_len, err)) {
+                         static_cast<unsigned long>(input_len), err)) {
         if (err) {
           (*err) += "Failed to decode ZIP data.\n";
         }
@@ -2483,7 +2491,7 @@ static bool DecompressZIPedTile(const StreamReader& sr, unsigned char* dst_data,
     tmp_buf.resize(uncompressed_size);
 
     if (!DecompressZIP(tmp_buf.data(), &uncompressed_size, sr.data() + offset,
-                       input_len, err)) {
+                       static_cast<unsigned long>(input_len), err)) {
       if (err) {
         (*err) += "Failed to decode non-tiled ZIP data.\n";
       }
@@ -3989,6 +3997,22 @@ static int easyDecode(const unsigned char* compressed,
 
 }  // namespace lzw
 
+#if defined(_WIN32)
+namespace {
+
+static inline std::wstring UTF8ToWchar(const std::string& str) {
+  int wstr_size =
+      MultiByteToWideChar(CP_UTF8, 0, str.data(), int(str.size()), NULL, 0);
+  TINY_DNG_ASSERT(wstr_size >= 0, "wstr_size must be positive");
+  std::wstring wstr(size_t(wstr_size), 0);
+  MultiByteToWideChar(CP_UTF8, 0, str.data(), int(str.size()), &wstr[0],
+                      int(wstr.size()));
+  return wstr;
+}
+
+}  // namespace
+#endif
+
 bool LoadDNG(const char* filename, std::vector<FieldInfo>& custom_fields,
              std::vector<DNGImage>* images, std::string* warn,
              std::string* err) {
@@ -3997,12 +4021,27 @@ bool LoadDNG(const char* filename, std::vector<FieldInfo>& custom_fields,
 
   TINY_DNG_ASSERT(images, "Invalid images pointer.");
 
-#ifdef _MSC_VER
   FILE* fp;
-  fopen_s(&fp, filename, "rb");
+#if defined(_WIN32)
+
+#if defined(_MSC_VER) || defined(__MINGW32__)  // MSVC, MinGW gcc or clang
+  errno_t errcode = _wfopen_s(&fp, UTF8ToWchar(filename).c_str(), L"rb");
+  if (errcode != 0) {
+    if (err) {
+      (*err) += "Error opening file: " + std::string(filename) + "(errno " +
+                std::to_string(errcode) + ")\n";
+    }
+    return false;
+  }
 #else
-  FILE* fp = fopen(filename, "rb");
+  // Unknown compiler
+  fp = fopen(filename, "rb");
 #endif
+
+#else
+  fp = fopen(filename, "rb");
+#endif
+
   if (!fp) {
     ss << "File not found or cannot open file " << filename << std::endl;
     if (err) {
@@ -4165,7 +4204,7 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
 
       if ((image->strip_byte_counts.size() > 0) &&
           (image->strip_byte_counts.size() == image->strip_offsets.size())) {
-#if defined(TINY_DNG_LOADER_USE_THREAD)
+#if (__cplusplus > 199711L) && defined(TINY_DNG_LOADER_USE_THREAD)
 
         const int num_strips = int(image->strip_byte_counts.size());
 
@@ -4448,8 +4487,8 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
         } else {
           memcpy(image->data.data(), static_cast<void*>(&(buf.at(0))), len);
         }
+
       } else {
-#if 0
         // Baseline 8bit JPEG
 
         image->bits_per_sample = 8;
@@ -4487,9 +4526,6 @@ bool LoadDNGFromMemory(const char* mem, unsigned int size,
 
         image->width = w;
         image->height = h;
-#else
-        TINY_DNG_ASSERT(0, "Cannot decode baseline 8bit JPEG image.");
-#endif
       }
 
     } else if (image->compression ==
@@ -4649,11 +4685,25 @@ bool IsDNGFromMemory(const char* mem, unsigned int size, std::string* msg) {
 bool IsDNG(const char* filename, std::string* msg) {
   std::stringstream ss;
 
-#ifdef _MSC_VER
-  FILE* fp;
-  fopen_s(&fp, filename, "rb");
+  FILE* fp = NULL;
+#if defined(_WIN32)
+
+#if defined(_MSC_VER) || defined(__MINGW32__)  // MSVC, MinGW gcc or clang
+  errno_t errcode = _wfopen_s(&fp, UTF8ToWchar(filename).c_str(), L"rb");
+  if (errcode != 0) {
+    if (msg) {
+      (*msg) += "Error opening file: " + std::string(filename) + "(errno " +
+                std::to_string(errcode) + ")\n";
+    }
+    return false;
+  }
 #else
-  FILE* fp = fopen(filename, "rb");
+  // Unknown compiler
+  fp = fopen(filename, "rb");
+#endif
+
+#else
+  fp = fopen(filename, "rb");
 #endif
   if (!fp) {
     ss << "File not found or cannot open file " << filename << std::endl;

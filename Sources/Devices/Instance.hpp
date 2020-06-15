@@ -5,13 +5,13 @@
 
 #include "Export.hpp"
 
-namespace acid {
-// Debug messenger is a newer Vulkan feature, but extremely useful if available.
-#define USE_DEBUG_MESSENGER VK_HEADER_VERSION >= 121
 #ifndef VK_API_VERSION_1_1
 #define VK_API_VERSION_1_1 VK_MAKE_VERSION(1, 1, 0)
 #endif
+// Debug messenger is a newer Vulkan feature, but extremely useful if available.
+#define USE_DEBUG_MESSENGER VK_HEADER_VERSION >= 121
 
+namespace acid {
 class ACID_EXPORT Instance {
 	friend class Graphics;
 public:

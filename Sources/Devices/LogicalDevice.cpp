@@ -66,9 +66,8 @@ void LogicalDevice::CreateQueueIndices() {
 		}
 	}
 
-	if (!graphicsFamily) {
+	if (!graphicsFamily)
 		throw std::runtime_error("Failed to find queue family supporting VK_QUEUE_GRAPHICS_BIT");
-	}
 }
 
 void LogicalDevice::CreateLogicalDevice() {
@@ -113,80 +112,69 @@ void LogicalDevice::CreateLogicalDevice() {
 	VkPhysicalDeviceFeatures enabledFeatures = {};
 
 	// Enable sample rate shading filtering if supported.
-	if (physicalDeviceFeatures.sampleRateShading) {
+	if (physicalDeviceFeatures.sampleRateShading)
 		enabledFeatures.sampleRateShading = VK_TRUE;
-	}
 
 	// Fill mode non solid is required for wireframe display.
 	if (physicalDeviceFeatures.fillModeNonSolid) {
 		enabledFeatures.fillModeNonSolid = VK_TRUE;
 
 		// Wide lines must be present for line width > 1.0f.
-		if (physicalDeviceFeatures.wideLines) {
+		if (physicalDeviceFeatures.wideLines)
 			enabledFeatures.wideLines = VK_TRUE;
-		}
 	} else {
 		Log::Warning("Selected GPU does not support wireframe pipelines!\n");
 	}
 
-	if (physicalDeviceFeatures.samplerAnisotropy) {
+	if (physicalDeviceFeatures.samplerAnisotropy)
 		enabledFeatures.samplerAnisotropy = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support sampler anisotropy!\n");
-	}
 
-	if (physicalDeviceFeatures.textureCompressionBC) {
+	if (physicalDeviceFeatures.textureCompressionBC)
 		enabledFeatures.textureCompressionBC = VK_TRUE;
-	} else if (physicalDeviceFeatures.textureCompressionASTC_LDR) {
+	else if (physicalDeviceFeatures.textureCompressionASTC_LDR)
 		enabledFeatures.textureCompressionASTC_LDR = VK_TRUE;
-	} else if (physicalDeviceFeatures.textureCompressionETC2) {
+	else if (physicalDeviceFeatures.textureCompressionETC2)
 		enabledFeatures.textureCompressionETC2 = VK_TRUE;
-	}
 
-	if (physicalDeviceFeatures.vertexPipelineStoresAndAtomics) {
+	if (physicalDeviceFeatures.vertexPipelineStoresAndAtomics)
 		enabledFeatures.vertexPipelineStoresAndAtomics = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support vertex pipeline stores and atomics!\n");
-	}
 
-	if (physicalDeviceFeatures.fragmentStoresAndAtomics) {
+	if (physicalDeviceFeatures.fragmentStoresAndAtomics)
 		enabledFeatures.fragmentStoresAndAtomics = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support fragment stores and atomics!\n");
-	}
 
-	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats) {
+	if (physicalDeviceFeatures.shaderStorageImageExtendedFormats)
 		enabledFeatures.shaderStorageImageExtendedFormats = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support shader storage extended formats!\n");
-	}
 
-	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat) {
+	if (physicalDeviceFeatures.shaderStorageImageWriteWithoutFormat)
 		enabledFeatures.shaderStorageImageWriteWithoutFormat = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support shader storage write without format!\n");
-	}
 
 	//enabledFeatures.shaderClipDistance = VK_TRUE;
 	//enabledFeatures.shaderCullDistance = VK_TRUE;
 
-	if (physicalDeviceFeatures.geometryShader) {
+	if (physicalDeviceFeatures.geometryShader)
 		enabledFeatures.geometryShader = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support geometry shaders!\n");
-	}
 
-	if (physicalDeviceFeatures.tessellationShader) {
+	if (physicalDeviceFeatures.tessellationShader)
 		enabledFeatures.tessellationShader = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support tessellation shaders!\n");
-	}
 
-	if (physicalDeviceFeatures.multiViewport) {
+	if (physicalDeviceFeatures.multiViewport)
 		enabledFeatures.multiViewport = VK_TRUE;
-	} else {
+	else
 		Log::Warning("Selected GPU does not support multi viewports!\n");
-	}
 
 	VkDeviceCreateInfo deviceCreateInfo = {};
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;

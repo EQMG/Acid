@@ -3,9 +3,6 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
-DescriptorsHandler::DescriptorsHandler() {
-}
-
 DescriptorsHandler::DescriptorsHandler(const Pipeline &pipeline) :
 	shader(pipeline.GetShader()),
 	pushDescriptors(pipeline.IsPushDescriptors()),
@@ -56,16 +53,14 @@ bool DescriptorsHandler::Update(const Pipeline &pipeline) {
 			auto writeDescriptorSet = descriptor.writeDescriptor.GetWriteDescriptorSet();
 			writeDescriptorSet.dstSet = VK_NULL_HANDLE;
 
-			if (!pushDescriptors) {
+			if (!pushDescriptors)
 				writeDescriptorSet.dstSet = descriptorSet->GetDescriptorSet();
-			}
 
 			writeDescriptorSets.emplace_back(writeDescriptorSet);
 		}
 
-		if (!pushDescriptors) {
+		if (!pushDescriptors)
 			descriptorSet->Update(writeDescriptorSets);
-		}
 
 		changed = false;
 	}

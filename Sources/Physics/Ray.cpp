@@ -9,11 +9,10 @@ Ray::Ray(bool useMouse, const Vector2f &screenStart) :
 void Ray::Update(const Vector3f &currentPosition, const Vector2f &mousePosition, const Matrix4 &viewMatrix, const Matrix4 &projectionMatrix) {
 	origin = currentPosition;
 
-	if (useMouse) {
+	if (useMouse)
 		UpdateNormalizedDeviceCoordinates(mousePosition.x, mousePosition.y);
-	} else {
+	else
 		normalizedCoords = screenStart;
-	}
 
 	this->viewMatrix = viewMatrix;
 	this->projectionMatrix = projectionMatrix;
@@ -32,9 +31,8 @@ Vector3f Ray::ConvertToScreenSpace(const Vector3f &position) const {
 	coords = viewMatrix.Transform(coords);
 	coords = projectionMatrix.Transform(coords);
 
-	if (coords.w < 0.0f) {
+	if (coords.w < 0.0f)
 		return {};
-	}
 
 	return {(coords.x / coords.w + 1.0f) / 2.0f, 1.0f - (coords.y / coords.w + 1.0f) / 2.0f, coords.z};
 }

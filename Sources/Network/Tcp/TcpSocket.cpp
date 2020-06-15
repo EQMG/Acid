@@ -34,9 +34,8 @@ uint16_t TcpSocket::GetLocalPort() const {
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
+		if (getsockname(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			return ntohs(address.sin_port);
-		}
 	}
 
 	// We failed to retrieve the port.
@@ -49,9 +48,8 @@ IpAddress TcpSocket::GetRemoteAddress() const {
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
+		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			return {ntohl(address.sin_addr.s_addr)};
-		}
 	}
 
 	// We failed to retrieve the address.
@@ -64,9 +62,8 @@ uint16_t TcpSocket::GetRemotePort() const {
 		sockaddr_in address;
 		SocketAddrLength size = sizeof(address);
 
-		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1) {
+		if (getpeername(GetHandle(), reinterpret_cast<sockaddr *>(&address), &size) != -1)
 			return ntohs(address.sin_port);
-		}
 	}
 
 	// We failed to retrieve the port.
@@ -87,9 +84,8 @@ Socket::Status TcpSocket::Connect(const IpAddress &remoteAddress, uint16_t remot
 		// We're not using a timeout: just try to connect.
 
 		// Connect the socket
-		if (connect(GetHandle(), reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1) {
+		if (connect(GetHandle(), reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1)
 			return GetErrorStatus();
-		}
 
 		// Connection succeeded.
 		return Status::Done;
@@ -188,9 +184,8 @@ Socket::Status TcpSocket::Send(const void *data, std::size_t size, std::size_t &
 		if (result < 0) {
 			auto status = GetErrorStatus();
 
-			if ((status == Status::NotReady) && sent) {
+			if (status == Status::NotReady && sent)
 				return Status::Partial;
-			}
 
 			return status;
 		}
@@ -218,9 +213,8 @@ Socket::Status TcpSocket::Receive(void *data, std::size_t size, std::size_t &rec
 		return Status::Done;
 	}
 
-	if (sizeReceived == 0) {
+	if (sizeReceived == 0)
 		return Status::Disconnected;
-	}
 
 	return GetErrorStatus();
 }
@@ -247,20 +241,18 @@ Socket::Status TcpSocket::Send(Packet &packet) {
 	// Copy the packet size and data into the block to send
 	std::memcpy(&blockToSend[0], &packetSize, sizeof(packetSize));
 
-	if (dataSize.second > 0) {
+	if (dataSize.second > 0)
 		std::memcpy(&blockToSend[0] + sizeof(packetSize), dataSize.first, dataSize.second);
-	}
 
 	// Send the data block.
 	std::size_t sent;
 	auto status = Send(&blockToSend[0] + packet.sendPos, blockToSend.size() - packet.sendPos, sent);
 
 	// In the case of a partial send, record the location to resume from
-	if (status == Status::Partial) {
+	if (status == Status::Partial)
 		packet.sendPos += sent;
-	} else if (status == Status::Done) {
+	else if (status == Status::Done)
 		packet.sendPos = 0;
-	}
 
 	return status;
 }
@@ -280,9 +272,8 @@ Socket::Status TcpSocket::Receive(Packet &packet) {
 			Status status = Receive(data, sizeof(pendingPacket.size) - pendingPacket.sizeReceived, received);
 			pendingPacket.sizeReceived += received;
 
-			if (status != Status::Done) {
+			if (status != Status::Done)
 				return status;
-			}
 		}
 
 		// The packet size has been fully received.
@@ -300,9 +291,8 @@ Socket::Status TcpSocket::Receive(Packet &packet) {
 		auto sizeToGet = std::min(static_cast<std::size_t>(packetSize - pendingPacket.data.size()), sizeof(buffer));
 		auto status = Receive(buffer, sizeToGet, received);
 
-		if (status != Status::Done) {
+		if (status != Status::Done)
 			return status;
-		}
 
 		// Append it into the packet.
 		if (received > 0) {
@@ -313,9 +303,8 @@ Socket::Status TcpSocket::Receive(Packet &packet) {
 	}
 
 	// We have received all the packet data: we can copy it to the user packet.
-	if (!pendingPacket.data.empty()) {
+	if (!pendingPacket.data.empty())
 		packet.OnReceive(&pendingPacket.data[0], pendingPacket.data.size());
-	}
 
 	// Clear the pending packet data.
 	pendingPacket = {};

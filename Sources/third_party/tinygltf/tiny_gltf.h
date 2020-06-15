@@ -4,7 +4,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 - 2019 Syoyo Fujita, Aurélien Chatelain and many
+// Copyright (c) 2015 - 2020 Syoyo Fujita, Aurélien Chatelain and many
 // contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,6 +26,7 @@
 // THE SOFTWARE.
 
 // Version:
+//  - v2.4.2 Decode percent-encoded URI.
 //  - v2.4.1 Fix some glTF object class does not have `extensions` and/or
 //  `extras` property.
 //  - v2.4.0 Experimental RapidJSON and C++14 support(Thanks to @jrkoone).
@@ -51,6 +52,7 @@
 
 #include <array>
 #include <cassert>
+#include <cmath>  // std::fabs
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -321,7 +323,8 @@ class Value {
   }
 
   // Use this function if you want to have number value as int.
-  double GetNumberAsInt() const {
+  // TODO(syoyo): Support int value larger than 32 bits
+  int GetNumberAsInt() const {
     if (type_ == REAL_TYPE) {
       return int(real_value_);
     } else {
@@ -639,7 +642,8 @@ struct Image {
   int bufferView;        // (required if no uri)
   std::string mimeType;  // (required if no uri) ["image/jpeg", "image/png",
                          // "image/bmp", "image/gif"]
-  std::string uri;       // (required if no mimeType)
+  std::string uri;       // (required if no mimeType) uri is not decoded(e.g.
+                         // whitespace may be represented as %20)
   Value extras;
   ExtensionMap extensions;
 
@@ -799,12 +803,13 @@ struct Material {
 
 struct BufferView {
   std::string name;
-  int buffer{-1};         // Required
+  int buffer{-1};        // Required
   size_t byteOffset{0};  // minimum 0, default 0
   size_t byteLength{0};  // required, minimum 1. 0 = invalid
   size_t byteStride{0};  // minimum 4, maximum 252 (multiple of 4), default 0 =
-                      // understood to be tightly packed
-  int target{0};         // ["ARRAY_BUFFER", "ELEMENT_ARRAY_BUFFER"] for vertex indices or atttribs. Could be 0 for other data
+                         // understood to be tightly packed
+  int target{0};  // ["ARRAY_BUFFER", "ELEMENT_ARRAY_BUFFER"] for vertex indices
+                  // or atttribs. Could be 0 for other data
   Value extras;
   ExtensionMap extensions;
 
@@ -814,7 +819,13 @@ struct BufferView {
 
   bool dracoDecoded{false};  // Flag indicating this has been draco decoded
 
-  BufferView() : buffer(-1), byteOffset(0), byteLength(0), byteStride(0), target(0), dracoDecoded(false) {}
+  BufferView()
+      : buffer(-1),
+        byteOffset(0),
+        byteLength(0),
+        byteStride(0),
+        target(0),
+        dracoDecoded(false) {}
   DEFAULT_METHODS(BufferView)
   bool operator==(const BufferView &) const;
 };
@@ -889,13 +900,13 @@ struct Accessor {
     // unreachable return 0;
   }
 
-  Accessor() :
-    bufferView(-1),
-    byteOffset(0),
-    normalized(false),
-    componentType(-1),
-    count(0),
-    type(-1){
+  Accessor()
+      : bufferView(-1),
+        byteOffset(0),
+        normalized(false),
+        componentType(-1),
+        count(0),
+        type(-1) {
     sparse.isSparse = false;
   }
   DEFAULT_METHODS(Accessor)
@@ -1039,6 +1050,7 @@ struct Buffer {
   std::vector<unsigned char> data;
   std::string
       uri;  // considered as required here but not in the spec (need to clarify)
+            // uri is not decoded(e.g. whitespace may be represented as %20)
   Value extras;
   ExtensionMap extensions;
 
@@ -1103,9 +1115,9 @@ struct SpotLight {
 struct Light {
   std::string name;
   std::vector<double> color;
-  double intensity;
+  double intensity{1.0};
   std::string type;
-  double range;
+  double range{0.0};  // 0.0 = inifinite
   SpotLight spot;
 
   Light() : intensity(1.0), range(0.0) {}
@@ -1182,6 +1194,19 @@ typedef bool (*LoadImageDataFunction)(Image *, const int, std::string *,
 typedef bool (*WriteImageDataFunction)(const std::string *, const std::string *,
                                        Image *, bool, void *);
 
+#ifndef TINYGLTF_NO_STB_IMAGE
+// Declaration of default image loader callback
+bool LoadImageData(Image *image, const int image_idx, std::string *err,
+                   std::string *warn, int req_width, int req_height,
+                   const unsigned char *bytes, int size, void *);
+#endif
+
+#ifndef TINYGLTF_NO_STB_IMAGE_WRITE
+// Declaration of default image writer callback
+bool WriteImageData(const std::string *basepath, const std::string *filename,
+                    Image *image, bool embedImages, void *);
+#endif
+
 ///
 /// FilExistsFunction type. Signature for custom filesystem callbacks.
 ///
@@ -1224,7 +1249,13 @@ struct FsCallbacks {
 
 bool FileExists(const std::string &abs_filename, void *);
 
-std::string ExpandFilePath(const std::string &filepath, void *);
+///
+/// Expand file path(e.g. `~` to home directory on posix, `%APPDATA%` to `C:\Users\tinygltf\AppData`)
+///
+/// @param[in] filepath File path string. Assume UTF-8
+/// @param[in] userdata User data. Set to `nullptr` if you don't need it.
+///
+std::string ExpandFilePath(const std::string &filepath, void *userdata);
 
 bool ReadWholeFile(std::vector<unsigned char> *out, std::string *err,
                    const std::string &filepath, void *);
@@ -1380,10 +1411,20 @@ class TinyGLTF {
 #endif
   };
 
-  LoadImageDataFunction LoadImageData = nullptr;
+  LoadImageDataFunction LoadImageData =
+#ifndef TINYGLTF_NO_STB_IMAGE
+      &tinygltf::LoadImageData;
+#else
+      nullptr;
+#endif
   void *load_image_user_data_ = reinterpret_cast<void *>(&fs);
 
-  WriteImageDataFunction WriteImageData = nullptr;
+  WriteImageDataFunction WriteImageData =
+#ifndef TINYGLTF_NO_STB_IMAGE_WRITE
+      &tinygltf::WriteImageData;
+#else
+      nullptr;
+#endif
   void *write_image_user_data_ = reinterpret_cast<void *>(&fs);
 };
 

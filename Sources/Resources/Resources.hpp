@@ -12,7 +12,8 @@ namespace acid {
  * @brief Module used for managing resources. Resources are held alive as long as they are in use,
  * a existing resource is queried by node value.
  */
-class ACID_EXPORT Resources : public Module::Registrar<Resources, Module::Stage::Post> {
+class ACID_EXPORT Resources : public Module::Registrar<Resources> {
+	inline static const bool Registered = Register(Stage::Post);
 public:
 	Resources();
 

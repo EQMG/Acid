@@ -72,9 +72,7 @@ void Model::SetIndices(const std::vector<uint32_t> &indices) {
 }
 
 std::vector<float> Model::GetPointCloud() const {
-	if (!vertexBuffer) {
-		return {};
-	}
+	if (!vertexBuffer) return {};
 
 	// This assumes a Vector3f attribute is the first vertex attribute.
 	auto indices = GetIndices();

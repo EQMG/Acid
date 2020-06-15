@@ -37,16 +37,4 @@ private:
 };
 
 template class ACID_EXPORT TypeInfo<Subrender>;
-
-/**
- * Gets the Type ID for the Subrender.
- * @tparam T The Subrender type.
- * @return The Type ID.
- */
-template<typename T>
-TypeId GetSubrenderTypeId() noexcept {
-	static_assert(std::is_base_of<Subrender, T>::value, "T must be a Subrender.");
-
-	return TypeInfo<Subrender>::GetTypeId<T>();
-}
 }

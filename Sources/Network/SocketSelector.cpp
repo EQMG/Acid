@@ -45,9 +45,8 @@ void SocketSelector::Add(Socket &socket) {
 			return;
 		}
 
-		if (FD_ISSET(handle, &impl->allSockets)) {
+		if (FD_ISSET(handle, &impl->allSockets))
 			return;
-		}
 
 		impl->socketCount++;
 #else
@@ -69,16 +68,14 @@ void SocketSelector::Remove(Socket &socket) {
 
 	if (handle != Socket::InvalidSocketHandle()) {
 #if defined(ACID_BUILD_WINDOWS)
-		if (!FD_ISSET(handle, &impl->allSockets)) {
+		if (!FD_ISSET(handle, &impl->allSockets))
 			return;
-		}
 
 		impl->socketCount--;
 
 #else
-		if (handle >= FD_SETSIZE) {
+		if (handle >= FD_SETSIZE)
 			return;
-		}
 #endif
 
 		FD_CLR(handle, &impl->allSockets);
@@ -115,9 +112,8 @@ bool SocketSelector::IsReady(const Socket &socket) const {
 
 	if (handle != Socket::InvalidSocketHandle()) {
 #if !defined(ACID_BUILD_WINDOWS)
-		if (handle >= FD_SETSIZE) {
+		if (handle >= FD_SETSIZE)
 			return false;
-		}
 #endif
 
 		return FD_ISSET(handle, &impl->socketsReady) != 0;

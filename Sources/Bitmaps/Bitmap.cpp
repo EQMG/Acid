@@ -40,9 +40,8 @@ void Bitmap::Load(const std::filesystem::path &filename) {
 }
 
 void Bitmap::Write(const std::filesystem::path &filename) const {
-	if (auto parentPath = filename.parent_path(); !parentPath.empty()) {
+	if (auto parentPath = filename.parent_path(); !parentPath.empty())
 		std::filesystem::create_directories(parentPath);
-	}
 
 	//Registry()[filename.extension().string()].second(this, filename);
 

@@ -48,9 +48,8 @@ Packet::operator BoolType() const {
 Packet &Packet::operator>>(bool &data) {
 	uint8_t value;
 
-	if (*this >> value) {
-		data = (value != 0);
-	}
+	if (*this >> value)
+		data = value != 0;
 
 	return *this;
 }
@@ -325,9 +324,8 @@ Packet &Packet::operator<<(const wchar_t *data) {
 	*this << length;
 
 	// Then insert characters.
-	for (auto c = data; *c != L'\0'; ++c) {
+	for (auto c = data; *c != L'\0'; ++c)
 		*this << static_cast<uint32_t>(*c);
-	}
 
 	return *this;
 }
@@ -339,9 +337,8 @@ Packet &Packet::operator<<(const std::wstring &data) {
 
 	// Then insert characters.
 	if (length > 0) {
-		for (auto c : data) {
+		for (auto c : data)
 			*this << static_cast<uint32_t>(c);
-		}
 	}
 
 	return *this;

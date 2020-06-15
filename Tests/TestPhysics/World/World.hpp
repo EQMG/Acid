@@ -2,13 +2,16 @@
 
 #include <Engine/Engine.hpp>
 #include <Uis/Drivers/LinearDriver.hpp>
+#include <Graphics/Graphics.hpp>
+#include <Scenes/Scenes.hpp>
 #include <Maths/Vector3.hpp>
 #include <Lights/Fog.hpp>
 
 using namespace acid;
 
 namespace test {
-class World : public Module::Registrar<World, Module::Stage::Always> {
+class World : public Module::Registrar<World> {
+	inline static const bool Registered = Register(Stage::Always, Requires<Graphics, Scenes>());
 public:
 	World();
 

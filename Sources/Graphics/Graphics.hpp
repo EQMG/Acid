@@ -7,13 +7,15 @@
 #include "Devices/LogicalDevice.hpp"
 #include "Devices/PhysicalDevice.hpp"
 #include "Devices/Surface.hpp"
+#include "Devices/Window.hpp"
 #include "Renderer.hpp"
 
 namespace acid {
 /**
  * @brief Module that manages the Vulkan instance, Surface, Window and the renderpass structure.
  */
-class ACID_EXPORT Graphics : public Module::Registrar<Graphics, Module::Stage::Render> {
+class ACID_EXPORT Graphics : public Module::Registrar<Graphics> {
+	inline static const bool Registered = Register(Stage::Render, Requires<Window>());
 public:
 	Graphics();
 	

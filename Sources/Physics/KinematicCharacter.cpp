@@ -31,13 +31,11 @@ KinematicCharacter::~KinematicCharacter() {
 }
 
 void KinematicCharacter::Start() {
-	if (ghostObject) {
+	if (ghostObject)
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(ghostObject.get());
-	}
 
-	if (controller) {
+	if (controller)
 		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(controller.get());
-	}
 
 	CreateShape(true);
 	assert((shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
@@ -45,9 +43,8 @@ void KinematicCharacter::Start() {
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-	if (mass != 0.0f) {
+	if (mass != 0.0f)
 		shape->calculateLocalInertia(mass, localInertia);
-	}
 
 	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
@@ -75,9 +72,8 @@ void KinematicCharacter::Start() {
 }
 
 void KinematicCharacter::Update() {
-	if (shape.get() != body->getCollisionShape()) {
+	if (shape.get() != body->getCollisionShape())
 		body->setCollisionShape(shape.get());
-	}
 
 	auto &transform = *GetEntity()->GetComponent<Transform>();
 	auto worldTransform = ghostObject->getWorldTransform();
@@ -91,9 +87,8 @@ bool KinematicCharacter::InFrustum(const Frustum &frustum) {
 	btVector3 min;
 	btVector3 max;
 
-	if (body && shape) {
+	if (body && shape)
 		shape->getAabb(Collider::Convert(*GetEntity()->GetComponent<Transform>()), min, max);
-	}
 
 	return frustum.CubeInFrustum(Collider::Convert(min), Collider::Convert(max));
 }

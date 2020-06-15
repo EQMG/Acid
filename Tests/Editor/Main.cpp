@@ -15,9 +15,6 @@ int main(int argc, char **argv) {
 	// Registers file search paths.
 	Files::Get()->AddSearchPath("Resources/Engine");
 
-	// Registers modules.
-	Plugins::Register();
-
 	// Sets values to modules.
 	Window::Get()->SetTitle("Acid Editor");
 	Window::Get()->SetIcons({

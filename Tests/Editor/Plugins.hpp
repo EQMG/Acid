@@ -2,6 +2,7 @@
 
 #include <Engine/Engine.hpp>
 #include <Files/FileObserver.hpp>
+#include <Files/Files.hpp>
 #include <Inputs/Buttons/KeyboardInputButton.hpp>
 #include "Uis/Panels.hpp"
 
@@ -13,7 +14,8 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins : public Module::Registrar<Plugins, Module::Stage::Always>, public rocket::trackable {
+class Plugins : public Module::Registrar<Plugins>, public rocket::trackable {
+	inline static const bool Registered = Register(Stage::Always, Requires<Files>());
 public:
 	Plugins();
 	~Plugins();

@@ -18,16 +18,13 @@ public:
 	 */
 	template<typename T>
 	T *Get() const {
-		const auto typeId = GetSubrenderTypeId<T>();
+		const auto typeId = TypeInfo<Subrender>::GetTypeId<T>();
 
-		auto it = subrenders.find(typeId);
+		if (auto it = subrenders.find(typeId);  it != subrenders.end() && it->second)
+			return static_cast<T *>(it->second.get());
 
-		if (it == subrenders.end() || !it->second) {
-			//throw std::runtime_error("Subrender Holder does not have requested Subrender");
-			return nullptr;
-		}
-
-		return static_cast<T *>(it->second.get());
+		//throw std::runtime_error("Subrender Holder does not have requested Subrender");
+		return nullptr;
 	}
 
 	/**
@@ -42,7 +39,7 @@ public:
 		// Remove previous Subrender, if it exists.
 		//Remove<T>();
 
-		const auto typeId = GetSubrenderTypeId<T>();
+		const auto typeId = TypeInfo<Subrender>::GetTypeId<T>();
 
 		// Insert the stage value
 		stages.insert({StageIndex(stage, subrenders.size()), typeId});
@@ -58,7 +55,7 @@ public:
 	 */
 	template<typename T>
 	void Remove() {
-		const auto typeId = GetSubrenderTypeId<T>();
+		const auto typeId = TypeInfo<Subrender>::GetTypeId<T>();
 
 		// Remove the stage value for this Subrender.
 		RemoveSubrenderStage(typeId);

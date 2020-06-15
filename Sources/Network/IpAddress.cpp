@@ -54,9 +54,8 @@ IpAddress IpAddress::GetLocalAddress() {
 	// Create the socket.
 	auto sock = socket(PF_INET, SOCK_DGRAM, 0);
 
-	if (sock == Socket::InvalidSocketHandle()) {
+	if (sock == Socket::InvalidSocketHandle())
 		return localAddress;
-	}
 
 	// Connect the socket to localhost on any port.
 	auto address = Socket::CreateAddress(ntohl(INADDR_LOOPBACK), 9);
@@ -94,9 +93,8 @@ IpAddress IpAddress::GetPublicAddress(const Time &timeout) {
 	HttpRequest request("/ip-provider.php", HttpRequest::Method::Get);
 	auto page = server.SendRequest(request, timeout);
 
-	if (page.GetStatus() == HttpResponse::Status::Ok) {
+	if (page.GetStatus() == HttpResponse::Status::Ok)
 		return {page.GetBody()};
-	}
 
 	// Something failed: return an invalid address.
 	return {};

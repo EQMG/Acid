@@ -2,22 +2,22 @@
 
 #include <map>
 #include <memory>
+#include <functional>
 
 #include "Utils/NonCopyable.hpp"
+#include "Utils/TypeInfo.hpp"
 
 namespace acid {
 template<typename Base>
 class ModuleFactory {
 public:
-	/**
-	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
-	 */
-	enum class Stage : uint8_t {
-		Never, Always, Pre, Normal, Post, Render
+	class TCreateValue {
+	public:
+		std::function<std::unique_ptr<Base>()> create;
+		typename Base::Stage stage;
+		std::vector<TypeId> requires;
 	};
-	
-	using StageIndex = std::pair<Stage, std::size_t>;
-	using TRegistryMap = std::multimap<StageIndex, std::unique_ptr<Base>>;
+	using TRegistryMap = std::unordered_map<TypeId, TCreateValue>;
 
 	virtual ~ModuleFactory() = default;
 
@@ -26,49 +26,41 @@ public:
 		return impl;
 	}
 
-	static std::size_t GetNextId() {
-		static std::size_t id = 0;
-		return ++id;
-	}
+	template<typename ... Args>
+	class Requires {
+	public:
+		std::vector<TypeId> Get() const {
+			std::vector<TypeId> requires;
+			(requires.emplace_back(TypeInfo<Base>::template GetTypeId<Args>()), ...);
+			return requires;
+		}
+	};
 
-	template<typename T, Stage S>
+	template<typename T>
 	class Registrar : public Base {
 	public:
 		/**
 		 * Gets the engines instance.
 		 * @return The current module instance.
 		 */
-		static T *Get() { return ModuleInstance; }
+		static T *Get() { return moduleInstance; }
 
+	protected:
 		/**
 		 * Creates a new module singleton instance and registers into the module registry map.
+		 * @tparam Args Modules that will be initialized before this module.
 		 * @return A dummy value in static initialization.
 		 */
-		static bool Register() {
-			auto it = Registry().insert({StageIndex(S, GetNextId()), std::make_unique<T>()});
-			ModuleInstance = dynamic_cast<T *>(it->second.get());
-			return true;
-		}
-
-		/**
-		 * Deletes this module singleton instance and removed it from the module registry map.
-		 * @return A dummy value in static initialization.
-		 */
-		static bool Deregister() {
-			for (auto it = Registry().begin(); it != Registry().end();) {
-				if (it->second.get() == ModuleInstance) {
-					it = Registry().erase(it);
-				} else {
-					++it;
-				}
-			}
-			ModuleInstance = nullptr;
+		template<typename ... Args>
+		static bool Register(typename Base::Stage stage, Requires<Args...> &&requires = {}) {
+			ModuleFactory::Registry()[TypeInfo<Base>::template GetTypeId<T>()] = {[]() {
+				moduleInstance = new T();
+				return std::unique_ptr<Base>(moduleInstance);
+			}, stage, requires.Get()};
 			return true;
 		}
 		
-	private:
-		// Named ModuleInstance instead of Instance to avoid name collisions.
-		inline static T *ModuleInstance = nullptr;
+		inline static T *moduleInstance = nullptr;
 	};
 };
 
@@ -77,11 +69,64 @@ public:
  */
 class ACID_EXPORT Module : public ModuleFactory<Module>, NonCopyable {
 public:
+	/**
+	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
+	 */
+	enum class Stage : uint8_t {
+		Never, Always, Pre, Normal, Post, Render
+	};
+
+	using StageIndex = std::pair<Stage, std::size_t>;
+
 	virtual ~Module() = default;
 
 	/**
 	 * The update function for the module.
 	 */
 	virtual void Update() = 0;
+};
+
+template class ACID_EXPORT TypeInfo<Module>;
+
+class ACID_EXPORT ModuleFilter {
+public:
+	ModuleFilter() {
+		// Include all modules by default.
+		include.set();
+	}
+	
+	template<typename T>
+	bool Check() const noexcept {
+		return include.test(TypeInfo<Module>::GetTypeId<T>());
+	}
+
+	bool Check(TypeId typeId) const noexcept {
+		return include.test(typeId);
+	}
+
+	template<typename T>
+	ModuleFilter &Exclude() noexcept {
+		include.reset(TypeInfo<Module>::GetTypeId<T>());
+		return *this;
+	}
+
+	template<typename T>
+	ModuleFilter &Include() noexcept {
+		include.set(TypeInfo<Module>::GetTypeId<T>());
+		return *this;
+	}
+
+	ModuleFilter &ExcludeAll() noexcept {
+		include.reset();
+		return *this;
+	}
+
+	ModuleFilter &IncludeAll() noexcept {
+		include.set();
+		return *this;
+	}
+
+private:
+	std::bitset<64> include;
 };
 }

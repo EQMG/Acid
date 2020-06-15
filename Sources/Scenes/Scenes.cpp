@@ -5,8 +5,7 @@ Scenes::Scenes() {
 }
 
 void Scenes::Update() {
-	if (!scene)
-		return;
+	if (!scene) return;
 
 	if (!scene->started) {
 		scene->Start();

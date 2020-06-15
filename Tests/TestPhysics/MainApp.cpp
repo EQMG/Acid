@@ -58,10 +58,6 @@ MainApp::MainApp() :
 		if (action == InputAction::Press)
 			Engine::Get()->RequestClose();
 	});
-
-	// Registers modules.
-	World::Register();
-	//Shadows::Deregister();
 }
 
 MainApp::~MainApp() {

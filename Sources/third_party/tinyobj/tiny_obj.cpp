@@ -1,4 +1,3 @@
-#define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj.h"
 
 #include <cassert>
@@ -1767,8 +1766,9 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       std::string namebuf = parseString(&token);
 
       int newMaterialId = -1;
-      if (material_map.find(namebuf) != material_map.end()) {
-        newMaterialId = material_map[namebuf];
+      std::map<std::string, int>::const_iterator it = material_map.find(namebuf);
+      if (it != material_map.end()) {
+        newMaterialId = it->second;
       } else {
         // { error!! material not found }
         if (warn) {
@@ -2175,8 +2175,9 @@ bool LoadObjWithCallback(std::istream &inStream, const callback_t &callback,
       std::string namebuf = ss.str();
 
       int newMaterialId = -1;
-      if (material_map.find(namebuf) != material_map.end()) {
-        newMaterialId = material_map[namebuf];
+      std::map<std::string, int>::const_iterator it = material_map.find(namebuf);
+      if (it != material_map.end()) {
+        newMaterialId = it->second;
       } else {
         // { warn!! material not found }
         if (warn && (!callback.usemtl_cb)) {
@@ -2352,8 +2353,9 @@ bool ObjReader::ParseFromFile(const std::string &filename,
     // split at last '/'(for unixish system) or '\\'(for windows) to get
     // the base directory of .obj file
     //
-    if (filename.find_last_of("/\\") != std::string::npos) {
-      mtl_search_path = filename.substr(0, filename.find_last_of("/\\"));
+    size_t pos = filename.find_last_of("/\\");
+    if (pos != std::string::npos) {
+      mtl_search_path = filename.substr(0, pos);
     }
   } else {
     mtl_search_path = config.mtl_search_path;

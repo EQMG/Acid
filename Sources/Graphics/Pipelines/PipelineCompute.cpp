@@ -44,16 +44,12 @@ void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector
 
 void PipelineCompute::CreateShaderProgram() {
 	std::stringstream defineBlock;
-
-	for (const auto &[defineName, defineValue] : defines) {
+	for (const auto &[defineName, defineValue] : defines)
 		defineBlock << "#define " << defineName << " " << defineValue << '\n';
-	}
 
 	auto fileLoaded = Files::Read(shaderStage);
-
-	if (!fileLoaded) {
+	if (!fileLoaded)
 		throw std::runtime_error("Could not create compute pipeline, missing shader stage");
-	}
 
 	auto stageFlag = Shader::GetShaderStage(shaderStage);
 	shaderModule = shader->CreateShaderModule(shaderStage, *fileLoaded, defineBlock.str(), stageFlag);

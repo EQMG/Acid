@@ -17,17 +17,11 @@ Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float fri
 }
 
 Rigidbody::~Rigidbody() {
-	auto body = btRigidBody::upcast(this->body);
-
-	if (body && body->getMotionState()) {
+	if (auto body = btRigidBody::upcast(this->body); body && body->getMotionState())
 		delete body->getMotionState();
-	}
 
-	auto physics = Scenes::Get()->GetPhysics();
-
-	if (physics) {
+	if (auto physics = Scenes::Get()->GetPhysics())
 		physics->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
-	}
 }
 
 void Rigidbody::Start() {
@@ -41,9 +35,8 @@ void Rigidbody::Start() {
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
-	if (mass != 0.0f) {
+	if (mass != 0.0f)
 		shape->calculateLocalInertia(mass, localInertia);
-	}
 
 	auto worldTransform = Collider::Convert(*GetEntity()->GetComponent<Transform>());
 
@@ -69,9 +62,8 @@ void Rigidbody::Start() {
 }
 
 void Rigidbody::Update() {
-	if (shape.get() != body->getCollisionShape()) {
+	if (shape.get() != body->getCollisionShape())
 		body->setCollisionShape(shape.get());
-	}
 
 	auto delta = Engine::Get()->GetDelta();
 
@@ -109,9 +101,8 @@ bool Rigidbody::InFrustum(const Frustum &frustum) {
 }
 
 void Rigidbody::ClearForces() {
-	if (rigidBody) {
+	if (rigidBody)
 		rigidBody->clearForces();
-	}
 }
 
 void Rigidbody::SetMass(float mass) {
@@ -177,17 +168,14 @@ Node &operator<<(Node &node, const Rigidbody &rigidbody) {
 }
 
 void Rigidbody::RecalculateMass() {
-	if (!rigidBody) {
-		return;
-	}
+	if (!rigidBody) return;
 
 	auto isDynamic = mass != 0.0f;
 
 	btVector3 localInertia;
 
-	if (!colliders.empty() && isDynamic) {
+	if (!colliders.empty() && isDynamic)
 		colliders[0]->GetCollisionShape()->calculateLocalInertia(mass, localInertia);
-	}
 
 	rigidBody->setMassProps(mass, localInertia);
 }

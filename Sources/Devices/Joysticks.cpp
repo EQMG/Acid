@@ -74,53 +74,45 @@ bool Joysticks::IsConnected(JoystickPort port) const {
 }
 
 std::string Joysticks::GetName(JoystickPort port) const {
-	auto joystick = GetJoystick(port);
-	return joystick ? joystick->name : "";
+	if (auto joystick = GetJoystick(port))
+		return joystick->name;
+	return "";
 }
 
 std::size_t Joysticks::GetAxisCount(JoystickPort port) const {
-	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<std::size_t>(joystick->axes.size()) : 0;
+	if (auto joystick = GetJoystick(port))
+		return static_cast<std::size_t>(joystick->axes.size());
+	return 0;
 }
 
 std::size_t Joysticks::GetButtonCount(JoystickPort port) const {
-	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<std::size_t>(joystick->buttons.size()) : 0;
+	if (auto joystick = GetJoystick(port))
+		return static_cast<std::size_t>(joystick->buttons.size());
+	return 0;
 }
 
 std::size_t Joysticks::GetHatCount(JoystickPort port) const {
-	auto joystick = GetJoystick(port);
-	return joystick ? static_cast<std::size_t>(joystick->hats.size()) : 0;
+	if (auto joystick = GetJoystick(port))
+		return static_cast<std::size_t>(joystick->hats.size());
+	return 0;
 }
 
 float Joysticks::GetAxis(JoystickPort port, JoystickAxis axis) const {
-	auto joystick = GetJoystick(port);
-
-	if (!joystick || axis > joystick->axes.size()) {
-		return 0.0f;
-	}
-
-	return joystick->axes[axis];
+	if (auto joystick = GetJoystick(port); joystick && axis <= joystick->axes.size())
+		return joystick->axes[axis];
+	return 0.0f;
 }
 
 InputAction Joysticks::GetButton(JoystickPort port, JoystickButton button) const {
-	auto joystick = GetJoystick(port);
-
-	if (!joystick || button > joystick->buttons.size()) {
-		return InputAction::Release;
-	}
-
-	return joystick->buttons[button];
+	if (auto joystick = GetJoystick(port); joystick && button <= joystick->buttons.size())
+		return joystick->buttons[button];
+	return InputAction::Release;
 }
 
 BitMask<JoystickHatValue> Joysticks::GetHat(JoystickPort port, JoystickHat hat) const {
-	auto joystick = GetJoystick(port);
-
-	if (!joystick || hat > joystick->hats.size()) {
-		return JoystickHatValue::Centered;
-	}
-
-	return joystick->hats[hat];
+	if (auto joystick = GetJoystick(port); joystick && hat <= joystick->hats.size())
+		return joystick->hats[hat];
+	return JoystickHatValue::Centered;
 }
 
 std::optional<Joysticks::JoystickImpl> Joysticks::GetJoystick(JoystickPort port) const {

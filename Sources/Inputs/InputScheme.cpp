@@ -39,8 +39,7 @@ InputAxis *InputScheme::AddAxis(const std::string &name, std::unique_ptr<InputAx
 }
 
 void InputScheme::RemoveAxis(const std::string &name) {
-	auto it = axes.find(name);
-	if (it != axes.end())
+	if (auto it = axes.find(name); it != axes.end())
 		axes.erase(it);
 }
 
@@ -58,8 +57,7 @@ InputButton *InputScheme::AddButton(const std::string &name, std::unique_ptr<Inp
 }
 
 void InputScheme::RemoveButton(const std::string &name) {
-	auto it = buttons.find(name);
-	if (it != buttons.end())
+	if (auto it = buttons.find(name); it != buttons.end())
 		buttons.erase(it);
 }
 

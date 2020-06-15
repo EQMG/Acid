@@ -133,7 +133,8 @@ enum class Key : int16_t {
 /**
  * @brief Module used for managing a virtual keyboard.
  */
-class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard, Module::Stage::Pre> {
+class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard> {
+	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
 public:
 	Keyboard();
 

@@ -19,9 +19,8 @@ void HttpRequest::SetUri(const std::string &uri) {
 	this->uri = uri;
 
 	// Make sure it starts with a '/'.
-	if (this->uri.empty() || (this->uri[0] != '/')) {
+	if (this->uri.empty() || this->uri[0] != '/')
 		this->uri.insert(0, "/");
-	}
 }
 
 void HttpRequest::SetHttpVersion(uint32_t major, uint32_t minor) {
@@ -70,9 +69,8 @@ std::string HttpRequest::Prepare() const {
 	out << "HTTP/" << majorVersion << "." << minorVersion << "\r\n";
 
 	// Write fields.
-	for (const auto &[fieldName, fieldValue] : fields) {
+	for (const auto &[fieldName, fieldValue] : fields)
 		out << fieldName << ": " << fieldValue << "\r\n";
-	}
 
 	// Use an extra \r\n to separate the header from the body.
 	out << "\r\n";
