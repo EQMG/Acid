@@ -9,15 +9,25 @@ jobs:
   doxygen:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Doxygen
+        run: |
+          git clone https://github.com/doxygen/doxygen.git
+          cd doxygen
+          mkdir build
+          cd build
+          cmake -G "Unix Makefiles" ..
+          make
+          sudo make install
+          sudo pip3 install jinja2 Pygments
       - uses: actions/checkout@v1
       - run: |
-          sudo apt install doxygen
-          sudo pip3 install jinja2 Pygments
           git clone https://github.com/mosra/m.css.git Build/m.css
           ./Build/m.css/documentation/doxygen.py Documents/Doxyfile-mcss
+          mkdir -p Build/doc-mcss/html/Documents
+          cp Documents/*.png Build/doc-mcss/html/Documents
       - name: Deploy Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: Build/doc/html
+          publish_dir: Build/doc-mcss/html

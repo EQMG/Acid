@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/Equilibrium-Games/Acid/master/Documents/Acid_03.png" alt="Acid" height="130px">
+<img src="Documents/Acid_03.png" alt="Acid" height="130px">
 
 [![Trello](https://img.shields.io/badge/board-trello-blue.svg)](https://trello.com/b/ZRvpbbYC/acid)
 [![Doxygen](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://eqmg.github.io/Acid/namespaces.html)
