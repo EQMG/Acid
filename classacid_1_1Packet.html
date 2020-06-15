@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Packet class | Acid</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Packet <span class="m-thin">class</span>
+        </h1>
+        <p>Packets provide a safe and easy way to serialize data, in order to send it over the network using sockets (acid::TcpSocket, acid::UdpSocket).</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-methods">Protected functions</a></li>
+                <li><a href="#pro-attribs">Protected variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Packets solve 2 fundamental problems that arise when transferring data over the network:</p><ul><li>data is interpreted correctly according to the endianness</li><li>the bounds of the packet are preserved (one send == one receive)</li></ul><p>The acid::Packet class provides both input and output modes. It is designed to follow the behavior of standard C++ streams, using operators &gt;&gt; and &lt;&lt; to extract and insert data.</p><p>It is recommended to use only fixed-size types (like acid::Int32, etc.), to avoid possible differences between the sender and the receiver. Indeed, the native C++ types may have different sizes on two platforms and your data may be corrupted if that happens.</p>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a0a5e0501beb5b770ee36e06e2d241cb2">
+              using <a href="#a0a5e0501beb5b770ee36e06e2d241cb2" class="m-doc-self">BoolType</a> = bool(Packet::*)(std::size_t)
+            </dt>
+            <dd>A bool-like type that cannot be converted to integer or pointer types.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab924de446318a4613790f26ec92f1d87" class="m-doc">Packet</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a08368c6e53cb7580ad21b07318495bc4" class="m-doc">operator BoolType</a>(</span><span class="m-doc-wrap">) const</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#adad3d75b8a2c2a3fc9629a90851c85f7" class="m-doc">Append</a>(</span><span class="m-doc-wrap">const void* data,
+              std::size_t sizeInBytes)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aeb6ce70d80d7914f956bf1c4fe7a21b8" class="m-doc">Clear</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac79ebd9ca804cfa87dd775dee2a8739b" class="m-doc">GetData</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2f3ac8bb3b3803693d859811ad1e03db" class="m-doc">GetDataSize</a>(</span><span class="m-doc-wrap">) const -&gt; std::size_t</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a327e3e80d6c02d3d7daf22bb7b262911" class="m-doc">EndOfStream</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-methods">
+          <h2><a href="#pro-methods">Protected functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a426cdb746f15919a5ff89594ba65be63" class="m-doc">OnSend</a>(</span><span class="m-doc-wrap">) -&gt; std::pair&lt;const void*, std::size_t&gt; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8e5829b06da328c5977bd7e20b59815f" class="m-doc">OnReceive</a>(</span><span class="m-doc-wrap">const void* data,
+              std::size_t size) <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a35a002360da84e2c941a11f3793771c3" class="m-doc">CheckSize</a>(</span><span class="m-doc-wrap">std::size_t size) -&gt; bool</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-attribs">
+          <h2><a href="#pro-attribs">Protected variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a9d81de581b622da3d744124819c03600">
+              std::vector&lt;char&gt; <a href="#a9d81de581b622da3d744124819c03600" class="m-doc-self">data</a>
+            </dt>
+            <dd>Data stored in the packet.</dd>
+            <dt id="a2718b150e4119dd95b5060054587f369">
+              std::size_t <a href="#a2718b150e4119dd95b5060054587f369" class="m-doc-self">readPos</a>
+            </dt>
+            <dd>Current reading position in the packet.</dd>
+            <dt id="ac1d09291147da335c971a0c27903f301">
+              std::size_t <a href="#ac1d09291147da335c971a0c27903f301" class="m-doc-self">sendPos</a>
+            </dt>
+            <dd>Current send position in the packet (for handling partial sends).</dd>
+            <dt id="a463adc60adc1d31c668aecca0a02b026">
+              bool <a href="#a463adc60adc1d31c668aecca0a02b026" class="m-doc-self">isValid</a>
+            </dt>
+            <dd>Reading state of the packet.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab924de446318a4613790f26ec92f1d87"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab924de446318a4613790f26ec92f1d87" class="m-doc-self">Packet</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+<p>Creates an empty packet.</p>
+          </div></section>
+          <section class="m-doc-details" id="a08368c6e53cb7580ad21b07318495bc4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a08368c6e53cb7580ad21b07318495bc4" class="m-doc-self">operator BoolType</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>True if last data extraction from packet was successful.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Test the validity of the packet, for reading. This operator allows to test the packet as a boolean variable, to check if a reading operation was successful. A packet will be in an invalid state if it has no more data to read. This behavior is the same as standard C++ streams.</p><p>Usage example: <code>float x; packet &gt;&gt; x; if (packet) { // ok, x was extracted successfully }</code></p><p><code>// &ndash; or &ndash;</code></p><p><code>float x; if (packet &gt;&gt; x) { // ok, x was extracted successfully }</code></p><p>Don&#x27;t focus on the return type, it&#x27;s equivalent to bool but it disallows unwanted implicit conversions to integer or pointer types.</p>
+          </div></section>
+          <section class="m-doc-details" id="adad3d75b8a2c2a3fc9629a90851c85f7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adad3d75b8a2c2a3fc9629a90851c85f7" class="m-doc-self">Append</a>(</span><span class="m-doc-wrap">const void* data,
+              std::size_t sizeInBytes)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">data</td>
+                  <td>Pointer to the sequence of bytes to append.</td>
+                </tr>
+                <tr>
+                  <td>sizeInBytes</td>
+                  <td>Number of bytes to append.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Append data to the end of the packet.</p>
+          </div></section>
+          <section class="m-doc-details" id="aeb6ce70d80d7914f956bf1c4fe7a21b8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb6ce70d80d7914f956bf1c4fe7a21b8" class="m-doc-self">Clear</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+<p>Clear the packet, after calling Clear, the packet is empty.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac79ebd9ca804cfa87dd775dee2a8739b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const void* acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac79ebd9ca804cfa87dd775dee2a8739b" class="m-doc-self">GetData</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Pointer to the data.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get a pointer to the data contained in the packet. Warning: the returned pointer may become invalid after you append data to the packet, therefore it should never be stored. The return pointer is null if the packet is empty.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2f3ac8bb3b3803693d859811ad1e03db"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::size_t acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2f3ac8bb3b3803693d859811ad1e03db" class="m-doc-self">GetDataSize</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Data size, in bytes.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get the size of the data contained in the packet. This function returns the number of bytes pointed to by what getData returns.</p>
+          </div></section>
+          <section class="m-doc-details" id="a327e3e80d6c02d3d7daf22bb7b262911"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a327e3e80d6c02d3d7daf22bb7b262911" class="m-doc-self">EndOfStream</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>True if all data was read, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tell if the reading position has reached the end of the packet. This function is useful to know if there is some data left to be read, without actually reading it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a426cdb746f15919a5ff89594ba65be63"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::pair&lt;const void*, std::size_t&gt; acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a426cdb746f15919a5ff89594ba65be63" class="m-doc-self">OnSend</a>(</span><span class="m-doc-wrap">) <span class="m-label m-warning">virtual</span> <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Pointer to the array of bytes to send and the size of data to send.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called before the packet is sent over the network. This function can be defined by derived classes to transform the data before it is sent; this can be used for compression, encryption, etc. The function must return a pointer to the modified data, as well as the number of bytes pointed. The default implementation provides the packet&#x27;s data without transforming it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8e5829b06da328c5977bd7e20b59815f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8e5829b06da328c5977bd7e20b59815f" class="m-doc-self">OnReceive</a>(</span><span class="m-doc-wrap">const void* data,
+              std::size_t size) <span class="m-label m-warning">virtual</span> <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">data</td>
+                  <td>Pointer to the received bytes.</td>
+                </tr>
+                <tr>
+                  <td>size</td>
+                  <td>Number of bytes.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Called after the packet is received over the network. This function can be defined by derived classes to transform the data after it is received; this can be used for decompression, decryption, etc. The function receives a pointer to the received data, and must fill the packet with the transformed bytes. The default implementation fills the packet directly without transforming the data.</p>
+          </div></section>
+          <section class="m-doc-details" id="a35a002360da84e2c941a11f3793771c3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Packet::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a35a002360da84e2c941a11f3793771c3" class="m-doc-self">CheckSize</a>(</span><span class="m-doc-wrap">std::size_t size) <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">size</td>
+                  <td>Size to check.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if <em>size</em> bytes can be read from the packet.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Check if the packet can extract a given number of bytes. This function updates accordingly the state of the packet.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

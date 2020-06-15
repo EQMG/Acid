@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Joysticks class | Acid</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Joysticks <span class="m-thin">class</span>
+        </h1>
+        <p>Module used for the creation, updating and destruction of the joysticks.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a74e77c81d85316be6f402ad92d0d761f" class="m-doc">IsConnected</a>(</span><span class="m-doc-wrap">JoystickPort port) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a83eb0f91b1b2c0722938a98b5ba719b3" class="m-doc">GetName</a>(</span><span class="m-doc-wrap">JoystickPort port) const -&gt; std::string</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a719147fa54718e7ee43b230b49f7f58a" class="m-doc">GetAxisCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const -&gt; std::size_t</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5a7bf07deb840f3f4f9de017b036b606" class="m-doc">GetButtonCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const -&gt; std::size_t</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e60cf3ebe547aa9d396f056f8cf7380" class="m-doc">GetHatCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const -&gt; std::size_t</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aafc136ffada95d9654146f0f67784dee" class="m-doc">GetAxis</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t axis) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a48a7bbe8b8975e3cc0f97afa601d4d30" class="m-doc">GetButton</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t button) const -&gt; InputAction</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa90dfb521be03d6b522df97e8bf8909e" class="m-doc">GetHat</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t hat) const -&gt; <a href="classacid_1_1BitMask.html" class="m-doc">BitMask</a>&lt;JoystickHatValue&gt;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5a713eecb8bbfa2e27a4ad9cc065a543" class="m-doc">OnConnect</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, bool)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a91769edb186f2033832eaca2cb7de581" class="m-doc">OnButton</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, InputAction)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a23f201860c1651926ae8a1373e656821" class="m-doc">OnAxis</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, float)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a782b54334c7eeb32d97a51b3005863e4" class="m-doc">OnHat</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, <a href="classacid_1_1BitMask.html" class="m-doc">BitMask</a>&lt;JoystickHatValue&gt;)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a74e77c81d85316be6f402ad92d0d761f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a74e77c81d85316be6f402ad92d0d761f" class="m-doc-self">IsConnected</a>(</span><span class="m-doc-wrap">JoystickPort port) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to check connection with.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If the joystick is connected.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if the joystick is connected.</p>
+          </div></section>
+          <section class="m-doc-details" id="a83eb0f91b1b2c0722938a98b5ba719b3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::string acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a83eb0f91b1b2c0722938a98b5ba719b3" class="m-doc-self">GetName</a>(</span><span class="m-doc-wrap">JoystickPort port) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to get the name of.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The joysticks name.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the name of the joystick.</p>
+          </div></section>
+          <section class="m-doc-details" id="a719147fa54718e7ee43b230b49f7f58a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::size_t acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a719147fa54718e7ee43b230b49f7f58a" class="m-doc-self">GetAxisCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to the the axis count from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The number of axes the joystick contains.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the number of axes the joystick contains.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5a7bf07deb840f3f4f9de017b036b606"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::size_t acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5a7bf07deb840f3f4f9de017b036b606" class="m-doc-self">GetButtonCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to the the button count from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The number of buttons the joystick contains.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the number of buttons the joystick contains.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5e60cf3ebe547aa9d396f056f8cf7380"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::size_t acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e60cf3ebe547aa9d396f056f8cf7380" class="m-doc-self">GetHatCount</a>(</span><span class="m-doc-wrap">JoystickPort port) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to the the hats count from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The number of hats the joystick contains.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the number of hats the joystick contains.</p>
+          </div></section>
+          <section class="m-doc-details" id="aafc136ffada95d9654146f0f67784dee"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aafc136ffada95d9654146f0f67784dee" class="m-doc-self">GetAxis</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t axis) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to get the axis from.</td>
+                </tr>
+                <tr>
+                  <td>axis</td>
+                  <td>The axis id to get the value from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value of the joystick&#x27;s axis.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the value of a joysticks axis.</p>
+          </div></section>
+          <section class="m-doc-details" id="a48a7bbe8b8975e3cc0f97afa601d4d30"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">InputAction acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a48a7bbe8b8975e3cc0f97afa601d4d30" class="m-doc-self">GetButton</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t button) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to get the button from.</td>
+                </tr>
+                <tr>
+                  <td>button</td>
+                  <td>The button id to get the value from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Whether a button on a joystick is pressed.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the whether a button on a joystick is pressed.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa90dfb521be03d6b522df97e8bf8909e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1BitMask.html" class="m-doc">BitMask</a>&lt;JoystickHatValue&gt; acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa90dfb521be03d6b522df97e8bf8909e" class="m-doc-self">GetHat</a>(</span><span class="m-doc-wrap">JoystickPort port,
+              uint8_t hat) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">port</td>
+                  <td>The joystick to get the axis from.</td>
+                </tr>
+                <tr>
+                  <td>hat</td>
+                  <td>The hat id to get the value from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The value of the joystick&#x27;s hat.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the value of a joysticks hat.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5a713eecb8bbfa2e27a4ad9cc065a543"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, bool)&gt;&amp; acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5a713eecb8bbfa2e27a4ad9cc065a543" class="m-doc-self">OnConnect</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a joystick has been connected or disconnected.</p>
+          </div></section>
+          <section class="m-doc-details" id="a91769edb186f2033832eaca2cb7de581"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, InputAction)&gt;&amp; acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a91769edb186f2033832eaca2cb7de581" class="m-doc-self">OnButton</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a joystick buttons changes state.</p>
+          </div></section>
+          <section class="m-doc-details" id="a23f201860c1651926ae8a1373e656821"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, float)&gt;&amp; acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a23f201860c1651926ae8a1373e656821" class="m-doc-self">OnAxis</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a joystick axis moves.</p>
+          </div></section>
+          <section class="m-doc-details" id="a782b54334c7eeb32d97a51b3005863e4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1Delegate.html" class="m-doc">Delegate</a>&lt;void(JoystickPort, uint8_t, <a href="classacid_1_1BitMask.html" class="m-doc">BitMask</a>&lt;JoystickHatValue&gt;)&gt;&amp; acid::<wbr />Joysticks::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a782b54334c7eeb32d97a51b3005863e4" class="m-doc-self">OnHat</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a joystick had changes state.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

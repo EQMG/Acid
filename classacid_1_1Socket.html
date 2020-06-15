@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Socket class | Acid</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Socket <span class="m-thin">class</span>
+        </h1>
+        <p>This class mainly defines internal stuff to be used by derived classes.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-types">Protected types</a></li>
+                <li><a href="#pro-methods">Protected functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>The only public features that it defines, and which is therefore common to all the socket classes, is the blocking state. All sockets can be set as blocking or non-blocking.</p><p>In blocking mode, socket functions will hang until the operation completes, which means that the entire program (well, in fact the current thread if you use multiple ones) will be stuck waiting for your socket operation to complete.</p><p>In non-blocking mode, all the socket functions will return immediately. If the socket is not ready to complete the requested operation, the function simply returns the proper status code (Socket::NotReady).</p><p>The default mode, which is blocking, is the one that is generally used, in combination with threads or selectors. The non-blocking mode is rather used in real-time applications that run an endless loop that can poll the socket often enough, and cannot afford blocking this loop.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classacid_1_1TcpListener.html" class="m-doc">TcpListener</a>
+            </dt>
+            <dd>A listener socket is a special type of socket that listens to a given port and waits for connections on that port. This is all it can do.</dd>
+            <dt>
+              class <a href="classacid_1_1TcpSocket.html" class="m-doc">TcpSocket</a>
+            </dt>
+            <dd>Specialized socket using the TCP protocol.</dd>
+            <dt>
+              class <a href="classacid_1_1UdpSocket.html" class="m-doc">UdpSocket</a>
+            </dt>
+            <dd>A UDP socket is a connectionless socket. Instead of connecting once to a remote host, like TCP sockets, it can send to and receive from any host at any time.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#ade3f3f004733c7f7ec396b672d698bbf" class="m-doc">Status</a> { </span><span class="m-doc-wrap"><a href="#ade3f3f004733c7f7ec396b672d698bbfaf92965e2c8a7afb3c1b9a5c09a263636" class="m-doc">Done</a>,
+              <a href="#ade3f3f004733c7f7ec396b672d698bbfadd353567e8118a2b8df4e822e59084ab" class="m-doc">NotReady</a>,
+              <a href="#ade3f3f004733c7f7ec396b672d698bbfa44ffd38a6dea695cbe2b34efdcc6cf27" class="m-doc">Partial</a>,
+              <a href="#ade3f3f004733c7f7ec396b672d698bbfaef70e46fd3bbc21e3e1f0b6815e750c0" class="m-doc">Disconnected</a>,
+              <a href="#ade3f3f004733c7f7ec396b672d698bbfa902b0d55fddef6f8d651fe1035b7d4bd" class="m-doc">Error</a> }</span>
+            </dt>
+            <dd>Status codes that may be returned by socket functions.</dd>
+          </dl>
+        </section>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ad0951e22be299f7b671c4449ba5f4c98" class="m-doc">CreateAddress</a>(</span><span class="m-doc-wrap">uint32_t address,
+              uint16_t port) -&gt; sockaddr_in</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a445c573e660a0792e54960a15c971d81" class="m-doc">InvalidSocketHandle</a>(</span><span class="m-doc-wrap">) -&gt; SocketHandle</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static void <a href="#adffe09dc5fb521b0deba60ff70e64b4f" class="m-doc">CloseSocketHandle</a>(</span><span class="m-doc-wrap">SocketHandle sock)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static void <a href="#ac39927c946f970b2155fa89138b60741" class="m-doc">SetHandleBlocking</a>(</span><span class="m-doc-wrap">SocketHandle sock,
+              bool block)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aaed4c5a9dc37ab13728a3fe5cdad9658" class="m-doc">GetErrorStatus</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1Socket.html#ade3f3f004733c7f7ec396b672d698bbf" class="m-doc">Status</a></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6289bf22e60263f7f4a044974af4a995" class="m-doc">~Socket</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a595a07cf665832373e53d8c1aa88438f" class="m-doc">Socket</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1Socket.html#a65a58cc405da0e657ce857bb8757bfc6" class="m-doc">Type</a> type) <span class="m-label m-flat m-warning">protected</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ec9ae6d03a1362d4d51ad0832ec4bcb" class="m-doc">IsBlocking</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af9eabeb15c40e5813e8a57384bde4122" class="m-doc">SetBlocking</a>(</span><span class="m-doc-wrap">bool blocking)</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-types">
+          <h2><a href="#pro-types">Protected types</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum <a href="#a65a58cc405da0e657ce857bb8757bfc6" class="m-doc">Type</a> { </span><span class="m-doc-wrap"><a href="#a65a58cc405da0e657ce857bb8757bfc6a30b7fdeebc36988717d0e274cc2e7520" class="m-doc">Tcp</a>,
+              <a href="#a65a58cc405da0e657ce857bb8757bfc6a81baba40274ccb30f9fdfa2c73cf0482" class="m-doc">Udp</a> }</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-methods">
+          <h2><a href="#pro-methods">Protected functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aeaa9ec03b7028ee2c569d9443ee82e1c" class="m-doc">GetHandle</a>(</span><span class="m-doc-wrap">) const -&gt; const SocketHandle&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a00533896ed33a230f062ae6c688da465" class="m-doc">Create</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa13a73af11a47d0fa72171ef797b8415" class="m-doc">Create</a>(</span><span class="m-doc-wrap">SocketHandle handle)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abfc1c0b3bc209bf3353ee4a8359acfba" class="m-doc">Close</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="ade3f3f004733c7f7ec396b672d698bbf"><div>
+            <h3>
+              enum acid::<wbr />Socket::<wbr /><a href="#ade3f3f004733c7f7ec396b672d698bbf" class="m-doc-self">Status</a>
+            </h3>
+            <p>Status codes that may be returned by socket functions.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#ade3f3f004733c7f7ec396b672d698bbfaf92965e2c8a7afb3c1b9a5c09a263636" class="m-doc-self" id="ade3f3f004733c7f7ec396b672d698bbfaf92965e2c8a7afb3c1b9a5c09a263636">Done</a></td>
+                  <td>
+                  <p>The socket has sent / received the data.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ade3f3f004733c7f7ec396b672d698bbfadd353567e8118a2b8df4e822e59084ab" class="m-doc-self" id="ade3f3f004733c7f7ec396b672d698bbfadd353567e8118a2b8df4e822e59084ab">NotReady</a></td>
+                  <td>
+                  <p>The socket is not ready to send / receive data yet.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ade3f3f004733c7f7ec396b672d698bbfa44ffd38a6dea695cbe2b34efdcc6cf27" class="m-doc-self" id="ade3f3f004733c7f7ec396b672d698bbfa44ffd38a6dea695cbe2b34efdcc6cf27">Partial</a></td>
+                  <td>
+                  <p>The socket sent a part of the data.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ade3f3f004733c7f7ec396b672d698bbfaef70e46fd3bbc21e3e1f0b6815e750c0" class="m-doc-self" id="ade3f3f004733c7f7ec396b672d698bbfaef70e46fd3bbc21e3e1f0b6815e750c0">Disconnected</a></td>
+                  <td>
+                  <p>The TCP socket has been disconnected.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ade3f3f004733c7f7ec396b672d698bbfa902b0d55fddef6f8d651fe1035b7d4bd" class="m-doc-self" id="ade3f3f004733c7f7ec396b672d698bbfa902b0d55fddef6f8d651fe1035b7d4bd">Error</a></td>
+                  <td>
+                  <p>An unexpected error happened.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65a58cc405da0e657ce857bb8757bfc6"><div>
+            <h3>
+              enum acid::<wbr />Socket::<wbr /><a href="#a65a58cc405da0e657ce857bb8757bfc6" class="m-doc-self">Type</a> <span class="m-label m-warning">protected</span>
+            </h3>
+<p>Types of protocols that the socket can use.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#a65a58cc405da0e657ce857bb8757bfc6a30b7fdeebc36988717d0e274cc2e7520" class="m-doc-self" id="a65a58cc405da0e657ce857bb8757bfc6a30b7fdeebc36988717d0e274cc2e7520">Tcp</a></td>
+                  <td>
+                  <p>TCP protocol.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#a65a58cc405da0e657ce857bb8757bfc6a81baba40274ccb30f9fdfa2c73cf0482" class="m-doc-self" id="a65a58cc405da0e657ce857bb8757bfc6a81baba40274ccb30f9fdfa2c73cf0482">Udp</a></td>
+                  <td>
+                  <p>UDP protocol.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ad0951e22be299f7b671c4449ba5f4c98"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static sockaddr_in acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad0951e22be299f7b671c4449ba5f4c98" class="m-doc-self">CreateAddress</a>(</span><span class="m-doc-wrap">uint32_t address,
+              uint16_t port)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">address</td>
+                  <td>Target address.</td>
+                </tr>
+                <tr>
+                  <td>port</td>
+                  <td>Target port.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>sockaddr_in ready to be used by socket functions.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Create an internal sockaddr_in address.</p>
+          </div></section>
+          <section class="m-doc-details" id="a445c573e660a0792e54960a15c971d81"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static SocketHandle acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a445c573e660a0792e54960a15c971d81" class="m-doc-self">InvalidSocketHandle</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Special value of the invalid socket.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Return the value of the invalid socket.</p>
+          </div></section>
+          <section class="m-doc-details" id="adffe09dc5fb521b0deba60ff70e64b4f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adffe09dc5fb521b0deba60ff70e64b4f" class="m-doc-self">CloseSocketHandle</a>(</span><span class="m-doc-wrap">SocketHandle sock)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sock</td>
+                  <td>Handle of the socket to close.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Close and destroy a socket.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac39927c946f970b2155fa89138b60741"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac39927c946f970b2155fa89138b60741" class="m-doc-self">SetHandleBlocking</a>(</span><span class="m-doc-wrap">SocketHandle sock,
+              bool block)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sock</td>
+                  <td>Handle of the socket.</td>
+                </tr>
+                <tr>
+                  <td>block</td>
+                  <td>New blocking state of the socket.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Set a socket as blocking or non-blocking.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaed4c5a9dc37ab13728a3fe5cdad9658"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classacid_1_1Socket.html#ade3f3f004733c7f7ec396b672d698bbf" class="m-doc">Status</a> acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaed4c5a9dc37ab13728a3fe5cdad9658" class="m-doc-self">GetErrorStatus</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Status corresponding to the last socket error.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get the last socket error status.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6289bf22e60263f7f4a044974af4a995"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6289bf22e60263f7f4a044974af4a995" class="m-doc-self">~Socket</a>(</span><span class="m-doc-wrap">) <span class="m-label m-warning">virtual</span></span></span>
+            </h3>
+<p>Destructor that closes the socket.</p>
+          </div></section>
+          <section class="m-doc-details" id="a595a07cf665832373e53d8c1aa88438f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a595a07cf665832373e53d8c1aa88438f" class="m-doc-self">Socket</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1Socket.html#a65a58cc405da0e657ce857bb8757bfc6" class="m-doc">Type</a> type) <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">type</td>
+                  <td>Type of the socket (TCP or UDP).</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Default constructor. This constructor can only be accessed by derived classes.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2ec9ae6d03a1362d4d51ad0832ec4bcb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ec9ae6d03a1362d4d51ad0832ec4bcb" class="m-doc-self">IsBlocking</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>True if the socket is blocking, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tell whether the socket is in blocking or non-blocking mode.</p>
+          </div></section>
+          <section class="m-doc-details" id="af9eabeb15c40e5813e8a57384bde4122"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9eabeb15c40e5813e8a57384bde4122" class="m-doc-self">SetBlocking</a>(</span><span class="m-doc-wrap">bool blocking)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blocking</td>
+                  <td>True to set the socket as blocking, false for non-blocking.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Set the blocking state of the socket. In blocking mode, calls will not return until they have completed their task. For example, a call to Receive in blocking mode won&#x27;t return until some data was actually received. In non-blocking mode, calls will always return immediately, using the return code to signal whether there was data available or not. By default, all sockets are blocking.</p>
+          </div></section>
+          <section class="m-doc-details" id="aeaa9ec03b7028ee2c569d9443ee82e1c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const SocketHandle&amp; acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeaa9ec03b7028ee2c569d9443ee82e1c" class="m-doc-self">GetHandle</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The internal (OS-specific) handle of the socket.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Return the internal handle of the socket. The returned handle may be invalid if the socket was not created yet (or already destroyed). This function can only be accessed by derived classes.</p>
+          </div></section>
+          <section class="m-doc-details" id="a00533896ed33a230f062ae6c688da465"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a00533896ed33a230f062ae6c688da465" class="m-doc-self">Create</a>(</span><span class="m-doc-wrap">) <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+<p>Create the internal representation of the socket. This function can only be accessed by derived classes.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa13a73af11a47d0fa72171ef797b8415"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa13a73af11a47d0fa72171ef797b8415" class="m-doc-self">Create</a>(</span><span class="m-doc-wrap">SocketHandle handle) <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">handle</td>
+                  <td>OS-specific handle of the socket to wrap.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Create the internal representation of the socket from a socket handle. This function can only be accessed by derived classes.</p>
+          </div></section>
+          <section class="m-doc-details" id="abfc1c0b3bc209bf3353ee4a8359acfba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Socket::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abfc1c0b3bc209bf3353ee4a8359acfba" class="m-doc-self">Close</a>(</span><span class="m-doc-wrap">) <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+<p>Close the socket gracefully. This function can only be accessed by derived classes.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

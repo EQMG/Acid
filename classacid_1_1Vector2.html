@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Vector2 class | Acid</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Vector2 <span class="m-thin">class</span>
+        </h1>
+        <p>Holds a 2-tuple vector.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T</td>
+              <td>The value type.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a3262eb12e6bb8c60ee47e7a68f3ee6bb" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a57751bc00f4ac43aa64315c891cfecf3" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const T&amp; a) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a23478f8b56edb514564ae35c58f1cacc" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const T&amp; x,
+              const T&amp; y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K, typename J&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#a1aabad9601e5152c7c23a7a67a9af3c8" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const K&amp; x,
+              const J&amp; y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#ab66b7d32e6cd316b8ed2215b134d2fb4" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; source) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#a74334aa9684563422735bf43090725c2" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector3.html" class="m-doc">Vector3</a>&lt;K&gt;&amp; source) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7f92fa2cacf3ccf4bf4129abe5352bac" class="m-doc">Add</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a690938251e17f3b31d0b6ef861a088a3" class="m-doc">Subtract</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6c7e58e430005deb562028c79493f8e0" class="m-doc">Multiply</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a27902a2a4916485a628bb6ed68ff5022" class="m-doc">Divide</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa8d558ba28b201627cab12d31620d0a0" class="m-doc">Angle</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab15ce81f63ad038af54a64bd65b945d0" class="m-doc">Dot</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K, typename J = float&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1c92f8c55aff332dbe518d9dbc5cf72e" class="m-doc">Lerp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other,
+              const J&amp; progression) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a17eb36a736b3e62765e09861f5be45e7" class="m-doc">Scale</a>(</span><span class="m-doc-wrap">const K&amp; scalar) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac17abaef2f50a1864e919951a46b6aaa" class="m-doc">Rotate</a>(</span><span class="m-doc-wrap">const K&amp; angle) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K = float, typename J&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aef121f10c573b4550a4bf43202be0be5" class="m-doc">Rotate</a>(</span><span class="m-doc-wrap">const K&amp; angle,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;J&gt;&amp; rotationAxis) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a59dc112ac99b5f6c146854b8cbafa8b5" class="m-doc">Normalize</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6776aadafdc3856071103d5c1f6df82d" class="m-doc">LengthSquared</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab3cf89062d77c5a494a2aad98ff6a0ea" class="m-doc">Length</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aec35186dbab5d447cd79a82d52108e73" class="m-doc">Abs</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7016078cf5e8bf1b2f9358b1be601c04" class="m-doc">Min</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1ea3c9e0e2a44715f21b5de2b841b85a" class="m-doc">Max</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6274c3d97897914e8d99f53021f5393" class="m-doc">MinMax</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5cf5ec4bb635f864eb079d303013c1b9" class="m-doc">Min</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2e21b8e5d33dfe85ac664c6a5eac299c" class="m-doc">Max</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2bed3f2328d06581f43fce66c7380b2d" class="m-doc">DistanceSquared</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2281225917651a5a3a2678e67eccb445" class="m-doc">Distance</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9b0f80db9ceb1426cb214a2b28d4ba67" class="m-doc">DistanceVector</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a67935172ed4398ea915635cfaf95f820" class="m-doc">InTriangle</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v1,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v2,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v3) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename K, typename J&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af4765c8766f15c76fca3b95019685d20" class="m-doc">SmoothDamp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; target,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;J&gt;&amp; rate) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a10fa402127eb30eb03d43b41ceb9ecb0" class="m-doc">CartesianToPolar</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afa13e9fa50ecffd780dcd75d14a45153" class="m-doc">PolarToCartesian</a>(</span><span class="m-doc-wrap">) const -&gt; auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a3262eb12e6bb8c60ee47e7a68f3ee6bb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3262eb12e6bb8c60ee47e7a68f3ee6bb" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">) <span class="m-label m-info">defaulted</span> <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+<p>Constructor for Vector2.</p>
+          </div></section>
+          <section class="m-doc-details" id="a57751bc00f4ac43aa64315c891cfecf3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a57751bc00f4ac43aa64315c891cfecf3" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const T&amp; a) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>The value to set all components to.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for Vector2.</p>
+          </div></section>
+          <section class="m-doc-details" id="a23478f8b56edb514564ae35c58f1cacc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a23478f8b56edb514564ae35c58f1cacc" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const T&amp; x,
+              const T&amp; y) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Start x.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Start y.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for Vector2.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1aabad9601e5152c7c23a7a67a9af3c8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K, typename J&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1aabad9601e5152c7c23a7a67a9af3c8" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const K&amp; x,
+              const J&amp; y) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The x type.</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>The y type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>x</td>
+                  <td>Start x.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Start y.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for Vector2.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab66b7d32e6cd316b8ed2215b134d2fb4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab66b7d32e6cd316b8ed2215b134d2fb4" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; source) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The sources type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>source</td>
+                  <td>Creates this vector out of a existing vector.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for Vector2.</p>
+          </div></section>
+          <section class="m-doc-details" id="a74334aa9684563422735bf43090725c2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a74334aa9684563422735bf43090725c2" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector3.html" class="m-doc">Vector3</a>&lt;K&gt;&amp; source) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The sources type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>source</td>
+                  <td>Creates this vector out of a existing vector.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for Vector3.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7f92fa2cacf3ccf4bf4129abe5352bac"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7f92fa2cacf3ccf4bf4129abe5352bac" class="m-doc-self">Add</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resultant vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds this vector to another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a690938251e17f3b31d0b6ef861a088a3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a690938251e17f3b31d0b6ef861a088a3" class="m-doc-self">Subtract</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resultant vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts this vector to another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6c7e58e430005deb562028c79493f8e0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c7e58e430005deb562028c79493f8e0" class="m-doc-self">Multiply</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resultant vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies this vector with another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a27902a2a4916485a628bb6ed68ff5022"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a27902a2a4916485a628bb6ed68ff5022" class="m-doc-self">Divide</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resultant vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides this vector by another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa8d558ba28b201627cab12d31620d0a0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa8d558ba28b201627cab12d31620d0a0" class="m-doc-self">Angle</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The angle, in radians.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Calculates the angle between this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab15ce81f63ad038af54a64bd65b945d0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab15ce81f63ad038af54a64bd65b945d0" class="m-doc-self">Dot</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The dot product.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Calculates the dot product of the this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1c92f8c55aff332dbe518d9dbc5cf72e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K, typename J = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1c92f8c55aff332dbe518d9dbc5cf72e" class="m-doc-self">Lerp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other,
+              const J&amp; progression) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>The progression type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other quaternion.</td>
+                </tr>
+                <tr>
+                  <td>progression</td>
+                  <td>The progression.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Left lerp right.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Calculates the linear interpolation between this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a17eb36a736b3e62765e09861f5be45e7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a17eb36a736b3e62765e09861f5be45e7" class="m-doc-self">Scale</a>(</span><span class="m-doc-wrap">const K&amp; scalar) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The scalar type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>scalar</td>
+                  <td>The scalar value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The scaled vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Scales this vector by a scalar.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac17abaef2f50a1864e919951a46b6aaa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac17abaef2f50a1864e919951a46b6aaa" class="m-doc-self">Rotate</a>(</span><span class="m-doc-wrap">const K&amp; angle) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The angle type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>angle</td>
+                  <td>The angle to rotate by, in radians.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The rotated vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Rotates this vector by a angle around the origin.</p>
+          </div></section>
+          <section class="m-doc-details" id="aef121f10c573b4550a4bf43202be0be5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K = float, typename J&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aef121f10c573b4550a4bf43202be0be5" class="m-doc-self">Rotate</a>(</span><span class="m-doc-wrap">const K&amp; angle,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;J&gt;&amp; rotationAxis) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The angle type.</td>
+                </tr>
+                <tr>
+                  <td>J</td>
+                  <td>The rotation axis type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>angle</td>
+                  <td>The angle to rotate by, in radians.</td>
+                </tr>
+                <tr>
+                  <td>rotationAxis</td>
+                  <td>The point to rotate the vector around.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The rotated vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Rotates this vector by a angle around a rotation axis.</p>
+          </div></section>
+          <section class="m-doc-details" id="a59dc112ac99b5f6c146854b8cbafa8b5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a59dc112ac99b5f6c146854b8cbafa8b5" class="m-doc-self">Normalize</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The normalized vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Normalizes this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6776aadafdc3856071103d5c1f6df82d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6776aadafdc3856071103d5c1f6df82d" class="m-doc-self">LengthSquared</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The length squared.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the length squared of this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab3cf89062d77c5a494a2aad98ff6a0ea"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab3cf89062d77c5a494a2aad98ff6a0ea" class="m-doc-self">Length</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The length.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the length of this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="aec35186dbab5d447cd79a82d52108e73"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aec35186dbab5d447cd79a82d52108e73" class="m-doc-self">Abs</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The absolute value of this vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the absolute value of every component in this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7016078cf5e8bf1b2f9358b1be601c04"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7016078cf5e8bf1b2f9358b1be601c04" class="m-doc-self">Min</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimal components.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the minimal value in this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1ea3c9e0e2a44715f21b5de2b841b85a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1ea3c9e0e2a44715f21b5de2b841b85a" class="m-doc-self">Max</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The maximal components.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the maximal value in this vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac6274c3d97897914e8d99f53021f5393"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6274c3d97897914e8d99f53021f5393" class="m-doc-self">MinMax</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The minimal and maximal components.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the minimal and maximal values in the vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5cf5ec4bb635f864eb079d303013c1b9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5cf5ec4bb635f864eb079d303013c1b9" class="m-doc-self">Min</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector to get values from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The lowest vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the lowest vector size between this vector and other.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2e21b8e5d33dfe85ac664c6a5eac299c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e21b8e5d33dfe85ac664c6a5eac299c" class="m-doc-self">Max</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector to get values from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The maximum vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the maximum vector size between this vector and other.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2bed3f2328d06581f43fce66c7380b2d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2bed3f2328d06581f43fce66c7380b2d" class="m-doc-self">DistanceSquared</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The squared distance.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the distance between this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2281225917651a5a3a2678e67eccb445"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2281225917651a5a3a2678e67eccb445" class="m-doc-self">Distance</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The distance.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the between this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9b0f80db9ceb1426cb214a2b28d4ba67"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b0f80db9ceb1426cb214a2b28d4ba67" class="m-doc-self">DistanceVector</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The others type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The other vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The vector distance.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the vector distance between this vector and another vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="a67935172ed4398ea915635cfaf95f820"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a67935172ed4398ea915635cfaf95f820" class="m-doc-self">InTriangle</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v1,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v2,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; v3) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">K</td>
+                  <td>The types.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>v1</td>
+                  <td>The first triangle vertex.</td>
+                </tr>
+                <tr>
+                  <td>v2</td>
+                  <td>The second triangle vertex.</td>
+                </tr>
+                <tr>
+                  <td>v3</td>
+                  <td>The third triangle vertex.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If this vector is in a triangle.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if this vector is in a triangle.</p>
+          </div></section>
+          <section class="m-doc-details" id="af4765c8766f15c76fca3b95019685d20"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename K, typename J&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4765c8766f15c76fca3b95019685d20" class="m-doc-self">SmoothDamp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;K&gt;&amp; target,
+              const <a href="classacid_1_1Vector2.html" class="m-doc">Vector2</a>&lt;J&gt;&amp; rate) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">target</td>
+                  <td>The target vector.</td>
+                </tr>
+                <tr>
+                  <td>rate</td>
+                  <td>The rate to go from current to the target.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The changed vector.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gradually changes this vector to a target.</p>
+          </div></section>
+          <section class="m-doc-details" id="a10fa402127eb30eb03d43b41ceb9ecb0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a10fa402127eb30eb03d43b41ceb9ecb0" class="m-doc-self">CartesianToPolar</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The polar coordinates (radius, theta).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts from rectangular to spherical coordinates, this vector is in cartesian (x, y).</p>
+          </div></section>
+          <section class="m-doc-details" id="afa13e9fa50ecffd780dcd75d14a45153"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto acid::<wbr />Vector2&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afa13e9fa50ecffd780dcd75d14a45153" class="m-doc-self">PolarToCartesian</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The cartesian coordinates (x, y).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts from spherical to rectangular coordinates, this vector is in polar (radius, theta).</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

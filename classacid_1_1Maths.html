@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Maths class | Acid</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Maths <span class="m-thin">class</span>
+        </h1>
+        <p>Class that holds many various math functions.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a4fe34e891c20fbd53a4bd2a721cda44d" class="m-doc">Random</a>(</span><span class="m-doc-wrap">float min = 0.0f,
+              float max = 1.0f) -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a454f470daf0fb2862da317666586266a" class="m-doc">RandomNormal</a>(</span><span class="m-doc-wrap">float standardDeviation,
+              float mean) -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#af24f5499889bc8c402a3156c82b73ae6" class="m-doc">RandomLog</a>(</span><span class="m-doc-wrap">float min,
+              float max) -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a1e3e6010c1060b0eff8c1e1c24b2c8ec" class="m-doc">Radians</a>(</span><span class="m-doc-wrap">const T&amp; degrees) -&gt; T <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a2702af19fb9282fb0629101d51839174" class="m-doc">Degrees</a>(</span><span class="m-doc-wrap">const T&amp; radians) -&gt; T <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ad5fc2abc619f0135edeb6d6ec3225003" class="m-doc">WrapDegrees</a>(</span><span class="m-doc-wrap">const T&amp; degrees) -&gt; T</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a2ee179cae1955b05012cd4e1c6d30ad8" class="m-doc">WrapRadians</a>(</span><span class="m-doc-wrap">const T&amp; radians) -&gt; T</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a7d631c9330a44cd43493ca0efb6a8f41" class="m-doc">RoundToPlace</a>(</span><span class="m-doc-wrap">const T&amp; value,
+              int32_t place) -&gt; T</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ab374f5b12454daed7ef572024f3d1fe2" class="m-doc">Deadband</a>(</span><span class="m-doc-wrap">const T&amp; min,
+              const T&amp; value) -&gt; T</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a6e60eb48cd697c140807b15ed18ae8aa" class="m-doc">AlmostEqual</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; eps) -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a8066e7b299727f1309f5c0a7a168c9e3" class="m-doc">SmoothDamp</a>(</span><span class="m-doc-wrap">const T&amp; current,
+              const T&amp; target,
+              const K&amp; rate) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a13c875eabaa22929f67fb4264fb5b868" class="m-doc">Lerp</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; factor) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a9b63c5935e0e43e3a3fcefbe54dcfcdf" class="m-doc">CosLerp</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; factor) -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a89725c0855f8784a46b59fc2a7611a50" class="m-doc">SmoothlyStep</a>(</span><span class="m-doc-wrap">const T&amp; edge0,
+              const T&amp; edge1,
+              const K&amp; x) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = float, typename K = float&gt;</div>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a60bf903963be56458670367c07beef44" class="m-doc">CosFromSin</a>(</span><span class="m-doc-wrap">const T&amp; sin,
+              const K&amp; angle) -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">static void <a href="#aef8fc08075b0be25442db6a943ded917" class="m-doc">HashCombine</a>(</span><span class="m-doc-wrap">std::size_t&amp; seed,
+              const T&amp; v) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a4fe34e891c20fbd53a4bd2a721cda44d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static float acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4fe34e891c20fbd53a4bd2a721cda44d" class="m-doc-self">Random</a>(</span><span class="m-doc-wrap">float min = 0.0f,
+              float max = 1.0f)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">min</td>
+                  <td>The min value.</td>
+                </tr>
+                <tr>
+                  <td>max</td>
+                  <td>The max value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The randomly selected value within the range.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Generates a random value from between a range.</p>
+          </div></section>
+          <section class="m-doc-details" id="a454f470daf0fb2862da317666586266a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static float acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a454f470daf0fb2862da317666586266a" class="m-doc-self">RandomNormal</a>(</span><span class="m-doc-wrap">float standardDeviation,
+              float mean)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">standardDeviation</td>
+                  <td>The standards deviation of the distribution.</td>
+                </tr>
+                <tr>
+                  <td>mean</td>
+                  <td>The mean of the distribution.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A normally distributed value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Generates a single value from a normal distribution, using Box-Muller.</p>
+          </div></section>
+          <section class="m-doc-details" id="af24f5499889bc8c402a3156c82b73ae6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static float acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af24f5499889bc8c402a3156c82b73ae6" class="m-doc-self">RandomLog</a>(</span><span class="m-doc-wrap">float min,
+              float max)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">min</td>
+                  <td>The min value.</td>
+                </tr>
+                <tr>
+                  <td>max</td>
+                  <td>The max value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The final random number.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a number between two numbers, logarithmic.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1e3e6010c1060b0eff8c1e1c24b2c8ec"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e3e6010c1060b0eff8c1e1c24b2c8ec" class="m-doc-self">Radians</a>(</span><span class="m-doc-wrap">const T&amp; degrees) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>degrees</td>
+                  <td>The degrees value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The radians value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts degrees to radians.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2702af19fb9282fb0629101d51839174"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2702af19fb9282fb0629101d51839174" class="m-doc-self">Degrees</a>(</span><span class="m-doc-wrap">const T&amp; radians) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>radians</td>
+                  <td>The radians value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The degrees value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts radians to degrees.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad5fc2abc619f0135edeb6d6ec3225003"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad5fc2abc619f0135edeb6d6ec3225003" class="m-doc-self">WrapDegrees</a>(</span><span class="m-doc-wrap">const T&amp; degrees)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>degrees</td>
+                  <td>The source angle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The normalized angle.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Normalizes a angle into the range of 0-360.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2ee179cae1955b05012cd4e1c6d30ad8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ee179cae1955b05012cd4e1c6d30ad8" class="m-doc-self">WrapRadians</a>(</span><span class="m-doc-wrap">const T&amp; radians)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>radians</td>
+                  <td>The source angle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The normalized angle.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Normalizes a angle into the range of 0-2PI.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7d631c9330a44cd43493ca0efb6a8f41"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7d631c9330a44cd43493ca0efb6a8f41" class="m-doc-self">RoundToPlace</a>(</span><span class="m-doc-wrap">const T&amp; value,
+              int32_t place)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>value</td>
+                  <td>The value to round.</td>
+                </tr>
+                <tr>
+                  <td>place</td>
+                  <td>How many places after the decimal to round to.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The rounded value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Rounds a value to a amount of places after the decimal point.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab374f5b12454daed7ef572024f3d1fe2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static T acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab374f5b12454daed7ef572024f3d1fe2" class="m-doc-self">Deadband</a>(</span><span class="m-doc-wrap">const T&amp; min,
+              const T&amp; value)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>min</td>
+                  <td>The minimum value.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>The value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Returns a value with deadband applied.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Used to floor the value if less than the min.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6e60eb48cd697c140807b15ed18ae8aa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static bool acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6e60eb48cd697c140807b15ed18ae8aa" class="m-doc-self">AlmostEqual</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; eps)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The values type.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The EPS type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>a</td>
+                  <td>The first value.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>The second value.</td>
+                </tr>
+                <tr>
+                  <td>eps</td>
+                  <td>EPS is the measure of equality.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If both are almost equal.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Checks if two values are almost equal.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8066e7b299727f1309f5c0a7a168c9e3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8066e7b299727f1309f5c0a7a168c9e3" class="m-doc-self">SmoothDamp</a>(</span><span class="m-doc-wrap">const T&amp; current,
+              const T&amp; target,
+              const K&amp; rate) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The current and target types.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The rate type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>current</td>
+                  <td>The current value.</td>
+                </tr>
+                <tr>
+                  <td>target</td>
+                  <td>The target value.</td>
+                </tr>
+                <tr>
+                  <td>rate</td>
+                  <td>The rate to go from current to the target.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The changed value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gradually changes a value to a target.</p>
+          </div></section>
+          <section class="m-doc-details" id="a13c875eabaa22929f67fb4264fb5b868"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a13c875eabaa22929f67fb4264fb5b868" class="m-doc-self">Lerp</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; factor) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The value types.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The factor type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>a</td>
+                  <td>The first value.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>The second value.</td>
+                </tr>
+                <tr>
+                  <td>factor</td>
+                  <td>The factor value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Returns a interpolation value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Interpolates two values by a factor using linear interpolation.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9b63c5935e0e43e3a3fcefbe54dcfcdf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b63c5935e0e43e3a3fcefbe54dcfcdf" class="m-doc-self">CosLerp</a>(</span><span class="m-doc-wrap">const T&amp; a,
+              const T&amp; b,
+              const K&amp; factor)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The value types.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The factor type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>a</td>
+                  <td>The first value.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>The second value.</td>
+                </tr>
+                <tr>
+                  <td>factor</td>
+                  <td>The blend value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Returns a interpolated value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Interpolates two values by a factor using cosine interpolation.</p>
+          </div></section>
+          <section class="m-doc-details" id="a89725c0855f8784a46b59fc2a7611a50"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89725c0855f8784a46b59fc2a7611a50" class="m-doc-self">SmoothlyStep</a>(</span><span class="m-doc-wrap">const T&amp; edge0,
+              const T&amp; edge1,
+              const K&amp; x) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The edge types.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The sample type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>edge0</td>
+                  <td>The inner edge.</td>
+                </tr>
+                <tr>
+                  <td>edge1</td>
+                  <td>The outer edge.</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>The sample.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resulting stepped value.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>A calculation that steps smoothly between two edges.</p>
+          </div></section>
+          <section class="m-doc-details" id="a60bf903963be56458670367c07beef44"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T = float, typename K = float&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a60bf903963be56458670367c07beef44" class="m-doc-self">CosFromSin</a>(</span><span class="m-doc-wrap">const T&amp; sin,
+              const K&amp; angle)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The sin type.</td>
+                </tr>
+                <tr>
+                  <td>K</td>
+                  <td>The angle type.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>sin</td>
+                  <td>The sin.</td>
+                </tr>
+                <tr>
+                  <td>angle</td>
+                  <td>The angle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resulting cosign.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Takes the cosign of a number by using the sign and a additional angle.</p>
+          </div></section>
+          <section class="m-doc-details" id="aef8fc08075b0be25442db6a943ded917"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static void acid::<wbr />Maths::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aef8fc08075b0be25442db6a943ded917" class="m-doc-self">HashCombine</a>(</span><span class="m-doc-wrap">std::size_t&amp; seed,
+              const T&amp; v) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">seed</td>
+                  <td>The seed.</td>
+                </tr>
+                <tr>
+                  <td>v</td>
+                  <td>The value to hash.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Combines a seed into a hash and modifies the seed by the new hash.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
