@@ -43,7 +43,8 @@ enum class CursorStandard : uint32_t {
 /**
  * @brief Module used for managing a virtual mouse.
  */
-class ACID_EXPORT Mouse : public Module::Registrar<Mouse, Module::Stage::Pre> {
+class ACID_EXPORT Mouse : public Module::Registrar<Mouse> {
+	inline static const bool Registered = Register<Window>(Stage::Pre);
 public:
 	Mouse();
 	~Mouse();

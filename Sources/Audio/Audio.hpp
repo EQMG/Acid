@@ -7,7 +7,8 @@ namespace acid {
 /**
  * @brief Module used for loading, managing and playing a variety of different sound types.
  */
-class ACID_EXPORT Audio : public Module::Registrar<Audio, Module::Stage::Pre> {
+class ACID_EXPORT Audio : public Module::Registrar<Audio> {
+	inline static const bool Registered = Register(Stage::Pre);
 public:
 	enum class Type {
 		Master, General, Effect, Music

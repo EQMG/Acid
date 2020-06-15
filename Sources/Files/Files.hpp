@@ -40,7 +40,8 @@ public:
 /**
  * @brief Module used for managing files on engine updates.
  */
-class ACID_EXPORT Files : public Module::Registrar<Files, Module::Stage::Post> {
+class ACID_EXPORT Files : public Module::Registrar<Files> {
+	inline static const bool Registered = Register(Stage::Post);
 public:
 	Files();
 	~Files();

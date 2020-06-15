@@ -60,10 +60,6 @@ MainApp::MainApp() :
 			Engine::Get()->RequestClose();
 		}
 	}, this);
-
-	// Registers modules.
-	World::Register();
-	//Shadows::Deregister();
 }
 
 MainApp::~MainApp() {

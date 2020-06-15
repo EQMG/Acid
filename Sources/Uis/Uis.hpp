@@ -8,7 +8,8 @@ namespace acid {
 /**
  * @brief Module used for managing gui textures in a container.
  */
-class ACID_EXPORT Uis : public Module::Registrar<Uis, Module::Stage::Normal> {
+class ACID_EXPORT Uis : public Module::Registrar<Uis> {
+	inline static const bool Registered = Register(Stage::Normal);
 public:
 	Uis();
 

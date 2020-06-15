@@ -8,7 +8,8 @@ namespace acid {
 /**
  * @brief Module used for managing a shadow map.
  */
-class ACID_EXPORT Shadows : public Module::Registrar<Shadows, Module::Stage::Normal> {
+class ACID_EXPORT Shadows : public Module::Registrar<Shadows> {
+	inline static const bool Registered = Register(Stage::Normal);
 public:
 	Shadows();
 

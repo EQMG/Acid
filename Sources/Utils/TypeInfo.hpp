@@ -16,7 +16,8 @@ public:
 	 * @tparam K The type ID K.
 	 * @return The type ID.
 	 */
-	template<typename K>
+	template<typename K,
+		typename = std::enable_if_t<std::is_convertible_v<K *, T *>>>
 	static TypeId GetTypeId() noexcept {
 		std::type_index typeIndex(typeid(K));
 		if (auto it = typeMap.find(typeIndex); it != typeMap.end())
