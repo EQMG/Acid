@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::CollisionObject class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>CollisionObject <span class="m-thin">class</span>
+        </h1>
+        <p>Represents a object in a scene effected by physics.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-methods">Protected functions</a></li>
+                <li><a href="#pro-attribs">Protected variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classacid_1_1_kinematic_character.html" class="m-doc">KinematicCharacter</a>
+            </dt>
+            <dd>Represents a kinematic character controller.</dd>
+            <dt>
+              class <a href="classacid_1_1_rigidbody.html" class="m-doc">Rigidbody</a>
+            </dt>
+            <dd>Represents a object in a scene effected by physics.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a1f34700014fac18658b7487211884cbe" class="m-doc">CollisionObject</a>(</span><span class="m-doc-wrap">std::vector&lt;std::unique_ptr&lt;<a href="classacid_1_1_collider.html" class="m-doc">Collider</a>&gt;&gt;&amp;&amp; colliders = {},
+              float mass = 1.0f,
+              float friction = 0.2f,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; linearFactor = <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>(1.0f),
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; angularFactor = <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>(1.0f)) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd></dd>
+            <dt id="a1852433cc6d0c00893c3e2cb0c0b6d87">
+              <span class="m-doc-wrap-bumper"><a href="#a1852433cc6d0c00893c3e2cb0c0b6d87" class="m-doc-self">~CollisionObject</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ade36b9b0bf069b98a0f8d565c8c585f3" class="m-doc">InFrustum</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_frustum.html" class="m-doc">Frustum</a>&amp; frustum) -&gt; bool <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt id="a9ace96e7924c83d04f022f470ee5db36">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9ace96e7924c83d04f022f470ee5db36" class="m-doc-self">AddCollider</a>(</span><span class="m-doc-wrap">std::unique_ptr&lt;<a href="classacid_1_1_collider.html" class="m-doc">Collider</a>&gt;&amp;&amp; collider) -&gt; <a href="classacid_1_1_collider.html" class="m-doc">Collider</a>*</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3892f4b0e70e90b03788c0665174d2a1">
+              <span class="m-doc-wrap-bumper">void <a href="#a3892f4b0e70e90b03788c0665174d2a1" class="m-doc-self">RemoveCollider</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_collider.html" class="m-doc">Collider</a>* collider)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a33d8945fdb5a906e91b6d3907426bf6c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a33d8945fdb5a906e91b6d3907426bf6c" class="m-doc-self">AddForce</a>(</span><span class="m-doc-wrap">std::unique_ptr&lt;<a href="classacid_1_1_force.html" class="m-doc">Force</a>&gt;&amp;&amp; force) -&gt; <a href="classacid_1_1_force.html" class="m-doc">Force</a>*</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af67e3d98ee02e9dead6634215b0fe1b3">
+              <span class="m-doc-wrap-bumper">void <a href="#af67e3d98ee02e9dead6634215b0fe1b3" class="m-doc-self">ClearForces</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="abf6c2c2c71293906ca55962d4b871486">
+              <span class="m-doc-wrap-bumper">auto <a href="#abf6c2c2c71293906ca55962d4b871486" class="m-doc-self">IsShapeCreated</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad226c2e49a51dfbb6030c84300bfc898">
+              <span class="m-doc-wrap-bumper">void <a href="#ad226c2e49a51dfbb6030c84300bfc898" class="m-doc-self">SetChildTransform</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_collider.html" class="m-doc">Collider</a>* child,
+              const <a href="classacid_1_1_transform.html" class="m-doc">Transform</a>&amp; transform)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab79287096550026854d8155c524802c0">
+              <span class="m-doc-wrap-bumper">void <a href="#ab79287096550026854d8155c524802c0" class="m-doc-self">AddChild</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_collider.html" class="m-doc">Collider</a>* child)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8067849a56c88b4097f362b0edb64203">
+              <span class="m-doc-wrap-bumper">void <a href="#a8067849a56c88b4097f362b0edb64203" class="m-doc-self">RemoveChild</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_collider.html" class="m-doc">Collider</a>* child)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac48ad53da75153ecb4c082b771194f8f">
+              <span class="m-doc-wrap-bumper">void <a href="#ac48ad53da75153ecb4c082b771194f8f" class="m-doc-self">SetIgnoreCollisionCheck</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>* other,
+              bool ignore)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a9b641b079d6920e95dda58461943e546">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9b641b079d6920e95dda58461943e546" class="m-doc-self">GetColliders</a>(</span><span class="m-doc-wrap">) const -&gt; const std::vector&lt;std::unique_ptr&lt;<a href="classacid_1_1_collider.html" class="m-doc">Collider</a>&gt;&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5980a191cb1e56ddf374a8273ba29302">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5980a191cb1e56ddf374a8273ba29302" class="m-doc-self">GetMass</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a81aa19990bdf0ad6c69925396be77b4d">
+              <span class="m-doc-wrap-bumper">void <a href="#a81aa19990bdf0ad6c69925396be77b4d" class="m-doc-self">SetMass</a>(</span><span class="m-doc-wrap">float mass) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3caf2406817ea1bee1dda32132ff45c0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3caf2406817ea1bee1dda32132ff45c0" class="m-doc-self">GetGravity</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8a431fd8e1486091ffb118272047675e">
+              <span class="m-doc-wrap-bumper">void <a href="#a8a431fd8e1486091ffb118272047675e" class="m-doc-self">SetGravity</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; gravity) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa84f5db56b1849435df716674a14cd87">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa84f5db56b1849435df716674a14cd87" class="m-doc-self">GetLinearFactor</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af2403ac137f81fc8647c0f7a6fd963e9">
+              <span class="m-doc-wrap-bumper">void <a href="#af2403ac137f81fc8647c0f7a6fd963e9" class="m-doc-self">SetLinearFactor</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; linearFactor) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a65e7e9cdb3882e228a5f7a8ed3ca76c0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a65e7e9cdb3882e228a5f7a8ed3ca76c0" class="m-doc-self">GetAngularFactor</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac602590a047c42939fd5d44d60b0f3a7">
+              <span class="m-doc-wrap-bumper">void <a href="#ac602590a047c42939fd5d44d60b0f3a7" class="m-doc-self">SetAngularFactor</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; angularFactor) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aaa6e3ec86b3dbb129a6ea87e73b57807">
+              <span class="m-doc-wrap-bumper">auto <a href="#aaa6e3ec86b3dbb129a6ea87e73b57807" class="m-doc-self">GetFriction</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af7e6ff7a69f8103b8bfb12f5773c3902">
+              <span class="m-doc-wrap-bumper">void <a href="#af7e6ff7a69f8103b8bfb12f5773c3902" class="m-doc-self">SetFriction</a>(</span><span class="m-doc-wrap">float friction)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="abbf0c0743bd68e6dd9efdf3b0806bd0b">
+              <span class="m-doc-wrap-bumper">auto <a href="#abbf0c0743bd68e6dd9efdf3b0806bd0b" class="m-doc-self">GetFrictionRolling</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="acac7fc0c0de6ae92c3a4761499dea6e0">
+              <span class="m-doc-wrap-bumper">void <a href="#acac7fc0c0de6ae92c3a4761499dea6e0" class="m-doc-self">SetFrictionRolling</a>(</span><span class="m-doc-wrap">float frictionRolling)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a39e914b8c3a75c46053079604aed2945">
+              <span class="m-doc-wrap-bumper">auto <a href="#a39e914b8c3a75c46053079604aed2945" class="m-doc-self">GetFrictionSpinning</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a99bd1b4489b11f52b875fec3dfd99d23">
+              <span class="m-doc-wrap-bumper">void <a href="#a99bd1b4489b11f52b875fec3dfd99d23" class="m-doc-self">SetFrictionSpinning</a>(</span><span class="m-doc-wrap">float frictionSpinning)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a4f787bcc2d6871648d1492a02b996fd1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4f787bcc2d6871648d1492a02b996fd1" class="m-doc-self">GetLinearVelocity</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab083aea1dba9a41907bc9e8baa72aee3">
+              <span class="m-doc-wrap-bumper">void <a href="#ab083aea1dba9a41907bc9e8baa72aee3" class="m-doc-self">SetLinearVelocity</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; linearVelocity) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7c219e9d827ea196fa80c0446329dabf">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7c219e9d827ea196fa80c0446329dabf" class="m-doc-self">GetAngularVelocity</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a059127879cbd85043ad56cc240d34449">
+              <span class="m-doc-wrap-bumper">void <a href="#a059127879cbd85043ad56cc240d34449" class="m-doc-self">SetAngularVelocity</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; angularVelocity) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad12a5f0154e201853dc31ad67ced644e" class="m-doc">OnCollision</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8ec032d374c1beb62b379a601a0db207" class="m-doc">OnSeparation</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pro-methods">
+          <h2><a href="#pro-methods">Protected functions</a></h2>
+          <dl class="m-doc">
+            <dt id="af725fa70930868f1c9e4ff087d138038">
+              <span class="m-doc-wrap-bumper">void <a href="#af725fa70930868f1c9e4ff087d138038" class="m-doc-self">RecalculateMass</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afc48de783705d6087948f73129c87816">
+              <span class="m-doc-wrap-bumper">void <a href="#afc48de783705d6087948f73129c87816" class="m-doc-self">CreateShape</a>(</span><span class="m-doc-wrap">bool forceSingle = false)</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pro-attribs">
+          <h2><a href="#pro-attribs">Protected variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a8fd8e7d73d9f3e06f17446d374633200">
+              std::vector&lt;std::unique_ptr&lt;<a href="classacid_1_1_collider.html" class="m-doc">Collider</a>&gt;&gt; <a href="#a8fd8e7d73d9f3e06f17446d374633200" class="m-doc-self">colliders</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="acf50b65f3678714c199e50f747fa9077">
+              float <a href="#acf50b65f3678714c199e50f747fa9077" class="m-doc-self">mass</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa31e57d30ffbec5cfd2bd1c8caa3b69e">
+              <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> <a href="#aa31e57d30ffbec5cfd2bd1c8caa3b69e" class="m-doc-self">gravity</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad99c9a5ed8baa4b0fd8761c1dc7fa547">
+              float <a href="#ad99c9a5ed8baa4b0fd8761c1dc7fa547" class="m-doc-self">friction</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af61ed1d43fe952289a8637864c6b318d">
+              float <a href="#af61ed1d43fe952289a8637864c6b318d" class="m-doc-self">frictionRolling</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a29eab1340a8431b4ad243f0690fd2892">
+              float <a href="#a29eab1340a8431b4ad243f0690fd2892" class="m-doc-self">frictionSpinning</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a326234ce3a5bbf06cd67dd8043f0667d">
+              <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> <a href="#a326234ce3a5bbf06cd67dd8043f0667d" class="m-doc-self">linearFactor</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a256a0506a3b9140ac3bfb696bd59dec0">
+              <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> <a href="#a256a0506a3b9140ac3bfb696bd59dec0" class="m-doc-self">angularFactor</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8732823f051b3604bad54f9e9dcc92d0">
+              <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> <a href="#a8732823f051b3604bad54f9e9dcc92d0" class="m-doc-self">linearVelocity</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a86f785f784edb9cb5b6227c7c9e85c50">
+              <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> <a href="#a86f785f784edb9cb5b6227c7c9e85c50" class="m-doc-self">angularVelocity</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2cf449063a772d6e009b692a0be034df">
+              std::unique_ptr&lt;btCollisionShape&gt; <a href="#a2cf449063a772d6e009b692a0be034df" class="m-doc-self">shape</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a97db4f6bf05d331e7d9049b8afe2197f">
+              btCollisionObject* <a href="#a97db4f6bf05d331e7d9049b8afe2197f" class="m-doc-self">body</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab1a215ebafb28e5fd2134bf99d7410f3">
+              std::vector&lt;std::unique_ptr&lt;<a href="classacid_1_1_force.html" class="m-doc">Force</a>&gt;&gt; <a href="#ab1a215ebafb28e5fd2134bf99d7410f3" class="m-doc-self">forces</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab2a69fc041b4d55dbf0a1f32e5296589">
+              rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt; <a href="#ab2a69fc041b4d55dbf0a1f32e5296589" class="m-doc-self">onCollision</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6037cd925b597401f1364c26b35bba50">
+              rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt; <a href="#a6037cd925b597401f1364c26b35bba50" class="m-doc-self">onSeparation</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a1f34700014fac18658b7487211884cbe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />CollisionObject::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1f34700014fac18658b7487211884cbe" class="m-doc-self">CollisionObject</a>(</span><span class="m-doc-wrap">std::vector&lt;std::unique_ptr&lt;<a href="classacid_1_1_collider.html" class="m-doc">Collider</a>&gt;&gt;&amp;&amp; colliders = {},
+              float mass = 1.0f,
+              float friction = 0.2f,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; linearFactor = <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>(1.0f),
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; angularFactor = <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>(1.0f)) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colliders</td>
+                  <td>The list of collider shapes that make up this collision object.</td>
+                </tr>
+                <tr>
+                  <td>mass</td>
+                  <td>The mass of the object.</td>
+                </tr>
+                <tr>
+                  <td>friction</td>
+                  <td>The amount of surface friction.</td>
+                </tr>
+                <tr>
+                  <td>linearFactor</td>
+                  <td>How effected each axis will be to linear movement.</td>
+                </tr>
+                <tr>
+                  <td>angularFactor</td>
+                  <td>How effected each axis will be to angular movement.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Creates a new collision object.</p>
+          </div></section>
+          <section class="m-doc-details" id="ade36b9b0bf069b98a0f8d565c8c585f3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />CollisionObject::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ade36b9b0bf069b98a0f8d565c8c585f3" class="m-doc-self">InFrustum</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_frustum.html" class="m-doc">Frustum</a>&amp; frustum) <span class="m-label m-warning">pure virtual</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">frustum</td>
+                  <td>The view frustum.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If the shape is partially in the view frustum.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if the shape is partially in the view frustum.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad12a5f0154e201853dc31ad67ced644e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt;&amp; acid::<wbr />CollisionObject::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad12a5f0154e201853dc31ad67ced644e" class="m-doc-self">OnCollision</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when this object collides from a object.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8ec032d374c1beb62b379a601a0db207"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="classacid_1_1_collision_object.html" class="m-doc">CollisionObject</a>*)&gt;&amp; acid::<wbr />CollisionObject::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8ec032d374c1beb62b379a601a0db207" class="m-doc-self">OnSeparation</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when this object separates from a object.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

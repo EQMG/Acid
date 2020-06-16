@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Image class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Image <span class="m-thin">class</span>
+        </h1>
+        <p>A representation of a Vulkan image, sampler, and view.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-attribs">Protected variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classacid_1_1_descriptor.html" class="m-doc">Descriptor</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classacid_1_1_image2d.html" class="m-doc">Image2d</a>
+            </dt>
+            <dd><a href="classacid_1_1_resource.html" class="m-doc">Resource</a> that represents a 2D image.</dd>
+            <dt>
+              class <a href="classacid_1_1_image2d_array.html" class="m-doc">Image2dArray</a>
+            </dt>
+            <dd><a href="classacid_1_1_resource.html" class="m-doc">Resource</a> that represents an array of 2D images.</dd>
+            <dt>
+              class <a href="classacid_1_1_image_cube.html" class="m-doc">ImageCube</a>
+            </dt>
+            <dd><a href="classacid_1_1_resource.html" class="m-doc">Resource</a> that represents a cubemap image.</dd>
+            <dt>
+              class <a href="classacid_1_1_image_depth.html" class="m-doc">ImageDepth</a>
+            </dt>
+            <dd><a href="classacid_1_1_resource.html" class="m-doc">Resource</a> that represents a depth stencil image.</dd>
+          </dl>
+        </section>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a81bf2fc9c7f9b0b7af3f001ecd646e62">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a81bf2fc9c7f9b0b7af3f001ecd646e62" class="m-doc-self">GetDescriptorSetLayout</a>(</span><span class="m-doc-wrap">uint32_t binding,
+              VkDescriptorType descriptorType,
+              VkShaderStageFlags stage,
+              uint32_t count) -&gt; VkDescriptorSetLayoutBinding</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a112acf41d1da90910810a7efa39add82">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a112acf41d1da90910810a7efa39add82" class="m-doc-self">GetMipLevels</a>(</span><span class="m-doc-wrap">const VkExtent3D&amp; extent) -&gt; uint32_t</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a4191da1ecae95658ef152aa0c810023c" class="m-doc">FindSupportedFormat</a>(</span><span class="m-doc-wrap">const std::vector&lt;VkFormat&gt;&amp; candidates,
+              VkImageTiling tiling,
+              VkFormatFeatureFlags features) -&gt; VkFormat</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a5559149dac163dd054244a687512ea60" class="m-doc">HasDepth</a>(</span><span class="m-doc-wrap">VkFormat format) -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ac6b2b0e93644af421b41a70582fd95b7" class="m-doc">HasStencil</a>(</span><span class="m-doc-wrap">VkFormat format) -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt id="a9103806ff2a803df21403c306aca7cf7">
+              <span class="m-doc-wrap-bumper">static void <a href="#a9103806ff2a803df21403c306aca7cf7" class="m-doc-self">CreateImage</a>(</span><span class="m-doc-wrap">VkImage&amp; image,
+              VkDeviceMemory&amp; memory,
+              const VkExtent3D&amp; extent,
+              VkFormat format,
+              VkSampleCountFlagBits samples,
+              VkImageTiling tiling,
+              VkImageUsageFlags usage,
+              VkMemoryPropertyFlags properties,
+              uint32_t mipLevels,
+              uint32_t arrayLayers,
+              VkImageType type)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3af373e5a0407b6ccc3efe683427b06a">
+              <span class="m-doc-wrap-bumper">static void <a href="#a3af373e5a0407b6ccc3efe683427b06a" class="m-doc-self">CreateImageSampler</a>(</span><span class="m-doc-wrap">VkSampler&amp; sampler,
+              VkFilter filter,
+              VkSamplerAddressMode addressMode,
+              bool anisotropic,
+              uint32_t mipLevels)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a670d4ea8021db93cd15e4e46561e5957">
+              <span class="m-doc-wrap-bumper">static void <a href="#a670d4ea8021db93cd15e4e46561e5957" class="m-doc-self">CreateImageView</a>(</span><span class="m-doc-wrap">const VkImage&amp; image,
+              VkImageView&amp; imageView,
+              VkImageViewType type,
+              VkFormat format,
+              VkImageAspectFlags imageAspect,
+              uint32_t mipLevels,
+              uint32_t baseMipLevel,
+              uint32_t layerCount,
+              uint32_t baseArrayLayer)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa5faa6d1be02d4eb452ecdf2a42b6f7b">
+              <span class="m-doc-wrap-bumper">static void <a href="#aa5faa6d1be02d4eb452ecdf2a42b6f7b" class="m-doc-self">CreateMipmaps</a>(</span><span class="m-doc-wrap">const VkImage&amp; image,
+              const VkExtent3D&amp; extent,
+              VkFormat format,
+              VkImageLayout dstImageLayout,
+              uint32_t mipLevels,
+              uint32_t baseArrayLayer,
+              uint32_t layerCount)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3f14e63e94180a5dfcccbed867655c49">
+              <span class="m-doc-wrap-bumper">static void <a href="#a3f14e63e94180a5dfcccbed867655c49" class="m-doc-self">TransitionImageLayout</a>(</span><span class="m-doc-wrap">const VkImage&amp; image,
+              VkFormat format,
+              VkImageLayout srcImageLayout,
+              VkImageLayout dstImageLayout,
+              VkImageAspectFlags imageAspect,
+              uint32_t mipLevels,
+              uint32_t baseMipLevel,
+              uint32_t layerCount,
+              uint32_t baseArrayLayer)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af0a79ddc58ebcc4f01943407e8f830e2">
+              <span class="m-doc-wrap-bumper">static void <a href="#af0a79ddc58ebcc4f01943407e8f830e2" class="m-doc-self">InsertImageMemoryBarrier</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_command_buffer.html" class="m-doc">CommandBuffer</a>&amp; commandBuffer,
+              const VkImage&amp; image,
+              VkAccessFlags srcAccessMask,
+              VkAccessFlags dstAccessMask,
+              VkImageLayout oldImageLayout,
+              VkImageLayout newImageLayout,
+              VkPipelineStageFlags srcStageMask,
+              VkPipelineStageFlags dstStageMask,
+              VkImageAspectFlags imageAspect,
+              uint32_t mipLevels,
+              uint32_t baseMipLevel,
+              uint32_t layerCount,
+              uint32_t baseArrayLayer)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac08d9ef1b16bf30b369932c727bd2f0e">
+              <span class="m-doc-wrap-bumper">static void <a href="#ac08d9ef1b16bf30b369932c727bd2f0e" class="m-doc-self">CopyBufferToImage</a>(</span><span class="m-doc-wrap">const VkBuffer&amp; buffer,
+              const VkImage&amp; image,
+              const VkExtent3D&amp; extent,
+              uint32_t layerCount,
+              uint32_t baseArrayLayer)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afd360420bd525be2a38d5297bcf18eb5">
+              <span class="m-doc-wrap-bumper">static auto <a href="#afd360420bd525be2a38d5297bcf18eb5" class="m-doc-self">CopyImage</a>(</span><span class="m-doc-wrap">const VkImage&amp; srcImage,
+              VkImage&amp; dstImage,
+              VkDeviceMemory&amp; dstImageMemory,
+              VkFormat srcFormat,
+              const VkExtent3D&amp; extent,
+              VkImageLayout srcImageLayout,
+              uint32_t mipLevel,
+              uint32_t arrayLayer) -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a35510cd7f4e0bf9a046ec91a881a357f" class="m-doc">Image</a>(</span><span class="m-doc-wrap">VkFilter filter,
+              VkSamplerAddressMode addressMode,
+              VkSampleCountFlagBits samples,
+              VkImageLayout layout,
+              VkImageUsageFlags usage,
+              VkFormat format,
+              uint32_t mipLevels,
+              uint32_t arrayLayers,
+              const VkExtent3D&amp; extent)</span>
+            </dt>
+            <dd></dd>
+            <dt id="a13897d1fe656cc769f8c0e065888bf29">
+              <span class="m-doc-wrap-bumper"><a href="#a13897d1fe656cc769f8c0e065888bf29" class="m-doc-self">~Image</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="acb65974df3ef664a36ca7529cea54ee9">
+              <span class="m-doc-wrap-bumper">auto <a href="#acb65974df3ef664a36ca7529cea54ee9" class="m-doc-self">GetWriteDescriptor</a>(</span><span class="m-doc-wrap">uint32_t binding,
+              VkDescriptorType descriptorType,
+              const std::optional&lt;<a href="classacid_1_1_offset_size.html" class="m-doc">OffsetSize</a>&gt;&amp; offsetSize) const -&gt; <a href="classacid_1_1_write_descriptor_set.html" class="m-doc">WriteDescriptorSet</a> <span class="m-label m-flat m-warning">override</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3a2546d0743a4a2fd08cca6dd29ca264" class="m-doc">GetBitmap</a>(</span><span class="m-doc-wrap">uint32_t mipLevel = 0,
+              uint32_t arrayLayer = 0) const -&gt; std::unique_ptr&lt;<a href="classacid_1_1_bitmap.html" class="m-doc">Bitmap</a>&gt;</span>
+            </dt>
+            <dd></dd>
+            <dt id="acf85c6d09b582408acdc7e121138db19">
+              <span class="m-doc-wrap-bumper">auto <a href="#acf85c6d09b582408acdc7e121138db19" class="m-doc-self">GetExtent</a>(</span><span class="m-doc-wrap">) const -&gt; const VkExtent3D&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a1f634af031162d3c4315d0c64077ee22">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1f634af031162d3c4315d0c64077ee22" class="m-doc-self">GetSize</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespaceacid.html#a6b88932ea122e48379375242b044d2e7" class="m-doc">Vector2ui</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0cbdc1deaae23f6cba6e7ae40f8c8b07">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0cbdc1deaae23f6cba6e7ae40f8c8b07" class="m-doc-self">GetFormat</a>(</span><span class="m-doc-wrap">) const -&gt; VkFormat</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af462a2bc6bab8be8103052b04b49cffe">
+              <span class="m-doc-wrap-bumper">auto <a href="#af462a2bc6bab8be8103052b04b49cffe" class="m-doc-self">GetSamples</a>(</span><span class="m-doc-wrap">) const -&gt; VkSampleCountFlagBits</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a41d58f940e8566609ba216247a4bb56b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a41d58f940e8566609ba216247a4bb56b" class="m-doc-self">GetUsage</a>(</span><span class="m-doc-wrap">) const -&gt; VkImageUsageFlags</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae0b72eba8bbfbbecd6eea3e42c9bdc1f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae0b72eba8bbfbbecd6eea3e42c9bdc1f" class="m-doc-self">GetMipLevels</a>(</span><span class="m-doc-wrap">) const -&gt; uint32_t</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5954ba1065d7bbc820896483d06d70ee">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5954ba1065d7bbc820896483d06d70ee" class="m-doc-self">GetArrayLevels</a>(</span><span class="m-doc-wrap">) const -&gt; uint32_t</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac978dd2566c394f6746cdaab8874ce17">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac978dd2566c394f6746cdaab8874ce17" class="m-doc-self">GetFilter</a>(</span><span class="m-doc-wrap">) const -&gt; VkFilter</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ace3bfc985517ff70964d0e836b0a2415">
+              <span class="m-doc-wrap-bumper">auto <a href="#ace3bfc985517ff70964d0e836b0a2415" class="m-doc-self">GetAddressMode</a>(</span><span class="m-doc-wrap">) const -&gt; VkSamplerAddressMode</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0eb019aee5c85d6bb205c9638cbde119">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0eb019aee5c85d6bb205c9638cbde119" class="m-doc-self">GetLayout</a>(</span><span class="m-doc-wrap">) const -&gt; VkImageLayout</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a86a7440c1bf0e1ec857a815a1cc2c4ee">
+              <span class="m-doc-wrap-bumper">auto <a href="#a86a7440c1bf0e1ec857a815a1cc2c4ee" class="m-doc-self">GetImage</a>(</span><span class="m-doc-wrap">) -&gt; const VkImage&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a488dde286afb187d633b7a7c4f9ff131">
+              <span class="m-doc-wrap-bumper">auto <a href="#a488dde286afb187d633b7a7c4f9ff131" class="m-doc-self">GetMemory</a>(</span><span class="m-doc-wrap">) -&gt; const VkDeviceMemory&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5184ff2c67db422c4ed671261532a09b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5184ff2c67db422c4ed671261532a09b" class="m-doc-self">GetSampler</a>(</span><span class="m-doc-wrap">) const -&gt; const VkSampler&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a00e96eb27cccf45d7397bcdacb892f69">
+              <span class="m-doc-wrap-bumper">auto <a href="#a00e96eb27cccf45d7397bcdacb892f69" class="m-doc-self">GetView</a>(</span><span class="m-doc-wrap">) const -&gt; const VkImageView&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pro-attribs">
+          <h2><a href="#pro-attribs">Protected variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a58a71b44982a3fcfd1dd2c042a29b55f">
+              VkExtent3D <a href="#a58a71b44982a3fcfd1dd2c042a29b55f" class="m-doc-self">extent</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6b32aecea7fea0c4d64a8c109bda6415">
+              VkSampleCountFlagBits <a href="#a6b32aecea7fea0c4d64a8c109bda6415" class="m-doc-self">samples</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab0abdabfb05d98827466f7db810e4e2e">
+              VkImageUsageFlags <a href="#ab0abdabfb05d98827466f7db810e4e2e" class="m-doc-self">usage</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa3d8a779b3bc204b4d3963a2f37c0d9a">
+              VkFormat <a href="#aa3d8a779b3bc204b4d3963a2f37c0d9a" class="m-doc-self">format</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab385235423386f1d44bf504481ae92da">
+              uint32_t <a href="#ab385235423386f1d44bf504481ae92da" class="m-doc-self">mipLevels</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0265a6f33c7b754d423cd87beba1c9be">
+              uint32_t <a href="#a0265a6f33c7b754d423cd87beba1c9be" class="m-doc-self">arrayLayers</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="add4b78498f7004b9b176befe8f66e375">
+              VkFilter <a href="#add4b78498f7004b9b176befe8f66e375" class="m-doc-self">filter</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a723969a0fe4c2dd7d9f38037d2bd25ca">
+              VkSamplerAddressMode <a href="#a723969a0fe4c2dd7d9f38037d2bd25ca" class="m-doc-self">addressMode</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5f094a41dc3680a4c0af40b60bf74ca5">
+              VkImageLayout <a href="#a5f094a41dc3680a4c0af40b60bf74ca5" class="m-doc-self">layout</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab1d4129deec79bfd3892bb635d9ac799">
+              VkImage <a href="#ab1d4129deec79bfd3892bb635d9ac799" class="m-doc-self">image</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aabe7030b73a0f9fd43556398d7c8fb7a">
+              VkDeviceMemory <a href="#aabe7030b73a0f9fd43556398d7c8fb7a" class="m-doc-self">memory</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a44557bd91b9469eda20d70a198f12d07">
+              VkSampler <a href="#a44557bd91b9469eda20d70a198f12d07" class="m-doc-self">sampler</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aaff5660ff7a6abf478f54641e7549158">
+              VkImageView <a href="#aaff5660ff7a6abf478f54641e7549158" class="m-doc-self">view</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a4191da1ecae95658ef152aa0c810023c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static VkFormat acid::<wbr />Image::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4191da1ecae95658ef152aa0c810023c" class="m-doc-self">FindSupportedFormat</a>(</span><span class="m-doc-wrap">const std::vector&lt;VkFormat&gt;&amp; candidates,
+              VkImageTiling tiling,
+              VkFormatFeatureFlags features)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">candidates</td>
+                  <td>Formats that are tested for features, in order of preference.</td>
+                </tr>
+                <tr>
+                  <td>tiling</td>
+                  <td>Tiling mode to test features in.</td>
+                </tr>
+                <tr>
+                  <td>features</td>
+                  <td>The features to test for.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The format found, or VK_FORMAT_UNDEFINED.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Find a format in the candidates list that fits the tiling and features required.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5559149dac163dd054244a687512ea60"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static bool acid::<wbr />Image::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5559149dac163dd054244a687512ea60" class="m-doc-self">HasDepth</a>(</span><span class="m-doc-wrap">VkFormat format)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format</td>
+                  <td>The format to check.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If the format has a depth component.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if a format has a depth component.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac6b2b0e93644af421b41a70582fd95b7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static bool acid::<wbr />Image::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6b2b0e93644af421b41a70582fd95b7" class="m-doc-self">HasStencil</a>(</span><span class="m-doc-wrap">VkFormat format)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">format</td>
+                  <td>The format to check.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>If the format has a depth component.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if a format has a depth component.</p>
+          </div></section>
+          <section class="m-doc-details" id="a35510cd7f4e0bf9a046ec91a881a357f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Image::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a35510cd7f4e0bf9a046ec91a881a357f" class="m-doc-self">Image</a>(</span><span class="m-doc-wrap">VkFilter filter,
+              VkSamplerAddressMode addressMode,
+              VkSampleCountFlagBits samples,
+              VkImageLayout layout,
+              VkImageUsageFlags usage,
+              VkFormat format,
+              uint32_t mipLevels,
+              uint32_t arrayLayers,
+              const VkExtent3D&amp; extent)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">filter</td>
+                  <td>The magnification/minification filter to apply to lookups.</td>
+                </tr>
+                <tr>
+                  <td>addressMode</td>
+                  <td>The addressing mode for outside [0..1] range.</td>
+                </tr>
+                <tr>
+                  <td>samples</td>
+                  <td>The number of samples per texel.</td>
+                </tr>
+                <tr>
+                  <td>layout</td>
+                  <td>The layout that the image subresources accessible from.</td>
+                </tr>
+                <tr>
+                  <td>usage</td>
+                  <td>The intended usage of the image.</td>
+                </tr>
+                <tr>
+                  <td>format</td>
+                  <td>The format and type of the texel blocks that will be contained in the image.</td>
+                </tr>
+                <tr>
+                  <td>mipLevels</td>
+                  <td>The number of levels of detail available for minified sampling of the image.</td>
+                </tr>
+                <tr>
+                  <td>arrayLayers</td>
+                  <td>The number of layers in the image.</td>
+                </tr>
+                <tr>
+                  <td>extent</td>
+                  <td>The number of data elements in each dimension of the base level.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Creates a new image object.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3a2546d0743a4a2fd08cca6dd29ca264"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::unique_ptr&lt;<a href="classacid_1_1_bitmap.html" class="m-doc">Bitmap</a>&gt; acid::<wbr />Image::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3a2546d0743a4a2fd08cca6dd29ca264" class="m-doc-self">GetBitmap</a>(</span><span class="m-doc-wrap">uint32_t mipLevel = 0,
+              uint32_t arrayLayer = 0) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mipLevel</td>
+                  <td>The mipmap level index to sample.</td>
+                </tr>
+                <tr>
+                  <td>arrayLayer</td>
+                  <td>The array level to sample.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A copy of the images pixels.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Copies the images pixels from memory to a bitmap. If this method is called from multiple threads at the same time Vulkan will crash!</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::IpAddress class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>IpAddress <span class="m-thin">class</span>
+        </h1>
+        <p>A utility class for manipulating network addresses. It provides a set a implicit constructors and conversion functions to easily build or transform an IP address from/to various representations.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-attribs">Public static variables</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="pub-static-attribs">
+          <h2><a href="#pub-static-attribs">Public static variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a2579a68605fb9f8ae30e83ca16972042">
+              static const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> <a href="#a2579a68605fb9f8ae30e83ca16972042" class="m-doc-self">None</a>
+            </dt>
+            <dd>Value representing an empty/invalid address.</dd>
+            <dt id="ad496438885879016e97aef5ed6a4430f">
+              static const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> <a href="#ad496438885879016e97aef5ed6a4430f" class="m-doc-self">Any</a>
+            </dt>
+            <dd>Value representing any address (0.0.0.0).</dd>
+            <dt id="a2bc6c35baf262321416225e928f05ded">
+              static const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> <a href="#a2bc6c35baf262321416225e928f05ded" class="m-doc-self">LocalHost</a>
+            </dt>
+            <dd>The &quot;localhost&quot; address (for connecting a computer to itself locally).</dd>
+            <dt id="ab45ec457be00d8316dcb5205533faa19">
+              static const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> <a href="#ab45ec457be00d8316dcb5205533faa19" class="m-doc-self">Broadcast</a>
+            </dt>
+            <dd>The &quot;broadcast&quot; address (for sending UDP messages to everyone on a local network).</dd>
+          </dl>
+        </section>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a47dc773b001fb8dbe8032024d5f24495" class="m-doc">GetLocalAddress</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a580a7fe288050f3e4224accc49aa98d8" class="m-doc">GetPublicAddress</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_time.html" class="m-doc">Time</a>&amp; timeout = 0s) -&gt; <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ad9661b1b96f70aa6f4c66439167b4f70" class="m-doc">IpAddress</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a8bba32d2e64d07854a512b4ecd2f935a" class="m-doc">IpAddress</a>(</span><span class="m-doc-wrap">const std::string&amp; address)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a59fa674f0bfb3af015d3b16ec1505b40" class="m-doc">IpAddress</a>(</span><span class="m-doc-wrap">uint8_t byte0,
+              uint8_t byte1,
+              uint8_t byte2,
+              uint8_t byte3)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aa1eab515c102ca7f6233f6d35f2f6c7d" class="m-doc">IpAddress</a>(</span><span class="m-doc-wrap">uint32_t address)</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a952a49b211c1bf1e8172856e0c5bad62" class="m-doc">ToString</a>(</span><span class="m-doc-wrap">) const -&gt; std::string</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a02362df9a96ed04d6d02f51ccedcfe3f" class="m-doc">ToInteger</a>(</span><span class="m-doc-wrap">) const -&gt; uint32_t</span>
+            </dt>
+            <dd></dd>
+            <dt id="a4c3f5d3fefdef7f8e73f497b2c79abcd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4c3f5d3fefdef7f8e73f497b2c79abcd" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a812d97fbcba9b095ff063acfc8a4459d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a812d97fbcba9b095ff063acfc8a4459d" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab29106fdbb98d8a24dea37654301da4e">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab29106fdbb98d8a24dea37654301da4e" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab79ce5693c3c8016ba2efccb25d2aff4">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab79ce5693c3c8016ba2efccb25d2aff4" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a018f04e08d18498007f2366fb3d52dac">
+              <span class="m-doc-wrap-bumper">auto <a href="#a018f04e08d18498007f2366fb3d52dac" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aefa4d583087424cf6525dded47baa96c">
+              <span class="m-doc-wrap-bumper">auto <a href="#aefa4d583087424cf6525dded47baa96c" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a4afeac59e0ed1a6e718fc05b731c3ad0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4afeac59e0ed1a6e718fc05b731c3ad0" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">std::ostream&amp; stream,
+              const <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; address) -&gt; std::ostream&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af98cf622f365de626cd9cfe4c72b6290">
+              <span class="m-doc-wrap-bumper">auto <a href="#af98cf622f365de626cd9cfe4c72b6290" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">std::istream&amp; stream,
+              <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>&amp; address) -&gt; std::istream&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a47dc773b001fb8dbe8032024d5f24495"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a47dc773b001fb8dbe8032024d5f24495" class="m-doc-self">GetLocalAddress</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Local IP address of the computer.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get the computer&#x27;s local address. The local address is the address of the computer from the LAN point of view, i.e. something like 192.168.1.56. It is meaningful only for communications over the local network. Unlike getPublicAddress, this function is fast and may be used safely anywhere.</p>
+          </div></section>
+          <section class="m-doc-details" id="a580a7fe288050f3e4224accc49aa98d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a580a7fe288050f3e4224accc49aa98d8" class="m-doc-self">GetPublicAddress</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_time.html" class="m-doc">Time</a>&amp; timeout = 0s)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">timeout</td>
+                  <td>Maximum time to wait.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Public IP address of the computer.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get the computer&#x27;s public address</p><p>The public address is the address of the computer from the internet point of view, i.e. something like 89.54.1.169. It is necessary for communications over the world wide web. The only way to get a public address is to ask it to a distant website; as a consequence, this function depends on both your network connection and the server, and may be very slow. You should use it as few as possible. Because this function depends on the network connection and on a distant server, you may use a time limit if you don&#x27;t want your program to be possibly stuck waiting in case there is a problem; this limit is deactivated by default.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad9661b1b96f70aa6f4c66439167b4f70"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad9661b1b96f70aa6f4c66439167b4f70" class="m-doc-self">IpAddress</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+<p>Default constructor, this constructor creates an empty (invalid) address.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8bba32d2e64d07854a512b4ecd2f935a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8bba32d2e64d07854a512b4ecd2f935a" class="m-doc-self">IpAddress</a>(</span><span class="m-doc-wrap">const std::string&amp; address)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">address</td>
+                  <td>IP address or network name.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Construct the address from a string. Here <em>address</em> can be either a decimal address (ex: &quot;192.168.1.56&quot;) or a network name (ex: &quot;localhost&quot;).</p>
+          </div></section>
+          <section class="m-doc-details" id="a59fa674f0bfb3af015d3b16ec1505b40"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a59fa674f0bfb3af015d3b16ec1505b40" class="m-doc-self">IpAddress</a>(</span><span class="m-doc-wrap">uint8_t byte0,
+              uint8_t byte1,
+              uint8_t byte2,
+              uint8_t byte3)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">byte0</td>
+                  <td>First byte of the address.</td>
+                </tr>
+                <tr>
+                  <td>byte1</td>
+                  <td>Second byte of the address.</td>
+                </tr>
+                <tr>
+                  <td>byte2</td>
+                  <td>Third byte of the address.</td>
+                </tr>
+                <tr>
+                  <td>byte3</td>
+                  <td>Fourth byte of the address.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Construct the address from 4 bytes. Calling IpAddress(a, b, c, d) is equivalent to calling <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a>(&quot;a.b.c.d&quot;), but safer as it doesn&#x27;t have to parse a string to get the address components.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa1eab515c102ca7f6233f6d35f2f6c7d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa1eab515c102ca7f6233f6d35f2f6c7d" class="m-doc-self">IpAddress</a>(</span><span class="m-doc-wrap">uint32_t address)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">address</td>
+                  <td>4 bytes of the address packed into a 32-bits integer.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Construct the address from a 32-bits integer.</p><p>This constructor uses the internal representation of the address directly. It should be used for optimization purposes, and only if you got that representation from IpAddress::toInteger().</p>
+          </div></section>
+          <section class="m-doc-details" id="a952a49b211c1bf1e8172856e0c5bad62"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::string acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a952a49b211c1bf1e8172856e0c5bad62" class="m-doc-self">ToString</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="classacid_1_1_string.html" class="m-doc">String</a> representation of the address.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get a string representation of the address. The returned string is the decimal representation of the IP address (like &quot;192.168.1.56&quot;), even if it was constructed from a host name.</p>
+          </div></section>
+          <section class="m-doc-details" id="a02362df9a96ed04d6d02f51ccedcfe3f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">uint32_t acid::<wbr />IpAddress::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a02362df9a96ed04d6d02f51ccedcfe3f" class="m-doc-self">ToInteger</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>32-bits unsigned integer representation of the address.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Get an integer representation of the address</p><p>The returned number is the internal representation of the address, and should be used for optimization purposes only (like sending the address through a socket). The integer produced by this function can then be converted back to a <a href="classacid_1_1_ip_address.html" class="m-doc">IpAddress</a> with the proper constructor.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

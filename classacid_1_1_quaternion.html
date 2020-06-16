@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Quaternion class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Quaternion <span class="m-thin">class</span>
+        </h1>
+        <p>A vector like object of the form w + xi + yj + zk, where w, x, y, z are real numbers and i, j, k are imaginary units.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-attribs">Public static variables</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="pub-static-attribs">
+          <h2><a href="#pub-static-attribs">Public static variables</a></h2>
+          <dl class="m-doc">
+            <dt id="ae8708f5f3b5cb9f20e555b82631603b5">
+              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#ae8708f5f3b5cb9f20e555b82631603b5" class="m-doc-self">Zero</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6e0115a6d931eaf1fa2590cbbacb655e">
+              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#a6e0115a6d931eaf1fa2590cbbacb655e" class="m-doc-self">One</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6bac2a75b9e4978b849dfee05c98d299">
+              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#a6bac2a75b9e4978b849dfee05c98d299" class="m-doc-self">PositiveInfinity</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab71ed1fb98f5d5d36748c84cb15db908">
+              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#ab71ed1fb98f5d5d36748c84cb15db908" class="m-doc-self">NegativeInfinity</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#acf81f3b9d9400c8a84ed80b1cc89ad46" class="m-doc">Quaternion</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a3dba9a1352c1843c4f437ff2f23dfd67" class="m-doc">Quaternion</a>(</span><span class="m-doc-wrap">float x,
+              float y,
+              float z,
+              float w)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6c18fe412558a57e239ef5aaf636040b" class="m-doc">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; source) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a037a6291efaa0091a9f45975f279ded3" class="m-doc">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a>&amp; source)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6a72b11c4a9a2d6dccaa8365401fa3e5" class="m-doc">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisX,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisY,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisZ)</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a03254a96bd617f9c0d0a1da1f92a112f" class="m-doc">MultiplyInverse</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other) const -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad79f600d4686c72045a2188157969dd6" class="m-doc">Dot</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0db9ac6d00c353da31857250371c951a" class="m-doc">Slerp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other,
+              float progression) const -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a89ff28ee7098574f1a9f1cbb85d0a9" class="m-doc">Normalize</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adbca7360556677f63b216c97b28e458e" class="m-doc">LengthSquared</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae66bec9bb65d86b50136e87641dba693" class="m-doc">Length</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abb5591cfe11be8b01f2abe433a80a651" class="m-doc">MaxComponent</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abb74ccebe9ef56c0e7500869d5fefe6c" class="m-doc">MinComponent</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a959a12a971887fb013db812af3372cba" class="m-doc">ToMatrix</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adf80d5646aebb4cae086ddc4f7b0e000" class="m-doc">ToRotationMatrix</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a15f67a1e70735a601490509536fef7c8" class="m-doc">ToEuler</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
+            </dt>
+            <dd></dd>
+            <dt id="a814d230271fb4f6d5d7d0ed2bbf8c4af">
+              <span class="m-doc-wrap-bumper">auto <a href="#a814d230271fb4f6d5d7d0ed2bbf8c4af" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t index) const -&gt; float</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae3065d6c9d56e48af9afaadfff3f5b3d">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae3065d6c9d56e48af9afaadfff3f5b3d" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t index) -&gt; float&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="accf6878047b999bbee702fe99ca00535">
+              <span class="m-doc-wrap-bumper">auto <a href="#accf6878047b999bbee702fe99ca00535" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa8594261c44d32c52a9e8726dd4f48d5">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa8594261c44d32c52a9e8726dd4f48d5" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a9896352e2452e6f5785c312ea606a2fa">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9896352e2452e6f5785c312ea606a2fa" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7dd5cf2062872695f3a6ca1ecd888565">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7dd5cf2062872695f3a6ca1ecd888565" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7ba0cc533ede6fc2a57d055a417c45e1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7ba0cc533ede6fc2a57d055a417c45e1" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a961f19d5c95543e6e847eda5721dba81">
+              float <a href="#a961f19d5c95543e6e847eda5721dba81" class="m-doc-self">x</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0749ba72ed5b58f62704aace0479f828">
+              float <a href="#a0749ba72ed5b58f62704aace0479f828" class="m-doc-self">y</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af09ca903348437b27a9d504df6e34d32">
+              float <a href="#af09ca903348437b27a9d504df6e34d32" class="m-doc-self">z</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a17cc8861b4f4a5cb2e7db07e8afda983">
+              float <a href="#a17cc8861b4f4a5cb2e7db07e8afda983" class="m-doc-self">w</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a268edb1c140fbf5c80e9f3cb95491c65">
+              <span class="m-doc-wrap-bumper">auto <a href="#a268edb1c140fbf5c80e9f3cb95491c65" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af31cc12be36a5a4d5f34c6761a5d56eb">
+              <span class="m-doc-wrap-bumper">auto <a href="#af31cc12be36a5a4d5f34c6761a5d56eb" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a74ba205f8d91abcf7305a2e4df7a3ace">
+              <span class="m-doc-wrap-bumper">auto <a href="#a74ba205f8d91abcf7305a2e4df7a3ace" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a01cfac813dd7711e5c2d08b0977d11a6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a01cfac813dd7711e5c2d08b0977d11a6" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; lhs,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8ce1e994749607f7ea700d16fb345e2f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8ce1e994749607f7ea700d16fb345e2f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; rhs) -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac4687317eafd9a3cfcfc56ed1af8299e">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac4687317eafd9a3cfcfc56ed1af8299e" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">float lhs,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab8dc0c441116599af85500080743ce3f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab8dc0c441116599af85500080743ce3f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
+              float rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a034ba03befb05b12bf4f1a760a08c7c1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a034ba03befb05b12bf4f1a760a08c7c1" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a667c9c0ce4be33c012fcae5255bcb5d4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a667c9c0ce4be33c012fcae5255bcb5d4" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac5dc526a4ba7ee1dfbf86acbdbb44642">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac5dc526a4ba7ee1dfbf86acbdbb44642" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">std::ostream&amp; stream,
+              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; std::ostream&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="acf81f3b9d9400c8a84ed80b1cc89ad46"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acf81f3b9d9400c8a84ed80b1cc89ad46" class="m-doc-self">Quaternion</a>(</span><span class="m-doc-wrap">) <span class="m-label m-info">defaulted</span></span></span>
+            </h3>
+<p>Constructor for <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3dba9a1352c1843c4f437ff2f23dfd67"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3dba9a1352c1843c4f437ff2f23dfd67" class="m-doc-self">Quaternion</a>(</span><span class="m-doc-wrap">float x,
+              float y,
+              float z,
+              float w)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Start x.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Start y.</td>
+                </tr>
+                <tr>
+                  <td>z</td>
+                  <td>Start z.</td>
+                </tr>
+                <tr>
+                  <td>w</td>
+                  <td>Start w.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6c18fe412558a57e239ef5aaf636040b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c18fe412558a57e239ef5aaf636040b" class="m-doc-self">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; source) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source</td>
+                  <td>Creates this quaternion out of a existing vector (pitch, yaw roll).</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a037a6291efaa0091a9f45975f279ded3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a037a6291efaa0091a9f45975f279ded3" class="m-doc-self">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a>&amp; source)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source</td>
+                  <td>Creates this vector out of a existing matrix.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6a72b11c4a9a2d6dccaa8365401fa3e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6a72b11c4a9a2d6dccaa8365401fa3e5" class="m-doc-self">Quaternion</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisX,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisY,
+              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; axisZ)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">axisX</td>
+                  <td>The X axis.</td>
+                </tr>
+                <tr>
+                  <td>axisY</td>
+                  <td>The Y axis.</td>
+                </tr>
+                <tr>
+                  <td>axisZ</td>
+                  <td>The Z axis.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructor for <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a03254a96bd617f9c0d0a1da1f92a112f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a03254a96bd617f9c0d0a1da1f92a112f" class="m-doc-self">MultiplyInverse</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>The other quaternion.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The resultant quaternion.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies this quaternion with the inverse of another quaternion. The value of both argument quaternions is persevered (this = left * right^-1).</p>
+          </div></section>
+          <section class="m-doc-details" id="ad79f600d4686c72045a2188157969dd6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad79f600d4686c72045a2188157969dd6" class="m-doc-self">Dot</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>The other quaternion.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The dot product.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Calculates the dot product of the this quaternion and another quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0db9ac6d00c353da31857250371c951a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0db9ac6d00c353da31857250371c951a" class="m-doc-self">Slerp</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; other,
+              float progression) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>The other quaternion.</td>
+                </tr>
+                <tr>
+                  <td>progression</td>
+                  <td>The progression.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Left slerp right.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Calculates the slerp between this quaternion and another quaternion, they must be normalized!</p>
+          </div></section>
+          <section class="m-doc-details" id="a7a89ff28ee7098574f1a9f1cbb85d0a9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7a89ff28ee7098574f1a9f1cbb85d0a9" class="m-doc-self">Normalize</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The normalized quaternion.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Normalizes this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="adbca7360556677f63b216c97b28e458e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adbca7360556677f63b216c97b28e458e" class="m-doc-self">LengthSquared</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The length squared.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the length squared of this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae66bec9bb65d86b50136e87641dba693"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae66bec9bb65d86b50136e87641dba693" class="m-doc-self">Length</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The length.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the length of this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="abb5591cfe11be8b01f2abe433a80a651"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb5591cfe11be8b01f2abe433a80a651" class="m-doc-self">MaxComponent</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The largest components.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the maximum value in this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="abb74ccebe9ef56c0e7500869d5fefe6c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb74ccebe9ef56c0e7500869d5fefe6c" class="m-doc-self">MinComponent</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The smallest components.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the lowest value in this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="a959a12a971887fb013db812af3372cba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a959a12a971887fb013db812af3372cba" class="m-doc-self">ToMatrix</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The rotation matrix which represents the exact same rotation as this quaternion.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts this quaternion to a 4x4 matrix.</p>
+          </div></section>
+          <section class="m-doc-details" id="adf80d5646aebb4cae086ddc4f7b0e000"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_matrix4.html" class="m-doc">Matrix4</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adf80d5646aebb4cae086ddc4f7b0e000" class="m-doc-self">ToRotationMatrix</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The rotation matrix which represents the exact same rotation as this quaternion.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts this quaternion to a 3x3 matrix representing the exact same rotation as this quaternion.</p>
+          </div></section>
+          <section class="m-doc-details" id="a15f67a1e70735a601490509536fef7c8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a> acid::<wbr />Quaternion::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15f67a1e70735a601490509536fef7c8" class="m-doc-self">ToEuler</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The euler angle representation of this quaternion.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts this quaternion to euler angles.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

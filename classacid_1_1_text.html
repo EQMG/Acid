@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::Text class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Text <span class="m-thin">class</span>
+        </h1>
+        <p>Class that represents a text in a GUI.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classacid_1_1_ui_object.html" class="m-doc">UiObject</a>
+            </dt>
+            <dd>A representation of a object this is rendered to a screen. This object is contained in a parent and has children. The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering. This class can be extended to create a representation for GUI images, fonts, etc.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a278efd1f0272f4037051158fb43d5363">
+              <span class="m-doc-wrap-bumper">enum <a href="#a278efd1f0272f4037051158fb43d5363" class="m-doc-self">Justify</a> { </span><span class="m-doc-wrap"><a href="#a278efd1f0272f4037051158fb43d5363a945d5e233cf7d6240f6b783b36a374ff" class="m-doc">Left</a>,
+              <a href="#a278efd1f0272f4037051158fb43d5363a1b83331ee5b0015c375e6542628088a8" class="m-doc">Centre</a>,
+              <a href="#a278efd1f0272f4037051158fb43d5363a92b09c7c48c520c3c55e497875da437c" class="m-doc">Right</a>,
+              <a href="#a278efd1f0272f4037051158fb43d5363a7372e03727d14171d0e28c22b8cc52bf" class="m-doc">Fully</a> }</span>
+            </dt>
+            <dd>A enum that represents how the text will be justified.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a9943389e04de629245c3fc0f7113991a">
+              <span class="m-doc-wrap-bumper"><a href="#a9943389e04de629245c3fc0f7113991a" class="m-doc-self">Text</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a9ef072a5f57eb694138096c529662dde">
+              <span class="m-doc-wrap-bumper">void <a href="#a9ef072a5f57eb694138096c529662dde" class="m-doc-self">UpdateObject</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">override</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a3965649e089ae920246d2319bd95a2e7">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3965649e089ae920246d2319bd95a2e7" class="m-doc-self">CmdRender</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_command_buffer.html" class="m-doc">CommandBuffer</a>&amp; commandBuffer,
+              const <a href="classacid_1_1_pipeline_graphics.html" class="m-doc">PipelineGraphics</a>&amp; pipeline) -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae62b11382e5cc13244e97860d1470387" class="m-doc">GetModel</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_model.html" class="m-doc">Model</a>*</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5f4002431e3fdd0bb6af1396fa7b02de" class="m-doc">GetFontSize</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac8e333257570587daddeabf704202b52" class="m-doc">SetFontSize</a>(</span><span class="m-doc-wrap">float fontSize)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ec232a4ec9aa6ca7eafacece73a6397" class="m-doc">GetNumberLines</a>(</span><span class="m-doc-wrap">) const -&gt; uint32_t</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa6e2862d87dd2c1ceefb821489e75832" class="m-doc">GetString</a>(</span><span class="m-doc-wrap">) const -&gt; const std::string&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a33c467b5a7c166e17e0d0f4b559990f1" class="m-doc">SetString</a>(</span><span class="m-doc-wrap">const std::string&amp; string)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1c222ed5045e772d65e855c5f54c089a" class="m-doc">GetJustify</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_text.html#a278efd1f0272f4037051158fb43d5363" class="m-doc">Justify</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae55f1d049ba073e0ed4dc9405457c1eb" class="m-doc">SetJustify</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_text.html#a278efd1f0272f4037051158fb43d5363" class="m-doc">Justify</a> justify)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af0a92ef46f7a3b286a9c3ccfe473d13d" class="m-doc">GetKerning</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#afd5722ec04e12e466c04756ab56300c5" class="m-doc">SetKerning</a>(</span><span class="m-doc-wrap">float kerning)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a92ce49f4445edd5e330b8551673ea32c" class="m-doc">GetLeading</a>(</span><span class="m-doc-wrap">) const -&gt; float</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9761467e46c2df6828a11cd556dc8ae8" class="m-doc">SetLeading</a>(</span><span class="m-doc-wrap">float leading)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af4056b5e2b5b6fd4792e7a7a80311805" class="m-doc">GetFontType</a>(</span><span class="m-doc-wrap">) const -&gt; const std::shared_ptr&lt;<a href="classacid_1_1_font_type.html" class="m-doc">FontType</a>&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4b876de17d1027ef1b614aeb5078d269" class="m-doc">SetFontType</a>(</span><span class="m-doc-wrap">const std::shared_ptr&lt;<a href="classacid_1_1_font_type.html" class="m-doc">FontType</a>&gt;&amp; fontType)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9319f849ec132524cfb160a8d265eba9" class="m-doc">GetTextColour</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae893b120581d33ac5683d29c6d20e585" class="m-doc">SetTextColour</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; textColour)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abfd7b80fae5e05fa6763e281e6141600" class="m-doc">IsLoaded</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ae62b11382e5cc13244e97860d1470387"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classacid_1_1_model.html" class="m-doc">Model</a>* acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae62b11382e5cc13244e97860d1470387" class="m-doc-self">GetModel</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The model of the text.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the text model, which contains all the vertex data for the quads on which the text will be rendered.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5f4002431e3fdd0bb6af1396fa7b02de"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5f4002431e3fdd0bb6af1396fa7b02de" class="m-doc-self">GetFontSize</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The font size.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the font size.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac8e333257570587daddeabf704202b52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac8e333257570587daddeabf704202b52" class="m-doc-self">SetFontSize</a>(</span><span class="m-doc-wrap">float fontSize)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">fontSize</td>
+                  <td>The new font size,</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the font size.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2ec232a4ec9aa6ca7eafacece73a6397"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">uint32_t acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ec232a4ec9aa6ca7eafacece73a6397" class="m-doc-self">GetNumberLines</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The number of lines.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the number of lines in this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa6e2862d87dd2c1ceefb821489e75832"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const std::string&amp; acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa6e2862d87dd2c1ceefb821489e75832" class="m-doc-self">GetString</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The string of text.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the string of text represented.</p>
+          </div></section>
+          <section class="m-doc-details" id="a33c467b5a7c166e17e0d0f4b559990f1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a33c467b5a7c166e17e0d0f4b559990f1" class="m-doc-self">SetString</a>(</span><span class="m-doc-wrap">const std::string&amp; string)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>The new text,</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Changed the current string in this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1c222ed5045e772d65e855c5f54c089a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_text.html#a278efd1f0272f4037051158fb43d5363" class="m-doc">Justify</a> acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1c222ed5045e772d65e855c5f54c089a" class="m-doc-self">GetJustify</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>How the text should justify.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets how the text should justify.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae55f1d049ba073e0ed4dc9405457c1eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae55f1d049ba073e0ed4dc9405457c1eb" class="m-doc-self">SetJustify</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_text.html#a278efd1f0272f4037051158fb43d5363" class="m-doc">Justify</a> justify)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">justify</td>
+                  <td>How the text will justify.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets how the text should justify.</p>
+          </div></section>
+          <section class="m-doc-details" id="af0a92ef46f7a3b286a9c3ccfe473d13d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af0a92ef46f7a3b286a9c3ccfe473d13d" class="m-doc-self">GetKerning</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The type kerning.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the kerning (type character spacing multiplier) of this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="afd5722ec04e12e466c04756ab56300c5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afd5722ec04e12e466c04756ab56300c5" class="m-doc-self">SetKerning</a>(</span><span class="m-doc-wrap">float kerning)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">kerning</td>
+                  <td>The new kerning.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the kerning (type character spacing multiplier) of this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a92ce49f4445edd5e330b8551673ea32c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">float acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92ce49f4445edd5e330b8551673ea32c" class="m-doc-self">GetLeading</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The line leading.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the leading (vertical line spacing multiplier) of this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9761467e46c2df6828a11cd556dc8ae8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9761467e46c2df6828a11cd556dc8ae8" class="m-doc-self">SetLeading</a>(</span><span class="m-doc-wrap">float leading)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">leading</td>
+                  <td>The new leading.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the leading (vertical line spacing multiplier) of this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="af4056b5e2b5b6fd4792e7a7a80311805"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const std::shared_ptr&lt;<a href="classacid_1_1_font_type.html" class="m-doc">FontType</a>&gt;&amp; acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4056b5e2b5b6fd4792e7a7a80311805" class="m-doc-self">GetFontType</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The font used by this text.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the font used by this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4b876de17d1027ef1b614aeb5078d269"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b876de17d1027ef1b614aeb5078d269" class="m-doc-self">SetFontType</a>(</span><span class="m-doc-wrap">const std::shared_ptr&lt;<a href="classacid_1_1_font_type.html" class="m-doc">FontType</a>&gt;&amp; fontType)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">fontType</td>
+                  <td>The font type to be used in this text.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the font used by this text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9319f849ec132524cfb160a8d265eba9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9319f849ec132524cfb160a8d265eba9" class="m-doc-self">GetTextColour</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The colour of the text.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the colour of the text.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae893b120581d33ac5683d29c6d20e585"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae893b120581d33ac5683d29c6d20e585" class="m-doc-self">SetTextColour</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; textColour)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">textColour</td>
+                  <td>The new colour of the text.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the colour of the text.</p>
+          </div></section>
+          <section class="m-doc-details" id="abfd7b80fae5e05fa6763e281e6141600"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Text::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abfd7b80fae5e05fa6763e281e6141600" class="m-doc-self">IsLoaded</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>If the text has been loaded to a model.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if the text has been loaded to a model.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
