@@ -11,15 +11,6 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	file.Load();
 	file.GetNode() >> *this;
 
-	/*File argsFile("ArgumentDescriptionMap.json");
-	std::map<std::string, InputAxis::ArgumentDescription> argumentDescriptionMap;
-	for (const auto &[name, createFunc] : InputAxis::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	for (const auto &[name, createFunc] : InputButton::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	*argsFile.GetNode() << argumentDescriptionMap;
-	argsFile.Write(Node::Format::Beautified);*/
-
 	File testOutFile(filename, File::Type::Json);
 	testOutFile.GetNode() = *this;
 	testOutFile.Write(Node::Format::Beautified);

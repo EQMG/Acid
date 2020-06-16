@@ -3,4 +3,38 @@ OUTPUT_DIRECTORY        = ../Build/doc-mcss
 GENERATE_HTML           = NO
 GENERATE_XML            = YES
 XML_PROGRAMLISTING      = NO
-XML_NS_MEMB_FILE_SCOPE  = YES
+XML_NS_MEMB_FILE_SCOPE  = NO
+
+HTML_EXTRA_STYLESHEET = \
+	https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600 \
+	../css/m-dark+documentation.compiled.css \
+	acid.css
+
+HTML_EXTRA_FILES = \
+	acid.js	\
+	Acid_01.png	\
+	Acid_03.png \
+	github-icon.png	\
+	Screenshot1.png \
+	Screenshot2.png	\
+	Screenshot3.png	\
+	Screenshot4.png	\
+	Screenshot5.png
+
+##! M_THEME_COLOR				= #22272e
+##! M_SHOW_UNDOCUMENTED         = YES
+##! M_LINKS_NAVBAR1 = \
+##! 	namespaces
+##! M_LINKS_NAVBAR2 = \
+##!  	annotated \
+##!		"<a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a>"
+##! M_SEARCH_DOWNLOAD_BINARY	= NO
+##! M_CLASS_TREE_EXPAND_LEVELS	= 3
+##! M_FILE_TREE_EXPAND_LEVELS	= 3
+##! M_PAGE_FINE_PRINT 			= <a target="_blank" href="https://github.com/EQMG/Acid/">Github</a> &bull; \
+##!								  <a target="_blank" href="https://github.com/EQMG/Acid/issues">Report an issue</a> \
+##!								  <br><br>Documentation generated using <a href="https://mcss.mosra.cz/">m.css</a>
+##! M_HTML_HEADER = <meta name="google-site-verification" content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs" />\
+##!		<meta name="description" content="A high speed C++17 Vulkan game engine.">\
+##!		<script src="acid.js"></script>
+##! M_FAVICON					= favicon.ico

@@ -11,15 +11,8 @@ jobs:
     steps:
       - name: Install Doxygen
         run: |
-          sudo apt-get install flex bison
+          sudo apt-get install doxygen flex bison
           sudo pip3 install jinja2 Pygments
-          git clone https://github.com/doxygen/doxygen.git
-          cd doxygen
-          mkdir build
-          cd build
-          cmake -G "Unix Makefiles" ..
-          make
-          sudo make install
       - uses: actions/checkout@v1
       - run: |
           git clone https://github.com/mosra/m.css.git Build/m.css
