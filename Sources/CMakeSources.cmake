@@ -49,9 +49,6 @@ set(_temp_acid_headers
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp
-		Files/Zip/ZipArchive.hpp
-		Files/Zip/ZipEntry.hpp
-		Files/Zip/ZipException.hpp
 		Fonts/FontsSubrender.hpp
 		Fonts/FontType.hpp
 		Fonts/Text.hpp
@@ -280,6 +277,11 @@ set(_temp_acid_third_party_headers
 		third_party/tinygltf/json.hpp
 		third_party/tinygltf/tiny_gltf.h
 		third_party/tinyobj/tiny_obj.h
+		third_party/Zippy/ZipArchive.hpp
+		third_party/Zippy/ZipEntry.hpp
+		third_party/Zippy/ZipException.hpp
+		third_party/Zippy/Zippy.hpp
+		third_party/Zippy/ZipUtilities.hpp
 		)
 set(_temp_acid_sources
 		Animations/AnimatedMesh.cpp
@@ -325,8 +327,6 @@ set(_temp_acid_sources
 		Files/NodeConstView.cpp
 		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
-		Files/Zip/ZipArchive.cpp
-		Files/Zip/ZipEntry.cpp
 		Fonts/FontsSubrender.cpp
 		Fonts/FontType.cpp
 		Fonts/Text.cpp

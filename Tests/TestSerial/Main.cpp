@@ -8,7 +8,6 @@
 #include <Files/Json/Json.hpp>
 #include <Files/Xml/Xml.hpp>
 //#include <Files/Yaml/Yaml.hpp>
-#include <Files/Zip/ZipArchive.hpp>
 
 using namespace acid;
 

@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Install Doxygen
         run: |
-          sudo apt-get install doxygen flex bison
+          sudo apt-get install doxygen flex bison python3-pip
           sudo pip3 install jinja2 Pygments
       - uses: actions/checkout@v1
       - run: |

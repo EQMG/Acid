@@ -13,5 +13,6 @@
  * [tinyexr](https://github.com/syoyo/tinyexr) - OpenEXR image loader/writer
  * [tinygltf](https://github.com/syoyo/tinygltf) - glTF 2.0 model loader
  * [tinyobj](https://github.com/syoyo/tinyobjloader) - OBJ model loader
+ * [Zippy](https://github.com/troldal/Zippy) - A simple C++ wrapper around the 'miniz' zip library
 
 Large header only libraries have been split between headers and implementations.
