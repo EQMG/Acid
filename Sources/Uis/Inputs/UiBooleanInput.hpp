@@ -22,7 +22,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnValue() { return onValue; }
+	rocket::signal<void(bool)> &OnValue() { return onValue; }
 
 private:
 	void UpdateValue();
@@ -34,6 +34,6 @@ private:
 
 	bool value = false;
 
-	Delegate<void(bool)> onValue;
+	rocket::signal<void(bool)> onValue;
 };
 }

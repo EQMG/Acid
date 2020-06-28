@@ -6,9 +6,9 @@ AxisInputButton::AxisInputButton(std::unique_ptr<InputAxis> &&axis, float min, f
 	min(min),
 	max(max) {
 	/*if (this->axis) {
-		this->axis->OnAxis().Add([this](float value) {
+		this->axis->OnAxis().connect(this, [this](float value) {
 			onButton(IsDown());
-		}, this);
+		});
 	}*/
 }
 

@@ -6,7 +6,7 @@ namespace acid {
 Uis::Uis() {
 	canvas.GetConstraints().SetWidth<PixelConstraint>(0)
 		.SetHeight<PixelConstraint>(0);
-	for (auto button : EnumIterator<MouseButton>())
+	for (auto button : bitmask::enum_iterator<MouseButton>())
 		selectors.emplace(button, SelectorMouse());
 }
 

@@ -220,7 +220,7 @@ target_compile_definitions(Acid
 target_compile_options(Acid
 		PUBLIC
 		# Disables symbol warnings.
-		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309 /wd26812>
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4275 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309 /wd26812>
 		PRIVATE
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
 		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>

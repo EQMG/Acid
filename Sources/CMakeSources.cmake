@@ -49,9 +49,6 @@ set(_temp_acid_headers
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp
-		Files/Zip/ZipArchive.hpp
-		Files/Zip/ZipEntry.hpp
-		Files/Zip/ZipException.hpp
 		Fonts/FontsSubrender.hpp
 		Fonts/FontType.hpp
 		Fonts/Text.hpp
@@ -247,8 +244,6 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		Utils/ConstExpr.hpp
-		Utils/Delegate.hpp
-		Utils/EnumClass.hpp
 		Utils/Enumerate.hpp
 		Utils/Factory.hpp
 		Utils/Future.hpp
@@ -260,6 +255,7 @@ set(_temp_acid_headers
 		Utils/TypeInfo.hpp
 		)
 set(_temp_acid_third_party_headers
+		third_party/bitmask/bitmask.hpp
 		third_party/cr/cr.h
 		third_party/dr_libs/dr_flac.h
 		third_party/dr_libs/dr_mp3.h
@@ -271,6 +267,7 @@ set(_temp_acid_third_party_headers
 		third_party/libspng/spng.h
 		third_party/miniz/miniz.h
 		third_party/msdf/msdf.h
+		third_party/rocket/rocket.hpp
 		third_party/stb/stb_image.h
 		third_party/stb/stb_image_write.h
 		third_party/stb/stb_truetype.h
@@ -280,6 +277,11 @@ set(_temp_acid_third_party_headers
 		third_party/tinygltf/json.hpp
 		third_party/tinygltf/tiny_gltf.h
 		third_party/tinyobj/tiny_obj.h
+		third_party/Zippy/ZipArchive.hpp
+		third_party/Zippy/ZipEntry.hpp
+		third_party/Zippy/ZipException.hpp
+		third_party/Zippy/Zippy.hpp
+		third_party/Zippy/ZipUtilities.hpp
 		)
 set(_temp_acid_sources
 		Animations/AnimatedMesh.cpp
@@ -325,8 +327,6 @@ set(_temp_acid_sources
 		Files/NodeConstView.cpp
 		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
-		Files/Zip/ZipArchive.cpp
-		Files/Zip/ZipEntry.cpp
 		Fonts/FontsSubrender.cpp
 		Fonts/FontType.cpp
 		Fonts/Text.cpp

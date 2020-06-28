@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <functional>
 
@@ -40,6 +40,14 @@ public:
 	class Registrar : public Base {
 	public:
 		/**
+		 * Virtual deconstructor called from the engine to clear the instance pointer.
+		 */
+		virtual ~Registrar() {
+			if (static_cast<T *>(this) == moduleInstance)
+				moduleInstance = nullptr;
+		}
+
+		/**
 		 * Gets the engines instance.
 		 * @return The current module instance.
 		 */
@@ -55,6 +63,7 @@ public:
 		static bool Register(typename Base::Stage stage, Requires<Args...> &&requires = {}) {
 			ModuleFactory::Registry()[TypeInfo<Base>::template GetTypeId<T>()] = {[]() {
 				moduleInstance = new T();
+				// The registrar does not own the instance, the engine does, we just hold a raw pointer for convenience.
 				return std::unique_ptr<Base>(moduleInstance);
 			}, stage, requires.Get()};
 			return true;
@@ -70,7 +79,7 @@ public:
 class ACID_EXPORT Module : public ModuleFactory<Module>, NonCopyable {
 public:
 	/**
-	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
+	 * @brief Represents the stage where the module will be updated in the engine.
 	 */
 	enum class Stage : uint8_t {
 		Never, Always, Pre, Normal, Post, Render

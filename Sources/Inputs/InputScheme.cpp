@@ -11,15 +11,6 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 	file.Load();
 	file.GetNode() >> *this;
 
-	/*File argsFile("ArgumentDescriptionMap.json");
-	std::map<std::string, InputAxis::ArgumentDescription> argumentDescriptionMap;
-	for (const auto &[name, createFunc] : InputAxis::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	for (const auto &[name, createFunc] : InputButton::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	*argsFile.GetNode() << argumentDescriptionMap;
-	argsFile.Write(Node::Format::Beautified);*/
-
 	File testOutFile(filename, File::Type::Json);
 	testOutFile.GetNode() = *this;
 	testOutFile.Write(Node::Format::Beautified);
@@ -76,9 +67,9 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 void InputScheme::MoveDelegateOwnership(InputScheme *other) {
 	if (!other) return;
 	// Move all delegate functions except those owned internally by the axis or button.
-	for (auto &[axisName, axis] : other->axes)
-		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
-	for (auto &[buttonName, button] : other->buttons)
-		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
+	//for (auto &[axisName, axis] : other->axes)
+	//	GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
+	//for (auto &[buttonName, button] : other->buttons)
+	//	GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
 }
 }

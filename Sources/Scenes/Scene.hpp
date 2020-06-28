@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Class that is used to represent a scene.
  */
-class ACID_EXPORT Scene : public virtual Observer {
+class ACID_EXPORT Scene : public virtual rocket::trackable {
 	friend class Scenes;
 public:
 	/**

@@ -61,8 +61,8 @@ void Joysticks::Update() {
 		joystick.hats.resize(static_cast<std::size_t>(hatCount));
 
 		for (uint32_t i = 0; i < static_cast<uint32_t>(hatCount); i++) {
-			if (joystick.hats[i] != MakeBitMask<JoystickHatValue>(hats[i])) {
-				joystick.hats[i] = MakeBitMask<JoystickHatValue>(hats[i]);
+			if (joystick.hats[i] != bitmask::bitmask<JoystickHatValue>(hats[i])) {
+				joystick.hats[i] = bitmask::bitmask<JoystickHatValue>(hats[i]);
 				onHat(port, i, joystick.hats[i]);
 			}
 		}
@@ -109,7 +109,7 @@ InputAction Joysticks::GetButton(JoystickPort port, JoystickButton button) const
 	return InputAction::Release;
 }
 
-BitMask<JoystickHatValue> Joysticks::GetHat(JoystickPort port, JoystickHat hat) const {
+bitmask::bitmask<JoystickHatValue> Joysticks::GetHat(JoystickPort port, JoystickHat hat) const {
 	if (auto joystick = GetJoystick(port); joystick && hat <= joystick->hats.size())
 		return joystick->hats[hat];
 	return JoystickHatValue::Centered;

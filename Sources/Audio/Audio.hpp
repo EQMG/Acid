@@ -1,7 +1,8 @@
 #pragma once
 
+#include <rocket/rocket.hpp>
+
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 
 namespace acid {
 /**
@@ -29,7 +30,7 @@ public:
 	 * Called when a gain value has been modified.
 	 * @return The delegate.
 	 */
-	Delegate<void(Type, float)> &OnGain() { return onGain; }
+	rocket::signal<void(Type, float)> &OnGain() { return onGain; }
 
 private:
 	// TODO: Only using p-impl because of signature differences from OpenAL and OpenALSoft.
@@ -38,6 +39,6 @@ private:
 
 	std::map<Type, float> gains;
 
-	Delegate<void(Type, float)> onGain;
+	rocket::signal<void(Type, float)> onGain;
 };
 }

@@ -29,7 +29,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnValue() { return onValue; }
+	rocket::signal<void(bool)> &OnValue() { return onValue; }
 
 private:
 	void UpdateValue();
@@ -41,10 +41,10 @@ private:
 	bool value = false;
 	Type type = Type::Filled;
 
-	Delegate<void(bool)> onValue;
+	rocket::signal<void(bool)> onValue;
 };
 
-class ACID_EXPORT UiRadioManager : public virtual Observer {
+class ACID_EXPORT UiRadioManager : public virtual rocket::trackable {
 public:
 	UiRadioManager() = default;
 
@@ -69,7 +69,7 @@ public:
 	void AddInput(UiRadioInput *input) {
 		inputs.emplace_back(input);
 		input->SetType(type);
-		input->OnValue().Add([this, input](bool value) {
+		input->OnValue().connect(this, [this, input](bool value) {
 			if (!multiple) {
 				for (auto &input2 : inputs) {
 					if (input2 != input) {
@@ -77,7 +77,7 @@ public:
 					}
 				}
 			}
-		}, this);
+		});
 	}
 
 	void RemoveInput(UiRadioInput *input) {

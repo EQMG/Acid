@@ -19,9 +19,9 @@ UiButtonInput::UiButtonInput() {
 	AddChild(&title);
 	
 	SetCursorHover(CursorStandard::Hand);
-	OnSelected().Add([this](bool selected) {
+	OnSelected().connect(this, [this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
-	}, this);
+	});
 }
 
 void UiButtonInput::UpdateObject() {

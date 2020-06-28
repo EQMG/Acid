@@ -1,12 +1,12 @@
 #pragma once
 
+#include <rocket/rocket.hpp>
 #include <Files/File.hpp>
-#include <Utils/Delegate.hpp>
 
 using namespace acid;
 
 namespace test {
-class ConfigManager : public virtual Observer {
+class ConfigManager : public virtual rocket::trackable {
 public:
 	ConfigManager();
 

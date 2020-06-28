@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Utils/Delegate.hpp"
 #include "Colliders/Collider.hpp"
 #include "Force.hpp"
 
@@ -14,7 +13,7 @@ class Frustum;
 /**
  * @brief Represents a object in a scene effected by physics.
  */
-class ACID_EXPORT CollisionObject : public virtual Observer, NonCopyable {
+class ACID_EXPORT CollisionObject : public virtual rocket::trackable, NonCopyable {
 public:
 	/**
 	 * Creates a new collision object.
@@ -82,13 +81,13 @@ public:
 	 * Called when this object collides from a object.
 	 * @return The delegate.
 	 */
-	Delegate<void(CollisionObject *)> &OnCollision() { return onCollision; }
+	rocket::signal<void(CollisionObject *)> &OnCollision() { return onCollision; }
 
 	/**
 	 * Called when this object separates from a object.
 	 * @return The delegate.
 	 */
-	Delegate<void(CollisionObject *)> &OnSeparation() { return onSeparation; }
+	rocket::signal<void(CollisionObject *)> &OnSeparation() { return onSeparation; }
 
 protected:
 	virtual void RecalculateMass() = 0;
@@ -111,7 +110,7 @@ protected:
 
 	std::vector<std::unique_ptr<Force>> forces;
 
-	Delegate<void(CollisionObject *)> onCollision;
-	Delegate<void(CollisionObject *)> onSeparation;
+	rocket::signal<void(CollisionObject *)> onCollision;
+	rocket::signal<void(CollisionObject *)> onSeparation;
 };
 }

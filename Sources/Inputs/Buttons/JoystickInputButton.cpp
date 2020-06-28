@@ -4,11 +4,11 @@ namespace acid {
 JoystickInputButton::JoystickInputButton(JoystickPort port, JoystickButton button) :
 	port(port),
 	button(button) {
-	Joysticks::Get()->OnButton().Add([this](JoystickPort port, JoystickButton button, InputAction action) {
+	Joysticks::Get()->OnButton().connect(this, [this](JoystickPort port, JoystickButton button, InputAction action) {
 		if (this->port == port && this->button == button) {
 			onButton(action, 0);
 		}
-	}, this);
+	});
 }
 
 bool JoystickInputButton::IsDown() const {

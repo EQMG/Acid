@@ -14,11 +14,11 @@ Scene1::Scene1() :
 	Scene(std::make_unique<Camera>()) {
 	//uiStartLogo.SetTransform({UiMargins::All});
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
-	uiStartLogo.OnFinished().Add([this]() {
+	uiStartLogo.OnFinished().connect(this, [this]() {
 		overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		//uiPanels.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		TogglePause();
-	}, this);
+	});
 	Uis::Get()->GetCanvas().AddChild(&uiStartLogo);
 
 	//uiPanels.SetTransform({UiMargins::All});
@@ -34,11 +34,11 @@ Scene1::Scene1() :
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
 	//Uis::Get()->GetCanvas().SetScaleDriver<SinewaveDriver>(Vector2f(0.3f), Vector2f(5.0f), 16s);
-	Input::Get()->GetButton("pause")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("pause")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			TogglePause();
 		}
-	}, this);
+	});
 }
 
 void Scene1::Start() {

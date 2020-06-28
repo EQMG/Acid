@@ -48,10 +48,10 @@ Scene1::Scene1() :
 	Scene(std::make_unique<FpsCamera>()) {
 	//uiStartLogo.SetTransform({UiMargins::All});
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
-	uiStartLogo.OnFinished().Add([this]() {
+	uiStartLogo.OnFinished().connect(this, [this]() {
 		overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
 		Mouse::Get()->SetCursorHidden(true);
-	}, this);
+	});
 	Uis::Get()->GetCanvas().AddChild(&uiStartLogo);
 
 	//overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
@@ -62,7 +62,7 @@ Scene1::Scene1() :
 	overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 
-	Input::Get()->GetButton("spawnSphere")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -81,15 +81,15 @@ Scene1::Scene1() :
 			sphereLight->AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
-	}, this);
+	});
 
-	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	}, this);
+	});
 
-	Input::Get()->GetButton("save")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Input::Get()->GetButton("save")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile("Scene1.json", File::Type::Json);
@@ -113,22 +113,22 @@ Scene1::Scene1() :
 				sceneFile.Write(Node::Format::Beautified);
 			});
 		}
-	}, this);
+	});
 
-	Mouse::Get()->OnDrop().Add([](std::vector<std::string> paths) {
+	Mouse::Get()->OnDrop().connect(this, [](std::vector<std::string> paths) {
 		for (const auto &path : paths) {
 			Log::Out("File dropped on window: ", path, '\n');
 		}
-	}, this);
-	Window::Get()->OnMonitorConnect().Add([](Monitor *monitor, bool connected) {
+	});
+	Window::Get()->OnMonitorConnect().connect(this, [](Monitor *monitor, bool connected) {
 		Log::Out("Monitor ", std::quoted(monitor->GetName()), " action: ", connected, '\n');
-	}, this);
-	Window::Get()->OnClose().Add([]() {
+	});
+	Window::Get()->OnClose().connect(this, []() {
 		Log::Out("Window has closed!\n");
-	}, this);
-	Window::Get()->OnIconify().Add([](bool iconified) {
+	});
+	Window::Get()->OnIconify().connect(this, [](bool iconified) {
 		Log::Out("Iconified: ", iconified, '\n');
-	}, this);
+	});
 }
 
 void Scene1::Start() {

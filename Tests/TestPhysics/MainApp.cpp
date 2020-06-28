@@ -43,23 +43,21 @@ MainApp::MainApp() :
 	// Loads a input scheme for this app.
 	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
-		if (action == InputAction::Press) {
+	Input::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+		if (action == InputAction::Press)
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-	}, this);
-	Input::Get()->GetButton("screenshot")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	});
+	Input::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
-	}, this);
-	Input::Get()->GetButton("exit")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
-		if (action == InputAction::Press) {
+	});
+	Input::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+		if (action == InputAction::Press)
 			Engine::Get()->RequestClose();
-		}
-	}, this);
+	});
 }
 
 MainApp::~MainApp() {
@@ -76,16 +74,16 @@ void MainApp::Start() {
 	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 
-	Timers::Get()->Once(0.333s, []() {
+	Timers::Get()->Once([]() {
 		Log::Out("Timer Hello World!\n");
-	});
-	Timers::Get()->Every(3s, []() {
+	}, 0.333s);
+	Timers::Get()->Every([]() {
 		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
-	});
-	Timers::Get()->Repeat(2s, 3, []() {
+	}, 3s);
+	Timers::Get()->Repeat([]() {
 		static uint32_t i = 0;
 		Log::Out("Timer Repeat Tick #", ++i, '\n');
-	});
+	}, 2s, 3);
 
 	// Sets values to modules.
 	Window::Get()->SetTitle("Test Physics");

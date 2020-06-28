@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Engine/Log.hpp"
-#include "Utils/Delegate.hpp"
 #include "Utils/StreamFactory.hpp"
 
 namespace acid {
@@ -10,7 +8,7 @@ class Entity;
 /**
  * @brief Class that represents a functional component attached to entity.
  */
-class ACID_EXPORT Component : public StreamFactory<Component>, public virtual Observer {
+class ACID_EXPORT Component : public StreamFactory<Component> {
 	friend class Entity;
 public:
 	virtual ~Component() = default;

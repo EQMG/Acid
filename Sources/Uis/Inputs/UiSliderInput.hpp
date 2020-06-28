@@ -33,7 +33,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(float)> &OnValue() { return onValue; }
+	rocket::signal<void(float)> &OnValue() { return onValue; }
 
 private:
 	void UpdateProgress();
@@ -51,6 +51,6 @@ private:
 	bool updating = false;
 	bool mouseOver = false;
 
-	Delegate<void(float)> onValue;
+	rocket::signal<void(float)> onValue;
 };
 }

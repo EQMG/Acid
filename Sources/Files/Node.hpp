@@ -93,7 +93,7 @@ public:
 	explicit Node(const std::string &name);
 	Node(const std::string &name, const Node &node);
 	Node(const Node &node) = default;
-	Node(Node &&node) = default;
+	Node(Node &&node) noexcept = default;
 
 	template<typename NodeParser>
 	void ParseString(std::string_view string);
@@ -167,9 +167,9 @@ public:
 	Node &operator=(const Node &rhs);
 	Node &operator=(Node &&rhs) noexcept;
 	Node &operator=(const NodeConstView &rhs);
-	Node &operator=(NodeConstView &&rhs) noexcept;
+	Node &operator=(NodeConstView &&rhs);
 	Node &operator=(NodeView &rhs);
-	Node &operator=(NodeView &&rhs) noexcept;
+	Node &operator=(NodeView &&rhs);
 	template<typename T>
 	Node &operator=(const T &rhs);
 

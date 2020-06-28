@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Utils/Delegate.hpp"
 #include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
@@ -14,7 +13,7 @@ namespace acid {
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI images, fonts, etc.
  */
-class ACID_EXPORT UiObject : public virtual Observer {
+class ACID_EXPORT UiObject : public virtual rocket::trackable {
 public:
 	UiObject();
 	virtual ~UiObject();
@@ -99,13 +98,13 @@ public:
 	 * Called when this object has been clicked on.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnClick() { return onClick; }
+	rocket::signal<void(MouseButton)> &OnClick() { return onClick; }
 
 	/**
 	 * Called when this object has has the cursor hovered over, or removed.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnSelected() { return onSelected; }
+	rocket::signal<void(bool)> &OnSelected() { return onSelected; }
 
 private:
 	std::vector<UiObject *> children;
@@ -127,7 +126,7 @@ private:
 	Vector2f screenScale;
 	bool selected = false;
 
-	Delegate<void(MouseButton)> onClick;
-	Delegate<void(bool)> onSelected;
+	rocket::signal<void(MouseButton)> onClick;
+	rocket::signal<void(bool)> onSelected;
 };
 }

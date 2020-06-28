@@ -240,7 +240,7 @@ Node &Node::operator=(const NodeConstView &rhs) {
 	return operator=(*rhs);
 }
 
-Node &Node::operator=(NodeConstView &&rhs) noexcept {
+Node &Node::operator=(NodeConstView &&rhs) {
 	return operator=(*rhs);
 }
 
@@ -248,7 +248,7 @@ Node &Node::operator=(NodeView &rhs) {
 	return operator=(*rhs);
 }
 
-Node &Node::operator=(NodeView &&rhs) noexcept {
+Node &Node::operator=(NodeView &&rhs) {
 	return operator=(*rhs);
 }
 
