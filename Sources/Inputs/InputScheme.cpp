@@ -6,14 +6,14 @@
 
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
-	file(filename, File::Type::Json) {
+	file(filename, std::make_unique<Json>()) {
 	// Load this scheme from the file right away.
 	file.Load();
 	file.GetNode() >> *this;
 
-	File testOutFile(filename, File::Type::Json);
+	File testOutFile(filename, std::make_unique<Json>());
 	testOutFile.GetNode() = *this;
-	testOutFile.Write(Node::Format::Beautified);
+	testOutFile.Write(NodeFormat::Beautified);
 }
 
 InputAxis *InputScheme::GetAxis(const std::string &name) {

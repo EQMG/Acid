@@ -5,6 +5,8 @@
 #include "NodeView.hpp"
 
 namespace acid {
+class NodeParser;
+
 /**
  * @brief Class that is used to represent a tree of UFT-8 values, used in serialization.
  */
@@ -14,96 +16,11 @@ public:
 		Object, Array, String, Boolean, Integer, Decimal, Null, Token, Unknown
 	};
 
-	/**
-	 * @brief Class that is used to print a char, and ignore null char.
-	 */
-	class NullableChar {
-	public:
-		constexpr NullableChar(char val) :
-			val(val) {
-		}
-
-		constexpr operator const char &() const noexcept { return val; }
-
-		friend std::ostream &operator<<(std::ostream &stream, const NullableChar &c) {
-			if (c.val != '\0') stream << c.val;
-			return stream;
-		}
-
-		char val;
-	};
-
-	/**
-	 * @brief Class that represents a configurable output format.
-	 */
-	class Format {
-	public:
-		constexpr Format(int8_t spacesPerIndent, NullableChar newLine, NullableChar space, bool inlineArrays) :
-			spacesPerIndent(spacesPerIndent),
-			newLine(newLine),
-			space(space),
-			inlineArrays(inlineArrays) {
-		}
-
-		/**
-		 * Creates a string for the indentation level.
-		 * @param indent The node level to get indentation for.
-		 * @return The indentation string.
-		 */
-		std::string GetIndents(int8_t indent) const {
-			return std::string(spacesPerIndent * indent, ' ');
-		}
-
-		/// Writes a node with full padding.
-		ACID_EXPORT static const Format Beautified;
-		/// Writes a node with no padding.
-		ACID_EXPORT static const Format Minified;
-
-		int8_t spacesPerIndent;
-		NullableChar newLine, space;
-		bool inlineArrays;
-	};
-
-	class Token {
-	public:
-		Token() = default;
-		Token(Type type, std::string_view view) :
-			type(type),
-			view(view) {
-		}
-
-		/**
-		 * Compares if two tokens have the same type and string contents.
-		 * @param rhs The other token to compare.
-		 * @return If the tokens are equal.
-		 */
-		bool operator==(const Token &rhs) const {
-			return type == rhs.type && view == rhs.view.data();
-		}
-
-		bool operator!=(const Token &rhs) const {
-			return !operator==(rhs);
-		}
-
-		Type type;
-		std::string_view view;
-	};
-
 	Node();
 	explicit Node(const std::string &name);
 	Node(const std::string &name, const Node &node);
 	Node(const Node &node) = default;
 	Node(Node &&node) noexcept = default;
-
-	template<typename NodeParser>
-	void ParseString(std::string_view string);
-	template<typename NodeParser>
-	void WriteStream(std::ostream &stream, Format format = Format::Minified) const;
-
-	template<typename NodeParser, typename _Elem = char>
-	void ParseStream(std::basic_istream<_Elem> &stream);
-	template<typename NodeParser, typename _Elem = char>
-	std::basic_string<_Elem> WriteString(Format format = Format::Minified) const;
 
 	template<typename T>
 	T GetName() const;
@@ -194,6 +111,97 @@ protected:
 	std::string name; // key
 	std::string value;
 	Type type;
+};
+
+/**
+ * @brief Class that represents an abstract node format parser and writer.
+ */
+class ACID_EXPORT NodeFormat {
+public:
+	/**
+	 * @brief Class that is used to print a char, and ignore null char.
+	 */
+	class NullableChar {
+	public:
+		constexpr NullableChar(char val) :
+			val(val) {
+		}
+
+		constexpr operator const char &() const noexcept { return val; }
+
+		friend std::ostream &operator<<(std::ostream &stream, const NullableChar &c) {
+			if (c.val != '\0') stream << c.val;
+			return stream;
+		}
+
+		char val;
+	};
+
+	/**
+	 * @brief Class that represents a configurable output format.
+	 */
+	class Format {
+	public:
+		constexpr Format(int8_t spacesPerIndent, NullableChar newLine, NullableChar space, bool inlineArrays) :
+			spacesPerIndent(spacesPerIndent),
+			newLine(newLine),
+			space(space),
+			inlineArrays(inlineArrays) {
+		}
+
+		/**
+		 * Creates a string for the indentation level.
+		 * @param indent The node level to get indentation for.
+		 * @return The indentation string.
+		 */
+		std::string GetIndents(int8_t indent) const {
+			return std::string(spacesPerIndent * indent, ' ');
+		}
+
+		int8_t spacesPerIndent;
+		NullableChar newLine, space;
+		bool inlineArrays;
+	};
+
+	class Token {
+	public:
+		Token() = default;
+		Token(Node::Type type, std::string_view view) :
+			type(type),
+			view(view) {
+		}
+
+		/**
+		 * Compares if two tokens have the same type and string contents.
+		 * @param rhs The other token to compare.
+		 * @return If the tokens are equal.
+		 */
+		bool operator==(const Token &rhs) const {
+			return type == rhs.type && view == rhs.view.data();
+		}
+
+		bool operator!=(const Token &rhs) const {
+			return !operator==(rhs);
+		}
+
+		Node::Type type;
+		std::string_view view;
+	};
+
+	/// Writes a node with full padding.
+	static const Format Beautified;
+	/// Writes a node with no padding.
+	static const Format Minified;
+
+	virtual ~NodeFormat() = default;
+
+	template<typename _Elem = char>
+	void ParseStream(Node &node, std::basic_istream<_Elem> &stream);
+	template<typename _Elem = char>
+	std::basic_string<_Elem> WriteString(const Node &node, Format format = Minified) const;
+
+	virtual void ParseString(Node &node, std::string_view string) = 0;
+	virtual void WriteStream(const Node &node, std::ostream &stream, Format format = Minified) const = 0;
 };
 }
 

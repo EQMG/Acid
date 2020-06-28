@@ -1,6 +1,7 @@
 #include "AnimatedMesh.hpp"
 
 #include "Maths/Maths.hpp"
+#include "Files/Xml/Xml.hpp"
 #include "Files/File.hpp"
 #include "Maths/Matrix4.hpp"
 #include "Scenes/Entity.hpp"
@@ -23,7 +24,7 @@ void AnimatedMesh::Start() {
 	if (filename.empty())
 		return;
 
-	File file(filename, File::Type::Xml);
+	File file(filename, std::make_unique<Xml>());
 	file.Load();
 	auto fileNode = file.GetNode()["COLLADA"];
 
@@ -44,20 +45,20 @@ void AnimatedMesh::Start() {
 
 /*#if defined(ACID_DEBUG)
 	{
-		File fileModel("Animation/Model.json", File::Type::Json);
+		File fileModel("Animation/Model.json", std::make_unique<Json>());
 		fileModel.GetNode()["vertices"] = model->GetVertices<VertexAnimated>();
 		fileModel.GetNode()["indices"] = model->GetIndices();
-		fileModel.Write(Node::Format::Beautified);
+		fileModel.Write(NodeFormat::Beautified);
 	}
 	{
-		File fileJoints("Animation/Joints.json", File::Type::Json);
+		File fileJoints("Animation/Joints.json", std::make_unique<Json>());
 		fileJoints.GetNode() = headJoint;
-		fileJoints.Write(Node::Format::Beautified);
+		fileJoints.Write(NodeFormat::Beautified);
 	}
 	{
-		File fileAnimation0("Animation/Animation0.json", File::Type::Json);
+		File fileAnimation0("Animation/Animation0.json", std::make_unique<Json>());
 		fileAnimation0.GetNode() = *animation;
-		fileAnimation0.Write(Node::Format::Beautified);
+		fileAnimation0.Write(NodeFormat::Beautified);
 	}
 #endif*/
 }
