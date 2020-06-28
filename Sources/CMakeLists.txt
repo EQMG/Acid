@@ -73,6 +73,25 @@ if(NOT TARGET glfw)
 	set_target_properties(glfw PROPERTIES FOLDER External)
 endif()
 
+find_package(Freetype 2.9.1 QUIET)
+if(NOT Freetype_FOUND)
+	FetchContent_Declare(freetype
+			URL https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
+			URL_MD5 b1cb620e4c875cd4d1bfa04945400945
+			)
+	FetchContent_GetProperties(freetype)
+	if(NOT freetype_POPULATED)
+		set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
+		set(CMAKE_DISABLE_FIND_PACKAGE_BZip2 TRUE)
+		set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
+		set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz TRUE)
+		FetchContent_Populate(freetype)
+		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
+		set_target_properties(freetype PROPERTIES FOLDER External)
+	endif()
+	set(FREETYPE_LIBRARIES "freetype")
+endif()
+
 # TODO: Prebuilt glslang binaries are unreliable between systems
 #find_package(glslang QUIET)
 if(NOT glslang_FOUND)
@@ -241,6 +260,7 @@ target_include_directories(Acid
 		PRIVATE
 		# Since building locally from the submodules won't always create these vars.
 		# We have to do a simple check if they exist or they will cause errors
+		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
 		$<$<BOOL:${GLSLANG_INCLUDE_DIRS}>:${GLSLANG_INCLUDE_DIRS}>
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
@@ -259,6 +279,7 @@ target_link_libraries(Acid
 		# More IMPORTED
 		OpenAL::OpenAL
 		glfw
+		${FREETYPE_LIBRARIES}
 		${GLSLANG_LIBRARIES}
 		${BULLET_LIBRARIES}
 		${PHYSFS_LIBRARY}

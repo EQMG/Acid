@@ -1,7 +1,8 @@
 #include "FontType.hpp"
 
-#include <msdf/msdf.h>
-#include <stb/stb_truetype.h>
+#include <tinymsdf/tinymsdf.hpp>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
@@ -9,6 +10,11 @@
 
 namespace acid {
 static const std::wstring_view NEHE = L" \t\r\nABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*";
+
+template<typename T>
+constexpr double F26DOT6_TO_DOUBLE(T x) {
+	return 1.0 / 64.0 * double(x);
+}
 
 std::shared_ptr<FontType> FontType::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<FontType>(node))
@@ -35,6 +41,10 @@ FontType::FontType(std::filesystem::path filename, std::size_t size, bool load) 
 		FontType::Load();
 }
 
+FontType::~FontType() {
+	Close();
+}
+
 const Node &operator>>(const Node &node, FontType &fontType) {
 	node["filename"].Get(fontType.filename);
 	node["size"].Get(fontType.size);
@@ -47,6 +57,34 @@ Node &operator<<(Node &node, const FontType &fontType) {
 	return node;
 }
 
+void FontType::Open() {
+	if (auto error = FT_Init_FreeType(&library))
+		throw std::runtime_error("Freetype failed to initialize");
+
+	auto fileLoaded = Files::Read(filename);
+
+	if (!fileLoaded) {
+		Log::Error("Font could not be loaded: ", filename, '\n');
+		return;
+	}
+
+	if (FT_New_Memory_Face(library, reinterpret_cast<FT_Byte *>(fileLoaded->data()), static_cast<FT_Long>(fileLoaded->size()), 0, &face) != 0)
+		throw std::runtime_error("Freetype failed to create face from memory");
+
+	// Multiply pixel size by 64 as FreeType uses points instead of pixels internally.
+	if (FT_Set_Char_Size(face, size * 64, size * 64, 96, 96) != 0)
+		throw std::runtime_error("Freetype failed to set char size");
+}
+
+void FontType::Close() {
+	if (!IsOpen())
+		return;
+	FT_Done_Face(face);
+	face = nullptr;
+	FT_Done_FreeType(library);
+	library = nullptr;
+}
+
 void FontType::Load() {
 	if (filename.empty()) return;
 
@@ -54,26 +92,32 @@ void FontType::Load() {
 	auto debugStart = Time::Now();
 #endif
 
-	auto bytes = Files::ReadBytes(filename);
-	stbtt_fontinfo fontinfo;
-	stbtt_InitFont(&fontinfo, bytes.data(), stbtt_GetFontOffsetForIndex(bytes.data(), 0));
-
+	Open();
+	
 	auto layerCount = NEHE.size();
-	//image = std::make_unique<Image2dArray>(Vector2ui(size, size), layerCount, VK_FORMAT_R32G32B32_SFLOAT);
+	//image = std::make_unique<Image2dArray>(Vector2ui(size, size), layerCount, VK_FORMAT_R32G32B32A32_SFLOAT);
 
-	std::size_t arrayLayer = 0;
+	tinymsdf::Bitmap<float, 4> mtsdf(size, size);
+	glyphs.resize(glyphs.size() + layerCount);
+	
 	for (auto c : NEHE) {
-		ex_metrics_t metrics = {};
-		auto bitmap = ex_msdf_glyph(&fontinfo, c, size, size, &metrics, 1);
-		if (bitmap) {
-			//image->SetPixels(bitmap, arrayLayer);
+		bool success = !tinymsdf::GenerateMTSDF(mtsdf, face, c);
 
-			free(bitmap);
-		}
+		auto id = indices.size();
+		indices[c] = id;
 
-		glyphs.emplace_back(Glyph(metrics.left_bearing, metrics.advance, {metrics.ix0, metrics.iy0}, {metrics.ix1, metrics.iy1}));
-		indices[c] = arrayLayer++;
+		glyphs[id].advance = F26DOT6_TO_DOUBLE(face->glyph->metrics.horiAdvance);
+		glyphs[id].x = F26DOT6_TO_DOUBLE(face->glyph->metrics.horiBearingX);
+		glyphs[id].y = F26DOT6_TO_DOUBLE(face->glyph->metrics.horiBearingY);
+		glyphs[id].w = F26DOT6_TO_DOUBLE(face->glyph->metrics.width);
+		glyphs[id].h = F26DOT6_TO_DOUBLE(face->glyph->metrics.height);
+		glyphs[id].pxRange = 2;
+
+		//if (success)
+		//	image->SetPixels(mtsdf.pixels, id);
 	}
+
+	Close();
 
 #if defined(ACID_DEBUG)
 	Log::Out("Font Type ", filename, " loaded ", glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");

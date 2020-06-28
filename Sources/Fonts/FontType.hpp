@@ -4,9 +4,10 @@
 #include "Graphics/Images/Image2dArray.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 
-namespace acid {
-class Text;
+typedef struct FT_LibraryRec_ *FT_Library;
+typedef struct FT_FaceRec_ *FT_Face;
 
+namespace acid {
 /**
  * @brief Resource that is used when creating a font mesh.
  */
@@ -14,16 +15,9 @@ class ACID_EXPORT FontType : public Resource {
 public:
 	class Glyph {
 	public:
-		Glyph(int32_t leftBearing, int32_t advance, const Vector2i &i0, const Vector2i &i1) :
-			leftBearing(leftBearing),
-			advance(advance),
-			i0(i0),
-			i1(i1) {
-		}
-
-		int32_t leftBearing;
-		int32_t advance;
-		Vector2i i0, i1;
+		double advance;
+		double x, y, w, h;
+		double pxRange;
 	};
 	
 	/**
@@ -47,11 +41,15 @@ public:
 	 * @param size The size of each glyph in pixels.
 	 * @param load If this resource will be loaded immediately, otherwise {@link FontType#Load} can be called later.
 	 */
-	FontType(std::filesystem::path filename, std::size_t size = 24, bool load = true);
+	explicit FontType(std::filesystem::path filename, std::size_t size = 24, bool load = true);
+
+	~FontType();
 
 	std::optional<Glyph> GetGlyph(wchar_t ascii) const;
 	
 	std::type_index GetTypeIndex() const override { return typeid(FontType); }
+
+	bool IsOpen() const noexcept { return library != nullptr; }
 
 	const std::filesystem::path &GetFilename() const { return filename; }
 	const Image2dArray *GetImage() const { return image.get(); }
@@ -64,8 +62,13 @@ public:
 	friend Node &operator<<(Node &node, const FontType &fontType);
 
 private:
+	void Open();
+	void Close();
 	void Load();
 
+	FT_Library library = nullptr;
+	FT_Face face = nullptr;
+	
 	std::filesystem::path filename;
 	std::unique_ptr<Image2dArray> image;
 
