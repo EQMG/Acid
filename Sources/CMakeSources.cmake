@@ -46,6 +46,7 @@ set(_temp_acid_headers
 		Files/Node.inl
 		Files/NodeConstView.hpp
 		Files/NodeConstView.inl
+		Files/NodeFormat.hpp
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp

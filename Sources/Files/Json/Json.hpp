@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Files/Node.hpp"
+#include "Files/NodeFormat.hpp"
 
 namespace acid {
 class ACID_EXPORT Json : public NodeFormat {

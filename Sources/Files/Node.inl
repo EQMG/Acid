@@ -3,7 +3,6 @@
 #include "Node.hpp"
 
 #include <algorithm>
-#include <codecvt>
 #include <cstring>
 #include <filesystem>
 #include <memory>
@@ -11,37 +10,12 @@
 #include <vector>
 #include <map>
 #include <set>
-#include <sstream>
 #include <bitmask/bitmask.hpp>
 
 #include "Resources/Resource.hpp"
-#include "Utils/ConstExpr.hpp"
 #include "Utils/String.hpp"
 
 namespace acid {
-template<typename _Elem>
-void NodeFormat::ParseStream(Node &node, std::basic_istream<_Elem> &stream) {
-	// We must read as UTF8 chars.
-	if constexpr (!std::is_same_v<_Elem, char>) {
-#if !defined(ACID_BUILD_MSVC)
-		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
-#else
-		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
-#endif
-	}
-
-	// Reading into a string before iterating is much faster.
-	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-	ParseString(node, s);
-}
-
-template<typename _Elem>
-std::basic_string<_Elem> NodeFormat::WriteString(const Node &node, Format format) const {
-	std::basic_ostringstream<_Elem> stream;
-	WriteStream(node, stream, format);
-	return stream.str();
-}
-
 template<typename T>
 T Node::GetName() const {
 	// String to basic type conversion.

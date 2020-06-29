@@ -3,9 +3,6 @@
 #include <algorithm>
 
 namespace acid {
-const NodeFormat::Format NodeFormat::Beautified = Format(2, '\n', ' ', true);
-const NodeFormat::Format NodeFormat::Minified = Format(0, '\0', '\0', false);
-
 static const Node NullNode = (Node() = nullptr);
 
 Node::Node() :
