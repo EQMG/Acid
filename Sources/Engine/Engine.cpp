@@ -53,6 +53,7 @@ Engine::Engine(std::string argv0, ModuleFilter &&moduleFilter) :
 }
 
 Engine::~Engine() {
+	app = nullptr;
 	Module::Registry().clear();
 	Log::CloseLog();
 }
