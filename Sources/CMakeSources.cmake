@@ -516,26 +516,8 @@ include(CheckCXXSourceCompiles)
 
 # Check if we can link to `std::filesystem`. macOS < 10.15, iOS < 13, Android.
 check_cxx_source_compiles("#include <filesystem>\nint main() { std::filesystem::space(\"/\"); }" HAS_STD_FILESYSTEM)
-if(NOT HAS_STD_FILESYSTEM)
-	message(WARNING "std::filesystem implementation not found, linking aganst our own sources")
-	list(APPEND _temp_acid_third_party_sources
-			third_party/filesystem/src/operations.cpp
-			third_party/filesystem/src/directory_iterator.cpp
-			third_party/filesystem/src/filesystem_common.h
-			third_party/filesystem/src/int128_builtins.cpp
-			)
-endif()
 # Check if we have `std::filesystem` headers. iOS < 13.
 check_cxx_source_compiles("#include <filesystem>\nint main() { using path = std::filesystem::path;\n0; }" HAS_STD_FILESYSTEM_HEADERS)
-if(NOT HAS_STD_FILESYSTEM_HEADERS)
-	message(WARNING "std::filesystem headers not found, including our own headers")
-	list(APPEND _temp_acid_third_party_headers
-			third_party/filesystem/include/filesystem
-			)
-	target_include_directories(Acid
-			PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party/filesystem/include>
-			)
-endif()
 
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
