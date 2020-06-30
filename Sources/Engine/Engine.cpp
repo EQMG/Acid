@@ -23,30 +23,37 @@ Engine::Engine(std::string argv0, ModuleFilter &&moduleFilter) :
 
 	// TODO: Optimize and clean up!
 	std::vector<TypeId> created;
-	for (const auto &[moduleId, moduleTest] : Module::Registry()) {
-		for (const auto &requireId : moduleTest.requires) {
-			const auto &requireTest = Module::Registry()[requireId];
-			if (std::find(created.begin(), created.end(), requireId) == created.end() &&
-				moduleFilter.Check(requireId)) {
-				auto &&module = Module::Registry()[requireId].create();
-				modules.emplace(Module::StageIndex(requireTest.stage, requireId), std::move(module));
-				created.emplace_back(requireId);
-				Log::Debug("Module created: ", requireId, "\n");
-			} else if (!moduleFilter.Check(requireId)) {
-				Log::Error("Module depends on another module this is excluded!");
+	for (;;) {
+		bool postponed = false;
+		for (const auto &[moduleId, moduleTest] : Module::Registry()) {
+			if (std::find (created.begin(), created.end(), moduleId) != created.end())
+				continue;
+			if (!moduleFilter.Check (moduleId))
+				continue;
+			bool this_postponed = false;
+			for (const auto &requireId : moduleTest.requires) {
+				if (!moduleFilter.Check (moduleId))
+					break;
+				if (std::find(created.begin(), created.end(), requireId) == created.end()) {
+					this_postponed = true;
+					break;
+				}
 			}
-		}
-
-		if (std::find(created.begin(), created.end(), moduleId) == created.end() &&
-			moduleFilter.Check(moduleId)) {
+			if (this_postponed) {
+				postponed = true;
+				continue;
+			}
 			auto &&module = moduleTest.create();
 			modules.emplace(Module::StageIndex(moduleTest.stage, moduleId), std::move(module));
 			created.emplace_back(moduleId);
 		}
+		if (!postponed)
+			break;
 	}
 }
 
 Engine::~Engine() {
+	app = nullptr;
 	Module::Registry().clear();
 	Log::CloseLog();
 }

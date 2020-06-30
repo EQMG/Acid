@@ -33,6 +33,10 @@ Graphics::~Graphics() {
 		vkDestroySemaphore(*logicalDevice, renderCompletes[i], nullptr);
 		vkDestroySemaphore(*logicalDevice, presentCompletes[i], nullptr);
 	}
+	commandPools.clear ();
+	commandBuffers.clear ();
+	swapchain = nullptr;
+	renderer = nullptr;
 }
 
 void Graphics::Update() {
