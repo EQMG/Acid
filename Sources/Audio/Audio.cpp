@@ -1,7 +1,7 @@
 #include "Audio.hpp"
 
 #include <iomanip>
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
@@ -23,7 +23,7 @@ Audio::Audio() :
 	impl->context = alcCreateContext(impl->device, nullptr);
 	alcMakeContextCurrent(impl->context);
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto devices = alcGetString(nullptr, ALC_DEVICE_SPECIFIER);
 	auto device = devices;
 	auto next = devices + 1;

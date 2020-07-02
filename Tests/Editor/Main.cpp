@@ -25,7 +25,8 @@ int main(int argc, char **argv) {
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
-
+	engine = nullptr;
+	
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
 	std::cin.get();

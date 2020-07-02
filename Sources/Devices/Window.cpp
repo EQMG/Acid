@@ -231,13 +231,13 @@ void Window::SetFullscreen(bool fullscreen, Monitor *monitor) {
 	this->fullscreen = fullscreen;
 
 	if (fullscreen) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 		Log::Out("Window is going fullscreen\n");
 #endif
 		fullscreenSize = {videoMode.width, videoMode.height};
 		glfwSetWindowMonitor(window, selected->GetMonitor(), 0, 0, fullscreenSize.x, fullscreenSize.y, GLFW_DONT_CARE);
 	} else {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 		Log::Out("Window is going windowed\n");
 #endif
 		position = ((Vector2i(videoMode.width, videoMode.height) - size) / 2) + selected->GetPosition();

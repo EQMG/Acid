@@ -1,6 +1,6 @@
 #include "Scene1.hpp"
 
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Uis/Constraints/PixelConstraint.hpp>
 #include <Uis/Constraints/RelativeConstraint.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
@@ -34,7 +34,7 @@ Scene1::Scene1() :
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
 	//Uis::Get()->GetCanvas().SetScaleDriver<SinewaveDriver>(Vector2f(0.3f), Vector2f(5.0f), 16s);
-	Input::Get()->GetButton("pause")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("pause")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			TogglePause();
 		}

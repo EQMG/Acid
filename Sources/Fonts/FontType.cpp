@@ -88,7 +88,7 @@ void FontType::Close() {
 void FontType::Load() {
 	if (filename.empty()) return;
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -119,7 +119,7 @@ void FontType::Load() {
 
 	Close();
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Font Type ", filename, " loaded ", glyphs.size(), " glyphs in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

@@ -90,7 +90,7 @@ uint32_t Instance::FindMemoryTypeIndex(const VkPhysicalDeviceMemoryProperties *d
 }
 
 Instance::Instance() {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	enableValidationLayers = true;
 #endif
 	
@@ -113,7 +113,7 @@ bool Instance::CheckValidationLayerSupport() const {
 	std::vector<VkLayerProperties> instanceLayerProperties(instanceLayerPropertyCount);
 	vkEnumerateInstanceLayerProperties(&instanceLayerPropertyCount, instanceLayerProperties.data());
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	LogVulkanLayers(instanceLayerProperties);
 #endif
 

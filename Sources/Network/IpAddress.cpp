@@ -1,6 +1,6 @@
 #include "IpAddress.hpp"
 
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #else

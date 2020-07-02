@@ -9,7 +9,7 @@
 
 namespace acid {
 void ExrBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -22,19 +22,19 @@ void ExrBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 
 	// TODO
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
 void ExrBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	// TODO
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

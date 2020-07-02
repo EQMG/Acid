@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
+#include "Graphics/Graphics.hpp"
 #include "Scene.hpp"
 #include "SceneStructure.hpp"
 
@@ -9,7 +10,7 @@ namespace acid {
  * @brief Module used for managing game scenes.
  */
 class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
-	inline static const bool Registered = Register(Stage::Normal);
+	inline static const bool Registered = Register(Stage::Normal, Requires<Graphics>());
 public:
 	Scenes();
 

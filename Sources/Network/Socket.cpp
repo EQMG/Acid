@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 
 #include <cstring>
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 #include <WinSock2.h>
 #else
 #include <netinet/in.h>
@@ -31,7 +31,7 @@ sockaddr_in Socket::CreateAddress(uint32_t address, uint16_t port) {
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
 
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 	addr.sin_len = sizeof(addr);
 #endif
 
@@ -39,7 +39,7 @@ sockaddr_in Socket::CreateAddress(uint32_t address, uint16_t port) {
 }
 
 SocketHandle Socket::InvalidSocketHandle() {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 	return INVALID_SOCKET;
 #else
 	return -1;
@@ -47,7 +47,7 @@ SocketHandle Socket::InvalidSocketHandle() {
 }
 
 void Socket::CloseSocketHandle(SocketHandle sock) {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 	closesocket(sock);
 #else
 	close(sock);
@@ -55,7 +55,7 @@ void Socket::CloseSocketHandle(SocketHandle sock) {
 }
 
 void Socket::SetHandleBlocking(SocketHandle sock, bool block) {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 	u_long blocking = block ? 0 : 1;
 	ioctlsocket(sock, FIONBIO, &blocking);
 #else
@@ -72,7 +72,7 @@ void Socket::SetHandleBlocking(SocketHandle sock, bool block) {
 }
 
 Socket::Status Socket::GetErrorStatus() {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 	switch (WSAGetLastError()) {
 	case WSAEWOULDBLOCK:
 		return Status::NotReady;
@@ -122,7 +122,7 @@ Socket::Status Socket::GetErrorStatus() {
 #endif
 }
 
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 // Windows needs some initialization and cleanup to get
 // sockets working properly... so let's create a class that will
 // do it automatically
@@ -179,7 +179,7 @@ void Socket::Create(SocketHandle handle) {
 				Log::Error("Failed to set socket option \"TCP_NODELAY\" ; all your TCP packets will be buffered\n");
 
 			// On Mac OS X, disable the SIGPIPE signal on disconnection.
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 			if (setsockopt(socket, SOL_SOCKET, SO_NOSIGPIPE, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1)
 				Log::Error("Failed to set socket option \"SO_NOSIGPIPE\"\n");
 #endif

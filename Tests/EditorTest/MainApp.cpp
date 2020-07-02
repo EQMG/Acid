@@ -1,10 +1,10 @@
 #include "MainApp.hpp"
 
-#if defined(ACID_RELOAD)
+#ifdef ACID_RELOAD
 #include <cr/cr.h>
 
 #include <Devices/Mouse.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Files/Files.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -37,7 +37,8 @@ int main(int argc, char **argv) {
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
-
+	engine = nullptr;
+	
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
 	std::cin.get();
@@ -55,21 +56,21 @@ MainApp::MainApp() :
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads a input scheme for this app.
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
+	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 		}
 	});
-	Input::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	Input::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
@@ -80,7 +81,7 @@ MainApp::~MainApp() {
 	Log::Debug("[Game] Destructor\n");
 	//Files::Get()->ClearSearchPath();
 
-	Input::Get()->RemoveScheme("Default");
+	Inputs::Get()->RemoveScheme("Default");
 
 	Graphics::Get()->SetRenderer(nullptr);
 	Scenes::Get()->SetScene(nullptr);
@@ -89,7 +90,7 @@ MainApp::~MainApp() {
 
 void MainApp::Start() {
 	// Sets values to modules.
-#if !defined(ACID_RELOAD)
+#ifndef ACID_RELOAD
 	Window::Get()->SetTitle("Test Physics");
 	Window::Get()->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",

@@ -78,8 +78,6 @@ public:
 		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
-	~ImageCube();
-
 	/**
 	 * Copies the images pixels from memory to a bitmap. The bitmap height will be scaled by the amount of layers.
 	 * @param mipLevel The mipmap level index to sample.

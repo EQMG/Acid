@@ -9,7 +9,7 @@
 
 namespace acid {
 void PngBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -33,13 +33,13 @@ void PngBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 		free(buffer); // lodepng_free
 	}*/
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
 void PngBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -53,7 +53,7 @@ void PngBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filenam
 
 	lodepng::encode(filename.string(), bitmap->GetData().get(), bitmap->GetSize().x, bitmap->GetSize().y, colorType);*/
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

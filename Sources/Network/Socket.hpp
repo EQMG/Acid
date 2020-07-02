@@ -8,8 +8,8 @@ struct sockaddr_in;
 
 namespace acid {
 // Define the low-level socket handle type, specific to each platform.
-#if defined(ACID_BUILD_WINDOWS)
-#if defined(_WIN64)
+#ifdef ACID_BUILD_WINDOWS
+#ifdef _WIN64
 using SocketHandle = unsigned __int64;
 #else
 using SocketHandle = unsigned int;

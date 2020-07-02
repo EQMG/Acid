@@ -75,8 +75,6 @@ public:
 		VkFilter filter = VK_FILTER_LINEAR, VkSamplerAddressMode addressMode = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
 		VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT, bool anisotropic = false, bool mipmap = false);
 
-	~Image2d() = default;
-
 	/**
 	 * Sets the pixels of this image.
 	 * @param pixels The pixels to copy from.

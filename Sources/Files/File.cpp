@@ -29,7 +29,7 @@ File::File(std::filesystem::path filename, std::unique_ptr<NodeFormat>&& type, N
 }
 
 void File::Load(const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -42,7 +42,7 @@ void File::Load(const std::filesystem::path &filename) {
 		inStream.close();
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("File ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
@@ -52,7 +52,7 @@ void File::Load() {
 }
 
 void File::Write(const std::filesystem::path &filename, NodeFormat::Format format) const {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -68,7 +68,7 @@ void File::Write(const std::filesystem::path &filename, NodeFormat::Format forma
 		os.close();
 	//}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("File ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

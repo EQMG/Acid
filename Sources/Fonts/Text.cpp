@@ -77,7 +77,7 @@ bool Text::IsLoaded() const {
 }
 
 void Text::LoadText() {
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif*/
 
@@ -104,7 +104,7 @@ void Text::LoadText() {
 	model = std::make_unique<Model>(vertices);
 	dirty = false;
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	Log::Out("Text mesh with ", string.length(), " chars created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif*/
 }

@@ -1,7 +1,7 @@
 #include "Pannable.hpp"
 
 #include <Audio/Audio.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Inputs/UiButtonInput.hpp>
 #include <Graphics/Graphics.hpp>
@@ -96,7 +96,7 @@ Pannable::Pannable(){
 	textUps.SetFontSize(11);
 	AddChild(&textUps);
 
-	Input::Get()->GetButton("reset")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("reset")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			zoom = 1.0f;
 //			content.GetTransform().SetPosition({0.5f, 0.5f});

@@ -15,46 +15,23 @@ Engine::Engine(std::string argv0, ModuleFilter &&moduleFilter) :
 	Instance = this;
 	Log::OpenLog(Time::GetDateTime("Logs/%Y%m%d%H%M%S.txt"));
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Version: ", ACID_VERSION, '\n');
 	Log::Out("Git: ", ACID_COMPILED_COMMIT_HASH, " on ", ACID_COMPILED_BRANCH, '\n');
 	Log::Out("Compiled on: ", ACID_COMPILED_SYSTEM, " from: ", ACID_COMPILED_GENERATOR, " with: ", ACID_COMPILED_COMPILER, "\n\n");
 #endif
 
-	// TODO: Optimize and clean up!
-	std::vector<TypeId> created;
-	for (;;) {
-		bool postponed = false;
-		for (const auto &[moduleId, moduleTest] : Module::Registry()) {
-			if (std::find (created.begin(), created.end(), moduleId) != created.end())
-				continue;
-			if (!moduleFilter.Check (moduleId))
-				continue;
-			bool this_postponed = false;
-			for (const auto &requireId : moduleTest.requires) {
-				if (!moduleFilter.Check (moduleId))
-					break;
-				if (std::find(created.begin(), created.end(), requireId) == created.end()) {
-					this_postponed = true;
-					break;
-				}
-			}
-			if (this_postponed) {
-				postponed = true;
-				continue;
-			}
-			auto &&module = moduleTest.create();
-			modules.emplace(Module::StageIndex(moduleTest.stage, moduleId), std::move(module));
-			created.emplace_back(moduleId);
-		}
-		if (!postponed)
-			break;
-	}
+	for (auto it = Module::Registry().begin(); it != Module::Registry().end(); ++it)
+		CreateModule(it, moduleFilter);
 }
 
 Engine::~Engine() {
 	app = nullptr;
-	Module::Registry().clear();
+
+	// TODO: Destroy in reverse dependency order: Scenes is destroyed before Graphics
+	for (auto it = modules.rbegin(); it != modules.rend(); ++it)
+		it->second = nullptr; //DestroyModule(it->first);
+	
 	Log::CloseLog();
 }
 
@@ -80,10 +57,8 @@ int32_t Engine::Run() {
 
 			// Pre-Update.
 			UpdateStage(Module::Stage::Pre);
-
 			// Update.
 			UpdateStage(Module::Stage::Normal);
-
 			// Post-Update.
 			UpdateStage(Module::Stage::Post);
 
@@ -112,10 +87,33 @@ int32_t Engine::Run() {
 	return EXIT_SUCCESS;
 }
 
+void Engine::CreateModule(Module::TRegistryMap::const_iterator it, const ModuleFilter &filter) {
+	if (modules.find(it->first) != modules.end())
+		return;
+	
+	if (!filter.Check(it->first))
+		return;
+	
+	for (auto requireId : it->second.requires)
+		CreateModule(Module::Registry().find(requireId), filter);
+
+	auto &&module = it->second.create();
+	modules[it->first] = std::move(module);
+	moduleStages[it->second.stage].emplace_back(it->first);
+}
+
+void Engine::DestroyModule(TypeId id) {
+	if (!modules[id])
+		return;
+	
+	for (auto it = Module::Registry().find(id)->second.requires.rbegin(); it != Module::Registry().find(id)->second.requires.rend(); ++it)
+		DestroyModule(*it);
+	
+	modules[id] = nullptr;
+}
+
 void Engine::UpdateStage(Module::Stage stage) {
-	for (auto &[stageIndex, module] : modules) {
-		if (stageIndex.first == stage)
-			module->Update();
-	}
+	for (auto &moduleId : moduleStages[stage])
+		modules[moduleId]->Update();
 }
 }

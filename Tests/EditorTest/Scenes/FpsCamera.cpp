@@ -1,7 +1,7 @@
 #include "FpsCamera.hpp"
 
 #include <Devices/Mouse.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Scenes/Entity.hpp>
 #include <Maths/Maths.hpp>
@@ -31,8 +31,8 @@ void FpsCamera::Update() {
 	}
 
 	if (!Scenes::Get()->IsPaused()) {
-		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Input::Get()->GetAxis("mouseX")->GetAmount(),
-			Input::Get()->GetAxis("mouseY")->GetAmount());
+		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
+			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 
 		rotation.y += rotationDelta.x;
 		rotation.x += rotationDelta.y;

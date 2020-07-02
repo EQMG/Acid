@@ -33,8 +33,9 @@ Graphics::~Graphics() {
 		vkDestroySemaphore(*logicalDevice, renderCompletes[i], nullptr);
 		vkDestroySemaphore(*logicalDevice, presentCompletes[i], nullptr);
 	}
-	commandPools.clear ();
-	commandBuffers.clear ();
+	
+	commandPools.clear();
+	commandBuffers.clear();
 	swapchain = nullptr;
 	renderer = nullptr;
 }
@@ -163,7 +164,7 @@ void Graphics::CheckVk(VkResult result) {
 }
 
 void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -197,7 +198,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	// Writes the screenshot bitmap to the file.
 	bitmap.Write(filename);
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Screenshot ", filename, " created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
@@ -243,7 +244,7 @@ void Graphics::RecreateSwapchain() {
 	vkDeviceWaitIdle(*logicalDevice);
 
 	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	if (swapchain)
 		Log::Out("Recreating swapchain old (", swapchain->GetExtent().width, ", ", swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif

@@ -59,7 +59,7 @@ void RenderStage::Update() {
 }
 
 void RenderStage::Rebuild(const Swapchain &swapchain) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -88,7 +88,7 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 			descriptors.emplace(image.GetName(), framebuffers->GetAttachment(image.GetBinding()));
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Render Stage created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

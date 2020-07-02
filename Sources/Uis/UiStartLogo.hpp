@@ -13,7 +13,7 @@ public:
 	bool IsFinished() const { return finished; }
 	rocket::signal<void()> &OnFinished() { return onFinished; }
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	static constexpr Time StartDelay = 1s;
 #else
 	static constexpr Time StartDelay = 3s;

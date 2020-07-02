@@ -1,7 +1,7 @@
 #include "MainApp.hpp"
 
 #include <Files/Files.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
+	engine = nullptr;
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -31,7 +32,7 @@ namespace test {
 MainApp::MainApp() :
 	App("Test Physics", {1, 0, 0}) {
 	// Registers file search paths.
-#if defined(ACID_PACKED_RESOURCES)
+#ifdef ACID_PACKED_RESOURCES
 	for (auto &file : std::filesystem::directory_iterator(std::filesystem::current_path())) {
 		if (String::StartsWith(file.path().string(), "data-"))
 			Files::Get()->AddSearchPath(file.path().string());
@@ -41,20 +42,20 @@ MainApp::MainApp() :
 #endif
 
 	// Loads a input scheme for this app.
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
+	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press)
 			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
 	});
-	Input::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
 	});
-	Input::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press)
 			Engine::Get()->RequestClose();
 	});
@@ -65,8 +66,8 @@ MainApp::~MainApp() {
 	// TODO: Only clear our search paths (leave Engine resources alone!)
 	Files::Get()->ClearSearchPath();
 
-	Graphics::Get()->SetRenderer(nullptr);
-	Scenes::Get()->SetScene(nullptr);
+//	Graphics::Get()->SetRenderer(nullptr);
+//	Scenes::Get()->SetScene(nullptr);
 }
 
 void MainApp::Start() {

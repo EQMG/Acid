@@ -1,6 +1,6 @@
 #include "SoundBuffer.hpp"
 
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #else
 #include <al.h>

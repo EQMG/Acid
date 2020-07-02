@@ -4,6 +4,7 @@
 
 #include "Engine/Engine.hpp"
 #include "Utils/ThreadPool.hpp"
+#include "Files/Files.hpp"
 #include "Files/Node.hpp"
 #include "Resource.hpp"
 
@@ -13,7 +14,7 @@ namespace acid {
  * a existing resource is queried by node value.
  */
 class ACID_EXPORT Resources : public Module::Registrar<Resources> {
-	inline static const bool Registered = Register(Stage::Post);
+	inline static const bool Registered = Register(Stage::Post, Requires<Files>());
 public:
 	Resources();
 

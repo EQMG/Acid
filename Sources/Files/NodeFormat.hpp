@@ -101,7 +101,7 @@ template<typename _Elem>
 void NodeFormat::ParseStream(Node &node, std::basic_istream<_Elem> &stream) {
 	// We must read as UTF8 chars.
 	if constexpr (!std::is_same_v<_Elem, char>) {
-#if !defined(ACID_BUILD_MSVC)
+#ifndef ACID_BUILD_MSVC
 		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
 #else
 		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));

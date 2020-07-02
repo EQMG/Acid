@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bitset>
 #include <unordered_map>
 #include <memory>
 #include <functional>
@@ -85,7 +86,7 @@ public:
 		Never, Always, Pre, Normal, Post, Render
 	};
 
-	using StageIndex = std::pair<Stage, std::size_t>;
+	using StageIndex = std::pair<Stage, TypeId>;
 
 	virtual ~Module() = default;
 

@@ -5,7 +5,7 @@
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Devices/Mouse.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Lights/Light.hpp>
 #include <Resources/Resources.hpp>
 #include <Materials/DefaultMaterial.hpp>
@@ -62,7 +62,7 @@ Scene1::Scene1() :
 	overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 
-	Input::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -83,13 +83,13 @@ Scene1::Scene1() :
 		}
 	});
 
-	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
 	});
 
-	Input::Get()->GetButton("save")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("save")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([this]() {
 				File sceneFile("Scene1.json", std::make_unique<Json>());
@@ -151,7 +151,7 @@ void Scene1::Start() {
 	//animated->AddComponent<Rigidbody>(std::make_unique<CapsuleCollider>(3.0f, 6.0f, Transform(Vector3(0.0f, 2.5f, 0.0f))), 0.0f);
 	animated->AddComponent<ShadowRender>();
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	EntityPrefab prefabAnimated("Prefabs/Animated.json");
 	prefabAnimated << *animated;
 	prefabAnimated.Write(NodeFormat::Beautified);
@@ -183,7 +183,7 @@ void Scene1::Start() {
 	//terrain->AddComponent<Rigidbody>(std::make_unique<HeightfieldCollider>(), 0.0f, 0.7f);
 	//terrain->AddComponent<ShadowRender>();
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	EntityPrefab prefabTerrain("Prefabs/Terrain.json");
 	prefabTerrain << *terrain;
 	prefabTerrain.Write(NodeFormat::Beautified);
@@ -224,7 +224,7 @@ void Scene1::Start() {
 	teapot1->AddComponent<NameTag>("Vector3", 1.4f);
 	teapot1->AddComponent<ShadowRender>();
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	EntityPrefab prefabTeapot1("Prefabs/Teapot1.json");
 	prefabTeapot1 << *teapot1;
 	prefabTeapot1.Write(NodeFormat::Beautified);
@@ -284,7 +284,7 @@ void Scene1::Start() {
 	smokeSystem->AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.wav", Audio::Type::Music, true, true);
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	EntityPrefab prefabSmokeSystem("Prefabs/SmokeSystem.json");
 	prefabSmokeSystem << *smokeSystem;
 	prefabSmokeSystem.Write(NodeFormat::Beautified);

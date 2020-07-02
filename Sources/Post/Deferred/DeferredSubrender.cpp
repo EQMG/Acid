@@ -21,7 +21,7 @@ DeferredSubrender::DeferredSubrender(const Pipeline::Stage &pipelineStage) :
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 	brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
 	fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Node node;
 	node << *pipeline.GetShader();
 	File("Deferred/Shader.json", std::make_unique<Json>(), node).Write(NodeFormat::Beautified);
@@ -130,7 +130,7 @@ std::unique_ptr<Image2d> DeferredSubrender::ComputeBRDF(uint32_t size) {
 	compute.CmdRender(commandBuffer, brdfImage->GetSize());
 	commandBuffer.SubmitIdle();
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
 		image->GetBitmap()->Write("Deferred/Brdf.png");
@@ -165,7 +165,7 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputeIrradiance(const std::share
 	compute.CmdRender(commandBuffer, irradianceCubemap->GetSize());
 	commandBuffer.SubmitIdle();
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		image->GetBitmap()->Write("Deferred/Irradiance.png");
@@ -231,7 +231,7 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputePrefiltered(const std::shar
 	}
 
 	// TODO: This debug write causes a crash at runtime, why?
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the prefiltered Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		for (uint32_t i = 0; i < image->GetMipLevels(); i++) {

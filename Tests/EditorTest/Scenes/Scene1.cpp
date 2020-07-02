@@ -1,6 +1,6 @@
 #include "Scene1.hpp"
 
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Files/File.hpp>
 #include <Gizmos/Gizmos.hpp>
 #include <Devices/Mouse.hpp>
@@ -53,7 +53,7 @@ Scene1::Scene1() :
 	overlayDebug.SetAlphaDriver<ConstantDriver>(0.0f);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 
-	Input::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
 			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
@@ -70,7 +70,7 @@ Scene1::Scene1() :
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
 	});
-	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}

@@ -1,6 +1,6 @@
 #include "Scene1.hpp"
 
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/DefaultMaterial.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
@@ -29,7 +29,7 @@ Scene1::Scene1() :
 		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
-	Input::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}

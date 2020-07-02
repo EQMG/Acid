@@ -89,7 +89,7 @@ protected:
 
 private:
 	bool started = false;
-	SubrenderHolder subrenderHolder;
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
+	SubrenderHolder subrenderHolder;
 };
 }

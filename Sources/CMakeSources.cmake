@@ -98,7 +98,7 @@ set(_temp_acid_headers
 		Inputs/Buttons/JoystickInputButton.hpp
 		Inputs/Buttons/KeyboardInputButton.hpp
 		Inputs/Buttons/MouseInputButton.hpp
-		Inputs/Input.hpp
+		Inputs/Inputs.hpp
 		Inputs/InputAxis.hpp
 		Inputs/InputButton.hpp
 		Inputs/InputDelay.hpp
@@ -371,7 +371,7 @@ set(_temp_acid_sources
 		Inputs/Buttons/JoystickInputButton.cpp
 		Inputs/Buttons/KeyboardInputButton.cpp
 		Inputs/Buttons/MouseInputButton.cpp
-		Inputs/Input.cpp
+		Inputs/Inputs.cpp
 		Inputs/InputDelay.cpp
 		Inputs/InputScheme.cpp
 		Lights/Fog.cpp
@@ -509,14 +509,6 @@ set(_temp_acid_third_party_sources
 		third_party/tinymsdf/tinymsdf.cpp
 		third_party/tinyobj/tiny_obj.cpp
 		)
-
-# Check if given C++ source compiles and links into an executable.
-include(CheckCXXSourceCompiles)
-
-# Check if we can link to `std::filesystem`. macOS < 10.15, iOS < 13, Android.
-check_cxx_source_compiles("#include <filesystem>\nint main() { std::filesystem::space(\"/\"); }" HAS_STD_FILESYSTEM)
-# Check if we have `std::filesystem` headers. iOS < 13.
-check_cxx_source_compiles("#include <filesystem>\nint main() { using path = std::filesystem::path;\n0; }" HAS_STD_FILESYSTEM_HEADERS)
 
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)

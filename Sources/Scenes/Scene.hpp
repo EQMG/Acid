@@ -34,6 +34,12 @@ public:
 	virtual void Update() = 0;
 
 	/**
+	 * Gets the scene physics system.
+	 * @return The scenes physics system.
+	 */
+	ScenePhysics *GetPhysics() const { return physics.get(); }
+
+	/**
 	 * Gets the current camera object.
 	 * @return The current camera.
 	 */
@@ -52,12 +58,6 @@ public:
 	SceneStructure *GetStructure() const { return structure.get(); }
 
 	/**
-	 * Gets the scene physics system.
-	 * @return The scenes physics system.
-	 */
-	ScenePhysics *GetPhysics() const { return physics.get(); }
-
-	/**
 	 * Gets if the scene is paused.
 	 * @return If the scene is paused.
 	 */
@@ -65,8 +65,8 @@ public:
 
 private:
 	bool started = false;
+	std::unique_ptr<ScenePhysics> physics;
 	std::unique_ptr<Camera> camera;
 	std::unique_ptr<SceneStructure> structure;
-	std::unique_ptr<ScenePhysics> physics;
 };
 }

@@ -1,6 +1,6 @@
 #include "Mp3SoundBuffer.hpp"
 
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #else
 #include <al.h>
@@ -13,7 +13,7 @@
 
 namespace acid {
 void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -42,19 +42,19 @@ void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 
 	drmp3_free(sampleData, nullptr);
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
 void Mp3SoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	// TODO: Implement
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

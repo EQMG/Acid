@@ -45,7 +45,7 @@ public:
 		auto location = shader->GetDescriptorLocation(descriptorName);
 
 		if (!location) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 			if (shader->ReportedNotFound(descriptorName, true)) {
 				Log::Error("Could not find descriptor in shader ", shader->GetName(), " of name ", std::quoted(descriptorName), '\n');
 			}
@@ -57,7 +57,7 @@ public:
 		auto descriptorType = shader->GetDescriptorType(*location);
 
 		if (!descriptorType) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 			if (shader->ReportedNotFound(descriptorName, true)) {
 				Log::Error("Could not find descriptor in shader ", shader->GetName(), " of name ", std::quoted(descriptorName), " at location ", *location, '\n');
 			}

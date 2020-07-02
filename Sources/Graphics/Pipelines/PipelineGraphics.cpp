@@ -22,7 +22,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 	shader(std::make_unique<Shader>()),
 	dynamicStates(DYNAMIC_STATES),
 	pipelineBindPoint(VK_PIPELINE_BIND_POINT_GRAPHICS) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -44,7 +44,7 @@ PipelineGraphics::PipelineGraphics(Stage stage, std::vector<std::filesystem::pat
 		throw std::runtime_error("Unknown pipeline mode");
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Pipeline Graphics ", this->shaderStages.back(), " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

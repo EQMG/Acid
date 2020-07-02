@@ -1,6 +1,6 @@
 #include "FpsPlayer.hpp"
 
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Scenes/Entity.hpp>
 #include <Physics/KinematicCharacter.hpp>
@@ -32,22 +32,22 @@ void FpsPlayer::Update() {
 	Vector3f direction;
 
 	if (!Scenes::Get()->IsPaused()) {
-		direction.x = Input::Get()->GetAxis("strafe")->GetAmount();
-		direction.z = Input::Get()->GetAxis("forward")->GetAmount();
+		direction.x = Inputs::Get()->GetAxis("strafe")->GetAmount();
+		direction.z = Inputs::Get()->GetAxis("forward")->GetAmount();
 
 		if (noclipEnabled) {
-			if (Input::Get()->GetButton("jump")->IsDown()) {
+			if (Inputs::Get()->GetButton("jump")->IsDown()) {
 				direction.y = 1.0f;
-			} else if (Input::Get()->GetButton("crouch")->IsDown()) {
+			} else if (Inputs::Get()->GetButton("crouch")->IsDown()) {
 				direction.y = -1.0f;
 			}
 		} else {
-			if (Input::Get()->GetButton("jump")->WasDown() && character->IsOnGround()) {
+			if (Inputs::Get()->GetButton("jump")->WasDown() && character->IsOnGround()) {
 				character->Jump({0.0f, JUMP_SPEED, 0.0f});
 			}
 		}
 
-		if (Input::Get()->GetButton("noclip")->WasDown()) {
+		if (Inputs::Get()->GetButton("noclip")->WasDown()) {
 			noclipEnabled = !noclipEnabled;
 
 			if (noclipEnabled) {
@@ -72,7 +72,7 @@ void FpsPlayer::Update() {
 	walkDirection.z = direction.z * std::cos(cameraRotation.y) - direction.x * std::sin(cameraRotation.y);
 
 	//walkDirection = walkDirection.Normalize();
-	walkDirection *= Input::Get()->GetButton("sprint")->IsDown() ? RUN_SPEED : Input::Get()->GetButton("crouch")->IsDown() ? CROUCH_SPEED : WALK_SPEED;
+	walkDirection *= Inputs::Get()->GetButton("sprint")->IsDown() ? RUN_SPEED : Inputs::Get()->GetButton("crouch")->IsDown() ? CROUCH_SPEED : WALK_SPEED;
 	walkDirection *= noclipEnabled ? NOCLIP_SPEED : 1.0f;
 	character->SetWalkDirection(0.02f * walkDirection);
 }

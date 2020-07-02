@@ -43,7 +43,7 @@ void AnimatedMesh::Start() {
 	animation = std::make_unique<Animation>(animationLoader.GetLengthSeconds(), animationLoader.GetKeyframes());
 	animator.DoAnimation(animation.get());
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	{
 		File fileModel("Animation/Model.json", std::make_unique<Json>());
 		fileModel.GetNode()["vertices"] = model->GetVertices<VertexAnimated>();
