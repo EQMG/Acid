@@ -37,7 +37,7 @@ public:
 			return node;
 		}
 		
-		std::vector<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
+		std::list<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
 		std::optional<float> optional0;
 		std::optional<std::string> optional1 = "Hello optional string!";
 	} xml;
@@ -76,10 +76,10 @@ public:
 		node["yaml"].Get(example1.yaml);
 		node["map"].Get(example1.map);
 		node["vectorMap"].Get(example1.vectorMap);
-		//node["array"].Get(example1.array);
+		node["forwardList"].Get(example1.forwardList);
 		//node["cArray"].Get(example1.cArray);
 		//node["vectorMatrixMap"].Get(example1.vectorMatrixMap);
-		//node["types"].Get(example1.types);
+		node["types"].Get(example1.types);
 		//node["uniqueVector"].Get(example1.uniqueVector);
 		node["objects"].Get(example1.objects);
 		return node;
@@ -95,10 +95,10 @@ public:
 		node["yaml"].Set(example1.yaml);
 		node["map"].Set(example1.map);
 		node["vectorMap"].Set(example1.vectorMap);
-		//node["array"].Set(example1.array);
+		node["forwardList"].Set(example1.forwardList);
 		//node["cArray"].Set(example1.cArray);
 		//node["vectorMatrixMap"].Set(example1.vectorMatrixMap);
-		//node["types"].Set(example1.types);
+		node["types"].Set(example1.types);
 		//node["uniqueVector"].Set(example1.uniqueVector);
 		node["objects"].Set(example1.objects);
 		return node;
@@ -110,17 +110,18 @@ public:
 
 	Time timeNow = Time::Now();
 	std::filesystem::path currentPath = std::filesystem::current_path();
-	std::vector<std::string> json = {"rigid", "better for data interchange"};
-	std::vector<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
-	std::map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
-	std::map<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
-	//std::vector<std::pair<std::string, bitmask::bitmask<ExampleType>>> types = {
+	std::set<std::string> json = {"rigid", "better for data interchange"};
+	std::multiset<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
+	std::unordered_map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
+	std::multimap<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
+	std::vector<std::pair<std::string, bitmask::bitmask<ExampleType>>> types = {
+	// TODO:
 	//	{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
 	//	{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
-	//};
+	};
 	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
 	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
-	//std::array<double, 5> array = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
+	std::forward_list<double> forwardList = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
 	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 };
 
