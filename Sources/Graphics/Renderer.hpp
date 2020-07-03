@@ -32,10 +32,10 @@ public:
 	 * @tparam T The Subrender type.
 	 * @return If the Subrender has the System.
 	 */
-	 /*template<typename T>
+	 template<typename T>
 	 bool HasSubrender() const  {
 		 return subrenderHolder.Has<T>();
-	 }*/
+	 }
 
 	 /**
 	  * Gets a Subrender.
@@ -58,8 +58,8 @@ protected:
 	/**
 	 * Adds a Subrender.
 	 * @tparam T The Subrender type.
-	 * @param pipelineStage The Subrender pipeline stage.
 	 * @tparam Args The constructor arg types.
+	 * @param pipelineStage The Subrender pipeline stage.
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>

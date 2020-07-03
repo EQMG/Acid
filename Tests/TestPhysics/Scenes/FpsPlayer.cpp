@@ -4,6 +4,7 @@
 #include <Scenes/Scenes.hpp>
 #include <Scenes/Entity.hpp>
 #include <Physics/KinematicCharacter.hpp>
+#include <Physics/Physics.hpp>
 #include <Uis/Uis.hpp>
 
 namespace test {
@@ -31,7 +32,7 @@ void FpsPlayer::Update() {
 
 	Vector3f direction;
 
-	if (!Scenes::Get()->IsPaused()) {
+	if (!Scenes::Get()->GetScene()->IsPaused()) {
 		direction.x = Inputs::Get()->GetAxis("strafe")->GetAmount();
 		direction.z = Inputs::Get()->GetAxis("forward")->GetAmount();
 
@@ -54,14 +55,14 @@ void FpsPlayer::Update() {
 				character->SetGravity({});
 				character->SetLinearVelocity({});
 			} else {
-				character->SetGravity(Scenes::Get()->GetPhysics()->GetGravity());
+				character->SetGravity(Scenes::Get()->GetScene()->GetSystem<Physics>()->GetGravity());
 			}
 
 			Log::Out("Player Noclip: ", std::boolalpha, noclipEnabled, '\n');
 		}
 	}
 
-	auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+	auto cameraRotation = Scenes::Get()->GetScene()->GetCamera()->GetRotation();
 
 	if (auto transform = GetEntity()->GetComponent<Transform>()) {
 		transform->SetLocalRotation({0.0f, cameraRotation.y, 0.0f});

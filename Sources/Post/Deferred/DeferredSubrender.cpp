@@ -29,11 +29,11 @@ DeferredSubrender::DeferredSubrender(const Pipeline::Stage &pipelineStage) :
 }
 
 void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 
 	// TODO probably use a cubemap image directly instead of scene components.
 	std::shared_ptr<ImageCube> skybox = nullptr;
-	auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
+	auto meshes = Scenes::Get()->GetScene()->QueryComponents<Mesh>();
 	for (const auto &mesh : meshes) {
 		if (auto materialSkybox = dynamic_cast<const SkyboxMaterial *>(mesh->GetMaterial())) {
 			skybox = materialSkybox->GetImage();
@@ -51,7 +51,7 @@ void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
 	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
 	uint32_t lightCount = 0;
 
-	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
+	auto sceneLights = Scenes::Get()->GetScene()->QueryComponents<Light>();
 
 	for (const auto &light : sceneLights) {
 		//auto position = *light->GetPosition();
@@ -78,7 +78,8 @@ void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
 
 	// Updates uniforms.
 	uniformScene.Push("view", camera->GetViewMatrix());
-	uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
+	if (auto shadows = Scenes::Get()->GetScene()->GetSystem<Shadows>())
+		uniformScene.Push("shadowSpace", shadows->GetShadowBox().GetToShadowMapSpaceMatrix());
 	uniformScene.Push("cameraPosition", camera->GetPosition());
 	uniformScene.Push("lightsCount", lightCount);
 	uniformScene.Push("fogColour", fog.GetColour());

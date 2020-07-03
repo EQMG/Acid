@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Engine/Engine.hpp"
+#include "Scenes/System.hpp"
 #include "Particle.hpp"
 
 namespace acid {
 /**
  * @brief A manager that manages particles.
  */
-class ACID_EXPORT Particles : public Module::Registrar<Particles> {
-	inline static const bool Registered = Register(Stage::Normal);
+class ACID_EXPORT Particles : public System {
 public:
 	using ParticlesContainer = std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>;
 

@@ -40,12 +40,12 @@ void World::Update() {
 		deferred->SetFog(fog);
 	}
 
-	if (Shadows::Get()) {
-		Shadows::Get()->SetLightDirection(-lightDirection);
-		//Shadows::Get()->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
-		//Shadows::Get()->SetShadowBoxDistance(40.0f);
-		//Shadows::Get()->SetShadowTransition(5.0f);
-		//Shadows::Get()->SetShadowDarkness(0.6f * GetShadowFactor());
+	if (auto shadows = Scenes::Get()->GetScene()->GetSystem<Shadows>()) {
+		shadows->SetLightDirection(-lightDirection);
+		//shadows->SetShadowBoxOffset((4.0f * (1.0f - GetShadowFactor())) + 10.0f);
+		//shadows->SetShadowBoxDistance(40.0f);
+		//shadows->SetShadowTransition(5.0f);
+		//shadows->SetShadowDarkness(0.6f * GetShadowFactor());
 	}
 }
 

@@ -22,10 +22,10 @@ void FreeCamera::Start() {
 void FreeCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (!Scenes::Get()->IsPaused()) {
+	if (!Scenes::Get()->GetScene()->IsPaused()) {
 		Vector3f positionDelta;
 
-		if (!Scenes::Get()->IsPaused()) {
+		if (!Scenes::Get()->GetScene()->IsPaused()) {
 			positionDelta.x = Inputs::Get()->GetAxis("strafe")->GetAmount();
 			positionDelta.y = Inputs::Get()->GetAxis("vertical")->GetAmount();
 			positionDelta.z = Inputs::Get()->GetAxis("forward")->GetAmount();

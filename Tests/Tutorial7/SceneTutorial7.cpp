@@ -17,7 +17,7 @@ void SceneTutorial7::Start() {
 	}
 
 	// Create an entity.
-	auto mesh = GetStructure()->CreateEntity();
+	auto mesh = CreateEntity();
 	// Give it a default transform.
 	mesh->AddComponent<Transform>();
 
@@ -29,6 +29,7 @@ void SceneTutorial7::Start() {
 }
 
 void SceneTutorial7::Update() {
+	Scene::Update();
 }
 
 /*

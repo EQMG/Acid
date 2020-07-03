@@ -47,7 +47,7 @@ Audio::~Audio() {
 }
 
 void Audio::Update() {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 
 	if (!camera) return;
 

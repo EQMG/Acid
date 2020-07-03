@@ -1,4 +1,4 @@
-#include "ScenePhysics.hpp"
+#include "Physics.hpp"
 
 #include <iterator>
 
@@ -16,7 +16,7 @@
 #include "Physics/CollisionObject.hpp"
 
 namespace acid {
-ScenePhysics::ScenePhysics() :
+Physics::Physics() :
 	collisionConfiguration(std::make_unique<btSoftBodyRigidBodyCollisionConfiguration>()),
 	broadphase(std::make_unique<btDbvtBroadphase>()),
 	dispatcher(std::make_unique<btCollisionDispatcher>(collisionConfiguration.get())),
@@ -38,7 +38,7 @@ ScenePhysics::ScenePhysics() :
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 }
 
-ScenePhysics::~ScenePhysics() {
+Physics::~Physics() {
 	for (int32_t i = dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--) {
 		auto obj = dynamicsWorld->getCollisionObjectArray()[i];
 		auto body = btRigidBody::upcast(obj);
@@ -52,12 +52,12 @@ ScenePhysics::~ScenePhysics() {
 	}
 }
 
-void ScenePhysics::Update() {
+void Physics::Update() {
 	dynamicsWorld->stepSimulation(Engine::Get()->GetDelta().AsSeconds());
 	CheckForCollisionEvents();
 }
 
-Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const {
+Raycast Physics::Raytest(const Vector3f &start, const Vector3f &end) const {
 	auto startBt = Collider::Convert(start);
 	auto endBt = Collider::Convert(end);
 	btCollisionWorld::ClosestRayResultCallback result(startBt, endBt);
@@ -67,19 +67,19 @@ Raycast ScenePhysics::Raytest(const Vector3f &start, const Vector3f &end) const 
 		result.m_collisionObject ? static_cast<CollisionObject *>(result.m_collisionObject->getUserPointer()) : nullptr);
 }
 
-void ScenePhysics::SetGravity(const Vector3f &gravity) {
+void Physics::SetGravity(const Vector3f &gravity) {
 	this->gravity = gravity;
 	dynamicsWorld->setGravity(Collider::Convert(gravity));
 }
 
-void ScenePhysics::SetAirDensity(float airDensity) {
+void Physics::SetAirDensity(float airDensity) {
 	this->airDensity = airDensity;
 	auto softDynamicsWorld = static_cast<btSoftRigidDynamicsWorld *>(dynamicsWorld.get());
 	softDynamicsWorld->getWorldInfo().air_density = airDensity;
 	softDynamicsWorld->getWorldInfo().m_sparsesdf.Initialize();
 }
 
-void ScenePhysics::CheckForCollisionEvents() {
+void Physics::CheckForCollisionEvents() {
 	// Keep a list of the collision pairs found during the current update.
 	CollisionPairs pairsThisUpdate;
 

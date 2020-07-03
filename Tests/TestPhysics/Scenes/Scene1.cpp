@@ -1,21 +1,22 @@
 #include "Scene1.hpp"
 
-#include <Audio/Sound.hpp>
 #include <Animations/AnimatedMesh.hpp>
-#include <Files/File.hpp>
-#include <Gizmos/Gizmos.hpp>
+#include <Audio/Sound.hpp>
 #include <Devices/Mouse.hpp>
+#include <Files/File.hpp>
+#include <Files/File.hpp>
+#include <Files/Json/Json.hpp>
+#include <Gizmos/Gizmos.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Lights/Light.hpp>
-#include <Resources/Resources.hpp>
 #include <Materials/DefaultMaterial.hpp>
-#include <Uis/Drivers/ConstantDriver.hpp>
-#include <Uis/Drivers/SlideDriver.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Shapes/CubeModel.hpp>
 #include <Models/Shapes/CylinderModel.hpp>
 #include <Models/Shapes/SphereModel.hpp>
 #include <Particles/Emitters/CircleEmitter.hpp>
+#include <Particles/Particles.hpp>
 #include <Particles/ParticleSystem.hpp>
 #include <Physics/Colliders/CapsuleCollider.hpp>
 #include <Physics/Colliders/ConeCollider.hpp>
@@ -24,15 +25,16 @@
 #include <Physics/Colliders/CylinderCollider.hpp>
 #include <Physics/Colliders/HeightfieldCollider.hpp>
 #include <Physics/Colliders/SphereCollider.hpp>
-#include <Graphics/Graphics.hpp>
-#include <Files/Json/Json.hpp>
-#include <Files/File.hpp>
+#include <Physics/Physics.hpp>
+#include <Resources/Resources.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Shadows/ShadowRender.hpp>
 #include <Skyboxes/SkyboxMaterial.hpp>
 #include <Uis/Constraints/PixelConstraint.hpp>
 #include <Uis/Constraints/RelativeConstraint.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
+#include <Uis/Drivers/SlideDriver.hpp>
 #include <Uis/Uis.hpp>
 #include "Behaviours/HeightDespawn.hpp"
 #include "Behaviours/NameTag.hpp"
@@ -46,6 +48,10 @@ constexpr Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<FpsCamera>()) {
+	AddSystem<Physics>();
+	AddSystem<Particles>();
+	AddSystem<Gizmos>();
+	
 	//uiStartLogo.SetTransform({UiMargins::All});
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
 	uiStartLogo.OnFinished().connect(this, [this]() {
@@ -64,10 +70,10 @@ Scene1::Scene1() :
 
 	Inputs::Get()->GetButton("spawnSphere")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			auto cameraPosition = Scenes::Get()->GetCamera()->GetPosition();
-			auto cameraRotation = Scenes::Get()->GetCamera()->GetRotation();
+			auto cameraPosition = GetCamera()->GetPosition();
+			auto cameraRotation = GetCamera()->GetRotation();
 
-			auto sphere = GetStructure()->CreateEntity();
+			auto sphere = CreateEntity();
 			sphere->AddComponent<Transform>(cameraPosition, Vector3f());
 			sphere->AddComponent<Mesh>(SphereModel::Create(0.5f, 32, 32), 
 				std::make_unique<DefaultMaterial>(Colour::White, nullptr, 0.0f, 1.0f));
@@ -77,7 +83,7 @@ Scene1::Scene1() :
 			sphere->AddComponent<ShadowRender>();
 			sphere->AddComponent<HeightDespawn>(-75.0f);
 
-			auto sphereLight = GetStructure()->CreateEntity();
+			auto sphereLight = CreateEntity();
 			sphereLight->AddComponent<Transform>(Vector3f(0.0f, 0.7f, 0.0f))->SetParent(sphere);
 			sphereLight->AddComponent<Light>(Colour::Aqua, 4.0f);
 		}
@@ -96,7 +102,7 @@ Scene1::Scene1() :
 
 				auto entitiesNode = sceneFile.GetNode()["entities"];
 
-				for (auto &entity : GetStructure()->QueryAll()) {
+				for (auto &entity : QueryAllEntities()) {
 					auto &entityNode = entitiesNode->AddProperty();
 
 					if (!entity->GetName().empty()) {
@@ -132,19 +138,19 @@ Scene1::Scene1() :
 }
 
 void Scene1::Start() {
-	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
-	GetPhysics()->SetAirDensity(1.0f);
+	GetSystem<Physics>()->SetGravity({0.0f, -9.81f, 0.0f});
+	GetSystem<Physics>()->SetAirDensity(1.0f);
 
-	auto player = GetStructure()->CreateEntity("Objects/Player/Player.json");
+	auto player = CreatePrefabEntity("Objects/Player/Player.json");
 	player->AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f), Vector3f(0.0f, Maths::Radians(180.0f), 0.0f));
 
-	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxClouds/SkyboxClouds.json");
+	auto skybox = CreatePrefabEntity("Objects/SkyboxClouds/SkyboxClouds.json");
 	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), Vector3f(2048.0f));
 
-	//auto animated = GetStructure()->CreateEntity("Objects/Animated/Animated.json");
+	//auto animated = CreateEntity("Objects/Animated/Animated.json");
 	//animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
 
-	auto animated = GetStructure()->CreateEntity();
+	auto animated = CreateEntity();
 	animated->AddComponent<Transform>(Vector3f(5.0f, 0.0f, 0.0f), Vector3f(), Vector3f(0.3f));
 	animated->AddComponent<AnimatedMesh>("Objects/Animated/Model.dae", 
 		std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Objects/Animated/Diffuse.png"), 0.7f, 0.6f));
@@ -157,25 +163,25 @@ void Scene1::Start() {
 	prefabAnimated.Write(NodeFormat::Beautified);
 #endif
 
-	auto sun = GetStructure()->CreateEntity();
+	auto sun = CreateEntity();
 	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));
 	//sun->AddComponent<CelestialBody>(CelestialBody::Type::Sun);
 	sun->AddComponent<Light>(Colour::White);
 
-	auto plane = GetStructure()->CreateEntity();
+	auto plane = CreateEntity();
 	plane->AddComponent<Transform>(Vector3f(0.0f, -0.5f, 0.0f), Vector3f(), Vector3f(50.0f, 1.0f, 50.0f));
 	plane->AddComponent<Mesh>(CubeModel::Create({1.0f, 1.0f, 1.0f}),
 		std::make_unique<DefaultMaterial>(Colour::White, Image2d::Create("Undefined2.png", VK_FILTER_NEAREST)));
 	plane->AddComponent<Rigidbody>(std::make_unique<CubeCollider>(Vector3f(1.0f, 1.0f, 1.0f)), 0.0f, 0.5f);
 	plane->AddComponent<ShadowRender>();
 
-	auto terrain = GetStructure()->CreateEntity();
+	auto terrain = CreateEntity();
 	terrain->AddComponent<Transform>(Vector3f(0.0f, -10.0f, 0.0f));
 	terrain->AddComponent<Mesh>(CubeModel::Create({50.0f, 1.0f, 50.0f}), 
 		std::make_unique<TerrainMaterial>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
 	terrain->AddComponent<ShadowRender>();
 
-	//auto terrain = GetStructure()->CreateEntity();
+	//auto terrain = CreateEntity();
 	//terrain->AddComponent<Transform>();
 	//terrain->AddComponent<Mesh>(nullptr,
 	//	std::make_unique<TerrainMaterial>(Image2d::Create("Objects/Terrain/Grass.png"), Image2d::Create("Objects/Terrain/Rocks.png")));
@@ -193,7 +199,7 @@ void Scene1::Start() {
 
 	for (int32_t i = 0; i < 5; i++) {
 		for (int32_t j = 0; j < 5; j++) {
-			auto cube = GetStructure()->CreateEntity();
+			auto cube = CreateEntity();
 			cube->AddComponent<Transform>(Vector3f(static_cast<float>(i), static_cast<float>(j) + 0.5f, -10.0f));
 			cube->AddComponent<Mesh>(CubeModel::Create({1.0f, 1.0f, 1.0f}), 
 				std::make_unique<DefaultMaterial>(cubeColours[static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(cubeColours.size())))], nullptr, 0.5f, 0.3f));
@@ -202,20 +208,20 @@ void Scene1::Start() {
 		}
 	}
 
-	auto suzanne = GetStructure()->CreateEntity();
+	auto suzanne = CreateEntity();
 	suzanne->AddComponent<Transform>(Vector3f(-1.0f, 2.0f, 10.0f));
 	suzanne->AddComponent<Mesh>(Model::Create("Objects/Suzanne/Suzanne.obj"),
 		std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.2f, 0.8f));
 	suzanne->AddComponent<ShadowRender>();
 
-	//auto suzanne1 = GetStructure()->CreateEntity();
+	//auto suzanne1 = CreateEntity();
 	//suzanne1->AddComponent<Transform>(Vector3f(-1.0f, 2.0f, 10.0f));
 	//suzanne1->AddComponent<Mesh>(GltfModel::Create("Objects/Suzanne/Suzanne.glb"),
 	//	std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.5f, 0.2f));
 	//suzanne1->AddComponent<MeshRender>();
 	//suzanne1->AddComponent<ShadowRender>();
 
-	auto teapot1 = GetStructure()->CreateEntity();
+	auto teapot1 = CreateEntity();
 	teapot1->AddComponent<Transform>(Vector3f(4.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot1->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
 		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.9f, 0.4f, nullptr, Image2d::Create("Objects/Testing/Normal.png")));
@@ -230,24 +236,24 @@ void Scene1::Start() {
 	prefabTeapot1.Write(NodeFormat::Beautified);
 #endif
 
-	auto teapotCone = GetStructure()->CreateEntity();
+	auto teapotCone = CreateEntity();
 	teapotCone->AddComponent<Transform>(Vector3f(0.0f, 10.0f, 0.0f), Vector3f(), Vector3f(3.0f))->SetParent(teapot1);
 	teapotCone->AddComponent<Mesh>(CylinderModel::Create(1.0f, 0.0f, 2.0f, 24, 2), 
 		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotCone->AddComponent<ShadowRender>();
 
-	auto teapotConeLight = GetStructure()->CreateEntity();
+	auto teapotConeLight = CreateEntity();
 	teapotConeLight->SetName("TeapotConeLight");
 	teapotConeLight->AddComponent<Transform>(Vector3f(0.0f, 2.0f, 0.0f))->SetParent(teapotCone);
 	teapotConeLight->AddComponent<Light>(Colour::Red, 6.0f);
 
-	auto teapotConeSphere = GetStructure()->CreateEntity();
+	auto teapotConeSphere = CreateEntity();
 	teapotConeSphere->AddComponent<Transform>(Vector3f(0.0f, 1.5f, 0.0f), Vector3f(), Vector3f(0.5f))->SetParent(teapotCone);
 	teapotConeSphere->AddComponent<Mesh>(SphereModel::Create(1.0f, 32, 32), 
 		std::make_unique<DefaultMaterial>(Colour::Fuchsia, nullptr, 0.5f, 0.6f));
 	teapotConeSphere->AddComponent<ShadowRender>();
 
-	auto teapot2 = GetStructure()->CreateEntity();
+	auto teapot2 = CreateEntity();
 	teapot2->AddComponent<Transform>(Vector3f(7.5f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot2->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
 		std::make_unique<DefaultMaterial>(Colour::Lime, nullptr, 0.6f, 0.7f));
@@ -256,7 +262,7 @@ void Scene1::Start() {
 	teapot2->AddComponent<NameTag>("Vector3->Quaternion->Vector3", 1.4f);
 	teapot2->AddComponent<ShadowRender>();
 
-	auto teapot3 = GetStructure()->CreateEntity();
+	auto teapot3 = CreateEntity();
 	teapot3->AddComponent<Transform>(Vector3f(11.0f, 2.0f, 10.0f), Vector3f(), Vector3f(0.2f));
 	teapot3->AddComponent<Mesh>(Model::Create("Objects/Testing/Model_Tea.obj"), 
 		std::make_unique<DefaultMaterial>(Colour::Teal, nullptr, 0.8f, 0.2f));
@@ -265,7 +271,7 @@ void Scene1::Start() {
 	teapot3->AddComponent<NameTag>("Rigigbody Method\nVector3->btQuaternion->Vector3", 1.4f);
 	teapot3->AddComponent<ShadowRender>();
 
-	auto cone = GetStructure()->CreateEntity();
+	auto cone = CreateEntity();
 	cone->AddComponent<Transform>(Vector3f(-3.0f, 2.0f, 10.0f));
 	cone->AddComponent<Mesh>(CylinderModel::Create(1.0f, 0.0f, 2.0f, 28, 2), 
 		std::make_unique<DefaultMaterial>(Colour::Blue, nullptr, 0.0f, 1.0f));
@@ -273,14 +279,14 @@ void Scene1::Start() {
 		/*std::make_unique<SphereCollider>(1.0f, Transform({0.0f, 2.0f, 0.0f})),*/ 1.5f);
 	cone->AddComponent<ShadowRender>();
 
-	auto cylinder = GetStructure()->CreateEntity();
+	auto cylinder = CreateEntity();
 	cylinder->AddComponent<Transform>(Vector3f(-8.0f, 3.0f, 10.0f), Vector3f(0.0f, 0.0f, Maths::Radians(90.0f)));
 	cylinder->AddComponent<Mesh>(CylinderModel::Create(1.1f, 1.1f, 2.2f, 32, 2), 
 		std::make_unique<DefaultMaterial>(Colour::Red, nullptr, 0.0f, 1.0f));
 	cylinder->AddComponent<Rigidbody>(std::make_unique<CylinderCollider>(1.1f, 2.2f), 2.5f);
 	cylinder->AddComponent<ShadowRender>();
 
-	auto smokeSystem = GetStructure()->CreateEntity("Objects/Smoke/Smoke.json");
+	auto smokeSystem = CreatePrefabEntity("Objects/Smoke/Smoke.json");
 	smokeSystem->AddComponent<Transform>(Vector3f(-15.0f, 4.0f, 12.0f));
 	//smokeSystem->AddComponent<Sound>("Sounds/Music/Hiitori-Bocchi.wav", Audio::Type::Music, true, true);
 
@@ -292,7 +298,9 @@ void Scene1::Start() {
 }
 
 void Scene1::Update() {
-	auto teapotConeLight = GetStructure()->GetEntity("TeapotConeLight");
+	Scene::Update();
+	
+	auto teapotConeLight = GetEntity("TeapotConeLight");
 	auto transform = teapotConeLight->GetComponent<Transform>();
 }
 

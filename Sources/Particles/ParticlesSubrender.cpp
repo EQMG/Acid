@@ -13,13 +13,16 @@ ParticlesSubrender::ParticlesSubrender(const Pipeline::Stage &pipelineStage) :
 }
 
 void ParticlesSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	if (!Scenes::Get()->GetScene()->GetSystem<Particles>())
+		return;
+	
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
 
 	pipeline.BindPipeline(commandBuffer);
 
-	auto particles = Particles::Get()->GetParticles();
+	auto &particles = Scenes::Get()->GetScene()->GetSystem<Particles>()->GetParticles();
 
 	for (auto &[type, typeParticles] : particles)
 		type->CmdRender(commandBuffer, pipeline, uniformScene);

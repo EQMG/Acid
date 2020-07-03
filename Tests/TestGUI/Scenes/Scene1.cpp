@@ -45,6 +45,7 @@ void Scene1::Start() {
 }
 
 void Scene1::Update() {
+	Scene::Update();
 }
 
 bool Scene1::IsPaused() const {

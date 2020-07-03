@@ -7,6 +7,7 @@
 #include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Physics.hpp"
 
 namespace acid {
 KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, float mass, float friction) :
@@ -21,9 +22,7 @@ KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, flo
 }
 
 KinematicCharacter::~KinematicCharacter() {
-	auto physics = Scenes::Get()->GetPhysics();
-
-	if (physics) {
+	if (auto physics = Scenes::Get()->GetScene()->GetSystem<Physics>()) {
 		// TODO: Are these being deleted?
 		physics->GetDynamicsWorld()->removeCollisionObject(ghostObject.get());
 		physics->GetDynamicsWorld()->removeAction(controller.get());
@@ -31,15 +30,17 @@ KinematicCharacter::~KinematicCharacter() {
 }
 
 void KinematicCharacter::Start() {
+	auto physics = Scenes::Get()->GetScene()->GetSystem<Physics>();
+	
 	if (ghostObject)
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeCollisionObject(ghostObject.get());
+		physics->GetDynamicsWorld()->removeCollisionObject(ghostObject.get());
 
 	if (controller)
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeAction(controller.get());
+		physics->GetDynamicsWorld()->removeAction(controller.get());
 
 	CreateShape(true);
 	assert((shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid ghost object shape!");
-	gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	gravity = physics->GetGravity();
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
@@ -50,14 +51,14 @@ void KinematicCharacter::Start() {
 
 	ghostObject = std::make_unique<btPairCachingGhostObject>();
 	ghostObject->setWorldTransform(worldTransform);
-	Scenes::Get()->GetPhysics()->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	physics->GetBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 	ghostObject->setCollisionShape(shape.get());
 	ghostObject->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	ghostObject->setFriction(friction);
 	ghostObject->setRollingFriction(frictionRolling);
 	ghostObject->setSpinningFriction(frictionSpinning);
 	ghostObject->setUserPointer(dynamic_cast<CollisionObject *>(this));
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addCollisionObject(ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
+	physics->GetDynamicsWorld()->addCollisionObject(ghostObject.get(), btBroadphaseProxy::CharacterFilter, btBroadphaseProxy::AllFilter);
 	body = ghostObject.get();
 
 	controller = std::make_unique<btKinematicCharacterController>(ghostObject.get(), static_cast<btConvexShape *>(shape.get()), 0.03f);
@@ -68,7 +69,7 @@ void KinematicCharacter::Start() {
 	controller->setJumpSpeed(jumpSpeed);
 	controller->setMaxJumpHeight(maxHeight);
 	controller->setUpInterpolate(interpolate);
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addAction(controller.get());
+	physics->GetDynamicsWorld()->addAction(controller.get());
 }
 
 void KinematicCharacter::Update() {

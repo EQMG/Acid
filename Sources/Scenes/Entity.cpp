@@ -1,14 +1,6 @@
 #include "Entity.hpp"
 
-#include "Scenes.hpp"
-#include "EntityPrefab.hpp"
-
 namespace acid {
-Entity::Entity(const std::filesystem::path &filename) {
-	auto entityPrefab = EntityPrefab::Create(filename);
-	*entityPrefab >> *this;
-}
-
 void Entity::Update() {
 	for (auto it = components.begin(); it != components.end();) {
 		if ((*it)->IsRemoved()) {

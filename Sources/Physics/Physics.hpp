@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Maths/Vector3.hpp"
+#include "Scenes/System.hpp"
 
 class btCollisionObject;
 class btCollisionConfiguration;
@@ -37,12 +38,12 @@ private:
 	CollisionObject *collisionObject;
 };
 
-class ACID_EXPORT ScenePhysics {
+class ACID_EXPORT Physics : public System {
 public:
-	ScenePhysics();
-	~ScenePhysics();
+	Physics();
+	~Physics();
 
-	void Update();
+	void Update() override;
 
 	Raycast Raytest(const Vector3f &start, const Vector3f &end) const;
 

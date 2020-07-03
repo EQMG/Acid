@@ -59,11 +59,11 @@ void ParticleType::Update(const std::vector<Particle> &particles) {
 		if (this->instances >= maxInstances)
 			break;
 
-		if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale())) {
+		if (!Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum().SphereInFrustum(particle.GetPosition(), FRUSTUM_BUFFER * particle.GetScale())) {
 			continue;
 		}
 
-		auto viewMatrix = Scenes::Get()->GetCamera()->GetViewMatrix();
+		auto viewMatrix = Scenes::Get()->GetScene()->GetCamera()->GetViewMatrix();
 		auto instance = &instances[this->instances];
 		instance->modelMatrix = Matrix4().Translate(particle.GetPosition());
 

@@ -22,14 +22,14 @@ void FpsCamera::Start() {
 void FpsCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>()) {
+	if (auto scenePlayer = Scenes::Get()->GetScene()->GetComponent<FpsPlayer>()) {
 		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>()) {
 			velocity = (transformPlayer->GetPosition() - position) / delta;
 			position = transformPlayer->GetPosition() + ViewOffset;
 		}
 	}
 
-	if (!Scenes::Get()->IsPaused()) {
+	if (!Scenes::Get()->GetScene()->IsPaused()) {
 		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
 			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 
@@ -44,7 +44,7 @@ void FpsCamera::Update() {
 	viewFrustum.Update(viewMatrix, projectionMatrix);
 	viewRay.Update(position, {0.5f, 0.5f}, viewMatrix, projectionMatrix);
 
-	//auto raytest = Scenes::Get()->GetPhysics()->Raytest(viewRay.GetOrigin(), viewRay.GetPointOnRay(20.0f));
+	//auto raytest = Scenes::Get()->GetScene()->GetSystem<Physics>()->Raytest(viewRay.GetOrigin(), viewRay.GetPointOnRay(20.0f));
 	//Log::Out((raytest.HasHit() ? raytest.GetParent()->GetName() : ""), ": ", raytest.GetPointWorld().Distance(viewRay.GetOrigin()), '\n');
 }
 }

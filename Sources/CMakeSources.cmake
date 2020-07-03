@@ -176,6 +176,7 @@ set(_temp_acid_headers
 		Physics/Force.hpp
 		Physics/Frustum.hpp
 		Physics/KinematicCharacter.hpp
+		Physics/Physics.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
 		Post/Deferred/DeferredSubrender.hpp
@@ -206,11 +207,12 @@ set(_temp_acid_headers
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
 		Scenes/Entity.hpp
+		Scenes/EntityHolder.hpp
 		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
-		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
-		Scenes/SceneStructure.hpp
+		Scenes/System.hpp
+		Scenes/SystemHolder.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -437,6 +439,7 @@ set(_temp_acid_sources
 		Physics/Force.cpp
 		Physics/Frustum.cpp
 		Physics/KinematicCharacter.cpp
+		Physics/Physics.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
 		Post/Deferred/DeferredSubrender.cpp
@@ -463,10 +466,11 @@ set(_temp_acid_sources
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
 		Scenes/Entity.cpp
+		Scenes/EntityHolder.cpp
 		Scenes/EntityPrefab.cpp
-		Scenes/ScenePhysics.cpp
+		Scenes/Scene.cpp
 		Scenes/Scenes.cpp
-		Scenes/SceneStructure.cpp
+		Scenes/SystemHolder.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp

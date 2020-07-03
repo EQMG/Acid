@@ -12,15 +12,18 @@ GizmosSubrender::GizmosSubrender(const Pipeline::Stage &pipelineStage) :
 }
 
 void GizmosSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	if (!Scenes::Get()->GetScene()->GetSystem<Gizmos>())
+		return;
+
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
 
-	auto &gizmos = Gizmos::Get()->GetGizmos();
+	/*auto &gizmos = Scenes::Get()->GetScene()->GetSystem<Gizmos>()->GetGizmos();
 
-	pipeline.BindPipeline(commandBuffer);
+	*/pipeline.BindPipeline(commandBuffer);/*
 
 	for (const auto &[type, typeGizmos] : gizmos)
-		type->CmdRender(commandBuffer, pipeline, uniformScene);
+		type->CmdRender(commandBuffer, pipeline, uniformScene);*/
 }
 }

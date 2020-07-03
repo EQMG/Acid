@@ -30,10 +30,10 @@ void Particle::Update() {
 	if (elapsedTime > lifeLength - FADE_TIME)
 		transparency -= delta / FADE_TIME;
 
-	if (!IsAlive() || !Scenes::Get()->GetCamera())
+	if (!IsAlive() || !Scenes::Get()->GetScene()->GetCamera())
 		return;
 
-	auto cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - position;
+	auto cameraToParticle = Scenes::Get()->GetScene()->GetCamera()->GetPosition() - position;
 	distanceToCamera = cameraToParticle.LengthSquared();
 
 	auto lifeFactor = stageCycles * elapsedTime / lifeLength;

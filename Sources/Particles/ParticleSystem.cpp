@@ -4,6 +4,7 @@
 #include "Maths/Transform.hpp"
 #include "Scenes/Entity.hpp"
 #include "Particles.hpp"
+#include "Scenes/Scenes.hpp"
 
 namespace acid {
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, std::vector<std::unique_ptr<Emitter>> &&emitters,
@@ -28,7 +29,7 @@ void ParticleSystem::Update() {
 	if (auto elapsed = elapsedEmit.GetElapsed(); elapsed && !emitters.empty()) {
 		for (uint32_t i = 0; i < elapsed; i++) {
 			auto emitterIndex = static_cast<uint32_t>(Maths::Random(0.0f, static_cast<float>(emitters.size())));
-			Particles::Get()->AddParticle(EmitParticle(emitters[emitterIndex].get()));
+			Scenes::Get()->GetScene()->GetSystem<Particles>()->AddParticle(EmitParticle(emitters[emitterIndex].get()));
 		}
 	}
 }

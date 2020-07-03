@@ -28,7 +28,7 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 
 	// Checks if the mesh is in view.
 	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
-		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
+		if (!rigidbody->InFrustum(Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum()))
 			return false;
 	}
 
@@ -63,7 +63,7 @@ void Mesh::SetMaterial(std::unique_ptr<Material> &&material) {
 }
 
 bool Mesh::operator<(const Mesh &rhs) const {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 
 	auto transform0 = GetEntity()->GetComponent<Transform>();
 	auto transform1 = rhs.GetEntity()->GetComponent<Transform>();

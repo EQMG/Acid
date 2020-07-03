@@ -80,7 +80,7 @@ bool AnimatedMesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler 
 
 	// Checks if the mesh is in view.
 	/*if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
-		if (!rigidbody->InFrustum(Scenes::Get()->GetCamera()->GetViewFrustum()))
+		if (!rigidbody->InFrustum(Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum()))
 			return false;
 	}*/
 

@@ -29,7 +29,7 @@ void CelestialBody::Update() {
 	switch (type) {
 	case Type::Sun: {
 		auto sunPosition = World::Get()->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
-		//sunPosition += Scenes::Get()->GetCamera()->GetPosition();
+		//sunPosition += Scenes::Get()->GetScene()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(sunPosition);
 
 		if (auto light = GetEntity()->GetComponent<Light>()) {
@@ -46,7 +46,7 @@ void CelestialBody::Update() {
 	break;
 	case Type::Moon: {
 		auto moonPosition = World::Get()->GetLightDirection() * Vector3f(6048.0f, 6048.0f, 6048.0f);
-		//moonPosition += Scenes::Get()->GetCamera()->GetPosition();
+		//moonPosition += Scenes::Get()->GetScene()->GetCamera()->GetPosition();
 		transform->SetLocalPosition(moonPosition);
 
 		if (auto light = GetEntity()->GetComponent<Light>()) {

@@ -23,14 +23,14 @@ void FpsCamera::Start() {
 void FpsCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (auto scenePlayer = Scenes::Get()->GetStructure()->GetComponent<FpsPlayer>()) {
+	if (auto scenePlayer = Scenes::Get()->GetScene()->GetComponent<FpsPlayer>()) {
 		if (auto transformPlayer = scenePlayer->GetEntity()->GetComponent<Transform>()) {
 			velocity = (transformPlayer->GetPosition() - position) / delta;
 			position = transformPlayer->GetPosition() + ViewOffset;
 		}
 	}
 
-	if (!Scenes::Get()->IsPaused()) {
+	if (!Scenes::Get()->GetScene()->IsPaused()) {
 		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
 			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 

@@ -3,6 +3,7 @@
 #include "Maths/Transform.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Scenes/Entity.hpp"
+#include "Scenes/Scenes.hpp"
 #include "Shadows.hpp"
 
 namespace acid {
@@ -16,13 +17,16 @@ void ShadowRender::Update() {
 }
 
 bool ShadowRender::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline) {
+	if (!Scenes::Get()->GetScene()->GetSystem<Shadows>())
+		return false;
+	
 	auto transform = GetEntity()->GetComponent<Transform>();
 
 	if (!transform)
 		return false;
 
 	// Update push constants.
-	pushObject.Push("mvp", Shadows::Get()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
+	pushObject.Push("mvp", Scenes::Get()->GetScene()->GetSystem<Shadows>()->GetShadowBox().GetProjectionViewMatrix() * transform->GetWorldMatrix());
 
 	// Gets required components.
 	auto mesh = GetEntity()->GetComponent<Mesh>();

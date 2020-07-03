@@ -7,36 +7,37 @@ namespace acid {
 /**
  * @brief Class that represents a  structure of spatial objects.
  */
-class ACID_EXPORT SceneStructure : NonCopyable {
+class ACID_EXPORT EntityHolder : NonCopyable {
 public:
-	SceneStructure();
+	EntityHolder();
 
+	void Update();
+
+	/**
+	 * Gets a Entity by name.
+	 * @param name The Entity name.
+	 * @return The entity.
+	 */
 	Entity *GetEntity(const std::string &name) const;
 
 	/**
 	 * Creates a new entity.
-	 * @return The newly created entity.
+	 * @return The Entity.
 	 */
 	Entity *CreateEntity();
 
 	/**
 	 * Creates a new entity from a prefab.
 	 * @param filename The file to load the component data from.
-	 * @return The newly created entity.
+	 * @return The Entity.
 	 */
-	Entity *CreateEntity(const std::string &filename);
+	Entity *CreatePrefabEntity(const std::string &filename);
 
 	/**
 	 * Adds a new object to the spatial structure.
 	 * @param object The object to add.
 	 */
-	void Add(Entity *object);
-
-	/**
-	 * Adds a new object to the spatial structure.
-	 * @param object The object to add.
-	 */
-	void Add(std::unique_ptr<Entity> object);
+	void Add(std::unique_ptr<Entity> &&object);
 
 	/**
 	 * Removes an object from the spatial structure.
@@ -49,17 +50,12 @@ public:
 	 * @param object The object to move.
 	 * @param structure The structure to move to.
 	 */
-	void Move(Entity *object, SceneStructure &structure);
+	void Move(Entity *object, EntityHolder &structure);
 
 	/**
-	 * Removes all objects from the spatial structure.
+	 * Removes all Entities.
 	 */
 	void Clear();
-
-	/**
-	 * Updates all of the entity.
-	 */
-	void Update();
 
 	/**
 	 * Gets the size of this structure.
@@ -85,12 +81,33 @@ public:
 	//std::vector<Entity *> QueryCube(const Vector3 &min, const Vector3 &max);
 
 	/**
+	 * Gets the first component of a type found in the spatial structure.
+	 * @tparam T The component type to get.
+	 * @param allowDisabled If disabled components will be included in this query.
+	 * @return The first component of the type found.
+	 */
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Component *>>>
+	T *GetComponent(bool allowDisabled = false) {
+		for (auto it = objects.begin(); it != objects.end(); ++it) {
+			auto component = (*it)->GetComponent<T>();
+
+			if (component && (component->IsEnabled() || allowDisabled)) {
+				return component;
+			}
+		}
+
+		return nullptr;
+	}
+
+	/**
 	 * Returns a set of all components of a type in the spatial structure.
 	 * @tparam T The components type to get.
 	 * @param allowDisabled If disabled components will be included in this query.
 	 * @return The list specified by of all components that match the type.
 	 */
-	template<typename T>
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Component *>>>
 	std::vector<T *> QueryComponents(bool allowDisabled = false) {
 		std::vector<T *> components;
 
@@ -103,25 +120,6 @@ public:
 		}
 
 		return components;
-	}
-
-	/**
-	 * Gets the first component of a type found in the spatial structure.
-	 * @tparam T The component type to get.
-	 * @param allowDisabled If disabled components will be included in this query.
-	 * @return The first component of the type found.
-	 */
-	template<typename T>
-	T *GetComponent(bool allowDisabled = false) {
-		for (auto it = objects.begin(); it != objects.end(); ++it) {
-			auto component = (*it)->GetComponent<T>();
-
-			if (component && (component->IsEnabled() || allowDisabled)) {
-				return component;
-			}
-		}
-
-		return nullptr;
 	}
 
 	/**

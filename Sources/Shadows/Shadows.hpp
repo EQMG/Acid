@@ -1,15 +1,14 @@
 #pragma once
 
-#include "Engine/Engine.hpp"
 #include "Maths/Vector3.hpp"
+#include "Scenes/System.hpp"
 #include "ShadowBox.hpp"
 
 namespace acid {
 /**
  * @brief Module used for managing a shadow map.
  */
-class ACID_EXPORT Shadows : public Module::Registrar<Shadows> {
-	inline static const bool Registered = Register(Stage::Normal);
+class ACID_EXPORT Shadows : public System {
 public:
 	Shadows();
 

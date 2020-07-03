@@ -26,7 +26,7 @@ SsaoFilter::SsaoFilter(const Pipeline::Stage &pipelineStage) :
 
 void SsaoFilter::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	uniformScene.Push("kernel", *kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
