@@ -21,10 +21,14 @@ void SkyboxCycle::Update() {
 	if (!materialSkybox)
 		return;
 
+	auto world = Scenes::Get()->GetScene()->GetSystem<World>();
+	if (!world)
+		return;
+	
 	if (enableFog) {
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
-		materialSkybox->SetFogColour(World::Get()->GetFog().GetColour());
-		materialSkybox->SetFogLimits({World::Get()->GetFog().GetLowerLimit(), World::Get()->GetFog().GetUpperLimit()});
+		materialSkybox->SetFogColour(world->GetFog().GetColour());
+		materialSkybox->SetFogLimits({world->GetFog().GetLowerLimit(), world->GetFog().GetUpperLimit()});
 	} else {
 		materialSkybox->SetBaseColour(SKYBOX_COLOUR_DAY);
 		materialSkybox->SetFogColour(Colour::Black);
@@ -36,8 +40,8 @@ void SkyboxCycle::Update() {
 		return;
 
 	if (enableRotation) {
-		materialSkybox->SetBlend(World::Get()->GetStarIntensity());
-		transform->SetLocalRotation(World::Get()->GetSkyboxRotation());
+		materialSkybox->SetBlend(world->GetStarIntensity());
+		transform->SetLocalRotation(world->GetSkyboxRotation());
 	} else {
 		materialSkybox->SetBlend(1.0f);
 		transform->SetLocalRotation({});

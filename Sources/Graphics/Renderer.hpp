@@ -47,14 +47,6 @@ public:
 		return subrenderHolder.Get<T>();
 	}
 
-	RenderStage *GetRenderStage(uint32_t index) const {
-		if (renderStages.empty() || renderStages.size() < index)
-			return nullptr;
-
-		return renderStages.at(index).get();
-	}
-
-protected:
 	/**
 	 * Adds a Subrender.
 	 * @tparam T The Subrender type.
@@ -81,6 +73,13 @@ protected:
 	 */
 	void ClearSubrenders() {
 		subrenderHolder.Clear();
+	}
+
+	RenderStage *GetRenderStage(uint32_t index) const {
+		if (renderStages.empty() || renderStages.size() < index)
+			return nullptr;
+
+		return renderStages.at(index).get();
 	}
 
 	void AddRenderStage(std::unique_ptr<RenderStage> &&renderStage) {

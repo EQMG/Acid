@@ -1,7 +1,9 @@
 #include "MainRenderer.hpp"
 
+#include <Devices/Keyboard.hpp>
 #include <Fonts/FontsSubrender.hpp>
 #include <Gizmos/GizmosSubrender.hpp>
+#include <Graphics/Graphics.hpp>
 #include <Guis/GuisSubrender.hpp>
 #include <Meshes/MeshesSubrender.hpp>
 #include <Models/Shapes/SphereModel.hpp>
@@ -20,9 +22,7 @@
 #include <Post/Filters/ToneFilter.hpp>
 #include <Post/Filters/VignetteFilter.hpp>
 #include <Post/Pipelines/BlurPipeline.hpp>
-#include <Graphics/Graphics.hpp>
 #include <Shadows/ShadowsSubrender.hpp>
-#include "Devices/Keyboard.hpp"
 
 namespace test {
 MainRenderer::MainRenderer() {

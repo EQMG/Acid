@@ -32,8 +32,8 @@ void OverlayDebug::UpdateObject() {
 	textFps.SetString("FPS: " + String::To(Engine::Get()->GetFps()));
 	textUps.SetString("UPS: " + String::To(Engine::Get()->GetUps()));
 
-	if (World::Get()) {
-		auto timePercent = (World::Get()->GetDayFactor() * 24.0f) + 6.0f;
+	if (auto world = Scenes::Get()->GetScene()->GetSystem<World>()) {
+		auto timePercent = (world->GetDayFactor() * 24.0f) + 6.0f;
 		auto hour = static_cast<int32_t>(timePercent);
 		auto minute = static_cast<int32_t>((timePercent - hour) * 60.0f);
 

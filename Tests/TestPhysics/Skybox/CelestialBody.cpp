@@ -26,15 +26,20 @@ void CelestialBody::Update() {
 	if (!transform)
 		return;
 
+	auto world = Scenes::Get()->GetScene()->GetSystem<World>();
+	if (!world)
+		return;
+	//auto camera = Scenes::Get()->GetScene()->GetCamera();
+
 	switch (type) {
 	case Type::Sun: {
-		auto sunPosition = World::Get()->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
-		//sunPosition += Scenes::Get()->GetScene()->GetCamera()->GetPosition();
+		auto sunPosition = world->GetLightDirection() * Vector3f(-6048.0f, -6048.0f, -6048.0f);
+		//sunPosition += camera->GetPosition();
 		transform->SetLocalPosition(sunPosition);
 
 		if (auto light = GetEntity()->GetComponent<Light>()) {
-			auto sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, World::Get()->GetSunriseFactor());
-			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, World::Get()->GetShadowFactor());
+			auto sunColour = SUN_COLOUR_SUNRISE.Lerp(SUN_COLOUR_NIGHT, world->GetSunriseFactor());
+			sunColour = sunColour.Lerp(SUN_COLOUR_DAY, world->GetShadowFactor());
 			light->SetColour(sunColour);
 		}
 
@@ -45,12 +50,12 @@ void CelestialBody::Update() {
 	}
 	break;
 	case Type::Moon: {
-		auto moonPosition = World::Get()->GetLightDirection() * Vector3f(6048.0f, 6048.0f, 6048.0f);
-		//moonPosition += Scenes::Get()->GetScene()->GetCamera()->GetPosition();
+		auto moonPosition = world->GetLightDirection() * Vector3f(6048.0f, 6048.0f, 6048.0f);
+		//moonPosition += camera->GetPosition();
 		transform->SetLocalPosition(moonPosition);
 
 		if (auto light = GetEntity()->GetComponent<Light>()) {
-			auto moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, World::Get()->GetShadowFactor());
+			auto moonColour = MOON_COLOUR_NIGHT.Lerp(MOON_COLOUR_DAY, world->GetShadowFactor());
 			light->SetColour(moonColour);
 		}
 	}
