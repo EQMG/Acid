@@ -35,7 +35,7 @@ InputButton *CompoundInputButton::AddButton(std::unique_ptr<InputButton> &&butto
 
 void CompoundInputButton::RemoveButton(InputButton *button) {
 	//button->OnButton().RemoveObservers(this);
-	buttons.erase(std::remove_if(buttons.begin(), buttons.end(), [button](std::unique_ptr<InputButton> &b) {
+	buttons.erase(std::remove_if(buttons.begin(), buttons.end(), [button](const auto &b) {
 		return b.get() == button;
 	}), buttons.end());
 }

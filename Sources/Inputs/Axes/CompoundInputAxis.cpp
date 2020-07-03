@@ -29,7 +29,7 @@ InputAxis *CompoundInputAxis::AddAxis(std::unique_ptr<InputAxis> &&axis) {
 
 void CompoundInputAxis::RemoveAxis(InputAxis *axis) {
 	//axis->OnAxis().RemoveObservers(this);
-	axes.erase(std::remove_if(axes.begin(), axes.end(), [axis](std::unique_ptr<InputAxis> &a) {
+	axes.erase(std::remove_if(axes.begin(), axes.end(), [axis](const auto &a) {
 		return a.get() == axis;
 	}), axes.end());
 }

@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Represents a render pipeline that is used to render a type of pipeline.
  */
-class ACID_EXPORT Subrender {
+class ACID_EXPORT Subrender : NonCopyable {
 public:
 	/**
 	 * Creates a new render pipeline.

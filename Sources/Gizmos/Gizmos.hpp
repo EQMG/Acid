@@ -9,7 +9,7 @@ namespace acid {
  */
 class ACID_EXPORT Gizmos : public System {
 public:
-	//using GizmosContainer = std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>;
+	using GizmosContainer = std::map<std::shared_ptr<GizmoType>, std::vector<std::unique_ptr<Gizmo>>>;
 
 	Gizmos();
 
@@ -27,9 +27,9 @@ public:
 	 * Gets a list of all gizmos.
 	 * @return All gizmos.
 	 */
-	//const GizmosContainer &GetGizmos() const { return gizmos; }
+	const GizmosContainer &GetGizmos() const { return gizmos; }
 
 private:
-	//GizmosContainer gizmos;
+	GizmosContainer gizmos;
 };
 }

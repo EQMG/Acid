@@ -34,7 +34,7 @@ Collider *CollisionObject::AddCollider(std::unique_ptr<Collider> &&collider) {
 
 void CollisionObject::RemoveCollider(Collider *collider) {
 	if (!collider) return;
-	colliders.erase(std::remove_if(colliders.begin(), colliders.end(), [collider](std::unique_ptr<Collider> &c) {
+	colliders.erase(std::remove_if(colliders.begin(), colliders.end(), [collider](const auto &c) {
 		return c.get() == collider;
 	}), colliders.end());
 }

@@ -19,11 +19,11 @@ void GizmosSubrender::Render(const CommandBuffer &commandBuffer) {
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
 
-	/*auto &gizmos = Scenes::Get()->GetScene()->GetSystem<Gizmos>()->GetGizmos();
+	auto &gizmos = Scenes::Get()->GetScene()->GetSystem<Gizmos>()->GetGizmos();
 
-	*/pipeline.BindPipeline(commandBuffer);/*
+	pipeline.BindPipeline(commandBuffer);
 
 	for (const auto &[type, typeGizmos] : gizmos)
-		type->CmdRender(commandBuffer, pipeline, uniformScene);*/
+		type->CmdRender(commandBuffer, pipeline, uniformScene);
 }
 }

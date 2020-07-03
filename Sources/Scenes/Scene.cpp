@@ -7,7 +7,8 @@ Scene::Scene(std::unique_ptr<Camera> &&camera) :
 
 void Scene::Update() {
 	systems.ForEach([](auto typeId, auto system) {
-		system->Update();
+		if (system->IsEnabled())
+			system->Update();
 	});
 
 	entities.Update();

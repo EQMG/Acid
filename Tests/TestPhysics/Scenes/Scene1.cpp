@@ -41,6 +41,7 @@
 #include "Behaviours/Rotate.hpp"
 #include "Terrain/TerrainMaterial.hpp"
 #include "Terrain/Terrain.hpp"
+#include "World/World.hpp"
 #include "FpsCamera.hpp"
 
 namespace test {
@@ -48,6 +49,7 @@ constexpr Time UI_SLIDE_TIME = 0.2s;
 
 Scene1::Scene1() :
 	Scene(std::make_unique<FpsCamera>()) {
+	AddSystem<World>();
 	AddSystem<Physics>();
 	AddSystem<Particles>();
 	AddSystem<Gizmos>();

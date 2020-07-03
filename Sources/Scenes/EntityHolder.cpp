@@ -44,7 +44,7 @@ void EntityHolder::Add(std::unique_ptr<Entity> &&object) {
 }
 
 void EntityHolder::Remove(Entity *object) {
-	objects.erase(std::remove_if(objects.begin(), objects.end(), [object](std::unique_ptr<Entity> &e) {
+	objects.erase(std::remove_if(objects.begin(), objects.end(), [object](const auto &e) {
 		return e.get() == object;
 	}), objects.end());
 }
