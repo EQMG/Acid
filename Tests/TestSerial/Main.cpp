@@ -115,7 +115,6 @@ public:
 	std::unordered_map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
 	std::multimap<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
 	std::vector<std::pair<std::string, bitmask::bitmask<ExampleType>>> types = {
-	// TODO:
 	//	{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
 	//	{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
 	};

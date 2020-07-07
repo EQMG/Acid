@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "Maths/Time.hpp"
 
 namespace acid {
@@ -29,7 +31,7 @@ public:
 		actualTime += delta;
 		currentTime += delta;
 		if (repeat)
-			currentTime = Time::Seconds(fmod(currentTime.AsSeconds(), length.AsSeconds()));
+			currentTime = Time::Seconds(std::fmod(currentTime.AsSeconds(), length.AsSeconds()));
 		auto factor = static_cast<float>(currentTime / length);
 		factor = std::clamp(factor, 0.0f, 1.0f);
 		current = Calculate(factor);

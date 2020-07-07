@@ -40,8 +40,8 @@ void Inputs::RemoveScheme(const std::string &name) {
 
 void Inputs::SetScheme(InputScheme *scheme) {
 	if (!scheme) scheme = nullScheme.get();
-	// We want to preserve delegate function pointers from the current scheme to the new one.
-	scheme->MoveDelegateOwnership(currentScheme);
+	// We want to preserve signals from the current scheme to the new one.
+	scheme->MoveSignals(currentScheme);
 	currentScheme = scheme;
 }
 

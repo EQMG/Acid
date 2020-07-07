@@ -19,7 +19,7 @@ InputScheme::InputScheme(const std::filesystem::path &filename) :
 InputAxis *InputScheme::GetAxis(const std::string &name) {
 	auto it = axes.find(name);
 	if (it == axes.end()) {
-		Log::Error("InputAxis was not found in current input scheme: ", std::quoted(name), '\n');
+		Log::Warning("InputAxis was not found in input scheme: ", std::quoted(name), '\n');
 		it = axes.emplace(name, std::make_unique<InputAxis>()).first;
 	}
 	return it->second.get();
@@ -37,7 +37,7 @@ void InputScheme::RemoveAxis(const std::string &name) {
 InputButton *InputScheme::GetButton(const std::string &name) {
 	auto it = buttons.find(name);
 	if (it == buttons.end()) {
-		Log::Error("InputButton was not found in current input scheme: ", std::quoted(name), '\n');
+		Log::Warning("InputButton was not found in input scheme: ", std::quoted(name), '\n');
 		it = buttons.emplace(name, std::make_unique<InputButton>()).first;
 	}
 	return it->second.get();
@@ -64,12 +64,20 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 	return node;
 }
 
-void InputScheme::MoveDelegateOwnership(InputScheme *other) {
+void InputScheme::MoveSignals(InputScheme *other) {
 	if (!other) return;
-	// Move all delegate functions except those owned internally by the axis or button.
-	//for (auto &[axisName, axis] : other->axes)
-	//	GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
-	//for (auto &[buttonName, button] : other->buttons)
-	//	GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
+	// Move all axis and button top level signals from the other scheme.
+	for (auto &[axisName, axis] : other->axes) {
+		if (auto it = axes.find(axisName); it != axes.end())
+			it->second->OnAxis() = std::move(axis->OnAxis());
+		else
+			Log::Warning("InputAxis was not found in input scheme: ", std::quoted(axisName), '\n');
+	}
+	for (auto &[buttonName, button] : other->buttons) {
+		if (auto it = buttons.find(buttonName); it != buttons.end())
+			it->second->OnButton() = std::move(button->OnButton());
+		else
+			Log::Warning("InputButton was not found in input scheme: ", std::quoted(buttonName), '\n');
+	}
 }
 }

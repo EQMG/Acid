@@ -35,7 +35,7 @@ public:
 	friend Node &operator<<(Node &node, const InputScheme &inputScheme);
 
 private:
-	void MoveDelegateOwnership(InputScheme *other);
+	void MoveSignals(InputScheme *other);
 
 	AxisMap axes;
 	ButtonMap buttons;
