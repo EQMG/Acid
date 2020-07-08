@@ -28,9 +28,8 @@ Engine::Engine(std::string argv0, ModuleFilter &&moduleFilter) :
 Engine::~Engine() {
 	app = nullptr;
 
-	// TODO: Destroy in reverse dependency order: Scenes is destroyed before Graphics
 	for (auto it = modules.rbegin(); it != modules.rend(); ++it)
-		it->second = nullptr; //DestroyModule(it->first);
+		DestroyModule(it->first);
 	
 	Log::CloseLog();
 }
@@ -93,7 +92,8 @@ void Engine::CreateModule(Module::TRegistryMap::const_iterator it, const ModuleF
 	
 	if (!filter.Check(it->first))
 		return;
-	
+
+	// TODO: Prevent circular dependencies.
 	for (auto requireId : it->second.requires)
 		CreateModule(Module::Registry().find(requireId), filter);
 
@@ -105,9 +105,12 @@ void Engine::CreateModule(Module::TRegistryMap::const_iterator it, const ModuleF
 void Engine::DestroyModule(TypeId id) {
 	if (!modules[id])
 		return;
-	
-	for (auto it = Module::Registry().find(id)->second.requires.rbegin(); it != Module::Registry().find(id)->second.requires.rend(); ++it)
-		DestroyModule(*it);
+
+	// Destroy all module dependencies first.
+	for (const auto &[registrarId, registrar] : Module::Registry()) {
+		if (std::find(registrar.requires.begin(), registrar.requires.end(), id) != registrar.requires.end())
+			DestroyModule(registrarId);
+	}
 	
 	modules[id] = nullptr;
 }

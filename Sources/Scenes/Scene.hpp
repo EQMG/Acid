@@ -30,6 +30,52 @@ public:
 	virtual void Update();
 
 	/**
+	 * Checks whether a System exists or not.
+	 * @tparam T The System type.
+	 * @return If the System exists.
+	 */
+	template<typename T>
+	bool HasSystem() const {
+		return systems.Has<T>();
+	}
+
+	/**
+	 * Gets a System.
+	 * @tparam T The System type.
+	 * @return The System.
+	 */
+	template<typename T>
+	T *GetSystem() const {
+		return systems.Get<T>();
+	}
+
+	/**
+	 * Adds a System.
+	 * @tparam T The System type.
+	 * @tparam Args The constructor arg types.
+	 * @param args The constructor args.
+	 * @return The System.
+	 */
+	template<typename T, typename... Args>
+	void AddSystem(Args &&...args) {
+		systems.Add<T>(std::make_unique<T>(std::forward<Args>(args)...));
+	}
+
+	/**
+	 * Removes a System.
+	 * @tparam T The System type.
+	 */
+	template<typename T>
+	void RemoveSystem() {
+		systems.Remove<T>();
+	}
+
+	/**
+	 * Removes all Systems.
+	 */
+	void ClearSystems();
+
+	/**
 	 * Gets a Entity by name.
 	 * @param name The Entity name.
 	 * @return The entity.
@@ -83,52 +129,6 @@ public:
 	void ClearEntities();
 
 	/**
-	 * Checks whether a System exists or not.
-	 * @tparam T The System type.
-	 * @return If the System exists.
-	 */
-	template<typename T>
-	bool HasSystem() const {
-		return systems.Has<T>();
-	}
-
-	/**
-	 * Gets a System.
-	 * @tparam T The System type.
-	 * @return The System.
-	 */
-	template<typename T>
-	T *GetSystem() const {
-		return systems.Get<T>();
-	}
-
-	/**
-	 * Adds a System.
-	 * @tparam T The System type.
-	 * @tparam Args The constructor arg types.
-	 * @param args The constructor args.
-	 * @return The System.
-	 */
-	template<typename T, typename... Args>
-	void AddSystem(Args &&...args) {
-		systems.Add<T>(std::make_unique<T>(std::forward<Args>(args)...));
-	}
-
-	/**
-	 * Removes a System.
-	 * @tparam T The System type.
-	 */
-	template<typename T>
-	void RemoveSystem() {
-		systems.Remove<T>();
-	}
-
-	/**
-	 * Removes all Systems.
-	 */
-	void ClearSystems();
-
-	/**
 	 * Gets the current camera object.
 	 * @return The current camera.
 	 */
@@ -150,12 +150,12 @@ private:
 	/// If this scene object has been started yet.
 	bool started = false;
 
-	/// List of all Entities.
-	EntityHolder entities;
-
 	/// List of all Systems of the Scene.
 	SystemHolder systems;
 	
+	/// List of all Entities.
+	EntityHolder entities;
+
 	/// The camera of this scene.
 	std::unique_ptr<Camera> camera;
 };

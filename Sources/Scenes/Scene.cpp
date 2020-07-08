@@ -15,6 +15,10 @@ void Scene::Update() {
 	camera->Update();
 }
 
+void Scene::ClearSystems() {
+	systems.Clear();
+}
+
 Entity *Scene::GetEntity(const std::string &name) const {
 	return entities.GetEntity(name);
 }
@@ -33,9 +37,5 @@ std::vector<Entity *> Scene::QueryAllEntities() {
 
 void Scene::ClearEntities() {
 	entities.Clear();
-}
-
-void Scene::ClearSystems() {
-	systems.Clear();
 }
 }
