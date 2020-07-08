@@ -69,13 +69,13 @@ void InputScheme::MoveSignals(InputScheme *other) {
 	// Move all axis and button top level signals from the other scheme.
 	for (auto &[axisName, axis] : other->axes) {
 		if (auto it = axes.find(axisName); it != axes.end())
-			it->second->OnAxis() = std::move(axis->OnAxis());
+			std::swap(it->second->OnAxis(), axis->OnAxis());
 		else
 			Log::Warning("InputAxis was not found in input scheme: ", std::quoted(axisName), '\n');
 	}
 	for (auto &[buttonName, button] : other->buttons) {
 		if (auto it = buttons.find(buttonName); it != buttons.end())
-			it->second->OnButton() = std::move(button->OnButton());
+			std::swap(it->second->OnButton(), button->OnButton());
 		else
 			Log::Warning("InputButton was not found in input scheme: ", std::quoted(buttonName), '\n');
 	}

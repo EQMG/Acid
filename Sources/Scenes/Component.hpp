@@ -23,7 +23,7 @@ public:
 	 */
 	virtual void Update() {}
 
-	bool IsEnabled() const { return enabled; };
+	bool IsEnabled() const { return enabled; }
 	void SetEnabled(bool enable) { this->enabled = enable; }
 
 	bool IsRemoved() const { return removed; }
