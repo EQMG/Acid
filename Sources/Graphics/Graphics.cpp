@@ -22,6 +22,9 @@ Graphics::Graphics() :
 Graphics::~Graphics() {
 	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
+	renderer = nullptr;
+	swapchain = nullptr;
+	
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 	glslang::FinalizeProcess();
@@ -36,8 +39,6 @@ Graphics::~Graphics() {
 	
 	commandPools.clear();
 	commandBuffers.clear();
-	swapchain = nullptr;
-	renderer = nullptr;
 }
 
 void Graphics::Update() {

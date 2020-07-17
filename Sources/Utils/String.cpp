@@ -127,7 +127,7 @@ std::string String::UnfixEscapedChars(std::string str) {
 				str.erase(str.begin() + --pos);
 			else
 				str.replace(pos, from.size(), 1, to);
-			pos = str.find(from, pos + 1 + from.size());
+			pos = str.find(from, pos + 1);
 		}
 	}
 

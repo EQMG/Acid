@@ -36,7 +36,6 @@ public:
 	};
 
 	Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
-	
 	~Renderpass();
 
 	operator const VkRenderPass &() const { return renderpass; }

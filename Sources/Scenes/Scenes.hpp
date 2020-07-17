@@ -3,13 +3,13 @@
 #include "Engine/Engine.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Scene.hpp"
-#include "EntityHolder.hpp"
 
 namespace acid {
 /**
  * @brief Module used for managing game scenes.
  */
 class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
+	// TODO: Scenes should not require Graphics, this is because of Material and Mesh components.
 	inline static const bool Registered = Register(Stage::Normal, Requires<Graphics>());
 public:
 	Scenes();

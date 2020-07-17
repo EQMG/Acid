@@ -18,7 +18,6 @@ class ACID_EXPORT Graphics : public Module::Registrar<Graphics> {
 	inline static const bool Registered = Register(Stage::Render, Requires<Window>());
 public:
 	Graphics();
-	
 	~Graphics();
 
 	void Update() override;
