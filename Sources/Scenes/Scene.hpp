@@ -16,7 +16,6 @@ public:
 	 * @param camera The scenes camera.
 	 */
 	explicit Scene(std::unique_ptr<Camera> &&camera);
-
 	virtual ~Scene() = default;
 
 	/**

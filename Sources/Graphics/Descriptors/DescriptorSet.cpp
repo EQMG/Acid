@@ -22,8 +22,7 @@ DescriptorSet::DescriptorSet(const Pipeline &pipeline) :
 DescriptorSet::~DescriptorSet() {
 	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
 
-	// TODO: This function causes a hard crash, and does not appear in any Vulkan samples at a first glance.
-	//Graphics::CheckVk(vkFreeDescriptorSets(*logicalDevice, descriptorPool, 1, &descriptorSet));
+	Graphics::CheckVk(vkFreeDescriptorSets(*logicalDevice, descriptorPool, 1, &descriptorSet));
 }
 
 void DescriptorSet::Update(const std::vector<VkWriteDescriptorSet> &descriptorWrites) {
