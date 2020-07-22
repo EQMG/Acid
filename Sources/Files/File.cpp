@@ -6,12 +6,12 @@
 #include "Files.hpp"
 
 namespace acid {
-File::File(std::unique_ptr<NodeFormat>&& type, const Node &node) :
+File::File(std::unique_ptr<NodeFormat> &&type, const Node &node) :
 	node(node),
 	type(std::move(type)) {
 }
 
-File::File(std::unique_ptr<NodeFormat>&& type, Node &&node) :
+File::File(std::unique_ptr<NodeFormat> &&type, Node &&node) :
 	node(std::move(node)),
 	type(std::move(type)) {
 }
@@ -35,10 +35,10 @@ void File::Load(const std::filesystem::path &filename) {
 
 	if (Files::ExistsInPath(filename)) {
 		IFStream inStream(filename);
-		type->ParseStream(node, inStream);
+		node = type->ParseStream(inStream);
 	} else if (std::filesystem::exists(filename)) {
 		std::ifstream inStream(filename);
-		type->ParseStream(node, inStream);
+		node = type->ParseStream(inStream);
 		inStream.close();
 	}
 

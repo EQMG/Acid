@@ -60,7 +60,7 @@ float JoystickHatInput::GetAmount() const {
 }
 
 bool JoystickHatInput::IsDown() const {
-	return (Joysticks::Get()->GetHat(port, hat) & hatFlags).value ^ inverted;
+	return (Joysticks::Get()->GetHat(port, hat) & hatFlags).value ^ static_cast<uint8_t>(inverted);
 }
 
 const Node &operator>>(const Node &node, JoystickHatInput &input) {

@@ -20,8 +20,8 @@ find_package(volk 121 QUIET)
 if(NOT volk_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(volk
-			URL https://github.com/zeux/volk/tarball/5d2e2cf91f8a1fe4156d4c6b5c814d45d733684a
-			URL_MD5 8c9250d59f2fda4bb076c2bb2c05c06b
+			URL https://github.com/zeux/volk/tarball/79c7627887a9de3775fe80fc316dfb716c226c70
+			URL_MD5 5f8f3a762be07b83e86c11128a5636eb
 			)
 	FetchContent_GetProperties(volk)
 	if(NOT volk_POPULATED)
@@ -239,12 +239,11 @@ target_compile_definitions(Acid
 target_compile_options(Acid
 		PUBLIC
 		# Disables symbol warnings.
-		$<$<CXX_COMPILER_ID:MSVC>:/wd4251 /wd4275 /wd4592 /wd4018 /wd4101 /wd4244 /wd4267 /wd4756 /wd4309 /wd26812>
-		PRIVATE
-		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
-		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4018 /wd4244 /wd4251 /wd4267 /wd4275 /wd4996>
 		# Enabled SSE2 for MSVC for 32-bit.
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
+		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
+		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
 		)
 target_include_directories(Acid
 		PUBLIC

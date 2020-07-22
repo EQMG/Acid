@@ -15,6 +15,8 @@ GeometryLoader::GeometryLoader(NodeConstView &&libraryGeometries, std::vector<Ve
 	auto indexRawData = String::Split(meshData.GetPropertyWithBackup("polylist", "triangles")["p"].Get<std::string>(), ' ');
 
 	std::unordered_map<VertexAnimated, size_t> uniqueVertices;
+	auto where = uniqueVertices.end();
+	indices.reserve(indexRawData.size() / indexCount);
 
 	for (uint32_t i = 0; i < indexRawData.size() / indexCount; i++) {
 		auto positionIndex = String::From<uint32_t>(indexRawData[indexCount * i]);
@@ -28,7 +30,7 @@ GeometryLoader::GeometryLoader(NodeConstView &&libraryGeometries, std::vector<Ve
 		VertexAnimated vertex(positions[positionIndex], uvs[uvIndex], normals[normalIndex], jointIds, weights);
 
 		if (uniqueVertices.count(vertex) == 0) {
-			uniqueVertices[vertex] = vertices.size();
+			where = uniqueVertices.insert(where, {vertex, vertices.size()});
 			vertices.emplace_back(vertex);
 		}
 
@@ -43,6 +45,7 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const {
 	auto positionsRawData = String::Split(positionsData.Get<std::string>(), ' ');
 
 	std::vector<Vector3f> positions;
+	positions.reserve(positionsCount / 3);
 
 	for (uint32_t i = 0; i < positionsCount / 3; i++) {
 		Vector4f position(String::From<float>(positionsRawData[3 * i]), String::From<float>(positionsRawData[i * 3 + 1]),
@@ -60,6 +63,7 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const {
 	auto uvsRawData = String::Split(uvsData.Get<std::string>(), ' ');
 
 	std::vector<Vector2f> uvs;
+	uvs.reserve(uvsCount / 2);
 
 	for (uint32_t i = 0; i < uvsCount / 2; i++) {
 		Vector2f uv(String::From<float>(uvsRawData[2 * i]), 1.0f - String::From<float>(uvsRawData[2 * i + 1]));
@@ -76,6 +80,7 @@ std::vector<Vector3f> GeometryLoader::GetNormals() const {
 	auto normalsRawData = String::Split(normalsData.Get<std::string>(), ' ');
 
 	std::vector<Vector3f> normals;
+	normals.reserve(normalsCount / 3);
 
 	for (uint32_t i = 0; i < normalsCount / 3; i++) {
 		Vector4f normal(String::From<float>(normalsRawData[3 * i]), String::From<float>(normalsRawData[3 * i + 1]), String::From<float>(normalsRawData[3 * i + 2]));

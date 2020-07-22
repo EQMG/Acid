@@ -284,10 +284,11 @@ const Monitor *Window::GetCurrentMonitor() const {
 		return nullptr;
 	}
 	std::multimap<int32_t, const Monitor *> rankedMonitor;
+	auto where = rankedMonitor.end();
 
 	for (const auto &monitor : monitors) {
-		rankedMonitor.emplace(OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(), 
-			position, position + size), monitor.get());
+		where = rankedMonitor.insert(where, {OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(),
+			position, position + size), monitor.get()});
 	}
 
 	if (rankedMonitor.begin()->first > 0)

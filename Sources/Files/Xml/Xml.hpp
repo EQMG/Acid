@@ -3,10 +3,10 @@
 #include "Files/NodeFormat.hpp"
 
 namespace acid {
-class ACID_EXPORT Xml : public NodeFormat {
+class ACID_EXPORT Xml : public NodeFormatType<Xml> {
 public:	
-	void ParseString(Node &node, std::string_view string) override;
-	void WriteStream(const Node &node, std::ostream &stream, Format format) const override;
+	static Node ParseString(std::string_view string);
+	static void WriteStream(const Node &node, std::ostream &stream, Format format = Minified);
 
 private:
 	static void AddToken(std::string_view view, std::vector<Token> &tokens);

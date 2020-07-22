@@ -35,10 +35,11 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 VkPhysicalDevice PhysicalDevice::ChoosePhysicalDevice(const std::vector<VkPhysicalDevice> &devices) {
 	// Maps to hold devices and sort by rank.
 	std::multimap<uint32_t, VkPhysicalDevice> rankedDevices;
+	auto where = rankedDevices.end();
 
 	// Iterates through all devices and rate their suitability.
 	for (const auto &device : devices)
-		rankedDevices.emplace(ScorePhysicalDevice(device), device);
+		where = rankedDevices.insert(where, {ScorePhysicalDevice(device), device});
 
 	// Checks to make sure the best candidate scored higher than 0  rbegin points to last element of ranked devices(highest rated), first is its rating.
 	if (rankedDevices.rbegin()->first > 0)

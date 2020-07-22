@@ -211,15 +211,14 @@ int main(int argc, char **argv) {
 	}
 	{
 		std::string source = R"({"message":"hello world","value":3})";
-		Node json;
-		Json().ParseString(json, source);
+		Node json = Json::ParseString(source);
 
 		auto value = json["value"];
 		value.Set(3 * value->Get<int32_t>() + 2);
 
 		json["values"] = std::vector{10, 11, -1, 2};
 
-		Log::Out(Json().WriteString(json, NodeFormat::Minified), '\n');
+		Log::Out(Json::WriteString(json, NodeFormat::Minified), '\n');
 	}
 	
 	/*ZipArchive zip0("Serial.zip");

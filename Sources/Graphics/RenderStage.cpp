@@ -80,12 +80,13 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 	outOfDate = false;
 
 	descriptors.clear();
+	auto where = descriptors.end();
 
 	for (const auto &image : attachments) {
 		if (image.GetType() == Attachment::Type::Depth)
-			descriptors.emplace(image.GetName(), depthStencil.get());
+			where = descriptors.insert(where, {image.GetName(), depthStencil.get()});
 		else
-			descriptors.emplace(image.GetName(), framebuffers->GetAttachment(image.GetBinding()));
+			where = descriptors.insert(where, {image.GetName(), framebuffers->GetAttachment(image.GetBinding())});
 	}
 
 #ifdef ACID_DEBUG

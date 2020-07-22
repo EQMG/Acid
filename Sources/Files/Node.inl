@@ -297,11 +297,12 @@ Node &operator<<(Node &node, const std::vector<T> &vector) {
 template<typename T>
 const Node &operator>>(const Node &node, std::set<T> &set) {
 	set.clear();
+	auto where = set.end();
 
 	for (const auto &property : node.GetProperties()) {
 		T x;
 		property >> x;
-		set.emplace(std::move(x));
+		where = set.insert(where, std::move(x));
 	}
 
 	return node;
@@ -319,11 +320,12 @@ Node &operator<<(Node &node, const std::set<T> &set) {
 template<typename T>
 const Node &operator>>(const Node &node, std::unordered_set<T> &set) {
 	set.clear();
+	auto where = set.end();
 
 	for (const auto &property : node.GetProperties()) {
 		T x;
 		property >> x;
-		set.emplace(std::move(x));
+		where = set.insert(where, std::move(x));
 	}
 
 	return node;
@@ -341,11 +343,12 @@ Node &operator<<(Node &node, const std::unordered_set<T> &set) {
 template<typename T>
 const Node &operator>>(const Node &node, std::multiset<T> &set) {
 	set.clear();
+	auto where = set.end();
 
 	for (const auto &property : node.GetProperties()) {
 		T x;
 		property >> x;
-		set.emplace(std::move(x));
+		where = set.insert(where, std::move(x));
 	}
 
 	return node;
@@ -363,11 +366,12 @@ Node &operator<<(Node &node, const std::multiset<T> &set) {
 template<typename T>
 const Node &operator>>(const Node &node, std::unordered_multiset<T> &set) {
 	set.clear();
+	auto where = set.end();
 
 	for (const auto &property : node.GetProperties()) {
 		T x;
 		property >> x;
-		set.emplace(std::move(x));
+		where = set.insert(where, std::move(x));
 	}
 
 	return node;
@@ -448,11 +452,12 @@ Node &operator<<(Node &node, const std::forward_list<T> &list) {
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::map<T, K> &map) {
 	map.clear();
+	auto where = map.end();
 
 	for (const auto &property : node.GetProperties()) {
 		std::pair<T, K> pair;
 		property >> pair;
-		map.emplace(std::move(pair));
+		where = map.insert(where, std::move(pair));
 	}
 
 	return node;
@@ -470,11 +475,12 @@ Node &operator<<(Node &node, const std::map<T, K> &map) {
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::unordered_map<T, K> &map) {
 	map.clear();
+	auto where = map.end();
 
 	for (const auto &property : node.GetProperties()) {
 		std::pair<T, K> pair;
 		property >> pair;
-		map.emplace(std::move(pair));
+		where = map.insert(where, std::move(pair));
 	}
 
 	return node;
@@ -492,11 +498,12 @@ Node &operator<<(Node &node, const std::unordered_map<T, K> &map) {
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::multimap<T, K> &map) {
 	map.clear();
+	auto where = map.end();
 
 	for (const auto &property : node.GetProperties()) {
 		std::pair<T, K> pair;
 		property >> pair;
-		map.emplace(std::move(pair));
+		where = map.insert(where, std::move(pair));
 	}
 
 	return node;
@@ -514,11 +521,12 @@ Node &operator<<(Node &node, const std::multimap<T, K> &map) {
 template<typename T, typename K>
 const Node &operator>>(const Node &node, std::unordered_multimap<T, K> &map) {
 	map.clear();
+	auto where = map.end();
 
 	for (const auto &property : node.GetProperties()) {
 		std::pair<T, K> pair;
 		property >> pair;
-		map.emplace(std::move(pair));
+		where = map.insert(where, std::move(pair));
 	}
 
 	return node;
