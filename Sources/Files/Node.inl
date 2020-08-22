@@ -22,6 +22,40 @@
 #include "Utils/String.hpp"
 
 namespace acid {
+template<typename T, typename>
+void Node::ParseString(std::string_view string) {
+	T::Load(*this, string);
+}
+
+template<typename T, typename>
+void Node::WriteStream(std::ostream &stream, NodeFormat::Format format) const {
+	T::Write(*this, stream, format);
+}
+
+// TODO: Duplicate ParseStream/WriteString templates from NodeFormat.
+template<typename T, typename _Elem, typename>
+void Node::ParseStream(std::basic_istream<_Elem> &stream) {
+	// We must read as UTF8 chars.
+	if constexpr (!std::is_same_v<_Elem, char>) {
+#ifndef ACID_BUILD_MSVC
+		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
+#else
+		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
+#endif
+	}
+
+	// Reading into a string before iterating is much faster.
+	std::string s(std::istreambuf_iterator<_Elem>(stream), {});
+	return T::Load(*this, s);
+}
+
+template<typename T, typename _Elem, typename>
+std::basic_string<_Elem> Node::WriteString(NodeFormat::Format format) const {
+	std::basic_ostringstream<_Elem> stream;
+	T::Write(*this, stream, format);
+	return stream.str();
+}
+
 template<typename T>
 T Node::GetName() const {
 	// String to basic type conversion.
@@ -109,7 +143,7 @@ inline Node &operator<<(Node &node, const Node &object) {
 
 inline Node &operator<<(Node &node, const std::nullptr_t &object) {
 	node.SetValue("");
-	node.SetType(Node::Type::Null);
+	node.SetType(NodeType::Null);
 	return node;
 }
 
@@ -167,7 +201,7 @@ inline const Node &operator>>(const Node &node, bool &object) {
 
 inline Node &operator<<(Node &node, bool object) {
 	node.SetValue(String::To(object));
-	node.SetType(Node::Type::Boolean);
+	node.SetType(NodeType::Boolean);
 	return node;
 }
 
@@ -180,7 +214,7 @@ const Node &operator>>(const Node &node, T &object) {
 template<typename T, std::enable_if_t<std::is_arithmetic_v<T> || std::is_enum_v<T>, int> = 0>
 Node &operator<<(Node &node, T object) {
 	node.SetValue(String::To(object));
-	node.SetType(std::is_floating_point_v<T> ? Node::Type::Decimal : Node::Type::Integer);
+	node.SetType(std::is_floating_point_v<T> ? NodeType::Decimal : NodeType::Integer);
 	return node;
 }
 
@@ -203,7 +237,7 @@ inline const Node &operator>>(const Node &node, char *&string) {
 
 inline Node &operator<<(Node &node, const char *string) {
 	node.SetValue(string);
-	node.SetType(Node::Type::String);
+	node.SetType(NodeType::String);
 	return node;
 }
 
@@ -211,7 +245,7 @@ inline Node &operator<<(Node &node, const char *string) {
 
 inline Node &operator<<(Node &node, std::string_view string) {
 	node.SetValue(std::string(string));
-	node.SetType(Node::Type::String);
+	node.SetType(NodeType::String);
 	return node;
 }
 
@@ -222,7 +256,7 @@ inline const Node &operator>>(const Node &node, std::string &string) {
 
 inline Node &operator<<(Node &node, const std::string &string) {
 	node.SetValue(string);
-	node.SetType(Node::Type::String);
+	node.SetType(NodeType::String);
 	return node;
 }
 
@@ -235,7 +269,7 @@ inline Node &operator<<(Node &node, const std::filesystem::path &object) {
 	auto str = object.string();
 	std::replace(str.begin(), str.end(), '\\', '/');
 	node.SetValue(str);
-	node.SetType(Node::Type::String);
+	node.SetType(NodeType::String);
 	return node;
 }
 
@@ -290,7 +324,7 @@ Node &operator<<(Node &node, const std::vector<T> &vector) {
 	for (const auto &x : vector)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -313,7 +347,7 @@ Node &operator<<(Node &node, const std::set<T> &set) {
 	for (const auto &x : set)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -336,7 +370,7 @@ Node &operator<<(Node &node, const std::unordered_set<T> &set) {
 	for (const auto &x : set)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -359,7 +393,7 @@ Node &operator<<(Node &node, const std::multiset<T> &set) {
 	for (const auto &x : set)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -382,7 +416,7 @@ Node &operator<<(Node &node, const std::unordered_multiset<T> &set) {
 	for (const auto &x : set)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -401,7 +435,7 @@ Node &operator<<(Node &node, const std::array<T, Size> &array) {
 	for (const auto &x : array)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -423,7 +457,7 @@ Node &operator<<(Node &node, const std::list<T> &list) {
 	for (const auto &x : list)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -445,7 +479,7 @@ Node &operator<<(Node &node, const std::forward_list<T> &list) {
 	for (const auto &x : list)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -468,7 +502,7 @@ Node &operator<<(Node &node, const std::map<T, K> &map) {
 	for (const auto &x : map)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -491,7 +525,7 @@ Node &operator<<(Node &node, const std::unordered_map<T, K> &map) {
 	for (const auto &x : map)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -514,7 +548,7 @@ Node &operator<<(Node &node, const std::multimap<T, K> &map) {
 	for (const auto &x : map)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 
@@ -537,7 +571,7 @@ Node &operator<<(Node &node, const std::unordered_multimap<T, K> &map) {
 	for (const auto &x : map)
 		node.AddProperty() << x;
 
-	node.SetType(Node::Type::Array);
+	node.SetType(NodeType::Array);
 	return node;
 }
 }

@@ -20,7 +20,7 @@ Joint SkeletonLoader::LoadJointData(const Node &jointNode, bool isRoot) {
 	if (!childJointNode)
 		return joint;
 	
-	if (childJointNode->GetType() == Node::Type::Array) {
+	if (childJointNode->GetType() == NodeType::Array) {
 		for (auto &childNode : childJointNode.GetProperties())
 			joint.AddChild(LoadJointData(childNode, false));
 	} else {

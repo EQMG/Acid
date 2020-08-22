@@ -2,6 +2,7 @@
 
 #include <ostream>
 
+#include "NodeFormat.hpp"
 #include "NodeView.hpp"
 
 namespace acid {
@@ -10,15 +11,21 @@ namespace acid {
  */
 class ACID_EXPORT Node final {
 public:
-	enum class Type : uint8_t {
-		Object, Array, String, Boolean, Integer, Decimal, Null, Token, Unknown
-	};
-
 	Node();
 	explicit Node(const std::string &name);
 	Node(const std::string &name, const Node &node);
 	Node(const Node &node) = default;
 	Node(Node &&node) noexcept = default;
+
+	template<typename T, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
+	void ParseString(std::string_view string);
+	template<typename T, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
+	void WriteStream(std::ostream &stream, NodeFormat::Format format = NodeFormat::Minified) const;
+
+	template<typename T, typename _Elem = char, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
+	void ParseStream(std::basic_istream<_Elem> &stream);
+	template<typename T, typename _Elem = char, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
+	std::basic_string<_Elem> WriteString(NodeFormat::Format format = NodeFormat::Minified) const;
 
 	template<typename T>
 	T GetName() const;
@@ -101,14 +108,14 @@ public:
 	const std::string &GetValue() const { return value; }
 	void SetValue(std::string value) { this->value = std::move(value); }
 
-	const Type &GetType() const { return type; }
-	void SetType(Type type) { this->type = type; }
+	const NodeType &GetType() const { return type; }
+	void SetType(NodeType type) { this->type = type; }
 
 protected:
 	std::vector<Node> properties; // members
 	std::string name; // key
 	std::string value;
-	Type type;
+	NodeType type;
 };
 }
 

@@ -12,7 +12,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void OggSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void OggSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -41,14 +41,14 @@ void OggSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 	Audio::CheckAl(alGetError());
 
 	free(data);
-	soundBuffer->SetBuffer(buffer);
+	soundBuffer.SetBuffer(buffer);
 	
 #ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void OggSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void OggSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

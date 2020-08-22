@@ -26,7 +26,7 @@ public:
 	/**
 	 * Creates a new cube model.
 	 * @param extents The size (width, height, depth) to load from.
-	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCube#Load} can be called later.
+	 * @param load If this resource will be loaded immediately, otherwise {@link CubeModel#Load} can be called later.
 	 */
 	explicit CubeModel(const Vector3f &extents = Vector3f(1.0f), bool load = true);
 

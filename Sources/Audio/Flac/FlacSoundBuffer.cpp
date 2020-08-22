@@ -12,7 +12,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void FlacSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void FlacSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -31,7 +31,7 @@ void FlacSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 #endif
 }
 
-void FlacSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void FlacSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

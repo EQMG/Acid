@@ -3,7 +3,7 @@
 #include <codecvt>
 #include <sstream>
 
-#include "Node.hpp"
+#include "NodeView.hpp"
 
 namespace acid {
 /**
@@ -14,7 +14,7 @@ public:
 	class Token {
 	public:
 		Token() = default;
-		Token(Node::Type type, std::string_view view) :
+		Token(NodeType type, std::string_view view) :
 			type(type),
 			view(view) {
 		}
@@ -32,7 +32,7 @@ public:
 			return !operator==(rhs);
 		}
 
-		Node::Type type;
+		NodeType type;
 		std::string_view view;
 	};
 
@@ -87,13 +87,13 @@ public:
 	inline static const Format Minified = Format(0, '\0', '\0', false);
 
 	virtual ~NodeFormat() = default;
-
-	virtual Node ParseString(std::string_view string) = 0;
+	
+	virtual void ParseString(Node &node, std::string_view string) = 0;
 	virtual void WriteStream(const Node &node, std::ostream &stream, Format format = Minified) const = 0;
 
-	// TODO: Duplicate templates from NodeFormatType.
+	// TODO: Duplicate ParseStream/WriteString templates from Node.
 	template<typename _Elem = char>
-	Node ParseStream(std::basic_istream<_Elem> &stream) {
+	void ParseStream(Node &node, std::basic_istream<_Elem> &stream) {
 		// We must read as UTF8 chars.
 		if constexpr (!std::is_same_v<_Elem, char>) {
 #ifndef ACID_BUILD_MSVC
@@ -105,8 +105,9 @@ public:
 
 		// Reading into a string before iterating is much faster.
 		std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-		return ParseString(s);
+		return ParseString(node, s);
 	}
+	
 	template<typename _Elem = char>
 	std::basic_string<_Elem> WriteString(const Node &node, Format format = Minified) const {
 		std::basic_ostringstream<_Elem> stream;
@@ -118,33 +119,12 @@ public:
 template<typename T>
 class NodeFormatType : public NodeFormat {
 public:
-	Node ParseString(std::string_view string) override {
-		return T::ParseString(string);
+	void ParseString(Node &node, std::string_view string) override {
+		T::Load(node, string);
 	}
+	
 	void WriteStream(const Node &node, std::ostream &stream, Format format = Minified) const override {
-		T::WriteStream(node, stream, format);
-	}
-
-	template<typename _Elem = char>
-	static Node ParseStream(std::basic_istream<_Elem> &stream) {
-		// We must read as UTF8 chars.
-		if constexpr (!std::is_same_v<_Elem, char>) {
-#ifndef ACID_BUILD_MSVC
-			throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
-#else
-			stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
-#endif
-		}
-
-		// Reading into a string before iterating is much faster.
-		std::string s(std::istreambuf_iterator<_Elem>(stream), {});
-		return T::ParseString(s);
-	}
-	template<typename _Elem = char>
-	static std::basic_string<_Elem> WriteString(const Node &node, Format format = Minified) {
-		std::basic_ostringstream<_Elem> stream;
-		T::WriteStream(node, stream, format);
-		return stream.str();
+		T::Write(node, stream, format);
 	}
 };
 }

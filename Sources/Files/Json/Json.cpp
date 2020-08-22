@@ -1,12 +1,13 @@
 #include "Json.hpp"
 
+#include "Files/Node.hpp"
 #include "Utils/Enumerate.hpp"
 #include "Utils/String.hpp"
 
 #define ATTRIBUTE_TEXT_SUPPORT 1
 
 namespace acid {
-Node Json::ParseString(std::string_view string) {
+void Json::Load(Node &node, std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
 	std::vector<Token> tokens;
 
@@ -33,54 +34,52 @@ Node Json::ParseString(std::string_view string) {
 			} else if (c == ':' || c == '{' || c == '}' || c == ',' || c == '[' || c == ']') {
 				// Tokens used to read json nodes.
 				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
-				tokens.emplace_back(Node::Type::Token, std::string_view(string.data() + index, 1));
+				tokens.emplace_back(NodeType::Token, std::string_view(string.data() + index, 1));
 				tokenStart = index + 1;
 			}
 		}
 	}
 
 	// Converts the tokens into nodes.
-	Node node;
 	int32_t k = 0;
 	Convert(node, tokens, k);
-	return node;
 }
 
-void Json::WriteStream(const Node &node, std::ostream &stream, Format format) {
-	stream << (node.GetType() == Node::Type::Array ? '[' : '{') << format.newLine;
+void Json::Write(const Node &node, std::ostream &stream, Format format) {
+	stream << (node.GetType() == NodeType::Array ? '[' : '{') << format.newLine;
 	AppendData(node, stream, format, 1);
-	stream << (node.GetType() == Node::Type::Array ? ']' : '}');
+	stream << (node.GetType() == NodeType::Array ? ']' : '}');
 }
 
 void Json::AddToken(std::string_view view, std::vector<Token> &tokens) {
 	if (view.length() != 0) {
 		// Finds the node value type of the string and adds it to the tokens vector.
 		if (view == "null") {
-			tokens.emplace_back(Node::Type::Null, std::string_view());
+			tokens.emplace_back(NodeType::Null, std::string_view());
 		} else if (view == "true" || view == "false") {
-			tokens.emplace_back(Node::Type::Boolean, view);
+			tokens.emplace_back(NodeType::Boolean, view);
 		} else if (String::IsNumber(view)) {
 			// This is a quick hack to get if the number is a decimal.
 			if (view.find('.') != std::string::npos) {
 				if (view.size() >= std::numeric_limits<long double>::digits)
 					throw std::runtime_error("Decimal number is too long");
-				tokens.emplace_back(Node::Type::Decimal, view);
+				tokens.emplace_back(NodeType::Decimal, view);
 			} else {
 				if (view.size() >= std::numeric_limits<uint64_t>::digits)
 					throw std::runtime_error("Integer number is too long");
-				tokens.emplace_back(Node::Type::Integer, view);
+				tokens.emplace_back(NodeType::Integer, view);
 			}
 		} else { // if (view.front() == view.back() == '\"')
-			tokens.emplace_back(Node::Type::String, view.substr(1, view.length() - 2));
+			tokens.emplace_back(NodeType::String, view.substr(1, view.length() - 2));
 		}
 	}
 }
 
 void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) {
-	if (tokens[k] == Token(Node::Type::Token, "{")) {
+	if (tokens[k] == Token(NodeType::Token, "{")) {
 		k++;
 
-		while (tokens[k] != Token(Node::Type::Token, "}")) {
+		while (tokens[k] != Token(NodeType::Token, "}")) {
 			auto key = tokens[k].view;
 			if (k + 2 >= tokens.size())
 				throw std::runtime_error("Missing end of {} array");
@@ -99,11 +98,11 @@ void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) 
 		}
 		k++;
 
-		current.SetType(Node::Type::Object);
-	} else if (tokens[k] == Token(Node::Type::Token, "[")) {
+		current.SetType(NodeType::Object);
+	} else if (tokens[k] == Token(NodeType::Token, "[")) {
 		k++;
 
-		while (tokens[k] != Token(Node::Type::Token, "]")) {
+		while (tokens[k] != Token(NodeType::Token, "]")) {
 			if (k >= tokens.size())
 				throw std::runtime_error("Missing end of [] object");
 			Convert(current.AddProperty(), tokens, k);
@@ -112,10 +111,10 @@ void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) 
 		}
 		k++;
 
-		current.SetType(Node::Type::Array);
+		current.SetType(NodeType::Array);
 	} else {
 		std::string str(tokens[k].view);
-		if (tokens[k].type == Node::Type::String)
+		if (tokens[k].type == NodeType::String)
 			str = String::UnfixEscapedChars(str);
 		current.SetValue(str);
 		current.SetType(tokens[k].type);
@@ -128,9 +127,9 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 
 	// Only output the value if no properties exist.
 	if (node.GetProperties().empty()) {
-		if (node.GetType() == Node::Type::String)
+		if (node.GetType() == NodeType::String)
 			stream << '\"' << String::FixEscapedChars(node.GetValue()) << '\"';
-		else if (node.GetType() == Node::Type::Null)
+		else if (node.GetType() == NodeType::Null)
 			stream << "null";
 		else
 			stream << node.GetValue();
@@ -166,15 +165,15 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 			}
 
 			stream << (isArray ? '[' : '{') << format.newLine;
-		} else if (it->GetType() == Node::Type::Object) {
+		} else if (it->GetType() == NodeType::Object) {
 			stream << '{';
-		} else if (it->GetType() == Node::Type::Array) {
+		} else if (it->GetType() == NodeType::Array) {
 			stream << '[';
 		}
 
 		// If a node type is a primitive type.
 		static constexpr auto IsPrimitive = [](const Node &type) {
-			return type.GetProperties().empty() && type.GetType() != Node::Type::Object && type.GetType() != Node::Type::Array && type.GetType() != Node::Type::Unknown;
+			return type.GetProperties().empty() && type.GetType() != NodeType::Object && type.GetType() != NodeType::Array && type.GetType() != NodeType::Unknown;
 		};
 
 		// Shorten primitive array output length.
@@ -189,9 +188,9 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 
 		if (!it->GetProperties().empty()) {
 			stream << indents << (isArray ? ']' : '}');
-		} else if (it->GetType() == Node::Type::Object) {
+		} else if (it->GetType() == NodeType::Object) {
 			stream << '}';
-		} else if (it->GetType() == Node::Type::Array) {
+		} else if (it->GetType() == NodeType::Array) {
 			stream << ']';
 		}
 

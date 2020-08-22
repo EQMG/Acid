@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Files/NodeFormat.hpp"
+#include "Files/Node.hpp"
 
 namespace acid {
 /**

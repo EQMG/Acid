@@ -9,8 +9,8 @@ namespace acid {
 template<typename Base>
 class BitmapFactory {
 public:
-	using TLoadMethod = std::function<void(Base *, const std::filesystem::path &)>;
-	using TWriteMethod = std::function<void(const Base *, const std::filesystem::path &)>;
+	using TLoadMethod = std::function<void(Base &, const std::filesystem::path &)>;
+	using TWriteMethod = std::function<void(const Base &, const std::filesystem::path &)>;
 	using TRegistryMap = std::unordered_map<std::string, std::pair<TLoadMethod, TWriteMethod>>;
 
 	virtual ~BitmapFactory() = default;

@@ -57,6 +57,6 @@ void SoundBuffer::Load() {
 	if (filename.empty())
 		return;
 
-	Registry()[filename.extension().string()].first(this, filename);
+	Registry()[filename.extension().string()].first(*this, filename);
 }
 }

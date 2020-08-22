@@ -12,7 +12,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void Mp3SoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -38,7 +38,7 @@ void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 
 	Audio::CheckAl(alGetError());
 
-	soundBuffer->SetBuffer(buffer);
+	soundBuffer.SetBuffer(buffer);
 
 	drmp3_free(sampleData, nullptr);
 
@@ -47,7 +47,7 @@ void Mp3SoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 #endif
 }
 
-void Mp3SoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void Mp3SoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

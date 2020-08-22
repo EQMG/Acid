@@ -8,7 +8,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void ExrBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
+void ExrBitmap::Load(Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -27,7 +27,7 @@ void ExrBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #endif
 }
 
-void ExrBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
+void ExrBitmap::Write(const Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

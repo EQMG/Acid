@@ -8,7 +8,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void DngBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
+void DngBitmap::Load(Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -27,7 +27,7 @@ void DngBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 #endif
 }
 
-void DngBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
+void DngBitmap::Write(const Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

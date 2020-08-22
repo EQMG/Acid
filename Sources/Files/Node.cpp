@@ -6,12 +6,12 @@ namespace acid {
 static const Node NullNode = (Node() = nullptr);
 
 Node::Node() :
-	type(Type::Object) {
+	type(NodeType::Object) {
 }
 
 Node::Node(const std::string &name) :
 	name(name),
-	type(Type::Object) {
+	type(NodeType::Object) {
 }
 
 Node::Node(const std::string &name, const Node &node) :
@@ -25,13 +25,13 @@ void Node::Clear() {
 
 bool Node::IsValid() const {
 	switch (type) {
-	case Type::Token:
-	case Type::Unknown:
+	case NodeType::Token:
+	case NodeType::Unknown:
 		return false;
-	case Type::Object:
-	case Type::Array:
+	case NodeType::Object:
+	case NodeType::Array:
 		return !properties.empty();
-	case Type::Null:
+	case NodeType::Null:
 		return true;
 	default:
 		return !value.empty();

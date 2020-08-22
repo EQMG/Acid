@@ -10,6 +10,10 @@
 namespace acid {
 class Node;
 
+enum class NodeType : uint8_t {
+	Object, Array, String, Boolean, Integer, Decimal, Null, Token, Unknown
+};
+
 /**
  * @brief Class that is returned from a {@link Node} when getting constant properties. This represents a key tree from a parent,
  * this allows reads of large trees with broken nodes to not need to generate new content.

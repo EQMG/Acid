@@ -35,10 +35,10 @@ void File::Load(const std::filesystem::path &filename) {
 
 	if (Files::ExistsInPath(filename)) {
 		IFStream inStream(filename);
-		node = type->ParseStream(inStream);
+		type->ParseStream(node, inStream);
 	} else if (std::filesystem::exists(filename)) {
 		std::ifstream inStream(filename);
-		node = type->ParseStream(inStream);
+		type->ParseStream(node, inStream);
 		inStream.close();
 	}
 

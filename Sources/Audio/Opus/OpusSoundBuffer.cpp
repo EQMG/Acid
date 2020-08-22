@@ -12,7 +12,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void OpusSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void OpusSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -24,14 +24,14 @@ void OpusSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 		return;
 	}
 
-	//soundBuffer->SetBuffer(buffer);
+	//soundBuffer.SetBuffer(buffer);
 	
 #ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void OpusSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void OpusSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

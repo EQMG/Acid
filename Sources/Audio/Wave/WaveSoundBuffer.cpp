@@ -12,7 +12,7 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
-void WaveSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void WaveSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
@@ -39,7 +39,7 @@ void WaveSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 
 	Audio::CheckAl(alGetError());
 
-	soundBuffer->SetBuffer(buffer);
+	soundBuffer.SetBuffer(buffer);
 	
 	drwav_free(sampleData, nullptr);
 
@@ -48,7 +48,7 @@ void WaveSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 #endif
 }
 
-void WaveSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
+void WaveSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif

@@ -35,7 +35,7 @@ public:
 	 * @param height The distance between the base and the top.
 	 * @param slices The amount of vertices that will be used to create the circular footprint.
 	 * @param stacks The amount of stacks between the base and the top.
-	 * @param load If this resource will be loaded immediately, otherwise {@link ModelCylinder#Load} can be called later.
+	 * @param load If this resource will be loaded immediately, otherwise {@link CylinderModel#Load} can be called later.
 	 */
 	explicit CylinderModel(float radiusBase = 1.0f, float radiusTop = 1.0f, float height = 2.0f, uint32_t slices = 20, uint32_t stacks = 2,
 		bool load = true);

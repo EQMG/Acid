@@ -28,7 +28,7 @@ public:
 	 * Creates a new rectangle model.
 	 * @param min The minimum extents.
 	 * @param max The maximum extents.
-	 * @param load If this resource will be loaded immediately, otherwise {@link ModelRectangle#Load} can be called later.
+	 * @param load If this resource will be loaded immediately, otherwise {@link RectangleModel#Load} can be called later.
 	 */
 	explicit RectangleModel(float min = 0.0f, float max = 1.0f, bool load = true);
 
