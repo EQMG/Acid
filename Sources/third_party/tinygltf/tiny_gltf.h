@@ -664,6 +664,8 @@ struct Image {
     width = -1;
     height = -1;
     component = -1;
+    bits = -1;
+    pixel_type = -1;
   }
   DEFAULT_METHODS(Image)
 
@@ -996,6 +998,7 @@ struct Primitive {
   Primitive() {
     material = -1;
     indices = -1;
+    mode = -1;
   }
   DEFAULT_METHODS(Primitive)
   bool operator==(const Primitive &) const;
@@ -1250,7 +1253,8 @@ struct FsCallbacks {
 bool FileExists(const std::string &abs_filename, void *);
 
 ///
-/// Expand file path(e.g. `~` to home directory on posix, `%APPDATA%` to `C:\Users\tinygltf\AppData`)
+/// Expand file path(e.g. `~` to home directory on posix, `%APPDATA%` to
+/// `C:\Users\tinygltf\AppData`)
 ///
 /// @param[in] filepath File path string. Assume UTF-8
 /// @param[in] userdata User data. Set to `nullptr` if you don't need it.

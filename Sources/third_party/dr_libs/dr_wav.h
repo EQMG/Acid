@@ -1,6 +1,7 @@
+
 /*
 WAV audio loader and writer. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_wav - v0.12.5 - 2020-05-27
+dr_wav - v0.12.9 - 2020-08-02
 
 David Reid - mackron@gmail.com
 
@@ -144,45 +145,44 @@ extern "C" {
 
 #define DRWAV_VERSION_MAJOR     0
 #define DRWAV_VERSION_MINOR     12
-#define DRWAV_VERSION_REVISION  5
+#define DRWAV_VERSION_REVISION  9
 #define DRWAV_VERSION_STRING    DRWAV_XSTRINGIFY(DRWAV_VERSION_MAJOR) "." DRWAV_XSTRINGIFY(DRWAV_VERSION_MINOR) "." DRWAV_XSTRINGIFY(DRWAV_VERSION_REVISION)
 
 #include <stddef.h> /* For size_t. */
 
-/* Sized types. Prefer built-in types. Fall back to stdint. */
-#ifdef _MSC_VER
-    #if defined(__clang__)
+/* Sized types. */
+typedef   signed char           drwav_int8;
+typedef unsigned char           drwav_uint8;
+typedef   signed short          drwav_int16;
+typedef unsigned short          drwav_uint16;
+typedef   signed int            drwav_int32;
+typedef unsigned int            drwav_uint32;
+#if defined(_MSC_VER)
+    typedef   signed __int64    drwav_int64;
+    typedef unsigned __int64    drwav_uint64;
+#else
+    #if defined(__GNUC__)
         #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wlanguage-extension-token"
-        #pragma GCC diagnostic ignored "-Wlong-long"        
-        #pragma GCC diagnostic ignored "-Wc++11-long-long"
+        #pragma GCC diagnostic ignored "-Wlong-long"
+        #if defined(__clang__)
+            #pragma GCC diagnostic ignored "-Wc++11-long-long"
+        #endif
     #endif
-    typedef   signed __int8  drwav_int8;
-    typedef unsigned __int8  drwav_uint8;
-    typedef   signed __int16 drwav_int16;
-    typedef unsigned __int16 drwav_uint16;
-    typedef   signed __int32 drwav_int32;
-    typedef unsigned __int32 drwav_uint32;
-    typedef   signed __int64 drwav_int64;
-    typedef unsigned __int64 drwav_uint64;
-    #if defined(__clang__)
+    typedef   signed long long  drwav_int64;
+    typedef unsigned long long  drwav_uint64;
+    #if defined(__GNUC__)
         #pragma GCC diagnostic pop
     #endif
-#else
-    #include <stdint.h>
-    typedef int8_t           drwav_int8;
-    typedef uint8_t          drwav_uint8;
-    typedef int16_t          drwav_int16;
-    typedef uint16_t         drwav_uint16;
-    typedef int32_t          drwav_int32;
-    typedef uint32_t         drwav_uint32;
-    typedef int64_t          drwav_int64;
-    typedef uint64_t         drwav_uint64;
 #endif
-typedef drwav_uint8          drwav_bool8;
-typedef drwav_uint32         drwav_bool32;
-#define DRWAV_TRUE           1
-#define DRWAV_FALSE          0
+#if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__)) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
+    typedef drwav_uint64        drwav_uintptr;
+#else
+    typedef drwav_uint32        drwav_uintptr;
+#endif
+typedef drwav_uint8             drwav_bool8;
+typedef drwav_uint32            drwav_bool32;
+#define DRWAV_TRUE              1
+#define DRWAV_FALSE             0
 
 #if !defined(DRWAV_API)
     #if defined(DRWAV_DLL)
@@ -288,7 +288,7 @@ typedef drwav_int32 drwav_result;
 #define DRWAV_SEQUENTIAL            0x00000001
 
 DRWAV_API void drwav_version(drwav_uint32* pMajor, drwav_uint32* pMinor, drwav_uint32* pRevision);
-DRWAV_API const char* drwav_version_string();
+DRWAV_API const char* drwav_version_string(void);
 
 typedef enum
 {
@@ -674,6 +674,8 @@ bytes of the raw internal sample data.
 Consider using drwav_read_pcm_frames_s16(), drwav_read_pcm_frames_s32() or drwav_read_pcm_frames_f32() for
 reading sample data in a consistent format.
 
+pBufferOut can be NULL in which case a seek will be performed.
+
 Returns the number of bytes actually read.
 */
 DRWAV_API size_t drwav_read_raw(drwav* pWav, size_t bytesToRead, void* pBufferOut);
@@ -689,6 +691,8 @@ you have requested more PCM frames than can possibly fit in the output buffer.
 
 This function will only work when sample data is of a fixed size and uncompressed. If you are
 using a compressed format consider using drwav_read_raw() or drwav_read_pcm_frames_s16/s32/f32().
+
+pBufferOut can be NULL in which case a seek will be performed.
 */
 DRWAV_API drwav_uint64 drwav_read_pcm_frames(drwav* pWav, drwav_uint64 framesToRead, void* pBufferOut);
 DRWAV_API drwav_uint64 drwav_read_pcm_frames_le(drwav* pWav, drwav_uint64 framesToRead, void* pBufferOut);
@@ -728,6 +732,8 @@ DRWAV_API drwav_uint64 drwav_write_pcm_frames_be(drwav* pWav, drwav_uint64 frame
 /*
 Reads a chunk of audio data and converts it to signed 16-bit PCM samples.
 
+pBufferOut can be NULL in which case a seek will be performed.
+
 Returns the number of PCM frames actually read.
 
 If the return value is less than <framesToRead> it means the end of the file has been reached.
@@ -761,6 +767,8 @@ DRWAV_API void drwav_mulaw_to_s16(drwav_int16* pOut, const drwav_uint8* pIn, siz
 /*
 Reads a chunk of audio data and converts it to IEEE 32-bit floating point samples.
 
+pBufferOut can be NULL in which case a seek will be performed.
+
 Returns the number of PCM frames actually read.
 
 If the return value is less than <framesToRead> it means the end of the file has been reached.
@@ -793,6 +801,8 @@ DRWAV_API void drwav_mulaw_to_f32(float* pOut, const drwav_uint8* pIn, size_t sa
 
 /*
 Reads a chunk of audio data and converts it to signed 32-bit PCM samples.
+
+pBufferOut can be NULL in which case a seek will be performed.
 
 Returns the number of PCM frames actually read.
 
@@ -1122,6 +1132,21 @@ two different ways to initialize a drwav object.
 /*
 REVISION HISTORY
 ================
+v0.12.9 - 2020-08-02
+  - Simplify sized types.
+
+v0.12.8 - 2020-07-25
+  - Fix a compilation warning.
+
+v0.12.7 - 2020-07-15
+  - Fix some bugs on big-endian architectures.
+  - Fix an error in s24 to f32 conversion.
+
+v0.12.6 - 2020-06-23
+  - Change drwav_read_*() to allow NULL to be passed in as the output buffer which is equivalent to a forward seek.
+  - Fix a buffer overflow when trying to decode invalid IMA-ADPCM files.
+  - Add include guard for the implementation section.
+
 v0.12.5 - 2020-05-27
   - Minor documentation fix.
 

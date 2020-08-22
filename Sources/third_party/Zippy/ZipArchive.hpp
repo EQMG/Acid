@@ -38,11 +38,6 @@
 #include <fstream>
 
 // ===== Other Includes
-#ifdef _WIN32
-#include <direct.h>
-#else
-#include <sys/stat.h>
-#endif
 #include <miniz/miniz.h>
 #include "ZipException.hpp"
 #include "ZipEntry.hpp"

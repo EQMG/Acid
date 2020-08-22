@@ -12,6 +12,7 @@ enum class UiManipulate {
 	Move = 2,
 	All = Resize | Move
 };
+ENABLE_BITMASK_OPERATORS(UiManipulate)
 
 class ACID_EXPORT UiPanel : public UiObject {
 public:
@@ -42,11 +43,5 @@ private:
 	bitmask::bitmask<ScrollBar> scrollBars;
 
 	Vector2f min, max;
-};
-}
-
-namespace bitmask {
-template<>
-struct enable_bitmask_operators<acid::UiManipulate> : std::true_type {
 };
 }

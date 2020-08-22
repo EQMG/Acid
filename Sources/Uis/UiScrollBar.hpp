@@ -10,6 +10,7 @@ enum class ScrollBar {
 	Horizontal = 2,
 	Both = Vertical | Horizontal
 };
+ENABLE_BITMASK_OPERATORS(ScrollBar)
 
 class ACID_EXPORT UiScrollBar : public UiObject {
 public:
@@ -33,11 +34,5 @@ private:
 	uint32_t index = 0;
 	bool updating = false;
 	bool mouseOver = false;
-};
-}
-
-namespace bitmask {
-template<>
-struct enable_bitmask_operators<acid::ScrollBar> : std::true_type {
 };
 }

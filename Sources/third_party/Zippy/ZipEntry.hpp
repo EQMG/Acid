@@ -33,7 +33,7 @@
 
 // ===== Other Includes
 #include "ZipUtilities.hpp"
-#include "miniz/miniz.h"
+#include <miniz/miniz.h>
 
 namespace Zippy
 {

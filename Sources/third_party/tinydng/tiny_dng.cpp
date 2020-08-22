@@ -1,7 +1,11 @@
 #include "tiny_dng.h"
 
 #if defined(_WIN32)
+#if defined(__MINGW32__)
 #include <windows.h>  // wchar apis
+#else
+#include <Windows.h>
+#endif
 #endif
 
 #include <stdint.h>  // for lj92

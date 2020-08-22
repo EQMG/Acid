@@ -1,6 +1,5 @@
 #ifndef TINYEXR_H_
 #define TINYEXR_H_
-
 /*
 Copyright (c) 2014 - 2019, Syoyo Fujita and many contributors.
 All rights reserved.
@@ -65,7 +64,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////
 
 // End of OpenEXR license -------------------------------------------------
-
 
 //
 //
@@ -199,11 +197,18 @@ typedef struct _EXRTile {
   unsigned char **images;  // image[channels][pixels]
 } EXRTile;
 
+typedef struct _EXRBox2i {
+  int min_x;
+  int min_y;
+  int max_x;
+  int max_y;
+} EXRBox2i;
+
 typedef struct _EXRHeader {
   float pixel_aspect_ratio;
   int line_order;
-  int data_window[4];
-  int display_window[4];
+  EXRBox2i data_window;
+  EXRBox2i display_window;
   float screen_window_center[2];
   float screen_window_width;
 
@@ -288,26 +293,29 @@ typedef struct _DeepImage {
 extern int LoadEXR(float **out_rgba, int *width, int *height,
                    const char *filename, const char **err);
 
-// Loads single-frame OpenEXR image by specifying layer name. Assume EXR image contains A(single channel
-// alpha) or RGB(A) channels.
-// Application must free image data as returned by `out_rgba`
-// Result image format is: float x RGBA x width x hight
-// Returns negative value and may set error string in `err` when there's an
-// error
-// When the specified layer name is not found in the EXR file, the function will return `TINYEXR_ERROR_LAYER_NOT_FOUND`.
+// Loads single-frame OpenEXR image by specifying layer name. Assume EXR image
+// contains A(single channel alpha) or RGB(A) channels. Application must free
+// image data as returned by `out_rgba` Result image format is: float x RGBA x
+// width x hight Returns negative value and may set error string in `err` when
+// there's an error When the specified layer name is not found in the EXR file,
+// the function will return `TINYEXR_ERROR_LAYER_NOT_FOUND`.
 extern int LoadEXRWithLayer(float **out_rgba, int *width, int *height,
-                   const char *filename, const char *layer_name, const char **err);
+                            const char *filename, const char *layer_name,
+                            const char **err);
 
 //
 // Get layer infos from EXR file.
 //
-// @param[out] layer_names List of layer names. Application must free memory after using this.
+// @param[out] layer_names List of layer names. Application must free memory
+// after using this.
 // @param[out] num_layers The number of layers
-// @param[out] err Error string(will be filled when the function returns error code). Free it using FreeEXRErrorMessage after using this value.
+// @param[out] err Error string(will be filled when the function returns error
+// code). Free it using FreeEXRErrorMessage after using this value.
 //
 // @return TINYEXR_SUCCEES upon success.
 //
-extern int EXRLayers(const char *filename, const char **layer_names[], int *num_layers, const char **err);
+extern int EXRLayers(const char *filename, const char **layer_names[],
+                     int *num_layers, const char **err);
 
 // @deprecated { to be removed. }
 // Simple wrapper API for ParseEXRHeaderFromFile.

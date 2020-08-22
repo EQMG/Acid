@@ -277,7 +277,7 @@ set(_temp_acid_third_party_headers
 		third_party/tinyexr/tiny_exr.h
 		third_party/tinygltf/json.hpp
 		third_party/tinygltf/tiny_gltf.h
-		third_party/tinymsdf/tinymsdf.hpp
+		third_party/tinymsdf/tiny_msdf.hpp
 		third_party/tinyobj/tiny_obj.h
 		third_party/Zippy/ZipArchive.hpp
 		third_party/Zippy/ZipEntry.hpp
@@ -510,7 +510,7 @@ set(_temp_acid_third_party_sources
 		third_party/tinydng/tiny_dng.cpp
 		third_party/tinyexr/tiny_exr.cpp
 		third_party/tinygltf/tiny_gltf.cpp
-		third_party/tinymsdf/tinymsdf.cpp
+		third_party/tinymsdf/tiny_msdf.cpp
 		third_party/tinyobj/tiny_obj.cpp
 		)
 

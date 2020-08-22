@@ -16,6 +16,7 @@ enum class InputAction : int32_t {
 	Press = 1,
 	Repeat = 2
 };
+ENABLE_BITMASK_OPERATORS(InputAction)
 
 enum class InputMod : int32_t {
 	None = 0,
@@ -24,6 +25,7 @@ enum class InputMod : int32_t {
 	Alt = 4,
 	Super = 8
 };
+ENABLE_BITMASK_OPERATORS(InputMod)
 
 /**
  * @brief Module used for managing a window.
@@ -276,15 +278,5 @@ private:
 	rocket::signal<void()> onClose;
 	rocket::signal<void(bool)> onFocus;
 	rocket::signal<void(bool)> onIconify;
-};
-}
-
-namespace bitmask {
-template<>
-struct enable_bitmask_operators<acid::InputAction> : std::true_type {
-};
-
-template<>
-struct enable_bitmask_operators<acid::InputMod> : std::true_type {
 };
 }

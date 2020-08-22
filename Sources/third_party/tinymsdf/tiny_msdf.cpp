@@ -1,4 +1,4 @@
-#include "tinymsdf.hpp"
+#include "tiny_msdf.hpp"
 
 #include <algorithm>
 #include <cmath>

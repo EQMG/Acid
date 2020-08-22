@@ -6,11 +6,10 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
-#include <limits>
-#include <utility>
-
 #include <fstream>
+#include <limits>
 #include <sstream>
+#include <utility>
 
 namespace tinyobj {
 
@@ -1298,8 +1297,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
 
       // Set a decent diffuse default value if a diffuse texture is specified
       // without a matching Kd value.
-      if (!has_kd)
-      {
+      if (!has_kd) {
         material.diffuse[0] = static_cast<real_t>(0.6);
         material.diffuse[1] = static_cast<real_t>(0.6);
         material.diffuse[2] = static_cast<real_t>(0.6);
@@ -1562,6 +1560,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   std::vector<real_t> vn;
   std::vector<real_t> vt;
   std::vector<real_t> vc;
+  std::vector<skin_weight_t> vw;
   std::vector<tag_t> tags;
   PrimGroup prim_group;
   std::string name;
@@ -1653,6 +1652,53 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       vt.push_back(x);
       vt.push_back(y);
       continue;
+    }
+
+    // skin weight. tinyobj extension
+    if (token[0] == 'v' && token[1] == 'w' && IS_SPACE((token[2]))) {
+      token += 3;
+
+      // vw <vid> <joint_0> <weight_0> <joint_1> <weight_1> ...
+      // example:
+      // vw 0 0 0.25 1 0.25 2 0.5
+
+      // TODO(syoyo): Add syntax check
+      int vid = 0;
+      vid = parseInt(&token);
+
+      skin_weight_t sw;
+
+      sw.vertex_id = vid;
+
+      while (!IS_NEW_LINE(token[0])) {
+        real_t j, w;
+        // joint_id should not be negative, weight may be negative
+        // TODO(syoyo): # of elements check
+        parseReal2(&j, &w, &token, -1.0);
+
+        if (j < 0.0) {
+          if (err) {
+            std::stringstream ss;
+            ss << "Failed parse `vw' line. joint_id is negative. "
+                  "line "
+               << line_num << ".)\n";
+            (*err) += ss.str();
+          }
+          return false;
+        }
+
+        joint_and_weight_t jw;
+
+        jw.joint_id = int(j);
+        jw.weight = w;
+
+        sw.weightValues.push_back(jw);
+
+        size_t n = strspn(token, " \t\r");
+        token += n;
+      }
+
+      vw.push_back(sw);
     }
 
     // line
@@ -2057,6 +2103,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
   attrib->texcoords.swap(vt);
   attrib->texcoord_ws.swap(vt);
   attrib->colors.swap(vc);
+  attrib->skin_weights.swap(vw);
 
   return true;
 }
