@@ -15,7 +15,7 @@ public:
 	 * @param port The joystick port.
 	 * @param button The button on the joystick being checked.
 	 */
-	explicit JoystickInputButton(JoystickPort port = 0, JoystickButton button = 0);
+	explicit JoystickInputButton(JoystickPort port = JoystickPort::_1, JoystickButton button = 0);
 
 	bool IsDown() const override;
 

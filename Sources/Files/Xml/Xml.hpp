@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Files/NodeFormat.hpp"
+#include "Files/Node.hpp"
 
 namespace acid {
 class ACID_EXPORT Xml : public NodeFormatType<Xml> {

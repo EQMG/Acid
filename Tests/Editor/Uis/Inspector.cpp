@@ -25,7 +25,7 @@ Inspector::Inspector() {
 
 	//input3.SetTransform({{0.0f, 0.18f}, UiAnchor::LeftTop});
 	input3.SetTitle("Joystick Grabber");
-	input3.SetPort(0);
+	input3.SetPort(JoystickPort::_1);
 	input3.SetValue(3);
 	section1.AddChild(&input3);
 

@@ -44,7 +44,7 @@ Panels::Panels() {
 
 	//grabber0.SetTransform({UiButtonInput::Size, UiAnchor::LeftTop, {0, GetNextY()}});
 	grabber0.SetTitle("Grabber Joystick");
-	grabber0.SetPort(0);
+	grabber0.SetPort(JoystickPort::_1);
 	grabber0.SetValue(0);
 	gui0.AddChild(&grabber0);
 

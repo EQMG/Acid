@@ -15,7 +15,7 @@ public:
 	 * @param port The joystick port.
 	 * @param axis The axis on the joystick being checked.
 	 */
-	explicit JoystickInputAxis(JoystickPort port = 0, JoystickAxis axis = 0);
+	explicit JoystickInputAxis(JoystickPort port = JoystickPort::_1, JoystickAxis axis = 0);
 
 	float GetAmount() const override;
 

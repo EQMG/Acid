@@ -337,9 +337,9 @@ static inline void spng__free(spng_ctx *ctx, void *ptr)
 }
 
 #if defined(SPNG_USE_MINIZ)
-static void *spng__zalloc(void *opaque, long unsigned items, long unsigned size)
+static void *spng__zalloc(void *opaque, size_t items, size_t size)
 #else
-static void *spng__zalloc(void *opaque, unsigned items, unsigned size)
+static void *spng__zalloc(void *opaque, uInt items, uInt size)
 #endif
 {
     spng_ctx *ctx = opaque;

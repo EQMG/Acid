@@ -18,7 +18,7 @@ public:
 	 * @param hat The hat that will be checked.
 	 * @param hatFlags If this bit is found the hat will trigger {@link JoystickHatInput#IsDown}.
 	 */
-	explicit JoystickHatInput(JoystickPort port = 0, JoystickHat hat = 0, const bitmask::bitmask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
+	explicit JoystickHatInput(JoystickPort port = JoystickPort::_1, JoystickHat hat = 0, const bitmask::bitmask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
 
 	ArgumentDescription GetArgumentDescription() const override;
 
