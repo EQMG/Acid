@@ -9,7 +9,7 @@ namespace acid {
  * @brief Component that represents a 3d fog.
  */
 class ACID_EXPORT Fog : public Component::Registrar<Fog> {
-	inline static const bool Registered = Register("fog");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new hazy fog.

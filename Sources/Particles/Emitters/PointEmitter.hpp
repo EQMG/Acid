@@ -4,7 +4,7 @@
 
 namespace acid {
 class ACID_EXPORT PointEmitter : public Emitter::Registrar<PointEmitter> {
-	inline static const bool Registered = Register("point");
+	static const bool Registered;
 public:
 	PointEmitter();
 

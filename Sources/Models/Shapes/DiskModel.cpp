@@ -5,6 +5,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool DiskModel::Registered = Register("disk");
+
 std::shared_ptr<DiskModel> DiskModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<DiskModel>(node))
 		return resource;

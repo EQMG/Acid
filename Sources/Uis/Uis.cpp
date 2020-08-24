@@ -3,6 +3,8 @@
 #include "Constraints/PixelConstraint.hpp"
 
 namespace acid {
+const bool Uis::Registered = Register(Stage::Normal);
+
 Uis::Uis() {
 	canvas.GetConstraints().SetWidth<PixelConstraint>(0)
 		.SetHeight<PixelConstraint>(0);

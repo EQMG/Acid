@@ -3,6 +3,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+const bool PointEmitter::Registered = Register("point");
+
 PointEmitter::PointEmitter() {
 }
 

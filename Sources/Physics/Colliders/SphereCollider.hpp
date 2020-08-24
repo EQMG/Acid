@@ -6,7 +6,7 @@ class btSphereShape;
 
 namespace acid {
 class ACID_EXPORT SphereCollider : public Collider::Registrar<SphereCollider> {
-	inline static const bool Registered = Register("sphere");
+	static const bool Registered;
 public:
 	explicit SphereCollider(float radius = 0.5f, const Transform &localTransform = {});
 	~SphereCollider();

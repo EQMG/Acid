@@ -4,6 +4,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool RectangleModel::Registered = Register("rectangle");
+
 std::shared_ptr<RectangleModel> RectangleModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<RectangleModel>(node))
 		return resource;

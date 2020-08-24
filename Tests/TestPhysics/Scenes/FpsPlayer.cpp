@@ -14,6 +14,8 @@ constexpr float CROUCH_SPEED = 1.2f;
 constexpr float JUMP_SPEED = 4.1f;
 constexpr float NOCLIP_SPEED = 3.0f;
 
+const bool FpsPlayer::Registered = Register("fpsPlayer");
+
 FpsPlayer::FpsPlayer() {
 }
 

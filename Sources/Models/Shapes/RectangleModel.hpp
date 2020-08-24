@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a rectangle model.
  */
 class ACID_EXPORT RectangleModel : public Model::Registrar<RectangleModel> {
-	inline static const bool Registered = Register("rectangle");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new rectangle model, or finds one with the same values.

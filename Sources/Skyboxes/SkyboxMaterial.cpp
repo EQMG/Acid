@@ -3,6 +3,8 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+const bool SkyboxMaterial::Registered = Register("skybox");
+
 SkyboxMaterial::SkyboxMaterial(std::shared_ptr<ImageCube> image, const Colour &baseColour) :
 	image(std::move(image)),
 	baseColour(baseColour),

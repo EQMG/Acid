@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a OBJ model.
  */
 class ACID_EXPORT ObjModel : public Model::Registrar<ObjModel> {
-	inline static const bool Registered = Register("obj", ".obj");;
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new OBJ model, or finds one with the same values.

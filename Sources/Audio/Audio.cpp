@@ -12,6 +12,8 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+const bool Audio::Registered = Register(Stage::Pre);
+
 struct Audio::_intern {
 	ALCdevice *device = nullptr;
 	ALCcontext *context = nullptr;

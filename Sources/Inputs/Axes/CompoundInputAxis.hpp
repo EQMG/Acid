@@ -8,7 +8,7 @@ namespace acid {
  * @brief Combines multiple axes inputs into a single axis.
  */
 class ACID_EXPORT CompoundInputAxis : public InputAxis::Registrar<CompoundInputAxis>, NonCopyable {
-	inline static const bool Registered = Register("compound");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new compound axis.

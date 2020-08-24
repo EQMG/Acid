@@ -12,7 +12,7 @@ namespace acid {
  * @brief Represents a object in a scene effected by physics.
  */
 class ACID_EXPORT Rigidbody : public Component::Registrar<Rigidbody>, public CollisionObject {
-	inline static const bool Registered = Register("rigidbody");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new rigidbody.

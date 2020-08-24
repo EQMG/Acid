@@ -9,7 +9,7 @@ namespace acid {
  * @brief Holds position, rotation, and scale components.
  */
 class ACID_EXPORT Transform : public Component::Registrar<Transform> {
-	inline static const bool Registered = Register("transform");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new transform.

@@ -10,6 +10,8 @@
 #include "Physics.hpp"
 
 namespace acid {
+const bool KinematicCharacter::Registered = Register("kinematicCharacter");
+
 KinematicCharacter::KinematicCharacter(std::unique_ptr<Collider> &&collider, float mass, float friction) :
 	CollisionObject({}, mass, friction),
 	up(Vector3f::Up),

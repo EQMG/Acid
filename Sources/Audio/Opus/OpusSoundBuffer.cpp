@@ -12,6 +12,8 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
+const bool OpusSoundBuffer::Registered = Register(".opus");
+
 void OpusSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();

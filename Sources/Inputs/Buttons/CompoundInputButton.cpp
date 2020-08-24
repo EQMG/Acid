@@ -1,6 +1,8 @@
 #include "CompoundInputButton.hpp"
 
 namespace acid {
+const bool CompoundInputButton::Registered = Register("compound");
+
 CompoundInputButton::CompoundInputButton(std::vector<std::unique_ptr<InputButton>> &&buttons, bool useAnd) :
 	buttons(std::move(buttons)),
 	useAnd(useAnd) {

@@ -11,7 +11,7 @@ using namespace acid;
 
 namespace test {
 class Terrain : public Component::Registrar<Terrain> {
-	inline static const bool Registered = Register("terrain");
+	static const bool Registered;
 public:
 	explicit Terrain(float sideLength = 200.0f, float squareSize = 2.0f);
 

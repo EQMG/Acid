@@ -8,7 +8,7 @@ namespace acid {
  * @brief InputButton input from the keyboard input device.
  */
 class ACID_EXPORT KeyboardInputButton : public InputButton::Registrar<KeyboardInputButton> {
-	inline static const bool Registered = Register("keyboard");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new button keyboard.

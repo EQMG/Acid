@@ -36,6 +36,8 @@ private:
 	std::filesystem::path folder;
 };
 
+const bool ObjModel::Registered = Register("obj", ".obj");;
+
 std::shared_ptr<ObjModel> ObjModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<ObjModel>(node))
 		return resource;

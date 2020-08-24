@@ -8,7 +8,7 @@ namespace acid {
  * @brief Resource that represents a GLTF model.
  */
 class ACID_EXPORT GltfModel : public Model::Registrar<GltfModel> {
-	inline static const bool Registered = Register("gltf", ".gltf");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new GLTF model, or finds one with the same values.

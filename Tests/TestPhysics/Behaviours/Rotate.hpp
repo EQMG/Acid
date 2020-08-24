@@ -7,7 +7,7 @@ using namespace acid;
 
 namespace test {
 class Rotate : public Component::Registrar<Rotate> {
-	inline static const bool Registered = Register("rotate");
+	static const bool Registered;
 public:
 	explicit Rotate(const Vector3f &direction = Vector3f(), const int &test = 0);
 

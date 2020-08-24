@@ -7,7 +7,7 @@ using namespace acid;
 
 namespace test {
 class NameTag : public Component::Registrar<NameTag> {
-	inline static const bool Registered = Register("heightDespawn");
+	static const bool Registered;
 public:
 	explicit NameTag(const std::string &name = "", float heightOffset = 0.0f);
 

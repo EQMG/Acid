@@ -8,7 +8,7 @@ namespace acid {
  * @brief InputAxis composed of two buttons.
  */
 class ACID_EXPORT ButtonInputAxis : public InputAxis::Registrar<ButtonInputAxis> {
-	inline static const bool Registered = Register("button");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new axis button.

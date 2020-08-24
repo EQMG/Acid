@@ -6,7 +6,7 @@ class btHeightfieldTerrainShape;
 
 namespace acid {
 class ACID_EXPORT HeightfieldCollider : public Collider::Registrar<HeightfieldCollider> {
-	inline static const bool Registered = Register("heightfield");
+	static const bool Registered;
 public:
 	explicit HeightfieldCollider(int32_t heightStickWidth = 100, int32_t heightStickLength = 100, const void *heightfieldData = nullptr,
 		float minHeight = -1.0f, float maxHeight = 1.0f, bool flipQuadEdges = false, const Transform &localTransform = {});

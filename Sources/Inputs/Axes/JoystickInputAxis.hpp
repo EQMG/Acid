@@ -8,7 +8,7 @@ namespace acid {
  * @brief InputAxis input from a joystick input device.
  */
 class ACID_EXPORT JoystickInputAxis : public InputAxis::Registrar<JoystickInputAxis> {
-	inline static const bool Registered = Register("joystick");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new axis joystick.

@@ -7,6 +7,8 @@
 #include <Maths/Maths.hpp>
 
 namespace test {
+	const bool Rotate::Registered = Register("rotate");
+
 Rotate::Rotate(const Vector3f &direction, const int &test) :
 	direction(direction),
 	test(test) {

@@ -4,6 +4,8 @@
 #include "Maths/Vector2.hpp"
 
 namespace acid {
+const bool SphereEmitter::Registered = Register("sphere");
+
 SphereEmitter::SphereEmitter(float radius) :
 	radius(radius) {
 }

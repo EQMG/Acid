@@ -1,6 +1,8 @@
 #include "AxisInputButton.hpp"
 
 namespace acid {
+const bool AxisInputButton::Registered = Register("axis");
+
 AxisInputButton::AxisInputButton(std::unique_ptr<InputAxis> &&axis, float min, float max) :
 	axis(std::move(axis)),
 	min(min),

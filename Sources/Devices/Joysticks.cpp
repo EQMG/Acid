@@ -5,6 +5,8 @@
 namespace acid {
 static_assert(GLFW_JOYSTICK_LAST == static_cast<int16_t>(JoystickPort::Last), "GLFW joystick port count does not match our joystick port enum count.");
 
+const bool Joysticks::Registered = Register(Stage::Pre, Requires<Window>());
+
 void CallbackJoystick(int32_t id, int32_t event) {
 	if (event == GLFW_CONNECTED) {
 		Log::Out("Joystick connected: '", glfwGetJoystickName(id), "' to ", id, '\n');

@@ -7,6 +7,8 @@
 #include "Shadows.hpp"
 
 namespace acid {
+const bool ShadowRender::Registered = Register("shadowRender");
+
 ShadowRender::ShadowRender() {
 }
 

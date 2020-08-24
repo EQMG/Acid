@@ -7,6 +7,8 @@
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
+const bool Window::Registered = Register(Stage::Pre);
+
 void CallbackError(int32_t error, const char *description) {
 	Window::CheckGlfw(error);
 	Log::Error("GLFW error: ", description, ", ", error, '\n');

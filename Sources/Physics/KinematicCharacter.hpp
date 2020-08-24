@@ -13,7 +13,7 @@ namespace acid {
  * @brief Represents a kinematic character controller.
  */
 class ACID_EXPORT KinematicCharacter : public Component::Registrar<KinematicCharacter>, public CollisionObject {
-	inline static const bool Registered = Register("kinematicCharacter");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new kinematic character controller.

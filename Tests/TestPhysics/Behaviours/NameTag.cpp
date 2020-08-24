@@ -6,8 +6,10 @@
 #include <Uis/Drivers/ConstantDriver.hpp>
 
 namespace test {
-static const float TEXT_SIZE = 8.0f;
-static const float VIEW_DISTANCE = 16.0f;
+constexpr float TEXT_SIZE = 8.0f;
+constexpr float VIEW_DISTANCE = 16.0f;
+
+const bool NameTag::Registered = Register("heightDespawn");
 
 NameTag::NameTag(const std::string &name, float heightOffset) :
 	name(name),

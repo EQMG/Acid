@@ -3,6 +3,8 @@
 #include <iomanip>
 
 namespace acid {
+const bool Inputs::Registered = Register(Stage::Pre, Requires<Joysticks, Keyboard, Mouse>());
+
 Inputs::Inputs() :
 	nullScheme(std::make_unique<InputScheme>()),
 	currentScheme(nullScheme.get()) {

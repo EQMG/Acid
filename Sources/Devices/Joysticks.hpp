@@ -42,7 +42,7 @@ using JoystickHat = uint8_t;
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
 class ACID_EXPORT Joysticks : public Module::Registrar<Joysticks> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
+	static const bool Registered;
 public:
 	Joysticks();
 

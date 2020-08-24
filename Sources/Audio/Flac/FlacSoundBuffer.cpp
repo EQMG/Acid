@@ -12,6 +12,8 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
+const bool FlacSoundBuffer::Registered = Register(".flac");
+
 void FlacSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();

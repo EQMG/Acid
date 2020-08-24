@@ -37,7 +37,7 @@ private:
  * @brief Module used for timed events.
  */
 class ACID_EXPORT Timers : public Module::Registrar<Timers> {
-	inline static const bool Registered = Register(Stage::Post);
+	static const bool Registered;
 public:
 	Timers();
 	~Timers();

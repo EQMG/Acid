@@ -6,7 +6,7 @@ class btConeShape;
 
 namespace acid {
 class ACID_EXPORT ConeCollider : public Collider::Registrar<ConeCollider> {
-	inline static const bool Registered = Register("cone");
+	static const bool Registered;
 public:
 	explicit ConeCollider(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 	~ConeCollider();

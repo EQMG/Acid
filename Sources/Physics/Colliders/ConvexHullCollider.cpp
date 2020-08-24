@@ -4,6 +4,8 @@
 #include "Meshes/Mesh.hpp"
 
 namespace acid {
+const bool ConvexHullCollider::Registered = Register("convexHull");
+
 ConvexHullCollider::ConvexHullCollider(const std::vector<float> &pointCloud, const Transform &localTransform) /*:
 	Collider(localTransform)*/ {
 	this->localTransform = localTransform;

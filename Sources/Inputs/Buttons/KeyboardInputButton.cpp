@@ -1,6 +1,8 @@
 #include "KeyboardInputButton.hpp"
 
 namespace acid {
+const bool KeyboardInputButton::Registered = Register("keyboard");
+
 KeyboardInputButton::KeyboardInputButton(Key key) :
 	key(key) {
 	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {

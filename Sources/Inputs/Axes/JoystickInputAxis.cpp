@@ -1,6 +1,8 @@
 #include "JoystickInputAxis.hpp"
 
 namespace acid {
+const bool JoystickInputAxis::Registered = Register("joystick");
+
 JoystickInputAxis::JoystickInputAxis(JoystickPort port, JoystickAxis axis) :
 	port(port),
 	axis(axis) {

@@ -1,6 +1,8 @@
 #include "CompoundInputAxis.hpp"
 
 namespace acid {
+const bool CompoundInputAxis::Registered = Register("compound");
+
 CompoundInputAxis::CompoundInputAxis(std::vector<std::unique_ptr<InputAxis>> &&axes) :
 	axes(std::move(axes)) {
 	ConnectAxes();

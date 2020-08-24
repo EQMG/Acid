@@ -4,6 +4,8 @@
 #include "Maths/Transform.hpp"
 
 namespace acid {
+const bool DefaultMaterial::Registered = Register("default");
+
 DefaultMaterial::DefaultMaterial(const Colour &baseDiffuse, std::shared_ptr<Image2d> imageDiffuse, float metallic, float roughness,
 	std::shared_ptr<Image2d> imageMaterial, std::shared_ptr<Image2d> imageNormal, bool castsShadows, bool ignoreLighting, bool ignoreFog) :
 	baseDiffuse(baseDiffuse),

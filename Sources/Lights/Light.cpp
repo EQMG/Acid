@@ -3,6 +3,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+const bool Light::Registered = Register("light");
+
 Light::Light(const Colour &colour, float radius) :
 	colour(colour),
 	radius(radius) {

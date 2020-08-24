@@ -1,6 +1,8 @@
 #include "Timers.hpp"
 
 namespace acid {
+const bool Timers::Registered = Register(Stage::Post);
+
 Timers::Timers() {
 	std::unique_lock<std::mutex> lock(mutex);
 	worker = std::thread(std::bind(&Timers::ThreadRun, this));

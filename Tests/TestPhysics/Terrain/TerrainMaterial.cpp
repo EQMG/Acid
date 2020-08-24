@@ -3,6 +3,8 @@
 #include <Maths/Transform.hpp>
 
 namespace test {
+const bool TerrainMaterial::Registered = Register("terrain");
+
 TerrainMaterial::TerrainMaterial(std::shared_ptr<Image2d> imageR, std::shared_ptr<Image2d> imageG) :
 	imageR(std::move(imageR)),
 	imageG(std::move(imageG)) {

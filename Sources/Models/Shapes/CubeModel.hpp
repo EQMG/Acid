@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a cube model.
  */
 class ACID_EXPORT CubeModel : public Model::Registrar<CubeModel> {
-	inline static const bool Registered = Register("cube");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new cube model, or finds one with the same values.

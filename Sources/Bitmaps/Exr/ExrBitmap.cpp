@@ -8,6 +8,8 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
+const bool ExrBitmap::Registered = Register(".exr");
+
 void ExrBitmap::Load(Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();

@@ -4,6 +4,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool CubeModel::Registered = Register("cube");
+
 std::shared_ptr<CubeModel> CubeModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<CubeModel>(node))
 		return resource;

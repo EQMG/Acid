@@ -6,7 +6,7 @@ class btCylinderShape;
 
 namespace acid {
 class ACID_EXPORT CylinderCollider : public Collider::Registrar<CylinderCollider> {
-	inline static const bool Registered = Register("cylinder");
+	static const bool Registered;
 public:
 	explicit CylinderCollider(float radius = 1.0f, float height = 1.0f, const Transform &localTransform = {});
 	~CylinderCollider();

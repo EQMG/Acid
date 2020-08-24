@@ -5,6 +5,8 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+const bool Mesh::Registered = Register("mesh");
+
 Mesh::Mesh(std::shared_ptr<Model> model, std::unique_ptr<Material> &&material) :
 	model(std::move(model)),
 	material(std::move(material)) {

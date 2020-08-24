@@ -6,7 +6,7 @@ using namespace acid;
 
 namespace test {
 class FpsPlayer : public Component::Registrar<FpsPlayer> {
-	inline static const bool Registered = Register("fpsPlayer");
+	static const bool Registered;
 public:
 	FpsPlayer();
 

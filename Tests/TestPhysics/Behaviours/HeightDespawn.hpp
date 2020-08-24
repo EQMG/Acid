@@ -7,7 +7,7 @@ using namespace acid;
 
 namespace test {
 class HeightDespawn : public Component::Registrar<HeightDespawn> {
-	inline static const bool Registered = Register("heightDespawn");
+	static const bool Registered;
 public:
 	explicit HeightDespawn(float removeHeight = -100.0f);
 

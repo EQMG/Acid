@@ -12,7 +12,7 @@ namespace acid {
  * @brief Class that represents an animated armature with a skin mesh.
  */
 class ACID_EXPORT AnimatedMesh : public Component::Registrar<AnimatedMesh> {
-	inline static const bool Registered = Register("animatedMesh");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new animated mesh component.

@@ -161,6 +161,8 @@ FStream::~FStream() {
 	delete rdbuf();
 }
 
+const bool Files::Registered = Register(Stage::Post);
+
 Files::Files() {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
 	// TODO: Only when not installed. 

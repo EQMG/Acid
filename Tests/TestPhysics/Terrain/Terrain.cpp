@@ -5,6 +5,8 @@
 #include <Physics/Rigidbody.hpp>
 
 namespace test {
+const bool Terrain::Registered = Register("terrain");
+
 Terrain::Terrain(float sideLength, float squareSize) :
 	noise(25653345),
 	sideLength(sideLength),

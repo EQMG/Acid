@@ -1,6 +1,8 @@
 #include "Resources.hpp"
 
 namespace acid {
+const bool Resources::Registered = Register(Stage::Post, Requires<Files>());
+
 Resources::Resources() :
 	elapsedPurge(5s) {
 }

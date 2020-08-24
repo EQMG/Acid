@@ -9,7 +9,7 @@ namespace acid {
  * @brief Class that represents the default material shader.
  */
 class ACID_EXPORT DefaultMaterial : public Material::Registrar<DefaultMaterial> {
-	inline static const bool Registered = Register("default");
+	static const bool Registered;
 public:
 	explicit DefaultMaterial(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,
 		float roughness = 0.0f, std::shared_ptr<Image2d> imageMaterial = nullptr, std::shared_ptr<Image2d> imageNormal = nullptr, bool castsShadows = true,

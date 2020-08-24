@@ -8,7 +8,7 @@ using namespace acid;
 
 namespace test {
 class CelestialBody : public Component::Registrar<CelestialBody> {
-	inline static const bool Registered = Register("celestialBody");
+	static const bool Registered;
 public:
 	enum class Type {
 		Sun, Moon

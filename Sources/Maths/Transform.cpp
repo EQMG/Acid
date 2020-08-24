@@ -3,6 +3,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+const bool Transform::Registered = Register("transform");
+
 Transform::Transform(const Vector3f &position, const Vector3f &rotation, const Vector3f &scale) :
 	position(position),
 	rotation(rotation),

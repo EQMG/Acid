@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Engine/Engine.hpp"
-#include "Graphics/Graphics.hpp"
 #include "Scene.hpp"
 
 namespace acid {
@@ -9,8 +8,7 @@ namespace acid {
  * @brief Module used for managing game scenes.
  */
 class ACID_EXPORT Scenes : public Module::Registrar<Scenes> {
-	// TODO: Scenes should not require Graphics, this is because of Material and Mesh components.
-	inline static const bool Registered = Register(Stage::Normal, Requires<Graphics>());
+	static const bool Registered;
 public:
 	Scenes();
 

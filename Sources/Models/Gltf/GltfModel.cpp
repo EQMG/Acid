@@ -7,6 +7,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool GltfModel::Registered = Register("gltf", ".gltf");
+
 std::shared_ptr<GltfModel> GltfModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<GltfModel>(node))
 		return resource;

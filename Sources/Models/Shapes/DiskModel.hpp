@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a disk model.
  */
 class ACID_EXPORT DiskModel : public Model::Registrar<DiskModel> {
-	inline static const bool Registered = Register("disk");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new disk model, or finds one with the same values.

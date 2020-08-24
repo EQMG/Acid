@@ -1,6 +1,9 @@
 #include "JoystickHatInput.hpp"
 
 namespace acid {
+const bool JoystickHatInput::Registered = InputAxis::Registrar<JoystickHatInput>::Register("joystickHat") &&
+		InputButton::Registrar<JoystickHatInput>::Register("joystickHat");
+
 JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const bitmask::bitmask<JoystickHatValue> &hatFlags) :
 	port(port),
 	hat(hat),

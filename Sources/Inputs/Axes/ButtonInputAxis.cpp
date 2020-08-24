@@ -1,6 +1,8 @@
 #include "ButtonInputAxis.hpp"
 
 namespace acid {
+const bool ButtonInputAxis::Registered = Register("button");
+
 ButtonInputAxis::ButtonInputAxis(std::unique_ptr<InputButton> &&negative, std::unique_ptr<InputButton> &&positive) :
 	negative(std::move(negative)),
 	positive(std::move(positive)) {

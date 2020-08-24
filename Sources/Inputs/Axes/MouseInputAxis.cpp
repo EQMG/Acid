@@ -3,6 +3,8 @@
 #include "Devices/Mouse.hpp"
 
 namespace acid {
+const bool MouseInputAxis::Registered = Register("mouse");
+
 MouseInputAxis::MouseInputAxis(uint8_t axis) :
 	axis(axis) {
 	Mouse::Get()->OnPosition().connect(this, [this](Vector2d value) {

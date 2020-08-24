@@ -8,6 +8,8 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
+const bool JpgBitmap::Registered = Register(".jpg", ".jpeg");
+
 void JpgBitmap::Load(Bitmap &bitmap, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();

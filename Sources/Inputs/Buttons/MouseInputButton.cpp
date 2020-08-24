@@ -1,6 +1,8 @@
 #include "MouseInputButton.hpp"
 
 namespace acid {
+const bool MouseInputButton::Registered = Register("mouse");
+
 MouseInputButton::MouseInputButton(MouseButton button) :
 	button(button) {
 	Mouse::Get()->OnButton().connect(this, [this](MouseButton button, InputAction action, bitmask::bitmask<InputMod> mods) {

@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 
 namespace acid {
+const bool CubeCollider::Registered = Register("cube");
+
 CubeCollider::CubeCollider(const Vector3f &extents, const Transform &localTransform) :
 	//Collider(localTransform),
 	shape(std::make_unique<btBoxShape>(Convert(extents / 2.0f))),

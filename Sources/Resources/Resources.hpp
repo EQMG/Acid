@@ -14,7 +14,7 @@ namespace acid {
  * a existing resource is queried by node value.
  */
 class ACID_EXPORT Resources : public Module::Registrar<Resources> {
-	inline static const bool Registered = Register(Stage::Post, Requires<Files>());
+	static const bool Registered;
 public:
 	Resources();
 

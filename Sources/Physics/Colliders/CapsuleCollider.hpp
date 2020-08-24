@@ -6,7 +6,7 @@ class btCapsuleShape;
 
 namespace acid {
 class ACID_EXPORT CapsuleCollider : public Collider::Registrar<CapsuleCollider> {
-	inline static const bool Registered = Register("capsule");
+	static const bool Registered;
 public:
 	explicit CapsuleCollider(float radius = 0.5f, float height = 1.0f, const Transform &localTransform = {});
 	~CapsuleCollider();

@@ -12,6 +12,8 @@
 #include "Physics.hpp"
 
 namespace acid {
+const bool Rigidbody::Registered = Register("rigidbody");
+
 Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
 	CollisionObject({}, mass, friction, linearFactor, angularFactor) {
 	AddCollider(std::move(collider));

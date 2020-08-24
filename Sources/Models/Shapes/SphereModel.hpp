@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a sphere model.
  */
 class ACID_EXPORT SphereModel : public Model::Registrar<SphereModel> {
-	inline static const bool Registered = Register("sphere");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new sphere model, or finds one with the same values.

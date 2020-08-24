@@ -12,6 +12,8 @@
 #include "Maths/Time.hpp"
 
 namespace acid {
+const bool OggSoundBuffer::Registered = Register(".ogg");
+
 void OggSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();

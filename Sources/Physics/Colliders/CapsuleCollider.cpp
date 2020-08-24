@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
 
 namespace acid {
+const bool CapsuleCollider::Registered = Register("capsule");
+
 CapsuleCollider::CapsuleCollider(float radius, float height, const Transform &localTransform) :
 	//Collider(localTransform),
 	shape(std::make_unique<btCapsuleShape>(radius, height)),

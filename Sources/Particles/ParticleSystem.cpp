@@ -7,6 +7,8 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
+const bool ParticleSystem::Registered = Register("particleSystem");
+
 ParticleSystem::ParticleSystem(std::vector<std::shared_ptr<ParticleType>> types, std::vector<std::unique_ptr<Emitter>> &&emitters,
 	float pps, float averageSpeed, float gravityEffect) :
 	types(std::move(types)),

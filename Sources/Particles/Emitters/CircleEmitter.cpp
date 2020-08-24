@@ -3,6 +3,8 @@
 #include "Scenes/Entity.hpp"
 
 namespace acid {
+const bool CircleEmitter::Registered = Register("circle");
+
 CircleEmitter::CircleEmitter(float radius, const Vector3f &heading) :
 	radius(radius),
 	heading(heading.Normalize()) {

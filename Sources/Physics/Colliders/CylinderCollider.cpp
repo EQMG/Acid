@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btCylinderShape.h>
 
 namespace acid {
+const bool CylinderCollider::Registered = Register("cylinder");
+
 CylinderCollider::CylinderCollider(float radius, float height, const Transform &localTransform) :
 	//Collider(localTransform),
 	shape(std::make_unique<btCylinderShape>(btVector3(radius, height / 2.0f, radius))),

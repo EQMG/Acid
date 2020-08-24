@@ -7,6 +7,8 @@
 #include "Subrender.hpp"
 
 namespace acid {
+const bool Graphics::Registered = Register(Stage::Render, Requires<Window>());
+
 Graphics::Graphics() :
 	elapsedPurge(5s),
 	instance(std::make_unique<Instance>()),

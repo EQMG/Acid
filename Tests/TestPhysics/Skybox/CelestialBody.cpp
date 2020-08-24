@@ -14,6 +14,8 @@ static constexpr Colour SUN_COLOUR_DAY(0xFFFFFF);
 static constexpr Colour MOON_COLOUR_NIGHT(0x666699);
 static constexpr Colour MOON_COLOUR_DAY(0x000000);
 
+const bool CelestialBody::Registered = Register("celestialBody");
+
 CelestialBody::CelestialBody(Type type) :
 	type(type) {
 }

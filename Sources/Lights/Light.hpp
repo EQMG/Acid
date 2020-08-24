@@ -9,7 +9,7 @@ namespace acid {
  * @brief Component that represents a point light.
  */
 class ACID_EXPORT Light : public Component::Registrar<Light> {
-	inline static const bool Registered = Register("light");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new point light.

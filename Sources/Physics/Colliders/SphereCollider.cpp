@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 
 namespace acid {
+const bool SphereCollider::Registered = Register("sphere");
+
 SphereCollider::SphereCollider(float radius, const Transform &localTransform) :
 	//Collider(localTransform),
 	shape(std::make_unique<btSphereShape>(radius)),

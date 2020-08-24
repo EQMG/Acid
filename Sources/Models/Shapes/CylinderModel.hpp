@@ -7,7 +7,7 @@ namespace acid {
  * @brief Resource that represents a cylinder model.
  */
 class ACID_EXPORT CylinderModel : public Model::Registrar<CylinderModel> {
-	inline static const bool Registered = Register("cylinder");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new cylinder model, or finds one with the same values.

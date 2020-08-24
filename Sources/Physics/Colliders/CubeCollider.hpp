@@ -6,7 +6,7 @@ class btBoxShape;
 
 namespace acid {
 class ACID_EXPORT CubeCollider : public Collider::Registrar<CubeCollider> {
-	inline static const bool Registered = Register("cube");
+	static const bool Registered;
 public:
 	explicit CubeCollider(const Vector3f &extents = Vector3f(1.0f), const Transform &localTransform = {});
 	~CubeCollider();

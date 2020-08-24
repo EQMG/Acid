@@ -1,6 +1,8 @@
 #include "JoystickInputButton.hpp"
 
 namespace acid {
+const bool JoystickInputButton::Registered = Register("joystick");
+
 JoystickInputButton::JoystickInputButton(JoystickPort port, JoystickButton button) :
 	port(port),
 	button(button) {

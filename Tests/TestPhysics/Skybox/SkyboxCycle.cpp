@@ -6,7 +6,9 @@
 #include "World/World.hpp"
 
 namespace test {
-static const Colour SKYBOX_COLOUR_DAY(0x003C8A);
+constexpr Colour SKYBOX_COLOUR_DAY = 0x003C8A;
+
+const bool SkyboxCycle::Registered = Register("skyboxCycle");
 
 SkyboxCycle::SkyboxCycle(bool enableFog, bool enableRotation) :
 	enableFog(enableFog),

@@ -4,7 +4,7 @@
 
 namespace acid {
 class ACID_EXPORT CircleEmitter : public Emitter::Registrar<CircleEmitter> {
-	inline static const bool Registered = Register("circle");
+	static const bool Registered;
 public:
 	explicit CircleEmitter(float radius = 1.0f, const Vector3f &heading = Vector3f::Up);
 

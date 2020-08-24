@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btConeShape.h>
 
 namespace acid {
+const bool ConeCollider::Registered = Register("cone");
+
 ConeCollider::ConeCollider(float radius, float height, const Transform &localTransform) :
 	//Collider(localTransform),
 	shape(std::make_unique<btConeShape>(radius, height)),

@@ -8,7 +8,7 @@ namespace acid {
  * @brief Module used for managing abstract inputs organized in schemes.
  */
 class ACID_EXPORT Inputs : public Module::Registrar<Inputs> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Joysticks, Keyboard, Mouse>());
+	static const bool Registered;
 public:
 	Inputs();
 

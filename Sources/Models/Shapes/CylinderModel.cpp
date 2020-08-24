@@ -5,6 +5,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool CylinderModel::Registered = Register("cylinder");
+
 std::shared_ptr<CylinderModel> CylinderModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<CylinderModel>(node))
 		return resource;

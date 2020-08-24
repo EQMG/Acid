@@ -7,7 +7,7 @@ namespace acid {
  * @brief InputAxis input from a mouse.
  */
 class ACID_EXPORT MouseInputAxis : public InputAxis::Registrar<MouseInputAxis> {
-	inline static const bool Registered = Register("mouse");
+	static const bool Registered;
 public:
 	/**
 	 * Creates a new axis mouse.

@@ -3,6 +3,8 @@
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 
 namespace acid {
+const bool HeightfieldCollider::Registered = Register("heightfield");
+
 HeightfieldCollider::HeightfieldCollider(int32_t heightStickWidth, int32_t heightStickLength, const void *heightfieldData, float minHeight,
 	float maxHeight, bool flipQuadEdges, const Transform &localTransform) /*:
 	Collider(localTransform)*/ {

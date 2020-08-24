@@ -7,7 +7,7 @@ class btConvexHullShape;
 
 namespace acid {
 class ACID_EXPORT ConvexHullCollider : public Collider::Registrar<ConvexHullCollider> {
-	inline static const bool Registered = Register("convexHull");
+	static const bool Registered;
 public:
 	explicit ConvexHullCollider(const std::vector<float> &pointCloud = {}, const Transform &localTransform = {});
 	~ConvexHullCollider();

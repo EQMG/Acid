@@ -4,7 +4,7 @@
 
 namespace acid {
 class ACID_EXPORT LineEmitter : public Emitter::Registrar<LineEmitter> {
-	inline static const bool Registered = Register("line");
+	static const bool Registered;
 public:
 	explicit LineEmitter(float length = 1.0f, const Vector3f &axis = Vector3f::Right);
 

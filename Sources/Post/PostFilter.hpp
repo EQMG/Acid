@@ -40,7 +40,7 @@ protected:
 	 */
 	void PushConditional(const std::string &descriptorName1, const std::string &descriptorName2, const std::string &rendererAttachment1, const std::string &rendererAttachment2);
 
-	inline static uint32_t GlobalSwitching = 0;
+	static uint32_t GlobalSwitching;
 
 	DescriptorsHandler descriptorSet;
 	PipelineGraphics pipeline;

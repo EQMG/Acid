@@ -12,6 +12,8 @@
 #include "Maths/Transform.hpp"
 
 namespace acid {
+const bool AnimatedMesh::Registered = Register("animatedMesh");
+
 AnimatedMesh::AnimatedMesh(std::filesystem::path filename, std::unique_ptr<Material> &&material) :
 	material(std::move(material)),
 	filename(std::move(filename)) {

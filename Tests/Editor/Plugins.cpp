@@ -9,6 +9,8 @@
 #include <Uis/Uis.hpp>
 
 namespace test {
+const bool Plugins::Registered = Register(Stage::Always, Requires<Files>());
+
 Plugins::Plugins() :
 	loadedPath(std::filesystem::current_path() / CR_PLUGIN("EditorTest")),
 	fileObserver(loadedPath, 0.5s),

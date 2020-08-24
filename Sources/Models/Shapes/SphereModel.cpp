@@ -5,6 +5,8 @@
 #include "Models/Vertex3d.hpp"
 
 namespace acid {
+const bool SphereModel::Registered = Register("sphere");
+
 std::shared_ptr<SphereModel> SphereModel::Create(const Node &node) {
 	if (auto resource = Resources::Get()->Find<SphereModel>(node))
 		return resource;
