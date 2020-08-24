@@ -239,7 +239,7 @@ target_compile_definitions(Acid
 target_compile_options(Acid
 		PUBLIC
 		# Disables symbol warnings.
-		$<$<CXX_COMPILER_ID:MSVC>:/wd4018 /wd4244 /wd4251 /wd4267 /wd4275 /wd4996>
+		$<$<CXX_COMPILER_ID:MSVC>:/wd4018 /wd4067 /wd4244 /wd4251 /wd4267 /wd4275 /wd4996>
 		# Enabled SSE2 for MSVC for 32-bit.
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2

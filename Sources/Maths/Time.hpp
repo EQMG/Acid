@@ -114,12 +114,12 @@ public:
 	 * @tparam format The format to put the time into.
 	 * @return The date time as a string.
 	 */
-	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S") {
+	static std::string GetDateTime(std::string_view format = "%Y-%m-%d %H:%M:%S") {
 		auto now = std::chrono::system_clock::now();
 		auto timeT = std::chrono::system_clock::to_time_t(now);
 
 		std::stringstream ss;
-		ss << std::put_time(std::localtime(&timeT), format.c_str());
+		ss << std::put_time(std::localtime(&timeT), format.data());
 		return ss.str();
 	}
 

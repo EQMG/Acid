@@ -48,7 +48,7 @@ public:
 		static constexpr std::string_view White = "\033[97m";
 	};
 
-	static constexpr auto TimestampFormat = "%H:%M:%S";
+	static constexpr std::string_view TimestampFormat = "%H:%M:%S";
 
 	/**
 	 * Outputs a message into the console.
