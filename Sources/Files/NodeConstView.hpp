@@ -60,6 +60,8 @@ public:
 
 	std::string GetName() const;
 	
+	NodeType GetType() const;
+	
 protected:
 	const Node *parent = nullptr;
 	const Node *value = nullptr;

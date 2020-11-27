@@ -1,4 +1,4 @@
-/* stb_image - v2.25 - public domain image loader - http://nothings.org/stb
+/* stb_image - v2.26 - public domain image loader - http://nothings.org/stb
                                   no warranty implied; use at your own risk
 
    Do this:
@@ -48,6 +48,7 @@ LICENSE
 
 RECENT REVISION HISTORY:
 
+      2.26  (2020-07-13) many minor fixes
       2.25  (2020-02-02) fix warnings
       2.24  (2020-02-02) fix warnings; thread-local failure_reason and flip_vertically
       2.23  (2019-08-11) fix clang static analysis warning
@@ -93,22 +94,30 @@ RECENT REVISION HISTORY:
     Carmelo J Fdez-Aguera
 
  Bug & warning fixes
-    Marc LeBlanc            David Woo          Guillaume George   Martins Mozeiko
-    Christpher Lloyd        Jerry Jansson      Joseph Thomson     Phil Jordan
-    Dave Moore              Roy Eltham         Hayaki Saito       Nathan Reed
-    Won Chun                Luke Graham        Johan Duparc       Nick Verigakis
-    the Horde3D community   Thomas Ruf         Ronny Chevalier    github:rlyeh
-    Janez Zemva             John Bartholomew   Michal Cichon      github:romigrou
-    Jonathan Blow           Ken Hamada         Tero Hanninen      github:svdijk
-    Laurent Gomila          Cort Stratton      Sergio Gonzalez    github:snagar
-    Aruelien Pocheville     Thibault Reuille   Cass Everitt       github:Zelex
-    Ryamond Barbiero        Paul Du Bois       Engin Manap        github:grim210
-    Aldo Culquicondor       Philipp Wiesemann  Dale Weiler        github:sammyhw
-    Oriol Ferrer Mesia      Josh Tobin         Matthew Gregan     github:phprus
-    Julian Raschke          Gregory Mullen     Baldur Karlsson    github:poppolopoppo
-    Christian Floisand      Kevin Schmidt      JR Smith           github:darealshinji
-    Brad Weinberger         Matvey Cherevko                       github:Michaelangel007
-    Blazej Dariusz Roszkowski                  Alexander Veselov
+    Marc LeBlanc            David Woo          Guillaume George     Martins Mozeiko
+    Christpher Lloyd        Jerry Jansson      Joseph Thomson       Blazej Dariusz Roszkowski
+    Phil Jordan                                Dave Moore           Roy Eltham
+    Hayaki Saito            Nathan Reed        Won Chun
+    Luke Graham             Johan Duparc       Nick Verigakis       the Horde3D community
+    Thomas Ruf              Ronny Chevalier                         github:rlyeh
+    Janez Zemva             John Bartholomew   Michal Cichon        github:romigrou
+    Jonathan Blow           Ken Hamada         Tero Hanninen        github:svdijk
+                            Laurent Gomila     Cort Stratton        github:snagar
+    Aruelien Pocheville     Sergio Gonzalez    Thibault Reuille     github:Zelex
+    Cass Everitt            Ryamond Barbiero                        github:grim210
+    Paul Du Bois            Engin Manap        Aldo Culquicondor    github:sammyhw
+    Philipp Wiesemann       Dale Weiler        Oriol Ferrer Mesia   github:phprus
+    Josh Tobin                                 Matthew Gregan       github:poppolopoppo
+    Julian Raschke          Gregory Mullen     Christian Floisand   github:darealshinji
+    Baldur Karlsson         Kevin Schmidt      JR Smith             github:Michaelangel007
+                            Brad Weinberger    Matvey Cherevko      [reserved]
+    Luca Sas                Alexander Veselov  Zack Middleton       [reserved]
+    Ryan C. Gordon          [reserved]                              [reserved]
+                     DO NOT ADD YOUR NAME HERE
+
+  To add your name to the credits, pick a random blank space in the middle and fill it.
+  80% of merge conflicts on stb PRs are due to people adding their name at the end
+  of the credits.
 */
 
 #ifndef STBI_INCLUDE_STB_IMAGE_H
@@ -318,7 +327,14 @@ RECENT REVISION HISTORY:
 //   - If you use STBI_NO_PNG (or _ONLY_ without PNG), and you still
 //     want the zlib decoder to be available, #define STBI_SUPPORT_ZLIB
 //
-
+//  - If you define STBI_MAX_DIMENSIONS, stb_image will reject images greater
+//    than that size (in either width or height) without further processing.
+//    This is to let programs in the wild set an upper bound to prevent
+//    denial-of-service attacks on untrusted data, as one could generate a
+//    valid image of gigantic dimensions and force stb_image to allocate a
+//    huge block of memory and spend disproportionate time decoding it. By
+//    default this is set to (1 << 24), which is 16777216, but that's still
+//    very big.
 
 #ifndef STBI_NO_STDIO
 #include <stdio.h>

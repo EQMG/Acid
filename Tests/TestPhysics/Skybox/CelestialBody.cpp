@@ -7,12 +7,12 @@
 #include "Maths/Transform.hpp"
 
 namespace test {
-static constexpr Colour SUN_COLOUR_SUNRISE(0xEE9A90);
-static constexpr Colour SUN_COLOUR_NIGHT(0x0D0D1A);
-static constexpr Colour SUN_COLOUR_DAY(0xFFFFFF);
+constexpr static Colour SUN_COLOUR_SUNRISE(0xEE9A90);
+constexpr static Colour SUN_COLOUR_NIGHT(0x0D0D1A);
+constexpr static Colour SUN_COLOUR_DAY(0xFFFFFF);
 			
-static constexpr Colour MOON_COLOUR_NIGHT(0x666699);
-static constexpr Colour MOON_COLOUR_DAY(0x000000);
+constexpr static Colour MOON_COLOUR_NIGHT(0x666699);
+constexpr static Colour MOON_COLOUR_DAY(0x000000);
 
 CelestialBody::CelestialBody(Type type) :
 	type(type) {

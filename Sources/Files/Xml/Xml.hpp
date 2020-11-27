@@ -7,6 +7,7 @@
 namespace acid {
 class ACID_EXPORT Xml : public NodeFormatType<Xml> {
 public:
+	// Do not call Load and Write directly, use Node::ParseString<Xml> and Node::WriteStream<Xml>.
 	static void Load(Node &node, std::string_view string);
 	static void Write(const Node &node, std::ostream &stream, Format format = Minified);
 

@@ -14,7 +14,7 @@ namespace acid {
 class ACID_EXPORT Maths {
 public:
 	template<typename T>
-	static constexpr T PI = static_cast<T>(3.14159265358979323846264338327950288L);
+	constexpr static T PI = static_cast<T>(3.14159265358979323846264338327950288L);
 
 	Maths() = delete;
 
@@ -49,7 +49,7 @@ public:
 	 * @return The radians value.
 	 */
 	template<typename T = float>
-	static constexpr T Radians(const T &degrees) {
+	constexpr static T Radians(const T &degrees) {
 		return static_cast<T>(degrees * PI<long double> / 180);
 	}
 
@@ -60,7 +60,7 @@ public:
 	 * @return The degrees value.
 	 */
 	template<typename T = float>
-	static constexpr T Degrees(const T &radians) {
+	constexpr static T Degrees(const T &radians) {
 		return static_cast<T>(radians * 180 / PI<long double>);
 	}
 
@@ -147,7 +147,7 @@ public:
 	 * @return The changed value.
 	 */
 	template<typename T = float, typename K = float>
-	static constexpr auto SmoothDamp(const T &current, const T &target, const K &rate) {
+	constexpr static auto SmoothDamp(const T &current, const T &target, const K &rate) {
 		return current + ((target - current) * rate);
 	}
 
@@ -161,7 +161,7 @@ public:
 	 * @return Returns a interpolation value.
 	 */
 	template<typename T = float, typename K = float>
-	static constexpr auto Lerp(const T &a, const T &b, const K &factor) {
+	constexpr static auto Lerp(const T &a, const T &b, const K &factor) {
 		return a * (1 - factor) + b * factor;
 	}
 
@@ -191,7 +191,7 @@ public:
 	 * @return The resulting stepped value.
 	 */
 	template<typename T = float, typename K = float>
-	static constexpr auto SmoothlyStep(const T &edge0, const T &edge1, const K &x) {
+	constexpr static auto SmoothlyStep(const T &edge0, const T &edge1, const K &x) {
 		auto s = std::clamp((x - edge0) / (edge1 - edge0), 0, 1);
 		return s * s * (3 - 2 * s);
 	}

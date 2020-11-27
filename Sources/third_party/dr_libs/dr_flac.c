@@ -4,7 +4,7 @@
 #define dr_flac_c
 
 /* Disable some annoying warnings. */
-#if defined(__GNUC__)
+#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
     #pragma GCC diagnostic push
     #if __GNUC__ >= 7
     #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
@@ -39,6 +39,8 @@
     #else
         #define DRFLAC_INLINE inline __attribute__((always_inline))
     #endif
+#elif defined(__WATCOMC__)
+    #define DRFLAC_INLINE __inline
 #else
     #define DRFLAC_INLINE
 #endif
@@ -52,7 +54,15 @@
     #define DRFLAC_ARM
 #endif
 
-/* Intrinsics Support */
+/*
+Intrinsics Support
+
+There's a bug in GCC 4.2.x which results in an incorrect compilation error when using _mm_slli_epi32() where it complains with
+
+    "error: shift must be an immediate"
+
+Unfortuantely dr_flac depends on this for a few things so we're just going to disable SSE on GCC 4.2 and below.
+*/
 #if !defined(DR_FLAC_NO_SIMD)
     #if defined(DRFLAC_X64) || defined(DRFLAC_X86)
         #if defined(_MSC_VER) && !defined(__clang__)
@@ -63,7 +73,7 @@
             #if _MSC_VER >= 1600 && !defined(DRFLAC_NO_SSE41)   /* 2010 */
                 #define DRFLAC_SUPPORT_SSE41
             #endif
-        #else
+        #elif defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)))
             /* Assume GNUC-style. */
             #if defined(__SSE2__) && !defined(DRFLAC_NO_SSE2)
                 #define DRFLAC_SUPPORT_SSE2
@@ -513,14 +523,15 @@ static DRFLAC_INLINE drflac_uint64 drflac__swap_endian_uint64(drflac_uint64 n)
         #error "This compiler does not support the byte swap intrinsic."
     #endif
 #else
-    return ((n & (drflac_uint64)0xFF00000000000000) >> 56) |
-           ((n & (drflac_uint64)0x00FF000000000000) >> 40) |
-           ((n & (drflac_uint64)0x0000FF0000000000) >> 24) |
-           ((n & (drflac_uint64)0x000000FF00000000) >>  8) |
-           ((n & (drflac_uint64)0x00000000FF000000) <<  8) |
-           ((n & (drflac_uint64)0x0000000000FF0000) << 24) |
-           ((n & (drflac_uint64)0x000000000000FF00) << 40) |
-           ((n & (drflac_uint64)0x00000000000000FF) << 56);
+    /* Weird "<< 32" bitshift is required for C89 because it doesn't support 64-bit constants. Should be optimized out by a good compiler. */
+    return ((n & ((drflac_uint64)0xFF000000 << 32)) >> 56) |
+           ((n & ((drflac_uint64)0x00FF0000 << 32)) >> 40) |
+           ((n & ((drflac_uint64)0x0000FF00 << 32)) >> 24) |
+           ((n & ((drflac_uint64)0x000000FF << 32)) >>  8) |
+           ((n & ((drflac_uint64)0xFF000000      )) <<  8) |
+           ((n & ((drflac_uint64)0x00FF0000      )) << 24) |
+           ((n & ((drflac_uint64)0x0000FF00      )) << 40) |
+           ((n & ((drflac_uint64)0x000000FF      )) << 56);
 #endif
 }
 
@@ -1074,7 +1085,6 @@ static DRFLAC_INLINE drflac_bool32 drflac__read_uint32(drflac_bs* bs, unsigned i
 static drflac_bool32 drflac__read_int32(drflac_bs* bs, unsigned int bitCount, drflac_int32* pResult)
 {
     drflac_uint32 result;
-    drflac_uint32 signbit;
 
     DRFLAC_ASSERT(bs != NULL);
     DRFLAC_ASSERT(pResult != NULL);
@@ -1085,8 +1095,12 @@ static drflac_bool32 drflac__read_int32(drflac_bs* bs, unsigned int bitCount, dr
         return DRFLAC_FALSE;
     }
 
-    signbit = ((result >> (bitCount-1)) & 0x01);
-    result |= (~signbit + 1) << bitCount;
+    /* Do not attempt to shift by 32 as it's undefined. */
+    if (bitCount < 32) {
+        drflac_uint32 signbit;
+        signbit = ((result >> (bitCount-1)) & 0x01);
+        result |= (~signbit + 1) << bitCount;
+    }
 
     *pResult = (drflac_int32)result;
     return DRFLAC_TRUE;
@@ -4422,6 +4436,9 @@ static drflac_bool32 drflac__seek_to_approximate_flac_frame_to_byte(drflac* pFla
     *pLastSuccessfulSeekOffset = pFlac->firstFLACFramePosInBytes;
 
     for (;;) {
+        /* After rangeLo == rangeHi == targetByte fails, we need to break out. */
+        drflac_uint64 lastTargetByte = targetByte;
+
         /* When seeking to a byte, failure probably means we've attempted to seek beyond the end of the stream. To counter this we just halve it each attempt. */
         if (!drflac__seek_to_byte(&pFlac->bs, targetByte)) {
             /* If we couldn't even seek to the first byte in the stream we have a problem. Just abandon the whole thing. */
@@ -4461,6 +4478,11 @@ static drflac_bool32 drflac__seek_to_approximate_flac_frame_to_byte(drflac* pFla
                 break;
             }
 #endif
+        }
+
+        /* We already tried this byte and there are no more to try, break out. */
+        if(targetByte == lastTargetByte) {
+            return DRFLAC_FALSE;
         }
     }
 
@@ -7021,12 +7043,13 @@ _wfopen() isn't always available in all compilation environments.
     * MSVC seems to support it universally as far back as VC6 from what I can tell (haven't checked further back).
     * MinGW-64 (both 32- and 64-bit) seems to support it.
     * MinGW wraps it in !defined(__STRICT_ANSI__).
+    * OpenWatcom wraps it in !defined(_NO_EXT_KEYS).
 
 This can be reviewed as compatibility issues arise. The preference is to use _wfopen_s() and _wfopen() as opposed to the wcsrtombs()
 fallback, so if you notice your compiler not detecting this properly I'm happy to look at adding support.
 */
 #if defined(_WIN32)
-    #if defined(_MSC_VER) || defined(__MINGW64__) || !defined(__STRICT_ANSI__)
+    #if defined(_MSC_VER) || defined(__MINGW64__) || (!defined(__STRICT_ANSI__) && !defined(_NO_EXT_KEYS))
         #define DRFLAC_HAS_WFOPEN
     #endif
 #endif
@@ -10444,7 +10467,7 @@ DRFLAC_API drflac_bool32 drflac_next_cuesheet_track(drflac_cuesheet_track_iterat
     return DRFLAC_TRUE;
 }
 
-#if defined(__GNUC__)
+#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
     #pragma GCC diagnostic pop
 #endif
 #endif  /* dr_flac_c */

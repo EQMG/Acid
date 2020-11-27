@@ -20,8 +20,8 @@ find_package(volk 121 QUIET)
 if(NOT volk_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(volk
-			URL https://github.com/zeux/volk/tarball/79c7627887a9de3775fe80fc316dfb716c226c70
-			URL_MD5 5f8f3a762be07b83e86c11128a5636eb
+			URL https://github.com/zeux/volk/archive/1.2.162.tar.gz
+			URL_MD5 06edbfc02f60b5f15781db45a0bbfcc5
 			)
 	FetchContent_GetProperties(volk)
 	if(NOT volk_POPULATED)
@@ -76,8 +76,8 @@ endif()
 find_package(Freetype 2.9.1 QUIET)
 if(NOT Freetype_FOUND)
 	FetchContent_Declare(freetype
-			URL https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
-			URL_MD5 b1cb620e4c875cd4d1bfa04945400945
+			URL https://bigsearcher.com/mirrors/nongnu/freetype/freetype-2.10.4.tar.gz
+			URL_MD5 4934a8b61b636920bcce58e7c7f3e1a2
 			)
 	FetchContent_GetProperties(freetype)
 	if(NOT freetype_POPULATED)
@@ -97,29 +97,37 @@ endif()
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/8.13.3559.tar.gz
-			URL_MD5 cb32322377cee2bc1cee5b60ebe46133
+			URL https://github.com/KhronosGroup/glslang/archive/10-11.0.0.tar.gz
+			URL_MD5 c54870922c39b8c307678fdf4ae2e85e
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
-		foreach(_glslang_option "BUILD_TESTING" "ENABLE_GLSLANG_BINARIES" "ENABLE_SPVREMAPPER" "ENABLE_HLSL" 
-				"ENABLE_AMD_EXTENSIONS" "ENABLE_NV_EXTENSIONS"
-				)
+		# On MSVC shared mode must be disabled with glslang currently
+		set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+		if(MSVC)
+			set(BUILD_SHARED_LIBS OFF)
+		endif()
+		foreach(_glslang_option "ENABLE_SPVREMAPPER" "ENABLE_GLSLANG_BINARIES" "ENABLE_PCH" "ENABLE_CTEST" "ENABLE_HLSL")
 			set(${_glslang_option} OFF CACHE INTERNAL "")
 		endforeach()
-		foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_OPT")
+		foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_RTTI" "ENABLE_EXCEPTIONS" "ENABLE_OPT")
 			set(${_glslang_option} ON CACHE INTERNAL "")
 		endforeach()
 		FetchContent_Populate(glslang)
 		add_subdirectory(${glslang_SOURCE_DIR} ${glslang_BINARY_DIR})
+		# Reset back to value before MSVC fix
+		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	endif()
 	set_target_properties(glslang PROPERTIES FOLDER External/glslang)
+	set_target_properties(glslang-build-info PROPERTIES FOLDER External/glslang)
+	set_target_properties(GenericCodeGen PROPERTIES FOLDER External/glslang)
+	set_target_properties(MachineIndependent PROPERTIES FOLDER External/glslang)
 	set_target_properties(OGLCompiler PROPERTIES FOLDER External/glslang)
 	set_target_properties(OSDependent PROPERTIES FOLDER External/glslang)
 	set_target_properties(SPIRV PROPERTIES FOLDER External/glslang)
 
 	# Used in target_link_libraries()
-	set(GLSLANG_LIBRARIES SPIRV)
+	set(GLSLANG_LIBRARIES glslang SPIRV)
 else()
 	set(GLSLANG_INCLUDE_DIRS "${GLSLANG_INCLUDE_DIR}" "${SPIRV_INCLUDE_DIR}")
 	set(GLSLANG_LIBRARIES glslang::glslang glslang::SPIRV)
@@ -132,23 +140,23 @@ find_package(Bullet 2.89 QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(bullet3
-			URL https://github.com/bulletphysics/bullet3/archive/2.89.tar.gz
-			URL_MD5 d239b4800ec30513879834be6fcdc376
+			URL https://github.com/bulletphysics/bullet3/archive/3.07.tar.gz
+			URL_MD5 88d4984dcfc97d23ddf880764d427849
 			)
 	FetchContent_GetProperties(bullet3)
 	if(NOT bullet3_POPULATED)
 		# On MSVC shared mode must be disabled with bullet currently
 		set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
-		foreach(_bullet3_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" 
-				"BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT"
-				)
-			set(${_bullet3_option} OFF CACHE INTERNAL "")
-		endforeach()
 		if(MSVC)
 			set(USE_MSVC_INCREMENTAL_LINKING ON CACHE INTERNAL "")
 			set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "")
 			set(BUILD_SHARED_LIBS OFF)
 		endif()
+		foreach(_bullet3_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" 
+				"BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT"
+				)
+			set(${_bullet3_option} OFF CACHE INTERNAL "")
+		endforeach()
 		FetchContent_Populate(bullet3)
 		add_subdirectory(${bullet3_SOURCE_DIR} ${bullet3_BINARY_DIR})
 		# Reset back to value before MSVC fix

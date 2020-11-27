@@ -8,7 +8,7 @@
 #include "Files/Files.hpp"
 
 namespace acid {
-static constexpr float ANISOTROPY = 16.0f;
+constexpr static float ANISOTROPY = 16.0f;
 
 Image::Image(VkFilter filter, VkSamplerAddressMode addressMode, VkSampleCountFlagBits samples, VkImageLayout layout, VkImageUsageFlags usage, VkFormat format, uint32_t mipLevels,
 	uint32_t arrayLayers, const VkExtent3D &extent):

@@ -7,9 +7,9 @@
 #include <Shadows/Shadows.hpp>
 
 namespace test {
-static constexpr Colour FOG_COLOUR_SUNRISE = 0xEE9A90;
-static constexpr Colour FOG_COLOUR_NIGHT = 0x0D0D1A;
-static constexpr Colour FOG_COLOUR_DAY = 0xE6E6E6;
+constexpr static Colour FOG_COLOUR_SUNRISE = 0xEE9A90;
+constexpr static Colour FOG_COLOUR_NIGHT = 0x0D0D1A;
+constexpr static Colour FOG_COLOUR_DAY = 0xE6E6E6;
 
 World::World() :
 	driverDay(LinearDriver<float>(0.0f, 1.0f, 300s)),

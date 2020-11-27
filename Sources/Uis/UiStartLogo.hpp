@@ -14,9 +14,9 @@ public:
 	rocket::signal<void()> &OnFinished() { return onFinished; }
 
 #ifdef ACID_DEBUG
-	static constexpr Time StartDelay = 1s;
+	constexpr static Time StartDelay = 1s;
 #else
-	static constexpr Time StartDelay = 3s;
+	constexpr static Time StartDelay = 3s;
 #endif
 	
 private:

@@ -18,37 +18,37 @@ class ACID_EXPORT Log {
 public:
 	class Styles {
 	public:
-		static constexpr std::string_view Default = "\033[0m";
-		static constexpr std::string_view Bold = "\033[1m";
-		static constexpr std::string_view Dim = "\033[2m";
-		static constexpr std::string_view Underlined = "\033[4m";
-		static constexpr std::string_view Blink = "\033[5m";
-		static constexpr std::string_view Reverse = "\033[7m";
-		static constexpr std::string_view Hidden = "\033[8m";
+		constexpr static std::string_view Default = "\033[0m";
+		constexpr static std::string_view Bold = "\033[1m";
+		constexpr static std::string_view Dim = "\033[2m";
+		constexpr static std::string_view Underlined = "\033[4m";
+		constexpr static std::string_view Blink = "\033[5m";
+		constexpr static std::string_view Reverse = "\033[7m";
+		constexpr static std::string_view Hidden = "\033[8m";
 	};
 
 	class Colours {
 	public:
-		static constexpr std::string_view Default = "\033[39m";
-		static constexpr std::string_view Black = "\033[30m";
-		static constexpr std::string_view Red = "\033[31m";
-		static constexpr std::string_view Green = "\033[32m";
-		static constexpr std::string_view Yellow = "\033[33m";
-		static constexpr std::string_view Blue = "\033[34m";
-		static constexpr std::string_view Magenta = "\033[35m";
-		static constexpr std::string_view Cyan = "\033[36m";
-		static constexpr std::string_view LightGrey = "\033[37m";
-		static constexpr std::string_view DarkGrey = "\033[90m";
-		static constexpr std::string_view LightRed = "\033[91m";
-		static constexpr std::string_view LightGreen = "\033[92m";
-		static constexpr std::string_view LightYellow = "\033[93m";
-		static constexpr std::string_view LightBlue = "\033[94m";
-		static constexpr std::string_view LightMagenta = "\033[95m";
-		static constexpr std::string_view LightCyan = "\033[96m";
-		static constexpr std::string_view White = "\033[97m";
+		constexpr static std::string_view Default = "\033[39m";
+		constexpr static std::string_view Black = "\033[30m";
+		constexpr static std::string_view Red = "\033[31m";
+		constexpr static std::string_view Green = "\033[32m";
+		constexpr static std::string_view Yellow = "\033[33m";
+		constexpr static std::string_view Blue = "\033[34m";
+		constexpr static std::string_view Magenta = "\033[35m";
+		constexpr static std::string_view Cyan = "\033[36m";
+		constexpr static std::string_view LightGrey = "\033[37m";
+		constexpr static std::string_view DarkGrey = "\033[90m";
+		constexpr static std::string_view LightRed = "\033[91m";
+		constexpr static std::string_view LightGreen = "\033[92m";
+		constexpr static std::string_view LightYellow = "\033[93m";
+		constexpr static std::string_view LightBlue = "\033[94m";
+		constexpr static std::string_view LightMagenta = "\033[95m";
+		constexpr static std::string_view LightCyan = "\033[96m";
+		constexpr static std::string_view White = "\033[97m";
 	};
 
-	static constexpr std::string_view TimestampFormat = "%H:%M:%S";
+	constexpr static std::string_view TimestampFormat = "%H:%M:%S";
 
 	/**
 	 * Outputs a message into the console.

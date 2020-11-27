@@ -18,6 +18,7 @@ PhysicalDevice::PhysicalDevice(const Instance *instance) :
 	std::vector<VkPhysicalDevice> physicalDevices(physicalDeviceCount);
 	vkEnumeratePhysicalDevices(*instance, &physicalDeviceCount, physicalDevices.data());
 
+	// TODO: Allow user to configure graphics preference.
 	physicalDevice = ChoosePhysicalDevice(physicalDevices);
 	if (!physicalDevice)
 		throw std::runtime_error("Vulkan runtime error, failed to find a suitable GPU");

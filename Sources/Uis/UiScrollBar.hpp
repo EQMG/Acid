@@ -22,7 +22,7 @@ public:
 	void SetSize(const Vector2f &size);
 	void SetType(ScrollBar type);
 
-	static constexpr uint32_t Size = 8;
+	constexpr static uint32_t Size = 8;
 
 private:
 	float ScrollByDelta(float delta) const;

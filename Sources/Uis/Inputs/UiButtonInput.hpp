@@ -14,18 +14,18 @@ public:
 	const std::string &GetTitle() const { return title.GetString(); }
 	void SetTitle(const std::string &string) { title.SetString(string); }
 	
-	static constexpr Vector2i Size = {175, 28};
-	static constexpr Vector2i Padding = {5, 5};
-	static constexpr float FontSize = 13.0f;
-	static constexpr Time SlideTime = 0.07s;
+	constexpr static Vector2i Size = {175, 28};
+	constexpr static Vector2i Padding = {5, 5};
+	constexpr static float FontSize = 13.0f;
+	constexpr static Time SlideTime = 0.07s;
 
-	static constexpr Colour ValueColour = 0xFEFCFE;
-	static constexpr Colour TitleColour = 0x9C9A9C;
+	constexpr static Colour ValueColour = 0xFEFCFE;
+	constexpr static Colour TitleColour = 0x9C9A9C;
 
-	static constexpr Colour BackgroundColour = 0x282729;
-	static constexpr Colour PrimaryColour = 0x121113;
-	static constexpr Colour SelectedColour = 0xFEA62A;
-	static constexpr Colour ButtonColour = 0x3C3B3C;
+	constexpr static Colour BackgroundColour = 0x282729;
+	constexpr static Colour PrimaryColour = 0x121113;
+	constexpr static Colour SelectedColour = 0xFEA62A;
+	constexpr static Colour ButtonColour = 0x3C3B3C;
 
 private:
 	Gui background;

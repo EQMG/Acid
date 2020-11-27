@@ -56,4 +56,10 @@ std::string NodeConstView::GetName() const {
 		return "";
 	return value->GetName();
 }
+
+NodeType NodeConstView::GetType() const {
+	if (!has_value())
+		return NodeType::Null;
+	return value->GetType();
+}
 }

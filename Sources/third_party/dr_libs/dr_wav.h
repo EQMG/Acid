@@ -1,7 +1,6 @@
-
 /*
 WAV audio loader and writer. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_wav - v0.12.9 - 2020-08-02
+dr_wav - v0.12.15 - 2020-11-21
 
 David Reid - mackron@gmail.com
 
@@ -19,7 +18,7 @@ Changes to Chunk Callback
 dr_wav supports the ability to fire a callback when a chunk is encounted (except for WAVE and FMT chunks). The callback has been updated to include both the
 container (RIFF or Wave64) and the FMT chunk which contains information about the format of the data in the wave file.
 
-Previously, there was no direct way to determine the container, and therefore no way discriminate against the different IDs in the chunk header (RIFF and
+Previously, there was no direct way to determine the container, and therefore no way to discriminate against the different IDs in the chunk header (RIFF and
 Wave64 containers encode chunk ID's differently). The `container` parameter can be used to know which ID to use.
 
 Sometimes it can be useful to know the data format at the time the chunk callback is fired. A pointer to a `drwav_fmt` object is now passed into the chunk
@@ -145,7 +144,7 @@ extern "C" {
 
 #define DRWAV_VERSION_MAJOR     0
 #define DRWAV_VERSION_MINOR     12
-#define DRWAV_VERSION_REVISION  9
+#define DRWAV_VERSION_REVISION  15
 #define DRWAV_VERSION_STRING    DRWAV_XSTRINGIFY(DRWAV_VERSION_MAJOR) "." DRWAV_XSTRINGIFY(DRWAV_VERSION_MINOR) "." DRWAV_XSTRINGIFY(DRWAV_VERSION_REVISION)
 
 #include <stddef.h> /* For size_t. */
@@ -161,7 +160,7 @@ typedef unsigned int            drwav_uint32;
     typedef   signed __int64    drwav_int64;
     typedef unsigned __int64    drwav_uint64;
 #else
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wlong-long"
         #if defined(__clang__)
@@ -170,7 +169,7 @@ typedef unsigned int            drwav_uint32;
     #endif
     typedef   signed long long  drwav_int64;
     typedef unsigned long long  drwav_uint64;
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic pop
     #endif
 #endif
@@ -299,7 +298,8 @@ typedef enum
 typedef enum
 {
     drwav_container_riff,
-    drwav_container_w64
+    drwav_container_w64,
+    drwav_container_rf64
 } drwav_container;
 
 typedef struct
@@ -420,8 +420,8 @@ Returns the number of bytes read + seeked.
 To read data from the chunk, call onRead(), passing in pReadSeekUserData as the first parameter. Do the same for seeking with onSeek(). The return value must
 be the total number of bytes you have read _plus_ seeked.
 
-Use the `container` argument to discriminate the fields in `pChunkHeader->id`. If the container is `drwav_container_riff` you should use `id.fourcc`,
-otherwise you should use `id.guid`.
+Use the `container` argument to discriminate the fields in `pChunkHeader->id`. If the container is `drwav_container_riff` or `drwav_container_rf64` you should
+use `id.fourcc`, otherwise you should use `id.guid`.
 
 The `pFMT` parameter can be used to determine the data format of the wave file. Use `drwav_fmt_get_format()` to get the sample format, which will be one of the
 `DR_WAVE_FORMAT_*` identifiers. 
@@ -882,8 +882,8 @@ Helper for initializing a writer which outputs data to a memory buffer.
 
 dr_wav will manage the memory allocations, however it is up to the caller to free the data with drwav_free().
 
-The buffer will remain allocated even after drwav_uninit() is called. Indeed, the buffer should not be
-considered valid until after drwav_uninit() has been called anyway.
+The buffer will remain allocated even after drwav_uninit() is called. The buffer should not be considered valid
+until after drwav_uninit() has been called.
 */
 DRWAV_API drwav_bool32 drwav_init_memory_write(drwav* pWav, void** ppData, size_t* pDataSize, const drwav_data_format* pFormat, const drwav_allocation_callbacks* pAllocationCallbacks);
 DRWAV_API drwav_bool32 drwav_init_memory_write_sequential(drwav* pWav, void** ppData, size_t* pDataSize, const drwav_data_format* pFormat, drwav_uint64 totalSampleCount, const drwav_allocation_callbacks* pAllocationCallbacks);
@@ -1132,6 +1132,25 @@ two different ways to initialize a drwav object.
 /*
 REVISION HISTORY
 ================
+v0.12.15 - 2020-11-21
+  - Fix compilation with OpenWatcom.
+
+v0.12.14 - 2020-11-13
+  - Minor code clean up.
+
+v0.12.13 - 2020-11-01
+  - Improve compiler support for older versions of GCC.
+
+v0.12.12 - 2020-09-28
+  - Add support for RF64.
+  - Fix a bug in writing mode where the size of the RIFF chunk incorrectly includes the header section.
+
+v0.12.11 - 2020-09-08
+  - Fix a compilation error on older compilers.
+
+v0.12.10 - 2020-08-24
+  - Fix a bug when seeking with ADPCM formats.
+
 v0.12.9 - 2020-08-02
   - Simplify sized types.
 

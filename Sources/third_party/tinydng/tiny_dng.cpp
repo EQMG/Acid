@@ -120,7 +120,7 @@
 
 #ifdef TINY_DNG_LOADER_ENABLE_ZIP
 #ifndef TINY_DNG_LOADER_USE_SYSTEM_ZLIB
-#include "miniz.h"
+#include "miniz/miniz.h"
 #endif
 #endif
 

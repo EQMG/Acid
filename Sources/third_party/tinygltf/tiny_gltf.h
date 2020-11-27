@@ -26,6 +26,8 @@
 // THE SOFTWARE.
 
 // Version:
+//  - v2.5.0 Add SetPreserveImageChannels() option to load image data as is.
+//  - v2.4.3 Fix null object output when when material has all default parameters.
 //  - v2.4.2 Decode percent-encoded URI.
 //  - v2.4.1 Fix some glTF object class does not have `extensions` and/or
 //  `extras` property.
@@ -1189,7 +1191,7 @@ enum SectionCheck {
 ///
 typedef bool (*LoadImageDataFunction)(Image *, const int, std::string *,
                                       std::string *, int, int,
-                                      const unsigned char *, int, void *);
+                                      const unsigned char *, int, void *user_pointer);
 
 ///
 /// WriteImageDataFunction type. Signature for custom image writing callbacks.
@@ -1346,6 +1348,11 @@ class TinyGLTF {
   void SetImageLoader(LoadImageDataFunction LoadImageData, void *user_data);
 
   ///
+  /// Unset(remove) callback of loading image data
+  ///
+  void RemoveImageLoader();
+
+  ///
   /// Set callback to use for writing image data
   ///
   void SetImageWriter(WriteImageDataFunction WriteImageData, void *user_data);
@@ -1383,6 +1390,18 @@ class TinyGLTF {
     return store_original_json_for_extras_and_extensions_;
   }
 
+  ///
+  /// Specify whether preserve image channales when loading images or not.
+  /// (Not effective when the user suppy their own LoadImageData callbacks)
+  ///
+  void SetPreserveImageChannels(bool onoff) {
+    preserve_image_channels_ = onoff;
+  }
+
+  bool GetPreserveImageChannels() const {
+    return preserve_image_channels_;
+  }
+
  private:
   ///
   /// Loads glTF asset from string(memory).
@@ -1401,6 +1420,8 @@ class TinyGLTF {
   bool serialize_default_values_ = false;  ///< Serialize default values?
 
   bool store_original_json_for_extras_and_extensions_ = false;
+
+  bool preserve_image_channels_ = false; /// Default false(expand channels to RGBA) for backward compatibility.
 
   FsCallbacks fs = {
 #ifndef TINYGLTF_NO_FS
@@ -1421,7 +1442,8 @@ class TinyGLTF {
 #else
       nullptr;
 #endif
-  void *load_image_user_data_ = reinterpret_cast<void *>(&fs);
+  void *load_image_user_data_{nullptr};
+  bool user_image_loader_{false};
 
   WriteImageDataFunction WriteImageData =
 #ifndef TINYGLTF_NO_STB_IMAGE_WRITE
@@ -1429,7 +1451,7 @@ class TinyGLTF {
 #else
       nullptr;
 #endif
-  void *write_image_user_data_ = reinterpret_cast<void *>(&fs);
+  void *write_image_user_data_{nullptr};
 };
 
 #ifdef __clang__

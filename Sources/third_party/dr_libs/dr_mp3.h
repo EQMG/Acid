@@ -1,6 +1,6 @@
 /*
 MP3 audio decoder. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_mp3 - v0.6.16 - 2020-08-02
+dr_mp3 - v0.6.20 - 2020-11-21
 
 David Reid - mackron@gmail.com
 
@@ -95,7 +95,7 @@ extern "C" {
 
 #define DRMP3_VERSION_MAJOR     0
 #define DRMP3_VERSION_MINOR     6
-#define DRMP3_VERSION_REVISION  16
+#define DRMP3_VERSION_REVISION  20
 #define DRMP3_VERSION_STRING    DRMP3_XSTRINGIFY(DRMP3_VERSION_MAJOR) "." DRMP3_XSTRINGIFY(DRMP3_VERSION_MINOR) "." DRMP3_XSTRINGIFY(DRMP3_VERSION_REVISION)
 
 #include <stddef.h> /* For size_t. */
@@ -111,7 +111,7 @@ typedef unsigned int            drmp3_uint32;
     typedef   signed __int64    drmp3_int64;
     typedef unsigned __int64    drmp3_uint64;
 #else
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wlong-long"
         #if defined(__clang__)
@@ -120,7 +120,7 @@ typedef unsigned int            drmp3_uint32;
     #endif
     typedef   signed long long  drmp3_int64;
     typedef unsigned long long  drmp3_uint64;
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic pop
     #endif
 #endif
@@ -239,6 +239,8 @@ typedef drmp3_int32 drmp3_result;
     #else
         #define DRMP3_INLINE inline __attribute__((always_inline))
     #endif
+#elif defined(__WATCOMC__)
+    #define DRMP3_INLINE __inline
 #else
     #define DRMP3_INLINE
 #endif
@@ -596,6 +598,18 @@ counts rather than sample counts.
 /*
 REVISION HISTORY
 ================
+v0.6.20 - 2020-11-21
+  - Fix compilation with OpenWatcom.
+
+v0.6.19 - 2020-11-13
+  - Minor code clean up.
+
+v0.6.18 - 2020-11-01
+  - Improve compiler support for older versions of GCC.
+
+v0.6.17 - 2020-09-28
+  - Bring up to date with minimp3.
+
 v0.6.16 - 2020-08-02
   - Simplify sized types.
 

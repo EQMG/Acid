@@ -9,7 +9,7 @@
 #include "FpsPlayer.hpp"
 
 namespace test {
-static constexpr Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
+constexpr static Vector3f ViewOffset(0.0f, 1.8f, 0.0f);
 
 FpsCamera::FpsCamera() {
 	nearPlane = 0.1f;

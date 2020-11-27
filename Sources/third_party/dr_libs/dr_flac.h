@@ -1,6 +1,6 @@
 /*
 FLAC audio decoder. Choice of public domain or MIT-0. See license statements at the end of this file.
-dr_flac - v0.12.18 - 2020-08-14
+dr_flac - v0.12.23 - 2020-11-21
 
 David Reid - mackron@gmail.com
 
@@ -232,7 +232,7 @@ extern "C" {
 
 #define DRFLAC_VERSION_MAJOR     0
 #define DRFLAC_VERSION_MINOR     12
-#define DRFLAC_VERSION_REVISION  18
+#define DRFLAC_VERSION_REVISION  23
 #define DRFLAC_VERSION_STRING    DRFLAC_XSTRINGIFY(DRFLAC_VERSION_MAJOR) "." DRFLAC_XSTRINGIFY(DRFLAC_VERSION_MINOR) "." DRFLAC_XSTRINGIFY(DRFLAC_VERSION_REVISION)
 
 #include <stddef.h> /* For size_t. */
@@ -248,7 +248,7 @@ typedef unsigned int            drflac_uint32;
     typedef   signed __int64    drflac_int64;
     typedef unsigned __int64    drflac_uint64;
 #else
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic push
         #pragma GCC diagnostic ignored "-Wlong-long"
         #if defined(__clang__)
@@ -257,7 +257,7 @@ typedef unsigned int            drflac_uint32;
     #endif
     typedef   signed long long  drflac_int64;
     typedef unsigned long long  drflac_uint64;
-    #if defined(__GNUC__)
+    #if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
         #pragma GCC diagnostic pop
     #endif
 #endif
@@ -1309,6 +1309,22 @@ DRFLAC_API drflac_bool32 drflac_next_cuesheet_track(drflac_cuesheet_track_iterat
 /*
 REVISION HISTORY
 ================
+v0.12.23 - 2020-11-21
+  - Fix compilation with OpenWatcom.
+
+v0.12.22 - 2020-11-01
+  - Fix an error with the previous release.
+
+v0.12.21 - 2020-11-01
+  - Fix a possible deadlock when seeking.
+  - Improve compiler support for older versions of GCC.
+
+v0.12.20 - 2020-09-08
+  - Fix a compilation error on older compilers.
+
+v0.12.19 - 2020-08-30
+  - Fix a bug due to an undefined 32-bit shift.
+
 v0.12.18 - 2020-08-14
   - Fix a crash when compiling with clang-cl.
 
