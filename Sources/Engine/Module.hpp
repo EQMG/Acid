@@ -70,7 +70,7 @@ public:
 class ACID_EXPORT Module : public ModuleFactory<Module>, NonCopyable {
 public:
 	/**
-	 * @brief Represents when a module will have <seealso cref="Module#Update()"/> called in the update loop.
+	 * @brief Represents the stage where the module will be updated in the engine.
 	 */
 	enum class Stage : uint8_t {
 		Never, Always, Pre, Normal, Post, Render
