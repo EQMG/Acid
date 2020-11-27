@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>acid::File class | Acid A
-high
-speed
-C++17
-Vulkan
-game
-engine</title>
+  <title>acid::File class | Acid</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
-  <link rel="stylesheet" href="acid.css" />
-  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#22272e" />
-  <meta
-  name="google-site-verification"
-  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
-  />
-  <meta
-  name="description"
-  content="A
-  high
-  speed
-  C++17
-  Vulkan
-  game
-  engine.">
-  <script
-  src="acid.js"></script>
 </head>
 <body>
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
-high
-speed
-C++17
-Vulkan
-game
-engine</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -52,11 +24,12 @@ engine</span></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="2">
+          <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
-            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -74,102 +47,6 @@ engine</span></a>
           <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>File <span class="m-thin">class</span>
         </h1>
         <p>Class that represents a readable and writable file format using <a href="classacid_1_1_node.html" class="m-doc">Node</a> as storage.</p>
-        <div class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#pub-types">Public types</a></li>
-                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
-                <li><a href="#pub-methods">Public functions</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <section id="pub-types">
-          <h2><a href="#pub-types">Public types</a></h2>
-          <dl class="m-doc">
-            <dt id="a1b76557009ef29a7730cb725aafb7854">
-              <span class="m-doc-wrap-bumper">enum <a href="#a1b76557009ef29a7730cb725aafb7854" class="m-doc-self">Type</a> { </span><span class="m-doc-wrap"><a href="#a1b76557009ef29a7730cb725aafb7854aeed8d85b888a6c015834240885ee6333" class="m-doc">Json</a>,
-              <a href="#a1b76557009ef29a7730cb725aafb7854a9ec8e4e3ab4c7eeba097f27d7364d743" class="m-doc">Xml</a> }</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="typeless-methods">
-          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
-          <dl class="m-doc">
-            <dt id="a2b5e1a0c457abdaf83ea65faff06e06b">
-              <span class="m-doc-wrap-bumper"><a href="#a2b5e1a0c457abdaf83ea65faff06e06b" class="m-doc-self">File</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a07b912add12e900593a24923c7120510">
-              <span class="m-doc-wrap-bumper"><a href="#a07b912add12e900593a24923c7120510" class="m-doc-self">File</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_file.html#a1b76557009ef29a7730cb725aafb7854" class="m-doc">Type</a> type,
-              const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="abf63a8ce1abee9f60a704da53a99219d">
-              <span class="m-doc-wrap-bumper"><a href="#abf63a8ce1abee9f60a704da53a99219d" class="m-doc-self">File</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_file.html#a1b76557009ef29a7730cb725aafb7854" class="m-doc">Type</a> type,
-              <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;&amp; node = {}) <span class="m-label m-flat m-info">explicit</span> </span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4eee923498285503f8cc26c232db4647">
-              <span class="m-doc-wrap-bumper"><a href="#a4eee923498285503f8cc26c232db4647" class="m-doc-self">File</a>(</span><span class="m-doc-wrap">std::filesystem::path filename,
-              <a href="classacid_1_1_file.html#a1b76557009ef29a7730cb725aafb7854" class="m-doc">Type</a> type,
-              const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa5cbc16d28743df61d09b5f805722e98">
-              <span class="m-doc-wrap-bumper"><a href="#aa5cbc16d28743df61d09b5f805722e98" class="m-doc-self">File</a>(</span><span class="m-doc-wrap">std::filesystem::path filename,
-              <a href="classacid_1_1_file.html#a1b76557009ef29a7730cb725aafb7854" class="m-doc">Type</a> type,
-              <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;&amp; node = {})</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-methods">
-          <h2><a href="#pub-methods">Public functions</a></h2>
-          <dl class="m-doc">
-            <dt id="ad89f73954634f846d66621a1479f1ba0">
-              <span class="m-doc-wrap-bumper">void <a href="#ad89f73954634f846d66621a1479f1ba0" class="m-doc-self">Load</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa72a886d6f6f2db96f9a9889c0037d42">
-              <span class="m-doc-wrap-bumper">void <a href="#aa72a886d6f6f2db96f9a9889c0037d42" class="m-doc-self">Load</a>(</span><span class="m-doc-wrap">)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a45f8c960de73b02842a576414ef5c982">
-              <span class="m-doc-wrap-bumper">void <a href="#a45f8c960de73b02842a576414ef5c982" class="m-doc-self">Write</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename,
-              <a href="classacid_1_1_node_1_1_format.html" class="m-doc">Node::<wbr />Format</a> format = <a href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8" class="m-doc">Node::<wbr />Format::<wbr />Minified</a>) const</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a26513d51a856e35cadc2d219afdc2e62">
-              <span class="m-doc-wrap-bumper">void <a href="#a26513d51a856e35cadc2d219afdc2e62" class="m-doc-self">Write</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node_1_1_format.html" class="m-doc">Node::<wbr />Format</a> format = <a href="classacid_1_1_node_1_1_format.html#a49692856f32fd7dff5a2c39a51351ce8" class="m-doc">Node::<wbr />Format::<wbr />Minified</a>) const</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a2e153a9216ca6eab0970d573d5827395">
-              <span class="m-doc-wrap-bumper">void <a href="#a2e153a9216ca6eab0970d573d5827395" class="m-doc-self">Clear</a>(</span><span class="m-doc-wrap">)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ace28ae1710c0d15c417b7a4fe4fa18ac">
-              <span class="m-doc-wrap-bumper">auto <a href="#ace28ae1710c0d15c417b7a4fe4fa18ac" class="m-doc-self">GetNode</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7517ca691a65fddf28f136a2124ee145">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7517ca691a65fddf28f136a2124ee145" class="m-doc-self">GetNode</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a0f5bb6d38d3a5f0d58655e295e2874fc">
-              <span class="m-doc-wrap-bumper">auto <a href="#a0f5bb6d38d3a5f0d58655e295e2874fc" class="m-doc-self">GetFilename</a>(</span><span class="m-doc-wrap">) const -&gt; const std::filesystem::path&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4889b4bb3aba05078cae477a03476e1f">
-              <span class="m-doc-wrap-bumper">void <a href="#a4889b4bb3aba05078cae477a03476e1f" class="m-doc-self">SetFilename</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename)</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
       </div>
     </div>
   </div>
@@ -214,22 +91,7 @@ engine</span></a>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <a
-target="_blank"
-href="https://github.com/EQMG/Acid/">Github</a>
-&bull;
-
-<a
-target="_blank"
-href="https://github.com/EQMG/Acid/issues">Report
-an
-issue</a>
-
-<br><br>Documentation
-generated
-using
-<a
-href="https://mcss.mosra.cz/">m.css</a>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

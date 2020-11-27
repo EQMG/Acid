@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Acid A
-high
-speed
-C++17
-Vulkan
-game
-engine</title>
+  <title>Acid</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
-  <link rel="stylesheet" href="acid.css" />
-  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#22272e" />
-  <meta
-  name="google-site-verification"
-  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
-  />
-  <meta
-  name="description"
-  content="A
-  high
-  speed
-  C++17
-  Vulkan
-  game
-  engine.">
-  <script
-  src="acid.js"></script>
 </head>
 <body>
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
-high
-speed
-C++17
-Vulkan
-game
-engine</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -52,11 +24,12 @@ engine</span></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="2">
+          <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
-            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -73,7 +46,7 @@ engine</span></a>
         <h1>
           Acid
         </h1>
-<img class="m-image" src="Acid_03.png" alt="Image" /><p><a href="https://eqmg.github.io/Acid/annotated.html"></a> <a href="https://github.com/EQMG/Acid/actions?query=workflow%linux_clang"></a> <a href="https://github.com/EQMG/Acid/actions?query=workflow%linux_gcc"></a> <a href="https://github.com/EQMG/Acid/actions?query=workflow%3Awindows_msvc"></a> <a href="https://github.com/EQMG/Acid/actions?query=workflow%macos_clang"></a></p><p>Acid is an open-source, cross-platform game engine written in modern C++17 and structured to be fast, simple, and extremely modular.</p><p>Vulkan is the sole graphics API, Vulkan can be accessed in apps with the provided Acid rendering pipeline. Metal is supported through <a href="https://github.com/KhronosGroup/MoltenVK">MoltenVK</a>; eventually, DirectX will be supported in a similar way.</p><p>This project is being worked on part-time by a single developer, this is under heavy development, expect bugs, API changes, and plenty of missing features.</p><ul><li>Multiplatform (Windows, Linux, MacOS, 32bit and 64bit)</li><li>Multithreaded command buffers and thread safety</li><li>On the fly GLSL to SPIR-V compilation and reflection</li><li>Deferred physically based rendering (PBR)</li><li>Networking (HTTP, FTP, UDP, TCP)</li><li>Object serialization (JSON, XML)</li><li>Resource management using serialization</li><li>Event delegate callbacks with scoped functions</li><li>Bullet physics</li><li>Entity component system</li><li>Particle effect systems</li><li>File multi-path searching, and packaging</li><li>UI constraints system, and MSDF font rendering</li><li>Audio systems (flac, mp3, ogg, opus, wave)</li><li>Shadow mapping</li><li>Post effects pipeline (lensflare, glow, blur, SSAO, ...)</li><li>Model file loading (obj, glTF 2.0)</li><li>Animations loading (Collada)</li><li>Image file loading (png, jpeg, dng, tiff, OpenEXR, bmp, dds, ppm, tga)</li></ul><ul><li><a href="https://www.khronos.org/vulkan">Vulkan</a> - Vulkan interface</li><li><a href="http://kcat.strangesoft.net/openal.html">OpenAL</a> - Audio interface</li><li><a href="https://github.com/zeux/volk">Volk</a> - Meta loader for Vulkan API</li><li><a href="https://github.com/glfw/glfw">GLFW</a> - Window creation</li><li><a href="https://github.com/KhronosGroup/glslang">Glslang</a> - Shader compiling</li><li><a href="https://github.com/bulletphysics/bullet3">Bullet3</a> - Physics integration</li><li><a href="https://icculus.org/physfs">PhysFS</a> - Archive file access</li><li>third_party - Small third party dependencies</li></ul><p># Code Snippets</p><pre class="m-code"><span class="c1">// Imports a 2D texture using nearest filtering.</span>
+<p><a name="md__home_runner_work_Acid_Acid_README"></a></p><img class="m-image" src="Documents/Acid_03.png" alt="Image" /><p><a href="https://trello.com/b/ZRvpbbYC/acid"><img class="m-image" src="https://img.shields.io/badge/board-trello-blue.svg" alt="Image" /></a> <a href="https://eqmg.github.io/Acid/namespaces.html"><img class="m-image" src="https://img.shields.io/badge/documentation-master-brightgreen.svg" alt="Image" /></a> <a href="https://github.com/EQMG/Acid/actions?query=workflow%3ACI"><img class="m-image" src="https://github.com/EQMG/Acid/workflows/CI/badge.svg" alt="Image" /></a></p><p>Acid is an open-source, cross-platform game engine written in modern C++17 and structured to be fast, simple, and extremely modular.</p><p>Vulkan is the sole graphics API, Vulkan can be accessed in apps with the provided Acid rendering pipeline. Metal is supported through <a href="https://github.com/KhronosGroup/MoltenVK">MoltenVK</a>; eventually, DirectX will be supported in a similar way.</p><p>This project is being worked on part-time by a single developer, this is under heavy development, expect bugs, API changes, and plenty of missing features.</p><section id="autotoc_md0"><h3><a href="#autotoc_md0">Features</a></h3><ul><li>Multiplatform (Windows, Linux, MacOS, 32bit and 64bit)</li><li>Multithreaded command buffers and thread safety</li><li>On the fly GLSL to SPIR-V compilation and reflection</li><li>Deferred physically based rendering (PBR)</li><li>Networking (HTTP, FTP, UDP, TCP)</li><li>Object serialization (JSON, XML)</li><li>Resource management using serialization</li><li>Event delegate callbacks with scoped functions</li><li>Bullet physics</li><li>Entity component system</li><li>Particle effect systems</li><li>File multi-path searching, and packaging</li><li>UI constraints system, and MSDF font rendering</li><li>Audio systems (flac, mp3, ogg, opus, wave)</li><li>Shadow mapping</li><li>Post effects pipeline (lensflare, glow, blur, SSAO, ...)</li><li>Model file loading (obj, glTF 2.0)</li><li>Animations loading (Collada)</li><li>Image file loading (png, jpeg, dng, tiff, OpenEXR, bmp, dds, ppm, tga)</li></ul></section><section id="autotoc_md1"><h3><a href="#autotoc_md1">Dependencies</a></h3><ul><li><a href="https://www.khronos.org/vulkan">Vulkan</a> - Vulkan interface</li><li><a href="http://kcat.strangesoft.net/openal.html">OpenAL</a> - Audio interface</li><li><a href="https://github.com/zeux/volk">Volk</a> - Meta loader for Vulkan API</li><li><a href="https://github.com/glfw/glfw">GLFW</a> - Window creation</li><li><a href="https://github.com/KhronosGroup/glslang">Glslang</a> - Shader compiling</li><li><a href="https://github.com/bulletphysics/bullet3">Bullet3</a> - Physics integration</li><li><a href="https://icculus.org/physfs">PhysFS</a> - Archive file access</li><li>third_party - Small third party dependencies</li></ul></section><section id="autotoc_md2"><h2><a href="#autotoc_md2">Code Snippets</a></h2><pre class="m-code"><span class="c1">// Imports a 2D texture using nearest filtering.</span>
 <span class="k">auto</span> <span class="n">guiBlack</span> <span class="o">=</span> <span class="n">Image2d</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;Guis/Black.png&quot;</span><span class="p">,</span> <span class="n">VK_FILTER_NEAREST</span><span class="p">);</span>
 
 <span class="c1">// Imports a 3D cubemap (face names defined in Cubemap.cpp).</span>
@@ -96,9 +69,9 @@ engine</span></a>
 <span class="k">auto</span> <span class="n">sphere</span> <span class="o">=</span> <span class="n">GetStructure</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">CreateEntity</span><span class="p">();</span>
 <span class="n">sphere</span><span class="o">-&gt;</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">Transform</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">6.7f</span><span class="p">,</span> <span class="mf">6.7f</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.0f</span><span class="p">),</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="n">Maths</span><span class="o">::</span><span class="n">Radians</span><span class="p">(</span><span class="mf">180.0f</span><span class="p">),</span> <span class="mf">0.0f</span><span class="p">),</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">));</span>
 <span class="n">sphere</span><span class="o">-&gt;</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">Mesh</span><span class="o">&gt;</span><span class="p">(</span><span class="n">SphereModel</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">),</span> <span class="c1">// This will used the sphere buffers created earlier.</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">DefaultMaterial</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Colour</span><span class="o">::</span><span class="n">White</span><span class="p">,</span> <span class="n">Image2d</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;Objects/Testing/Albedo.png&quot;</span><span class="p">),</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.5f</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">MaterialDefault</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Colour</span><span class="o">::</span><span class="n">White</span><span class="p">,</span> <span class="n">Image2d</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;Objects/Testing/Albedo.png&quot;</span><span class="p">),</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.5f</span><span class="p">,</span>
         <span class="n">Image2d</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;Objects/Testing/Material.png&quot;</span><span class="p">),</span> <span class="n">Image2d</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;Objects/Testing/Normal.png&quot;</span><span class="p">)));</span>
-<span class="n">sphere</span><span class="o">-&gt;</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">Rigidbody</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">SphereCollider</span><span class="o">&gt;</span><span class="p">(),</span> <span class="mf">2.0f</span><span class="p">);</span> <span class="c1">// Will be created weighing 2 units.</span>
+<span class="n">sphere</span><span class="o">-&gt;</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">Rigidbody</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ColliderSphere</span><span class="o">&gt;</span><span class="p">(),</span> <span class="mf">2.0f</span><span class="p">);</span> <span class="c1">// Will be created weighing 2 units.</span>
 
 <span class="c1">// Vector maths.</span>
 <span class="n">Vector2f</span> <span class="nf">a</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.2f</span><span class="p">);</span>
@@ -113,28 +86,35 @@ engine</span></a>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">stringSource</span> <span class="o">=</span> <span class="s">&quot;Hello world!&quot;</span><span class="p">;</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">stringSplit</span> <span class="o">=</span> <span class="n">String</span><span class="o">::</span><span class="n">Split</span><span class="p">(</span><span class="n">stringSource</span><span class="p">,</span> <span class="sc">&#39; &#39;</span><span class="p">);</span>
 
-<span class="c1">// Will run a lambda on window resize, and when this object is deleted the lambda is removed.</span>
-<span class="n">Window</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">OnSize</span><span class="p">().</span><span class="n">connect</span><span class="p">([](</span><span class="n">Vector2ui</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// Will run a lambda on window resize, and when this object is deleted the lamdba is removed.</span>
+<span class="n">Window</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">OnSize</span><span class="p">()</span> <span class="o">+=</span> <span class="p">[](</span><span class="n">Vector2ui</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Log</span><span class="o">::</span><span class="n">Out</span><span class="p">(</span><span class="s">&quot;Hello world: &quot;</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span>
-<span class="p">});</span>
+<span class="p">};</span>
+
+<span class="c1">// A value container that calls a delegate on value assignments.</span>
+<span class="n">DelegateValue</span><span class="o">&lt;</span><span class="n">Vector3f</span><span class="o">&gt;</span> <span class="n">da</span><span class="p">;</span>
+<span class="n">da</span> <span class="o">+=</span> <span class="p">[](</span><span class="n">Vector3f</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Log</span><span class="o">::</span><span class="n">Out</span><span class="p">(</span><span class="s">&quot;New value: &quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="n">da</span> <span class="o">=</span> <span class="p">{</span><span class="mf">10.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.11f</span><span class="p">,</span> <span class="mf">99.991f</span><span class="p">};</span>
 
 <span class="c1">// Time addition.</span>
 <span class="n">Time</span> <span class="n">dateTime</span> <span class="o">=</span> <span class="mi">4</span><span class="n">h</span> <span class="o">+</span> <span class="mi">2</span><span class="n">min</span> <span class="o">+</span> <span class="mi">11</span><span class="n">s</span> <span class="o">+</span> <span class="mi">9</span><span class="n">ms</span> <span class="o">+</span> <span class="mi">1u</span><span class="n">s</span> <span class="o">+</span> <span class="mi">4</span><span class="n">ns</span><span class="p">;</span>
 
 <span class="c1">// Calls the function once after 150 milliseconds.</span>
-<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Once</span><span class="p">([]()</span> <span class="p">{</span>
+<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Once</span><span class="p">(</span><span class="mi">150</span><span class="n">ms</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span>
     <span class="n">Log</span><span class="o">::</span><span class="n">Out</span><span class="p">(</span><span class="s">&quot;Timer Once After</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="p">},</span> <span class="mi">150</span><span class="n">ms</span><span class="p">);</span>
+<span class="p">});</span>
 <span class="c1">// Calls the function every 4 seconds. </span>
-<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Every</span><span class="p">([]()</span> <span class="p">{</span>
+<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Every</span><span class="p">(</span><span class="mi">4</span><span class="n">s</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span>
     <span class="n">Log</span><span class="o">::</span><span class="n">Out</span><span class="p">(</span><span class="s">&quot;Timer Every Tick</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="p">},</span> <span class="mi">4</span><span class="n">s</span><span class="p">);</span>
-<span class="c1">// Calls the function every 7 seconds 3 times.</span>
-<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Repeat</span><span class="p">([]()</span> <span class="p">{</span>
+<span class="p">});</span>
+<span class="c1">// Calls the funcion every 7 seconds 3 times.</span>
+<span class="n">Timers</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Repeat</span><span class="p">(</span><span class="mi">7</span><span class="n">s</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span>
     <span class="k">static</span> <span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="n">Log</span><span class="o">::</span><span class="n">Out</span><span class="p">(</span><span class="s">&quot;Timer Repeat Tick #&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span>
     <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-<span class="p">},</span> <span class="mi">7</span><span class="n">s</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span></pre><img class="m-image" src="Screenshot1.png" alt="Image" /><img class="m-image" src="Screenshot2.png" alt="Image" /><img class="m-image" src="Screenshot3.png" alt="Image" /><img class="m-image" src="Screenshot4.png" alt="Image" /><img class="m-image" src="Screenshot5.png" alt="Image" /><p>All platforms depend on <a href="https://cmake.org/download">CMake</a>, 3.11.0 or higher, to generate IDE/make files.</p><p>CMake options (default ON):</p><ul><li><code>BUILD_TESTS</code></li><li><code>ACID_INSTALL_EXAMPLES</code></li><li><code>ACID_INSTALL_RESOURCES</code></li></ul><p>If you installed Acid using only system libs, then <code>find_package(Acid)</code> will work from CMake. Versioning is also supported. When using <code>find_package(Acid)</code> the imported target <code>Acid::Acid</code> will be created. The <code>ACID_RESOURCES_DIR</code> variable will also be available, which will point to the on-disk location of <code>Acid/Resources</code> (if installed).</p><p><a href="https://www.python.org/downloads/">Python 3</a>, <a href="https://www.lunarg.com/vulkan-sdk/">Vulkan SDK</a>, <a href="https://www.openal.org/downloads/">OpenAL</a>, and <a href="https://openal-soft.org/#download">OpenAL SDK</a> are required to develop Acid.</p><p>Make sure you have environment variables <code>VULKAN_SDK</code> and <code>OPENALDIR</code> set to the paths you have Vulkan and OpenAL installed into.</p><p>Ensure you are using a compiler with full C++17 support, on Windows it is recommended that you use MSVC or <a href="https://sourceforge.net/projects/mingw-w64/?source=navbar">MinGW w64</a>.</p><p>If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both &quot;Desktop development with C++&quot; and &quot;Windows SDK&quot; if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.</p><p>On Linux Acid requires <code>xorg-dev</code>, <code>libopenal1</code>, and <code>libvulkan1</code> to be installed. Read about how to setup <a href="https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html">Vulkan on Linux</a> so a Vulkan SDK is found.</p><p>Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.</p><p>You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the .github/GUIDELINES.md &quot;GUIDELINES.md&quot;.</p>
+<span class="p">});</span></pre><section id="autotoc_md3"><h3><a href="#autotoc_md3">Screenshots</a></h3><img class="m-image" src="Documents/Screenshot1.png" alt="Image" /><img class="m-image" src="Documents/Screenshot2.png" alt="Image" /><img class="m-image" src="Documents/Screenshot3.png" alt="Image" /><img class="m-image" src="Documents/Screenshot4.png" alt="Image" /><img class="m-image" src="Documents/Screenshot5.png" alt="Image" /></section><section id="autotoc_md4"><h3><a href="#autotoc_md4">Compiling</a></h3><p>All platforms depend on <a href="https://cmake.org/download">CMake</a>, 3.11.0 or higher, to generate IDE/make files.</p><p>CMake options (default ON):</p><ul><li><code>BUILD_TESTS</code></li><li><code>ACID_INSTALL_EXAMPLES</code></li><li><code>ACID_INSTALL_RESOURCES</code><br /></li></ul><p>If you installed Acid using only system libs, then <code>find_package(Acid)</code> will work from CMake. Versioning is also supported.<br />When using <code>find_package(Acid)</code> the imported target <code>Acid::Acid</code> will be created.<br />The <code>ACID_RESOURCES_DIR</code> variable will also be available, which will point to the on-disk location of <code>Acid/Resources</code> (if installed).</p><p><a href="https://www.python.org/downloads/">Python 3</a>, <a href="https://www.lunarg.com/vulkan-sdk/">Vulkan SDK</a>, <a href="https://www.openal.org/downloads/">OpenAL</a>, and <a href="https://openal-soft.org/#download">OpenAL SDK</a> are required to develop Acid.</p><p>Make sure you have environment variables <code>VULKAN_SDK</code> and <code>OPENALDIR</code> set to the paths you have Vulkan and OpenAL installed into.</p><p>Ensure you are using a compiler with full C++17 support, on Windows it is recommended that you use MSVC or <a href="https://sourceforge.net/projects/mingw-w64/?source=navbar">MinGW w64</a>.</p><p>If using Visual Studio it must be 2015 or later. Use the Visual Studio installer and select both &quot;Desktop development with C++&quot; and &quot;Windows SDK&quot; if they are not already installed. Then on Visual Studio Acid can be opened as a CMake workspace folder.</p><p>On Linux Acid requires <code>xorg-dev</code>, <code>libopenal1</code>, and <code>libvulkan1</code> to be installed. Read about how to setup <a href="https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html">Vulkan on Linux</a> so a Vulkan SDK is found.</p><p>Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.</p></section><section id="autotoc_md5"><h3><a href="#autotoc_md5">Contributing</a></h3><p>You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the /home/runner/work/Acid/Acid/.github/GUIDELINES.md &quot;GUIDELINES.md&quot;.</p></section></section>
       </div>
     </div>
   </div>
@@ -179,22 +159,7 @@ engine</span></a>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <a
-target="_blank"
-href="https://github.com/EQMG/Acid/">Github</a>
-&bull;
-
-<a
-target="_blank"
-href="https://github.com/EQMG/Acid/issues">Report
-an
-issue</a>
-
-<br><br>Documentation
-generated
-using
-<a
-href="https://mcss.mosra.cz/">m.css</a>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

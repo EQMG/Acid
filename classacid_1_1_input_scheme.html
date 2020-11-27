@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>acid::InputScheme class | Acid A
-high
-speed
-C++17
-Vulkan
-game
-engine</title>
+  <title>acid::InputScheme class | Acid</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
-  <link rel="stylesheet" href="acid.css" />
-  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#22272e" />
-  <meta
-  name="google-site-verification"
-  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
-  />
-  <meta
-  name="description"
-  content="A
-  high
-  speed
-  C++17
-  Vulkan
-  game
-  engine.">
-  <script
-  src="acid.js"></script>
 </head>
 <body>
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
-high
-speed
-C++17
-Vulkan
-game
-engine</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -52,11 +24,12 @@ engine</span></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="2">
+          <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
-            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -73,101 +46,7 @@ engine</span></a>
         <h1>
           <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>InputScheme <span class="m-thin">class</span>
         </h1>
-        <div class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#pub-types">Public types</a></li>
-                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
-                <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#friends">Friends</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
 <p>Class is used to abstract and wrap input methods inside a serializable factory.</p>
-        <section id="pub-types">
-          <h2><a href="#pub-types">Public types</a></h2>
-          <dl class="m-doc">
-            <dt id="a81cb644c9cdde2a9d030a9fe8ca5d3e4">
-              using <a href="#a81cb644c9cdde2a9d030a9fe8ca5d3e4" class="m-doc-self">AxisMap</a> = std::map&lt;std::string, std::unique_ptr&lt;<a href="classacid_1_1_input_axis.html" class="m-doc">InputAxis</a>&gt;&gt;
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a9b4eba83572245361a5ac80d21344c50">
-              using <a href="#a9b4eba83572245361a5ac80d21344c50" class="m-doc-self">ButtonMap</a> = std::map&lt;std::string, std::unique_ptr&lt;<a href="classacid_1_1_input_button.html" class="m-doc">InputButton</a>&gt;&gt;
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ad07d7aac9cbbbabdf517d232c01f28a8">
-              using <a href="#ad07d7aac9cbbbabdf517d232c01f28a8" class="m-doc-self">JoystickMap</a> = std::map&lt;std::string, <a href="namespaceacid.html#af06d66335a9ad908a692170a7e0e0a30" class="m-doc">JoystickPort</a>&gt;
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="typeless-methods">
-          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
-          <dl class="m-doc">
-            <dt id="a3f1cb0b7d35367e9f9f41ec9a5688742">
-              <span class="m-doc-wrap-bumper"><a href="#a3f1cb0b7d35367e9f9f41ec9a5688742" class="m-doc-self">InputScheme</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a600efb769e4d4c184540a8f9304180ea">
-              <span class="m-doc-wrap-bumper"><a href="#a600efb769e4d4c184540a8f9304180ea" class="m-doc-self">InputScheme</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename) <span class="m-label m-flat m-info">explicit</span> </span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-methods">
-          <h2><a href="#pub-methods">Public functions</a></h2>
-          <dl class="m-doc">
-            <dt id="ad2072760aca551a6276d80a0bd963f1a">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad2072760aca551a6276d80a0bd963f1a" class="m-doc-self">GetAxis</a>(</span><span class="m-doc-wrap">const std::string&amp; name) -&gt; <a href="classacid_1_1_input_axis.html" class="m-doc">InputAxis</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7618a72a0767ac4689289261ca7d8521">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7618a72a0767ac4689289261ca7d8521" class="m-doc-self">AddAxis</a>(</span><span class="m-doc-wrap">const std::string&amp; name,
-              std::unique_ptr&lt;<a href="classacid_1_1_input_axis.html" class="m-doc">InputAxis</a>&gt;&amp;&amp; axis) -&gt; <a href="classacid_1_1_input_axis.html" class="m-doc">InputAxis</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aca2a80240d869b6c38817d2a18b4dc26">
-              <span class="m-doc-wrap-bumper">void <a href="#aca2a80240d869b6c38817d2a18b4dc26" class="m-doc-self">RemoveAxis</a>(</span><span class="m-doc-wrap">const std::string&amp; name)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a1b8400f427f2a0c9f24e612436da708b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1b8400f427f2a0c9f24e612436da708b" class="m-doc-self">GetButton</a>(</span><span class="m-doc-wrap">const std::string&amp; name) -&gt; <a href="classacid_1_1_input_button.html" class="m-doc">InputButton</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a184ca87d26ae35360b471f0e84e4b1d3">
-              <span class="m-doc-wrap-bumper">auto <a href="#a184ca87d26ae35360b471f0e84e4b1d3" class="m-doc-self">AddButton</a>(</span><span class="m-doc-wrap">const std::string&amp; name,
-              std::unique_ptr&lt;<a href="classacid_1_1_input_button.html" class="m-doc">InputButton</a>&gt;&amp;&amp; button) -&gt; <a href="classacid_1_1_input_button.html" class="m-doc">InputButton</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="abc334d4a88f724f3108bdd6e0204ead3">
-              <span class="m-doc-wrap-bumper">void <a href="#abc334d4a88f724f3108bdd6e0204ead3" class="m-doc-self">RemoveButton</a>(</span><span class="m-doc-wrap">const std::string&amp; name)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a79b059bf46e63a7c9927223922039765">
-              <span class="m-doc-wrap-bumper">auto <a href="#a79b059bf46e63a7c9927223922039765" class="m-doc-self">GetFile</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_file.html" class="m-doc">File</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="friends">
-          <h2><a href="#friends">Friends</a></h2>
-          <dl class="m-doc">
-            <dt id="a1a1240b2f0302713233a108484ce8fef">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1a1240b2f0302713233a108484ce8fef" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              <a href="classacid_1_1_input_scheme.html" class="m-doc">InputScheme</a>&amp; inputScheme) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a29a2608eeb43dfcc6b41d98d59ee5632">
-              <span class="m-doc-wrap-bumper">auto <a href="#a29a2608eeb43dfcc6b41d98d59ee5632" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              const <a href="classacid_1_1_input_scheme.html" class="m-doc">InputScheme</a>&amp; inputScheme) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
       </div>
     </div>
   </div>
@@ -212,22 +91,7 @@ engine</span></a>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <a
-target="_blank"
-href="https://github.com/EQMG/Acid/">Github</a>
-&bull;
-
-<a
-target="_blank"
-href="https://github.com/EQMG/Acid/issues">Report
-an
-issue</a>
-
-<br><br>Documentation
-generated
-using
-<a
-href="https://mcss.mosra.cz/">m.css</a>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

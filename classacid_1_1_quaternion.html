@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>acid::Quaternion class | Acid A
-high
-speed
-C++17
-Vulkan
-game
-engine</title>
+  <title>acid::Quaternion class | Acid</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
-  <link rel="stylesheet" href="acid.css" />
-  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#22272e" />
-  <meta
-  name="google-site-verification"
-  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
-  />
-  <meta
-  name="description"
-  content="A
-  high
-  speed
-  C++17
-  Vulkan
-  game
-  engine.">
-  <script
-  src="acid.js"></script>
 </head>
 <body>
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
-high
-speed
-C++17
-Vulkan
-game
-engine</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -52,11 +24,12 @@ engine</span></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="2">
+          <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
-            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -80,36 +53,12 @@ engine</span></a>
             <li>
               Reference
               <ul>
-                <li><a href="#pub-static-attribs">Public static variables</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#pub-attribs">Public variables</a></li>
-                <li><a href="#friends">Friends</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <section id="pub-static-attribs">
-          <h2><a href="#pub-static-attribs">Public static variables</a></h2>
-          <dl class="m-doc">
-            <dt id="ae8708f5f3b5cb9f20e555b82631603b5">
-              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#ae8708f5f3b5cb9f20e555b82631603b5" class="m-doc-self">Zero</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6e0115a6d931eaf1fa2590cbbacb655e">
-              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#a6e0115a6d931eaf1fa2590cbbacb655e" class="m-doc-self">One</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6bac2a75b9e4978b849dfee05c98d299">
-              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#a6bac2a75b9e4978b849dfee05c98d299" class="m-doc-self">PositiveInfinity</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ab71ed1fb98f5d5d36748c84cb15db908">
-              static const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a> <a href="#ab71ed1fb98f5d5d36748c84cb15db908" class="m-doc-self">NegativeInfinity</a>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -188,110 +137,6 @@ engine</span></a>
               <span class="m-doc-wrap-bumper">auto <a href="#a15f67a1e70735a601490509536fef7c8" class="m-doc">ToEuler</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
             </dt>
             <dd></dd>
-            <dt id="a814d230271fb4f6d5d7d0ed2bbf8c4af">
-              <span class="m-doc-wrap-bumper">auto <a href="#a814d230271fb4f6d5d7d0ed2bbf8c4af" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t index) const -&gt; float</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ae3065d6c9d56e48af9afaadfff3f5b3d">
-              <span class="m-doc-wrap-bumper">auto <a href="#ae3065d6c9d56e48af9afaadfff3f5b3d" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t index) -&gt; float&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="accf6878047b999bbee702fe99ca00535">
-              <span class="m-doc-wrap-bumper">auto <a href="#accf6878047b999bbee702fe99ca00535" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) const -&gt; bool</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa8594261c44d32c52a9e8726dd4f48d5">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa8594261c44d32c52a9e8726dd4f48d5" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) const -&gt; bool</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a9896352e2452e6f5785c312ea606a2fa">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9896352e2452e6f5785c312ea606a2fa" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7dd5cf2062872695f3a6ca1ecd888565">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7dd5cf2062872695f3a6ca1ecd888565" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7ba0cc533ede6fc2a57d055a417c45e1">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7ba0cc533ede6fc2a57d055a417c45e1" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="a961f19d5c95543e6e847eda5721dba81">
-              float <a href="#a961f19d5c95543e6e847eda5721dba81" class="m-doc-self">x</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a0749ba72ed5b58f62704aace0479f828">
-              float <a href="#a0749ba72ed5b58f62704aace0479f828" class="m-doc-self">y</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="af09ca903348437b27a9d504df6e34d32">
-              float <a href="#af09ca903348437b27a9d504df6e34d32" class="m-doc-self">z</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a17cc8861b4f4a5cb2e7db07e8afda983">
-              float <a href="#a17cc8861b4f4a5cb2e7db07e8afda983" class="m-doc-self">w</a>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="friends">
-          <h2><a href="#friends">Friends</a></h2>
-          <dl class="m-doc">
-            <dt id="a268edb1c140fbf5c80e9f3cb95491c65">
-              <span class="m-doc-wrap-bumper">auto <a href="#a268edb1c140fbf5c80e9f3cb95491c65" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="af31cc12be36a5a4d5f34c6761a5d56eb">
-              <span class="m-doc-wrap-bumper">auto <a href="#af31cc12be36a5a4d5f34c6761a5d56eb" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a74ba205f8d91abcf7305a2e4df7a3ace">
-              <span class="m-doc-wrap-bumper">auto <a href="#a74ba205f8d91abcf7305a2e4df7a3ace" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a01cfac813dd7711e5c2d08b0977d11a6">
-              <span class="m-doc-wrap-bumper">auto <a href="#a01cfac813dd7711e5c2d08b0977d11a6" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; lhs,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a8ce1e994749607f7ea700d16fb345e2f">
-              <span class="m-doc-wrap-bumper">auto <a href="#a8ce1e994749607f7ea700d16fb345e2f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
-              const <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a>&amp; rhs) -&gt; <a href="namespaceacid.html#abcd82c5e8bbe0f8784037ec0223ef3c9" class="m-doc">Vector3f</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac4687317eafd9a3cfcfc56ed1af8299e">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac4687317eafd9a3cfcfc56ed1af8299e" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">float lhs,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ab8dc0c441116599af85500080743ce3f">
-              <span class="m-doc-wrap-bumper">auto <a href="#ab8dc0c441116599af85500080743ce3f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; lhs,
-              float rhs) -&gt; <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a034ba03befb05b12bf4f1a760a08c7c1">
-              <span class="m-doc-wrap-bumper">auto <a href="#a034ba03befb05b12bf4f1a760a08c7c1" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a667c9c0ce4be33c012fcae5255bcb5d4">
-              <span class="m-doc-wrap-bumper">auto <a href="#a667c9c0ce4be33c012fcae5255bcb5d4" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac5dc526a4ba7ee1dfbf86acbdbb44642">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac5dc526a4ba7ee1dfbf86acbdbb44642" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">std::ostream&amp; stream,
-              const <a href="classacid_1_1_quaternion.html" class="m-doc">Quaternion</a>&amp; quaternion) -&gt; std::ostream&amp;</span>
-            </dt>
-            <dd><span></span></dd>
           </dl>
         </section>
         <section>
@@ -626,22 +471,7 @@ engine</span></a>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <a
-target="_blank"
-href="https://github.com/EQMG/Acid/">Github</a>
-&bull;
-
-<a
-target="_blank"
-href="https://github.com/EQMG/Acid/issues">Report
-an
-issue</a>
-
-<br><br>Documentation
-generated
-using
-<a
-href="https://mcss.mosra.cz/">m.css</a>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

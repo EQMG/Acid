@@ -2,46 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>acid::Colour class | Acid A
-high
-speed
-C++17
-Vulkan
-game
-engine</title>
+  <title>acid::Colour class | Acid</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
-  <link rel="stylesheet" href="acid.css" />
-  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#22272e" />
-  <meta
-  name="google-site-verification"
-  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
-  />
-  <meta
-  name="description"
-  content="A
-  high
-  speed
-  C++17
-  Vulkan
-  game
-  engine.">
-  <script
-  src="acid.js"></script>
 </head>
 <body>
 <header><nav id="navigation">
   <div class="m-container">
     <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
-high
-speed
-C++17
-Vulkan
-game
-engine</span></a>
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Acid</a>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
           <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
@@ -52,11 +24,12 @@ engine</span></a>
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="namespaces.html">Namespaces</a></li>
           </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="2">
+          <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="annotated.html">Classes</a></li>
-            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -81,11 +54,8 @@ engine</span></a>
               Reference
               <ul>
                 <li><a href="#pub-types">Public types</a></li>
-                <li><a href="#pub-static-attribs">Public static variables</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#pub-attribs">Public variables</a></li>
-                <li><a href="#friends">Friends</a></li>
               </ul>
             </li>
           </ul>
@@ -94,93 +64,16 @@ engine</span></a>
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
             <dt id="a8c8b4ea0f7dc2d45e15a0d56d0daa2db">
-              <span class="m-doc-wrap-bumper">enum <a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2db" class="m-doc-self">Type</a> { </span><span class="m-doc-wrap"><a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2dbaea3495a278957dc58165e48a8945469f" class="m-doc">RGBA</a>,
+              <span class="m-doc-wrap-bumper">enum class <a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2db" class="m-doc-self">Type</a> { </span><span class="m-doc-wrap"><a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2dbaea3495a278957dc58165e48a8945469f" class="m-doc">RGBA</a>,
               <a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2dbae192297ecf3602fabbec5f0a38ede758" class="m-doc">ARGB</a>,
               <a href="#a8c8b4ea0f7dc2d45e15a0d56d0daa2dba889574aebacda6bfd3e534e2b49b8028" class="m-doc">RGB</a> }</span>
             </dt>
             <dd>In order of how bits are mapped [24, 16, 8, 0xFF].</dd>
           </dl>
         </section>
-        <section id="pub-static-attribs">
-          <h2><a href="#pub-static-attribs">Public static variables</a></h2>
-          <dl class="m-doc">
-            <dt id="acca7e870a29c6602603cfded25a7689d">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#acca7e870a29c6602603cfded25a7689d" class="m-doc-self">Clear</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ae248ea5dc8cb5fe504781681f5e12c8f">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#ae248ea5dc8cb5fe504781681f5e12c8f" class="m-doc-self">Black</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac17bbb81f419a5e452154cc855e48419">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#ac17bbb81f419a5e452154cc855e48419" class="m-doc-self">Grey</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6ddf3434b0b183503acb8063956dd257">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a6ddf3434b0b183503acb8063956dd257" class="m-doc-self">Silver</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a87d029dd4ec0a7ec7ea6ef7a28a425f0">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a87d029dd4ec0a7ec7ea6ef7a28a425f0" class="m-doc-self">White</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a52d4243d5602dfbd45c0e2af1896994c">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a52d4243d5602dfbd45c0e2af1896994c" class="m-doc-self">Maroon</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a55d21eaf6b86cef5b7c226d0fd3f0be5">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a55d21eaf6b86cef5b7c226d0fd3f0be5" class="m-doc-self">Red</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac1a8af6e5acf5d1a201b9696f440fc5e">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#ac1a8af6e5acf5d1a201b9696f440fc5e" class="m-doc-self">Olive</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4a68af34b7fb1ca90b6ebedb59e4f29a">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a4a68af34b7fb1ca90b6ebedb59e4f29a" class="m-doc-self">Yellow</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ae1324a872e640e122aac39b6f967ebeb">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#ae1324a872e640e122aac39b6f967ebeb" class="m-doc-self">Green</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa8a6ff6b92215a12f975fb196a7cba46">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#aa8a6ff6b92215a12f975fb196a7cba46" class="m-doc-self">Lime</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a229691bcd63942502f782294a6e660dc">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a229691bcd63942502f782294a6e660dc" class="m-doc-self">Teal</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a36bda86ebea92d85eeb22261c52ec664">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a36bda86ebea92d85eeb22261c52ec664" class="m-doc-self">Aqua</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a0ae351a133c8ec31249e20623757444f">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a0ae351a133c8ec31249e20623757444f" class="m-doc-self">Navy</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ae9bbf2221126b3ccd03a0698835e2561">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#ae9bbf2221126b3ccd03a0698835e2561" class="m-doc-self">Blue</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7fdff0c96dc9997d1ce628ca3c3efefc">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a7fdff0c96dc9997d1ce628ca3c3efefc" class="m-doc-self">Purple</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6eeeeb863c442fc3bde9f0ea608c4854">
-              static const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <a href="#a6eeeeb863c442fc3bde9f0ea608c4854" class="m-doc-self">Fuchsia</a>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a0ec71e00cf4d041e5e37d476ce3ec0d8">
-              <span class="m-doc-wrap-bumper"><a href="#a0ec71e00cf4d041e5e37d476ce3ec0d8" class="m-doc-self">Colour</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
-            </dt>
-            <dd><span></span></dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#aeac95541bd76efd773b1027283b745f9" class="m-doc">Colour</a>(</span><span class="m-doc-wrap">float r,
               float g,
@@ -237,155 +130,6 @@ engine</span></a>
               <span class="m-doc-wrap-bumper">auto <a href="#a17cf498f1a61f1934842fa5babebe49d" class="m-doc">GetHex</a>(</span><span class="m-doc-wrap">) const -&gt; std::string</span>
             </dt>
             <dd></dd>
-            <dt id="abf9a3e35d43a330680003fc652342ee3">
-              <span class="m-doc-wrap-bumper">auto <a href="#abf9a3e35d43a330680003fc652342ee3" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t i) const -&gt; float <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a384be744c78a99e2f5aab94098814407">
-              <span class="m-doc-wrap-bumper">auto <a href="#a384be744c78a99e2f5aab94098814407" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint32_t i) -&gt; float&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac4e7e4c40803c615b5e660af1a9968b2">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac4e7e4c40803c615b5e660af1a9968b2" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a960ff1dc9254f6dae3c4d5955e0e5294">
-              <span class="m-doc-wrap-bumper">auto <a href="#a960ff1dc9254f6dae3c4d5955e0e5294" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ac5368e95b00b8618c4d4f45a353ff290">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac5368e95b00b8618c4d4f45a353ff290" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ad0cf7ee60ab6677a1dec4b45f344eb61">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad0cf7ee60ab6677a1dec4b45f344eb61" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="af773d13b8f0c0173a5389adbf0e32112">
-              <span class="m-doc-wrap-bumper">auto <a href="#af773d13b8f0c0173a5389adbf0e32112" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7f1462587852d0843d1398afa837dbec">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7f1462587852d0843d1398afa837dbec" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7454de1da64d52d88eea1b43a18ff0c4">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7454de1da64d52d88eea1b43a18ff0c4" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a11804788e9fa7f0a26cb735e0b9b63d8">
-              <span class="m-doc-wrap-bumper">auto <a href="#a11804788e9fa7f0a26cb735e0b9b63d8" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4dea1f061f08ff96847688885a726b7e">
-              <span class="m-doc-wrap-bumper">auto <a href="#a4dea1f061f08ff96847688885a726b7e" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6417bb9324ce68ea80e6e59b6c8b2a00">
-              <span class="m-doc-wrap-bumper">auto <a href="#a6417bb9324ce68ea80e6e59b6c8b2a00" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="a31bf8381a90a6126084070a22fc47231">
-              float <a href="#a31bf8381a90a6126084070a22fc47231" class="m-doc-self">r</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a893d1c9201cd3f7750bfb168e3fc740b">
-              float <a href="#a893d1c9201cd3f7750bfb168e3fc740b" class="m-doc-self">g</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="af5d9a295dc678ffbb4f3a67d69da7146">
-              float <a href="#af5d9a295dc678ffbb4f3a67d69da7146" class="m-doc-self">b</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a53e8aeb6f59d558674f319123d08fb2a">
-              float <a href="#a53e8aeb6f59d558674f319123d08fb2a" class="m-doc-self">a</a>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="friends">
-          <h2><a href="#friends">Friends</a></h2>
-          <dl class="m-doc">
-            <dt id="acf91301533fcd34d28e50089ea39d0ab">
-              <span class="m-doc-wrap-bumper">auto <a href="#acf91301533fcd34d28e50089ea39d0ab" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a851719232a340ab69dd6ff3aa7ddfd08">
-              <span class="m-doc-wrap-bumper">auto <a href="#a851719232a340ab69dd6ff3aa7ddfd08" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a66c83633aa14271ad8bdca036948ed3a">
-              <span class="m-doc-wrap-bumper">auto <a href="#a66c83633aa14271ad8bdca036948ed3a" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6f094d3b7a9eae23930691b04c82646b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a6f094d3b7a9eae23930691b04c82646b" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="abce11a323a937d2f35a13abb496ed7da">
-              <span class="m-doc-wrap-bumper">auto <a href="#abce11a323a937d2f35a13abb496ed7da" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">float lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a9a673bd652b99df563e5b7b170574b81">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9a673bd652b99df563e5b7b170574b81" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">float lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a381d8b71ea3f4525f71d61d5db09eec8">
-              <span class="m-doc-wrap-bumper">auto <a href="#a381d8b71ea3f4525f71d61d5db09eec8" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">float lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a892f985aa49a4a68fa06e9db18a9d62b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a892f985aa49a4a68fa06e9db18a9d62b" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">float lhs,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a87c28673b08be836e0a913d540eb3b6b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a87c28673b08be836e0a913d540eb3b6b" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a07ce083109520f02c073852aaab40137">
-              <span class="m-doc-wrap-bumper">auto <a href="#a07ce083109520f02c073852aaab40137" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ae11c64995300a3507e182ae7528392fb">
-              <span class="m-doc-wrap-bumper">auto <a href="#ae11c64995300a3507e182ae7528392fb" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4df71de52bce4b61d406e695a419a54e">
-              <span class="m-doc-wrap-bumper">auto <a href="#a4df71de52bce4b61d406e695a419a54e" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; lhs,
-              float rhs) -&gt; <a href="classacid_1_1_colour.html" class="m-doc">Colour</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa48b9ee6ab759a5f7d36f318f7a1aec6">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa48b9ee6ab759a5f7d36f318f7a1aec6" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; colour) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="acfc4adf81a96879ac4c3612311405e0d">
-              <span class="m-doc-wrap-bumper">auto <a href="#acfc4adf81a96879ac4c3612311405e0d" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; colour) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a2e67ef4fb058d7a69c667ad3cd901db8">
-              <span class="m-doc-wrap-bumper">auto <a href="#a2e67ef4fb058d7a69c667ad3cd901db8" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">std::ostream&amp; stream,
-              const <a href="classacid_1_1_colour.html" class="m-doc">Colour</a>&amp; colour) -&gt; std::ostream&amp;</span>
-            </dt>
-            <dd><span></span></dd>
           </dl>
         </section>
         <section>
@@ -660,22 +404,7 @@ engine</span></a>
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <a
-target="_blank"
-href="https://github.com/EQMG/Acid/">Github</a>
-&bull;
-
-<a
-target="_blank"
-href="https://github.com/EQMG/Acid/issues">Report
-an
-issue</a>
-
-<br><br>Documentation
-generated
-using
-<a
-href="https://mcss.mosra.cz/">m.css</a>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
