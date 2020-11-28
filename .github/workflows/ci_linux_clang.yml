@@ -4,20 +4,23 @@ on: [push, pull_request]
 
 jobs:
   linux_clang:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v1
+    - uses: lukka/get-cmake@v3.19.0
     - name: Download Dependencies
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-10 main"
-        sudo apt-get update -y
-        sudo apt-get install -y build-essential pkg-config cmake ninja-build g++-10 clang-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 11
+        sudo apt-get install -y build-essential pkg-config g++-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
     - name: Build Acid
       env:
-        CC: clang-10
-        CXX: clang++-10
-        LD_LIBRARY_PATH: /usr/bin/clang++-10/lib
+        CC: clang-11
+        CXX: clang++-11
+        LD_LIBRARY_PATH: /usr/bin/clang++-11/lib
       run: |
+        cmake --version
+        ninja --version
         cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
