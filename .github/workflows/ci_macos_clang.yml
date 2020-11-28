@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   macos_clang:
-    runs-on: macos-latest
+    runs-on: macos-11.0
     steps:
     - uses: actions/checkout@v1
     - name: Download Dependencies
@@ -20,5 +20,6 @@ jobs:
         CC: clang
         CXX: clang++
       run: |
+        cmake --version
         cmake -B Build -G "Xcode" -DCMAKE_BUILD_TYPE=Release
         cmake --build Build

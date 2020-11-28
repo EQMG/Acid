@@ -4,9 +4,10 @@ on: [push, pull_request]
 
 jobs:
   windows_msvc:
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
+    - uses: lukka/get-cmake@v3.19.0
     - name: Download OpenAL
       run: |
         Invoke-WebRequest -Uri "https://openal-soft.org/openal-binaries/openal-soft-1.21.0-bin.zip" -OutFile openal-soft.zip
@@ -20,6 +21,10 @@ jobs:
       env:
         VULKAN_SDK: "C:\\VulkanSDK\\1.2.154.1"
         OPENALDIR: "C:\\openal-soft-1.21.0-bin"
+      shell: cmd
       run: |
-        cmake -B Build -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE=Release
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake --version
+        ninja --version
+        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
