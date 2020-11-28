@@ -264,7 +264,7 @@ set(_temp_acid_third_party_headers
 		third_party/dr_libs/dr_mp3.h
 		third_party/dr_libs/dr_opus.h
 		third_party/dr_libs/dr_wav.h
-		third_party/fastnoise/FastNoise.h
+		third_party/fastnoise/FastNoiseLite.h
 		third_party/libjpgd/jpgd.h
 		third_party/libjpgd/jpgd_idct.h
 		third_party/libspng/spng.h
@@ -500,7 +500,6 @@ set(_temp_acid_third_party_sources
 		third_party/dr_libs/dr_mp3.c
 		third_party/dr_libs/dr_opus.c
 		third_party/dr_libs/dr_wav.c
-		third_party/fastnoise/FastNoise.cpp
 		third_party/libjpgd/jpgd.cpp
 		third_party/libspng/spng.c
 		third_party/miniz/miniz.c

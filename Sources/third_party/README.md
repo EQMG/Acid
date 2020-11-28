@@ -2,7 +2,7 @@
  * [bitmask](https://github.com/Dalzhim/ArticleEnumClass-v2) - Bitmask operators for enum classes
  * [cr](https://github.com/fungos/cr) - Debug code hot-reload
  * [dr_libs](https://github.com/mackron/dr_libs) - Audio decoding/encoding
- * [fastnoise](https://github.com/Auburns/FastNoise) - Noise algorithms
+ * [fastnoise](https://github.com/Auburns/FastNoise) - Noise noise generation library
  * [libjpgd](https://github.com/richgel999/jpeg-compressor) - JPG image loader/writer 
  * [libspng](https://github.com/randy408/libspng) - PNG image loader/writer
  * [miniz](https://github.com/richgel999/miniz) - Data compression (zlib replacement)

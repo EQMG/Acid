@@ -1,6 +1,6 @@
 #pragma once
 
-#include <fastnoise/FastNoise.h>
+#include <fastnoise/FastNoiseLite.h>
 
 #include <Scenes/Component.hpp>
 #include <Scenes/Entity.hpp>
@@ -26,7 +26,7 @@ private:
 	static float CalculateTextureScale(float sideLength);
 	std::vector<float> GenerateHeightmap(uint32_t vertexCount);
 
-	FastNoise noise;
+	FastNoiseLite noise;
 	std::vector<float> heightmap;
 
 	float sideLength;
