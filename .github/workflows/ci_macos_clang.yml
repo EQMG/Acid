@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   macos_clang:
-    runs-on: macos-11.0
+    runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v1
     - name: Download Dependencies
