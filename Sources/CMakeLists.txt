@@ -97,8 +97,8 @@ endif()
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/10-11.0.0.tar.gz
-			URL_MD5 c54870922c39b8c307678fdf4ae2e85e
+			URL https://github.com/KhronosGroup/glslang/archive/11.1.0.tar.gz
+			URL_MD5 1688a1e36945d72df960b859ede55078
 			)
 	FetchContent_GetProperties(glslang)
 	if(NOT glslang_POPULATED)
