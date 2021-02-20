@@ -24,3 +24,6 @@ jobs:
         ninja --version
         cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
+    - name: Run Tests
+      run: |
+        ctest

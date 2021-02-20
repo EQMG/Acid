@@ -23,3 +23,6 @@ jobs:
         cmake --version
         cmake -B Build -G "Xcode" -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
+    - name: Run Tests
+      run: |
+        ctest

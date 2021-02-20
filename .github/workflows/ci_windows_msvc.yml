@@ -28,3 +28,8 @@ jobs:
         ninja --version
         cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
+    - name: Run Tests
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        ctest
