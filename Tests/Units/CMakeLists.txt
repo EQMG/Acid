@@ -24,8 +24,6 @@ if(NOT GTest_FOUND)
 	set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
 endif()
 
-enable_testing()
-
 file(GLOB_RECURSE TESTUNITS_HEADER_FILES
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.h" "*.hpp" "*.inl"
@@ -48,9 +46,7 @@ set_target_properties(UnitTests PROPERTIES
 		FOLDER "Acid/Tests"
 		)
 
-add_test(NAME unit
-		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit
-		)
+add_test(NAME UnitTests COMMAND UnitTests)
 		
 include(AcidGroupSources)
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTUNITS_HEADER_FILES}")

@@ -67,6 +67,8 @@ execute_process(
 		ERROR_QUIET
 		)
 
+enable_testing() # must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
+
 # Acid sources directory
 add_subdirectory(Sources)
 
