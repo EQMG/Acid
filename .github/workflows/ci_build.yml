@@ -32,6 +32,7 @@ jobs:
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cd build
         ctest
 
   linux_clang:
@@ -57,6 +58,7 @@ jobs:
         cmake --build Build
     - name: Run Tests
       run: |
+        cd build
         ctest
 
   linux_gcc:
@@ -81,6 +83,7 @@ jobs:
         cmake --build Build
     - name: Run Tests
       run: |
+        cd build
         ctest
 
   macos_clang:
@@ -105,4 +108,5 @@ jobs:
         cmake --build Build
     - name: Run Tests
       run: |
+        cd build
         ctest
