@@ -25,7 +25,7 @@ if(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Maths" COMMAND "TestMaths")
+# add_test(NAME "Maths" COMMAND "TestMaths")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestMaths

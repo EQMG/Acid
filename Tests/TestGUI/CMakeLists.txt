@@ -31,7 +31,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "GUI" COMMAND "TestGUI")
+# add_test(NAME "GUI" COMMAND "TestGUI")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestGUI

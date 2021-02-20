@@ -33,7 +33,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Editor" COMMAND "Editor")
+# add_test(NAME "Editor" COMMAND "Editor")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS Editor

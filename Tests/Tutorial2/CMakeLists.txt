@@ -29,7 +29,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Tutorial2" COMMAND "Tutorial2")
+# add_test(NAME "Tutorial2" COMMAND "Tutorial2")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS Tutorial2

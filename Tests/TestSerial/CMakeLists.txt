@@ -25,7 +25,7 @@ if(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Serial" COMMAND "TestSerial")
+# add_test(NAME "Serial" COMMAND "TestSerial")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestSerial

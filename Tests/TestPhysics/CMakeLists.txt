@@ -31,7 +31,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Physics" COMMAND "TestPhysics")
+# add_test(NAME "Physics" COMMAND "TestPhysics")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestPhysics

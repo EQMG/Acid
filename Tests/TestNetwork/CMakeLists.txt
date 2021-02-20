@@ -25,7 +25,7 @@ if(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Network" COMMAND "TestNetwork")
+# add_test(NAME "Network" COMMAND "TestNetwork")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestNetwork
