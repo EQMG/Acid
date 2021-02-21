@@ -38,6 +38,10 @@ jobs:
         ninja --version
         cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
+    - name: Copy OpenAL32.dll
+      shell: cmd
+      run: |
+        cp .github\workflows\openal\OpenAL32.dll Build\bin\OpenAL32.dll
     - name: Run Tests
       shell: cmd
       run: |
