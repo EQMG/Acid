@@ -1,6 +1,16 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release/*
+  pull_request:
+    branches:
+      - main
+      - develop
+      - release/*
 
 jobs:
   windows_msvc:
@@ -97,7 +107,7 @@ jobs:
         brew tap homebrew/cask
         brew install pkg-config
         brew install openal-soft
-        brew install --cask apenngrace/vulkan/vulkan-sdk
+        brew  install --cask apenngrace/vulkan/vulkan-sdk
     - name: Build Acid
       env:
         CC: clang
