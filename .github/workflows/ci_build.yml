@@ -97,7 +97,7 @@ jobs:
         brew tap homebrew/cask
         brew install pkg-config
         brew install openal-soft
-        brew cask install apenngrace/vulkan/vulkan-sdk
+        brew install --cask apenngrace/vulkan/vulkan-sdk
     - name: Build Acid
       env:
         CC: clang
