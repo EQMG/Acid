@@ -48,7 +48,7 @@ ENDIF (APPLE)
 
 include(FindPackageHandleStandardArgs)
 
-find_package_handle_standard_args(OPENALSOFT REQUIRED_VARS OPENALSOFT_LIBRARY OPENALSOFT_INCLUDE_DIR)
+find_package_handle_standard_args(OpenALSoft REQUIRED_VARS OPENALSOFT_LIBRARY OPENALSOFT_INCLUDE_DIR)
 
 mark_as_advanced(OPENALSOFT_INCLUDE_DIR OPENALSOFT_LIBRARY)
 

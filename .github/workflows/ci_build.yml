@@ -1,0 +1,126 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release/*
+  pull_request:
+    branches:
+      - main
+      - develop
+      - release/*
+
+jobs:
+  windows_msvc:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - uses: lukka/get-cmake@v3.19.0
+    - name: Download OpenAL
+      run: |
+        Invoke-WebRequest -Uri "https://openal-soft.org/openal-binaries/openal-soft-1.21.0-bin.zip" -OutFile openal-soft.zip
+        Expand-Archive -Path openal-soft.zip -DestinationPath C:\\
+    - name: Download Vulkan
+      run: |
+        Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/1.2.154.1/windows/VulkanSDK-1.2.154.1-Installer.exe" -OutFile VulkanSDK.exe
+        $installer = Start-Process -FilePath VulkanSDK.exe -Wait -PassThru -ArgumentList @("/S");
+        $installer.WaitForExit();
+    - name: Build Acid
+      env:
+        VULKAN_SDK: "C:\\VulkanSDK\\1.2.154.1"
+        OPENALDIR: "C:\\openal-soft-1.21.0-bin"
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake --version
+        ninja --version
+        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake --build Build
+    - name: Copy OpenAL32.dll
+      shell: cmd
+      run: |
+        cp .github\workflows\openal\OpenAL32.dll Build\bin\OpenAL32.dll
+    - name: Run Tests
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cd Build
+        ctest
+
+  linux_clang:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v1
+    - uses: lukka/get-cmake@v3.19.0
+    - name: Download Dependencies
+      run: |
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 11
+        sudo apt-get install -y build-essential pkg-config g++-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
+    - name: Build Acid
+      env:
+        CC: clang-11
+        CXX: clang++-11
+        LD_LIBRARY_PATH: /usr/bin/clang++-11/lib
+      run: |
+        cmake --version
+        ninja --version
+        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake --build Build
+    - name: Run Tests
+      run: |
+        cd Build
+        ctest
+
+  linux_gcc:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v1
+    - uses: lukka/get-cmake@v3.19.0
+    - name: Download Dependencies
+      run: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+        sudo apt-get update -y
+        sudo apt-get install -y build-essential pkg-config gcc-10 g++-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
+    - name: Build Acid
+      env:
+        CC: gcc-10
+        CXX: g++-10
+        LD_LIBRARY_PATH: /usr/bin/g++-10/lib
+      run: |
+        cmake --version
+        ninja --version
+        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake --build Build
+    - name: Run Tests
+      run: |
+        cd Build
+        ctest
+
+  macos_clang:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download Dependencies
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        brew update
+        brew tap homebrew/cask
+        brew install pkg-config
+        brew install openal-soft
+        brew install --cask apenngrace/vulkan/vulkan-sdk
+    - name: Build Acid
+      env:
+        CC: clang
+        CXX: clang++
+      run: |
+        cmake --version
+        cmake -B Build -G "Xcode" -DCMAKE_BUILD_TYPE=Release
+        cmake --build Build
+    - name: Run Tests
+      run: |
+        cd Build
+        ctest -C Release

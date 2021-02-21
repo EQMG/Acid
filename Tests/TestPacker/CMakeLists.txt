@@ -25,7 +25,7 @@ if(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Packer" COMMAND "TestPacker")
+# add_test(NAME "Packer" COMMAND "TestPacker")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestPacker
