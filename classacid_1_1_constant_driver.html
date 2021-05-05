@@ -44,10 +44,21 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
           <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>ConstantDriver <span class="m-thin">class</span>
         </h1>
         <p>A driver that has a constant value.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T</td>
+              <td>The type to be driven.</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,7 +76,7 @@
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
               class <a href="classacid_1_1_ui_driver.html" class="m-doc">UiDriver&lt;T&gt;</a>
             </dt>
             <dd>Represents a driver that changes over time.</dd>
@@ -75,7 +86,7 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#af9caa83a2a69ffd19a4756bf6dc19cf3" class="m-doc">ConstantDriver</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; constant) <span class="m-label m-flat m-info">explicit</span> </span>
+              <span class="m-doc-wrap-bumper"><a href="#af9caa83a2a69ffd19a4756bf6dc19cf3" class="m-doc">ConstantDriver</a>(</span><span class="m-doc-wrap">const T&amp; constant) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
             <dd></dd>
           </dl>
@@ -84,11 +95,11 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#add70c8a5dda334529c480a08bfe46ea3" class="m-doc">GetConstant</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#add70c8a5dda334529c480a08bfe46ea3" class="m-doc">GetConstant</a>(</span><span class="m-doc-wrap">) const -&gt; const T&amp;</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#afbb1ddbe79c7352db611da412f37cae2" class="m-doc">SetConstant</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; constant)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#afbb1ddbe79c7352db611da412f37cae2" class="m-doc">SetConstant</a>(</span><span class="m-doc-wrap">const T&amp; constant)</span>
             </dt>
             <dd></dd>
           </dl>
@@ -98,9 +109,9 @@
           <section class="m-doc-details" id="af9caa83a2a69ffd19a4756bf6dc19cf3"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> acid::<wbr />ConstantDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9caa83a2a69ffd19a4756bf6dc19cf3" class="m-doc-self">ConstantDriver</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; constant) <span class="m-label m-info">explicit</span> </span></span>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />ConstantDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9caa83a2a69ffd19a4756bf6dc19cf3" class="m-doc-self">ConstantDriver</a>(</span><span class="m-doc-wrap">const T&amp; constant) <span class="m-label m-info">explicit</span> </span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -118,9 +129,9 @@
           <section class="m-doc-details" id="add70c8a5dda334529c480a08bfe46ea3"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; acid::<wbr />ConstantDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#add70c8a5dda334529c480a08bfe46ea3" class="m-doc-self">GetConstant</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">const T&amp; acid::<wbr />ConstantDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#add70c8a5dda334529c480a08bfe46ea3" class="m-doc-self">GetConstant</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
@@ -135,9 +146,9 @@
           <section class="m-doc-details" id="afbb1ddbe79c7352db611da412f37cae2"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void acid::<wbr />ConstantDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbb1ddbe79c7352db611da412f37cae2" class="m-doc-self">SetConstant</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; constant)</span></span>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />ConstantDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbb1ddbe79c7352db611da412f37cae2" class="m-doc-self">SetConstant</a>(</span><span class="m-doc-wrap">const T&amp; constant)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -197,7 +208,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

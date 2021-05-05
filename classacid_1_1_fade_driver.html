@@ -44,10 +44,21 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
           <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>FadeDriver <span class="m-thin">class</span>
         </h1>
         <p>A driver that fades from start to end.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T</td>
+              <td>The type to be driven.</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,7 +76,7 @@
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
               class <a href="classacid_1_1_ui_driver.html" class="m-doc">UiDriver&lt;T&gt;</a>
             </dt>
             <dd>Represents a driver that changes over time.</dd>
@@ -75,9 +86,9 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a6845ee64662fbe311dcc8d1a06328070" class="m-doc">FadeDriver</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; start,
-              const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; end,
-              const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; peak,
+              <span class="m-doc-wrap-bumper"><a href="#a6845ee64662fbe311dcc8d1a06328070" class="m-doc">FadeDriver</a>(</span><span class="m-doc-wrap">const T&amp; start,
+              const T&amp; end,
+              const T&amp; peak,
               const <a href="classacid_1_1_time.html" class="m-doc">Time</a>&amp; length)</span>
             </dt>
             <dd></dd>
@@ -87,27 +98,27 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#adcd1de7f31fa3be95302dbf593df30df" class="m-doc">GetStart</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#adcd1de7f31fa3be95302dbf593df30df" class="m-doc">GetStart</a>(</span><span class="m-doc-wrap">) const -&gt; const T&amp;</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a9967fa3f7470e2cb816504e3360e30ef" class="m-doc">SetStart</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; start)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#a9967fa3f7470e2cb816504e3360e30ef" class="m-doc">SetStart</a>(</span><span class="m-doc-wrap">const T&amp; start)</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a459799b686116d06c248f705e3fd5b9d" class="m-doc">GetEnd</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a459799b686116d06c248f705e3fd5b9d" class="m-doc">GetEnd</a>(</span><span class="m-doc-wrap">) const -&gt; const T&amp;</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#af59b2b672238cb36935193cff8883471" class="m-doc">SetEnd</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; end)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#af59b2b672238cb36935193cff8883471" class="m-doc">SetEnd</a>(</span><span class="m-doc-wrap">const T&amp; end)</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4752de5aff0d10a4f4f66bf3f81b2a9e" class="m-doc">GetPeak</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4752de5aff0d10a4f4f66bf3f81b2a9e" class="m-doc">GetPeak</a>(</span><span class="m-doc-wrap">) const -&gt; const T&amp;</span>
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a3cbdabc35191e51c765bc93bacf1f2b4" class="m-doc">SetPeak</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; peak)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#a3cbdabc35191e51c765bc93bacf1f2b4" class="m-doc">SetPeak</a>(</span><span class="m-doc-wrap">const T&amp; peak)</span>
             </dt>
             <dd></dd>
           </dl>
@@ -117,11 +128,11 @@
           <section class="m-doc-details" id="a6845ee64662fbe311dcc8d1a06328070"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6845ee64662fbe311dcc8d1a06328070" class="m-doc-self">FadeDriver</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; start,
-              const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; end,
-              const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; peak,
+              <span class="m-doc-wrap-bumper"> acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6845ee64662fbe311dcc8d1a06328070" class="m-doc-self">FadeDriver</a>(</span><span class="m-doc-wrap">const T&amp; start,
+              const T&amp; end,
+              const T&amp; peak,
               const <a href="classacid_1_1_time.html" class="m-doc">Time</a>&amp; length)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -152,9 +163,9 @@
           <section class="m-doc-details" id="adcd1de7f31fa3be95302dbf593df30df"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adcd1de7f31fa3be95302dbf593df30df" class="m-doc-self">GetStart</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">const T&amp; acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adcd1de7f31fa3be95302dbf593df30df" class="m-doc-self">GetStart</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
@@ -169,9 +180,9 @@
           <section class="m-doc-details" id="a9967fa3f7470e2cb816504e3360e30ef"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9967fa3f7470e2cb816504e3360e30ef" class="m-doc-self">SetStart</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; start)</span></span>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9967fa3f7470e2cb816504e3360e30ef" class="m-doc-self">SetStart</a>(</span><span class="m-doc-wrap">const T&amp; start)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -189,9 +200,9 @@
           <section class="m-doc-details" id="a459799b686116d06c248f705e3fd5b9d"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a459799b686116d06c248f705e3fd5b9d" class="m-doc-self">GetEnd</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">const T&amp; acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a459799b686116d06c248f705e3fd5b9d" class="m-doc-self">GetEnd</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
@@ -206,9 +217,9 @@
           <section class="m-doc-details" id="af59b2b672238cb36935193cff8883471"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af59b2b672238cb36935193cff8883471" class="m-doc-self">SetEnd</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; end)</span></span>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af59b2b672238cb36935193cff8883471" class="m-doc-self">SetEnd</a>(</span><span class="m-doc-wrap">const T&amp; end)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -226,9 +237,9 @@
           <section class="m-doc-details" id="a4752de5aff0d10a4f4f66bf3f81b2a9e"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4752de5aff0d10a4f4f66bf3f81b2a9e" class="m-doc-self">GetPeak</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">const T&amp; acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4752de5aff0d10a4f4f66bf3f81b2a9e" class="m-doc-self">GetPeak</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
@@ -243,9 +254,9 @@
           <section class="m-doc-details" id="a3cbdabc35191e51c765bc93bacf1f2b4"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> _1&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;_1&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3cbdabc35191e51c765bc93bacf1f2b4" class="m-doc-self">SetPeak</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&amp; peak)</span></span>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />FadeDriver&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3cbdabc35191e51c765bc93bacf1f2b4" class="m-doc-self">SetPeak</a>(</span><span class="m-doc-wrap">const T&amp; peak)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -305,7 +316,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

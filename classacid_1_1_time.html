@@ -82,7 +82,7 @@
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#a523ac011fa8260d7897b1b6e6a6dbc29" class="m-doc">GetDateTime</a>(</span><span class="m-doc-wrap">const std::string&amp; format = &quot;%Y-%m-%d %H:%M:%<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aa5dbc98dcc983a70728bd082d1a47546e" class="m-doc">S</a>&quot;) -&gt; std::string</span>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a523ac011fa8260d7897b1b6e6a6dbc29" class="m-doc">GetDateTime</a>(</span><span class="m-doc-wrap">const std::string&amp; format = &quot;%Y-%m-%d %H:%M:%S&quot;) -&gt; std::string</span>
             </dt>
             <dd></dd>
           </dl>
@@ -91,17 +91,17 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = float&gt;</div>
+              <div class="m-doc-template">template&lt;typename T = float&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a20e0099d0d834a7c2133e63d139b9b4f" class="m-doc">AsSeconds</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = int32_t&gt;</div>
+              <div class="m-doc-template">template&lt;typename T = int32_t&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#aff4275c1e848677249eaaa19c737e3ea" class="m-doc">AsMilliseconds</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = int64_t&gt;</div>
+              <div class="m-doc-template">template&lt;typename T = int64_t&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#afa169edbbd6e1e0186531e1af1943216" class="m-doc">AsMicroseconds</a>(</span><span class="m-doc-wrap">) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd></dd>
@@ -230,7 +230,7 @@
           </div></section>
           <section class="m-doc-details" id="a523ac011fa8260d7897b1b6e6a6dbc29"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">static std::string acid::<wbr />Time::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a523ac011fa8260d7897b1b6e6a6dbc29" class="m-doc-self">GetDateTime</a>(</span><span class="m-doc-wrap">const std::string&amp; format = &quot;%Y-%m-%d %H:%M:%<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aa5dbc98dcc983a70728bd082d1a47546e" class="m-doc">S</a>&quot;)</span></span>
+              <span class="m-doc-wrap-bumper">static std::string acid::<wbr />Time::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a523ac011fa8260d7897b1b6e6a6dbc29" class="m-doc-self">GetDateTime</a>(</span><span class="m-doc-wrap">const std::string&amp; format = &quot;%Y-%m-%d %H:%M:%S&quot;)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
@@ -245,14 +245,23 @@
           <section class="m-doc-details" id="a20e0099d0d834a7c2133e63d139b9b4f"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = float&gt;
+                template&lt;typename T = float&gt;
               </div>
               <span class="m-doc-wrap-bumper">auto acid::<wbr />Time::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a20e0099d0d834a7c2133e63d139b9b4f" class="m-doc-self">AsSeconds</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The type of value to be casted to.</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
+                  <th>Returns</th>
                   <td><a href="classacid_1_1_time.html" class="m-doc">Time</a> in seconds.</td>
                 </tr>
               </tfoot>
@@ -262,14 +271,23 @@
           <section class="m-doc-details" id="aff4275c1e848677249eaaa19c737e3ea"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = int32_t&gt;
+                template&lt;typename T = int32_t&gt;
               </div>
               <span class="m-doc-wrap-bumper">auto acid::<wbr />Time::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff4275c1e848677249eaaa19c737e3ea" class="m-doc-self">AsMilliseconds</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The type of value to be casted to.</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
+                  <th>Returns</th>
                   <td><a href="classacid_1_1_time.html" class="m-doc">Time</a> in milliseconds.</td>
                 </tr>
               </tfoot>
@@ -279,14 +297,23 @@
           <section class="m-doc-details" id="afa169edbbd6e1e0186531e1af1943216"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a> = int64_t&gt;
+                template&lt;typename T = int64_t&gt;
               </div>
               <span class="m-doc-wrap-bumper">auto acid::<wbr />Time::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afa169edbbd6e1e0186531e1af1943216" class="m-doc-self">AsMicroseconds</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The type of value to be casted to.</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
+                  <th>Returns</th>
                   <td><a href="classacid_1_1_time.html" class="m-doc">Time</a> in microseconds.</td>
                 </tr>
               </tfoot>
@@ -338,7 +365,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

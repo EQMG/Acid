@@ -81,8 +81,8 @@
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac6b460a39b68f379a6d7a2f880e18d37" class="m-doc">GetSubrender</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*</span>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6b460a39b68f379a6d7a2f880e18d37" class="m-doc">GetSubrender</a>(</span><span class="m-doc-wrap">) const -&gt; T*</span>
             </dt>
             <dd></dd>
           </dl>
@@ -91,13 +91,13 @@
           <h2><a href="#pro-methods">Protected functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>, typename... Args&gt;</div>
+              <div class="m-doc-template">template&lt;typename T, typename... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a0ceb7727ddd194bc7013ee4ff02df855" class="m-doc">AddSubrender</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_pipeline.html#adaf5b5305f9ff158ca0450ef94dea800" class="m-doc">Pipeline::<wbr />Stage</a>&amp; pipelineStage,
-              Args &amp;&amp; ... args) -&gt; <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*</span>
+              Args &amp;&amp; ... args) -&gt; T*</span>
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="#a7beaf44c5996824613b1c2e800e97915" class="m-doc">RemoveSubrender</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd></dd>
@@ -130,14 +130,23 @@
           <section class="m-doc-details" id="ac6b460a39b68f379a6d7a2f880e18d37"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>* acid::<wbr />Renderer::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6b460a39b68f379a6d7a2f880e18d37" class="m-doc-self">GetSubrender</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">T* acid::<wbr />Renderer::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6b460a39b68f379a6d7a2f880e18d37" class="m-doc-self">GetSubrender</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a> type.</td>
+                </tr>
+              </tbody>
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
+                  <th>Returns</th>
                   <td>If the <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a> has the System. Gets a <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a>.</td>
                 </tr>
               </tfoot>
@@ -147,9 +156,9 @@
           <section class="m-doc-details" id="a0ceb7727ddd194bc7013ee4ff02df855"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>, typename... Args&gt;
+                template&lt;typename T, typename... Args&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>* acid::<wbr />Renderer::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0ceb7727ddd194bc7013ee4ff02df855" class="m-doc-self">AddSubrender</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_pipeline.html#adaf5b5305f9ff158ca0450ef94dea800" class="m-doc">Pipeline::<wbr />Stage</a>&amp; pipelineStage,
+              <span class="m-doc-wrap-bumper">T* acid::<wbr />Renderer::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0ceb7727ddd194bc7013ee4ff02df855" class="m-doc-self">AddSubrender</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_pipeline.html#adaf5b5305f9ff158ca0450ef94dea800" class="m-doc">Pipeline::<wbr />Stage</a>&amp; pipelineStage,
               Args &amp;&amp; ... args) <span class="m-label m-warning">protected</span></span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
@@ -158,7 +167,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">Args</td>
+                  <td style="width: 1%">T</td>
+                  <td>The <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a> type.</td>
+                </tr>
+                <tr>
+                  <td>Args</td>
                   <td>The constructor arg types.</td>
                 </tr>
               </tbody>
@@ -181,10 +194,21 @@
           <section class="m-doc-details" id="a7beaf44c5996824613b1c2e800e97915"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;
+                template&lt;typename T&gt;
               </div>
               <span class="m-doc-wrap-bumper">void acid::<wbr />Renderer::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7beaf44c5996824613b1c2e800e97915" class="m-doc-self">RemoveSubrender</a>(</span><span class="m-doc-wrap">) <span class="m-label m-warning">protected</span></span></span>
             </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a> type.</td>
+                </tr>
+              </tbody>
+            </table>
 <p>Removes a <a href="classacid_1_1_subrender.html" class="m-doc">Subrender</a>.</p>
           </div></section>
           <section class="m-doc-details" id="aa72bd2bef21551b290ae79171be94cd8"><div>
@@ -238,7 +262,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

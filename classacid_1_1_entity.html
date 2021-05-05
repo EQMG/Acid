@@ -80,13 +80,13 @@
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa3f9f5cf4db7983aa5e43a60941c7c75" class="m-doc">GetComponent</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const -&gt; <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*</span>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa3f9f5cf4db7983aa5e43a60941c7c75" class="m-doc">GetComponent</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const -&gt; T*</span>
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac0d3f116843ea9c57fb3cb6016cf7d19" class="m-doc">GetComponents</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const -&gt; std::vector&lt;<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*&gt;</span>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac0d3f116843ea9c57fb3cb6016cf7d19" class="m-doc">GetComponents</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const -&gt; std::vector&lt;T*&gt;</span>
             </dt>
             <dd></dd>
             <dt>
@@ -94,8 +94,8 @@
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>, typename... Args&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad392cd57730520eb9b86fa334647b195" class="m-doc">AddComponent</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*</span>
+              <div class="m-doc-template">template&lt;typename T, typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad392cd57730520eb9b86fa334647b195" class="m-doc">AddComponent</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; T*</span>
             </dt>
             <dd></dd>
             <dt>
@@ -107,7 +107,7 @@
             </dt>
             <dd></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;</div>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="#ac3fe27f0fb78316fe281802454aa13ba" class="m-doc">RemoveComponent</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd></dd>
@@ -163,17 +163,26 @@
           <section class="m-doc-details" id="aa3f9f5cf4db7983aa5e43a60941c7c75"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>* acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa3f9f5cf4db7983aa5e43a60941c7c75" class="m-doc-self">GetComponent</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const</span></span>
+              <span class="m-doc-wrap-bumper">T* acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa3f9f5cf4db7983aa5e43a60941c7c75" class="m-doc-self">GetComponent</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The component type to find.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">allowDisabled</td>
+                  <td>allowDisabled</td>
                   <td>If disabled components will be returned.</td>
                 </tr>
               </tbody>
@@ -189,17 +198,26 @@
           <section class="m-doc-details" id="ac0d3f116843ea9c57fb3cb6016cf7d19"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;
+                template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">std::vector&lt;<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>*&gt; acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac0d3f116843ea9c57fb3cb6016cf7d19" class="m-doc-self">GetComponents</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const</span></span>
+              <span class="m-doc-wrap-bumper">std::vector&lt;T*&gt; acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac0d3f116843ea9c57fb3cb6016cf7d19" class="m-doc-self">GetComponents</a>(</span><span class="m-doc-wrap">bool allowDisabled = false) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The component type to find.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">allowDisabled</td>
+                  <td>allowDisabled</td>
                   <td>If disabled components will be returned.</td>
                 </tr>
               </tbody>
@@ -238,9 +256,9 @@
           <section class="m-doc-details" id="ad392cd57730520eb9b86fa334647b195"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>, typename... Args&gt;
+                template&lt;typename T, typename... Args&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>* acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad392cd57730520eb9b86fa334647b195" class="m-doc-self">AddComponent</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+              <span class="m-doc-wrap-bumper">T* acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad392cd57730520eb9b86fa334647b195" class="m-doc-self">AddComponent</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -248,7 +266,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">Args</td>
+                  <td style="width: 1%">T</td>
+                  <td>The type of component to add.</td>
+                </tr>
+                <tr>
+                  <td>Args</td>
                   <td>The argument types/</td>
                 </tr>
               </tbody>
@@ -307,10 +329,21 @@
           <section class="m-doc-details" id="ac3fe27f0fb78316fe281802454aa13ba"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;typename <a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93aab9ece18c950afbfa6b0fdbfa4ff731d3" class="m-doc">T</a>&gt;
+                template&lt;typename T&gt;
               </div>
               <span class="m-doc-wrap-bumper">void acid::<wbr />Entity::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac3fe27f0fb78316fe281802454aa13ba" class="m-doc-self">RemoveComponent</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td>The type of component to remove.</td>
+                </tr>
+              </tbody>
+            </table>
 <p>Removes a component by type from this entity.</p>
           </div></section>
         </section>
@@ -358,7 +391,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Acid. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
