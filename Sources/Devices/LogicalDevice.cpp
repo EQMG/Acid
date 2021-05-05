@@ -84,7 +84,7 @@ void LogicalDevice::CreateLogicalDevice() {
 		graphicsQueueCreateInfo.pQueuePriorities = queuePriorities;
 		queueCreateInfos.emplace_back(graphicsQueueCreateInfo);
 	} else {
-		graphicsFamily = VK_NULL_HANDLE;
+		graphicsFamily = (uint32_t)VK_NULL_HANDLE;
 	}
 
 	if (supportedQueues & VK_QUEUE_COMPUTE_BIT && computeFamily != graphicsFamily) {
