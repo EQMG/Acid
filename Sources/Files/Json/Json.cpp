@@ -1,18 +1,46 @@
 #include "Json.hpp"
 
-#include "Utils/Enumerate.hpp"
-#include "Utils/String.hpp"
-
 #define ATTRIBUTE_TEXT_SUPPORT 1
 
 namespace acid {
+static std::string FixEscapedChars(std::string str) {
+	static const std::vector<std::pair<char, std::string_view>> replaces = {{'\\', "\\\\"}, {'\n', "\\n"}, {'\r', "\\r"}, {'\t', "\\t"}, {'\"', "\\\""}};
+
+	for (const auto &[from, to] : replaces) {
+		auto pos = str.find(from);
+		while (pos != std::string::npos) {
+			str.replace(pos, 1, to);
+			pos = str.find(from, pos + 2);
+		}
+	}
+
+	return str;
+}
+
+static std::string UnfixEscapedChars(std::string str) {
+	static const std::vector<std::pair<std::string_view, char>> replaces = {{"\\n", '\n'}, {"\\r", '\r'}, {"\\t", '\t'}, {"\\\"", '\"'}, {"\\\\", '\\'}};
+
+	for (const auto &[from, to] : replaces) {
+		auto pos = str.find(from);
+		while (pos != std::string::npos) {
+			if (pos != 0 && str[pos - 1] == '\\')
+				str.erase(str.begin() + --pos);
+			else
+				str.replace(pos, from.size(), 1, to);
+			pos = str.find(from, pos + 1);
+		}
+	}
+
+	return str;
+}
+
 void Json::Load(Node &node, std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
 	std::vector<Token> tokens;
 
 	std::size_t tokenStart = 0;
 	enum class QuoteState : char {
-		None = '\0', Single = '\'', Double = '"'
+		None, Single, Double
 	} quoteState = QuoteState::None;
 
 	// Iterates over all the characters in the string view.
@@ -38,6 +66,9 @@ void Json::Load(Node &node, std::string_view string) {
 			}
 		}
 	}
+
+	if (tokens.empty())
+		throw std::runtime_error("No tokens found in document");
 
 	// Converts the tokens into nodes.
 	int32_t k = 0;
@@ -114,7 +145,7 @@ void Json::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) 
 	} else {
 		std::string str(tokens[k].view);
 		if (tokens[k].type == NodeType::String)
-			str = String::UnfixEscapedChars(str);
+			str = UnfixEscapedChars(str);
 		current.SetValue(str);
 		current.SetType(tokens[k].type);
 		k++;
@@ -127,7 +158,7 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 	// Only output the value if no properties exist.
 	if (node.GetProperties().empty()) {
 		if (node.GetType() == NodeType::String)
-			stream << '\"' << String::FixEscapedChars(node.GetValue()) << '\"';
+			stream << '\"' << FixEscapedChars(node.GetValue()) << '\"';
 		else if (node.GetType() == NodeType::Null)
 			stream << "null";
 		else
@@ -146,27 +177,31 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 #endif
 
 	// Output each property.
-	for (auto it = node.GetProperties().begin(); it < node.GetProperties().end(); ++it) {
+	for (auto it = node.GetProperties().begin(); it != node.GetProperties().end(); ++it) {
+		const auto &[propertyName, property] = *it;
+		// TODO: if this *it is in an array and there are elements missing between *(it-1) and *it fill with null.
+
 		stream << indents;
 		// Output name for property if it exists.
-		if (!it->GetName().empty()) {
-			stream << '\"' << it->GetName() << "\":" << format.space;
+		if (!propertyName.empty()) {
+			stream << '\"' << propertyName << "\":" << format.space;
 		}
 
 		bool isArray = false;
-		if (!it->GetProperties().empty()) {
+		if (!property.GetProperties().empty()) {
 			// If all properties have no names, then this must be an array.
-			for (const auto &property2 : it->GetProperties()) {
-				if (property2.GetName().empty()) {
+			// TODO: this does not look over all properties, handle where we have mixed mapped names and array elements.
+			for (const auto &[name2, property2] : property.GetProperties()) {
+				if (name2.empty()) {
 					isArray = true;
 					break;
 				}
 			}
 
 			stream << (isArray ? '[' : '{') << format.newLine;
-		} else if (it->GetType() == NodeType::Object) {
+		} else if (property.GetType() == NodeType::Object) {
 			stream << '{';
-		} else if (it->GetType() == NodeType::Array) {
+		} else if (property.GetType() == NodeType::Array) {
 			stream << '[';
 		}
 
@@ -176,25 +211,25 @@ void Json::AppendData(const Node &node, std::ostream &stream, Format format, int
 		};
 
 		// Shorten primitive array output length.
-		if (isArray && format.inlineArrays && !it->GetProperties().empty() && IsPrimitive(it->GetProperties()[0])) {
+		if (isArray && format.inlineArrays && !property.GetProperties().empty() && IsPrimitive(property.GetProperty(0))) {
 			stream << format.GetIndents(indent + 1);
 			// New lines are printed a a space, no spaces are ever emitted by primitives.
-			AppendData(*it, stream, Format(0, '\0', '\0', false), indent);
+			AppendData(property, stream, Format(0, '\0', '\0', false), indent);
 			stream << '\n';
 		} else {
-			AppendData(*it, stream, format, indent + 1);
+			AppendData(property, stream, format, indent + 1);
 		}
 
-		if (!it->GetProperties().empty()) {
+		if (!property.GetProperties().empty()) {
 			stream << indents << (isArray ? ']' : '}');
-		} else if (it->GetType() == NodeType::Object) {
+		} else if (property.GetType() == NodeType::Object) {
 			stream << '}';
-		} else if (it->GetType() == NodeType::Array) {
+		} else if (property.GetType() == NodeType::Array) {
 			stream << ']';
 		}
 
 		// Separate properties by comma.
-		if (it != node.GetProperties().end() - 1)
+		if (it != std::prev(node.GetProperties().end()))
 			stream << ',';
 		// No new line if the indent level is zero (if primitive array type).
 		stream << (indent != 0 ? format.newLine : format.space);

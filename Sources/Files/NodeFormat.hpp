@@ -11,10 +11,13 @@ namespace acid {
  */
 class ACID_EXPORT NodeFormat {
 public:
+	/**
+	 * @brief Tokens used in tokenizers.
+	 */
 	class Token {
 	public:
-		Token() = default;
-		Token(NodeType type, std::string_view view) :
+		constexpr Token() = default;
+		constexpr Token(NodeType type, std::string_view view) :
 			type(type),
 			view(view) {
 		}
@@ -24,15 +27,15 @@ public:
 		 * @param rhs The other token to compare.
 		 * @return If the tokens are equal.
 		 */
-		bool operator==(const Token &rhs) const {
+		constexpr bool operator==(const Token &rhs) const {
 			return type == rhs.type && view == rhs.view.data();
 		}
 
-		bool operator!=(const Token &rhs) const {
+		constexpr bool operator!=(const Token &rhs) const {
 			return !operator==(rhs);
 		}
 
-		NodeType type;
+		NodeType type = NodeType::Unknown;
 		std::string_view view;
 	};
 

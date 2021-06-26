@@ -43,12 +43,12 @@ void EntityPrefab::Write(NodeFormat::Format format) const {
 }
 
 const EntityPrefab &operator>>(const EntityPrefab &entityPrefab, Entity &entity) {
-	for (const auto &property : entityPrefab.GetParent().GetProperties()) {
-		if (property.GetName().empty()) {
+	for (const auto &[propertyName, property] : entityPrefab.GetParent().GetProperties()) {
+		if (propertyName.empty()) {
 			continue;
 		}
 
-		if (auto component = Component::Create(property.GetName())) {
+		if (auto component = Component::Create(propertyName)) {
 			property >> *component;
 			entity.AddComponent(std::move(component));
 		}

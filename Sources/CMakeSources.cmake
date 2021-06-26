@@ -50,6 +50,7 @@ set(_temp_acid_headers
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp
+		Files/Xml/XmlContainer.hpp
 		Fonts/FontsSubrender.hpp
 		Fonts/FontType.hpp
 		Fonts/Text.hpp
@@ -248,6 +249,7 @@ set(_temp_acid_headers
 		Uis/UiStartLogo.hpp
 		Utils/ConstExpr.hpp
 		Utils/Enumerate.hpp
+		Utils/EnumValue.hpp
 		Utils/Factory.hpp
 		Utils/Future.hpp
 		Utils/NonCopyable.hpp
@@ -268,6 +270,7 @@ set(_temp_acid_third_party_headers
 		third_party/libjpgd/jpgd.h
 		third_party/libjpgd/jpgd_idct.h
 		third_party/libspng/spng.h
+		third_party/magic_enum/magic_enum.hpp
 		third_party/miniz/miniz.h
 		third_party/rocket/rocket.hpp
 		third_party/stb/stb_image.h

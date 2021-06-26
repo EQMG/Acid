@@ -125,9 +125,7 @@ enum class Key : int16_t {
 	ControlRight = 345,
 	AltRight = 346,
 	SuperRight = 347,
-	Menu = 348,
-	First = Space,
-	Last = Menu
+	Menu = 348
 };
 
 /**
@@ -167,5 +165,13 @@ private:
 
 	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> onKey;
 	rocket::signal<void(char)> onChar;
+};
+}
+
+namespace magic_enum::customize {
+template<>
+struct enum_range<acid::Key> {
+	inline constexpr static int min = -1;
+	inline constexpr static int max = 400;
 };
 }

@@ -14,7 +14,7 @@ public:
 	 * Creates a new button mouse.
 	 * @param button The button on the mouse being checked.
 	 */
-	explicit MouseInputButton(MouseButton button = MouseButton::First);
+	explicit MouseInputButton(MouseButton button = MouseButton::_1);
 
 	bool IsDown() const override;
 

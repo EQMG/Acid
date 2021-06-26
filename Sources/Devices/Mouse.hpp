@@ -17,9 +17,7 @@ enum class MouseButton : uint8_t {
 	_8 = 7,
 	Left = _1,
 	Right = _2,
-	Middle = _3,
-	First = _1,
-	Last = _8
+	Middle = _3
 };
 
 enum class CursorHotspot : uint8_t {

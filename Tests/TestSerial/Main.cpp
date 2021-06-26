@@ -77,7 +77,7 @@ public:
 		node["yaml"].Get(example1.yaml);
 		node["map"].Get(example1.map);
 		node["vectorMap"].Get(example1.vectorMap);
-		node["forwardList"].Get(example1.forwardList);
+		//node["forwardList"].Get(example1.forwardList);
 		//node["cArray"].Get(example1.cArray);
 		//node["vectorMatrixMap"].Get(example1.vectorMatrixMap);
 		node["types"].Get(example1.types);
@@ -96,7 +96,7 @@ public:
 		node["yaml"].Set(example1.yaml);
 		node["map"].Set(example1.map);
 		node["vectorMap"].Set(example1.vectorMap);
-		node["forwardList"].Set(example1.forwardList);
+		//node["forwardList"].Set(example1.forwardList);
 		//node["cArray"].Set(example1.cArray);
 		//node["vectorMatrixMap"].Set(example1.vectorMatrixMap);
 		node["types"].Set(example1.types);
@@ -121,7 +121,7 @@ public:
 	};
 	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
 	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
-	std::forward_list<double> forwardList = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
+	//std::forward_list<double> forwardList = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
 	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 };
 
@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
 	//auto array2Name{node["array2"].GetName()};
 	//auto array2{node["array2"].Get<std::vector<float>>()};
 
-	auto timeNow = node["timeNow"].Get<int64_t>(123456); // 123456
+	auto timeNow = node["timeNow"].GetWithFallback<int64_t>(123456); // 123456
 	node.RemoveProperty("timeNow");
 
 	auto data00 = node["xml"]["data"][0][0].Get<std::string>(); // "clunky"
@@ -200,8 +200,8 @@ int main(int argc, char **argv) {
 	}
 	{
 		// Test Xml writer.
-		File fileXml1(std::make_unique<Xml>(), node);
-		fileXml1.GetNode().SetName("root");
+		File fileXml1(std::make_unique<Xml>());
+		fileXml1.GetNode()["root"] = node;
 		fileXml1.Write("Serial/Test1.xml", NodeFormat::Beautified);
 
 		/*// Test Xml reader.

@@ -5,6 +5,7 @@
  * [fastnoise](https://github.com/Auburns/FastNoise) - Noise noise generation library
  * [libjpgd](https://github.com/richgel999/jpeg-compressor) - JPG image loader/writer 
  * [libspng](https://github.com/randy408/libspng) - PNG image loader/writer
+ * [magic_enum](https://github.com/Neargye/magic_enum) - Static reflection for enums
  * [miniz](https://github.com/richgel999/miniz) - Data compression (zlib replacement)
  * [rocket](https://github.com/tripleslash/rocket) - Fast signal/slots library
  * [stb](https://github.com/nothings/stb) - Single-file public domain libraries

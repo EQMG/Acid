@@ -29,9 +29,7 @@ enum class JoystickPort : uint8_t {
 	_13 = 12,
 	_14 = 13,
 	_15 = 14,
-	_16 = 15,
-	First = _1,
-	Last = _16
+	_16 = 15
 };
 
 using JoystickAxis = uint8_t;
@@ -145,7 +143,7 @@ private:
 
 	friend void CallbackJoystick(int32_t id, int32_t event);
 
-	std::array<Joystick, (std::size_t)JoystickPort::Last> joysticks;
+	std::array<Joystick, magic_enum::enum_count<JoystickPort>()> joysticks;
 	rocket::signal<void(JoystickPort, bool)> onConnect;
 	rocket::signal<void(JoystickPort, uint8_t, InputAction)> onButton;
 	rocket::signal<void(JoystickPort, uint8_t, float)> onAxis;

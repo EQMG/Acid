@@ -103,7 +103,7 @@ protected:
 	}
 
 private:
-	MouseButton value = MouseButton::Last;
+	MouseButton value = MouseButton::_8;
 	rocket::signal<void(MouseButton)> onValue;
 };
 }

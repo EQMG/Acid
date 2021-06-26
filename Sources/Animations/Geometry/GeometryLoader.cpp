@@ -39,9 +39,9 @@ GeometryLoader::GeometryLoader(NodeConstView &&libraryGeometries, std::vector<Ve
 }
 
 std::vector<Vector3f> GeometryLoader::GetPositions() const {
-	auto positionsSource = meshData["vertices"]["input"]["-source"].Get<std::string>().substr(1);
-	auto positionsData = meshData["source"].GetPropertyWithValue("-id", positionsSource)["float_array"];
-	auto positionsCount = positionsData["-count"].Get<uint32_t>();
+	auto positionsSource = meshData["vertices"]["input"]["@source"].Get<std::string>().substr(1);
+	auto positionsData = meshData["source"].GetPropertyWithValue("@id", positionsSource)["float_array"];
+	auto positionsCount = positionsData["@count"].Get<uint32_t>();
 	auto positionsRawData = String::Split(positionsData.Get<std::string>(), ' ');
 
 	std::vector<Vector3f> positions;
@@ -57,9 +57,9 @@ std::vector<Vector3f> GeometryLoader::GetPositions() const {
 }
 
 std::vector<Vector2f> GeometryLoader::GetUvs() const {
-	auto uvsSource = meshData.GetPropertyWithBackup("polylist", "triangles")["input"].GetPropertyWithValue("-semantic", "TEXCOORD")["-source"].Get<std::string>().substr(1);
-	auto uvsData = meshData["source"].GetPropertyWithValue("-id", uvsSource)["float_array"];
-	auto uvsCount = uvsData["-count"].Get<uint32_t>();
+	auto uvsSource = meshData.GetPropertyWithBackup("polylist", "triangles")["input"].GetPropertyWithValue("@semantic", "TEXCOORD")["@source"].Get<std::string>().substr(1);
+	auto uvsData = meshData["source"].GetPropertyWithValue("@id", uvsSource)["float_array"];
+	auto uvsCount = uvsData["@count"].Get<uint32_t>();
 	auto uvsRawData = String::Split(uvsData.Get<std::string>(), ' ');
 
 	std::vector<Vector2f> uvs;
@@ -74,9 +74,9 @@ std::vector<Vector2f> GeometryLoader::GetUvs() const {
 }
 
 std::vector<Vector3f> GeometryLoader::GetNormals() const {
-	auto normalsSource = meshData.GetPropertyWithBackup("polylist", "triangles")["input"].GetPropertyWithValue("-semantic", "NORMAL")["-source"].Get<std::string>().substr(1);
-	auto normalsData = meshData["source"].GetPropertyWithValue("-id", normalsSource)["float_array"];
-	auto normalsCount = normalsData["-count"].Get<uint32_t>();
+	auto normalsSource = meshData.GetPropertyWithBackup("polylist", "triangles")["input"].GetPropertyWithValue("@semantic", "NORMAL")["@source"].Get<std::string>().substr(1);
+	auto normalsData = meshData["source"].GetPropertyWithValue("@id", normalsSource)["float_array"];
+	auto normalsCount = normalsData["@count"].Get<uint32_t>();
 	auto normalsRawData = String::Split(normalsData.Get<std::string>(), ' ');
 
 	std::vector<Vector3f> normals;

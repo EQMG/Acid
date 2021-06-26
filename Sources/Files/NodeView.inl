@@ -4,13 +4,13 @@
 
 namespace acid {
 template<typename T>
-void NodeView::SetName(const T &value) {
-	return get()->SetName<T>(value);
+void NodeView::Set(const T &value) {
+	get()->Set<T>(value);
 }
 
 template<typename T>
-void NodeView::Set(const T &value) {
-	get()->Set<T>(value);
+void NodeView::Set(T &&value) {
+	get()->Set<std::remove_reference_t<T>>(std::move(value));
 }
 
 template<typename T>

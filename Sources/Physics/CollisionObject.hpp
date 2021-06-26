@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Utils/NonCopyable.hpp"
 #include "Colliders/Collider.hpp"
 #include "Force.hpp"
 

@@ -2,6 +2,7 @@
 
 #include "Commands/CommandBuffer.hpp"
 #include "Graphics/Pipelines/Pipeline.hpp"
+#include "Utils/NonCopyable.hpp"
 #include "Utils/TypeInfo.hpp"
 
 namespace acid {

@@ -18,21 +18,21 @@ ConfigManager::ConfigManager() :
 void ConfigManager::Load() {
 	audio.Load();
 	auto &audioData = audio.GetNode();
-	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].Get<float>(1.0f));
-	Audio::Get()->SetGain(Audio::Type::General, audioData["generalVolume"].Get<float>(1.0f));
-	Audio::Get()->SetGain(Audio::Type::Effect, audioData["effectVolume"].Get<float>(1.0f));
-	Audio::Get()->SetGain(Audio::Type::Music, audioData["musicVolume"].Get<float>(1.0f));
+	Audio::Get()->SetGain(Audio::Type::Master, audioData["masterVolume"].GetWithFallback<float>(1.0f));
+	Audio::Get()->SetGain(Audio::Type::General, audioData["generalVolume"].GetWithFallback<float>(1.0f));
+	Audio::Get()->SetGain(Audio::Type::Effect, audioData["effectVolume"].GetWithFallback<float>(1.0f));
+	Audio::Get()->SetGain(Audio::Type::Music, audioData["musicVolume"].GetWithFallback<float>(1.0f));
 
 	graphics.Load();
 	auto &graphicsData = graphics.GetNode();
-	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].Get<bool>(true));
-	Window::Get()->SetSize(graphicsData["size"].Get<Vector2f>(Vector2i(1080, 720)));
-	//Window::Get()->SetPosition(graphicsData["position"].Get<Vector2f>(Vector2i(0, 0)));
-	Window::Get()->SetBorderless(graphicsData["borderless"].Get<bool>(false));
-	Window::Get()->SetResizable(graphicsData["resizable"].Get<bool>(true));
-	Window::Get()->SetFloating(graphicsData["floating"].Get<bool>(false));
-	Window::Get()->SetFullscreen(graphicsData["fullscreen"].Get<bool>(false));
-	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].Get<float>(-1.0f));
+	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].GetWithFallback<bool>(true));
+	Window::Get()->SetSize(graphicsData["size"].GetWithFallback<Vector2f>(Vector2i(1080, 720)));
+	//Window::Get()->SetPosition(graphicsData["position"].GetWithFallback<Vector2f>(Vector2i(0, 0)));
+	Window::Get()->SetBorderless(graphicsData["borderless"].GetWithFallback<bool>(false));
+	Window::Get()->SetResizable(graphicsData["resizable"].GetWithFallback<bool>(true));
+	Window::Get()->SetFloating(graphicsData["floating"].GetWithFallback<bool>(false));
+	Window::Get()->SetFullscreen(graphicsData["fullscreen"].GetWithFallback<bool>(false));
+	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].GetWithFallback<float>(-1.0f));
 	
 #ifdef ACID_DEBUG
 	Save();

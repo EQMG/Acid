@@ -33,6 +33,8 @@
 
 #include <type_traits>
 
+#include <magic_enum/magic_enum.hpp>
+
 namespace bitmask {
 /**
  * @brief Wrapper for an enumerator that provides implicit bool conversion
@@ -82,33 +84,6 @@ struct bitmask {
 	constexpr explicit operator bool() const { return value != 0; }
 
 	underlying_type value;
-};
-
-template<typename T>
-struct enum_iterator {
-	struct iterator {
-		using underlying_type = typename std::underlying_type_t<T>;
-
-		iterator(const underlying_type &value) :
-			value(value) {
-		}
-
-		T operator*() const { return static_cast<T>(value); }
-		void operator++() { ++value; }
-		bool operator!=(iterator rhs) { return value != rhs.value; }
-
-		underlying_type value;
-	};
-	
-	iterator begin() const {
-		using underlying_type = typename std::underlying_type_t<T>;
-		return {static_cast<underlying_type>(T::First)};
-	}
-
-	iterator end() const {
-		using underlying_type = typename std::underlying_type_t<T>;
-		return {static_cast<underlying_type>(T::Last) + 1};
-	}
 };
 }
 

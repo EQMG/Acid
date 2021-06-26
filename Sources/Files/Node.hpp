@@ -11,9 +11,7 @@ namespace acid {
  */
 class ACID_EXPORT Node final {
 public:
-	Node();
-	explicit Node(const std::string &name);
-	Node(const std::string &name, const Node &node);
+	Node() {} // = default;
 	Node(const Node &node) = default;
 	Node(Node &&node) noexcept = default;
 
@@ -28,21 +26,22 @@ public:
 	std::basic_string<_Elem> WriteString(NodeFormat::Format format = NodeFormat::Minified) const;
 
 	template<typename T>
-	T GetName() const;
-	template<typename T>
-	void SetName(const T &value);
-
-	template<typename T>
 	T Get() const;
 	template<typename T>
-	T Get(const T &fallback) const;
+	T GetWithFallback(const T &fallback) const;
 	template<typename T>
 	bool Get(T &dest) const;
 	template<typename T, typename K>
-	bool Get(T &dest, const K &fallback) const;
+	bool GetWithFallback(T &dest, const K &fallback) const;
+	template<typename T>
+	bool Get(T &&dest) const;
+	template<typename T, typename K>
+	bool GetWithFallback(T &&dest, const K &fallback) const;
 	template<typename T>
 	void Set(const T &value);
-
+	template<typename T>
+	void Set(T &&value);
+	
 	/**
 	 * Clears all properties from this node.
 	 */
@@ -58,6 +57,8 @@ public:
 	Node &Append(const T &value);
 	template<typename ...Args>
 	Node &Append(const Args &...args);
+	
+	//Node &Merge(Node &&node);
 
 	bool HasProperty(const std::string &name) const;
 	bool HasProperty(uint32_t index) const;
@@ -71,23 +72,21 @@ public:
 	Node &AddProperty(const std::string &name, Node &&node = {});
 	Node &AddProperty(uint32_t index, const Node &node);
 	Node &AddProperty(uint32_t index, Node &&node = {});
-	void RemoveProperty(const std::string &name);
-	void RemoveProperty(const Node &node);
+	Node RemoveProperty(const std::string &name);
+	Node RemoveProperty(const Node &node);
 
-	std::vector<NodeConstView> GetProperties(const std::string &name) const;
 	NodeConstView GetPropertyWithBackup(const std::string &name, const std::string &backupName) const;
-	NodeConstView GetPropertyWithValue(const std::string &name, const std::string &value) const;
-	std::vector<NodeView> GetProperties(const std::string &name);
+	NodeConstView GetPropertyWithValue(const std::string &name, const NodeValue &propertyValue) const;
 	NodeView GetPropertyWithBackup(const std::string &name, const std::string &backupName);
-	NodeView GetPropertyWithValue(const std::string &name, const std::string &value);
+	NodeView GetPropertyWithValue(const std::string &name, const NodeValue &propertyValue);
 
-	NodeConstView operator[](const std::string &key) const;
+	NodeConstView operator[](const std::string &name) const;
 	NodeConstView operator[](uint32_t index) const;
-	NodeView operator[](const std::string &key);
+	NodeView operator[](const std::string &name);
 	NodeView operator[](uint32_t index);
 
-	Node &operator=(const Node &rhs);
-	Node &operator=(Node &&rhs) noexcept;
+	Node &operator=(const Node &rhs) = default;
+	Node &operator=(Node &&rhs) noexcept = default;
 	Node &operator=(const NodeConstView &rhs);
 	Node &operator=(NodeConstView &&rhs);
 	Node &operator=(NodeView &rhs);
@@ -99,23 +98,19 @@ public:
 	bool operator!=(const Node &rhs) const;
 	bool operator<(const Node &rhs) const;
 
-	const std::vector<Node> &GetProperties() const { return properties; }
-	std::vector<Node> &GetProperties() { return properties; }
+	const NodeProperties &GetProperties() const { return properties; }
+	NodeProperties &GetProperties() { return properties; }
 
-	const std::string &GetName() const { return name; }
-	void SetName(std::string name) { this->name = std::move(name); }
-
-	const std::string &GetValue() const { return value; }
-	void SetValue(std::string value) { this->value = std::move(value); }
+	const NodeValue &GetValue() const { return value; }
+	void SetValue(NodeValue value) { this->value = std::move(value); }
 
 	const NodeType &GetType() const { return type; }
 	void SetType(NodeType type) { this->type = type; }
 
 protected:
-	std::vector<Node> properties; // members
-	std::string name; // key
-	std::string value;
-	NodeType type;
+	NodeProperties properties;
+	NodeValue value;
+	NodeType type = NodeType::Object;
 };
 }
 

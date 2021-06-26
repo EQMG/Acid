@@ -66,7 +66,7 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 		if (cursorHover)
 			cursorSelect = this;
 
-		for (auto button : bitmask::enum_iterator<MouseButton>()) {
+		for (auto button : magic_enum::enum_values<MouseButton>()) {
 			if (Uis::Get()->WasDown(button))
 				onClick(button);
 		}

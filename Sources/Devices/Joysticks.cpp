@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 namespace acid {
-static_assert(GLFW_JOYSTICK_LAST == static_cast<int16_t>(JoystickPort::Last), "GLFW joystick port count does not match our joystick port enum count.");
+static_assert(GLFW_JOYSTICK_LAST == static_cast<int16_t>(JoystickPort::_16), "GLFW joystick port count does not match our joystick port enum count.");
 
 void CallbackJoystick(int32_t id, int32_t event) {
 	if (event == GLFW_CONNECTED) {
