@@ -150,8 +150,8 @@ find_package(PhysFS 3.0.1 QUIET)
 if(NOT PhysFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
 	FetchContent_Declare(physfs
-			URL https://github.com/EQMG/physfs/tarball/9b7980700e252ccb296022d57fc731fb348e298b
-			URL_MD5 91a607d7b12188f5a41370bf11fa53b2
+			URL https://github.com/EQMG/physfs/tarball/e5da0dbd4674fa421ace0efbf0ad0dd692995b08
+			URL_MD5 d3bb92335e9565c4101ee3ea10b42e43
 			)
 	FetchContent_GetProperties(physfs)
 	if(NOT physfs_POPULATED)
