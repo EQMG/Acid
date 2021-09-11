@@ -2,6 +2,8 @@
 
 #include "CommandPool.hpp"
 
+#include <memory>
+
 namespace acid {
 /**
  * @brief Class that represents a command buffer.
