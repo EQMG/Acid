@@ -4,8 +4,8 @@ find_package(GTest 1.8.1 QUIET)
 if(NOT GTest_FOUND)
 	FetchContent_Declare(
 			googletest
-			URL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-			URL_MD5 ecd1fa65e7de707cd5c00bdac56022cd
+			URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+			URL_MD5 52943a59cefce0ae0491d4d2412c120b
 			)
 	FetchContent_GetProperties(googletest)
 	if(NOT googletest_POPULATED)
