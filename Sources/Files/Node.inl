@@ -17,7 +17,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include <bitmask/bitmask.hpp>
+#include <bitmask.hpp>
 
 #include "Resources/Resource.hpp"
 #include "Utils/Enumerate.hpp"
@@ -271,6 +271,17 @@ inline const Node &operator>>(const Node &node, std::string &string) {
 
 inline Node &operator<<(Node &node, const std::string &string) {
 	node.SetValue(string);
+	node.SetType(NodeType::String);
+	return node;
+}
+
+inline const Node &operator>>(const Node &node, std::wstring &string) {
+	string = String::ConvertUtf16(node.GetValue());
+	return node;
+}
+
+inline Node &operator<<(Node &node, const std::wstring &string) {
+	node.SetValue(String::ConvertUtf8(string));
 	node.SetType(NodeType::String);
 	return node;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid {
@@ -132,7 +132,7 @@ enum class Key : int16_t {
  * @brief Module used for managing a virtual keyboard.
  */
 class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
+	inline static const bool Registered = Register(Stage::Pre, Requires<Windows>());
 public:
 	Keyboard();
 

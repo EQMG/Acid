@@ -1,6 +1,6 @@
 <img src="Documents/Acid_03.png" alt="Acid" height="130px">
 
-[![Documentation](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://eqmg.github.io/Acid/annotated.html)
+[![Documentation](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://equilibrium.games/Acid/annotated.html)
 [![Linux Clang](https://github.com/EQMG/Acid/workflows/linux_clang/badge.svg)](https://github.com/EQMG/Acid/actions?query=workflow%linux_clang)
 [![Linux GCC](https://github.com/EQMG/Acid/workflows/linux_gcc/badge.svg)](https://github.com/EQMG/Acid/actions?query=workflow%linux_gcc)
 [![Windows MSVC](https://github.com/EQMG/Acid/workflows/windows_msvc/badge.svg)](https://github.com/EQMG/Acid/actions?query=workflow%3Awindows_msvc)
@@ -32,17 +32,6 @@ This project is being worked on part-time by a single developer, this is under h
  * Model file loading (obj, glTF 2.0)
  * Animations loading (Collada)
  * Image file loading (png, jpeg, dng, tiff, OpenEXR, bmp, dds, ppm, tga)
-
-## Dependencies
- * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
- * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
- * [Volk](https://github.com/zeux/volk) - Meta loader for Vulkan API
- * [GLFW](https://github.com/glfw/glfw) - Window creation
- * [Freetype](https://www.freetype.org/) - Font loading
- * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
- * [Bullet3](https://github.com/bulletphysics/bullet3) - Physics integration
- * [PhysFS](https://icculus.org/physfs) - Archive file access
- * [third_party](Sources/third_party/README.md) - Small third party dependencies
 
 # Code Snippets
 ```cpp

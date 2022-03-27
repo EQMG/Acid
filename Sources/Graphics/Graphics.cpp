@@ -3,7 +3,7 @@
 #include <cstring>
 #include <SPIRV/GlslangToSpv.h>
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Subrender.hpp"
 
 namespace acid {
@@ -42,7 +42,7 @@ Graphics::~Graphics() {
 }
 
 void Graphics::Update() {
-	if (!renderer || Window::Get()->IsIconified()) return;
+	if (!renderer || Windows::Get()->GetWindow(0)->IsIconified()) return;
 
 	if (!renderer->started) {
 		ResetRenderStages();
@@ -169,7 +169,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	auto debugStart = Time::Now();
 #endif
 
-	auto size = Window::Get()->GetSize();
+	auto size = Windows::Get()->GetWindow(0)->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
@@ -244,7 +244,7 @@ void Graphics::ResetRenderStages() {
 void Graphics::RecreateSwapchain() {
 	vkDeviceWaitIdle(*logicalDevice);
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
+	VkExtent2D displayExtent = {Windows::Get()->GetWindow(0)->GetSize().x, Windows::Get()->GetWindow(0)->GetSize().y};
 #ifdef ACID_DEBUG
 	if (swapchain)
 		Log::Out("Recreating swapchain old (", swapchain->GetExtent().width, ", ", swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
@@ -286,7 +286,7 @@ void Graphics::RecreateCommandBuffers() {
 void Graphics::RecreatePass(RenderStage &renderStage) {
 	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
+	VkExtent2D displayExtent = {Windows::Get()->GetWindow(0)->GetSize().x, Windows::Get()->GetWindow(0)->GetSize().y};
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 

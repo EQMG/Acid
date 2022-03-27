@@ -127,7 +127,7 @@ namespace miniz {
 
 #endif
 
-#include "miniz/miniz.h"
+#include <miniz.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rocket/rocket.hpp>
+#include <rocket.hpp>
 
 #include "Utils/StreamFactory.hpp"
 
@@ -50,8 +50,12 @@ public:
 	float GetScale() const { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
 
+	float GetOffset() const { return offset; }
+	void SetOffset(float offset) { this->offset = offset; }
+
 protected:
 	rocket::signal<void(float)> onAxis;
 	float scale = 1.0f;
+	float offset = 0.0f;
 };
 }

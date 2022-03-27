@@ -29,6 +29,23 @@ if(BUILD_TESTS_TUTORIAL)
 endif()
 
 if(BUILD_TESTS_UNITS)
+	find_package(GTest 1.11.0 QUIET)
+	if(NOT GTest_FOUND)
+		add_subdirectory(third_party/googletest)
+		set_target_properties(gmock PROPERTIES FOLDER "External/googletest")
+		set_target_properties(gmock_main PROPERTIES FOLDER "External/googletest")
+		set_target_properties(gtest PROPERTIES FOLDER "External/googletest")
+		set_target_properties(gtest_main PROPERTIES FOLDER "External/googletest")
+	
+		set(GTEST_INCLUDE_DIRS
+				"${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest/googlemock/include"
+				"${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest/googletest/include"
+				)
+		set(GTEST_LIBRARIES "gtest")
+		set(GTEST_MAIN_LIBRARIES "gtest_main")
+		set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
+	endif()
+
 	add_subdirectory(Units)
 endif()
 

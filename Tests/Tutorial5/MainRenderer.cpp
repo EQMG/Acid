@@ -6,7 +6,7 @@
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Maths/Matrix4.hpp"
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 
 namespace test {
 class TutorialVertex5 {
@@ -99,7 +99,7 @@ public:
 		// Lets set up the camera viewpoint
 		// for now the models transform will be the Unit transform
 		ubo.view = Matrix4::LookAt(Vector3f(2.0f, 2.0f, 2.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f));
-		ubo.proj = Matrix4::PerspectiveMatrix(Maths::Radians(45.0f), Window::Get()->GetAspectRatio(), 0.1f, 10.0f);
+		ubo.proj = Matrix4::PerspectiveMatrix(Maths::Radians(45.0f), Windows::Get()->GetWindow(0)->GetAspectRatio(), 0.1f, 10.0f);
 		ubo.proj[1][1] *= -1;
 		ubo.model = Matrix4();
 

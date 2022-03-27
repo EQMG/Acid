@@ -1,29 +1,5 @@
 include(FetchContent)
 
-find_package(GTest 1.8.1 QUIET)
-if(NOT GTest_FOUND)
-	FetchContent_Declare(
-			googletest
-			URL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-			URL_MD5 ecd1fa65e7de707cd5c00bdac56022cd
-			)
-	FetchContent_GetProperties(googletest)
-	if(NOT googletest_POPULATED)
-		set(INSTALL_GTEST OFF CACHE INTERNAL "")
-		FetchContent_Populate(googletest)
-		add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-	endif()
-	set_target_properties(gmock PROPERTIES FOLDER "External/googletest")
-	set_target_properties(gmock_main PROPERTIES FOLDER "External/googletest")
-	set_target_properties(gtest PROPERTIES FOLDER "External/googletest")
-	set_target_properties(gtest_main PROPERTIES FOLDER "External/googletest")
-
-	set(GTEST_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/googlemock/include" "${bullet3_SOURCE_DIR}/googletest/include")
-	set(GTEST_LIBRARIES "gtest")
-	set(GTEST_MAIN_LIBRARIES "gtest_main")
-	set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
-endif()
-
 file(GLOB_RECURSE TESTUNITS_HEADER_FILES
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.h" "*.hpp" "*.inl"

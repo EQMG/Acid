@@ -5,8 +5,7 @@
 #else
 #include <al.h>
 #endif
-
-#include <dr_libs/dr_flac.h>
+#include <dr_flac.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

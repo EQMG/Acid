@@ -128,13 +128,13 @@ Scene1::Scene1() :
 			Log::Out("File dropped on window: ", path, '\n');
 		}
 	});
-	Window::Get()->OnMonitorConnect().connect(this, [](Monitor *monitor, bool connected) {
+	Windows::Get()->OnMonitorConnect().connect(this, [](Monitor *monitor, bool connected) {
 		Log::Out("Monitor ", std::quoted(monitor->GetName()), " action: ", connected, '\n');
 	});
-	Window::Get()->OnClose().connect(this, []() {
+	Windows::Get()->GetWindow(0)->OnClose().connect(this, []() {
 		Log::Out("Window has closed!\n");
 	});
-	Window::Get()->OnIconify().connect(this, [](bool iconified) {
+	Windows::Get()->GetWindow(0)->OnIconify().connect(this, [](bool iconified) {
 		Log::Out("Iconified: ", iconified, '\n');
 	});
 }

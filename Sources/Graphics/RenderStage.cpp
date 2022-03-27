@@ -1,6 +1,6 @@
 #include "RenderStage.hpp"
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Graphics.hpp"
 
 namespace acid {
@@ -50,7 +50,7 @@ void RenderStage::Update() {
 	if (viewport.GetSize())
 		renderArea.SetExtent(viewport.GetScale() * *viewport.GetSize());
 	else
-		renderArea.SetExtent(viewport.GetScale() * Window::Get()->GetSize());
+		renderArea.SetExtent(viewport.GetScale() * Windows::Get()->GetWindow(0)->GetSize());
 
 	renderArea.SetAspectRatio(static_cast<float>(renderArea.GetExtent().x) / static_cast<float>(renderArea.GetExtent().y));
 	renderArea.SetExtent(renderArea.GetExtent() + renderArea.GetOffset());

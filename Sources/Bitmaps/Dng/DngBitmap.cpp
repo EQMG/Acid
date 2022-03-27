@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <tinydng/tiny_dng.h>
+#include <tiny_dng.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

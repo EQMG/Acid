@@ -43,9 +43,9 @@ Inspector::Inspector() {
 	//text1.SetTransform({{0.0f, 0.30f}, UiAnchor::LeftTop});
 	text1.SetTitle("Title");
 	text1.SetMaxLength(14);
-	text1.SetValue(Window::Get()->GetTitle());
+	text1.SetValue(Windows::Get()->GetWindow(0)->GetTitle());
 	text1.OnValue().connect(this, [this](std::string text) {
-		Window::Get()->SetTitle(text);
+		Windows::Get()->GetWindow(0)->SetTitle(text);
 	});
 	section1.AddChild(&text1);
 

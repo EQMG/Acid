@@ -25,15 +25,11 @@ set(_temp_acid_headers
 		Bitmaps/Exr/ExrBitmap.hpp
 		Bitmaps/Jpg/JpgBitmap.hpp
 		Bitmaps/Png/PngBitmap.hpp
-		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
-		Devices/LogicalDevice.hpp
 		Devices/Monitor.hpp
 		Devices/Mouse.hpp
-		Devices/PhysicalDevice.hpp
-		Devices/Surface.hpp
-		Devices/Window.hpp
+		Devices/Windows.hpp
 		Engine/App.hpp
 		Engine/Engine.hpp
 		Engine/Log.hpp
@@ -70,6 +66,10 @@ set(_temp_acid_headers
 		Graphics/Descriptors/Descriptor.hpp
 		Graphics/Descriptors/DescriptorSet.hpp
 		Graphics/Descriptors/DescriptorsHandler.hpp
+		Graphics/Devices/Instance.hpp
+		Graphics/Devices/LogicalDevice.hpp
+		Graphics/Devices/PhysicalDevice.hpp
+		Graphics/Devices/Surface.hpp
 		Graphics/Graphics.hpp
 		Graphics/Images/Image.hpp
 		Graphics/Images/Image2d.hpp
@@ -313,15 +313,11 @@ set(_temp_acid_sources
 		Bitmaps/Exr/ExrBitmap.cpp
 		Bitmaps/Jpg/JpgBitmap.cpp
 		Bitmaps/Png/PngBitmap.cpp
-		Devices/Instance.cpp
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp
-		Devices/LogicalDevice.cpp
 		Devices/Monitor.cpp
 		Devices/Mouse.cpp
-		Devices/PhysicalDevice.cpp
-		Devices/Surface.cpp
-		Devices/Window.cpp
+		Devices/Windows.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Files/File.cpp
@@ -350,6 +346,10 @@ set(_temp_acid_sources
 		Graphics/Commands/CommandPool.cpp
 		Graphics/Descriptors/DescriptorSet.cpp
 		Graphics/Descriptors/DescriptorsHandler.cpp
+		Graphics/Devices/Instance.cpp
+		Graphics/Devices/LogicalDevice.cpp
+		Graphics/Devices/PhysicalDevice.cpp
+		Graphics/Devices/Surface.cpp
 		Graphics/Graphics.cpp
 		Graphics/Images/Image.cpp
 		Graphics/Images/Image2d.cpp
@@ -516,6 +516,25 @@ set(_temp_acid_third_party_sources
 		third_party/tinyobj/tiny_obj.cpp
 		)
 
+set(_temp_acid_third_party_includes
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/bitmask
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/cr
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/dr_libs
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/fastnoise
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libjpgd
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libspng
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/magic_enum
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/miniz
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/rocket
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinydng
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyexr
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinygltf
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinymsdf
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyobj
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/Zippy
+		)
+
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
 	# Directory that Acid resources can be found.
@@ -531,10 +550,10 @@ endif()
 
 # Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Export.hpp")
+generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Export.hpp")
 
 # Adds a CMake generated config file
-configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" @ONLY)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/Config.hpp" @ONLY)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

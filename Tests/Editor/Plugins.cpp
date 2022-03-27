@@ -1,7 +1,7 @@
 #include "Plugins.hpp"
 
 #define CR_HOST CR_SAFE
-#include <cr/cr.h>
+#include <cr.h>
 
 #include <Devices/Keyboard.hpp>
 #include <Graphics/Graphics.hpp>

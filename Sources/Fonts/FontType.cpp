@@ -1,6 +1,6 @@
 #include "FontType.hpp"
 
-#include <tinymsdf/tiny_msdf.hpp>
+#include <tiny_msdf.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 

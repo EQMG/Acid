@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <libspng/spng.h>
+#include <spng.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

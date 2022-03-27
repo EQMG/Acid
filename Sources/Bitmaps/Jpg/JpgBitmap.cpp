@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <libjpgd/jpgd.h>
+#include <jpgd.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

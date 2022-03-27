@@ -43,7 +43,7 @@
 #else
 #include <sys/stat.h>
 #endif
-#include <miniz/miniz.h>
+#include <miniz.h>
 #include "ZipException.hpp"
 #include "ZipEntry.hpp"
 

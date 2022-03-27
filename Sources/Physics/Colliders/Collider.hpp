@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rocket/rocket.hpp>
+#include <rocket.hpp>
 
 #include "Maths/Transform.hpp"
 #include "Maths/Quaternion.hpp"

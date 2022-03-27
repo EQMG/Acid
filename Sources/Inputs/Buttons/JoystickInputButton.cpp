@@ -2,17 +2,21 @@
 
 namespace acid {
 JoystickInputButton::JoystickInputButton(JoystickPort port, JoystickButton button) :
-	port(port),
 	button(button) {
-	Joysticks::Get()->OnButton().connect(this, [this](JoystickPort port, JoystickButton button, InputAction action) {
-		if (this->port == port && this->button == button) {
-			onButton(action, 0);
-		}
-	});
+	SetPort(port);
 }
 
 bool JoystickInputButton::IsDown() const {
-	return (Joysticks::Get()->GetButton(port, button) != InputAction::Release) ^ inverted;
+	return (joystick->GetButton(button) != InputAction::Release) ^ inverted;
+}
+
+void JoystickInputButton::SetPort(JoystickPort port) {
+	joystick = Joysticks::Get()->GetJoystick(port);
+	disconnect_tracked_connections();
+	joystick->OnButton().connect(this, [this](JoystickButton button, InputAction action) {
+		if (this->button == button)
+			onButton(action, 0);
+	});
 }
 
 InputAxis::ArgumentDescription JoystickInputButton::GetArgumentDescription() const {
@@ -25,14 +29,14 @@ InputAxis::ArgumentDescription JoystickInputButton::GetArgumentDescription() con
 
 const Node &operator>>(const Node &node, JoystickInputButton &inputButton) {
 	node["inverted"].Get(inputButton.inverted);
-	node["port"].Get(inputButton.port);
+	inputButton.SetPort(node["port"].Get<JoystickPort>());
 	node["button"].Get(inputButton.button);
 	return node;
 }
 
 Node &operator<<(Node &node, const JoystickInputButton &inputButton) {
 	node["inverted"].Set(inputButton.inverted);
-	node["port"].Set(inputButton.port);
+	node["port"].Set(inputButton.GetPort());
 	node["button"].Set(inputButton.button);
 	return node;
 }

@@ -1,5 +1,5 @@
 #include "SceneTutorial7.hpp"
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Meshes/Mesh.hpp"
 #include "Models/Obj/ObjModel.hpp"
 #include "SimpleMaterial.hpp"
@@ -37,7 +37,7 @@ void SceneTutorial7::Update() {
  */
 void FixedCamera::LookAt(Vector3f pos, Vector3f up) {
 	viewMatrix = Matrix4::LookAt(this->position, pos, up);
-	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Windows::Get()->GetWindow(0)->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 	viewFrustum.Update(viewMatrix, projectionMatrix);
 	viewRay.Update(this->position, {0.5f, 0.5f}, viewMatrix, projectionMatrix);
 }

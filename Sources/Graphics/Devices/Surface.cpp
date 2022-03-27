@@ -1,16 +1,16 @@
 #include "Surface.hpp"
 
+#include "Devices/Windows.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
-#include "Window.hpp"
 
 namespace acid {
 Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
 	instance(instance),
 	physicalDevice(physicalDevice) {
 	// Creates the surface.
-	Graphics::CheckVk(Window::Get()->CreateSurface(*instance, nullptr, &surface));
+	Graphics::CheckVk(Windows::Get()->GetWindow(0)->CreateSurface(*instance, nullptr, &surface));
 
 	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*physicalDevice, surface, &capabilities));
 

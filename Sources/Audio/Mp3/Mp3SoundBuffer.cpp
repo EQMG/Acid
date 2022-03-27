@@ -5,8 +5,7 @@
 #else
 #include <al.h>
 #endif
-
-#include <dr_libs/dr_mp3.h>
+#include <dr_mp3.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

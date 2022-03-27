@@ -4,7 +4,8 @@
 #include <condition_variable>
 #include <mutex>
 #include <thread>
-#include <rocket/rocket.hpp>
+
+#include <rocket.hpp>
 
 #include "Engine/Engine.hpp"
 #include "Maths/Time.hpp"

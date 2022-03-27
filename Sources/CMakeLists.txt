@@ -1,130 +1,92 @@
-add_library(Acid)
-add_library(Acid::Acid ALIAS Acid)
-
-# This file is quite big, so for readability we include instead...
-# This uses target_sources(Acid) to define its headers & source files
-include(CMakeSources.cmake)
-
 # Used to track if we're using ONLY system libs
 # Prevents errors with EXPORT
 set(_ACID_ALL_SYSTEM_LIBS true)
-
-# Allows usage of configure time content
-include(FetchContent)
 
 # Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
 
 # Finds Vulkan, env "VULKAN_SDK" must be set
-find_package(volk 121 QUIET)
-if(NOT volk_FOUND)
+#find_package(volk 121 QUIET)
+#if(NOT volk_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(volk
-			URL https://github.com/zeux/volk/archive/1.2.162.tar.gz
-			URL_MD5 06edbfc02f60b5f15781db45a0bbfcc5
-			)
-	FetchContent_GetProperties(volk)
-	if(NOT volk_POPULATED)
-		FetchContent_Populate(volk)
-		add_subdirectory(${volk_SOURCE_DIR} ${volk_BINARY_DIR})
-	endif()
-	set_target_properties(volk PROPERTIES FOLDER External)
-	add_library(volk::volk ALIAS volk)
-endif()
+	add_subdirectory(third_party/volk)
+	set_target_properties(volk PROPERTIES FOLDER "External")
+#endif()
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
 find_package(OpenALSoft)
 find_package(OpenAL)
 if(OPENALSOFT_FOUND)
-	if(OPENALSOFT_FOUND AND NOT TARGET OpenAL::OpenAL)
+	#if(OPENALSOFT_FOUND AND NOT TARGET OpenAL::OpenAL)
 		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 		set_target_properties(OpenAL::OpenAL PROPERTIES
 				IMPORTED_LOCATION "${OPENALSOFT_LIBRARY}"
 				INTERFACE_INCLUDE_DIRECTORIES "${OPENALSOFT_INCLUDE_DIR}"
 				)
-	endif()
+	#endif()
 elseif(OPENAL_FOUND)
-	if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
+	#if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
 		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 		set_target_properties(OpenAL::OpenAL PROPERTIES
 				IMPORTED_LOCATION "${OPENAL_LIBRARY}"
 				INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}"
 				)
-	endif()
+	#endif()
 else()
 	message(FATAL_ERROR "Could not find OpenAL or OpenAL-Soft")
 endif()
 
-find_package(glfw3 3.3 QUIET)
+find_package(glfw3 3.3.6 QUIET)
 if(NOT TARGET glfw)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(glfw3
-			URL https://github.com/glfw/glfw/archive/3.3.3.tar.gz
-			URL_MD5 cc691871d5f10cf47ab528f659fdeebd
-			)
-	FetchContent_GetProperties(glfw3)
-	if(NOT glfw3_POPULATED)
-		foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
-			set(${_glfw3_option} OFF CACHE INTERNAL "")
-		endforeach()
-		FetchContent_Populate(glfw3)
-		add_subdirectory(${glfw3_SOURCE_DIR} ${glfw3_BINARY_DIR})
-	endif()
-	set_target_properties(glfw PROPERTIES FOLDER External)
+	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
+		set(${_glfw3_option} OFF CACHE INTERNAL "")
+	endforeach()
+	add_subdirectory(third_party/glfw)
+	set_target_properties(glfw PROPERTIES FOLDER "External")
 endif()
 
-find_package(Freetype 2.9.1 QUIET)
+find_package(Freetype 2.11.1 QUIET)
 if(NOT Freetype_FOUND)
-	FetchContent_Declare(freetype
-			URL https://bigsearcher.com/mirrors/nongnu/freetype/freetype-2.10.4.tar.gz
-			URL_MD5 4934a8b61b636920bcce58e7c7f3e1a2
-			)
-	FetchContent_GetProperties(freetype)
-	if(NOT freetype_POPULATED)
-		set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
-		set(CMAKE_DISABLE_FIND_PACKAGE_BZip2 TRUE)
-		set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
-		set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz TRUE)
-		FetchContent_Populate(freetype)
-		add_subdirectory(${freetype_SOURCE_DIR} ${freetype_BINARY_DIR})
-		set_target_properties(freetype PROPERTIES FOLDER External)
-	endif()
+	set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
+	set(CMAKE_DISABLE_FIND_PACKAGE_BZip2 TRUE)
+	set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
+	set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz TRUE)
+	add_subdirectory(third_party/freetype)
+	
+	set_target_properties(freetype PROPERTIES FOLDER "External")
+	
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
 # TODO: Prebuilt glslang binaries are unreliable between systems
-#find_package(glslang QUIET)
+#find_package(glslang 11.6.0 QUIET)
 if(NOT glslang_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(glslang
-			URL https://github.com/KhronosGroup/glslang/archive/11.1.0.tar.gz
-			URL_MD5 1688a1e36945d72df960b859ede55078
-			)
-	FetchContent_GetProperties(glslang)
-	if(NOT glslang_POPULATED)
-		# On MSVC shared mode must be disabled with glslang currently
-		set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
-		if(MSVC)
-			set(BUILD_SHARED_LIBS OFF)
-		endif()
-		foreach(_glslang_option "ENABLE_SPVREMAPPER" "ENABLE_GLSLANG_BINARIES" "ENABLE_PCH" "ENABLE_CTEST" "ENABLE_HLSL")
-			set(${_glslang_option} OFF CACHE INTERNAL "")
-		endforeach()
-		foreach(_glslang_option "SKIP_GLSLANG_INSTALL" "ENABLE_RTTI" "ENABLE_EXCEPTIONS" "ENABLE_OPT")
-			set(${_glslang_option} ON CACHE INTERNAL "")
-		endforeach()
-		FetchContent_Populate(glslang)
-		add_subdirectory(${glslang_SOURCE_DIR} ${glslang_BINARY_DIR})
-		# Reset back to value before MSVC fix
-		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
+
+	# On MSVC shared mode must be disabled with glslang currently
+	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+	if(MSVC)
+		set(BUILD_SHARED_LIBS OFF)
 	endif()
-	set_target_properties(glslang PROPERTIES FOLDER External/glslang)
-	set_target_properties(glslang-build-info PROPERTIES FOLDER External/glslang)
-	set_target_properties(GenericCodeGen PROPERTIES FOLDER External/glslang)
-	set_target_properties(MachineIndependent PROPERTIES FOLDER External/glslang)
-	set_target_properties(OGLCompiler PROPERTIES FOLDER External/glslang)
-	set_target_properties(OSDependent PROPERTIES FOLDER External/glslang)
-	set_target_properties(SPIRV PROPERTIES FOLDER External/glslang)
+	set(ENABLE_SPVREMAPPER OFF CACHE INTERNAL "Enables building of SPVRemapper")
+	set(ENABLE_GLSLANG_BINARIES OFF CACHE INTERNAL "Builds glslangValidator and spirv-remap")
+	set(ENABLE_HLSL OFF CACHE INTERNAL "Enables HLSL input support")
+	set(ENABLE_RTTI ON CACHE INTERNAL "Enables RTTI")
+	set(ENABLE_EXCEPTIONS ON CACHE INTERNAL "Enables Exceptions")
+	set(ENABLE_CTEST OFF CACHE INTERNAL "Enables testing")
+	set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
+	add_subdirectory(third_party/glslang)
+	# Reset back to value before MSVC fix
+	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
+
+	set_target_properties(glslang PROPERTIES FOLDER "External/glslang")
+	#set_target_properties(glslang-build-info PROPERTIES FOLDER "External/glslang")
+	set_target_properties(GenericCodeGen PROPERTIES FOLDER "External/glslang")
+	set_target_properties(MachineIndependent PROPERTIES FOLDER "External/glslang")
+	set_target_properties(OGLCompiler PROPERTIES FOLDER "External/glslang")
+	set_target_properties(OSDependent PROPERTIES FOLDER "External/glslang")
+	set_target_properties(SPIRV PROPERTIES FOLDER "External/glslang")
 
 	# Used in target_link_libraries()
 	set(GLSLANG_LIBRARIES glslang SPIRV)
@@ -136,86 +98,79 @@ endif()
 if(WIN32 AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
 	set(CMAKE_DISABLE_FIND_PACKAGE_Bullet TRUE CACHE INTERNAL "")
 endif()
-find_package(Bullet 2.89 QUIET)
+find_package(Bullet 3.17 QUIET)
 if(NOT BULLET_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(bullet3
-			URL https://github.com/bulletphysics/bullet3/archive/3.07.tar.gz
-			URL_MD5 88d4984dcfc97d23ddf880764d427849
-			)
-	FetchContent_GetProperties(bullet3)
-	if(NOT bullet3_POPULATED)
-		# On MSVC shared mode must be disabled with bullet currently
-		set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
-		if(MSVC)
-			set(USE_MSVC_INCREMENTAL_LINKING ON CACHE INTERNAL "")
-			set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "")
-			set(BUILD_SHARED_LIBS OFF)
-		endif()
-		foreach(_bullet3_option "BUILD_BULLET3" "BUILD_PYBULLET" "BUILD_BULLET2_DEMOS" "BUILD_OPENGL3_DEMOS" 
-				"BUILD_CPU_DEMOS" "BUILD_EXTRAS" "BUILD_UNIT_TESTS" "USE_GRAPHICAL_BENCHMARK" "USE_GLUT"
-				)
-			set(${_bullet3_option} OFF CACHE INTERNAL "")
-		endforeach()
-		FetchContent_Populate(bullet3)
-		add_subdirectory(${bullet3_SOURCE_DIR} ${bullet3_BINARY_DIR})
-		# Reset back to value before MSVC fix
-		set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
-	endif()
-	set_target_properties(Bullet3Common PROPERTIES FOLDER External/bullet)
-	set_target_properties(BulletCollision PROPERTIES FOLDER External/bullet)
-	set_target_properties(BulletDynamics PROPERTIES FOLDER External/bullet)
-	set_target_properties(BulletInverseDynamics PROPERTIES FOLDER External/bullet)
-	set_target_properties(BulletSoftBody PROPERTIES FOLDER External/bullet)
-	set_target_properties(LinearMath PROPERTIES FOLDER External/bullet)
 
-	set(BULLET_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/src")
+	# On MSVC shared mode must be disabled with bullet currently
+	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+	if(MSVC)
+		set(USE_MSVC_INCREMENTAL_LINKING ON CACHE INTERNAL "")
+		set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "")
+		set(BUILD_SHARED_LIBS OFF)
+	endif()
+	set(USE_GRAPHICAL_BENCHMARK OFF CACHE INTERNAL "Use Graphical Benchmark")
+	set(BUILD_CPU_DEMOS OFF CACHE INTERNAL "Build original Bullet CPU examples")
+	set(USE_GLUT OFF CACHE INTERNAL "Use Glut")
+	set(BUILD_BULLET3 OFF CACHE INTERNAL "Set when you want to build Bullet 3")
+	set(BUILD_PYBULLET OFF CACHE INTERNAL "Set when you want to build pybullet (Python bindings for Bullet)")
+	set(BUILD_BULLET2_DEMOS OFF CACHE INTERNAL "Set when you want to build the Bullet 2 demos")
+	set(BUILD_EXTRAS OFF CACHE INTERNAL "Set when you want to build the extras")
+	set(BUILD_UNIT_TESTS OFF CACHE INTERNAL "Build Unit Tests")
+	add_subdirectory(third_party/bullet3)
+	# Reset back to value before MSVC fix
+	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
+
+	set_target_properties(Bullet3Common PROPERTIES FOLDER "External/bullet")
+	set_target_properties(BulletCollision PROPERTIES FOLDER "External/bullet")
+	set_target_properties(BulletDynamics PROPERTIES FOLDER "External/bullet")
+	set_target_properties(BulletInverseDynamics PROPERTIES FOLDER "External/bullet")
+	set_target_properties(BulletSoftBody PROPERTIES FOLDER "External/bullet")
+	set_target_properties(LinearMath PROPERTIES FOLDER "External/bullet")
+
+	set(BULLET_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/third_party/bullet3/src")
 	set(BULLET_LIBRARIES BulletSoftBody BulletDynamics BulletCollision LinearMath)
 endif()
 
-find_package(PhysFS 3.0.1 QUIET)
+find_package(PhysFS 3.0.2 QUIET)
 if(NOT PhysFS_FOUND)
 	set(_ACID_ALL_SYSTEM_LIBS false)
-	FetchContent_Declare(physfs
-			URL https://github.com/EQMG/physfs/tarball/9b7980700e252ccb296022d57fc731fb348e298b
-			URL_MD5 91a607d7b12188f5a41370bf11fa53b2
-			)
-	FetchContent_GetProperties(physfs)
-	if(NOT physfs_POPULATED)
-		set(PHYSFS_BUILD_STATIC NOT${BUILD_SHARED_LIBS} CACHE INTERNAL "")
-		set(PHYSFS_BUILD_SHARED ${BUILD_SHARED_LIBS} CACHE INTERNAL "")
-		set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "")
-		set(PHYSFS_TARGETNAME_DOCS "physfs-docs" CACHE INTERNAL STRING)
-		set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
-		set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
-		set(CMAKE_DISABLE_FIND_PACKAGE_Doxygen TRUE)
-		FetchContent_Populate(physfs)
-		add_subdirectory(${physfs_SOURCE_DIR} ${physfs_BINARY_DIR})
+	
+	if(BUILD_SHARED_LIBS)
+		set(PHYSFS_BUILD_STATIC OFF CACHE INTERNAL "Build static library.")
+	else()
+		set(PHYSFS_BUILD_SHARED OFF CACHE INTERNAL "Build shared library.")
 	endif()
-	set_target_properties(physfs-static PROPERTIES FOLDER External/physfs)
+	set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "Build stdio test program.")
+	set(PHYSFS_BUILD_DOCS OFF CACHE INTERNAL "Build doxygen based documentation.")
+	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
+	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
+	add_subdirectory(third_party/physfs)
+	
 	if(TARGET physfs)
-		set_target_properties(physfs PROPERTIES FOLDER External/physfs)
+		set_target_properties(physfs PROPERTIES FOLDER "External/physfs")
+		set(PHYSFS_LIBRARY physfs)
 	endif()
-	if(TARGET physfs-docs)
-		set_target_properties(physfs-docs PROPERTIES FOLDER External/physfs)
+	if(TARGET physfs-static)
+		set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
+		set(PHYSFS_LIBRARY physfs-static)
 	endif()
-	if(TARGET physfs-uninstall)
-		set_target_properties(physfs-uninstall PROPERTIES FOLDER External/physfs)
+	if(UNIX)
+		set_target_properties(physfs-dist PROPERTIES FOLDER "External/physfs")
+		set_target_properties(physfs-uninstall PROPERTIES FOLDER "External/physfs")
 	endif()
-
-	# PhysFS disables rpath on GNU, when disabled Acid will not run on Unix.
 	if(CMAKE_COMPILER_IS_GNUCC)
 		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
 	endif()
 
-	set(PHYSFS_INCLUDE_DIR "${physfs_SOURCE_DIR}/src")
-	# Set here so we can use it in Sources/CMakeLists.txt
-	if(PHYSFS_BUILD_STATIC)
-		set(PHYSFS_LIBRARY physfs-static)
-	else()
-		set(PHYSFS_LIBRARY physfs)
-	endif()
+	set(PHYSFS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/physfs/src")
 endif()
+
+add_library(Acid)
+add_library(Acid::Acid ALIAS Acid)
+# This file is quite big, so for readability we include instead...
+# This uses target_sources(Acid) to define its headers & source files
+include(CMakeSources.cmake)
 
 if(APPLE)
     set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-framework IOKit -framework Foundation -framework CoreFoundation")
@@ -255,12 +210,12 @@ target_compile_options(Acid
 		)
 target_include_directories(Acid
 		PUBLIC
+		# Generated headers
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
 		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		# Project third_party includes
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/third_party>
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+		${_temp_acid_third_party_includes}
 		# Helps the includes find what they need at runtime
 		# Although this also allows people to not prefix "Acid" before includes as well
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
@@ -298,8 +253,8 @@ set_target_properties(Acid PROPERTIES
 		)
 
 # Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" 
-		"${CMAKE_CURRENT_BINARY_DIR}/Export.hpp"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Config.hpp" 
+		"${CMAKE_CURRENT_BINARY_DIR}/include/Export.hpp"
 		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
 		)
 foreach(_acid_header IN LISTS _temp_acid_headers _temp_acid_third_party_headers)

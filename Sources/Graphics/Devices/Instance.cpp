@@ -2,8 +2,8 @@
 
 #include <iomanip>
 
+#include "Devices/Windows.hpp"
 #include "Graphics/Graphics.hpp"
-#include "Window.hpp"
 
 #ifndef VK_EXT_DEBUG_UTILS_EXTENSION_NAME
 #define VK_EXT_DEBUG_UTILS_EXTENSION_NAME "VK_EXT_debug_utils"
@@ -138,7 +138,7 @@ bool Instance::CheckValidationLayerSupport() const {
 
 std::vector<const char *> Instance::GetExtensions() const {
 	// Sets up the extensions.
-	auto [glfwExtensions, glfwExtensionsCount] = Window::Get()->GetInstanceExtensions();
+	auto [glfwExtensions, glfwExtensionsCount] = Windows::Get()->GetInstanceExtensions();
 
 	std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionsCount);
 

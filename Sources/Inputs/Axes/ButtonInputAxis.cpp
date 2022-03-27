@@ -19,7 +19,7 @@ float ButtonInputAxis::GetAmount() const {
 	if (negative->IsDown())
 		amount -= 1.0f;
 
-	return scale * amount;
+	return scale * amount + offset;
 }
 
 InputAxis::ArgumentDescription ButtonInputAxis::GetArgumentDescription() const {

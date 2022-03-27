@@ -1,4 +1,4 @@
-#include <Zippy/Zippy.hpp>
+#include <Zippy.hpp>
 
 #include <Engine/Log.hpp>
 #include "Config.hpp"

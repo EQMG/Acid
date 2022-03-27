@@ -33,7 +33,7 @@
 
 #include <type_traits>
 
-#include <magic_enum/magic_enum.hpp>
+#include <magic_enum.hpp>
 
 namespace bitmask {
 /**

@@ -46,7 +46,7 @@ MainApp::MainApp() :
 
 	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press)
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			Windows::Get()->GetWindow(0)->SetFullscreen(!Windows::Get()->GetWindow(0)->IsFullscreen());
 	});
 	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
@@ -87,8 +87,10 @@ void MainApp::Start() {
 	}, 2s, 3);
 
 	// Sets values to modules.
-	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcons({
+	Windows::Get()->AddWindow();
+	Windows::Get()->GetWindow(1)->SetTitle("Test Physics 2");
+	Windows::Get()->GetWindow(0)->SetTitle("Test Physics");
+	Windows::Get()->GetWindow(0)->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
 		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
 		});

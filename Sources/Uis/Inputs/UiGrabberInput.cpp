@@ -62,8 +62,8 @@ void UiGrabberInput::UpdateValue() {
 UiGrabberJoystick::UiGrabberJoystick() {
 	UpdateValue();
 
-	Joysticks::Get()->OnButton().connect(this, [this](JoystickPort port, uint32_t button, InputAction action) {
-		if (!updating || this->port != port)
+	Joysticks::Get()->GetJoystick(port)->OnButton().connect(this, [this](uint32_t button, InputAction action) {
+		if (!updating)
 			return;
 
 		value = button;

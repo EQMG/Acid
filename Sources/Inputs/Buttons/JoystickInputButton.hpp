@@ -21,8 +21,10 @@ public:
 
 	InputAxis::ArgumentDescription GetArgumentDescription() const override;
 
-	JoystickPort GetPort() const { return port; }
-	void SetPort(JoystickPort port) { this->port = port; }
+	bool IsConnected() const { return joystick->IsConnected(); }
+
+	JoystickPort GetPort() const { return joystick->GetPort(); }
+	void SetPort(JoystickPort port);
 
 	JoystickButton GetButton() const { return button; }
 	void SetButton(JoystickButton button) { this->button = button; }
@@ -31,7 +33,7 @@ public:
 	friend Node &operator<<(Node &node, const JoystickInputButton &inputButton);
 
 private:
-	JoystickPort port;
+	Joystick *joystick;
 	JoystickButton button;
 };
 }

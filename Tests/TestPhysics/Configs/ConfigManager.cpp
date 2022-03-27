@@ -1,7 +1,7 @@
 #include "ConfigManager.hpp"
 
 #include <Audio/Audio.hpp>
-#include <Devices/Window.hpp>
+#include <Devices/Windows.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Files/Json/Json.hpp>
 #include <Timers/Timers.hpp>
@@ -26,12 +26,12 @@ void ConfigManager::Load() {
 	graphics.Load();
 	auto &graphicsData = graphics.GetNode();
 	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].GetWithFallback<bool>(true));
-	Window::Get()->SetSize(graphicsData["size"].GetWithFallback<Vector2f>(Vector2i(1080, 720)));
-	//Window::Get()->SetPosition(graphicsData["position"].GetWithFallback<Vector2f>(Vector2i(0, 0)));
-	Window::Get()->SetBorderless(graphicsData["borderless"].GetWithFallback<bool>(false));
-	Window::Get()->SetResizable(graphicsData["resizable"].GetWithFallback<bool>(true));
-	Window::Get()->SetFloating(graphicsData["floating"].GetWithFallback<bool>(false));
-	Window::Get()->SetFullscreen(graphicsData["fullscreen"].GetWithFallback<bool>(false));
+	Windows::Get()->GetWindow(0)->SetSize(graphicsData["size"].GetWithFallback<Vector2f>(Vector2i(1080, 720)));
+	//Windows::Get()->GetWindow(0)->SetPosition(graphicsData["position"].GetWithFallback<Vector2f>(Vector2i(0, 0)));
+	Windows::Get()->GetWindow(0)->SetBorderless(graphicsData["borderless"].GetWithFallback<bool>(false));
+	Windows::Get()->GetWindow(0)->SetResizable(graphicsData["resizable"].GetWithFallback<bool>(true));
+	Windows::Get()->GetWindow(0)->SetFloating(graphicsData["floating"].GetWithFallback<bool>(false));
+	Windows::Get()->GetWindow(0)->SetFullscreen(graphicsData["fullscreen"].GetWithFallback<bool>(false));
 	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].GetWithFallback<float>(-1.0f));
 	
 #ifdef ACID_DEBUG
@@ -49,12 +49,12 @@ void ConfigManager::Save() {
 
 	auto &graphicsData = graphics.GetNode();
 	//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
-	graphicsData["size"].Set<Vector2f>(Window::Get()->GetSize(false));
-	//graphicsData["position"].Set<Vector2f>(Window::Get()->GetPosition());
-	graphicsData["borderless"].Set<bool>(Window::Get()->IsBorderless());
-	graphicsData["resizable"].Set<bool>(Window::Get()->IsResizable());
-	graphicsData["floating"].Set<bool>(Window::Get()->IsFloating());
-	graphicsData["fullscreen"].Set<bool>(Window::Get()->IsFullscreen());
+	graphicsData["size"].Set<Vector2f>(Windows::Get()->GetWindow(0)->GetSize(false));
+	//graphicsData["position"].Set<Vector2f>(Windows::Get()->GetWindow(0)->GetPosition());
+	graphicsData["borderless"].Set<bool>(Windows::Get()->GetWindow(0)->IsBorderless());
+	graphicsData["resizable"].Set<bool>(Windows::Get()->GetWindow(0)->IsResizable());
+	graphicsData["floating"].Set<bool>(Windows::Get()->GetWindow(0)->IsFloating());
+	graphicsData["fullscreen"].Set<bool>(Windows::Get()->GetWindow(0)->IsFullscreen());
 	graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
 	graphics.Write(NodeFormat::Beautified);
 }

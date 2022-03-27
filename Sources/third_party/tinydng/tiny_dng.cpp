@@ -126,7 +126,7 @@
 
 // STB image to decode jpeg image.
 // Assume STB_IMAGE_IMPLEMENTATION is defined elsewhere
-#include "stb/stb_image.h"
+#include <stb_image.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop

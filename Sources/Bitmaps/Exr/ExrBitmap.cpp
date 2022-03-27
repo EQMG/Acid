@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <tinyexr/tiny_exr.h>
+#include <tiny_exr.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

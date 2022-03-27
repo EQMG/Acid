@@ -25,8 +25,10 @@ public:
 	float GetAmount() const override;
 	bool IsDown() const override;
 
-	JoystickPort GetPort() const { return port; }
-	void SetPort(JoystickPort port) { this->port = port; }
+	bool IsConnected() const { return joystick->IsConnected(); }
+
+	JoystickPort GetPort() const { return joystick->GetPort(); }
+	void SetPort(JoystickPort port);
 
 	JoystickHat GetHat() const { return hat; }
 	void SetHat(JoystickHat hat) { this->hat = hat; }
@@ -38,7 +40,7 @@ public:
 	friend Node &operator<<(Node &node, const JoystickHatInput &input);
 
 private:
-	JoystickPort port;
+	Joystick *joystick;
 	JoystickHat hat;
 	bitmask::bitmask<JoystickHatValue> hatFlags;
 	bool lastDown = false;

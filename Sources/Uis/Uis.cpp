@@ -21,10 +21,10 @@ void Uis::Update() {
 	cursorSelect = nullptr;
 
 	objects.clear();
-	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Window::Get()->GetSize().x, 
-		0.0f, Window::Get()->GetSize().y, -1.0f, 1.0f);
-	canvas.GetConstraints().GetWidth()->SetOffset(Window::Get()->GetSize().x);
-	canvas.GetConstraints().GetHeight()->SetOffset(Window::Get()->GetSize().y);
+	auto viewMatrix = Matrix4::OrthographicMatrix(0.0f, Windows::Get()->GetWindow(0)->GetSize().x, 
+		0.0f, Windows::Get()->GetWindow(0)->GetSize().y, -1.0f, 1.0f);
+	canvas.GetConstraints().GetWidth()->SetOffset(Windows::Get()->GetWindow(0)->GetSize().x);
+	canvas.GetConstraints().GetHeight()->SetOffset(Windows::Get()->GetWindow(0)->GetSize().y);
 	canvas.Update(viewMatrix, objects, cursorSelect);
 
 	if (lastCursorSelect != cursorSelect) {

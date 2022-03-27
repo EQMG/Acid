@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include "Windows.hpp"
 
 #include <algorithm>
 #include <GLFW/glfw3.h>
@@ -8,20 +8,20 @@
 
 namespace acid {
 void CallbackError(int32_t error, const char *description) {
-	Window::CheckGlfw(error);
+	Windows::CheckGlfw(error);
 	Log::Error("GLFW error: ", description, ", ", error, '\n');
 }
 
 void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
-	auto &monitors = Window::Get()->monitors;
+	auto &monitors = Windows::Get()->monitors;
 
 	if (event == GLFW_CONNECTED) {
 		auto &it = monitors.emplace_back(std::make_unique<Monitor>(monitor));
-		Window::Get()->onMonitorConnect(it.get(), true);
+		Windows::Get()->onMonitorConnect(it.get(), true);
 	} else if (event == GLFW_DISCONNECTED) {
 		for (auto &m : monitors) {
 			if (m->GetMonitor() == monitor) {
-				Window::Get()->onMonitorConnect(m.get(), false);
+				Windows::Get()->onMonitorConnect(m.get(), false);
 			}
 		}
 
@@ -32,85 +32,60 @@ void CallbackMonitor(GLFWmonitor *monitor, int32_t event) {
 }
 
 void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos) {
-	if (Window::Get()->fullscreen) return;
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
+	if (context->fullscreen) return;
 	
-	Window::Get()->position = {xpos, ypos};
-	Window::Get()->onPosition(Window::Get()->position);
+	context->position = {xpos, ypos};
+	context->onPosition(context->position);
 }
 
 void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height) {
 	if (width <= 0 || height <= 0) return;
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
 
-	if (Window::Get()->fullscreen) {
-		Window::Get()->fullscreenSize = {width, height};
-		Window::Get()->onSize(Window::Get()->fullscreenSize);
+	if (context->fullscreen) {
+		context->fullscreenSize = {width, height};
+		context->onSize(context->fullscreenSize);
 	} else {
-		Window::Get()->size = {width, height};
-		Window::Get()->onSize(Window::Get()->size);
+		context->size = {width, height};
+		context->onSize(context->size);
 	}
 }
 
 void CallbackWindowClose(GLFWwindow *window) {
-	Window::Get()->closed = false;
-	Engine::Get()->RequestClose();
-	Window::Get()->onClose();
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
+	context->closed = false;
+	//Engine::Get()->RequestClose();
+	context->onClose();
 }
 
 void CallbackWindowFocus(GLFWwindow *window, int32_t focused) {
-	Window::Get()->focused = static_cast<bool>(focused);
-	Window::Get()->onFocus(focused == GLFW_TRUE);
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
+	context->focused = static_cast<bool>(focused);
+	context->onFocus(focused == GLFW_TRUE);
 }
 
 void CallbackWindowIconify(GLFWwindow *window, int32_t iconified) {
-	Window::Get()->iconified = iconified;
-	Window::Get()->onIconify(iconified);
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
+	context->iconified = iconified;
+	context->onIconify(iconified);
 }
 
 void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height) {
-	if (Window::Get()->fullscreen)
-		Window::Get()->fullscreenSize = {width, height};
+	auto context = static_cast<Window *>(glfwGetWindowUserPointer(window));
+	if (context->fullscreen)
+		context->fullscreenSize = {width, height};
 	else
-		Window::Get()->size = {width, height};
+		context->size = {width, height};
+	// TODO: only set this window to resized
 	Graphics::Get()->SetFramebufferResized();
 }
 
-Window::Window() :
+Window::Window(VideoMode videoMode) :
 	size(1080, 720),
 	title("Acid Window"),
 	resizable(true),
 	focused(true) {
-	// Set the error error callback
-	glfwSetErrorCallback(CallbackError);
-
-	// Initialize the GLFW library.
-	if (glfwInit() == GLFW_FALSE)
-		throw std::runtime_error("GLFW failed to initialize");
-
-	// Checks Vulkan support on GLFW.
-	if (glfwVulkanSupported() == GLFW_FALSE)
-		throw std::runtime_error("GLFW failed to find Vulkan support");
-
-	// Set the monitor callback
-	glfwSetMonitorCallback(CallbackMonitor);
-
-	// The window will stay hidden until after creation.
-	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-	// Disable context creation.
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	// Fixes 16 bit stencil bits in macOS.
-	glfwWindowHint(GLFW_STENCIL_BITS, 8);
-	// No stereo view!
-	glfwWindowHint(GLFW_STEREO, GLFW_FALSE);
-
-	// Get connected monitors.
-	int32_t monitorCount;
-	auto monitors = glfwGetMonitors(&monitorCount);
-
-	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
-		this->monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
-
-	auto videoMode = this->monitors[0]->GetVideoMode();
-
 	// Create a windowed mode window and its context.
 	window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
 
@@ -153,15 +128,7 @@ Window::~Window() {
 	// Free the window callbacks and destroy the window.
 	glfwDestroyWindow(window);
 
-	// Terminate GLFW.
-	glfwTerminate();
-
 	closed = true;
-}
-
-void Window::Update() {
-	// Polls for window events.
-	glfwPollEvents();
 }
 
 void Window::SetSize(const Vector2i &size) {
@@ -255,14 +222,6 @@ void Window::SetIconified(bool iconify) {
 	}
 }
 
-const Monitor *Window::GetPrimaryMonitor() const {
-	for (const auto &monitor : monitors) {
-		if (monitor->IsPrimary())
-			return monitor.get();
-	}
-	return nullptr;
-}
-
 int32_t OverlappingArea(Vector2i l1, Vector2i r1, Vector2i l2, Vector2i r2) {
 	int area1 = std::abs(l1.x - r1.x) * std::abs(l1.y - r1.y);
 
@@ -277,7 +236,7 @@ int32_t OverlappingArea(Vector2i l1, Vector2i r1, Vector2i l2, Vector2i r2) {
 const Monitor *Window::GetCurrentMonitor() const {
 	if (fullscreen) {
 		auto glfwMonitor = glfwGetWindowMonitor(window);
-		for (const auto &monitor : monitors) {
+		for (const auto &monitor : Windows::Get()->GetMonitors()) {
 			if (monitor->monitor == glfwMonitor)
 				return monitor.get();
 		}
@@ -286,7 +245,7 @@ const Monitor *Window::GetCurrentMonitor() const {
 	std::multimap<int32_t, const Monitor *> rankedMonitor;
 	auto where = rankedMonitor.end();
 
-	for (const auto &monitor : monitors) {
+	for (const auto &monitor : Windows::Get()->GetMonitors()) {
 		where = rankedMonitor.insert(where, {OverlappingArea(monitor->GetWorkareaPosition(), monitor->GetWorkareaPosition() + monitor->GetWorkareaSize(),
 			position, position + size), monitor.get()});
 	}
@@ -297,7 +256,79 @@ const Monitor *Window::GetCurrentMonitor() const {
 	return nullptr;
 }
 
-std::string Window::StringifyResultGlfw(int32_t result) {
+VkResult Window::CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const {
+	return glfwCreateWindowSurface(instance, window, allocator, surface);
+}
+
+Windows::Windows() {
+	// Set the error error callback
+	glfwSetErrorCallback(CallbackError);
+
+	// Initialize the GLFW library.
+	if (glfwInit() == GLFW_FALSE)
+		throw std::runtime_error("GLFW failed to initialize");
+
+	// Checks Vulkan support on GLFW.
+	if (glfwVulkanSupported() == GLFW_FALSE)
+		throw std::runtime_error("GLFW failed to find Vulkan support");
+
+	// Set the monitor callback
+	glfwSetMonitorCallback(CallbackMonitor);
+
+	// The window will stay hidden until after creation.
+	glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+	// Disable context creation.
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	// Fixes 16 bit stencil bits in macOS.
+	glfwWindowHint(GLFW_STENCIL_BITS, 8);
+	// No stereo view!
+	glfwWindowHint(GLFW_STEREO, GLFW_FALSE);
+
+	// Get connected monitors.
+	int32_t monitorCount;
+	auto monitors = glfwGetMonitors(&monitorCount);
+
+	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
+		this->monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
+
+	AddWindow();
+}
+
+Windows::~Windows() {
+	// Terminate GLFW.
+	glfwTerminate();
+}
+
+void Windows::Update() {
+	// Polls for window events.
+	glfwPollEvents();
+}
+
+Window *Windows::AddWindow() {
+	return windows.emplace_back(std::make_unique<Window>(GetPrimaryMonitor()->GetVideoMode())).get();
+}
+
+const Window *Windows::GetWindow(WindowId id) const {
+	if (id >= windows.size())
+		return nullptr;
+	return windows.at(id).get();
+}
+
+Window *Windows::GetWindow(WindowId id) {
+	if (id >= windows.size())
+		return nullptr;
+	return windows.at(id).get();
+}
+
+const Monitor *Windows::GetPrimaryMonitor() const {
+	for (const auto &monitor : monitors) {
+		if (monitor->IsPrimary())
+			return monitor.get();
+	}
+	return nullptr;
+}
+
+std::string Windows::StringifyResultGlfw(int32_t result) {
 	switch (result) {
 	case GLFW_TRUE:
 		return "Success";
@@ -326,7 +357,7 @@ std::string Window::StringifyResultGlfw(int32_t result) {
 	}
 }
 
-void Window::CheckGlfw(int32_t result) {
+void Windows::CheckGlfw(int32_t result) {
 	if (result) return;
 
 	auto failure = StringifyResultGlfw(result);
@@ -334,13 +365,9 @@ void Window::CheckGlfw(int32_t result) {
 	throw std::runtime_error("GLFW error: " + failure);
 }
 
-std::pair<const char **, uint32_t> Window::GetInstanceExtensions() const {
+std::pair<const char **, uint32_t> Windows::GetInstanceExtensions() const {
 	uint32_t glfwExtensionCount;
 	auto glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 	return std::make_pair(glfwExtensions, glfwExtensionCount);
-}
-
-VkResult Window::CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const {
-	return glfwCreateWindowSurface(instance, window, allocator, surface);
 }
 }

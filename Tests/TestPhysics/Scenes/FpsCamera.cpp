@@ -39,7 +39,7 @@ void FpsCamera::Update() {
 	}
 
 	viewMatrix = Matrix4::ViewMatrix(position, rotation);
-	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Windows::Get()->GetWindow(0)->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 	viewFrustum.Update(viewMatrix, projectionMatrix);
 	viewRay.Update(position, {0.5f, 0.5f}, viewMatrix, projectionMatrix);

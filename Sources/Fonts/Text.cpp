@@ -32,8 +32,8 @@ bool Text::CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics 
 	VkRect2D scissorRect = {};
 	scissorRect.offset.x = scissor ? static_cast<int32_t>(scissor->x) : 0;
 	scissorRect.offset.y = scissor ? static_cast<int32_t>(scissor->y) : 0;
-	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->z) : Window::Get()->GetSize().x;
-	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->w) : Window::Get()->GetSize().y;
+	scissorRect.extent.width = scissor ? static_cast<int32_t>(scissor->z) : Windows::Get()->GetWindow(0)->GetSize().x;
+	scissorRect.extent.height = scissor ? static_cast<int32_t>(scissor->w) : Windows::Get()->GetWindow(0)->GetSize().y;
 	vkCmdSetScissor(commandBuffer, 0, 1, &scissorRect);
 
 	// Draws the object.

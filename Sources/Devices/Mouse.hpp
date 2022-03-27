@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Engine/Engine.hpp"
 
 struct GLFWcursor;
@@ -41,7 +41,7 @@ enum class CursorStandard : uint32_t {
  * @brief Module used for managing a virtual mouse.
  */
 class ACID_EXPORT Mouse : public Module::Registrar<Mouse> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
+	inline static const bool Registered = Register(Stage::Pre, Requires<Windows>());
 public:
 	Mouse();
 	~Mouse();

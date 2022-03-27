@@ -5,8 +5,7 @@
 #else
 #include <al.h>
 #endif
-
-#include <stb/stb_vorbis.h>
+#include <stb_vorbis.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"

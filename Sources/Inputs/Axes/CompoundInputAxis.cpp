@@ -11,7 +11,7 @@ float CompoundInputAxis::GetAmount() const {
 	for (const auto &axis : axes)
 		result += axis->GetAmount();
 
-	return scale * std::clamp(result, -1.0f, 1.0f);
+	return scale * std::clamp(result, -1.0f, 1.0f) + offset;
 }
 
 InputAxis::ArgumentDescription CompoundInputAxis::GetArgumentDescription() const {

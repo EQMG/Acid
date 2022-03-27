@@ -1,6 +1,6 @@
 #include "GltfModel.hpp"
 
-#include <tinygltf/tiny_gltf.h>
+#include <tiny_gltf.h>
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"

@@ -11,7 +11,7 @@ MouseInputAxis::MouseInputAxis(uint8_t axis) :
 }
 
 float MouseInputAxis::GetAmount() const {
-	return scale * static_cast<float>(Mouse::Get()->GetPositionDelta()[axis]);
+	return scale * static_cast<float>(Mouse::Get()->GetPositionDelta()[axis]) + offset;
 }
 
 InputAxis::ArgumentDescription MouseInputAxis::GetArgumentDescription() const {

@@ -1,0 +1,21 @@
+[submodule "Sources/third_party/volk"]
+	path = Sources/third_party/volk
+	url = https://github.com/zeux/volk
+[submodule "Sources/third_party/glfw"]
+	path = Sources/third_party/glfw
+	url = https://github.com/glfw/glfw
+[submodule "Sources/third_party/freetype"]
+	path = Sources/third_party/freetype
+	url = https://github.com/freetype/freetype
+[submodule "Sources/third_party/glslang"]
+	path = Sources/third_party/glslang
+	url = https://github.com/KhronosGroup/glslang
+[submodule "Sources/third_party/bullet3"]
+	path = Sources/third_party/bullet3
+	url = https://github.com/bulletphysics/bullet3
+[submodule "Sources/third_party/physfs"]
+	path = Sources/third_party/physfs
+	url = https://github.com/icculus/physfs
+[submodule "Tests/third_party/googletest"]
+	path = Tests/third_party/googletest
+	url = https://github.com/google/googletest

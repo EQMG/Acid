@@ -1,4 +1,4 @@
-#include <bitmask/bitmask.hpp>
+#include <bitmask.hpp>
 
 #include <Files/File.hpp>
 #include <Files/Files.hpp>

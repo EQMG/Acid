@@ -1,6 +1,6 @@
 #include "ShadowBox.hpp"
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Maths/Maths.hpp"
 
@@ -69,8 +69,8 @@ void ShadowBox::UpdateShadowBox(const Camera &camera) {
 void ShadowBox::UpdateSizes(const Camera &camera) {
 	farWidth = shadowDistance * std::tan(camera.GetFieldOfView());
 	nearWidth = camera.GetNearPlane() * std::tan(camera.GetFieldOfView());
-	farHeight = farWidth / Window::Get()->GetAspectRatio();
-	nearHeight = nearWidth / Window::Get()->GetAspectRatio();
+	farHeight = farWidth / Windows::Get()->GetWindow(0)->GetAspectRatio();
+	nearHeight = nearWidth / Windows::Get()->GetWindow(0)->GetAspectRatio();
 }
 
 std::array<Vector4f, 8> ShadowBox::CalculateFrustumVertices(const Matrix4 &rotation, const Vector3f &forwardVector, const Vector3f &centreNear, const Vector3f &centreFar) const {

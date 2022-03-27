@@ -16,7 +16,9 @@ jobs:
   windows_msvc:
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+       submodules: recursive
     - uses: lukka/get-cmake@v3.19.0
     - name: Download OpenAL
       run: |
@@ -52,7 +54,9 @@ jobs:
   linux_clang:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - uses: lukka/get-cmake@v3.19.0
     - name: Download Dependencies
       run: |
@@ -78,7 +82,9 @@ jobs:
   linux_gcc:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - uses: lukka/get-cmake@v3.19.0
     - name: Download Dependencies
       run: |
@@ -103,7 +109,9 @@ jobs:
   macos_clang:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - name: Download Dependencies
       run: |
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"

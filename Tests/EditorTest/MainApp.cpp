@@ -1,7 +1,7 @@
 #include "MainApp.hpp"
 
 #ifdef ACID_RELOAD
-#include <cr/cr.h>
+#include <cr.h>
 
 #include <Devices/Mouse.hpp>
 #include <Inputs/Inputs.hpp>
@@ -60,7 +60,7 @@ MainApp::MainApp() :
 
 	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			Windows::Get()->GetWindow(0)->SetFullscreen(!Windows::Get()->GetWindow(0)->IsFullscreen());
 		}
 	});
 	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
@@ -91,8 +91,8 @@ MainApp::~MainApp() {
 void MainApp::Start() {
 	// Sets values to modules.
 #ifndef ACID_RELOAD
-	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcons({
+	Windows::Get()->GetWindow(0)->SetTitle("Test Physics");
+	Windows::Get()->GetWindow(0)->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
 		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
 		});

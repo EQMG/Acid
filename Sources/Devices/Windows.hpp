@@ -1,8 +1,8 @@
 #pragma once
 
 #include <volk.h>
-#include <bitmask/bitmask.hpp>
-#include <rocket/rocket.hpp>
+#include <bitmask.hpp>
+#include <rocket.hpp>
 
 #include "Engine/Engine.hpp"
 #include "Maths/Vector2.hpp"
@@ -27,16 +27,12 @@ enum class InputMod : int32_t {
 };
 ENABLE_BITMASK_OPERATORS(InputMod)
 
-/**
- * @brief Module used for managing a window.
- */
-class ACID_EXPORT Window : public Module::Registrar<Window> {
-	inline static const bool Registered = Register(Stage::Pre);
-public:
-	Window();
-	~Window();
+using WindowId = std::size_t;
 
-	void Update() override;
+class Window {
+public:
+	Window(VideoMode videoMode);
+	~Window();
 
 	/**
 	 * Gets the size of the window in pixels.
@@ -162,10 +158,9 @@ public:
 
 	ACID_NO_EXPORT GLFWwindow *GetWindow() const { return window; }
 
-	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return monitors; };
-
-	const Monitor *GetPrimaryMonitor() const;
 	const Monitor *GetCurrentMonitor() const;
+
+	VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
 
 	/**
 	 * Called when the window is resized.
@@ -178,12 +173,6 @@ public:
 	 * @return The rocket::signal.
 	 */
 	rocket::signal<void(Vector2ui)> &OnPosition() { return onPosition; }
-
-	/**
-	 * Called when a monitor has been connected or disconnected.
-	 * @return The rocket::signal.
-	 */
-	rocket::signal<void(Monitor *, bool)> &OnMonitorConnect() { return onMonitorConnect; }
 
 	/**
 	 * Called when the windows title changed.
@@ -233,15 +222,7 @@ public:
 	 */
 	rocket::signal<void(bool)> &OnIconify() { return onIconify; }
 
-	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
-	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
-
-	std::pair<const char **, uint32_t> GetInstanceExtensions() const;
-	VkResult CreateSurface(const VkInstance &instance, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) const;
-
 private:
-	friend void CallbackError(int32_t error, const char *description);
-	friend void CallbackMonitor(GLFWmonitor *monitor, int32_t event);
 	friend void CallbackWindowPosition(GLFWwindow *window, int32_t xpos, int32_t ypos);
 	friend void CallbackWindowSize(GLFWwindow *window, int32_t width, int32_t height);
 	friend void CallbackWindowClose(GLFWwindow *window);
@@ -265,11 +246,9 @@ private:
 	bool iconified = false;
 
 	GLFWwindow *window = nullptr;
-	std::vector<std::unique_ptr<Monitor>> monitors;
 
 	rocket::signal<void(Vector2ui)> onSize;
 	rocket::signal<void(Vector2ui)> onPosition;
-	rocket::signal<void(Monitor *, bool)> onMonitorConnect;
 	rocket::signal<void(std::string)> onTitle;
 	rocket::signal<void(bool)> onBorderless;
 	rocket::signal<void(bool)> onResizable;
@@ -278,5 +257,46 @@ private:
 	rocket::signal<void()> onClose;
 	rocket::signal<void(bool)> onFocus;
 	rocket::signal<void(bool)> onIconify;
+};
+
+/**
+ * @brief Module used for managing a window.
+ */
+class ACID_EXPORT Windows : public Module::Registrar<Windows> {
+	inline static const bool Registered = Register(Stage::Pre);
+public:
+	Windows();
+	~Windows();
+
+	void Update() override;
+
+	Window *AddWindow();
+	const Window *GetWindow(WindowId id) const;
+	Window *GetWindow(WindowId id);
+
+	const std::vector<std::unique_ptr<Monitor>> &GetMonitors() const { return monitors; };
+
+	const Monitor *GetPrimaryMonitor() const;
+
+	/**
+	 * Called when a monitor has been connected or disconnected.
+	 * @return The rocket::signal.
+	 */
+	rocket::signal<void(Monitor *, bool)> &OnMonitorConnect() { return onMonitorConnect; }
+
+	ACID_NO_EXPORT static std::string StringifyResultGlfw(int32_t result);
+	ACID_NO_EXPORT static void CheckGlfw(int32_t result);
+
+	std::pair<const char **, uint32_t> GetInstanceExtensions() const;
+
+private:
+	friend void CallbackError(int32_t error, const char *description);
+	friend void CallbackMonitor(GLFWmonitor *monitor, int32_t event);
+
+	std::vector<std::unique_ptr<Window>> windows;
+
+	std::vector<std::unique_ptr<Monitor>> monitors;
+
+	rocket::signal<void(Monitor *, bool)> onMonitorConnect;
 };
 }
