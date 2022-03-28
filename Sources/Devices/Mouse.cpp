@@ -35,11 +35,13 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths) {
 }
 
 Mouse::Mouse() {
-	glfwSetMouseButtonCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackMouseButton);
-	glfwSetCursorPosCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackCursorPos);
-	glfwSetCursorEnterCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackCursorEnter);
-	glfwSetScrollCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackScroll);
-	glfwSetDropCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackDrop);
+	Windows::Get()->OnAddWindow().connect(this, [this](Window *window, bool added) {
+		glfwSetMouseButtonCallback(window->GetWindow(), CallbackMouseButton);
+		glfwSetCursorPosCallback(window->GetWindow(), CallbackCursorPos);
+		glfwSetCursorEnterCallback(window->GetWindow(), CallbackCursorEnter);
+		glfwSetScrollCallback(window->GetWindow(), CallbackScroll);
+		glfwSetDropCallback(window->GetWindow(), CallbackDrop);
+	});
 }
 
 Mouse::~Mouse() {

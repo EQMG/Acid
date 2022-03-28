@@ -14,8 +14,10 @@ void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
 }
 
 Keyboard::Keyboard() {
-	glfwSetKeyCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackKey);
-	glfwSetCharCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackChar);
+	Windows::Get()->OnAddWindow().connect(this, [this](Window *window, bool added) {
+		glfwSetKeyCallback(window->GetWindow(), CallbackKey);
+		glfwSetCharCallback(window->GetWindow(), CallbackChar);
+	});
 }
 
 void Keyboard::Update() {

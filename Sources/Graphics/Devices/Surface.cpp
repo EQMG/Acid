@@ -3,21 +3,24 @@
 #include "Devices/Windows.hpp"
 #include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
+#include "LogicalDevice.hpp"
 #include "PhysicalDevice.hpp"
 
 namespace acid {
-Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice) :
+Surface::Surface(const Instance &instance, const PhysicalDevice &physicalDevice, const LogicalDevice &logicalDevice, const Window &window) :
 	instance(instance),
-	physicalDevice(physicalDevice) {
+	physicalDevice(physicalDevice),
+	logicalDevice(logicalDevice),
+	window(window) {
 	// Creates the surface.
-	Graphics::CheckVk(Windows::Get()->GetWindow(0)->CreateSurface(*instance, nullptr, &surface));
+	Graphics::CheckVk(window.CreateSurface(instance, nullptr, &surface));
 
-	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*physicalDevice, surface, &capabilities));
+	Graphics::CheckVk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, &capabilities));
 
 	uint32_t surfaceFormatCount = 0;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(*physicalDevice, surface, &surfaceFormatCount, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &surfaceFormatCount, nullptr);
 	std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
-	vkGetPhysicalDeviceSurfaceFormatsKHR(*physicalDevice, surface, &surfaceFormatCount, surfaceFormats.data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &surfaceFormatCount, surfaceFormats.data());
 
 	if (surfaceFormatCount == 1 && surfaceFormats[0].format == VK_FORMAT_UNDEFINED) {
 		format.format = VK_FORMAT_B8G8R8A8_UNORM;
@@ -43,9 +46,16 @@ Surface::Surface(const Instance *instance, const PhysicalDevice *physicalDevice)
 			format.colorSpace = surfaceFormats[0].colorSpace;
 		}
 	}
+
+	// Check for presentation support.
+	VkBool32 presentSupport;
+	vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, logicalDevice.GetPresentFamily(), surface, &presentSupport);
+
+	if (!presentSupport)
+		throw std::runtime_error("Present queue family does not have presentation support");
 }
 
 Surface::~Surface() {
-	vkDestroySurfaceKHR(*instance, surface, nullptr);
+	vkDestroySurfaceKHR(instance, surface, nullptr);
 }
 }

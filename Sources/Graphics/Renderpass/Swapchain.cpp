@@ -8,25 +8,24 @@ static const std::vector<VkCompositeAlphaFlagBitsKHR> COMPOSITE_ALPHA_FLAGS = {
 	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
 };
 
-Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
+Swapchain::Swapchain(const PhysicalDevice &physicalDevice, const Surface &surface, const LogicalDevice &logicalDevice, const VkExtent2D &extent, const Swapchain *oldSwapchain) :
+	physicalDevice(physicalDevice),
+	surface(surface),
+	logicalDevice(logicalDevice),
 	extent(extent),
 	presentMode(VK_PRESENT_MODE_FIFO_KHR),
 	preTransform(VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR),
 	compositeAlpha(VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
 	activeImageIndex(std::numeric_limits<uint32_t>::max()) {
-	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto surface = Graphics::Get()->GetSurface();
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
-	auto surfaceFormat = surface->GetFormat();
-	auto surfaceCapabilities = surface->GetCapabilities();
-	auto graphicsFamily = logicalDevice->GetGraphicsFamily();
-	auto presentFamily = logicalDevice->GetPresentFamily();
+	auto surfaceFormat = surface.GetFormat();
+	auto surfaceCapabilities = surface.GetCapabilities();
+	auto graphicsFamily = logicalDevice.GetGraphicsFamily();
+	auto presentFamily = logicalDevice.GetPresentFamily();
 
 	uint32_t physicalPresentModeCount;
-	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, nullptr);
+	vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, nullptr);
 	std::vector<VkPresentModeKHR> physicalPresentModes(physicalPresentModeCount);
-	vkGetPhysicalDeviceSurfacePresentModesKHR(*physicalDevice, *surface, &physicalPresentModeCount, physicalPresentModes.data());
+	vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &physicalPresentModeCount, physicalPresentModes.data());
 
 	for (const auto &presentMode : physicalPresentModes) {
 		if (presentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
@@ -61,7 +60,7 @@ Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
 
 	VkSwapchainCreateInfoKHR swapchainCreateInfo = {};
 	swapchainCreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-	swapchainCreateInfo.surface = *surface;
+	swapchainCreateInfo.surface = surface;
 	swapchainCreateInfo.minImageCount = desiredImageCount;
 	swapchainCreateInfo.imageFormat = surfaceFormat.format;
 	swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -91,12 +90,12 @@ Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
 		swapchainCreateInfo.pQueueFamilyIndices = queueFamily.data();
 	}
 
-	Graphics::CheckVk(vkCreateSwapchainKHR(*logicalDevice, &swapchainCreateInfo, nullptr, &swapchain));
+	Graphics::CheckVk(vkCreateSwapchainKHR(logicalDevice, &swapchainCreateInfo, nullptr, &swapchain));
 
-	Graphics::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, swapchain, &imageCount, nullptr));
+	Graphics::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, swapchain, &imageCount, nullptr));
 	images.resize(imageCount);
 	imageViews.resize(imageCount);
-	Graphics::CheckVk(vkGetSwapchainImagesKHR(*logicalDevice, swapchain, &imageCount, images.data()));
+	Graphics::CheckVk(vkGetSwapchainImagesKHR(logicalDevice, swapchain, &imageCount, images.data()));
 
 	for (uint32_t i = 0; i < imageCount; i++) {
 		Image::CreateImageView(images.at(i), imageViews.at(i), VK_IMAGE_VIEW_TYPE_2D, surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT, 
@@ -105,28 +104,24 @@ Swapchain::Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain) :
 
 	VkFenceCreateInfo fenceCreateInfo = {};
 	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-	vkCreateFence(*logicalDevice, &fenceCreateInfo, nullptr, &fenceImage);
+	vkCreateFence(logicalDevice, &fenceCreateInfo, nullptr, &fenceImage);
 }
 
 Swapchain::~Swapchain() {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
-	vkDestroySwapchainKHR(*logicalDevice, swapchain, nullptr);
+	vkDestroySwapchainKHR(logicalDevice, swapchain, nullptr);
 
 	for (const auto &imageView : imageViews) {
-		vkDestroyImageView(*logicalDevice, imageView, nullptr);
+		vkDestroyImageView(logicalDevice, imageView, nullptr);
 	}
 
-	vkDestroyFence(*logicalDevice, fenceImage, nullptr);
+	vkDestroyFence(logicalDevice, fenceImage, nullptr);
 }
 
 VkResult Swapchain::AcquireNextImage(const VkSemaphore &presentCompleteSemaphore, VkFence fence) {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
 	if (fence != VK_NULL_HANDLE)
-		Graphics::CheckVk(vkWaitForFences(*logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
+		Graphics::CheckVk(vkWaitForFences(logicalDevice, 1, &fence, VK_TRUE, std::numeric_limits<uint64_t>::max()));
 	
-	auto acquireResult = vkAcquireNextImageKHR(*logicalDevice, swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
+	auto acquireResult = vkAcquireNextImageKHR(logicalDevice, swapchain, std::numeric_limits<uint64_t>::max(), presentCompleteSemaphore, VK_NULL_HANDLE,
 		&activeImageIndex);
 
 	if (acquireResult != VK_SUCCESS && acquireResult != VK_SUBOPTIMAL_KHR && acquireResult != VK_ERROR_OUT_OF_DATE_KHR)

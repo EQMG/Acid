@@ -393,7 +393,7 @@ void Image::CopyBufferToImage(const VkBuffer &buffer, const VkImage &image, cons
 bool Image::CopyImage(const VkImage &srcImage, VkImage &dstImage, VkDeviceMemory &dstImageMemory, VkFormat srcFormat, const VkExtent3D &extent,
 	VkImageLayout srcImageLayout, uint32_t mipLevel, uint32_t arrayLayer) {
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto surface = Graphics::Get()->GetSurface();
+	auto surface = Graphics::Get()->GetSurface(0);
 
 	// Checks blit swapchain support.
 	auto supportsBlit = true;

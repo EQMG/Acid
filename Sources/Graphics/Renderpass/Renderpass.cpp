@@ -4,9 +4,8 @@
 #include "Graphics/RenderStage.hpp"
 
 namespace acid {
-Renderpass::Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples) {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
+Renderpass::Renderpass(const LogicalDevice &logicalDevice, const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples) :
+	logicalDevice(logicalDevice) {
 	// Creates the renderpasses attachment descriptions,
 	std::vector<VkAttachmentDescription> attachmentDescriptions;
 
@@ -117,12 +116,10 @@ Renderpass::Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkF
 	renderPassCreateInfo.pSubpasses = subpassDescriptions.data();
 	renderPassCreateInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
 	renderPassCreateInfo.pDependencies = dependencies.data();
-	Graphics::CheckVk(vkCreateRenderPass(*logicalDevice, &renderPassCreateInfo, nullptr, &renderpass));
+	Graphics::CheckVk(vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &renderpass));
 }
 
 Renderpass::~Renderpass() {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
-	vkDestroyRenderPass(*logicalDevice, renderpass, nullptr);
+	vkDestroyRenderPass(logicalDevice, renderpass, nullptr);
 }
 }

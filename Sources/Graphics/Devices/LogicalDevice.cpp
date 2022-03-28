@@ -3,15 +3,13 @@
 #include "Graphics/Graphics.hpp"
 #include "Instance.hpp"
 #include "PhysicalDevice.hpp"
-#include "Surface.hpp"
 
 namespace acid {
 const std::vector<const char *> LogicalDevice::DeviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME}; // VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME
 
-LogicalDevice::LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface) :
+LogicalDevice::LogicalDevice(const Instance &instance, const PhysicalDevice &physicalDevice) :
 	instance(instance),
-	physicalDevice(physicalDevice),
-	surface(surface) {
+	physicalDevice(physicalDevice) {
 	CreateQueueIndices();
 	CreateLogicalDevice();
 }
@@ -24,9 +22,9 @@ LogicalDevice::~LogicalDevice() {
 
 void LogicalDevice::CreateQueueIndices() {
 	uint32_t deviceQueueFamilyPropertyCount;
-	vkGetPhysicalDeviceQueueFamilyProperties(*physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
+	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &deviceQueueFamilyPropertyCount, nullptr);
 	std::vector<VkQueueFamilyProperties> deviceQueueFamilyProperties(deviceQueueFamilyPropertyCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(*physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
+	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &deviceQueueFamilyPropertyCount, deviceQueueFamilyProperties.data());
 
 	std::optional<uint32_t> graphicsFamily, presentFamily, computeFamily, transferFamily;
 
@@ -39,10 +37,10 @@ void LogicalDevice::CreateQueueIndices() {
 		}
 
 		// Check for presentation support.
-		VkBool32 presentSupport;
-		vkGetPhysicalDeviceSurfaceSupportKHR(*physicalDevice, i, *surface, &presentSupport);
+		//VkBool32 presentSupport;
+		//vkGetPhysicalDeviceSurfaceSupportKHR(*physicalDevice, i, *surface, &presentSupport);
 
-		if (deviceQueueFamilyProperties[i].queueCount > 0 && presentSupport) {
+		if (deviceQueueFamilyProperties[i].queueCount > 0 /*&& presentSupport*/) {
 			presentFamily = i;
 			this->presentFamily = i;
 		}
@@ -71,8 +69,6 @@ void LogicalDevice::CreateQueueIndices() {
 }
 
 void LogicalDevice::CreateLogicalDevice() {
-	auto physicalDeviceFeatures = physicalDevice->GetFeatures();
-
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 	float queuePriorities[1] = {0.0f};
 
@@ -109,6 +105,7 @@ void LogicalDevice::CreateLogicalDevice() {
 		transferFamily = graphicsFamily;
 	}
 
+	auto physicalDeviceFeatures = physicalDevice.GetFeatures();
 	VkPhysicalDeviceFeatures enabledFeatures = {};
 
 	// Enable sample rate shading filtering if supported.
@@ -180,14 +177,14 @@ void LogicalDevice::CreateLogicalDevice() {
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
 	deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-	if (instance->GetEnableValidationLayers()) {
+	if (instance.GetEnableValidationLayers()) {
 		deviceCreateInfo.enabledLayerCount = static_cast<uint32_t>(Instance::ValidationLayers.size());
 		deviceCreateInfo.ppEnabledLayerNames = Instance::ValidationLayers.data();
 	}
 	deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(DeviceExtensions.size());
 	deviceCreateInfo.ppEnabledExtensionNames = DeviceExtensions.data();
 	deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
-	Graphics::CheckVk(vkCreateDevice(*physicalDevice, &deviceCreateInfo, nullptr, &logicalDevice));
+	Graphics::CheckVk(vkCreateDevice(physicalDevice, &deviceCreateInfo, nullptr, &logicalDevice));
 
 	volkLoadDevice(logicalDevice);
 

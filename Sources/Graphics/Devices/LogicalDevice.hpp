@@ -8,12 +8,11 @@
 namespace acid {
 class Instance;
 class PhysicalDevice;
-class Surface;
 
 class ACID_EXPORT LogicalDevice {
 	friend class Graphics;
 public:
-	LogicalDevice(const Instance *instance, const PhysicalDevice *physicalDevice, const Surface *surface);
+	LogicalDevice(const Instance &instance, const PhysicalDevice &physicalDevice);
 	~LogicalDevice();
 
 	operator const VkDevice &() const { return logicalDevice; }
@@ -35,9 +34,8 @@ private:
 	void CreateQueueIndices();
 	void CreateLogicalDevice();
 
-	const Instance *instance;
-	const PhysicalDevice *physicalDevice;
-	const Surface *surface;
+	const Instance &instance;
+	const PhysicalDevice &physicalDevice;
 
 	VkDevice logicalDevice = VK_NULL_HANDLE;
 	VkPhysicalDeviceFeatures enabledFeatures = {};

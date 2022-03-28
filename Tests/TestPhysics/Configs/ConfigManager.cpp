@@ -24,16 +24,18 @@ void ConfigManager::Load() {
 	Audio::Get()->SetGain(Audio::Type::Music, audioData["musicVolume"].GetWithFallback<float>(1.0f));
 
 	graphics.Load();
-	auto &graphicsData = graphics.GetNode();
-	//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].GetWithFallback<bool>(true));
-	Windows::Get()->GetWindow(0)->SetSize(graphicsData["size"].GetWithFallback<Vector2f>(Vector2i(1080, 720)));
-	//Windows::Get()->GetWindow(0)->SetPosition(graphicsData["position"].GetWithFallback<Vector2f>(Vector2i(0, 0)));
-	Windows::Get()->GetWindow(0)->SetBorderless(graphicsData["borderless"].GetWithFallback<bool>(false));
-	Windows::Get()->GetWindow(0)->SetResizable(graphicsData["resizable"].GetWithFallback<bool>(true));
-	Windows::Get()->GetWindow(0)->SetFloating(graphicsData["floating"].GetWithFallback<bool>(false));
-	Windows::Get()->GetWindow(0)->SetFullscreen(graphicsData["fullscreen"].GetWithFallback<bool>(false));
-	Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].GetWithFallback<float>(-1.0f));
-	
+	Windows::Get()->OnAddWindow().connect(this, [this](Window *window, bool added) {
+		auto &graphicsData = graphics.GetNode();
+		//Renderer::Get()->SetAntialiasing(graphicsData["antialiasing"].GetWithFallback<bool>(true));
+		window->SetSize(graphicsData["size"].GetWithFallback<Vector2f>(Vector2i(1080, 720)));
+		//window->SetPosition(graphicsData["position"].GetWithFallback<Vector2f>(Vector2i(0, 0)));
+		window->SetBorderless(graphicsData["borderless"].GetWithFallback<bool>(false));
+		window->SetResizable(graphicsData["resizable"].GetWithFallback<bool>(true));
+		window->SetFloating(graphicsData["floating"].GetWithFallback<bool>(false));
+		window->SetFullscreen(graphicsData["fullscreen"].GetWithFallback<bool>(false));
+		Engine::Get()->SetFpsLimit(graphicsData["fpsLimit"].GetWithFallback<float>(-1.0f));
+	});
+
 #ifdef ACID_DEBUG
 	Save();
 #endif
@@ -47,15 +49,17 @@ void ConfigManager::Save() {
 	audioData["musicVolume"].Set<float>(Audio::Get()->GetGain(Audio::Type::Music));
 	audio.Write(NodeFormat::Beautified);
 
-	auto &graphicsData = graphics.GetNode();
-	//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
-	graphicsData["size"].Set<Vector2f>(Windows::Get()->GetWindow(0)->GetSize(false));
-	//graphicsData["position"].Set<Vector2f>(Windows::Get()->GetWindow(0)->GetPosition());
-	graphicsData["borderless"].Set<bool>(Windows::Get()->GetWindow(0)->IsBorderless());
-	graphicsData["resizable"].Set<bool>(Windows::Get()->GetWindow(0)->IsResizable());
-	graphicsData["floating"].Set<bool>(Windows::Get()->GetWindow(0)->IsFloating());
-	graphicsData["fullscreen"].Set<bool>(Windows::Get()->GetWindow(0)->IsFullscreen());
-	graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
+	if (auto window = Windows::Get()->GetWindow(0)) {
+		auto &graphicsData = graphics.GetNode();
+		//graphicsData["antialiasing"].Set<bool>(Renderer::Get()->IsAntialiasing());
+		graphicsData["size"].Set<Vector2f>(window->GetSize(false));
+		//graphicsData["position"].Set<Vector2f>(window->GetPosition());
+		graphicsData["borderless"].Set<bool>(window->IsBorderless());
+		graphicsData["resizable"].Set<bool>(window->IsResizable());
+		graphicsData["floating"].Set<bool>(window->IsFloating());
+		graphicsData["fullscreen"].Set<bool>(window->IsFullscreen());
+		graphicsData["fpsLimit"].Set<float>(Engine::Get()->GetFpsLimit());
+	}
 	graphics.Write(NodeFormat::Beautified);
 }
 }

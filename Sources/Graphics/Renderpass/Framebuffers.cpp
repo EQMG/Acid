@@ -6,10 +6,9 @@
 #include "Graphics/RenderStage.hpp"
 
 namespace acid {
-Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderStage, const Renderpass &renderPass, const Swapchain &swapchain, const ImageDepth &depthStencil,
-	VkSampleCountFlagBits samples) {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
+Framebuffers::Framebuffers(const LogicalDevice &logicalDevice, const Swapchain &swapchain, const RenderStage &renderStage, const Renderpass &renderPass, const ImageDepth &depthStencil,
+	const Vector2ui &extent, VkSampleCountFlagBits samples) :
+	logicalDevice(logicalDevice) {
 	for (const auto &attachment : renderStage.GetAttachments()) {
 		auto attachmentSamples = attachment.IsMultisampled() ? samples : VK_SAMPLE_COUNT_1_BIT;
 
@@ -54,14 +53,12 @@ Framebuffers::Framebuffers(const Vector2ui &extent, const RenderStage &renderSta
 		framebufferCreateInfo.width = extent.x;
 		framebufferCreateInfo.height = extent.y;
 		framebufferCreateInfo.layers = 1;
-		Graphics::CheckVk(vkCreateFramebuffer(*logicalDevice, &framebufferCreateInfo, nullptr, &framebuffers[i]));
+		Graphics::CheckVk(vkCreateFramebuffer(logicalDevice, &framebufferCreateInfo, nullptr, &framebuffers[i]));
 	}
 }
 
 Framebuffers::~Framebuffers() {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
 	for (const auto &framebuffer : framebuffers)
-		vkDestroyFramebuffer(*logicalDevice, framebuffer, nullptr);
+		vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
 }
 }

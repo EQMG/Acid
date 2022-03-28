@@ -6,10 +6,13 @@
 #include "Export.hpp"
 
 namespace acid {
+class PhysicalDevice;
+class Surface;
+class LogicalDevice;
+
 class ACID_EXPORT Swapchain {
 public:
-	explicit Swapchain(const VkExtent2D &extent, const Swapchain *oldSwapchain = nullptr);
-	
+	Swapchain(const PhysicalDevice &physicalDevice, const Surface &surface, const LogicalDevice &logicalDevice, const VkExtent2D &extent, const Swapchain *oldSwapchain = nullptr);
 	~Swapchain();
 
 	/**
@@ -43,6 +46,10 @@ public:
 	uint32_t GetActiveImageIndex() const { return activeImageIndex; }
 
 private:
+	const PhysicalDevice &physicalDevice;
+	const Surface &surface;
+	const LogicalDevice &logicalDevice;
+
 	VkExtent2D extent;
 	VkPresentModeKHR presentMode;
 

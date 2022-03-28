@@ -11,7 +11,7 @@ class Instance;
 class ACID_EXPORT PhysicalDevice {
 	friend class Graphics;
 public:
-	explicit PhysicalDevice(const Instance *instance);
+	explicit PhysicalDevice(const Instance &instance);
 
 	operator const VkPhysicalDevice &() const { return physicalDevice; }
 
@@ -28,7 +28,7 @@ private:
 
 	static void LogVulkanDevice(const VkPhysicalDeviceProperties &physicalDeviceProperties, const std::vector<VkExtensionProperties> &extensionProperties);
 
-	const Instance *instance;
+	const Instance &instance;
 
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 	VkPhysicalDeviceProperties properties = {};

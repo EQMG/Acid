@@ -66,7 +66,8 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 	Update();
 
 	auto physicalDevice = Graphics::Get()->GetPhysicalDevice();
-	auto surface = Graphics::Get()->GetSurface();
+	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
+	auto surface = Graphics::Get()->GetSurface(0);
 
 	auto msaaSamples = physicalDevice->GetMsaaSamples();
 
@@ -74,9 +75,9 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 		depthStencil = std::make_unique<ImageDepth>(renderArea.GetExtent(), depthAttachment->IsMultisampled() ? msaaSamples : VK_SAMPLE_COUNT_1_BIT);
 
 	if (!renderpass)
-		renderpass = std::make_unique<Renderpass>(*this, depthStencil ? depthStencil->GetFormat() : VK_FORMAT_UNDEFINED, surface->GetFormat().format, msaaSamples);
+		renderpass = std::make_unique<Renderpass>(*logicalDevice, *this, depthStencil ? depthStencil->GetFormat() : VK_FORMAT_UNDEFINED, surface->GetFormat().format, msaaSamples);
 
-	framebuffers = std::make_unique<Framebuffers>(renderArea.GetExtent(), *this, *renderpass, swapchain, *depthStencil, msaaSamples);
+	framebuffers = std::make_unique<Framebuffers>(*logicalDevice, swapchain, *this, *renderpass, *depthStencil, renderArea.GetExtent(), msaaSamples);
 	outOfDate = false;
 
 	descriptors.clear();

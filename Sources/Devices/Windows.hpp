@@ -31,7 +31,7 @@ using WindowId = std::size_t;
 
 class Window {
 public:
-	Window(VideoMode videoMode);
+	Window(std::size_t id);
 	~Window();
 
 	/**
@@ -230,6 +230,8 @@ private:
 	friend void CallbackWindowIconify(GLFWwindow *window, int32_t iconified);
 	friend void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height);
 
+	std::size_t id;
+
 	Vector2ui size;
 	Vector2ui fullscreenSize;
 
@@ -279,6 +281,12 @@ public:
 	const Monitor *GetPrimaryMonitor() const;
 
 	/**
+	 * Called when a window has been added or closed.
+	 * @return The rocket::signal.
+	 */
+	rocket::signal<void(Window *, bool)> &OnAddWindow() { return onAddWindow; }
+
+	/**
 	 * Called when a monitor has been connected or disconnected.
 	 * @return The rocket::signal.
 	 */
@@ -297,6 +305,7 @@ private:
 
 	std::vector<std::unique_ptr<Monitor>> monitors;
 
+	rocket::signal<void(Window *, bool)> onAddWindow;
 	rocket::signal<void(Monitor *, bool)> onMonitorConnect;
 };
 }

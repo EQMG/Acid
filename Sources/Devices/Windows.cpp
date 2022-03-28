@@ -78,10 +78,11 @@ void CallbackFramebufferSize(GLFWwindow *window, int32_t width, int32_t height) 
 	else
 		context->size = {width, height};
 	// TODO: only set this window to resized
-	Graphics::Get()->SetFramebufferResized();
+	Graphics::Get()->SetFramebufferResized(context->id);
 }
 
-Window::Window(VideoMode videoMode) :
+Window::Window(std::size_t id) :
+	id(id),
 	size(1080, 720),
 	title("Acid Window"),
 	resizable(true),
@@ -104,9 +105,9 @@ Window::Window(VideoMode videoMode) :
 	glfwSetWindowAttrib(window, GLFW_FLOATING, floating);
 
 	// Centre the window position.
-	position.x = (videoMode.width - size.x) / 2;
-	position.y = (videoMode.height - size.y) / 2;
-	glfwSetWindowPos(window, position.x, position.y);
+	//position.x = (videoMode.width - size.x) / 2;
+	//position.y = (videoMode.height - size.y) / 2;
+	//glfwSetWindowPos(window, position.x, position.y);
 
 	// Sets fullscreen if enabled.
 	if (fullscreen)
@@ -290,8 +291,6 @@ Windows::Windows() {
 
 	for (uint32_t i = 0; i < static_cast<uint32_t>(monitorCount); i++)
 		this->monitors.emplace_back(std::make_unique<Monitor>(monitors[i]));
-
-	AddWindow();
 }
 
 Windows::~Windows() {
@@ -305,7 +304,9 @@ void Windows::Update() {
 }
 
 Window *Windows::AddWindow() {
-	return windows.emplace_back(std::make_unique<Window>(GetPrimaryMonitor()->GetVideoMode())).get();
+	auto window = windows.emplace_back(std::make_unique<Window>(windows.size())).get();
+	onAddWindow(window, true);
+	return window;
 }
 
 const Window *Windows::GetWindow(WindowId id) const {

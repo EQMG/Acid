@@ -7,6 +7,7 @@
 #include "Utils/NonCopyable.hpp"
 
 namespace acid {
+class LogicalDevice;
 class ImageDepth;
 class RenderStage;
 
@@ -35,13 +36,15 @@ public:
 		VkAttachmentReference depthStencilAttachment = {};
 	};
 
-	Renderpass(const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
+	Renderpass(const LogicalDevice &logicalDevice, const RenderStage &renderStage, VkFormat depthFormat, VkFormat surfaceFormat, VkSampleCountFlagBits samples = VK_SAMPLE_COUNT_1_BIT);
 	~Renderpass();
 
 	operator const VkRenderPass &() const { return renderpass; }
 	const VkRenderPass &GetRenderpass() const { return renderpass; }
 
 private:
+	const LogicalDevice &logicalDevice;
+
 	VkRenderPass renderpass = VK_NULL_HANDLE;
 };
 }
