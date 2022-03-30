@@ -60,8 +60,8 @@ public:
 	bool IsEnabled() const;
 	void SetEnabled(bool enabled) { this->enabled = enabled; }
 
-	const std::optional<CursorStandard> &GetCursorHover() const { return cursorHover; }
-	void SetCursorHover(const std::optional<CursorStandard> &cursorHover) { this->cursorHover = cursorHover; }
+	const Cursor *GetCursorHover() const { return cursorHover.get(); }
+	void SetCursorHover(std::unique_ptr<Cursor> &&cursorHover) { this->cursorHover = std::move(cursorHover); }
 
 	const std::optional<Vector4i> &GetScissor() const { return scissor; }
 	void SetScissor(const std::optional<Vector4i> &scissor) { this->scissor = scissor; }
@@ -111,7 +111,7 @@ private:
 	UiObject *parent = nullptr;
 
 	bool enabled = true;
-	std::optional<CursorStandard> cursorHover;
+	std::unique_ptr<Cursor> cursorHover;
 	std::optional<Vector4i> scissor;
 
 	std::unique_ptr<UiDriver<float>> alphaDriver;

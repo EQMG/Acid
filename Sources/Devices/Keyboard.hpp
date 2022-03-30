@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Devices/Windows.hpp"
+#if 0
 #include "Engine/Engine.hpp"
 
 namespace acid {
@@ -160,8 +161,8 @@ public:
 	rocket::signal<void(char)> &OnChar() { return onChar; }
 
 private:
-	friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
-	friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
+	friend void CallbackKey(GLFWwindow *glfwWindow, int32_t key, int32_t scancode, int32_t action, int32_t mods);
+	friend void CallbackChar(GLFWwindow *glfwWindow, uint32_t codepoint);
 
 	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> onKey;
 	rocket::signal<void(char)> onChar;
@@ -175,3 +176,4 @@ struct enum_range<acid::Key> {
 	inline constexpr static int max = 400;
 };
 }
+#endif

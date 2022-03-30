@@ -32,7 +32,7 @@ UiBooleanInput::UiBooleanInput() {
 	textValue.SetTextColour(UiButtonInput::ValueColour);
 	AddChild(&textValue);
 
-	SetCursorHover(CursorStandard::Hand);
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::Hand));
 	OnSelected().connect([this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), 
 			selected ? UiButtonInput::SelectedColour : UiButtonInput::PrimaryColour,

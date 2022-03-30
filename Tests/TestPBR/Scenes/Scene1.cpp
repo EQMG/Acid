@@ -38,7 +38,7 @@ Scene1::Scene1() :
 	
 	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
+			Windows::Get()->GetWindow(0)->SetCursorHidden(!Windows::Get()->GetWindow(0)->IsCursorHidden());
 		}
 	});
 }

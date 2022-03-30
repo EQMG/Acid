@@ -34,7 +34,7 @@ void FreeCamera::Update() {
 		positionDelta *= Inputs::Get()->GetButton("sprint")->IsDown() ? -RUN_SPEED : -WALK_SPEED;
 		velocity = velocity.SmoothDamp(positionDelta, delta * DAMP);
 
-		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
+		auto rotationDelta = Windows::Get()->GetWindow(0)->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
 			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 
 		rotation.y += rotationDelta.x;

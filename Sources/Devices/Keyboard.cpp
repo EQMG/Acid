@@ -1,15 +1,18 @@
 #include "Keyboard.hpp"
 
+#if 0
 #include <GLFW/glfw3.h>
 
 namespace acid {
 static_assert(GLFW_KEY_LAST == static_cast<int16_t>(Key::Menu), "GLFW keys count does not match our keys enum count.");
 
-void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
+void CallbackKey(GLFWwindow *glfwWindow, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
+	auto window = static_cast<Window *>(glfwGetWindowUserPointer(glfwWindow));
 	Keyboard::Get()->onKey(static_cast<Key>(key), static_cast<InputAction>(action), bitmask::bitmask<InputMod>(mods));
 }
 
-void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
+void CallbackChar(GLFWwindow *glfwWindow, uint32_t codepoint) {
+	auto window = static_cast<Window *>(glfwGetWindowUserPointer(glfwWindow));
 	Keyboard::Get()->onChar(static_cast<char>(codepoint));
 }
 
@@ -275,3 +278,4 @@ std::string Keyboard::ToString(Key key) {
 	}
 }
 }
+#endif

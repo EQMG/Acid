@@ -26,7 +26,7 @@ UiGrabberInput::UiGrabberInput() {
 	textValue.SetTextColour(UiButtonInput::ValueColour);
 	AddChild(&textValue);
 	
-	SetCursorHover(CursorStandard::Hand);
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::Hand));
 }
 
 void UiGrabberInput::UpdateObject() {
@@ -82,7 +82,7 @@ void UiGrabberJoystick::SetValue(uint32_t value) {
 UiGrabberKeyboard::UiGrabberKeyboard() {
 	UpdateValue();
 
-	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
+	Windows::Get()->GetWindow(0)->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (!updating)
 			return;
 
@@ -102,7 +102,7 @@ void UiGrabberKeyboard::SetValue(Key value) {
 UiGrabberMouse::UiGrabberMouse() {
 	UpdateValue();
 
-	Mouse::Get()->OnButton().connect(this, [this](MouseButton button, InputAction action, bitmask::bitmask<InputMod> mods) {
+	Windows::Get()->GetWindow(0)->OnMouseButton().connect(this, [this](MouseButton button, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (!updating || action != InputAction::Press)
 			return;
 

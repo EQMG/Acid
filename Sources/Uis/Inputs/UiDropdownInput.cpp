@@ -25,7 +25,7 @@ UiDropdownInput::UiDropdownInput() {
 	textTitle.SetTextColour(UiButtonInput::TitleColour);
 	AddChild(&textTitle);
 
-	SetCursorHover(CursorStandard::Hand);
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::Hand));
 	OnSelected().connect(this, [this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(),
 			selected ? UiButtonInput::SelectedColour : UiButtonInput::PrimaryColour, UiButtonInput::SlideTime);

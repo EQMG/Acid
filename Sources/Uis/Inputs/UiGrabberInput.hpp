@@ -76,7 +76,7 @@ public:
 
 protected:
 	std::string GetTextString() const override {
-		return Keyboard::ToString(value);
+		return Window::ToString(value);
 	}
 
 private:

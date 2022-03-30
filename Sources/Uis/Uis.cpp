@@ -12,7 +12,7 @@ Uis::Uis() {
 
 void Uis::Update() {
 	for (auto &[button, selector] : selectors) {
-		auto isDown = Mouse::Get()->GetButton(button) != InputAction::Release;
+		auto isDown = Windows::Get()->GetWindow(0)->GetMouseButton(button) != InputAction::Release;
 		selector.wasDown = !selector.isDown && isDown;
 		selector.isDown = isDown;
 	}
@@ -28,7 +28,7 @@ void Uis::Update() {
 	canvas.Update(viewMatrix, objects, cursorSelect);
 
 	if (lastCursorSelect != cursorSelect) {
-		Mouse::Get()->SetCursor(cursorSelect ? *cursorSelect->GetCursorHover() : CursorStandard::Arrow);
+		Windows::Get()->GetWindow(0)->SetCursor(cursorSelect ? cursorSelect->GetCursorHover() : nullptr);
 	}
 }
 

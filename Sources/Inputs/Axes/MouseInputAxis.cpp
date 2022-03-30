@@ -5,13 +5,13 @@
 namespace acid {
 MouseInputAxis::MouseInputAxis(uint8_t axis) :
 	axis(axis) {
-	Mouse::Get()->OnPosition().connect(this, [this](Vector2d value) {
+	Windows::Get()->GetWindow(0)->OnMousePosition().connect(this, [this](Vector2d value) {
 		onAxis(GetAmount());
 	});
 }
 
 float MouseInputAxis::GetAmount() const {
-	return scale * static_cast<float>(Mouse::Get()->GetPositionDelta()[axis]) + offset;
+	return scale * static_cast<float>(Windows::Get()->GetWindow(0)->GetMousePositionDelta()[axis]) + offset;
 }
 
 InputAxis::ArgumentDescription MouseInputAxis::GetArgumentDescription() const {

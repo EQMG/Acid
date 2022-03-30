@@ -18,7 +18,7 @@ UiButtonInput::UiButtonInput() {
 	title.SetTextColour(ValueColour);
 	AddChild(&title);
 	
-	SetCursorHover(CursorStandard::Hand);
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::Hand));
 	OnSelected().connect(this, [this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(), selected ? SelectedColour : ButtonColour, SlideTime);
 	});

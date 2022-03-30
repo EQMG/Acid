@@ -18,7 +18,7 @@ UiPanel::UiPanel() {
 	//resizeHandle.SetTransform({RESIZE_SIZE, UiAnchor::RightBottom});
 	resizeHandle.SetImage(Image2d::Create("Guis/White.png"));
 	resizeHandle.SetColourDriver<ConstantDriver>(UiButtonInput::ButtonColour);
-	resizeHandle.SetCursorHover(CursorStandard::ResizeX);
+	resizeHandle.SetCursorHover(std::make_unique<Cursor>(CursorStandard::ResizeX));
 	UiObject::AddChild(&resizeHandle);
 
 	//scrollX.SetTransform({UiMargins::None, {}, {-RESIZE_SIZE.x, 0}});

@@ -3,7 +3,7 @@
 namespace acid {
 KeyboardInputButton::KeyboardInputButton(Key key) :
 	key(key) {
-	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
+	Windows::Get()->GetWindow(0)->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (this->key == key) {
 			onButton(action, mods);
 		}
@@ -11,7 +11,7 @@ KeyboardInputButton::KeyboardInputButton(Key key) :
 }
 
 bool KeyboardInputButton::IsDown() const {
-	return (Keyboard::Get()->GetKey(key) != InputAction::Release) ^ inverted;
+	return (Windows::Get()->GetWindow(0)->GetKey(key) != InputAction::Release) ^ inverted;
 }
 
 InputAxis::ArgumentDescription KeyboardInputButton::GetArgumentDescription() const {

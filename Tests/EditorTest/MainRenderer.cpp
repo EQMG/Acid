@@ -106,7 +106,7 @@ void MainRenderer::Update() {
 	auto renderpassCreate1 = GetRenderStage(1);
 	//renderpassCreate1->GetViewport().SetOffset({0.1f, 0.0f});
 
-	if (Keyboard::Get()->GetKey(Key::Q) == InputAction::Release) {
+	if (Windows::Get()->GetWindow(0)->GetKey(Key::Q) == InputAction::Release) {
 		renderpassCreate1->GetViewport().SetScale({1.0f, 1.0f});
 	} else {
 		renderpassCreate1->GetViewport().SetScale({0.5f, 1.0f});

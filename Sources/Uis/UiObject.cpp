@@ -51,8 +51,8 @@ void UiObject::Update(const Matrix4 &viewMatrix, std::vector<UiObject *> &list, 
 	modelView = viewMatrix * modelMatrix;
 
 	bool selected = false;
-	if (IsEnabled() && Mouse::Get()->IsWindowSelected() && Windows::Get()->GetWindow(0)->IsFocused()) {
-		auto distance = Mouse::Get()->GetPosition() - screenPosition;
+	if (IsEnabled() && Windows::Get()->GetWindow(0)->IsWindowSelected() && Windows::Get()->GetWindow(0)->IsFocused()) {
+		auto distance = Windows::Get()->GetWindow(0)->GetMousePosition() - screenPosition;
 		selected = distance.x <= screenSize.x && distance.y <= screenSize.y &&
 			distance.x >= 0.0f && distance.y >= 0.0f;
 	}

@@ -27,8 +27,8 @@ UiTextInput::UiTextInput() {
 	textValue.SetTextColour(UiButtonInput::ValueColour);
 	AddChild(&textValue);
 
-	SetCursorHover(CursorStandard::Hand);
-	Keyboard::Get()->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::Hand));
+	Windows::Get()->GetWindow(0)->OnKey().connect(this, [this](Key key, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (!updating)
 			return;
 
@@ -46,7 +46,7 @@ UiTextInput::UiTextInput() {
 			SetUpdating(false);
 		}
 	});
-	Keyboard::Get()->OnChar().connect(this, [this](char c) {
+	Windows::Get()->GetWindow(0)->OnChar().connect(this, [this](char c) {
 		if (!updating)
 			return;
 

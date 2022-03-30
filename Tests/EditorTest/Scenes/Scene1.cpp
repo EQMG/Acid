@@ -47,7 +47,7 @@ Scene1::Scene1() :
 	uiStartLogo.SetAlphaDriver<ConstantDriver>(1.0f);
 	uiStartLogo.OnFinished().connect(this, [this]() {
 		overlayDebug.SetAlphaDriver<SlideDriver>(0.0f, 1.0f, UI_SLIDE_TIME);
-		Mouse::Get()->SetCursorHidden(true);
+		Windows::Get()->GetWindow(0)->SetCursorHidden(true);
 	});
 	Uis::Get()->GetCanvas().AddChild(&uiStartLogo);
 
@@ -78,7 +78,7 @@ Scene1::Scene1() :
 	});
 	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
+			Windows::Get()->GetWindow(0)->SetCursorHidden(!Windows::Get()->GetWindow(0)->IsCursorHidden());
 		}
 	});
 }

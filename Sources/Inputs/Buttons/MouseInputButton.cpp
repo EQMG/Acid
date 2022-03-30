@@ -3,7 +3,7 @@
 namespace acid {
 MouseInputButton::MouseInputButton(MouseButton button) :
 	button(button) {
-	Mouse::Get()->OnButton().connect(this, [this](MouseButton button, InputAction action, bitmask::bitmask<InputMod> mods) {
+	Windows::Get()->GetWindow(0)->OnMouseButton().connect(this, [this](MouseButton button, InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (this->button == button) {
 			onButton(action, mods);
 		}
@@ -11,7 +11,7 @@ MouseInputButton::MouseInputButton(MouseButton button) :
 }
 
 bool MouseInputButton::IsDown() const {
-	return (Mouse::Get()->GetButton(button) != InputAction::Release) ^ inverted;
+	return (Windows::Get()->GetWindow(0)->GetMouseButton(button) != InputAction::Release) ^ inverted;
 }
 
 InputAxis::ArgumentDescription MouseInputButton::GetArgumentDescription() const {

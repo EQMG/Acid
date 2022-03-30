@@ -32,7 +32,7 @@ UiSliderInput::UiSliderInput() {
 	textValue.SetTextColour(UiButtonInput::ValueColour);
 	AddChild(&textValue);
 
-	SetCursorHover(CursorStandard::ResizeX);
+	SetCursorHover(std::make_unique<Cursor>(CursorStandard::ResizeX));
 	UpdateProgress();
 }
 
@@ -45,7 +45,7 @@ void UiSliderInput::UpdateObject() {
 	} else if (updating) {
 		auto width = background.GetScreenSize().x;
 		auto positionX = background.GetScreenPosition().x;
-		auto cursorX = static_cast<float>(Mouse::Get()->GetPosition().x) - positionX;
+		auto cursorX = static_cast<float>(Windows::Get()->GetWindow(0)->GetMousePosition().x) - positionX;
 		progress = cursorX / width;
 		progress = std::clamp(progress, 0.0f, 1.0f);
 		value = (progress * (valueMax - valueMin)) + valueMin;

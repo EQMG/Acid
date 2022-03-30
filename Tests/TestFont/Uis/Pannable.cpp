@@ -113,10 +113,10 @@ void Pannable::UpdateObject() {
 
 //	auto offset = content.GetTransform().GetPosition();
 
-	zoom += Mouse::Get()->GetScrollDelta().y;
+	zoom += Windows::Get()->GetWindow(0)->GetMouseScrollDelta().y;
 	dynamic_cast<ConstantDriver<Vector2f> *>(content.GetScaleDriver())->SetConstant(Vector2f(zoom));
 
-	if (Mouse::Get()->GetButton(MouseButton::Left) != InputAction::Release) {
+	if (Windows::Get()->GetWindow(0)->GetMouseButton(MouseButton::Left) != InputAction::Release) {
 //		offset -= Mouse::Get()->GetPositionDelta() / zoom / Engine::Get()->GetDelta().AsSeconds();
 	}
 

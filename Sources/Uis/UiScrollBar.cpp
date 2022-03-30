@@ -17,7 +17,7 @@ UiScrollBar::UiScrollBar() {
 	scroll.SetColourDriver<ConstantDriver>(UiButtonInput::PrimaryColour);
 	AddChild(&scroll);
 
-	Mouse::Get()->OnScroll().connect(this, [this](Vector2d wheelDelta) {
+	Windows::Get()->GetWindow(0)->OnMouseScroll().connect(this, [this](Vector2d wheelDelta) {
 		if (GetParent()->IsSelected() && !updating && scroll.IsEnabled()) {
 			Vector2f position;
 			position[index] = ScrollByDelta(wheelDelta[index]);
@@ -35,7 +35,7 @@ void UiScrollBar::UpdateObject() {
 		}
 
 		Vector2d position;
-		position[index] = Mouse::Get()->GetPosition()[index] - GetScreenPosition()[index]; // ScrollByPosition(Mouse::Get()->GetPosition()[index]);
+		position[index] = Windows::Get()->GetWindow(0)->GetMousePosition()[index] - GetScreenPosition()[index]; // ScrollByPosition(Mouse::Get()->GetPosition()[index]);
 //		scroll.GetTransform().SetPosition(position);
 		CancelEvent(MouseButton::Left);
 	}

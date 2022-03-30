@@ -31,7 +31,7 @@ void FpsCamera::Update() {
 	}
 
 	if (!Scenes::Get()->GetScene()->IsPaused()) {
-		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
+		auto rotationDelta = Windows::Get()->GetWindow(0)->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
 			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 
 		rotation.y += rotationDelta.x;
