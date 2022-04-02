@@ -4,6 +4,8 @@ set(_ACID_ALL_SYSTEM_LIBS true)
 
 # Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
+# Check whether a SSE instructions can be used on the machine
+include(FindSSE)
 
 # Finds Vulkan, env "VULKAN_SDK" must be set
 #find_package(volk 121 QUIET)
@@ -206,7 +208,7 @@ target_compile_options(Acid
 		# Enabled SSE2 for MSVC for 32-bit.
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
-		$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-msse4.1>
+		$<$<BOOL:${SSE4_1_FOUND}>:-msse4.1>
 		)
 target_include_directories(Acid
 		PUBLIC

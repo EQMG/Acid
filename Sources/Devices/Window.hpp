@@ -169,7 +169,7 @@ ENABLE_BITMASK_OPERATORS(InputMod)
 
 using WindowId = std::size_t;
 
-class Window {
+class Window : NonCopyable {
 public:
 	Window(std::size_t id);
 	~Window();

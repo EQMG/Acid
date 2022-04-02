@@ -30,7 +30,8 @@ int main(int argc, char **argv) {
 
 namespace test {
 MainApp::MainApp() :
-	App("Test Physics", {1, 0, 0}) {
+	App("Test Physics", {1, 0, 0}),
+	cursor("Guis/Cursor.png", CursorHotspot::UpperLeft)  {
 	// Registers file search paths.
 #ifdef ACID_PACKED_RESOURCES
 	for (auto &file : std::filesystem::directory_iterator(std::filesystem::current_path())) {
@@ -50,7 +51,7 @@ MainApp::MainApp() :
 		});
 	auto window1 = Windows::Get()->AddWindow();
 	window1->SetTitle("Test Physics 2");
-	Mouse::Get()->SetCursor("Guis/Cursor.png", CursorHotspot::UpperLeft);
+	Windows::Get()->GetWindow(0)->SetCursor(&cursor);
 
 	// Loads a input scheme for this app.
 	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);

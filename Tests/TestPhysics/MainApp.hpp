@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Devices/Cursor.hpp>
 #include <Engine/App.hpp>
 #include "Configs/ConfigManager.hpp"
 
@@ -16,5 +17,6 @@ public:
 
 private:
 	ConfigManager configManager;
+	Cursor cursor;
 };
 }

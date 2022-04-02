@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "Export.hpp"
+#include "Utils/NonCopyable.hpp"
 
 struct GLFWcursor;
 
