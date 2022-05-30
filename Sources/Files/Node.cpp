@@ -154,7 +154,6 @@ NodeView Node::GetPropertyWithValue(const std::string &name, const NodeValue &pr
 	for (auto &[propertyName, property] : properties) {
 		if (auto property1 = property.GetProperty(name); property1->GetValue() == propertyValue)
 			return {this, name, &property};
-		return {this, name, nullptr};
 	}
 
 	return {this, name, nullptr};

@@ -146,7 +146,7 @@ auto Vector3<T>::Length() const {
 
 template<typename T>
 auto Vector3<T>::Abs() const {
-	return Vector2<T>(std::abs(x), std::abs(y), std::abs(z));
+	return Vector3<T>(std::abs(x), std::abs(y), std::abs(z));
 }
 
 template<typename T>
