@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Devices/Mouse.hpp"
+#include "Devices/Windows.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Transform.hpp"

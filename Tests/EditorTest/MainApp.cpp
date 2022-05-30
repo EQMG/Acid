@@ -3,7 +3,6 @@
 #ifdef ACID_RELOAD
 #include <cr.h>
 
-#include <Devices/Mouse.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Files/Files.hpp>
 #include <Graphics/Graphics.hpp>

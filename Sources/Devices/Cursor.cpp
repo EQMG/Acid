@@ -1,4 +1,4 @@
-#include "Mouse.hpp"
+#include "Cursor.hpp"
 
 #include <GLFW/glfw3.h>
 #include "Bitmaps/Bitmap.hpp"

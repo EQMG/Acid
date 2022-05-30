@@ -1,7 +1,6 @@
 #include "MainApp.hpp"
 
 #include <Files/Files.hpp>
-#include <Devices/Mouse.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Resources/Resources.hpp>

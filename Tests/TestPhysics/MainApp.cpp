@@ -2,7 +2,6 @@
 
 #include <Files/Files.hpp>
 #include <Inputs/Inputs.hpp>
-#include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Timers/Timers.hpp>

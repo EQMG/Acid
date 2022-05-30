@@ -1,7 +1,5 @@
 #include "MouseInputAxis.hpp"
 
-#include "Devices/Mouse.hpp"
-
 namespace acid {
 MouseInputAxis::MouseInputAxis(uint8_t axis) :
 	axis(axis) {

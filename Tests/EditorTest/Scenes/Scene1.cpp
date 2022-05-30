@@ -1,6 +1,5 @@
 #include "Scene1.hpp"
 
-#include <Devices/Mouse.hpp>
 #include <Files/File.hpp>
 #include <Files/Json/Json.hpp>
 #include <Gizmos/Gizmos.hpp>

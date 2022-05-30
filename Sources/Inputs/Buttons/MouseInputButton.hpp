@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Devices/Mouse.hpp"
 #include "Inputs/InputButton.hpp"
 
 namespace acid {

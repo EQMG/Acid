@@ -1,6 +1,5 @@
 #include "FreeCamera.hpp"
 
-#include <Devices/Mouse.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Maths/Maths.hpp>
 #include <Scenes/Scenes.hpp>

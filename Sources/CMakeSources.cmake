@@ -27,9 +27,7 @@ set(_temp_acid_headers
 		Bitmaps/Png/PngBitmap.hpp
 		Devices/Cursor.hpp
 		Devices/Joysticks.hpp
-		Devices/Keyboard.hpp
 		Devices/Monitor.hpp
-		Devices/Mouse.hpp
 		Devices/Window.hpp
 		Devices/Windows.hpp
 		Engine/App.hpp
@@ -317,9 +315,7 @@ set(_temp_acid_sources
 		Bitmaps/Png/PngBitmap.cpp
 		Devices/Cursor.cpp
 		Devices/Joysticks.cpp
-		Devices/Keyboard.cpp
 		Devices/Monitor.cpp
-		Devices/Mouse.cpp
 		Devices/Window.cpp
 		Devices/Windows.cpp
 		Engine/Engine.cpp

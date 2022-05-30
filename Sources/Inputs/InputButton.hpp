@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Utils/StreamFactory.hpp"
 #include "Devices/Windows.hpp"
+#include "Utils/StreamFactory.hpp"
 #include "InputAxis.hpp"
 
 namespace acid {

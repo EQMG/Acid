@@ -2,6 +2,7 @@
 
 #include <rocket.hpp>
 
+#include "Devices/Windows.hpp"
 #include "Utils/StreamFactory.hpp"
 
 namespace acid {

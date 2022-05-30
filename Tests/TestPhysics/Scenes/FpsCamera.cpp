@@ -2,7 +2,6 @@
 
 #include <Inputs/Inputs.hpp>
 #include <Scenes/Scenes.hpp>
-#include <Devices/Mouse.hpp>
 #include <Maths/Maths.hpp>
 #include <Graphics/Graphics.hpp>
 #include "FpsPlayer.hpp"

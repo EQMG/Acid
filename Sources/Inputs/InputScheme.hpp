@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Devices/Joysticks.hpp"
-#include "Devices/Keyboard.hpp"
-#include "Devices/Mouse.hpp"
+#include "Devices/Windows.hpp"
 #include "Files/File.hpp"
 #include "InputAxis.hpp"
 #include "InputButton.hpp"

@@ -2,7 +2,6 @@
 
 #include <Animations/AnimatedMesh.hpp>
 #include <Audio/Sound.hpp>
-#include <Devices/Mouse.hpp>
 #include <Files/File.hpp>
 #include <Files/File.hpp>
 #include <Files/Json/Json.hpp>
