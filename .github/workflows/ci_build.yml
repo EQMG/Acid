@@ -3,13 +3,13 @@ name: build
 on:
   push:
     branches:
-      - main
-      - develop
+      - master
+      - develop/*
       - release/*
   pull_request:
     branches:
-      - main
-      - develop
+      - master
+      - develop/*
       - release/*
 
 jobs:
