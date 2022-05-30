@@ -79,7 +79,7 @@ bitmask::bitmask<JoystickHatValue> Joystick::GetHat(JoystickHat hat) const {
 Joysticks::Joysticks() {
 	glfwSetJoystickCallback(CallbackJoystick);
 
-	for (auto &&[port, joystick] : Enumerate(joysticks)) {
+	for (auto [port, joystick] : Enumerate(joysticks)) {
 		if (glfwJoystickPresent(port)) {
 			joystick.port = static_cast<JoystickPort>(port);
 			joystick.name = glfwGetJoystickName(port);
@@ -89,7 +89,7 @@ Joysticks::Joysticks() {
 }
 
 void Joysticks::Update() {
-	for (auto &&[port, joystick] : Enumerate(joysticks)) {
+	for (auto [port, joystick] : Enumerate(joysticks)) {
 		joystick.Update();
 	}
 }

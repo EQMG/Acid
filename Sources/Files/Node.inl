@@ -476,7 +476,7 @@ template<typename T, std::size_t Size>
 const Node &operator>>(const Node &node, std::array<T, Size> &array) {
 	array = {};
 
-	for (auto &&[i, propertyPair] : Enumerate(node.GetProperties()))
+	for (auto [i, propertyPair] : Enumerate(node.GetProperties()))
 		propertyPair.second >> array[i];
 
 	return node;

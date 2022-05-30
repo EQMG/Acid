@@ -14,7 +14,7 @@ void Xml::Load(Node &node, std::string_view string) {
 	} tagState = TagState::None;
 
 	// Iterates over all the characters in the string view.
-	for (auto &&[index, c] : Enumerate(string)) {
+	for (const auto [index, c] : Enumerate(string)) {
 		// If the previous character was a backslash the quote will not break the string.
 		if (c == '\'' && quoteState != QuoteState::Double && string[index - 1] != '\\')
 			quoteState = quoteState == QuoteState::None ? QuoteState::Single : QuoteState::None;

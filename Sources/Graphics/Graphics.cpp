@@ -58,7 +58,7 @@ void Graphics::Update() {
 
 	renderer->Update();
 
-	for (auto &[id, swapchain] : Enumerate(swapchains)) {
+	for (auto [id, swapchain] : Enumerate(swapchains)) {
 		auto &perSurfaceBuffer = perSurfaceBuffers[id];
 		auto acquireResult = swapchain->AcquireNextImage(perSurfaceBuffer->presentCompletes[perSurfaceBuffer->currentFrame], perSurfaceBuffer->flightFences[perSurfaceBuffer->currentFrame]);
 
@@ -241,7 +241,7 @@ void Graphics::CreatePipelineCache() {
 void Graphics::ResetRenderStages() {
 	RecreateSwapchain();
 
-	for (auto &[id, swapchain] : Enumerate(swapchains)) {
+	for (const auto [id, swapchain] : Enumerate(swapchains)) {
 		auto &perSurfaceBuffer = perSurfaceBuffers[id];
 		if (perSurfaceBuffer->flightFences.size() != swapchain->GetImageCount())
 			RecreateCommandBuffers(id);
@@ -266,7 +266,7 @@ void Graphics::RecreateSwapchain() {
 #endif
 	swapchains.resize(surfaces.size());
 	perSurfaceBuffers.resize(surfaces.size());
-	for (auto &[id, surface] : Enumerate(surfaces)) {
+	for (const auto [id, surface] : Enumerate(surfaces)) {
 		swapchains[id] = std::make_unique<Swapchain>(*physicalDevice, *surface, *logicalDevice, displayExtent, swapchains[id].get());
 		perSurfaceBuffers[id] = std::make_unique<PerSurfaceBuffers>();
 		RecreateCommandBuffers(id);
@@ -314,7 +314,7 @@ void Graphics::RecreatePass(std::size_t id, RenderStage &renderStage) {
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
-	for (auto &[id, swapchain] : Enumerate(swapchains)) {
+	for (const auto [id, swapchain] : Enumerate(swapchains)) {
 		if (renderStage.HasSwapchain() && (perSurfaceBuffer->framebufferResized || !swapchain->IsSameExtent(displayExtent)))
 			RecreateSwapchain();
 

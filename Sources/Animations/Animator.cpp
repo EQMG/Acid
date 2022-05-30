@@ -30,7 +30,7 @@ std::pair<Keyframe, Keyframe> Animator::GetPreviousAndNextFrames() const {
 	const Keyframe *previousFrame = nullptr;
 	const Keyframe *nextFrame = nullptr;
 
-	for (const auto &[i, frame] : Enumerate(allFrames)) {
+	for (const auto [i, frame] : Enumerate(allFrames)) {
 		nextFrame = &frame;
 		if (frame.GetTimeStamp() > animationTime)
 			break;

@@ -65,7 +65,7 @@ std::string AnimationLoader::GetJointName(const Node &jointData) {
 }
 
 void AnimationLoader::ProcessTransforms(const std::string &jointName, const std::vector<std::string> &rawData, bool root) {
-	for (auto &&[i, keyframe] : Enumerate(keyframes)) {
+	for (auto [i, keyframe] : Enumerate(keyframes)) {
 		Matrix4 transform;
 
 		for (uint32_t row = 0; row < 4; row++) {
