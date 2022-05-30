@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::ModelFactory class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename Base&gt;</div>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>ModelFactory <span class="m-thin">class</span>
+        </h1>
+        <p><span></span></p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pro-methods">Protected functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              class <a href="classacid_1_1_model_factory_1_1_registrar.html" class="m-doc">Registrar</a>
+            </dt>
+            <dd></dd>
+            <dt id="aad08e60d87dc42a444d2c3fc8938aa41">
+              using <a href="#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc-self">TCreateReturn</a> = std::shared_ptr&lt;Base&gt;
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afd8bb1d917366c18a8c301abd010d378">
+              using <a href="#afd8bb1d917366c18a8c301abd010d378" class="m-doc-self">TCreateMethodNode</a> = std::function&lt;<a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a>(const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;)&gt;
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7c8a00d9383b6df730e720de2bd00b8f">
+              using <a href="#a7c8a00d9383b6df730e720de2bd00b8f" class="m-doc-self">TRegistryMapNode</a> = std::unordered_map&lt;std::string, <a href="classacid_1_1_model_factory.html#afd8bb1d917366c18a8c301abd010d378" class="m-doc">TCreateMethodNode</a>&gt;
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a67a6c211e216c9c00eda80f084c562db">
+              using <a href="#a67a6c211e216c9c00eda80f084c562db" class="m-doc-self">TCreateMethodFilename</a> = std::function&lt;<a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a>(const std::filesystem::path&amp;)&gt;
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aa4c9c3bae5418f156b7af21804f26eb6">
+              using <a href="#aa4c9c3bae5418f156b7af21804f26eb6" class="m-doc-self">TRegistryMapFilename</a> = std::unordered_map&lt;std::string, <a href="classacid_1_1_model_factory.html#a67a6c211e216c9c00eda80f084c562db" class="m-doc">TCreateMethodFilename</a>&gt;
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a424f28c6037e0e77213f61e6f17226f3" class="m-doc">Create</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node) -&gt; <a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ac5852a0325093d79ec272b37796374ba" class="m-doc">Create</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename) -&gt; <a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a></span>
+            </dt>
+            <dd></dd>
+            <dt id="a927a2455d5033f497a18f222f2ee3b7d">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a927a2455d5033f497a18f222f2ee3b7d" class="m-doc-self">RegistryNode</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1_model_factory.html#a7c8a00d9383b6df730e720de2bd00b8f" class="m-doc">TRegistryMapNode</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="adadde932cdef331333428e064852c23d">
+              <span class="m-doc-wrap-bumper">static auto <a href="#adadde932cdef331333428e064852c23d" class="m-doc-self">RegistryFilename</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classacid_1_1_model_factory.html#aa4c9c3bae5418f156b7af21804f26eb6" class="m-doc">TRegistryMapFilename</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="ac8805762df4409ff4018604d4d547e42">
+              <span class="m-doc-wrap-bumper"><a href="#ac8805762df4409ff4018604d4d547e42" class="m-doc-self">~ModelFactory</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pro-methods">
+          <h2><a href="#pro-methods">Protected functions</a></h2>
+          <dl class="m-doc">
+            <dt id="aca151142bab487c7722bbcebc7e9dcf0">
+              <span class="m-doc-wrap-bumper">auto <a href="#aca151142bab487c7722bbcebc7e9dcf0" class="m-doc-self">Load</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="add0bdffcc45ba168e121dfd96652e1a2">
+              <span class="m-doc-wrap-bumper">auto <a href="#add0bdffcc45ba168e121dfd96652e1a2" class="m-doc-self">Write</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node) const -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="ac16db06b4e3d04027173fc703f7b3a59">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac16db06b4e3d04027173fc703f7b3a59" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              Base&amp; base) -&gt; const friend <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a1273044986174f921ba20b048c172122">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1273044986174f921ba20b048c172122" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              const Base&amp; base) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a424f28c6037e0e77213f61e6f17226f3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Base&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a> acid::<wbr />ModelFactory&lt;Base&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a424f28c6037e0e77213f61e6f17226f3" class="m-doc-self">Create</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">node</td>
+                  <td>The node to decode values from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The model with the requested values.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new model, or finds one with the same values.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac5852a0325093d79ec272b37796374ba"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Base&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classacid_1_1_model_factory.html#aad08e60d87dc42a444d2c3fc8938aa41" class="m-doc">TCreateReturn</a> acid::<wbr />ModelFactory&lt;Base&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5852a0325093d79ec272b37796374ba" class="m-doc-self">Create</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">filename</td>
+                  <td>The file to load the model from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The model loaded from the filename.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new model, or finds one with the same values.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

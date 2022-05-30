@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>acid::PipelineGraphicsCreate class | Acid A
+high
+speed
+C++17
+Vulkan
+game
+engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="stylesheet" href="acid.css" />
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+  <meta
+  name="google-site-verification"
+  content="CFh8H_6dbXMEBgSBApTt5U8Tq5CO3iL3dCIhww9DiYs"
+  />
+  <meta
+  name="description"
+  content="A
+  high
+  speed
+  C++17
+  Vulkan
+  game
+  engine.">
+  <script
+  src="acid.js"></script>
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m"><img src="Acid_01.png" alt="" />Acid <span class="m-thin">A
+high
+speed
+C++17
+Vulkan
+game
+engine</span></a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="2">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a target="_blank" href="https://github.com/EQMG/Acid/" class="github">Github</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>PipelineGraphicsCreate <span class="m-thin">class</span>
+        </h1>
+        <p><span></span></p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a9e6e2efc1f0736c96ceafdecb29be128">
+              <span class="m-doc-wrap-bumper"><a href="#a9e6e2efc1f0736c96ceafdecb29be128" class="m-doc-self">PipelineGraphicsCreate</a>(</span><span class="m-doc-wrap">std::vector&lt;std::filesystem::path&gt; shaderStages = {},
+              std::vector&lt;<a href="classacid_1_1_shader_1_1_vertex_input.html" class="m-doc">Shader::<wbr />VertexInput</a>&gt; vertexInputs = {},
+              std::vector&lt;<a href="classacid_1_1_shader.html#a36116034b5fa41ab9c7af05766159aad" class="m-doc">Shader::<wbr />Define</a>&gt; defines = {},
+              <a href="classacid_1_1_pipeline_graphics.html#affd4cbcdba56b45baee632847310b591" class="m-doc">PipelineGraphics::<wbr />Mode</a> mode = <a href="classacid_1_1_pipeline_graphics.html#affd4cbcdba56b45baee632847310b591a4c0a11247d92f73fb84baa51e37a3263" class="m-doc">PipelineGraphics::<wbr />Mode::<wbr />Polygon</a>,
+              <a href="classacid_1_1_pipeline_graphics.html#a89f4242e5b5e9ed78caa59ba88ec58de" class="m-doc">PipelineGraphics::<wbr />Depth</a> depth = <a href="classacid_1_1_pipeline_graphics.html#a89f4242e5b5e9ed78caa59ba88ec58dea70a2a84088d405a2e3f1e3accaa16723" class="m-doc">PipelineGraphics::<wbr />Depth::<wbr />ReadWrite</a>,
+              VkPrimitiveTopology topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+              VkPolygonMode polygonMode = VK_POLYGON_MODE_FILL,
+              VkCullModeFlags cullMode = VK_CULL_MODE_BACK_BIT,
+              VkFrontFace frontFace = VK_FRONT_FACE_CLOCKWISE,
+              bool pushDescriptors = false)</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a28ba93b6f5f0f1053054f9febf552ceb" class="m-doc">Create</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_pipeline.html#adaf5b5305f9ff158ca0450ef94dea800" class="m-doc">Pipeline::<wbr />Stage</a>&amp; pipelineStage) const -&gt; <a href="classacid_1_1_pipeline_graphics.html" class="m-doc">PipelineGraphics</a>*</span>
+            </dt>
+            <dd></dd>
+            <dt id="a2caace2371aa7019ce4e8656dfedee50">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2caace2371aa7019ce4e8656dfedee50" class="m-doc-self">GetShaderStages</a>(</span><span class="m-doc-wrap">) const -&gt; const std::vector&lt;std::filesystem::path&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6ed2e197236bd8de5c44f09cd76db600">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6ed2e197236bd8de5c44f09cd76db600" class="m-doc-self">GetVertexInputs</a>(</span><span class="m-doc-wrap">) const -&gt; const std::vector&lt;<a href="classacid_1_1_shader_1_1_vertex_input.html" class="m-doc">Shader::<wbr />VertexInput</a>&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ace5d72203ba838893dcb351a74d8abab">
+              <span class="m-doc-wrap-bumper">auto <a href="#ace5d72203ba838893dcb351a74d8abab" class="m-doc-self">GetDefines</a>(</span><span class="m-doc-wrap">) const -&gt; const std::vector&lt;<a href="classacid_1_1_shader.html#a36116034b5fa41ab9c7af05766159aad" class="m-doc">Shader::<wbr />Define</a>&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a766fc682cbeaf9e08ed9566bc9fd1512">
+              <span class="m-doc-wrap-bumper">auto <a href="#a766fc682cbeaf9e08ed9566bc9fd1512" class="m-doc-self">GetMode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_pipeline_graphics.html#affd4cbcdba56b45baee632847310b591" class="m-doc">PipelineGraphics::<wbr />Mode</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad7817dabf6aa02c108dd2f1f027dd43c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad7817dabf6aa02c108dd2f1f027dd43c" class="m-doc-self">GetDepth</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classacid_1_1_pipeline_graphics.html#a89f4242e5b5e9ed78caa59ba88ec58de" class="m-doc">PipelineGraphics::<wbr />Depth</a></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac5fc6ac4744c1eb2422213891f7b43c3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac5fc6ac4744c1eb2422213891f7b43c3" class="m-doc-self">GetTopology</a>(</span><span class="m-doc-wrap">) const -&gt; VkPrimitiveTopology</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8440f5b54f4aaeec2ceb2fcc86170c81">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8440f5b54f4aaeec2ceb2fcc86170c81" class="m-doc-self">GetPolygonMode</a>(</span><span class="m-doc-wrap">) const -&gt; VkPolygonMode</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7e3b6ef6f6ec1bde6823c8504dd77cb6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e3b6ef6f6ec1bde6823c8504dd77cb6" class="m-doc-self">GetCullMode</a>(</span><span class="m-doc-wrap">) const -&gt; VkCullModeFlags</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a7582285e166dd75f85a4517aa82e994b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7582285e166dd75f85a4517aa82e994b" class="m-doc-self">GetFrontFace</a>(</span><span class="m-doc-wrap">) const -&gt; VkFrontFace</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a24cdc0d5e717dc61a951bf93c1bb107e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a24cdc0d5e717dc61a951bf93c1bb107e" class="m-doc-self">GetPushDescriptors</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a2409bd1060fe0963170ef4819fe3e9a0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2409bd1060fe0963170ef4819fe3e9a0" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              <a href="classacid_1_1_pipeline_graphics_create.html" class="m-doc">PipelineGraphicsCreate</a>&amp; pipelineCreate) -&gt; const friend <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aef8edfd861e1ab2acdbadf9fb666e467">
+              <span class="m-doc-wrap-bumper">auto <a href="#aef8edfd861e1ab2acdbadf9fb666e467" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
+              const <a href="classacid_1_1_pipeline_graphics_create.html" class="m-doc">PipelineGraphicsCreate</a>&amp; pipelineCreate) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a28ba93b6f5f0f1053054f9febf552ceb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classacid_1_1_pipeline_graphics.html" class="m-doc">PipelineGraphics</a>* acid::<wbr />PipelineGraphicsCreate::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28ba93b6f5f0f1053054f9febf552ceb" class="m-doc-self">Create</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_pipeline.html#adaf5b5305f9ff158ca0450ef94dea800" class="m-doc">Pipeline::<wbr />Stage</a>&amp; pipelineStage) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pipelineStage</td>
+                  <td>The pipelines graphics stage.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The created graphics pipeline.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates a new pipeline.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <a
+target="_blank"
+href="https://github.com/EQMG/Acid/">Github</a>
+&bull;
+
+<a
+target="_blank"
+href="https://github.com/EQMG/Acid/issues">Report
+an
+issue</a>
+
+<br><br>Documentation
+generated
+using
+<a
+href="https://mcss.mosra.cz/">m.css</a>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
