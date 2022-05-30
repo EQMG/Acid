@@ -9,6 +9,7 @@
 #include "Scenes/Entity.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Colliders/Collider.hpp"
+#include "Physics.hpp"
 
 namespace acid {
 Rigidbody::Rigidbody(std::unique_ptr<Collider> &&collider, float mass, float friction, const Vector3f &linearFactor, const Vector3f &angularFactor) :
@@ -20,18 +21,19 @@ Rigidbody::~Rigidbody() {
 	if (auto body = btRigidBody::upcast(this->body); body && body->getMotionState())
 		delete body->getMotionState();
 
-	if (auto physics = Scenes::Get()->GetPhysics())
+	if (auto physics = Scenes::Get()->GetScene()->GetSystem<Physics>())
 		physics->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
 }
 
 void Rigidbody::Start() {
-	if (rigidBody) {
-		Scenes::Get()->GetPhysics()->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
-	}
+	auto physics = Scenes::Get()->GetScene()->GetSystem<Physics>();
+	
+	if (rigidBody)
+		physics->GetDynamicsWorld()->removeRigidBody(rigidBody.get());
 
 	CreateShape();
 	assert((!shape || shape->getShapeType() != INVALID_SHAPE_PROXYTYPE) && "Invalid rigidbody shape!");
-	gravity = Scenes::Get()->GetPhysics()->GetGravity();
+	gravity = physics->GetGravity();
 	btVector3 localInertia;
 
 	// Rigidbody is dynamic if and only if mass is non zero, otherwise static.
@@ -56,7 +58,7 @@ void Rigidbody::Start() {
 	rigidBody->setAngularFactor(Collider::Convert(angularFactor));
 	rigidBody->setUserPointer(dynamic_cast<CollisionObject *>(this));
 	body = rigidBody.get();
-	Scenes::Get()->GetPhysics()->GetDynamicsWorld()->addRigidBody(rigidBody.get());
+	physics->GetDynamicsWorld()->addRigidBody(rigidBody.get());
 	rigidBody->activate(true);
 	RecalculateMass();
 }

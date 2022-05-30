@@ -12,13 +12,11 @@ Transform::Transform(const Vector3f &position, const Vector3f &rotation, const V
 Transform::~Transform() {
 	delete worldTransform;
 
-	if (parent) {
-		parent->RemoveChild(this);
-	}
-
-	for (auto &child : children) {
+	for (auto &child : children)
 		child->parent = nullptr;
-	}
+
+	if (parent)
+		parent->RemoveChild(this);
 }
 
 Matrix4 Transform::GetWorldMatrix() const {

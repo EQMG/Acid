@@ -31,11 +31,11 @@ private:
 		float radius = 0.0f;
 	};
 
+	PipelineGraphics pipeline;
+
 	DescriptorsHandler descriptorSet;
 	UniformHandler uniformScene;
 	StorageHandler storageLights;
-
-	PipelineGraphics pipeline;
 
 	Future<std::unique_ptr<Image2d>> brdf;
 

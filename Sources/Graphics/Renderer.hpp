@@ -14,7 +14,6 @@ public:
 	 * Creates a new renderer, fill {@link renderStages} in your subclass of this.
 	 */
 	Renderer() = default;
-	
 	virtual ~Renderer() = default;
 
 	/**
@@ -32,10 +31,10 @@ public:
 	 * @tparam T The Subrender type.
 	 * @return If the Subrender has the System.
 	 */
-	 /*template<typename T>
+	 template<typename T>
 	 bool HasSubrender() const  {
 		 return subrenderHolder.Has<T>();
-	 }*/
+	 }
 
 	 /**
 	  * Gets a Subrender.
@@ -47,19 +46,11 @@ public:
 		return subrenderHolder.Get<T>();
 	}
 
-	RenderStage *GetRenderStage(uint32_t index) const {
-		if (renderStages.empty() || renderStages.size() < index)
-			return nullptr;
-
-		return renderStages.at(index).get();
-	}
-
-protected:
 	/**
 	 * Adds a Subrender.
 	 * @tparam T The Subrender type.
-	 * @param pipelineStage The Subrender pipeline stage.
 	 * @tparam Args The constructor arg types.
+	 * @param pipelineStage The Subrender pipeline stage.
 	 * @param args The constructor arguments.
 	 */
 	template<typename T, typename... Args>
@@ -83,13 +74,20 @@ protected:
 		subrenderHolder.Clear();
 	}
 
+	RenderStage *GetRenderStage(uint32_t index) const {
+		if (renderStages.empty() || renderStages.size() < index)
+			return nullptr;
+
+		return renderStages.at(index).get();
+	}
+
 	void AddRenderStage(std::unique_ptr<RenderStage> &&renderStage) {
 		renderStages.emplace_back(std::move(renderStage));
 	}
 
 private:
 	bool started = false;
-	SubrenderHolder subrenderHolder;
 	std::vector<std::unique_ptr<RenderStage>> renderStages;
+	SubrenderHolder subrenderHolder;
 };
 }

@@ -1,29 +1,25 @@
+#include <bitmask.hpp>
+
 #include <Files/File.hpp>
 #include <Files/Files.hpp>
-#include <Utils/EnumClass.hpp>
 #include <Maths/Matrix4.hpp>
 #include <Maths/Vector2.hpp>
 #include <Files/Node.hpp>
 #include <Files/Json/Json.hpp>
 #include <Files/Xml/Xml.hpp>
 //#include <Files/Yaml/Yaml.hpp>
-#include <Files/Zip/ZipArchive.hpp>
 
 using namespace acid;
 
+namespace test {
 enum class ExampleType {
 	A = 1,
 	B = 2,
 	C = 4,
 	D = 8
 };
+ENABLE_BITMASK_OPERATORS(ExampleType)
 
-// TODO: Allow bitmask macro to work in namespaces outside of acid.
-namespace acid {
-ENABLE_BITMASK_OPERATORS(ExampleType);
-}
-
-namespace test {
 class Example1 {
 public:
 	class XML {
@@ -42,7 +38,7 @@ public:
 			return node;
 		}
 		
-		std::vector<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
+		std::list<std::vector<std::string>> data = {{"clunky"}, {"uses more words than necessary"}};
 		std::optional<float> optional0;
 		std::optional<std::string> optional1 = "Hello optional string!";
 	} xml;
@@ -81,7 +77,7 @@ public:
 		node["yaml"].Get(example1.yaml);
 		node["map"].Get(example1.map);
 		node["vectorMap"].Get(example1.vectorMap);
-		//node["array"].Get(example1.array);
+		//node["forwardList"].Get(example1.forwardList);
 		//node["cArray"].Get(example1.cArray);
 		//node["vectorMatrixMap"].Get(example1.vectorMatrixMap);
 		node["types"].Get(example1.types);
@@ -100,7 +96,7 @@ public:
 		node["yaml"].Set(example1.yaml);
 		node["map"].Set(example1.map);
 		node["vectorMap"].Set(example1.vectorMap);
-		//node["array"].Set(example1.array);
+		//node["forwardList"].Set(example1.forwardList);
 		//node["cArray"].Set(example1.cArray);
 		//node["vectorMatrixMap"].Set(example1.vectorMatrixMap);
 		node["types"].Set(example1.types);
@@ -115,17 +111,17 @@ public:
 
 	Time timeNow = Time::Now();
 	std::filesystem::path currentPath = std::filesystem::current_path();
-	std::vector<std::string> json = {"rigid", "better for data interchange"};
-	std::vector<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
-	std::map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
-	std::map<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
-	std::vector<std::pair<std::string, BitMask<ExampleType>>> types = {
+	std::set<std::string> json = {"rigid", "better for data interchange"};
+	std::multiset<std::string> yaml = {"slim and flexible", "better for configuration", "supports comments"};
+	std::unordered_map<int32_t, std::string> map = {{10, "Hello World"}, {-2, "Negative Keys"}, {400, "Larger Key"}};
+	std::multimap<int32_t, std::vector<std::string>> vectorMap = {{-1, {"A", "B", "C"}}, {8, {"1", "2.00", "3.00"}}, {700, {"%", "$", "#", "&", "#"}}};
+	std::vector<std::pair<std::string, bitmask::bitmask<ExampleType>>> types = {
 		{"AB", ExampleType::A | ExampleType::B}, {"C", ExampleType::C},
 		{"ABD", ExampleType::A | ExampleType::B | ExampleType::D}
 	};
 	//std::vector<std::unique_ptr<float>> uniqueVector = {std::make_unique<float>(10.0f), std::make_unique<float>(-2.1111f)};
 	//std::map<Vector2f, Matrix4> vectorMatrixMap = {{Vector2f(-0.91f, 5998.1f), Matrix4(1.0f)}, {Vector2f(75.559f, 1.2433f), Matrix4(0.0f)}}; // Not allowed by Json.
-	//std::array<double, 5> array = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
+	//std::forward_list<double> forwardList = {-9.1, 10932.0, 1.111, 64634.324324234, -7436.0043}; // TODO
 	//float cArray[3] = {0.0f, 10.0f, -33.3f}; // TODO: By converting into a vector for saving?
 };
 
@@ -172,7 +168,7 @@ int main(int argc, char **argv) {
 	//auto array2Name{node["array2"].GetName()};
 	//auto array2{node["array2"].Get<std::vector<float>>()};
 
-	auto timeNow = node["timeNow"].Get<int64_t>(123456); // 123456
+	auto timeNow = node["timeNow"].GetWithFallback<int64_t>(123456); // 123456
 	node.RemoveProperty("timeNow");
 
 	auto data00 = node["xml"]["data"][0][0].Get<std::string>(); // "clunky"
@@ -193,26 +189,26 @@ int main(int argc, char **argv) {
 
 	{
 		// Test Json writer.
-		File fileJson1(File::Type::Json, node);
-		fileJson1.Write("Serial/Test1.json", Node::Format::Beautified);
+		File fileJson1(std::make_unique<Json>(), node);
+		fileJson1.Write("Serial/Test1.json", NodeFormat::Beautified);
 
 		// Test Json reader.
-		File fileJson2(File::Type::Json);
+		File fileJson2(std::make_unique<Json>());
 		fileJson2.Load("Serial/Test1.json");
 		// Ensure Test1.json and Test2.json values are the same.
-		fileJson2.Write("Serial/Test2.json", Node::Format::Beautified);
+		fileJson2.Write("Serial/Test2.json", NodeFormat::Beautified);
 	}
 	{
 		// Test Xml writer.
-		File fileXml1(File::Type::Xml, node);
-		fileXml1.GetNode().SetName("root");
-		fileXml1.Write("Serial/Test1.xml", Node::Format::Beautified);
+		File fileXml1(std::make_unique<Xml>());
+		fileXml1.GetNode()["root"] = node;
+		fileXml1.Write("Serial/Test1.xml", NodeFormat::Beautified);
 
 		/*// Test Xml reader.
 		File fileXml2(std::make_unique<Xml>("root"));
 		fileXml2.Load("Serial/Test1.xml");
 		// Ensure Test1.xml and Test2.xml values are the same.
-		fileXml2.Write("Serial/Test2.xml", Node::Format::Beautified);*/
+		fileXml2.Write("Serial/Test2.xml", NodeFormat::Beautified);*/
 	}
 	{
 		std::string source = R"({"message":"hello world","value":3})";
@@ -224,7 +220,7 @@ int main(int argc, char **argv) {
 
 		json["values"] = std::vector{10, 11, -1, 2};
 
-		Log::Out(json.WriteString<Json>(Node::Format::Minified), '\n');
+		Log::Out(json.WriteString<Json>(NodeFormat::Minified), '\n');
 	}
 	
 	/*ZipArchive zip0("Serial.zip");

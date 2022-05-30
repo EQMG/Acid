@@ -1,6 +1,7 @@
 #pragma once
 
-#include <map>
+#include <bitset>
+#include <unordered_map>
 #include <memory>
 #include <functional>
 
@@ -40,6 +41,14 @@ public:
 	class Registrar : public Base {
 	public:
 		/**
+		 * Virtual deconstructor called from the engine to clear the instance pointer.
+		 */
+		virtual ~Registrar() {
+			if (static_cast<T *>(this) == moduleInstance)
+				moduleInstance = nullptr;
+		}
+
+		/**
 		 * Gets the engines instance.
 		 * @return The current module instance.
 		 */
@@ -55,6 +64,7 @@ public:
 		static bool Register(typename Base::Stage stage, Requires<Args...> &&requires = {}) {
 			ModuleFactory::Registry()[TypeInfo<Base>::template GetTypeId<T>()] = {[]() {
 				moduleInstance = new T();
+				// The registrar does not own the instance, the engine does, we just hold a raw pointer for convenience.
 				return std::unique_ptr<Base>(moduleInstance);
 			}, stage, requires.Get()};
 			return true;
@@ -76,7 +86,7 @@ public:
 		Never, Always, Pre, Normal, Post, Render
 	};
 
-	using StageIndex = std::pair<Stage, std::size_t>;
+	using StageIndex = std::pair<Stage, TypeId>;
 
 	virtual ~Module() = default;
 

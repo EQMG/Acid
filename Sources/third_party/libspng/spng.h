@@ -6,8 +6,8 @@
 extern "C" {
 #endif
 
-#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__CYGWIN__)
-    #ifndef SPNG_STATIC
+#if (defined(_WIN32) || defined(__CYGWIN__)) && !defined(SPNG_STATIC)
+    #if defined(SPNG__BUILD)
         #define SPNG_API __declspec(dllexport)
     #else
         #define SPNG_API __declspec(dllimport)
@@ -22,7 +22,7 @@ extern "C" {
 
 #define SPNG_VERSION_MAJOR 0
 #define SPNG_VERSION_MINOR 6
-#define SPNG_VERSION_PATCH 0
+#define SPNG_VERSION_PATCH 2
 
 enum spng_errno
 {
@@ -173,9 +173,15 @@ enum spng_decode_flags
 
 enum spng_crc_action
 {
-    SPNG_CRC_ERROR = 0, /* Default */
-    SPNG_CRC_DISCARD = 1, /* Discard chunk, invalid for critical chunks */
-    SPNG_CRC_USE = 2 /* Ignore and don't calculate checksum */
+    /* Default for critical chunks */
+    SPNG_CRC_ERROR = 0,
+
+    /* Discard chunk, invalid for critical chunks,
+       since v0.6.2: default for ancillary chunks */
+    SPNG_CRC_DISCARD = 1,
+
+    /* Ignore and don't calculate checksum */
+    SPNG_CRC_USE = 2
 };
 
 struct spng_ihdr

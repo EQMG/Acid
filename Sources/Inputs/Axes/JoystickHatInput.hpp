@@ -18,29 +18,31 @@ public:
 	 * @param hat The hat that will be checked.
 	 * @param hatFlags If this bit is found the hat will trigger {@link JoystickHatInput#IsDown}.
 	 */
-	explicit JoystickHatInput(JoystickPort port = 0, JoystickHat hat = 0, const BitMask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
+	explicit JoystickHatInput(JoystickPort port = JoystickPort::_1, JoystickHat hat = 0, const bitmask::bitmask<JoystickHatValue> &hatFlags = JoystickHatValue::Centered);
 
 	ArgumentDescription GetArgumentDescription() const override;
 
 	float GetAmount() const override;
 	bool IsDown() const override;
 
-	JoystickPort GetPort() const { return port; }
-	void SetPort(JoystickPort port) { this->port = port; }
+	bool IsConnected() const { return joystick->IsConnected(); }
+
+	JoystickPort GetPort() const { return joystick->GetPort(); }
+	void SetPort(JoystickPort port);
 
 	JoystickHat GetHat() const { return hat; }
 	void SetHat(JoystickHat hat) { this->hat = hat; }
 
-	const BitMask<JoystickHatValue> &GetHatFlags() const { return hatFlags; }
+	const bitmask::bitmask<JoystickHatValue> &GetHatFlags() const { return hatFlags; }
 	void SetHatFlags(JoystickHatValue hatFlags) { this->hatFlags = hatFlags; }
 
 	friend const Node &operator>>(const Node &node, JoystickHatInput &input);
 	friend Node &operator<<(Node &node, const JoystickHatInput &input);
 
 private:
-	JoystickPort port;
+	Joystick *joystick;
 	JoystickHat hat;
-	BitMask<JoystickHatValue> hatFlags;
+	bitmask::bitmask<JoystickHatValue> hatFlags;
 	bool lastDown = false;
 };
 

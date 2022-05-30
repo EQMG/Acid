@@ -1,6 +1,6 @@
 #include "ObjModel.hpp"
 
-#include <tinyobj/tiny_obj.h>
+#include <tiny_obj.h>
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"

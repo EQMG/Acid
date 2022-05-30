@@ -21,19 +21,19 @@ DeferredSubrender::DeferredSubrender(const Pipeline::Stage &pipelineStage) :
 		PipelineGraphics::Mode::Polygon, PipelineGraphics::Depth::None),
 	brdf(Resources::Get()->GetThreadPool().Enqueue(ComputeBRDF, 512)),
 	fog(Colour::White, 0.001f, 2.0f, -0.1f, 0.3f) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Node node;
 	node << *pipeline.GetShader();
-	File("Deferred/Shader.json", File::Type::Json, node).Write(Node::Format::Beautified);
+	File("Deferred/Shader.json", std::make_unique<Json>(), node).Write(NodeFormat::Beautified);
 #endif
 }
 
 void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 
 	// TODO probably use a cubemap image directly instead of scene components.
 	std::shared_ptr<ImageCube> skybox = nullptr;
-	auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
+	auto meshes = Scenes::Get()->GetScene()->QueryComponents<Mesh>();
 	for (const auto &mesh : meshes) {
 		if (auto materialSkybox = dynamic_cast<const SkyboxMaterial *>(mesh->GetMaterial())) {
 			skybox = materialSkybox->GetImage();
@@ -51,7 +51,7 @@ void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
 	std::vector<DeferredLight> deferredLights(MAX_LIGHTS);
 	uint32_t lightCount = 0;
 
-	auto sceneLights = Scenes::Get()->GetStructure()->QueryComponents<Light>();
+	auto sceneLights = Scenes::Get()->GetScene()->QueryComponents<Light>();
 
 	for (const auto &light : sceneLights) {
 		//auto position = *light->GetPosition();
@@ -78,7 +78,8 @@ void DeferredSubrender::Render(const CommandBuffer &commandBuffer) {
 
 	// Updates uniforms.
 	uniformScene.Push("view", camera->GetViewMatrix());
-	uniformScene.Push("shadowSpace", Shadows::Get()->GetShadowBox().GetToShadowMapSpaceMatrix());
+	if (auto shadows = Scenes::Get()->GetScene()->GetSystem<Shadows>())
+		uniformScene.Push("shadowSpace", shadows->GetShadowBox().GetToShadowMapSpaceMatrix());
 	uniformScene.Push("cameraPosition", camera->GetPosition());
 	uniformScene.Push("lightsCount", lightCount);
 	uniformScene.Push("fogColour", fog.GetColour());
@@ -130,7 +131,7 @@ std::unique_ptr<Image2d> DeferredSubrender::ComputeBRDF(uint32_t size) {
 	compute.CmdRender(commandBuffer, brdfImage->GetSize());
 	commandBuffer.SubmitIdle();
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the BRDF Image.
 	Resources::Get()->GetThreadPool().Enqueue([](Image2d *image) {
 		image->GetBitmap()->Write("Deferred/Brdf.png");
@@ -165,7 +166,7 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputeIrradiance(const std::share
 	compute.CmdRender(commandBuffer, irradianceCubemap->GetSize());
 	commandBuffer.SubmitIdle();
 
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the irradiance Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		image->GetBitmap()->Write("Deferred/Irradiance.png");
@@ -231,7 +232,7 @@ std::unique_ptr<ImageCube> DeferredSubrender::ComputePrefiltered(const std::shar
 	}
 
 	// TODO: This debug write causes a crash at runtime, why?
-/*#if defined(ACID_DEBUG)
+/*#ifdef ACID_DEBUG
 	// Saves the prefiltered Image.
 	Resources::Get()->GetThreadPool().Enqueue([](ImageCube *image) {
 		for (uint32_t i = 0; i < image->GetMipLevels(); i++) {

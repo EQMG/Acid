@@ -11,12 +11,12 @@ public:
 	void UpdateObject() override;
 
 	bool IsFinished() const { return finished; }
-	Delegate<void()> &OnFinished() { return onFinished; }
+	rocket::signal<void()> &OnFinished() { return onFinished; }
 
-#if defined(ACID_DEBUG)
-	static constexpr Time StartDelay = 1s;
+#ifdef ACID_DEBUG
+	constexpr static Time StartDelay = 1s;
 #else
-	static constexpr Time StartDelay = 3s;
+	constexpr static Time StartDelay = 3s;
 #endif
 	
 private:
@@ -26,6 +26,6 @@ private:
 
 	bool finished = false;
 
-	Delegate<void()> onFinished;
+	rocket::signal<void()> onFinished;
 };
 }

@@ -17,7 +17,7 @@ DofFilter::DofFilter(const Pipeline::Stage &pipelineStage, BlurPipeline *pipelin
 
 void DofFilter::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	pushScene.Push("nearPlane", camera->GetNearPlane());
 	pushScene.Push("farPlane", camera->GetFarPlane());
 	pushScene.Push("focusPoint", focusPoint);

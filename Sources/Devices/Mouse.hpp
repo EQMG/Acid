@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Engine/Engine.hpp"
-#include "Utils/Delegate.hpp"
 
 struct GLFWcursor;
 
@@ -18,9 +17,7 @@ enum class MouseButton : uint8_t {
 	_8 = 7,
 	Left = _1,
 	Right = _2,
-	Middle = _3,
-	First = _1,
-	Last = _8
+	Middle = _3
 };
 
 enum class CursorHotspot : uint8_t {
@@ -44,7 +41,7 @@ enum class CursorStandard : uint32_t {
  * @brief Module used for managing a virtual mouse.
  */
 class ACID_EXPORT Mouse : public Module::Registrar<Mouse> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
+	inline static const bool Registered = Register(Stage::Pre, Requires<Windows>());
 public:
 	Mouse();
 	~Mouse();
@@ -141,31 +138,31 @@ public:
 	 * Called when a mouse button changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> &OnButton() { return onButton; }
+	rocket::signal<void(MouseButton, InputAction, bitmask::bitmask<InputMod>)> &OnButton() { return onButton; }
 
 	/**
 	 * Called when the mouse moves.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnPosition() { return onPosition; }
+	rocket::signal<void(Vector2d)> &OnPosition() { return onPosition; }
 
 	/**
 	 * Called when the mouse enters the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnEnter() { return onEnter; }
+	rocket::signal<void(bool)> &OnEnter() { return onEnter; }
 
 	/**
 	 * Called when the scroll wheel changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Vector2d)> &OnScroll() { return onScroll; }
+	rocket::signal<void(Vector2d)> &OnScroll() { return onScroll; }
 
 	/**
 	 * Called when a group of files/folders is dropped onto the window.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::vector<std::string>)> &OnDrop() { return onDrop; }
+	rocket::signal<void(std::vector<std::string>)> &OnDrop() { return onDrop; }
 
 private:
 	static double SmoothScrollWheel(double value, float delta);
@@ -189,10 +186,10 @@ private:
 	bool windowSelected = false;
 	bool cursorHidden = false;
 
-	Delegate<void(MouseButton, InputAction, BitMask<InputMod>)> onButton;
-	Delegate<void(Vector2d)> onPosition;
-	Delegate<void(bool)> onEnter;
-	Delegate<void(Vector2d)> onScroll;
-	Delegate<void(std::vector<std::string>)> onDrop;
+	rocket::signal<void(MouseButton, InputAction, bitmask::bitmask<InputMod>)> onButton;
+	rocket::signal<void(Vector2d)> onPosition;
+	rocket::signal<void(bool)> onEnter;
+	rocket::signal<void(Vector2d)> onScroll;
+	rocket::signal<void(std::vector<std::string>)> onDrop;
 };
 }

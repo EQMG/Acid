@@ -1,7 +1,7 @@
 #include "Plugins.hpp"
 
 #define CR_HOST CR_SAFE
-#include <cr/cr.h>
+#include <cr.h>
 
 #include <Devices/Keyboard.hpp>
 #include <Graphics/Graphics.hpp>
@@ -22,15 +22,15 @@ Plugins::Plugins() :
 	cr_plugin_load(*plugin, pathStr.c_str());
 
 	// Watches the plugin path.
-	fileObserver.OnChange().Add([this](std::filesystem::path path, FileObserver::Status status) {
+	fileObserver.OnChange().connect(this, [this](std::filesystem::path path, FileObserver::Status status) {
 		update = true;
-	}, this);
-	buttonReload.OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	});
+	buttonReload.OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			//std::filesystem::last_write_time(loadedPath, std::filesystem::file_time_type(Time::Now()));
 			update = true;
 		}
-	}, this);
+	});
 }
 
 Plugins::~Plugins() {

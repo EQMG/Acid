@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Utils/StreamFactory.hpp"
+#include <rocket.hpp>
+
 #include "Maths/Transform.hpp"
 #include "Maths/Quaternion.hpp"
-#include "Utils/Delegate.hpp"
+#include "Utils/StreamFactory.hpp"
 
 class btCollisionShape;
 class btVector3;
@@ -32,7 +33,7 @@ public:
 	const Transform &GetLocalTransform() const { return localTransform; }
 	void SetLocalTransform(const Transform &localTransform);
 
-	Delegate<void(Collider *, const Transform &)> &OnTransformChange() { return onTransformChange; }
+	rocket::signal<void(Collider *, const Transform &)> &OnTransformChange() { return onTransformChange; }
 
 	static btVector3 Convert(const Vector3f &vector);
 	static Vector3f Convert(const btVector3 &vector);
@@ -43,6 +44,6 @@ public:
 
 protected:
 	Transform localTransform;
-	Delegate<void(Collider*, const Transform &)> onTransformChange;
+	rocket::signal<void(Collider*, const Transform &)> onTransformChange;
 };
 }

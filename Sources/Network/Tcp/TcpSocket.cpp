@@ -1,7 +1,7 @@
 #include "TcpSocket.hpp"
 
 #include <cstring>
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 #include <WinSock2.h>
 #else
 #include <sys/select.h>
@@ -18,7 +18,7 @@
 
 namespace acid {
 // Define the low-level send/receive flags, which depends on the OS.
-#if defined(ACID_BUILD_LINUX)
+#ifdef ACID_BUILD_LINUX
 const int32_t flags = MSG_NOSIGNAL;
 #else
 const int32_t flags = 0;

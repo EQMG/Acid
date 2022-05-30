@@ -1,7 +1,7 @@
 #include "FreeCamera.hpp"
 
 #include <Devices/Mouse.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Maths/Maths.hpp>
 #include <Scenes/Scenes.hpp>
 
@@ -22,20 +22,20 @@ void FreeCamera::Start() {
 void FreeCamera::Update() {
 	auto delta = Engine::Get()->GetDelta().AsSeconds();
 
-	if (!Scenes::Get()->IsPaused()) {
+	if (!Scenes::Get()->GetScene()->IsPaused()) {
 		Vector3f positionDelta;
 
-		if (!Scenes::Get()->IsPaused()) {
-			positionDelta.x = Input::Get()->GetAxis("strafe")->GetAmount();
-			positionDelta.y = Input::Get()->GetAxis("vertical")->GetAmount();
-			positionDelta.z = Input::Get()->GetAxis("forward")->GetAmount();
+		if (!Scenes::Get()->GetScene()->IsPaused()) {
+			positionDelta.x = Inputs::Get()->GetAxis("strafe")->GetAmount();
+			positionDelta.y = Inputs::Get()->GetAxis("vertical")->GetAmount();
+			positionDelta.z = Inputs::Get()->GetAxis("forward")->GetAmount();
 		}
 
-		positionDelta *= Input::Get()->GetButton("sprint")->IsDown() ? -RUN_SPEED : -WALK_SPEED;
+		positionDelta *= Inputs::Get()->GetButton("sprint")->IsDown() ? -RUN_SPEED : -WALK_SPEED;
 		velocity = velocity.SmoothDamp(positionDelta, delta * DAMP);
 
-		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Input::Get()->GetAxis("mouseX")->GetAmount(),
-			Input::Get()->GetAxis("mouseY")->GetAmount());
+		auto rotationDelta = Mouse::Get()->IsCursorHidden() * Vector2f(Inputs::Get()->GetAxis("mouseX")->GetAmount(),
+			Inputs::Get()->GetAxis("mouseY")->GetAmount());
 
 		rotation.y += rotationDelta.x;
 		rotation.x += rotationDelta.y;
@@ -47,7 +47,7 @@ void FreeCamera::Update() {
 	}
 
 	viewMatrix = Matrix4::ViewMatrix(position, rotation);
-	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Window::Get()->GetAspectRatio(), GetNearPlane(), GetFarPlane());
+	projectionMatrix = Matrix4::PerspectiveMatrix(GetFieldOfView(), Windows::Get()->GetWindow(0)->GetAspectRatio(), GetNearPlane(), GetFarPlane());
 
 	viewFrustum.Update(viewMatrix, projectionMatrix);
 	viewRay.Update(position, {0.5f, 0.5f}, viewMatrix, projectionMatrix);

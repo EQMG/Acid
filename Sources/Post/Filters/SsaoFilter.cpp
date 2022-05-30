@@ -26,7 +26,7 @@ SsaoFilter::SsaoFilter(const Pipeline::Stage &pipelineStage) :
 
 void SsaoFilter::Render(const CommandBuffer &commandBuffer) {
 	// Updates uniforms.
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	uniformScene.Push("kernel", *kernel.data(), sizeof(Vector3f) * SSAO_KERNEL_SIZE);
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
@@ -69,7 +69,7 @@ std::shared_ptr<Image2d> SsaoFilter::ComputeNoise(uint32_t size) {
 	auto noiseImage = std::make_shared<Image2d>(std::make_unique<Bitmap>(ssaoNoise, Vector2ui(size)), VK_FORMAT_R32G32B32_SFLOAT,
 		VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_STORAGE_BIT, VK_FILTER_NEAREST);*/
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	// Saves the noise Image.
 	/*auto filename = "SSAO_Noise.png";
 	Vector2ui extent;

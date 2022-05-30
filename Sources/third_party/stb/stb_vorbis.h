@@ -1,4 +1,5 @@
-// Ogg Vorbis audio decoder - v1.19 - public domain
+
+// Ogg Vorbis audio decoder - v1.20 - public domain
 // http://nothings.org/stb_vorbis/
 //
 // Original version written by Sean Barrett in 2007.
@@ -31,9 +32,11 @@
 //    Phillip Bennefall  Rohit               Thiago Goulart
 //    github:manxorist   saga musix          github:infatum
 //    Timur Gagiev       Maxwell Koo         Peter Waller
-//    github:audinowho   Dougall Johnson
+//    github:audinowho   Dougall Johnson     David Reid
+//    github:Clownacy    Pedro J. Estebanez  Remi Verschelde
 //
 // Partial history:
+//    1.20    - 2020-07-11 - several small fixes
 //    1.19    - 2020-02-05 - warnings
 //    1.18    - 2020-02-02 - fix seek bugs; parse header comments; misc warnings etc.
 //    1.17    - 2019-07-08 - fix CVE-2019-13217..CVE-2019-13223 (by ForAllSecure)
@@ -462,6 +465,7 @@ enum STBVorbisError
     0.91 - conditional compiles to omit parts of the API and the infrastructure to support them: STB_VORBIS_NO_PULLDATA_API, STB_VORBIS_NO_PUSHDATA_API, STB_VORBIS_NO_STDIO, STB_VORBIS_NO_INTEGER_CONVERSION
     0.90 - first public release
 */
+
 /*
 ------------------------------------------------------------------------------
 This software is available under 2 licenses -- choose whichever you prefer.

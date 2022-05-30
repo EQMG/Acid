@@ -4,8 +4,9 @@
 #include <unordered_map>
 #include <thread>
 
+#include <rocket.hpp>
+
 #include "Maths/Time.hpp"
-#include "Utils/Delegate.hpp"
 
 namespace acid {
 /**
@@ -37,7 +38,7 @@ public:
 	 * Called when a file or directory has changed.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::filesystem::path, Status)> &OnChange() { return onChange; }
+	rocket::signal<void(std::filesystem::path, Status)> &OnChange() { return onChange; }
 
 private:
 	void QueueLoop();
@@ -46,7 +47,7 @@ private:
 
 	std::filesystem::path path;
 	Time delay;
-	Delegate<void(std::filesystem::path, Status)> onChange;
+	rocket::signal<void(std::filesystem::path, Status)> onChange;
 
 	bool running;
 	std::thread thread;

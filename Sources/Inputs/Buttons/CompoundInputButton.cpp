@@ -35,13 +35,13 @@ InputButton *CompoundInputButton::AddButton(std::unique_ptr<InputButton> &&butto
 
 void CompoundInputButton::RemoveButton(InputButton *button) {
 	//button->OnButton().RemoveObservers(this);
-	buttons.erase(std::remove_if(buttons.begin(), buttons.end(), [button](std::unique_ptr<InputButton> &b) {
+	buttons.erase(std::remove_if(buttons.begin(), buttons.end(), [button](const auto &b) {
 		return b.get() == button;
 	}), buttons.end());
 }
 
 void CompoundInputButton::ConnectButton(std::unique_ptr<InputButton> &button) {
-	button->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	button->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		auto isDown = IsDown();
 
 		if (!lastDown && isDown) {
@@ -54,7 +54,7 @@ void CompoundInputButton::ConnectButton(std::unique_ptr<InputButton> &button) {
 			// TODO: This will be sent for every button, only count one per cycle.
 			onButton(InputAction::Repeat, 0);
 		}
-	}, this);
+	});
 }
 
 void CompoundInputButton::ConnectButtons() {

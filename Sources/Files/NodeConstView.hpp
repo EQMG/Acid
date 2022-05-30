@@ -1,14 +1,23 @@
 #pragma once
 
 #include <cstdint>
-#include <variant>
 #include <string>
+#include <variant>
 #include <vector>
 
 #include "Export.hpp"
 
 namespace acid {
 class Node;
+
+enum class NodeType : uint8_t {
+	Object, Array, String, Boolean, Integer, Decimal, Null, // Type of node value.
+	Unknown, Token, EndOfFile, // Used in tokenizers.
+};
+using NodeValue = std::string;
+
+using NodeProperty = std::pair<std::string, Node>;
+using NodeProperties = std::vector<NodeProperty>;
 
 /**
  * @brief Class that is returned from a {@link Node} when getting constant properties. This represents a key tree from a parent,
@@ -34,27 +43,27 @@ public:
 	const Node *operator->() const { return value; }
 
 	template<typename T>
-	T GetName() const;
-
-	template<typename T>
 	T Get() const;
 	template<typename T>
-	T Get(const T &fallback) const;
+	T GetWithFallback(const T &fallback) const;
 	template<typename T>
 	bool Get(T &dest) const;
 	template<typename T, typename K>
-	bool Get(T &dest, const K &fallback) const;
-
-	std::vector<NodeConstView> GetProperties(const std::string &name) const;
-	NodeConstView GetPropertyWithBackup(const std::string &name, const std::string &backupName) const;
-	NodeConstView GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const;
+	bool GetWithFallback(T &dest, const K &fallback) const;
+	template<typename T>
+	bool Get(T &&dest) const;
+	template<typename T, typename K>
+	bool GetWithFallback(T &&dest, const K &fallback) const;
+	
+	NodeConstView GetPropertyWithBackup(const std::string &key, const std::string &backupKey) const;
+	NodeConstView GetPropertyWithValue(const std::string &key, const NodeValue &propertyValue) const;
 
 	NodeConstView operator[](const std::string &key) const;
 	NodeConstView operator[](uint32_t index) const;
 
-	std::vector<Node> GetProperties() const;
+	NodeProperties GetProperties() const;
 
-	std::string GetName() const;
+	NodeType GetType() const;
 	
 protected:
 	const Node *parent = nullptr;

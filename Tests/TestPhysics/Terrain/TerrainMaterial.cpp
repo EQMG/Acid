@@ -9,7 +9,10 @@ TerrainMaterial::TerrainMaterial(std::shared_ptr<Image2d> imageR, std::shared_pt
 }
 
 void TerrainMaterial::CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) {
-	pipelineMaterial = MaterialPipeline::Create({1, 0}, {{"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"}, {vertexInput}});
+	pipelineMaterial = MaterialPipeline::Create({1, 0}, {
+		{"Shaders/Terrains/Terrain.vert", "Shaders/Terrains/Terrain.frag"},
+		{vertexInput}, {}, PipelineGraphics::Mode::MRT
+	});
 }
 
 void TerrainMaterial::PushUniforms(UniformHandler &uniformObject, const Transform *transform) {

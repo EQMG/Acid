@@ -26,7 +26,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(std::string)> &OnValue() { return onValue; }
+	rocket::signal<void(std::string)> &OnValue() { return onValue; }
 
 private:
 	void SetUpdating(bool updating);
@@ -44,6 +44,6 @@ private:
 	bool updating = false;
 	bool mouseOver = false;
 
-	Delegate<void(std::string)> onValue;
+	rocket::signal<void(std::string)> onValue;
 };
 }

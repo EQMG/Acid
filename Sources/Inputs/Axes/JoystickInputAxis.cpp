@@ -2,16 +2,21 @@
 
 namespace acid {
 JoystickInputAxis::JoystickInputAxis(JoystickPort port, JoystickAxis axis) :
-	port(port),
 	axis(axis) {
-	Joysticks::Get()->OnAxis().Add([this](JoystickPort port, JoystickAxis axis, float value) {
-		if (this->port == port && this->axis == axis)
-			onAxis(GetAmount());
-	}, this);
+	SetPort(port);
 }
 
 float JoystickInputAxis::GetAmount() const {
-	return scale * Joysticks::Get()->GetAxis(port, axis);
+	return scale * joystick->GetAxis(axis) + offset;
+}
+
+void JoystickInputAxis::SetPort(JoystickPort port) {
+	joystick = Joysticks::Get()->GetJoystick(port);
+	disconnect_tracked_connections();
+	joystick->OnAxis().connect(this, [this](JoystickAxis axis, float value) {
+		if (this->axis == axis)
+			onAxis(GetAmount());
+	});
 }
 
 InputAxis::ArgumentDescription JoystickInputAxis::GetArgumentDescription() const {
@@ -22,20 +27,16 @@ InputAxis::ArgumentDescription JoystickInputAxis::GetArgumentDescription() const
 	};
 }
 
-bool JoystickInputAxis::IsConnected() const {
-	return Joysticks::Get()->IsConnected(port);
-}
-
 const Node &operator>>(const Node &node, JoystickInputAxis &inputAxis) {
 	node["scale"].Get(inputAxis.scale);
-	node["port"].Get(inputAxis.port);
+	inputAxis.SetPort(node["port"].Get<JoystickPort>());
 	node["axis"].Get(inputAxis.axis);
 	return node;
 }
 
 Node &operator<<(Node &node, const JoystickInputAxis &inputAxis) {
 	node["scale"].Set(inputAxis.scale);
-	node["port"].Set(inputAxis.port);
+	node["port"].Set(inputAxis.GetPort());
 	node["axis"].Set(inputAxis.axis);
 	return node;
 }

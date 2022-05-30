@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "Maths/Time.hpp"
 
 namespace acid {

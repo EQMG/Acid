@@ -192,18 +192,18 @@ public:
 	constexpr bool operator==(const Colour &rhs) const;
 	constexpr bool operator!=(const Colour &rhs) const;
 
-	friend constexpr Colour operator+(const Colour &lhs, const Colour &rhs);
-	friend constexpr Colour operator-(const Colour &lhs, const Colour &rhs);
-	friend constexpr Colour operator*(const Colour &lhs, const Colour &rhs);
-	friend constexpr Colour operator/(const Colour &lhs, const Colour &rhs);
-	friend constexpr Colour operator+(float lhs, const Colour &rhs);
-	friend constexpr Colour operator-(float lhs, const Colour &rhs);
-	friend constexpr Colour operator*(float lhs, const Colour &rhs);
-	friend constexpr Colour operator/(float lhs, const Colour &rhs);
-	friend constexpr Colour operator+(const Colour &lhs, float rhs);
-	friend constexpr Colour operator-(const Colour &lhs, float rhs);
-	friend constexpr Colour operator*(const Colour &lhs, float rhs);
-	friend constexpr Colour operator/(const Colour &lhs, float rhs);
+	constexpr friend Colour operator+(const Colour &lhs, const Colour &rhs);
+	constexpr friend Colour operator-(const Colour &lhs, const Colour &rhs);
+	constexpr friend Colour operator*(const Colour &lhs, const Colour &rhs);
+	constexpr friend Colour operator/(const Colour &lhs, const Colour &rhs);
+	constexpr friend Colour operator+(float lhs, const Colour &rhs);
+	constexpr friend Colour operator-(float lhs, const Colour &rhs);
+	constexpr friend Colour operator*(float lhs, const Colour &rhs);
+	constexpr friend Colour operator/(float lhs, const Colour &rhs);
+	constexpr friend Colour operator+(const Colour &lhs, float rhs);
+	constexpr friend Colour operator-(const Colour &lhs, float rhs);
+	constexpr friend Colour operator*(const Colour &lhs, float rhs);
+	constexpr friend Colour operator/(const Colour &lhs, float rhs);
 
 	constexpr Colour &operator+=(const Colour &rhs);
 	constexpr Colour &operator-=(const Colour &rhs);

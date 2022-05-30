@@ -1,7 +1,11 @@
 #include "tiny_dng.h"
 
 #if defined(_WIN32)
+#if defined(__MINGW32__)
 #include <windows.h>  // wchar apis
+#else
+#include <Windows.h>
+#endif
 #endif
 
 #include <stdint.h>  // for lj92
@@ -116,13 +120,13 @@
 
 #ifdef TINY_DNG_LOADER_ENABLE_ZIP
 #ifndef TINY_DNG_LOADER_USE_SYSTEM_ZLIB
-#include "miniz.h"
+#include "miniz/miniz.h"
 #endif
 #endif
 
 // STB image to decode jpeg image.
 // Assume STB_IMAGE_IMPLEMENTATION is defined elsewhere
-#include "stb/stb_image.h"
+#include <stb_image.h>
 
 #ifdef __clang__
 #pragma clang diagnostic pop

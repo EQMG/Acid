@@ -1,31 +1,5 @@
 include(FetchContent)
 
-find_package(GTest 1.8.1 QUIET)
-if(NOT GTest_FOUND)
-	FetchContent_Declare(
-			googletest
-			URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-			URL_MD5 52943a59cefce0ae0491d4d2412c120b
-			)
-	FetchContent_GetProperties(googletest)
-	if(NOT googletest_POPULATED)
-		set(INSTALL_GTEST OFF CACHE INTERNAL "")
-		FetchContent_Populate(googletest)
-		add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-	endif()
-	set_target_properties(gmock PROPERTIES FOLDER googletest)
-	set_target_properties(gmock_main PROPERTIES FOLDER googletest)
-	set_target_properties(gtest PROPERTIES FOLDER googletest)
-	set_target_properties(gtest_main PROPERTIES FOLDER googletest)
-
-	set(GTEST_INCLUDE_DIRS "${bullet3_SOURCE_DIR}/googlemock/include" "${bullet3_SOURCE_DIR}/googletest/include")
-	set(GTEST_LIBRARIES "gtest")
-	set(GTEST_MAIN_LIBRARIES "gtest_main")
-	set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
-endif()
-
-enable_testing()
-
 file(GLOB_RECURSE TESTUNITS_HEADER_FILES
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.h" "*.hpp" "*.inl"
@@ -48,9 +22,7 @@ set_target_properties(UnitTests PROPERTIES
 		FOLDER "Acid/Tests"
 		)
 
-add_test(NAME unit
-		COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit
-		)
+add_test(NAME UnitTests COMMAND UnitTests)
 		
 include(AcidGroupSources)
 acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTUNITS_HEADER_FILES}")

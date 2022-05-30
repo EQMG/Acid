@@ -37,7 +37,7 @@ void NameTag::Update() {
 	this->transform.SetLocalRotation(Vector3f());
 
 	// Quick way to change alpha values, only if you know the driver type for sure!
-	auto toCamera = Scenes::Get()->GetCamera()->GetPosition().Distance(worldPosition);
+	auto toCamera = Scenes::Get()->GetScene()->GetCamera()->GetPosition().Distance(worldPosition);
 	//dynamic_cast<ConstantDriver<float> *>(text.GetAlphaDriver())->SetConstant(std::clamp((VIEW_DISTANCE - toCamera) / VIEW_DISTANCE, 0.0f, 1.0f));
 
 	// Will always face the screen, like a particle.

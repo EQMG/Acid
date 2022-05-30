@@ -1,6 +1,6 @@
 #include "BlurPipeline.hpp"
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Graphics/Graphics.hpp"
 
 namespace acid {
@@ -17,7 +17,7 @@ BlurPipeline::BlurPipeline(const Pipeline::Stage &pipelineStage, float blur, con
 
 void BlurPipeline::Render(const CommandBuffer &commandBuffer) {
 	if (!toScreen) {
-		if (auto size = Window::Get()->GetSize(); size != lastSize) {
+		if (auto size = Windows::Get()->GetWindow(0)->GetSize(); size != lastSize) {
 			auto newSize = outputScale * size;
 			output = std::make_unique<Image2d>(newSize, VK_FORMAT_R8G8B8A8_UNORM);
 

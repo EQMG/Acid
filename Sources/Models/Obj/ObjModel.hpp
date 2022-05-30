@@ -26,7 +26,7 @@ public:
 	/**
 	 * Creates a new OBJ model.
 	 * @param filename The file to load the OBJ model from.
-	 * @param load If this resource will be loaded immediately, otherwise {@link ModelObj#Load} can be called later.
+	 * @param load If this resource will be loaded immediately, otherwise {@link ObjModel#Load} can be called later.
 	 */
 	explicit ObjModel(std::filesystem::path filename, bool load = true);
 

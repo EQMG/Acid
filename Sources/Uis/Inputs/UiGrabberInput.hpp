@@ -38,8 +38,8 @@ class ACID_EXPORT UiGrabberJoystick : public UiGrabberInput {
 public:
 	UiGrabberJoystick();
 
-	uint32_t GetPort() const { return port; }
-	void SetPort(uint32_t port) { this->port = port; }
+	JoystickPort GetPort() const { return port; }
+	void SetPort(JoystickPort port) { this->port = port; }
 
 	uint32_t GetValue() const { return value; }
 	void SetValue(uint32_t value);
@@ -48,7 +48,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(uint32_t, uint32_t)> &OnValue() { return onValue; }
+	rocket::signal<void(JoystickPort, uint32_t)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -56,9 +56,9 @@ protected:
 	}
 
 private:
-	uint32_t port = 0; // -1
+	JoystickPort port = JoystickPort::_1; // -1
 	uint32_t value = 0;
-	Delegate<void(uint32_t, uint32_t)> onValue;
+	rocket::signal<void(JoystickPort, uint32_t)> onValue;
 };
 
 class ACID_EXPORT UiGrabberKeyboard : public UiGrabberInput {
@@ -72,7 +72,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(Key)> &OnValue() { return onValue; }
+	rocket::signal<void(Key)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -81,7 +81,7 @@ protected:
 
 private:
 	Key value = Key::Unknown;
-	Delegate<void(Key)> onValue;
+	rocket::signal<void(Key)> onValue;
 };
 
 class ACID_EXPORT UiGrabberMouse : public UiGrabberInput {
@@ -95,7 +95,7 @@ public:
 	 * Called when this value of the input changes.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnValue() { return onValue; }
+	rocket::signal<void(MouseButton)> &OnValue() { return onValue; }
 
 protected:
 	std::string GetTextString() const override {
@@ -103,7 +103,7 @@ protected:
 	}
 
 private:
-	MouseButton value = MouseButton::Last;
-	Delegate<void(MouseButton)> onValue;
+	MouseButton value = MouseButton::_8;
+	rocket::signal<void(MouseButton)> onValue;
 };
 }

@@ -6,49 +6,43 @@
 #include "Files.hpp"
 
 namespace acid {
-File::File(Type type, const Node &node) :
+File::File(std::unique_ptr<NodeFormat> &&type, const Node &node) :
 	node(node),
-	type(type) {
+	type(std::move(type)) {
 }
 
-File::File(Type type, Node &&node) :
+File::File(std::unique_ptr<NodeFormat> &&type, Node &&node) :
 	node(std::move(node)),
-	type(type) {
+	type(std::move(type)) {
 }
 
-File::File(std::filesystem::path filename, Type type, const Node &node) :
+File::File(std::filesystem::path filename, std::unique_ptr<NodeFormat>&& type, const Node &node) :
 	node(node),
-	type(type),
+	type(std::move(type)),
 	filename(std::move(filename)) {
 }
 
-File::File(std::filesystem::path filename, Type type, Node &&node) :
+File::File(std::filesystem::path filename, std::unique_ptr<NodeFormat>&& type, Node &&node) :
 	node(std::move(node)),
-	type(type),
+	type(std::move(type)),
 	filename(std::move(filename)) {
 }
 
 void File::Load(const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	if (Files::ExistsInPath(filename)) {
 		IFStream inStream(filename);
-		if (type == Type::Json)
-			node.ParseStream<Json>(inStream);
-		else if (type == Type::Xml)
-			node.ParseStream<Xml>(inStream);
+		type->ParseStream(node, inStream);
 	} else if (std::filesystem::exists(filename)) {
 		std::ifstream inStream(filename);
-		if (type == Type::Json)
-			node.ParseStream<Json>(inStream);
-		else if (type == Type::Xml)
-			node.ParseStream<Xml>(inStream);
+		type->ParseStream(node, inStream);
 		inStream.close();
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("File ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
@@ -57,8 +51,8 @@ void File::Load() {
 	Load(filename);
 }
 
-void File::Write(const std::filesystem::path &filename, Node::Format format) const {
-#if defined(ACID_DEBUG)
+void File::Write(const std::filesystem::path &filename, NodeFormat::Format format) const {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -70,19 +64,16 @@ void File::Write(const std::filesystem::path &filename, Node::Format format) con
 			std::filesystem::create_directories(parentPath);
 
 		std::ofstream os(filename);
-		if (type == Type::Json)
-			node.WriteStream<Json>(os, format);
-		else if (type == Type::Xml)
-			node.WriteStream<Xml>(os, format);
+		type->WriteStream(node, os, format);
 		os.close();
 	//}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("File ", filename, " saved in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void File::Write(Node::Format format) const {
+void File::Write(NodeFormat::Format format) const {
 	Write(filename, format);
 }
 

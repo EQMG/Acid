@@ -6,29 +6,20 @@
 
 namespace acid {
 InputScheme::InputScheme(const std::filesystem::path &filename) :
-	file(filename, File::Type::Json) {
+	file(filename, std::make_unique<Json>()) {
 	// Load this scheme from the file right away.
 	file.Load();
 	file.GetNode() >> *this;
 
-	/*File argsFile("ArgumentDescriptionMap.json");
-	std::map<std::string, InputAxis::ArgumentDescription> argumentDescriptionMap;
-	for (const auto &[name, createFunc] : InputAxis::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	for (const auto &[name, createFunc] : InputButton::Registry())
-		argumentDescriptionMap[name] = createFunc()->GetArgumentDescription();
-	*argsFile.GetNode() << argumentDescriptionMap;
-	argsFile.Write(Node::Format::Beautified);*/
-
-	File testOutFile(filename, File::Type::Json);
+	File testOutFile(filename, std::make_unique<Json>());
 	testOutFile.GetNode() = *this;
-	testOutFile.Write(Node::Format::Beautified);
+	testOutFile.Write(NodeFormat::Beautified);
 }
 
 InputAxis *InputScheme::GetAxis(const std::string &name) {
 	auto it = axes.find(name);
 	if (it == axes.end()) {
-		Log::Error("InputAxis was not found in current input scheme: ", std::quoted(name), '\n');
+		Log::Warning("InputAxis was not found in input scheme: ", std::quoted(name), '\n');
 		it = axes.emplace(name, std::make_unique<InputAxis>()).first;
 	}
 	return it->second.get();
@@ -46,7 +37,7 @@ void InputScheme::RemoveAxis(const std::string &name) {
 InputButton *InputScheme::GetButton(const std::string &name) {
 	auto it = buttons.find(name);
 	if (it == buttons.end()) {
-		Log::Error("InputButton was not found in current input scheme: ", std::quoted(name), '\n');
+		Log::Warning("InputButton was not found in input scheme: ", std::quoted(name), '\n');
 		it = buttons.emplace(name, std::make_unique<InputButton>()).first;
 	}
 	return it->second.get();
@@ -73,12 +64,20 @@ Node &operator<<(Node &node, const InputScheme &inputScheme) {
 	return node;
 }
 
-void InputScheme::MoveDelegateOwnership(InputScheme *other) {
+void InputScheme::MoveSignals(InputScheme *other) {
 	if (!other) return;
-	// Move all delegate functions except those owned internally by the axis or button.
-	for (auto &[axisName, axis] : other->axes)
-		GetAxis(axisName)->OnAxis().MoveFunctions(axis->OnAxis(), {axis->valid});
-	for (auto &[buttonName, button] : other->buttons)
-		GetButton(buttonName)->OnButton().MoveFunctions(button->OnButton(), {button->valid});
+	// Move all axis and button top level signals from the other scheme.
+	for (auto &[axisName, axis] : other->axes) {
+		if (auto it = axes.find(axisName); it != axes.end())
+			std::swap(it->second->OnAxis(), axis->OnAxis());
+		else
+			Log::Warning("InputAxis was not found in input scheme: ", std::quoted(axisName), '\n');
+	}
+	for (auto &[buttonName, button] : other->buttons) {
+		if (auto it = buttons.find(buttonName); it != buttons.end())
+			std::swap(it->second->OnButton(), button->OnButton());
+		else
+			Log::Warning("InputButton was not found in input scheme: ", std::quoted(buttonName), '\n');
+	}
 }
 }

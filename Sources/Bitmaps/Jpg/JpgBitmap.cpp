@@ -2,14 +2,14 @@
 
 #include <cstring>
 
-#include <libjpgd/jpgd.h>
+#include <jpgd.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {
-void JpgBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void JpgBitmap::Load(Bitmap &bitmap, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -22,19 +22,19 @@ void JpgBitmap::Load(Bitmap *bitmap, const std::filesystem::path &filename) {
 
 	// TODO
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void JpgBitmap::Write(const Bitmap *bitmap, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void JpgBitmap::Write(const Bitmap &bitmap, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	// TODO
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Bitmap ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

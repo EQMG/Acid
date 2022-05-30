@@ -7,15 +7,9 @@ namespace acid {
 /**
  * @brief Class that represents a objects that acts as a component container.
  */
-class ACID_EXPORT Entity : NonCopyable {
+class ACID_EXPORT Entity final : NonCopyable {
 public:
 	Entity() = default;
-
-	/**
-	 * Creates a new entity from a entity prefab file.
-	 * @param filename The file to load components from.
-	 */
-	Entity(const std::filesystem::path &filename);
 
 	void Update();
 

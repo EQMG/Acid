@@ -1,7 +1,7 @@
 #include "MainApp.hpp"
 
 #include <Files/Files.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Devices/Mouse.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
+	engine = nullptr;
 
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
@@ -31,7 +32,7 @@ namespace test {
 MainApp::MainApp() :
 	App("Test Physics", {1, 0, 0}) {
 	// Registers file search paths.
-#if defined(ACID_PACKED_RESOURCES)
+#ifdef ACID_PACKED_RESOURCES
 	for (auto &file : std::filesystem::directory_iterator(std::filesystem::current_path())) {
 		if (String::StartsWith(file.path().string(), "data-"))
 			Files::Get()->AddSearchPath(file.path().string());
@@ -41,25 +42,23 @@ MainApp::MainApp() :
 #endif
 
 	// Loads a input scheme for this app.
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
+	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
-		if (action == InputAction::Press) {
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
-		}
-	}, this);
-	Input::Get()->GetButton("screenshot")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+		if (action == InputAction::Press)
+			Windows::Get()->GetWindow(0)->SetFullscreen(!Windows::Get()->GetWindow(0)->IsFullscreen());
+	});
+	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
-	}, this);
-	Input::Get()->GetButton("exit")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
-		if (action == InputAction::Press) {
+	});
+	Inputs::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
+		if (action == InputAction::Press)
 			Engine::Get()->RequestClose();
-		}
-	}, this);
+	});
 }
 
 MainApp::~MainApp() {
@@ -67,8 +66,8 @@ MainApp::~MainApp() {
 	// TODO: Only clear our search paths (leave Engine resources alone!)
 	Files::Get()->ClearSearchPath();
 
-	Graphics::Get()->SetRenderer(nullptr);
-	Scenes::Get()->SetScene(nullptr);
+//	Graphics::Get()->SetRenderer(nullptr);
+//	Scenes::Get()->SetScene(nullptr);
 }
 
 void MainApp::Start() {
@@ -76,20 +75,22 @@ void MainApp::Start() {
 	Log::Out("Current DateTime: ", Time::GetDateTime(), '\n');
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 
-	Timers::Get()->Once(0.333s, []() {
+	Timers::Get()->Once([]() {
 		Log::Out("Timer Hello World!\n");
-	});
-	Timers::Get()->Every(3s, []() {
+	}, 0.333s);
+	Timers::Get()->Every([]() {
 		Log::Out(Engine::Get()->GetFps(), " fps, ", Engine::Get()->GetUps(), " ups\n");
-	});
-	Timers::Get()->Repeat(2s, 3, []() {
+	}, 3s);
+	Timers::Get()->Repeat([]() {
 		static uint32_t i = 0;
 		Log::Out("Timer Repeat Tick #", ++i, '\n');
-	});
+	}, 2s, 3);
 
 	// Sets values to modules.
-	Window::Get()->SetTitle("Test Physics");
-	Window::Get()->SetIcons({
+	Windows::Get()->AddWindow();
+	Windows::Get()->GetWindow(1)->SetTitle("Test Physics 2");
+	Windows::Get()->GetWindow(0)->SetTitle("Test Physics");
+	Windows::Get()->GetWindow(0)->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
 		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
 		});

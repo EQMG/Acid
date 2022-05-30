@@ -1,19 +1,18 @@
 #include "OggSoundBuffer.hpp"
 
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #else
 #include <al.h>
 #endif
-
-#include <stb/stb_vorbis.h>
+#include <stb_vorbis.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {
-void OggSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void OggSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -41,21 +40,21 @@ void OggSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path 
 	Audio::CheckAl(alGetError());
 
 	free(data);
-	soundBuffer->SetBuffer(buffer);
+	soundBuffer.SetBuffer(buffer);
 	
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void OggSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void OggSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	// TODO: Implement
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

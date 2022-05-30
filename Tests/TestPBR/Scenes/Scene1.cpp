@@ -1,27 +1,34 @@
 #include "Scene1.hpp"
 
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Lights/Light.hpp>
 #include <Materials/DefaultMaterial.hpp>
-#include <Uis/Drivers/ConstantDriver.hpp>
-#include <Uis/Drivers/SlideDriver.hpp>
+#include <Gizmos/Gizmos.hpp>
 #include <Meshes/Mesh.hpp>
 #include <Models/Obj/ObjModel.hpp>
 #include <Models/Shapes/CubeModel.hpp>
 #include <Models/Shapes/SphereModel.hpp>
+#include <Physics/Physics.hpp>
 #include <Particles/ParticleSystem.hpp>
+#include <Particles/Particles.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
 #include <Scenes/EntityPrefab.hpp>
 #include <Skyboxes/SkyboxMaterial.hpp>
 #include <Uis/Constraints/PixelConstraint.hpp>
 #include <Uis/Constraints/RelativeConstraint.hpp>
+#include <Uis/Drivers/ConstantDriver.hpp>
+#include <Uis/Drivers/SlideDriver.hpp>
 #include <Uis/Uis.hpp>
 #include "FreeCamera.hpp"
 
 namespace test {
 Scene1::Scene1() :
 	Scene(std::make_unique<FreeCamera>()) {
+	//AddSystem<Physics>();
+	//AddSystem<Particles>();
+	//AddSystem<Gizmos>();
+	
 	//overlayDebug.SetTransform({{100, 36}, UiAnchor::LeftBottom});
 	overlayDebug.GetConstraints().SetWidth<PixelConstraint>(100)
 		.SetHeight<PixelConstraint>(36)
@@ -29,34 +36,34 @@ Scene1::Scene1() :
 		.SetY<PixelConstraint>(0, UiAnchor::Bottom);
 	Uis::Get()->GetCanvas().AddChild(&overlayDebug);
 	
-	Input::Get()->GetButton("captureMouse")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Inputs::Get()->GetButton("captureMouse")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Mouse::Get()->SetCursorHidden(!Mouse::Get()->IsCursorHidden());
 		}
-	}, this);
+	});
 }
 
 void Scene1::Start() {
-	GetPhysics()->SetGravity({0.0f, -9.81f, 0.0f});
-	GetPhysics()->SetAirDensity(1.0f);
+	//GetSystem<Physics>()->SetGravity({0.0f, -9.81f, 0.0f});
+	//GetSystem<Physics>()->SetAirDensity(1.0f);
 
-	auto skybox = GetStructure()->CreateEntity("Objects/SkyboxSnowy/SkyboxSnowy.json");
+	auto skybox = CreatePrefabEntity("Objects/SkyboxSnowy/SkyboxSnowy.json");
 	skybox->AddComponent<Transform>(Vector3f(), Vector3f(), Vector3f(1024.0f));
 
-	auto sun = GetStructure()->CreateEntity();
+	auto sun = CreateEntity();
 	sun->AddComponent<Transform>(Vector3f(1000.0f, 5000.0f, -4000.0f), Vector3f(), Vector3f(18.0f));
 	sun->AddComponent<Light>(Colour::White);
 
 	for (uint32_t i = 0; i < 6; i++) {
 		for (uint32_t j = 0; j < 6; j++) {
-			auto sphere = GetStructure()->CreateEntity();
+			auto sphere = CreateEntity();
 			sphere->AddComponent<Transform>(Vector3f(i, j, -6.0f), Vector3f(), Vector3f(0.5f));
 			sphere->AddComponent<Mesh>(SphereModel::Create(1.0f, 30, 30), 
 				std::make_unique<DefaultMaterial>(Colour::Red, Image2d::Create("Objects/Testing/Diffuse.png"), j / 5.0f, i / 5.0f,
 				nullptr, // Image2d::Create("Objects/Testing/Material.png")
 				Image2d::Create("Objects/Testing/Normal.png")));
 
-			auto teapot = GetStructure()->CreateEntity();
+			auto teapot = CreateEntity();
 			teapot->AddComponent<Transform>(Vector3f(i * 1.6f, j, 6.0f), Vector3f(), Vector3f(0.14f));
 			teapot->AddComponent<Mesh>(ObjModel::Create("Objects/Testing/Model_Tea.obj"), 
 				std::make_unique<DefaultMaterial>(Colour::White, nullptr, j / 5.0f, i / 5.0f));
@@ -70,6 +77,7 @@ void Scene1::Start() {
 }
 
 void Scene1::Update() {
+	Scene::Update();
 }
 
 bool Scene1::IsPaused() const {

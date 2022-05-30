@@ -27,6 +27,8 @@ THE SOFTWARE.
 //                 * Support line primitive.
 //                 * Support points primitive.
 //                 * Support multiple search path for .mtl(v1 API).
+//                 * Support vertex weight `vw`(as an tinyobj extension)
+//                 * Support escaped whitespece in mtllib
 // version 1.4.0 : Modifed ParseTextureNameAndOption API
 // version 1.3.1 : Make ParseTextureNameAndOption API public
 // version 1.3.0 : Separate warning and error message(breaking API of LoadObj)
@@ -162,8 +164,9 @@ struct texture_option_t {
   real_t origin_offset[3];  // -o u [v [w]] (default 0 0 0)
   real_t scale[3];          // -s u [v [w]] (default 1 1 1)
   real_t turbulence[3];     // -t u [v [w]] (default 0 0 0)
-  int   texture_resolution; // -texres resolution (No default value in the spec. We'll use -1)
-  bool clamp;    // -clamp (default false)
+  int texture_resolution;   // -texres resolution (No default value in the spec.
+                            // We'll use -1)
+  bool clamp;               // -clamp (default false)
   char imfchan;  // -imfchan (the default for bump is 'l' and for decal is 'm')
   bool blendu;   // -blendu (default on)
   bool blendv;   // -blendv (default on)
@@ -316,7 +319,6 @@ struct material_t {
   }
 
 #endif
-
 };
 
 struct tag_t {
@@ -325,6 +327,18 @@ struct tag_t {
   std::vector<int> intValues;
   std::vector<real_t> floatValues;
   std::vector<std::string> stringValues;
+};
+
+struct joint_and_weight_t {
+  int joint_id;
+  real_t weight;
+};
+
+struct skin_weight_t {
+  int vertex_id;  // Corresponding vertex index in `attrib_t::vertices`.
+                  // Compared to `index_t`, this index must be positive and
+                  // start with 0(does not allow relative indexing)
+  std::vector<joint_and_weight_t> weightValues;
 };
 
 // Index struct to support different indices for vtx/normal/texcoord.
@@ -382,6 +396,16 @@ struct attrib_t {
   // array.
   std::vector<real_t> texcoord_ws;  // 'vt'(w)
   std::vector<real_t> colors;       // extension: vertex colors
+
+  //
+  // TinyObj extension.
+  //
+
+  // NOTE(syoyo): array index is based on the appearance order.
+  // To get a corresponding skin weight for a specific vertex id `vid`,
+  // Need to reconstruct a look up table: `skin_weight_t::vertex_id` == `vid`
+  // (e.g. using std::map, std::unordered_map)
+  std::vector<skin_weight_t> skin_weights;
 
   attrib_t() {}
 

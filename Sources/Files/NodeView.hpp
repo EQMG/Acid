@@ -22,14 +22,12 @@ public:
 	Node *operator->() { return get(); }
 
 	template<typename T>
-	void SetName(const T &value);
-
-	template<typename T>
 	void Set(const T &value);
-
-	std::vector<NodeView> GetProperties(const std::string &name);
-	NodeView GetPropertyWithBackup(const std::string &name, const std::string &backupName);
-	NodeView GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue);
+	template<typename T>
+	void Set(T &&value);
+	
+	NodeView GetPropertyWithBackup(const std::string &key, const std::string &backupKey);
+	NodeView GetPropertyWithValue(const std::string &key, const NodeValue &propertyValue);
 
 	NodeView operator[](const std::string &key);
 	NodeView operator[](uint32_t index);
@@ -41,6 +39,6 @@ public:
 	template<typename T>
 	Node &operator=(T &&rhs);
 
-	std::vector<Node> &GetProperties();
+	NodeProperties &GetProperties();
 };
 }

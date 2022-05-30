@@ -15,16 +15,16 @@ public:
 	 * @param port The joystick port.
 	 * @param axis The axis on the joystick being checked.
 	 */
-	explicit JoystickInputAxis(JoystickPort port = 0, JoystickAxis axis = 0);
+	explicit JoystickInputAxis(JoystickPort port = JoystickPort::_1, JoystickAxis axis = 0);
 
 	float GetAmount() const override;
 
 	ArgumentDescription GetArgumentDescription() const override;
 
-	bool IsConnected() const;
+	bool IsConnected() const { return joystick->IsConnected(); }
 
-	JoystickPort GetPort() const { return port; }
-	void SetPort(JoystickPort port) { this->port = port; }
+	JoystickPort GetPort() const { return joystick->GetPort(); }
+	void SetPort(JoystickPort port);
 
 	JoystickAxis GetAxis() const { return axis; }
 	void SetAxis(JoystickAxis axis) { this->axis = axis; }
@@ -33,7 +33,7 @@ public:
 	friend Node &operator<<(Node &node, const JoystickInputAxis &joystick);
 
 private:
-	JoystickPort port;
+	Joystick *joystick;
 	JoystickAxis axis;
 };
 }

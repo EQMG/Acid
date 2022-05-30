@@ -3,7 +3,7 @@
 #include <cstring>
 #include <SPIRV/GlslangToSpv.h>
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Subrender.hpp"
 
 namespace acid {
@@ -22,6 +22,9 @@ Graphics::Graphics() :
 Graphics::~Graphics() {
 	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
+	renderer = nullptr;
+	swapchain = nullptr;
+	
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 
 	glslang::FinalizeProcess();
@@ -33,14 +36,13 @@ Graphics::~Graphics() {
 		vkDestroySemaphore(*logicalDevice, renderCompletes[i], nullptr);
 		vkDestroySemaphore(*logicalDevice, presentCompletes[i], nullptr);
 	}
-	commandPools.clear ();
-	commandBuffers.clear ();
-	swapchain = nullptr;
-	renderer = nullptr;
+	
+	commandPools.clear();
+	commandBuffers.clear();
 }
 
 void Graphics::Update() {
-	if (!renderer || Window::Get()->IsIconified()) return;
+	if (!renderer || Windows::Get()->GetWindow(0)->IsIconified()) return;
 
 	if (!renderer->started) {
 		ResetRenderStages();
@@ -163,11 +165,11 @@ void Graphics::CheckVk(VkResult result) {
 }
 
 void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
-	auto size = Window::Get()->GetSize();
+	auto size = Windows::Get()->GetWindow(0)->GetSize();
 
 	VkImage dstImage;
 	VkDeviceMemory dstImageMemory;
@@ -197,7 +199,7 @@ void Graphics::CaptureScreenshot(const std::filesystem::path &filename) const {
 	// Writes the screenshot bitmap to the file.
 	bitmap.Write(filename);
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Screenshot ", filename, " created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
@@ -242,8 +244,8 @@ void Graphics::ResetRenderStages() {
 void Graphics::RecreateSwapchain() {
 	vkDeviceWaitIdle(*logicalDevice);
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
-#if defined(ACID_DEBUG)
+	VkExtent2D displayExtent = {Windows::Get()->GetWindow(0)->GetSize().x, Windows::Get()->GetWindow(0)->GetSize().y};
+#ifdef ACID_DEBUG
 	if (swapchain)
 		Log::Out("Recreating swapchain old (", swapchain->GetExtent().width, ", ", swapchain->GetExtent().height, ") new (", displayExtent.width, ", ", displayExtent.height, ")\n");
 #endif
@@ -284,7 +286,7 @@ void Graphics::RecreateCommandBuffers() {
 void Graphics::RecreatePass(RenderStage &renderStage) {
 	auto graphicsQueue = logicalDevice->GetGraphicsQueue();
 
-	VkExtent2D displayExtent = {Window::Get()->GetSize().x, Window::Get()->GetSize().y};
+	VkExtent2D displayExtent = {Windows::Get()->GetWindow(0)->GetSize().x, Windows::Get()->GetWindow(0)->GetSize().y};
 
 	CheckVk(vkQueueWaitIdle(graphicsQueue));
 

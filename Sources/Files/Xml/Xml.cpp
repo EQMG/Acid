@@ -1,21 +1,16 @@
 #include "Xml.hpp"
 
-#include <sstream>
-
-#include "Utils/Enumerate.hpp"
-#include "Utils/String.hpp"
-
 namespace acid {
-void Xml::ParseString(Node &node, std::string_view string) {
+void Xml::Load(Node &node, std::string_view string) {
 	// Tokenizes the string view into small views that are used to build a Node tree.
-	std::vector<Node::Token> tokens;
+	std::vector<Token> tokens;
 
 	std::size_t tokenStart = 0;
 	enum class QuoteState : char {
-		None = '\0', Single = '\'', Double = '"'
+		None, Single, Double
 	} quoteState = QuoteState::None;
 	enum class TagState : char {
-		None = '\0', Open = '<', Close = '>'
+		None, Open, Close
 	} tagState = TagState::None;
 
 	// Iterates over all the characters in the string view.
@@ -36,7 +31,7 @@ void Xml::ParseString(Node &node, std::string_view string) {
 			} else if (c == '<' || c == '>' || (tagState == TagState::Open && (c == '?' || c == '!' || c == '=' || c == '/'))) {
 				// Tokens used to read XML nodes.
 				AddToken(std::string_view(string.data() + tokenStart, index - tokenStart), tokens);
-				tokens.emplace_back(Node::Type::Token, std::string_view(string.data() + index, 1));
+				tokens.emplace_back(NodeType::Token, std::string_view(string.data() + index, 1));
 				if (c == '<')
 					tagState = TagState::Open;
 				else if (c == '>')
@@ -46,67 +41,81 @@ void Xml::ParseString(Node &node, std::string_view string) {
 		}
 	}
 
+	if (tokens.empty())
+		throw std::runtime_error("No tokens found in document");
+
 	// Converts the tokens into nodes.
 	int32_t k = 0;
 	Convert(node, tokens, k);
 }
 
-void Xml::WriteStream(const Node &node, std::ostream &stream, Node::Format format) {
-	stream << R"(<?xml version="1.0" encoding="utf-8"?>)" << format.newLine;
-	// TODO: Taken from body of AppendData properties loop to write parent node tags.
-	stream << '<' << node.GetName();
-	for (const auto &property : node.GetProperties()) {
-		if (property.GetName().rfind('-', 0) != 0) continue;
-		stream << " " << property.GetName().substr(1) << "=\"" << property.GetValue() << "\"";
+void Xml::Write(const Node &node, std::ostream &stream, Format format) {
+	if (!node.HasProperty("?xml")) {
+		Node xmldecl;
+		xmldecl["@version"] = "1.0";
+		xmldecl["@encoding"] = "utf-8";
+		AppendData("?xml", xmldecl, stream, format, 0);
 	}
-	stream << '>' << format.newLine;
-	AppendData(node, stream, format, 0);
-	stream << "</" << node.GetName() << ">";
+
+	for (const auto &[propertyName, property] : node.GetProperties()) {
+		AppendData(propertyName, property, stream, format, 0);
+	}
 }
 
-void Xml::AddToken(std::string_view view, std::vector<Node::Token> &tokens) {
+void Xml::AddToken(std::string_view view, std::vector<Token> &tokens) {
 	if (view.length() != 0 && !std::all_of(view.cbegin(), view.cend(), String::IsWhitespace))
-		tokens.emplace_back(Node::Type::String, view);
+		tokens.emplace_back(NodeType::String, view);
 }
 
-void Xml::Convert(Node &current, const std::vector<Node::Token> &tokens, int32_t &k) {
+void Xml::Convert(Node &current, const std::vector<Token> &tokens, int32_t &k) {
 	// Only start to parse if we are at the start of a tag.
-	if (tokens[k] != Node::Token(Node::Type::Token, "<"))
+	if (tokens[k] != Token(NodeType::Token, "<"))
 		return;
 	k++;
 
-	// Ignore prolog and DOCTYPE.
-	if (tokens[k] == Node::Token(Node::Type::Token, "?") || tokens[k] == Node::Token(Node::Type::Token, "!")) {
+	// Ignore comments.
+	if (tokens[k] == Token(NodeType::Token, "!") && (tokens[k + 1].view.find("--") == 0)) {
 		k += 2;
-		while (tokens[k] != Node::Token(Node::Type::Token, ">"))
+		while (tokens[k + 1] != Token(NodeType::Token, ">") && (tokens[k].view.find("--") == std::string::npos))
 			k++;
-		k++;
+		k += 2;
 		Convert(current, tokens, k);
 		return;
 	}
 
 	// The next token after the open tag is the name.
-	auto name = tokens[k].view;
+	std::string name(tokens[k].view);
+	// First token in tag might have been prolog or XMLDecl char, name will be in the following token.
+	if (tokens[k] == Token(NodeType::Token, "?") || tokens[k] == Token(NodeType::Token, "!")) {
+		name += tokens[k + 1].view;
+		k++;
+	}
 	k++;
-	// Create the property that will contain the attributes and children found in the tag.
-	auto &property = CreateProperty(current, std::string(name));
 
-	while (tokens[k] != Node::Token(Node::Type::Token, ">")) {
+	// Create the property that will contain the attributes and children found in the tag.
+	auto &property = CreateProperty(current, name);
+
+	while (tokens[k] != Token(NodeType::Token, ">")) {
 		// Attributes are added as properties.
-		if (tokens[k] == Node::Token(Node::Type::Token, "=")) {
-			property.AddProperty("-" + std::string(tokens[k - 1].view)) = tokens[k + 1].view.substr(1, tokens[k + 1].view.size() - 2);
+		if (tokens[k] == Token(NodeType::Token, "=")) {
+			property.AddProperty(AttributePrefix + std::string(tokens[k - 1].view)) = tokens[k + 1].view.substr(1, tokens[k + 1].view.size() - 2);
 			k++;
 		}
 		k++;
 	}
 	k++;
 
+	// More tags will follow after prolog and XMLDecl.
+	if (tokens[k - 2] == Token(NodeType::Token, "?") || name[0] == '!') {
+		Convert(current, tokens, k);
+		return;
+	}
 	// Inline tag has no children.
-	if (tokens[k - 2] == Node::Token(Node::Type::Token, "/"))
+	if (tokens[k - 2] == Token(NodeType::Token, "/"))
 		return;
 	// Continue through all children until the end tag is found.
-	while (!(tokens[k] == Node::Token(Node::Type::Token, "<") && tokens[k + 1] == Node::Token(Node::Type::Token, "/") && tokens[k + 2].view == name)) {
-		if (tokens[k].type == Node::Type::String) {
+	while (!(tokens[k] == Token(NodeType::Token, "<") && tokens[k + 1] == Token(NodeType::Token, "/") && tokens[k + 2].view == name)) {
+		if (tokens[k].type == NodeType::String) {
 			property = tokens[k].view;
 			k++;
 		} else {
@@ -121,14 +130,13 @@ Node &Xml::CreateProperty(Node &current, const std::string &name) {
 	// Combine duplicate tags.
 	if (auto duplicate = current[name]) {
 		// If the node is already an array add the new property to it.
-		if (duplicate->GetType() == Node::Type::Array)
+		if (duplicate->GetType() == NodeType::Array)
 			return duplicate->AddProperty();
 
 		// Copy the duplicate node so we can add it to the new array.
-		Node original("", duplicate);
-		current.RemoveProperty(duplicate);
+		auto original = current.RemoveProperty(duplicate);
 		auto &array = current.AddProperty(name);
-		array.SetType(Node::Type::Array);
+		array.SetType(NodeType::Array);
 		array.AddProperty(std::move(original));
 		return array.AddProperty();
 	}
@@ -136,47 +144,50 @@ Node &Xml::CreateProperty(Node &current, const std::string &name) {
 	return current.AddProperty(name);
 }
 
-void Xml::AppendData(const Node &node, std::ostream &stream, Node::Format format, int32_t indent) {
-	stream << node.GetValue();
+void Xml::AppendData(const std::string &nodeName, const Node &node, std::ostream &stream, Format format, int32_t indent) {
+	if (nodeName.rfind(AttributePrefix, 0) == 0) return;
 
-	auto indents = format.GetIndents(indent + 1);
-	// Output each property.
-	for (auto it = node.GetProperties().begin(); it < node.GetProperties().end(); ++it) {
-		if (it->GetName().rfind('-', 0) == 0) continue;
-
-		// Skip property tag for arrays and move onto appending its properties.
-		if (it->GetType() == Node::Type::Array) {
-			AppendData(*it, stream, format, indent);
-			continue;
-		}
-
+	if (node.GetType() == NodeType::Array) {
 		// If the node is an array, then all properties will inherit the array name.
-		const auto &name = node.GetType() == Node::Type::Array ? node.GetName() : it->GetName();
-		stream << indents << '<' << name;
+		for (const auto &[propertyName, property] : node.GetProperties())
+			AppendData(nodeName, property, stream, format, indent);
+		return;
+	}
 
-		// Add attributes to opening tag.
-		int attributeCount = 0;
-		for (const auto &property : it->GetProperties()) {
-			if (property.GetName().rfind('-', 0) != 0) continue;
-			stream << " " << property.GetName().substr(1) << "=\"" << property.GetValue() << "\"";
-			attributeCount++;
-		}
+	auto indents = format.GetIndents(indent);
+	stream << indents << '<' << nodeName;
 
-		// When the property has a value or children recursively append them, otherwise shorten tag ending.
-		if (it->GetProperties().size() - attributeCount != 0 || !it->GetValue().empty()) {
-			stream << '>';
+	// Add attributes to opening tag.
+	int attributeCount = 0;
+	for (const auto &[propertyName, property] : node.GetProperties()) {
+		if (propertyName.rfind(AttributePrefix, 0) != 0) continue;
+		stream << " " << propertyName.substr(1) << "=\"" << property.GetValue() << "\"";
+		attributeCount++;
+	}
 
-			if (it->GetProperties().size() - attributeCount != 0) {
-				stream << format.newLine;
-				AppendData(*it, stream, format, indent + 1);
-				stream << indents;
-			} else {
-				AppendData(*it, stream, format, indent + 1);
-			}
-			stream << "</" << name << '>' << format.newLine;
+	// When the property has a value or children recursively append them, otherwise shorten tag ending.
+	if (node.GetProperties().size() - attributeCount != 0 || !node.GetValue().empty()) {
+		stream << '>';
+		stream << node.GetValue();
+
+		if (node.GetProperties().size() - attributeCount != 0) {
+			stream << format.newLine;
+			// Output each property.
+			for (const auto &[propertyName, property] : node.GetProperties())
+				AppendData(propertyName, property, stream, format, indent + 1);
+			stream << indents;
 		} else {
-			stream << "/>" << format.newLine;
+			// Output each property.
+			for (const auto &[propertyName, property] : node.GetProperties())
+				AppendData(propertyName, property, stream, format, indent + 1);
 		}
+		stream << "</" << nodeName << '>' << format.newLine;
+	} else if (nodeName[0] == '?') {
+		stream << "?>" << format.newLine;
+	} else if (nodeName[0] == '!') {
+		stream << '>' << format.newLine;
+	} else {
+		stream << "/>" << format.newLine;
 	}
 }
 }

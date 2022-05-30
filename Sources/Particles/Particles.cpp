@@ -7,7 +7,7 @@ Particles::Particles() {
 }
 
 void Particles::Update() {
-	if (Scenes::Get()->IsPaused()) return;
+	if (Scenes::Get()->GetScene()->IsPaused()) return;
 
 	for (auto it = particles.begin(); it != particles.end();) {
 		for (auto it1 = (*it).second.begin(); it1 != (*it).second.end();) {
@@ -47,7 +47,7 @@ void Particles::AddParticle(Particle &&particle) {
 	auto it = particles.find(particle.GetParticleType());
 
 	if (it != particles.end()) {
-		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [particle](Particle &p) {
+		it->second.erase(std::remove_if(it->second.begin(), it->second.end(), [particle](const auto &p) {
 			return p == particle;
 		}), it->second.end());
 	}

@@ -29,7 +29,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "PBR" COMMAND "TestPBR")
+# add_test(NAME "PBR" COMMAND "TestPBR")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestPBR

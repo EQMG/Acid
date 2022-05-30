@@ -12,9 +12,8 @@ Terrain::Terrain(float sideLength, float squareSize) :
 	minHeight(+std::numeric_limits<float>::infinity()),
 	maxHeight(-std::numeric_limits<float>::infinity()) {
 	noise.SetFrequency(0.01f);
-	noise.SetInterp(FastNoise::Quintic);
-	noise.SetNoiseType(FastNoise::PerlinFractal);
-	noise.SetFractalType(FastNoise::FBM);
+	noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	noise.SetFractalType(FastNoiseLite::FractalType_FBm);
 	noise.SetFractalOctaves(5);
 	noise.SetFractalLacunarity(2.0f);
 	noise.SetFractalGain(0.5f);
@@ -77,9 +76,9 @@ std::vector<float> Terrain::GenerateHeightmap(uint32_t vertexCount) {
 			float height;
 
 			if (transform) {
-				height = 16.0f * noise.GetValueFractal(transform->GetPosition().x + x, transform->GetPosition().z + z);
+				height = 16.0f * noise.GetNoise(transform->GetPosition().x + x, transform->GetPosition().z + z);
 			} else {
-				height = 16.0f * noise.GetValueFractal(x, z);
+				height = 16.0f * noise.GetNoise(x, z);
 			}
 
 			heightmap[row * vertexCount + col] = height;

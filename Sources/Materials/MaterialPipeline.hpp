@@ -42,12 +42,13 @@ public:
 
 	const Pipeline::Stage &GetStage() const { return pipelineStage; }
 	const PipelineGraphicsCreate &GetPipelineCreate() const { return pipelineCreate; }
-	const PipelineGraphics *GetPipeline() { return pipeline.get(); }
+	const PipelineGraphics *GetPipeline() const { return pipeline.get(); }
 
 	friend const Node &operator>>(const Node &node, MaterialPipeline &pipeline);
 	friend Node &operator<<(Node &node, const MaterialPipeline &pipeline);
 
 private:
+	// TODO: Have pipelineStage configured though the application rather than hardcoded in the Material implementations.
 	Pipeline::Stage pipelineStage;
 	PipelineGraphicsCreate pipelineCreate;
 	const RenderStage *renderStage = nullptr;

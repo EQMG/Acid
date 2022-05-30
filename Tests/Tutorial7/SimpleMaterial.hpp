@@ -21,12 +21,10 @@ public:
 	 * So we have inNormal in our shader even though we dont use it.
 	 */
 	void CreatePipeline(const Shader::VertexInput &vertexInput, bool animated) override {
-		pipelineMaterial = MaterialPipeline::Create(
-			stage, {
-				{"Tutorial/Shaders/tri7.vert", "Tutorial/Shaders/tri7.frag"},
-				{vertexInput}//, {}, PipelineGraphics::Mode::Polygon
-			}
-		);
+		pipelineMaterial = MaterialPipeline::Create(stage, {
+			{"Tutorial/Shaders/tri7.vert", "Tutorial/Shaders/tri7.frag"},
+			{vertexInput}//, {}, PipelineGraphics::Mode::Polygon
+		});
 	}
 
 	/*

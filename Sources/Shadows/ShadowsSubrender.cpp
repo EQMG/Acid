@@ -13,11 +13,11 @@ ShadowsSubrender::ShadowsSubrender(const Pipeline::Stage &pipelineStage) :
 }
 
 void ShadowsSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 
 	pipeline.BindPipeline(commandBuffer);
 
-	auto sceneShadowRenders = Scenes::Get()->GetStructure()->QueryComponents<ShadowRender>();
+	auto sceneShadowRenders = Scenes::Get()->GetScene()->QueryComponents<ShadowRender>();
 
 	for (const auto &shadowRender : sceneShadowRenders)
 		shadowRender->CmdRender(commandBuffer, pipeline);

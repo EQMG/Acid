@@ -10,8 +10,7 @@ enum class ScrollBar {
 	Horizontal = 2,
 	Both = Vertical | Horizontal
 };
-
-ENABLE_BITMASK_OPERATORS(ScrollBar);
+ENABLE_BITMASK_OPERATORS(ScrollBar)
 
 class ACID_EXPORT UiScrollBar : public UiObject {
 public:
@@ -23,7 +22,7 @@ public:
 	void SetSize(const Vector2f &size);
 	void SetType(ScrollBar type);
 
-	static constexpr uint32_t Size = 8;
+	constexpr static uint32_t Size = 8;
 
 private:
 	float ScrollByDelta(float delta) const;

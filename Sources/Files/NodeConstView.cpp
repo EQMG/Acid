@@ -15,22 +15,16 @@ NodeConstView::NodeConstView(const NodeConstView *parent, Key key) :
 	keys.emplace_back(std::move(key));
 }
 
-std::vector<NodeConstView> NodeConstView::GetProperties(const std::string &name) const {
+NodeConstView NodeConstView::GetPropertyWithBackup(const std::string &key, const std::string &backupKey) const {
 	if (!has_value())
-		return {};
-	return value->GetProperties(name);
+		return {this, key};
+	return value->GetPropertyWithBackup(key, backupKey);
 }
 
-NodeConstView NodeConstView::GetPropertyWithBackup(const std::string &name, const std::string &backupName) const {
+NodeConstView NodeConstView::GetPropertyWithValue(const std::string &key, const NodeValue &propertyValue) const {
 	if (!has_value())
-		return {this, name};
-	return value->GetPropertyWithBackup(name, backupName);
-}
-
-NodeConstView NodeConstView::GetPropertyWithValue(const std::string &propertyName, const std::string &propertyValue) const {
-	if (!has_value())
-		return {this, propertyName};
-	return value->GetPropertyWithValue(propertyName, propertyValue);
+		return {this, key};
+	return value->GetPropertyWithValue(key, propertyValue);
 }
 
 NodeConstView NodeConstView::operator[](const std::string &key) const {
@@ -45,15 +39,15 @@ NodeConstView NodeConstView::operator[](uint32_t index) const {
 	return value->operator[](index);
 }
 
-std::vector<Node> NodeConstView::GetProperties() const {
+NodeProperties NodeConstView::GetProperties() const {
 	if (!has_value())
-		return {};
+		return NodeProperties{};
 	return value->GetProperties();
 }
 
-std::string NodeConstView::GetName() const {
+NodeType NodeConstView::GetType() const {
 	if (!has_value())
-		return "";
-	return value->GetName();
+		return NodeType::Null;
+	return value->GetType();
 }
 }

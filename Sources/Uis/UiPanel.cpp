@@ -4,8 +4,8 @@
 #include "Drivers/ConstantDriver.hpp"
 
 namespace acid {
-static constexpr Vector2i RESIZE_SIZE(16, 16);
-static constexpr Vector2i PADDING(16, 16);
+constexpr static Vector2i RESIZE_SIZE(16, 16);
+constexpr static Vector2i PADDING(16, 16);
 
 UiPanel::UiPanel() {
 	//background.SetTransform({UiMargins::All});

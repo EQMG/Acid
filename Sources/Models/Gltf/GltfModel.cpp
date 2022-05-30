@@ -1,6 +1,6 @@
 #include "GltfModel.hpp"
 
-#include <tinygltf/tiny_gltf.h>
+#include <tiny_gltf.h>
 
 #include "Files/Files.hpp"
 #include "Resources/Resources.hpp"
@@ -47,7 +47,7 @@ void GltfModel::Load() {
 		return;
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -110,7 +110,7 @@ void GltfModel::Load() {
 
 	auto extensions = gltfModel.extensionsUsed;*/
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Model ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 

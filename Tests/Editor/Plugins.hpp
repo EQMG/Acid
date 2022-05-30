@@ -14,7 +14,7 @@ namespace test {
 /**
  * Module used for managing the world.
  */
-class Plugins : public Module::Registrar<Plugins>, public Observer {
+class Plugins : public Module::Registrar<Plugins>, public rocket::trackable {
 	inline static const bool Registered = Register(Stage::Always, Requires<Files>());
 public:
 	Plugins();

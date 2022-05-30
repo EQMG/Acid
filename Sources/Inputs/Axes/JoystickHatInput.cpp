@@ -1,26 +1,10 @@
 #include "JoystickHatInput.hpp"
 
 namespace acid {
-JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const BitMask<JoystickHatValue> &hatFlags) :
-	port(port),
+JoystickHatInput::JoystickHatInput(JoystickPort port, JoystickHat hat, const bitmask::bitmask<JoystickHatValue> &hatFlags) :
 	hat(hat),
 	hatFlags(hatFlags) {
-	Joysticks::Get()->OnHat().Add([this](JoystickPort port, JoystickHat hat, BitMask<JoystickHatValue> value) {
-		if (this->port == port && this->hat == hat) {
-			onAxis(GetAmount());
-			auto isDown = IsDown();
-
-			if (!lastDown && isDown) {
-				lastDown = true;
-				onButton(InputAction::Press, 0);
-			} else if (lastDown && !isDown) {
-				lastDown = false;
-				onButton(InputAction::Release, 0);
-			} else if (lastDown && isDown) {
-				onButton(InputAction::Repeat, 0);
-			}
-		}
-	}, static_cast<InputButton *>(this));
+	SetPort(port);
 }
 
 InputAxis::ArgumentDescription JoystickHatInput::GetArgumentDescription() const {
@@ -34,7 +18,7 @@ InputAxis::ArgumentDescription JoystickHatInput::GetArgumentDescription() const 
 }
 
 float JoystickHatInput::GetAmount() const {
-	auto hatValue = Joysticks::Get()->GetHat(port, hat);
+	auto hatValue = joystick->GetHat(hat);
 	float value = 0.0f;
 	if (hatValue & JoystickHatValue::Up) {
 		if (hatValue & JoystickHatValue::Right)
@@ -56,17 +40,38 @@ float JoystickHatInput::GetAmount() const {
 		value = 0.25f;
 	else if (hatValue & JoystickHatValue::Left)
 		value = 0.75f;
-	return scale * value;
+	return scale * value + offset;
 }
 
 bool JoystickHatInput::IsDown() const {
-	return (Joysticks::Get()->GetHat(port, hat) & hatFlags) ^ inverted;
+	return (joystick->GetHat(hat) & hatFlags).value ^ static_cast<uint8_t>(inverted);
+}
+
+void JoystickHatInput::SetPort(JoystickPort port) {
+	joystick = Joysticks::Get()->GetJoystick(port);
+	disconnect_tracked_connections();
+	joystick->OnHat().connect(static_cast<InputButton *>(this), [this](JoystickHat hat, bitmask::bitmask<JoystickHatValue> value) {
+		if (this->hat == hat) {
+			onAxis(GetAmount());
+			auto isDown = IsDown();
+
+			if (!lastDown && isDown) {
+				lastDown = true;
+				onButton(InputAction::Press, 0);
+			} else if (lastDown && !isDown) {
+				lastDown = false;
+				onButton(InputAction::Release, 0);
+			} else if (lastDown && isDown) {
+				onButton(InputAction::Repeat, 0);
+			}
+		}
+	});
 }
 
 const Node &operator>>(const Node &node, JoystickHatInput &input) {
 	node["scale"].Get(input.scale);
 	node["inverted"].Get(input.inverted);
-	node["port"].Get(input.port);
+	input.SetPort(node["port"].Get<JoystickPort>());
 	node["hat"].Get(input.hat);
 	node["hatFlags"].Get(input.hatFlags);
 	return node;
@@ -75,7 +80,7 @@ const Node &operator>>(const Node &node, JoystickHatInput &input) {
 Node &operator<<(Node &node, const JoystickHatInput &input) {
 	node["scale"].Set(input.scale);
 	node["inverted"].Set(input.inverted);
-	node["port"].Set(input.port);
+	node["port"].Set(input.GetPort());
 	node["hat"].Set(input.hat);
 	node["hatFlags"].Set(input.hatFlags);
 	return node;

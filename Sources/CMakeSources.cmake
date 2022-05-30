@@ -25,15 +25,11 @@ set(_temp_acid_headers
 		Bitmaps/Exr/ExrBitmap.hpp
 		Bitmaps/Jpg/JpgBitmap.hpp
 		Bitmaps/Png/PngBitmap.hpp
-		Devices/Instance.hpp
 		Devices/Joysticks.hpp
 		Devices/Keyboard.hpp
-		Devices/LogicalDevice.hpp
 		Devices/Monitor.hpp
 		Devices/Mouse.hpp
-		Devices/PhysicalDevice.hpp
-		Devices/Surface.hpp
-		Devices/Window.hpp
+		Devices/Windows.hpp
 		Engine/App.hpp
 		Engine/Engine.hpp
 		Engine/Log.hpp
@@ -46,12 +42,11 @@ set(_temp_acid_headers
 		Files/Node.inl
 		Files/NodeConstView.hpp
 		Files/NodeConstView.inl
+		Files/NodeFormat.hpp
 		Files/NodeView.hpp
 		Files/NodeView.inl
 		Files/Xml/Xml.hpp
-		Files/Zip/ZipArchive.hpp
-		Files/Zip/ZipEntry.hpp
-		Files/Zip/ZipException.hpp
+		Files/Xml/XmlContainer.hpp
 		Fonts/FontsSubrender.hpp
 		Fonts/FontType.hpp
 		Fonts/Text.hpp
@@ -71,6 +66,10 @@ set(_temp_acid_headers
 		Graphics/Descriptors/Descriptor.hpp
 		Graphics/Descriptors/DescriptorSet.hpp
 		Graphics/Descriptors/DescriptorsHandler.hpp
+		Graphics/Devices/Instance.hpp
+		Graphics/Devices/LogicalDevice.hpp
+		Graphics/Devices/PhysicalDevice.hpp
+		Graphics/Devices/Surface.hpp
 		Graphics/Graphics.hpp
 		Graphics/Images/Image.hpp
 		Graphics/Images/Image2d.hpp
@@ -100,7 +99,7 @@ set(_temp_acid_headers
 		Inputs/Buttons/JoystickInputButton.hpp
 		Inputs/Buttons/KeyboardInputButton.hpp
 		Inputs/Buttons/MouseInputButton.hpp
-		Inputs/Input.hpp
+		Inputs/Inputs.hpp
 		Inputs/InputAxis.hpp
 		Inputs/InputButton.hpp
 		Inputs/InputDelay.hpp
@@ -178,6 +177,7 @@ set(_temp_acid_headers
 		Physics/Force.hpp
 		Physics/Frustum.hpp
 		Physics/KinematicCharacter.hpp
+		Physics/Physics.hpp
 		Physics/Ray.hpp
 		Physics/Rigidbody.hpp
 		Post/Deferred/DeferredSubrender.hpp
@@ -208,11 +208,12 @@ set(_temp_acid_headers
 		Scenes/Camera.hpp
 		Scenes/Component.hpp
 		Scenes/Entity.hpp
+		Scenes/EntityHolder.hpp
 		Scenes/EntityPrefab.hpp
 		Scenes/Scene.hpp
-		Scenes/ScenePhysics.hpp
 		Scenes/Scenes.hpp
-		Scenes/SceneStructure.hpp
+		Scenes/System.hpp
+		Scenes/SystemHolder.hpp
 		Shadows/ShadowBox.hpp
 		Shadows/ShadowRender.hpp
 		Shadows/Shadows.hpp
@@ -247,9 +248,8 @@ set(_temp_acid_headers
 		Uis/UiSection.hpp
 		Uis/UiStartLogo.hpp
 		Utils/ConstExpr.hpp
-		Utils/Delegate.hpp
-		Utils/EnumClass.hpp
 		Utils/Enumerate.hpp
+		Utils/EnumValue.hpp
 		Utils/Factory.hpp
 		Utils/Future.hpp
 		Utils/NonCopyable.hpp
@@ -260,26 +260,33 @@ set(_temp_acid_headers
 		Utils/TypeInfo.hpp
 		)
 set(_temp_acid_third_party_headers
+		third_party/bitmask/bitmask.hpp
 		third_party/cr/cr.h
 		third_party/dr_libs/dr_flac.h
 		third_party/dr_libs/dr_mp3.h
 		third_party/dr_libs/dr_opus.h
 		third_party/dr_libs/dr_wav.h
-		third_party/fastnoise/FastNoise.h
+		third_party/fastnoise/FastNoiseLite.h
 		third_party/libjpgd/jpgd.h
 		third_party/libjpgd/jpgd_idct.h
 		third_party/libspng/spng.h
+		third_party/magic_enum/magic_enum.hpp
 		third_party/miniz/miniz.h
-		third_party/msdf/msdf.h
+		third_party/rocket/rocket.hpp
 		third_party/stb/stb_image.h
 		third_party/stb/stb_image_write.h
-		third_party/stb/stb_truetype.h
 		third_party/stb/stb_vorbis.h
 		third_party/tinydng/tiny_dng.h
 		third_party/tinyexr/tiny_exr.h
 		third_party/tinygltf/json.hpp
 		third_party/tinygltf/tiny_gltf.h
+		third_party/tinymsdf/tiny_msdf.hpp
 		third_party/tinyobj/tiny_obj.h
+		third_party/Zippy/ZipArchive.hpp
+		third_party/Zippy/ZipEntry.hpp
+		third_party/Zippy/ZipException.hpp
+		third_party/Zippy/Zippy.hpp
+		third_party/Zippy/ZipUtilities.hpp
 		)
 set(_temp_acid_sources
 		Animations/AnimatedMesh.cpp
@@ -306,15 +313,11 @@ set(_temp_acid_sources
 		Bitmaps/Exr/ExrBitmap.cpp
 		Bitmaps/Jpg/JpgBitmap.cpp
 		Bitmaps/Png/PngBitmap.cpp
-		Devices/Instance.cpp
 		Devices/Joysticks.cpp
 		Devices/Keyboard.cpp
-		Devices/LogicalDevice.cpp
 		Devices/Monitor.cpp
 		Devices/Mouse.cpp
-		Devices/PhysicalDevice.cpp
-		Devices/Surface.cpp
-		Devices/Window.cpp
+		Devices/Windows.cpp
 		Engine/Engine.cpp
 		Engine/Log.cpp
 		Files/File.cpp
@@ -325,8 +328,6 @@ set(_temp_acid_sources
 		Files/NodeConstView.cpp
 		Files/NodeView.cpp
 		Files/Xml/Xml.cpp
-		Files/Zip/ZipArchive.cpp
-		Files/Zip/ZipEntry.cpp
 		Fonts/FontsSubrender.cpp
 		Fonts/FontType.cpp
 		Fonts/Text.cpp
@@ -345,6 +346,10 @@ set(_temp_acid_sources
 		Graphics/Commands/CommandPool.cpp
 		Graphics/Descriptors/DescriptorSet.cpp
 		Graphics/Descriptors/DescriptorsHandler.cpp
+		Graphics/Devices/Instance.cpp
+		Graphics/Devices/LogicalDevice.cpp
+		Graphics/Devices/PhysicalDevice.cpp
+		Graphics/Devices/Surface.cpp
 		Graphics/Graphics.cpp
 		Graphics/Images/Image.cpp
 		Graphics/Images/Image2d.cpp
@@ -371,7 +376,7 @@ set(_temp_acid_sources
 		Inputs/Buttons/JoystickInputButton.cpp
 		Inputs/Buttons/KeyboardInputButton.cpp
 		Inputs/Buttons/MouseInputButton.cpp
-		Inputs/Input.cpp
+		Inputs/Inputs.cpp
 		Inputs/InputDelay.cpp
 		Inputs/InputScheme.cpp
 		Lights/Fog.cpp
@@ -437,6 +442,7 @@ set(_temp_acid_sources
 		Physics/Force.cpp
 		Physics/Frustum.cpp
 		Physics/KinematicCharacter.cpp
+		Physics/Physics.cpp
 		Physics/Ray.cpp
 		Physics/Rigidbody.cpp
 		Post/Deferred/DeferredSubrender.cpp
@@ -463,10 +469,11 @@ set(_temp_acid_sources
 		Post/PostFilter.cpp
 		Resources/Resources.cpp
 		Scenes/Entity.cpp
+		Scenes/EntityHolder.cpp
 		Scenes/EntityPrefab.cpp
-		Scenes/ScenePhysics.cpp
+		Scenes/Scene.cpp
 		Scenes/Scenes.cpp
-		Scenes/SceneStructure.cpp
+		Scenes/SystemHolder.cpp
 		Shadows/ShadowBox.cpp
 		Shadows/ShadowRender.cpp
 		Shadows/Shadows.cpp
@@ -496,28 +503,37 @@ set(_temp_acid_third_party_sources
 		third_party/dr_libs/dr_mp3.c
 		third_party/dr_libs/dr_opus.c
 		third_party/dr_libs/dr_wav.c
-		third_party/fastnoise/FastNoise.cpp
 		third_party/libjpgd/jpgd.cpp
 		third_party/libspng/spng.c
 		third_party/miniz/miniz.c
-		third_party/msdf/msdf.c
 		third_party/stb/stb_image.c
 		third_party/stb/stb_image_write.c
-		third_party/stb/stb_truetype.c
 		third_party/stb/stb_vorbis.c
 		third_party/tinydng/tiny_dng.cpp
 		third_party/tinyexr/tiny_exr.cpp
 		third_party/tinygltf/tiny_gltf.cpp
+		third_party/tinymsdf/tiny_msdf.cpp
 		third_party/tinyobj/tiny_obj.cpp
 		)
 
-# Check if given C++ source compiles and links into an executable.
-include(CheckCXXSourceCompiles)
-
-# Check if we can link to `std::filesystem`. macOS < 10.15, iOS < 13, Android.
-check_cxx_source_compiles("#include <filesystem>\nint main() { std::filesystem::space(\"/\"); }" HAS_STD_FILESYSTEM)
-# Check if we have `std::filesystem` headers. iOS < 13.
-check_cxx_source_compiles("#include <filesystem>\nint main() { using path = std::filesystem::path;\n0; }" HAS_STD_FILESYSTEM_HEADERS)
+set(_temp_acid_third_party_includes
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/bitmask
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/cr
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/dr_libs
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/fastnoise
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libjpgd
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libspng
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/magic_enum
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/miniz
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/rocket
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinydng
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyexr
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinygltf
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinymsdf
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyobj
+		${CMAKE_CURRENT_SOURCE_DIR}/third_party/Zippy
+		)
 
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
 if(ACID_LINK_RESOURCES)
@@ -534,10 +550,10 @@ endif()
 
 # Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Export.hpp")
+generate_export_header(Acid EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Export.hpp")
 
 # Adds a CMake generated config file
-configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/Config.hpp" @ONLY)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/Config.hpp" @ONLY)
 
 # Sets all headers as PUBLIC sources for Acid
 # The BUILD/INSTALL interface generator expressions are for the EXPORT command

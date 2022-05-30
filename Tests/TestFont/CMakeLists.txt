@@ -31,7 +31,7 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-add_test(NAME "Font" COMMAND "TestFont")
+# add_test(NAME "Font" COMMAND "TestFont")
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestFont

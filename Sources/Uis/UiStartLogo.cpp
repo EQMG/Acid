@@ -30,9 +30,9 @@ UiStartLogo::UiStartLogo() {
 	textCopyright.SetString("Copyright (C) 2019, Equilibrium Games - All Rights Reserved.");
 	AddChild(&textCopyright);
 
-	Timers::Get()->Once(StartDelay, [this]() {
+	Timers::Get()->Once(this, [this]() {
 		SetAlphaDriver<SlideDriver>(1.0f, 0.0f, 1.4s);
-	}, this);
+	}, StartDelay);
 }
 
 void UiStartLogo::UpdateObject() {

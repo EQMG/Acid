@@ -1,4 +1,7 @@
 /* SPDX-License-Identifier: (BSD-2-Clause AND libpng-2.0) */
+
+#define SPNG__BUILD
+
 #include "spng.h"
 
 #include <limits.h>
@@ -14,7 +17,7 @@
     #include "tests/framac_stubs.h"
 #else
     #ifdef SPNG_USE_MINIZ
-        #include "miniz/miniz.h"
+        #include <miniz.h>
     #else
         #include <zlib.h>
     #endif
@@ -41,7 +44,7 @@
         /* #define SPNG_ARM */ /* buffer overflow for rgb8 images */
         #define SPNG_DISABLE_OPT
     #else
-        #warning "disabling optimizations for unknown platform"
+        #warning "disabling SIMD optimizations for unknown target"
         #define SPNG_DISABLE_OPT
     #endif
 
@@ -132,6 +135,8 @@ struct spng_text2
     uint8_t compression_flag; /* iTXt only */
     char *language_tag; /* iTXt only */
     char *translated_keyword; /* iTXt only */
+
+    size_t cache_usage;
 };
 
 struct decode_flags
@@ -206,6 +211,7 @@ struct spng_ctx
     unsigned streaming: 1;
 
     unsigned encode_only: 1;
+    unsigned strict : 1;
 
     /* input file contains this chunk */
     struct spng_chunk_bitfield file;
@@ -282,12 +288,12 @@ struct spng_ctx
 
 static const uint32_t png_u32max = 2147483647;
 
-static const uint8_t png_signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
+static const uint32_t adam7_x_start[7] = { 0, 4, 0, 2, 0, 1, 0 };
+static const uint32_t adam7_y_start[7] = { 0, 0, 4, 0, 2, 0, 1 };
+static const uint32_t adam7_x_delta[7] = { 8, 8, 4, 4, 2, 2, 1 };
+static const uint32_t adam7_y_delta[7] = { 8, 8, 8, 4, 4, 2, 2 };
 
-static const unsigned int adam7_x_start[7] = { 0, 4, 0, 2, 0, 1, 0 };
-static const unsigned int adam7_y_start[7] = { 0, 0, 4, 0, 2, 0, 1 };
-static const unsigned int adam7_x_delta[7] = { 8, 8, 4, 4, 2, 2, 1 };
-static const unsigned int adam7_y_delta[7] = { 8, 8, 8, 4, 4, 2, 2 };
+static const uint8_t png_signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
 
 static const uint8_t type_ihdr[4] = { 73, 72, 68, 82 };
 static const uint8_t type_plte[4] = { 80, 76, 84, 69 };
@@ -333,9 +339,9 @@ static inline void spng__free(spng_ctx *ctx, void *ptr)
 }
 
 #if defined(SPNG_USE_MINIZ)
-static void *spng__zalloc(void *opaque, long unsigned items, long unsigned size)
+static void *spng__zalloc(void *opaque, size_t items, size_t size)
 #else
-static void *spng__zalloc(void *opaque, unsigned items, unsigned size)
+static void *spng__zalloc(void *opaque, uInt items, uInt size)
 #endif
 {
     spng_ctx *ctx = opaque;
@@ -366,7 +372,11 @@ static int spng__inflate_init(spng_ctx *ctx)
 #if ZLIB_VERNUM >= 0x1290 && !defined(SPNG_USE_MINIZ)
     if(inflateValidate(&ctx->zstream, ctx->flags & SPNG_CTX_IGNORE_ADLER32)) return SPNG_EZLIB;
 #else /* This requires zlib >= 1.2.11 */
-    //#warning "inflateValidate() not available, SPNG_CTX_IGNORE_ADLER32 will be ignored"
+#ifdef _MSC_VER
+    #pragma message ("inflateValidate() not available, SPNG_CTX_IGNORE_ADLER32 will be ignored")
+#else
+    #warning "inflateValidate() not available, SPNG_CTX_IGNORE_ADLER32 will be ignored"
+#endif
 #endif
 
     return 0;
@@ -743,7 +753,7 @@ static int discard_chunk_bytes(spng_ctx *ctx, uint32_t bytes)
 
    Takes into account the chunk size and cache limits.
 */
-static int spng__inflate_stream(spng_ctx *ctx, char **out, size_t *len, int extra, const void *start_buf, size_t start_len)
+static int spng__inflate_stream(spng_ctx *ctx, char **out, size_t *len, size_t extra, const void *start_buf, size_t start_len)
 {
     int ret = spng__inflate_init(ctx);
     if(ret) return ret;
@@ -1628,12 +1638,45 @@ static int read_ihdr(spng_ctx *ctx)
     return 0;
 }
 
+static void splt_undo(spng_ctx *ctx)
+{
+    struct spng_splt *splt = &ctx->splt_list[ctx->n_splt - 1];
+
+    spng__free(ctx, splt->entries);
+
+    decrease_cache_usage(ctx, sizeof(struct spng_splt));
+    decrease_cache_usage(ctx, splt->n_entries * sizeof(struct spng_splt_entry));
+
+    splt->entries = NULL;
+
+    ctx->n_splt--;
+}
+
+static void text_undo(spng_ctx *ctx)
+{
+    struct spng_text2 *text = &ctx->text_list[ctx->n_text - 1];
+
+    spng__free(ctx, text->keyword);
+    if(text->compression_flag) spng__free(ctx, text->text);
+
+    decrease_cache_usage(ctx, text->cache_usage);
+    decrease_cache_usage(ctx, sizeof(struct spng_text2));
+
+    text->keyword = NULL;
+    text->text = NULL;
+
+    ctx->n_text--;
+}
+
+typedef void spng__undo(spng_ctx *ctx);
+
 static int read_non_idat_chunks(spng_ctx *ctx)
 {
     int ret, discard = 0;
     int prev_was_idat = ctx->state == SPNG_STATE_AFTER_IDAT ? 1 : 0;
     struct spng_chunk chunk;
     const unsigned char *data;
+    spng__undo *undo = NULL;
 
     struct spng_chunk_bitfield stored;
     memcpy(&stored, &ctx->stored, sizeof(struct spng_chunk_bitfield));
@@ -1642,8 +1685,13 @@ static int read_non_idat_chunks(spng_ctx *ctx)
     {
         if(discard)
         {
+            if(undo) undo(ctx);
+
             memcpy(&ctx->stored, &stored, sizeof(struct spng_chunk_bitfield));
         }
+
+        discard = 0;
+        undo = NULL;
 
         memcpy(&stored, &ctx->stored, sizeof(struct spng_chunk_bitfield));
 
@@ -1785,7 +1833,11 @@ static int read_non_idat_chunks(spng_ctx *ctx)
             }
             else if(ctx->ihdr.color_type == 6)
             {
-                if(chunk.length != 4) return SPNG_ECHUNK_SIZE;
+                if(chunk.length != 4)
+                {
+                    if(ctx->strict) return SPNG_ECHUNK_SIZE;
+                    else continue;
+                }
 
                 memcpy(&ctx->sbit.red_bits, data, 1);
                 memcpy(&ctx->sbit.green_bits, data + 1, 1);
@@ -1882,7 +1934,14 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                 }
                 ctx->trns.n_type3_entries = chunk.length;
             }
-            else return SPNG_ETRNS_COLOR_TYPE;
+
+            /* The standard explicitly forbids tRNS chunks for grayscale alpha,
+                truecolor alpha images but libpng only emits a warning by default. */
+            if(ctx->ihdr.color_type == 4 || ctx->ihdr.color_type == 6)
+            {
+                if(ctx->strict) return SPNG_ETRNS_COLOR_TYPE;
+                else continue;
+            }
 
             ctx->file.trns = 1;
             ctx->stored.trns = 1;
@@ -2037,27 +2096,19 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                 if(!chunk.length) return SPNG_ECHUNK_SIZE;
 
                 ctx->file.text = 1;
+                undo = text_undo;
 
                 if(ctx->user.text) goto discard;
 
                 if(increase_cache_usage(ctx, sizeof(struct spng_text2))) return SPNG_EMEM;
 
-                if(!ctx->stored.text)
-                {
-                    ctx->n_text = 1;
-                    ctx->text_list = spng__calloc(ctx, 1, sizeof(struct spng_text2));
-                    if(ctx->text_list == NULL) return SPNG_EMEM;
-                }
-                else
-                {
-                    ctx->n_text++;
-                    if(ctx->n_text < 1) return SPNG_EOVERFLOW;
-                    if(sizeof(struct spng_text2) > SIZE_MAX / ctx->n_text) return SPNG_EOVERFLOW;
+                ctx->n_text++;
+                if(ctx->n_text < 1) return SPNG_EOVERFLOW;
+                if(sizeof(struct spng_text2) > SIZE_MAX / ctx->n_text) return SPNG_EOVERFLOW;
 
-                    void *buf = spng__realloc(ctx, ctx->text_list, ctx->n_text * sizeof(struct spng_text2));
-                    if(buf == NULL) return SPNG_EMEM;
-                    ctx->text_list = buf;
-                }
+                void *buf = spng__realloc(ctx, ctx->text_list, ctx->n_text * sizeof(struct spng_text2));
+                if(buf == NULL) return SPNG_EMEM;
+                ctx->text_list = buf;
 
                 struct spng_text2 *text = &ctx->text_list[ctx->n_text - 1];
                 memset(text, 0, sizeof(struct spng_text2));
@@ -2153,6 +2204,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                     if(ret) return ret;
 
                     text->text[text->text_length - 1] = '\0';
+                    text->cache_usage = text->text_length + peek_bytes;
                 }
                 else
                 {
@@ -2174,6 +2226,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                     text->text_length = chunk.length - text_offset;
 
                     text->text[text->text_length] = '\0';
+                    text->cache_usage = chunk.length + 1;
                 }
 
                 if(check_png_keyword(text->keyword)) return SPNG_ETEXT_KEYWORD;
@@ -2185,7 +2238,11 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                     language_tag_offset = keyword_len;
                     translated_keyword_offset = keyword_len;
 
-                    if(check_png_text(text->text, text->text_length)) return SPNG_ETEXT;
+                    if(ctx->strict && check_png_text(text->text, text->text_length))
+                    {
+                        if(text->type == SPNG_ZTXT) return SPNG_EZTXT;
+                        else return SPNG_ETEXT;
+                    }
                 }
 
                 text->language_tag = text->keyword + language_tag_offset;
@@ -2200,26 +2257,18 @@ static int read_non_idat_chunks(spng_ctx *ctx)
                 if(!chunk.length) return SPNG_ECHUNK_SIZE;
 
                 ctx->file.splt = 1;
+                undo = splt_undo;
 
-                /* chunk.length + sizeof(struct spng_splt) + splt->n_entries * sizeof(struct spnt_splt_entry) */
+                /* chunk.length + sizeof(struct spng_splt) + splt->n_entries * sizeof(struct spng_splt_entry) */
                 if(increase_cache_usage(ctx, chunk.length + sizeof(struct spng_splt))) return SPNG_EMEM;
 
-                if(!ctx->stored.splt)
-                {
-                    ctx->n_splt = 1;
-                    ctx->splt_list = spng__calloc(ctx, 1, sizeof(struct spng_splt));
-                    if(ctx->splt_list == NULL) return SPNG_EMEM;
-                }
-                else
-                {
-                    ctx->n_splt++;
-                    if(ctx->n_splt < 1) return SPNG_EOVERFLOW;
-                    if(sizeof(struct spng_splt) > SIZE_MAX / ctx->n_splt) return SPNG_EOVERFLOW;
+                ctx->n_splt++;
+                if(ctx->n_splt < 1) return SPNG_EOVERFLOW;
+                if(sizeof(struct spng_splt) > SIZE_MAX / ctx->n_splt) return SPNG_EOVERFLOW;
 
-                    void *buf = spng__realloc(ctx, ctx->splt_list, ctx->n_splt * sizeof(struct spng_splt));
-                    if(buf == NULL) return SPNG_EMEM;
-                    ctx->splt_list = buf;
-                }
+                void *buf = spng__realloc(ctx, ctx->splt_list, ctx->n_splt * sizeof(struct spng_splt));
+                if(buf == NULL) return SPNG_EMEM;
+                ctx->splt_list = buf;
 
                 struct spng_splt *splt = &ctx->splt_list[ctx->n_splt - 1];
 
@@ -2881,7 +2930,7 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
         float file_gamma = (float)ctx->gama / 100000.0f;
         float max;
 
-        uint32_t lut_entries;
+        unsigned lut_entries;
 
         if(fmt & (SPNG_FMT_RGBA8 | SPNG_FMT_RGB8))
         {
@@ -2910,7 +2959,7 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
 
         exponent = 1.0f / exponent;
 
-        int i;
+        unsigned i;
         for(i=0; i < lut_entries; i++)
         {
             float c = pow((float)i / max, exponent) * max;
@@ -2990,7 +3039,7 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
     /* Pre-process palette entries */
     if(f.indexed)
     {
-        int i;
+        uint32_t i;
         for(i=0; i < 256; i++)
         {
             if(f.apply_trns && i < ctx->trns.n_type3_entries)
@@ -3068,7 +3117,7 @@ int spng_decode_image(spng_ctx *ctx, void *out, size_t len, int fmt, int flags)
     else if(fmt == SPNG_FMT_G8) pixel_size = 1;
     else if(fmt == SPNG_FMT_GA8) pixel_size = 2;
 
-    uint32_t i;
+    int i;
     for(i=ri->pass; i <= ctx->last_pass; i++)
     {
         if(!sub[i].scanline_width) continue;
@@ -3147,6 +3196,9 @@ spng_ctx *spng_ctx_new2(struct spng_alloc *alloc, int flags)
     ctx->chunk_cache_limit = SIZE_MAX;
 
     ctx->state = SPNG_STATE_INIT;
+
+    ctx->crc_action_critical = SPNG_CRC_ERROR;
+    ctx->crc_action_ancillary = SPNG_CRC_DISCARD;
 
     ctx->flags = flags;
 
@@ -3345,6 +3397,9 @@ int spng_decoded_image_size(spng_ctx *ctx, int fmt, size_t *len)
     size_t res = ihdr->width;
     unsigned bytes_per_pixel;
 
+    /* Currently all enums are single-bit values */
+    if(fmt & ((unsigned)fmt - 1)) return SPNG_EFMT; /* More than one bit is set */
+
     if(fmt == SPNG_FMT_RGBA8)
     {
         bytes_per_pixel = 4;
@@ -3501,6 +3556,8 @@ int spng_get_text(spng_ctx *ctx, struct spng_text *text, uint32_t *n_text)
 {
     if(ctx == NULL || n_text == NULL) return 1;
 
+    if(!ctx->stored.text) return SPNG_ECHUNKAVAIL;
+
     if(text == NULL)
     {
         *n_text = ctx->n_text;
@@ -3512,16 +3569,15 @@ int spng_get_text(spng_ctx *ctx, struct spng_text *text, uint32_t *n_text)
 
     if(*n_text < ctx->n_text) return 1;
 
-    if(!ctx->stored.text) return SPNG_ECHUNKAVAIL;
-
     uint32_t i;
     for(i=0; i< ctx->n_text; i++)
     {
         text[i].type = ctx->text_list[i].type;
-        memcpy(&text[i].keyword,  ctx->text_list[i].keyword, strlen(ctx->text_list[i].keyword) + 1);
+        memcpy(&text[i].keyword, ctx->text_list[i].keyword, strlen(ctx->text_list[i].keyword) + 1);
         text[i].compression_method = 0;
         text[i].compression_flag = ctx->text_list[i].compression_flag;
         text[i].language_tag = ctx->text_list[i].language_tag;
+        text[i].translated_keyword = ctx->text_list[i].translated_keyword;
         text[i].length = ctx->text_list[i].text_length;
         text[i].text = ctx->text_list[i].text;
     }
@@ -3566,6 +3622,8 @@ int spng_get_splt(spng_ctx *ctx, struct spng_splt *splt, uint32_t *n_splt)
 {
     if(ctx == NULL || n_splt == NULL) return 1;
 
+    if(!ctx->stored.splt) return SPNG_ECHUNKAVAIL;
+
     if(splt == NULL)
     {
         *n_splt = ctx->n_splt;
@@ -3576,8 +3634,6 @@ int spng_get_splt(spng_ctx *ctx, struct spng_splt *splt, uint32_t *n_splt)
     if(ret) return ret;
 
     if(*n_splt < ctx->n_splt) return 1;
-
-    if(!ctx->stored.splt) return SPNG_ECHUNKAVAIL;
 
     memcpy(splt, &ctx->splt_list, ctx->n_splt * sizeof(struct spng_splt));
 
@@ -4072,17 +4128,42 @@ const char *spng_version_string(void)
     #pragma warning(pop)
 #endif
 
-/* filter_sse2_intrinsics.c - SSE2 optimized filter functions
- *
- * Copyright (c) 2018 Cosmin Truta
- * Copyright (c) 2016-2017 Glenn Randers-Pehrson
- * Written by Mike Klein and Matt Sarett
- * Derived from arm/filter_neon_intrinsics.c
- *
- * This code is released under the libpng license.
- * For conditions of distribution and use, see the disclaimer
- * and license in png.h
- */
+/* The following SIMD optimizations are derived from libpng source code. */
+
+/*
+* PNG Reference Library License version 2
+*
+* Copyright (c) 1995-2019 The PNG Reference Library Authors.
+* Copyright (c) 2018-2019 Cosmin Truta.
+* Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson.
+* Copyright (c) 1996-1997 Andreas Dilger.
+* Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+*
+* The software is supplied "as is", without warranty of any kind,
+* express or implied, including, without limitation, the warranties
+* of merchantability, fitness for a particular purpose, title, and
+* non-infringement.  In no event shall the Copyright owners, or
+* anyone distributing the software, be liable for any damages or
+* other liability, whether in contract, tort or otherwise, arising
+* from, out of, or in connection with the software, or the use or
+* other dealings in the software, even if advised of the possibility
+* of such damage.
+*
+* Permission is hereby granted to use, copy, modify, and distribute
+* this software, or portions hereof, for any purpose, without fee,
+* subject to the following restrictions:
+*
+*  1. The origin of this software must not be misrepresented; you
+*     must not claim that you wrote the original software.  If you
+*     use this software in a product, an acknowledgment in the product
+*     documentation would be appreciated, but is not required.
+*
+*  2. Altered source versions must be plainly marked as such, and must
+*     not be misrepresented as being the original software.
+*
+*  3. This Copyright notice may not be removed or altered from any
+*     source or altered source distribution.
+*/
 
 #if defined(SPNG_X86)
 
@@ -4091,12 +4172,27 @@ const char *spng_version_string(void)
 #endif
 
 #if defined(__GNUC__) && !defined(__clang__)
-   #pragma GCC target("sse2")
-
     #if SPNG_SSE == 3
         #pragma GCC target("ssse3")
+    #elif SPNG_SSE == 4
+        #pragma GCC target("sse4.1")
+    #else
+        #pragma GCC target("sse2")
     #endif
 #endif
+
+/* SSE2 optimised filter functions
+ * Derived from filter_neon_intrinsics.c
+ *
+ * Copyright (c) 2018 Cosmin Truta
+ * Copyright (c) 2016-2017 Glenn Randers-Pehrson
+ * Written by Mike Klein and Matt Sarett
+ * Derived from arm/filter_neon_intrinsics.c
+ *
+ * This code is derived from libpng source code.
+ * For conditions of distribution and use, see the disclaimer
+ * and license above.
+ */
 
 #include <immintrin.h>
 #include <inttypes.h>
@@ -4292,7 +4388,7 @@ static __m128i abs_i16(__m128i x)
 /* Bytewise c ? t : e. */
 static __m128i if_then_else(__m128i c, __m128i t, __m128i e)
 {
-#if SPNG_SSE > 3
+#if SPNG_SSE >= 4
    return _mm_blendv_epi8(e, t, c);
 #else
    return _mm_or_si128(_mm_and_si128(c, t), _mm_andnot_si128(c, e));
@@ -4453,20 +4549,20 @@ static void defilter_paeth4(size_t rowbytes, unsigned char *row, const unsigned 
 #endif /* SPNG_X86 */
 
 
-/* filter_neon_intrinsics.c - NEON optimised filter functions
+#if defined(SPNG_ARM)
+
+/* NEON optimised filter functions
+ * Derived from filter_neon_intrinsics.c
  *
  * Copyright (c) 2018 Cosmin Truta
  * Copyright (c) 2014,2016 Glenn Randers-Pehrson
  * Written by James Yu <james.yu at linaro.org>, October 2013.
  * Based on filter_neon.S, written by Mans Rullgard, 2011.
  *
- * This code is released under the libpng license.
+ * This code is derived from libpng source code.
  * For conditions of distribution and use, see the disclaimer
- * and license in png.h
+ * and license in this file.
  */
-
-
-#if defined(SPNG_ARM)
 
 #define png_aligncast(type, value) ((void*)(value))
 #define png_aligncastconst(type, value) ((const void*)(value))

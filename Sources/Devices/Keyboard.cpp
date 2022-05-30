@@ -3,10 +3,10 @@
 #include <GLFW/glfw3.h>
 
 namespace acid {
-static_assert(GLFW_KEY_LAST == static_cast<int16_t>(Key::Last), "GLFW keys count does not match our keys enum count.");
+static_assert(GLFW_KEY_LAST == static_cast<int16_t>(Key::Menu), "GLFW keys count does not match our keys enum count.");
 
 void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods) {
-	Keyboard::Get()->onKey(static_cast<Key>(key), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
+	Keyboard::Get()->onKey(static_cast<Key>(key), static_cast<InputAction>(action), bitmask::bitmask<InputMod>(mods));
 }
 
 void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
@@ -14,15 +14,15 @@ void CallbackChar(GLFWwindow *window, uint32_t codepoint) {
 }
 
 Keyboard::Keyboard() {
-	glfwSetKeyCallback(Window::Get()->GetWindow(), CallbackKey);
-	glfwSetCharCallback(Window::Get()->GetWindow(), CallbackChar);
+	glfwSetKeyCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackKey);
+	glfwSetCharCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackChar);
 }
 
 void Keyboard::Update() {
 }
 
 InputAction Keyboard::GetKey(Key key) const {
-	auto state = glfwGetKey(Window::Get()->GetWindow(), static_cast<int32_t>(key));
+	auto state = glfwGetKey(Windows::Get()->GetWindow(0)->GetWindow(), static_cast<int32_t>(key));
 	return static_cast<InputAction>(state);
 }
 

@@ -11,7 +11,7 @@ float CompoundInputAxis::GetAmount() const {
 	for (const auto &axis : axes)
 		result += axis->GetAmount();
 
-	return scale * std::clamp(result, -1.0f, 1.0f);
+	return scale * std::clamp(result, -1.0f, 1.0f) + offset;
 }
 
 InputAxis::ArgumentDescription CompoundInputAxis::GetArgumentDescription() const {
@@ -29,15 +29,15 @@ InputAxis *CompoundInputAxis::AddAxis(std::unique_ptr<InputAxis> &&axis) {
 
 void CompoundInputAxis::RemoveAxis(InputAxis *axis) {
 	//axis->OnAxis().RemoveObservers(this);
-	axes.erase(std::remove_if(axes.begin(), axes.end(), [axis](std::unique_ptr<InputAxis> &a) {
+	axes.erase(std::remove_if(axes.begin(), axes.end(), [axis](const auto &a) {
 		return a.get() == axis;
 	}), axes.end());
 }
 
 void CompoundInputAxis::ConnectAxis(std::unique_ptr<InputAxis> &axis) {
-	axis->OnAxis().Add([this](float value) {
+	axis->OnAxis().connect(this, [this](float value) {
 		onAxis(GetAmount());
-	}, this);
+	});
 }
 
 void CompoundInputAxis::ConnectAxes() {

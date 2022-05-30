@@ -169,7 +169,7 @@
    #if defined(_MSC_VER) || defined(__MINGW32__)
       #include <malloc.h>
    #endif
-   #if defined(__linux__) || defined(__linux) || defined(__EMSCRIPTEN__)
+   #if defined(__linux__) || defined(__linux) || defined(__EMSCRIPTEN__) || defined(__NEWLIB__)
       #include <alloca.h>
    #endif
 #else // STB_VORBIS_NO_CRT
@@ -191,7 +191,9 @@
    #undef __forceinline
    #endif
    #define __forceinline
+   #ifndef alloca
    #define alloca __builtin_alloca
+   #endif
 #elif !defined(_MSC_VER)
    #if __GNUC__
       #define __forceinline inline
@@ -553,7 +555,7 @@ static void *setup_temp_malloc(vorb *f, int sz)
 static void setup_temp_free(vorb *f, void *p, int sz)
 {
    if (f->alloc.alloc_buffer) {
-      f->temp_offset += (sz+3)&~3;
+      f->temp_offset += (sz+7)&~7;
       return;
    }
    free(p);
@@ -1192,7 +1194,8 @@ static uint32 get_bits(vorb *f, int n)
          f->valid_bits += 8;
       }
    }
-   if (f->valid_bits < 0) return 0;
+
+   assert(f->valid_bits >= n);
    z = f->acc & ((1 << n)-1);
    f->acc >>= n;
    f->valid_bits -= n;
@@ -3222,6 +3225,7 @@ static int start_decoder(vorb *f)
    //file vendor
    len = get32_packet(f);
    f->vendor = (char*)setup_malloc(f, sizeof(char) * (len+1));
+   if (f->vendor == NULL)                           return error(f, VORBIS_outofmem);
    for(i=0; i < len; ++i) {
       f->vendor[i] = get8_packet(f);
    }
@@ -3229,10 +3233,12 @@ static int start_decoder(vorb *f)
    //user comments
    f->comment_list_length = get32_packet(f);
    f->comment_list = (char**)setup_malloc(f, sizeof(char*) * (f->comment_list_length));
+   if (f->comment_list == NULL)                     return error(f, VORBIS_outofmem);
 
    for(i=0; i < f->comment_list_length; ++i) {
       len = get32_packet(f);
       f->comment_list[i] = (char*)setup_malloc(f, sizeof(char) * (len+1));
+      if (f->comment_list[i] == NULL)               return error(f, VORBIS_outofmem);
 
       for(j=0; j < len; ++j) {
          f->comment_list[i][j] = get8_packet(f);
@@ -3845,7 +3851,7 @@ static void vorbis_init(stb_vorbis *p, const stb_vorbis_alloc *z)
    memset(p, 0, sizeof(*p)); // NULL out all malloc'd pointers to start
    if (z) {
       p->alloc = *z;
-      p->alloc.alloc_buffer_length_in_bytes = (p->alloc.alloc_buffer_length_in_bytes+3) & ~3;
+      p->alloc.alloc_buffer_length_in_bytes &= ~7;
       p->temp_offset = p->alloc.alloc_buffer_length_in_bytes;
    }
    p->eof = 0;

@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Utils/Delegate.hpp"
+#include <rocket.hpp>
+
 #include "Utils/StreamFactory.hpp"
 
 namespace acid {
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_EXPORT InputAxis : public StreamFactory<InputAxis>, public virtual Observer {
+class ACID_EXPORT InputAxis : public StreamFactory<InputAxis>, public virtual rocket::trackable {
 public:
 	class Argument {
 	public:
@@ -44,13 +45,17 @@ public:
 	 * Called when the axis changes value.
 	 * @return The delegate.
 	 */
-	Delegate<void(float)> &OnAxis() { return onAxis; }
+	rocket::signal<void(float)> &OnAxis() { return onAxis; }
 
 	float GetScale() const { return scale; }
 	void SetScale(float scale) { this->scale = scale; }
 
+	float GetOffset() const { return offset; }
+	void SetOffset(float offset) { this->offset = offset; }
+
 protected:
-	Delegate<void(float)> onAxis;
+	rocket::signal<void(float)> onAxis;
 	float scale = 1.0f;
+	float offset = 0.0f;
 };
 }

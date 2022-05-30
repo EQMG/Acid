@@ -5,10 +5,10 @@
 #include "Maths/Maths.hpp"
 
 namespace acid {
-static_assert(GLFW_MOUSE_BUTTON_LAST == static_cast<int16_t>(MouseButton::Last), "GLFW mouse button count does not match our mouse button enum count.");
+static_assert(GLFW_MOUSE_BUTTON_LAST == static_cast<int16_t>(MouseButton::_8), "GLFW mouse button count does not match our mouse button enum count.");
 
 void CallbackMouseButton(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) {
-	Mouse::Get()->onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), MakeBitMask<InputMod>(mods));
+	Mouse::Get()->onButton(static_cast<MouseButton>(button), static_cast<InputAction>(action), bitmask::bitmask<InputMod>(mods));
 }
 
 void CallbackCursorPos(GLFWwindow *window, double xpos, double ypos) {
@@ -35,11 +35,11 @@ void CallbackDrop(GLFWwindow *window, int32_t count, const char **paths) {
 }
 
 Mouse::Mouse() {
-	glfwSetMouseButtonCallback(Window::Get()->GetWindow(), CallbackMouseButton);
-	glfwSetCursorPosCallback(Window::Get()->GetWindow(), CallbackCursorPos);
-	glfwSetCursorEnterCallback(Window::Get()->GetWindow(), CallbackCursorEnter);
-	glfwSetScrollCallback(Window::Get()->GetWindow(), CallbackScroll);
-	glfwSetDropCallback(Window::Get()->GetWindow(), CallbackDrop);
+	glfwSetMouseButtonCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackMouseButton);
+	glfwSetCursorPosCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackCursorPos);
+	glfwSetCursorEnterCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackCursorEnter);
+	glfwSetScrollCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackScroll);
+	glfwSetDropCallback(Windows::Get()->GetWindow(0)->GetWindow(), CallbackDrop);
 }
 
 Mouse::~Mouse() {
@@ -91,7 +91,7 @@ void Mouse::SetCursor(const std::filesystem::path &filename, CursorHotspot hotsp
 		break;
 	}
 
-	glfwSetCursor(Window::Get()->GetWindow(), cursor);
+	glfwSetCursor(Windows::Get()->GetWindow(0)->GetWindow(), cursor);
 	currentCursor = {filename, hotspot};
 	currentStandard = std::nullopt;
 }
@@ -103,28 +103,28 @@ void Mouse::SetCursor(CursorStandard standard) {
 
 	cursor = glfwCreateStandardCursor(static_cast<int32_t>(standard));
 
-	glfwSetCursor(Window::Get()->GetWindow(), cursor);
+	glfwSetCursor(Windows::Get()->GetWindow(0)->GetWindow(), cursor);
 	currentCursor = std::nullopt;
 	currentStandard = standard;
 }
 
 std::string Mouse::GetClipboard() const {
-	return glfwGetClipboardString(Window::Get()->GetWindow());
+	return glfwGetClipboardString(Windows::Get()->GetWindow(0)->GetWindow());
 }
 
 void Mouse::SetClipboard(const std::string &string) const {
-	glfwSetClipboardString(Window::Get()->GetWindow(), string.c_str());
+	glfwSetClipboardString(Windows::Get()->GetWindow(0)->GetWindow(), string.c_str());
 }
 
 InputAction Mouse::GetButton(MouseButton mouseButton) const {
-	auto state = glfwGetMouseButton(Window::Get()->GetWindow(), static_cast<int32_t>(mouseButton));
+	auto state = glfwGetMouseButton(Windows::Get()->GetWindow(0)->GetWindow(), static_cast<int32_t>(mouseButton));
 	return static_cast<InputAction>(state);
 }
 
 void Mouse::SetPosition(const Vector2d &position) {
 	this->lastPosition = position;
 	this->position = position;
-	glfwSetCursorPos(Window::Get()->GetWindow(), position.x, position.y);
+	glfwSetCursorPos(Windows::Get()->GetWindow(0)->GetWindow(), position.x, position.y);
 }
 
 void Mouse::SetScroll(const Vector2d &scroll) {
@@ -134,7 +134,7 @@ void Mouse::SetScroll(const Vector2d &scroll) {
 
 void Mouse::SetCursorHidden(bool hidden) {
 	if (cursorHidden != hidden) {
-		glfwSetInputMode(Window::Get()->GetWindow(), GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(Windows::Get()->GetWindow(0)->GetWindow(), GLFW_CURSOR, hidden ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 
 		if (!hidden && cursorHidden)
 			SetPosition(position);

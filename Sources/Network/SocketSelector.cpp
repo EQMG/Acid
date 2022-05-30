@@ -1,6 +1,6 @@
 #include "SocketSelector.hpp"
 
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 #include <WinSock2.h>
 #else
 #include <sys/types.h>
@@ -39,7 +39,7 @@ void SocketSelector::Add(Socket &socket) {
 	auto handle = socket.GetHandle();
 
 	if (handle != Socket::InvalidSocketHandle()) {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 		if (impl->socketCount >= FD_SETSIZE) {
 			Log::Error("The socket can't be added to the selector because the selector is full. This is a limitation of your operating system's FD_SETSIZE setting.\n");
 			return;
@@ -67,7 +67,7 @@ void SocketSelector::Remove(Socket &socket) {
 	auto handle = socket.GetHandle();
 
 	if (handle != Socket::InvalidSocketHandle()) {
-#if defined(ACID_BUILD_WINDOWS)
+#ifdef ACID_BUILD_WINDOWS
 		if (!FD_ISSET(handle, &impl->allSockets))
 			return;
 
@@ -111,7 +111,7 @@ bool SocketSelector::IsReady(const Socket &socket) const {
 	auto handle = socket.GetHandle();
 
 	if (handle != Socket::InvalidSocketHandle()) {
-#if !defined(ACID_BUILD_WINDOWS)
+#ifndef ACID_BUILD_WINDOWS
 		if (handle >= FD_SETSIZE)
 			return false;
 #endif

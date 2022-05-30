@@ -12,12 +12,12 @@ MeshesSubrender::MeshesSubrender(const Pipeline::Stage &pipelineStage, Sort sort
 }
 
 void MeshesSubrender::Render(const CommandBuffer &commandBuffer) {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	uniformScene.Push("projection", camera->GetProjectionMatrix());
 	uniformScene.Push("view", camera->GetViewMatrix());
 	uniformScene.Push("cameraPos", camera->GetPosition());
 
-	auto meshes = Scenes::Get()->GetStructure()->QueryComponents<Mesh>();
+	auto meshes = Scenes::Get()->GetScene()->QueryComponents<Mesh>();
 	if (sort == Sort::Front)
 		std::sort(meshes.begin(), meshes.end(), std::greater<>());
 	else if (sort == Sort::Back)
@@ -27,7 +27,7 @@ void MeshesSubrender::Render(const CommandBuffer &commandBuffer) {
 		mesh->CmdRender(commandBuffer, uniformScene, GetStage());
 
 	// TODO: Split animated meshes into it's own subrender.
-	auto animatedMeshes = Scenes::Get()->GetStructure()->QueryComponents<AnimatedMesh>();
+	auto animatedMeshes = Scenes::Get()->GetScene()->QueryComponents<AnimatedMesh>();
 	for (const auto &animatedMesh : animatedMeshes)
 		animatedMesh->CmdRender(commandBuffer, uniformScene, GetStage());
 }

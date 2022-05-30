@@ -2,7 +2,7 @@
   "configurations": [
     {
       "name": "x64-Debug",
-      "generator": "Visual Studio 16 2019 Win64",
+      "generator": "Ninja",
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",
@@ -14,7 +14,7 @@
     },
     {
       "name": "x64-RelWithDebInfo",
-      "generator": "Visual Studio 16 2019 Win64",
+      "generator": "Ninja",
       "configurationType": "RelWithDebInfo",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\Build\\${name}",
@@ -26,7 +26,7 @@
     },
     {
       "name": "x64-Release",
-      "generator": "Visual Studio 16 2019 Win64",
+      "generator": "Ninja",
       "configurationType": "Release",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${workspaceRoot}\\Build\\${name}",

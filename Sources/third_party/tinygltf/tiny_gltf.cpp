@@ -88,13 +88,13 @@
 
 #ifndef TINYGLTF_NO_STB_IMAGE
 #ifndef TINYGLTF_NO_INCLUDE_STB_IMAGE
-#include "stb/stb_image.h"
+#include <stb_image.h>
 #endif
 #endif
 
 #ifndef TINYGLTF_NO_STB_IMAGE_WRITE
 #ifndef TINYGLTF_NO_INCLUDE_STB_IMAGE_WRITE
-#include "stb/stb_image_write.h"
+#include <stb_image_write.h>
 #endif
 #endif
 
@@ -241,6 +241,19 @@ void JsonParse(JsonDocument &doc, const char *str, size_t length,
 #endif
 
 namespace tinygltf {
+
+///
+/// Internal LoadImageDataOption struct.
+/// This struct is passed through `user_pointer` in LoadImageData.
+/// The struct is not passed when the user supply their own LoadImageData callbacks.
+///
+struct LoadImageDataOption
+{
+  // true: preserve image channels(e.g. load as RGB image if the image has RGB channels)
+  // default `false`(channels are expanded to RGBA for backward compatiblity).
+  bool preserve_channels{false};
+
+};
 
 // Equals function for Value, for recursivity
 static bool Equals(const tinygltf::Value &one, const tinygltf::Value &other) {
@@ -570,7 +583,7 @@ std::string base64_decode(std::string const &s);
 /*
    base64.cpp and base64.h
 
-   Copyright (C) 2004-2008 René Nyffenegger
+   Copyright (C) 2004-2008 RenÃ© Nyffenegger
 
    This source code is provided 'as-is', without any express or implied
    warranty. In no event will the author be held liable for any damages
@@ -590,7 +603,7 @@ std::string base64_decode(std::string const &s);
 
    3. This notice may not be removed or altered from any source distribution.
 
-   René Nyffenegger rene.nyffenegger@adp-gmbh.ch
+   RenÃ© Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
 */
 
@@ -856,22 +869,40 @@ static bool LoadExternalFile(std::vector<unsigned char> *out, std::string *err,
 void TinyGLTF::SetImageLoader(LoadImageDataFunction func, void *user_data) {
   LoadImageData = func;
   load_image_user_data_ = user_data;
+  user_image_loader_ = true;
+}
+
+void TinyGLTF::RemoveImageLoader() {
+  LoadImageData =
+#ifndef TINYGLTF_NO_STB_IMAGE
+      &tinygltf::LoadImageData;
+#else
+      nullptr;
+#endif
+
+  load_image_user_data_ = nullptr;
+  user_image_loader_ = false;
 }
 
 #ifndef TINYGLTF_NO_STB_IMAGE
 bool LoadImageData(Image *image, const int image_idx, std::string *err,
                    std::string *warn, int req_width, int req_height,
                    const unsigned char *bytes, int size, void *user_data) {
-  (void)user_data;
   (void)warn;
+
+  LoadImageDataOption option;
+  if (user_data) {
+    option = *reinterpret_cast<LoadImageDataOption *>(user_data);
+  }
 
   int w = 0, h = 0, comp = 0, req_comp = 0;
 
   unsigned char *data = nullptr;
 
-  // force 32-bit textures for common Vulkan compatibility. It appears that
+  // preserve_channels true: Use channels stored in the image file.
+  // false: force 32-bit textures for common Vulkan compatibility. It appears that
   // some GPU drivers do not support 24-bit images for Vulkan
-  req_comp = 4;
+  req_comp = option.preserve_channels ? 0 : 4;
   int bits = 8;
   int pixel_type = TINYGLTF_COMPONENT_TYPE_UNSIGNED_BYTE;
 
@@ -943,13 +974,18 @@ bool LoadImageData(Image *image, const int image_idx, std::string *err,
     }
   }
 
+  if (req_comp != 0) {
+    // loaded data has `req_comp` channels(components)
+    comp = req_comp;
+  }
+
   image->width = w;
   image->height = h;
-  image->component = req_comp;
+  image->component = comp;
   image->bits = bits;
   image->pixel_type = pixel_type;
-  image->image.resize(static_cast<size_t>(w * h * req_comp) * size_t(bits / 8));
-  std::copy(data, data + w * h * req_comp * (bits / 8), image->image.begin());
+  image->image.resize(static_cast<size_t>(w * h * comp) * size_t(bits / 8));
+  std::copy(data, data + w * h * comp * (bits / 8), image->image.begin());
   stbi_image_free(data);
 
   return true;
@@ -1055,7 +1091,7 @@ static inline std::wstring UTF8ToWchar(const std::string &str) {
 
 static inline std::string WcharToUTF8(const std::wstring &wstr) {
   int str_size = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(),
-                                      nullptr, 0, NULL, NULL);
+                                     nullptr, 0, NULL, NULL);
   std::string str(str_size, 0);
   WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(), &str[0],
                       (int)str.size(), NULL, NULL);
@@ -1198,7 +1234,8 @@ bool ReadWholeFile(std::vector<unsigned char> *out, std::string *err,
   __gnu_cxx::stdio_filebuf<char> wfile_buf(file_descriptor, std::ios_base::in);
   std::istream f(&wfile_buf);
 #elif defined(_MSC_VER) || defined(_LIBCPP_VERSION)
-  // For libcxx, assume _LIBCPP_HAS_OPEN_WITH_WCHAR is defined to accept `wchar_t *`
+  // For libcxx, assume _LIBCPP_HAS_OPEN_WITH_WCHAR is defined to accept
+  // `wchar_t *`
   std::ifstream f(UTF8ToWchar(filepath).c_str(), std::ifstream::binary);
 #else
   // Unknown compiler/runtime
@@ -1560,7 +1597,9 @@ json_const_iterator ObjectEnd(const json &o) {
 #endif
 }
 
-const char *GetKey(json_const_iterator &it) {
+// Making this a const char* results in a pointer to a temporary when
+// TINYGLTF_USE_RAPIDJSON is off.
+std::string GetKey(json_const_iterator &it) {
 #ifdef TINYGLTF_USE_RAPIDJSON
   return it->name.GetString();
 #else
@@ -4265,10 +4304,13 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
 
       for (auto &target : primitive.targets) {
         for (auto &attribute : target) {
-          model
-              ->bufferViews[size_t(
-                  model->accessors[size_t(attribute.second)].bufferView)]
-              .target = TINYGLTF_TARGET_ARRAY_BUFFER;
+          auto bufferView =
+              model->accessors[size_t(attribute.second)].bufferView;
+          // bufferView could be null(-1) for sparse morph target
+          if (bufferView >= 0) {
+            model->bufferViews[size_t(bufferView)].target =
+                TINYGLTF_TARGET_ARRAY_BUFFER;
+          }
         }
       }
     }
@@ -4378,6 +4420,18 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
   }
 
   // 11. Parse Image
+  void *load_image_user_data{nullptr};
+
+  LoadImageDataOption load_image_option;
+
+  if (user_image_loader_) {
+    // Use user supplied pointer
+    load_image_user_data = load_image_user_data_;
+  } else {
+    load_image_option.preserve_channels = preserve_image_channels_;
+    load_image_user_data = reinterpret_cast<void *>(&load_image_option);
+  }
+
   {
     int idx = 0;
     bool success = ForEachInArray(v, "images", [&](const json &o) {
@@ -4390,7 +4444,7 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
       Image image;
       if (!ParseImage(&image, idx, err, warn, o,
                       store_original_json_for_extras_and_extensions_, base_dir,
-                      &fs, &this->LoadImageData, load_image_user_data_)) {
+                      &fs, &this->LoadImageData, load_image_user_data)) {
         return false;
       }
 
@@ -4428,7 +4482,7 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
         bool ret = LoadImageData(
             &image, idx, err, warn, image.width, image.height,
             &buffer.data[bufferView.byteOffset],
-            static_cast<int>(bufferView.byteLength), load_image_user_data_);
+            static_cast<int>(bufferView.byteLength), load_image_user_data);
         if (!ret) {
           return false;
         }
@@ -5778,6 +5832,15 @@ static void SerializeGltfModel(Model *model, json &o) {
     for (unsigned int i = 0; i < model->materials.size(); ++i) {
       json material;
       SerializeGltfMaterial(model->materials[i], material);
+
+      if (JsonIsNull(material)) {
+        // Issue 294.
+        // `material` does not have any required parameters
+        // so the result may be null(unmodified) when all material parameters have default value.
+        //
+        // null is not allowed thus we create an empty JSON object.
+        JsonSetObject(material);
+      }
       JsonPushBack(materials, std::move(material));
     }
     JsonAddMember(o, "materials", std::move(materials));
@@ -5903,8 +5966,9 @@ static void SerializeGltfModel(Model *model, json &o) {
 
     // Also add "KHR_lights_punctual" to `extensionsUsed`
     {
-      auto has_khr_lights_punctual = std::find_if(
-          extensionsUsed.begin(), extensionsUsed.end(), [](const std::string &s) {
+      auto has_khr_lights_punctual =
+          std::find_if(extensionsUsed.begin(), extensionsUsed.end(),
+                       [](const std::string &s) {
                          return (s.compare("KHR_lights_punctual") == 0);
                        });
 

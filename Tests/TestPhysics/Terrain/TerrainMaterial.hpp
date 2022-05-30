@@ -7,6 +7,7 @@ using namespace acid;
 
 namespace test {
 class TerrainMaterial : public Material::Registrar<TerrainMaterial> {
+	inline static const bool Registered = Register("terrain");
 public:
 	explicit TerrainMaterial(std::shared_ptr<Image2d> imageR = nullptr, std::shared_ptr<Image2d> imageG = nullptr);
 
@@ -24,8 +25,6 @@ public:
 	void SetImageG(std::shared_ptr<Image2d> imageG) { this->imageG = std::move(imageG); }
 
 private:
-	inline static bool Registered = Register("terrain");
-
 	std::shared_ptr<Image2d> imageR;
 	std::shared_ptr<Image2d> imageG;
 };

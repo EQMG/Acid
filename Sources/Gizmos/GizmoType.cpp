@@ -51,7 +51,7 @@ void GizmoType::Update(const std::vector<std::unique_ptr<Gizmo>> &gizmos) {
 		if (this->instances >= maxInstances)
 			break;
 
-		//if (!Scenes::Get()->GetCamera()->GetViewFrustum().SphereInFrustum(gizmo->GetTransform().GetPosition(), FRUSTUM_BUFFER * gizmo->GetTransform().GetPosition().GetScale())) {
+		//if (!Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum().SphereInFrustum(gizmo->GetTransform().GetPosition(), FRUSTUM_BUFFER * gizmo->GetTransform().GetPosition().GetScale())) {
 		//	continue;
 		//}
 

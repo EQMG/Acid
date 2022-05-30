@@ -26,10 +26,10 @@ UiDropdownInput::UiDropdownInput() {
 	AddChild(&textTitle);
 
 	SetCursorHover(CursorStandard::Hand);
-	OnSelected().Add([this](bool selected) {
+	OnSelected().connect(this, [this](bool selected) {
 		background.SetColourDriver<SlideDriver>(background.GetColourDriver()->Get(),
 			selected ? UiButtonInput::SelectedColour : UiButtonInput::PrimaryColour, UiButtonInput::SlideTime);
-	}, this);
+	});
 }
 
 void UiDropdownInput::UpdateObject() {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Engine/Engine.hpp"
 
 namespace acid {
@@ -125,16 +125,14 @@ enum class Key : int16_t {
 	ControlRight = 345,
 	AltRight = 346,
 	SuperRight = 347,
-	Menu = 348,
-	First = Space,
-	Last = Menu
+	Menu = 348
 };
 
 /**
  * @brief Module used for managing a virtual keyboard.
  */
 class ACID_EXPORT Keyboard : public Module::Registrar<Keyboard> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Window>());
+	inline static const bool Registered = Register(Stage::Pre, Requires<Windows>());
 public:
 	Keyboard();
 
@@ -153,19 +151,27 @@ public:
 	 * Called when a key changes state.
 	 * @return The delegate.
 	 */
-	Delegate<void(Key, InputAction, BitMask<InputMod>)> &OnKey() { return onKey; }
+	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> &OnKey() { return onKey; }
 
 	/**
 	 * Called when a character has been typed.
 	 * @return The delegate.
 	 */
-	Delegate<void(char)> &OnChar() { return onChar; }
+	rocket::signal<void(char)> &OnChar() { return onChar; }
 
 private:
 	friend void CallbackKey(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mods);
 	friend void CallbackChar(GLFWwindow *window, uint32_t codepoint);
 
-	Delegate<void(Key, InputAction, BitMask<InputMod>)> onKey;
-	Delegate<void(char)> onChar;
+	rocket::signal<void(Key, InputAction, bitmask::bitmask<InputMod>)> onKey;
+	rocket::signal<void(char)> onChar;
+};
+}
+
+namespace magic_enum::customize {
+template<>
+struct enum_range<acid::Key> {
+	inline constexpr static int min = -1;
+	inline constexpr static int max = 400;
 };
 }

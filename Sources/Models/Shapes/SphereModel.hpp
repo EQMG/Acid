@@ -30,7 +30,7 @@ public:
 	 * @param radius The radius.
 	 * @param latitudeBands The amount of vertices that will make up the spheres latitude.
 	 * @param longitudeBands The amount of vertices that will make up the spheres longitude.
-	 * @param load If this resource will be loaded immediately, otherwise {@link ModelSphere#Load} can be called later.
+	 * @param load If this resource will be loaded immediately, otherwise {@link SphereModel#Load} can be called later.
 	 */
 	explicit SphereModel(float radius = 1.0f, uint32_t latitudeBands = 20, uint32_t longitudeBands = 20, bool load = true);
 

@@ -1,8 +1,7 @@
 #ifndef TINYEXR_H_
 #define TINYEXR_H_
-
 /*
-Copyright (c) 2014 - 2019, Syoyo Fujita and many contributors.
+Copyright (c) 2014 - 2020, Syoyo Fujita and many contributors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -164,9 +163,13 @@ extern "C" {
 
 typedef struct _EXRVersion {
   int version;    // this must be 2
-  int tiled;      // tile format image
+  // tile format image;
+  // not zero for only a single-part "normal" tiled file (according to spec.)
+  int tiled;      
   int long_name;  // long name attribute
-  int non_image;  // deep image(EXR 2.0)
+  // deep image(EXR 2.0);
+  // for a multi-part file, indicates that at least one part is of type deep* (according to spec.)
+  int non_image;  
   int multipart;  // multi-part(EXR 2.0)
 } EXRVersion;
 
@@ -199,11 +202,18 @@ typedef struct _EXRTile {
   unsigned char **images;  // image[channels][pixels]
 } EXRTile;
 
+typedef struct _EXRBox2i {
+  int min_x;
+  int min_y;
+  int max_x;
+  int max_y;
+} EXRBox2i;
+
 typedef struct _EXRHeader {
   float pixel_aspect_ratio;
   int line_order;
-  int data_window[4];
-  int display_window[4];
+  EXRBox2i data_window;
+  EXRBox2i display_window;
   float screen_window_center[2];
   float screen_window_width;
 
@@ -217,6 +227,8 @@ typedef struct _EXRHeader {
   int tile_rounding_mode;
 
   int long_name;
+  // for a single-part file, agree with the version field bit 11
+  // for a multi-part file, it is consistent with the type of part
   int non_image;
   int multipart;
   unsigned int header_len;
@@ -239,7 +251,11 @@ typedef struct _EXRHeader {
                                // ParseEXRHeaderFrom(Meomory|File), then users
                                // can edit it(only valid for HALF pixel type
                                // channel)
-
+  // name attribute required for multipart files;
+  // must be unique and non empty (according to spec.);
+  // use EXRSetNameAttr for setting value;
+  // max 255 character allowed - excluding terminating zero
+  char name[256];
 } EXRHeader;
 
 typedef struct _EXRMultiPartHeader {
@@ -251,6 +267,10 @@ typedef struct _EXRMultiPartHeader {
 typedef struct _EXRImage {
   EXRTile *tiles;  // Tiled pixel data. The application must reconstruct image
                    // from tiles manually. NULL if scanline format.
+  struct _EXRImage* next_level; // NULL if scanline format or image is the last level.
+  int level_x; // x level index
+  int level_y; // y level index
+
   unsigned char **images;  // image[channels][pixels]. NULL if tiled format.
 
   int width;
@@ -288,26 +308,29 @@ typedef struct _DeepImage {
 extern int LoadEXR(float **out_rgba, int *width, int *height,
                    const char *filename, const char **err);
 
-// Loads single-frame OpenEXR image by specifying layer name. Assume EXR image contains A(single channel
-// alpha) or RGB(A) channels.
-// Application must free image data as returned by `out_rgba`
-// Result image format is: float x RGBA x width x hight
-// Returns negative value and may set error string in `err` when there's an
-// error
-// When the specified layer name is not found in the EXR file, the function will return `TINYEXR_ERROR_LAYER_NOT_FOUND`.
+// Loads single-frame OpenEXR image by specifying layer name. Assume EXR image
+// contains A(single channel alpha) or RGB(A) channels. Application must free
+// image data as returned by `out_rgba` Result image format is: float x RGBA x
+// width x hight Returns negative value and may set error string in `err` when
+// there's an error When the specified layer name is not found in the EXR file,
+// the function will return `TINYEXR_ERROR_LAYER_NOT_FOUND`.
 extern int LoadEXRWithLayer(float **out_rgba, int *width, int *height,
-                   const char *filename, const char *layer_name, const char **err);
+                            const char *filename, const char *layer_name,
+                            const char **err);
 
 //
 // Get layer infos from EXR file.
 //
-// @param[out] layer_names List of layer names. Application must free memory after using this.
+// @param[out] layer_names List of layer names. Application must free memory
+// after using this.
 // @param[out] num_layers The number of layers
-// @param[out] err Error string(will be filled when the function returns error code). Free it using FreeEXRErrorMessage after using this value.
+// @param[out] err Error string(will be filled when the function returns error
+// code). Free it using FreeEXRErrorMessage after using this value.
 //
 // @return TINYEXR_SUCCEES upon success.
 //
-extern int EXRLayers(const char *filename, const char **layer_names[], int *num_layers, const char **err);
+extern int EXRLayers(const char *filename, const char **layer_names[],
+                     int *num_layers, const char **err);
 
 // @deprecated { to be removed. }
 // Simple wrapper API for ParseEXRHeaderFromFile.
@@ -331,8 +354,14 @@ extern int SaveEXR(const float *data, const int width, const int height,
                    const int components, const int save_as_fp16,
                    const char *filename, const char **err);
 
+// Returns the number of resolution levels of the image (including the base)
+extern int EXRNumLevels(const EXRImage* exr_image);
+
 // Initialize EXRHeader struct
 extern void InitEXRHeader(EXRHeader *exr_header);
+
+// Set name attribute of EXRHeader struct (it makes a copy)
+extern void EXRSetNameAttr(EXRHeader *exr_header, const char* name);
 
 // Initialize EXRImage struct
 extern void InitEXRImage(EXRImage *exr_image);
@@ -457,6 +486,30 @@ extern size_t SaveEXRImageToMemory(const EXRImage *image,
                                    const EXRHeader *exr_header,
                                    unsigned char **memory, const char **err);
 
+// Saves multi-channel, multi-frame OpenEXR image to a memory.
+// Image is compressed using EXRImage.compression value.
+// File global attributes (eg. display_window) must be set in the first header.
+// Returns negative value and may set error string in `err` when there's an
+// error
+// When there was an error message, Application must free `err` with
+// FreeEXRErrorMessage()
+extern int SaveEXRMultipartImageToFile(const EXRImage *images,
+                                       const EXRHeader **exr_headers,
+                                       unsigned int num_parts,
+                                       const char *filename, const char **err);
+
+// Saves multi-channel, multi-frame OpenEXR image to a memory.
+// Image is compressed using EXRImage.compression value.
+// File global attributes (eg. display_window) must be set in the first header.
+// Return the number of bytes if success.
+// Return zero and will set error string in `err` when there's an
+// error.
+// When there was an error message, Application must free `err` with
+// FreeEXRErrorMessage()
+extern size_t SaveEXRMultipartImageToMemory(const EXRImage *images,
+                                            const EXRHeader **exr_headers,
+                                            unsigned int num_parts,
+                                            unsigned char **memory, const char **err);
 // Loads single-frame OpenEXR deep image.
 // Application must free memory of variables in DeepImage(image, offset_table)
 // Returns negative value and may set error string in `err` when there's an

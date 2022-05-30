@@ -35,7 +35,7 @@ public:
 	 * @return Time value constructed from the amount of seconds.
 	 */
 	template<typename Rep = float>
-	static constexpr Time Seconds(const Rep &seconds) {
+	constexpr static Time Seconds(const Rep &seconds) {
 		return Time(std::chrono::duration<Rep>(seconds));
 	}
 
@@ -46,7 +46,7 @@ public:
 	 * @return Time value constructed from the amount of milliseconds.
 	 */
 	template<typename Rep = int32_t>
-	static constexpr Time Milliseconds(const Rep &milliseconds) {
+	constexpr static Time Milliseconds(const Rep &milliseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(milliseconds));
 	}
 
@@ -57,7 +57,7 @@ public:
 	 * @return Time value constructed from the amount of microseconds.
 	 */
 	template<typename Rep = int64_t>
-	static constexpr Time Microseconds(const Rep &microseconds) {
+	constexpr static Time Microseconds(const Rep &microseconds) {
 		return Time(std::chrono::duration<Rep, std::micro>(microseconds));
 	}
 
@@ -114,12 +114,12 @@ public:
 	 * @tparam format The format to put the time into.
 	 * @return The date time as a string.
 	 */
-	static std::string GetDateTime(const std::string &format = "%Y-%m-%d %H:%M:%S") {
+	static std::string GetDateTime(std::string_view format = "%Y-%m-%d %H:%M:%S") {
 		auto now = std::chrono::system_clock::now();
 		auto timeT = std::chrono::system_clock::to_time_t(now);
 
 		std::stringstream ss;
-		ss << std::put_time(std::localtime(&timeT), format.c_str());
+		ss << std::put_time(std::localtime(&timeT), format.data());
 		return ss.str();
 	}
 
@@ -137,15 +137,15 @@ public:
 
 	constexpr Time operator-() const;
 
-	friend constexpr Time operator+(const Time &lhs, const Time &rhs);
-	friend constexpr Time operator-(const Time &lhs, const Time &rhs);
-	friend constexpr Time operator*(const Time &lhs, float rhs);
-	friend constexpr Time operator*(const Time &lhs, int64_t rhs);
-	friend constexpr Time operator*(float lhs, const Time &rhs);
-	friend constexpr Time operator*(int64_t lhs, const Time &rhs);
-	friend constexpr Time operator/(const Time &lhs, float rhs);
-	friend constexpr Time operator/(const Time &lhs, int64_t rhs);
-	friend constexpr double operator/(const Time &lhs, const Time &rhs);
+	constexpr friend Time operator+(const Time &lhs, const Time &rhs);
+	constexpr friend Time operator-(const Time &lhs, const Time &rhs);
+	constexpr friend Time operator*(const Time &lhs, float rhs);
+	constexpr friend Time operator*(const Time &lhs, int64_t rhs);
+	constexpr friend Time operator*(float lhs, const Time &rhs);
+	constexpr friend Time operator*(int64_t lhs, const Time &rhs);
+	constexpr friend Time operator/(const Time &lhs, float rhs);
+	constexpr friend Time operator/(const Time &lhs, int64_t rhs);
+	constexpr friend double operator/(const Time &lhs, const Time &rhs);
 
 	constexpr Time &operator+=(const Time &rhs);
 	constexpr Time &operator-=(const Time &rhs);

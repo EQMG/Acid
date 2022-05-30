@@ -63,15 +63,6 @@ ImageCube::ImageCube(std::unique_ptr<Bitmap> &&bitmap, VkFormat format, VkImageL
 	ImageCube::Load(std::move(bitmap));
 }
 
-ImageCube::~ImageCube() {
-	auto logicalDevice = Graphics::Get()->GetLogicalDevice();
-
-	vkDestroyImageView(*logicalDevice, view, nullptr);
-	vkDestroySampler(*logicalDevice, sampler, nullptr);
-	vkFreeMemory(*logicalDevice, memory, nullptr);
-	vkDestroyImage(*logicalDevice, image, nullptr);
-}
-
 std::unique_ptr<Bitmap> ImageCube::GetBitmap(uint32_t mipLevel) const {
 	auto size = Vector2ui(extent.width, extent.height) >> mipLevel;
 	auto sizeSide = size.x * size.y * components;

@@ -20,7 +20,6 @@ public:
 	 * @param data Pointer to the data that should be copied to the buffer after creation (optional, if not set, no data is copied over).
 	 */
 	Buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, const void *data = nullptr);
-
 	virtual ~Buffer();
 
 	void MapMemory(void **data) const;

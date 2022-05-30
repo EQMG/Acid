@@ -1,5 +1,8 @@
 #include "dr_mp3.h"
 
+#ifndef dr_mp3_c
+#define dr_mp3_c
+
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h> /* For INT_MAX */
@@ -19,7 +22,7 @@ DRMP3_API void drmp3_version(drmp3_uint32* pMajor, drmp3_uint32* pMinor, drmp3_u
     }
 }
 
-DRMP3_API const char* drmp3_version_string()
+DRMP3_API const char* drmp3_version_string(void)
 {
     return DRMP3_VERSION_STRING;
 }
@@ -188,6 +191,8 @@ static __inline__ __attribute__((always_inline)) drmp3_int32 drmp3_clip_int16_ar
     __asm__ ("ssat %0, #16, %1" : "=r"(x) : "r"(a));
     return x;
 }
+#else
+#define DRMP3_HAVE_ARMV6 0
 #endif
 
 
@@ -2127,7 +2132,10 @@ static drmp3_uint32 drmp3_decode_next_frame_ex__callbacks(drmp3* pMP3, drmp3d_sa
             size_t bytesRead;
 
             /* First we need to move the data down. */
-            memmove(pMP3->pData, pMP3->pData + pMP3->dataConsumed, pMP3->dataSize);
+            if (pMP3->pData != NULL) {
+                memmove(pMP3->pData, pMP3->pData + pMP3->dataConsumed, pMP3->dataSize);
+            }
+
             pMP3->dataConsumed = 0;
 
             if (pMP3->dataCapacity < DRMP3_DATA_CHUNK_SIZE) {
@@ -2160,6 +2168,9 @@ static drmp3_uint32 drmp3_decode_next_frame_ex__callbacks(drmp3* pMP3, drmp3d_sa
             pMP3->atEnd = DRMP3_TRUE;
             return 0; /* File too big. */
         }
+
+        DRMP3_ASSERT(pMP3->pData != NULL);
+        DRMP3_ASSERT(pMP3->dataCapacity > 0);
 
         pcmFramesRead = drmp3dec_decode_frame(&pMP3->decoder, pMP3->pData + pMP3->dataConsumed, (int)pMP3->dataSize, pPCMFrames, &info);    /* <-- Safe size_t -> int conversion thanks to the check above. */
 
@@ -2845,12 +2856,13 @@ _wfopen() isn't always available in all compilation environments.
     * MSVC seems to support it universally as far back as VC6 from what I can tell (haven't checked further back).
     * MinGW-64 (both 32- and 64-bit) seems to support it.
     * MinGW wraps it in !defined(__STRICT_ANSI__).
+    * OpenWatcom wraps it in !defined(_NO_EXT_KEYS).
 
 This can be reviewed as compatibility issues arise. The preference is to use _wfopen_s() and _wfopen() as opposed to the wcsrtombs()
 fallback, so if you notice your compiler not detecting this properly I'm happy to look at adding support.
 */
 #if defined(_WIN32)
-    #if defined(_MSC_VER) || defined(__MINGW64__) || !defined(__STRICT_ANSI__)
+    #if defined(_MSC_VER) || defined(__MINGW64__) || (!defined(__STRICT_ANSI__) && !defined(_NO_EXT_KEYS))
         #define DRMP3_HAS_WFOPEN
     #endif
 #endif
@@ -3119,7 +3131,7 @@ DRMP3_API drmp3_uint64 drmp3_read_pcm_frames_f32(drmp3* pMP3, drmp3_uint64 frame
                 break;
             }
 
-            drmp3_s16_to_f32((float*)DRMP3_OFFSET_PTR(pBufferOut, sizeof(drmp3_int16) * totalPCMFramesRead * pMP3->channels), pTempS16, framesJustRead * pMP3->channels);
+            drmp3_s16_to_f32((float*)DRMP3_OFFSET_PTR(pBufferOut, sizeof(float) * totalPCMFramesRead * pMP3->channels), pTempS16, framesJustRead * pMP3->channels);
             totalPCMFramesRead += framesJustRead;
         }
 
@@ -3815,3 +3827,5 @@ DRMP3_API void drmp3_free(void* p, const drmp3_allocation_callbacks* pAllocation
         drmp3__free_default(p, NULL);
     }
 }
+
+#endif  /* dr_mp3_c */

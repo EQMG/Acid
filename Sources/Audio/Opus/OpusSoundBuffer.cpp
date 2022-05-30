@@ -1,19 +1,18 @@
 #include "OpusSoundBuffer.hpp"
 
-#if defined(ACID_BUILD_MACOS)
+#ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
 #else
 #include <al.h>
 #endif
-
-#include <dr_libs/dr_opus.h>
+#include <dr_opus.h>
 
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
 namespace acid {
-void OpusSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void OpusSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -24,21 +23,21 @@ void OpusSoundBuffer::Load(SoundBuffer *soundBuffer, const std::filesystem::path
 		return;
 	}
 
-	//soundBuffer->SetBuffer(buffer);
+	//soundBuffer.SetBuffer(buffer);
 	
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " loaded in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }
 
-void OpusSoundBuffer::Write(const SoundBuffer *soundBuffer, const std::filesystem::path &filename) {
-#if defined(ACID_DEBUG)
+void OpusSoundBuffer::Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
 	// TODO: Implement
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("SoundBuffer ", filename, " written in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

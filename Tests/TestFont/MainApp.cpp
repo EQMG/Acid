@@ -1,7 +1,7 @@
 #include "MainApp.hpp"
 
 #include <Devices/Mouse.hpp>
-#include <Inputs/Input.hpp>
+#include <Inputs/Inputs.hpp>
 #include <Files/Files.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Scenes/Scenes.hpp>
@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
 
 	// Runs the game loop.
 	auto exitCode = engine->Run();
-
+	engine = nullptr;
+	
 	// Pauses the console.
 	std::cout << "Press enter to continue...";
 	std::cin.get();
@@ -33,25 +34,25 @@ MainApp::MainApp() :
 	Files::Get()->AddSearchPath("Resources/Engine");
 
 	// Loads a input scheme for this app.
-	Input::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultFont.json"), true);
+	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultFont.json"), true);
 
-	Input::Get()->GetButton("fullscreen")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	Inputs::Get()->GetButton("fullscreen")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
-			Window::Get()->SetFullscreen(!Window::Get()->IsFullscreen());
+			Windows::Get()->GetWindow(0)->SetFullscreen(!Windows::Get()->GetWindow(0)->IsFullscreen());
 		}
-	}, this);
-	Input::Get()->GetButton("screenshot")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	});
+	Inputs::Get()->GetButton("screenshot")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Resources::Get()->GetThreadPool().Enqueue([]() {
 				Graphics::Get()->CaptureScreenshot(Time::GetDateTime("Screenshots/%Y%m%d%H%M%S.png"));
 			});
 		}
-	}, this);
-	Input::Get()->GetButton("exit")->OnButton().Add([this](InputAction action, BitMask<InputMod> mods) {
+	});
+	Inputs::Get()->GetButton("exit")->OnButton().connect(this, [this](InputAction action, bitmask::bitmask<InputMod> mods) {
 		if (action == InputAction::Press) {
 			Engine::Get()->RequestClose();
 		}
-	}, this);
+	});
 }
 
 MainApp::~MainApp() {
@@ -63,8 +64,8 @@ MainApp::~MainApp() {
 
 void MainApp::Start() {
 	// Sets values to modules.
-	Window::Get()->SetTitle("Test Font");
-	Window::Get()->SetIcons({
+	Windows::Get()->GetWindow(0)->SetTitle("Test Font");
+	Windows::Get()->GetWindow(0)->SetIcons({
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png",
 		"Icons/Icon-96.png", "Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
 		});

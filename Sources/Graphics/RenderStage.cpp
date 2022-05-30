@@ -1,6 +1,6 @@
 #include "RenderStage.hpp"
 
-#include "Devices/Window.hpp"
+#include "Devices/Windows.hpp"
 #include "Graphics.hpp"
 
 namespace acid {
@@ -50,7 +50,7 @@ void RenderStage::Update() {
 	if (viewport.GetSize())
 		renderArea.SetExtent(viewport.GetScale() * *viewport.GetSize());
 	else
-		renderArea.SetExtent(viewport.GetScale() * Window::Get()->GetSize());
+		renderArea.SetExtent(viewport.GetScale() * Windows::Get()->GetWindow(0)->GetSize());
 
 	renderArea.SetAspectRatio(static_cast<float>(renderArea.GetExtent().x) / static_cast<float>(renderArea.GetExtent().y));
 	renderArea.SetExtent(renderArea.GetExtent() + renderArea.GetOffset());
@@ -59,7 +59,7 @@ void RenderStage::Update() {
 }
 
 void RenderStage::Rebuild(const Swapchain &swapchain) {
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
 #endif
 
@@ -80,15 +80,16 @@ void RenderStage::Rebuild(const Swapchain &swapchain) {
 	outOfDate = false;
 
 	descriptors.clear();
+	auto where = descriptors.end();
 
 	for (const auto &image : attachments) {
 		if (image.GetType() == Attachment::Type::Depth)
-			descriptors.emplace(image.GetName(), depthStencil.get());
+			where = descriptors.insert(where, {image.GetName(), depthStencil.get()});
 		else
-			descriptors.emplace(image.GetName(), framebuffers->GetAttachment(image.GetBinding()));
+			where = descriptors.insert(where, {image.GetName(), framebuffers->GetAttachment(image.GetBinding())});
 	}
 
-#if defined(ACID_DEBUG)
+#ifdef ACID_DEBUG
 	Log::Out("Render Stage created in ", (Time::Now() - debugStart).AsMilliseconds<float>(), "ms\n");
 #endif
 }

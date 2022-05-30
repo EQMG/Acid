@@ -1,14 +1,13 @@
 #pragma once
 
 #include <cmath>
-#include <bitset>
 
 #include "Utils/NonCopyable.hpp"
 #include "Maths/ElapsedTime.hpp"
 #include "Maths/Time.hpp"
 #include "Module.hpp"
-#include "App.hpp"
 #include "Log.hpp"
+#include "App.hpp"
 
 namespace acid {
 class ACID_EXPORT Delta {
@@ -138,6 +137,8 @@ public:
 	void RequestClose() { running = false; }
 
 private:
+	void CreateModule(Module::TRegistryMap::const_iterator it, const ModuleFilter &filter);
+	void DestroyModule(TypeId id);
 	void UpdateStage(Module::Stage stage);
 	
 	static Engine *Instance;
@@ -146,8 +147,9 @@ private:
 	Version version;
 
 	std::unique_ptr<App> app;
-	
-	std::multimap<Module::StageIndex, std::unique_ptr<Module>> modules;
+
+	std::map<TypeId, std::unique_ptr<Module>> modules;
+	std::map<Module::Stage, std::vector<TypeId>> moduleStages;
 
 	float fpsLimit;
 	bool running;

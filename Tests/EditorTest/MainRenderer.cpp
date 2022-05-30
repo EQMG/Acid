@@ -37,7 +37,7 @@ MainRenderer::MainRenderer() {
 
 	std::vector<Attachment> renderpassAttachments1 = {
 		{0, "depth", Attachment::Type::Depth, false},
-#if defined(ACID_RELOAD)
+#ifdef ACID_RELOAD
 		{1, "swapchain", Attachment::Type::Image, false, VK_FORMAT_R8G8B8A8_UNORM},
 #else
 		{1, "swapchain", Attachment::Type::Swapchain},
@@ -55,7 +55,7 @@ MainRenderer::MainRenderer() {
 	};
 	AddRenderStage(std::make_unique<RenderStage>(renderpassAttachments1, renderpassSubpasses1));
 
-#if defined(ACID_RELOAD)
+#ifdef ACID_RELOAD
 	std::vector<Attachment> renderpassAttachments2 = {
 		{0, "swapchainReal", Attachment::Type::Swapchain}
 	};
@@ -91,7 +91,7 @@ void MainRenderer::Start() {
 	AddSubrender<GuisSubrender>(Pipeline::Stage(1, 2));
 	AddSubrender<FontsSubrender>(Pipeline::Stage(1, 2));
 
-#if defined(ACID_RELOAD)
+#ifdef ACID_RELOAD
 	AddSubrender<BlitFilter>({2, 0});
 #endif
 }
@@ -102,7 +102,7 @@ void MainRenderer::Update() {
 
 	//Renderer::Get()->GetRenderer<VignetteFilter>(true)->SetEnabled(Keyboard::Get()->GetKey(KEY_I));
 	
-#if defined(ACID_RELOAD)
+#ifdef ACID_RELOAD
 	auto renderpassCreate1 = GetRenderStage(1);
 	//renderpassCreate1->GetViewport().SetOffset({0.1f, 0.0f});
 

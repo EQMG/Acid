@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Engine/Log.hpp"
 #include "Utils/NonCopyable.hpp"
 #include "Pipelines/Pipeline.hpp"
 #include "Subrender.hpp"
@@ -12,11 +13,25 @@ class ACID_EXPORT SubrenderHolder : NonCopyable {
 	friend class Graphics;
 public:
 	/**
+	 * Checks whether a Subrender exists or not.
+	 * @tparam T The Subrender type.
+	 * @return If the Subrender exists.
+	 */
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Subrender *>>>
+	bool Has() const {
+		const auto it = subrenders.find(TypeInfo<Subrender>::GetTypeId<T>());
+
+		return it != subrenders.end() && it->second;
+	}
+
+	/**
 	 * Gets a Subrender.
 	 * @tparam T The Subrender type.
 	 * @return The Subrender.
 	 */
-	template<typename T>
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Subrender *>>>
 	T *Get() const {
 		const auto typeId = TypeInfo<Subrender>::GetTypeId<T>();
 
@@ -31,10 +46,11 @@ public:
 	 * Adds a Subrender.
 	 * @tparam T The Subrender type.
 	 * @param stage The Subrender pipeline stage.
-	 * @param subrender The subrender.
+	 * @param subrender The Subrender.
 	 * @return The added renderer.
 	 */
-	template<typename T, typename... Args>
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Subrender *>>>
 	T *Add(const Pipeline::Stage &stage, std::unique_ptr<T> &&subrender) {
 		// Remove previous Subrender, if it exists.
 		//Remove<T>();
@@ -53,7 +69,8 @@ public:
 	 * Removes a Subrender.
 	 * @tparam T The Subrender type.
 	 */
-	template<typename T>
+	template<typename T,
+		typename = std::enable_if_t<std::is_convertible_v<T *, Subrender *>>>
 	void Remove() {
 		const auto typeId = TypeInfo<Subrender>::GetTypeId<T>();
 
@@ -65,10 +82,10 @@ public:
 	}
 
 	/**
-	 * Clears all subrenders.
+	 * Clears all Subrenders.
 	 */
 	void Clear();
-	
+
 private:
 	using StageIndex = std::pair<Pipeline::Stage, std::size_t>;
 

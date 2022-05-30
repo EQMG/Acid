@@ -39,8 +39,8 @@ public:
 	friend const Node &operator>>(const Node &node, AnimatedMesh &animatedMesh);
 	friend Node &operator<<(Node &node, const AnimatedMesh &animatedMesh);
 
-	static constexpr uint32_t MaxJoints = 50;
-	static constexpr uint32_t MaxWeights = 3;
+	constexpr static uint32_t MaxJoints = 50;
+	constexpr static uint32_t MaxWeights = 3;
 
 private:
 	std::shared_ptr<Model> model;

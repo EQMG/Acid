@@ -30,7 +30,7 @@ void LensflareFilter::Render(const CommandBuffer &commandBuffer) {
 }
 
 void LensflareFilter::SetSunPosition(const Vector3f &sunPosition) {
-	auto camera = Scenes::Get()->GetCamera();
+	auto camera = Scenes::Get()->GetScene()->GetCamera();
 	this->sunPosition = Matrix4::Project(sunPosition, camera->GetViewMatrix(), camera->GetProjectionMatrix());
 }
 }

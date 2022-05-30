@@ -24,7 +24,7 @@ void Rotate::Update() {
 	transform->SetLocalRotation(rotation);
 
 	if (test == 1) {
-		Quaternion rotation(rotation);
+		Quaternion rotation(this->rotation);
 		transform->SetLocalRotation(rotation.ToEuler());
 	} else if (test == 2) {
 		//auto transform1 = Collider::Convert(transform);

@@ -49,12 +49,13 @@ float Animator::CalculateProgression(const Keyframe &previousFrame, const Keyfra
 
 std::map<std::string, Matrix4> Animator::InterpolatePoses(const Keyframe &previousFrame, const Keyframe &nextFrame, float progression) const {
 	std::map<std::string, Matrix4> currentPose;
+	auto where = currentPose.end();
 
 	for (const auto &[name, joint] : previousFrame.GetPose()) {
 		auto previousTransform = previousFrame.GetPose().find(name)->second;
 		auto nextTransform = nextFrame.GetPose().find(name)->second;
 		auto currentTransform = JointTransform::Interpolate(previousTransform, nextTransform, progression);
-		currentPose.emplace(name, currentTransform.GetLocalTransform());
+		where = currentPose.insert(where, {name, currentTransform.GetLocalTransform()});
 	}
 
 	return currentPose;

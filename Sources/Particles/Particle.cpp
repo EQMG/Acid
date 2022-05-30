@@ -3,7 +3,7 @@
 #include "Scenes/Scenes.hpp"
 
 namespace acid {
-static constexpr float FADE_TIME = 1.0f;
+constexpr static float FADE_TIME = 1.0f;
 
 Particle::Particle(std::shared_ptr<ParticleType> particleType, const Vector3f &position, const Vector3f &velocity, float lifeLength, float stageCycles,
 	float rotation, float scale, float gravityEffect) :
@@ -30,10 +30,10 @@ void Particle::Update() {
 	if (elapsedTime > lifeLength - FADE_TIME)
 		transparency -= delta / FADE_TIME;
 
-	if (!IsAlive() || !Scenes::Get()->GetCamera())
+	if (!IsAlive() || !Scenes::Get()->GetScene()->GetCamera())
 		return;
 
-	auto cameraToParticle = Scenes::Get()->GetCamera()->GetPosition() - position;
+	auto cameraToParticle = Scenes::Get()->GetScene()->GetCamera()->GetPosition() - position;
 	distanceToCamera = cameraToParticle.LengthSquared();
 
 	auto lifeFactor = stageCycles * elapsedTime / lifeLength;

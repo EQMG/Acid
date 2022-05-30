@@ -13,10 +13,5 @@ void Scenes::Update() {
 	}
 
 	scene->Update();
-	scene->GetPhysics()->Update();
-	if (scene->GetStructure())
-		scene->GetStructure()->Update();
-	if (scene->GetCamera())
-		scene->GetCamera()->Update();
 }
 }

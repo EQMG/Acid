@@ -12,8 +12,7 @@ enum class UiManipulate {
 	Move = 2,
 	All = Resize | Move
 };
-
-ENABLE_BITMASK_OPERATORS(UiManipulate);
+ENABLE_BITMASK_OPERATORS(UiManipulate)
 
 class ACID_EXPORT UiPanel : public UiObject {
 public:
@@ -25,11 +24,11 @@ public:
 
 	void SetBackgroundColor(const Colour &colour);
 
-	const BitMask<UiManipulate> &GetManipulate() const { return manipulate; }
-	void SetManipulate(const BitMask<UiManipulate> &manipulate) { this->manipulate = manipulate; }
+	const bitmask::bitmask<UiManipulate> &GetManipulate() const { return manipulate; }
+	void SetManipulate(const bitmask::bitmask<UiManipulate> &manipulate) { this->manipulate = manipulate; }
 	
-	const BitMask<ScrollBar> &GetScrollBars() const { return scrollBars; }
-	void SetScrollBars(const BitMask<ScrollBar> &scrollBars) { this->scrollBars = scrollBars; }
+	const bitmask::bitmask<ScrollBar> &GetScrollBars() const { return scrollBars; }
+	void SetScrollBars(const bitmask::bitmask<ScrollBar> &scrollBars) { this->scrollBars = scrollBars; }
 
 private:
 	void SetScissor(UiObject *object, bool checkSize = false);
@@ -38,10 +37,10 @@ private:
 	UiObject content;
 
 	Gui resizeHandle;
-	BitMask<UiManipulate> manipulate;
+	bitmask::bitmask<UiManipulate> manipulate;
 
 	UiScrollBar scrollX, scrollY;
-	BitMask<ScrollBar> scrollBars;
+	bitmask::bitmask<ScrollBar> scrollBars;
 
 	Vector2f min, max;
 };

@@ -13,6 +13,8 @@ CapsuleCollider::CapsuleCollider(float radius, float height, const Transform &lo
 }
 
 CapsuleCollider::~CapsuleCollider() {
+	// TODO: Intentional memory leak, for some reason `btCapsuleShape *` can't be deleted.
+	shape.release();
 }
 
 btCollisionShape *CapsuleCollider::GetCollisionShape() const {

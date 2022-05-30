@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Utils/Delegate.hpp"
+#include <rocket.hpp>
+
+#include "Export.hpp"
 
 #ifdef major
 #undef major
@@ -24,7 +26,7 @@ public:
 /**
  * @brief Class that represents a application.
  */
-class ACID_EXPORT App : public virtual Observer {
+class ACID_EXPORT App : public virtual rocket::trackable {
 	friend class Engine;
 public:
 	explicit App(std::string name, const Version &version = {1, 0, 0}) :

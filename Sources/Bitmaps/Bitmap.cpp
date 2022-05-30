@@ -1,7 +1,7 @@
 #include "Bitmap.hpp"
 
-#include <stb/stb_image.h>
-#include <stb/stb_image_write.h>
+#include <stb_image.h>
+#include <stb_image_write.h>
 
 #include "Engine/Log.hpp"
 #include "Files/Files.hpp"
@@ -25,7 +25,7 @@ Bitmap::Bitmap(std::unique_ptr<uint8_t[]> &&data, const Vector2ui &size, uint32_
 }
 
 void Bitmap::Load(const std::filesystem::path &filename) {
-	//Registry()[filename.extension().string()].first(this, filename);
+	//Registry()[filename.extension().string()].first(*this, filename);
 
 	auto fileLoaded = Files::Read(filename);
 
@@ -43,7 +43,7 @@ void Bitmap::Write(const std::filesystem::path &filename) const {
 	if (auto parentPath = filename.parent_path(); !parentPath.empty())
 		std::filesystem::create_directories(parentPath);
 
-	//Registry()[filename.extension().string()].second(this, filename);
+	//Registry()[filename.extension().string()].second(*this, filename);
 
 	std::ofstream os(filename, std::ios::binary | std::ios::out);
 	int32_t len;

@@ -15,13 +15,13 @@ AnimationLoader::AnimationLoader(NodeConstView &&libraryAnimations, NodeConstVie
 	lengthSeconds = times[times.size() - 1];
 	CreateKeyframe(times);
 
-	for (auto &jointNode : animationNodes.GetProperties())
+	for (const auto &[jointNodeName, jointNode]: animationNodes.GetProperties())
 		LoadJointTransforms(jointNode, rootNode);
 }
 
 std::string AnimationLoader::FindRootJointName() const {
-	auto skeleton = libraryVisualScenes["visual_scene"]["node"].GetPropertyWithValue("-id", "Armature");
-	return skeleton["node"]["-id"].Get<std::string>();
+	auto skeleton = libraryVisualScenes["visual_scene"]["node"].GetPropertyWithValue("@id", "Armature");
+	return skeleton["node"]["@id"].Get<std::string>();
 }
 
 std::vector<Time> AnimationLoader::GetKeyTimes() const {
@@ -45,7 +45,7 @@ void AnimationLoader::LoadJointTransforms(const Node &jointData, const std::stri
 	auto jointNameId = GetJointName(jointData);
 	auto dataId = GetDataId(jointData);
 
-	auto transformData = jointData["source"].GetPropertyWithValue("-id", dataId);
+	auto transformData = jointData["source"].GetPropertyWithValue("@id", dataId);
 
 	auto data = transformData["float_array"].Get<std::string>();
 	auto splitData = String::Split(data, ' ');
@@ -53,13 +53,13 @@ void AnimationLoader::LoadJointTransforms(const Node &jointData, const std::stri
 }
 
 std::string AnimationLoader::GetDataId(const Node &jointData) {
-	auto node = jointData["sampler"]["input"].GetPropertyWithValue("-semantic", "OUTPUT");
-	return node["-source"].Get<std::string>().substr(1);
+	auto node = jointData["sampler"]["input"].GetPropertyWithValue("@semantic", "OUTPUT");
+	return node["@source"].Get<std::string>().substr(1);
 }
 
 std::string AnimationLoader::GetJointName(const Node &jointData) {
 	auto channelNode = jointData["channel"];
-	auto data = channelNode["-target"].Get<std::string>();
+	auto data = channelNode["@target"].Get<std::string>();
 	auto splitData = String::Split(data, '/');
 	return splitData[0];
 }

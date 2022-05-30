@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Utils/Delegate.hpp"
 #include "Devices/Mouse.hpp"
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector4.hpp"
@@ -14,7 +13,7 @@ namespace acid {
  * The screen object has a few values that allow for it to be positioned and scaled, along with other variables that are used when rendering.
  * This class can be extended to create a representation for GUI images, fonts, etc.
  */
-class ACID_EXPORT UiObject : public virtual Observer {
+class ACID_EXPORT UiObject : public virtual rocket::trackable {
 public:
 	UiObject();
 	virtual ~UiObject();
@@ -68,16 +67,14 @@ public:
 	void SetScissor(const std::optional<Vector4i> &scissor) { this->scissor = scissor; }
 
 	UiDriver<float> *GetAlphaDriver() const { return alphaDriver.get(); }
-	template<template<typename> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>>>
-		void SetAlphaDriver(Args &&... args) {
+	template<template<typename> typename T, typename... Args>
+	auto SetAlphaDriver(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<float> *, UiDriver<float> *>, void> {
 		alphaDriver = std::make_unique<T<float>>(std::forward<Args>(args)...);
 	}
 
 	UiDriver<Vector2f> *GetScaleDriver() const { return scaleDriver.get(); }
-	template<template<typename> typename T, typename... Args,
-		typename = std::enable_if_t<std::is_convertible_v<T<Vector2f> *, UiDriver<Vector2f> *>>>
-		void SetScaleDriver(Args &&... args) {
+	template<template<typename> typename T, typename... Args>
+	auto SetScaleDriver(Args &&... args) -> std::enable_if_t<std::is_convertible_v<T<Vector2f> *, UiDriver<Vector2f> *>, void> {
 		scaleDriver = std::make_unique<T<Vector2f>>(std::forward<Args>(args)...);
 	}
 
@@ -101,13 +98,13 @@ public:
 	 * Called when this object has been clicked on.
 	 * @return The delegate.
 	 */
-	Delegate<void(MouseButton)> &OnClick() { return onClick; }
+	rocket::signal<void(MouseButton)> &OnClick() { return onClick; }
 
 	/**
 	 * Called when this object has has the cursor hovered over, or removed.
 	 * @return The delegate.
 	 */
-	Delegate<void(bool)> &OnSelected() { return onSelected; }
+	rocket::signal<void(bool)> &OnSelected() { return onSelected; }
 
 private:
 	std::vector<UiObject *> children;
@@ -129,7 +126,7 @@ private:
 	Vector2f screenScale;
 	bool selected = false;
 
-	Delegate<void(MouseButton)> onClick;
-	Delegate<void(bool)> onSelected;
+	rocket::signal<void(MouseButton)> onClick;
+	rocket::signal<void(bool)> onSelected;
 };
 }
