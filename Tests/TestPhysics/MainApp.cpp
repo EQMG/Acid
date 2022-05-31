@@ -48,9 +48,9 @@ MainApp::MainApp() :
 		"Icons/Icon-16.png", "Icons/Icon-24.png", "Icons/Icon-32.png", "Icons/Icon-48.png", "Icons/Icon-64.png", "Icons/Icon-96.png",
 		"Icons/Icon-128.png", "Icons/Icon-192.png", "Icons/Icon-256.png"
 		});
-	auto window1 = Windows::Get()->AddWindow();
-	window1->SetTitle("Test Physics 2");
-	Windows::Get()->GetWindow(0)->SetCursor(&cursor);
+	window0->SetCursor(&cursor);
+	//auto window1 = Windows::Get()->AddWindow();
+	//window1->SetTitle("Test Physics 2");
 
 	// Loads a input scheme for this app.
 	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPhysics.json"), true);
