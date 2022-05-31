@@ -11,8 +11,8 @@
  * [bitmask](https://github.com/Dalzhim/ArticleEnumClass-v2) - Bitmask operators for enum classes
  * [cr](https://github.com/fungos/cr) - Debug code hot-reload
  * [dr_libs](https://github.com/mackron/dr_libs) - Audio decoding/encoding
- * [fastnoise](https://github.com/Auburns/FastNoise) - Noise noise generation library
- * [ffx-fsr](https://github.com/GPUOpen-Effects/FidelityFX-FSR) - FidelityFX Super Resolution
+ * [FastNoiseLite](https://github.com/Auburns/FastNoiseLite) - Noise noise generation library
+ * [FidelityFX-FSR](https://github.com/GPUOpen-Effects/FidelityFX-FSR) - FidelityFX Super Resolution
  * [libjpgd](https://github.com/richgel999/jpeg-compressor) - JPG image loader/writer 
  * [libspng](https://github.com/randy408/libspng) - PNG image loader/writer
  * [magic_enum](https://github.com/Neargye/magic_enum) - Static reflection for enums

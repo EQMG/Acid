@@ -260,33 +260,33 @@ set(_temp_acid_headers
 		Utils/TypeInfo.hpp
 		)
 set(_temp_acid_third_party_headers
-		third_party/bitmask/bitmask.hpp
-		third_party/cr/cr.h
-		third_party/dr_libs/dr_flac.h
-		third_party/dr_libs/dr_mp3.h
-		third_party/dr_libs/dr_opus.h
-		third_party/dr_libs/dr_wav.h
-		third_party/fastnoise/FastNoiseLite.h
-		third_party/libjpgd/jpgd.h
-		third_party/libjpgd/jpgd_idct.h
-		third_party/libspng/spng.h
-		third_party/magic_enum/magic_enum.hpp
-		third_party/miniz/miniz.h
-		third_party/rocket/rocket.hpp
-		third_party/stb/stb_image.h
-		third_party/stb/stb_image_write.h
-		third_party/stb/stb_vorbis.h
-		third_party/tinydng/tiny_dng.h
-		third_party/tinyexr/tiny_exr.h
-		third_party/tinygltf/json.hpp
-		third_party/tinygltf/tiny_gltf.h
-		third_party/tinymsdf/tiny_msdf.hpp
-		third_party/tinyobj/tiny_obj.h
-		third_party/Zippy/ZipArchive.hpp
-		third_party/Zippy/ZipEntry.hpp
-		third_party/Zippy/ZipException.hpp
-		third_party/Zippy/Zippy.hpp
-		third_party/Zippy/ZipUtilities.hpp
+		../External/bitmask/bitmask.hpp
+		../External/cr/cr.h
+		../External/dr_libs/dr_flac.h
+		../External/dr_libs/dr_mp3.h
+		../External/dr_libs/dr_opus.h
+		../External/dr_libs/dr_wav.h
+		../External/FastNoiseLite/FastNoiseLite.h
+		../External/libjpgd/jpgd.h
+		../External/libjpgd/jpgd_idct.h
+		../External/libspng/spng.h
+		../External/magic_enum/magic_enum.hpp
+		../External/miniz/miniz.h
+		../External/rocket/rocket.hpp
+		../External/stb/stb_image.h
+		../External/stb/stb_image_write.h
+		../External/stb/stb_vorbis.h
+		../External/tinydng/tiny_dng.h
+		../External/tinyexr/tiny_exr.h
+		../External/tinygltf/json.hpp
+		../External/tinygltf/tiny_gltf.h
+		../External/tinymsdf/tiny_msdf.hpp
+		../External/tinyobj/tiny_obj.h
+		../External/Zippy/ZipArchive.hpp
+		../External/Zippy/ZipEntry.hpp
+		../External/Zippy/ZipException.hpp
+		../External/Zippy/Zippy.hpp
+		../External/Zippy/ZipUtilities.hpp
 		)
 set(_temp_acid_sources
 		Animations/AnimatedMesh.cpp
@@ -499,40 +499,40 @@ set(_temp_acid_sources
 		Utils/ThreadPool.cpp
 		)
 set(_temp_acid_third_party_sources
-		third_party/dr_libs/dr_flac.c
-		third_party/dr_libs/dr_mp3.c
-		third_party/dr_libs/dr_opus.c
-		third_party/dr_libs/dr_wav.c
-		third_party/libjpgd/jpgd.cpp
-		third_party/libspng/spng.c
-		third_party/miniz/miniz.c
-		third_party/stb/stb_image.c
-		third_party/stb/stb_image_write.c
-		third_party/stb/stb_vorbis.c
-		third_party/tinydng/tiny_dng.cpp
-		third_party/tinyexr/tiny_exr.cpp
-		third_party/tinygltf/tiny_gltf.cpp
-		third_party/tinymsdf/tiny_msdf.cpp
-		third_party/tinyobj/tiny_obj.cpp
+		../External/dr_libs/dr_flac.c
+		../External/dr_libs/dr_mp3.c
+		../External/dr_libs/dr_opus.c
+		../External/dr_libs/dr_wav.c
+		../External/libjpgd/jpgd.cpp
+		../External/libspng/spng.c
+		../External/miniz/miniz.c
+		../External/stb/stb_image.c
+		../External/stb/stb_image_write.c
+		../External/stb/stb_vorbis.c
+		../External/tinydng/tiny_dng.cpp
+		../External/tinyexr/tiny_exr.cpp
+		../External/tinygltf/tiny_gltf.cpp
+		../External/tinymsdf/tiny_msdf.cpp
+		../External/tinyobj/tiny_obj.cpp
 		)
 
 set(_temp_acid_third_party_includes
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/bitmask
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/cr
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/dr_libs
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/fastnoise
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libjpgd
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/libspng
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/magic_enum
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/miniz
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/rocket
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinydng
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyexr
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinygltf
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinymsdf
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyobj
-		${CMAKE_CURRENT_SOURCE_DIR}/third_party/Zippy
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/bitmask
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/cr
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/dr_libs
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/FastNoiseLite
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/libjpgd
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/libspng
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/magic_enum
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/miniz
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/rocket
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/stb
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/tinydng
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/tinyexr
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/tinygltf
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/tinymsdf
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/tinyobj
+		${CMAKE_CURRENT_SOURCE_DIR}/../External/Zippy
 		)
 
 get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
