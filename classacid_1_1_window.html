@@ -80,6 +80,7 @@ engine</span></a>
             <li>
               Reference
               <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
@@ -87,11 +88,20 @@ engine</span></a>
             </li>
           </ul>
         </nav>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a8ebfdde743fc44622797cbb466d17102">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a8ebfdde743fc44622797cbb466d17102" class="m-doc-self">ToString</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93a" class="m-doc">Key</a> key) -&gt; std::string</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="ac93ba87dea19c072a10dd61e2a309897">
-              <span class="m-doc-wrap-bumper"><a href="#ac93ba87dea19c072a10dd61e2a309897" class="m-doc-self">Window</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_video_mode.html" class="m-doc">VideoMode</a> videoMode)</span>
+            <dt id="aef2b733925687863d9499e7dbf66545e">
+              <span class="m-doc-wrap-bumper"><a href="#aef2b733925687863d9499e7dbf66545e" class="m-doc-self">Window</a>(</span><span class="m-doc-wrap">std::size_t id)</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a9970ace40acece0792ee6c424d3ffe17">
@@ -103,6 +113,10 @@ engine</span></a>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
+            <dt id="a9e7e98cec045e43dd254a1d5dac5e6ef">
+              <span class="m-doc-wrap-bumper">void <a href="#a9e7e98cec045e43dd254a1d5dac5e6ef" class="m-doc-self">Update</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd><span></span></dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aa0762bf0aabd9788b508ed4734c7e6dd" class="m-doc">GetSize</a>(</span><span class="m-doc-wrap">bool checkFullscreen = true) const -&gt; const <a href="namespaceacid.html#a6b88932ea122e48379375242b044d2e7" class="m-doc">Vector2ui</a>&amp;</span>
             </dt>
@@ -184,6 +198,62 @@ engine</span></a>
               <span class="m-doc-wrap-bumper">void <a href="#a1794b361267d6e7a8d1d775d7626753c" class="m-doc">SetIconified</a>(</span><span class="m-doc-wrap">bool iconify)</span>
             </dt>
             <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acba15537472cab3b68117050e93a5ca4" class="m-doc">GetClipboard</a>(</span><span class="m-doc-wrap">) const -&gt; std::string</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aeb95538418b4191f0630dc44afa36261" class="m-doc">SetClipboard</a>(</span><span class="m-doc-wrap">const std::string&amp; string) const</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0b296c7b5d79a868a6949f749a9139c9" class="m-doc">IsWindowSelected</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2bed9a4bd63a7ad95120f38819f88f4" class="m-doc">IsCursorHidden</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2b8a2b817bb98e94b189a76234f9b098" class="m-doc">SetCursorHidden</a>(</span><span class="m-doc-wrap">bool hidden)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5d56b554b5de394201f7cb78c1a2fde9" class="m-doc">SetCursor</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_cursor.html" class="m-doc">Cursor</a>* cursor)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e9656381f44f54ce1f531433022a86c" class="m-doc">GetKey</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93a" class="m-doc">Key</a> key) const -&gt; <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a652187569fa59715ae30b30ef96c71c3" class="m-doc">GetMouseButton</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#a91c2051d74062e655f6a79167e3530c4" class="m-doc">MouseButton</a> mouseButton) const -&gt; <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4f38c3001b7f89784bc87eb45f442ca" class="m-doc">GetMousePosition</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abd75142e1a5b86e6c8fba06727b1b402" class="m-doc">SetMousePosition</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; mousePosition)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4d2dfc4e0fa1c38d9ab46f6961381500" class="m-doc">GetMousePositionDelta</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af8a72df36c6a8d23f2a4bc1c45f03660" class="m-doc">GetMouseScroll</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0d55ce617ff6ea37b08741650886e142" class="m-doc">SetMouseScroll</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; scroll)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a230a5dd1fc120172ea73d3bee91fb629" class="m-doc">GetMouseScrollDelta</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp;</span>
+            </dt>
+            <dd></dd>
             <dt id="a8bf08b452bee43725c484e279273bfdc">
               <span class="m-doc-wrap-bumper">auto <a href="#a8bf08b452bee43725c484e279273bfdc" class="m-doc-self">GetWindow</a>(</span><span class="m-doc-wrap">) const -&gt; ACID_NO_EXPORT GLFWwindow*</span>
             </dt>
@@ -238,41 +308,112 @@ engine</span></a>
               <span class="m-doc-wrap-bumper">auto <a href="#ae13f9439b0fe220a7bd4e8b0b7fec366" class="m-doc">OnIconify</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(bool)&gt;&amp;</span>
             </dt>
             <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a07210b0e2c464056cb2866b8b51d2ff0" class="m-doc">OnEnter</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(bool)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3c28d375272e0c1c819737084774523a" class="m-doc">OnDrop</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(std::vector&lt;std::string&gt;)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aba32ae284ed16debc4150f2f4d34260d" class="m-doc">OnKey</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93a" class="m-doc">Key</a>, <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a>, bitmask::bitmask&lt;<a href="namespaceacid.html#a5473f831afe1d1193889a453785dee8c" class="m-doc">InputMod</a>&gt;)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a493fe6ab245ef7f48233384dd7d710fb" class="m-doc">OnChar</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(char)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adcc9e4679c81aa1e40312870976e9cf1" class="m-doc">OnMouseButton</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="namespaceacid.html#a91c2051d74062e655f6a79167e3530c4" class="m-doc">MouseButton</a>, <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a>, bitmask::bitmask&lt;<a href="namespaceacid.html#a5473f831afe1d1193889a453785dee8c" class="m-doc">InputMod</a>&gt;)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af8d29884af2e0fb62aafa9e7ee9020a9" class="m-doc">OnMousePosition</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a544328a7f7875ea55c00a57a7cc8eb22" class="m-doc">OnMouseScroll</a>(</span><span class="m-doc-wrap">) -&gt; rocket::signal&lt;void(<a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>)&gt;&amp;</span>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section id="friends">
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
-            <dt id="a6ab18973849bd83de9934caacd73c3b4">
-              <span class="m-doc-wrap-bumper">void <a href="#a6ab18973849bd83de9934caacd73c3b4" class="m-doc-self">CallbackWindowPosition</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a054bf7c57f80f3e336c50b01a2215925">
+              <span class="m-doc-wrap-bumper">void <a href="#a054bf7c57f80f3e336c50b01a2215925" class="m-doc-self">CallbackWindowPosition</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t xpos,
               int32_t ypos)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a71c41dcbed854bd190d8f28ab05739e4">
-              <span class="m-doc-wrap-bumper">void <a href="#a71c41dcbed854bd190d8f28ab05739e4" class="m-doc-self">CallbackWindowSize</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a3f4aaf087ff2396f2b33b7a0e0fdbda2">
+              <span class="m-doc-wrap-bumper">void <a href="#a3f4aaf087ff2396f2b33b7a0e0fdbda2" class="m-doc-self">CallbackWindowSize</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t width,
               int32_t height)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a9ef491d3c17242e64eb0d7d927c82a49">
-              <span class="m-doc-wrap-bumper">void <a href="#a9ef491d3c17242e64eb0d7d927c82a49" class="m-doc-self">CallbackWindowClose</a>(</span><span class="m-doc-wrap">GLFWwindow* window)</span>
+            <dt id="a16866513f0978dd5dab6c3fe0bfb3528">
+              <span class="m-doc-wrap-bumper">void <a href="#a16866513f0978dd5dab6c3fe0bfb3528" class="m-doc-self">CallbackWindowClose</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a70b4e7ed44777b413e925724aca48097">
-              <span class="m-doc-wrap-bumper">void <a href="#a70b4e7ed44777b413e925724aca48097" class="m-doc-self">CallbackWindowFocus</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a79ea07f6f7e48e644a09a6002fce7397">
+              <span class="m-doc-wrap-bumper">void <a href="#a79ea07f6f7e48e644a09a6002fce7397" class="m-doc-self">CallbackWindowFocus</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t focused)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a1b4c62836c498904664d0e4552437722">
-              <span class="m-doc-wrap-bumper">void <a href="#a1b4c62836c498904664d0e4552437722" class="m-doc-self">CallbackWindowIconify</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="ab5f4c5895bb8a14ad0a420886c282946">
+              <span class="m-doc-wrap-bumper">void <a href="#ab5f4c5895bb8a14ad0a420886c282946" class="m-doc-self">CallbackWindowIconify</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t iconified)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="ae895f4ee1ac8e8d7919650ca77855455">
-              <span class="m-doc-wrap-bumper">void <a href="#ae895f4ee1ac8e8d7919650ca77855455" class="m-doc-self">CallbackFramebufferSize</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a54e99642f7cdeb1ad536e7ddd087b0c9">
+              <span class="m-doc-wrap-bumper">void <a href="#a54e99642f7cdeb1ad536e7ddd087b0c9" class="m-doc-self">CallbackFramebufferSize</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t width,
               int32_t height)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a04e26fb82d150f1296b30d20ec008678">
+              <span class="m-doc-wrap-bumper">void <a href="#a04e26fb82d150f1296b30d20ec008678" class="m-doc-self">CallbackCursorEnter</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t entered)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2e85e8dd00139eba6e6e6dd91633d24e">
+              <span class="m-doc-wrap-bumper">void <a href="#a2e85e8dd00139eba6e6e6dd91633d24e" class="m-doc-self">CallbackDrop</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t count,
+              const char** paths)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae1233a761eb7934a31aac0920a678798">
+              <span class="m-doc-wrap-bumper">void <a href="#ae1233a761eb7934a31aac0920a678798" class="m-doc-self">CallbackKey</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t key,
+              int32_t scancode,
+              int32_t action,
+              int32_t mods)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a6a3d56d31cb10abcc9892275a7e5c2f1">
+              <span class="m-doc-wrap-bumper">void <a href="#a6a3d56d31cb10abcc9892275a7e5c2f1" class="m-doc-self">CallbackChar</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              uint32_t codepoint)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a257b6cc2ce7f5e043a9475601b92b3e5">
+              <span class="m-doc-wrap-bumper">void <a href="#a257b6cc2ce7f5e043a9475601b92b3e5" class="m-doc-self">CallbackMouseButton</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t button,
+              int32_t action,
+              int32_t mods)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab1784c880e0f31c01376313e25959233">
+              <span class="m-doc-wrap-bumper">void <a href="#ab1784c880e0f31c01376313e25959233" class="m-doc-self">CallbackCursorPos</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              double xpos,
+              double ypos)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a9a119f0722b1f0dc721f9a517bf01c96">
+              <span class="m-doc-wrap-bumper">void <a href="#a9a119f0722b1f0dc721f9a517bf01c96" class="m-doc-self">CallbackScroll</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              double xoffset,
+              double yoffset)</span>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -600,6 +741,224 @@ engine</span></a>
             </table>
 <p>Sets the window to be iconified (minimized).</p>
           </div></section>
+          <section class="m-doc-details" id="acba15537472cab3b68117050e93a5ca4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">std::string acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acba15537472cab3b68117050e93a5ca4" class="m-doc-self">GetClipboard</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>If the clipboard contents.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the contents of the clipboard as a string.</p>
+          </div></section>
+          <section class="m-doc-details" id="aeb95538418b4191f0630dc44afa36261"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb95538418b4191f0630dc44afa36261" class="m-doc-self">SetClipboard</a>(</span><span class="m-doc-wrap">const std::string&amp; string) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>The string to set as the clipboard.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the clipboard to the specified string.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0b296c7b5d79a868a6949f749a9139c9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0b296c7b5d79a868a6949f749a9139c9" class="m-doc-self">IsWindowSelected</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>If the display is selected.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets if the display is selected.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac2bed9a4bd63a7ad95120f38819f88f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac2bed9a4bd63a7ad95120f38819f88f4" class="m-doc-self">IsCursorHidden</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>If the cursor is hidden.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the cursor is hidden, the mouse is the display locked if true.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2b8a2b817bb98e94b189a76234f9b098"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2b8a2b817bb98e94b189a76234f9b098" class="m-doc-self">SetCursorHidden</a>(</span><span class="m-doc-wrap">bool hidden)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">hidden</td>
+                  <td>If the system cursor should be hidden when not shown.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets if the operating systems cursor is hidden whilst in the display.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5d56b554b5de394201f7cb78c1a2fde9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5d56b554b5de394201f7cb78c1a2fde9" class="m-doc-self">SetCursor</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_cursor.html" class="m-doc">Cursor</a>* cursor)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">cursor</td>
+                  <td>The cursor style to use.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the cursor new style.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7e9656381f44f54ce1f531433022a86c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a> acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e9656381f44f54ce1f531433022a86c" class="m-doc-self">GetKey</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93a" class="m-doc">Key</a> key) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">key</td>
+                  <td>The key to get the state of.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The keys state.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the current state of a key.</p>
+          </div></section>
+          <section class="m-doc-details" id="a652187569fa59715ae30b30ef96c71c3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a> acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a652187569fa59715ae30b30ef96c71c3" class="m-doc-self">GetMouseButton</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#a91c2051d74062e655f6a79167e3530c4" class="m-doc">MouseButton</a> mouseButton) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mouseButton</td>
+                  <td>The mouse button to get the state of.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The mouse buttons state.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the current state of a mouse button.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab4f38c3001b7f89784bc87eb45f442ca"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4f38c3001b7f89784bc87eb45f442ca" class="m-doc-self">GetMousePosition</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The mouses position.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the mouses position.</p>
+          </div></section>
+          <section class="m-doc-details" id="abd75142e1a5b86e6c8fba06727b1b402"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abd75142e1a5b86e6c8fba06727b1b402" class="m-doc-self">SetMousePosition</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; mousePosition)</span></span>
+            </h3>
+<p>Sets the mouse position.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4d2dfc4e0fa1c38d9ab46f6961381500"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4d2dfc4e0fa1c38d9ab46f6961381500" class="m-doc-self">GetMousePositionDelta</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The mouse position delta.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the mouse position delta.</p>
+          </div></section>
+          <section class="m-doc-details" id="af8a72df36c6a8d23f2a4bc1c45f03660"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af8a72df36c6a8d23f2a4bc1c45f03660" class="m-doc-self">GetMouseScroll</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The mouses virtual scroll position.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the mouses virtual scroll position.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0d55ce617ff6ea37b08741650886e142"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0d55ce617ff6ea37b08741650886e142" class="m-doc-self">SetMouseScroll</a>(</span><span class="m-doc-wrap">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; scroll)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">scroll</td>
+                  <td>The new mouse virtual scroll position.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the mouse virtual scroll position.</p>
+          </div></section>
+          <section class="m-doc-details" id="a230a5dd1fc120172ea73d3bee91fb629"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a230a5dd1fc120172ea73d3bee91fb629" class="m-doc-self">GetMouseScrollDelta</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The mouse scroll delta.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the mouse scroll delta.</p>
+          </div></section>
           <section class="m-doc-details" id="a5c1066277bba3b6e328a033bf65ae406"><div>
             <h3>
               <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="namespaceacid.html#a6b88932ea122e48379375242b044d2e7" class="m-doc">Vector2ui</a>)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c1066277bba3b6e328a033bf65ae406" class="m-doc-self">OnSize</a>(</span><span class="m-doc-wrap">)</span></span>
@@ -739,6 +1098,104 @@ engine</span></a>
               </tfoot>
             </table>
 <p>Called when the window is minimized or maximized.</p>
+          </div></section>
+          <section class="m-doc-details" id="a07210b0e2c464056cb2866b8b51d2ff0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(bool)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a07210b0e2c464056cb2866b8b51d2ff0" class="m-doc-self">OnEnter</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when the mouse enters the window.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3c28d375272e0c1c819737084774523a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(std::vector&lt;std::string&gt;)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c28d375272e0c1c819737084774523a" class="m-doc-self">OnDrop</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a group of files/folders is dropped onto the window.</p>
+          </div></section>
+          <section class="m-doc-details" id="aba32ae284ed16debc4150f2f4d34260d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="namespaceacid.html#a9be4f46a397372035d4a087f9fc3a93a" class="m-doc">Key</a>, <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a>, bitmask::bitmask&lt;<a href="namespaceacid.html#a5473f831afe1d1193889a453785dee8c" class="m-doc">InputMod</a>&gt;)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aba32ae284ed16debc4150f2f4d34260d" class="m-doc-self">OnKey</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a key changes state.</p>
+          </div></section>
+          <section class="m-doc-details" id="a493fe6ab245ef7f48233384dd7d710fb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(char)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a493fe6ab245ef7f48233384dd7d710fb" class="m-doc-self">OnChar</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a character has been typed.</p>
+          </div></section>
+          <section class="m-doc-details" id="adcc9e4679c81aa1e40312870976e9cf1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="namespaceacid.html#a91c2051d74062e655f6a79167e3530c4" class="m-doc">MouseButton</a>, <a href="namespaceacid.html#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc">InputAction</a>, bitmask::bitmask&lt;<a href="namespaceacid.html#a5473f831afe1d1193889a453785dee8c" class="m-doc">InputMod</a>&gt;)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adcc9e4679c81aa1e40312870976e9cf1" class="m-doc-self">OnMouseButton</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when a mouse button changes state.</p>
+          </div></section>
+          <section class="m-doc-details" id="af8d29884af2e0fb62aafa9e7ee9020a9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af8d29884af2e0fb62aafa9e7ee9020a9" class="m-doc-self">OnMousePosition</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when the mouse moves.</p>
+          </div></section>
+          <section class="m-doc-details" id="a544328a7f7875ea55c00a57a7cc8eb22"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">rocket::signal&lt;void(<a href="namespaceacid.html#a8b7d422982630f3b9fb43d009f1fe434" class="m-doc">Vector2d</a>)&gt;&amp; acid::<wbr />Window::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a544328a7f7875ea55c00a57a7cc8eb22" class="m-doc-self">OnMouseScroll</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The delegate.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Called when the scroll wheel changes.</p>
           </div></section>
         </section>
       </div>

@@ -121,7 +121,8 @@ engine</span></a>
             </dt>
             <dd><span></span></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a4fdca33de8393c617dfbe8b7bcbab98c" class="m-doc">CaptureScreenshot</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename) const</span>
+              <span class="m-doc-wrap-bumper">void <a href="#a2656a9ac91326ada7386a27036bfa808" class="m-doc">CaptureScreenshot</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename,
+              std::size_t id = 0) const</span>
             </dt>
             <dd></dd>
             <dt id="aa72a2d43057f886b241331be32591d6f">
@@ -136,45 +137,46 @@ engine</span></a>
               <span class="m-doc-wrap-bumper">void <a href="#aaf5ae7b79a280b7dd3d6649e8aa54d43" class="m-doc">SetRenderer</a>(</span><span class="m-doc-wrap">std::unique_ptr&lt;<a href="classacid_1_1_renderer.html" class="m-doc">Renderer</a>&gt;&amp;&amp; renderer)</span>
             </dt>
             <dd></dd>
-            <dt id="acb7c10b44825d6c4669e3119bda708dd">
-              <span class="m-doc-wrap-bumper">auto <a href="#acb7c10b44825d6c4669e3119bda708dd" class="m-doc-self">GetRenderStage</a>(</span><span class="m-doc-wrap">uint32_t index) const -&gt; <a href="classacid_1_1_render_stage.html" class="m-doc">RenderStage</a>*</span>
+            <dt id="ab0b896014cac2d891714462e9569045e">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0b896014cac2d891714462e9569045e" class="m-doc-self">GetRenderStage</a>(</span><span class="m-doc-wrap">uint32_t index) const -&gt; const <a href="classacid_1_1_render_stage.html" class="m-doc">RenderStage</a>*</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a87a6ef62806821ef3985527dd2f69657">
               <span class="m-doc-wrap-bumper">auto <a href="#a87a6ef62806821ef3985527dd2f69657" class="m-doc-self">GetAttachment</a>(</span><span class="m-doc-wrap">const std::string&amp; name) const -&gt; const <a href="classacid_1_1_descriptor.html" class="m-doc">Descriptor</a>*</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a607d95106a2e0337092b75a3067a8afa">
-              <span class="m-doc-wrap-bumper">auto <a href="#a607d95106a2e0337092b75a3067a8afa" class="m-doc-self">GetSwapchain</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_swapchain.html" class="m-doc">Swapchain</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a88434eb531cbf38841aafdd06a4e05aa">
-              <span class="m-doc-wrap-bumper">auto <a href="#a88434eb531cbf38841aafdd06a4e05aa" class="m-doc-self">GetPipelineCache</a>(</span><span class="m-doc-wrap">) const -&gt; const VkPipelineCache&amp;</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a6ac20b6deb1f835bd4643bb080bda57c">
-              <span class="m-doc-wrap-bumper">void <a href="#a6ac20b6deb1f835bd4643bb080bda57c" class="m-doc-self">SetFramebufferResized</a>(</span><span class="m-doc-wrap">)</span>
-            </dt>
-            <dd><span></span></dd>
             <dt id="a424aac306706a4b8d4489f77eb5fd1b5">
               <span class="m-doc-wrap-bumper">auto <a href="#a424aac306706a4b8d4489f77eb5fd1b5" class="m-doc-self">GetPhysicalDevice</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_physical_device.html" class="m-doc">PhysicalDevice</a>*</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a397b8a00add204d9c4edb77f49d00221">
-              <span class="m-doc-wrap-bumper">auto <a href="#a397b8a00add204d9c4edb77f49d00221" class="m-doc-self">GetSurface</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_surface.html" class="m-doc">Surface</a>*</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a99908c28cec26c1021c1a7df81276678">
               <span class="m-doc-wrap-bumper">auto <a href="#a99908c28cec26c1021c1a7df81276678" class="m-doc-self">GetLogicalDevice</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classacid_1_1_logical_device.html" class="m-doc">LogicalDevice</a>*</span>
             </dt>
             <dd><span></span></dd>
+            <dt id="a88434eb531cbf38841aafdd06a4e05aa">
+              <span class="m-doc-wrap-bumper">auto <a href="#a88434eb531cbf38841aafdd06a4e05aa" class="m-doc-self">GetPipelineCache</a>(</span><span class="m-doc-wrap">) const -&gt; const VkPipelineCache&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a09b54dc24d322cd05350e0459a01d301">
+              <span class="m-doc-wrap-bumper">auto <a href="#a09b54dc24d322cd05350e0459a01d301" class="m-doc-self">GetSurface</a>(</span><span class="m-doc-wrap">std::size_t id) const -&gt; const <a href="classacid_1_1_surface.html" class="m-doc">Surface</a>*</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a794a4ba3378ada203cafa1d3381d8f49">
+              <span class="m-doc-wrap-bumper">auto <a href="#a794a4ba3378ada203cafa1d3381d8f49" class="m-doc-self">GetSwapchain</a>(</span><span class="m-doc-wrap">std::size_t id) const -&gt; const <a href="classacid_1_1_swapchain.html" class="m-doc">Swapchain</a>*</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a75746723a9e4142e9b0bbd9ee65056e2">
+              <span class="m-doc-wrap-bumper">void <a href="#a75746723a9e4142e9b0bbd9ee65056e2" class="m-doc-self">SetFramebufferResized</a>(</span><span class="m-doc-wrap">std::size_t id)</span>
+            </dt>
+            <dd><span></span></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a4fdca33de8393c617dfbe8b7bcbab98c"><div>
+          <section class="m-doc-details" id="a2656a9ac91326ada7386a27036bfa808"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void acid::<wbr />Graphics::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4fdca33de8393c617dfbe8b7bcbab98c" class="m-doc-self">CaptureScreenshot</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename) const</span></span>
+              <span class="m-doc-wrap-bumper">void acid::<wbr />Graphics::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2656a9ac91326ada7386a27036bfa808" class="m-doc-self">CaptureScreenshot</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename,
+              std::size_t id = 0) const</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -184,6 +186,10 @@ engine</span></a>
                 <tr>
                   <td style="width: 1%">filename</td>
                   <td>The file to save the screenshot as.</td>
+                </tr>
+                <tr>
+                  <td>id</td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>

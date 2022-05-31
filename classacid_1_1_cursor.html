@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>/home/runner/work/Acid/Acid/Sources/Devices/Keyboard.cpp file | Acid A
+  <title>acid::Cursor class | Acid A
 high
 speed
 C++17
@@ -71,7 +71,7 @@ engine</span></a>
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_937900b87e0c7a5fa01190c395fb83f7.html">/home/runner/work/Acid/Acid/Sources</a>/</span><span class="m-breadcrumb"><a href="dir_52d9bdf1379648212ef2f017cf7f455d.html">Devices</a>/</span>Keyboard.cpp <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespaceacid.html">acid</a>::<wbr/></span>Cursor <span class="m-thin">class</span>
         </h1>
         <p><span></span></p>
         <nav class="m-block m-default">
@@ -80,17 +80,70 @@ engine</span></a>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespaceacid.html" class="m-doc">acid</a></dt>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a69f1ec053652cca89785e5cb4f099651" class="m-doc">Cursor</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename,
+              <a href="namespaceacid.html#a5c090149b4783695a8345631d112c2d2" class="m-doc">CursorHotspot</a> hotspot)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a056ccae464528379d6c226f60a877c48" class="m-doc">Cursor</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#ad126a29b1e40bea1a56bc930f31ab7b4" class="m-doc">CursorStandard</a> standard)</span>
+            </dt>
+            <dd></dd>
+            <dt id="aa2563210a5b594b9f0872647dade8521">
+              <span class="m-doc-wrap-bumper"><a href="#aa2563210a5b594b9f0872647dade8521" class="m-doc-self">~Cursor</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
             <dd><span></span></dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a69f1ec053652cca89785e5cb4f099651"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Cursor::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a69f1ec053652cca89785e5cb4f099651" class="m-doc-self">Cursor</a>(</span><span class="m-doc-wrap">const std::filesystem::path&amp; filename,
+              <a href="namespaceacid.html#a5c090149b4783695a8345631d112c2d2" class="m-doc">CursorHotspot</a> hotspot)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">filename</td>
+                  <td>The new custom mouse file.</td>
+                </tr>
+                <tr>
+                  <td>hotspot</td>
+                  <td>The hotspot to display the cursor image at.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the cursor to a image file.</p>
+          </div></section>
+          <section class="m-doc-details" id="a056ccae464528379d6c226f60a877c48"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> acid::<wbr />Cursor::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a056ccae464528379d6c226f60a877c48" class="m-doc-self">Cursor</a>(</span><span class="m-doc-wrap"><a href="namespaceacid.html#ad126a29b1e40bea1a56bc930f31ab7b4" class="m-doc">CursorStandard</a> standard)</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">standard</td>
+                  <td>The standard shape.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sets the cursor to a system style.</p>
+          </div></section>
         </section>
       </div>
     </div>

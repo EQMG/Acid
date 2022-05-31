@@ -225,6 +225,10 @@ engine</span></a>
             </dt>
             <dd>A driver that has a constant value.</dd>
             <dt>
+              class <a href="classacid_1_1_context.html" class="m-doc">Context</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
               class <a href="classacid_1_1_convex_hull_collider.html" class="m-doc">ConvexHullCollider</a>
             </dt>
             <dd><span></span></dd>
@@ -240,6 +244,10 @@ engine</span></a>
               class <a href="classacid_1_1_cube_model.html" class="m-doc">CubeModel</a>
             </dt>
             <dd><a href="classacid_1_1_resource.html" class="m-doc">Resource</a> that represents a cube model.</dd>
+            <dt>
+              class <a href="classacid_1_1_cursor.html" class="m-doc">Cursor</a>
+            </dt>
+            <dd><span></span></dd>
             <dt>
               class <a href="classacid_1_1_cylinder_collider.html" class="m-doc">CylinderCollider</a>
             </dt>
@@ -648,10 +656,6 @@ engine</span></a>
             </dt>
             <dd><span></span></dd>
             <dt>
-              class <a href="classacid_1_1_keyboard.html" class="m-doc">Keyboard</a>
-            </dt>
-            <dd><a href="classacid_1_1_module.html" class="m-doc">Module</a> used for managing a virtual keyboard.</dd>
-            <dt>
               class <a href="classacid_1_1_keyboard_input_button.html" class="m-doc">KeyboardInputButton</a>
             </dt>
             <dd><a href="classacid_1_1_input_button.html" class="m-doc">InputButton</a> input from the keyboard input device.</dd>
@@ -755,10 +759,6 @@ engine</span></a>
               class <a href="classacid_1_1_monitor.html" class="m-doc">Monitor</a>
             </dt>
             <dd>Class used to represent a monitor.</dd>
-            <dt>
-              class <a href="classacid_1_1_mouse.html" class="m-doc">Mouse</a>
-            </dt>
-            <dd><a href="classacid_1_1_module.html" class="m-doc">Module</a> used for managing a virtual mouse.</dd>
             <dt>
               class <a href="classacid_1_1_mouse_input_axis.html" class="m-doc">MouseInputAxis</a>
             </dt>
@@ -1341,6 +1341,23 @@ engine</span></a>
         <section id="enum-members">
           <h2><a href="#enum-members">Enums</a></h2>
           <dl class="m-doc">
+            <dt id="a5c090149b4783695a8345631d112c2d2">
+              <span class="m-doc-wrap-bumper">enum class <a href="#a5c090149b4783695a8345631d112c2d2" class="m-doc-self">CursorHotspot</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#a5c090149b4783695a8345631d112c2d2a6f43ca0793e0c68184761673278f4ca4" class="m-doc">UpperLeft</a>,
+              <a href="#a5c090149b4783695a8345631d112c2d2a894d4b94cedce8501ff5165b6863ea3a" class="m-doc">UpperRight</a>,
+              <a href="#a5c090149b4783695a8345631d112c2d2a98e5a1c44509157ebcaf46c515c78875" class="m-doc">BottomLeft</a>,
+              <a href="#a5c090149b4783695a8345631d112c2d2a9146bfc669fddc88db2c4d89297d0e9a" class="m-doc">BottomRight</a>,
+              <a href="#a5c090149b4783695a8345631d112c2d2adc5ffc2b720501ba00de3be1477b435d" class="m-doc">Centered</a> }</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad126a29b1e40bea1a56bc930f31ab7b4">
+              <span class="m-doc-wrap-bumper">enum class <a href="#ad126a29b1e40bea1a56bc930f31ab7b4" class="m-doc-self">CursorStandard</a>: uint32_t { </span><span class="m-doc-wrap"><a href="#ad126a29b1e40bea1a56bc930f31ab7b4a0f4e1aaabd074689b7d3ead824d1ee8e" class="m-doc">Arrow</a> = 0x00036001,
+              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a4ca8b47601e7a843e23d0139a8a4ff61" class="m-doc">IBeam</a> = 0x00036002,
+              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a0a7ad1fc7e1bda1d661fc937c4e6eedd" class="m-doc">Crosshair</a> = 0x00036003,
+              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4aa78b1ac16c0cd02168097fc9a9bd7604" class="m-doc">Hand</a> = 0x00036004,
+              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4ac7ff252c016aad27ff32f098e25d4aa1" class="m-doc">ResizeX</a> = 0x00036005,
+              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a38b9221e1930a60c63d48c28b8f83f34" class="m-doc">ResizeY</a> = 0x00036006 }</span>
+            </dt>
+            <dd><span></span></dd>
             <dt id="a5bb11babbedaa16a53ae9d619743acec">
               <span class="m-doc-wrap-bumper">enum class <a href="#a5bb11babbedaa16a53ae9d619743acec" class="m-doc-self">JoystickHatValue</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#a5bb11babbedaa16a53ae9d619743acecadc5ffc2b720501ba00de3be1477b435d" class="m-doc">Centered</a> = 0,
               <a href="#a5bb11babbedaa16a53ae9d619743aceca258f49887ef8d14ac268c92b02503aaa" class="m-doc">Up</a> = 1,
@@ -1506,23 +1523,6 @@ engine</span></a>
               <a href="#a91c2051d74062e655f6a79167e3530c4ab1ca34f82e83c52b010f86955f264e05" class="m-doc">Middle</a> = _3 }</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a5c090149b4783695a8345631d112c2d2">
-              <span class="m-doc-wrap-bumper">enum class <a href="#a5c090149b4783695a8345631d112c2d2" class="m-doc-self">CursorHotspot</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#a5c090149b4783695a8345631d112c2d2a6f43ca0793e0c68184761673278f4ca4" class="m-doc">UpperLeft</a>,
-              <a href="#a5c090149b4783695a8345631d112c2d2a894d4b94cedce8501ff5165b6863ea3a" class="m-doc">UpperRight</a>,
-              <a href="#a5c090149b4783695a8345631d112c2d2a98e5a1c44509157ebcaf46c515c78875" class="m-doc">BottomLeft</a>,
-              <a href="#a5c090149b4783695a8345631d112c2d2a9146bfc669fddc88db2c4d89297d0e9a" class="m-doc">BottomRight</a>,
-              <a href="#a5c090149b4783695a8345631d112c2d2adc5ffc2b720501ba00de3be1477b435d" class="m-doc">Centered</a> }</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ad126a29b1e40bea1a56bc930f31ab7b4">
-              <span class="m-doc-wrap-bumper">enum class <a href="#ad126a29b1e40bea1a56bc930f31ab7b4" class="m-doc-self">CursorStandard</a>: uint32_t { </span><span class="m-doc-wrap"><a href="#ad126a29b1e40bea1a56bc930f31ab7b4a0f4e1aaabd074689b7d3ead824d1ee8e" class="m-doc">Arrow</a> = 0x00036001,
-              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a4ca8b47601e7a843e23d0139a8a4ff61" class="m-doc">IBeam</a> = 0x00036002,
-              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a0a7ad1fc7e1bda1d661fc937c4e6eedd" class="m-doc">Crosshair</a> = 0x00036003,
-              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4aa78b1ac16c0cd02168097fc9a9bd7604" class="m-doc">Hand</a> = 0x00036004,
-              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4ac7ff252c016aad27ff32f098e25d4aa1" class="m-doc">ResizeX</a> = 0x00036005,
-              <a href="#ad126a29b1e40bea1a56bc930f31ab7b4a38b9221e1930a60c63d48c28b8f83f34" class="m-doc">ResizeY</a> = 0x00036006 }</span>
-            </dt>
-            <dd><span></span></dd>
             <dt id="ac89843856e59da4ef44e13f3abb7ce53">
               <span class="m-doc-wrap-bumper">enum class <a href="#ac89843856e59da4ef44e13f3abb7ce53" class="m-doc-self">InputAction</a>: int32_t { </span><span class="m-doc-wrap"><a href="#ac89843856e59da4ef44e13f3abb7ce53ab8e7b465df7c5979dc731d06e84ce2cf" class="m-doc">Release</a> = 0,
               <a href="#ac89843856e59da4ef44e13f3abb7ce53a0610123bdd4ffc191a3ea05a847e1307" class="m-doc">Press</a> = 1,
@@ -1534,7 +1534,9 @@ engine</span></a>
               <a href="#a5473f831afe1d1193889a453785dee8ca825a3d98017bab11815ad2817201324c" class="m-doc">Shift</a> = 1,
               <a href="#a5473f831afe1d1193889a453785dee8caa1595abbb4c3a326636dd178757cd6c1" class="m-doc">Control</a> = 2,
               <a href="#a5473f831afe1d1193889a453785dee8caa2e92861b757ab878312dd57993d60cf" class="m-doc">Alt</a> = 4,
-              <a href="#a5473f831afe1d1193889a453785dee8ca0ce3266d4eb71ad50f7a90aee6d21dcd" class="m-doc">Super</a> = 8 }</span>
+              <a href="#a5473f831afe1d1193889a453785dee8ca0ce3266d4eb71ad50f7a90aee6d21dcd" class="m-doc">Super</a> = 8,
+              <a href="#a5473f831afe1d1193889a453785dee8ca8d0f4171170104d094d8b6d4f8bf49e6" class="m-doc">CapsLock</a> = 16,
+              <a href="#a5473f831afe1d1193889a453785dee8cacf6cc0261135c6d163fd4305375773d2" class="m-doc">NumLock</a> = 32 }</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a99144e3ffe032212925c9892f8b04c3f">
@@ -1683,7 +1685,7 @@ engine</span></a>
             </dt>
             <dd><span></span></dd>
             <dt id="a498c1dd224f3236c9ceccab6e1ec00bb">
-              using <a href="#a498c1dd224f3236c9ceccab6e1ec00bb" class="m-doc-self">CollisionPairs</a> = <a href="_c_make_lists_8txt.html#a6f9bbe06d46c3820d29e70fa14bfa236" class="m-doc">std::<wbr />set</a>&lt;<a href="namespaceacid.html#a26149f1cfe66516497b52b714241b40d" class="m-doc">CollisionPair</a>&gt;
+              using <a href="#a498c1dd224f3236c9ceccab6e1ec00bb" class="m-doc-self">CollisionPairs</a> = <a href="_c_make_lists_8txt.html#a39fa26a3faf2e40d2d6c4e569af8ce4d" class="m-doc">std::<wbr />set</a>&lt;<a href="namespaceacid.html#a26149f1cfe66516497b52b714241b40d" class="m-doc">CollisionPair</a>&gt;
             </dt>
             <dd><span></span></dd>
             <dt id="ac541d22a57b08a9f58b8afe95c3fbf74">
@@ -1770,89 +1772,79 @@ engine</span></a>
               int32_t event)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="afd9f087e6de0983f469a7d4de1de95ee">
-              <span class="m-doc-wrap-bumper">void <a href="#afd9f087e6de0983f469a7d4de1de95ee" class="m-doc-self">CallbackKey</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a3d499aa909117932f11fd13f52b111f3">
+              <span class="m-doc-wrap-bumper">void <a href="#a3d499aa909117932f11fd13f52b111f3" class="m-doc-self">CallbackWindowPosition</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t xpos,
+              int32_t ypos)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a70457bc0b010725133ff634a4e5b63a8">
+              <span class="m-doc-wrap-bumper">void <a href="#a70457bc0b010725133ff634a4e5b63a8" class="m-doc-self">CallbackWindowSize</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t width,
+              int32_t height)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5037b1b73410ca68ee9167746f47fb0f">
+              <span class="m-doc-wrap-bumper">void <a href="#a5037b1b73410ca68ee9167746f47fb0f" class="m-doc-self">CallbackWindowClose</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab6eba00fb199d66845815e60e82a5272">
+              <span class="m-doc-wrap-bumper">void <a href="#ab6eba00fb199d66845815e60e82a5272" class="m-doc-self">CallbackWindowFocus</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t focused)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a1f46708d425d583b634af35cc2eb6058">
+              <span class="m-doc-wrap-bumper">void <a href="#a1f46708d425d583b634af35cc2eb6058" class="m-doc-self">CallbackWindowIconify</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t iconified)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aaaf888625457b7956f455d90321eaac3">
+              <span class="m-doc-wrap-bumper">void <a href="#aaaf888625457b7956f455d90321eaac3" class="m-doc-self">CallbackFramebufferSize</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t width,
+              int32_t height)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0742d3b70e2b0ab98b233ddb7f3219ab">
+              <span class="m-doc-wrap-bumper">void <a href="#a0742d3b70e2b0ab98b233ddb7f3219ab" class="m-doc-self">CallbackCursorEnter</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t entered)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad4396f57fe5c4577b39453713716db37">
+              <span class="m-doc-wrap-bumper">void <a href="#ad4396f57fe5c4577b39453713716db37" class="m-doc-self">CallbackDrop</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
+              int32_t count,
+              const char** paths)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab5d6b86a56ddf90b8d733d00e503e7ae">
+              <span class="m-doc-wrap-bumper">void <a href="#ab5d6b86a56ddf90b8d733d00e503e7ae" class="m-doc-self">CallbackKey</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t key,
               int32_t scancode,
               int32_t action,
               int32_t mods)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="ab979d591891ebee9b25ecb8694f463c5">
-              <span class="m-doc-wrap-bumper">void <a href="#ab979d591891ebee9b25ecb8694f463c5" class="m-doc-self">CallbackChar</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a0b0146f3a76468bbf02320ee738c5ebd">
+              <span class="m-doc-wrap-bumper">void <a href="#a0b0146f3a76468bbf02320ee738c5ebd" class="m-doc-self">CallbackChar</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               uint32_t codepoint)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a16f7671da8a259b81f2bf7263292e665">
-              <span class="m-doc-wrap-bumper">void <a href="#a16f7671da8a259b81f2bf7263292e665" class="m-doc-self">CallbackMouseButton</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a38dfb117039f0255adeee2eb6d236142">
+              <span class="m-doc-wrap-bumper">void <a href="#a38dfb117039f0255adeee2eb6d236142" class="m-doc-self">CallbackMouseButton</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               int32_t button,
               int32_t action,
               int32_t mods)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a7dca80992224512bb9674c03977e671a">
-              <span class="m-doc-wrap-bumper">void <a href="#a7dca80992224512bb9674c03977e671a" class="m-doc-self">CallbackCursorPos</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="adaf768f7847b3a033afbf2a127c54352">
+              <span class="m-doc-wrap-bumper">void <a href="#adaf768f7847b3a033afbf2a127c54352" class="m-doc-self">CallbackCursorPos</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               double xpos,
               double ypos)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a42339d044182f89b8371063accc0aa0d">
-              <span class="m-doc-wrap-bumper">void <a href="#a42339d044182f89b8371063accc0aa0d" class="m-doc-self">CallbackCursorEnter</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t entered)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a20e247fcf2b9676cfe11b5f511475db8">
-              <span class="m-doc-wrap-bumper">void <a href="#a20e247fcf2b9676cfe11b5f511475db8" class="m-doc-self">CallbackScroll</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
+            <dt id="a778783eb7ae01f70ff89bbb8b4676e80">
+              <span class="m-doc-wrap-bumper">void <a href="#a778783eb7ae01f70ff89bbb8b4676e80" class="m-doc-self">CallbackScroll</a>(</span><span class="m-doc-wrap">GLFWwindow* glfwWindow,
               double xoffset,
               double yoffset)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a18845643e3db456d70a594e99a72284d">
-              <span class="m-doc-wrap-bumper">void <a href="#a18845643e3db456d70a594e99a72284d" class="m-doc-self">CallbackDrop</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t count,
-              const char** paths)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a232b80fa7234437c7e8b717898a46c9d">
-              <span class="m-doc-wrap-bumper">void <a href="#a232b80fa7234437c7e8b717898a46c9d" class="m-doc-self">CallbackError</a>(</span><span class="m-doc-wrap">int32_t error,
-              const char* description)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a13f8a14911d90761808c28fa3f42c0c7">
-              <span class="m-doc-wrap-bumper">void <a href="#a13f8a14911d90761808c28fa3f42c0c7" class="m-doc-self">CallbackMonitor</a>(</span><span class="m-doc-wrap">GLFWmonitor* monitor,
-              int32_t event)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ad4abacaa1698ce1beaea709734fe4a93">
-              <span class="m-doc-wrap-bumper">void <a href="#ad4abacaa1698ce1beaea709734fe4a93" class="m-doc-self">CallbackWindowPosition</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t xpos,
-              int32_t ypos)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="accf73e19e2acd0e49db7e390aeb68d81">
-              <span class="m-doc-wrap-bumper">void <a href="#accf73e19e2acd0e49db7e390aeb68d81" class="m-doc-self">CallbackWindowSize</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t width,
-              int32_t height)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aa86f8ba9b2b18a6530e8167b15fbda4f">
-              <span class="m-doc-wrap-bumper">void <a href="#aa86f8ba9b2b18a6530e8167b15fbda4f" class="m-doc-self">CallbackWindowClose</a>(</span><span class="m-doc-wrap">GLFWwindow* window)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aebdd2318a5a173daa6aa06886f4b968d">
-              <span class="m-doc-wrap-bumper">void <a href="#aebdd2318a5a173daa6aa06886f4b968d" class="m-doc-self">CallbackWindowFocus</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t focused)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="aede77248be7929252e44424aa4831830">
-              <span class="m-doc-wrap-bumper">void <a href="#aede77248be7929252e44424aa4831830" class="m-doc-self">CallbackWindowIconify</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t iconified)</span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4a848bbd9419b7aec2d4c08cf2da80f4">
-              <span class="m-doc-wrap-bumper">void <a href="#a4a848bbd9419b7aec2d4c08cf2da80f4" class="m-doc-self">CallbackFramebufferSize</a>(</span><span class="m-doc-wrap">GLFWwindow* window,
-              int32_t width,
-              int32_t height)</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a8b9524d218d77f6bdcd0995ab733531a">
@@ -1860,6 +1852,16 @@ engine</span></a>
               <a href="namespaceacid.html#ad36324b4ac31ebf35fcd9a7eed60a41d" class="m-doc">Vector2i</a> r1,
               <a href="namespaceacid.html#ad36324b4ac31ebf35fcd9a7eed60a41d" class="m-doc">Vector2i</a> l2,
               <a href="namespaceacid.html#ad36324b4ac31ebf35fcd9a7eed60a41d" class="m-doc">Vector2i</a> r2) -&gt; int32_t</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a232b80fa7234437c7e8b717898a46c9d">
+              <span class="m-doc-wrap-bumper">void <a href="#a232b80fa7234437c7e8b717898a46c9d" class="m-doc-self">CallbackError</a>(</span><span class="m-doc-wrap">int32_t error,
+              const char* description)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab8d787c213b960f31a013b05a352e57c">
+              <span class="m-doc-wrap-bumper">void <a href="#ab8d787c213b960f31a013b05a352e57c" class="m-doc-self">CallbackMonitor</a>(</span><span class="m-doc-wrap">GLFWmonitor* glfwMonitor,
+              int32_t event)</span>
             </dt>
             <dd><span></span></dd>
             <dt id="ac31de26b07cb425cefc56fae100590f8">
@@ -2056,13 +2058,13 @@ engine</span></a>
             <dt id="a6e0d61c19bde8c793c580283627c3f25">
               <div class="m-doc-template">template&lt;typename T&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a6e0d61c19bde8c793c580283627c3f25" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap">const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              <a href="_c_make_lists_8txt.html#a6f9bbe06d46c3820d29e70fa14bfa236" class="m-doc">std::<wbr />set</a>&lt;T&gt;&amp; set) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+              <a href="_c_make_lists_8txt.html#a39fa26a3faf2e40d2d6c4e569af8ce4d" class="m-doc">std::<wbr />set</a>&lt;T&gt;&amp; set) -&gt; const <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a9eb75760c6d36f3d967724cfc737a023">
               <div class="m-doc-template">template&lt;typename T&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a9eb75760c6d36f3d967724cfc737a023" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp; node,
-              const <a href="_c_make_lists_8txt.html#a6f9bbe06d46c3820d29e70fa14bfa236" class="m-doc">std::<wbr />set</a>&lt;T&gt;&amp; set) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
+              const <a href="_c_make_lists_8txt.html#a39fa26a3faf2e40d2d6c4e569af8ce4d" class="m-doc">std::<wbr />set</a>&lt;T&gt;&amp; set) -&gt; <a href="classacid_1_1_node.html" class="m-doc">Node</a>&amp;</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a9b199660414ab1e9adadb9bb70bd9ecb">
