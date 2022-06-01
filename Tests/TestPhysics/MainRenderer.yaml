@@ -1,0 +1,101 @@
+---
+renderStages:
+- attachments:
+  - binding: 0
+    name: shadows
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R8_UNORM
+  subpasses:
+  - binding: 0
+    attachmentBindings:
+    - 0
+    subrenders:
+    - type: RenderShadows
+  viewport:
+    size:
+      width: 4096
+      height: 4096
+- attachments:
+  - binding: 0
+    name: depth
+    type: Attachment::Type::Depth
+    multisampled: false
+  - binding: 1
+    name: swapchain
+    type: Attachment::Type::Swapchain
+  - binding: 2
+    name: position
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R16G16B16A16_SFLOAT
+  - binding: 3
+    name: diffuse
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R8G8B8A8_UNORM
+  - binding: 4
+    name: normal
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R16G16B16A16_SFLOAT
+  - binding: 5
+    name: material
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R8G8B8A8_UNORM
+  - binding: 6
+    name: resolved
+    type: Attachment::Type::Image
+    multisampled: false
+    format: VK_FORMAT_R8G8B8A8_UNORM
+  subpasses:
+  - binding: 0
+    attachmentBindings:
+    - 0
+    - 2
+    - 3
+    - 4
+    - 5
+    subrenders:
+    - MeshesSubrender
+  - binding: 1
+    attachmentBindings:
+    - 0
+    - 6
+    subrenders:
+    - type: DeferredSubrender
+    - type: ParticlesSubrender
+  - binding: 2
+    attachmentBindings:
+    - 0
+    - 1
+    subrenders:
+#   - type: FxaaFilter
+#   - type: ToneFilter
+#   - type: SsaoFilter
+#   - type: BlurPipeline
+#     name: sceneBlur
+#     blur: 1.8
+#     blurType: BlurFilter::Type::_5
+#     inputScale: 0.6
+#   - type: DofFilter
+#     pipelineBlur: sceneBlur
+#     focusPoint: 1.11
+#   - type: EmbossFilter
+#   - type: CrtFilter
+#   - type: LensflareFilter
+#   - type: TiltshiftFilter
+#   - type: PixelFilter
+#     pixelSize: 8.0
+#   - type: VignetteFilter
+#   - type: GrainFilter
+    - type: DefaultFilter
+      lastFilter: true
+#   - type: RendererGizmos
+    - type: GuisSubrender
+    - type: FontsSubrender
+  viewport:
+    scale:
+      x: 1.0
+      y: 1.0

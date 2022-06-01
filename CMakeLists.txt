@@ -1,6 +1,6 @@
 # 3.11.0 required for cxx_std_17 and FetchContent
 cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
-project(Acid VERSION 0.14.3 LANGUAGES CXX C)
+project(Acid VERSION 0.15.0 LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_TESTS "Build test applications" ON)
@@ -69,11 +69,19 @@ execute_process(
 
 enable_testing() # must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
 
+add_subdirectory(Engine/Core)
+add_subdirectory(Engine/Scene)
+add_subdirectory(Engine/Audio)
+add_subdirectory(Engine/Context)
+add_subdirectory(Engine/Graphics)
+add_subdirectory(Engine/Ui)
+add_subdirectory(Engine/Animation)
+
 # Acid sources directory
-add_subdirectory(Sources)
+#add_subdirectory(Sources)
 
 # Allows automation of "BUILD_TESTING"
-include(CTest)
-if(BUILD_TESTS)
-	add_subdirectory(Tests)
-endif()
+#include(CTest)
+#if(BUILD_TESTS)
+#	add_subdirectory(Tests)
+#endif()
