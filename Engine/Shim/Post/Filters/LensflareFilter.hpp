@@ -2,9 +2,10 @@
 
 #include "Maths/Vector3.hpp"
 #include "Post/PostFilter.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_GRAPHICS_EXPORT LensflareFilter : public PostFilter {
+class ACID_SHIM_EXPORT LensflareFilter : public PostFilter {
 public:
 	explicit LensflareFilter(const Pipeline::Stage &pipelineStage);
 

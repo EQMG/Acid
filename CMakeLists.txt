@@ -69,18 +69,21 @@ execute_process(
 		ERROR_QUIET
 		)
 
-enable_testing() # must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
+# Must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
+enable_testing()
 
 # Acid components
 add_subdirectory(Engine/Core)
+add_subdirectory(Engine/Network)
 add_subdirectory(Engine/Scene)
 add_subdirectory(Engine/Physics)
 add_subdirectory(Engine/Sound)
 add_subdirectory(Engine/Context)
+add_subdirectory(Engine/Input)
 add_subdirectory(Engine/Graphics)
 add_subdirectory(Engine/Ui)
+add_subdirectory(Engine/Shim)
 add_subdirectory(Engine/Animation)
-add_subdirectory(Engine/Network)
 
 #if(BUILD_EDITOR)
 #	add_subdirectory(Editor)

@@ -2,9 +2,10 @@
 
 #include "Post/PostFilter.hpp"
 #include "Post/Pipelines/BlurPipeline.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_GRAPHICS_EXPORT DofFilter : public PostFilter {
+class ACID_SHIM_EXPORT DofFilter : public PostFilter {
 public:
 	explicit DofFilter(const Pipeline::Stage &pipelineStage, BlurPipeline *pipelineBlur, float focusPoint = 8.24f, float nearField = 0.3f,
 		float nearTransition = 0.125f, float farField = 8.0f, float farTransition = 3.0f);

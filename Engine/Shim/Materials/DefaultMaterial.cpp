@@ -1,6 +1,6 @@
 #include "DefaultMaterial.hpp"
 
-#include "Animations/AnimatedMesh.hpp"
+//#include "Animations/AnimatedMesh.hpp"
 #include "Maths/Transform.hpp"
 
 namespace acid {
@@ -48,8 +48,8 @@ std::vector<Shader::Define> DefaultMaterial::GetDefines() const {
 		{"MATERIAL_MAPPING", String::To<int32_t>(imageMaterial != nullptr)},
 		{"NORMAL_MAPPING", String::To<int32_t>(imageNormal != nullptr)},
 		{"ANIMATED", String::To<int32_t>(animated)},
-		{"MAX_JOINTS", String::To(AnimatedMesh::MaxJoints)},
-		{"MAX_WEIGHTS", String::To(AnimatedMesh::MaxWeights)}
+		//{"MAX_JOINTS", String::To(AnimatedMesh::MaxJoints)},
+		//{"MAX_WEIGHTS", String::To(AnimatedMesh::MaxWeights)}
 	};
 }
 

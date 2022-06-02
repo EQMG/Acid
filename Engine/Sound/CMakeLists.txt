@@ -92,3 +92,25 @@ target_link_libraries(Acid.Sound
         PRIVATE
 		OpenAL::OpenAL
 		)
+
+set_target_properties(Acid.Sound PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Sound/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Sound"
+		)
+foreach(_header IN LISTS _acid_sound_headers _acid_sound_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Sound/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Sound
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+		)

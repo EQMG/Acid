@@ -3,9 +3,10 @@
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_EXPORT GizmosSubrender : public Subrender {
+class ACID_SHIM_EXPORT GizmosSubrender : public Subrender {
 public:
 	explicit GizmosSubrender(const Pipeline::Stage &pipelineStage);
 

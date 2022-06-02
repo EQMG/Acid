@@ -2,12 +2,13 @@
 
 #include "Utils/StreamFactory.hpp"
 #include "Maths/Vector3.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 /**
  * @brief Component interface that defines a emitter volume.
  */
-class ACID_EXPORT Emitter : public StreamFactory<Emitter> {
+class ACID_SHIM_EXPORT Emitter : public StreamFactory<Emitter> {
 public:
 	virtual ~Emitter() = default;
 

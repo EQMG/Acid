@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief A manager that manages particles.
  */
-class ACID_EXPORT Particles : public System {
+class ACID_SHIM_EXPORT Particles : public System {
 public:
 	using ParticlesContainer = std::map<std::shared_ptr<ParticleType>, std::vector<Particle>>;
 

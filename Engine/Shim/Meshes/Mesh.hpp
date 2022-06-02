@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Component that represents a model/mesh.
  */
-class ACID_EXPORT Mesh : public Component::Registrar<Mesh> {
+class ACID_SHIM_EXPORT Mesh : public Component::Registrar<Mesh> {
 	inline static const bool Registered = Register("mesh");
 public:
 	/**

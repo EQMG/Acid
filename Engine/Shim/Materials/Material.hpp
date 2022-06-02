@@ -11,7 +11,7 @@ namespace acid {
  * @brief Component that represents a material shader that is used to render a model.
  * The implementation of this object must initialize {@link Material#pipelineMaterial} in {@link Material#CreatePipeline()}.
  */
-class ACID_GRAPHICS_EXPORT Material : public StreamFactory<Material> {
+class ACID_SHIM_EXPORT Material : public StreamFactory<Material> {
 public:
 	virtual ~Material() = default;
 

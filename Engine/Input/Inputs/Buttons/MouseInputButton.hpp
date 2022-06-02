@@ -6,7 +6,7 @@ namespace acid {
 /**
  * @brief InputButton input from the mouse input device.
  */
-class ACID_EXPORT MouseInputButton : public InputButton::Registrar<MouseInputButton> {
+class ACID_INPUT_EXPORT MouseInputButton : public InputButton::Registrar<MouseInputButton> {
 	inline static const bool Registered = Register("mouse");
 public:
 	/**

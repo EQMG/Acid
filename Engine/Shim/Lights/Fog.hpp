@@ -3,12 +3,13 @@
 #include "Maths/Colour.hpp"
 #include "Files/Node.hpp"
 #include "Scenes/Component.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 /**
  * @brief Component that represents a 3d fog.
  */
-class ACID_EXPORT Fog : public Component::Registrar<Fog> {
+class ACID_SHIM_EXPORT Fog : public Component::Registrar<Fog> {
 	inline static const bool Registered = Register("fog");
 public:
 	/**

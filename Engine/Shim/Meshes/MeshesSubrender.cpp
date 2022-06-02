@@ -1,6 +1,6 @@
 #include "MeshesSubrender.hpp"
 
-#include "Animations/AnimatedMesh.hpp"
+//#include "Animations/AnimatedMesh.hpp"
 #include "Scenes/Scenes.hpp"
 #include "Mesh.hpp"
 
@@ -27,8 +27,8 @@ void MeshesSubrender::Render(const CommandBuffer &commandBuffer) {
 		mesh->CmdRender(commandBuffer, uniformScene, GetStage());
 
 	// TODO: Split animated meshes into it's own subrender.
-	auto animatedMeshes = Scenes::Get()->GetScene()->QueryComponents<AnimatedMesh>();
-	for (const auto &animatedMesh : animatedMeshes)
-		animatedMesh->CmdRender(commandBuffer, uniformScene, GetStage());
+	//auto animatedMeshes = Scenes::Get()->GetScene()->QueryComponents<AnimatedMesh>();
+	//for (const auto &animatedMesh : animatedMeshes)
+	//	animatedMesh->CmdRender(commandBuffer, uniformScene, GetStage());
 }
 }

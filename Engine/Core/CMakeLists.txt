@@ -94,7 +94,7 @@ add_library(Acid.Core
         ${_acid_core_third_party_sources}
         )
 
-get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} PATH)
+get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../.. ABSOLUTE)
 if(ACID_LINK_RESOURCES)
 	# Directory that Acid resources can be found.
 	set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
@@ -126,6 +126,7 @@ if(NOT PhysFS_FOUND)
 		set(PHYSFS_BUILD_SHARED OFF CACHE INTERNAL "Build shared library.")
 	endif()
 	set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "Build stdio test program.")
+	set(PHYSFS_DISABLE_INSTALL ON CACHE INTERNAL "Disable installing PhysFS.")
 	set(PHYSFS_BUILD_DOCS OFF CACHE INTERNAL "Build doxygen based documentation.")
 	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
 	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
@@ -214,4 +215,27 @@ target_link_libraries(Acid.Core
 		Threads::Threads # pthread
         PRIVATE
 		${PHYSFS_LIBRARY}
+		)
+
+set_target_properties(Acid.Core PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Core/Config.hpp" 
+		"${CMAKE_CURRENT_BINARY_DIR}/include/Core/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core"
+		)
+foreach(_header IN LISTS _acid_core_headers _acid_core_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Core
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)

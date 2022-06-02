@@ -9,7 +9,7 @@ namespace acid {
 /**
  * @brief Class that represents a skybox material shader.
  */
-class ACID_EXPORT SkyboxMaterial : public Material::Registrar<SkyboxMaterial> {
+class ACID_SHIM_EXPORT SkyboxMaterial : public Material::Registrar<SkyboxMaterial> {
 	inline static const bool Registered = Register("skybox");
 public:
 	explicit SkyboxMaterial(std::shared_ptr<ImageCube> image = nullptr, const Colour &baseColour = Colour::White);

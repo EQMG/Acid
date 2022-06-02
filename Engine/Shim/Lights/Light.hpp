@@ -3,12 +3,13 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
 #include "Scenes/Component.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 /**
  * @brief Component that represents a point light.
  */
-class ACID_EXPORT Light : public Component::Registrar<Light> {
+class ACID_SHIM_EXPORT Light : public Component::Registrar<Light> {
 	inline static const bool Registered = Register("light");
 public:
 	/**

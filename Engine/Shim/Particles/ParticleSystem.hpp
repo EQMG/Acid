@@ -11,7 +11,7 @@ namespace acid {
 /**
  * @brief A system of particles.
  */
-class ACID_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, NonCopyable {
+class ACID_SHIM_EXPORT ParticleSystem : public Component::Registrar<ParticleSystem>, NonCopyable {
 	inline static const bool Registered = Register("particleSystem");
 public:
 	/**

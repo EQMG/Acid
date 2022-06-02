@@ -65,14 +65,12 @@ generate_export_header(Acid.Context EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR
 # Finds Vulkan, env "VULKAN_SDK" must be set
 #find_package(volk 121 QUIET)
 #if(NOT volk_FOUND)
-	set(_ACID_ALL_SYSTEM_LIBS false)
 	add_subdirectory(../../External/volk volk)
 	set_target_properties(volk PROPERTIES FOLDER "External")
 #endif()
 
 find_package(glfw3 3.3.6 QUIET)
 if(NOT TARGET glfw)
-	set(_ACID_ALL_SYSTEM_LIBS false)
 	foreach(_glfw3_option "GLFW_BUILD_TESTS" "GLFW_BUILD_EXAMPLES" "GLFW_BUILD_DOCS" "GLFW_INSTALL")
 		set(${_glfw3_option} OFF CACHE INTERNAL "")
 	endforeach()
@@ -100,4 +98,26 @@ target_link_libraries(Acid.Context
 		PRIVATE
 		# More IMPORTED
 		glfw
+		)
+
+set_target_properties(Acid.Context PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Context/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Context"
+		)
+foreach(_header IN LISTS _acid_context_headers _acid_context_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Context/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Context
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)

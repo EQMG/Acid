@@ -8,9 +8,10 @@
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Images/ImageCube.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_GRAPHICS_EXPORT DeferredSubrender : public Subrender {
+class ACID_SHIM_EXPORT DeferredSubrender : public Subrender {
 public:
 	explicit DeferredSubrender(const Pipeline::Stage &pipelineStage);
 

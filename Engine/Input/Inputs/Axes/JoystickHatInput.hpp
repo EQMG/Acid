@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief InputButton from a joystick.
  */
-class ACID_EXPORT JoystickHatInput : public InputAxis::Registrar<JoystickHatInput>, public InputButton::Registrar<JoystickHatInput> {
+class ACID_INPUT_EXPORT JoystickHatInput : public InputAxis::Registrar<JoystickHatInput>, public InputButton::Registrar<JoystickHatInput> {
 	inline static const bool Registered = InputAxis::Registrar<JoystickHatInput>::Register("joystickHat") &&
 		InputButton::Registrar<JoystickHatInput>::Register("joystickHat");
 public:

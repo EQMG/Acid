@@ -2,12 +2,13 @@
 
 #include "Maths/Colour.hpp"
 #include "Maths/Matrix4.hpp"
+#include "Resources/Resource.hpp"
+#include "Files/Node.hpp"
 #include "Models/Model.hpp"
 #include "Graphics/Buffers/InstanceBuffer.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Resources/Resource.hpp"
-#include "Files/Node.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 class Gizmo;
@@ -15,7 +16,7 @@ class Gizmo;
 /**
  * @brief Resource that represents a gizmo type.
  */
-class ACID_EXPORT GizmoType : public Resource {
+class ACID_SHIM_EXPORT GizmoType : public Resource {
 public:
 	class Instance {
 	public:

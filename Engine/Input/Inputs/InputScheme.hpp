@@ -10,7 +10,7 @@ namespace acid {
 /**
  * Class is used to abstract and wrap input methods inside a serializable factory.
  */
-class ACID_EXPORT InputScheme : NonCopyable {
+class ACID_INPUT_EXPORT InputScheme : NonCopyable {
 	friend class Inputs;
 public:
 	using AxisMap = std::map<std::string, std::unique_ptr<InputAxis>>;

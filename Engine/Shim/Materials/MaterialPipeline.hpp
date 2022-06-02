@@ -2,12 +2,13 @@
 
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Graphics/RenderStage.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 /**
  * @brief Resource that represents a material pipeline.
  */
-class ACID_GRAPHICS_EXPORT MaterialPipeline : public Resource {
+class ACID_SHIM_EXPORT MaterialPipeline : public Resource {
 public:
 	/**
 	 * Creates a new material pipeline, or finds one with the same values.

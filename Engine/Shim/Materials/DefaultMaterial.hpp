@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Class that represents the default material shader.
  */
-class ACID_GRAPHICS_EXPORT DefaultMaterial : public Material::Registrar<DefaultMaterial> {
+class ACID_SHIM_EXPORT DefaultMaterial : public Material::Registrar<DefaultMaterial> {
 	inline static const bool Registered = Register("default");
 public:
 	explicit DefaultMaterial(const Colour &baseDiffuse = Colour::White, std::shared_ptr<Image2d> imageDiffuse = nullptr, float metallic = 0.0f,

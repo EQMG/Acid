@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief Interface for a binary input device.
  */
-class ACID_EXPORT InputButton : public StreamFactory<InputButton>, public virtual rocket::trackable {
+class ACID_INPUT_EXPORT InputButton : public StreamFactory<InputButton>, public virtual rocket::trackable {
 public:
 	virtual ~InputButton() = default;
 

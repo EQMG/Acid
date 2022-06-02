@@ -3,7 +3,7 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT SphereEmitter : public Emitter::Registrar<SphereEmitter> {
+class ACID_SHIM_EXPORT SphereEmitter : public Emitter::Registrar<SphereEmitter> {
 	inline static const bool Registered = Register("sphere");
 public:
 	explicit SphereEmitter(float radius = 1.0f);

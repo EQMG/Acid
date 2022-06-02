@@ -3,9 +3,10 @@
 #include "Utils/Future.hpp"
 #include "Post/PostFilter.hpp"
 #include "Maths/Vector3.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_GRAPHICS_EXPORT SsaoFilter : public PostFilter {
+class ACID_SHIM_EXPORT SsaoFilter : public PostFilter {
 public:
 	explicit SsaoFilter(const Pipeline::Stage &pipelineStage);
 

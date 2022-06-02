@@ -3,7 +3,7 @@
 #include "Emitter.hpp"
 
 namespace acid {
-class ACID_EXPORT PointEmitter : public Emitter::Registrar<PointEmitter> {
+class ACID_SHIM_EXPORT PointEmitter : public Emitter::Registrar<PointEmitter> {
 	inline static const bool Registered = Register("point");
 public:
 	PointEmitter();

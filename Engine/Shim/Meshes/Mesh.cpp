@@ -3,6 +3,7 @@
 #include "Scenes/Entity.hpp"
 #include "Maths/Transform.hpp"
 #include "Scenes/Scenes.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 Mesh::Mesh(std::shared_ptr<Model> model, std::unique_ptr<Material> &&material) :
@@ -27,10 +28,10 @@ bool Mesh::CmdRender(const CommandBuffer &commandBuffer, UniformHandler &uniform
 		return false;
 
 	// Checks if the mesh is in view.
-	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
-		if (!rigidbody->InFrustum(Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum()))
-			return false;
-	}
+//	if (auto rigidbody = GetEntity()->GetComponent<Rigidbody>()) {
+//		if (!rigidbody->InFrustum(Scenes::Get()->GetScene()->GetCamera()->GetViewFrustum()))
+//			return false;
+//	}
 
 	// Check if we are in the correct pipeline stage.
 	auto materialPipeline = material->GetPipelineMaterial();

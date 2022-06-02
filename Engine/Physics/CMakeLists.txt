@@ -52,8 +52,6 @@ if(WIN32 AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
 endif()
 find_package(Bullet 3.17 QUIET)
 if(NOT BULLET_FOUND)
-	set(_ACID_ALL_SYSTEM_LIBS false)
-
 	# On MSVC shared mode must be disabled with bullet currently
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	if(MSVC)
@@ -108,4 +106,26 @@ target_link_libraries(Acid.Physics
 		PRIVATE
 		# More IMPORTED
 		${BULLET_LIBRARIES}
+		)
+
+set_target_properties(Acid.Physics PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Physics/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Physics"
+		)
+foreach(_header IN LISTS _acid_physics_headers _acid_physics_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Physics/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Physics
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)

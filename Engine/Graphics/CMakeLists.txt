@@ -32,9 +32,6 @@ set(_acid_graphics_headers
 		Graphics/RenderStage.hpp
 		Graphics/Subrender.hpp
 		Graphics/SubrenderHolder.hpp
-		#Materials/DefaultMaterial.hpp
-		#Materials/Material.hpp
-		#Materials/MaterialPipeline.hpp
 		Models/Gltf/GltfModel.hpp
 		Models/Model.hpp
 		Models/Obj/ObjModel.hpp
@@ -101,8 +98,6 @@ set(_acid_graphics_sources
 		Graphics/Renderpass/Swapchain.cpp
 		Graphics/RenderStage.cpp
 		Graphics/SubrenderHolder.cpp
-		#Materials/DefaultMaterial.cpp
-		#Materials/MaterialPipeline.cpp
 		Models/Gltf/GltfModel.cpp
 		Models/Model.cpp
 		Models/Obj/ObjModel.cpp
@@ -164,8 +159,6 @@ generate_export_header(Acid.Graphics EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DI
 # TODO: Prebuilt glslang binaries are unreliable between systems
 #find_package(glslang 11.6.0 QUIET)
 if(NOT glslang_FOUND)
-	set(_ACID_ALL_SYSTEM_LIBS false)
-
 	# On MSVC shared mode must be disabled with glslang currently
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	if(MSVC)
@@ -221,4 +214,26 @@ target_link_libraries(Acid.Graphics
 		PRIVATE
 		# More IMPORTED
 		${GLSLANG_LIBRARIES}
+		)
+
+set_target_properties(Acid.Graphics PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Graphics/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Graphics"
+		)
+foreach(_header IN LISTS _acid_graphics_headers _acid_graphics_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Graphics/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Graphics
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)

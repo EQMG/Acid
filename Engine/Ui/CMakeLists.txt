@@ -80,6 +80,7 @@ generate_export_header(Acid.Ui EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/inc
 
 find_package(Freetype 2.11.1 QUIET)
 if(NOT Freetype_FOUND)
+	set(SKIP_INSTALL_ALL TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_BZip2 TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
@@ -115,4 +116,26 @@ target_link_libraries(Acid.Ui
 		PRIVATE
 		# More IMPORTED
 		${FREETYPE_LIBRARIES}
+		)
+
+set_target_properties(Acid.Ui PROPERTIES
+		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
+		FOLDER "Acid"
+		)
+
+# Installs all headers, preserving their file structure
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Ui/Export.hpp"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui"
+		)
+foreach(_header IN LISTS _acid_ui_headers _acid_ui_third_party_headers)
+    get_filename_component(_header_dir ${_header} DIRECTORY)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
+			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui/${_header_dir}"
+			)
+endforeach()
+# Install without an export since we're using 1 (or more) non-system libs
+install(TARGETS Acid.Ui
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)

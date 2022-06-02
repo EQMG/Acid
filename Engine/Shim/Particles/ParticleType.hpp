@@ -4,12 +4,13 @@
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
 #include "Maths/Vector3.hpp"
+#include "Resources/Resource.hpp"
 #include "Models/Model.hpp"
 #include "Graphics/Buffers/InstanceBuffer.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Graphics/Images/Image2d.hpp"
-#include "Resources/Resource.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
 class Particle;
@@ -17,7 +18,7 @@ class Particle;
 /**
  * @brief Resource that represents a particle type.
  */
-class ACID_EXPORT ParticleType : public Resource {
+class ACID_SHIM_EXPORT ParticleType : public Resource {
 public:
 	class Instance {
 	public:

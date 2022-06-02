@@ -8,7 +8,7 @@ namespace acid {
 /**
  * @brief A instance of a particle type.
  */
-class ACID_EXPORT Particle final {
+class ACID_SHIM_EXPORT Particle final {
 	friend class ParticleType;
 public:
 	/**

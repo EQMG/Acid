@@ -2,9 +2,10 @@
 
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
+#include "Shim/Export.hpp"
 
 namespace acid {
-class ACID_EXPORT ShadowsSubrender : public Subrender {
+class ACID_SHIM_EXPORT ShadowsSubrender : public Subrender {
 public:
 	explicit ShadowsSubrender(const Pipeline::Stage &pipelineStage);
 

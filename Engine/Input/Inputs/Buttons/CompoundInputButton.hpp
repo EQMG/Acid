@@ -7,7 +7,7 @@ namespace acid {
 /**
  * @brief Combines multiple button inputs into a single button.
  */
-class ACID_EXPORT CompoundInputButton : public InputButton::Registrar<CompoundInputButton>, NonCopyable {
+class ACID_INPUT_EXPORT CompoundInputButton : public InputButton::Registrar<CompoundInputButton>, NonCopyable {
 	inline static const bool Registered = Register("compound");
 public:
 	/**
