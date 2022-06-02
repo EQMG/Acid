@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
 project(Acid VERSION 0.15.0 LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
-option(BUILD_TESTS "Build test applications" ON)
+#option(BUILD_EDITOR "Build editor" ON)
+option(BUILD_EXAMPLES "Build example applications" ON)
+option(BUILD_TESTS "Build unit tests" ON)
 option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Passes local Resources directory into debug Confg" ON)
 
@@ -69,16 +71,24 @@ execute_process(
 
 enable_testing() # must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
 
+# Acid components
 add_subdirectory(Engine/Core)
 add_subdirectory(Engine/Scene)
-add_subdirectory(Engine/Audio)
+add_subdirectory(Engine/Physics)
+add_subdirectory(Engine/Sound)
 add_subdirectory(Engine/Context)
 add_subdirectory(Engine/Graphics)
 add_subdirectory(Engine/Ui)
 add_subdirectory(Engine/Animation)
+add_subdirectory(Engine/Network)
 
-# Acid sources directory
-#add_subdirectory(Sources)
+#if(BUILD_EDITOR)
+#	add_subdirectory(Editor)
+#endif
+
+#if(BUILD_EXAMPLES)
+#	add_subdirectory(Examples)
+#endif()
 
 # Allows automation of "BUILD_TESTING"
 #include(CTest)
