@@ -11,6 +11,10 @@ set(_tests_sources
 
 add_executable(Tests ${_tests_headers} ${_tests_sources})
 
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_tests_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_tests_sources})
+
 find_package(GTest 1.11.0 QUIET)
 if(NOT GTest_FOUND)
 	add_subdirectory(../External/googletest googletest)
@@ -40,7 +44,3 @@ set_target_properties(Tests PROPERTIES
 		)
 
 add_test(NAME Tests COMMAND Tests)
-		
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_tests_headers}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${_tests_sources}")

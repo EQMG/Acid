@@ -11,6 +11,10 @@ file(GLOB_RECURSE TESTFONT_SOURCE_FILES
 
 add_executable(TestFont ${TESTFONT_HEADER_FILES} ${TESTFONT_SOURCE_FILES})
 
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTFONT_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTFONT_SOURCE_FILES})
+
 target_compile_features(TestFont PUBLIC cxx_std_17)
 target_include_directories(TestFont PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestFont PRIVATE Acid::Acid)
@@ -39,7 +43,3 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
-
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTFONT_HEADER_FILES}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTFONT_SOURCE_FILES}")

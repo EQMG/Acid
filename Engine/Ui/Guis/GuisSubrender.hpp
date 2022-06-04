@@ -2,7 +2,7 @@
 
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Ui/Export.hpp"
+#include "UiExport.hpp"
 
 namespace acid {
 class ACID_UI_EXPORT GuisSubrender : public Subrender {

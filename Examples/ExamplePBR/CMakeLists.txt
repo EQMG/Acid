@@ -9,6 +9,10 @@ file(GLOB_RECURSE TESTPBR_SOURCE_FILES
 
 add_executable(TestPBR ${TESTPBR_HEADER_FILES} ${TESTPBR_SOURCE_FILES})
 
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPBR_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPBR_SOURCE_FILES})
+
 target_compile_features(TestPBR PUBLIC cxx_std_17)
 target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestPBR PRIVATE Acid::Acid)
@@ -37,7 +41,3 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
-
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPBR_HEADER_FILES}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPBR_SOURCE_FILES}")

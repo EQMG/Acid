@@ -9,6 +9,10 @@ file(GLOB_RECURSE TUTORIAL5_SOURCE_FILES
 
 add_executable(Tutorial5 ${TUTORIAL5_HEADER_FILES} ${TUTORIAL5_SOURCE_FILES})
 
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TUTORIAL5_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TUTORIAL5_SOURCE_FILES})
+
 target_compile_features(Tutorial5 PUBLIC cxx_std_17)
 target_include_directories(Tutorial5 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(Tutorial5 PRIVATE Acid::Acid)
@@ -37,7 +41,3 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
-
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TUTORIAL5_HEADER_FILES}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TUTORIAL5_SOURCE_FILES}")

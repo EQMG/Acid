@@ -2,7 +2,7 @@
 
 #include "Utils/NonCopyable.hpp"
 #include "Utils/TypeInfo.hpp"
-#include "Scene/Export.hpp"
+#include "SceneExport.hpp"
 
 namespace acid {
 class ACID_SCENE_EXPORT System : NonCopyable {

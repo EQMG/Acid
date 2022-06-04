@@ -3,7 +3,7 @@
 #include <volk.h>
 #include <vector>
 
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 namespace acid {
 class PhysicalDevice;

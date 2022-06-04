@@ -4,7 +4,7 @@
 #include <volk.h>
 
 #include "Files/Node.hpp"
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 namespace glslang {
 class TProgram;

@@ -5,7 +5,7 @@
 #include <volk.h>
 
 #include "Utils/NonCopyable.hpp"
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 namespace acid {
 class LogicalDevice;

@@ -4,7 +4,7 @@
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Buffers/PushHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 /**

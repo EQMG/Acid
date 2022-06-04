@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "Animation/Export.hpp"
+#include "AnimationExport.hpp"
 
 namespace acid {
 class ACID_ANIMATION_EXPORT VertexWeights {

@@ -1,112 +1,115 @@
 set(_acid_ui_headers
-		Fonts/FontsSubrender.hpp
-		Fonts/FontType.hpp
-		Fonts/Text.hpp
-		Guis/Gui.hpp
-		Guis/GuisSubrender.hpp
-		Uis/Constraints/BestFitConstraint.hpp
-		Uis/Constraints/PixelConstraint.hpp
-		Uis/Constraints/RatioConstraint.hpp
-		Uis/Constraints/RelativeConstraint.hpp
-		Uis/Constraints/UiAnchor.hpp
-		Uis/Constraints/UiConstraint.hpp
-		Uis/Constraints/UiConstraints.hpp
-		Uis/Drivers/BounceDriver.hpp
-		Uis/Drivers/ConstantDriver.hpp
-		Uis/Drivers/FadeDriver.hpp
-		Uis/Drivers/LinearDriver.hpp
-		Uis/Drivers/SinewaveDriver.hpp
-		Uis/Drivers/SlideDriver.hpp
-		Uis/Drivers/UiDriver.hpp
-		Uis/Inputs/InputDelay.hpp
-		Uis/Inputs/UiBooleanInput.hpp
-		Uis/Inputs/UiButtonInput.hpp
-		Uis/Inputs/UiDropdownInput.hpp
-		Uis/Inputs/UiGrabberInput.hpp
-		Uis/Inputs/UiRadioInput.hpp
-		Uis/Inputs/UiSliderInput.hpp
-		Uis/Inputs/UiTextInput.hpp
-		Uis/UiObject.hpp
-		Uis/UiPanel.hpp
-		Uis/Uis.hpp
-		Uis/UiScrollBar.hpp
-		Uis/UiSection.hpp
-		Uis/UiStartLogo.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontsSubrender.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontType.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/Text.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Guis/Gui.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Guis/GuisSubrender.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/BestFitConstraint.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/PixelConstraint.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/RatioConstraint.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/RelativeConstraint.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/UiAnchor.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/UiConstraint.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/UiConstraints.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/BounceDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/ConstantDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/FadeDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/LinearDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/SinewaveDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/SlideDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Drivers/UiDriver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/InputDelay.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiBooleanInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiButtonInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiDropdownInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiGrabberInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiRadioInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiSliderInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiTextInput.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiObject.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiPanel.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Uis.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiScrollBar.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiSection.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiStartLogo.hpp
 		)
 set(_acid_ui_sources
-		Fonts/FontsSubrender.cpp
-		Fonts/FontType.cpp
-		Fonts/Text.cpp
-		Guis/Gui.cpp
-		Guis/GuisSubrender.cpp
-		Uis/Constraints/UiAnchor.cpp
-		Uis/Constraints/UiConstraints.cpp
-		Uis/Inputs/InputDelay.cpp
-		Uis/Inputs/UiBooleanInput.cpp
-		Uis/Inputs/UiButtonInput.cpp
-		Uis/Inputs/UiDropdownInput.cpp
-		Uis/Inputs/UiGrabberInput.cpp
-		Uis/Inputs/UiRadioInput.cpp
-		Uis/Inputs/UiSliderInput.cpp
-		Uis/Inputs/UiTextInput.cpp
-		Uis/UiObject.cpp
-		Uis/UiPanel.cpp
-		Uis/Uis.cpp
-		Uis/UiScrollBar.cpp
-		Uis/UiSection.cpp
-		Uis/UiStartLogo.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontsSubrender.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontType.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/Text.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Guis/Gui.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Guis/GuisSubrender.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/UiAnchor.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Constraints/UiConstraints.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/InputDelay.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiBooleanInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiButtonInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiDropdownInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiGrabberInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiRadioInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiSliderInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Inputs/UiTextInput.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiObject.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiPanel.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/Uis.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiScrollBar.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiSection.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiStartLogo.cpp
 		)
-
+set(_acid_ui_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/UiExport.hpp
+		)
 set(_acid_ui_third_party_headers
-		../../External/tinymsdf/tiny_msdf.hpp
+		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.hpp
 		)
 set(_acid_ui_third_party_sources
-		../../External/tinymsdf/tiny_msdf.cpp
-		)
-set(_acid_ui_third_party_includes
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/tinymsdf
+		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.cpp
 		)
 
 add_library(Acid.Ui
         ${_acid_ui_headers}
         ${_acid_ui_sources}
+		${_acid_ui_generated_headers}
         ${_acid_ui_third_party_headers}
         ${_acid_ui_third_party_sources}
         )
 
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Ui EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Ui/Export.hpp")
+generate_export_header(Acid.Ui EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/UiExport.hpp")
 
-find_package(Freetype 2.11.1 QUIET)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_ui_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_ui_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_ui_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_ui_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_ui_third_party_sources})
+
+#find_package(Freetype 2.11.1 QUIET)
 if(NOT Freetype_FOUND)
 	set(SKIP_INSTALL_ALL TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_BZip2 TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz TRUE)
-	add_subdirectory(../../External/freetype freetype)
+	set(CMAKE_DISABLE_FIND_PACKAGE_BrotliDec TRUE)
+	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+	set(BUILD_SHARED_LIBS OFF)
+	add_subdirectory(${ACID_THIRD_PARTY_DIR}/freetype freetype)
+	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	
 	set_target_properties(freetype PROPERTIES FOLDER "External")
 	
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
+set_target_properties(Acid.Ui PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Ui PUBLIC c_std_11 cxx_std_17)
 target_include_directories(Acid.Ui
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_ui_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/tinymsdf>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui>
 		PRIVATE
-		# Since building locally from the submodules won't always create these vars.
-		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
 		)
 target_link_libraries(Acid.Ui
@@ -114,28 +117,20 @@ target_link_libraries(Acid.Ui
 		Acid.Core
 		Acid.Graphics
 		PRIVATE
-		# More IMPORTED
 		${FREETYPE_LIBRARIES}
 		)
 
-set_target_properties(Acid.Ui PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Ui/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui"
-		)
-foreach(_header IN LISTS _acid_ui_headers _acid_ui_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Ui
+		EXPORT AcidUiExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidUiExport
+		FILE AcidUiConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Ui" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_ui_headers}")
+install_headers_with_dir("Ui" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_ui_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_ui_third_party_headers}")

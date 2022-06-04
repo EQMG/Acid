@@ -9,6 +9,10 @@ file(GLOB_RECURSE TESTPACKER_SOURCE_FILES
 
 add_executable(TestPacker ${TESTPACKER_HEADER_FILES} ${TESTPACKER_SOURCE_FILES})
 
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPACKER_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPACKER_SOURCE_FILES})
+
 target_compile_features(TestPacker PUBLIC cxx_std_17)
 target_include_directories(TestPacker PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(TestPacker PRIVATE Acid::Acid)
@@ -33,7 +37,3 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
-
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPACKER_HEADER_FILES}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TESTPACKER_SOURCE_FILES}")

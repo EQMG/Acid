@@ -3,7 +3,7 @@
 #include "Maths/Matrix4.hpp"
 #include "Maths/Vector4.hpp"
 #include "Scenes/Camera.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 /**

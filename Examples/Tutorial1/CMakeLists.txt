@@ -6,7 +6,12 @@ file(GLOB_RECURSE TUTORIAL1_SOURCE_FILES
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.c" "*.cpp" "*.rc"
 		)
+
 add_executable(Tutorial1 ${TUTORIAL1_HEADER_FILES} ${TUTORIAL1_SOURCE_FILES})
+
+# Changes how sources appear in IDE virtual file structures
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TUTORIAL1_HEADER_FILES})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TUTORIAL1_SOURCE_FILES})
 
 target_compile_features(Tutorial1 PUBLIC cxx_std_17)
 target_include_directories(Tutorial1 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
@@ -36,7 +41,3 @@ if(ACID_INSTALL_EXAMPLES)
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)
 endif()
-
-include(AcidGroupSources)
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TUTORIAL1_HEADER_FILES}")
-acid_group_sources("${CMAKE_CURRENT_SOURCE_DIR}" "/" "" "${TUTORIAL1_SOURCE_FILES}")

@@ -4,7 +4,7 @@
 
 #include "Devices/Windows.hpp"
 #include "Utils/StreamFactory.hpp"
-#include "Input/Export.hpp"
+#include "InputExport.hpp"
 
 namespace acid {
 /**

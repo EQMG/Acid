@@ -3,7 +3,7 @@
 #include <vector>
 #include <volk.h>
 
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 #ifndef VK_API_VERSION_1_1
 #define VK_API_VERSION_1_1 VK_MAKE_VERSION(1, 1, 0)

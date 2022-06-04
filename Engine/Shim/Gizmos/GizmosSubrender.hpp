@@ -3,7 +3,7 @@
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Buffers/UniformHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class ACID_SHIM_EXPORT GizmosSubrender : public Subrender {

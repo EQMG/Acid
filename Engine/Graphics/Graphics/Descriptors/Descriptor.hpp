@@ -5,7 +5,7 @@
 #include <memory>
 #include <volk.h>
 
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 namespace acid {
 class ACID_GRAPHICS_EXPORT OffsetSize {

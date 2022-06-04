@@ -32,7 +32,7 @@ MainApp::MainApp() :
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	//Files::Get()->AddSearchPath("Resources/Engine");
-	std::string p(ACID_RESOURCES_DEV);
+	std::string p(ACID_RESOURCES_DIR);
 
 	Files::Get()->AddSearchPath(p + "/Tutorial/chalet.zip");
 	//std::string_view s = acid::ACID_RESOURCES_DIR;

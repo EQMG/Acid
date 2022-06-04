@@ -5,7 +5,7 @@
 
 #include "Maths/Vector3.hpp"
 #include "Scenes/System.hpp"
-#include "Physics/Export.hpp"
+#include "PhysicsExport.hpp"
 
 class btCollisionObject;
 class btCollisionConfiguration;

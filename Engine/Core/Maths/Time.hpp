@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <sstream>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 using namespace std::chrono_literals;

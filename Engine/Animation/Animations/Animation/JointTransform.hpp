@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Quaternion.hpp"
-#include "Animation/Export.hpp"
+#include "AnimationExport.hpp"
 
 namespace acid {
 /**

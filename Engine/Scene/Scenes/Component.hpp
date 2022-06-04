@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Utils/StreamFactory.hpp"
-#include "Scene/Export.hpp"
+#include "SceneExport.hpp"
 
 namespace acid {
 class Entity;

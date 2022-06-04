@@ -2,7 +2,7 @@
 
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Graphics/RenderStage.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 /**

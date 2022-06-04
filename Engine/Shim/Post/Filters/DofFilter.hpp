@@ -2,7 +2,7 @@
 
 #include "Post/PostFilter.hpp"
 #include "Post/Pipelines/BlurPipeline.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class ACID_SHIM_EXPORT DofFilter : public PostFilter {

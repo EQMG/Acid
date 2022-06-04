@@ -3,7 +3,7 @@
 #include "Resources/Resource.hpp"
 #include "Graphics/Images/Image2dArray.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Ui/Export.hpp"
+#include "UiExport.hpp"
 
 typedef struct FT_LibraryRec_ *FT_Library;
 typedef struct FT_FaceRec_ *FT_Face;

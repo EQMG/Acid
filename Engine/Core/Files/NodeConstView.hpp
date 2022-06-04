@@ -5,7 +5,7 @@
 #include <variant>
 #include <vector>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 class Node;

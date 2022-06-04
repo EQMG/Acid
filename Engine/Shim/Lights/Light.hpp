@@ -3,7 +3,7 @@
 #include "Maths/Colour.hpp"
 #include "Maths/Vector3.hpp"
 #include "Scenes/Component.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 /**

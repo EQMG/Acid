@@ -3,7 +3,7 @@
 #include <iterator>
 #include <physfs.h>
 #include "Engine/Engine.hpp"
-#include "Core/Config.hpp"
+#include "CoreConfig.hpp"
 
 namespace acid {
 using std::streambuf;
@@ -163,9 +163,10 @@ FStream::~FStream() {
 
 Files::Files() {
 	PHYSFS_init(Engine::Get()->GetArgv0().c_str());
-	// TODO: Only when not installed. 
-	if (std::filesystem::exists(ACID_RESOURCES_DEV))
-		AddSearchPath(std::string(ACID_RESOURCES_DEV));
+	// TODO: Only when not installed.
+#if ACID_LINK_RESOURCES
+	AddSearchPath(std::string(ACID_RESOURCES_DIR));
+#endif
 }
 
 Files::~Files() {

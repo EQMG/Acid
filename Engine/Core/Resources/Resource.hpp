@@ -3,7 +3,7 @@
 #include <typeindex>
 
 #include "Utils/NonCopyable.hpp"
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 /**

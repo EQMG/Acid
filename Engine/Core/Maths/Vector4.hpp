@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 template<typename T>

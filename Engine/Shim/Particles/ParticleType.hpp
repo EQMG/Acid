@@ -10,7 +10,7 @@
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Graphics/Images/Image2d.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class Particle;

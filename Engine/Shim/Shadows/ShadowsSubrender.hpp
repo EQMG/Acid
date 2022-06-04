@@ -2,7 +2,7 @@
 
 #include "Graphics/Subrender.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class ACID_SHIM_EXPORT ShadowsSubrender : public Subrender {

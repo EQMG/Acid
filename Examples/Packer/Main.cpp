@@ -3,7 +3,7 @@
 #include <Engine/Log.hpp>
 #include "Config.hpp"
 
-std::filesystem::path PATH = acid::ACID_RESOURCES_DEV;
+std::filesystem::path PATH = acid::ACID_RESOURCES_DIR;
 
 std::unique_ptr<Zippy::ZipArchive> NewArchive(int index) {
 	auto zipFilepath = std::filesystem::current_path() / ("data-" + std::to_string(index) + ".zip");

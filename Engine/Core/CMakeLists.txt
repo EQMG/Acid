@@ -1,145 +1,124 @@
 set(_acid_core_headers
-		Engine/App.hpp
-		Engine/Engine.hpp
-		Engine/Log.hpp
-		Engine/Module.hpp
-		Files/File.hpp
-		Files/FileObserver.hpp
-		Files/Files.hpp
-		Files/Json/Json.hpp
-		Files/Node.hpp
-		Files/Node.inl
-		Files/NodeConstView.hpp
-		Files/NodeConstView.inl
-		Files/NodeFormat.hpp
-		Files/NodeView.hpp
-		Files/NodeView.inl
-		Files/Xml/Xml.hpp
-		Files/Xml/XmlContainer.hpp
-		Maths/Colour.hpp
-		Maths/Colour.inl
-		Maths/ElapsedTime.hpp
-		Maths/Maths.hpp
-		Maths/Matrix2.hpp
-		Maths/Matrix3.hpp
-		Maths/Matrix4.hpp
-		Maths/Quaternion.hpp
-		Maths/Time.hpp
-		Maths/Time.inl
-		Maths/Vector2.hpp
-		Maths/Vector2.inl
-		Maths/Vector3.hpp
-		Maths/Vector3.inl
-		Maths/Vector4.hpp
-		Maths/Vector4.inl
-		Resources/Resource.hpp
-		Resources/Resources.hpp
-		Timers/Timers.hpp
-		Utils/ConstExpr.hpp
-		Utils/Enumerate.hpp
-		Utils/EnumValue.hpp
-		Utils/Factory.hpp
-		Utils/Future.hpp
-		Utils/NonCopyable.hpp
-		Utils/RingBuffer.hpp
-		Utils/StreamFactory.hpp
-		Utils/String.hpp
-		Utils/ThreadPool.hpp
-		Utils/TypeInfo.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/App.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Log.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Module.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/File.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/FileObserver.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Files.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Json/Json.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Node.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Node.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeConstView.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeConstView.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeFormat.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeView.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeView.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Xml/Xml.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Xml/XmlContainer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Colour.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Colour.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/ElapsedTime.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Maths.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix2.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix3.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix4.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Quaternion.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Time.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Time.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector2.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector2.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector3.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector3.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector4.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector4.inl
+		${CMAKE_CURRENT_SOURCE_DIR}/Resources/Resource.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Resources/Resources.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Timers/Timers.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/ConstExpr.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/Enumerate.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/EnumValue.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/Factory.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/Future.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/NonCopyable.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/RingBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/StreamFactory.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/String.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/ThreadPool.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/TypeInfo.hpp
 		)
 set(_acid_core_sources
-		Engine/Engine.cpp
-		Engine/Log.cpp
-		Files/File.cpp
-		Files/FileObserver.cpp
-		Files/Files.cpp
-		Files/Json/Json.cpp
-		Files/Node.cpp
-		Files/NodeConstView.cpp
-		Files/NodeView.cpp
-		Files/Xml/Xml.cpp
-		Maths/Colour.cpp
-		Maths/ElapsedTime.cpp
-		Maths/Maths.cpp
-		Maths/Matrix2.cpp
-		Maths/Matrix3.cpp
-		Maths/Matrix4.cpp
-		Maths/Quaternion.cpp
-		Maths/Vector2.cpp
-		Maths/Vector3.cpp
-		Maths/Vector4.cpp
-		Resources/Resources.cpp
-		Timers/Timers.cpp
-		Utils/String.cpp
-		Utils/ThreadPool.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Log.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/File.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/FileObserver.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Files.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Json/Json.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Node.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeConstView.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/NodeView.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Files/Xml/Xml.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Colour.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/ElapsedTime.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Maths.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix2.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix3.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Matrix4.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Quaternion.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector2.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector3.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Vector4.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Resources/Resources.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Timers/Timers.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/String.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Utils/ThreadPool.cpp
 		)
-
+set(_acid_core_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/CoreExport.hpp
+		${CMAKE_CURRENT_BINARY_DIR}/include/CoreConfig.hpp
+		)
 set(_acid_core_third_party_headers
-		../../External/bitmask/bitmask.hpp
-		../../External/magic_enum/magic_enum.hpp
-		../../External/rocket/rocket.hpp
+		${ACID_THIRD_PARTY_DIR}/bitmask/bitmask.hpp
+		${ACID_THIRD_PARTY_DIR}/magic_enum/magic_enum.hpp
+		${ACID_THIRD_PARTY_DIR}/rocket/rocket.hpp
 		)
 set(_acid_core_third_party_sources
-		)
-set(_acid_core_third_party_includes
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/bitmask
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/magic_enum
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/rocket
 		)
 
 add_library(Acid.Core
         ${_acid_core_headers}
         ${_acid_core_sources}
+		${_acid_core_generated_headers}
         ${_acid_core_third_party_headers}
         ${_acid_core_third_party_sources}
         )
 
-get_filename_component(CURRENT_PARENT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../.. ABSOLUTE)
-if(ACID_LINK_RESOURCES)
-	# Directory that Acid resources can be found.
-	set(ACID_RESOURCES_DIR "${CURRENT_PARENT_DIR}/Resources")
-endif()
-if(ACID_INSTALL_RESOURCES)
-	# Install resources for end-user usage because many source files use these
-	install(DIRECTORY "${CURRENT_PARENT_DIR}/Resources"
-			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
-			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
-			)
-endif()
-
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Core EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Core/Export.hpp")
+generate_export_header(Acid.Core EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/CoreExport.hpp")
 
-# Adds a CMake generated config file
-configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/Core/Config.hpp" @ONLY)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/CoreConfig.hpp" @ONLY)
+
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_core_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_core_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_core_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_core_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_core_third_party_sources})
 
 if(APPLE)
     set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-framework IOKit -framework Foundation -framework CoreFoundation")
 endif()
 
-find_package(PhysFS 3.0.2 QUIET)
+#find_package(PhysFS 3.0.2 QUIET)
 if(NOT PhysFS_FOUND)
-	if(BUILD_SHARED_LIBS)
-		set(PHYSFS_BUILD_STATIC OFF CACHE INTERNAL "Build static library.")
-	else()
-		set(PHYSFS_BUILD_SHARED OFF CACHE INTERNAL "Build shared library.")
-	endif()
+	set(PHYSFS_BUILD_SHARED OFF CACHE INTERNAL "Build shared library.")
 	set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "Build stdio test program.")
 	set(PHYSFS_DISABLE_INSTALL ON CACHE INTERNAL "Disable installing PhysFS.")
 	set(PHYSFS_BUILD_DOCS OFF CACHE INTERNAL "Build doxygen based documentation.")
 	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
 	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
-	add_subdirectory(../../External/physfs physfs)
-	
-	if(TARGET physfs)
-		set_target_properties(physfs PROPERTIES FOLDER "External/physfs")
-		set(PHYSFS_LIBRARY physfs)
-	endif()
-	if(TARGET physfs-static)
-		set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
-		set(PHYSFS_LIBRARY physfs-static)
-	endif()
+	add_subdirectory(${ACID_THIRD_PARTY_DIR}/physfs physfs)
+
+	set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
 	if(UNIX)
 		set_target_properties(physfs-dist PROPERTIES FOLDER "External/physfs")
 		set_target_properties(physfs-uninstall PROPERTIES FOLDER "External/physfs")
@@ -148,7 +127,8 @@ if(NOT PhysFS_FOUND)
 		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
 	endif()
 
-	set(PHYSFS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../External/physfs/src")
+	set(PHYSFS_INCLUDE_DIR "${ACID_THIRD_PARTY_DIR}/physfs/src")
+	set(PHYSFS_LIBRARY physfs-static)
 endif()
 
 # Looks for a appropriate threads package for this platform
@@ -156,6 +136,7 @@ find_package(Threads REQUIRED)
 # Check whether a SSE instructions can be used on the machine
 include(FindSSE)
 
+set_target_properties(Acid.Core PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Core PUBLIC c_std_11 cxx_std_17)
 target_compile_definitions(Acid.Core
 		PUBLIC
@@ -190,23 +171,18 @@ target_compile_options(Acid.Core
 		)
 target_include_directories(Acid.Core
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_core_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/bitmask>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/magic_enum>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/rocket>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party>
 		PRIVATE
-		# Since building locally from the submodules won't always create these vars.
-		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
 		)
 target_link_libraries(Acid.Core
 		PUBLIC
-		# All IMPORTED targets, which automatically handles includes
 		$<$<CXX_COMPILER_ID:GNU>:stdc++fs> # std::filesystem
 		$<$<PLATFORM_ID:Windows>:ws2_32> # Winsock 2.0
 		$<$<PLATFORM_ID:Android>:log> # log support
@@ -217,25 +193,17 @@ target_link_libraries(Acid.Core
 		${PHYSFS_LIBRARY}
 		)
 
-set_target_properties(Acid.Core PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Core/Config.hpp" 
-		"${CMAKE_CURRENT_BINARY_DIR}/include/Core/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core"
-		)
-foreach(_header IN LISTS _acid_core_headers _acid_core_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Core
+		EXPORT AcidCoreExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidCoreExport
+		FILE AcidCoreConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Core" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_core_headers}")
+install_headers_with_dir("Core" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_core_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_core_third_party_headers}")

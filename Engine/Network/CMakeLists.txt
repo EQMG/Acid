@@ -1,92 +1,77 @@
 set(_acid_network_headers
-		Network/Ftp/Ftp.hpp
-		Network/Ftp/FtpDataChannel.hpp
-		Network/Ftp/FtpResponse.hpp
-		Network/Ftp/FtpResponseDirectory.hpp
-		Network/Ftp/FtpResponseListing.hpp
-		Network/Http/Http.hpp
-		Network/Http/HttpRequest.hpp
-		Network/Http/HttpResponse.hpp
-		Network/IpAddress.hpp
-		Network/Packet.hpp
-		Network/Socket.hpp
-		Network/SocketSelector.hpp
-		Network/Tcp/TcpListener.hpp
-		Network/Tcp/TcpSocket.hpp
-		Network/Udp/UdpSocket.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/Ftp.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpDataChannel.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponse.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponseDirectory.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponseListing.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/Http.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/HttpRequest.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/HttpResponse.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/IpAddress.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Packet.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Socket.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/SocketSelector.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Tcp/TcpListener.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Tcp/TcpSocket.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Udp/UdpSocket.hpp
 		)
 set(_acid_network_sources
-		Network/Ftp/Ftp.cpp
-		Network/Ftp/FtpDataChannel.cpp
-		Network/Ftp/FtpResponse.cpp
-		Network/Ftp/FtpResponseDirectory.cpp
-		Network/Ftp/FtpResponseListing.cpp
-		Network/Http/Http.cpp
-		Network/Http/HttpRequest.cpp
-		Network/Http/HttpResponse.cpp
-		Network/IpAddress.cpp
-		Network/Packet.cpp
-		Network/Socket.cpp
-		Network/SocketSelector.cpp
-		Network/Tcp/TcpListener.cpp
-		Network/Tcp/TcpSocket.cpp
-		Network/Udp/UdpSocket.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/Ftp.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpDataChannel.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponse.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponseDirectory.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Ftp/FtpResponseListing.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/Http.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/HttpRequest.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Http/HttpResponse.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/IpAddress.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Packet.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Socket.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/SocketSelector.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Tcp/TcpListener.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Tcp/TcpSocket.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Network/Udp/UdpSocket.cpp
 		)
-
-set(_acid_network_third_party_headers
-		)
-set(_acid_network_third_party_sources
-		)
-set(_acid_network_third_party_includes
+set(_acid_network_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/NetworkExport.hpp
 		)
 
 add_library(Acid.Network
         ${_acid_network_headers}
         ${_acid_network_sources}
-        ${_acid_network_third_party_headers}
-        ${_acid_network_third_party_sources}
+		${_acid_network_generated_headers}
         )
 
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Network EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Network/Export.hpp")
+generate_export_header(Acid.Network EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/NetworkExport.hpp")
 
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_network_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_network_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_network_generated_headers})
+
+set_target_properties(Acid.Network PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Network PUBLIC c_std_11 cxx_std_17)
 target_include_directories(Acid.Network
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_network_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Network>
 		)
 target_link_libraries(Acid.Network
 		PUBLIC
 		Acid.Core
 		)
 
-set_target_properties(Acid.Network PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Network/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Network"
-		)
-foreach(_header IN LISTS _acid_network_headers _acid_network_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Network/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Network
+		EXPORT AcidNetworkExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidNetworkExport
+		FILE AcidNetworkConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Network" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_network_headers}")
+install_headers_with_dir("Network" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_network_generated_headers}")

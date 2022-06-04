@@ -1,53 +1,57 @@
 set(_acid_sound_headers
-		Audio/Audio.hpp
-		Audio/Flac/FlacSoundBuffer.hpp
-		Audio/Mp3/Mp3SoundBuffer.hpp
-		Audio/Ogg/OggSoundBuffer.hpp
-		Audio/Opus/OpusSoundBuffer.hpp
-		Audio/Sound.hpp
-		Audio/SoundBuffer.hpp
-		Audio/Wave/WaveSoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Audio.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Flac/FlacSoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Mp3/Mp3SoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Ogg/OggSoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Opus/OpusSoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Sound.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/SoundBuffer.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Wave/WaveSoundBuffer.hpp
 		)
 set(_acid_sound_sources
-		Audio/Audio.cpp
-		Audio/Flac/FlacSoundBuffer.cpp
-		Audio/Mp3/Mp3SoundBuffer.cpp
-		Audio/Ogg/OggSoundBuffer.cpp
-		Audio/Opus/OpusSoundBuffer.cpp
-		Audio/Sound.cpp
-		Audio/SoundBuffer.cpp
-		Audio/Wave/WaveSoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Audio.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Flac/FlacSoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Mp3/Mp3SoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Ogg/OggSoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Opus/OpusSoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Sound.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/SoundBuffer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Wave/WaveSoundBuffer.cpp
 		)
-
+set(_acid_sound_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/SoundExport.hpp
+		)
 set(_acid_sound_third_party_headers
-		../../External/dr_libs/dr_flac.h
-		../../External/dr_libs/dr_mp3.h
-		../../External/dr_libs/dr_opus.h
-		../../External/dr_libs/dr_wav.h
-		../../External/stb/stb_vorbis.h
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_flac.h
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_mp3.h
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_opus.h
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_wav.h
+		${ACID_THIRD_PARTY_DIR}/stb/stb_vorbis.h
 		)
 set(_acid_sound_third_party_sources
-		../../External/dr_libs/dr_flac.c
-		../../External/dr_libs/dr_mp3.c
-		../../External/dr_libs/dr_opus.c
-		../../External/dr_libs/dr_wav.c
-		../../External/stb/stb_vorbis.c
-		)
-set(_acid_sound_third_party_includes
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/dr_libs
-		${CMAKE_CURRENT_SOURCE_DIR}/../../External/stb
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_flac.c
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_mp3.c
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_opus.c
+		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_wav.c
+		${ACID_THIRD_PARTY_DIR}/stb/stb_vorbis.c
 		)
 
 add_library(Acid.Sound
         ${_acid_sound_headers}
         ${_acid_sound_sources}
+		${_acid_sound_generated_headers}
         ${_acid_sound_third_party_headers}
         ${_acid_sound_third_party_sources}
         )
 
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Sound EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Sound/Export.hpp")
+generate_export_header(Acid.Sound EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/SoundExport.hpp")
+
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_sound_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_sound_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_sound_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_sound_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_sound_third_party_sources})
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
 find_package(OpenALSoft)
@@ -72,18 +76,15 @@ else()
 	message(FATAL_ERROR "Could not find OpenAL or OpenAL-Soft")
 endif()
 
+set_target_properties(Acid.Sound PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Sound PUBLIC c_std_11 cxx_std_17)
 target_include_directories(Acid.Sound
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_sound_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/dr_libs>
+		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/stb>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Sound>
 		)
 target_link_libraries(Acid.Sound
 		PUBLIC
@@ -93,24 +94,17 @@ target_link_libraries(Acid.Sound
 		OpenAL::OpenAL
 		)
 
-set_target_properties(Acid.Sound PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Sound/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Sound"
-		)
-foreach(_header IN LISTS _acid_sound_headers _acid_sound_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Sound/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Sound
+		EXPORT AcidSoundExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidSoundExport
+		FILE AcidSoundConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Sound" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_sound_headers}")
+install_headers_with_dir("Sound" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_sound_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_sound_third_party_headers}")

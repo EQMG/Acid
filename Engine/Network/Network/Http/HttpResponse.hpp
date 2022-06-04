@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 
-#include "Network/Export.hpp"
+#include "NetworkExport.hpp"
 
 namespace acid {
 /**

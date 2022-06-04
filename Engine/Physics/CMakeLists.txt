@@ -1,63 +1,58 @@
 set(_acid_physics_headers
-		Physics/Colliders/CapsuleCollider.hpp
-		Physics/Colliders/Collider.hpp
-		Physics/Colliders/ConeCollider.hpp
-		#Physics/Colliders/ConvexHullCollider.hpp
-		Physics/Colliders/CubeCollider.hpp
-		Physics/Colliders/CylinderCollider.hpp
-		Physics/Colliders/HeightfieldCollider.hpp
-		Physics/Colliders/SphereCollider.hpp
-		Physics/CollisionObject.hpp
-		Physics/Force.hpp
-		Physics/KinematicCharacter.hpp
-		Physics/Physics.hpp
-		Physics/Rigidbody.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CapsuleCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/Collider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConeCollider.hpp
+		#${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CubeCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CylinderCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/HeightfieldCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/SphereCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/CollisionObject.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Force.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/KinematicCharacter.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Physics.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Rigidbody.hpp
 		)
 set(_acid_physics_sources
-		Physics/Colliders/CapsuleCollider.cpp
-		Physics/Colliders/Collider.cpp
-		Physics/Colliders/ConeCollider.cpp
-		#Physics/Colliders/ConvexHullCollider.cpp
-		Physics/Colliders/CubeCollider.cpp
-		Physics/Colliders/CylinderCollider.cpp
-		Physics/Colliders/HeightfieldCollider.cpp
-		Physics/Colliders/SphereCollider.cpp
-		Physics/CollisionObject.cpp
-		Physics/Force.cpp
-		Physics/KinematicCharacter.cpp
-		Physics/Physics.cpp
-		Physics/Rigidbody.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CapsuleCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/Collider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConeCollider.cpp
+		#${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CubeCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CylinderCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/HeightfieldCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/SphereCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/CollisionObject.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Force.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/KinematicCharacter.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Physics.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Rigidbody.cpp
 		)
-
-set(_acid_physics_third_party_headers
-		)
-set(_acid_physics_third_party_sources
-		)
-set(_acid_physics_third_party_includes
+set(_acid_physics_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/PhysicsExport.hpp
 		)
 
 add_library(Acid.Physics
         ${_acid_physics_headers}
         ${_acid_physics_sources}
-        ${_acid_physics_third_party_headers}
-        ${_acid_physics_third_party_sources}
+		${_acid_physics_generated_headers}
         )
 
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Physics EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Physics/Export.hpp")
+generate_export_header(Acid.Physics EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/PhysicsExport.hpp")
+
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_physics_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_physics_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_physics_generated_headers})
 
 if(WIN32 AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
 	set(CMAKE_DISABLE_FIND_PACKAGE_Bullet TRUE CACHE INTERNAL "")
 endif()
-find_package(Bullet 3.17 QUIET)
+#find_package(Bullet 3.17 QUIET)
 if(NOT BULLET_FOUND)
-	# On MSVC shared mode must be disabled with bullet currently
-	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	if(MSVC)
 		set(USE_MSVC_INCREMENTAL_LINKING ON CACHE INTERNAL "")
 		set(USE_MSVC_RUNTIME_LIBRARY_DLL ON CACHE INTERNAL "")
-		set(BUILD_SHARED_LIBS OFF)
 	endif()
 	set(USE_GRAPHICAL_BENCHMARK OFF CACHE INTERNAL "Use Graphical Benchmark")
 	set(BUILD_CPU_DEMOS OFF CACHE INTERNAL "Build original Bullet CPU examples")
@@ -67,8 +62,10 @@ if(NOT BULLET_FOUND)
 	set(BUILD_BULLET2_DEMOS OFF CACHE INTERNAL "Set when you want to build the Bullet 2 demos")
 	set(BUILD_EXTRAS OFF CACHE INTERNAL "Set when you want to build the extras")
 	set(BUILD_UNIT_TESTS OFF CACHE INTERNAL "Build Unit Tests")
-	add_subdirectory(../../External/bullet3 bullet3)
-	# Reset back to value before MSVC fix
+	set(INSTALL_CMAKE_FILES OFF CACHE INTERNAL "Install generated CMake files")
+	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
+	set(BUILD_SHARED_LIBS OFF)
+	add_subdirectory(${ACID_THIRD_PARTY_DIR}/bullet3 bullet3)
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 	set_target_properties(Bullet3Common PROPERTIES FOLDER "External/bullet")
@@ -78,25 +75,18 @@ if(NOT BULLET_FOUND)
 	set_target_properties(BulletSoftBody PROPERTIES FOLDER "External/bullet")
 	set_target_properties(LinearMath PROPERTIES FOLDER "External/bullet")
 
-	set(BULLET_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/../../External/bullet3/src")
+	set(BULLET_INCLUDE_DIRS "${ACID_THIRD_PARTY_DIR}/bullet3/src")
 	set(BULLET_LIBRARIES BulletSoftBody BulletDynamics BulletCollision LinearMath)
 endif()
 
+set_target_properties(Acid.Physics PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Physics PUBLIC c_std_11 cxx_std_17)
 target_include_directories(Acid.Physics
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_physics_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Physics>
 		PRIVATE
-		# Since building locally from the submodules won't always create these vars.
-		# We have to do a simple check if they exist or they will cause errors
 		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
 		)
 target_link_libraries(Acid.Physics
@@ -104,28 +94,19 @@ target_link_libraries(Acid.Physics
 		Acid.Core
 		Acid.Scene
 		PRIVATE
-		# More IMPORTED
 		${BULLET_LIBRARIES}
 		)
 
-set_target_properties(Acid.Physics PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Physics/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Physics"
-		)
-foreach(_header IN LISTS _acid_physics_headers _acid_physics_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Physics/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Physics
+		EXPORT AcidPhysicsExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidPhysicsExport
+		FILE AcidPhysicsConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Physics" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_physics_headers}")
+install_headers_with_dir("Physics" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_physics_generated_headers}")

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ui/Export.hpp"
+#include "UiExport.hpp"
 
 namespace acid {
 class ACID_UI_EXPORT UiAnchor {

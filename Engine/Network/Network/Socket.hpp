@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "Network/Export.hpp"
+#include "NetworkExport.hpp"
 
 struct sockaddr_in;
 

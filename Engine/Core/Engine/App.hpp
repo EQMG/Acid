@@ -2,7 +2,7 @@
 
 #include <rocket.hpp>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 #ifdef major
 #undef major

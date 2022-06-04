@@ -3,7 +3,7 @@
 #include <vector>
 #include <volk.h>
 
-#include "Graphics/Export.hpp"
+#include "GraphicsExport.hpp"
 
 namespace acid {
 class Instance;

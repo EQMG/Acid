@@ -5,7 +5,7 @@
 #include "Maths/Transform.hpp"
 #include "Maths/Quaternion.hpp"
 #include "Utils/StreamFactory.hpp"
-#include "Physics/Export.hpp"
+#include "PhysicsExport.hpp"
 
 class btCollisionShape;
 class btVector3;

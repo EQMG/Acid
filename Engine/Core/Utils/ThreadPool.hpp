@@ -7,7 +7,7 @@
 #include <queue>
 #include <future>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 /**

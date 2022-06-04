@@ -3,7 +3,7 @@
 #include "Utils/Future.hpp"
 #include "Post/PostFilter.hpp"
 #include "Maths/Vector3.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class ACID_SHIM_EXPORT SsaoFilter : public PostFilter {

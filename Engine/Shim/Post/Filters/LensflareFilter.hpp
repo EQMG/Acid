@@ -2,7 +2,7 @@
 
 #include "Maths/Vector3.hpp"
 #include "Post/PostFilter.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class ACID_SHIM_EXPORT LensflareFilter : public PostFilter {

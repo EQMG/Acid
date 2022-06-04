@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Network/Export.hpp"
+#include "NetworkExport.hpp"
 
 namespace acid {
 /**

@@ -8,7 +8,7 @@
 #include "Graphics/Buffers/InstanceBuffer.hpp"
 #include "Graphics/Descriptors/DescriptorsHandler.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
-#include "Shim/Export.hpp"
+#include "ShimExport.hpp"
 
 namespace acid {
 class Gizmo;

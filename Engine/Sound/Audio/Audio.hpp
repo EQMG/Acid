@@ -3,7 +3,7 @@
 #include <rocket.hpp>
 
 #include "Engine/Engine.hpp"
-#include "Sound/Export.hpp"
+#include "SoundExport.hpp"
 
 namespace acid {
 /**

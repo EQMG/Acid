@@ -3,7 +3,7 @@
 #include "Files/File.hpp"
 #include "Files/Node.hpp"
 #include "Resources/Resource.hpp"
-#include "Scene/Export.hpp"
+#include "SceneExport.hpp"
 
 namespace acid {
 class Entity;

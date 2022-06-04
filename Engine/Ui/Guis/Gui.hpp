@@ -8,7 +8,7 @@
 #include "Graphics/Images/Image2d.hpp"
 #include "Graphics/Pipelines/PipelineGraphics.hpp"
 #include "Uis/UiObject.hpp"
-#include "Ui/Export.hpp"
+#include "UiExport.hpp"
 
 namespace acid {
 /**

@@ -4,7 +4,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Maths/Vector4.hpp"
-#include "Scene/Export.hpp"
+#include "SceneExport.hpp"
 
 namespace acid {
 /**

@@ -4,7 +4,7 @@
 #include <functional>
 
 #include "Maths/Vector2.hpp"
-#include "Context/Export.hpp"
+#include "ContextExport.hpp"
 
 namespace acid {
 template<typename Base>

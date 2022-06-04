@@ -1,6 +1,6 @@
 #include "Engine.hpp"
 
-#include "Core/Config.hpp"
+#include "CoreConfig.hpp"
 
 namespace acid {
 Engine *Engine::Instance = nullptr;

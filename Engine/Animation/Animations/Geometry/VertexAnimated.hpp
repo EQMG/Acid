@@ -3,7 +3,7 @@
 #include "Maths/Vector2.hpp"
 #include "Maths/Vector3.hpp"
 #include "Graphics/Pipelines/Shader.hpp"
-#include "Animation/Export.hpp"
+#include "AnimationExport.hpp"
 
 namespace acid {
 class ACID_ANIMATION_EXPORT VertexAnimated {

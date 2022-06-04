@@ -1,83 +1,68 @@
 set(_acid_scene_headers
-		Maths/Frustum.hpp
-		Maths/Ray.hpp
-		Maths/Transform.hpp
-		Scenes/Camera.hpp
-		Scenes/Component.hpp
-		Scenes/Entity.hpp
-		Scenes/EntityHolder.hpp
-		Scenes/EntityPrefab.hpp
-		Scenes/Scene.hpp
-		Scenes/Scenes.hpp
-		Scenes/System.hpp
-		Scenes/SystemHolder.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Frustum.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Ray.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Transform.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Camera.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Component.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Entity.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/EntityHolder.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/EntityPrefab.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scene.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scenes.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/System.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/SystemHolder.hpp
 		)
 set(_acid_scene_sources
-		Maths/Frustum.cpp
-		Maths/Ray.cpp
-		Maths/Transform.cpp
-		Scenes/Entity.cpp
-		Scenes/EntityHolder.cpp
-		Scenes/EntityPrefab.cpp
-		Scenes/Scene.cpp
-		Scenes/Scenes.cpp
-		Scenes/SystemHolder.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Frustum.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Ray.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Maths/Transform.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Entity.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/EntityHolder.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/EntityPrefab.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scene.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scenes.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/SystemHolder.cpp
 		)
-
-set(_acid_scene_third_party_headers
-		)
-set(_acid_scene_third_party_sources
-		)
-set(_acid_scene_third_party_includes
+set(_acid_scene_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/SceneExport.hpp
 		)
 
 add_library(Acid.Scene
         ${_acid_scene_headers}
         ${_acid_scene_sources}
-        ${_acid_scene_third_party_headers}
-        ${_acid_scene_third_party_sources}
+		${_acid_scene_generated_headers}
         )
 
-# Generates a header containing export macros
 include(GenerateExportHeader)
-generate_export_header(Acid.Scene EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/Scene/Export.hpp")
+generate_export_header(Acid.Scene EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/SceneExport.hpp")
 
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_scene_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_scene_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_scene_generated_headers})
+
+set_target_properties(Acid.Scene PROPERTIES FOLDER "Acid")
 target_compile_features(Acid.Scene PUBLIC c_std_11 cxx_std_17)
 target_include_directories(Acid.Scene
 		PUBLIC
-		# Generated headers
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		# Project source includes
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-		# Project third_party includes
-		${_acid_scene_third_party_includes}
-		# Helps the includes find what they need at runtime
-		# Although this also allows people to not prefix "Acid" before includes as well
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Scene>
 		)
 target_link_libraries(Acid.Scene
 		PUBLIC
 		Acid.Core
 		)
 
-set_target_properties(Acid.Scene PROPERTIES
-		#INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}
-		FOLDER "Acid"
-		)
-
-# Installs all headers, preserving their file structure
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/Scene/Export.hpp"
-		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Scene"
-		)
-foreach(_header IN LISTS _acid_scene_headers _acid_scene_third_party_headers)
-    get_filename_component(_header_dir ${_header} DIRECTORY)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_header}
-			DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Scene/${_header_dir}"
-			)
-endforeach()
-# Install without an export since we're using 1 (or more) non-system libs
 install(TARGETS Acid.Scene
+		EXPORT AcidSceneExport
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 		)
+install(EXPORT AcidSceneExport
+		FILE AcidSceneConfig.cmake
+		#NAMESPACE acid::
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+install_headers_with_dir("Scene" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_scene_headers}")
+install_headers_with_dir("Scene" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_scene_generated_headers}")

@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Maths/Time.hpp"
-#include "Network/Export.hpp"
+#include "NetworkExport.hpp"
 
 namespace acid {
 class Socket;

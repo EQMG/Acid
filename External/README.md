@@ -1,7 +1,6 @@
 # Third Party Dependencies
  * [Vulkan](https://www.khronos.org/vulkan) - Vulkan interface
  * [OpenAL](http://kcat.strangesoft.net/openal.html) - Audio interface
- * [Volk](https://github.com/zeux/volk) - Meta loader for Vulkan API
  * [GLFW](https://github.com/glfw/glfw) - Window creation
  * [Freetype](https://www.freetype.org/) - Font loading
  * [Glslang](https://github.com/KhronosGroup/glslang) - Shader compiling
@@ -24,6 +23,7 @@
  * [tinygltf](https://github.com/syoyo/tinygltf) - glTF 2.0 model loader
  * [tinymsdf](https://github.com/Chlumsky/msdfgen) - Multi-channel signed distance field generator
  * [tinyobj](https://github.com/syoyo/tinyobjloader) - OBJ model loader
+ * [Volk](https://github.com/zeux/volk) - Meta loader for Vulkan API
  * [Zippy](https://github.com/troldal/Zippy) - A simple C++ wrapper around the 'miniz' zip library
 
 Header only libraries have been split between headers and implementations.

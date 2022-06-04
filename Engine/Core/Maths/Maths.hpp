@@ -5,7 +5,7 @@
 #include <cmath>
 #include <functional>
 
-#include "Core/Export.hpp"
+#include "CoreExport.hpp"
 
 namespace acid {
 /**

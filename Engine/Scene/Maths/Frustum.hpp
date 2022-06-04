@@ -3,7 +3,7 @@
 #include <array>
 
 #include "Maths/Matrix4.hpp"
-#include "Scene/Export.hpp"
+#include "SceneExport.hpp"
 
 namespace acid {
 /**

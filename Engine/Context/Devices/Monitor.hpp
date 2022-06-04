@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Maths/Vector2.hpp"
-#include "Context/Export.hpp"
+#include "ContextExport.hpp"
 
 struct GLFWmonitor;
 
