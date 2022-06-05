@@ -6,8 +6,8 @@ option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_EDITOR "Build editor" ON)
 option(BUILD_EXAMPLES "Build example applications" ON)
 option(BUILD_TESTS "Build unit tests" ON)
-option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Passes local Resources directory into debug Confg" ON)
+option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 
 # Used to include Acid CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/CMake" CACHE STRING "Modules for CMake")

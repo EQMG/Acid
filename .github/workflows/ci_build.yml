@@ -29,7 +29,7 @@ jobs:
         Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/1.2.154.1/windows/VulkanSDK-1.2.154.1-Installer.exe" -OutFile VulkanSDK.exe
         $installer = Start-Process -FilePath VulkanSDK.exe -Wait -PassThru -ArgumentList @("/S");
         $installer.WaitForExit();
-    - name: Build Acid
+    - name: Build
       env:
         VULKAN_SDK: "C:\\VulkanSDK\\1.2.154.1"
         OPENALDIR: "C:\\openal-soft-1.21.0-bin"
@@ -38,7 +38,7 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Copy OpenAL32.dll
       shell: cmd
@@ -50,6 +50,18 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cd Build
         ctest
+    - name: Install
+      run: |
+        cmake --install Build --prefix Install --strip
+    - name: Pack Zip
+      working-directory: Install
+      run: |
+        cmake -E tar "cvf" "../Windows-MSVC.zip" --format=zip .
+    - name: Upload zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: Windows-MSVC.zip
+        path: ./Windows-MSVC.zip
 
   linux_clang:
     runs-on: ubuntu-20.04
@@ -64,7 +76,7 @@ jobs:
         chmod +x llvm.sh
         sudo ./llvm.sh 11
         sudo apt-get install -y build-essential pkg-config g++-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
-    - name: Build Acid
+    - name: Build
       env:
         CC: clang-11
         CXX: clang++-11
@@ -72,12 +84,24 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |
         cd Build
         ctest
+    - name: Install
+      run: |
+        cmake --install Build --prefix Install --strip
+    - name: Pack Zip
+      working-directory: Install
+      run: |
+        cmake -E tar "cvf" "../Linux-Clang.zip" --format=zip .
+    - name: Upload zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: Linux-Clang.zip
+        path: ./Linux-Clang.zip
 
   linux_gcc:
     runs-on: ubuntu-20.04
@@ -91,7 +115,7 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
         sudo apt-get update -y
         sudo apt-get install -y build-essential pkg-config gcc-10 g++-10 xorg-dev libglu1-mesa-dev libopenal-dev libvulkan-dev
-    - name: Build Acid
+    - name: Build
       env:
         CC: gcc-10
         CXX: g++-10
@@ -99,12 +123,24 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |
         cd Build
         ctest
+    - name: Install
+      run: |
+        cmake --install Build --prefix Install --strip
+    - name: Pack Zip
+      working-directory: Install
+      run: |
+        cmake -E tar "cvf" "../Linux-GCC.zip" --format=zip .
+    - name: Upload zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: Linux-GCC.zip
+        path: ./Linux-GCC.zip
 
   macos_clang:
     runs-on: macos-latest
@@ -120,15 +156,27 @@ jobs:
         brew install pkg-config
         brew install openal-soft
         brew install --cask apenngrace/vulkan/vulkan-sdk
-    - name: Build Acid
+    - name: Build
       env:
         CC: clang
         CXX: clang++
       run: |
         cmake --version
-        cmake -B Build -G "Xcode" -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -G "Xcode" -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |
         cd Build
         ctest -C Release
+    - name: Install
+      run: |
+        cmake --install Build --prefix Install --strip
+    - name: Pack Zip
+      working-directory: Install
+      run: |
+        cmake -E tar "cvf" "../macOS-Clang.zip" --format=zip .
+    - name: Upload zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: macOS-Clang.zip
+        path: ./macOS-Clang.zip
