@@ -1,4 +1,6 @@
-set(_acid_graphics_headers
+set(_component_name Graphics)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/Buffer.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/InstanceBuffer.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/PushHandler.hpp
@@ -68,7 +70,7 @@ set(_acid_graphics_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Post/PostFilter.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Post/PostPipeline.hpp
 		)
-set(_acid_graphics_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/Buffer.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/InstanceBuffer.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Graphics/Buffers/PushHandler.cpp
@@ -131,45 +133,40 @@ set(_acid_graphics_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Post/Pipelines/BlurPipeline.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Post/PostFilter.cpp
 		)
-set(_acid_graphics_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/GraphicsExport.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
-set(_acid_graphics_third_party_headers
+set(_component_third_party_headers
 		${ACID_THIRD_PARTY_DIR}/tinygltf/tiny_gltf.h
 		${ACID_THIRD_PARTY_DIR}/tinyobj/tiny_obj.h
 		)
-set(_acid_graphics_third_party_sources
+set(_component_third_party_sources
 		${ACID_THIRD_PARTY_DIR}/tinygltf/tiny_gltf.cpp
 		${ACID_THIRD_PARTY_DIR}/tinyobj/tiny_obj.cpp
 		)
 
-add_library(Acid.Graphics
-        ${_acid_graphics_headers}
-        ${_acid_graphics_sources}
-		${_acid_graphics_generated_headers}
-        ${_acid_graphics_third_party_headers}
-        ${_acid_graphics_third_party_sources}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
+        ${_component_third_party_headers}
+        ${_component_third_party_sources}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Graphics EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/GraphicsExport.hpp")
-
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_graphics_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_graphics_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_graphics_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_graphics_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_graphics_third_party_sources})
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
 # TODO: Prebuilt glslang binaries are unreliable between systems
 #find_package(glslang 11.6.0 QUIET)
 if(NOT glslang_FOUND)
-	set(ENABLE_SPVREMAPPER OFF CACHE INTERNAL "Enables building of SPVRemapper")
-	set(ENABLE_GLSLANG_BINARIES OFF CACHE INTERNAL "Builds glslangValidator and spirv-remap")
-	set(ENABLE_HLSL OFF CACHE INTERNAL "Enables HLSL input support")
-	set(ENABLE_RTTI ON CACHE INTERNAL "Enables RTTI")
-	set(ENABLE_EXCEPTIONS ON CACHE INTERNAL "Enables Exceptions")
-	set(ENABLE_CTEST OFF CACHE INTERNAL "Enables testing")
-	set(SKIP_GLSLANG_INSTALL ON CACHE INTERNAL "Skip installation")
+	set(ENABLE_SPVREMAPPER OFF CACHE BOOL "Enables building of SPVRemapper")
+	set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "Builds glslangValidator and spirv-remap")
+	set(ENABLE_HLSL OFF CACHE BOOL "Enables HLSL input support")
+	set(ENABLE_RTTI ON CACHE BOOL "Enables RTTI")
+	set(ENABLE_EXCEPTIONS ON CACHE BOOL "Enables Exceptions")
+	set(ENABLE_CTEST OFF CACHE BOOL "Enables testing")
+	set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "Skip installation")
+
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
 	add_subdirectory(${ACID_THIRD_PARTY_DIR}/glslang glslang)
@@ -189,19 +186,21 @@ else()
 	set(GLSLANG_LIBRARIES glslang::glslang glslang::SPIRV)
 endif()
 
-set_target_properties(Acid.Graphics PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Graphics PUBLIC c_std_11 cxx_std_17)
-target_include_directories(Acid.Graphics
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/tinygltf>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/tinyobj>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Graphics>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinygltf>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinyobj>
 		PRIVATE
 		$<$<BOOL:${GLSLANG_INCLUDE_DIRS}>:${GLSLANG_INCLUDE_DIRS}>
 		)
-target_link_libraries(Acid.Graphics
+target_link_libraries(${_component_library}
 		PUBLIC
 		Acid.Core
 		Acid.Context
@@ -209,17 +208,14 @@ target_link_libraries(Acid.Graphics
 		${GLSLANG_LIBRARIES}
 		)
 
-install(TARGETS Acid.Graphics
-		EXPORT AcidGraphicsExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidGraphicsExport
-		FILE AcidGraphicsConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Graphics" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_graphics_headers}")
-install_headers_with_dir("Graphics" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_graphics_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_graphics_third_party_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

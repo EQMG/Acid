@@ -1,4 +1,6 @@
-set(_acid_input_headers
+set(_component_name Input)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/ButtonInputAxis.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/CompoundInputAxis.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/JoystickHatInput.hpp
@@ -14,7 +16,7 @@ set(_acid_input_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/InputButton.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/InputScheme.hpp
 		)
-set(_acid_input_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/ButtonInputAxis.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/CompoundInputAxis.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Axes/JoystickHatInput.cpp
@@ -28,47 +30,38 @@ set(_acid_input_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/Inputs.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Inputs/InputScheme.cpp
 		)
-set(_acid_input_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/InputExport.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 
-add_library(Acid.Input
-        ${_acid_input_headers}
-        ${_acid_input_sources}
-		${_acid_input_generated_headers}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Input EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/InputExport.hpp")
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_input_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_input_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_input_generated_headers})
-
-set_target_properties(Acid.Input PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Input PUBLIC c_std_11 cxx_std_17)
-target_include_directories(Acid.Input
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Input>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		)
-target_link_libraries(Acid.Input
+target_link_libraries(${_component_library}
 		PUBLIC
 		Acid.Core
 		Acid.Context
 		)
 
-install(TARGETS Acid.Input
-		EXPORT AcidInputExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidInputExport
-		FILE AcidInputConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Input" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_input_headers}")
-install_headers_with_dir("Input" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_input_generated_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

@@ -1,4 +1,6 @@
-set(_acid_animation_headers
+set(_component_name Animation)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/AnimatedMesh.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Animation/Animation.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Animation/AnimationLoader.hpp
@@ -12,7 +14,7 @@ set(_acid_animation_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Skin/SkinLoader.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Skin/VertexWeights.hpp
 		)
-set(_acid_animation_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/AnimatedMesh.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Animation/Animation.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Animation/AnimationLoader.cpp
@@ -25,47 +27,39 @@ set(_acid_animation_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Skin/SkinLoader.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Skin/VertexWeights.cpp
 		)
-set(_acid_animation_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/AnimationExport.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 
-add_library(Acid.Animation
-        ${_acid_animation_headers}
-        ${_acid_animation_sources}
-		${_acid_animation_generated_headers}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Animation EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/AnimationExport.hpp")
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_animation_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_animation_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_animation_generated_headers})
-
-set_target_properties(Acid.Animation PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Animation PUBLIC c_std_11 cxx_std_17)
-target_include_directories(Acid.Animation
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Animation>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		)
-target_link_libraries(Acid.Animation
+target_link_libraries(${_component_library}
 		PUBLIC
 		Acid.Core
+		Acid.Scene
 		Acid.Shim
 		)
 
-install(TARGETS Acid.Animation
-		EXPORT AcidAnimationExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidAnimationExport
-		FILE AcidAnimationConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Animation" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_animation_headers}")
-install_headers_with_dir("Animation" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_animation_generated_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

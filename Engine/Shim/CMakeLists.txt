@@ -1,4 +1,6 @@
-set(_acid_shim_headers
+set(_component_name Shim)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/Gizmo.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/Gizmos.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/GizmosSubrender.hpp
@@ -30,7 +32,7 @@ set(_acid_shim_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Shadows/ShadowsSubrender.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Skyboxes/SkyboxMaterial.hpp
 		)
-set(_acid_shim_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/Gizmo.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/Gizmos.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Gizmos/GizmosSubrender.cpp
@@ -60,48 +62,39 @@ set(_acid_shim_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Shadows/ShadowsSubrender.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Skyboxes/SkyboxMaterial.cpp
 		)
-set(_acid_shim_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/ShimExport.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 
-add_library(Acid.Shim
-        ${_acid_shim_headers}
-        ${_acid_shim_sources}
-		${_acid_shim_generated_headers}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Shim EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/ShimExport.hpp")
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_shim_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_shim_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_shim_generated_headers})
-
-set_target_properties(Acid.Shim PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Shim PUBLIC c_std_11 cxx_std_17)
-target_include_directories(Acid.Shim
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Shim>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		)
-target_link_libraries(Acid.Shim
+target_link_libraries(${_component_library}
 		PUBLIC
 		Acid.Core
 		Acid.Scene
 		Acid.Graphics
 		)
 
-install(TARGETS Acid.Shim
-		EXPORT AcidShimExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidShimExport
-		FILE AcidShimConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Shim" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_shim_headers}")
-install_headers_with_dir("Shim" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_shim_generated_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

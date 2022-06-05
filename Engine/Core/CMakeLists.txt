@@ -1,4 +1,6 @@
-set(_acid_core_headers
+set(_component_name Core)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/App.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Log.hpp
@@ -47,7 +49,7 @@ set(_acid_core_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Utils/ThreadPool.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Utils/TypeInfo.hpp
 		)
-set(_acid_core_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Log.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Files/File.cpp
@@ -73,49 +75,40 @@ set(_acid_core_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Utils/String.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Utils/ThreadPool.cpp
 		)
-set(_acid_core_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/CoreExport.hpp
-		${CMAKE_CURRENT_BINARY_DIR}/include/CoreConfig.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Config.hpp
 		)
-set(_acid_core_third_party_headers
+set(_component_third_party_headers
 		${ACID_THIRD_PARTY_DIR}/bitmask/bitmask.hpp
 		${ACID_THIRD_PARTY_DIR}/magic_enum/magic_enum.hpp
 		${ACID_THIRD_PARTY_DIR}/rocket/rocket.hpp
 		)
-set(_acid_core_third_party_sources
+set(_component_third_party_sources
 		)
 
-add_library(Acid.Core
-        ${_acid_core_headers}
-        ${_acid_core_sources}
-		${_acid_core_generated_headers}
-        ${_acid_core_third_party_headers}
-        ${_acid_core_third_party_sources}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
+        ${_component_third_party_headers}
+        ${_component_third_party_sources}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Core EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/CoreExport.hpp")
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/CoreConfig.hpp" @ONLY)
+configure_file(Config.hpp.in "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Config.hpp" @ONLY)
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_core_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_core_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_core_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_core_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_core_third_party_sources})
-
-if(APPLE)
-    set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-framework IOKit -framework Foundation -framework CoreFoundation")
-endif()
-
-#find_package(PhysFS 3.0.2 QUIET)
+find_package(PhysFS 3.0.2 QUIET)
 if(NOT PhysFS_FOUND)
-	set(PHYSFS_BUILD_SHARED OFF CACHE INTERNAL "Build shared library.")
-	set(PHYSFS_BUILD_TEST OFF CACHE INTERNAL "Build stdio test program.")
-	set(PHYSFS_DISABLE_INSTALL ON CACHE INTERNAL "Disable installing PhysFS.")
-	set(PHYSFS_BUILD_DOCS OFF CACHE INTERNAL "Build doxygen based documentation.")
-	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE INTERNAL STRING)
-	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE INTERNAL STRING)
+	set(PHYSFS_BUILD_SHARED OFF CACHE BOOL "Build shared library")
+	set(PHYSFS_BUILD_TEST OFF CACHE BOOL "Build stdio test program")
+	set(PHYSFS_DISABLE_INSTALL ON CACHE BOOL "Disable installing PhysFS")
+	set(PHYSFS_BUILD_DOCS OFF CACHE BOOL "Build doxygen based documentation")
+	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE STRING "Name of 'dist' build target")
+	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE STRING "Name of 'uninstall' build target")
+
 	add_subdirectory(${ACID_THIRD_PARTY_DIR}/physfs physfs)
 
 	set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
@@ -131,14 +124,18 @@ if(NOT PhysFS_FOUND)
 	set(PHYSFS_LIBRARY physfs-static)
 endif()
 
+if(APPLE)
+    set(OTHER_LDFLAGS ${OTHER_LDFLAGS} "-framework IOKit -framework Foundation -framework CoreFoundation")
+endif()
+
 # Looks for a appropriate threads package for this platform
 find_package(Threads REQUIRED)
 # Check whether a SSE instructions can be used on the machine
 include(FindSSE)
 
-set_target_properties(Acid.Core PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Core PUBLIC c_std_11 cxx_std_17)
-target_compile_definitions(Acid.Core
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_compile_definitions(${_component_library}
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_DEBUG
 		# Works on both single and mutli configuration
@@ -160,7 +157,7 @@ target_compile_definitions(Acid.Core
 		# GNU/GCC
 		$<$<CXX_COMPILER_ID:GNU>:ACID_BUILD_GNU __USE_MINGW_ANSI_STDIO=0>
 		)
-target_compile_options(Acid.Core
+target_compile_options(${_component_library}
 		PUBLIC
 		# Disables symbol warnings.
 		$<$<CXX_COMPILER_ID:MSVC>:/wd4018 /wd4067 /wd4244 /wd4251 /wd4267 /wd4275 /wd4996>
@@ -169,19 +166,21 @@ target_compile_options(Acid.Core
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
 		$<$<BOOL:${SSE4_1_FOUND}>:-msse4.1>
 		)
-target_include_directories(Acid.Core
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/bitmask>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/magic_enum>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/rocket>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Core>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/bitmask>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/magic_enum>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/rocket>
 		PRIVATE
 		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
 		)
-target_link_libraries(Acid.Core
+target_link_libraries(${_component_library}
 		PUBLIC
 		$<$<CXX_COMPILER_ID:GNU>:stdc++fs> # std::filesystem
 		$<$<PLATFORM_ID:Windows>:ws2_32> # Winsock 2.0
@@ -193,17 +192,14 @@ target_link_libraries(Acid.Core
 		${PHYSFS_LIBRARY}
 		)
 
-install(TARGETS Acid.Core
-		EXPORT AcidCoreExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidCoreExport
-		FILE AcidCoreConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Core" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_core_headers}")
-install_headers_with_dir("Core" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_core_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_core_third_party_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

@@ -1,4 +1,6 @@
-set(_acid_ui_headers
+set(_component_name Ui)
+set(_component_library Acid.${_component_name})
+set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontsSubrender.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontType.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/Text.hpp
@@ -33,7 +35,7 @@ set(_acid_ui_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiSection.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiStartLogo.hpp
 		)
-set(_acid_ui_sources
+set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontsSubrender.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontType.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/Text.cpp
@@ -56,34 +58,28 @@ set(_acid_ui_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiSection.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Uis/UiStartLogo.cpp
 		)
-set(_acid_ui_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/UiExport.hpp
+set(_component_generated_headers
+		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
-set(_acid_ui_third_party_headers
+set(_component_third_party_headers
 		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.hpp
 		)
-set(_acid_ui_third_party_sources
+set(_component_third_party_sources
 		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.cpp
 		)
 
-add_library(Acid.Ui
-        ${_acid_ui_headers}
-        ${_acid_ui_sources}
-		${_acid_ui_generated_headers}
-        ${_acid_ui_third_party_headers}
-        ${_acid_ui_third_party_sources}
+add_library(${_component_library}
+        ${_component_headers}
+        ${_component_sources}
+		${_component_generated_headers}
+        ${_component_third_party_headers}
+        ${_component_third_party_sources}
         )
 
 include(GenerateExportHeader)
-generate_export_header(Acid.Ui EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/UiExport.hpp")
+generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_ui_headers})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_acid_ui_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_acid_ui_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_ui_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_acid_ui_third_party_sources})
-
-#find_package(Freetype 2.11.1 QUIET)
+find_package(Freetype 2.11.1 QUIET)
 if(NOT Freetype_FOUND)
 	set(SKIP_INSTALL_ALL TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
@@ -91,6 +87,7 @@ if(NOT Freetype_FOUND)
 	set(CMAKE_DISABLE_FIND_PACKAGE_PNG TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_HarfBuzz TRUE)
 	set(CMAKE_DISABLE_FIND_PACKAGE_BrotliDec TRUE)
+
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
 	add_subdirectory(${ACID_THIRD_PARTY_DIR}/freetype freetype)
@@ -101,18 +98,19 @@ if(NOT Freetype_FOUND)
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-set_target_properties(Acid.Ui PROPERTIES FOLDER "Acid")
-target_compile_features(Acid.Ui PUBLIC c_std_11 cxx_std_17)
-target_include_directories(Acid.Ui
+set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
+target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
 		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/tinymsdf>
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Ui>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinymsdf>
 		PRIVATE
 		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
 		)
-target_link_libraries(Acid.Ui
+target_link_libraries(${_component_library}
 		PUBLIC
 		Acid.Core
 		Acid.Graphics
@@ -120,17 +118,14 @@ target_link_libraries(Acid.Ui
 		${FREETYPE_LIBRARIES}
 		)
 
-install(TARGETS Acid.Ui
-		EXPORT AcidUiExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidUiExport
-		FILE AcidUiConfig.cmake
-		#NAMESPACE acid::
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-install_headers_with_dir("Ui" "${CMAKE_CURRENT_SOURCE_DIR}" "${_acid_ui_headers}")
-install_headers_with_dir("Ui" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_acid_ui_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_acid_ui_third_party_headers}")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
+source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
+install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
+install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+
+set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)

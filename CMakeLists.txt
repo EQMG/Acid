@@ -10,7 +10,7 @@ option(ACID_INSTALL_RESOURCES "Installs the Resources directory" ON)
 option(ACID_LINK_RESOURCES "Passes local Resources directory into debug Confg" ON)
 
 # Used to include Acid CMake modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/CMake" CACHE STRING "Modules for CMake" FORCE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/CMake" CACHE STRING "Modules for CMake")
 
 # Sets the install directories defined by GNU
 include(GNUInstallDirs)
@@ -60,9 +60,9 @@ if(MSVC_VERSION GREATER 1500 AND ${CMAKE_VERSION} VERSION_GREATER "2.8.6")
 	include(ProcessorCount)
 	ProcessorCount(N)
 	if(NOT N EQUAL 0)
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${N}" CACHE STRING "" FORCE)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /MP${N}" CACHE STRING "" FORCE)
-		set(CMAKE_CSharp_FLAGS "${CMAKE_CSharp_FLAGS} /m:${N}" CACHE STRING "" FORCE)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP${N}" CACHE STRING "")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /MP${N}" CACHE STRING "")
+		set(CMAKE_CSharp_FLAGS "${CMAKE_CSharp_FLAGS} /m:${N}" CACHE STRING "")
 	endif()
 endif()
 
@@ -99,18 +99,10 @@ execute_process(
 		ERROR_QUIET
 		)
 
+# Directory that Acid resources can be found.
+get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources ABSOLUTE)
 # Directory where external third_party sources are located
 get_filename_component(ACID_THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External ABSOLUTE)
-
-if(ACID_INSTALL_RESOURCES)
-	# Directory that Acid resources can be found.
-	get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources ABSOLUTE)
-	# Install resources for end-user usage because many source files use these
-	install(DIRECTORY "${ACID_RESOURCES_DIR}"
-			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
-			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
-			)
-endif()
 
 # Acid components
 add_subdirectory(Engine/Core)
@@ -124,6 +116,24 @@ add_subdirectory(Engine/Sound)
 add_subdirectory(Engine/Shim)
 add_subdirectory(Engine/Animation)
 add_subdirectory(Engine/Physics)
+
+install(TARGETS ${ACID_INSTALL_TARGETS}
+		EXPORT AcidExport
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+		)
+install(EXPORT AcidExport
+		FILE AcidConfig.cmake
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+		)
+if(ACID_INSTALL_RESOURCES)
+	# Install resources for end-user usage because many source files use these
+	install(DIRECTORY "${ACID_RESOURCES_DIR}"
+			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
+			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
+			)
+endif()
 
 #if(BUILD_EDITOR)
 #	add_subdirectory(Editor)
