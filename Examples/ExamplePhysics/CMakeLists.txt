@@ -1,25 +1,33 @@
-file(GLOB_RECURSE TESTPHYSICS_HEADER_FILES
+file(GLOB_RECURSE _example_headers
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.h" "*.hpp" "*.inl"
 		)
-file(GLOB_RECURSE TESTPHYSICS_SOURCE_FILES
+file(GLOB_RECURSE _example_sources
 		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 		"*.c" "*.cpp" "*.rc"
 		)
-
-add_executable(TestPhysics ${TESTPHYSICS_HEADER_FILES} ${TESTPHYSICS_SOURCE_FILES})
-
-# Changes how sources appear in IDE virtual file structures
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPHYSICS_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPHYSICS_SOURCE_FILES})
-
-target_compile_features(TestPhysics PUBLIC cxx_std_17)
-target_include_directories(TestPhysics PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestPhysics PRIVATE Acid::Acid)
-
-set_target_properties(TestPhysics PROPERTIES
-		FOLDER "Acid/Tests"
+set(_example_third_party_headers
+		${THIRD_PARTY_SOURCE_DIR}/FastNoiseLite/FastNoiseLite.h
 		)
+
+add_executable(TestPhysics
+		${_example_headers}
+		${_example_sources}
+		${_example_third_party_headers}
+		)
+
+target_compile_features(TestPhysics PUBLIC c_std_11 cxx_std_17)
+target_include_directories(TestPhysics
+		PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/FastNoiseLite>
+		)
+target_link_libraries(TestPhysics
+		PRIVATE
+		${ACID_LIBRARIES}
+		)
+set_target_properties(TestPhysics PROPERTIES FOLDER "Acid/Tests")
+
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	set_target_properties(TestPhysics PROPERTIES 
 			LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup"
@@ -35,7 +43,8 @@ elseif(UNIX AND APPLE)
 			)
 endif()
 
-# add_test(NAME "Physics" COMMAND "TestPhysics")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_example_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_example_sources})
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestPhysics

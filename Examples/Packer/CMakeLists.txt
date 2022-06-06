@@ -1,25 +1,34 @@
-file(GLOB_RECURSE TESTPACKER_HEADER_FILES
-		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-		"*.h" "*.hpp" "*.inl"
+set(_packer_headers
 		)
-file(GLOB_RECURSE TESTPACKER_SOURCE_FILES
-		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-		"*.c" "*.cpp" "*.rc"
+set(_packer_sources
+		${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
+		)
+set(_packer_third_party_headers
+		${THIRD_PARTY_SOURCE_DIR}/Zippy/ZipArchive.hpp
+		${THIRD_PARTY_SOURCE_DIR}/Zippy/ZipEntry.hpp
+		${THIRD_PARTY_SOURCE_DIR}/Zippy/ZipException.hpp
+		${THIRD_PARTY_SOURCE_DIR}/Zippy/Zippy.hpp
+		${THIRD_PARTY_SOURCE_DIR}/Zippy/ZipUtilities.hpp
 		)
 
-add_executable(TestPacker ${TESTPACKER_HEADER_FILES} ${TESTPACKER_SOURCE_FILES})
-
-# Changes how sources appear in IDE virtual file structures
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPACKER_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPACKER_SOURCE_FILES})
-
-target_compile_features(TestPacker PUBLIC cxx_std_17)
-target_include_directories(TestPacker PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestPacker PRIVATE Acid::Acid)
-
-set_target_properties(TestPacker PROPERTIES
-		FOLDER "Acid/Tests"
+add_executable(TestPacker
+		${_packer_headers}
+		${_packer_sources}
+		${_packer_third_party_headers}
 		)
+
+target_compile_features(TestPacker PUBLIC c_std_11 cxx_std_17)
+target_include_directories(TestPacker
+		PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/Zippy>
+		)
+target_link_libraries(TestPacker
+		PRIVATE
+		${ACID_LIBRARIES}
+		)
+set_target_properties(TestPacker PROPERTIES FOLDER "Acid/Tests")
+
 if(UNIX AND APPLE)
 	set_target_properties(TestPacker PROPERTIES
 			MACOSX_BUNDLE_BUNDLE_NAME "Test Packer"
@@ -29,7 +38,9 @@ if(UNIX AND APPLE)
 			)
 endif()
 
-# add_test(NAME "Packer" COMMAND "TestPacker")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_packer_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_packer_sources})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_packer_third_party_headers})
 
 if(ACID_INSTALL_EXAMPLES)
 	install(TARGETS TestPacker

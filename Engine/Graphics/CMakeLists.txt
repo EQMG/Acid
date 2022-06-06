@@ -170,7 +170,7 @@ if(NOT glslang_FOUND)
 
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
-	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/glslang glslang)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/glslang ${THIRD_PARTY_BINARY_DIR}/glslang)
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 	set_target_properties(glslang PROPERTIES FOLDER "External/glslang")
@@ -202,7 +202,6 @@ target_include_directories(${_component_library}
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid::Core
 		Acid::Context
 		PRIVATE
 		${GLSLANG_LIBRARIES}
@@ -223,4 +222,4 @@ install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" CACHE INTERNAL "")

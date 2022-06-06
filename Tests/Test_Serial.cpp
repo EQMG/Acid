@@ -1,3 +1,4 @@
+#include <gtest/gtest.h>
 #include <bitmask.hpp>
 
 #include <Files/File.hpp>
@@ -153,7 +154,7 @@ public:
 };
 }
 
-int main(int argc, char **argv) {
+TEST(Serial, example1) {
 	test::Example1 example1;
 	Node node;
 	node = example1;
@@ -222,19 +223,16 @@ int main(int argc, char **argv) {
 
 		Log::Out(json.WriteString<Json>(NodeFormat::Minified), '\n');
 	}
-	
-	/*ZipArchive zip0("Serial.zip");
+}
+
+/*TEST(Serial, zip) {
+	ZipArchive zip0("Serial.zip");
 	zip0.AddEntry("hello.txt", "Hello World!");
 	zip0.Write();
-	zip0.Close();*/
-	/*ZipArchive zip("Serial.zip");
+	zip0.Close();
+	ZipArchive zip("Serial.zip");
 	for (const auto &entry : zip.GetEntryNames())
 		Log::Out(entry, '\n');
-	zip.ExtractAll("Extracted");*/
+	zip.ExtractAll("Extracted");
 	//zip.ExtractDir("Serial", "Extracted");
-
-	// Pauses the console.
-	std::cout << "Press enter to continue...";
-	std::cin.get();
-	return EXIT_SUCCESS;
-}
+}*/

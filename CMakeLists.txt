@@ -65,23 +65,27 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-add_subdirectory(Engine)
+# Directory that Acid resources can be found.
+get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources ABSOLUTE)
+# Directory where external third_party sources are located
+get_filename_component(THIRD_PARTY_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External ABSOLUTE)
+get_filename_component(THIRD_PARTY_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/External ABSOLUTE)
 
-message(STATUS "TOP ACID_LIBRARIES: ${ACID_LIBRARIES}")
+add_subdirectory(Engine)
 
 #if(BUILD_EDITOR)
 #	add_subdirectory(Editor)
 #endif
 
-#if(BUILD_EXAMPLES)
-#	add_subdirectory(Examples)
-#endif()
+if(BUILD_EXAMPLES)
+	add_subdirectory(Examples)
+endif()
 
 # Must be a top level before add_subdirectory to make ctest pick up the individual add_test commands
 enable_testing()
 
 # Allows automation of "BUILD_TESTING"
-#include(CTest)
-#if(BUILD_TESTS)
-#	add_subdirectory(Tests)
-#endif()
+include(CTest)
+if(BUILD_TESTS)
+	add_subdirectory(Tests)
+endif()

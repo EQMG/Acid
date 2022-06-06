@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Maths/Transform.hpp>
 #include <Scenes/Component.hpp>
 #include <Fonts/Text.hpp>
 

@@ -2,7 +2,7 @@
 
 #include <Utils/RingBuffer.hpp>
 
-TEST(RingBuffer, pushPopResize) {
+TEST(RingBuffer, push_pop_resize) {
 	acid::RingBuffer<int32_t> buffer(4);
 
 	EXPECT_TRUE(buffer.push(1, 2, 3, 4));

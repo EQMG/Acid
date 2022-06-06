@@ -1,3 +1,5 @@
+#include <gtest/gtest.h>
+
 #include <thread>
 #include <Engine/Log.hpp>
 #include <Network/Ftp/Ftp.hpp>
@@ -7,67 +9,68 @@
 
 using namespace acid;
 
-int main(int argc, char **argv) {
-	// TODO: Download a ZIP from Google Drive.
-	/*{
-		Http http("http://drive.google.com/");
+// TODO: Download a ZIP from Google Drive.
+/*TEST(Network, http_zip) {
+	Http http("http://drive.google.com/");
 
-		HttpRequest request;
-		request.SetMethod(HttpRequest::Method::Get);
-		request.SetUri("/uc?id=1LLymFp9BRrSje7jaGJdHBraW0BVpZ2-K&export=download");
-		request.SetHttpVersion(1, 1); // HTTP 1.1
-		request.SetField("From", "me");
-		request.SetField("Content-Type", "application/vnd.google-apps.file");
+	HttpRequest request;
+	request.SetMethod(HttpRequest::Method::Get);
+	request.SetUri("/uc?id=1LLymFp9BRrSje7jaGJdHBraW0BVpZ2-K&export=download");
+	request.SetHttpVersion(1, 1); // HTTP 1.1
+	request.SetField("From", "me");
+	request.SetField("Content-Type", "application/vnd.google-apps.file");
 
-		auto page = http.SendRequest(request);
-		auto fileSize = page.GetBody().size();
+	auto page = http.SendRequest(request);
+	auto fileSize = page.GetBody().size();
 
-		auto fileContainer = page.GetBody();
-		std::ofstream file(std::filesystem::current_path() / "Data-Sponza.zip", std::ios::out | std::ios::binary);
-		file.write(fileContainer.c_str(), fileSize);
-		file.close();
-	}*/
+	auto fileContainer = page.GetBody();
+	std::ofstream file(std::filesystem::current_path() / "Data-Sponza.zip", std::ios::out | std::ios::binary);
+	file.write(fileContainer.c_str(), fileSize);
+	file.close();
+}*/
 
-	// https://www.sfml-dev.org/tutorials/2.5/network-http.php
+// https://www.sfml-dev.org/tutorials/2.5/network-http.php
+/*TEST(Network, http) {
+	Http http("http://equilibrium.games/");
+
+	HttpRequest request;
+	request.SetMethod(HttpRequest::Method::Post);
+	request.SetUri("/devblog/");
+	request.SetHttpVersion(1, 1); // HTTP 1.1
+	request.SetField("From", "me");
+	request.SetField("Content-Type", "application/x-www-form-urlencoded");
+	request.SetBody("para1=value1&param2=value2");
+
+	auto response = http.SendRequest(request);
+	Log::Out("Status: ", static_cast<uint32_t>(response.GetStatus()), '\n'); // TODO: Enum stream operators.
+	Log::Out("HTTP version: ", response.GetMajorHttpVersion(), '.', response.GetMinorHttpVersion(), '\n');
+	Log::Out("Content-Type header: ", response.GetField("Content-Type"), '\n');
+	Log::Out("Body: ", response.GetBody(), '\n');
+}*/
+
+// TODO: json examples.
+// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
+/*TEST(Network, ftp) {
+	Ftp ftp;
+	ftp.Connect(IpAddress("ftp.myserver.org"), 21);
+	ftp.Login("username", "password");
+	ftp.KeepAlive();
+
+	auto response = ftp.GetWorkingDirectory();
+
+	if (response.IsOk())
 	{
-		Http http("http://equilibrium.games/");
-
-		HttpRequest request;
-		request.SetMethod(HttpRequest::Method::Post);
-		request.SetUri("/devblog/");
-		request.SetHttpVersion(1, 1); // HTTP 1.1
-		request.SetField("From", "me");
-		request.SetField("Content-Type", "application/x-www-form-urlencoded");
-		request.SetBody("para1=value1&param2=value2");
-
-		auto response = http.SendRequest(request);
-		Log::Out("Status: ", static_cast<uint32_t>(response.GetStatus()), '\n'); // TODO: Enum stream operators.
-		Log::Out("HTTP version: ", response.GetMajorHttpVersion(), '.', response.GetMinorHttpVersion(), '\n');
-		Log::Out("Content-Type header: ", response.GetField("Content-Type"), '\n');
-		Log::Out("Body: ", response.GetBody(), '\n');
+		Log::Out("Current directory: ", response.GetDirectory(), '\n');
 	}
-	// TODO: json examples.
-	// https://www.sfml-dev.org/tutorials/2.5/network-ftp.php
-	/*{
-		Ftp ftp;
-		ftp.Connect(IpAddress("ftp.myserver.org"), 21);
-		ftp.Login("username", "password");
-		ftp.KeepAlive();
 
-		auto response = ftp.GetWorkingDirectory();
+	ftp.Download("remote_file_name.txt", "local/destination/path", FtpDataChannel::Mode::Ascii);
+	ftp.Upload("local_file_name.pdf", "remote/destination/path", FtpDataChannel::Mode::Binary);
 
-		if (response.IsOk())
-		{
-			Log::Out("Current directory: ", response.GetDirectory(), '\n');
-		}
+	ftp.Disconnect();
+}*/
 
-		ftp.Download("remote_file_name.txt", "local/destination/path", FtpDataChannel::Mode::Ascii);
-		ftp.Upload("local_file_name.pdf", "remote/destination/path", FtpDataChannel::Mode::Binary);
-
-		ftp.Disconnect();
-	}*/
-
-	/*UdpSocket socket;
+/*TEST(Network, udp) {
+	UdpSocket socket;
 
 	std::string name("Hello world");
 	uint32_t a = 420;
@@ -83,10 +86,5 @@ int main(int argc, char **argv) {
 	if (socket.Send(packet.GetData(), packet.GetDataSize(), recipient, port) != SocketStatus::Done)
 	{
 		// error...
-	}*/
-
-	// Pauses the console.
-	std::cout << "Press enter to continue...";
-	std::cin.get();
-	return EXIT_SUCCESS;
-}
+	}
+}*/

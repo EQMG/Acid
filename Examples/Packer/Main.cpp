@@ -1,7 +1,7 @@
 #include <Zippy.hpp>
 
 #include <Engine/Log.hpp>
-#include "Config.hpp"
+#include <CoreConfig.hpp>
 
 std::filesystem::path PATH = acid::ACID_RESOURCES_DIR;
 

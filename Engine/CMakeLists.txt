@@ -9,11 +9,6 @@ function(install_headers_with_dir _component_name _source_dir _header_list)
 	endforeach()
 endfunction()
 
-# Directory that Acid resources can be found.
-get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Resources ABSOLUTE)
-# Directory where external third_party sources are located
-get_filename_component(THIRD_PARTY_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../External ABSOLUTE)
-
 # Uses Git to find the current git branch and commit
 find_package(Git REQUIRED)
 
@@ -84,8 +79,6 @@ option(ACID_ANIMATION "Build Acid collada animation entity component" ON)
 if(ACID_ANIMATION)
     add_subdirectory(Animation)
 endif()
-
-message(STATUS "ENGINE ACID_LIBRARIES: ${ACID_LIBRARIES}")
 
 if(ACID_INSTALL_RESOURCES)
 	# Install resources for end-user usage because many source files use these

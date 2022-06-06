@@ -65,7 +65,7 @@ if(NOT BULLET_FOUND)
 
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
-	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/bullet3 bullet3)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/bullet3 ${THIRD_PARTY_BINARY_DIR}/bullet3)
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 	set_target_properties(Bullet3Common PROPERTIES FOLDER "External/bullet")
@@ -90,7 +90,6 @@ target_include_directories(${_component_library}
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid::Core
 		Acid::Scene
 		PRIVATE
 		${BULLET_LIBRARIES}
@@ -108,4 +107,4 @@ source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_compo
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 
-set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" CACHE INTERNAL "")

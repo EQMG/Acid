@@ -24,6 +24,7 @@
 #include <Physics/Colliders/CylinderCollider.hpp>
 #include <Physics/Colliders/HeightfieldCollider.hpp>
 #include <Physics/Colliders/SphereCollider.hpp>
+#include <Physics/Rigidbody.hpp>
 #include <Physics/Physics.hpp>
 #include <Resources/Resources.hpp>
 #include <Scenes/EntityPrefab.hpp>

@@ -110,7 +110,7 @@ if(NOT PhysFS_FOUND)
 	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE STRING "Name of 'dist' build target")
 	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE STRING "Name of 'uninstall' build target")
 
-	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/physfs physfs)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/physfs ${THIRD_PARTY_BINARY_DIR}/physfs)
 
 	set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
 	if(UNIX)
@@ -207,4 +207,4 @@ install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${_component_library}" CACHE INTERNAL "")

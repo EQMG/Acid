@@ -98,7 +98,7 @@ if(NOT TARGET glfw)
 	set(GLFW_INSTALL OFF CACHE BOOL "Generate installation target")
 	set(GLFW_LIBRARY_TYPE "STATIC" CACHE STRING "Library type override for GLFW")
 
-	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/glfw glfw)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/glfw ${THIRD_PARTY_BINARY_DIR}/glfw)
 
 	set_target_properties(glfw PROPERTIES FOLDER "External/glfw")
 	set_target_properties(update_mappings PROPERTIES FOLDER "External/glfw")
@@ -148,4 +148,4 @@ install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" CACHE INTERNAL "")
