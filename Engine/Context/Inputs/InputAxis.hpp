@@ -4,13 +4,13 @@
 
 #include "Devices/Windows.hpp"
 #include "Utils/StreamFactory.hpp"
-#include "InputExport.hpp"
+#include "ContextExport.hpp"
 
 namespace acid {
 /**
  * @brief Interface for an axis based input device.
  */
-class ACID_INPUT_EXPORT InputAxis : public StreamFactory<InputAxis>, public virtual rocket::trackable {
+class ACID_CONTEXT_EXPORT InputAxis : public StreamFactory<InputAxis>, public virtual rocket::trackable {
 public:
 	class Argument {
 	public:

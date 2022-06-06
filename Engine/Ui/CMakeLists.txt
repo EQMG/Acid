@@ -1,5 +1,5 @@
 set(_component_name Ui)
-set(_component_library Acid.${_component_name})
+set(_component_library Acid_${_component_name})
 set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontsSubrender.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Fonts/FontType.hpp
@@ -62,10 +62,10 @@ set(_component_generated_headers
 		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 set(_component_third_party_headers
-		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.hpp
+		${THIRD_PARTY_SOURCE_DIR}/tinymsdf/tiny_msdf.hpp
 		)
 set(_component_third_party_sources
-		${ACID_THIRD_PARTY_DIR}/tinymsdf/tiny_msdf.cpp
+		${THIRD_PARTY_SOURCE_DIR}/tinymsdf/tiny_msdf.cpp
 		)
 
 add_library(${_component_library}
@@ -75,6 +75,7 @@ add_library(${_component_library}
         ${_component_third_party_headers}
         ${_component_third_party_sources}
         )
+add_library(Acid::${_component_name} ALIAS ${_component_library})
 
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
@@ -90,7 +91,7 @@ if(NOT Freetype_FOUND)
 
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
-	add_subdirectory(${ACID_THIRD_PARTY_DIR}/freetype freetype)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/freetype freetype)
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 	
 	set_target_properties(freetype PROPERTIES FOLDER "External")
@@ -98,34 +99,38 @@ if(NOT Freetype_FOUND)
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
 target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/tinymsdf>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/tinymsdf>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinymsdf>
 		PRIVATE
-		$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>
+		$<BUILD_INTERFACE:$<$<BOOL:${FREETYPE_INCLUDE_DIRS}>:${FREETYPE_INCLUDE_DIRS}>>
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid.Core
-		Acid.Graphics
+		Acid::Core
+		Acid::Graphics
 		PRIVATE
 		${FREETYPE_LIBRARIES}
+		)
+set_target_properties(${_component_library}
+		PROPERTIES
+		FOLDER "Acid"
+		EXPORT_NAME "${_component_name}"
 		)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
 source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
 
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)

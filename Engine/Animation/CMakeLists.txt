@@ -1,5 +1,5 @@
 set(_component_name Animation)
-set(_component_library Acid.${_component_name})
+set(_component_library Acid_${_component_name})
 set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/AnimatedMesh.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Animations/Animation/Animation.hpp
@@ -36,11 +36,11 @@ add_library(${_component_library}
         ${_component_sources}
 		${_component_generated_headers}
         )
+add_library(Acid::${_component_name} ALIAS ${_component_library})
 
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
 target_include_directories(${_component_library}
 		PUBLIC
@@ -50,9 +50,14 @@ target_include_directories(${_component_library}
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid.Core
-		Acid.Scene
-		Acid.Shim
+		Acid::Core
+		Acid::Scene
+		Acid::Shim
+		)
+set_target_properties(${_component_library}
+		PROPERTIES
+		FOLDER "Acid"
+		EXPORT_NAME "${_component_name}"
 		)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
@@ -62,4 +67,4 @@ source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_compo
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 
-set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)

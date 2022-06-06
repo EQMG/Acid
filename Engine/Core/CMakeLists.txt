@@ -1,5 +1,5 @@
 set(_component_name Core)
-set(_component_library Acid.${_component_name})
+set(_component_library Acid_${_component_name})
 set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/App.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.hpp
@@ -80,9 +80,9 @@ set(_component_generated_headers
 		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Config.hpp
 		)
 set(_component_third_party_headers
-		${ACID_THIRD_PARTY_DIR}/bitmask/bitmask.hpp
-		${ACID_THIRD_PARTY_DIR}/magic_enum/magic_enum.hpp
-		${ACID_THIRD_PARTY_DIR}/rocket/rocket.hpp
+		${THIRD_PARTY_SOURCE_DIR}/bitmask/bitmask.hpp
+		${THIRD_PARTY_SOURCE_DIR}/magic_enum/magic_enum.hpp
+		${THIRD_PARTY_SOURCE_DIR}/rocket/rocket.hpp
 		)
 set(_component_third_party_sources
 		)
@@ -94,6 +94,7 @@ add_library(${_component_library}
         ${_component_third_party_headers}
         ${_component_third_party_sources}
         )
+add_library(Acid::${_component_name} ALIAS ${_component_library})
 
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
@@ -109,7 +110,7 @@ if(NOT PhysFS_FOUND)
 	set(PHYSFS_TARGETNAME_DIST "physfs-dist" CACHE STRING "Name of 'dist' build target")
 	set(PHYSFS_TARGETNAME_UNINSTALL "physfs-uninstall" CACHE STRING "Name of 'uninstall' build target")
 
-	add_subdirectory(${ACID_THIRD_PARTY_DIR}/physfs physfs)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/physfs physfs)
 
 	set_target_properties(physfs-static PROPERTIES FOLDER "External/physfs")
 	if(UNIX)
@@ -120,7 +121,7 @@ if(NOT PhysFS_FOUND)
 		set(CMAKE_SKIP_RPATH OFF CACHE BOOL "Skip RPATH" FORCE)
 	endif()
 
-	set(PHYSFS_INCLUDE_DIR "${ACID_THIRD_PARTY_DIR}/physfs/src")
+	set(PHYSFS_INCLUDE_DIR "${THIRD_PARTY_SOURCE_DIR}/physfs/src")
 	set(PHYSFS_LIBRARY physfs-static)
 endif()
 
@@ -133,7 +134,6 @@ find_package(Threads REQUIRED)
 # Check whether a SSE instructions can be used on the machine
 include(FindSSE)
 
-set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
 target_compile_definitions(${_component_library}
 		PUBLIC
@@ -170,15 +170,15 @@ target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/bitmask>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/magic_enum>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/rocket>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/bitmask>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/magic_enum>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/rocket>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/bitmask>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/magic_enum>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/rocket>
 		PRIVATE
-		$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>
+		$<BUILD_INTERFACE:$<$<BOOL:${PHYSFS_INCLUDE_DIR}>:${PHYSFS_INCLUDE_DIR}>>
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
@@ -191,15 +191,20 @@ target_link_libraries(${_component_library}
         PRIVATE
 		${PHYSFS_LIBRARY}
 		)
+set_target_properties(${_component_library}
+		PROPERTIES
+		FOLDER "Acid"
+		EXPORT_NAME "${_component_name}"
+		)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
 source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
 
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)

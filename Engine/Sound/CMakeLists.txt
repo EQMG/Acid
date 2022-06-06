@@ -1,5 +1,5 @@
 set(_component_name Sound)
-set(_component_library Acid.${_component_name})
+set(_component_library Acid_${_component_name})
 set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Audio.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Flac/FlacSoundBuffer.hpp
@@ -24,18 +24,18 @@ set(_component_generated_headers
 		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 set(_component_third_party_headers
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_flac.h
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_mp3.h
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_opus.h
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_wav.h
-		${ACID_THIRD_PARTY_DIR}/stb/stb_vorbis.h
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_flac.h
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_mp3.h
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_opus.h
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_wav.h
+		${THIRD_PARTY_SOURCE_DIR}/stb/stb_vorbis.h
 		)
 set(_component_third_party_sources
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_flac.c
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_mp3.c
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_opus.c
-		${ACID_THIRD_PARTY_DIR}/dr_libs/dr_wav.c
-		${ACID_THIRD_PARTY_DIR}/stb/stb_vorbis.c
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_flac.c
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_mp3.c
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_opus.c
+		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_wav.c
+		${THIRD_PARTY_SOURCE_DIR}/stb/stb_vorbis.c
 		)
 
 add_library(${_component_library}
@@ -45,6 +45,7 @@ add_library(${_component_library}
         ${_component_third_party_headers}
         ${_component_third_party_sources}
         )
+add_library(Acid::${_component_name} ALIAS ${_component_library})
 
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
@@ -72,34 +73,38 @@ else()
 	message(FATAL_ERROR "Could not find OpenAL or OpenAL-Soft")
 endif()
 
-set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
 target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/dr_libs>
-		$<BUILD_INTERFACE:${ACID_THIRD_PARTY_DIR}/stb>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/dr_libs>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/stb>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/dr_libs>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/stb>
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid.Core
-		Acid.Scene
+		Acid::Core
+		Acid::Scene
         PRIVATE
 		OpenAL::OpenAL
+		)
+set_target_properties(${_component_library}
+		PROPERTIES
+		FOLDER "Acid"
+		EXPORT_NAME "${_component_name}"
 		)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
 source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
-source_group(TREE "${ACID_THIRD_PARTY_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
+source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
 
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
-install_headers_with_dir("third_party" "${ACID_THIRD_PARTY_DIR}" "${_component_third_party_headers}")
+install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
-set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)

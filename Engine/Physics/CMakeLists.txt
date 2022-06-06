@@ -1,5 +1,5 @@
 set(_component_name Physics)
-set(_component_library Acid.${_component_name})
+set(_component_library Acid_${_component_name})
 set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CapsuleCollider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/Collider.hpp
@@ -39,6 +39,7 @@ add_library(${_component_library}
         ${_component_sources}
 		${_component_generated_headers}
         )
+add_library(Acid::${_component_name} ALIAS ${_component_library})
 
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
@@ -64,7 +65,7 @@ if(NOT BULLET_FOUND)
 
 	set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
 	set(BUILD_SHARED_LIBS OFF)
-	add_subdirectory(${ACID_THIRD_PARTY_DIR}/bullet3 bullet3)
+	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/bullet3 bullet3)
 	set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
 
 	set_target_properties(Bullet3Common PROPERTIES FOLDER "External/bullet")
@@ -74,11 +75,10 @@ if(NOT BULLET_FOUND)
 	set_target_properties(BulletSoftBody PROPERTIES FOLDER "External/bullet")
 	set_target_properties(LinearMath PROPERTIES FOLDER "External/bullet")
 
-	set(BULLET_INCLUDE_DIRS "${ACID_THIRD_PARTY_DIR}/bullet3/src")
+	set(BULLET_INCLUDE_DIRS "${THIRD_PARTY_SOURCE_DIR}/bullet3/src")
 	set(BULLET_LIBRARIES BulletSoftBody BulletDynamics BulletCollision LinearMath)
 endif()
 
-set_target_properties(${_component_library} PROPERTIES FOLDER "Acid")
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
 target_include_directories(${_component_library}
 		PUBLIC
@@ -86,14 +86,19 @@ target_include_directories(${_component_library}
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
 		PRIVATE
-		$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>
+		$<BUILD_INTERFACE:$<$<BOOL:${BULLET_INCLUDE_DIRS}>:${BULLET_INCLUDE_DIRS}>>
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
-		Acid.Core
-		Acid.Scene
+		Acid::Core
+		Acid::Scene
 		PRIVATE
 		${BULLET_LIBRARIES}
+		)
+set_target_properties(${_component_library}
+		PROPERTIES
+		FOLDER "Acid"
+		EXPORT_NAME "${_component_name}"
 		)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
@@ -103,4 +108,4 @@ source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_compo
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 
-set(ACID_INSTALL_TARGETS ${ACID_INSTALL_TARGETS} ";${_component_library}" PARENT_SCOPE)
+set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" PARENT_SCOPE)

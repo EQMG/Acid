@@ -26,17 +26,6 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/bin)
 endforeach()
 
-# Installs headers, preserving their file structure
-macro(install_headers_with_dir _component_name _source_dir _header_list)
-	foreach(_header IN ITEMS ${_header_list})
-		file(RELATIVE_PATH _rel_header "${_source_dir}" ${_header})
-	    get_filename_component(_header_dir ${_rel_header} DIRECTORY)
-		install(FILES ${_header}
-				DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}/${_header_dir}"
-				)
-	endforeach()
-endmacro()
-
 # Add property to allow making project folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON CACHE BOOL "")
@@ -76,64 +65,9 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-# Uses Git to find the current git branch and commit
-find_package(Git REQUIRED)
+add_subdirectory(Engine)
 
-#execute_process(
-#		COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-#		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#		COMMAND_ERROR_IS_FATAL ANY
-#		)
-execute_process(
-		COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		OUTPUT_VARIABLE ACID_GIT_BRANCH
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-		ERROR_QUIET
-		)
-execute_process(
-		COMMAND ${GIT_EXECUTABLE} log -1 --format=%h
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-		OUTPUT_VARIABLE ACID_GIT_COMMIT_HASH
-		OUTPUT_STRIP_TRAILING_WHITESPACE
-		ERROR_QUIET
-		)
-
-# Directory that Acid resources can be found.
-get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources ABSOLUTE)
-# Directory where external third_party sources are located
-get_filename_component(ACID_THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/External ABSOLUTE)
-
-# Acid components
-add_subdirectory(Engine/Core)
-add_subdirectory(Engine/Network)
-add_subdirectory(Engine/Context)
-add_subdirectory(Engine/Input)
-add_subdirectory(Engine/Graphics)
-add_subdirectory(Engine/Ui)
-add_subdirectory(Engine/Scene)
-add_subdirectory(Engine/Sound)
-add_subdirectory(Engine/Shim)
-add_subdirectory(Engine/Animation)
-add_subdirectory(Engine/Physics)
-
-install(TARGETS ${ACID_INSTALL_TARGETS}
-		EXPORT AcidExport
-		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		)
-install(EXPORT AcidExport
-		FILE AcidConfig.cmake
-		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-		)
-if(ACID_INSTALL_RESOURCES)
-	# Install resources for end-user usage because many source files use these
-	install(DIRECTORY "${ACID_RESOURCES_DIR}"
-			# Example: this will install the Resources dir to /usr/share/Acid/Resources on Linux
-			DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}"
-			)
-endif()
+message(STATUS "TOP ACID_LIBRARIES: ${ACID_LIBRARIES}")
 
 #if(BUILD_EDITOR)
 #	add_subdirectory(Editor)
