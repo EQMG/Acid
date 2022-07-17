@@ -4,7 +4,7 @@ set(_component_headers
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CapsuleCollider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/Collider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConeCollider.hpp
-		#${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CubeCollider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CylinderCollider.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/HeightfieldCollider.hpp
@@ -19,7 +19,7 @@ set(_component_sources
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CapsuleCollider.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/Collider.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConeCollider.cpp
-		#${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/ConvexHullCollider.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CubeCollider.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/CylinderCollider.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/Physics/Colliders/HeightfieldCollider.cpp

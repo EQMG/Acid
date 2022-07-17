@@ -19,7 +19,7 @@
 #include <Particles/ParticleSystem.hpp>
 #include <Physics/Colliders/CapsuleCollider.hpp>
 #include <Physics/Colliders/ConeCollider.hpp>
-#include <Physics/Colliders/ConvexHullCollider.hpp>
+//#include <Physics/Colliders/ConvexHullCollider.hpp>
 #include <Physics/Colliders/CubeCollider.hpp>
 #include <Physics/Colliders/CylinderCollider.hpp>
 #include <Physics/Colliders/HeightfieldCollider.hpp>

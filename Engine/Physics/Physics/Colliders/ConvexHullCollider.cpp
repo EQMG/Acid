@@ -1,7 +1,7 @@
 #include "ConvexHullCollider.hpp"
 
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
-#include "Meshes/Mesh.hpp"
+//#include "Meshes/Mesh.hpp"
 
 namespace acid {
 ConvexHullCollider::ConvexHullCollider(const std::vector<float> &pointCloud, const Transform &localTransform) /*:

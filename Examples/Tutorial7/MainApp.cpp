@@ -1,5 +1,6 @@
 #include "MainApp.hpp"
 
+#include <CoreConfig.hpp>
 #include <Files/Files.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Graphics/Graphics.hpp>
@@ -7,7 +8,6 @@
 #include <Scenes/Scenes.hpp>
 #include "MainRenderer.hpp"
 #include "SceneTutorial7.hpp"
-#include "Config.hpp"
 
 int main(int argc, char **argv) {
 	using namespace test;
@@ -32,10 +32,7 @@ MainApp::MainApp() :
 	// Registers file search paths.
 	Log::Out("Working Directory: ", std::filesystem::current_path(), '\n');
 	//Files::Get()->AddSearchPath("Resources/Engine");
-	std::string p(ACID_RESOURCES_DIR);
-
-	Files::Get()->AddSearchPath(p + "/Tutorial/chalet.zip");
-	//std::string_view s = acid::ACID_RESOURCES_DIR;
+	Files::Get()->AddSearchPath(std::string(ACID_RESOURCES_DIR) + "/Tutorial/chalet.zip");
 
 	// Loads a input scheme for this app.
 	Inputs::Get()->AddScheme("Default", std::make_unique<InputScheme>("InputSchemes/DefaultPBR.json"), true);

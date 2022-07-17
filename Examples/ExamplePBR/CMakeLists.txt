@@ -1,42 +1,56 @@
-file(GLOB_RECURSE TESTPBR_HEADER_FILES
-		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-		"*.h" "*.hpp" "*.inl"
+set(_example_executable ExamplePBR)
+set(_example_headers
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/FreeCamera.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scene1.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/OverlayDebug.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/MainApp.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/MainRenderer.hpp
 		)
-file(GLOB_RECURSE TESTPBR_SOURCE_FILES
-		RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-		"*.c" "*.cpp" "*.rc"
+set(_example_sources
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/FreeCamera.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Scenes/Scene1.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/Uis/OverlayDebug.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/MainApp.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/MainRenderer.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/${_example_executable}.rc
 		)
 
-add_executable(TestPBR ${TESTPBR_HEADER_FILES} ${TESTPBR_SOURCE_FILES})
-
-# Changes how sources appear in IDE virtual file structures
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPBR_HEADER_FILES})
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${TESTPBR_SOURCE_FILES})
-
-target_compile_features(TestPBR PUBLIC cxx_std_17)
-target_include_directories(TestPBR PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
-target_link_libraries(TestPBR PRIVATE Acid::Acid)
-
-set_target_properties(TestPBR PROPERTIES
-		FOLDER "Acid/Tests"
+add_executable(${_example_executable}
+		${_example_headers}
+		${_example_sources}
 		)
+
+target_compile_features(${_example_executable} PUBLIC c_std_11 cxx_std_17)
+target_include_directories(${_example_executable}
+		PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+		)
+target_link_libraries(${_example_executable}
+		PRIVATE
+		${ACID_LIBRARIES}
+		)
+set_target_properties(${_example_executable} PROPERTIES FOLDER "Acid/Tests")
+
 if(MSVC AND "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	set_target_properties(TestPBR PROPERTIES 
+	set_target_properties(${_example_executable} PROPERTIES 
 			LINK_FLAGS "/subsystem:windows /ENTRY:mainCRTStartup"
 			)
 elseif(UNIX AND APPLE)
-	set_target_properties(TestPBR PROPERTIES
-			MACOSX_BUNDLE_BUNDLE_NAME "Test PBR"
+	set_target_properties(${_example_executable} PROPERTIES
+			#RESOURCE Icon.icns
+			MACOSX_BUNDLE_BUNDLE_NAME "${_example_executable}"
 			MACOSX_BUNDLE_SHORT_VERSION_STRING ${ACID_VERSION}
 			MACOSX_BUNDLE_LONG_VERSION_STRING ${ACID_VERSION}
+			#MACOSX_BUNDLE_ICON_FILE Icon.icns
 			MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/CMake/Info.plist.in"
 			)
 endif()
 
-# add_test(NAME "PBR" COMMAND "TestPBR")
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_example_headers})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_example_sources})
 
 if(ACID_INSTALL_EXAMPLES)
-	install(TARGETS TestPBR
+	install(TARGETS ${_example_executable}
 			RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 			ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 			)

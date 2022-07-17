@@ -38,7 +38,7 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DACID_INSTALL_EXAMPLES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Copy OpenAL32.dll
       shell: cmd
@@ -84,7 +84,7 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DACID_INSTALL_EXAMPLES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |
@@ -123,7 +123,7 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -GNinja -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DACID_INSTALL_EXAMPLES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |
@@ -162,7 +162,7 @@ jobs:
         CXX: clang++
       run: |
         cmake --version
-        cmake -B Build -G "Xcode" -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DCMAKE_BUILD_TYPE=Release
+        cmake -B Build -G "Xcode" -DACID_LINK_RESOURCES=0 -DACID_INSTALL_RESOURCES=0 -DACID_INSTALL_EXAMPLES=0 -DCMAKE_BUILD_TYPE=Release
         cmake --build Build
     - name: Run Tests
       run: |

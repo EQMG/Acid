@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Models/Model.hpp"
+//#include "Models/Model.hpp"
 #include "Collider.hpp"
 
 class btConvexHullShape;
@@ -22,7 +22,7 @@ public:
 
 private:
 	std::unique_ptr<btConvexHullShape> shape;
-	std::shared_ptr<Model> model;
+	//std::shared_ptr<Model> model;
 	uint32_t pointCount = 0;
 };
 }
