@@ -11,8 +11,6 @@ namespace acid {
  */
 class ACID_SCENE_EXPORT Frustum {
 public:
-	Frustum() = default;
-
 	/**
 	 * Updates a frustum from the view and projection matrix.
 	 * @param view The view matrix.

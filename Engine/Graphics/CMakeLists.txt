@@ -137,10 +137,12 @@ set(_component_generated_headers
 		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
 		)
 set(_component_third_party_headers
+		${THIRD_PARTY_SOURCE_DIR}/stb/stb_image.h
 		${THIRD_PARTY_SOURCE_DIR}/tinygltf/tiny_gltf.h
 		${THIRD_PARTY_SOURCE_DIR}/tinyobj/tiny_obj.h
 		)
 set(_component_third_party_sources
+		${THIRD_PARTY_SOURCE_DIR}/stb/stb_image.c
 		${THIRD_PARTY_SOURCE_DIR}/tinygltf/tiny_gltf.cpp
 		${THIRD_PARTY_SOURCE_DIR}/tinyobj/tiny_obj.cpp
 		)
@@ -192,9 +194,11 @@ target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/stb>
 		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/tinygltf>
 		$<BUILD_INTERFACE:${THIRD_PARTY_SOURCE_DIR}/tinyobj>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/${_component_name}>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/stb>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinygltf>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinyobj>
 		PRIVATE

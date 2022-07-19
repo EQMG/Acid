@@ -9,8 +9,6 @@ namespace acid {
  */
 class ACID_SCENE_EXPORT Entity final : NonCopyable {
 public:
-	Entity() = default;
-
 	void Update();
 
 	const std::string &GetName() const { return name; }

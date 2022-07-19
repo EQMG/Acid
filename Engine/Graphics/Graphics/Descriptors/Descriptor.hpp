@@ -55,7 +55,6 @@ private:
 
 class ACID_GRAPHICS_EXPORT Descriptor {
 public:
-	Descriptor() = default;
 	virtual ~Descriptor() = default;
 
 	virtual WriteDescriptorSet GetWriteDescriptor(uint32_t binding, VkDescriptorType descriptorType, const std::optional<OffsetSize> &offsetSize) const = 0;

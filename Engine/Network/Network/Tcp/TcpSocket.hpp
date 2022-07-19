@@ -34,8 +34,6 @@ class Packet;
  */
 class ACID_NETWORK_EXPORT PendingPacket {
 public:
-	PendingPacket() = default;
-
 	/// Data of packet size.
 	uint32_t size = 0;
 	/// Number of size bytes received so far.

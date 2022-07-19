@@ -61,6 +61,10 @@ PipelineGraphics::~PipelineGraphics() {
 	vkDestroyDescriptorSetLayout(*logicalDevice, descriptorSetLayout, nullptr);
 }
 
+void PipelineGraphics::BindPipeline(const CommandBuffer &commandBuffer) const {
+	vkCmdBindPipeline(commandBuffer, GetPipelineBindPoint(), GetPipeline());
+}
+
 const ImageDepth *PipelineGraphics::GetDepthStencil(const std::optional<uint32_t> &stage) const {
 	return Graphics::Get()->GetRenderStage(stage ? *stage : this->stage.first)->GetDepthStencil();
 }

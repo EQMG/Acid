@@ -46,8 +46,6 @@ private:
 
 class ACID_UI_EXPORT UiRadioManager : public virtual rocket::trackable {
 public:
-	UiRadioManager() = default;
-
 	const UiRadioInput::Type &GetMarkType() const { return type; }
 
 	void SetMarkType(const UiRadioInput::Type &type) {

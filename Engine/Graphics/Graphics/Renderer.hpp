@@ -10,10 +10,6 @@ namespace acid {
 class ACID_GRAPHICS_EXPORT Renderer {
 	friend class Graphics;
 public:
-	/**
-	 * Creates a new renderer, fill {@link renderStages} in your subclass of this.
-	 */
-	Renderer() = default;
 	virtual ~Renderer() = default;
 
 	/**

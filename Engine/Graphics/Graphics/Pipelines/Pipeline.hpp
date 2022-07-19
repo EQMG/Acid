@@ -14,12 +14,9 @@ public:
 	 */
 	using Stage = std::pair<uint32_t, uint32_t>;
 
-	Pipeline() = default;
 	virtual ~Pipeline() = default;
 
-	void BindPipeline(const CommandBuffer &commandBuffer) const {
-		vkCmdBindPipeline(commandBuffer, GetPipelineBindPoint(), GetPipeline());
-	}
+	virtual void BindPipeline(const CommandBuffer &commandBuffer) const = 0;
 
 	virtual const Shader *GetShader() const = 0;
 	virtual bool IsPushDescriptors() const = 0;

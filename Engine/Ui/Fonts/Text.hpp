@@ -56,8 +56,6 @@ public:
 		Left, Centre, Right, Fully
 	};
 
-	Text() = default;
-
 	void UpdateObject() override;
 
 	bool CmdRender(const CommandBuffer &commandBuffer, const PipelineGraphics &pipeline);
@@ -170,11 +168,6 @@ private:
 	 */
 	class Word {
 	public:
-		/**
-		 * Creates a new text word.
-		 */
-		Word() = default;
-
 		/**
 		 * Adds a glyph to the end of the current word and increases the screen-space width of the word.
 		 * @param glyph The glyph to be added.

@@ -42,6 +42,10 @@ void PipelineCompute::CmdRender(const CommandBuffer &commandBuffer, const Vector
 	vkCmdDispatch(commandBuffer, groupCountX, groupCountY, 1);
 }
 
+void PipelineCompute::BindPipeline(const CommandBuffer &commandBuffer) const {
+	vkCmdBindPipeline(commandBuffer, GetPipelineBindPoint(), GetPipeline());
+}
+
 void PipelineCompute::CreateShaderProgram() {
 	std::stringstream defineBlock;
 	for (const auto &[defineName, defineValue] : defines)
