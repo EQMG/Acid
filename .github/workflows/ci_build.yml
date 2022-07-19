@@ -14,7 +14,7 @@ on:
 
 jobs:
   windows_msvc:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
       with:
@@ -64,7 +64,7 @@ jobs:
         path: ./Windows-MSVC.zip
 
   linux_clang:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
@@ -104,7 +104,7 @@ jobs:
         path: ./Linux-Clang.zip
 
   linux_gcc:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
