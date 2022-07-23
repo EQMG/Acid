@@ -16,7 +16,9 @@ public:
 
 	virtual ~Pipeline() = default;
 
-	virtual void BindPipeline(const CommandBuffer &commandBuffer) const = 0;
+	void BindPipeline(const CommandBuffer &commandBuffer) const {
+		vkCmdBindPipeline(commandBuffer, GetPipelineBindPoint(), GetPipeline());
+	}
 
 	virtual const Shader *GetShader() const = 0;
 	virtual bool IsPushDescriptors() const = 0;

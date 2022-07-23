@@ -65,7 +65,7 @@
 extern "C" {
 #endif
 
-struct VolkDeviceTable;
+struct ACID_CONTEXT_EXPORT VolkDeviceTable;
 
 /**
  * Initialize library by loading Vulkan loader; call this function before creating the Vulkan instance.
@@ -129,7 +129,7 @@ ACID_CONTEXT_EXPORT void volkLoadDeviceTable(struct VolkDeviceTable* table, VkDe
 /**
  * Device-specific function pointer table
  */
-struct VolkDeviceTable
+struct ACID_CONTEXT_EXPORT VolkDeviceTable
 {
 	/* VOLK_GENERATE_DEVICE_TABLE */
 #if defined(VK_VERSION_1_0)

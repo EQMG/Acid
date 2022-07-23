@@ -20,7 +20,6 @@ public:
 	~PipelineCompute();
 
 	void CmdRender(const CommandBuffer &commandBuffer, const Vector2ui &extent) const;
-	void BindPipeline(const CommandBuffer &commandBuffer) const override;
 
 	const std::filesystem::path &GetShaderStage() const { return shaderStage; }
 	const std::vector<Shader::Define> &GetDefines() const { return defines; }

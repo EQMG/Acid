@@ -46,8 +46,6 @@ public:
 		VkCullModeFlags cullMode = VK_CULL_MODE_BACK_BIT, VkFrontFace frontFace = VK_FRONT_FACE_CLOCKWISE, bool pushDescriptors = false);
 	~PipelineGraphics();
 
-	void BindPipeline(const CommandBuffer &commandBuffer) const override;
-
 	/**
 	 * Gets the depth stencil used in a stage.
 	 * @param stage The stage to get values from, if not provided the pipelines stage will be used.
