@@ -18,7 +18,7 @@ add_executable(${_example_executable}
 		${_example_sources}
 		)
 
-target_compile_features(${_example_executable} PUBLIC c_std_11 cxx_std_17)
+target_compile_features(${_example_executable} PUBLIC cxx_std_20 c_std_11)
 target_include_directories(${_example_executable}
 		PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>

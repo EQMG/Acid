@@ -1,12 +1,21 @@
-#pragma once
+module;
 
 #include <unordered_map>
 
 #include "Maths/Vector3.hpp"
 #include "Resources/Resource.hpp"
-#include "Audio.hpp"
 
-namespace acid {
+#ifdef ACID_BUILD_MACOS
+#include <OpenAL/al.h>
+#else
+#include <al.h>
+#endif
+#include "Files/Files.hpp"
+#include "Resources/Resources.hpp"
+
+export module acid.soundbuffer;
+
+export namespace acid {
 template<typename Base>
 class SoundBufferFactory {
 public:
@@ -36,7 +45,7 @@ public:
 /**
  * @brief Resource that represents a sound buffer.
  */
-class ACID_SOUND_EXPORT SoundBuffer : public SoundBufferFactory<SoundBuffer>, public Resource {
+class SoundBuffer : public SoundBufferFactory<SoundBuffer>, public Resource {
 public:
 	/**
 	 * Creates a new sound buffer, or finds one with the same values.
@@ -65,8 +74,15 @@ public:
 	uint32_t GetBuffer() const { return buffer; }
 	void SetBuffer(uint32_t buffer);
 
-	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer);
-	friend Node &operator<<(Node &node, const SoundBuffer &soundBuffer);
+	friend const Node &operator>>(const Node &node, SoundBuffer &soundBuffer) {
+		node["filename"].Get(soundBuffer.filename);
+		return node;
+	}
+
+	friend Node &operator<<(Node &node, const SoundBuffer &soundBuffer) {
+		node["filename"].Set(soundBuffer.filename);
+		return node;
+	}
 
 private:
 	void Load();
@@ -74,4 +90,45 @@ private:
 	std::filesystem::path filename;
 	uint32_t buffer = 0;
 };
+
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const Node &node) {
+	if (auto resource = Resources::Get()->Find<SoundBuffer>(node))
+		return resource;
+
+	auto result = std::make_shared<SoundBuffer>("");
+	Resources::Get()->Add(node, std::dynamic_pointer_cast<Resource>(result));
+	node >> *result;
+	result->Load();
+	return result;
+}
+
+std::shared_ptr<SoundBuffer> SoundBuffer::Create(const std::filesystem::path &filename) {
+	SoundBuffer temp(filename, false);
+	Node node;
+	node << temp;
+	return Create(node);
+}
+
+SoundBuffer::SoundBuffer(std::filesystem::path filename, bool load) :
+	filename(std::move(filename)) {
+	if (load)
+		SoundBuffer::Load();
+}
+
+SoundBuffer::~SoundBuffer() {
+	alDeleteBuffers(1, &buffer);
+}
+
+void SoundBuffer::SetBuffer(uint32_t buffer) {
+	if (this->buffer)
+		alDeleteBuffers(1, &this->buffer);
+	this->buffer = buffer;
+}
+
+void SoundBuffer::Load() {
+	if (filename.empty())
+		return;
+
+	Registry()[filename.extension().string()].first(*this, filename);
+}
 }

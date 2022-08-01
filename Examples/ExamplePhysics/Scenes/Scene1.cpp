@@ -1,7 +1,6 @@
 #include "Scene1.hpp"
 
 #include <Animations/AnimatedMesh.hpp>
-#include <Audio/Sound.hpp>
 #include <Files/File.hpp>
 #include <Files/File.hpp>
 #include <Files/Json/Json.hpp>
@@ -43,6 +42,9 @@
 #include "Terrain/Terrain.hpp"
 #include "World/World.hpp"
 #include "FpsCamera.hpp"
+
+import acid.sound.component;
+import acid.sound;
 
 namespace test {
 constexpr Time UI_SLIDE_TIME = 0.2s;

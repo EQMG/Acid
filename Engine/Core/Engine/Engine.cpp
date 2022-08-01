@@ -94,7 +94,7 @@ void Engine::CreateModule(Module::TRegistryMap::const_iterator it, const ModuleF
 		return;
 
 	// TODO: Prevent circular dependencies.
-	for (auto requireId : it->second.requires)
+	for (auto requireId : it->second.require)
 		CreateModule(Module::Registry().find(requireId), filter);
 
 	auto &&module = it->second.create();
@@ -108,7 +108,7 @@ void Engine::DestroyModule(TypeId id) {
 
 	// Destroy all module dependencies first.
 	for (const auto &[registrarId, registrar] : Module::Registry()) {
-		if (std::find(registrar.requires.begin(), registrar.requires.end(), id) != registrar.requires.end())
+		if (std::find(registrar.require.begin(), registrar.require.end(), id) != registrar.require.end())
 			DestroyModule(registrarId);
 	}
 	

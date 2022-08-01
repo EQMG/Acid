@@ -16,7 +16,7 @@ public:
 	public:
 		std::function<std::unique_ptr<Base>()> create;
 		typename Base::Stage stage;
-		std::vector<TypeId> requires;
+		std::vector<TypeId> require;
 	};
 	using TRegistryMap = std::unordered_map<TypeId, TCreateValue>;
 
@@ -28,12 +28,12 @@ public:
 	}
 
 	template<typename ... Args>
-	class Requires {
+	class Require {
 	public:
 		std::vector<TypeId> Get() const {
-			std::vector<TypeId> requires;
-			(requires.emplace_back(TypeInfo<Base>::template GetTypeId<Args>()), ...);
-			return requires;
+			std::vector<TypeId> require;
+			(require.emplace_back(TypeInfo<Base>::template GetTypeId<Args>()), ...);
+			return require;
 		}
 	};
 
@@ -61,12 +61,12 @@ public:
 		 * @return A dummy value in static initialization.
 		 */
 		template<typename ... Args>
-		static bool Register(typename Base::Stage stage, Requires<Args...> &&requires = {}) {
+		static bool Register(typename Base::Stage stage, Require<Args...> &&require = {}) {
 			ModuleFactory::Registry()[TypeInfo<Base>::template GetTypeId<T>()] = {[]() {
 				moduleInstance = new T();
 				// The registrar does not own the instance, the engine does, we just hold a raw pointer for convenience.
 				return std::unique_ptr<Base>(moduleInstance);
-			}, stage, requires.Get()};
+			}, stage, require.Get()};
 			return true;
 		}
 		

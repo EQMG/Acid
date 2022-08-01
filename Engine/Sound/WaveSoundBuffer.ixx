@@ -1,4 +1,4 @@
-#include "WaveSoundBuffer.hpp"
+module;
 
 #ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
@@ -10,7 +10,18 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
-namespace acid {
+export module acid.soundbuffer.wave;
+import acid.soundbuffer;
+import acid.sound;
+
+export namespace acid {
+class WaveSoundBuffer : public SoundBuffer::Registrar<WaveSoundBuffer> {
+	inline static const bool Registered = Register(".wav", ".wave");
+public:
+	static void Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename);
+	static void Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename);
+};
+
 void WaveSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
@@ -36,7 +47,7 @@ void WaveSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path
 	alGenBuffers(1, &buffer);
 	alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, sampleData, totalPCMFrameCount, sampleRate);
 
-	Audio::CheckAl(alGetError());
+	CheckAl(alGetError());
 
 	soundBuffer.SetBuffer(buffer);
 	

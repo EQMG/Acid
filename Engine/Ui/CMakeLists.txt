@@ -99,7 +99,7 @@ if(NOT Freetype_FOUND)
 	set(FREETYPE_LIBRARIES "freetype")
 endif()
 
-target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_compile_features(${_component_library} PUBLIC cxx_std_20 c_std_11)
 target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>

@@ -134,7 +134,7 @@ find_package(Threads REQUIRED)
 # Check whether a SSE instructions can be used on the machine
 include(FindSSE)
 
-target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_compile_features(${_component_library} PUBLIC cxx_std_20 c_std_11)
 target_compile_definitions(${_component_library}
 		PUBLIC
 		# If the CONFIG is Debug or RelWithDebInfo, define ACID_DEBUG

@@ -1,4 +1,4 @@
-#include "OggSoundBuffer.hpp"
+module;
 
 #ifdef ACID_BUILD_MACOS
 #include <OpenAL/al.h>
@@ -10,7 +10,18 @@
 #include "Files/Files.hpp"
 #include "Maths/Time.hpp"
 
-namespace acid {
+export module acid.soundbuffer.ogg;
+import acid.soundbuffer;
+import acid.sound;
+
+export namespace acid {
+class OggSoundBuffer : public SoundBuffer::Registrar<OggSoundBuffer> {
+	inline static const bool Registered = Register(".ogg");
+public:
+	static void Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename);
+	static void Write(const SoundBuffer &soundBuffer, const std::filesystem::path &filename);
+};
+
 void OggSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path &filename) {
 #ifdef ACID_DEBUG
 	auto debugStart = Time::Now();
@@ -37,7 +48,7 @@ void OggSoundBuffer::Load(SoundBuffer &soundBuffer, const std::filesystem::path 
 	alGenBuffers(1, &buffer);
 	alBufferData(buffer, (channels == 2) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, samplesPerSec);
 
-	Audio::CheckAl(alGetError());
+	CheckAl(alGetError());
 
 	free(data);
 	soundBuffer.SetBuffer(buffer);

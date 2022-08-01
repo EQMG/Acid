@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Audio/Sound.hpp>
 #include <Scenes/Scene.hpp>
 #include <Uis/UiStartLogo.hpp>
 #include "Uis/OverlayDebug.hpp"
+
+import acid.sound.component;
 
 using namespace acid;
 

@@ -146,7 +146,7 @@ private:
  * @brief Module used for the creation, updating and destruction of the joysticks.
  */
 class ACID_CONTEXT_EXPORT Joysticks : public Module::Registrar<Joysticks> {
-	inline static const bool Registered = Register(Stage::Pre, Requires<Windows>());
+	inline static const bool Registered = Register(Stage::Pre, Require<Windows>());
 public:
 	Joysticks();
 

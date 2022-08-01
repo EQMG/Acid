@@ -1,6 +1,6 @@
 #include "Inspector.hpp"
 
-#include <Audio/Audio.hpp>
+import acid.sound.component;
 
 namespace test {
 Inspector::Inspector() {

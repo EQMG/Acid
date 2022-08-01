@@ -1,27 +1,14 @@
 set(_component_name Sound)
 set(_component_library Acid_${_component_name})
-set(_component_headers
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Audio.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Flac/FlacSoundBuffer.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Mp3/Mp3SoundBuffer.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Ogg/OggSoundBuffer.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Opus/OpusSoundBuffer.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Sound.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/SoundBuffer.hpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Wave/WaveSoundBuffer.hpp
-		)
 set(_component_sources
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Audio.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Flac/FlacSoundBuffer.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Mp3/Mp3SoundBuffer.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Ogg/OggSoundBuffer.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Opus/OpusSoundBuffer.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Sound.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/SoundBuffer.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/Audio/Wave/WaveSoundBuffer.cpp
-		)
-set(_component_generated_headers
-		${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp
+		${CMAKE_CURRENT_SOURCE_DIR}/AudioModule.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/SoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/FlacSoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/Mp3SoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/OggSoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/OpusSoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/WaveSoundBuffer.ixx
+		${CMAKE_CURRENT_SOURCE_DIR}/SoundComponent.ixx
 		)
 set(_component_third_party_headers
 		${THIRD_PARTY_SOURCE_DIR}/dr_libs/dr_flac.h
@@ -38,17 +25,20 @@ set(_component_third_party_sources
 		${THIRD_PARTY_SOURCE_DIR}/stb/stb_vorbis.c
 		)
 
-add_library(${_component_library}
-        ${_component_headers}
+add_library(${_component_library} STATIC
         ${_component_sources}
-		${_component_generated_headers}
         ${_component_third_party_headers}
         ${_component_third_party_sources}
         )
+#target_sources(${_component_library}
+#		PUBLIC
+#			FILE_SET modules TYPE CXX_MODULES
+#			BASE_DIRS
+#				"${CMAKE_CURRENT_SOURCE_DIR}"
+#			FILES
+#				${_component_sources}
+#		)
 add_library(Acid::${_component_name} ALIAS ${_component_library})
-
-include(GenerateExportHeader)
-generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
 # OpenAL must be installed on the system, env "OPENALDIR" must be set
 find_package(OpenALSoft)
@@ -73,7 +63,7 @@ else()
 	message(FATAL_ERROR "Could not find OpenAL or OpenAL-Soft")
 endif()
 
-target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_compile_features(${_component_library} PUBLIC cxx_std_20 c_std_11)
 target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -96,14 +86,10 @@ set_target_properties(${_component_library}
 		EXPORT_NAME "${_component_name}"
 		)
 
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_headers})
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${_component_sources})
-source_group(TREE "${CMAKE_CURRENT_BINARY_DIR}/include" PREFIX "" FILES ${_component_generated_headers})
 source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_headers})
 source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_component_third_party_sources})
 
-install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
-install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
 
 set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" CACHE INTERNAL "")

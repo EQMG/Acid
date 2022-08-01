@@ -1,6 +1,6 @@
-# 3.11.0 required for cxx_std_17 and FetchContent
-cmake_minimum_required(VERSION 3.11.0 FATAL_ERROR)
-project(Acid VERSION 0.15.0 LANGUAGES CXX C)
+# 3.12.0 required for cxx_std_20 and FetchContent
+cmake_minimum_required(VERSION 3.24.0 FATAL_ERROR)
+project(Acid VERSION 0.16.0 LANGUAGES CXX C)
 
 option(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 option(BUILD_EDITOR "Build editor" ON)
@@ -57,13 +57,21 @@ endif()
 
 # Force all compilers to use the correct C and C++ standard versions
 # Needed to allow for CheckCXXSourceCompiles to work correctly
-set(CMAKE_REQUIRED_FLAGS "-std=c++17 -std=c11")
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_REQUIRED_FLAGS "-std=c++20 -std=c11")
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
+
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "3c375311-a3c9-4396-a187-3227ef642046")
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
+string(CONCAT CMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE
+  "<CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> <SOURCE>"
+  " -MT <DYNDEP_FILE> -MD -MF <DEP_FILE>"
+  " ${flags_to_scan_deps} -fdep-file=<DYNDEP_FILE> -fdep-output=<OBJECT>"
+  )
 
 # Directory that Acid resources can be found.
 get_filename_component(ACID_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Resources ABSOLUTE)

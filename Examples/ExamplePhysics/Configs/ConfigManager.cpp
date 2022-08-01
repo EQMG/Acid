@@ -1,10 +1,11 @@
 #include "ConfigManager.hpp"
 
-#include <Audio/Audio.hpp>
 #include <Devices/Windows.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Files/Json/Json.hpp>
 #include <Timers/Timers.hpp>
+
+import acid.sound;
 
 namespace test {
 ConfigManager::ConfigManager() :

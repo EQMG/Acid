@@ -41,7 +41,7 @@ add_library(Acid::${_component_name} ALIAS ${_component_library})
 include(GenerateExportHeader)
 generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/${_component_name}Export.hpp")
 
-target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
+target_compile_features(${_component_library} PUBLIC cxx_std_20 c_std_11)
 target_include_directories(${_component_library}
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>

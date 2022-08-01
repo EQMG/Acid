@@ -1,11 +1,12 @@
 #include "Pannable.hpp"
 
-#include <Audio/Audio.hpp>
 #include <Inputs/Inputs.hpp>
 #include <Uis/Drivers/ConstantDriver.hpp>
 #include <Uis/Inputs/UiButtonInput.hpp>
 #include <Graphics/Graphics.hpp>
 #include <Uis/Uis.hpp>
+
+import acid.sound;
 
 namespace test {
 Pannable::Pannable(){

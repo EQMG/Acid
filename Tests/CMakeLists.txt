@@ -33,7 +33,7 @@ if(NOT GTest_FOUND)
 	set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
 endif()
 
-target_compile_features(Tests PUBLIC c_std_11 cxx_std_17)
+target_compile_features(Tests PUBLIC cxx_std_20 c_std_11)
 target_include_directories(Tests
 		PRIVATE 
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
