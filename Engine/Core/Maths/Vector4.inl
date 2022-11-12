@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Vector4.hpp"
+
 #include "Files/Node.hpp"
 #include "Maths.hpp"
-#include "Vector4.hpp"
 
 namespace acid {
 template<typename T>

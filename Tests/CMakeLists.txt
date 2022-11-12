@@ -17,6 +17,7 @@ add_test(NAME Tests COMMAND Tests)
 find_package(GTest 1.11.0 QUIET)
 if(NOT GTest_FOUND)
 	set(INSTALL_GTEST OFF CACHE BOOL "Enable installation of googletest")
+	set(gtest_force_shared_crt ON CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.")
 	add_subdirectory(${THIRD_PARTY_SOURCE_DIR}/googletest ${THIRD_PARTY_BINARY_DIR}/googletest)
 
 	set_target_properties(gmock PROPERTIES FOLDER "External/googletest")

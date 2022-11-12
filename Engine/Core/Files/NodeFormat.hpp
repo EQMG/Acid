@@ -95,16 +95,16 @@ public:
 	virtual void WriteStream(const Node &node, std::ostream &stream, Format format = Minified) const = 0;
 
 	// TODO: Duplicate ParseStream/WriteString templates from Node.
-	template<typename _Elem = char>
+	template<typename _Elem = char
+#ifndef ACID_BUILD_MSVC
+		// Cannot dynamicly parse wide streams on GCC or Clang
+		, typename = std::enable_if_t<std::is_same_v<_Elem, char>>
+#endif
+	>
 	void ParseStream(Node &node, std::basic_istream<_Elem> &stream) {
 		// We must read as UTF8 chars.
-		if constexpr (!std::is_same_v<_Elem, char>) {
-#ifndef ACID_BUILD_MSVC
-			throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
-#else
+		if constexpr (!std::is_same_v<_Elem, char>)
 			stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
-#endif
-		}
 
 		// Reading into a string before iterating is much faster.
 		std::string s(std::istreambuf_iterator<_Elem>(stream), {});

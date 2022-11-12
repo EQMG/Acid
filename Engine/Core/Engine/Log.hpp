@@ -133,8 +133,8 @@ public:
 
 private:
 	// TODO: Only use mutex in synced writes (where output order must be the same).
-	static std::mutex WriteMutex;
-	static std::ofstream FileStream;
+	inline static std::mutex WriteMutex;
+	inline static std::ofstream FileStream;
 
 	/**
 	 * A internal method used to write values to the out stream and to a file.

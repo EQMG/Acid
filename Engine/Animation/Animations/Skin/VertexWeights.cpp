@@ -4,7 +4,7 @@
 
 namespace acid {
 void VertexWeights::AddJointEffect(uint32_t jointId, float jointWeight) {
-	for (auto &&[i, weight] : Enumerate(weights)) {
+	for (auto [i, weight] : Enumerate(weights)) {
 		if (jointWeight > weight) {
 			jointIds[i] = jointId;
 			weight = jointWeight;

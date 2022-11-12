@@ -54,21 +54,21 @@ generate_export_header(${_component_library} EXPORT_FILE_NAME "${CMAKE_CURRENT_B
 find_package(OpenALSoft)
 find_package(OpenAL)
 if(OPENALSOFT_FOUND)
-	#if(OPENALSOFT_FOUND AND NOT TARGET OpenAL::OpenAL)
+	if(NOT TARGET OpenAL::OpenAL)
 		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 		set_target_properties(OpenAL::OpenAL PROPERTIES
 				IMPORTED_LOCATION "${OPENALSOFT_LIBRARY}"
 				INTERFACE_INCLUDE_DIRECTORIES "${OPENALSOFT_INCLUDE_DIR}"
 				)
-	#endif()
+	endif()
 elseif(OPENAL_FOUND)
-	#if(OPENAL_FOUND AND NOT TARGET OpenAL::OpenAL)
+	if(NOT TARGET OpenAL::OpenAL)
 		add_library(OpenAL::OpenAL UNKNOWN IMPORTED)
 		set_target_properties(OpenAL::OpenAL PROPERTIES
 				IMPORTED_LOCATION "${OPENAL_LIBRARY}"
 				INTERFACE_INCLUDE_DIRECTORIES "${OPENAL_INCLUDE_DIR}"
 				)
-	#endif()
+	endif()
 else()
 	message(FATAL_ERROR "Could not find OpenAL or OpenAL-Soft")
 endif()

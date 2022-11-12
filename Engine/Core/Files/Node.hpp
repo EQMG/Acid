@@ -20,7 +20,13 @@ public:
 	template<typename T, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
 	void WriteStream(std::ostream &stream, NodeFormat::Format format = NodeFormat::Minified) const;
 
-	template<typename T, typename _Elem = char, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
+	template<typename T, typename _Elem = char, typename = std::enable_if_t<
+		std::is_convertible_v<T *, NodeFormat *>
+#ifndef ACID_BUILD_MSVC
+		// Cannot dynamicly parse wide streams on GCC or Clang
+		&& std::is_same_v<_Elem, char>
+#endif
+	>>
 	void ParseStream(std::basic_istream<_Elem> &stream);
 	template<typename T, typename _Elem = char, typename = std::enable_if_t<std::is_convertible_v<T *, NodeFormat *>>>
 	std::basic_string<_Elem> WriteString(NodeFormat::Format format = NodeFormat::Minified) const;

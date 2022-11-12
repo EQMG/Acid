@@ -145,13 +145,13 @@ target_compile_definitions(${_component_library}
 		# 64-bit
 		$<$<EQUAL:8,${CMAKE_SIZEOF_VOID_P}>:ACID_BUILD_64BIT>
 		# Windows
-		$<$<PLATFORM_ID:Windows>:ACID_BUILD_WINDOWS WIN32_LEAN_AND_MEAN NOMINMAX>
+		$<$<PLATFORM_ID:Windows>:ACID_BUILD_WINDOWS _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING _SCL_SECURE_NO_WARNINGS _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS WIN32_LEAN_AND_MEAN NOMINMAX>
 		# Linux
 		$<$<PLATFORM_ID:Linux>:ACID_BUILD_LINUX>
 		# macOS
 		$<$<PLATFORM_ID:Darwin>:ACID_BUILD_MACOS>
 		# MSVC
-		$<$<CXX_COMPILER_ID:MSVC>:ACID_BUILD_MSVC _SCL_SECURE_NO_WARNINGS _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS>
+		$<$<CXX_COMPILER_ID:MSVC>:ACID_BUILD_MSVC>
 		# Clang/AppleClang
 		$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:ACID_BUILD_CLANG>
 		# GNU/GCC
@@ -161,6 +161,7 @@ target_compile_options(${_component_library}
 		PUBLIC
 		# Disables symbol warnings.
 		$<$<CXX_COMPILER_ID:MSVC>:/wd4018 /wd4067 /wd4244 /wd4251 /wd4267 /wd4275 /wd4996>
+		$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-undefined-var-template>
 		# Enabled SSE2 for MSVC for 32-bit.
 		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<EQUAL:4,${CMAKE_SIZEOF_VOID_P}>>:/arch:SSE2>
 		# Enables SSE4.1, it is also possible to use SSE2 with -msse2
@@ -206,5 +207,8 @@ source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_compo
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
+if(NOT BUILD_SHARED_LIBS)
+	install(TARGETS ${PHYSFS_LIBRARY} EXPORT AcidTargets)
+endif()
 
 set(ACID_LIBRARIES "${_component_library}" CACHE INTERNAL "")

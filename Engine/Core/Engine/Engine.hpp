@@ -140,8 +140,8 @@ private:
 	void CreateModule(Module::TRegistryMap::const_iterator it, const ModuleFilter &filter);
 	void DestroyModule(TypeId id);
 	void UpdateStage(Module::Stage stage);
-	
-	static Engine *Instance;
+
+	inline static Engine *Instance = nullptr;
 
 	std::string argv0;
 	Version version;

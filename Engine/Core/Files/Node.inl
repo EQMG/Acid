@@ -38,13 +38,8 @@ void Node::WriteStream(std::ostream &stream, NodeFormat::Format format) const {
 template<typename T, typename _Elem, typename>
 void Node::ParseStream(std::basic_istream<_Elem> &stream) {
 	// We must read as UTF8 chars.
-	if constexpr (!std::is_same_v<_Elem, char>) {
-#ifndef _MSC_VER
-		throw std::runtime_error("Cannot dynamicly parse wide streams on GCC or Clang");
-#else
+	if constexpr (!std::is_same_v<_Elem, char>)
 		stream.imbue(std::locale(stream.getloc(), new std::codecvt_utf8<char>));
-#endif
-	}
 
 	// Reading into a string before iterating is much faster.
 	std::string s(std::istreambuf_iterator<_Elem>(stream), {});

@@ -102,6 +102,8 @@ if(NOT TARGET glfw)
 
 	set_target_properties(glfw PROPERTIES FOLDER "External/glfw")
 	set_target_properties(update_mappings PROPERTIES FOLDER "External/glfw")
+
+	set(GLFW3_LIBRARIES glfw)
 endif()
 
 target_compile_features(${_component_library} PUBLIC c_std_11 cxx_std_17)
@@ -124,13 +126,15 @@ target_include_directories(${_component_library}
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/stb>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinydng>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/third_party/tinyexr>
+		PRIVATE
+		$<BUILD_INTERFACE:$<$<BOOL:${GLFW3_INCLUDE_DIRS}>:${GLFW3_INCLUDE_DIRS}>>
 		)
 target_link_libraries(${_component_library}
 		PUBLIC
 		Acid::Core
 		Vulkan::Vulkan
 		PRIVATE
-		glfw
+		${GLFW3_LIBRARIES}
 		)
 set_target_properties(${_component_library}
 		PROPERTIES
@@ -147,5 +151,8 @@ source_group(TREE "${THIRD_PARTY_SOURCE_DIR}" PREFIX "ThirdParty" FILES ${_compo
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_SOURCE_DIR}" "${_component_headers}")
 install_headers_with_dir("${_component_name}" "${CMAKE_CURRENT_BINARY_DIR}/include" "${_component_generated_headers}")
 install_headers_with_dir("third_party" "${THIRD_PARTY_SOURCE_DIR}" "${_component_third_party_headers}")
+if(NOT BUILD_SHARED_LIBS)
+	install(TARGETS ${GLFW3_LIBRARIES} EXPORT AcidTargets)
+endif()
 
 set(ACID_LIBRARIES "${ACID_LIBRARIES};${_component_library}" CACHE INTERNAL "")

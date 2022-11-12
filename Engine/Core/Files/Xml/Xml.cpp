@@ -41,8 +41,8 @@ void Xml::Load(Node &node, std::string_view string) {
 		}
 	}
 
-	if (tokens.empty())
-		throw std::runtime_error("No tokens found in document");
+	//if (tokens.empty())
+	//	throw std::runtime_error("No tokens found in document");
 
 	// Converts the tokens into nodes.
 	int32_t k = 0;

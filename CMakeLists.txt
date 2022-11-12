@@ -28,21 +28,18 @@ endforeach()
 
 # Add property to allow making project folders in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_DISABLE_SOURCE_CHANGES ON CACHE BOOL "")
-set(CMAKE_DISABLE_IN_SOURCE_BUILD ON CACHE BOOL "")
-set(CMAKE_POSITION_INDEPENDENT_CODE ON CACHE BOOL "Whether to create a position-independent target")
-if(BUILD_SHARED_LIBS)
-	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE BOOL "Export all symbols")
-endif()
 # Under some compilers CMAKE_DEBUG_POSTFIX is set to "d", removed to clean dll names
-set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "Set Debug library postfix")
-set(CMAKE_RELEASE_POSTFIX "" CACHE STRING "Set Release library postfix")
-set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "Set RelWithDebInfo library postfix")
-set(CMAKE_MINSIZEREL_POSTFIX "" CACHE STRING "Set MinsizeRel library postfix")
-# Removes any dll prefix name on windows, unix will keep a prefix set as "lib"
+set(CMAKE_DEBUG_POSTFIX "" CACHE STRING "")
+set(CMAKE_RELEASE_POSTFIX "" CACHE STRING "")
+set(CMAKE_RELWITHDEBINFO_POSTFIX "" CACHE STRING "")
+set(CMAKE_MINSIZEREL_POSTFIX "" CACHE STRING "")
 if(WIN32)
 	set(CMAKE_SHARED_LIBRARY_PREFIX "")
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE BOOL "")
 endif()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON CACHE BOOL "")
+set(CMAKE_DISABLE_SOURCE_CHANGES ON CACHE BOOL "")
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON CACHE BOOL "")
 
 # Multithreaded MSVC builds
 if(MSVC_VERSION GREATER 1500 AND ${CMAKE_VERSION} VERSION_GREATER "2.8.6")

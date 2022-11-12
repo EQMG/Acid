@@ -134,5 +134,8 @@ On Linux Acid requires `xorg-dev`, `libopenal1`, and `libvulkan1` to be installe
 
 Setup on MacOS is similar to the setup on Linux, a compiler that supports C++17 is required, such as XCode 10.0.
 
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/EQMG/Acid.svg)](https://starchart.cc/EQMG/Acid)
+
 ## Contributing
 You can contribute to Acid in any way you want, we are always looking for help. You can learn about Acids code style from the [GUIDELINES.md](.github/GUIDELINES.md).
