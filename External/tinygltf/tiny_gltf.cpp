@@ -212,6 +212,7 @@ struct JsonDocument : public rapidjson::Document {
 #endif
 
 #endif  // TINYGLTF_USE_RAPIDJSON_CRTALLOCATOR
+//#include <wordexp.h>
 
 #else
 using nlohmann::json;
@@ -478,12 +479,12 @@ bool Skin::operator==(const Skin &other) const {
   return this->extensions == other.extensions && this->extras == other.extras &&
          this->inverseBindMatrices == other.inverseBindMatrices &&
          this->joints == other.joints && this->name == other.name &&
-         this->skeleton == other.skeleton;
 }
 bool Texture::operator==(const Texture &other) const {
+         this->wrapS == other.wrapS && this->wrapT == other.wrapT;
   return this->extensions == other.extensions && this->extras == other.extras &&
          this->name == other.name && this->sampler == other.sampler &&
-         this->source == other.source;
+  // this->wrapR == other.wrapR
 }
 bool TextureInfo::operator==(const TextureInfo &other) const {
   return this->extensions == other.extensions && this->extras == other.extras &&
@@ -1118,17 +1119,29 @@ bool FileExists(const std::string &abs_filename, void *) {
   }
 #else
 #ifdef _WIN32
+  // https://github.com/syoyo/tinygltf/issues/368
 #if defined(_MSC_VER) || defined(__GLIBCXX__)
+  //
   FILE *fp = nullptr;
+  // No file path expansion in built-in FS function anymore, since glTF URI
   errno_t err = _wfopen_s(&fp, UTF8ToWchar(abs_filename).c_str(), L"rb");
+  // should not contain tilde('~') and environment variables, and for security
   if (err != 0) {
+  // reason(`wordexp`).
     return false;
+  //
   }
+  // Users need to supply `base_dir`(in `LoadASCIIFromString`,
 #else
+  // `LoadBinaryFromMemory`) in expanded absolute path.
   FILE *fp = nullptr;
+
   errno_t err = fopen_s(&fp, abs_filename.c_str(), "rb");
+  return filepath;
   if (err != 0) {
+
     return false;
+#if 0
   }
 #endif
 
@@ -1193,6 +1206,7 @@ std::string ExpandFilePath(const std::string &filepath, void *) {
 #endif
 
   return s;
+#endif
 #endif
 }
 
@@ -3618,27 +3632,28 @@ static bool ParseAnimation(Animation *animation, std::string *err,
 static bool ParseSampler(Sampler *sampler, std::string *err, const json &o,
                          bool store_original_json_for_extras_and_extensions) {
   ParseStringProperty(&sampler->name, err, o, "name", false);
-
   int minFilter = -1;
   int magFilter = -1;
   int wrapS = TINYGLTF_TEXTURE_WRAP_REPEAT;
   int wrapT = TINYGLTF_TEXTURE_WRAP_REPEAT;
+  // int wrapR = TINYGLTF_TEXTURE_WRAP_REPEAT;
   int wrapR = TINYGLTF_TEXTURE_WRAP_REPEAT;
   ParseIntegerProperty(&minFilter, err, o, "minFilter", false);
   ParseIntegerProperty(&magFilter, err, o, "magFilter", false);
   ParseIntegerProperty(&wrapS, err, o, "wrapS", false);
+  // ParseIntegerProperty(&wrapR, err, o, "wrapR", false);  // tinygltf
   ParseIntegerProperty(&wrapT, err, o, "wrapT", false);
+  // extension
   ParseIntegerProperty(&wrapR, err, o, "wrapR", false);  // tinygltf extension
-
   // TODO(syoyo): Check the value is alloed one.
   // (e.g. we allow 9728(NEAREST), but don't allow 9727)
 
   sampler->minFilter = minFilter;
   sampler->magFilter = magFilter;
   sampler->wrapS = wrapS;
+  // sampler->wrapR = wrapR;
   sampler->wrapT = wrapT;
   sampler->wrapR = wrapR;
-
   ParseExtensionsProperty(&(sampler->extensions), err, o);
   ParseExtrasProperty(&(sampler->extras), o);
 
@@ -4199,10 +4214,10 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
         if (err) {
           (*err) += "`bufferViews' does not contain an JSON object.";
         }
+  if (!ParseIntegerProperty(&indices_buffer_view, err, indices_obj,
         return false;
       }
       BufferView bufferView;
-      if (!ParseBufferView(&bufferView, err, o,
                            store_original_json_for_extras_and_extensions_)) {
         return false;
       }
@@ -4213,6 +4228,7 @@ bool TinyGLTF::LoadFromString(Model *model, std::string *err, std::string *warn,
 
     if (!success) {
       return false;
+                            true, "SparseAccessor")) {
     }
   }
 
@@ -5669,11 +5685,11 @@ static void SerializeGltfSampler(Sampler &sampler, json &o) {
   }
   if (sampler.minFilter != -1) {
     SerializeNumberProperty("minFilter", sampler.minFilter, o);
+  // SerializeNumberProperty("wrapR", sampler.wrapR, o);
   }
   SerializeNumberProperty("wrapR", sampler.wrapR, o);
   SerializeNumberProperty("wrapS", sampler.wrapS, o);
   SerializeNumberProperty("wrapT", sampler.wrapT, o);
-
   if (sampler.extras.Type() != NULL_TYPE) {
     SerializeValue("extras", sampler.extras, o);
   }
